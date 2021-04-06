@@ -1,32 +1,30 @@
-// @flow
-
 import bean from 'bean';
 import fastdom from 'fastdom';
 
 const overlaySelector = '.u-faux-block-link__overlay';
 const hoverStateClassName = 'u-faux-block-link--hover';
 
-const showIntentToClick = (e: Event): void => {
+const showIntentToClick = (e) => {
     fastdom.mutate(() => {
-        if ((e.currentTarget: any).parentElement) {
-            (e.currentTarget: any).parentElement.classList.add(
+        if ((e.currentTarget).parentElement) {
+            (e.currentTarget).parentElement.classList.add(
                 hoverStateClassName
             );
         }
     });
 };
 
-const removeIntentToClick = (e: Event): void => {
+const removeIntentToClick = (e) => {
     fastdom.mutate(() => {
-        if ((e.currentTarget: any).parentElement) {
-            (e.currentTarget: any).parentElement.classList.remove(
+        if ((e.currentTarget).parentElement) {
+            (e.currentTarget).parentElement.classList.remove(
                 hoverStateClassName
             );
         }
     });
 };
 
-const fauxBlockLink = (): void => {
+const fauxBlockLink = () => {
     // mouseover
     bean.on(document.body, 'mouseenter', overlaySelector, showIntentToClick);
     // mouseout

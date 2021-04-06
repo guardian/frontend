@@ -15,7 +15,7 @@ class YoutubeController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def getAtomId(youtubeId: String): Action[AnyContent] =

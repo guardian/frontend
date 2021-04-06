@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import model.Cached.RevalidatableResult
 import model._
 import pages.TagIndexHtmlPage
@@ -10,7 +10,7 @@ import services._
 class TagIndexController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
-    with Logging {
+    with GuLogging {
 
   private val TagIndexCacheTime = 600
 

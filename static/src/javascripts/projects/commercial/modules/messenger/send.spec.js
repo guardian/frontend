@@ -1,8 +1,7 @@
-// @flow
-import { postMessage } from 'commercial/modules/messenger/post-message';
+import { postMessage } from './post-message';
 import { send } from './send';
 
-jest.mock('commercial/modules/messenger/post-message', () => ({
+jest.mock('./post-message', () => ({
     postMessage: jest.fn(),
 }));
 

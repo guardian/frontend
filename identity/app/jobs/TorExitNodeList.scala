@@ -1,6 +1,6 @@
 package jobs
 
-import common.Logging
+import common.GuLogging
 
 import scala.collection.JavaConverters._
 import java.net.{InetAddress, URL}
@@ -9,7 +9,7 @@ import com.gu.Box
 
 import scala.io.Source
 
-object TorExitNodeList extends Logging {
+object TorExitNodeList extends GuLogging {
 
   private val torExitNodeAgent = Box[Set[String]](Set.empty)
   private val torNodeListUrl = "https://check.torproject.org/cgi-bin/TorBulkExitList.py"

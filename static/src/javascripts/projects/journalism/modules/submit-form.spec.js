@@ -1,8 +1,6 @@
-// @flow
-
 import { formatData } from 'journalism/modules/submit-form';
 
-let mockFormEls: NodeList<*>;
+let mockFormEls;
 
 describe('Submitting a callout response to formstack', () => {
     beforeEach(() => {

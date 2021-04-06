@@ -1,4 +1,3 @@
-// @flow
 import reqwest from 'reqwest';
 import config from 'lib/config';
 import raven from 'lib/raven';
@@ -6,7 +5,7 @@ import raven from 'lib/raven';
 // Prefer the new 'lib/fetch' or 'lib/fetch-json' library instead, which are es6 compliant.
 let ajaxHost = config.get('page.ajaxUrl', '');
 
-const ajax = (params: Object): any => {
+const ajax = (params) => {
     const options = params;
 
     if (!options.url.match('^(https?:)?//')) {

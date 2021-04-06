@@ -1,11 +1,8 @@
-// @flow
-import { getUrlVars } from 'lib/url';
-import config from 'lib/config';
-import { breakpoints } from 'lib/detect';
-import uniqBy from 'lodash/uniqBy';
-import flatten from 'lodash/flatten';
 import once from 'lodash/once';
-import type { Slot } from 'commercial/types';
+import uniqBy from 'lodash/uniqBy';
+import config from '../../../../lib/config';
+import { breakpoints } from '../../../../lib/detect';
+import { getUrlVars } from '../../../../lib/url';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();
@@ -14,7 +11,6 @@ const adUnit = once(() => {
         : config.get('page.adUnit');
 });
 
-type SizeMappingArray = Array<Object>;
 
 /**
  * Builds and assigns the correct size map for a slot based on the breakpoints
@@ -26,7 +22,7 @@ type SizeMappingArray = Array<Object>;
  * If it has been defined, then we add that size to the size mapping.
  *
  */
-const buildSizeMapping = (sizes: Object): SizeMappingArray => {
+const buildSizeMapping = (sizes) => {
     const mapping = window.googletag.sizeMapping();
 
     breakpoints
@@ -38,11 +34,19 @@ const buildSizeMapping = (sizes: Object): SizeMappingArray => {
     return mapping.build();
 };
 
-const getSizeOpts = (sizesByBreakpoint: Object): Object => {
+const getSizeOpts = (sizesByBreakpoint) => {
     const sizeMapping = buildSizeMapping(sizesByBreakpoint);
     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+
+    const flattenSizeMappings = sizeMapping.map(size => size[1]).reduce((a, b) => {
+        if (!b.length) {
+            return [...a, b];
+        }
+        return [...a, ...b]
+    }, []);
+
     const sizes = uniqBy(
-        flatten(sizeMapping.map(size => size[1])),
+        flattenSizeMappings,
         size => `${size[0]}-${size[1]}`
     );
 
@@ -52,7 +56,7 @@ const getSizeOpts = (sizesByBreakpoint: Object): Object => {
     };
 };
 
-const adomikClassify = (): string => {
+const adomikClassify = () => {
     const rand = Math.random();
 
     switch (true) {
@@ -65,11 +69,11 @@ const adomikClassify = (): string => {
     }
 };
 
-const isEligibleForOutstream = (slotTarget: ?string): boolean =>
+const isEligibleForOutstream = (slotTarget) =>
     typeof slotTarget === 'string' &&
     (slotTarget === 'inline1' || slotTarget === 'top-above-nav');
 
-const allowSafeFrameToExpand = (slot: Slot): Slot => {
+const allowSafeFrameToExpand = (slot) => {
     slot.setSafeFrameConfig({
         allowOverlayExpansion: false,
         allowPushExpansion: true,
@@ -78,7 +82,7 @@ const allowSafeFrameToExpand = (slot: Slot): Slot => {
     return slot;
 };
 
-const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
+const defineSlot = (adSlotNode, sizes) => {
     const slotTarget = adSlotNode.getAttribute('data-name');
     const sizeOpts = getSizeOpts(sizes);
     const id = adSlotNode.id;
@@ -110,11 +114,11 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
     if (config.get('switches.iasAdTargeting', false)) {
-        /* eslint-disable no-underscore-dangle */
+
         // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
         window.__iasPET = window.__iasPET || {};
         const iasPET = window.__iasPET;
-        /* eslint-disable no-underscore-enable */
+
 
         iasPET.queue = iasPET.queue || [];
         iasPET.pubId = '10249';

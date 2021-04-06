@@ -17,7 +17,7 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
     implicit context: ApplicationContext,
 ) extends BaseController
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private[this] def getRelatedContent(path: String): Future[Seq[RelatedContentItem]] = {
@@ -34,10 +34,9 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
         val json = JsonComponent(
           OnwardCollectionResponse(
             heading = "More on this story",
-            trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(items.map(_.faciaContent)),
+            trails = items.map(_.faciaContent).map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
           ),
         )
-
         Cached(5.minutes)(json)
       })
     }

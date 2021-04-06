@@ -1,4 +1,3 @@
-// @flow
 import { storage } from '@guardian/libs';
 
 const viewKey = 'gu.contributions.views';
@@ -12,7 +11,7 @@ const maxLogEntries = 50;
  *
  * @param testId
  */
-const logView = (testId: string): void => {
+const logView = (testId) => {
     viewLog.push({
         date: new Date().getTime(),
         testId,
@@ -21,19 +20,8 @@ const logView = (testId: string): void => {
     storage.local.set(viewKey, viewLog.slice(-maxLogEntries));
 };
 
-const viewsInPreviousDays = (days: number, testId: ?string): number => {
-    const ms = days * 1000 * 60 * 60 * 24;
-    const now = new Date().getTime();
-
-    return viewLog.filter(
-        view => (testId ? view.testId === testId : true) && view.date > now - ms
-    ).length;
-};
-
-const clearViewLog = (): void => {
+const clearViewLog = () => {
     storage.local.remove(viewKey);
 };
 
-const overallNumberOfViews = () => viewLog.length;
-
-export { logView, viewsInPreviousDays, overallNumberOfViews, clearViewLog };
+export { logView, clearViewLog };

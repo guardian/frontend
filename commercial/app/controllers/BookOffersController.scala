@@ -3,7 +3,7 @@ package commercial.controllers
 import commercial.model.Segment
 import commercial.model.merchandise.Book
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
-import common.{ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, GuLogging}
 import model.Cached
 import play.api.libs.json.{JsNull, JsValue, Json}
 import play.api.mvc._
@@ -16,7 +16,7 @@ class BookOffersController(
     val controllerComponents: ControllerComponents,
 ) extends BaseController
     with ImplicitControllerExecutionContext
-    with Logging
+    with GuLogging
     with implicits.Collections
     with implicits.Requests {
 

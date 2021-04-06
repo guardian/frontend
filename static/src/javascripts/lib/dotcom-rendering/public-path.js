@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 
 // Let webpack know where to get files from

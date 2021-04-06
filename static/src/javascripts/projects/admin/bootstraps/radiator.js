@@ -1,8 +1,7 @@
-// @flow
 import fetchJson from 'lib/fetch-json';
 import flattenDeep from 'lodash/flattenDeep';
 
-const initRadiator = (): void => {
+const initRadiator = () => {
     // riff raff - requires you to be on the guardian network
     const apiKeyElem = document.getElementById('riffraff-api-key');
     if (!apiKeyElem || !(apiKeyElem instanceof HTMLInputElement)) {

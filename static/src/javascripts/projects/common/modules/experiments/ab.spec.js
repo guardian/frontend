@@ -1,5 +1,3 @@
-// @flow
-
 import {
     getParticipationsFromLocalStorage,
     setParticipationsInLocalStorage,
@@ -13,14 +11,10 @@ import {
 } from 'common/modules/experiments/ab';
 import {
     concurrentTests,
-    epicTests,
-    engagementBannerTests,
 } from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
-import { getConfiguredLiveblogEpicTests as getConfiguredLiveblogEpicTests_ } from 'common/modules/commercial/contributions-utilities';
 
-const getConfiguredLiveblogEpicTests: any = getConfiguredLiveblogEpicTests_;
 
 // This is required as loading these seems to cause an error locally (and in CI)
 // because of some implicit dependency evil that I haven't been able to figure out.
@@ -38,10 +32,6 @@ jest.mock('common/modules/experiments/ab-ophan', () => ({
     trackABTests: () => {},
     buildOphanPayload: () => {},
 }));
-jest.mock('common/modules/commercial/contributions-utilities', () => ({
-    getConfiguredLiveblogEpicTests: jest.fn(),
-}));
-
 jest.mock('lodash/memoize', () => f => f);
 
 /* eslint guardian-frontend/global-config: "off" */
@@ -59,7 +49,6 @@ describe('A/B', () => {
         overwriteMvtCookie(1234);
         window.location.hash = '';
         setParticipationsInLocalStorage({});
-        getConfiguredLiveblogEpicTests.mockReturnValue(Promise.resolve(null));
     });
 
     afterEach(() => {
@@ -82,14 +71,10 @@ describe('A/B', () => {
             const shouldRun = [
                 jest.spyOn(concurrentTests[0].variants[0], 'test'),
                 jest.spyOn(concurrentTests[1].variants[0], 'test'),
-                jest.spyOn(epicTests[0].variants[0], 'test'),
-                jest.spyOn(engagementBannerTests[0].variants[0], 'test'),
             ];
 
             const shouldNotRun = [
                 jest.spyOn(concurrentTests[2].variants[0], 'test'),
-                jest.spyOn(epicTests[1].variants[0], 'test'),
-                jest.spyOn(engagementBannerTests[1].variants[0], 'test'),
             ];
 
             runAndTrackAbTests().then(() => {

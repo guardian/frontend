@@ -1,7 +1,7 @@
 package controllers.admin
 
 import com.gu.googleauth.UserIdentity
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import model.{ApplicationContext, NoCache}
 import model.readerRevenue._
 import org.joda.time.DateTime
@@ -17,7 +17,7 @@ import scala.concurrent.Future
 class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderReaderRevenueMenu(): Action[AnyContent] =

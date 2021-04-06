@@ -1,7 +1,9 @@
-// @flow
 import { loadScript } from '@guardian/libs';
-import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import {
+    onConsentChange as onConsentChange_,
+    getConsentFor as getConsentFor_,
+} from '@guardian/consent-management-platform';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { init, _ } from './comscore';
 
 jest.mock('@guardian/consent-management-platform', () => ({
@@ -9,11 +11,11 @@ jest.mock('@guardian/consent-management-platform', () => ({
     getConsentFor: jest.fn()
 }));
 
-const onConsentChange: any = onConsentChange_;
-const getConsentFor: any = getConsentFor_;
+const onConsentChange = onConsentChange_;
+const getConsentFor = getConsentFor_;
 const SOURCEPOINT_ID = '5efefe25b8e05c06542b2a77';
 
-const tcfv2WithConsentMock = (callback): void =>
+const tcfv2WithConsentMock = (callback) =>
     callback({
         tcfv2: {
             vendorConsents: {
@@ -21,7 +23,7 @@ const tcfv2WithConsentMock = (callback): void =>
             },
         },
     });
-const tcfv2WithoutConsentMock = (callback): void =>
+const tcfv2WithoutConsentMock = (callback) =>
     callback({
         tcfv2: {
             vendorConsents: {
@@ -29,16 +31,30 @@ const tcfv2WithoutConsentMock = (callback): void =>
             },
         },
     });
-const ccpaWithConsentMock = (callback): void =>
+const ccpaWithConsentMock = (callback) =>
     callback({
         ccpa: {
             doNotSell: false,
         },
     });
-const ccpaWithoutConsentMock = (callback): void =>
+const ccpaWithoutConsentMock = (callback) =>
     callback({
         ccpa: {
             doNotSell: true,
+        },
+    });
+
+const AusWithoutConsentMock = (callback) =>
+    callback({
+        aus: {
+            doNotSell: true,
+        },
+    });
+
+const AusWithConsentMock = (callback) =>
+    callback({
+        aus: {
+            doNotSell: false,
         },
     });
 
@@ -46,7 +62,7 @@ jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         comscore: true,
     },
@@ -92,8 +108,20 @@ describe('comscore init', () => {
             expect(loadScript).toBeCalled();
         });
 
-        it('CCPA without consent: runs', () => {
+        it('CCPA without consent: does not run', () => {
             onConsentChange.mockImplementation(ccpaWithoutConsentMock);
+            init();
+            expect(loadScript).not.toBeCalled();
+        });
+
+        it('Aus without consent: runs', () => {
+            onConsentChange.mockImplementation(AusWithoutConsentMock);
+            init();
+            expect(loadScript).toBeCalled();
+        });
+
+        it('Aus with consent: runs', () => {
+            onConsentChange.mockImplementation(AusWithConsentMock);
             init();
             expect(loadScript).toBeCalled();
         });
@@ -115,7 +143,7 @@ describe('comscore initOnConsent', () => {
         _.initOnConsent(true);
         _.initOnConsent(true);
 
-        // $FlowFixMe
+
         expect(loadScript).toBeCalledTimes(1);
     });
 });

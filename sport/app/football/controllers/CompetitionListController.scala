@@ -12,7 +12,7 @@ class CompetitionListController(
 )(implicit context: ApplicationContext)
     extends BaseController
     with CompetitionListFilters
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   val page = new FootballPage("football/competitions", "football", "Leagues & competitions")

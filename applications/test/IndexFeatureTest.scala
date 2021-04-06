@@ -2,6 +2,7 @@ package test
 
 import play.api.test.TestBrowser
 import org.scalatest._
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class IndexFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
@@ -17,7 +18,9 @@ import org.scalatest._
 
         And(s"the ${sponsorshipType.replace("-", " ")} badge should be displayed")
         $(".js-sponsored-front") should have size 1
-        $(s".facia-container--$sponsorshipType").attribute("data-sponsorship") should be(sponsorshipType)
+        $(s".facia-container--$sponsorshipType").attributes("data-sponsorship").asScala.toList.head should be(
+          sponsorshipType,
+        )
       }
 
       /**

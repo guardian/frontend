@@ -1,9 +1,8 @@
-// @flow
 import bean from 'bean';
 import fastdom from 'fastdom';
-import { load } from 'commercial/modules/hosted/next-video';
-import $ from 'lib/$';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import { load } from './next-video';
+import $ from '../../../../lib/$';
+import { trackNonClickInteraction } from '../../../common/modules/analytics/google';
 
 let nextVideoInterval;
 let $hostedNext;
@@ -23,7 +22,7 @@ const cancelAutoplayMobile = () => {
     });
 };
 
-const triggerAutoplay = (getCurrentTimeFn: () => number, duration: number) => {
+const triggerAutoplay = (getCurrentTimeFn, duration) => {
     nextVideoInterval = setInterval(() => {
         const timeLeft = duration - Math.ceil(getCurrentTimeFn());
         const countdownLength = 10; // seconds before the end when to show the timer

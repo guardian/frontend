@@ -1,43 +1,36 @@
-// @flow
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import config from 'lib/config';
-import userPrefs from 'common/modules/user-prefs';
-import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
-import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
+import { commercialFeatures } from './commercial-features';
+import config from '../../../../lib/config';
+import userPrefs from '../user-prefs';
+import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
+import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
 import {
     isPayingMember as isPayingMember_,
     isRecentOneOffContributor as isRecentOneOffContributor_,
     shouldHideSupportMessaging as shouldHideSupportMessaging_,
     isAdFreeUser as isAdFreeUser_,
-} from 'common/modules/commercial/user-features';
+} from './user-features';
 
-const isPayingMember: JestMockFn<*, *> = (isPayingMember_: any);
-const isRecentOneOffContributor: JestMockFn<
-    *,
-    *
-> = (isRecentOneOffContributor_: any);
-const shouldHideSupportMessaging: JestMockFn<
-    *,
-    *
-> = (shouldHideSupportMessaging_: any);
-const isAdFreeUser: JestMockFn<*, *> = (isAdFreeUser_: any);
-const getBreakpoint: any = getBreakpoint_;
-const isUserLoggedIn: any = isUserLoggedIn_;
+const isPayingMember = (isPayingMember_);
+const isRecentOneOffContributor = (isRecentOneOffContributor_);
+const shouldHideSupportMessaging = (shouldHideSupportMessaging_);
+const isAdFreeUser = (isAdFreeUser_);
+const getBreakpoint = getBreakpoint_;
+const isUserLoggedIn = isUserLoggedIn_;
 
 const CommercialFeatures = commercialFeatures.constructor;
 
-jest.mock('common/modules/commercial/user-features', () => ({
+jest.mock('./user-features', () => ({
     isPayingMember: jest.fn(),
     isRecentOneOffContributor: jest.fn(),
     shouldHideSupportMessaging: jest.fn(),
     isAdFreeUser: jest.fn(),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     getBreakpoint: jest.fn(),
 }));
 
-jest.mock('common/modules/identity/api', () => ({
+jest.mock('../identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 

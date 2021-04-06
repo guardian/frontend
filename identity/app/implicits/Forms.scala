@@ -35,7 +35,9 @@ trait Forms extends I18nSupport {
         .map(encryptedValue => Crypto.decryptAES(encryptedValue, httpConfiguration.secret.secret))
         .map(Json.parse)
         .map { data =>
-          errors.foldLeft(form.bind(data)) { (formFold, error) => formFold.withError(error) }
+          errors.foldLeft(form.bind(data, 300 * 1024)) { (formFold, error) => // limit to 300KiB
+            formFold.withError(error)
+          }
         }
     }
 

@@ -1,7 +1,7 @@
 package jobs
 
 import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, EmailPriority, TrainingPriority}
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, GuLogging}
 import conf.Configuration
 import services.{ConfigAgent, FrontPressNotification}
 
@@ -18,7 +18,7 @@ object HighFrequency extends FrontType {
 
 case class CronUpdate(path: String, frontType: FrontType)
 
-object RefreshFrontsJob extends Logging {
+object RefreshFrontsJob extends GuLogging {
   def getAllCronUpdates: Seq[CronUpdate] = {
     ConfigAgent.getPathIds.map(path => CronUpdate(path, getFrontType(path)))
   }

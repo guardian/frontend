@@ -1,7 +1,6 @@
 const fs = require('fs');
 
 const chalk = require('chalk');
-const execa = require('execa');
 
 const config = '--quiet --color';
 
@@ -16,35 +15,21 @@ const error = ctx => {
     );
 };
 
-const flowError = ctx => {
-    ctx.messages.push(
-        `Your editor may be able to catch flow errors as you work:\n${chalk.underline(
-            'https://flow.org/en/docs/editors'
-        )}`
-    );
-};
 const dirs = p =>
     fs.readdirSync(p).filter(f => fs.statSync(`${p}/${f}`).isDirectory());
 
 module.exports = {
     description: 'Lint JS',
     task: [
-        ...dirs('static/src/javascripts')
-            .filter(dir => !['__flow__'].includes(dir))
-            .map(dir => ({
-                description: `App ${chalk.dim(dir)}`,
-                task: `eslint static/src/javascripts/${dir} ${config}`,
-                onError: error,
-            })),
         {
-            description: 'Tools etc.',
-            task: `eslint --ignore-pattern /static/src --ignore-pattern . ${config}`,
+            description: 'Static',
+            task: `eslint static/src/javascripts --ext=ts,tsx,js ${config}`,
             onError: error,
         },
         {
-            description: 'Flow',
-            task: () => execa('flow'),
-            onError: flowError,
+            description: 'Tools etc.',
+            task: `eslint tools ${config}`,
+            onError: error,
         },
         {
             description: 'Git hooks',

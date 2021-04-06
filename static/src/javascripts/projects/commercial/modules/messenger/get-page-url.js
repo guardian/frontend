@@ -1,7 +1,4 @@
-// @flow
-import type { RegisterListeners } from 'commercial/modules/messenger';
-
-const init = (register: RegisterListeners) => {
+const init = (register) => {
     register('get-page-url', () => window.location.origin + window.location.pathname);
 };
 

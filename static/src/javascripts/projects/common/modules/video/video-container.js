@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
@@ -6,23 +5,10 @@ import { elementInView } from 'lib/element-inview';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import { isBreakpoint } from 'lib/detect';
 
-type Action = {
-    type: string,
-};
 
-type Position = {
-    position: number,
-    atStart?: boolean,
-    atEnd?: boolean,
-};
 
-type State = Position & {
-    length: number,
-    videoWidth: number,
-    container: Element,
-};
 
-const updateYouTubeVideo = (currentItem: ?Element): void => {
+const updateYouTubeVideo = (currentItem) => {
     if (currentItem != null) {
         const youTubeAtom = currentItem.querySelector('.youtube-media-atom');
         if (youTubeAtom) {
@@ -34,14 +20,14 @@ const updateYouTubeVideo = (currentItem: ?Element): void => {
     }
 };
 
-const getPositionState = (position: number, length: number): Position => ({
+const getPositionState = (position, length) => ({
     position,
     atStart: position === 0,
     atEnd: position >= length,
 });
 
 const reducers = {
-    NEXT: function next(previousState: State): State {
+    NEXT: function next(previousState) {
         const position =
             previousState.position >= previousState.length
                 ? previousState.position
@@ -57,7 +43,7 @@ const reducers = {
         );
     },
 
-    PREV: function prev(previousState: State): State {
+    PREV: function prev(previousState) {
         const position =
             previousState.position <= 0 ? 0 : previousState.position - 1;
         updateYouTubeVideo(
@@ -70,7 +56,7 @@ const reducers = {
         );
     },
 
-    INIT: function init(previousState: State): State {
+    INIT: function init(previousState) {
         const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
             if (
                 isBreakpoint({
@@ -139,7 +125,7 @@ const reducers = {
     },
 };
 
-const fetchLazyImage = (container: Element, i: number): void => {
+const fetchLazyImage = (container, i) => {
     $(`.js-video-playlist-image--${i}`, container).each(el => {
         fastdom
             .measure(() => {
@@ -157,7 +143,7 @@ const fetchLazyImage = (container: Element, i: number): void => {
     });
 };
 
-const update = (state: State, container: Element): Promise<number> => {
+const update = (state, container) => {
     const translateWidth = -state.videoWidth * state.position;
 
     return fastdom.mutate(() => {
@@ -242,7 +228,7 @@ const update = (state: State, container: Element): Promise<number> => {
     });
 };
 
-const getInitialState = (container: Element): State => ({
+const getInitialState = (container) => ({
     position: 0,
     length: Number(container.getAttribute('data-number-of-videos')),
     videoWidth: 700,
@@ -250,9 +236,9 @@ const getInitialState = (container: Element): State => ({
 });
 
 const setupDispatches = (
-    dispatch: (a: Action) => void,
-    container: Element
-): void => {
+    dispatch,
+    container
+) => {
     bean.on(container, 'click', '.js-video-playlist-next', () => {
         dispatch({
             type: 'NEXT',
@@ -284,14 +270,14 @@ const setupDispatches = (
     });
 };
 
-const reducer = (previousState: State, action: Action): State =>
+const reducer = (previousState, action) =>
     reducers[action.type]
         ? reducers[action.type](previousState)
         : previousState;
 
 const createStore = (
-    storeReducer: (s: State, a: Action) => State,
-    initialState: State
+    storeReducer,
+    initialState
 ) => {
     // We re-assign this over time
     let state = initialState;
@@ -322,7 +308,7 @@ const createStore = (
     };
 };
 
-export const videoContainerInit = (container: Element) => {
+export const videoContainerInit = (container) => {
     const initialState = getInitialState(container);
     const store = createStore(reducer, initialState);
 

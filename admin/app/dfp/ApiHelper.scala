@@ -1,10 +1,10 @@
 package dfp
 
 import com.google.api.ads.admanager.axis.v202011._
-import common.Logging
+import common.GuLogging
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
-private[dfp] object ApiHelper extends Logging {
+private[dfp] object ApiHelper extends GuLogging {
 
   def isPageSkin(dfpLineItem: LineItem): Boolean = {
 

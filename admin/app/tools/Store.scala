@@ -1,6 +1,6 @@
 package tools
 
-import common.Logging
+import common.GuLogging
 import common.dfp._
 import conf.Configuration.commercial._
 import conf.{AdminConfiguration, Configuration}
@@ -10,7 +10,7 @@ import play.api.libs.json.{JsError, JsSuccess, Json}
 import play.api.libs.json.Json.toJson
 import services.S3
 
-trait Store extends Logging with Dates {
+trait Store extends GuLogging with Dates {
   lazy val switchesKey = Configuration.switches.key
   lazy val topStoriesKey = AdminConfiguration.topStoriesKey
 

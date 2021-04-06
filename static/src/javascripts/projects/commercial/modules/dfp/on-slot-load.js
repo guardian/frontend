@@ -1,9 +1,5 @@
-// @flow
-import type { SlotOnloadEvent } from 'commercial/types';
-
-import { Advert } from 'commercial/modules/dfp/Advert';
-import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
-import { postMessage } from 'commercial/modules/messenger/post-message';
+import { getAdvertById } from './get-advert-by-id';
+import { postMessage } from '../messenger/post-message';
 
 const host = `${window.location.protocol}//${window.location.host}`;
 
@@ -15,8 +11,8 @@ const host = `${window.location.protocol}//${window.location.host}`;
      But, this information is necessary in the window.postMessage call, and so
      we resort to sending it as a token of welcome :)
 */
-export const onSlotLoad = (event: SlotOnloadEvent) => {
-    const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
+export const onSlotLoad = (event) => {
+    const advert = getAdvertById(event.slot.getSlotElementId());
     if (!advert) {
         return;
     }

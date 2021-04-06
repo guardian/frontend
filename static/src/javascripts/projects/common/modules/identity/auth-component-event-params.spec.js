@@ -1,5 +1,3 @@
-// @flow
-
 import { createAuthenticationComponentEventParams } from "common/modules/identity/auth-component-event-params";
 
 describe('createAuthenticationComponentEventParams', () => {

@@ -1,4 +1,3 @@
-// @flow
 import { integerCommas } from 'lib/formatters';
 
 describe('integerCommas', () => {

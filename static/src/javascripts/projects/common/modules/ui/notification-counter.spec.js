@@ -1,5 +1,3 @@
-// @flow
-
 import mediator from 'lib/mediator';
 import { initNotificationCounter } from './notification-counter';
 

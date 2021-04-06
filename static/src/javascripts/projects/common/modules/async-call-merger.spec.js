@@ -1,5 +1,3 @@
-// @flow
-
 import Chance from 'chance';
 
 import { mergeCalls } from './async-call-merger';

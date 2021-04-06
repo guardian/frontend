@@ -1,27 +1,25 @@
-// @flow
-
-import config from 'lib/config';
-import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import 'prebid.js/build/dist/prebid';
-import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
+import config from '../../../../../lib/config';
+import { getAdvertById as getAdvertById_ } from '../../dfp/get-advert-by-id';
+import prebid from './prebid';
 
-const getAdvertById: any = getAdvertById_;
+const getAdvertById = getAdvertById_;
 
-jest.mock('lib/raven');
+jest.mock('../../../../../lib/raven');
 
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('../../dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/header-bidding/prebid/bid-config', () => ({
+jest.mock('./bid-config', () => ({
     bids: jest.fn(),
 }));
 
-jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
+jest.mock('../../dfp/get-advert-by-id', () => ({
     getAdvertById: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'variant'
     ),
@@ -147,7 +145,7 @@ describe('initialise', () => {
 
     test('should respond to prebid.js bidWon event', () => {
         let bidWonEventName;
-        let bidWonEventHandler: ?() => void;
+        let bidWonEventHandler;
         const dummyAdvert = {
             size: [200, 200],
             hasPrebidSize: false,
@@ -181,7 +179,7 @@ describe('initialise', () => {
 
     test('should not respond to prebid.js bidWon event if height missing from prebid data', () => {
         let bidWonEventName;
-        let bidWonEventHandler: ?() => void;
+        let bidWonEventHandler;
 
         window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
             bidWonEventName = eventName;
@@ -205,7 +203,7 @@ describe('initialise', () => {
 
     test('should not respond to prebid.js bidWon event if width missing from prebid data', () => {
         let bidWonEventName;
-        let bidWonEventHandler: ?() => void;
+        let bidWonEventHandler;
 
         window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
             bidWonEventName = eventName;
@@ -229,7 +227,7 @@ describe('initialise', () => {
 
     test('should not respond to prebid.js bidWon event if adUnitCode missing from prebid data', () => {
         let bidWonEventName;
-        let bidWonEventHandler: ?() => void;
+        let bidWonEventHandler;
 
         window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
             bidWonEventName = eventName;

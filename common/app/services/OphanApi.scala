@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-import common.{BadConfigurationException, Logging}
+import common.{BadConfigurationException, GuLogging}
 import conf.Configuration._
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
@@ -18,13 +18,8 @@ object OphanMostReadItem {
   implicit val jsonReads = Json.reads[OphanMostReadItem]
 }
 
-case class OphanDeeplyReadItem(path: String, benchmarkedAttentionTime: Int)
-object OphanDeeplyReadItem {
-  implicit val jsonReads = Json.reads[OphanDeeplyReadItem]
-}
-
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
-    extends Logging
+    extends GuLogging
     with implicits.WSRequests {
   private val mostViewedDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
@@ -103,9 +98,6 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
   }
 
   def getSurgingContent(): Future[JsValue] = getBody("surging")()
-
-  def getDeeplyReadContent(): Future[Seq[OphanDeeplyReadItem]] =
-    getBody("deeplyread")().map(_.as[Seq[OphanDeeplyReadItem]])
 
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = {
     val sixMonthsAgo = mostViewedDateFormatter.format(LocalDate.now.minus(6, ChronoUnit.MONTHS))

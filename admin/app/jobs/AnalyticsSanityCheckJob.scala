@@ -3,7 +3,7 @@ package jobs
 import java.util.concurrent.atomic.AtomicLong
 
 import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, StandardUnit}
-import common.Logging
+import common.GuLogging
 import metrics.GaugeMetric
 import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
@@ -12,7 +12,7 @@ import services.{CloudWatchStats, OphanApi}
 import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
-class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
+class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {
 
   private val rawPageViews = new AtomicLong(0L)
   private val ophanPageViews = new AtomicLong(0L)

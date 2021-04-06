@@ -1,11 +1,10 @@
-// @flow
-import { Advert } from 'commercial/modules/dfp/Advert';
-import prebid from 'commercial/modules/header-bidding/prebid/prebid';
-import { markTime } from 'lib/user-timing';
-import a9 from 'commercial/modules/header-bidding/a9/a9';
-import type { HeaderBiddingSlot } from 'commercial/modules/header-bidding/types';
+import prebid from '../header-bidding/prebid/prebid';
+import { markTime } from '../../../../lib/user-timing';
+import a9 from '../header-bidding/a9/a9';
+import { stripDfpAdPrefixFrom } from '../header-bidding/utils';
+import { EventTimer } from "@guardian/commercial-core";
 
-const forcedSlotSize = (advert: Advert, hbSlot: HeaderBiddingSlot) => {
+const forcedSlotSize = (advert, hbSlot) => {
     // We only fiddle with top-above-nav hbSlot(s)
     if (hbSlot.key !== 'top-above-nav') {
         return [hbSlot];
@@ -29,13 +28,17 @@ const forcedSlotSize = (advert: Advert, hbSlot: HeaderBiddingSlot) => {
     return [];
 };
 
-export const loadAdvert = (advert: Advert): void => {
+const eventTimer = EventTimer.get();
+
+export const loadAdvert = (advert) => {
+    const adName = stripDfpAdPrefixFrom(advert.id);
     advert.whenSlotReady
         .catch(() => {
             // The display needs to be called, even in the event of an error.
         })
         .then(() => {
             markTime(`Commercial: Slot Ready: ${advert.id}`);
+            eventTimer.trigger('slotReady', adName);
             advert.startLoading();
             return Promise.all([
                 prebid.requestBids(advert),
@@ -43,11 +46,12 @@ export const loadAdvert = (advert: Advert): void => {
             ]);
         })
         .then(() => {
+            eventTimer.trigger('slotInitialised', adName);
             window.googletag.display(advert.id);
         });
 };
 
-export const refreshAdvert = (advert: Advert): void => {
+export const refreshAdvert = (advert) => {
     // advert.size contains the effective size being displayed prior to refreshing
     advert.whenSlotReady
         .then(() => {

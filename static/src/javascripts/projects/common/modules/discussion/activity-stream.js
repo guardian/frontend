@@ -1,5 +1,3 @@
-// @flow
-
 import bonzo from 'bonzo';
 import bean from 'bean';
 import $ from 'lib/$';
@@ -12,12 +10,9 @@ import {
 import { Component } from 'common/modules/component';
 import { recommendComment } from 'common/modules/discussion/api';
 
-declare class PopStateEvent extends Event {
-    state: Object;
-}
 
 class ActivityStream extends Component {
-    constructor(opts: Object): void {
+    constructor(opts) {
         super();
 
         this.endpoint =
@@ -32,8 +27,8 @@ class ActivityStream extends Component {
         this.setOptions(opts);
     }
 
-    applyState(html: string, streamType: string): void {
-        const selectTab = (type: string): void => {
+    applyState(html, streamType) {
+        const selectTab = (type) => {
             // Blur so that when pressing forward/back the focus is not retained on
             // the old tab Note, without the focus first, the blur doesn't seem to
             // work for some reason
@@ -69,13 +64,13 @@ class ActivityStream extends Component {
         this.options.streamType = streamType;
     }
 
-    change(opts: Object): Promise<any> {
+    change(opts) {
         this.setOptions(opts);
         // eslint-disable-next-line no-underscore-dangle
         return this._fetch();
     }
 
-    fetched(resp: Object): void {
+    fetched(resp) {
         if (this.options.streamType) {
             this.applyState(resp.html, this.options.streamType);
         }
@@ -83,15 +78,15 @@ class ActivityStream extends Component {
         this.updateHistory(resp);
     }
 
-    ready(): void {
-        const pagination = (activityStream: ActivityStream): void => {
+    ready() {
+        const pagination = (activityStream) => {
             bean.on(
                 activityStream.elem,
                 'click',
                 '.js-activity-stream-page-change',
-                (e: Event) => {
-                    const target: HTMLElement = (e.currentTarget: any);
-                    const page: ?string = target.getAttribute('data-page');
+                (e) => {
+                    const target = (e.currentTarget);
+                    const page = target.getAttribute('data-page');
                     e.preventDefault();
 
                     activityStream.change({
@@ -108,7 +103,7 @@ class ActivityStream extends Component {
             'disc-comment__recommend--open'
         );
 
-        window.onpopstate = (event: PopStateEvent): void => {
+        window.onpopstate = (event) => {
             this.applyState(event.state.resp.html, event.state.streamType);
         };
 
@@ -116,8 +111,8 @@ class ActivityStream extends Component {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    recommendComment(e: Event): void {
-        const el: HTMLElement = (e.currentTarget: any);
+    recommendComment(e) {
+        const el = (e.currentTarget);
         const id = el.getAttribute('data-comment-id');
 
         if (id) {
@@ -131,7 +126,7 @@ class ActivityStream extends Component {
         }
     }
 
-    updateHistory(resp: Object): void {
+    updateHistory(resp) {
         const page = this.options.page;
         const userId = this.options.userId || '';
         const pageParam = getUrlVars().page;

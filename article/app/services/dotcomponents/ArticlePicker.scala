@@ -10,6 +10,8 @@ import model.liveblog.{
   CommentBlockElement,
   ContentAtomBlockElement,
   DocumentBlockElement,
+  FormBlockElement,
+  EmbedBlockElement,
   GuVideoBlockElement,
   ImageBlockElement,
   InstagramBlockElement,
@@ -19,12 +21,15 @@ import model.liveblog.{
   TableBlockElement,
   TextBlockElement,
   TweetBlockElement,
+  UnknownBlockElement,
   VideoBlockElement,
+  WitnessBlockElement,
+  InteractiveBlockElement,
 }
 import play.api.mvc.RequestHeader
 import views.support.Commercial
-
 import conf.Configuration
+import model.dotcomrendering.DotcomRenderingUtils
 
 object ArticlePageChecks {
 
@@ -34,13 +39,6 @@ object ArticlePageChecks {
 
   def isDiscussionDisabled(page: PageWithStoryPackage): Boolean = {
     (!page.article.content.trail.isCommentable) && page.article.content.trail.isClosedForComments
-  }
-
-  def hasBlocks(page: PageWithStoryPackage): Boolean = {
-    page.article.blocks match {
-      case Some(b) => b.body.nonEmpty
-      case None    => false
-    }
   }
 
   def isSupportedType(page: PageWithStoryPackage): Boolean = {
@@ -58,6 +56,8 @@ object ArticlePageChecks {
         case _: AudioBlockElement     => false
         case _: CommentBlockElement   => false
         case _: DocumentBlockElement  => false
+        case _: FormBlockElement      => false
+        case _: EmbedBlockElement     => false
         case _: GuVideoBlockElement   => false
         case _: ImageBlockElement     => false
         case _: InstagramBlockElement => false
@@ -67,13 +67,21 @@ object ArticlePageChecks {
         case _: TableBlockElement     => false
         case _: TextBlockElement      => false
         case _: TweetBlockElement     => false
+        case _: UnknownBlockElement   => false
         case _: VideoBlockElement     => false
-        case ContentAtomBlockElement(_, atomtype) => {
+        case _: WitnessBlockElement   => false
+        case ContentAtomBlockElement(_, atomtype, _) => {
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
           val supportedAtomTypes =
-            List("audio", "chart", "explainer", "guide", "profile", "qanda", "timeline")
+            List("audio", "chart", "explainer", "guide", "interactive", "media", "profile", "qanda", "timeline")
           !supportedAtomTypes.contains(atomtype)
+        }
+        case InteractiveBlockElement(_, scriptUrl) => {
+          scriptUrl match {
+            case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
+            case _                                                                       => true
+          }
         }
         case _ => true
       }
@@ -85,9 +93,13 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: TextBlockElement  => false
-        case _: ImageBlockElement => false
-        case _                    => true
+        case _: TextBlockElement                    => false
+        case _: ImageBlockElement                   => false
+        case _: VideoBlockElement                   => false
+        case _: GuVideoBlockElement                 => false
+        case _: EmbedBlockElement                   => false
+        case ContentAtomBlockElement(_, "media", _) => false
+        case _                                      => true
       }
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
@@ -96,20 +108,6 @@ object ArticlePageChecks {
   // Custom Tag that can be added to articles + special reports tags while we don't support them
   private[this] val tagsBlockList: Set[String] = Set(
     "tracking/platformfunctional/dcrblacklist",
-    "business/series/undercover-in-the-chicken-industry",
-    "business/series/britains-debt-timebomb",
-    "world/series/this-is-europe",
-    "environment/series/the-polluters",
-    "news/series/hsbc-files",
-    "news/series/panama-papers",
-    "us-news/homan-square",
-    "uk-news/series/the-new-world-of-work",
-    "world/series/the-new-arrivals",
-    "news/series/nauru-files",
-    "us-news/series/counted-us-police-killings",
-    "australia-news/series/healthcare-in-detention",
-    "society/series/this-is-the-nhs",
-    "artanddesign/series/guardian-print-shop",
   )
 
   def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
@@ -118,9 +116,9 @@ object ArticlePageChecks {
 
   def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
 
-  def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = !page.item.isPhotoEssay
-
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
+
+  def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
 
   def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
 
@@ -143,14 +141,14 @@ object ArticlePicker {
   def primaryFeatures(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
-      ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
-      ("isNotPhotoEssay", ArticlePageChecks.isNotPhotoEssay(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
+      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
+      ("isNotSpecialReport", !DotcomRenderingUtils.isSpecialReport(page)),
       ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
@@ -165,8 +163,10 @@ object ArticlePicker {
       Set(
         "isSupportedType",
         "isNotAGallery",
+        "isNotLiveBlog",
         "isNotAMP",
         "isNotInTagBlockList",
+        "isNotSpecialReport",
         "isNotPaidContent",
       ),
     )

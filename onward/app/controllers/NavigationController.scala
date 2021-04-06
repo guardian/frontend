@@ -2,21 +2,42 @@ package controllers
 
 import common.{Edition, JsonComponent, LinkTo}
 import conf.Configuration
-import model.Cached
-import navigation.{NavLink, NavMenu, UrlHelpers}
+import model.Cached.RevalidatableResult
+import model.{Cached, Cors}
+import navigation.{NavLink, SimpleMenu, UrlHelpers}
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+
+case class ApiError(message: String, statusCode: Int)
+
+object ApiError {
+  implicit val writes = Json.writes[ApiError]
+}
 
 class NavigationController(val controllerComponents: ControllerComponents) extends BaseController {
 
   private case class topLevelNavItems(navLink: NavLink)
   private case class navSectionLink(navLink: NavLink)
 
+  def renderDCRNav(editionId: String): Action[AnyContent] =
+    Action { implicit request =>
+      Edition.byId(editionId) match {
+        case Some(edition) =>
+          val menu = SimpleMenu(edition)
+          Cached(900)(JsonComponent(menu))
+        case None =>
+          Cached(60) {
+            val json = Json.toJson(ApiError("Invalid edition ID.", 400)).toString()
+            RevalidatableResult(Cors(BadRequest(json).as(JSON))(request), "")
+          }
+      }
+    }
+
   //  This is to editionalise the menu on AMP
   def renderAmpNav: Action[AnyContent] =
     Action { implicit request =>
       val edition = Edition(request)
-      val menu = NavMenu(edition)
+      val menu = SimpleMenu(edition)
       val navSecondarySections = List.concat(
         menu.brandExtensions.map(section => navSectionLink(section)),
         menu.otherLinks.map(section => navSectionLink(section)),

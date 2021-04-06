@@ -23,7 +23,7 @@ class RelatedController(
     extends BaseController
     with Related
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private val RelatedLabel: String = "Related stories"
@@ -60,7 +60,7 @@ class RelatedController(
       if (request.forceDCR) {
         val data = OnwardCollectionResponse(
           heading = containerTitle,
-          trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(trails.map(_.faciaContent)),
+          trails = trails.map(_.faciaContent).map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
         )
 
         JsonComponent(data)

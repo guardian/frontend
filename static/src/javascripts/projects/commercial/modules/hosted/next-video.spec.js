@@ -1,9 +1,8 @@
-// @flow
-import { load } from 'commercial/modules/hosted/next-video';
-import fetchJson from 'lib/fetch-json';
-import config from 'lib/config';
+import { load } from './next-video';
+import fetchJson from '../../../../lib/fetch-json';
+import config from '../../../../lib/config';
 
-jest.mock('lib/fetch-json', () =>
+jest.mock('../../../../lib/fetch-json', () =>
     jest.fn(() => Promise.resolve({ html: '<div class="video"></div>' }))
 );
 

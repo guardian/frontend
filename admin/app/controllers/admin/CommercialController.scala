@@ -1,7 +1,7 @@
 package controllers.admin
 
 import common.dfp.{GuCreativeTemplate, GuCustomField, GuLineItem}
-import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import conf.Configuration
 import dfp.{AdvertiserAgent, CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor, OrderAgent}
 import model._
@@ -34,7 +34,7 @@ class CommercialController(
     dfpApi: DfpApi,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderCommercialMenu(): Action[AnyContent] =

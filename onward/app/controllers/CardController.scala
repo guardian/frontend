@@ -16,7 +16,7 @@ class CardController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def opengraph(resource: String): Action[AnyContent] =

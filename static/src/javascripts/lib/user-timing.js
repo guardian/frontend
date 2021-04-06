@@ -1,11 +1,9 @@
-// @flow
-
 import performanceAPI from 'lib/window-performance';
 
 const timings = {};
 const startDate = new Date().getTime();
 
-const getCurrentTime = (): number => {
+const getCurrentTime = () => {
     if (performanceAPI && 'now' in performanceAPI) {
         return performanceAPI.now();
     }
@@ -13,7 +11,7 @@ const getCurrentTime = (): number => {
     return new Date().getTime() - startDate;
 };
 
-const markTime = (label: string): void => {
+const markTime = (label) => {
     if (performanceAPI && 'mark' in performanceAPI) {
         performanceAPI.mark(label);
     } else {
@@ -22,7 +20,7 @@ const markTime = (label: string): void => {
 };
 
 // Returns the ms time when the mark was made.
-const getMarkTime = (label: string): ?number => {
+const getMarkTime = (label) => {
     if (performanceAPI && 'getEntriesByName' in performanceAPI) {
         const perfMark = performanceAPI.getEntriesByName(label, 'mark');
 

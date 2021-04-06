@@ -11,7 +11,7 @@ import contentapi.ContentApiClient
 class EmbedController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def render(path: String): Action[AnyContent] =

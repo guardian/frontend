@@ -1,13 +1,12 @@
-// @flow
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
-import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
+import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
-import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { removeDisabledSlots as closeDisabledSlots } from 'commercial/modules/remove-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
@@ -22,12 +21,13 @@ import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { init as initComscore } from 'commercial/modules/comscore';
 import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
 import { paidContainers } from 'commercial/modules/paid-containers';
-import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
+import { EventTimer } from '@guardian/commercial-core';
 
-const commercialModules: Array<Array<any>> = [
+const commercialModules = [
+    ['cm-setAdTestCookie', setAdTestCookie],
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-comscore', initComscore],
@@ -57,7 +57,7 @@ if (!commercialFeatures.adFree) {
     );
 }
 
-const loadHostedBundle = (): Promise<void> => {
+const loadHostedBundle = () => {
     if (config.get('page.isHosted')) {
         return new Promise(resolve => {
             require.ensure(
@@ -90,18 +90,18 @@ const loadHostedBundle = (): Promise<void> => {
     return Promise.resolve();
 };
 
-const loadModules = (): Promise<any> => {
+const loadModules = () => {
     const modulePromises = [];
 
     commercialModules.forEach(module => {
-        const moduleName: string = module[0];
-        const moduleInit: () => void = module[1];
+        const moduleName = module[0];
+        const moduleInit = module[1];
 
         catchErrorsWithContext(
             [
                 [
                     moduleName,
-                    function pushAfterComplete(): void {
+                    function pushAfterComplete() {
                         const result = moduleInit();
                         modulePromises.push(result);
                     },
@@ -116,18 +116,16 @@ const loadModules = (): Promise<any> => {
     return Promise.all(modulePromises);
 };
 
-export const bootCommercial = (): Promise<void> => {
-    markTime('commercial start');
+export const bootCommercial = () => {
+    // Init Commercial event timers
+    EventTimer.init();
+
     catchErrorsWithContext(
         [
             [
                 'ga-user-timing-commercial-start',
-                function runTrackPerformance(): void {
-                    trackPerformance(
-                        'Javascript Load',
-                        'commercialStart',
-                        'Commercial start parse time'
-                    );
+                function runTrackPerformance() {
+                    EventTimer.get().trigger('commercialStart');
                 },
             ],
         ],
@@ -144,17 +142,12 @@ export const bootCommercial = (): Promise<void> => {
     return loadHostedBundle()
         .then(loadModules)
         .then(() => {
-            markTime('commercial end');
             catchErrorsWithContext(
                 [
                     [
                         'ga-user-timing-commercial-end',
-                        function runTrackPerformance(): void {
-                            trackPerformance(
-                                'Javascript Load',
-                                'commercialEnd',
-                                'Commercial end parse time'
-                            );
+                        function runTrackPerformance() {
+                            EventTimer.get().trigger('commercialEnd');
                         },
                     ],
                 ],

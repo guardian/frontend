@@ -1,5 +1,3 @@
-// @flow
-import type { CurrentABTest, SignInGateVariant } from '../../types';
 import { componentName } from '../../component';
 import {
     isNPageOrHigherPageView,
@@ -19,7 +17,7 @@ import { designShow } from '../design/main-variant';
 const variant = 'main-variant-3';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
-const canShow: (name?: string) => boolean = (name = '') => {
+const canShow = (name = '') => {
     const isGateDismissed = hasUserDismissedGateMoreThanCount(
         variant,
         name,
@@ -42,16 +40,11 @@ const canShow: (name?: string) => boolean = (name = '') => {
 // method which runs if the canShow method returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
 // in our case it returns true if the design ran successfully, and false if there were any problems encountered
-const show: ({
-    abTest: CurrentABTest,
-    guUrl: string,
-    signInUrl: string,
-    ophanComponentId: string,
-}) => boolean = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
+const show = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
     designShow({ abTest, guUrl, signInUrl, ophanComponentId });
 
 // export the variant as a SignInGateVariant type
-export const signInGateVariant: SignInGateVariant = {
+export const signInGateVariant = {
     name: variant,
     canShow,
     show,

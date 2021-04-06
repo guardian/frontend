@@ -6,7 +6,7 @@ import sbt._
 import sbt.Keys._
 import com.gu.riffraff.artifact.RiffRaffArtifact
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
-import Dependencies._
+import com.gu.Dependencies._
 import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
@@ -32,12 +32,12 @@ object ProjectSettings {
     publishArtifact in (Compile, packageDoc) := false,
     sources in (Compile, doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
-    scalaVersion := "2.12.12",
+    scalaVersion := "2.12.13",
     initialize := {
       val _ = initialize.value
       assert(
-        sys.props("java.specification.version") == "1.8",
-        "Java 8 is required for this project.",
+        Set("1.8", "11").contains(sys.props("java.specification.version")),
+        "Java 8 or 11 is required for this project.",
       )
     },
     cleanAll := Def.taskDyn {
@@ -58,7 +58,7 @@ object ProjectSettings {
       "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
       Resolver.bintrayRepo("guardian", "ophan"),
       "Spy" at "https://files.couchbase.com/maven2/",
-      "emueller-bintray" at "http://dl.bintray.com/emueller/maven",
+      "emueller-bintray" at "https://dl.bintray.com/emueller/maven",
     ),
     evictionWarningOptions in update := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)

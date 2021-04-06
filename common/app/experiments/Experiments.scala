@@ -9,7 +9,8 @@ import conf.switches.SwitchGroup.Commercial
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     DotcomRendering,
-    NGInteractiveDCR,
+    ClickToView,
+    LiveblogRendering,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -18,7 +19,7 @@ object ActiveExperiments extends ExperimentsDefinition {
 object DotcomRendering
     extends Experiment(
       name = "dotcom-rendering",
-      description = "Show DCR pages to users including those with comments",
+      description = "Show DCR eligible pages to users",
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = new LocalDate(2021, 6, 1),
       participationGroup = Perc10A, // Also see ArticlePicker.scala - our main filter mechanism is by page features
@@ -26,13 +27,13 @@ object DotcomRendering
       // This means that 90% of the audience is being exposed to DCR
     )
 
-object NGInteractiveDCR
+object LiveblogRendering
     extends Experiment(
-      name = "ng-interactive-dcr",
-      description = "Use DCR to render (ng)-interactives",
+      name = "liveblog-rendering",
+      description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 6, 1),
-      participationGroup = Perc0B,
+      sellByDate = new LocalDate(2021, 8, 2),
+      participationGroup = Perc0A,
     )
 
 object NewsletterEmbedDesign
@@ -42,4 +43,13 @@ object NewsletterEmbedDesign
       owners = Seq(Owner.withGithub("buck06191")),
       sellByDate = new LocalDate(2020, 11, 30),
       participationGroup = Perc20A,
+    )
+
+object ClickToView
+    extends Experiment(
+      name = "click-to-view",
+      description = "Click to provide consent before seeing embedded content",
+      owners = Seq(Owner.withGithub("frj")),
+      sellByDate = new LocalDate(2021, 5, 6),
+      participationGroup = Perc0B,
     )

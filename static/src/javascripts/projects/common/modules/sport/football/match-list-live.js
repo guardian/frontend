@@ -1,11 +1,9 @@
-// @flow
-
 import $ from 'lib/$';
 import bonzo from 'bonzo';
 import { Component } from 'common/modules/component';
 
 class MatchListLive extends Component {
-    constructor(type: string, competition: string | true, date: ?string): void {
+    constructor(type, competition, date) {
         super();
 
         const slug = ['football', type, competition, date]
@@ -17,7 +15,7 @@ class MatchListLive extends Component {
         this.endpoint = `/${slug}.json`;
     }
 
-    autoupdate(elem: HTMLElement): void {
+    autoupdate(elem) {
         const updated = $('.football-match', elem);
 
         $('.football-match', this.elem).each((match, i) => {
@@ -38,7 +36,7 @@ class MatchListLive extends Component {
         });
     }
 
-    prerender(): void {
+    prerender() {
         const elem = this.elem;
 
         $('.football-team__form', elem).remove();

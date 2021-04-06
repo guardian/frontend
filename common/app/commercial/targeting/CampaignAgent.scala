@@ -8,7 +8,7 @@ import conf.Configuration
 import scala.concurrent.{ExecutionContext, Future}
 import conf.switches.Switches.Targeting
 
-object CampaignAgent extends Logging {
+object CampaignAgent extends GuLogging {
   private val agent = Box[CampaignCache](CampaignCache(Nil, None))
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Unit] = {

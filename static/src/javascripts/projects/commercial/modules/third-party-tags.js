@@ -1,27 +1,24 @@
-// @flow strict
 /* A regionalised container for all the commercial tags. */
 
-import fastdom from 'lib/fastdom-promise';
 import {
-    onConsentChange,
-    getConsentFor,
-} from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
-import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import {
-    ias,
-    permutive,
-    twitter,
-    lotame,
     fbPixel,
-    remarketing,
+    ias,
     inizio,
+    permutive,
+    remarketing,
+    twitter,
 } from '@guardian/commercial-core';
-import config from 'lib/config';
-import { isInAuOrNz, isInUsOrCa } from 'common/modules/commercial/geo-utils';
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
+import config from '../../../lib/config';
+import fastdom from '../../../lib/fastdom-promise';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+import { imrWorldwide } from './third-party-tags/imr-worldwide';
+import { imrWorldwideLegacy } from './third-party-tags/imr-worldwide-legacy';
 
-const addScripts = (tags: Array<ThirdPartyTag>): void => {
+const addScripts = tags => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
@@ -66,9 +63,9 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
 };
 
 const insertScripts = (
-    advertisingServices: Array<ThirdPartyTag>,
-    performanceServices: Array<ThirdPartyTag> // performanceServices always run
-): void => {
+    advertisingServices,
+    performanceServices // performanceServices always run
+) => {
     addScripts(performanceServices);
     onConsentChange(state => {
         const consentedAdvertisingServices = advertisingServices.filter(
@@ -81,8 +78,8 @@ const insertScripts = (
     });
 };
 
-const loadOther = (): void => {
-    const advertisingServices: Array<ThirdPartyTag> = [
+const loadOther = () => {
+    const advertisingServices = [
         remarketing({ shouldRun: config.get('switches.remarketing', false) }),
         permutive({ shouldRun: config.get('switches.permutive', false) }),
         ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
@@ -91,14 +88,9 @@ const loadOther = (): void => {
             shouldRun: config.get('switches.facebookTrackingPixel', false),
         }),
         twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
-        lotame({
-            shouldRun:
-                config.get('switches.lotame', false) &&
-                !(isInUsOrCa() || isInAuOrNz()),
-        }),
     ].filter(_ => _.shouldRun);
 
-    const performanceServices: Array<ThirdPartyTag> = [
+    const performanceServices = [
         imrWorldwide, // only in AU & NZ
         imrWorldwideLegacy, // only in AU & NZ
     ].filter(_ => _.shouldRun);
@@ -106,7 +98,7 @@ const loadOther = (): void => {
     insertScripts(advertisingServices, performanceServices);
 };
 
-const init = (): Promise<boolean> => {
+const init = () => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
     }

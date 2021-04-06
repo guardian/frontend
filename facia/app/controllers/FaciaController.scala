@@ -20,13 +20,14 @@ import conf.switches.Switches.InlineEmailStyles
 import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
+import conf.Configuration
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 trait FaciaController
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext
     with implicits.Collections
     with implicits.Requests {
@@ -193,9 +194,9 @@ trait FaciaController
             if (request.isRss) {
               val body = TrailsToRss.fromPressedPage(faciaPage)
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-            } else if (request.isJson)
+            } else if (request.isJson) {
               JsonFront(faciaPage)
-            else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
+            } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
@@ -408,6 +409,13 @@ trait FaciaController
     if (request.isAdFree) FullAdFreeType else FullType
   def liteRequestType(implicit request: RequestHeader): PressedPageType =
     if (request.isAdFree) LiteAdFreeType else LiteType
+
+  def ampRsaPublicKey: Action[AnyContent] = {
+    Action {
+      // The private key is in the CAPI account, see the documentation at https://github.com/guardian/fastly-cache-purger
+      Ok(Configuration.amp.flushPublicKey).as("text/plain")
+    }
+  }
 }
 
 class FaciaControllerImpl(

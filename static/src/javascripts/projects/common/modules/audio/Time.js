@@ -1,11 +1,7 @@
-// @flow
 import React from 'react';
 import { formatTime } from './utils';
 
-type Props = {
-    t: number,
-};
 
-export default function Time({ t }: Props) {
+export default function Time({ t }) {
     return <span>{formatTime(t)}</span>;
 }

@@ -1,10 +1,9 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 
 const ERR_MODAL_NOT_FOUND = 'Modal not found';
 const ERR_MODAL_MALFORMED = 'Modal is malformed';
 
-const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
+const bindCloserOnce = (modalEl) =>
     fastdom
         .measure(() =>
             Array.from(modalEl.querySelectorAll('.js-identity-modal__closer'))
@@ -23,10 +22,10 @@ const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
         )
         .then(_ => Promise.all(_));
 
-const getModal = (name: string): Promise<HTMLElement> =>
+const getModal = (name) =>
     fastdom
         .measure(() => {
-            const modalEl: ?HTMLElement = document.querySelector(
+            const modalEl = document.querySelector(
                 `.identity-modal.identity-modal--${name}`
             );
             if (!modalEl) throw new Error(ERR_MODAL_NOT_FOUND);
@@ -34,10 +33,10 @@ const getModal = (name: string): Promise<HTMLElement> =>
         })
         .then(modalEl => bindCloserOnce(modalEl).then(() => modalEl));
 
-const getContents = (name: string): Promise<HTMLElement> =>
+const getContents = (name) =>
     getModal(name).then(modalEl =>
         fastdom.measure(() => {
-            const contentsEl: ?HTMLElement = modalEl.querySelector(
+            const contentsEl = modalEl.querySelector(
                 `.identity-modal__content`
             );
             if (!contentsEl) throw new Error(ERR_MODAL_MALFORMED);
@@ -45,14 +44,14 @@ const getContents = (name: string): Promise<HTMLElement> =>
         })
     );
 
-const show = (name: string): Promise<void> =>
+const show = (name) =>
     getModal(name).then(modalEl =>
         fastdom.measure(() => {
             modalEl.classList.add('identity-modal--active');
         })
     );
 
-const hide = (name: string): Promise<void> =>
+const hide = (name) =>
     getModal(name).then(modalEl =>
         fastdom.measure(() => {
             modalEl.classList.remove('identity-modal--active');

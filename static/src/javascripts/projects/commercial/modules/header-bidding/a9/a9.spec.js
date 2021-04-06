@@ -1,26 +1,27 @@
-// @flow
+import {
+    getConsentFor as getConsentFor_,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
+import a9, { _ } from './a9';
 
-import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
-import { onConsentChange as onConsentChange_ , getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
+const onConsentChange = onConsentChange_;
 
-const onConsentChange: any = onConsentChange_;
-
-const tcfv2WithConsentMock = (callback): void =>
+const tcfv2WithConsentMock = (callback) =>
     callback({
         tcfv2: { vendorConsents: { '5edf9a821dc4e95986b66df4': true } },
     });
 
-const CcpaWithConsentMock = (callback): void =>
+const CcpaWithConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: false } });
 
-const getConsentFor: any = getConsentFor_;
+const getConsentFor = getConsentFor_;
 
-jest.mock('lib/raven');
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('../../../../../lib/raven');
+jest.mock('../../dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/header-bidding/slot-config', () => ({
+jest.mock('../slot-config', () => ({
     slots: jest
         .fn()
         .mockImplementation(() => [

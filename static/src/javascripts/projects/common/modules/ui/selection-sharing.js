@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import Rangefix from 'rangefix';
 import $ from 'lib/$';
@@ -54,26 +53,26 @@ const validAncestors = [
 
 const isValidSelection = (
     range
-): boolean => // commonAncestorContainer is buggy, can't use it here.
+) => // commonAncestorContainer is buggy, can't use it here.
     validAncestors.some(
         className =>
             $.ancestor(range.startContainer, className) &&
             $.ancestor(range.endContainer, className)
     );
 
-const hideSelection = (): void => {
+const hideSelection = () => {
     if ($selectionSharing.hasClass('selection-sharing--active')) {
         $selectionSharing.removeClass('selection-sharing--active');
     }
 };
 
-const showSelection = (): void => {
+const showSelection = () => {
     if (!$selectionSharing.hasClass('selection-sharing--active')) {
         $selectionSharing.addClass('selection-sharing--active');
     }
 };
 
-const updateSelection = (): void => {
+const updateSelection = () => {
     const selection =
         window.getSelection && document.createRange && window.getSelection();
 
@@ -128,13 +127,13 @@ const updateSelection = (): void => {
     }
 };
 
-const onMouseDown = (event): void => {
+const onMouseDown = (event) => {
     if (!event.target.closest('.social__item')) {
         hideSelection();
     }
 };
 
-const init = (): void => {
+const init = () => {
     // The current mobile Safari returns absolute Rect co-ordinates (instead of viewport-relative),
     // and the UI is generally fiddly on touch.
     if (document.body && !hasTouchScreen()) {

@@ -1,5 +1,3 @@
-// @flow
-import type { SignInGateVariant } from '../../types';
 import { componentName } from '../../component';
 import {
     hasUserDismissedGate,
@@ -16,7 +14,7 @@ import {
 const variant = 'main-control-3';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
-const canShow: (name?: string) => boolean = (name = '') => {
+const canShow = (name = '') => {
     const isGateDismissed = hasUserDismissedGate({
         name,
         variant,
@@ -38,10 +36,10 @@ const canShow: (name?: string) => boolean = (name = '') => {
 // method which runs if the canShow method returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
 // in this case as the gate doesn't show anything, we just return true
-const show: () => boolean = () => true;
+const show = () => true;
 
 // export the variant as a SignInGateVariant type
-export const signInGateVariant: SignInGateVariant = {
+export const signInGateVariant = {
     name: variant,
     canShow,
     show,

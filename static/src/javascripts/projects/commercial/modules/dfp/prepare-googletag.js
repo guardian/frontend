@@ -1,44 +1,44 @@
-// @flow
-
-import qwery from 'qwery';
-import config from 'lib/config';
-import fastdom from 'lib/fastdom-promise';
-import { loadScript, storage } from '@guardian/libs';
-import raven from 'lib/raven';
-import sha1 from 'lib/sha1';
 import {
-    onConsentChange,
     getConsentFor,
+    onConsentChange,
 } from '@guardian/consent-management-platform';
-import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
-import { getUserFromCookie } from 'common/modules/identity/api';
-import { onSlotLoad } from 'commercial/modules/dfp/on-slot-load';
-import { onSlotRender } from 'commercial/modules/dfp/on-slot-render';
-import { onSlotViewableFunction } from 'commercial/modules/dfp/on-slot-viewable';
-import { onSlotVisibilityChanged } from 'commercial/modules/dfp/on-slot-visibility-changed';
-import { refreshOnResize } from 'commercial/modules/dfp/refresh-on-resize';
-import { init as initMessenger } from 'commercial/modules/messenger';
-import { init as background } from 'commercial/modules/messenger/background';
-import { init as sendClick } from 'commercial/modules/messenger/click';
-import { init as disableRefresh } from 'commercial/modules/messenger/disable-refresh';
-import { init as initGetPageTargeting } from 'commercial/modules/messenger/get-page-targeting';
-import { init as initGetPageUrl } from 'commercial/modules/messenger/get-page-url';
-import { init as getStyles } from 'commercial/modules/messenger/get-stylesheet';
-import { init as hide } from 'commercial/modules/messenger/hide';
-import { init as resize } from 'commercial/modules/messenger/resize';
-import { init as scroll } from 'commercial/modules/messenger/scroll';
-import { init as type } from 'commercial/modules/messenger/type';
-import { init as viewport } from 'commercial/modules/messenger/viewport';
+import { loadScript, storage } from '@guardian/libs';
+import qwery from 'qwery';
+import config from '../../../../lib/config';
+import fastdom from '../../../../lib/fastdom-promise';
+import raven from '../../../../lib/raven';
+import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { getUserFromApi, getUserFromCookie } from '../../../common/modules/identity/api';
+import { adFreeSlotRemove } from '../ad-free-slot-remove';
+import { init as initMessenger } from '../messenger';
+import { init as background } from '../messenger/background';
+import { init as sendClick } from '../messenger/click';
+import { init as disableRefresh } from '../messenger/disable-refresh';
+import { init as initGetPageTargeting } from '../messenger/get-page-targeting';
+import { init as initGetPageUrl } from '../messenger/get-page-url';
+import { init as getStyles } from '../messenger/get-stylesheet';
+import { init as hide } from '../messenger/hide';
+import { init as resize } from '../messenger/resize';
+import { init as scroll } from '../messenger/scroll';
+import { init as type } from '../messenger/type';
+import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
+import { init as viewport } from '../messenger/viewport';
+import { dfpEnv } from './dfp-env';
+import { fillAdvertSlots } from './fill-advert-slots';
+import { onSlotLoad } from './on-slot-load';
+import { onSlotRender } from './on-slot-render';
+import { onSlotViewableFunction } from './on-slot-viewable';
+import { onSlotVisibilityChanged } from './on-slot-visibility-changed';
+import { refreshOnResize } from './refresh-on-resize';
+import { removeSlots } from '../../../commercial/modules/remove-slots';
 
 initMessenger(
     type,
     getStyles,
     initGetPageTargeting,
     initGetPageUrl,
+    initMeasureAdLoad,
     resize,
     hide,
     scroll,
@@ -48,7 +48,7 @@ initMessenger(
     disableRefresh
 );
 
-const setDfpListeners = (): void => {
+const setDfpListeners = () => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
@@ -62,7 +62,7 @@ const setDfpListeners = (): void => {
     }
 };
 
-const setPageTargeting = (): void => {
+const setPageTargeting = () => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
     const targeting = getPageTargeting();
@@ -71,35 +71,25 @@ const setPageTargeting = (): void => {
     });
 };
 
-// This is specifically a separate function to close-disabled-slots. One is for
-// closing hidden/disabled slots, the other is for graceful recovery when prepare-googletag
-// encounters an error. Here, slots are closed unconditionally.
-const removeAdSlots = (): Promise<void> => {
-    // Get all ad slots
-    const adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
-
-    return fastdom.mutate(() =>
-        adSlots.forEach((adSlot: Element) => adSlot.remove())
-    );
+const setPublisherProvidedId = () => {
+	// Also known as PPID
+	getUserFromApi((user) => {
+		if (user && user.privateFields && user.privateFields.googleTagId) {
+			window.googletag
+				.pubads()
+				.setPublisherProvidedId(user.privateFields.googleTagId);
+		}
+	});
 };
 
-const setPublisherProvidedId = (): void => {
-    const user: ?Object = getUserFromCookie();
-    if (user) {
-        const hashedId = sha1.hash(user.id);
-        window.googletag.pubads().setPublisherProvidedId(hashedId);
-    }
-};
-
-export const init = (): Promise<void> => {
-    const setupAdvertising = (): Promise<void> => {
+export const init = () => {
+    const setupAdvertising = () => {
         // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
         // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
         // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
         window.googletag.cmd.push(
             setDfpListeners,
             setPageTargeting,
-            setPublisherProvidedId,
             refreshOnResize,
             () => {
                 fillAdvertSlots();
@@ -107,7 +97,7 @@ export const init = (): Promise<void> => {
         );
 
         onConsentChange(state => {
-            let canRun: boolean = true;
+            let canRun = true;
             if (state.ccpa) {
                 // CCPA mode
                 window.googletag.cmd.push(() => {
@@ -115,8 +105,13 @@ export const init = (): Promise<void> => {
                         restrictDataProcessing: state.ccpa.doNotSell,
                     });
                 });
+                if (!state.ccpa.doNotSell) {
+                    window.googletag.cmd.push(
+                        setPublisherProvidedId,
+                    );
+                }
             } else {
-                let npaFlag: boolean;
+                let npaFlag;
                 if (state.tcfv2) {
                     // TCFv2 mode
                     npaFlag =
@@ -133,6 +128,11 @@ export const init = (): Promise<void> => {
                         .pubads()
                         .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
                 });
+                if (!npaFlag) {
+                    window.googletag.cmd.push(
+                        setPublisherProvidedId,
+                    );
+                }
             }
             // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
             // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
@@ -155,10 +155,10 @@ export const init = (): Promise<void> => {
         // Abandon the init sequence.
         setupAdvertising()
             .then(adFreeSlotRemove)
-            .catch(removeAdSlots);
+            .catch(removeSlots);
 
         return Promise.resolve();
     }
 
-    return removeAdSlots();
+    return removeSlots();
 };

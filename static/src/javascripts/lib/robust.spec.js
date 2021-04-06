@@ -1,12 +1,10 @@
-// @flow
-
 import { catchErrorsWithContext, _ } from './robust';
 
 const { catchAndLogError } = _;
 
 // #? Refactor this into a test utility with lots of magic?
 jest.mock('lib/report-error', () => jest.fn());
-const reportErrorMock: any = require('lib/report-error');
+const reportErrorMock = require('lib/report-error');
 
 let origConsoleWarn;
 

@@ -1,8 +1,6 @@
-// @flow
-
 import { testAndParticipationsToVariant } from './ab-utils';
 
-export const getForcedParticipationsFromUrl = (): Participations => {
+export const getForcedParticipationsFromUrl = () => {
     if (window.location.hash.startsWith('#ab')) {
         const tokens = window.location.hash.replace('#ab-', '').split(',');
 
@@ -19,10 +17,10 @@ export const getForcedParticipationsFromUrl = (): Participations => {
 };
 
 // If the given test has a variant which is forced by the URL, return it
-export const getVariantFromUrl = (test: ABTest): ?Variant =>
+export const getVariantFromUrl = (test) =>
     testAndParticipationsToVariant(test, getForcedParticipationsFromUrl());
 
 // Useful if you want to force a test even when it normally wouldn't run
 // (for example, to display a specific epic variant to verify it renders
 // okay).
-export const getIgnoreCanRunFromUrl = (): boolean => window.location.hash.includes('ignoreCanRun=true');
+export const getIgnoreCanRunFromUrl = () => window.location.hash.includes('ignoreCanRun=true');

@@ -1,17 +1,16 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
 
 const targetUrl = config.get('page.calloutsUrl');
 const isNamed = element => element.name > '';
-const isCheckbox = (element: HTMLInputElement) => element.type === 'checkbox';
-const isFile = (element: HTMLInputElement) => element.type === 'file';
+const isCheckbox = (element) => element.type === 'checkbox';
+const isFile = (element) => element.type === 'file';
 
 /* --------- DOM MANIPULATION ---------*/
 
 const enableButton = cForm => {
-    const button: HTMLButtonElement = cForm.getElementsByTagName('button')[0];
+    const button = cForm.getElementsByTagName('button')[0];
     button.disabled = false;
     button.textContent = 'Share with the Guardian';
 };
@@ -33,7 +32,7 @@ const showWaiting = cForm => {
     });
 };
 
-const showError = (cForm: HTMLElement, msg: string) => {
+const showError = (cForm, msg) => {
     const errorField = cForm.querySelector('.error_box');
     if (errorField) {
         fastdom.mutate(() => {
@@ -78,7 +77,7 @@ const getValueFromInput = (element, data) => {
     return element.value;
 };
 
-export const formatData = (elements: any): Promise<any> =>
+export const formatData = (elements) =>
     [].reduce.call(
         elements,
         async (promise, element) => {
@@ -93,7 +92,7 @@ export const formatData = (elements: any): Promise<any> =>
         Promise.resolve({})
     );
 
-export const submitForm = async (e: any) => {
+export const submitForm = async (e) => {
     e.preventDefault();
     const cForm = e.target;
     const data = await formatData(cForm.elements);

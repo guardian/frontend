@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import qwery from 'qwery';
 import raven from 'lib/raven';
@@ -13,7 +12,7 @@ import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
 import {fetchAndRenderEpic} from "common/modules/commercial/contributions-service";
 
-const bootEnhanced = (): void => {
+const bootEnhanced = () => {
     const bootstrapContext = (featureName, bootstrap) => {
         raven.context(
             {
@@ -42,9 +41,7 @@ const bootEnhanced = (): void => {
 
         //
         // A/B tests
-        //
-
-        [
+                [
             'ab-tests',
             () => {
                 catchErrorsWithContext([
@@ -353,20 +350,6 @@ const bootEnhanced = (): void => {
                     );
                 }
             });
-
-            if (window.location.hash.includes('experiments')) {
-                require.ensure(
-                    [],
-                    require => {
-                        bootstrapContext(
-                            'experiments',
-                            require('common/modules/experiments')
-                                .showExperiments
-                        );
-                    },
-                    'experiments'
-                );
-            }
 
             if (config.get('page.contentType') === 'Audio') {
                 require.ensure(

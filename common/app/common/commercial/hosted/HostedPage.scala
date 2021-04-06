@@ -5,7 +5,7 @@ import java.net.URLEncoder
 import com.gu.commercial.branding.Dimensions
 import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
 import com.gu.contentapi.client.model.v1.{Content, SponsorshipLogoDimensions}
-import common.Logging
+import common.GuLogging
 import common.commercial.hosted.HostedVideoPage.log
 import common.commercial.hosted.LoggingUtils.getAndLog
 import conf.Configuration.site
@@ -38,7 +38,7 @@ trait HostedPage extends StandalonePage {
   def fontColour: Colour = campaign.map(_.fontColour).getOrElse(Colour.black)
 }
 
-object HostedPage extends Logging {
+object HostedPage extends GuLogging {
 
   def fromContent(item: Content): Option[HostedPage] = {
     if (item.isHosted) {

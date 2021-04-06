@@ -3,19 +3,20 @@ package views.support
 import java.net.{URI, URISyntaxException}
 import java.util.Base64
 
-import common.Logging
-import conf.switches.Switches.{FacebookShareImageLogoOverlay, ImageServerSwitch, TwitterShareImageLogoOverlay}
-import conf.{Configuration, Static}
+import common.GuLogging
+import conf.switches.Switches.{ImageServerSwitch}
+import conf.{Configuration}
 import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
-import org.apache.commons.math3.fraction.Fraction
-import org.apache.commons.math3.util.Precision
-import common.Environment.{app, awsRegion, stage}
-import org.joda.time.DateTime
+import org.apache.commons.lang3.math.Fraction
 import play.api.libs.json.{Json, Writes}
 
 import Function.const
 
+/**
+  * ElementProfile is configuration for displaying an image, and is used to generate custom URLs (with parameters) for
+  * calls to our Fastly image service.
+  */
 sealed trait ElementProfile {
 
   def width: Option[Int]
@@ -71,6 +72,10 @@ sealed trait ElementProfile {
 
 }
 
+/**
+  * ImageProfile is an ElementProfile that provides sensible defaults. It is used as the base class for lots of more
+  * specific profiles.
+  */
 case class ImageProfile(
     override val width: Option[Int] = None,
     override val height: Option[Int] = None,
@@ -81,7 +86,7 @@ case class ImageProfile(
 ) extends ElementProfile
 
 object VideoProfile {
-  lazy val ratioHD = new Fraction(16, 9)
+  lazy val ratioHD = Fraction.getFraction(16, 9)
 }
 
 case class VideoProfile(
@@ -93,6 +98,10 @@ case class VideoProfile(
     override val autoFormat: Boolean = true,
 ) extends ElementProfile {}
 
+/**
+  * SrcSet relates to the HTML `srcSet` attribute but only represents a single image source-width combo. For information
+  * on the HTML attribute, see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset.
+  */
 case class SrcSet(src: String, width: Int) {
   def asSrcSetString: String = {
     s"$src ${width}w"
@@ -329,7 +338,7 @@ object SeoOptimisedContentImage extends ImageProfile(width = Some(460))
 // Just degrade the image quality without adjusting the width/height
 object Naked extends ImageProfile(None, None)
 
-object ImgSrc extends Logging with implicits.Strings {
+object ImgSrc extends GuLogging with implicits.Strings {
 
   private val imageServiceHost: String = Configuration.images.host
 

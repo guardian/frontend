@@ -1,7 +1,9 @@
 package model.dotcomrendering
 
 import common.commercial.EditionCommercialProperties
+import model.ContentFormat
 import model.dotcomrendering.pageElements.PageElement
+import navigation.Nav
 import play.api.libs.json._
 
 // -----------------------------------------------------------------
@@ -21,9 +23,13 @@ case class DotcomRenderingDataModel(
     author: Author,
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
+    webPublicationSecondaryDateDisplay: String,
     editionLongForm: String,
     editionId: String,
     pageId: String,
+    // Format and previous flags
+    format: ContentFormat,
+    designType: String,
     tags: List[Tag],
     pillar: String,
     isImmersive: Boolean,
@@ -50,31 +56,60 @@ case class DotcomRenderingDataModel(
     starRating: Option[Int],
     trailText: String,
     nav: Nav,
-    designType: String,
     showBottomSocialButtons: Boolean,
     pageFooter: PageFooter,
     publication: String,
     shouldHideReaderRevenue: Boolean,
-    // slot machine (temporary for contributions development)
-    slotMachineFlags: String,
+    slotMachineFlags: String, // slot machine (temporary for contributions development)
     contributionsServiceUrl: String,
     badge: Option[DCRBadge],
-    // Match Data
     matchUrl: Option[String], // Optional url used for match data
+    isSpecialReport: Boolean, // Indicates whether the page is a special report.
 )
+
+object ElementsEnhancer {
+
+  // Note:
+  //     In the file PageElement-Identifiers.md you will find a discussion of identifiers used by PageElements
+  //     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
+
+  def enhanceElement(element: JsValue): JsValue = {
+    element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
+  }
+
+  def enhanceElements(elements: JsValue): IndexedSeq[JsValue] = {
+    elements.as[JsArray].value.map(element => enhanceElement(element))
+  }
+
+  def enhanceObjectWithElementsAtDepth1(obj: JsValue): JsValue = {
+    val elements = obj.as[JsObject].value("elements")
+    obj.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
+  }
+
+  def enhanceObjectsWithElementsAtDepth1(objs: JsValue): IndexedSeq[JsValue] = {
+    objs.as[JsArray].value.map(obj => enhanceObjectWithElementsAtDepth1(obj))
+  }
+
+  def enhanceDcrObject(obj: JsObject): JsObject = {
+    obj ++
+      Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks"))) ++
+      Json.obj("mainMediaElements" -> enhanceElements(obj.value("mainMediaElements"))) ++
+      Json.obj("keyEvents" -> enhanceObjectsWithElementsAtDepth1(obj.value("keyEvents")))
+  }
+}
 
 object DotcomRenderingDataModel {
 
   implicit val pageElementWrites = PageElement.pageElementWrites
 
   implicit val writes = new Writes[DotcomRenderingDataModel] {
-    def writes(model: DotcomRenderingDataModel) =
-      Json.obj(
+    def writes(model: DotcomRenderingDataModel) = {
+      val obj = Json.obj(
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
         "webTitle" -> model.webTitle,
-        "mainMediaElements" -> Json.toJson(model.mainMediaElements),
+        "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "keyEvents" -> model.keyEvents,
         "blocks" -> model.blocks,
@@ -82,9 +117,12 @@ object DotcomRenderingDataModel {
         "author" -> model.author,
         "webPublicationDate" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
+        "webPublicationSecondaryDateDisplay" -> model.webPublicationSecondaryDateDisplay,
         "editionLongForm" -> model.editionLongForm,
         "editionId" -> model.editionId,
         "pageId" -> model.pageId,
+        "format" -> model.format,
+        "designType" -> model.designType,
         "tags" -> model.tags,
         "pillar" -> model.pillar,
         "isImmersive" -> model.isImmersive,
@@ -111,7 +149,6 @@ object DotcomRenderingDataModel {
         "starRating" -> model.starRating,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
-        "designType" -> model.designType,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
         "pageFooter" -> model.pageFooter,
         "publication" -> model.publication,
@@ -120,7 +157,11 @@ object DotcomRenderingDataModel {
         "contributionsServiceUrl" -> model.contributionsServiceUrl,
         "badge" -> model.badge,
         "matchUrl" -> model.matchUrl,
+        "isSpecialReport" -> model.isSpecialReport,
       )
+
+      ElementsEnhancer.enhanceDcrObject(obj)
+    }
   }
 
   def toJson(model: DotcomRenderingDataModel): String = {

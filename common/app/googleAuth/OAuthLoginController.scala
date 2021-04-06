@@ -1,7 +1,7 @@
 package googleAuth
 
 import com.gu.googleauth.{GoogleAuth, GoogleAuthConfig, UserIdentity}
-import common.{Crypto, ImplicitControllerExecutionContext, Logging}
+import common.{Crypto, ImplicitControllerExecutionContext, GuLogging}
 import conf.Configuration
 import org.joda.time.DateTime
 import play.api.http.HttpConfiguration
@@ -112,7 +112,7 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
     }
 }
 
-class AuthCookie(httpConfiguration: HttpConfiguration) extends Logging {
+class AuthCookie(httpConfiguration: HttpConfiguration) extends GuLogging {
 
   private val cookieName = "GU_PV_AUTH"
   private val oneDayInSeconds: Int = 86400

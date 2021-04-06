@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { related } from './related';
@@ -17,7 +15,7 @@ jest.mock('common/modules/analytics/register', () => ({
     error() {},
 }));
 
-const FakeExp: any = require('common/modules/ui/expandable').Expandable;
+const FakeExp = require('common/modules/ui/expandable').Expandable;
 
 describe('onward/related', () => {
     beforeEach(() => {
@@ -49,9 +47,9 @@ describe('onward/related', () => {
     });
 
     it("should hide if there's no story package and related can't be fetched", () => {
-        const container: HTMLElement = (document.querySelector(
+        const container = (document.querySelector(
             '.js-related'
-        ): any);
+        ));
 
         config.switches.relatedContent = false;
 
@@ -61,9 +59,9 @@ describe('onward/related', () => {
     });
 
     it('should hide if user has ad-free and the page is paid content', () => {
-        const container: HTMLElement = (document.querySelector(
+        const container = (document.querySelector(
             '.js-related'
-        ): any);
+        ));
 
         config.page.isPaidContent = true;
         commercialFeatures.adFree = true;

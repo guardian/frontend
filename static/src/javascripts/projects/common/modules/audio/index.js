@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import {
@@ -11,18 +9,10 @@ import config from 'lib/config';
 import { AudioPlayer } from './AudioPlayer';
 import { sendToOphan, registerOphanListeners } from './utils';
 
-type Props = {
-    source: string,
-    mediaId: string,
-    duration: string,
-};
 
-type State = {
-    acastConsent: boolean,
-};
 
-class AudioContainer extends Component<Props, State> {
-    constructor(props: Props) {
+class AudioContainer extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             acastConsent: false,
@@ -72,8 +62,8 @@ const getPillar = pillarClass => {
 const supportsCSSGrid =
     window.CSS && window.CSS.supports && window.CSS.supports('display', 'grid');
 
-const init = (): void => {
-    const placeholder: ?HTMLElement = document.getElementById(
+const init = () => {
+    const placeholder = document.getElementById(
         'audio-component-container'
     );
     const article = document.getElementsByTagName('article')[0];

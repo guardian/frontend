@@ -1,15 +1,14 @@
-// @flow
-import { noop } from 'lib/noop';
+import { noop } from '../../../lib/noop';
 import {
     register as register_,
     unregister as unregister_,
     _ as testExports,
-} from 'commercial/modules/messenger';
-import { postMessage } from 'commercial/modules/messenger/post-message';
+} from './messenger';
+import { postMessage } from './messenger/post-message';
 
-const onMessage: any = testExports.onMessage;
-const register: any = register_;
-const unregister: any = unregister_;
+const onMessage = testExports.onMessage;
+const register = register_;
+const unregister = unregister_;
 
 const addEventListenerSpy = jest
     .spyOn(global, 'addEventListener')
@@ -20,11 +19,11 @@ const removeEventListenerSpy = jest
 const jsonParseSpy = jest.spyOn(JSON, 'parse');
 const mockOrigin = "someorigin.com";
 
-jest.mock('commercial/modules/messenger/post-message', () => ({
+jest.mock('./messenger/post-message', () => ({
     postMessage: jest.fn(),
 }));
 
-jest.mock('lib/report-error', () => jest.fn());
+jest.mock('../../../lib/report-error', () => jest.fn());
 
 describe('Cross-frame messenger', () => {
     const routines = {

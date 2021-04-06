@@ -1,18 +1,9 @@
-// @flow
-import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
-import { newsletterEmbeds } from 'common/modules/experiments/tests/newsletter-embed-test';
-import { globalEoyHeaderTest } from 'common/modules/experiments/tests/global-eoy-header-test';
+import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
 
-export const concurrentTests: $ReadOnlyArray<ABTest> = [
-    commercialPrebidSafeframe,
+export const concurrentTests = [
     signInGateMainVariant,
     signInGateMainControl,
-    newsletterEmbeds,
-    globalEoyHeaderTest,
+    puzzlesBanner
 ];
-
-export const epicTests: $ReadOnlyArray<EpicABTest> = [];
-
-export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [];

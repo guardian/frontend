@@ -1,4 +1,3 @@
-// @flow
 /*
  Module: history.js
  Description: Gets and sets users reading history
@@ -9,7 +8,6 @@ import { storage } from '@guardian/libs';
 import { getPath } from 'lib/url';
 import isObject from 'lodash/isObject';
 
-import type { bonzo } from 'bonzo';
 import {getCookie} from "lib/cookies";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 
@@ -56,7 +54,7 @@ const buckets = [
     },
 ];
 
-const getMondayFromDate = (date: Date) => {
+const getMondayFromDate = (date) => {
     const day = date.getDay() || 7;
     // Do not set date to Monday if it is already Monday
     if (day !== 1) {
@@ -76,28 +74,28 @@ const storageKeyWeeklyArticleCount = 'gu.history.weeklyArticleCount';
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 const startOfThisWeek = getMondayFromDate(new Date());
 
-let historyCache: ?Array<Array<any>>;
-let summaryCache: ?Object;
-let popularFilteredCache: ?Array<Array<any>>;
-let topNavItemsCache: ?Array<string>;
-let inMegaNav: boolean = false;
+let historyCache;
+let summaryCache;
+let popularFilteredCache;
+let topNavItemsCache;
+let inMegaNav = false;
 
-const saveHistory = (history: Array<Array<any>>): void => {
+const saveHistory = (history) => {
     historyCache = history;
     storage.local.set(storageKeyHistory, history);
 };
 
-const saveSummary = (summary: Object): void => {
+const saveSummary = (summary) => {
     summaryCache = summary;
     storage.local.set(storageKeySummary, summary);
 };
 
-const getHistory = (): Array<Array<any>> => {
+const getHistory = () => {
     historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
     return historyCache;
 };
 
-const getSummary = (): Object => {
+const getSummary = () => {
     if (!summaryCache) {
         summaryCache = storage.local.get(storageKeySummary);
 
@@ -116,7 +114,7 @@ const getSummary = (): Object => {
     return summaryCache;
 };
 
-const seriesSummary = (): Object => {
+const seriesSummary = () => {
     const views = item => item.reduce((acc, val) => acc + val[1], 0);
     const summaryTags = getSummary().tags;
 
@@ -139,7 +137,7 @@ const seriesSummary = (): Object => {
     return seriesTagsSummary;
 };
 
-const mostViewedSeries = (): string => {
+const mostViewedSeries = () => {
     const summary = seriesSummary();
 
     return Object.keys(summary).reduce(
@@ -151,20 +149,20 @@ const mostViewedSeries = (): string => {
     );
 };
 
-const deleteFromSummary = (tag: string): void => {
+const deleteFromSummary = (tag) => {
     const summary = getSummary();
 
     delete summary.tags[tag];
     saveSummary(summary);
 };
 
-const isRevisit = (pageId: string): boolean => {
+const isRevisit = (pageId) => {
     const visited = getHistory().find(page => page[0] === pageId);
 
     return !!(visited && visited[1] > 1);
 };
 
-const pruneSummary = (summary: Object, newToday: number = today) => {
+const pruneSummary = (summary, newToday = today) => {
     const updateBy = newToday - summary.periodEnd;
 
     if (updateBy !== 0) {
@@ -206,10 +204,10 @@ const pruneSummary = (summary: Object, newToday: number = today) => {
 };
 
 const tally = (
-    visits: Array<Array<number>>,
-    weight: number = 1,
-    minimum: number = 1
-): number => {
+    visits,
+    weight = 1,
+    minimum = 1
+) => {
     let totalVisits = 0;
 
     const result = visits.reduce((t, day) => {
@@ -223,7 +221,7 @@ const tally = (
     return totalVisits < minimum ? 0 : result;
 };
 
-const getPopular = (opts: ?Object): Array<Array<string>> => {
+const getPopular = (opts) => {
     const tags = getSummary().tags;
     let tids = Object.keys(tags);
 
@@ -271,7 +269,7 @@ const getPopular = (opts: ?Object): Array<Array<string>> => {
         .reverse();
 };
 
-const getContributors = (): Array<any> => {
+const getContributors = () => {
     const contibutors = [];
     const tags = getSummary().tags;
 
@@ -284,7 +282,7 @@ const getContributors = (): Array<any> => {
     return contibutors;
 };
 
-const collapsePath = (path: string): string => {
+const collapsePath = (path) => {
     const isEditionalisedRx = new RegExp(
         `^(${editions.join('|')})/(${editionalised.join('|')})$`
     );
@@ -309,7 +307,7 @@ const collapsePath = (path: string): string => {
     return '';
 };
 
-const getTopNavItems = (): Array<string> => {
+const getTopNavItems = () => {
     topNavItemsCache =
         topNavItemsCache ||
         $('.js-navigation-header .js-top-navigation a').map(item =>
@@ -319,7 +317,7 @@ const getTopNavItems = (): Array<string> => {
     return topNavItemsCache;
 };
 
-const getPopularFiltered = (opts?: Object): Array<Array<any>> => {
+const getPopularFiltered = (opts) => {
     const flush = opts && opts.flush;
 
     popularFilteredCache =
@@ -340,9 +338,9 @@ const getPopularFiltered = (opts?: Object): Array<Array<any>> => {
     return popularFilteredCache;
 };
 
-const firstCsv = (str: string): string => (str || '').split(',')[0];
+const firstCsv = (str) => (str || '').split(',')[0];
 
-const reset = (): void => {
+const reset = () => {
     historyCache = undefined;
     summaryCache = undefined;
     storage.local.remove(storageKeyHistory);
@@ -350,7 +348,7 @@ const reset = (): void => {
     storage.local.remove(storageKeyDailyArticleCount);
 };
 
-const logHistory = (pageConfig: Object): void => {
+const logHistory = (pageConfig) => {
     const { pageId } = pageConfig;
     let history;
     let foundCount = 0;
@@ -370,7 +368,7 @@ const logHistory = (pageConfig: Object): void => {
     }
 };
 
-const logSummary = (pageConfig: Object, mockToday?: number): void => {
+const logSummary = (pageConfig, mockToday) => {
     const summary = pruneSummary(getSummary(), mockToday);
     const page = collapsePath(pageConfig.pageId);
     let isFront = false;
@@ -411,9 +409,9 @@ const logSummary = (pageConfig: Object, mockToday?: number): void => {
     saveSummary(summary);
 };
 
-const getMegaNav = (): bonzo => $('.js-global-navigation');
+const getMegaNav = () => $('.js-global-navigation');
 
-const removeFromMegaNav = (): void => {
+const removeFromMegaNav = () => {
     getMegaNav().each(megaNav => {
         fastdom.mutate(() => {
             $('.js-global-navigation__section--history', megaNav).remove();
@@ -423,16 +421,16 @@ const removeFromMegaNav = (): void => {
 };
 
 const tagHtml = (
-    tag: Array<string>,
-    index: number
-): string => `<li class="inline-list__item">
+    tag,
+    index
+) => `<li class="inline-list__item">
         <a href="/${
             tag[0]
         }" class="button button--small button--tag button--secondary" data-link-name="${index +
     1} | ${tag[1]}">${tag[1]}</a>
     </li>`;
 
-const showInMegaNav = (): void => {
+const showInMegaNav = () => {
     let tagsHTML;
 
     if (getSummary().showInMegaNav === false) {
@@ -460,10 +458,10 @@ const showInMegaNav = (): void => {
     }
 };
 
-const showInMegaNavEnabled = (): boolean =>
+const showInMegaNavEnabled = () =>
     getSummary().showInMegaNav !== false;
 
-const showInMegaNavEnable = (bool: boolean): void => {
+const showInMegaNavEnable = (bool) => {
     const summary = getSummary();
 
     summary.showInMegaNav = bool;
@@ -477,7 +475,7 @@ const showInMegaNavEnable = (bool: boolean): void => {
     saveSummary(summary);
 };
 
-const incrementDailyArticleCount = (pageConfig: Object): void => {
+const incrementDailyArticleCount = (pageConfig) => {
     if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
         const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
 
@@ -501,7 +499,7 @@ const incrementDailyArticleCount = (pageConfig: Object): void => {
     }
 };
 
-const incrementWeeklyArticleCount = (pageConfig: Object): void => {
+const incrementWeeklyArticleCount = (pageConfig) => {
     if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
         const weeklyArticleCount =
             storage.local.get(storageKeyWeeklyArticleCount) || [];
@@ -532,7 +530,7 @@ const incrementWeeklyArticleCount = (pageConfig: Object): void => {
     }
 };
 
-const getArticleViewCountForDays = (days: number): number => {
+const getArticleViewCountForDays = (days) => {
     const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
     const cutOff = today - days;
 
@@ -547,7 +545,7 @@ const getArticleViewCountForDays = (days: number): number => {
     return dailyCountWindow.reduce((acc, current) => current.count + acc, 0);
 };
 
-const getArticleViewCountForWeeks = (weeks: number): number => {
+const getArticleViewCountForWeeks = (weeks) => {
     const weeklyCount = storage.local.get(storageKeyWeeklyArticleCount) || [];
     const cutOff = startOfThisWeek - weeks * 7;
 

@@ -1,7 +1,7 @@
 package views
 
 import pa.{LineUpPlayer, Team}
-import common.Logging
+import common.GuLogging
 import play.twirl.api.Html
 
 object ShortName {
@@ -12,7 +12,7 @@ object ShortName {
 
 }
 
-object MatchStatus extends Logging {
+object MatchStatus extends GuLogging {
 
   // This is the list of possible statuses from the docs
   // http://pads6.pa-sport.com/API/Football/Documents/Football%20API%20Programmers%20Usage%20Guide%20V1.5.pdf

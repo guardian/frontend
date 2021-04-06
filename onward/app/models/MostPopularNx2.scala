@@ -1,15 +1,15 @@
 package models
 
 import com.github.nscala_time.time.Imports.DateTimeZone
+import com.gu.commercial.branding.{Branding, BrandingType, Sponsored, Logo, Dimensions}
 import common.{Edition, LinkTo}
-import feed.DeeplyReadItem
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
-import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
+import views.support.{ContentOldAgeDescriber, ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.{Article, InlineImage, MostPopular, Pillar}
+import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 
 case class OnwardItemNx2(
@@ -18,10 +18,12 @@ case class OnwardItemNx2(
     showByline: Boolean,
     byline: Option[String],
     image: Option[String],
+    carouselImages: Map[String, Option[String]],
     ageWarning: Option[String],
     isLiveBlog: Boolean,
     pillar: String,
     designType: String,
+    format: ContentFormat,
     webPublicationDate: String,
     headline: String,
     mediaType: Option[String],
@@ -29,13 +31,28 @@ case class OnwardItemNx2(
     kickerText: Option[String],
     starRating: Option[Int],
     avatarUrl: Option[String],
+    branding: Option[Branding],
 )
 
 object OnwardItemNx2 {
 
-  implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
+  implicit val brandingTypeWrites = new Writes[BrandingType] {
+    def writes(bt: BrandingType) = {
+      Json.obj(
+        "name" -> bt.name,
+      )
+    }
+  }
 
-  def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
+  implicit val dimensionsWrites = Json.writes[Dimensions]
+
+  implicit val logoWrites = Json.writes[Logo]
+
+  implicit val brandingWrites = Json.writes[Branding]
+
+  implicit val onwardItemNx2Writes = Json.writes[OnwardItemNx2]
+
+  private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
     val maybeUrl1 = if (contentCard.cardTypes.showCutOut) {
       contentCard.cutOut.map { cutOut => cutOut.imageUrl }
@@ -56,6 +73,22 @@ object OnwardItemNx2 {
     }
 
   }
+
+  // We ideally want this to be replaced by something else in the near future. Probably
+  // image-rendering or similar. But this will do for now.
+  // TODO: Replace this.
+
+  def getImageSources(imageMedia: Option[ImageMedia]): Map[String, Option[String]] = {
+    val images = for {
+      profile: ImageProfile <- List(Item300, Item460)
+      width: Int <- profile.width
+      trailPicture: ImageMedia <- imageMedia
+    } yield {
+      width.toString -> profile.bestSrcFor(trailPicture)
+    }
+    images.toMap
+  }
+
   def contentCardToOnwardItemNx2(contentCard: ContentCard): Option[OnwardItemNx2] = {
     for {
       properties <- contentCard.properties
@@ -74,10 +107,12 @@ object OnwardItemNx2 {
       showByline = showByline,
       byline = contentCard.byline.map(x => x.get),
       image = maybeContent.trail.thumbnailPath,
+      carouselImages = getImageSources(maybeContent.trail.trailPicture),
       ageWarning = None,
       isLiveBlog = isLiveBlog,
       pillar = correctPillar(pillar.toString.toLowerCase),
       designType = metadata.designType.toString,
+      format = metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = webPublicationDate,
       headline = headline,
       mediaType = contentCard.mediaType.map(x => x.toString),
@@ -85,6 +120,7 @@ object OnwardItemNx2 {
       kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
       starRating = contentCard.starRating,
       avatarUrl = contentCardToAvatarUrl(contentCard),
+      branding = contentCard.branding,
     )
   }
 
@@ -98,17 +134,18 @@ object OnwardItemNx2 {
         case other  => other
       }
     }
-
     OnwardItemNx2(
       url = LinkTo(content.header.url),
       linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
       showByline = content.properties.showByline,
       byline = content.properties.byline,
       image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
+      carouselImages = getImageSources(content.trailPicture),
       ageWarning = content.ageWarning,
       isLiveBlog = content.properties.isLiveBlog,
       pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
       designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
+      format = content.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
       headline = content.header.headline,
       mediaType = content.card.mediaType.map(_.toString()),
@@ -116,15 +153,8 @@ object OnwardItemNx2 {
       kickerText = content.header.kicker.flatMap(_.properties.kickerText),
       starRating = content.card.starRating,
       avatarUrl = None,
+      branding = content.branding(Edition(request)),
     )
-  }
-
-  def pressedContentsToOnwardItemsNx2(
-      trails: Seq[PressedContent],
-  )(implicit request: RequestHeader): Seq[OnwardItemNx2] = {
-    trails
-      .take(10)
-      .map(content => pressedContentToOnwardItemNx2(content))
   }
 }
 
@@ -136,13 +166,13 @@ object OnwardCollectionResponse {
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
 }
 
-case class OnwardCollectionResponseForDCR(
+case class OnwardCollectionResponseDCR(
     tabs: Seq[OnwardCollectionResponse],
     mostCommented: Option[OnwardItemNx2],
     mostShared: Option[OnwardItemNx2],
 )
-object OnwardCollectionResponseForDCR {
-  implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseForDCR]
+object OnwardCollectionResponseDCR {
+  implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseDCR]
 }
 
 case class MostPopularGeoResponse(
@@ -161,7 +191,4 @@ case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardIt
 
 object MostPopularNx2 {
   implicit val mostPopularNx2Writes = Json.writes[MostPopularNx2]
-  def mostPopularToMostPopularNx2(mostPopular: MostPopular): MostPopularNx2 = {
-    MostPopularNx2("", "", List())
-  }
 }

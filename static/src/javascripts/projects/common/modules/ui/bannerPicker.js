@@ -1,19 +1,13 @@
-// @flow
 import ophan from 'ophan/ng';
 
-export type Banner = {
-    id: string,
-    canShow: () => Promise<boolean>,
-    show: () => Promise<boolean>,
-};
 
-const init = (banners: Array<Banner>): Promise<void> => {
-    const results: Array<'pending' | boolean> = new Array(banners.length).fill(
+const init = (banners) => {
+    const results = new Array(banners.length).fill(
         'pending',
         0
     );
 
-    const getSuccessfulBannerIndex = (): number => {
+    const getSuccessfulBannerIndex = () => {
         const firstCheckPassedIndex = results.findIndex(item => item === true);
 
         // if no check has passed firstCheckPassedIndex equals -1
@@ -40,7 +34,7 @@ const init = (banners: Array<Banner>): Promise<void> => {
         let bannerPicked = false;
 
         banners.forEach((banner, index) => {
-            const pushToResults = (result: boolean): void => {
+            const pushToResults = (result) => {
                 results[index] = result;
 
                 const successfulBannerIndex = getSuccessfulBannerIndex();

@@ -1,4 +1,3 @@
-// @flow
 import $ from 'lib/$';
 import { addSpinner, removeSpinner, getInfo } from './switch';
 

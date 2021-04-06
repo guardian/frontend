@@ -1,52 +1,32 @@
-// @flow strict
-
-import config from 'lib/config';
-import { pbTestNameMap } from 'lib/url';
-import isEmpty from 'lodash/isEmpty';
+import config from '../../../../../lib/config';
+import { pbTestNameMap } from '../../../../../lib/url';
 import {
     buildAppNexusTargeting,
     buildAppNexusTargetingObject,
     getPageTargeting,
-} from 'common/modules/commercial/build-page-targeting';
-import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { isInUk,
-    isInUsOrCa,
+} from '../../../../common/modules/commercial/build-page-targeting';
+import {
     isInAuOrNz,
-    isInRow } from 'common/modules/commercial/geo-utils';
-import { getLotameData } from '@guardian/commercial-core';
-import type {
-    PrebidAdYouLikeParams,
-    PrebidAppNexusParams,
-    PrebidBid,
-    PrebidBidder,
-    PrebidImproveParams,
-    PrebidIndexExchangeParams,
-    PrebidOpenXParams,
-    PrebidOzoneParams,
-    PrebidPubmaticParams,
-    HeaderBiddingSize,
-    PrebidSonobiParams,
-    PrebidTripleLiftParams,
-    PrebidTrustXParams,
-    PrebidXaxisParams,
-} from '../types';
+    isInRow,
+    isInUk,
+    isInUsOrCa,
+} from '../../../../common/modules/commercial/geo-utils';
 import {
     containsBillboard,
     containsDmpu,
     containsLeaderboard,
     containsLeaderboardOrBillboard,
+    containsMobileSticky,
     containsMpu,
     containsMpuOrDmpu,
-    containsMobileSticky,
     getBreakpointKey,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeSonobi,
-    shouldIncludeTrustX,
     shouldIncludeTripleLift,
+    shouldIncludeTrustX,
     shouldIncludeXaxis,
     shouldUseOzoneAdaptor,
     stripDfpAdPrefixFrom,
@@ -58,17 +38,11 @@ import { getAppNexusDirectBidParams } from './appnexus';
 // The below line is needed for page skins to show
 getPageTargeting();
 
-const isInSafeframeTestVariant = (): boolean =>
-    isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
-
 const isArticle = config.get('page.contentType') === 'Article';
 
 const isDesktopAndArticle = getBreakpointKey() === 'D' && isArticle;
 
-const getTrustXAdUnitId = (
-    slotId: string,
-    isDesktopArticle: boolean
-): string => {
+const getTrustXAdUnitId = (slotId, isDesktopArticle) => {
     switch (stripMobileSuffix(slotId)) {
         case 'dfp-ad--inline1':
             return '2960';
@@ -120,54 +94,14 @@ const getTrustXAdUnitId = (
     }
 };
 
-const getIndexSiteId = (): string => {
-    if (isInSafeframeTestVariant()) {
-        switch (getBreakpointKey()) {
-            case 'D':
-                return '287246';
-            case 'T':
-                return '287247';
-            case 'M':
-                return '287248';
-            default:
-                return '-1';
-        }
-    } else {
-        const site = config
-            .get('page.pbIndexSites', [])
-            .find(s => s.bp === getBreakpointKey());
-        return site && site.id ? site.id.toString() : '';
-    }
+const getIndexSiteId = () => {
+    const site = config
+        .get('page.pbIndexSites', [])
+        .find(s => s.bp === getBreakpointKey());
+    return site && site.id ? site.id.toString() : '';
 };
 
-const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
-    if (isInSafeframeTestVariant()) {
-        switch (getBreakpointKey()) {
-            case 'D':
-                if (containsDmpu(sizes)) {
-                    return 1116408;
-                }
-                if (containsMpu(sizes)) {
-                    return 1116407;
-                }
-                if (containsLeaderboardOrBillboard(sizes)) {
-                    return 1116409;
-                }
-                return -1;
-            case 'T':
-                if (containsMpu(sizes)) {
-                    return 1116410;
-                }
-                if (containsLeaderboard(sizes)) {
-                    return 1116411;
-                }
-                return -1;
-            case 'M':
-                return 1116412;
-            default:
-                return -1;
-        }
-    }
+const getImprovePlacementId = sizes => {
     if (isInUk()) {
         switch (getBreakpointKey()) {
             case 'D':
@@ -227,7 +161,7 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
 // because it uses same placement ID for multiple slot sizes and has no other size information
-const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
+const getImproveSizeParam = slotId => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
     return key &&
         (key.endsWith('mostpop') ||
@@ -238,17 +172,35 @@ const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
         : {};
 };
 
-const getXaxisPlacementId = (sizes: HeaderBiddingSize[]): number => {
-    if (containsDmpu(sizes)) return 13663297;
-    if (containsMpu(sizes)) return 13663304;
-    if (containsBillboard(sizes)) return 13663284;
-    return 13663304;
+const getXaxisPlacementId = sizes => {
+    switch (getBreakpointKey()) {
+        case 'D':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943665;
+            }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return 20943666;
+            }
+            return 20943668;
+        case 'M':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943669;
+            }
+            return 20943670;
+        case 'T':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943671;
+            }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return 20943672;
+            }
+            return 20943674;
+        default:
+            return -1;
+    }
 };
 
-const getTripleLiftInventoryCode = (
-    slotId: string,
-    sizes: HeaderBiddingSize[]
-): string => {
+const getTripleLiftInventoryCode = (slotId, sizes) => {
     if (containsLeaderboard(sizes))
         return 'theguardian_topbanner_728x90_prebid';
 
@@ -263,38 +215,29 @@ const getTripleLiftInventoryCode = (
     return '';
 };
 
-const getOzoneTargeting = (): { } => {
-    const lotameData = getLotameData();
-    const appNexusTargetingObject = buildAppNexusTargetingObject(getPageTargeting());
-    if (typeof lotameData !== 'undefined') {
-        return {
-            ...appNexusTargetingObject,
-            'lotameSegs': lotameData.ozoneLotameData,
-            'lotamePid': lotameData.ozoneLotameProfileId,
-        }
-    }
+const getOzoneTargeting = () => {
+    const appNexusTargetingObject = buildAppNexusTargetingObject(
+        getPageTargeting()
+    );
     return appNexusTargetingObject;
 };
 
 // Is pbtest being used?
-const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
+const isPbTestOn = () => Object.keys(pbTestNameMap()).length > 0;
 // Helper for conditions
-const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
+const inPbTestOr = liveClause => isPbTestOn() || liveClause;
 
 /* Bidders */
-const appNexusBidder: PrebidBidder = {
+const appNexusBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
-    bidParams: (
-        slotId: string,
-        sizes: HeaderBiddingSize[]
-    ): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes),
+    bidParams: (slotId, sizes) => getAppNexusDirectBidParams(sizes),
 };
 
-const openxClientSideBidder: PrebidBidder = {
+const openxClientSideBidder = {
     name: 'oxd',
     switchName: 'prebidOpenx',
-    bidParams: (): PrebidOpenXParams => {
+    bidParams: () => {
         if (isInUsOrCa()) {
             return {
                 delDomain: 'guardian-us-d.openx.net',
@@ -318,10 +261,10 @@ const openxClientSideBidder: PrebidBidder = {
     },
 };
 
-const ozoneClientSideBidder: PrebidBidder = {
+const ozoneClientSideBidder = {
     name: 'ozone',
     switchName: 'prebidOzone',
-    bidParams: (): PrebidOzoneParams =>
+    bidParams: () =>
         Object.assign(
             {},
             (() => ({
@@ -335,27 +278,23 @@ const ozoneClientSideBidder: PrebidBidder = {
                     },
                 ],
                 ozoneData: {}, // TODO: confirm if we need to send any
-            }))(),
+            }))()
         ),
 };
 
-const sonobiBidder: PrebidBidder = {
+const sonobiBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
-    bidParams: (slotId: string): PrebidSonobiParams =>
-        Object.assign(
-            {},
-            {
-                ad_unit: config.get('page.adUnit'),
-                dom_id: slotId,
-                appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
-                pageViewId: config.get('ophan.pageViewId'),
-            },
-            isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
-        ),
+    bidParams: slotId =>
+        ({
+                   ad_unit: config.get('page.adUnit'),
+                   dom_id: slotId,
+                   appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
+                   pageViewId: config.get('ophan.pageViewId'),
+               })
 };
 
-const getPubmaticPublisherId = (): string => {
+const getPubmaticPublisherId = () => {
     if (isInUsOrCa()) {
         return '157206';
     }
@@ -365,10 +304,10 @@ const getPubmaticPublisherId = (): string => {
     return '157207';
 };
 
-const pubmaticBidder: PrebidBidder = {
+const pubmaticBidder = {
     name: 'pubmatic',
     switchName: 'prebidPubmatic',
-    bidParams: (slotId: string): PrebidPubmaticParams =>
+    bidParams: slotId =>
         Object.assign(
             {},
             {
@@ -378,52 +317,43 @@ const pubmaticBidder: PrebidBidder = {
         ),
 };
 
-const trustXBidder: PrebidBidder = {
+const trustXBidder = {
     name: 'trustx',
     switchName: 'prebidTrustx',
-    bidParams: (slotId: string): PrebidTrustXParams => ({
+    bidParams: slotId => ({
         uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
     }),
 };
 
-const tripleLiftBidder: PrebidBidder = {
+const tripleLiftBidder = {
     name: 'triplelift',
     switchName: 'prebidTriplelift',
-    bidParams: (
-        slotId: string,
-        sizes: HeaderBiddingSize[]
-    ): PrebidTripleLiftParams => ({
+    bidParams: (slotId, sizes) => ({
         inventoryCode: getTripleLiftInventoryCode(slotId, sizes),
     }),
 };
 
-const improveDigitalBidder: PrebidBidder = {
+const improveDigitalBidder = {
     name: 'improvedigital',
     switchName: 'prebidImproveDigital',
-    bidParams: (
-        slotId: string,
-        sizes: HeaderBiddingSize[]
-    ): PrebidImproveParams => ({
+    bidParams: (slotId, sizes) => ({
         placementId: getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
     }),
 };
 
-const xaxisBidder: PrebidBidder = {
+const xaxisBidder = {
     name: 'xhb',
     switchName: 'prebidXaxis',
-    bidParams: (
-        slotId: string,
-        sizes: HeaderBiddingSize[]
-    ): PrebidXaxisParams => ({
+    bidParams: (slotId, sizes) => ({
         placementId: getXaxisPlacementId(sizes),
     }),
 };
 
-const adYouLikeBidder: PrebidBidder = {
+const adYouLikeBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
-    bidParams: (): PrebidAdYouLikeParams => {
+    bidParams: () => {
         if (isInUk()) {
             return {
                 placement: '2b4d757e0ec349583ce704699f1467dd',
@@ -447,31 +377,28 @@ const adYouLikeBidder: PrebidBidder = {
 };
 
 // There's an IX bidder for every size that the slot can take
-const indexExchangeBidders: (
-    HeaderBiddingSize[]
-) => PrebidBidder[] = slotSizes => {
+const indexExchangeBidders = slotSizes => {
     const indexSiteId = getIndexSiteId();
     return slotSizes.map(size => ({
         name: 'ix',
         switchName: 'prebidIndexExchange',
-        bidParams: (): PrebidIndexExchangeParams => ({
+        bidParams: () => ({
             siteId: indexSiteId,
             size,
         }),
     }));
 };
 
-const biddersBeingTested: (PrebidBidder[]) => PrebidBidder[] = allBidders =>
+const biddersBeingTested = allBidders =>
     allBidders.filter(bidder => pbTestNameMap()[bidder.name]);
 
-const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
-    const isSwitchedOn: PrebidBidder => boolean = bidder =>
-        config.get(`switches.${bidder.switchName}`);
+const biddersSwitchedOn = allBidders => {
+    const isSwitchedOn = bidder => config.get(`switches.${bidder.switchName}`);
     return allBidders.filter(bidder => isSwitchedOn(bidder));
 };
 
-const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
-    const otherBidders: PrebidBidder[] = [
+const currentBidders = slotSizes => {
+    const otherBidders = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
         ...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
@@ -488,18 +415,14 @@ const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
-    const allBidders = indexExchangeBidders(slotSizes)
-        .concat(otherBidders);
+    const allBidders = indexExchangeBidders(slotSizes).concat(otherBidders);
     return isPbTestOn()
         ? biddersBeingTested(allBidders)
         : biddersSwitchedOn(allBidders);
 };
 
-export const bids: (string, HeaderBiddingSize[]) => PrebidBid[] = (
-    slotId,
-    slotSizes
-) =>
-    currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
+export const bids = (slotId, slotSizes) =>
+    currentBidders(slotSizes).map(bidder => ({
         bidder: bidder.name,
         params: bidder.bidParams(slotId, slotSizes),
     }));
@@ -507,6 +430,7 @@ export const bids: (string, HeaderBiddingSize[]) => PrebidBid[] = (
 export const _ = {
     getIndexSiteId,
     getImprovePlacementId,
+    getXaxisPlacementId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 };

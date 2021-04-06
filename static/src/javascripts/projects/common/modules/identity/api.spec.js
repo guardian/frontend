@@ -1,4 +1,3 @@
-// @flow
 /* global jsdom */
 
 import {
@@ -30,8 +29,8 @@ jest.mock('common/modules/async-call-merger', () => ({
     },
 }));
 
-const getCookieStub: any = getCookie_;
-const ajax: any = ajax_;
+const getCookieStub = getCookie_;
+const ajax = ajax_;
 
 const originalAssign = window.location.assign;
 
@@ -47,7 +46,7 @@ describe('Identity API', () => {
                 '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
         );
 
-        window.location.assign = (url: string) => {
+        window.location.assign = (url) => {
             jsdom.reconfigure({
                 url,
             });

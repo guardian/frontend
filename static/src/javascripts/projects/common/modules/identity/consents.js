@@ -1,5 +1,3 @@
-// @flow
-
 import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
@@ -19,7 +17,6 @@ import {
     setConsent,
     updateNewsletter,
 } from './api';
-import type { SettableConsent } from './api';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
@@ -38,10 +35,10 @@ const UNSUBSCRIPTION_SUCCESS_MESSAGE =
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
 const buildConsentUpdatePayload = (
-    fields: NodeList<any> = new NodeList()
-): SettableConsent => {
+    fields = new NodeList()
+) => {
     const consent = {};
-    Array.from(fields).forEach((field: HTMLInputElement) => {
+    Array.from(fields).forEach((field) => {
         switch (field.type) {
             case 'checkbox':
                 consent.consented = field.checked;
@@ -57,10 +54,10 @@ const buildConsentUpdatePayload = (
     return consent;
 };
 
-const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
+const getInputFields = (labelEl) =>
     fastdom.measure(() => labelEl.querySelectorAll('[name][value]'));
 
-const unsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> => {
+const unsubscribeFromAll = (buttonEl) => {
     buttonEl.classList.add(isLoadingClassName);
     return reqwest({
         url: `${config.get('page.idApiUrl')}/remove/consent/all`,
@@ -70,7 +67,7 @@ const unsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> => {
     });
 };
 
-const toggleInputsWithSelector = (className: string, checked: boolean) =>
+const toggleInputsWithSelector = (className, checked) =>
     fastdom
         .measure(() =>
             Array.from(
@@ -85,21 +82,21 @@ const toggleInputsWithSelector = (className: string, checked: boolean) =>
             })
         );
 
-const checkAllOptOuts = (): Promise<void> =>
+const checkAllOptOuts = () =>
     toggleInputsWithSelector(optOutClassName, true);
 
-const uncheckAllOptIns = (): Promise<void> =>
+const uncheckAllOptIns = () =>
     toggleInputsWithSelector(optInClassName, false);
 
-const showUnsubscribeConfirmation = (): Promise<void> => {
-    const fetchButton = (): Promise<HTMLButtonElement> =>
+const showUnsubscribeConfirmation = () => {
+    const fetchButton = () =>
         fastdom.measure(() =>
             document.querySelector(`.${unsubscribeButtonClassName}`)
         );
 
     const updateVisibilityAndShowMessage = (
-        elem: HTMLButtonElement
-    ): Promise<void> =>
+        elem
+    ) =>
         fastdom.mutate(() => {
             if (elem.parentElement) {
                 prependSuccessMessage(
@@ -113,7 +110,7 @@ const showUnsubscribeConfirmation = (): Promise<void> => {
     return fetchButton().then(button => updateVisibilityAndShowMessage(button));
 };
 
-const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
+const bindUnsubscribeFromAll = (buttonEl) => {
     buttonEl.addEventListener('click', () => {
         toggleInputsWithSelector(newsletterCheckboxClassName, false);
         unsubscribeFromAll(buttonEl)
@@ -124,7 +121,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                     checkAllOptOuts(),
                 ])
             )
-            .catch((err: Error) => {
+            .catch((err) => {
                 pushError(err, 'reload').then(() => {
                     window.scrollTo(0, 0);
                 });
@@ -132,7 +129,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     });
 };
 
-const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
+const updateNewsletterSwitch = (labelEl) =>
     Promise.all([getCheckboxInfo(labelEl), addSpinner(labelEl)])
         .then(([checkbox]) =>
             buildNewsletterUpdatePayload(
@@ -141,7 +138,7 @@ const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
             )
         )
         .then(newsletter => updateNewsletter(newsletter))
-        .catch((err: Error) => {
+        .catch((err) => {
             pushError(err, 'reload').then(() => {
                 window.scrollTo(0, 0);
             });
@@ -149,7 +146,7 @@ const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
         })
         .then(() => removeSpinner(labelEl));
 
-const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
+const bindNewsletterSwitch = (labelEl) => {
     getCheckboxInfo(labelEl).then(info => {
         if (info.shouldUpdate) {
             updateNewsletterSwitch(labelEl);
@@ -158,7 +155,7 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
 
     labelEl.addEventListener(
         'change',
-        (ev: Event, isNotUserInitiated: boolean = false) => {
+        (ev, isNotUserInitiated = false) => {
             if (isNotUserInitiated) {
                 return;
             }
@@ -168,11 +165,11 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
     );
 };
 
-const updateConsentSwitch = (labelEl: HTMLElement): Promise<void> =>
+const updateConsentSwitch = (labelEl) =>
     Promise.all([getInputFields(labelEl), addSpinner(labelEl)])
         .then(([fields]) => buildConsentUpdatePayload(fields))
         .then(consent => setConsent([consent]))
-        .catch((err: Error) => {
+        .catch((err) => {
             pushError(err, 'reload').then(() => {
                 window.scrollTo(0, 0);
             });
@@ -180,7 +177,7 @@ const updateConsentSwitch = (labelEl: HTMLElement): Promise<void> =>
         })
         .then(() => removeSpinner(labelEl));
 
-const bindConsentSwitch = (labelEl: HTMLElement): void => {
+const bindConsentSwitch = (labelEl) => {
     getCheckboxInfo(labelEl).then(info => {
         if (info.shouldUpdate) {
             updateConsentSwitch(labelEl);
@@ -189,7 +186,7 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
 
     labelEl.addEventListener(
         'change',
-        (ev: Event, isNotUserInitiated: boolean = false) => {
+        (ev, isNotUserInitiated = false) => {
             if (isNotUserInitiated) {
                 return;
             }
@@ -199,17 +196,17 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
     );
 };
 
-const getCheckedAllStatus = (checkboxesEl: HTMLInputElement[]): boolean =>
+const getCheckedAllStatus = (checkboxesEl) =>
     checkboxesEl.reduce((acc, checkboxEl) => checkboxEl.checked && acc, true);
 
-const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
-    const fetchElements = (): Promise<(HTMLInputElement | HTMLElement)[]> =>
+const bindCheckAllSwitch = (labelEl) => {
+    const fetchElements = () =>
         fastdom.measure(() => [
             labelEl.querySelector('input'),
             labelEl.querySelector('.manage-account__switch-title'),
         ]);
 
-    const fetchWrappedCheckboxes = (): Promise<HTMLInputElement[]> =>
+    const fetchWrappedCheckboxes = () =>
         fastdom
             .measure(() => [
                 labelEl.dataset.wrapper
@@ -244,7 +241,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             throw new Error(ERR_MALFORMED_HTML);
         }
 
-        const getTextForStatus = (status: boolean) =>
+        const getTextForStatus = (status) =>
             status ? LC_UNCHECK_ALL : LC_CHECK_ALL;
 
         const updateCheckStatus = () =>
@@ -303,7 +300,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
     });
 };
 
-const enhanceConsents = (): void => {
+const enhanceConsents = () => {
     const loaders = [
         [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],

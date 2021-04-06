@@ -2,7 +2,7 @@ package services
 
 import com.amazonaws.services.cloudwatch.{AmazonCloudWatchAsync, AmazonCloudWatchAsyncClient}
 import com.amazonaws.services.cloudwatch.model._
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import conf.Configuration.environment
 import org.joda.time.DateTime
@@ -10,7 +10,7 @@ import awswrappers.cloudwatch._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object CloudWatchStats extends Logging {
+object CloudWatchStats extends GuLogging {
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch: AmazonCloudWatchAsync = {

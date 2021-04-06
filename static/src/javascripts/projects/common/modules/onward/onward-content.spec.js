@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 
 import { OnwardContent } from './onward-content';
@@ -10,7 +8,7 @@ jest.mock('ophan/ng', () => ({
 
 jest.mock('lib/config');
 
-const getShortUrl = (): string =>
+const getShortUrl = () =>
     encodeURIComponent(config.get('page.shortUrl'));
 
 describe('Onward Content', () => {

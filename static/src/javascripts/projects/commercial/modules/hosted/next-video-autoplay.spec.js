@@ -1,14 +1,13 @@
-// @flow
-import fastdom from 'lib/fastdom-promise';
+import fastdom from '../../../../lib/fastdom-promise';
 import {
     init,
     canAutoplay,
     triggerEndSlate,
     addCancelListener,
-} from 'commercial/modules/hosted/next-video-autoplay';
+} from './next-video-autoplay';
 
-jest.mock('common/modules/analytics/google', () => {});
-jest.mock('commercial/modules/hosted/next-video', () => ({
+jest.mock('../../../common/modules/analytics/google', () => {});
+jest.mock('./next-video', () => ({
     init: () => Promise.resolve(),
     load: () => Promise.resolve(),
 }));
@@ -59,7 +58,7 @@ describe('Next video autoplay', () => {
             expect(
                 (document.querySelector(
                     '.js-hosted-next-autoplay'
-                ): any).classList.toString()
+                )).classList.toString()
             ).toEqual(expect.stringContaining('js-autoplay-start'));
             done();
         });
@@ -67,12 +66,12 @@ describe('Next video autoplay', () => {
 
     it('should hide end slate information when cancel button is clicked', done => {
         addCancelListener();
-        (document.querySelector('.js-autoplay-cancel'): any).click();
+        (document.querySelector('.js-autoplay-cancel')).click();
         fastdom.measure(() => {
             expect(
                 (document.querySelector(
                     '.js-hosted-next-autoplay'
-                ): any).classList.toString()
+                )).classList.toString()
             ).toEqual(expect.stringContaining('hosted-slide-out'));
             done();
         });

@@ -1,4 +1,3 @@
-// @flow
 import { addCookie, getCookie } from 'lib/cookies';
 
 const MULTIVARIATE_ID_COOKIE = 'GU_mvt_id';
@@ -6,22 +5,22 @@ const MULTIVARIATE_ID_COOKIE = 'GU_mvt_id';
 const MAX_CLIENT_MVT_ID = 1000000;
 
 // For test purposes only.
-export const overwriteMvtCookie = (testId: number): void =>
+export const overwriteMvtCookie = (testId) =>
     addCookie(MULTIVARIATE_ID_COOKIE, String(testId), 365);
 
-export const getMvtValue = (): number =>
+export const getMvtValue = () =>
     Number(getCookie(MULTIVARIATE_ID_COOKIE));
 
 // For test purposes only.
 // Since it's set by Fastly, sometimes it's not set in dev,
 // but it's needed for certain A/B tests to work properly.
-export const initMvtCookie = (): void => {
+export const initMvtCookie = () => {
     if (!getCookie(MULTIVARIATE_ID_COOKIE)) {
         addCookie(MULTIVARIATE_ID_COOKIE, '1');
     }
 };
 
-export const incrementMvtCookie = (): void => {
+export const incrementMvtCookie = () => {
     const mvtId = parseInt(getCookie('GU_mvt_id'), 10);
     if (mvtId) {
         if (mvtId === MAX_CLIENT_MVT_ID) {
@@ -33,7 +32,7 @@ export const incrementMvtCookie = (): void => {
     }
 };
 
-export const decrementMvtCookie = (): void => {
+export const decrementMvtCookie = () => {
     const mvtId = parseInt(getCookie('GU_mvt_id'), 10);
     if (mvtId) {
         if (mvtId === 0) {
@@ -45,4 +44,4 @@ export const decrementMvtCookie = (): void => {
     }
 };
 
-export const getMvtNumValues = (): number => Number(MAX_CLIENT_MVT_ID);
+export const getMvtNumValues = () => Number(MAX_CLIENT_MVT_ID);

@@ -1,25 +1,14 @@
-// @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
 import { OptoutsExpanderButton } from 'common/modules/identity/upsell/button/OptoutsExpanderButton';
 import {
     getAllUserConsents,
     setConsentsInApi,
 } from 'common/modules/identity/upsell/store/consents';
-import type { ConsentWithState } from 'common/modules/identity/upsell/store/types';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 
-export class OptOutsList extends Component<
-    {},
-    {
-        consents: ConsentWithState[],
-        isLoading: boolean,
-        hasUnsavedChanges: boolean,
-        errors: string[],
-        isExpanded: boolean,
-    }
-> {
-    constructor(props: {}) {
+export class OptOutsList extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             isLoading: false,
@@ -38,7 +27,7 @@ export class OptOutsList extends Component<
         });
     }
 
-    onCheckboxChange = (consent: ConsentWithState) => {
+    onCheckboxChange = (consent) => {
         this.setState(state => ({
             hasUnsavedChanges: true,
             consents: state.consents.map(original =>
@@ -47,7 +36,7 @@ export class OptOutsList extends Component<
         }));
     };
 
-    onSubmit = (ev: Event) => {
+    onSubmit = (ev) => {
         ev.preventDefault();
         this.setState({
             isLoading: true,
@@ -68,7 +57,7 @@ export class OptOutsList extends Component<
             });
     };
 
-    updateExpandState = (isExpanded: boolean) => {
+    updateExpandState = (isExpanded) => {
         this.setState({
             isExpanded,
         });

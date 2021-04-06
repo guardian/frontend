@@ -7,8 +7,9 @@ import org.joda.time.LocalDate
 import java.io.File
 
 import scala.util.{Failure, Success}
-import play.Logger
-import common.{Logging}
+import play.api.Logger
+
+import common.GuLogging
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
 import conf.AdminConfiguration
 import football.model.PA
@@ -36,6 +37,8 @@ private case class RealClient(wsClient: WSClient)(implicit context: ExecutionCon
 }
 private case class TestClient(wsClient: WSClient, environment: Environment) extends Client {
 
+  lazy val log = Logger(getClass)
+
   override def GET(urlString: String): Future[Response] = ???
 
   override def get(suffix: String)(implicit context: ExecutionContext): Future[String] = {
@@ -57,11 +60,11 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
         val xml = scala.io.Source.fromFile(file, "UTF-8").getLines().mkString
         Future(xml)(context)
       case None =>
-        Logger.warn(s"Missing fixture for API response: $suffix ($filename)")
+        log.warn(s"Missing fixture for API response: $suffix ($filename)")
         val response = realClient.get(realApiCallPath)(context)
         response.onComplete {
           case Success(str) => {
-            Logger.info(s"writing response to testdata, $filename.xml, $str")
+            log.info(s"writing response to testdata, $filename.xml, $str")
             writeToFile(s"${environment.rootPath}/admin/test/football/testdata/$filename.xml", str)
           }
           case Failure(writeError) => throw writeError
@@ -82,7 +85,7 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
 }
 
 trait PaFootballClient {
-  self: PaFootballClient with Logging =>
+  self: PaFootballClient with GuLogging =>
 
   implicit val executionContext: ExecutionContext
   implicit val context: ApplicationContext

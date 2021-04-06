@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import implicits.{Dates, ItemResponses}
 import model.ApplicationContext
 import org.joda.time.format.DateTimeFormat
@@ -20,7 +20,7 @@ class PublicationController(
     with ImplicitControllerExecutionContext
     with ItemResponses
     with Dates
-    with Logging {
+    with GuLogging {
 
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 

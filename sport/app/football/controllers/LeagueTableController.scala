@@ -21,12 +21,13 @@ class LeagueTableController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with CompetitionTableFilters
     with ImplicitControllerExecutionContext {
 
   // Competitions must be added to this list to show up at /football/tables
   val tableOrder: Seq[String] = Seq(
+    "World Cup 2022 qualifying",
     "Premier League",
     "Bundesliga",
     "Serie A",
@@ -34,7 +35,6 @@ class LeagueTableController(
     "Ligue 1",
     "Women's Super League",
     "Champions League",
-    "Euro 2020 qualifying",
     "Europa League",
     "Carabao Cup",
     "International friendlies",

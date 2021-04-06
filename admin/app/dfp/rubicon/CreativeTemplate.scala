@@ -1,11 +1,11 @@
 package dfp.rubicon
 
 import com.google.api.ads.admanager.axis.v202011._
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
 
-object CreativeTemplate extends Logging with implicits.Collections {
+object CreativeTemplate extends GuLogging with implicits.Collections {
 
   private val ukOrder = 171545367
   private val ukMobileOrder = 170179047

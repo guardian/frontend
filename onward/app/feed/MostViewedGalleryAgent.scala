@@ -8,7 +8,7 @@ import model.RelatedContentItem
 import scala.concurrent.{ExecutionContext, Future}
 import services.OphanApi
 
-class MostViewedGalleryAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
+class MostViewedGalleryAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
   private val agent = Box[Seq[RelatedContentItem]](Nil)
 

@@ -188,7 +188,7 @@ class CloudWatchMetricsLifecycle(
     jobs: JobScheduler,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent
-    with Logging {
+    with GuLogging {
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(appIdentity.name))
 

@@ -20,7 +20,7 @@ class PopularInTag(
     extends BaseController
     with Related
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   import implicits.Requests._
@@ -45,7 +45,7 @@ class PopularInTag(
         JsonComponent(
           OnwardCollectionResponse(
             heading = "Related content",
-            trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(trails.items.map(_.faciaContent)),
+            trails = trails.items.map(_.faciaContent).map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
           ),
         )
       } else {

@@ -2,29 +2,30 @@
 require('core-js');
 
 // Stub global Guardian config
+// eslint-disable-next-line id-denylist -- this is on purpose
 window.guardian = {
-    config: {
-        switches: {},
-        page: {},
-        images: {
-            commercial: {},
-        },
-        libs: {},
-    },
-    css: {},
-    adBlockers: {
-        active: undefined,
-        onDetect: [],
-    },
+	config: {
+		switches: {},
+		page: {},
+		images: {
+			commercial: {},
+		},
+		libs: {},
+	},
+	css: {},
+	adBlockers: {
+		active: undefined,
+		onDetect: [],
+	},
 };
 
 // Stub matchmedia
 window.matchMedia =
-    window.matchMedia ||
-    function() {
-        return {
-            matches: false,
-            addListener() {},
-            removeListener() {},
-        };
-    };
+	window.matchMedia ||
+	function() {
+		return {
+			matches: false,
+			addListener() {},
+			removeListener() {},
+		};
+	};

@@ -1,13 +1,13 @@
 package bindables
 
-import common.Logging
+import common.GuLogging
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import play.api.mvc.PathBindable
 
 import scala.util.{Failure, Success, Try}
 
-class LocalDateBindable extends PathBindable[LocalDate] with Logging {
+class LocalDateBindable extends PathBindable[LocalDate] with GuLogging {
   val Format = "yyyy-MM-dd"
 
   override def bind(key: String, value: String): Either[String, LocalDate] = {

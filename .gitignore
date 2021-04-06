@@ -21,6 +21,7 @@ static/vendor/data/cmp_vendorlist.json
 .sbt
 .sbt.*
 .metals
+.bsp
 
 log
 logs

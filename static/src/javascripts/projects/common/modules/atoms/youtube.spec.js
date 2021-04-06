@@ -1,4 +1,3 @@
-// @flow
 import { _, checkElemsForVideos } from 'common/modules/atoms/youtube';
 import { isAndroid as _isAndroid, isIOS as _isIOS } from 'lib/detect';
 import { isOn as _isOn } from 'common/modules/accessibility/main';
@@ -6,12 +5,12 @@ import config from 'lib/config';
 
 const { muteIFrame, getIFrameBehaviour, getIFrameBehaviourConfig } = _;
 
-const isAndroid: any = _isAndroid;
-const isIOS: any = _isIOS;
-const accessibilityIsOn: any = _isOn;
+const isAndroid = _isAndroid;
+const isIOS = _isIOS;
+const accessibilityIsOn = _isOn;
 
 jest.mock('lib/detect', () => {
-    // $FlowFixMe property requireActual is actually not missing Flow.
+    
     const original = jest.requireActual('lib/detect');
     return {
         ...original,
@@ -21,7 +20,7 @@ jest.mock('lib/detect', () => {
 });
 
 jest.mock('common/modules/accessibility/main', () => {
-    // $FlowFixMe property requireActual is actually not missing Flow.
+    
     const original = jest.requireActual('common/modules/accessibility/main');
     return {
         ...original,
@@ -89,7 +88,7 @@ describe('youtube', () => {
 
             const iframe = ((document.getElementById(
                 'iframeId'
-            ): any): HTMLIFrameElement);
+            )));
 
             muteIFrame(iframe);
 
@@ -109,7 +108,7 @@ describe('youtube', () => {
 
             const iframe = ((document.getElementById(
                 'iframeId'
-            ): any): HTMLIFrameElement);
+            )));
 
             muteIFrame(iframe);
             if (document.body) {
@@ -130,7 +129,7 @@ describe('youtube', () => {
 
             const iframe = ((document.getElementById(
                 'iframeId'
-            ): any): HTMLIFrameElement);
+            )));
 
             muteIFrame(iframe);
 
@@ -237,7 +236,7 @@ describe('youtube', () => {
             }
             iframe = ((document.getElementById(
                 'iframeId'
-            ): any): HTMLIFrameElement);
+            )));
         });
 
         it('is Autoplay blocking platform if isAndroid', () => {
@@ -255,14 +254,14 @@ describe('youtube', () => {
         });
 
         it('correctly identifies Internal Referrer', () => {
-            // $FlowFixMe jest.spyon can take a third accesstype argument since jest 22.1.0
+            
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.theguardian.com'
             );
             expect(getIFrameBehaviourConfig(iframe).isInternalReferrer).toBe(
                 true
             );
-            // $FlowFixMe jest.spyon can take a third accesstype argument since jest 22.1.0
+            
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.garbage-site.com'
             );

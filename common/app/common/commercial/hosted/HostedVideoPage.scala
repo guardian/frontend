@@ -2,7 +2,7 @@ package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
-import common.Logging
+import common.GuLogging
 import common.commercial.hosted.ContentUtils.{imageForSocialShare, thumbnailUrl}
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.{Encoding, EncodingOrdering, MetaData}
@@ -23,7 +23,7 @@ case class HostedVideoPage(
   override val mainImageUrl = video.posterUrl
 }
 
-object HostedVideoPage extends Logging {
+object HostedVideoPage extends GuLogging {
   private implicit val ordering = EncodingOrdering
 
   def fromContent(content: Content): Option[HostedVideoPage] = {

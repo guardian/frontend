@@ -1,12 +1,12 @@
 package dfp
 
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, GuLogging}
 import conf.Configuration
 import tools.Store
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String, dfpApi: DfpApi) extends Logging {
+class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String, dfpApi: DfpApi) extends GuLogging {
 
   def run(akkaAsync: AkkaAsync)(implicit executionContext: ExecutionContext): Future[Unit] =
     Future {

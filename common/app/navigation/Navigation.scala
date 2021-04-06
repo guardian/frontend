@@ -2,7 +2,9 @@ package navigation
 
 import _root_.model.{NavItem, Page, Tags}
 import common.{Edition, editions}
-import play.api.libs.json.{Json, Writes}
+import navigation.NavMenu.navRoot
+import play.api.libs.functional.syntax.toFunctionalBuilderOps
+import play.api.libs.json.{Json, Writes, _}
 
 import scala.annotation.tailrec
 
@@ -13,18 +15,39 @@ case class ParentSubnav(parent: NavLink, links: Seq[NavLink]) extends Subnav
 case class NavLink(
     title: String,
     url: String,
-    longTitle: String = "",
+    longTitle: Option[String] = None,
     // TODO: Shouldn't need iconName. Remove, and just make the first NavLink on mobile
-    iconName: String = "",
+    iconName: Option[String] = None,
     children: Seq[NavLink] = Nil,
     classList: Seq[String] = Nil,
 )
 
-case class SimpleMenu(
-    pillars: Seq[NavLink],
-    otherLinks: Seq[NavLink],
-    brandExtensions: Seq[NavLink],
-)
+object NavLink {
+  def id(link: NavLink): String = link.title
+
+  def nullableSeq[A](path: JsPath, writer: => Writes[A]): OWrites[Seq[A]] =
+    OWrites[Seq[A]] { a =>
+      a match {
+        case nonEmpty if nonEmpty.nonEmpty =>
+          JsPath.createObj(path -> Json.toJson(nonEmpty)(Writes.seq(writer)))
+        case _ => JsObject.empty
+      }
+    }
+
+  // Custom writer so that we can drop sequences altogether. It is really important to minimise the data sent to DCR and
+  // this really helps.
+  implicit lazy val navLinkWrites: Writes[NavLink] = {
+    ((__ \ "title").write[String]
+      and (__ \ "url").write[String]
+      and (__ \ "longTitle").writeNullable[String]
+      and (__ \ "iconName").writeNullable[String]
+      and (nullableSeq[NavLink](__ \ "children", navLinkWrites))
+      and (nullableSeq[String](__ \ "classList", Writes.StringWrites)))(nl =>
+      (nl.title, nl.url, nl.longTitle, nl.iconName, nl.children, nl.classList),
+    )
+  }
+
+}
 
 case class NavMenu(
     currentUrl: String,
@@ -74,11 +97,6 @@ object NavMenu {
     )
   }
 
-  def apply(edition: Edition): SimpleMenu = {
-    val root = navRoot(edition)
-    SimpleMenu(root.children, root.otherLinks, root.brandExtensions)
-  }
-
   /*
    * Useful when looking for a link, which may not exist in current edition, but
    * does in another.
@@ -100,7 +118,7 @@ object NavMenu {
     }
   }
 
-  private[navigation] def findDescendantByUrl(
+  def findDescendantByUrl(
       url: String,
       edition: Edition,
       pillars: Seq[NavLink],
@@ -112,7 +130,7 @@ object NavMenu {
       .orElse(find(getChildrenFromOtherEditions(edition), hasUrl))
   }
 
-  private[navigation] def findParent(
+  def findParent(
       currentNavLink: NavLink,
       edition: Edition,
       pillars: Seq[NavLink],
@@ -130,7 +148,7 @@ object NavMenu {
       .orElse(find(getChildrenFromOtherEditions(edition), isParent))
   }
 
-  private[navigation] def getPillar(
+  def getPillar(
       currentParent: Option[NavLink],
       edition: Edition,
       pillars: Seq[NavLink],
@@ -145,7 +163,7 @@ object NavMenu {
     )
   }
 
-  private[navigation] def navRoot(edition: Edition): NavRoot = {
+  def navRoot(edition: Edition): NavRoot = {
 
     val editionLinks: EditionNavLinks = edition match {
       case editions.Uk            => navigationData.uk
@@ -214,7 +232,7 @@ object NavMenu {
 
   }
 
-  private[navigation] def getSubnav(
+  def getSubnav(
       customSignPosting: Option[NavItem],
       currentNavLink: Option[NavLink],
       currentParent: Option[NavLink],
@@ -256,4 +274,21 @@ object NavMenu {
         }
     }
   }
+}
+
+// Used by AMP and DCR
+case class SimpleMenu(
+    pillars: Seq[NavLink],
+    otherLinks: Seq[NavLink],
+    brandExtensions: Seq[NavLink],
+    readerRevenueLinks: ReaderRevenueLinks,
+)
+
+object SimpleMenu {
+  def apply(edition: Edition): SimpleMenu = {
+    val root = navRoot(edition)
+    SimpleMenu(root.children, root.otherLinks, root.brandExtensions, ReaderRevenueLinks.all)
+  }
+
+  implicit val writes = Json.writes[SimpleMenu]
 }

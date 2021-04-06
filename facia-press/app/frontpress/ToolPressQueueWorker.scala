@@ -13,7 +13,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress)(implicit
     executionContext: ExecutionContext,
 ) extends JsonQueueWorker[PressJob]
-    with Logging {
+    with GuLogging {
   override lazy val queue: JsonMessageQueue[PressJob] = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
 

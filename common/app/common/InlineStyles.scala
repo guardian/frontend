@@ -61,7 +61,7 @@ object CSSRule {
     styles.map { case (k, v) => s"$k: $v" }.mkString("; ")
 }
 
-object InlineStyles {
+object InlineStyles extends GuLogging {
 
   /**
     * Attempt to inline the rules from the <style> tags in a page.
@@ -106,7 +106,7 @@ object InlineStyles {
         val source = new InputSource(new StringReader(element.html))
         val cssParser = new CSSOMParser(new SACParserCSS3())
         Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
-          Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
+          log.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
         } match {
           case Failure(_) => (inline, head :+ element.html)
           case Success(sheet) =>

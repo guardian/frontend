@@ -2,12 +2,12 @@ package contentapi
 
 import com.gu.Box
 import com.gu.contentapi.client.model.v1.Section
-import common.Logging
+import common.GuLogging
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
-class SectionsLookUp(contentApiClient: ContentApiClient) extends Logging {
+class SectionsLookUp(contentApiClient: ContentApiClient) extends GuLogging {
   private val sections = Box[Option[Map[String, Section]]](None)
 
   def refresh()(implicit executionContext: ExecutionContext): Unit = {

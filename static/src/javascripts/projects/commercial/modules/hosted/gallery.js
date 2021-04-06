@@ -1,44 +1,18 @@
-// @flow
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
-import $ from 'lib/$';
-import qwery from 'qwery';
-import config from 'lib/config';
-import { pushUrl } from 'lib/url';
-import { getBreakpoint, hasTouchScreen } from 'lib/detect';
-import FiniteStateMachine from 'lib/fsm';
-import mediator from 'lib/mediator';
 import throttle from 'lodash/throttle';
-import interactionTracking from 'common/modules/analytics/interaction-tracking';
-import { loadCssPromise } from 'lib/load-css-promise';
+import qwery from 'qwery';
+import $ from '../../../../lib/$';
+import config from '../../../../lib/config';
+import { getBreakpoint, hasTouchScreen } from '../../../../lib/detect';
+import FiniteStateMachine from '../../../../lib/fsm';
+import { loadCssPromise } from '../../../../lib/load-css-promise';
+import mediator from '../../../../lib/mediator';
+import { pushUrl } from '../../../../lib/url';
+import interactionTracking from '../../../common/modules/analytics/interaction-tracking';
 
 class HostedGallery {
-    useSwipe: boolean;
-    swipeThreshold: number;
-    swipeContainerWidth: number;
-    index: number;
-    imageRatios: number[];
-    $galleryEl: bonzo;
-    $galleryFrame: bonzo;
-    $header: bonzo;
-    $imagesContainer: bonzo;
-    $captionContainer: bonzo;
-    $captions: bonzo;
-    $scrollEl: bonzo;
-    $images: bonzo;
-    $progress: bonzo;
-    $border: bonzo;
-    prevBtn: HTMLElement;
-    nextBtn: HTMLElement;
-    infoBtn: HTMLElement;
-    $counter: bonzo;
-    $ctaFloat: bonzo;
-    $ojFloat: bonzo;
-    $meta: bonzo;
-    ojClose: HTMLElement;
-    resize: (data?: Object) => void;
-    resizer: () => void;
-    fsm: FiniteStateMachine;
+
     constructor() {
         // CONFIG
         const breakpoint = getBreakpoint();
@@ -87,7 +61,7 @@ class HostedGallery {
                 initial: 'image',
                 onChangeState() {},
                 context: this,
-                // $FlowFixMe
+
                 states: this.states,
             });
 
@@ -208,7 +182,7 @@ class HostedGallery {
         });
     }
 
-    static ctaIndex(): ?number {
+    static ctaIndex() {
         const ctaIndex = config.get('page.ctaIndex');
         const images = config.get('page.images');
         return ctaIndex > 0 && ctaIndex < images.length - 1
@@ -216,11 +190,11 @@ class HostedGallery {
             : undefined;
     }
 
-    trigger(event: string, data?: Object) {
+    trigger(event, data) {
         this.fsm.trigger(event, data);
     }
 
-    loadSurroundingImages(index: number, count: number) {
+    loadSurroundingImages(index, count) {
         let $img;
         const that = this;
 
@@ -247,7 +221,7 @@ class HostedGallery {
             }, this);
     }
 
-    resizeImage(imgIndex: number) {
+    resizeImage(imgIndex) {
         const $galleryFrame = this.$galleryFrame[0];
         const width = $galleryFrame.clientWidth;
         const height = $galleryFrame.clientHeight;
@@ -310,7 +284,7 @@ class HostedGallery {
         });
     }
 
-    translateContent(imgIndex: number, offset: number, duration: number) {
+    translateContent(imgIndex, offset, duration) {
         const px = -1 * (imgIndex - 1) * this.swipeContainerWidth;
         const galleryEl = this.$imagesContainer[0];
         const $meta = this.$meta;
@@ -330,7 +304,7 @@ class HostedGallery {
         });
     }
 
-    fadeContent(e: Event) {
+    fadeContent(e) {
         const length = this.$images.length;
         const scrollTop =
             e.target instanceof HTMLElement ? e.target.scrollTop : 0;
@@ -341,7 +315,7 @@ class HostedGallery {
         const fractionProgress = progress % 1;
         const deg = Math.ceil(fractionProgress * 360);
         const newIndex = Math.round(progress + 0.75);
-        const ctaIndex: number = HostedGallery.ctaIndex() || -1;
+        const ctaIndex = HostedGallery.ctaIndex() || -1;
         fastdom.mutate(() => {
             this.$images.each((image, index) => {
                 const opacity = ((progress - index + 1) * 16) / 11 - 0.0625;
@@ -376,7 +350,7 @@ class HostedGallery {
         }
     }
 
-    scrollTo(index: number) {
+    scrollTo(index) {
         const scrollEl = this.$scrollEl;
         const length = this.$images.length;
         const scrollHeight = scrollEl[0].scrollHeight;
@@ -385,7 +359,7 @@ class HostedGallery {
         });
     }
 
-    trackNavBetweenImages(data: Object) {
+    trackNavBetweenImages(data) {
         if (data && data.nav) {
             const trackingPrefix = config.get('page.trackingPrefix', '');
             interactionTracking.trackNonClickInteraction(
@@ -435,7 +409,7 @@ class HostedGallery {
         });
     }
 
-    handleKeyEvents(e: KeyboardEvent) {
+    handleKeyEvents(e) {
         const keyNames = {
             '37': 'left',
             '38': 'up',
@@ -464,7 +438,7 @@ class HostedGallery {
         }
     }
 
-    loadAtIndex(i: number) {
+    loadAtIndex(i) {
         this.index = i;
         this.trigger('reload');
         if (this.useSwipe) {
@@ -475,7 +449,7 @@ class HostedGallery {
     }
 }
 // TODO: If we add `states` to the list of annotations within the class, it is `undefined` in the constructor. Wat?
-// $FlowFixMe
+
 HostedGallery.prototype.states = {
     image: {
         enter() {
@@ -517,7 +491,7 @@ HostedGallery.prototype.states = {
             mediator.off('window:throttledResize', this.resize);
         },
         events: {
-            next(e: Object) {
+            next(e) {
                 if (this.index < this.$images.length) {
                     // last img
                     this.index += 1;
@@ -525,7 +499,7 @@ HostedGallery.prototype.states = {
                 }
                 this.reloadState = true;
             },
-            prev(e: Object) {
+            prev(e) {
                 if (this.index > 1) {
                     // first img
                     this.index -= 1;
@@ -533,7 +507,7 @@ HostedGallery.prototype.states = {
                 }
                 this.reloadState = true;
             },
-            reload(e: Object) {
+            reload(e) {
                 this.trackNavBetweenImages(e);
                 this.reloadState = true;
             },
@@ -557,7 +531,7 @@ HostedGallery.prototype.states = {
     },
 };
 
-export const init = (): Promise<any> => {
+export const init = () => {
     if (qwery('.js-hosted-gallery-container').length) {
         return loadCssPromise.then(() => {
             let res;

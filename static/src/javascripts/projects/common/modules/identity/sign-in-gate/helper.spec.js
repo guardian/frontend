@@ -1,4 +1,3 @@
-// @flow
 import {
     hasUserDismissedGateInWindow,
     hasUserDismissedGateMoreThanCount,
@@ -60,9 +59,9 @@ jest.mock('./component-event-tracking', () => ({
     get: jest.fn(() => undefined),
 }));
 
-const fakeUserPrefs: any = require('common/modules/user-prefs');
-const fakeLocal: any = require('@guardian/libs').storage.local;
-const fakeConfig: any = require('lib/config');
+const fakeUserPrefs = require('common/modules/user-prefs');
+const fakeLocal = require('@guardian/libs').storage.local;
+const fakeConfig = require('lib/config');
 
 describe('Sign In Gate Helper functions', () => {
     describe('hasUserDismissedGateInWindow', () => {

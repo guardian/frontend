@@ -14,7 +14,7 @@ class MostViewedGalleryController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private val page = SimplePage(

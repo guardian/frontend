@@ -1,4 +1,3 @@
-// @flow
 /*
  Module: geo-most-popular.js
  Description: Shows popular trails for a given country.
@@ -9,18 +8,18 @@ import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
 import once from 'lodash/once';
 
-const promise: Promise<void> = new Promise((resolve, reject) => {
+const promise = new Promise((resolve, reject) => {
     mediator.on('modules:onward:geo-most-popular:ready', resolve);
     mediator.on('modules:onward:geo-most-popular:cancel', resolve);
     mediator.on('modules:onward:geo-most-popular:error', reject);
 });
 
 class GeoMostPopular extends Component {
-    static error(error: Error): void {
+    static error(error) {
         mediator.emit('modules:onward:geo-most-popular:error', error);
     }
 
-    constructor(): void {
+    constructor() {
         super();
 
         this.endpoint = '/most-read-geo.json';
@@ -28,7 +27,7 @@ class GeoMostPopular extends Component {
         mediator.emit('register:begin', 'geo-most-popular');
     }
 
-    ready(): void {
+    ready() {
         mediator.emit('register:end', 'geo-most-popular');
         mediator.emit('modules:onward:geo-most-popular:ready', this);
     }
@@ -37,7 +36,7 @@ class GeoMostPopular extends Component {
 // we don't want to show most popular on short articles as the sticky right mpu slot will push most popular behind other containers at the bottom.
 const showMostPopularThreshold = 1500;
 
-const fetchMostPopular = (articleBodyHeight: number): void => {
+const fetchMostPopular = (articleBodyHeight) => {
     if (articleBodyHeight > showMostPopularThreshold) {
         new GeoMostPopular().fetch(
             qwery('.js-components-container'),
@@ -48,7 +47,7 @@ const fetchMostPopular = (articleBodyHeight: number): void => {
 
 const geoMostPopular = {
     render: once(
-        (): Promise<void> => {
+        () => {
             fastdom
                 .measure(() => {
                     const jsArticleBodyElement = document.querySelector(
