@@ -10,7 +10,7 @@ import play.api.libs.json._
 // because we don't want people changing the core frontend models and as a side effect,
 // making them incompatible with Dotcomponents. By having our own set of models, there's
 // only one reason for change.
-// exceptions: we do resuse the existing Nav & BlockElement classes right now
+// Exceptions: we do reuse the existing Nav & BlockElement classes right now
 
 // -----------------------------------------------------------------
 // Supporting Types
@@ -31,16 +31,10 @@ object Tag {
 case class Block(
     id: String,
     elements: List[PageElement],
-    createdOn: Option[Long],
-    createdOnDisplay: Option[String],
     blockCreatedOn: Option[Long],
     blockCreatedOnDisplay: Option[String],
-    lastUpdated: Option[Long],
-    lastUpdatedDisplay: Option[String],
     blockLastUpdated: Option[Long],
     blockLastUpdatedDisplay: Option[String],
-    firstPublished: Option[Long],
-    firstPublishedDisplay: Option[String],
     blockFirstPublished: Option[Long],
     blockFirstPublishedDisplay: Option[String],
     title: Option[String],
