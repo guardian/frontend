@@ -7,10 +7,9 @@ import qwery from 'qwery';
 import config from '../../../../lib/config';
 import fastdom from '../../../../lib/fastdom-promise';
 import raven from '../../../../lib/raven';
-import sha1 from '../../../../lib/sha1';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import { getUserFromCookie } from '../../../common/modules/identity/api';
+import { getUserFromApi, getUserFromCookie } from '../../../common/modules/identity/api';
 import { adFreeSlotRemove } from '../ad-free-slot-remove';
 import { init as initMessenger } from '../messenger';
 import { init as background } from '../messenger/background';
@@ -32,6 +31,7 @@ import { onSlotRender } from './on-slot-render';
 import { onSlotViewableFunction } from './on-slot-viewable';
 import { onSlotVisibilityChanged } from './on-slot-visibility-changed';
 import { refreshOnResize } from './refresh-on-resize';
+import { removeSlots } from '../../../commercial/modules/remove-slots';
 
 initMessenger(
     type,
@@ -71,24 +71,15 @@ const setPageTargeting = () => {
     });
 };
 
-// This is specifically a separate function to close-disabled-slots. One is for
-// closing hidden/disabled slots, the other is for graceful recovery when prepare-googletag
-// encounters an error. Here, slots are closed unconditionally.
-const removeAdSlots = () => {
-    // Get all ad slots
-    const adSlots = qwery(dfpEnv.adSlotSelector);
-
-    return fastdom.mutate(() =>
-        adSlots.forEach((adSlot) => adSlot.remove())
-    );
-};
-
 const setPublisherProvidedId = () => {
-    const user = getUserFromCookie();
-    if (user) {
-        const hashedId = sha1.hash(user.id);
-        window.googletag.pubads().setPublisherProvidedId(hashedId);
-    }
+	// Also known as PPID
+	getUserFromApi((user) => {
+		if (user && user.privateFields && user.privateFields.googleTagId) {
+			window.googletag
+				.pubads()
+				.setPublisherProvidedId(user.privateFields.googleTagId);
+		}
+	});
 };
 
 export const init = () => {
@@ -164,10 +155,10 @@ export const init = () => {
         // Abandon the init sequence.
         setupAdvertising()
             .then(adFreeSlotRemove)
-            .catch(removeAdSlots);
+            .catch(removeSlots);
 
         return Promise.resolve();
     }
 
-    return removeAdSlots();
+    return removeSlots();
 };

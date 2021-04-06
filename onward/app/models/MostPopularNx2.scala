@@ -1,6 +1,7 @@
 package models
 
 import com.github.nscala_time.time.Imports.DateTimeZone
+import com.gu.commercial.branding.{Branding, BrandingType, Sponsored, Logo, Dimensions}
 import common.{Edition, LinkTo}
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
@@ -8,7 +9,7 @@ import views.support.{ContentOldAgeDescriber, ImageProfile, ImgSrc, Item300, Ite
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.{Article, ImageMedia, InlineImage, Pillar}
+import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 
 case class OnwardItemNx2(
@@ -22,6 +23,7 @@ case class OnwardItemNx2(
     isLiveBlog: Boolean,
     pillar: String,
     designType: String,
+    format: ContentFormat,
     webPublicationDate: String,
     headline: String,
     mediaType: Option[String],
@@ -29,11 +31,26 @@ case class OnwardItemNx2(
     kickerText: Option[String],
     starRating: Option[Int],
     avatarUrl: Option[String],
+    branding: Option[Branding],
 )
 
 object OnwardItemNx2 {
 
-  implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
+  implicit val brandingTypeWrites = new Writes[BrandingType] {
+    def writes(bt: BrandingType) = {
+      Json.obj(
+        "name" -> bt.name,
+      )
+    }
+  }
+
+  implicit val dimensionsWrites = Json.writes[Dimensions]
+
+  implicit val logoWrites = Json.writes[Logo]
+
+  implicit val brandingWrites = Json.writes[Branding]
+
+  implicit val onwardItemNx2Writes = Json.writes[OnwardItemNx2]
 
   private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
@@ -95,6 +112,7 @@ object OnwardItemNx2 {
       isLiveBlog = isLiveBlog,
       pillar = correctPillar(pillar.toString.toLowerCase),
       designType = metadata.designType.toString,
+      format = metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = webPublicationDate,
       headline = headline,
       mediaType = contentCard.mediaType.map(x => x.toString),
@@ -102,6 +120,7 @@ object OnwardItemNx2 {
       kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
       starRating = contentCard.starRating,
       avatarUrl = contentCardToAvatarUrl(contentCard),
+      branding = contentCard.branding,
     )
   }
 
@@ -115,7 +134,6 @@ object OnwardItemNx2 {
         case other  => other
       }
     }
-
     OnwardItemNx2(
       url = LinkTo(content.header.url),
       linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
@@ -127,6 +145,7 @@ object OnwardItemNx2 {
       isLiveBlog = content.properties.isLiveBlog,
       pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
       designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
+      format = content.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
       headline = content.header.headline,
       mediaType = content.card.mediaType.map(_.toString()),
@@ -134,6 +153,7 @@ object OnwardItemNx2 {
       kickerText = content.header.kicker.flatMap(_.properties.kickerText),
       starRating = content.card.starRating,
       avatarUrl = None,
+      branding = content.branding(Edition(request)),
     )
   }
 }

@@ -108,6 +108,10 @@ Location: London, UK
 Developer: Lauren Emms
 From: London, UK
 
+Associate Developer: Rhys Mills
+Website: rhysmills.com
+From: Tonbridge, UK
+
 /* CONTENT PRODUCTION */
 
 Editorial Systems: Luke Hoyland

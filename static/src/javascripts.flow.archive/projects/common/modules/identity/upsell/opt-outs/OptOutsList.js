@@ -11,7 +11,7 @@
  */
 
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
 import { OptoutsExpanderButton } from 'common/modules/identity/upsell/button/OptoutsExpanderButton';
 import {

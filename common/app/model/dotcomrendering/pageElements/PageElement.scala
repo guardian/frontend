@@ -291,6 +291,7 @@ case class InteractiveAtomBlockElement(
     css: Option[String],
     js: Option[String],
     placeholderUrl: Option[String],
+    role: Option[String],
 ) extends PageElement
 object InteractiveAtomBlockElement {
   implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
@@ -796,11 +797,18 @@ object PageElement {
       overrideImage: Option[ImageElement],
       edition: Edition,
   ): List[PageElement] = {
+
     def extractAtom: Option[Atom] =
       for {
-        contentAtom <- element.contentAtomTypeData
-        atom <- atoms.find(_.id == contentAtom.atomId)
+        d <- element.contentAtomTypeData
+        atom <- atoms.find(_.id == d.atomId)
       } yield atom
+
+    val elementRole: Option[String] =
+      for {
+        d <- element.contentAtomTypeData
+        role <- d.role
+      } yield role
 
     element.`type` match {
 
@@ -1068,6 +1076,7 @@ object PageElement {
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
+                role = elementRole,
               ),
             )
           }
@@ -1610,8 +1619,8 @@ object PageElement {
       url = data.url.getOrElse(originalUrl)
       thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
-      source match {
-        case "YouTube" =>
+      source.toLowerCase match {
+        case "youtube" =>
           VideoYoutubeBlockElement(
             caption,
             url,
@@ -1624,7 +1633,7 @@ object PageElement {
             data.source,
             data.sourceDomain,
           )
-        case "Vimeo" =>
+        case "vimeo" =>
           VideoVimeoBlockElement(
             caption,
             url,
@@ -1637,7 +1646,7 @@ object PageElement {
             data.source,
             data.sourceDomain,
           )
-        case "Facebook" =>
+        case "facebook" =>
           VideoFacebookBlockElement(
             caption,
             url,

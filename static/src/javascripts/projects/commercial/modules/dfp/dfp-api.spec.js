@@ -31,6 +31,7 @@ jest.mock('../../../../lib/raven');
 jest.mock('../../../common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
     getUserFromCookie: jest.fn(),
+    getUserFromApi: jest.fn(),
     getUrl: jest.fn(),
 }));
 jest.mock('ophan/ng', () => null);
@@ -76,12 +77,9 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
         dfpAdvertising: true,
     },
 }));
-jest.mock('./apply-creative-template', () => ({
-    applyCreativeTemplate: () => Promise.resolve(true),
-}));
 jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
-    
+
     storage: jest.requireActual('@guardian/libs').storage,
 }));
 jest.mock('lodash/once', () => fn => fn);

@@ -70,6 +70,9 @@ module.exports = {
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
             lodash: 'lodash-es',
+            "react": "preact/compat",
+            "react-dom/test-utils": "preact/test-utils",
+            "react-dom": "preact/compat",
         },
         extensions: ['.js', '.ts', '.tsx', '.jsx'],
         symlinks: false, // Inserted to enable linking @guardian/consent-management-platform
@@ -125,12 +128,6 @@ module.exports = {
                 test: /\.(html|css)$/,
                 exclude: /(node_modules)/,
                 loader: 'raw-loader',
-            },
-            {
-                include: path.resolve(__dirname, 'node_modules/preact-x'),
-                resolve: {
-                    alias: { preact: 'preact-x' },
-                },
             },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This

@@ -27,6 +27,8 @@ import {
     isRecurringContributor,
     shouldHideSupportMessaging,
 } from './user-features';
+import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -215,6 +217,18 @@ const getStickyBottomBanner = (payload) => {
     const URL = isProd ? 'https://contributions.guardianapis.com/banner' : 'https://contributions.code.dev-guardianapis.com/banner';
     const json = JSON.stringify(payload);
 
+    return fetchJson(URL, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: json,
+    });
+};
+
+const getPuzzlesBanner = (payload) => {
+    const isProd = config.get('page.isProd');
+    const URL = isProd ? 'https://contributions.guardianapis.com/puzzles' : 'https://contributions.code.dev-guardianapis.com/puzzles?';
+    const json = JSON.stringify(payload);
+
     const forcedVariant = getForcedVariant('banner');
     const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
 
@@ -223,7 +237,7 @@ const getStickyBottomBanner = (payload) => {
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
-};
+}
 
 const getEpicUrl = (contentType) => {
     const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
@@ -287,6 +301,29 @@ const renderEpic = async (module, meta) => {
     );
 };
 
+export const fetchPuzzlesData = async () => {
+    const page = config.get('page');
+    const payload = await buildBannerPayload();
+    const forcePuzzlesBannerTest = isInVariantSynchronous(puzzlesBanner, 'variant');
+    const isPuzzlesBannerSwitchOn = config.get('switches.puzzlesBanner', false);
+    const userShouldSeeBanner = forcePuzzlesBannerTest || isPuzzlesBannerSwitchOn;
+    const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
+
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+        return null;
+    }
+
+    if (userShouldSeeBanner && isPuzzlesPage) {
+        return getPuzzlesBanner(payload).then(json => {
+            if (!json.data) {
+                return null;
+            }
+            return (json);
+        })
+    }
+    return null;
+}
+
 export const fetchBannerData = async () => {
     const payload = await buildBannerPayload();
 
@@ -319,15 +356,18 @@ export const renderBanner = (response) => {
         return Promise.resolve(false);
     }
 
-    
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
+            const isPuzzlesBanner = module.name === 'PuzzlesBanner';
 
             return fastdom.mutate(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
                 container.classList.add('remote-banner');
+                if (isPuzzlesBanner) {
+                    container.classList.add('remote-banner--puzzles');
+                }
 
                 if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
@@ -337,7 +377,7 @@ export const renderBanner = (response) => {
                     container,
                     Banner,
                     { submitComponentEvent, ...module.props},
-                    true
+                    !isPuzzlesBanner // The puzzles banner has its own CacheProvider component, and needs this to be false
                 );
             }).then(() => {
                 const {

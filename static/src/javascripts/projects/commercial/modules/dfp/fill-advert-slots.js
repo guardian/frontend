@@ -5,7 +5,7 @@ import { queueAdvert } from './queue-advert';
 import { displayLazyAds } from './display-lazy-ads';
 import { displayAds } from './display-ads';
 import { setupPrebidOnce } from './prepare-prebid';
-import { closeDisabledSlots } from '../close-disabled-slots';
+import { removeDisabledSlots } from '../remove-slots';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 
 import { getBreakpoint } from '../../../../lib/detect';
@@ -23,7 +23,7 @@ const fillAdvertSlots = () => {
     // initiates these dependencies, to speed up the init process. Bootstrap also captures the module performance.
     const dependencies = [
         setupPrebidOnce(),
-        closeDisabledSlots(),
+        removeDisabledSlots(),
     ];
 
     return Promise.all(dependencies).then(() => {

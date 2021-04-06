@@ -1,13 +1,11 @@
 package controllers
 
-import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
-import play.api.libs.ws.WSClient
-import play.api.mvc.ControllerComponents
+import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
 
-import scala.concurrent.ExecutionContext
+class HealthCheck(cc: ControllerComponents) extends AbstractController(cc) {
 
-class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
-    executionContext: ExecutionContext,
-) extends AllGoodCachedHealthCheck(
-      NeverExpiresSingleHealthCheck(routes.AdvertsManager.renderAdvertsManager(None).url),
-    )(wsClient, executionContext)
+  def healthCheck: Action[AnyContent] =
+    Action {
+      Ok("200 OK")
+    }
+}
