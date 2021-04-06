@@ -6,16 +6,22 @@ const staticUrl = `${String(config.get('page.avatarImagesUrl'))}/user`;
 const request = (
 	method: string,
 	path: string,
-	data?: Record<string, unknown>,
+	data?: FormData,
 ): Promise<Response> => {
 	const url = apiUrl + path;
 
-	const body = ['GET', 'HEAD'].includes(method.toUpperCase())
-		? undefined
-		: JSON.stringify(data);
+	if (method === 'POST') {
+		if (!data) throw new Error('POST error: No data provided.');
+
+		return fetch(url, {
+			method,
+			body: data,
+			mode: 'cors',
+			credentials: 'include',
+		}).then((resp) => resp.json() as Promise<Response>);
+	}
 
 	return fetch(url, {
-		body,
 		method,
 		mode: 'cors',
 		credentials: 'include',
@@ -27,7 +33,7 @@ const request = (
 const getActive = (): Promise<Response> =>
 	request('GET', '/avatars/user/me/active');
 
-const updateAvatar = (data: Record<string, unknown>): Promise<Response> =>
+const updateAvatar = (data: FormData): Promise<Response> =>
 	request('POST', '/avatars', data);
 
 // The deterministic URL always returns an image. If the user has no avatar,
