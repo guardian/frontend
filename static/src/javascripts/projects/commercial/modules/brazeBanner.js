@@ -83,8 +83,7 @@ const getMessageFromUrlFragment = () => {
             );
 
             try {
-                const dataFromBraze = JSON.parse(decodeURIComponent(value));
-
+                const dataFromBraze = JSON.parse(decodeURIComponent(forcedMessage));
                 return {
                     extras: dataFromBraze,
                 };
