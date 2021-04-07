@@ -62,30 +62,39 @@ const FORCE_BRAZE_ALLOWLIST = [
     'm.thegulocal.com',
 ];
 
-const getMessageFromQueryString = () => {
-    const qsArg = 'force-braze-message';
+const getMessageFromUrlFragment = () => {
+    if (window.location.hash){
+        // This is intended for use on development domains for preview purposes.
+		// It won't run in PROD.
 
-    const params = getUrlVars();
-    const value = params[qsArg];
+        const key = 'force-braze-message';
 
-    if (value) {
-        if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
-            console.log(`${qsArg} is not supported on this domain`)
-            return null;
-        }
+        const hashString = window.location.hash;
 
-        try {
-            const dataFromBraze = JSON.parse(value);
+        if (hashString.includes(key)) {
+            if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
+                console.log(`${key} is not supported on this domain`)
+                return null;
+            }
 
-            return {
-                extras: dataFromBraze,
-            };
-        } catch (e) {
-            // Parsing failed. Log a message and fall through.
-            console.log(
-                `There was an error with ${qsArg}:`,
-                e.message,
+            const forcedMessage = hashString.slice(
+                hashString.indexOf(`${key}=`) + key.length + 1,
+                hashString.length,
             );
+
+            try {
+                const dataFromBraze = JSON.parse(decodeURIComponent(value));
+
+                return {
+                    extras: dataFromBraze,
+                };
+            } catch (e) {
+                // Parsing failed. Log a message and fall through.
+                console.log(
+                    `There was an error with ${key}:`,
+                    e.message,
+                );
+            }
         }
     }
 
@@ -192,7 +201,7 @@ const canShow = async () => {
     const bannerTiming = measureTiming('braze-banner');
     bannerTiming.start();
 
-    const forcedBrazeMessage = getMessageFromQueryString();
+    const forcedBrazeMessage = getMessageFromUrlFragment();
     if (forcedBrazeMessage) {
         messageConfig = forcedBrazeMessage;
         return true;
