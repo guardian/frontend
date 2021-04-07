@@ -265,7 +265,7 @@ const show = () => Promise.all([
             document.body.appendChild(container);
         }
 
-        const Component = brazeModule.BrazeMessage
+        const Component = brazeModule.BrazeMessageComponent
 
         // IE does not support shadow DOM, so instead we just render
         if (!container.attachShadow) {
