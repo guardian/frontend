@@ -28,7 +28,7 @@ import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
-import services.newsletters.{EmailEmbedLifecycle, GroupedNewslettersLifecycle}
+import services.newsletters.NewsletterSignupLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
 
 trait PreviewLifecycleComponents
@@ -59,8 +59,7 @@ trait PreviewLifecycleComponents
       wire[TargetingLifecycle],
       wire[SkimLinksCacheLifeCycle],
       wire[CloudWatchMetricsLifecycle],
-      wire[EmailEmbedLifecycle],
-      wire[GroupedNewslettersLifecycle],
+      wire[NewsletterSignupLifecycle],
     )
 
   def actorSystem: ActorSystem

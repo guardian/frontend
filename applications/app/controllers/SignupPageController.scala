@@ -7,7 +7,7 @@ import pages.NewsletterHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.filters.csrf.CSRFAddToken
-import services.newsletters.{GroupedNewslettersAgent, GroupedNewslettersResponse}
+import services.newsletters.{NewsletterSignupAgent, GroupedNewslettersResponse}
 import staticpages.StaticPages
 
 import scala.concurrent.duration._
@@ -16,7 +16,7 @@ class SignupPageController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
     csrfAddToken: CSRFAddToken,
-    groupedNewslettersAgent: GroupedNewslettersAgent,
+    newsletterSignupAgent: NewsletterSignupAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
@@ -24,15 +24,11 @@ class SignupPageController(
 
   val defaultCacheDuration: Duration = 15.minutes
 
-  def logApiError(error: String): Unit = {
-    log.error(s"API call to get newsletters failed: $error")
-  }
-
   def renderNewslettersPage(): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
         val groupedNewsletters: Either[String, GroupedNewslettersResponse] =
-          groupedNewslettersAgent.getGroupedNewsletters()
+          newsletterSignupAgent.getGroupedNewsletters()
 
         groupedNewsletters match {
           case Right(groupedNewsletters) =>
@@ -42,7 +38,7 @@ class SignupPageController(
               ),
             )
           case Left(e) =>
-            logApiError(e)
+            log.error(s"API call to get newsletters failed: $e")
             Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
         }
       }

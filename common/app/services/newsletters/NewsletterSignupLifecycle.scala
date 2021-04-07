@@ -7,10 +7,10 @@ import play.api.inject.ApplicationLifecycle
 import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
 
-class GroupedNewslettersLifecycle(
+class NewsletterSignupLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    groupedNewslettersAgent: GroupedNewslettersAgent,
+    newsletterSignupAgent: NewsletterSignupAgent,
 )(implicit
     ec: ExecutionContext,
 ) extends LifecycleComponent {
@@ -22,15 +22,17 @@ class GroupedNewslettersLifecycle(
   }
 
   private def descheduleAll(): Unit = {
-    jobs.deschedule("GroupedNewslettersAgentLowFrequencyRefreshJob")
+    jobs.deschedule("NewsletterSignupAgentLowFrequencyRefreshJob")
   }
 
   override def start(): Unit = {
 
     descheduleAll()
-    groupedNewslettersAgent.refresh()
-    jobs.scheduleEveryNMinutes("GroupedNewslettersAgentLowFrequencyRefreshJob", 60) {
-      groupedNewslettersAgent.refresh()
+    newsletterSignupAgent.refreshNewsletters()
+    newsletterSignupAgent.refreshGroupedNewsletters()
+    jobs.scheduleEveryNMinutes("NewsletterSignupAgentLowFrequencyRefreshJob", 60) {
+      newsletterSignupAgent.refreshNewsletters()
+      newsletterSignupAgent.refreshGroupedNewsletters()
     }
 
   }

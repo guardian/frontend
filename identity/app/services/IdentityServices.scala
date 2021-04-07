@@ -11,7 +11,7 @@ import idapiclient.IdApiComponents
 import org.http4s.Uri
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import services.newsletters.{EmailSignupAgent, GroupedNewslettersAgent, NewsletterApi}
+import services.newsletters.{NewsletterSignupAgent, NewsletterApi}
 import utils.IdentityApiThreadPoolMonitor
 
 import scala.concurrent.ExecutionContext
@@ -51,7 +51,5 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   lazy val discussionApiService = wire[DiscussionApiService]
   lazy val discussionClient = wire[DiscussionClient]
   lazy val newsletterApi = wire[NewsletterApi]
-  lazy val emailEmbedAgent = wire[EmailSignupAgent]
-  lazy val groupedNewslettersAgent = wire[GroupedNewslettersAgent]
-
+  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
 }
