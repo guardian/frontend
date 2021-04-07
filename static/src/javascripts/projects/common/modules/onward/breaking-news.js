@@ -9,7 +9,6 @@ import reportError from 'lib/report-error';
 import { storage } from '@guardian/libs';
 import template from 'lodash/template';
 import flattenDeep from 'lodash/flattenDeep';
-import pickBy from 'lodash/pickBy';
 import { isWithinSeconds } from 'common/modules/ui/relativedates';
 import { inlineSvg } from 'common/views/svgs';
 import alertHtml from 'common/views/breaking-news.html';
@@ -100,9 +99,14 @@ const pruneKnownAlertIDs = (alerts) => {
 
     // then remove all known alert ids that are not
     // in the current breaking news alerts
-    knownAlertIDs = pickBy(knownAlertIDs, (state, id) =>
-        alerts.some(alert => alert.id === id)
-    );
+    const filteredKnownAlertIDs = {};
+    for (const id in knownAlertIDs) {
+        if (alerts.some(alert => alert.id === id)) {
+        	filteredKnownAlertIDs[id] = knownAlertIDs[id];
+        }
+    }
+
+    knownAlertIDs = filteredKnownAlertIDs;
 
     storeKnownAlertIDs();
 

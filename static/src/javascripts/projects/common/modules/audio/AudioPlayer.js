@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import styled from '@emotion/styled';
 import { isIOS, isAndroid } from 'lib/detect';
 
@@ -306,52 +306,49 @@ export class AudioPlayer extends Component {
             hovering: false,
             grabbing: false,
         };
+
+        this.fakeWaveRef = createRef()
+        this.audioRef = createRef()
+        this.waveRef = createRef()
+        this.waveBufferRef = createRef()
     }
 
     componentDidMount() {
-        this.audio.addEventListener('timeupdate', this.onTimeUpdate);
+        this.audioRef.current.addEventListener('timeupdate', this.onTimeUpdate);
         // this should fire on Firefox
-        this.audio.addEventListener('ended', this.resetAudio);
-        this.audio.addEventListener('progress', this.buffer);
+        this.audioRef.current.addEventListener('ended', this.resetAudio);
+        this.audioRef.current.addEventListener('progress', this.buffer);
 
-        registerOphanListeners(this.audio);
+        registerOphanListeners(this.audioRef.current);
 
-        if (Number.isNaN(this.audio.duration)) {
-            this.audio.addEventListener('durationchange', this.ready, {
+        if (Number.isNaN(this.audioRef.current.duration)) {
+            this.audioRef.current.addEventListener('durationchange', this.ready, {
                 once: true,
             });
         } else {
             this.ready();
         }
+        this.waveRef.current = document.getElementById('WaveCutOff-rect')
+        this.waveBufferRef.current = document.getElementById('WaveCutOffBuffered-rect');
+        this.setGeometry(this.fakeWaveRef.current)
     }
 
     onTimeUpdate = () => {
-        const percentPlayed = this.audio.currentTime / this.state.duration;
+        const percentPlayed = this.audioRef.current.currentTime / this.state.duration;
 
         // pause when it gets to the end
-        if (this.audio.currentTime >= this.state.duration) {
+        if (this.audioRef.current.currentTime >= this.state.duration) {
             this.resetAudio();
         } else if (!this.state.grabbing) {
             const currentOffsetPx = this.state.waveWidthPx * percentPlayed;
-            this.wave.setAttribute('width', currentOffsetPx.toString());
+            this.waveRef.current.setAttribute('width', currentOffsetPx.toString());
             this.setState({
-                currentTime: this.audio.currentTime,
+                currentTime: this.audioRef.current.currentTime,
                 currentOffsetPx,
             });
         }
     };
 
-    setAudio = (el) => {
-        if (el) {
-            this.audio = el;
-        }
-        const wave = document.getElementById('WaveCutOff-rect');
-        const waveBuffered = document.getElementById('WaveCutOffBuffered-rect');
-        if (wave && waveBuffered) {
-            this.wave = wave;
-            this.waveBuffered = waveBuffered;
-        }
-    };
 
     setGeometry = (el) => {
         if (el) {
@@ -374,9 +371,9 @@ export class AudioPlayer extends Component {
     };
 
     buffer = () => {
-        if (this.audio.buffered.length > 0) {
-            const buffered = this.audio.buffered.end(0);
-            this.waveBuffered.setAttribute(
+        if (this.audioRef.current.buffered.length > 0) {
+            const buffered = this.audioRef.current.buffered.end(0);
+            this.waveBufferRef.current.setAttribute(
                 'width',
                 (
                     (buffered / this.state.duration) *
@@ -388,13 +385,13 @@ export class AudioPlayer extends Component {
 
     resetAudio = () => {
         this.setState({ playing: false });
-        this.audio.pause();
+        this.audioRef.current.pause();
     };
 
 
 
     ready = () => {
-        this.setState({ duration: this.audio.duration });
+        this.setState({ duration: this.audioRef.current.duration });
     };
 
     play = () => {
@@ -404,9 +401,9 @@ export class AudioPlayer extends Component {
             },
             () => {
                 if (this.state.playing) {
-                    this.audio.play();
+                    this.audioRef.current.play();
                 } else {
-                    this.audio.pause();
+                    this.audioRef.current.pause();
                 }
             }
         );
@@ -421,18 +418,18 @@ export class AudioPlayer extends Component {
             const currentTime =
                 (currentOffsetPx / this.state.waveWidthPx) *
                 this.state.duration;
-            this.audio.currentTime = currentTime;
-            this.wave.setAttribute('width', currentOffsetPx.toString());
+            this.audioRef.current.currentTime = currentTime;
+            this.waveRef.current.setAttribute('width', currentOffsetPx.toString());
             this.setState({ currentTime, currentOffsetPx });
         }
     };
 
     updatePlayerTime = (currTime) => {
-        this.audio.currentTime = currTime;
+        this.audioRef.current.currentTime = currTime;
 
         const currentOffsetPx =
             (currTime / this.state.duration) * this.state.waveWidthPx;
-        this.wave.setAttribute('width', currentOffsetPx.toString());
+        this.waveRef.current.setAttribute('width', currentOffsetPx.toString());
         this.setState({
             currentTime: currTime,
             currentOffsetPx,
@@ -454,12 +451,12 @@ export class AudioPlayer extends Component {
 
     mute = () => {
         this.setState({ muted: true });
-        this.audio.volume = 0;
+        this.audioRef.current.volume = 0;
     };
 
     sound = () => {
         this.setState({ muted: false });
-        this.audio.volume = 1;
+        this.audioRef.current.volume = 1;
     };
 
     hovering = (hovering) => () => {
@@ -470,7 +467,7 @@ export class AudioPlayer extends Component {
         if (this.state.hovering || !grabbing) {
             this.setState({ grabbing }, () => {
                 if (!this.state.grabbing) {
-                    this.audio.currentTime = this.state.currentTime;
+                    this.audioRef.current.currentTime = this.state.currentTime;
                 }
             });
         }
@@ -488,7 +485,7 @@ export class AudioPlayer extends Component {
                 this.state.duration;
 
             this.setState({ currentTime, currentOffsetPx }, () => {
-                this.wave.setAttribute('width', currentOffsetPx.toString());
+                this.waveRef.current.setAttribute('width', currentOffsetPx.toString());
             });
         }
     };
@@ -500,7 +497,7 @@ export class AudioPlayer extends Component {
                 onMouseUp={this.grabbing(false)}
                 onMouseMove={this.scrub}>
                 <audio
-                    ref={this.setAudio}
+                    ref={this.audioRef}
                     data-media-id={this.props.mediaId}
                     preload="none">
                     <source src={this.props.sourceUrl} type="audio/mpeg" />
@@ -512,7 +509,7 @@ export class AudioPlayer extends Component {
                     <Time t={this.state.duration} />
                 </TimeContainer>
                 <WaveAndTrack>
-                    <FakeWave ref={this.setGeometry} onClick={this.seek}>
+                    <FakeWave ref={this.fakeWaveRef} onClick={this.seek}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}

@@ -45,6 +45,11 @@ object UrlHelpers {
       case (SupportGifting, Footer)                                  => "footer_support_gifting"
       case (SupportGifting, AmpFooter)                               => "amp_footer_support_gifting"
 
+      case (SupporterCTA, Header | AmpHeader | SlimHeaderDropdown) => "header_supporter_cta"
+      case (SupporterCTA, SideMenu)                                => "side_menu_supporter_cta"
+      case (SupporterCTA, Footer)                                  => "footer_supporter_cta"
+      case (SupporterCTA, AmpFooter)                               => "amp_footer_supporter_cta"
+
       case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
   }

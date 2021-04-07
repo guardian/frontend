@@ -42,7 +42,7 @@ val common = library("common")
       jerseyClient,
       cssParser,
       w3cSac,
-      logback2,// logback2: to prevent "error: reference to logback is ambiguous;"
+      logback2, // logback2: to prevent "error: reference to logback is ambiguous;"
       kinesisLogbackAppender,
       targetingClient,
       scanamo,
@@ -213,10 +213,6 @@ val main = root()
     rss,
   )
   .settings(
-    riffRaffBuildIdentifier := System
-      .getenv()
-      .getOrDefault("BUILD_NUMBER", "0")
-      .replaceAll("\"", ""),
     riffRaffUploadArtifactBucket := Some(
       System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity"),
     ),

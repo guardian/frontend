@@ -150,17 +150,6 @@ category: Common
     padding: ($gs-baseline/3*2) ($gs-gutter/10) 0 ($gs-gutter/2);
 }
 
-// Pintrest is inappropriate in certain sections
-
-.social__item--pinterest {
-    .content[class*='-network'] &,
-    .content[class*='-leadership'] &,
-    .content[class*='-careers'] &,
-    .content[class*='-advertisement-feature'] &,
-    .content[class*='-partner-zone'] & {
-        display: none;
-    }
-}
 .paid-content, .paid-content.tonal--tone-media {
     .social-icon,
     .block-share__item {

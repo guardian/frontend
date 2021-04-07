@@ -31,6 +31,7 @@ jest.mock('../../../../lib/raven');
 jest.mock('../../../common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
     getUserFromCookie: jest.fn(),
+    getUserFromApi: jest.fn(),
     getUrl: jest.fn(),
 }));
 jest.mock('ophan/ng', () => null);

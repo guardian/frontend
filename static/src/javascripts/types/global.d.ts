@@ -25,3 +25,9 @@ declare type ThirdPartyTag = {
 declare const jsdom: {
 	reconfigure: (settings: Record<string, unknown>) => void;
 };
+
+declare module '*.svg' {
+	const content: { markup: string };
+	// eslint-disable-next-line import/no-default-export -- allow svg imports
+	export default content;
+}

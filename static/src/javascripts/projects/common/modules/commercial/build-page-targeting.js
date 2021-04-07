@@ -1,9 +1,7 @@
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { storage } from '@guardian/libs';
-import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
-import pickBy from 'lodash/pickBy';
 import config from '../../../../lib/config';
 import { getCookie } from '../../../../lib/cookies';
 import {
@@ -159,17 +157,18 @@ const getUrlKeywords = (pageId) => {
     return [];
 };
 
-const formatAppNexusTargeting = (obj) =>
-    flattenDeep(
-        Object.keys(obj)
-            .filter((key) => obj[key] !== '' && obj[key] !== null)
-            .map((key) => {
-                const value = obj[key];
-                return Array.isArray(value)
-                    ? value.map(nestedValue => `${key}=${nestedValue}`)
-                    : `${key}=${value}`;
-            })
-    ).join(',');
+const formatAppNexusTargeting = (obj) => {
+    const asKeyValues = Object.keys(obj)
+        .map((key) => {
+            const value = obj[key];
+            return Array.isArray(value)
+                ? value.map(nestedValue => `${key}=${nestedValue}`)
+                : `${key}=${value}`;
+        });
+
+    const flattenDeep = Array.prototype.concat.apply([], asKeyValues);
+    return flattenDeep.join(',');
+}
 
 const buildAppNexusTargetingObject = once(
     (pageTargeting) =>
@@ -238,6 +237,21 @@ const createAdManagerGroup = () => {
     return group;
 }
 
+const filterEmptyValues = (pageTargets) => {
+    const filtered = {};
+    for (const key in pageTargets) {
+        const value = pageTargets[key];
+        if (!value) {
+            continue;
+        }
+        if (Array.isArray(value) && value.length === 0) {
+            continue;
+        }
+        filtered[key] = value;
+    }
+    return filtered;
+}
+
 const rebuildPageTargeting = () => {
     latestCmpHasInitalised = cmp.hasInitialised();
     const adConsentState = getAdConsentFromState(latestCMPState);
@@ -294,12 +308,7 @@ const rebuildPageTargeting = () => {
     );
 
     // filter out empty values
-    const pageTargeting = pickBy(pageTargets, target => {
-        if (Array.isArray(target)) {
-            return target.length > 0;
-        }
-        return target;
-    });
+    const pageTargeting = filterEmptyValues(pageTargets);
 
     // third-parties wish to access our page targeting, before the googletag script is loaded.
     page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);

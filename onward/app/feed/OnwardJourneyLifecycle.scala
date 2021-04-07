@@ -15,7 +15,6 @@ class OnwardJourneyLifecycle(
     geoMostPopularAgent: GeoMostPopularAgent,
     dayMostPopularAgent: DayMostPopularAgent,
     mostPopularAgent: MostPopularAgent,
-    deeplyReadAgent: DeeplyReadAgent,
     mostViewedAudioAgent: MostViewedAudioAgent,
     mostViewedGalleryAgent: MostViewedGalleryAgent,
     mostViewedVideoAgent: MostViewedVideoAgent,
@@ -42,7 +41,6 @@ class OnwardJourneyLifecycle(
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsHighFrequencyRefreshJob", 5) {
       mostPopularAgent.refresh()
       geoMostPopularAgent.refresh()
-      deeplyReadAgent.refresh()
     }
 
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsMediumFrequencyRefreshJob", 30) {
@@ -64,7 +62,6 @@ class OnwardJourneyLifecycle(
       mostViewedGalleryAgent.refresh()
       mostViewedVideoAgent.refresh()
       mostReadAgent.refresh()
-      deeplyReadAgent.refresh()
     }
   }
 }

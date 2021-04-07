@@ -48,10 +48,17 @@ const initOnConsent = (state) => {
 export const init = () => {
     if (commercialFeatures.comscore) {
         onConsentChange(state => {
-            const canRunTcfv2 =
-                state.tcfv2 && getConsentFor('comscore', state);
-            const canRunCcpaOrAus = !!state.ccpa || !!state.aus; // always runs in CCPA and AUS
-            if (canRunTcfv2 || canRunCcpaOrAus) initOnConsent(true);
+
+            /* Rule is that comscore can run:
+                - in Tcfv2: Based on consent for comsocre
+                - in Australia: Always
+                - in CCPA: If the user hasn't chosen Do Not Sell
+            */
+            const canRunTcfv2 = state.tcfv2 && getConsentFor('comscore', state);
+            const canRunAus = !!state.aus;
+            const canRunCcpa = !!state.ccpa && !state.ccpa.doNotSell;
+
+            if (canRunTcfv2 || canRunAus || canRunCcpa) initOnConsent(true);
         });
     }
 
