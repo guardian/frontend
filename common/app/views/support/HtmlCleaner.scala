@@ -2,9 +2,9 @@ package views.support
 
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
-
 import com.gu.contentatom.renderer.ArticleConfiguration
-import common.{Edition, LinkTo, GuLogging}
+import common.editions.Uk
+import common.{Edition, GuLogging, LinkTo}
 import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches
@@ -821,8 +821,9 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
   }
 }
 
-case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean)(implicit
-    val request: RequestHeader,
+case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean)(
+    implicit val edition: Edition,
+    implicit val request: RequestHeader,
 ) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
@@ -834,7 +835,13 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
     if (containers.length >= minContainers) {
 
       val containerIndex = if (containers.length >= 4) {
-        if (isNetworkFront) 3 else 2
+        if (isNetworkFront) {
+          if (MerchandisingHighSection.isSwitchedOn && edition.id.equals(Uk.id)) {
+            4
+          } else {
+            3
+          }
+        } else 2
       } else 0
 
       val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isPaidContent, hasPageSkin)
