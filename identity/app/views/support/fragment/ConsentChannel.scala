@@ -29,7 +29,7 @@ object ConsentChannel {
     Consent.SupporterNewsletter.id,
     Consent.SubscriberPreview.id,
     Consent.DigitalSubscriberPreview.id,
-    Consent.GuardianWeeklyNewsletter.id
+    Consent.GuardianWeeklyNewsletter.id,
   )
 
   def channelsProvidedBy(user: User): List[ConsentChannelBehaviour] = {
