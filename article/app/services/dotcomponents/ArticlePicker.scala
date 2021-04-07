@@ -4,28 +4,7 @@ import model.ArticlePage
 import experiments.{ActiveExperiments, Control, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{
-  AudioBlockElement,
-  BlockElement,
-  CommentBlockElement,
-  ContentAtomBlockElement,
-  DocumentBlockElement,
-  FormBlockElement,
-  EmbedBlockElement,
-  GuVideoBlockElement,
-  ImageBlockElement,
-  InstagramBlockElement,
-  MapBlockElement,
-  PullquoteBlockElement,
-  RichLinkBlockElement,
-  TableBlockElement,
-  TextBlockElement,
-  TweetBlockElement,
-  UnknownBlockElement,
-  VideoBlockElement,
-  WitnessBlockElement,
-  InteractiveBlockElement,
-}
+import model.liveblog.{BlockElement, CodeBlockElement, ContentAtomBlockElement, InteractiveBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 import conf.Configuration
@@ -53,37 +32,19 @@ object ArticlePageChecks {
 
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: AudioBlockElement     => false
-        case _: CommentBlockElement   => false
-        case _: DocumentBlockElement  => false
-        case _: FormBlockElement      => false
-        case _: EmbedBlockElement     => false
-        case _: GuVideoBlockElement   => false
-        case _: ImageBlockElement     => false
-        case _: InstagramBlockElement => false
-        case _: MapBlockElement       => false
-        case _: PullquoteBlockElement => false
-        case _: RichLinkBlockElement  => false
-        case _: TableBlockElement     => false
-        case _: TextBlockElement      => false
-        case _: TweetBlockElement     => false
-        case _: UnknownBlockElement   => false
-        case _: VideoBlockElement     => false
-        case _: WitnessBlockElement   => false
-        case ContentAtomBlockElement(_, atomtype, _) => {
+        case _: CodeBlockElement                     => true
+        case ContentAtomBlockElement(_, atomtype, _) =>
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
           val supportedAtomTypes =
             List("audio", "chart", "explainer", "guide", "interactive", "media", "profile", "qanda", "timeline")
           !supportedAtomTypes.contains(atomtype)
-        }
-        case InteractiveBlockElement(_, scriptUrl) => {
+        case InteractiveBlockElement(_, scriptUrl) =>
           scriptUrl match {
             case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
             case _                                                                       => true
           }
-        }
-        case _ => true
+        case _ => false
       }
 
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
@@ -93,13 +54,13 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: TextBlockElement                    => false
-        case _: ImageBlockElement                   => false
-        case _: VideoBlockElement                   => false
-        case _: GuVideoBlockElement                 => false
-        case _: EmbedBlockElement                   => false
-        case ContentAtomBlockElement(_, "media", _) => false
-        case _                                      => true
+        // There is currently an issue with showcase layout for these
+        case _: InteractiveBlockElement => true
+        // The majority of the remaining atoms appear to be interactive atoms, which aren't supported yet
+        case ContentAtomBlockElement(_, atomtype, _) if atomtype != "media" => true
+        // Everything else should be supported, but there are some element types that don't
+        // get use in main media, for which there are no guarantees
+        case _ => false
       }
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
