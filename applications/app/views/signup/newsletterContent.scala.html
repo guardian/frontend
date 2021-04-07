@@ -1,21 +1,25 @@
 @import model.Page
 @import com.gu.identity.model.EmailNewsletter
 @import com.gu.identity.model.EmailNewsletters._
+@import services.newsletters.EmailSignupAgent
+@import services.newsletters.NewsletterResponse
 @import views.support.`package`.Seq2zipWithRowInfo
 
 @import common.LinkTo
 
+@import com.gu.identity.model.GroupedNewsletters
+@import services.newsletters.NewsletterResponse
 @(signupPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @manageEmailsUrl = @{"https://manage.theguardian.com/email-prefs"}
 
-@emailListCategoryList(theme: String, emailListings: List[EmailNewsletter]) = {
+@emailListCategoryList(theme: String, emailListings: List[NewsletterResponse]) = {
     <div class="newsletters-category__heading">
         @theme
     </div>
     <div class="newsletter-card__wrapper">
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-            <div class="newsletter-card" data-component="newsletter-card @emailListing.identityName">
+            <div class="newsletter-card" data-component="newsletter-card @emailListing.id">
                 <div class="newsletter-card__content js-newsletter-content">
 
                     <div class="newsletter-card__name">
@@ -23,7 +27,7 @@
                     </div>
 
                     <div>
-                        @emailListing.teaser
+                        @emailListing.description
                     </div>
                 </div>
 
@@ -52,11 +56,11 @@
                           type="email"
                           name="email"
                           placeholder="Email address" required/>
-                        <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.identityName" />
+                        <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.id" />
                         <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit"
-                          data-link-name="Subscribe to @emailListing.identityName"
+                          data-link-name="Subscribe to @emailListing.id"
                           type="submit"
-                          value="@emailListing.listIdV1">
+                          value="@emailListing.listIdv1">
                           <span>Sign up</span>
                         </button>
                     </form>
@@ -68,7 +72,7 @@
                         @if(emailListing.exampleUrl.isDefined){
                           <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
                               <button class="newsletter-card__lozenge newsletter-card__lozenge--preview"
-                                  data-link-name="Preview @emailListing.identityName"
+                                  data-link-name="Preview @emailListing.id"
                                   type="button">
                                   <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
                               </button>
@@ -82,19 +86,9 @@
 }
 
 @displayNewslettersByTheme = {
-    @List(
-        "News roundups"  -> newsRoundUpEmails,
-        "News by topic"  -> newsEmails,
-        "Features"       -> featureEmails,
-        "Sport"          -> sportEmails,
-        "Culture"        -> cultureEmails,
-        "Lifestyle"      -> lifestyleEmails,
-        "Comment"        -> commentEmails,
-        "Work"           -> workEmails,
-        "From the papers" -> fromThePapersEmails
-    ).map { case (theme, newsletters) =>
+    @signupPage.metadata.groupedNewslettersResponses.map { case (theme, newsletters) =>
         <div class="newsletters-category" name="@theme">
-            @emailListCategoryList(theme, newsletters)
+        @emailListCategoryList(theme, newsletters)
         </div>
     }
 }

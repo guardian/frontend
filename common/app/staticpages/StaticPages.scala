@@ -1,6 +1,7 @@
 package staticpages
 
 import model.{DotcomContentType, MetaData, SectionId, SimplePage}
+import services.newsletters.{GroupedNewslettersResponse, NewsletterResponse}
 
 object StaticPages {
   def simpleSurveyStaticPageForId(id: String): SimplePage =
@@ -27,7 +28,10 @@ object StaticPages {
       ),
     )
 
-  def simpleNewslettersPage(id: String): SimplePage =
+  def simpleNewslettersPage(
+      id: String,
+      groupedNewsletterResponses: List[(String, List[NewsletterResponse])],
+  ): SimplePage =
     SimplePage(
       MetaData.make(
         id = id,
@@ -36,6 +40,7 @@ object StaticPages {
         contentType = Some(DotcomContentType.Signup),
         iosType = None,
         shouldGoogleIndex = true,
+        groupedNewsletterResponses = groupedNewsletterResponses,
       ),
     )
 }

@@ -1,5 +1,6 @@
 package pages
 
+import com.gu.identity.model.GroupedNewsletters
 import common.Edition
 import conf.switches.Switches.WeAreHiring
 import html.HtmlPageHelpers._
@@ -30,7 +31,10 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
       override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
     }
 
-  def html(page: SimplePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def html(page: SimplePage)(implicit
+      request: RequestHeader,
+      applicationContext: ApplicationContext,
+  ): Html = {
     implicit val p: SimplePage = page
 
     htmlTag(

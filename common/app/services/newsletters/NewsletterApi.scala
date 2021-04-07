@@ -20,6 +20,8 @@ case class NewsletterResponse(
     frequency: String,
     exactTargetListId: Int,
     listIdv1: Int,
+    listId: Int,
+    exampleUrl: Option[String],
     emailEmbed: EmailEmbed,
     illustration: Option[NewsletterIllustration] = None,
 )
@@ -49,11 +51,23 @@ case class GroupedNewslettersResponse(
     comment: GroupedNewsletterResponse,
     work: GroupedNewsletterResponse,
     fromThePapers: GroupedNewsletterResponse,
-)
+) {
+  val toList: () => List[(String, List[NewsletterResponse])] = () =>
+    List(
+      newsRoundups.displayName -> newsRoundups.newsletters,
+      newsByTopic.displayName -> newsByTopic.newsletters,
+      features.displayName -> features.newsletters,
+      sport.displayName -> sport.newsletters,
+      culture.displayName -> culture.newsletters,
+      lifestyle.displayName -> lifestyle.newsletters,
+      comment.displayName -> comment.newsletters,
+      work.displayName -> work.newsletters,
+      fromThePapers.displayName -> fromThePapers.newsletters,
+    )
+}
 
 object GroupedNewslettersResponse {
   implicit val groupedNewslettersResponseReads = Json.reads[GroupedNewslettersResponse]
-
 }
 
 case class NewsletterApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)

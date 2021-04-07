@@ -14,7 +14,7 @@ import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.newsletters.{EmailSignupAgent}
+import services.newsletters.EmailSignupAgent
 import utils.RemoteAddress
 
 import scala.concurrent.Future
