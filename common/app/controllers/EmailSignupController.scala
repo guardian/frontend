@@ -14,7 +14,7 @@ import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.newsletters.{EmailEmbedAgent, NewsletterApi}
+import services.newsletters.{EmailSignupAgent}
 import utils.RemoteAddress
 
 import scala.concurrent.Future
@@ -69,7 +69,7 @@ class EmailSignupController(
     val controllerComponents: ControllerComponents,
     csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
-    emailEmbedAgent: EmailEmbedAgent,
+    emailEmbedAgent: EmailSignupAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext

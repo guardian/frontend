@@ -7,7 +7,7 @@ import play.api.inject.ApplicationLifecycle
 import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
 
-class EmailEmbedLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, emailEmbedAgent: EmailEmbedAgent)(
+class EmailEmbedLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, emailEmbedAgent: EmailSignupAgent)(
     implicit ec: ExecutionContext,
 ) extends LifecycleComponent {
 
