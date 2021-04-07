@@ -1,15 +1,19 @@
 package views.support.fragment
 
-import com.gu.identity.model.User
+import com.gu.identity.model.{Consent, User}
 import play.api.data.Field
 
 object ConsentChannel {
   sealed abstract class ConsentChannelBehaviour(val id: String)
-  case object TextConsentChannel extends ConsentChannelBehaviour("sms")
-  case object PhoneOptOutConsentChannel extends ConsentChannelBehaviour("phone_optout")
-  case object PostOptOutConsentChannel extends ConsentChannelBehaviour("post_optout")
-  case object MarketResearchConsentChannel extends ConsentChannelBehaviour("market_research_optout")
-  case object ProfilingConsentChannel extends ConsentChannelBehaviour("profiling_optout")
+  // channels
+  case object TextConsentChannel extends ConsentChannelBehaviour(Consent.CommunicationSms.id)
+  case object PhoneOptOutConsentChannel extends ConsentChannelBehaviour(Consent.PhoneOptout.id)
+  case object PostOptOutConsentChannel extends ConsentChannelBehaviour(Consent.PostOptout.id)
+  case object MarketResearchConsentChannel extends ConsentChannelBehaviour(Consent.MarketResearchOptout.id)
+  case object ProfilingConsentChannel extends ConsentChannelBehaviour(Consent.ProfilingOptout.id)
+
+  // products
+  // case object TextConsentChannel extends ConsentChannelBehaviour(Consent.Events.id)
 
   private val channelsIds = List(
     TextConsentChannel.id,
@@ -17,6 +21,15 @@ object ConsentChannel {
     PostOptOutConsentChannel.id,
     MarketResearchConsentChannel.id,
     ProfilingConsentChannel.id,
+  )
+
+  private val productIds = List(
+    Consent.YourSubscriptionSupport.id,
+    Consent.SimilarGuardianProducts.id,
+    Consent.SupporterNewsletter.id,
+    Consent.SubscriberPreview.id,
+    Consent.DigitalSubscriberPreview.id,
+    Consent.GuardianWeeklyNewsletter.id
   )
 
   def channelsProvidedBy(user: User): List[ConsentChannelBehaviour] = {
@@ -58,4 +71,7 @@ object ConsentChannel {
     consentField("id").value.exists { id => channelsIds.contains(id) }
   }
 
+  def isProduct(consentField: Field): Boolean = {
+    consentField("id").value.exists { id => productIds.contains(id) }
+  }
 }
