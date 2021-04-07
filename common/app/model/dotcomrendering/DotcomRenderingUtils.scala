@@ -6,7 +6,7 @@ import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => Cli
 import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Maps.RichMap
-import common.{Edition, RichRequestHeader}
+import common.{Edition, Localisation, RichRequestHeader}
 import common.commercial.EditionCommercialProperties
 import conf.Configuration.affiliateLinks
 import conf.switches.Switches
@@ -503,7 +503,7 @@ object DotcomRenderingUtils {
       tags = allTags, // List[Tag]
       pillar = findPillar(article.metadata.pillar, article.metadata.designType), // String
       isImmersive = article.isImmersive, // Boolean
-      sectionLabel = article.content.sectionLabelName, // String
+      sectionLabel = Localisation(article.content.sectionLabelName)(request), // String
       sectionUrl = article.content.sectionLabelLink, // String
       sectionName = article.metadata.section.map(_.value), // Option[String]
       subMetaSectionLinks = article.content.submetaLinks.sectionLabels.map(SubMetaLink.apply), // List[SubMetaLink]
