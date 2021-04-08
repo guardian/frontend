@@ -253,17 +253,17 @@ const show = () => Promise.all([
         if (!container.attachShadow) {
             render(
                 <Component
-                    componentName={ messageConfig.extras.componentName}
+                    componentName={ message.extras.componentName}
                     logButtonClickWithBraze={(buttonId) => {
                         if (appboy) {
                             const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
                             appboy.logInAppMessageButtonClick(
-                                thisButton, messageConfig
+                                thisButton, message
                             );
                         }
                     }}
                     submitComponentEvent={submitComponentEvent}
-                    brazeMessageProps={messageConfig.extras}
+                    brazeMessageProps={message.extras}
                 />
             , container);
         } else {
@@ -278,17 +278,17 @@ const show = () => Promise.all([
             const cached = (
                 <CacheProvider value={emotionCache}>
                     <Component
-                        componentName={ messageConfig.extras.componentName}
+                        componentName={ message.extras.componentName}
                         logButtonClickWithBraze={(buttonId) => {
                             if (appboy) {
                                 const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
                                 appboy.logInAppMessageButtonClick(
-                                    thisButton, messageConfig
+                                    thisButton, message
                                 );
                             }
                         }}
                         submitComponentEvent={submitComponentEvent}
-                        brazeMessageProps={messageConfig.extras}
+                        brazeMessageProps={message.extras}
                     />
                 </CacheProvider>
             );
