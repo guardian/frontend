@@ -2,7 +2,7 @@ package controllers
 
 import common.{GuLogging, ImplicitControllerExecutionContext}
 import model.{ApplicationContext, Cached, NoCache}
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.Cached.RevalidatableResult
 import pages.NewsletterHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}

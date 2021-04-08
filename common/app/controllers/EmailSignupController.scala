@@ -2,7 +2,7 @@ package controllers
 
 import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
-import common.{ImplicitControllerExecutionContext, LinkTo, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._

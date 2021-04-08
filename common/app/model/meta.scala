@@ -154,7 +154,6 @@ object MetaData {
       twitterPropertiesOverrides: Map[String, String] = Map(),
       commercial: Option[CommercialProperties] = None,
       isFoundation: Boolean = false,
-      groupedNewsletterResponses: List[(String, List[NewsletterResponse])] = Nil,
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -183,7 +182,6 @@ object MetaData {
       isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides,
       commercial = commercial,
-      groupedNewslettersResponses = groupedNewsletterResponses,
     )
   }
 
@@ -310,7 +308,6 @@ final case class MetaData(
     isNewRecipeDesign: Boolean = false,
     sensitive: Boolean = false,
     isFoundation: Boolean = false,
-    groupedNewslettersResponses: List[(String, List[NewsletterResponse])] = Nil,
 ) {
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)

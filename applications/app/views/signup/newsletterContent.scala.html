@@ -1,15 +1,10 @@
-@import model.Page
-@import com.gu.identity.model.EmailNewsletter
-@import com.gu.identity.model.EmailNewsletters._
-@import services.newsletters.NewsletterSignupAgent
 @import services.newsletters.NewsletterResponse
 @import views.support.`package`.Seq2zipWithRowInfo
+@import staticpages.NewsletterRoundupPage
 
 @import common.LinkTo
 
-@import com.gu.identity.model.GroupedNewsletters
-@import services.newsletters.NewsletterResponse
-@(signupPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(signupPage: NewsletterRoundupPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @manageEmailsUrl = @{
     "https://manage.theguardian.com/email-prefs"
@@ -74,7 +69,7 @@
 }
 
 @displayNewslettersByTheme = {
-    @signupPage.metadata.groupedNewslettersResponses.map { case (theme, newsletters) =>
+    @signupPage.groupedNewslettersResponses.map { case (theme, newsletters) =>
         <div class="newsletters-category" name="@theme">
             @emailListCategoryList(theme, newsletters)
         </div>
