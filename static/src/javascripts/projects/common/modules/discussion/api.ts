@@ -1,4 +1,9 @@
-import config from 'lib/config';
+import config_ from 'lib/config';
+
+// This is really a hacky workaround ⚠️
+const config = config_ as {
+	get: (s: string) => string;
+};
 
 /**
  * This information is partly inspired by the API in discussion-rendering
@@ -32,8 +37,8 @@ const defaultInitParams: RequestInit = {
 	mode: 'cors',
 	credentials: 'include',
 	headers: {
-		'D2-X-UID': String(config.get('page.discussionD2Uid')),
-		'GU-Client': String(config.get('page.discussionApiClientHeader')),
+		'D2-X-UID': config.get('page.discussionD2Uid'),
+		'GU-Client': config.get('page.discussionApiClientHeader'),
 	},
 };
 
@@ -43,7 +48,7 @@ export const send = (
 	data?: Comment | AbuseReport,
 ): Promise<CommentResponse> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
-		const url = String(config.get('page.discussionApiUrl')) + endpoint;
+		const url = config.get('page.discussionApiUrl') + endpoint;
 
 		// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
 		if (method === 'POST') {

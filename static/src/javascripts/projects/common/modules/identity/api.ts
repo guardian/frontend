@@ -4,12 +4,16 @@ import {
 	createAuthenticationComponentEvent,
 	createAuthenticationComponentEventParams,
 } from 'common/modules/identity/auth-component-event-params';
-import { ajax } from 'lib/ajax';
-import config from 'lib/config';
+import config_ from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
+
+// This is really a hacky workaround ⚠️
+const config = config_ as {
+	get: (s: string) => string;
+};
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
 
@@ -98,9 +102,9 @@ let idApiRoot = '';
 let profileRoot = '';
 
 export const init = (): void => {
-	idApiRoot = String(config.get('page.idApiUrl'));
+	idApiRoot = config.get('page.idApiUrl');
 	mediator.emit('module:identity:api:loaded');
-	profileRoot = String(config.get('page.idUrl'));
+	profileRoot = config.get('page.idUrl');
 };
 
 export const decodeBase64 = (str: string): string =>
@@ -201,7 +205,7 @@ export const reset = (): void => {
 export const getCookie = (): string | null =>
 	getCookieByName(cookieName) as string | null;
 
-export const getUrl = (): string => config.get('page.idUrl') as string;
+export const getUrl = (): string => config.get('page.idUrl');
 
 export const getUserFromApiWithRefreshedCookie = (): Promise<unknown> => {
 	const endpoint = `${idApiRoot}/user/me`;
@@ -293,7 +297,7 @@ export const sendValidationEmail = (): unknown => {
 	const returnUrl = getUrlVars().returnUrl
 		? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- it’s okay
 		  decodeURIComponent(getUrlVars()?.returnUrl)
-		: (profileRoot || '') + defaultReturnEndpoint;
+		: profileRoot + defaultReturnEndpoint;
 
 	const data = new URLSearchParams();
 	data.append('method', 'post');
