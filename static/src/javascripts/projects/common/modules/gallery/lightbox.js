@@ -143,16 +143,6 @@ class GalleryLightbox {
                     config.get('page.webTitle')
                 )}&url=${encodeURIComponent(`${blockShortUrl}/stw#img-${i}`)}`,
             },
-            {
-                text: 'Pinterest',
-                css: 'pinterest',
-                icon: inlineSvg('sharePinterest', ['icon']),
-                url: encodeURI(
-                    `http://www.pinterest.com/pin/create/button/?description=${config.get(
-                        'page.webTitle'
-                    )}&url=${blockShortUrl}&media=${urlPrefix}${img.src}`
-                ),
-            },
         ];
 
         return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''))({

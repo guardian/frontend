@@ -6,7 +6,7 @@ import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => Cli
 import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Maps.RichMap
-import common.{Edition, RichRequestHeader}
+import common.{Edition, Localisation, RichRequestHeader}
 import common.commercial.EditionCommercialProperties
 import conf.Configuration.affiliateLinks
 import conf.switches.Switches
@@ -214,11 +214,9 @@ object DotcomRenderingUtils {
 
     // We are passing through the block data here, not the article
     // the block dateTime types are used for liveblogs
-    // We will remove the non 'block' prefixed versions when DCR change is out
-    val createdOn = block.createdDate.map(_.dateTime)
-    val createdOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
     val blockCreatedOn = block.createdDate.map(_.dateTime)
-    val blockCreatedOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+    val blockCreatedOnDisplay =
+      blockCreatedOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
 
     val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
     val blockFirstPublishedDisplay =
@@ -248,17 +246,11 @@ object DotcomRenderingUtils {
         campaigns,
         calloutsUrl,
       ),
-      createdOn = createdOn,
-      createdOnDisplay = createdOnDisplay,
       blockCreatedOn = blockCreatedOn,
       blockCreatedOnDisplay = blockCreatedOnDisplay,
-      lastUpdated = Some(displayedDateTimes.lastUpdated),
-      lastUpdatedDisplay = Some(displayedDateTimes.lastUpdatedDisplay),
       blockLastUpdated = blockLastUpdated,
       blockLastUpdatedDisplay = blockLastUpdatedDisplay,
       title = block.title,
-      firstPublished = Some(displayedDateTimes.firstPublished),
-      firstPublishedDisplay = Some(displayedDateTimes.firstPublishedDisplay),
       blockFirstPublished = blockFirstPublished,
       blockFirstPublishedDisplay = blockFirstPublishedDisplay,
       primaryDateLine = displayedDateTimes.primaryDateLine,
@@ -511,7 +503,7 @@ object DotcomRenderingUtils {
       tags = allTags, // List[Tag]
       pillar = findPillar(article.metadata.pillar, article.metadata.designType), // String
       isImmersive = article.isImmersive, // Boolean
-      sectionLabel = article.content.sectionLabelName, // String
+      sectionLabel = Localisation(article.content.sectionLabelName)(request), // String
       sectionUrl = article.content.sectionLabelLink, // String
       sectionName = article.metadata.section.map(_.value), // Option[String]
       subMetaSectionLinks = article.content.submetaLinks.sectionLabels.map(SubMetaLink.apply), // List[SubMetaLink]

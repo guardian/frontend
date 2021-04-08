@@ -1868,10 +1868,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-0.0.20.tgz#6e63a93a598eefa1ebd80c643be0a3087b3fa839"
-  integrity sha512-3KWR9Td2KxvEZ3NDa56aPeyNJ2hFYD5K50IepSB1BxVpICxX1UAYF1CvP8yPashDon4rI/T8VcPiaSw16reyJA==
+"@guardian/braze-components@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-1.0.1.tgz#427364b25c1288a1845c7ad49009a8f32efc7f01"
+  integrity sha512-mF63OjWy1YbQnC4nQlGhB8fPcwlgf8ed6YAr5NiyJ4S1QQow5vU/2gw6halI1a79UjmDIM6GNk21kJ1ZrK89Rg==
   dependencies:
     "@guardian/src-button" "2.7.1"
     "@guardian/src-foundations" "2.7.1"
@@ -1883,32 +1883,32 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.16.3.tgz#04b41f28aacec6615489fd06110c29f4377a57bd"
   integrity sha512-p+EE+ompyHod+OnQ5goZLUkJpRIBeCClEVpMnx3KByuaj2HkyoorqREpoQZczeZHNwzeltVC3WZqDGlaavRVKw==
 
-"@guardian/consent-management-platform@6.9.1":
-  version "6.9.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.9.1.tgz#78aaf208dfc25b4f3fb8d6cbc4991d64cf8242db"
-  integrity sha512-52kRmS0u1NJSAyfHOcDiL8/zoQQ8Tii4dQcJ1ENyJ0x6Gn8CE6j+9bNLwc4AGP6Oj80FQdCBd9fx+3Yrhx1vdg==
+"@guardian/consent-management-platform@^6.11.3":
+  version "6.11.3"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.11.3.tgz#92a7a6221587bcd86851e6a90198ad618f51b1e9"
+  integrity sha512-xKocfioFtkq5v9MuupT1ugo290NfSD4yIMl7m89xek6W+7B2fKjh0cAMHj4u2LQSXmEoyQ76vs2IaB3w5+98ZQ==
 
-"@guardian/eslint-config-typescript@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/eslint-config-typescript/-/eslint-config-typescript-0.4.2.tgz#085ff16e4b340386f9b28107ef83f2b03561c7f5"
-  integrity sha512-PrM0fhsz1RbV+iQHnJyShzzX7eenjD6ylSCD7xSqVL1Mwfl8UoNDoxlpcK2N4p7zupP5EfzzZZSvrqmD9Hxt1A==
+"@guardian/eslint-config-typescript@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@guardian/eslint-config-typescript/-/eslint-config-typescript-0.5.0.tgz#362b79da6440fc77d9c25b77ef9cfae18988ac5b"
+  integrity sha512-bCLWYgjNUNzppF+kD2IWmWnvvPSZRMHnNU1Yku9nHqlDOgE8HdEkdfrMc6fWuD/I/HyWW9p5UJweeGfgRSypVw==
   dependencies:
-    "@guardian/eslint-config" "^0.4.2"
+    "@guardian/eslint-config" "^0.5.0"
 
-"@guardian/eslint-config@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/eslint-config/-/eslint-config-0.4.2.tgz#0f07c3b951e0b5730ad3a3423d8cc508ff2c431e"
-  integrity sha512-zDXdnGhY+5IomMc0zVLOquaxylWEFjWJz4Beg2UP+U2qPjr4yVVe2ekEjZM+hayADHIs9bH7OlQ8s2EHSgfK2g==
+"@guardian/eslint-config@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@guardian/eslint-config/-/eslint-config-0.5.0.tgz#ece14ec90b372932c7bf01992fc6d8ce58f7f26e"
+  integrity sha512-THJn0wg7i9YjSVM9ofobsJgS+WH9ybrZH1+0CXLAebp0T53RGtgZUkek82mDg1h3DidsM+f7HSZqoQyrCbPzPw==
 
-"@guardian/libs@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.6.3.tgz#71ad9a5160708ae75d3bc182afb3f235b9c4de1f"
-  integrity sha512-CMTvDbIrfvla8OWHdO+tyjUUEp9XGGr2fQ8XDJptSiiJr1gKJsWV6NvFXQi1ypqDRsPYiJ8h1DxvBtyuyWATOA==
+"@guardian/libs@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.7.1.tgz#8fe4abd10d4ab5f4cdf397f84f416fe6c698f662"
+  integrity sha512-gafm04w/ETycDBb8rRDdt+MYhBAiA5aJ5JHYe2s2Q+0fk0npyWDJFvQB0Rttm1qblWlaHimLLfzZNNoAReKwLA==
 
-"@guardian/prettier@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/prettier/-/prettier-0.4.2.tgz#2d08a8a50aad3911a88c9b53f92a37748694d551"
-  integrity sha512-f8MCY/s3rLNonqxITsqnqrPRt0r6hEyW6rGKqDexTt88fEQnA3BMtAlN2hqjuNfrOa9EQexEknZugRVdIpbijQ==
+"@guardian/prettier@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@guardian/prettier/-/prettier-0.5.0.tgz#d8ea25cc396f31bd4baedb8f6d7d3727a9af1fa7"
+  integrity sha512-IYXMdqW6vg9mVnAXbbWCm0R9AZfWlAjfJ668TnCx3ypX5/u4AYAXdOfrWWX+uWvFvs3Ulub+E8vEm+eUkxi6rQ==
 
 "@guardian/shimport@^1.0.2":
   version "1.0.2"

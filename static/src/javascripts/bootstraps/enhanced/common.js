@@ -40,7 +40,6 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
-import { initPinterest } from 'common/modules/social/pinterest';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
@@ -283,12 +282,6 @@ const initPublicApi = () => {
     window.guardian.api = {};
 };
 
-const startPinterest = () => {
-    if (/Article|LiveBlog|Gallery|Video/.test(config.get('page.contentType'))) {
-        initPinterest();
-    }
-};
-
 const initialiseBanner = () => {
     // ordered by priority
     const bannerList = [
@@ -339,7 +332,6 @@ const init = () => {
         ['c-public-api', initPublicApi],
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
-        ['c-pinterest', startPinterest],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-banner-picker', initialiseBanner],

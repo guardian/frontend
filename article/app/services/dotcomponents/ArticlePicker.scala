@@ -1,35 +1,12 @@
 package services.dotcomponents
 
-import model.ArticlePage
-import experiments.{ActiveExperiments, Control, DotcomRendering, Excluded, Experiment, Participant}
-import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{
-  AudioBlockElement,
-  BlockElement,
-  CommentBlockElement,
-  ContentAtomBlockElement,
-  DocumentBlockElement,
-  FormBlockElement,
-  EmbedBlockElement,
-  GuVideoBlockElement,
-  ImageBlockElement,
-  InstagramBlockElement,
-  MapBlockElement,
-  PullquoteBlockElement,
-  RichLinkBlockElement,
-  TableBlockElement,
-  TextBlockElement,
-  TweetBlockElement,
-  UnknownBlockElement,
-  VideoBlockElement,
-  WitnessBlockElement,
-  InteractiveBlockElement,
-}
+import model.liveblog.{BlockElement, CodeBlockElement, ContentAtomBlockElement, InteractiveBlockElement}
+import model.{ArticlePage, PageWithStoryPackage}
+import model.dotcomrendering.DotcomRenderingUtils
+import model.liveblog._
 import play.api.mvc.RequestHeader
 import views.support.Commercial
-import conf.Configuration
-import model.dotcomrendering.DotcomRenderingUtils
 
 object ArticlePageChecks {
 
@@ -53,37 +30,19 @@ object ArticlePageChecks {
 
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: AudioBlockElement     => false
-        case _: CommentBlockElement   => false
-        case _: DocumentBlockElement  => false
-        case _: FormBlockElement      => false
-        case _: EmbedBlockElement     => false
-        case _: GuVideoBlockElement   => false
-        case _: ImageBlockElement     => false
-        case _: InstagramBlockElement => false
-        case _: MapBlockElement       => false
-        case _: PullquoteBlockElement => false
-        case _: RichLinkBlockElement  => false
-        case _: TableBlockElement     => false
-        case _: TextBlockElement      => false
-        case _: TweetBlockElement     => false
-        case _: UnknownBlockElement   => false
-        case _: VideoBlockElement     => false
-        case _: WitnessBlockElement   => false
-        case ContentAtomBlockElement(_, atomtype, _) => {
+        case _: CodeBlockElement                     => true
+        case ContentAtomBlockElement(_, atomtype, _) =>
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
           val supportedAtomTypes =
-            List("audio", "chart", "explainer", "guide", "media", "profile", "qanda", "timeline")
+            List("audio", "chart", "explainer", "guide", "interactive", "media", "profile", "qanda", "timeline")
           !supportedAtomTypes.contains(atomtype)
-        }
-        case InteractiveBlockElement(_, scriptUrl) => {
+        case InteractiveBlockElement(_, scriptUrl) =>
           scriptUrl match {
             case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
             case _                                                                       => true
           }
-        }
-        case _ => true
+        case _ => false
       }
 
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
@@ -93,13 +52,15 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: TextBlockElement                    => false
-        case _: ImageBlockElement                   => false
-        case _: VideoBlockElement                   => false
-        case _: GuVideoBlockElement                 => false
-        case _: EmbedBlockElement                   => false
-        case ContentAtomBlockElement(_, "media", _) => false
-        case _                                      => true
+        // This has never been used but we know we don't yet support them due to a required CAPI update
+        case _: CodeBlockElement => true
+        // There is currently an issue with showcase layout for these
+        case _: InteractiveBlockElement => true
+        // The majority of the remaining atoms appear to be interactive atoms, which aren't supported yet
+        case ContentAtomBlockElement(_, atomtype, _) if atomtype != "media" => true
+        // Everything else should be supported, but there are some element types that don't
+        // get used in main media, for which there are no guarantees
+        case _ => false
       }
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
@@ -130,7 +91,7 @@ object ArticlePageChecks {
 
 object ArticlePicker {
 
-  val logger = DotcomponentsLogger()
+  private[this] val logger = DotcomponentsLogger()
 
   private[this] def logRequest(msg: String, results: Map[String, String], page: PageWithStoryPackage)(implicit
       request: RequestHeader,
@@ -138,7 +99,7 @@ object ArticlePicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  def primaryFeatures(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
+  def dcrChecks(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
@@ -153,12 +114,8 @@ object ArticlePicker {
     )
   }
 
-  def forall(features: Map[String, Boolean]): Boolean = {
-    features.forall({ case (_, isMet) => isMet })
-  }
-
-  def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
-    val allowListFeatures = primaryFeatures(page, request)
+  private[this] def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
+    val allowListFeatures = dcrChecks(page, request)
     val article100PercentPageFeatures = allowListFeatures.filterKeys(
       Set(
         "isSupportedType",
@@ -170,63 +127,28 @@ object ArticlePicker {
         "isNotPaidContent",
       ),
     )
-    article100PercentPageFeatures.forall({ case (test, isMet) => isMet })
-  }
 
-  def dcrDisabled(request: RequestHeader): Boolean = {
-    val dcrEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
-    val forceDCROff = request.forceDCROff
-    !dcrEnabled || forceDCROff
-  }
-
-  def canConnectToDCR(): Boolean = {
-    Configuration.environment.isProd || Configuration.environment.isCode
+    article100PercentPageFeatures.forall({ case (_, isMet) => isMet })
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
-    val primaryChecks = primaryFeatures(page, request)
-    val hasPrimaryFeatures = forall(primaryChecks)
-
-    /*
-        date: Friday 20th Nov 2020
-        id: cea453f4-9b71-435e-8a11-35ef690c7821
-        message: We are moving to exposing 90% of the audience to DCR rendering.
-        Unfortunately our experiment framework does not allow the variant group to be bigger than 50%.
-        We are then going to expose DCR to { the control group and the excluded } and reduce the size of the variant to 10%.
-     */
-    val userInDCRGroup = !ActiveExperiments.isParticipating(DotcomRendering)
-    // true if user is not participating / not in variant
+    val checks = dcrChecks(page, request)
+    val dcrCanRender = checks.values.forall(identity)
 
     val tier =
-      if (!canConnectToDCR()) LocalRenderArticle
-      // We select LocalRenderArticle when we are not in PROD or and not in CODE.
-      else if (request.forceDCR) RemoteRender
-      // The `request.forceDCR` doesn't check the switch.
-      // This means that RemoteRender is always going to be selected if `?dcr=true`, regardless of the value of the switch.
-      else if (dcrDisabled(request)) LocalRenderArticle
-      // The `dcrDisabled(request)` checks the switch.
-      // Switch off implies dcrDisabled
-      else if (userInDCRGroup && hasPrimaryFeatures) RemoteRender
+      if (request.forceDCROff) LocalRenderArticle
+      else if (request.forceDCR || dcrCanRender) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val isAddFree = ArticlePageChecks.isAdFree(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
-    def testGroup(experiment: Experiment): String =
-      ActiveExperiments.groupFor(experiment) match {
-        case Participant => "participant" // Not showed DCR (see: cea453f4-9b71-435e-8a11-35ef690c7821)
-        case Control     => "control" // Showed DCR
-        case Excluded    => "excluded" // Showed DCR
-      }
-
     // include features that we wish to log but not allow-list against
-    val features = primaryChecks.mapValues(_.toString) +
-      ("dcrTestGroup" -> testGroup(DotcomRendering)) +
-      ("userIsInCohort" -> userInDCRGroup.toString) +
+    val features = checks.mapValues(_.toString) +
       ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
-      ("dcrCouldRender" -> hasPrimaryFeatures.toString) +
+      ("dcrCouldRender" -> dcrCanRender.toString) +
       ("pageTones" -> pageTones)
 
     if (tier == RemoteRender) {

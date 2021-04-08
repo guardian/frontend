@@ -62,18 +62,6 @@ object WhatsApp extends SharePlatform {
   override val css = "whatsapp"
   override val userMessage = "Share on WhatsApp"
 }
-object PinterestBlock extends SharePlatform {
-  override val campaign = None
-  override val text = "Pinterest"
-  override val css = "pinterest"
-  override val userMessage = "Share on Pinterest"
-}
-object PinterestPage extends SharePlatform {
-  override val campaign = None
-  override val text = "Pinterest"
-  override val css = "pinterest"
-  override val userMessage = "Share on Pinterest"
-}
 object LinkedIn extends SharePlatform {
   override val campaign = None
   override val text = "LinkedIn"
@@ -83,7 +71,7 @@ object LinkedIn extends SharePlatform {
 
 object ShareLinks {
 
-  val defaultShares = List(Facebook, Twitter, PinterestBlock)
+  val defaultShares = List(Facebook, Twitter)
 
   private[model] def create(
       platform: SharePlatform,
@@ -110,15 +98,12 @@ object ShareLinks {
     lazy val twitterText = title.replace("Leave.EU", "Leave. EU").encodeURIComponent
 
     val fullLink = platform match {
-      case WhatsApp => s"""whatsapp://send?text=${("\"" + title + "\" " + href).encodeURIComponent}"""
-      case PinterestBlock =>
-        s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=$encodedHref&media=${fullMediaPath.getOrElse("").urlEncoded}"
-      case PinterestPage => s"http://www.pinterest.com/pin/find/?url=$encodedHref"
-      case Email         => s"mailto:?subject=${title.encodeURIComponent}&body=$encodedHref"
-      case LinkedIn      => s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$encodedHref"
-      case Facebook      => s"https://www.facebook.com/dialog/share".appendQueryParams(facebookParams)
-      case Twitter       => s"https://twitter.com/intent/tweet?text=$twitterText&url=$encodedHref"
-      case Messenger     => s"fb-messenger://share?link=$encodedHref&app_id=180444840287"
+      case WhatsApp  => s"""whatsapp://send?text=${("\"" + title + "\" " + href).encodeURIComponent}"""
+      case Email     => s"mailto:?subject=${title.encodeURIComponent}&body=$encodedHref"
+      case LinkedIn  => s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$encodedHref"
+      case Facebook  => s"https://www.facebook.com/dialog/share".appendQueryParams(facebookParams)
+      case Twitter   => s"https://twitter.com/intent/tweet?text=$twitterText&url=$encodedHref"
+      case Messenger => s"fb-messenger://share?link=$encodedHref&app_id=180444840287"
     }
 
     ShareLink(platform, fullLink)
@@ -161,11 +146,7 @@ final case class ShareLinks(
     metadata: MetaData,
 ) {
 
-  private val elementShareOrder: List[SharePlatform] = if (tags.isLiveBlog) {
-    List(Facebook, Twitter)
-  } else {
-    List(Facebook, Twitter, PinterestBlock)
-  }
+  private val elementShareOrder: List[SharePlatform] = List(Facebook, Twitter)
 
   private def campaignParams(platform: SharePlatform): Map[String, String] = {
     platform.campaign
@@ -196,6 +177,6 @@ final case class ShareLinks(
 
   val pageShares: ShareLinkMeta = ShareLinkMeta(
     sharesToLinks(List(Facebook, Twitter, Email)),
-    sharesToLinks(List(LinkedIn, PinterestPage, WhatsApp, Messenger)),
+    sharesToLinks(List(LinkedIn, WhatsApp, Messenger)),
   )
 }

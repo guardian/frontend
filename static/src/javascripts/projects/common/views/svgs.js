@@ -29,7 +29,6 @@ import share from 'svgs/icon/share.svg';
 import shareTwitter from 'svgs/icon/share-twitter.svg';
 import shareEmail from 'svgs/icon/share-email.svg';
 import shareFacebook from 'svgs/icon/share-facebook.svg';
-import sharePinterest from 'svgs/icon/share-pinterest.svg';
 import externalLink from 'svgs/icon/external-link.svg';
 import tick from 'svgs/icon/tick.svg';
 import glabsLogoSmall from 'svgs/logo/glabs-logo-small.svg';
@@ -65,7 +64,6 @@ const svgs = {
     shareTwitter,
     shareEmail,
     shareFacebook,
-    sharePinterest,
     externalLink,
     tick,
     glabsLogoSmall,
