@@ -53,10 +53,10 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
               |You are trying to access a DCR page via Frontend. Most of the time you are better off developing directly
               |on DCR. See https://github.com/guardian/dotcom-rendering for how to get started with this.
               |
-              |If you do need to access DCR via Frontend, then make sure to:
+              |If you do need to access DCR via Frontend, then make sure to run DCR locally. E.g (from DCR directory):
               |
-              | * run DCR locally
-              | * override the 'rendering.endpoint' config property if DCR is running on a non-standard domain or port""".stripMargin
+              |    $$ make build
+              |    $$ PORT 3030 node dist/frontend.server.js""".stripMargin
           Future.failed(new ConnectException(msg))
       })
     }
