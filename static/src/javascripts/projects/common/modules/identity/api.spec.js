@@ -8,16 +8,14 @@ import {
     reset,
     getUserOrSignIn,
     shouldAutoSigninInUser,
-} from 'common/modules/identity/api.js';
+} from 'common/modules/identity/api';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
-import { ajax as ajax_ } from 'lib/ajax';
+import fetchJson_ from 'lib/fetch-json';
 import { storage } from '@guardian/libs';
 
 jest.mock('lib/config');
-jest.mock('lib/ajax', () => ({
-    ajax: jest.fn(),
-}));
+jest.mock('lib/fetch-json', () => jest.fn());
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
@@ -30,7 +28,7 @@ jest.mock('common/modules/async-call-merger', () => ({
 }));
 
 const getCookieStub = getCookie_;
-const ajax = ajax_;
+const fetchJson = fetchJson_;
 
 const originalAssign = window.location.assign;
 
@@ -62,7 +60,7 @@ describe('Identity API', () => {
 
     it('gets user from cookie', () => {
         const user = getUserFromCookie();
-        const displayName = user && user.displayName;
+        const displayName = user && user.publicFields && user.publicFields.displayName;
 
         expect(displayName).toBe('Amélie Jôse');
     });
@@ -79,7 +77,7 @@ describe('Identity API', () => {
         const expectedUser = {};
         const apiCallback = user => {
             expect(user).toBe(expectedUser);
-            expect(ajax).toHaveBeenCalledWith({
+            expect(fetchJson).toHaveBeenCalledWith({
                 url: 'https://idapi.theguardian.com/user/me',
                 type: 'jsonp',
                 crossOrigin: true,
@@ -87,7 +85,7 @@ describe('Identity API', () => {
             done();
         };
 
-        ajax.mockImplementationOnce(() =>
+        fetchJson.mockImplementationOnce(() =>
             Promise.resolve({
                 status: 'ok',
                 user: expectedUser,
@@ -103,7 +101,7 @@ describe('Identity API', () => {
 
         const apiCallback = user => {
             expect(user).toBe(null);
-            expect(ajax).not.toHaveBeenCalled();
+            expect(fetchJson).not.toHaveBeenCalled();
             done();
         };
 
@@ -130,7 +128,7 @@ describe('Identity API', () => {
 
     it('should not redirect to sign in when user is already signed in', () => {
         const user = getUserOrSignIn('email_sign_in_banner');
-        const displayName = user && user.displayName;
+        const displayName = user && user.publicFields && user.publicFields.displayName;
 
         expect(displayName).toBe('Amélie Jôse');
     });
