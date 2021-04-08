@@ -18,6 +18,7 @@ import {
     setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
 import { measureTiming } from './measure-timing';
+import { BrazeMessages, InMemoryCache, LocalMessageCache } from '@guardian/braze-components/logic'
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -52,8 +53,7 @@ const canShowPreChecks = ({
     pageConfig,
 }) => Boolean(userIsGuSupporter && !pageConfig.isPaidContent);
 
-let messageConfig;
-let appboy;
+let message;
 
 const FORCE_BRAZE_ALLOWLIST = [
     'preview.gutools.co.uk',
@@ -86,6 +86,8 @@ const getMessageFromUrlFragment = () => {
                 const dataFromBraze = JSON.parse(decodeURIComponent(forcedMessage));
                 return {
                     extras: dataFromBraze,
+                    logImpression: () => {},
+                    logButtonClick: () => {}
                 };
             } catch (e) {
                 // Parsing failed. Log a message and fall through.
@@ -112,7 +114,7 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     const sdkLoadTiming = measureTiming('braze-sdk-load');
     sdkLoadTiming.start();
 
-    appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+    const appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
 
     const sdkLoadTimeTaken = sdkLoadTiming.end();
     ophan.record({
@@ -125,35 +127,16 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
 
     appboy.initialize(apiKey, SDK_OPTIONS);
 
-    const canShowPromise = new Promise(resolve => {
-        // Needed to keep Flow happy
-        if (!appboy) {
-            resolve(false);
-            return;
-        }
+    const errorHandler = (error) => { reportError(error, {}, false) };
+    const brazeMessages = new BrazeMessages(appboy, InMemoryCache, errorHandler);
 
-        let subscriptionId;
+    setHasCurrentBrazeUser();
+    appboy.changeUser(brazeUuid);
+    appboy.openSession();
 
-        const callback = (message) => {
-            if (message.extras) {
-                messageConfig = message;
-                resolve(true);
-            } else {
-                resolve(false);
-            }
-
-            if (appboy && subscriptionId) {
-                appboy.removeSubscription(subscriptionId);
-            }
-        };
-
-        // Keep hold of the subscription ID so that we can unsubscribe in the
-        // callback, ensuring that the callback is only invoked once per page
-        subscriptionId = appboy.subscribeToInAppMessage(callback);
-
-        setHasCurrentBrazeUser();
-        appboy.changeUser(brazeUuid);
-        appboy.openSession();
+    const canShowPromise = brazeMessages.getMessageForBanner().then((m) => {
+        message = m;
+        return true;
     });
 
     canShowPromise.then(() => {
@@ -171,11 +154,12 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     return canShowPromise
 };
 
-const maybeWipeUserData = async (apiKey, brazeUuid) => {
+const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
     const userHasLoggedOut = !brazeUuid && hasCurrentBrazeUser();
-    const slotNames = ['Banner','EndOfArticle']
+    const userHasRemovedConsent = !consent && hasCurrentBrazeUser();
+    const slotNames = ['Banner','EndOfArticle'];
 
-    if (userHasLoggedOut) {
+    if (userHasLoggedOut || userHasRemovedConsent) {
         try {
             appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
             appboy.initialize(apiKey, SDK_OPTIONS);
@@ -190,6 +174,7 @@ const maybeWipeUserData = async (apiKey, brazeUuid) => {
             })
 
             clearHasCurrentBrazeUser();
+            LocalMessageCache.clear();
         } catch(error) {
             reportError(error, {}, false);
         }
@@ -202,7 +187,7 @@ const canShow = async () => {
 
     const forcedBrazeMessage = getMessageFromUrlFragment();
     if (forcedBrazeMessage) {
-        messageConfig = forcedBrazeMessage;
+        message = forcedBrazeMessage;
         return true;
     }
 
@@ -215,7 +200,7 @@ const canShow = async () => {
 
     const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
 
-    await maybeWipeUserData(apiKey, brazeUuid);
+    await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
 
     if (!(brazeUuid && hasGivenConsent)) {
         return false;
@@ -271,17 +256,12 @@ const show = () => Promise.all([
         if (!container.attachShadow) {
             render(
                 <Component
-                    componentName={ messageConfig.extras.componentName}
+                    componentName={ message.extras.componentName}
                     logButtonClickWithBraze={(buttonId) => {
-                        if (appboy) {
-                            const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
-                            appboy.logInAppMessageButtonClick(
-                                thisButton, messageConfig
-                            );
-                        }
+                        message.logButtonClick(buttonId)
                     }}
                     submitComponentEvent={submitComponentEvent}
-                    brazeMessageProps={messageConfig.extras}
+                    brazeMessageProps={message.extras}
                 />
             , container);
         } else {
@@ -296,17 +276,12 @@ const show = () => Promise.all([
             const cached = (
                 <CacheProvider value={emotionCache}>
                     <Component
-                        componentName={ messageConfig.extras.componentName}
+                        componentName={ message.extras.componentName}
                         logButtonClickWithBraze={(buttonId) => {
-                            if (appboy) {
-                                const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
-                                appboy.logInAppMessageButtonClick(
-                                    thisButton, messageConfig
-                                );
-                            }
+                            message.logButtonClick(buttonId)
                         }}
                         submitComponentEvent={submitComponentEvent}
-                        brazeMessageProps={messageConfig.extras}
+                        brazeMessageProps={message.extras}
                     />
                 </CacheProvider>
             );
@@ -317,16 +292,14 @@ const show = () => Promise.all([
             );
         }
 
-        if (appboy) {
-            // Log the impression with Braze
-            appboy.logInAppMessageImpression(messageConfig);
-        }
+        // Log the impression with Braze
+        message.logImpression();
 
         // Log the impression with Ophan
         submitViewEvent({
             component: {
                 componentType: 'RETENTION_ENGAGEMENT_BANNER',
-                id: messageConfig.extras.componentName,
+                id: message.extras.componentName,
             },
         });
 
