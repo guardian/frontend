@@ -16,7 +16,7 @@
     "@guardian/atom-renderer": "1.2.2",
     "@guardian/automat-contributions": "^0.3.6",
     "@guardian/automat-modules": "^0.3.7",
-    "@guardian/braze-components": "^0.0.20",
+    "@guardian/braze-components": "^1.0.1",
     "@guardian/commercial-core": "^0.16.3",
     "@guardian/consent-management-platform": "^6.11.3",
     "@guardian/libs": "^1.7.1",
