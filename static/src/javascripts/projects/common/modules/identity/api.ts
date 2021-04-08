@@ -1,324 +1,428 @@
-/* global escape:true */
+import { storage } from '@guardian/libs';
+import { mergeCalls } from 'common/modules/async-call-merger';
+import {
+	createAuthenticationComponentEvent,
+	createAuthenticationComponentEventParams,
+} from 'common/modules/identity/auth-component-event-params';
 import { ajax } from 'lib/ajax';
 import config from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
+import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
-import { storage } from '@guardian/libs';
-import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
-import fetch from 'lib/fetch-json';
-import qs from 'qs';
-import reqwest from 'reqwest';
-import { createAuthenticationComponentEvent, createAuthenticationComponentEventParams } from "common/modules/identity/auth-component-event-params";
 
-let userFromCookieCache = null;
+// Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
+
+type PasswordCredential = {
+	id: string;
+	password: string;
+};
+
+type SettableConsent = {
+	id: string;
+	consented: boolean;
+};
+
+type Newsletter = {
+	id: string;
+	subscribed?: boolean;
+};
+
+type UserNameError = {
+	message: string;
+	description: string;
+	context: string;
+};
+
+type UserConsents = {
+	id: string;
+	actor: string;
+	version: number;
+	consented: boolean;
+	timestamp: string;
+	privacyPolicyVersion: number;
+};
+
+type UserGroups = {
+	path: string;
+	packageCode: string;
+};
+
+export type IdentityUser = {
+	dates: { accountCreatedDate: string };
+	consents: UserConsents[];
+	userGroups: UserGroups[];
+	publicFields: {
+		username: string;
+		displayName: string;
+	};
+	statusFields: {
+		userEmailValidated: boolean;
+	};
+	privateFields: {
+		brazeUuid: string;
+		googleTagId: string;
+		legacyPackages: string;
+		legacyProducts: string;
+	};
+	primaryEmailAddress: string;
+	id: string;
+	hasPassword: boolean;
+};
+
+type IdentityUserFromCache = {
+	dates: { accountCreatedDate: string };
+	publicFields: {
+		displayName: string;
+	};
+	statusFields: {
+		userEmailValidated: boolean;
+	};
+	primaryEmailAddress: string;
+	id: string;
+	rawResponse: string;
+} | null;
+
+type IdentityResponse = {
+	status: 'ok' | 'error';
+	user: IdentityUser;
+	errors?: UserNameError[];
+};
+
+let userFromCookieCache: IdentityUserFromCache = null;
 
 const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
-let idApiRoot = null;
-let profileRoot = null;
+let idApiRoot = '';
+let profileRoot = '';
 
-
-
-
-
-export const init = () => {
-    idApiRoot = config.get('page.idApiUrl');
-    mediator.emit('module:identity:api:loaded');
-    profileRoot = config.get('page.idUrl');
+export const init = (): void => {
+	idApiRoot = String(config.get('page.idApiUrl'));
+	mediator.emit('module:identity:api:loaded');
+	profileRoot = String(config.get('page.idUrl'));
 };
 
-export const decodeBase64 = (str) =>
-    decodeURIComponent(
-        escape(
-            window.atob(
-                str
-                    .replace(/-/g, '+')
-                    .replace(/_/g, '/')
-                    .replace(/,/g, '=')
-            )
-        )
-    );
+export const decodeBase64 = (str: string): string =>
+	decodeURIComponent(
+		escape(
+			window.atob(
+				str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='),
+			),
+		),
+	);
 
-export const getUserFromCookie = () => {
-    if (userFromCookieCache === null) {
-        const cookieData = getCookieByName(cookieName);
-        let userData = null;
+export const getUserFromCookie = (): IdentityUserFromCache => {
+	if (userFromCookieCache === null) {
+		const cookieData = getCookieByName(cookieName) as string;
+		let userData = null;
 
-        if (cookieData) {
-            userData = JSON.parse(decodeBase64(cookieData.split('.')[0]));
-        }
-        if (userData) {
-            const displayName = decodeURIComponent(userData[2]);
-            userFromCookieCache = {
-                id: userData[0],
-                primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
-                displayName,
-                accountCreatedDate: userData[6],
-                emailVerified: userData[7],
-                rawResponse: cookieData,
-            };
-        }
-    }
+		if (cookieData) {
+			userData = JSON.parse(
+				decodeBase64(cookieData.split('.')[0]),
+			) as string[];
+		}
+		if (userData) {
+			const displayName = decodeURIComponent(userData[2]);
+			userFromCookieCache = {
+				id: userData[0],
+				primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
+				publicFields: {
+					displayName,
+				},
+				dates: { accountCreatedDate: userData[6] },
+				statusFields: {
+					userEmailValidated: Boolean(userData[7]),
+				},
+				rawResponse: cookieData,
+			};
+		}
+	}
 
-    return userFromCookieCache;
+	return userFromCookieCache;
 };
 
-export const updateNewsletter = (newsletter) =>
-    reqwest({
-        url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
-        method: 'PATCH',
-        type: 'json',
-        contentType: 'application/json',
-        withCredentials: true,
-        crossOrigin: true,
-        data: JSON.stringify(newsletter),
-    });
+export const updateNewsletter = (newsletter: Newsletter): Promise<void> => {
+	const url = `${idApiRoot}/users/me/newsletters`;
+	return fetch(url, {
+		method: 'PATCH',
+		credentials: 'include',
+		mode: 'cors',
+		body: JSON.stringify(newsletter),
+	}).then(() => Promise.resolve());
+};
 
 export const buildNewsletterUpdatePayload = (
-    action = 'none',
-    newsletterId
-) => {
-    const newsletter = {};
-    switch (action) {
-        case 'add':
-            newsletter.id = newsletterId;
-            newsletter.subscribed = true;
-            break;
-        case 'remove':
-            newsletter.id = newsletterId;
-            newsletter.subscribed = false;
-            break;
-        default:
-            throw new Error(`Undefined newsletter action type (${action})`);
-    }
-    return newsletter;
+	action = 'none',
+	newsletterId: string,
+): Newsletter => {
+	const newsletter: Newsletter = { id: newsletterId };
+	switch (action) {
+		case 'add':
+			newsletter.subscribed = true;
+			break;
+		case 'remove':
+			newsletter.subscribed = false;
+			break;
+		default:
+			throw new Error(`Undefined newsletter action type (${action})`);
+	}
+	return newsletter;
 };
 
-export const isUserLoggedIn = () => getUserFromCookie() !== null;
+export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 
-export const getUserFromApi = mergeCalls(mergingCallback => {
-    const apiRoot = idApiRoot || '';
+export const getUserFromApi = mergeCalls(
+	(mergingCallback: (u: IdentityUser | null) => void) => {
+		if (isUserLoggedIn()) {
+			void fetch(`${idApiRoot}/user/me`, {
+				credentials: 'include',
+				mode: 'cors',
+			})
+				.then((response) => response.json())
+				.then((data: IdentityResponse) => {
+					if (data.status === 'ok') {
+						mergingCallback(data.user);
+					} else {
+						mergingCallback(null);
+					}
+				});
+		} else {
+			mergingCallback(null);
+		}
+	},
+);
 
-    if (isUserLoggedIn()) {
-        ajax({
-            url: `${apiRoot}/user/me`,
-            type: 'jsonp',
-            crossOrigin: true,
-        }).then(response => {
-            if (response.status === 'ok') {
-                mergingCallback(response.user);
-            } else {
-                mergingCallback(null);
-            }
-        });
-    } else {
-        mergingCallback(null);
-    }
-});
-
-export const reset = () => {
-    getUserFromApi.reset();
-    userFromCookieCache = null;
+export const reset = (): void => {
+	getUserFromApi.reset();
+	userFromCookieCache = null;
 };
 
-export const getCookie = () => getCookieByName(cookieName);
+export const getCookie = (): string | null =>
+	getCookieByName(cookieName) as string | null;
 
-export const getUrl = () => config.get('page.idUrl');
+export const getUrl = (): string => config.get('page.idUrl') as string;
 
-export const getUserFromApiWithRefreshedCookie = () => {
-    const endpoint = '/user/me';
-    const request = ajax({
-        url: (idApiRoot || '') + endpoint,
-        type: 'jsonp',
-        data: {
-            refreshCookie: true,
-        },
-    });
+export const getUserFromApiWithRefreshedCookie = (): Promise<unknown> => {
+	const endpoint = `${idApiRoot}/user/me`;
+	const data = new URLSearchParams();
+	data.append('refreshCookie', 'true');
 
-    return request;
+	return fetch(endpoint, {
+		mode: 'cors',
+		credentials: 'include',
+		body: data.toString(),
+	}).then((resp) => resp.json());
 };
 
-export const redirectTo = (url) => {
-    window.location.assign(url);
+export const redirectTo = (url: string): void => {
+	window.location.assign(url);
 };
 
-export const getUserOrSignIn = (componentId, paramUrl) => {
-    let returnUrl = paramUrl;
+// This needs to get out of here
+type AuthenticationComponentId =
+	| 'email_sign_in_banner'
+	| 'subscription_sign_in_banner'
+	| 'guardian_smartlock'
+	| 'signin_from_formstack';
 
-    if (isUserLoggedIn()) {
-        return getUserFromCookie();
-    }
+export const getUserOrSignIn = (
+	componentId: AuthenticationComponentId,
+	paramUrl: string | null,
+): IdentityUserFromCache | void => {
+	let returnUrl = paramUrl;
 
-    returnUrl = encodeURIComponent(returnUrl || document.location.href);
-    let url = `${getUrl() || ''}/signin?returnUrl=${returnUrl}`;
+	if (isUserLoggedIn()) {
+		return getUserFromCookie();
+	}
 
-    if (componentId) {
-        url += `&${createAuthenticationComponentEventParams(componentId)}`
-    }
+	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- not sure what it would do
+	returnUrl = encodeURIComponent(returnUrl || document.location.href);
+	const url = [
+		getUrl() || '',
+		'/signin?returnUrl=',
+		returnUrl,
+		'&',
+		createAuthenticationComponentEventParams(componentId),
+	].join('');
 
-    redirectTo(url);
+	redirectTo(url);
 };
 
-export const hasUserSignedOutInTheLast24Hours = () => {
-    const cookieData = getCookieByName(signOutCookieName);
+export const hasUserSignedOutInTheLast24Hours = (): boolean => {
+	const cookieData = getCookieByName(signOutCookieName) as string;
 
-    if (cookieData) {
-        return (
-            Math.round(new Date().getTime() / 1000) <
-            parseInt(cookieData, 10) + 86400
-        );
-    }
-    return false;
+	if (cookieData) {
+		return (
+			Math.round(new Date().getTime() / 1000) <
+			parseInt(cookieData, 10) + 86400
+		);
+	}
+	return false;
 };
 
-export const shouldAutoSigninInUser = () => {
-    const signedInUser = !!getCookieByName(cookieName);
-    const checkFacebook = !!storage.local.get(fbCheckKey);
-    return (
-        !signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
-    );
+export const shouldAutoSigninInUser = (): boolean => {
+	const signedInUser = !!getCookieByName(cookieName);
+	const checkFacebook = !!storage.local.get(fbCheckKey);
+	return (
+		!signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
+	);
 };
 
-export const getUserEmailSignUps = () => {
-    const user = getUserFromCookie();
+export const getUserEmailSignUps = (): Promise<unknown> => {
+	const user = getUserFromCookie();
 
-    if (user) {
-        const endpoint = `/useremails/${user.id}`;
-        const request = ajax({
-            url: (idApiRoot || '') + endpoint,
-            type: 'jsonp',
-            crossOrigin: true,
-            withCredentials: true,
-        });
+	if (user) {
+		const endpoint = `${idApiRoot}/useremails/${user.id}`;
+		const request = fetch(endpoint, {
+			mode: 'cors',
+			credentials: 'include',
+		}).then((resp) => resp.json());
 
-        return request;
-    }
+		return request;
+	}
 
-    return Promise.resolve(null);
+	return Promise.resolve(null);
 };
 
-export const sendValidationEmail = () => {
-    const defaultReturnEndpoint = '/email-prefs';
-    const endpoint = '/user/send-validation-email';
-    const returnUrl = getUrlVars().returnUrl
-        ? decodeURIComponent(getUrlVars().returnUrl)
-        : (profileRoot || '') + defaultReturnEndpoint;
+export const sendValidationEmail = (): unknown => {
+	const defaultReturnEndpoint = '/email-prefs';
+	const endpoint = `${idApiRoot}/user/send-validation-email`;
 
-    const request = ajax({
-        url: (idApiRoot || '') + endpoint,
-        type: 'jsonp',
-        crossOrigin: true,
-        data: {
-            method: 'post',
-            returnUrl,
-        },
-    });
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- it’s okay
+	const returnUrl = getUrlVars().returnUrl
+		? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- it’s okay
+		  decodeURIComponent(getUrlVars()?.returnUrl)
+		: (profileRoot || '') + defaultReturnEndpoint;
 
-    return request;
+	const data = new URLSearchParams();
+	data.append('method', 'post');
+	data.append('returnUrl', returnUrl);
+
+	const request = fetch(endpoint, {
+		mode: 'cors',
+		credentials: 'include',
+		body: data.toString(),
+	});
+
+	return request;
 };
 
-export const updateUsername = (username) => {
-    const endpoint = '/user/me';
-    const data = {
-        publicFields: {
-            username,
-            displayName: username,
-        },
-    };
-    const request = ajax({
-        url: (idApiRoot || '') + endpoint,
-        type: 'json',
-        crossOrigin: true,
-        method: 'POST',
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(data),
-        withCredentials: true,
-    });
+export const updateUsername = (username: string): unknown => {
+	const endpoint = `${idApiRoot}/user/me`;
+	const data = {
+		publicFields: {
+			username,
+			displayName: username,
+		},
+	};
+	const request = fetch(endpoint, {
+		mode: 'cors',
+		method: 'POST',
+		body: JSON.stringify(data),
+		credentials: 'include',
+	});
 
-    return request;
+	return request;
 };
 
-export const getAllConsents = () => {
-    const endpoint = '/consents';
-    const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
-        mode: 'cors',
-        method: 'GET',
-        headers: { Accept: 'application/json' },
-    });
+export const getAllConsents = (): Promise<unknown> => {
+	const endpoint = '/consents';
+	const url = idApiRoot + endpoint;
+	return fetchJson(url, {
+		mode: 'cors',
+		method: 'GET',
+		headers: { Accept: 'application/json' },
+	});
 };
 
-export const getAllNewsletters = () => {
-    const endpoint = '/newsletters';
-    const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
-        mode: 'cors',
-        method: 'GET',
-        headers: { Accept: 'application/json' },
-    });
+export const getAllNewsletters = (): Promise<unknown> => {
+	const endpoint = '/newsletters';
+	const url = idApiRoot + endpoint;
+	return fetchJson(url, {
+		mode: 'cors',
+		method: 'GET',
+		headers: { Accept: 'application/json' },
+	});
 };
 
-export const getSubscribedNewsletters = () => {
-    const endpoint = '/users/me/newsletters';
-    const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
-        mode: 'cors',
-        method: 'GET',
-        headers: { Accept: 'application/json' },
-        credentials: 'include',
-    })
-        .then(json => {
-            if (json.result.subscriptions) {
-                return json.result.subscriptions.map(sub => sub.listId);
-            }
-            return [];
-        })
-        .catch(() => []);
+export const getSubscribedNewsletters = (): Promise<string[]> => {
+	const endpoint = '/users/me/newsletters';
+	const url = idApiRoot + endpoint;
+
+	type Subscriptions = {
+		listId: string;
+	};
+
+	type NewslettersResponse =
+		| {
+				result?: {
+					globalSubscriptionStatus?: string;
+					htmlPreference?: string;
+					subscriptions?: Subscriptions[];
+					status?: 'ok' | string;
+				};
+		  }
+		| undefined;
+
+	return fetchJson(url, {
+		mode: 'cors',
+		method: 'GET',
+		headers: { Accept: 'application/json' },
+		credentials: 'include',
+	})
+		.then((json: NewslettersResponse) => {
+			if (json?.result?.subscriptions) {
+				return json.result.subscriptions.map((sub) => sub.listId);
+			}
+			return [];
+		})
+		.catch(() => []);
 };
 
-export const setConsent = (consents) =>
-    new Promise((success, error) => {
-        reqwest({
-            url: `${idApiRoot || ''}/users/me/consents`,
-            method: 'PATCH',
-            type: 'json',
-            contentType: 'application/json',
-            withCredentials: true,
-            crossOrigin: true,
-            data: JSON.stringify(consents),
-            error,
-            success,
-        });
-    });
-export const ajaxSignIn = (credentials) => {
-    const url = `${profileRoot || ''}/actions/auth/ajax`;
-    const body = {
-        email: credentials.id,
-        password: credentials.password,
-    };
+export const setConsent = (consents: SettableConsent): Promise<void> =>
+	fetch(`${idApiRoot}/users/me/consents`, {
+		method: 'PATCH',
+		credentials: 'include',
+		mode: 'cors',
+		body: JSON.stringify(consents),
+	}).then((resp) => {
+		if (resp.ok) return Promise.resolve();
+		return Promise.reject();
+	});
 
-    if (
-        window.guardian &&
-        window.guardian.ophan &&
-        window.guardian.ophan.viewId
-    ) {
-        body.componentEventParams = createAuthenticationComponentEvent('guardian_smartlock', window.guardian.ophan.viewId);
-    }
+export const ajaxSignIn = (
+	credentials: PasswordCredential,
+): Promise<unknown> => {
+	const url = `${profileRoot}/actions/auth/ajax`;
 
-    return fetch(url, {
-        mode: 'cors',
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: qs.stringify(body),
-        credentials: 'include',
-    });
+	const data = new URLSearchParams();
+
+	data.append('email', credentials.id);
+	data.append('password', credentials.password);
+
+	if (window.guardian.ophan?.viewId) {
+		data.append(
+			'componentEventParams',
+			createAuthenticationComponentEvent(
+				'guardian_smartlock',
+				window.guardian.ophan.viewId,
+			),
+		);
+	}
+
+	return fetchJson(url, {
+		mode: 'cors',
+		method: 'POST',
+		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+		body: data.toString(),
+		credentials: 'include',
+	});
 };
 
-export const getUserData = () =>
-    fetch(`${idApiRoot || ''}/user/me`, {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'include',
-    });
+export const getUserData = (): Promise<unknown> =>
+	fetchJson(`${idApiRoot}/user/me`, {
+		method: 'GET',
+		mode: 'cors',
+		credentials: 'include',
+	});
