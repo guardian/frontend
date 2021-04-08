@@ -304,6 +304,7 @@ case class InteractiveBlockElement(
     scriptUrl: Option[String],
     role: Option[String],
     isMandatory: Option[Boolean],
+    caption: Option[String],
 ) extends PageElement
 object InteractiveBlockElement {
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
@@ -1244,7 +1245,7 @@ object PageElement {
           .toList
       case Interactive =>
         element.interactiveTypeData
-          .map(d => InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl, d.role, d.isMandatory))
+          .map(d => InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl, d.role, d.isMandatory, d.caption))
           .toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => {
