@@ -86,6 +86,8 @@ const getMessageFromUrlFragment = () => {
                 const dataFromBraze = JSON.parse(decodeURIComponent(forcedMessage));
                 return {
                     extras: dataFromBraze,
+                    logImpression: () => {},
+                    logButtonClick: () => {}
                 };
             } catch (e) {
                 // Parsing failed. Log a message and fall through.
@@ -255,12 +257,7 @@ const show = () => Promise.all([
                 <Component
                     componentName={ message.extras.componentName}
                     logButtonClickWithBraze={(buttonId) => {
-                        if (appboy) {
-                            const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
-                            appboy.logInAppMessageButtonClick(
-                                thisButton, message
-                            );
-                        }
+                        message.logButtonClick(buttonId)
                     }}
                     submitComponentEvent={submitComponentEvent}
                     brazeMessageProps={message.extras}
@@ -280,12 +277,7 @@ const show = () => Promise.all([
                     <Component
                         componentName={ message.extras.componentName}
                         logButtonClickWithBraze={(buttonId) => {
-                            if (appboy) {
-                                const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
-                                appboy.logInAppMessageButtonClick(
-                                    thisButton, message
-                                );
-                            }
+                            message.logButtonClick(buttonId)
                         }}
                         submitComponentEvent={submitComponentEvent}
                         brazeMessageProps={message.extras}
