@@ -1,13 +1,13 @@
 package controllers
 
 import common.{GuLogging, ImplicitControllerExecutionContext}
-import model.{ApplicationContext, Cached}
+import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import pages.NewsletterHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.filters.csrf.CSRFAddToken
-import services.newsletters.{NewsletterSignupAgent, GroupedNewslettersResponse}
+import services.newsletters.{GroupedNewslettersResponse, NewsletterSignupAgent}
 import staticpages.StaticPages
 
 import scala.concurrent.duration._
@@ -39,7 +39,7 @@ class SignupPageController(
             )
           case Left(e) =>
             log.error(s"API call to get newsletters failed: $e")
-            Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
+            NoCache(InternalServerError)
         }
       }
     }
