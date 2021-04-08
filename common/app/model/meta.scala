@@ -22,6 +22,7 @@ import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
 import navigation.GuardianFoundationHelper
+import services.newsletters.{NewsletterResponse}
 
 import scala.util.matching.Regex
 import utils.ShortUrls

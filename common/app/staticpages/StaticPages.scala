@@ -1,6 +1,14 @@
 package staticpages
 
-import model.{DotcomContentType, MetaData, SectionId, SimplePage}
+import model.{DotcomContentType, MetaData, SectionId, SimplePage, StandalonePage}
+import services.newsletters.{GroupedNewslettersResponse, NewsletterResponse}
+
+case class NewsletterRoundupPage(
+    metadata: MetaData,
+    groupedNewsletterResponses: List[(String, List[NewsletterResponse])],
+) extends StandalonePage {
+  val groupedNewslettersResponses = groupedNewsletterResponses
+}
 
 object StaticPages {
   def simpleSurveyStaticPageForId(id: String): SimplePage =
@@ -27,8 +35,11 @@ object StaticPages {
       ),
     )
 
-  def simpleNewslettersPage(id: String): SimplePage =
-    SimplePage(
+  def simpleNewslettersPage(
+      id: String,
+      groupedNewsletterResponses: List[(String, List[NewsletterResponse])],
+  ): NewsletterRoundupPage =
+    NewsletterRoundupPage(
       MetaData.make(
         id = id,
         section = Option(SectionId(value = "newsletter-signup-page")),
@@ -37,5 +48,6 @@ object StaticPages {
         iosType = None,
         shouldGoogleIndex = true,
       ),
+      groupedNewsletterResponses,
     )
 }
