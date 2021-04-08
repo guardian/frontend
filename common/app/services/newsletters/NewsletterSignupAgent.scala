@@ -10,7 +10,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
   // Newsletters (not grouped by theme)
   private val newslettersAgent = Box[Either[String, List[NewsletterResponse]]](Right(Nil))
 
-  def refreshNewsletters()(implicit ec: ExecutionContext): Future[Either[String, List[NewsletterResponse]]] = {
+  def refreshNewsletters()(implicit ec: ExecutionContext): Unit = {
     log.info("Refreshing newsletters for newsletter signup embeds.")
 
     val newslettersQuery = newsletterApi.getNewsletters()
@@ -55,13 +55,12 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
   private val groupedNewslettersAgent =
     Box[Either[String, GroupedNewslettersResponse]](Right(GroupedNewslettersResponse.empty))
 
-  def refreshGroupedNewsletters()(implicit ec: ExecutionContext): Future[Either[String, GroupedNewslettersResponse]] = {
+  def refreshGroupedNewsletters()(implicit ec: ExecutionContext): Unit = {
     log.info("Refreshing Grouped Newsletters for round up page.")
 
     val groupedNewslettersQuery = newsletterApi.getGroupedNewsletters()
 
     groupedNewslettersQuery.flatMap { newsletters =>
-      log.info(s"*** ${newsletters.toString}")
       groupedNewslettersAgent.alter(newsletters match {
         case Right(response) =>
           log.info("Successfully refreshed Grouped Newsletters cache.")
@@ -72,7 +71,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
       })
     } recover {
       case e =>
-        val errMessage = s"Call to Newsletter API failed: ${e.getMessage}"
+        val errMessage = s"Call to Grouped Newsletter API failed: ${e.getMessage}"
         log.error(errMessage)
         Left(errMessage)
     }
@@ -85,6 +84,11 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
       case Right(groupedNewsletters) =>
         Right(groupedNewsletters)
     }
+  }
+
+  def refresh()(implicit ec: ExecutionContext): Unit = {
+    refreshNewsletters()
+    refreshGroupedNewsletters()
   }
 
 }

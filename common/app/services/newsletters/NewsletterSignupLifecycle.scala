@@ -28,13 +28,11 @@ class NewsletterSignupLifecycle(
   override def start(): Unit = {
 
     descheduleAll()
-    newsletterSignupAgent.refreshNewsletters()
-    newsletterSignupAgent.refreshGroupedNewsletters()
+    newsletterSignupAgent.refresh()
     jobs.scheduleEveryNMinutes("NewsletterSignupAgentLowFrequencyRefreshJob", 60) {
-      newsletterSignupAgent.refreshNewsletters()
-      newsletterSignupAgent.refreshGroupedNewsletters()
+      newsletterSignupAgent.refresh()
+      Future.successful(())
     }
-
   }
 
 }
