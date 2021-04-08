@@ -154,11 +154,12 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     return canShowPromise
 };
 
-const maybeWipeUserData = async (apiKey, brazeUuid) => {
+const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
     const userHasLoggedOut = !brazeUuid && hasCurrentBrazeUser();
-    const slotNames = ['Banner','EndOfArticle']
+    const userHasRemovedConsent = !consent && hasCurrentBrazeUser();
+    const slotNames = ['Banner','EndOfArticle'];
 
-    if (userHasLoggedOut) {
+    if (userHasLoggedOut || userHasRemovedConsent) {
         try {
             appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
             appboy.initialize(apiKey, SDK_OPTIONS);
