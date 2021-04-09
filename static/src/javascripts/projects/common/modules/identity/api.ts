@@ -169,10 +169,10 @@ export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
 		if (isUserLoggedIn()) {
-			void fetchJson({
-				url: `${idApiRoot}/user/me`,
-				type: 'jsonp',
-				crossOrigin: true,
+			const url = `${idApiRoot}/user/me`;
+			void fetchJson(url, {
+				mode: 'cors',
+				credentials: 'include',
 			}).then((data: IdentityResponse) => {
 				if (data.status === 'ok') {
 					mergingCallback(data.user);
