@@ -503,8 +503,8 @@ object DotcomRenderingUtils {
       tags = allTags, // List[Tag]
       pillar = findPillar(article.metadata.pillar, article.metadata.designType), // String
       isImmersive = article.isImmersive, // Boolean
-      sectionLabel = Localisation(article.content.sectionLabelName)(request), // String
-      sectionUrl = article.content.sectionLabelLink, // String
+      sectionLabel = Localisation(article.content.sectionLabelName.getOrElse(""))(request), // String
+      sectionUrl = article.content.sectionLabelLink.getOrElse(""), // String
       sectionName = article.metadata.section.map(_.value), // Option[String]
       subMetaSectionLinks = article.content.submetaLinks.sectionLabels
         .map(SubMetaLink.apply)

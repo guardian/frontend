@@ -59,7 +59,7 @@
         @if(item.content.isPaidContent && item.content.isImmersive) {
           <div class="content__section-label--advertisement">
               <a class="content__label__link content__section-label__link--advertisement" href="@LinkTo {/@item.content.sectionLabelLink}">
-                  @Html(Localisation(item.content.sectionLabelName))
+                  @Html(Localisation(item.content.sectionLabelName.getOrElse("")))
               </a>
           </div>
         } else {
@@ -69,7 +69,7 @@
                       data-link-name="article section"
                       href="@LinkTo {/@item.content.sectionLabelLink}">
                       <span class="label__link-wrapper">
-                          @Html(Localisation(item.content.sectionLabelName))
+                          @Html(Localisation(item.content.sectionLabelName.getOrElse("")))
                       </span>
                   </a>
               </div>
