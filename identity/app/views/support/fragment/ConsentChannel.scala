@@ -12,9 +12,6 @@ object ConsentChannel {
   case object MarketResearchConsentChannel extends ConsentChannelBehaviour(Consent.MarketResearchOptout.id)
   case object ProfilingConsentChannel extends ConsentChannelBehaviour(Consent.ProfilingOptout.id)
 
-  // products
-  // case object TextConsentChannel extends ConsentChannelBehaviour(Consent.Events.id)
-
   private val channelsIds = List(
     TextConsentChannel.id,
     PhoneOptOutConsentChannel.id,
