@@ -2,7 +2,6 @@ import {
     brazeVendorId,
     canShowPreChecks,
 } from './brazeBanner';
-
 import { hasRequiredConsents } from './hasRequiredConsents.js'
 
 jest.mock('../../../lib/raven');

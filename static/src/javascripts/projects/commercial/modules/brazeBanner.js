@@ -17,7 +17,6 @@ import {
 import { measureTiming } from './measure-timing';
 import { checkBrazeDependencies } from './checkBrazeDependencies.js'
 import { BrazeMessages, InMemoryCache, LocalMessageCache } from '@guardian/braze-components/logic'
-import fastdom from 'lib/__mocks__/fastdom';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -138,14 +137,6 @@ const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
             appboy.initialize(apiKey, SDK_OPTIONS);
             appboy.wipeData();
 
-            // DCR has an implementation of LocalMessageCache but Frontend does not
-            // We should still wipe the cache from Frontend if the user logs out
-            const localStorageKeyBase = 'gu.brazeMessageCache'
-            slotNames.forEach(slotName => {
-                const key = `${localStorageKeyBase}.${slotName}`
-                storage.local.remove(key);
-            })
-
             clearHasCurrentBrazeUser();
             LocalMessageCache.clear();
         } catch(error) {
@@ -179,7 +170,6 @@ const canShow = async () => {
 
         return false;
     }
-
 
     try {
         const result = await getMessageFromBraze(dependenciesResult.data.apiKey, dependenciesResult.data.brazeUuid)
