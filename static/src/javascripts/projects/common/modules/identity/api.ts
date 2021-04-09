@@ -281,9 +281,9 @@ export const sendValidationEmail = (): unknown => {
 	const defaultReturnEndpoint = '/email-prefs';
 	const endpoint = `${idApiRoot}/user/send-validation-email`;
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- it’s okay
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- it will evaluate to false if undefined
 	const returnUrl = getUrlVars().returnUrl
-		? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- it’s okay
+		? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- same as above
 		  decodeURIComponent(getUrlVars()?.returnUrl)
 		: profileRoot + defaultReturnEndpoint;
 
