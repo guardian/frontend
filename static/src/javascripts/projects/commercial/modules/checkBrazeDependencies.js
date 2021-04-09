@@ -46,9 +46,6 @@ const checkBrazeDependencies = async () => {
 
 	const data = {};
 
-	// I think we could possibly clean this up a bit when we can use
-	// Promise.allSettled reliably (it's not available in our current Node
-	// version and polyfill.io doesn't have a polyfill yet).
 	for (const { name, value } of dependencies) {
 		try {
 			// eslint-disable-next-line no-await-in-loop
