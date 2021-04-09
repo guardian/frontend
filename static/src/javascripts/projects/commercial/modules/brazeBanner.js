@@ -134,7 +134,7 @@ const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
 
     if (userHasLoggedOut || userHasRemovedConsent) {
         try {
-            appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+            const appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
             appboy.initialize(apiKey, SDK_OPTIONS);
             appboy.wipeData();
 
