@@ -87,7 +87,7 @@
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
-                @if(!isChannel(consentField)) {
+                @if(!isChannel(consentField) && !isProduct(consentField)) {
                     @if(index == 0) {
                         <li>
                             @fragments.consentSwitch(consentField, consentHint, skin = skin)(messages)
