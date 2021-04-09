@@ -24,7 +24,7 @@ const buildDependencies = () => {
 		},
 		{
 			name: 'brazeUuid',
-			value: Promise.resolve(getBrazeUuid()),
+			value: getBrazeUuid(),
 		},
 		{
 			name: 'consent',
