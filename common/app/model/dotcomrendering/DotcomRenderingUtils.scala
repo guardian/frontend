@@ -506,7 +506,9 @@ object DotcomRenderingUtils {
       sectionLabel = Localisation(article.content.sectionLabelName)(request), // String
       sectionUrl = article.content.sectionLabelLink, // String
       sectionName = article.metadata.section.map(_.value), // Option[String]
-      subMetaSectionLinks = article.content.submetaLinks.sectionLabels.map(SubMetaLink.apply), // List[SubMetaLink]
+      subMetaSectionLinks = article.content.submetaLinks.sectionLabels
+        .map(SubMetaLink.apply)
+        .filter(_.title.trim.nonEmpty), // List[SubMetaLink]
       subMetaKeywordLinks = article.content.submetaLinks.keywords.map(SubMetaLink.apply), // List[SubMetaLink]
       shouldHideAds = article.content.shouldHideAdverts, // Boolean
       isAdFreeUser = views.support.Commercial.isAdFree(request), // Boolean
