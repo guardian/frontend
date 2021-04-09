@@ -1,9 +1,6 @@
 import { storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
-import {
-	createAuthenticationComponentEvent,
-	createAuthenticationComponentEventParams,
-} from 'common/modules/identity/auth-component-event-params';
+import { createAuthenticationComponentEventParams } from 'common/modules/identity/auth-component-event-params';
 import config_ from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
@@ -16,11 +13,6 @@ const config = config_ as {
 };
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
-
-type PasswordCredential = {
-	id: string;
-	password: string;
-};
 
 type SettableConsent = {
 	id: string;
@@ -224,7 +216,6 @@ export const redirectTo = (url: string): void => {
 type AuthenticationComponentId =
 	| 'email_sign_in_banner'
 	| 'subscription_sign_in_banner'
-	| 'guardian_smartlock'
 	| 'signin_from_formstack';
 
 export const getUserOrSignIn = (
@@ -391,35 +382,6 @@ export const setConsent = (consents: SettableConsent): Promise<void> =>
 		if (resp.ok) return Promise.resolve();
 		return Promise.reject();
 	});
-
-export const ajaxSignIn = (
-	credentials: PasswordCredential,
-): Promise<unknown> => {
-	const url = `${profileRoot}/actions/auth/ajax`;
-
-	const data = new URLSearchParams();
-
-	data.append('email', credentials.id);
-	data.append('password', credentials.password);
-
-	if (window.guardian.ophan?.viewId) {
-		data.append(
-			'componentEventParams',
-			createAuthenticationComponentEvent(
-				'guardian_smartlock',
-				window.guardian.ophan.viewId,
-			),
-		);
-	}
-
-	return fetchJson(url, {
-		mode: 'cors',
-		method: 'POST',
-		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-		body: data.toString(),
-		credentials: 'include',
-	});
-};
 
 export const getUserData = (): Promise<unknown> =>
 	fetchJson(`${idApiRoot}/user/me`, {
