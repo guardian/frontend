@@ -9,12 +9,25 @@ import {
     getUserOrSignIn,
     shouldAutoSigninInUser,
 } from 'common/modules/identity/api';
-import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import fetchJson_ from 'lib/fetch-json';
 import { storage } from '@guardian/libs';
 
-jest.mock('lib/config');
+const defaultConfig = {
+	page: {
+		idApiUrl: 'https://idapi.theguardian.com',
+		idUrl: 'https://profile.theguardian.com',
+	},
+};
+jest.mock('lib/config', () => {
+	return Object.assign({}, defaultConfig, {
+		get: (path = '', defaultValue) =>
+			path
+				.replace(/\[(.+?)]/g, '.$1')
+				.split('.')
+				.reduce((o, key) => o[key], defaultConfig) || defaultValue,
+	});
+});
 jest.mock('lib/fetch-json', () => jest.fn());
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
@@ -34,10 +47,6 @@ const originalAssign = window.location.assign;
 
 describe('Identity API', () => {
     beforeEach(() => {
-        config.page = {
-            idApiUrl: 'https://idapi.theguardian.com',
-            idUrl: 'https://profile.theguardian.com',
-        };
         getCookieStub.mockImplementation(
             () =>
                 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
@@ -92,7 +101,6 @@ describe('Identity API', () => {
             })
         );
 
-        init();
         getUserFromApi(apiCallback);
     });
 
@@ -118,7 +126,7 @@ describe('Identity API', () => {
         getUserOrSignIn('email_sign_in_banner');
 
         expect(window.location.href).toBe(
-            `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
+            `${defaultConfig.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
             )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );
@@ -141,7 +149,7 @@ describe('Identity API', () => {
         getUserOrSignIn('email_sign_in_banner', returnUrl);
 
         expect(window.location.href).toBe(
-            `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
+            `${defaultConfig.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
             )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );

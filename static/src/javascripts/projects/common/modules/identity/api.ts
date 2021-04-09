@@ -98,14 +98,10 @@ let userFromCookieCache: IdentityUserFromCache = null;
 const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
-let idApiRoot = '';
-let profileRoot = '';
 
-export const init = (): void => {
-	idApiRoot = config.get('page.idApiUrl');
-	mediator.emit('module:identity:api:loaded');
-	profileRoot = config.get('page.idUrl');
-};
+const idApiRoot = config.get('page.idApiUrl');
+const profileRoot = config.get('page.idUrl');
+mediator.emit('module:identity:api:loaded');
 
 export const decodeBase64 = (str: string): string =>
 	decodeURIComponent(
@@ -204,7 +200,7 @@ export const reset = (): void => {
 export const getCookie = (): string | null =>
 	getCookieByName(cookieName) as string | null;
 
-export const getUrl = (): string => config.get('page.idUrl');
+export const getUrl = (): string => profileRoot;
 
 export const getUserFromApiWithRefreshedCookie = (): Promise<unknown> => {
 	const endpoint = `${idApiRoot}/user/me`;
