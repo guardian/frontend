@@ -61,7 +61,7 @@ describe('checkBrazeDependecies', () => {
 	it('fails if the api key is not set', async () => {
 		config.set('switches.brazeSwitch', true);
 		config.set('page.brazeApiKey', '');
-        config.set('page.isPaidContent', false);
+		config.set('page.isPaidContent', false);
 		mockBrazeUuid = 'fake-uuid';
 		mockConsentsPromise = Promise.resolve(true);
 		mockShouldNotBeShownSupportMessaging = true;
