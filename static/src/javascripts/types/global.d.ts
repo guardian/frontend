@@ -31,3 +31,13 @@ declare module '*.svg' {
 	// eslint-disable-next-line import/no-default-export -- allow svg imports
 	export default content;
 }
+
+interface Window {
+	// eslint-disable-next-line id-denylist -- this *is* the guardian object
+	guardian: {
+		ophan?: {
+			viewId: string;
+			pageViewId: string;
+		};
+	};
+}
