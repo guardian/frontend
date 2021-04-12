@@ -14,9 +14,10 @@ const fetchJson = async (
 		throw new Error('First argument should be of type `string`');
 
 	let path = resource;
-	if (!RegExp('^(https?:)?//').exec(resource)) {
-		// If `resource` is not relative url
-		path = String(config.get('page.ajaxUrl', '')) + resource;
+	if (!RegExp('^(https?:)?//').exec(path)) {
+		// If `path` is path-absolute-URL string, starting with `/…`
+		// https://url.spec.whatwg.org/#path-absolute-url-string
+		path = config.get('page.ajaxUrl', '') + resource;
 		init.mode = 'cors';
 		init.credentials = 'include';
 	}
