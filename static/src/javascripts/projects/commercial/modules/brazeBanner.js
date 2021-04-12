@@ -18,7 +18,7 @@ import {
     setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
 import { measureTiming } from './measure-timing';
-import { BrazeMessages, InMemoryCache, LocalMessageCache } from '@guardian/braze-components/logic'
+import { BrazeMessages, LocalMessageCache } from '@guardian/braze-components/logic'
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -128,7 +128,7 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     appboy.initialize(apiKey, SDK_OPTIONS);
 
     const errorHandler = (error) => { reportError(error, {}, false) };
-    const brazeMessages = new BrazeMessages(appboy, InMemoryCache, errorHandler);
+    const brazeMessages = new BrazeMessages(appboy, LocalMessageCache, errorHandler);
 
     setHasCurrentBrazeUser();
     appboy.changeUser(brazeUuid);
