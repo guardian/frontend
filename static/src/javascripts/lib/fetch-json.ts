@@ -15,30 +15,26 @@ const fetchJson = async (
 
 	let path = '';
 	if (!RegExp('^(https?:)?//').exec(resource)) {
-		path = config.get('page.ajaxUrl', '') + resource;
+		path = String(config.get('page.ajaxUrl', '')) + resource;
 		init.mode = 'cors';
 		init.credentials = 'include';
 	}
-
-	return fetch(path, init).then((resp: Response) => {
-		if (resp.ok) {
-			switch (resp.status) {
-				case 204:
-					return Promise.resolve({});
-				default:
-					try {
-						return resp.json();
-					} catch (ex) {
-						throw new Error(
-							`Fetch error while requesting ${path}: Invalid JSON response`,
-						);
-					}
-			}
+	const resp = (await fetch(path, init)) as Response;
+	if (resp.ok) {
+		switch (resp.status) {
+			case 204:
+				return {};
+			default:
+				try {
+					return resp.json();
+				} catch (ex) {
+					throw new Error(
+						`Fetch error while requesting ${path}: Invalid JSON response`,
+					);
+				}
 		}
-		throw new Error(
-			`Fetch error while requesting ${path}: ${resp.statusText}`,
-		);
-	});
+	}
+	throw new Error(`Fetch error while requesting ${path}: ${resp.statusText}`);
 };
 
 export { fetchJson };
