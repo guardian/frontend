@@ -4,7 +4,7 @@ import qwery from 'qwery';
 
 import $ from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import { isBreakpoint, pageVisible, initPageVisibility } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { enhanceTweets } from 'common/modules/article/twitter';
@@ -136,7 +136,7 @@ const autoUpdate = (opts) => {
             }
         };
 
-        return fetchJSON(endpoint, {
+        return fetchJson(endpoint, {
             mode: 'cors',
         })
             .then(resp => {

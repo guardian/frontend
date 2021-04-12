@@ -1,4 +1,4 @@
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import config from 'lib/config';
 import { storage } from '@guardian/libs';
 
@@ -20,7 +20,7 @@ const get = () =>
             return resolve(geolocationFromStorage);
         }
 
-        fetchJSON('/geolocation', {
+        fetchJson('/geolocation', {
             mode: 'cors',
         })
             .then(response => {

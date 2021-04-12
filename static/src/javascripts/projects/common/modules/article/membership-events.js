@@ -1,6 +1,6 @@
 import fastdom from 'fastdom';
 import $ from 'lib/$';
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 
 const ELEMENT_INITIAL_CLASS = 'element-membership--not-upgraded';

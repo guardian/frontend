@@ -1,5 +1,5 @@
 import config from '../../../../lib/config';
-import fetchJson from '../../../../lib/fetch-json';
+import { fetchJson } from '../../../../lib/fetch-json';
 import fastdom from '../../../../lib/fastdom-promise';
 import { initHostedCarousel } from './onward-journey-carousel';
 

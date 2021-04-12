@@ -1,5 +1,5 @@
 import fastdom from 'lib/fastdom-promise';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import { integerCommas } from 'lib/formatters';
 import mediator from 'lib/mediator';
 import { inlineSvg } from 'common/views/svgs';
@@ -110,7 +110,7 @@ const getCommentCounts = (context) => {
 
             const endpoint = `${COUNT_URL}${getContentIds(indexedElements)}`;
 
-            return fetchJSON(endpoint, {
+            return fetchJson(endpoint, {
                 mode: 'cors',
             }).then(response => {
                 if (response && response.counts) {

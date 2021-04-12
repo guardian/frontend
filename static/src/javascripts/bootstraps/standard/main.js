@@ -17,7 +17,7 @@ import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import { storage } from '@guardian/libs';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { addEventListener } from 'lib/events';
 import { isUserLoggedIn } from 'common/modules/identity/api';
@@ -85,7 +85,7 @@ const handleMembershipAccess = () => {
     };
 
     if (isUserLoggedIn()) {
-        fetchJSON(`${membershipUrl}/user/me`, {
+        fetchJson(`${membershipUrl}/user/me`, {
             mode: 'cors',
             credentials: 'include',
         })

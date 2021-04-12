@@ -1,4 +1,4 @@
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import { initCommentCount } from './comment-count';
 
 jest.mock('lib/fastdom-promise');

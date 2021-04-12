@@ -1,4 +1,4 @@
-import fetchJson_ from '../../../../lib/fetch-json';
+import {fetchJson as fetchJson_} from '../../../../lib/fetch-json';
 import { loadOnwardComponent, _ } from './onward.js';
 
 const { insertHTMLfromPlaceholders, generateUrlFromConfig } = _;

@@ -1,6 +1,6 @@
 /* eslint-disable guardian-frontend/no-direct-access-config */
 import config from 'lib/config';
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
 import { Weather } from 'facia/modules/onwards/weather';
 

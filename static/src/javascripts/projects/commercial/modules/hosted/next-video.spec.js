@@ -1,5 +1,5 @@
 import { load } from './next-video';
-import fetchJson from '../../../../lib/fetch-json';
+import { fetchJson } from '../../../../lib/fetch-json';
 import config from '../../../../lib/config';
 
 jest.mock('../../../../lib/fetch-json', () =>
