@@ -1,5 +1,5 @@
 import React, { Component } from 'preact/compat';
-import reqwest from 'reqwest';
+import { fetchJson } from '../../../../../../lib/fetch-json';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';

@@ -8,7 +8,7 @@ import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { scrollToElement } from 'lib/scroller';
 import fastdom from 'lib/fastdom-promise';
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import { initDiscussionAnalytics } from 'common/modules/analytics/discussion';
 import { begin, end } from 'common/modules/analytics/register';
 import { Component } from 'common/modules/component';

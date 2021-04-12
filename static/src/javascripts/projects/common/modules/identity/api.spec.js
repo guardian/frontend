@@ -10,7 +10,7 @@ import {
     shouldAutoSigninInUser,
 } from 'common/modules/identity/api';
 import { getCookie as getCookie_ } from 'lib/cookies';
-import fetchJson_ from 'lib/fetch-json';
+import { fetchJson as fetchJson_ } from 'lib/fetch-json';
 import { storage } from '@guardian/libs';
 
 const defaultConfig = {
@@ -28,7 +28,7 @@ jest.mock('lib/config', () => {
 				.reduce((o, key) => o[key], defaultConfig) || defaultValue,
 	});
 });
-jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('lib/fetch-json', () => ({ fetchJson: jest.fn() }));
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));

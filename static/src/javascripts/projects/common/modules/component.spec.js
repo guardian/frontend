@@ -1,9 +1,9 @@
 import bean from 'bean';
-import fetchJSON_ from 'lib/fetch-json';
+import { fetchJson as fetchJson_ } from 'lib/fetch-json';
 
 import { Component } from './component';
 
-const fetchJSON = (fetchJSON_);
+const fetchJson = (fetchJson_);
 
 const mockResponse = {
     html: '<p>html</p>',
@@ -21,7 +21,9 @@ const createComponent = (props = {}) => {
     return component;
 };
 
-jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve(mockResponse)));
+jest.mock('lib/fetch-json', () => ({
+	fetchJson: jest.fn(() => Promise.resolve(mockResponse)),
+}));
 
 jest.mock('bean', () => ({
     off: jest.fn(),
@@ -155,7 +157,7 @@ describe('Component', () => {
             });
             const mockError = new Error('Bad response');
 
-            fetchJSON.mockReturnValueOnce(Promise.reject(mockError));
+            fetchJson.mockReturnValueOnce(Promise.reject(mockError));
 
             return component.fetch(elem).catch(() => {
                 expect(component.ready).toHaveBeenCalled();

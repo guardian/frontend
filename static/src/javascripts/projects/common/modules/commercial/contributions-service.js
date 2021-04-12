@@ -9,7 +9,7 @@ import userPrefs from 'common/modules/user-prefs';
 import config from '../../../../lib/config';
 import { getCookie } from '../../../../lib/cookies';
 import fastdom from '../../../../lib/fastdom-promise';
-import fetchJson from '../../../../lib/fetch-json';
+import { fetchJson } from '../../../../lib/fetch-json';
 import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
 import reportError from '../../../../lib/report-error';
 import { trackNonClickInteraction } from '../analytics/google';

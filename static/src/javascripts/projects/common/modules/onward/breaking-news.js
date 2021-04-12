@@ -4,7 +4,7 @@ import $ from 'lib/$';
 import fastdom from 'fastdom';
 import qwery from 'qwery';
 import config from 'lib/config';
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import { storage } from '@guardian/libs';
 import template from 'lodash/template';

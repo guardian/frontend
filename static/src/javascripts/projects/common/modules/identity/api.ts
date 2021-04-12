@@ -3,7 +3,7 @@ import { mergeCalls } from 'common/modules/async-call-merger';
 import { createAuthenticationComponentEventParams } from 'common/modules/identity/auth-component-event-params';
 import config_ from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 
@@ -170,16 +170,17 @@ export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
 		if (isUserLoggedIn()) {
 			const url = `${idApiRoot}/user/me`;
-			void fetchJson(url, {
+			void (fetchJson(url, {
 				mode: 'cors',
 				credentials: 'include',
-			}).then((data: IdentityResponse) => {
-				if (data.status === 'ok') {
-					mergingCallback(data.user);
-				} else {
-					mergingCallback(null);
-				}
-			});
+			}) as Promise<IdentityResponse>) // assert unknown -> IdentityResponse
+				.then((data: IdentityResponse) => {
+					if (data.status === 'ok') {
+						mergingCallback(data.user);
+					} else {
+						mergingCallback(null);
+					}
+				});
 		} else {
 			mergingCallback(null);
 		}
@@ -357,12 +358,12 @@ export const getSubscribedNewsletters = (): Promise<string[]> => {
 		  }
 		| undefined;
 
-	return fetchJson(url, {
+	return (fetchJson(url, {
 		mode: 'cors',
 		method: 'GET',
 		headers: { Accept: 'application/json' },
 		credentials: 'include',
-	})
+	}) as Promise<NewslettersResponse>) // assert unknown -> NewslettersResponse
 		.then((json: NewslettersResponse) => {
 			if (json?.result?.subscriptions) {
 				return json.result.subscriptions.map((sub) => sub.listId);
