@@ -13,12 +13,13 @@ const fetchJson = async (
 	if (typeof resource !== 'string')
 		throw new Error('First argument should be of type `string`');
 
-	let path = '';
+	let path = resource;
 	if (!RegExp('^(https?:)?//').exec(resource)) {
 		path = String(config.get('page.ajaxUrl', '')) + resource;
 		init.mode = 'cors';
 		init.credentials = 'include';
 	}
+
 	const resp = (await fetch(path, init)) as Response;
 	if (resp.ok) {
 		switch (resp.status) {
