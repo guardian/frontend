@@ -9,7 +9,7 @@ const fetchSpy = require('lib/fetch');
 
 describe('Fetch JSON util', () => {
 	beforeAll(() => {
-		config.set('page.ajaxUrl', 'foo');
+		config.set('page.ajaxUrl', 'ajax.url/');
 	});
 
 	it('returns a promise which rejects on network errors', (done) => {
@@ -84,4 +84,23 @@ describe('Fetch JSON util', () => {
 			.then(done)
 			.catch(done.fail);
 	});
+
+    it('handles fully qualified URLs', (done) => {
+        fetchSpy.mockReturnValueOnce(
+            Promise.resolve({
+                ok: true,
+                json() {
+                    return Promise.resolve({})
+                }
+            })
+        )
+
+        const url = 'https://example.com';
+        fetchJson(url).then((response) => {
+            expect(response).toEqual({});
+            expect(fetchSpy).toHaveBeenLastCalledWith(url, {})
+        }).then(done)
+        .catch(done.fail)
+
+    })
 });

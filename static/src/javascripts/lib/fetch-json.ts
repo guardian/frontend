@@ -15,6 +15,7 @@ const fetchJson = async (
 
 	let path = resource;
 	if (!RegExp('^(https?:)?//').exec(resource)) {
+		// If `resource` is not relative url
 		path = String(config.get('page.ajaxUrl', '')) + resource;
 		init.mode = 'cors';
 		init.credentials = 'include';
