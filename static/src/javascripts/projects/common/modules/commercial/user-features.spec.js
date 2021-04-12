@@ -21,7 +21,9 @@ jest.mock('../../../../lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
-jest.mock('../../../../lib/fetch-json', () => jest.fn(() => Promise.resolve()));
+jest.mock('../../../../lib/fetch-json', () => ({
+	fetchJson: jest.fn(() => Promise.resolve()),
+}));
 
 const fetchJsonSpy = fetchJson;
 const isUserLoggedIn = isUserLoggedIn_;

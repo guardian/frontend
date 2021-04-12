@@ -2,9 +2,11 @@ import { load } from './next-video';
 import { fetchJson } from '../../../../lib/fetch-json';
 import config from '../../../../lib/config';
 
-jest.mock('../../../../lib/fetch-json', () =>
-    jest.fn(() => Promise.resolve({ html: '<div class="video"></div>' }))
-);
+jest.mock('../../../../lib/fetch-json', () => ({
+	fetchJson: jest.fn(() =>
+		Promise.resolve({ html: '<div class="video"></div>' }),
+	),
+}));
 
 describe('Hosted Next Video', () => {
     beforeAll(() => {

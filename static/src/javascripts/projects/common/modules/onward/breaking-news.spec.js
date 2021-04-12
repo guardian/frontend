@@ -41,45 +41,45 @@ jest.mock('lib/config', () => {
                 .reduce((o, key) => o[key], defaultConfig) || defaultValue,
     });
 });
-jest.mock('lib/fetch-json', () =>
-    jest.fn().mockReturnValue(
-        Promise.resolve({
-            webTitle: 'Breaking News',
-            collections: [
-                {
-                    href: 'global',
-                    content: [
-                        {
-                            headline: 'alert 1',
-                            id: 'alert_1',
-                            frontPublicationDate: Date.now(),
-                        },
-                    ],
-                },
-                {
-                    href: 'uk',
-                    content: [
-                        {
-                            headline: 'alert 2',
-                            id: 'alert_2',
-                            frontPublicationDate: Date.now() - 1000,
-                        },
-                    ],
-                },
-                {
-                    href: 'sport',
-                    content: [
-                        {
-                            headline: 'alert 3',
-                            id: 'alert_3',
-                            frontPublicationDate: Date.now() - 2000,
-                        },
-                    ],
-                },
-            ],
-        })
-    )
-);
+jest.mock('lib/fetch-json', () => ({
+	fetchJson: jest.fn().mockReturnValue(
+		Promise.resolve({
+			webTitle: 'Breaking News',
+			collections: [
+				{
+					href: 'global',
+					content: [
+						{
+							headline: 'alert 1',
+							id: 'alert_1',
+							frontPublicationDate: Date.now(),
+						},
+					],
+				},
+				{
+					href: 'uk',
+					content: [
+						{
+							headline: 'alert 2',
+							id: 'alert_2',
+							frontPublicationDate: Date.now() - 1000,
+						},
+					],
+				},
+				{
+					href: 'sport',
+					content: [
+						{
+							headline: 'alert 3',
+							id: 'alert_3',
+							frontPublicationDate: Date.now() - 2000,
+						},
+					],
+				},
+			],
+		}),
+	),
+}));
 jest.mock('common/modules/ui/relativedates', () => ({
     isWithinSeconds: jest.fn().mockReturnValue(true),
 }));
@@ -89,7 +89,7 @@ jest.useFakeTimers();
 const isAvailableMock = require('@guardian/libs').storage.local.isAvailable;
 const getMock = require('@guardian/libs').storage.local.get;
 const setMock = require('@guardian/libs').storage.local.set;
-const fakeFetchJson = require('lib/fetch-json');
+const fakeFetchJson = require('lib/fetch-json').fetchJson;
 const isWithinSecondsMock = require('common/modules/ui/relativedates')
     .isWithinSeconds;
 const fakeTemplate = require('lodash/template');

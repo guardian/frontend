@@ -21,7 +21,9 @@ const createComponent = (props = {}) => {
     return component;
 };
 
-jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve(mockResponse)));
+jest.mock('lib/fetch-json', () => ({
+	fetchJson: jest.fn(() => Promise.resolve(mockResponse)),
+}));
 
 jest.mock('bean', () => ({
     off: jest.fn(),

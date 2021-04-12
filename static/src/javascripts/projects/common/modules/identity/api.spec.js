@@ -28,7 +28,7 @@ jest.mock('lib/config', () => {
 				.reduce((o, key) => o[key], defaultConfig) || defaultValue,
 	});
 });
-jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('lib/fetch-json', () => ({ fetchJson: jest.fn() }));
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));

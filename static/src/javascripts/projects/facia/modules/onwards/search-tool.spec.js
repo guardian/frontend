@@ -6,7 +6,7 @@ import mediator from 'lib/mediator';
 
 jest.mock('lib/raven');
 
-jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('lib/fetch-json', () => ({ fetchJson: jest.fn() }));
 
 const fetchJson = (fetchJson_);
 
