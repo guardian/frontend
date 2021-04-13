@@ -1,7 +1,7 @@
 import fastdom from 'fastdom';
 import reportError from 'lib/report-error';
 import $ from 'lib/$';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import config from 'lib/config';
 import { integerCommas } from 'lib/formatters';
 import template from 'lodash/template';
@@ -65,7 +65,7 @@ const fetch = () => {
         'page.pageId'
     )}.json`;
 
-    fetchJSON(url, {
+    fetchJson(url, {
         mode: 'cors',
     }).then(res => {
         const count = res.share_count || 0;

@@ -1,21 +1,21 @@
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import { initCommentCount } from './comment-count';
 
 jest.mock('lib/fastdom-promise');
 
-jest.mock('lib/fetch-json', () =>
-    jest.fn(() =>
-        Promise.resolve({
-            counts: [
-                { id: '/p/3ghkT', count: 0 },
-                { id: '/p/3ghv5', count: 100 },
-                { id: '/p/3ghx3', count: 200 },
-                { id: '/p/3gh4n', count: 300 },
-                { id: '/p/3ghNp', count: 400 },
-            ],
-        })
-    )
-);
+jest.mock('lib/fetch-json', () => ({
+	fetchJson: jest.fn(() =>
+		Promise.resolve({
+			counts: [
+				{ id: '/p/3ghkT', count: 0 },
+				{ id: '/p/3ghv5', count: 100 },
+				{ id: '/p/3ghx3', count: 200 },
+				{ id: '/p/3gh4n', count: 300 },
+				{ id: '/p/3ghNp', count: 400 },
+			],
+		}),
+	),
+}));
 
 const fetchJsonSpy = fetchJson;
 

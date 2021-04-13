@@ -31,7 +31,7 @@ import services._
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import concurrent.BlockingOperations
-import services.newsletters.{EmailEmbedAgent, EmailEmbedLifecycle, NewsletterApi}
+import services.newsletters.{NewsletterSignupLifecycle, NewsletterSignupAgent, NewsletterApi}
 import play.api.OptionalDevContext
 
 class AppLoader extends FrontendApplicationLoader {
@@ -54,7 +54,7 @@ trait Controllers
     with CricketControllers {
   self: BuiltInComponents =>
 
-  def emailEmbedAgent: EmailEmbedAgent
+  def newsletterSignupAgent: NewsletterSignupAgent
 
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
@@ -81,7 +81,7 @@ trait AppComponents
   override lazy val contentApiClient = wire[ContentApiClient]
   override lazy val blockingOperations = wire[BlockingOperations]
   override lazy val newsletterApi = wire[NewsletterApi]
-  override lazy val emailEmbedAgent = wire[EmailEmbedAgent]
+  override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
 
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
@@ -114,7 +114,7 @@ trait AppComponents
       wire[TargetingLifecycle],
       wire[DiscussionExternalAssetsLifecycle],
       wire[StocksDataLifecycle],
-      wire[EmailEmbedLifecycle],
+      wire[NewsletterSignupLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters

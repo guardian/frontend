@@ -2,7 +2,7 @@ import bean from 'bean';
 import bonzo from 'bonzo';
 import $ from 'lib/$';
 import config from 'lib/config';
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import {
     isCompetition,
     isMatch,
@@ -261,7 +261,7 @@ const init = () => {
         );
         const $img = $('.media-primary');
         const $matchListContainer = $.create(
-            
+
             `<div class="football-matches__container"
                   data-link-name="football-matches-clockwatch"></div>
             `.css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 })

@@ -227,7 +227,7 @@ const buildGrid = (
         });
     });
 
-    
+
     return grid;
 };
 

@@ -17,13 +17,10 @@ import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import { storage } from '@guardian/libs';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { addEventListener } from 'lib/events';
-import {
-    isUserLoggedIn,
-    init as identityInit,
-} from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { addCookie } from 'lib/cookies';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
@@ -88,7 +85,7 @@ const handleMembershipAccess = () => {
     };
 
     if (isUserLoggedIn()) {
-        fetchJSON(`${membershipUrl}/user/me`, {
+        fetchJson(`${membershipUrl}/user/me`, {
             mode: 'cors',
             credentials: 'include',
         })
@@ -243,8 +240,6 @@ const bootStandard = () => {
     if (config.get('page.requiresMembershipAccess')) {
         handleMembershipAccess();
     }
-
-    identityInit();
 
     newHeaderInit();
 

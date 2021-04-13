@@ -4,7 +4,7 @@ import common.Edition
 import conf.switches.Switches.WeAreHiring
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
-import model.{ApplicationContext, SimplePage}
+import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
@@ -15,9 +15,10 @@ import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.signup.newsletterContent
 import html.HtmlPageHelpers.ContentCSSFile
+import staticpages.NewsletterRoundupPage
 import views.html.stacked
 
-object NewsletterHtmlPage extends HtmlPage[SimplePage] {
+object NewsletterHtmlPage extends HtmlPage[NewsletterRoundupPage] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles =
     new Styles {
@@ -30,8 +31,11 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
       override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
     }
 
-  def html(page: SimplePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
-    implicit val p: SimplePage = page
+  def html(page: NewsletterRoundupPage)(implicit
+      request: RequestHeader,
+      applicationContext: ApplicationContext,
+  ): Html = {
+    implicit val p: NewsletterRoundupPage = page
 
     htmlTag(
       headTag(

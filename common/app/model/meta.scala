@@ -22,6 +22,7 @@ import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
 import navigation.GuardianFoundationHelper
+import services.newsletters.{NewsletterResponse}
 
 import scala.util.matching.Regex
 import utils.ShortUrls
@@ -671,11 +672,11 @@ object SubMetaLinks {
       tags: Tags,
       blogOrSeriesTag: Option[Tag],
       isFromTheObserver: Boolean,
-      sectionLabelLink: String,
-      sectionLabelName: String,
+      sectionLabelLink: Option[String],
+      sectionLabelName: Option[String],
   ): SubMetaLinks = {
-    val sectionLink = if (!(isImmersive && tags.isArticle)) {
-      Some(SubMetaLink(s"/$sectionLabelLink", sectionLabelName, Some("article section")))
+    val sectionLink: Option[SubMetaLink] = if (!(isImmersive && tags.isArticle)) {
+      sectionLabelName.map(name => SubMetaLink(s"/$sectionLabelLink", name, Some("article section")))
     } else None
 
     val secondaryLink = if (blogOrSeriesTag.isDefined) {

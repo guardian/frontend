@@ -1,4 +1,4 @@
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 
 class MatchInfo {
     constructor(match, whosCalling) {
@@ -10,7 +10,7 @@ class MatchInfo {
 
 
     fetch() {
-        return fetchJSON(this.endpoint, {
+        return fetchJson(this.endpoint, {
             mode: 'cors',
         });
     }

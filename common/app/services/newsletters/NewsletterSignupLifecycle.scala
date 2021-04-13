@@ -7,8 +7,12 @@ import play.api.inject.ApplicationLifecycle
 import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
 
-class EmailEmbedLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, emailEmbedAgent: EmailEmbedAgent)(
-    implicit ec: ExecutionContext,
+class NewsletterSignupLifecycle(
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    newsletterSignupAgent: NewsletterSignupAgent,
+)(implicit
+    ec: ExecutionContext,
 ) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () =>
@@ -18,17 +22,17 @@ class EmailEmbedLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler
   }
 
   private def descheduleAll(): Unit = {
-    jobs.deschedule("EmailEmbedAgentLowFrequencyRefreshJob")
+    jobs.deschedule("NewsletterSignupAgentLowFrequencyRefreshJob")
   }
 
   override def start(): Unit = {
 
     descheduleAll()
-    emailEmbedAgent.refresh()
-    jobs.scheduleEveryNMinutes("EmailEmbedAgentLowFrequencyRefreshJob", 60) {
-      emailEmbedAgent.refresh()
+    newsletterSignupAgent.refresh()
+    jobs.scheduleEveryNMinutes("NewsletterSignupAgentLowFrequencyRefreshJob", 60) {
+      newsletterSignupAgent.refresh()
+      Future.successful(())
     }
-
   }
 
 }

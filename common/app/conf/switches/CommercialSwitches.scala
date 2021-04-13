@@ -287,6 +287,16 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val MerchandisingHighSection: Switch = Switch(
+    group = Commercial,
+    name = "merchandising-high-section",
+    description = "Move merchandising high section one section lower",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }
 
 trait PrebidSwitches {

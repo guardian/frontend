@@ -1,5 +1,4 @@
 import once from 'lodash/once';
-import uniqBy from 'lodash/uniqBy';
 import config from '../../../../lib/config';
 import { breakpoints } from '../../../../lib/detect';
 import { getUrlVars } from '../../../../lib/url';
@@ -37,18 +36,19 @@ const buildSizeMapping = (sizes) => {
 const getSizeOpts = (sizesByBreakpoint) => {
     const sizeMapping = buildSizeMapping(sizesByBreakpoint);
     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-
-    const flattenSizeMappings = sizeMapping.map(size => size[1]).reduce((a, b) => {
-        if (!b.length) {
-            return [...a, b];
+    const flattenSizeMappings = sizeMapping.map(size => size[1]).reduce((acc, current) => {
+        if (!current.length) {
+            return [...acc, current];
         }
-        return [...a, ...b]
+        return [...acc, ...current]
     }, []);
 
-    const sizes = uniqBy(
-        flattenSizeMappings,
-        size => `${size[0]}-${size[1]}`
-    );
+    let sizes = [];
+    flattenSizeMappings.forEach(arr => {
+        if (!sizes.some(size => `${size[0]}-${size[1]}` === `${arr[0]}-${arr[1]}` )) {
+            sizes.push(arr);
+        }
+    });
 
     return {
         sizeMapping,

@@ -1,6 +1,6 @@
 import config from 'lib/config';
 import mediator from 'lib/mediator';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import { begin, error, end } from 'common/modules/analytics/register';
 import { Expandable } from 'common/modules/ui/expandable';
@@ -109,7 +109,7 @@ const related = (opts) => {
                 relatedUrl += `?${queryParams.join('&')}`;
             }
 
-            fetchJSON(relatedUrl, { mode: 'cors' })
+            fetchJson(relatedUrl, { mode: 'cors' })
                 .then(resp =>
                     fastdom.mutate(() => {
                         container.innerHTML = resp.html;

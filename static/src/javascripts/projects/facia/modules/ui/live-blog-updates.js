@@ -3,7 +3,7 @@ import { makeRelativeDate } from 'common/modules/ui/relativedates';
 import $ from 'lib/$';
 import { getViewport } from 'lib/detect';
 import fastdomPromise from 'lib/fastdom-promise';
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { storage } from '@guardian/libs';
 import template from 'lodash/template';

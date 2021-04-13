@@ -2,7 +2,7 @@
 
 import bean from 'bean';
 import bonzo from 'bonzo';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import qwery from 'qwery';
 
 class ComponentError {
@@ -116,7 +116,7 @@ class Component {
             return Promise.resolve({});
         }
 
-        return fetchJSON(endpoint, {
+        return fetchJson(endpoint, {
             mode: 'cors',
             body: this.fetchData,
         }).then(resp => {

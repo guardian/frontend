@@ -20,6 +20,8 @@ case class NewsletterResponse(
     frequency: String,
     exactTargetListId: Int,
     listIdv1: Int,
+    listId: Int,
+    exampleUrl: Option[String],
     emailEmbed: EmailEmbed,
     illustration: Option[NewsletterIllustration] = None,
 )
@@ -39,6 +41,7 @@ object GroupedNewsletterResponse {
   implicit val groupedNewsletterResponseReads = Json.reads[GroupedNewsletterResponse]
 }
 
+// TODO: Find a better way to define this that means Frontend doesn't have knowledge of the fields returned.
 case class GroupedNewslettersResponse(
     newsRoundups: GroupedNewsletterResponse,
     newsByTopic: GroupedNewsletterResponse,
@@ -49,11 +52,36 @@ case class GroupedNewslettersResponse(
     comment: GroupedNewsletterResponse,
     work: GroupedNewsletterResponse,
     fromThePapers: GroupedNewsletterResponse,
-)
+) {
+  val toList: () => List[(String, List[NewsletterResponse])] = () =>
+    List(
+      newsRoundups.displayName -> newsRoundups.newsletters,
+      newsByTopic.displayName -> newsByTopic.newsletters,
+      features.displayName -> features.newsletters,
+      sport.displayName -> sport.newsletters,
+      culture.displayName -> culture.newsletters,
+      lifestyle.displayName -> lifestyle.newsletters,
+      comment.displayName -> comment.newsletters,
+      work.displayName -> work.newsletters,
+      fromThePapers.displayName -> fromThePapers.newsletters,
+    )
+}
 
 object GroupedNewslettersResponse {
   implicit val groupedNewslettersResponseReads = Json.reads[GroupedNewslettersResponse]
 
+  // Create an empty response to initialise the box
+  val empty = GroupedNewslettersResponse(
+    GroupedNewsletterResponse("News roundups", Nil),
+    GroupedNewsletterResponse("News by topic", Nil),
+    GroupedNewsletterResponse("Features", Nil),
+    GroupedNewsletterResponse("Sport", Nil),
+    GroupedNewsletterResponse("Culture", Nil),
+    GroupedNewsletterResponse("Lifestyle", Nil),
+    GroupedNewsletterResponse("Comment", Nil),
+    GroupedNewsletterResponse("Work", Nil),
+    GroupedNewsletterResponse("From the papers", Nil),
+  )
 }
 
 case class NewsletterApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
