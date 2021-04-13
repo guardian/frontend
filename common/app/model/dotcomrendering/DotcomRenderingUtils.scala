@@ -482,62 +482,62 @@ object DotcomRenderingUtils {
 
     DotcomRenderingDataModel(
       version = 3, // Int
-      headline = article.trail.headline, // String
-      standfirst = TextCleaner.sanitiseLinks(edition)(article.fields.standfirst.getOrElse("")), // String
-      webTitle = article.metadata.webTitle, // String
-      mainMediaElements = mainBlock.toList.flatMap(_.elements), // List[PageElement]
-      main = article.fields.main, // String
-      keyEvents = keyEvents.toList, // List[model.dotcomrendering.Block]
-      blocks = bodyBlocks, // List[model.dotcomrendering.Block]
-      pagination = pagination, // Option[Pagination]
-      author = author, // Author
-      webPublicationDate = article.trail.webPublicationDate.toString, // String
+      headline = article.trail.headline,
+      standfirst = TextCleaner.sanitiseLinks(edition)(article.fields.standfirst.getOrElse("")),
+      webTitle = article.metadata.webTitle,
+      mainMediaElements = mainBlock.toList.flatMap(_.elements),
+      main = article.fields.main,
+      keyEvents = keyEvents.toList,
+      blocks = bodyBlocks,
+      pagination = pagination,
+      author = author,
+      webPublicationDate = article.trail.webPublicationDate.toString,
       webPublicationDateDisplay =
-        GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request), // String
-      webPublicationSecondaryDateDisplay = displayedDateTimes.secondaryDateLine, // String
-      editionLongForm = Edition(request).displayName, // String
-      editionId = edition.id, // String
-      pageId = article.metadata.id, // String
-      format = article.metadata.format.getOrElse(ContentFormat.defaultContentFormat), // ContentFormat
-      designType = designTypeAsString(article.metadata.designType), // String
-      tags = allTags, // List[Tag]
-      pillar = findPillar(article.metadata.pillar, article.metadata.designType), // String
-      isImmersive = article.isImmersive, // Boolean
-      sectionLabel = Localisation(article.content.sectionLabelName)(request), // String
-      sectionUrl = article.content.sectionLabelLink, // String
-      sectionName = article.metadata.section.map(_.value), // Option[String]
+        GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
+      webPublicationSecondaryDateDisplay = displayedDateTimes.secondaryDateLine,
+      editionLongForm = Edition(request).displayName,
+      editionId = edition.id,
+      pageId = article.metadata.id,
+      format = article.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
+      designType = designTypeAsString(article.metadata.designType),
+      tags = allTags,
+      pillar = findPillar(article.metadata.pillar, article.metadata.designType),
+      isImmersive = article.isImmersive,
+      sectionLabel = Localisation(article.content.sectionLabelName.getOrElse(""))(request),
+      sectionUrl = article.content.sectionLabelLink.getOrElse(""),
+      sectionName = article.metadata.section.map(_.value),
       subMetaSectionLinks = article.content.submetaLinks.sectionLabels
         .map(SubMetaLink.apply)
-        .filter(_.title.trim.nonEmpty), // List[SubMetaLink]
-      subMetaKeywordLinks = article.content.submetaLinks.keywords.map(SubMetaLink.apply), // List[SubMetaLink]
-      shouldHideAds = article.content.shouldHideAdverts, // Boolean
-      isAdFreeUser = views.support.Commercial.isAdFree(request), // Boolean
-      webURL = article.metadata.webUrl, // String
-      linkedData = linkedData, // List[LinkedData]
-      openGraphData = openGraphData, // Map[String String]
-      twitterData = twitterData, // Map[String, String]
-      config = combinedConfig, // JsObject
-      guardianBaseURL = Configuration.site.host, // String
-      contentType = jsConfig("contentType").getOrElse(""), // String
-      hasRelated = article.content.showInRelated, // Boolean
-      hasStoryPackage = page.related.hasStoryPackage, // Boolean
-      beaconURL = Configuration.debug.beaconUrl, // String
-      isCommentable = article.trail.isCommentable, // Boolean
-      commercialProperties = commercial.editionCommercialProperties, // Map[String, EditionCommercialProperties]
-      pageType = pageType, // PageType
-      starRating = article.content.starRating, // Option[Int]
-      trailText = TextCleaner.sanitiseLinks(edition)(article.trail.fields.trailText.getOrElse("")), // String
-      nav = nav, // Nav
-      showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article), // Boolean
-      pageFooter = pageFooter, // PageFooter
-      publication = article.content.publication, // String
+        .filter(_.title.trim.nonEmpty),
+      subMetaKeywordLinks = article.content.submetaLinks.keywords.map(SubMetaLink.apply),
+      shouldHideAds = article.content.shouldHideAdverts,
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
+      webURL = article.metadata.webUrl,
+      linkedData = linkedData,
+      openGraphData = openGraphData,
+      twitterData = twitterData,
+      config = combinedConfig,
+      guardianBaseURL = Configuration.site.host,
+      contentType = jsConfig("contentType").getOrElse(""),
+      hasRelated = article.content.showInRelated,
+      hasStoryPackage = page.related.hasStoryPackage,
+      beaconURL = Configuration.debug.beaconUrl,
+      isCommentable = article.trail.isCommentable,
+      commercialProperties = commercial.editionCommercialProperties,
+      pageType = pageType,
+      starRating = article.content.starRating,
+      trailText = TextCleaner.sanitiseLinks(edition)(article.trail.fields.trailText.getOrElse("")),
+      nav = nav,
+      showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
+      pageFooter = pageFooter,
+      publication = article.content.publication,
       // See pageShouldHideReaderRevenue in contributions-utilities.js
-      shouldHideReaderRevenue = article.fields.shouldHideReaderRevenue.getOrElse(isPaidContent), // Boolean
-      slotMachineFlags = request.slotMachineFlags, // String
-      contributionsServiceUrl = Configuration.contributionsService.url, // String
-      badge = badge, // Option[DCRBadge]
-      matchUrl = makeMatchUrl(page), // Option[String] ; Match Data
-      isSpecialReport = isSpecialReport(page), // Boolean
+      shouldHideReaderRevenue = article.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
+      slotMachineFlags = request.slotMachineFlags,
+      contributionsServiceUrl = Configuration.contributionsService.url,
+      badge = badge,
+      matchUrl = makeMatchUrl(page),
+      isSpecialReport = isSpecialReport(page),
     )
   }
 }

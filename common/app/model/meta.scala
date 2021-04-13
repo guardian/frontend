@@ -672,11 +672,11 @@ object SubMetaLinks {
       tags: Tags,
       blogOrSeriesTag: Option[Tag],
       isFromTheObserver: Boolean,
-      sectionLabelLink: String,
-      sectionLabelName: String,
+      sectionLabelLink: Option[String],
+      sectionLabelName: Option[String],
   ): SubMetaLinks = {
-    val sectionLink = if (!(isImmersive && tags.isArticle)) {
-      Some(SubMetaLink(s"/$sectionLabelLink", sectionLabelName, Some("article section")))
+    val sectionLink: Option[SubMetaLink] = if (!(isImmersive && tags.isArticle)) {
+      sectionLabelName.map(name => SubMetaLink(s"/$sectionLabelLink", name, Some("article section")))
     } else None
 
     val secondaryLink = if (blogOrSeriesTag.isDefined) {
