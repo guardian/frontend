@@ -11,7 +11,7 @@ trait AdminAuthController {
   object AdminAuthAction
       extends AuthAction(
         conf.GoogleAuth.getConfigOrDie,
-        routes.OAuthLoginAdminController.login(),
+        routes.OAuthLoginAdminController.login,
         controllerComponents.parsers.default,
       )(controllerComponents.executionContext)
 }
