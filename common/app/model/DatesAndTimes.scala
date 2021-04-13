@@ -97,9 +97,9 @@ object GUDateTimeFormatNew {
   }
   def formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition): String = {
     val timezone = edition.timezone
-    date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timezone.getShortName(
-      date.getMillis,
-    )
+    val timeZoneString1 = timezone.getShortName(date.getMillis)
+    val timeZoneString2 = if (timeZoneString1 == "GMT-04:00") "EDT" else timeZoneString1
+    date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timeZoneString2
   }
   def formatDateForDisplay(date: DateTime, request: RequestHeader): String = {
     date.toString("E d MMM yyyy")
