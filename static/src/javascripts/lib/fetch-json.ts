@@ -1,5 +1,4 @@
 import config_ from 'lib/config';
-import fetch from 'lib/fetch';
 
 // This is really a hacky workaround ⚠️
 const config = config_ as {
@@ -27,7 +26,7 @@ const fetchJson = async (
 		init.mode = 'cors';
 	}
 
-	const resp = (await fetch(path, init)) as Response;
+	const resp = await fetch(path, init);
 	if (resp.ok) {
 		switch (resp.status) {
 			case 204:

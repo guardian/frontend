@@ -3,7 +3,6 @@ import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { isIOS } from 'lib/detect';
-import fetch from 'lib/fetch';
 import mediator from 'lib/mediator';
 import { addProximityLoader } from 'lib/proximity-loader';
 import reportError from 'lib/report-error';
@@ -138,7 +137,7 @@ const fetchFragment = (el, asJson = false) => {
         .then(resp => {
             if (resp.ok) {
                 return asJson
-                    ? resp.json().then(json => json.html)
+                    ? resp.json()
                     : resp.text();
             }
             return Promise.reject(new Error(`Fetch error: ${resp.statusText}`));
