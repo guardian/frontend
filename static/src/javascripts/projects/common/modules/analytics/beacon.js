@@ -1,5 +1,4 @@
 import config from 'lib/config';
-import fetch from 'lib/fetch';
 
 const fire = (path) => {
     const img = new Image();
@@ -16,7 +15,7 @@ const postJson = (path, jsonString) => {
             .replace(/^\/\//, `${window.location.protocol}//`) + path;
 
     fetch(url, {
-        method: 'post',
+        method: 'POST',
         header: {
             'Content-Type': 'application/json',
         },

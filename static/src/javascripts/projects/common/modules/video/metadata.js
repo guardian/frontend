@@ -1,5 +1,4 @@
 import config from 'lib/config';
-import fetch from 'lib/fetch';
 import { fetchJson } from 'lib/fetch-json';
 
 
@@ -15,7 +14,7 @@ const isGeoBlocked = (el) => {
     return new Promise(resolve => {
         fetch(source, {
             mode: 'cors',
-            method: 'head',
+            method: 'HEAD',
         })
             .then(() => resolve(false))
             .catch(res => resolve(res.status === 403));
