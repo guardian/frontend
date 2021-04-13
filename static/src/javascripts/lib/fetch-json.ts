@@ -19,7 +19,6 @@ const fetchJson = async (
 		// https://url.spec.whatwg.org/#path-absolute-url-string
 		path = config.get('page.ajaxUrl', '') + resource;
 		init.mode = 'cors';
-		init.credentials = 'include';
 	}
 
 	const resp = (await fetch(path, init)) as Response;
