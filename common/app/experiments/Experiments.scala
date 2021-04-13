@@ -39,5 +39,5 @@ object ClickToView
       description = "Click to provide consent before seeing embedded content",
       owners = Seq(Owner.withGithub("frj")),
       sellByDate = new LocalDate(2021, 5, 6),
-      participationGroup = Perc5A,
+      participationGroup = Perc20A,
     )
