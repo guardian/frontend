@@ -6,6 +6,14 @@ const config = config_ as {
 	get: (s: string, d?: string) => string;
 };
 
+/**
+ * Check that path is a path-absolute-URL string as described in https://url.spec.whatwg.org/#path-absolute-url-string
+ * A path-absolute-URL string is U+002F (/) followed by a path-relative-URL string, for instance `/plop` or `/plop/plop`
+ */
+function isPathAbsoluteURL(path: string): boolean {
+	return !RegExp('^(https?:)?//').exec(path);
+}
+
 const fetchJson = async (
 	resource: string,
 	init: RequestInit = {},
@@ -14,12 +22,9 @@ const fetchJson = async (
 		throw new Error('First argument should be of type `string`');
 
 	let path = resource;
-	if (!RegExp('^(https?:)?//').exec(path)) {
-		// If `path` is path-absolute-URL string, starting with `/…`
-		// https://url.spec.whatwg.org/#path-absolute-url-string
+	if (isPathAbsoluteURL(path)) {
 		path = config.get('page.ajaxUrl', '') + resource;
 		init.mode = 'cors';
-		init.credentials = 'include';
 	}
 
 	const resp = (await fetch(path, init)) as Response;
