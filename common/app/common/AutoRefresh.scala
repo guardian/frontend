@@ -26,7 +26,13 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
 
   class Task(implicit executionContext: ExecutionContext) extends Runnable {
     def run() {
-      refresh().map { data => agent.send(Some(data)) }
+      refresh().onComplete {
+        case Success(a) =>
+          log.debug(s"Updated AutoRefresh: $a")
+          agent.send(Some(a))
+        case Failure(error) =>
+          log.warn("Failed to update AutoRefresh", error)
+      }
     }
   }
 
