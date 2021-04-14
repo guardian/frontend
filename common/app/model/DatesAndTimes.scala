@@ -96,10 +96,14 @@ object GUDateTimeFormatNew {
     formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition)
   }
   def formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition): String = {
+    def correctTimeZoneString(str: String): String = {
+      // For some reasons For some reasons timezone.getShortName(date.getMillis) no longer returns "EDT"
+      // as it used to do, but now returns "GMT-04:00". This is to correct it when that happens
+      if (str == "GMT-04:00") "EDT" else str
+    }
     val timezone = edition.timezone
-    val timeZoneString1 = timezone.getShortName(date.getMillis)
-    val timeZoneString2 = if (timeZoneString1 == "GMT-04:00") "EDT" else timeZoneString1
-    date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timeZoneString2
+    val timeZoneString = correctTimeZoneString(timezone.getShortName(date.getMillis))
+    date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timeZoneString
   }
   def formatDateForDisplay(date: DateTime, request: RequestHeader): String = {
     date.toString("E d MMM yyyy")
