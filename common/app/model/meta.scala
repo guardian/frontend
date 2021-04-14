@@ -695,7 +695,7 @@ object SubMetaLinks {
       .filterNot(_.isSectionTag)
       .filter(k => {
         sectionLabelName match {
-          case Some(name) => k.name == name
+          case Some(name) => k.name != name
           case None       => false
         }
       })
