@@ -693,8 +693,8 @@ object SubMetaLinks {
     val sectionLabels = List(sectionLink, secondaryLink).flatten
     val keywordSubMetaLinks = tags.keywords
       .filterNot(_.isSectionTag)
-      .filterNot(k => sectionLabelName.exists(name => k.name == name))
-      .filterNot(t => blogOrSeriesTag.exists(s => s.id == t.id))
+      .filterNot(k => sectionLabelName.contains(k.name))
+      .filterNot(t => blogOrSeriesTag.map(_.id).contains(t.id))
       .take(6)
       .map(tag => SubMetaLink(tag.metadata.url, makeKeywordName(tag, tags.keywords), Some(s"keyword: ${tag.id}")))
 
