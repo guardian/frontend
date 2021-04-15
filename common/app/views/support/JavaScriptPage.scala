@@ -5,13 +5,11 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.switches.Switches.prebidSwitch
-import conf.switches.Switches.a9Switch
-import model.IpsosTags.{getScriptTag}
+import conf.switches.Switches.{a9Switch, prebidSwitch}
 import conf.{Configuration, DiscussionAsset}
+import model.IpsosTags.getScriptTag
 import model._
 import play.api.libs.json._
-import model.IpsosTags.{getScriptTag}
 import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
@@ -67,13 +65,20 @@ object JavaScriptPage {
       "calloutsUrl" -> JsString(Configuration.journalism.calloutsUrl),
     )
 
-    val javascriptConfig = page match {
+    var javascriptConfig = page match {
       case c: ContentPage    => c.getJavascriptConfig
       case s: StandalonePage => s.getJavascriptConfig
       case _                 => Map()
     }
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
+
+    val headers = request.headers.toSimpleMap
+    headers
+      .get("X-GU-GeoLocation")
+      .foreach(countryCode =>
+        javascriptConfig = javascriptConfig ++ Map(("countryCode", JsString(countryCode.replace("country:", "")))),
+      )
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
