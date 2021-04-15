@@ -78,7 +78,6 @@ object Dependencies {
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
-  val jsonSchema = "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5-M4"
 
   /*
     Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
