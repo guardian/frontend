@@ -5,8 +5,8 @@ export const remoteRRHeaderLinksTest = {
     author: 'Tom Forbes',
     description:
         'Use the dotcom-components service for serving the Reader Revenue header links',
-    audience: 0.1,
-    audienceOffset: 0.9,
+    audience: 1,
+    audienceOffset: 0,
     successMeasure: 'AV is not worse',
     audienceCriteria:
         'all pageviews',
