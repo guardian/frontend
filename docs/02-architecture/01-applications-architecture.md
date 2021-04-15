@@ -120,12 +120,6 @@ Rss app is rendering the RSS version for all Guardian content.
 # Admin
 Admin app hosts a set of dashboards and tools used by Guardian developers to monitor, manage and troubleshoot the Guardian website.
 
-[All supported routes](https://github.com/guardian/frontend/blob/main/admin/conf/routes)
-
-- Create breaking-news alerts
-
-- [Get all breaking-news alert](http://api.nextgen.guardianapps.co.uk/news-alert/alerts)
-
 [All supported routes](https://github.com/guardian/frontend/blob/main/sport/conf/routes)
 
 # Archive

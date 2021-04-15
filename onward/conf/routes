@@ -76,7 +76,3 @@ GET        /related-mf2/*path.json                    controllers.RelatedControl
 GET        /series-mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
 GET        /editionalised-nav.json                    controllers.NavigationController.renderAmpNav()
 GET        /story-package-mf2/*path.json              controllers.StoryPackageController.renderMF2(path)
-
-## Breaking-news
-GET     /news-alert/alerts                            controllers.NewsAlertController.alerts()
-POST    /news-alert/alert                             controllers.NewsAlertController.create()

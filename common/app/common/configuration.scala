@@ -707,10 +707,6 @@ class GuardianConfiguration extends GuLogging {
     val url = configuration.getMandatoryStringProperty("email.signup.url")
   }
 
-  object NewsAlert {
-    lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
-  }
-
   object Logstash {
     lazy val enabled = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
     lazy val stream = configuration.getStringProperty("logstash.stream.name")
