@@ -113,7 +113,7 @@ class ChangePasswordController(
           logger.info("form errors in change password attempt")
           Future.successful(
             NoCache(
-              SeeOther(routes.ChangePasswordController.displayForm().url)
+              SeeOther(routes.ChangePasswordController.displayForm.url)
                 .flashing(clearPasswords(formWithErrors).toFlash),
             ),
           )
@@ -129,7 +129,7 @@ class ChangePasswordController(
                 form.withError(error.context.getOrElse(""), error.description)
               }
               NoCache(
-                SeeOther(routes.ChangePasswordController.displayForm().url)
+                SeeOther(routes.ChangePasswordController.displayForm.url)
                   .flashing(clearPasswords(formWithErrors).toFlash),
               )
             case Right(cookies) =>
