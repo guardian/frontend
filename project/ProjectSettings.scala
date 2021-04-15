@@ -19,7 +19,7 @@ object ProjectSettings {
     organization := "com.gu",
     maxErrors := 20,
     javacOptions := Seq("-g", "-encoding", "utf8"),
-    scalacOptions := Seq(
+    scalacOptions ++= Seq(
       "-unchecked",
       "-deprecation",
       "-target:jvm-1.8",
