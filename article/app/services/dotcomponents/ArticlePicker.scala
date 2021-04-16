@@ -54,8 +54,6 @@ object ArticlePageChecks {
       blockElement match {
         // This has never been used but we know we don't yet support them due to a required CAPI update
         case _: CodeBlockElement => true
-        // There is currently an issue with showcase layout for these
-        case _: InteractiveBlockElement => true
         // The majority of the remaining atoms appear to be interactive atoms, which aren't supported yet
         case ContentAtomBlockElement(_, atomtype, _) if atomtype != "media" => true
         // Everything else should be supported, but there are some element types that don't
