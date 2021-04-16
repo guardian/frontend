@@ -20,19 +20,16 @@ const htmlTemplate = ({ signInUrl, guUrl }) => `
 <div class="signin-gate">
     <div class="signin-gate__content--var">
         <div class="signin-gate__header--var">
-            <h1 class="signin-gate__header--text--var">Register for free and <br>continue reading</h1>
+            <h1 class="signin-gate__header--text--var">You need to register to keep reading</h1>
         </div>
         <div class="signin-gate__benefits--var signin-gate__margin-top--var">
             <p class="signin-gate__benefits--text--var">
-                It’s important to say this is not a step towards a paywall
+                It’s still free to read - this is not a paywall
             </p>
         </div>
         <div class="signin-gate__paragraph--var">
             <p class="signin-gate__paragraph--text--var">
-               Registering is a free and simple way to help us sustain our independent Guardian journalism.
-            </p>
-            <p class="signin-gate__paragraph--text--var">
-               When you register with us we are able to improve our news experience for you and for others. You will always be able to control your own <a id="js-signin-gate__privacy" class="signin-gate__link--var">privacy settings</a>. Thank you.
+                We’re committed to keeping our quality reporting open. By registering and providing us with insight into your preferences, you’re helping us to engage with you more deeply, and that allows us to keep our journalism free for all. You’ll always be able to control your own <a id="js-signin-gate__privacy" class="signin-gate__link--var">privacy settings</a>.
             </p>
         </div>
         <div class="signin-gate__buttons">
