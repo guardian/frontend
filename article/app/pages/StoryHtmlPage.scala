@@ -69,7 +69,6 @@ object StoryHtmlPage {
         survey() when SurveySwitch.isSwitchedOn,
         header,
         mainContent(),
-        breakingNewsDiv(),
         content,
         twentyFourSevenTraining(),
         footer(),

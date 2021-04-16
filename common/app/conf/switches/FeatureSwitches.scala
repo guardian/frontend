@@ -168,16 +168,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val BreakingNewsSwitch = Switch(
-    SwitchGroup.Feature,
-    "breaking-news",
-    "If this is switched on then the breaking news feed is requested and articles are displayed",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val WeatherSwitch = Switch(
     SwitchGroup.Feature,
     "weather",

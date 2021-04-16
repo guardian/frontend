@@ -12,7 +12,7 @@ import views.IndexCleaner
 import views.html.all
 import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
+import views.html.fragments.page.body.{bodyTag, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
@@ -53,7 +53,6 @@ object IndexHtml {
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
         mainContent(),
-        breakingNewsDiv(),
         bodyContent,
         footer(),
         message(),

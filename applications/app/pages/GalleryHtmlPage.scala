@@ -8,7 +8,7 @@ import model.{ApplicationContext, GalleryPage, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments.commercial.pageSkin
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
+import views.html.fragments.page.body.{bodyTag, skipToMainContent}
 import views.html.fragments.page.head._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
@@ -50,7 +50,6 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
         galleryTop(),
-        breakingNewsDiv(),
         galleryBody(page),
         footer(),
         message(),
