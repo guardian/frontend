@@ -44,7 +44,7 @@ object Dependencies {
   val json4s = "org.json4s" %% "json4s-native" % "3.5.3"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
-  val paClient = "com.gu" %% "pa-client" % "6.1.0"
+  val paClient = "com.gu" %% "pa-client" % "7.0.5"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.7.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.3"
   val redisClient = "net.debasishg" %% "redisclient" % "3.4"
