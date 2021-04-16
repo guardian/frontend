@@ -443,4 +443,14 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2022, 3, 31),
     exposeClientSide = true,
   )
+
+  val anniversaryArticleHeader = Switch(
+    SwitchGroup.Feature,
+    "anniversary-article-header",
+    "Enables the anniversary interactive atom in DCR",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 5, 7),
+    exposeClientSide = true,
+  )
 }

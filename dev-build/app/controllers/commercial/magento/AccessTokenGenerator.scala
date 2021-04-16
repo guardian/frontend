@@ -34,7 +34,7 @@ class AccessTokenGenerator(val controllerComponents: ControllerComponents) exten
     Action { implicit request =>
       def genRequestToken(): Result = {
         authService.fold(unavailable) { auth =>
-          val callbackUrl = routes.AccessTokenGenerator.generate().absoluteURL()
+          val callbackUrl = routes.AccessTokenGenerator.generate.absoluteURL()
           auth.retrieveRequestToken(callbackUrl) match {
             case Right(t) =>
               Redirect(auth.redirectUrl(t.token)).withSession("token" -> t.token, "secret" -> t.secret)
