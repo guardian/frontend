@@ -9,7 +9,6 @@ import feed._
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import services.breakingnews.BreakingNewsApi
 import weather.WeatherApi
 
 trait OnwardControllers {
@@ -27,7 +26,6 @@ trait OnwardControllers {
   def mostViewedVideoAgent: MostViewedVideoAgent
   def mostViewedGalleryAgent: MostViewedGalleryAgent
   def mostViewedAudioAgent: MostViewedAudioAgent
-  def breakingNewsApi: BreakingNewsApi
   def actorSystem: ActorSystem
   def controllerComponents: ControllerComponents
 
@@ -50,6 +48,5 @@ trait OnwardControllers {
   lazy val taggedContentController = wire[TaggedContentController]
   lazy val seriesController = wire[SeriesController]
   lazy val stocksController = wire[StocksController]
-  lazy val newsAlertController = wire[NewsAlertController]
   lazy val storyPackageController = wire[StoryPackageController]
 }
