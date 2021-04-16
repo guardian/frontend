@@ -16,7 +16,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
+import views.html.fragments.page.body.{bodyTag, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
@@ -67,7 +67,6 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
         mainContent(),
-        breakingNewsDiv(),
         content,
         footer(),
         message(),
