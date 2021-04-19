@@ -14,7 +14,7 @@ const isGeoBlocked = (el) => {
     return new Promise(resolve => {
         fetch(source, {
             mode: 'cors',
-            method: 'HEAD',
+            method: 'head',
         })
             .then(() => resolve(false))
             .catch(res => resolve(res.status === 403));

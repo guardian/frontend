@@ -137,7 +137,7 @@ const fetchFragment = (el, asJson = false) => {
         .then(resp => {
             if (resp.ok) {
                 return asJson
-                    ? resp.json()
+                    ? resp.json().then(json => json.html)
                     : resp.text();
             }
             return Promise.reject(new Error(`Fetch error: ${resp.statusText}`));
