@@ -33,4 +33,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2021, 5, 3),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-remote-rr-header-links-test",
+    "Test serving remote header",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 6, 1),
+    exposeClientSide = true,
+  )
 }
