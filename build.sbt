@@ -1,5 +1,4 @@
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
-import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.gu.Dependencies._
