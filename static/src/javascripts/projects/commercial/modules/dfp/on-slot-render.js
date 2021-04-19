@@ -1,7 +1,6 @@
 import once from 'lodash/once';
 import mediator from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
-import { fire } from '../../../common/modules/analytics/beacon';
 import { dfpEnv } from './dfp-env';
 import { renderAdvert } from './render-advert';
 import { emptyAdvert } from './empty-advert';
@@ -12,7 +11,6 @@ import { markTime } from '../../../../lib/user-timing';
 
 const recordFirstAdRendered = once(() => {
     markTime('Commercial: First Ad Rendered');
-    fire('/count/ad-render.gif');
 });
 
 const reportEmptyResponse = (
