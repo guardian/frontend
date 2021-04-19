@@ -69,6 +69,8 @@ jest.mock('../../../../common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: () => 'bla',
 }));
 
+jest.mock('lib/raven');
+
 jest.mock('../utils');
 
 jest.mock('../../../../common/modules/commercial/geo-utils');

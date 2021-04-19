@@ -10,7 +10,7 @@ import {
     getReferrer as getReferrer_,
     getViewport as getViewport_,
 } from '../../../../lib/detect';
-import { getSync as getSync_ } from '../../../../lib/geolocation';
+import { get as getGeo_ } from '../../../../lib/geolocation';
 import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from '../experiments/ab';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
@@ -25,7 +25,7 @@ const getReferrer = getReferrer_;
 const getBreakpoint = getBreakpoint_;
 const getViewport = getViewport_;
 const isUserLoggedIn = isUserLoggedIn_;
-const getSync = getSync_;
+const get = getGeo_;
 const getPrivacyFramework = getPrivacyFramework_;
 const cmp = cmp_;
 
@@ -40,7 +40,7 @@ jest.mock('../../../../lib/detect', () => ({
     hasPushStateSupport: jest.fn(),
 }));
 jest.mock('../../../../lib/geolocation', () => ({
-    getSync: jest.fn(),
+    get: jest.fn(),
 }));
 jest.mock('../../../../lib/getPrivacyFramework', () => ({
     getPrivacyFramework: jest.fn(),
@@ -159,7 +159,7 @@ describe('Build Page Targeting', () => {
 
         storage.local.setRaw('gu.alreadyVisited', 0);
 
-        getSync.mockReturnValue('US');
+        get.mockReturnValue('US');
         getPrivacyFramework.mockReturnValue({ ccpa: true });
 
         jest.spyOn(global.Math, 'random').mockReturnValue(0.5);

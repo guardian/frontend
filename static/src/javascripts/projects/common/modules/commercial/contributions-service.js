@@ -10,7 +10,7 @@ import config from '../../../../lib/config';
 import { getCookie } from '../../../../lib/cookies';
 import fastdom from '../../../../lib/fastdom-promise';
 import { fetchJson } from '../../../../lib/fetch-json';
-import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
+import { get as getCountryCode } from '../../../../lib/geolocation';
 import reportError from '../../../../lib/report-error';
 import { trackNonClickInteraction } from '../analytics/google';
 import { getMvtValue } from '../analytics/mvt-cookie';
@@ -108,7 +108,7 @@ const buildEpicPayload = async () => {
     const page = config.get('page');
 
     // note, there is a race condition so we want to fetch this as late as possible to give a change for the geo local storage value to be set
-    const countryCode = geolocationGetSync();
+    const countryCode = getCountryCode();
 
     const tracking = {
         ophanPageId: ophan.pageViewId,
