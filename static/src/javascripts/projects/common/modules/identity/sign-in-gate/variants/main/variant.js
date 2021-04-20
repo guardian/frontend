@@ -14,7 +14,7 @@ import {
 import { designShow } from '../design/main-variant';
 
 // define the variant name here
-const variant = 'main-variant-3';
+const variant = 'main-variant-4';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow = (name = '') => {

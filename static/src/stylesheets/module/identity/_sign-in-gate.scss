@@ -2,9 +2,6 @@
 .signin-gate {
     clear: left;
     margin-bottom: $gs-baseline * 2;
-    @include mq(tablet) {
-        padding: ($gs-baseline * 2) 0;
-    }
     @include mq(desktop) {
         min-height: 600px;
     }
@@ -107,10 +104,10 @@
         height: 100%;
 
         /* "transparent" only works here because == rgba(0,0,0,0) */
-        background-image: linear-gradient(0deg, $brightness-100, 70%, rgba(255, 255, 255, 0));
+        background-image: linear-gradient(0deg, $brightness-100, 10%, rgba(255, 255, 255, 0));
 
         &.signin-gate__first-paragraph-overlay--comment {
-            background-image: linear-gradient(0deg, $opinion-faded, 70%, rgba(255, 255, 255, 0));
+            background-image: linear-gradient(0deg, $opinion-faded, 10%, rgba(255, 255, 255, 0));
         }
     }
 }
@@ -324,15 +321,6 @@
     padding-bottom: $gs-baseline * 3;
     padding-top: $gs-baseline * 1;
     position: relative;
-}
-
-// VARIANT DESIGN - article gradient overlay changes // vii-variant
-
-.signin-gate__content--var {
-    padding-top: $gs-baseline * 3;
-    @include mq(tablet) {
-        padding-top: $gs-baseline * 3;
-    }
 }
 
 .overlay--var {
