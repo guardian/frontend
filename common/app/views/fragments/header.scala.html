@@ -5,29 +5,34 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupporterCTA}
-@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch, AnniversaryLogoHeader}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
-            "new-header--slim" -> page.metadata.hasSlimHeader
-        ), s"pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"
-        role="banner">
+        "new-header--slim" -> page.metadata.hasSlimHeader
+    ), s"pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"
+    role="banner">
 
         <nav class="new-header__inner gs-container"
-            data-component="nav2"
-            role="navigation"
+        data-component="nav2"
+        role="navigation"
             aria-label="Guardian sections">
 
-            <a href="@LinkTo{/}"
-                class="new-header__logo"
-                data-link-name="nav2 : logo">
+            <a href="@LinkTo {/}"
+            class="new-header__logo"
+            data-link-name="nav2 : logo">
 
                 <span class="u-h">The Guardian - Back to home</span>
 
                 @if(page.metadata.hasSlimHeader) {
                     @fragments.inlineSvg("the-guardian-roundel", "logo")
                 } else {
-                    @fragments.inlineSvg("the-guardian-logo", "logo")
+                    @if(AnniversaryLogoHeader.isSwitchedOn) {
+                        //TODO: Add correct SVG when available
+                        @fragments.inlineSvg("the-guardian-logo", "logo")
+                    } else {
+                        @fragments.inlineSvg("the-guardian-logo", "logo")
+                    }
                 }
             </a>
 
