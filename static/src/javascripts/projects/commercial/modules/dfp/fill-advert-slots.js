@@ -1,4 +1,3 @@
-import qwery from 'qwery';
 import { dfpEnv } from './dfp-env';
 import { Advert } from './Advert';
 import { queueAdvert } from './queue-advert';
@@ -35,7 +34,7 @@ const fillAdvertSlots = () => {
             config.get('isDotcomRendering', false) &&
             getBreakpoint() === 'mobile'
         // Get all ad slots
-        const adverts = qwery(dfpEnv.adSlotSelector)
+        const adverts = Array.from(document.querySelectorAll(dfpEnv.adSlotSelector))
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
             // TODO: find cleaner workaround
             // we need to not init top-above-nav on mobile view in DCR

@@ -1,4 +1,3 @@
-import qwery from 'qwery';
 import config from '../../../../lib/config';
 import reportError from '../../../../lib/report-error';
 import fastdom from '../../../../lib/fastdom-promise';
@@ -187,8 +186,7 @@ sizeCallbacks[adSizes.merchandising] = addFluid250([
 ]);
 
 const addContentClass = adSlotNode => {
-    const adSlotContent = qwery('> div:not(.ad-slot__label)', adSlotNode);
-
+    const adSlotContent = Array.from(adSlotNode.querySelectorAll('div:not(.ad-slot__label)'));
     if (adSlotContent.length) {
         fastdom.mutate(() => {
             adSlotContent[0].classList.add('ad-slot__content');

@@ -1,4 +1,3 @@
-import qwery from 'qwery';
 import bean from 'bean';
 import fastdom from 'fastdom';
 
@@ -24,7 +23,7 @@ const onOpenClick = (event) => {
 };
 
 const paidContainers = () => {
-    const showMores = qwery('.dumathoin-more > summary');
+    const showMores = Array.from(document.querySelectorAll('.dumathoin-more > summary'));
     bean.on(document, 'click', showMores, onOpenClick);
     bean.on(document, 'click', showMores, onKeyPress(onOpenClick));
 

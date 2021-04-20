@@ -1,4 +1,3 @@
-import qwery from 'qwery';
 import fastdom from 'fastdom';
 import $ from '../../../../lib/$';
 
@@ -60,7 +59,7 @@ class HostedCarousel {
 }
 
 export const initHostedCarousel = () => {
-    if (qwery('.js-carousel-pages').length) {
+    if (document.querySelectorAll('.js-carousel-pages').length) {
         new HostedCarousel().bindButtons();
     }
     return Promise.resolve();
