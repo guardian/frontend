@@ -11,6 +11,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     ClickToView,
     LiveblogRendering,
     HideAnniversaryAtom,
+    AnniversaryAtom,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -33,6 +34,15 @@ object HideAnniversaryAtom
       owners = Seq(Owner.withGithub("gtrufitt")),
       sellByDate = new LocalDate(2021, 5, 19),
       participationGroup = Perc0B,
+    )
+
+object AnniversaryAtom
+    extends Experiment(
+      name = "anniversary-atom",
+      description = "Allows opting into the anniversary atom for testing on prod",
+      owners = Seq(Owner.withGithub("gtrufitt")),
+      sellByDate = new LocalDate(2021, 5, 19),
+      participationGroup = Perc0C,
     )
 
 object NewsletterEmbedDesign
