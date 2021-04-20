@@ -1,8 +1,10 @@
 @()(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
+    @import conf.switches.Switches.AnniversaryLogoHeader
 
-@editionListItem(edition: Edition, isCurrentEdition: Boolean = false) = {
+
+    @editionListItem(edition: Edition, isCurrentEdition: Boolean = false) = {
     <li class="dropdown-menu__item">
         <a data-link-name="nav2 : topbar : edition-picker: @edition.id"
             href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
@@ -14,9 +16,13 @@
     </li>
 }
 
-<div class="new-header__edition-container hide-until-desktop">
+<div class="@(if(AnniversaryLogoHeader.isSwitchedOn){
+    "new-header__edition-container-anniversary"
+} else {
+    "new-header__edition-container"
+}) hide-until-desktop">
     <span class="top-bar__item__seperator"></span>
-    
+
     <input type="checkbox"
             id="edition-picker-toggle"
             aria-controls="edition-dropdown-menu"
