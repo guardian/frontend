@@ -168,6 +168,7 @@ private object NavLinks {
     children = List(
       NavLink("Obituaries", "/tone/obituaries"),
       NavLink("G2", "/theguardian/g2"),
+      NavLink("Journal", "/theguardian/journal"),
       NavLink("Weekend", "/theguardian/weekend"),
       NavLink("The Guide", "/theguardian/theguide"),
       NavLink("Saturday review", "/theguardian/guardianreview"),
