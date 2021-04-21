@@ -184,6 +184,25 @@ from scrolling */
     }
 }
 
+.inline-guardian-anniversary-logo__svg {
+    display: block;
+    height: auto;
+    width: 132px;
+
+    @include mq(mobileMedium) {
+        width: 174px;
+    }
+
+    @include mq(tablet) {
+        width: 229px;
+    }
+
+    @include mq(desktop) {
+        width: 301px;
+    }
+
+}
+
 .new-header--slim {
     height: $pillar-height + $gs-baseline / 2;
 }

@@ -19,7 +19,7 @@
             aria-label="Guardian sections">
 
             <a href="@LinkTo {/}"
-            class="@{if (AnniversaryLogoHeader.isSwitchedOn){"new-header__anniversary-logo"} else {"new-header__logo"}}"
+            class="new-header__logo"
             data-link-name="nav2 : logo">
 
                 <span class="u-h">The Guardian - Back to home</span>
@@ -28,8 +28,7 @@
                     @fragments.inlineSvg("the-guardian-roundel", "logo")
                 } else {
                     @if(AnniversaryLogoHeader.isSwitchedOn) {
-                        //TODO: Add correct SVG when available
-                        @fragments.inlineSvg("the-guardian-logo", "logo")
+                        @fragments.inlineSvg("guardian-anniversary-logo", "logo")
                     } else {
                         @fragments.inlineSvg("the-guardian-logo", "logo")
                     }
@@ -157,9 +156,6 @@
                     Search
                 </a>
                 }
-                @if(AnniversaryLogoHeader.isSwitchedOn){
-                  @fragments.nav.editionPickerDropdown()
-                }
                 }
                 }
             </div>
@@ -167,26 +163,26 @@
 
             @if(SearchSwitch.isSwitchedOn) {
                 <div class="popup popup--default popup--search js-search-popup js-search-new is-off"
-                     aria-label="search"
-                     role="dialog"
-                     tabindex="-1"
-                     id="search-popup"
+                aria-label="search"
+                role="dialog"
+                tabindex="-1"
+                id="search-popup"
                 >
                     <div class="js-search-placeholder"></div>
                 </div>
             }
 
-            @if(!page.metadata.hasSlimHeader && !AnniversaryLogoHeader.isSwitchedOn) {
+            @if(!page.metadata.hasSlimHeader) {
                 @fragments.nav.editionPickerDropdown()
             }
 
             <ul class="pillars">
-                @navMenu.pillars.map { link =>
-                    <li class="pillars__item">
-                        <a class="@RenderClasses(Map(
-                            "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)
-                            ), "pillar-link", s"pillar-link--${link.title}")"
-                        href="@LinkTo(link.url)"
+            @navMenu.pillars.map { link =>
+                <li class="pillars__item">
+                    <a class="@RenderClasses(Map(
+                        "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)
+                    ), "pillar-link", s"pillar-link--${link.title}")"
+                    href="@LinkTo(link.url)"
                         data-link-name="nav2 : primary : @link.title">
 
                         @link.title
