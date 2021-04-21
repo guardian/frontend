@@ -33,6 +33,10 @@ module.exports = {
                                             name: 'removeXMLNS',
                                             active: true,
                                         },
+                                        {
+                                            name: 'removeViewBox',
+                                            active: false,
+                                        },
                                     ]),
                                 })
                             )
