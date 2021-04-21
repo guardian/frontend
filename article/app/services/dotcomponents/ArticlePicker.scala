@@ -73,8 +73,6 @@ object ArticlePageChecks {
     !page.item.tags.tags.exists(t => tagsBlockList(t.id))
   }
 
-  def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
-
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
   def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
@@ -108,7 +106,6 @@ object ArticlePicker {
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
       ("isNotSpecialReport", !DotcomRenderingUtils.isSpecialReport(page)),
-      ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
 
