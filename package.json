@@ -139,7 +139,7 @@
     "semver": "^5.4.1",
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",
-    "svgo": "^0.7.2",
+    "svgo": "^2.3.0",
     "tcp-ping": "^0.1.1",
     "ts-jest": "^26.4.4",
     "ts-loader": "^8.0.12",
