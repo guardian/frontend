@@ -105,7 +105,6 @@ class InteractiveController(
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    // See comment id: DF38D2B4-614D for why we have two rendering.
     ApplicationsInteractiveRendering.getRenderingTier(path) match {
       case Regular => {
         lookup(path) map {
@@ -114,6 +113,13 @@ class InteractiveController(
         }
       }
       case USElection2020AmpPage => renderInteractivePageUSPresidentialElection2020(path)
+      case DotcomRendering => {
+        // On purpose reproduce Regular [work in progress]
+        lookup(path) map {
+          case Left(model)  => render(model)
+          case Right(other) => RenderOtherStatus(other)
+        }
+      }
     }
   }
 
@@ -122,7 +128,7 @@ class InteractiveController(
 
   def renderInteractivePageUSPresidentialElection2020(path: String): Future[Result] = {
     /*
-      This version retrieve the AMP version directly but rely on an predefined map between paths and amp page ids
+      This version retrieve the AMP version directly but rely on a predefined map between paths and amp page ids
      */
     val capiLookupString = ApplicationsUSElection2020AmpPages.pathToAmpAtomId(path)
     val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
