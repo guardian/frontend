@@ -6,6 +6,7 @@
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupporterCTA}
 @import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch, AnniversaryLogoHeader}
+@import experiments.{ActiveExperiments, AnniversaryAtom}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -27,7 +28,7 @@
                 @if(page.metadata.hasSlimHeader) {
                     @fragments.inlineSvg("the-guardian-roundel", "logo")
                 } else {
-                    @if(AnniversaryLogoHeader.isSwitchedOn) {
+                    @if(AnniversaryLogoHeader.isSwitchedOn && ActiveExperiments.isParticipating(AnniversaryAtom)) {
                         @fragments.inlineSvg("guardian-anniversary-logo", "logo")
                     } else {
                         @fragments.inlineSvg("the-guardian-logo", "logo")

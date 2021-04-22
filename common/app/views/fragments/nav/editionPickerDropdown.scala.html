@@ -1,8 +1,6 @@
 @()(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
-    @import conf.switches.Switches.AnniversaryLogoHeader
-
 
     @editionListItem(edition: Edition, isCurrentEdition: Boolean = false) = {
     <li class="dropdown-menu__item">
