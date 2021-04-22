@@ -17,6 +17,7 @@ import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
 import services.ApplicationsUSElection2020AmpPages
 import services.ApplicationsUSElection2020AmpPages.pathToAmpAtomId
+import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
@@ -104,22 +105,24 @@ class InteractiveController(
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
+  def RenderItemLegacy(path: String)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path) map {
+      case Left(model)  => render(model)
+      case Right(other) => RenderOtherStatus(other)
+    }
+  }
+
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    ApplicationsInteractiveRendering.getRenderingTier(path) match {
-      case FrontendLegacy => {
-        lookup(path) map {
-          case Left(model)  => render(model)
-          case Right(other) => RenderOtherStatus(other)
-        }
-      }
-      case USElection2020AmpPage => renderInteractivePageUSPresidentialElection2020(path)
-      case DotcomRendering => {
-        // On purpose reproduce Regular [work in progress]
-        lookup(path) map {
-          case Left(model)  => render(model)
-          case Right(other) => RenderOtherStatus(other)
-        }
-      }
+    val requestFormat = request.getRequestFormat
+    val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
+    println((requestFormat, renderingTier))
+    (requestFormat, renderingTier) match {
+      case (EmailFormat, _)                   => RenderItemLegacy(path: String)
+      case (AmpFormat, FrontendLegacy)        => RenderItemLegacy(path: String)
+      case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
+      case (AmpFormat, DotcomRendering)       => RenderItemLegacy(path: String)
+      case (HtmlFormat, _)                    => RenderItemLegacy(path: String)
+      case (JsonFormat, _)                    => Future.successful(Ok("[]").as("application/json"))
     }
   }
 
