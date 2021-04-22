@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const btoa = require('btoa');
-const { optimize } = require('svgo')
+const { optimize, extendDefaultPlugins } = require('svgo')
 const mkdirp = require('mkdirp');
 
 const getSVG = iconPath =>
@@ -17,7 +17,14 @@ const getSVG = iconPath =>
             try {
                 resolve({
                     name: path.parse(iconPath).name,
-                    data: optimize(data)
+                    data: optimize(data, {
+                        plugins: extendDefaultPlugins([
+                            {
+                                name: 'removeViewBox',
+                                active: false,
+                            },
+                        ]),
+                    })
                 })
             } catch (e) {
                 return reject(e);
