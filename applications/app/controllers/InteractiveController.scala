@@ -116,13 +116,9 @@ class InteractiveController(
     val requestFormat = request.getRequestFormat
     val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
     (requestFormat, renderingTier) match {
-      case (EmailFormat, _)                   => RenderItemLegacy(path: String)
-      case (AmpFormat, FrontendLegacy)        => RenderItemLegacy(path: String)
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-      case (AmpFormat, DotcomRendering)       => RenderItemLegacy(path: String)
-      case (HtmlFormat, _)                    => RenderItemLegacy(path: String)
       case (JsonFormat, DotcomRendering)      => Future.successful(Ok("{}").as("application/json"))
-      case (JsonFormat, _)                    => RenderItemLegacy(path: String)
+      case _                                  => RenderItemLegacy(path: String)
     }
   }
 
