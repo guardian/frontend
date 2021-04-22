@@ -115,7 +115,6 @@ class InteractiveController(
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
     val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
-    println((requestFormat, renderingTier))
     (requestFormat, renderingTier) match {
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
       case (JsonFormat, DotcomRendering)      => Future.successful(Ok("{}").as("application/json"))
