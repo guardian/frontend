@@ -4,7 +4,7 @@ import play.api.mvc.RequestHeader
 import implicits.Requests._
 
 sealed trait RenderingTier
-object Regular extends RenderingTier
+object FrontendLegacy extends RenderingTier
 object USElection2020AmpPage extends RenderingTier
 object DotcomRendering extends RenderingTier
 
@@ -36,6 +36,6 @@ object ApplicationsInteractiveRendering {
 
     if (isSpecialElection && isAmp) USElection2020AmpPage
     else if (forceDCR) DotcomRendering
-    else Regular
+    else FrontendLegacy
   }
 }

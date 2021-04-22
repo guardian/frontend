@@ -106,7 +106,7 @@ class InteractiveController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     ApplicationsInteractiveRendering.getRenderingTier(path) match {
-      case Regular => {
+      case FrontendLegacy => {
         lookup(path) map {
           case Left(model)  => render(model)
           case Right(other) => RenderOtherStatus(other)
