@@ -33,10 +33,9 @@ object ApplicationsInteractiveRendering {
     val isSpecialElection = ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)
     val isAmp = request.host.contains("amp")
     val forceDCR = request.forceDCR
-    (isSpecialElection, isAmp, forceDCR) match {
-      case (true, true, _)  => USElection2020AmpPage
-      case (_, false, true) => DotcomRendering
-      case _                => Regular
-    }
+
+    if (isSpecialElection && isAmp) USElection2020AmpPage
+    else if (forceDCR) DotcomRendering
+    else Regular
   }
 }
