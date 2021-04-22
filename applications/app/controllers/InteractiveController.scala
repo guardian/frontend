@@ -122,7 +122,8 @@ class InteractiveController(
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
       case (AmpFormat, DotcomRendering)       => RenderItemLegacy(path: String)
       case (HtmlFormat, _)                    => RenderItemLegacy(path: String)
-      case (JsonFormat, _)                    => Future.successful(Ok("[]").as("application/json"))
+      case (JsonFormat, DotcomRendering)      => Future.successful(Ok("[]").as("application/json"))
+      case (JsonFormat, _)                    => RenderItemLegacy(path: String)
     }
   }
 
