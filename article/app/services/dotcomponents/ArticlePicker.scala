@@ -104,7 +104,6 @@ object ArticlePicker {
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
-      ("isNotSpecialReport", !DotcomRenderingUtils.isSpecialReport(page)),
       ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
@@ -118,7 +117,6 @@ object ArticlePicker {
         "isNotLiveBlog",
         "isNotAMP",
         "isNotInTagBlockList",
-        "isNotSpecialReport",
       ),
     )
 
