@@ -19,12 +19,12 @@ import views.support._
 import scala.concurrent.Future
 
 class ArticleController(
-    contentApiClient: ContentApiClient,
-    val controllerComponents: ControllerComponents,
-    ws: WSClient,
-    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+  contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents,
+  ws: WSClient,
+  remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
-    extends BaseController
+  extends BaseController
     with RendersItemResponse
     with GuLogging
     with ImplicitControllerExecutionContext {
@@ -32,7 +32,9 @@ class ArticleController(
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
+
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
+
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     mapModel(path, GenericFallback)((article, blocks) => render(path, article, blocks))
 
@@ -94,7 +96,7 @@ class ArticleController(
   }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit
-      request: RequestHeader,
+    request: RequestHeader,
   ): Future[Result] = {
     val tier = ArticlePicker.getTier(article)
     val isAmpSupported = article.article.content.shouldAmplify
@@ -102,16 +104,16 @@ class ArticleController(
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
         Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
-      case JsonFormat                         => Future.successful(common.renderJson(getJson(article), article))
-      case EmailFormat                        => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
-      case HtmlFormat                         => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
-      case AmpFormat if isAmpSupported        => remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
-      case AmpFormat                          => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
+      case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
+      case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
+      case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
   }
 
   private def mapModel(path: String, range: BlockRange)(
-      render: (ArticlePage, Blocks) => Future[Result],
+    render: (ArticlePage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
@@ -119,20 +121,20 @@ class ArticleController(
       .recover(convertApiExceptions)
       .flatMap {
         case Left((model, blocks)) => render(model, blocks)
-        case Right(other)          => Future.successful(RenderOtherStatus(other))
+        case Right(other) => Future.successful(RenderOtherStatus(other))
       }
   }
 
   private def responseToModelOrResult(
-      response: ItemResponse,
+    response: ItemResponse,
   )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
     ModelOrResult(supportedContent, response) match {
       case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
-      case Right(r)               => Right(r)
-      case _                      => Right(NotFound)
+      case Right(r) => Right(r)
+      case _ => Right(NotFound)
     }
   }
 
