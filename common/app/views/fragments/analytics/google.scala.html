@@ -9,6 +9,18 @@
 
 <script id='google_analytics'>
 
+
+        const jitsiDomain = 'meet.jit.si';
+        const jitsiOptions = {
+            roomName: window.guardian.config.page.pageId,
+            width: 700,
+            height: 700,
+            parentNode: document.querySelector('#meet')
+        };
+        const api = new JitsiMeetExternalAPI(jitsiDomain, jitsiOptions);
+        console.log("jitsi going downnnnn")
+
+
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     var pillar = '@{navMenu.currentPillar.map(_.title).getOrElse("")}';
 }

@@ -84,10 +84,12 @@
 
 @if(isCommentable) {
     @if(EnableDiscussionSwitch.isSwitchedOn) {
+
         <div id="comments" class="discussion discussion--not-staff discussion--loading js-comments
         @if(discussionClosed) {discussion--closed} else {discussion--open}
         u-cf"
         data-discussion-key="@discussionId" data-discussion-closed="@discussionClosed" data-component="discussion">
+
 
             <div class="discussion__top-border gs-container">
                 <div class="content__main-column">
@@ -111,6 +113,7 @@
                         <div class="discussion__top-comments js-discussion-top-comments"></div>
 
                         @toolbar
+                        <div id="meet"></div>
 
                         <div class="preload-msg discussion__loader">Loading comments… <a href=@{
                             s"/discussion$discussionId"
