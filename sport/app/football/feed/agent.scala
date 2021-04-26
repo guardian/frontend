@@ -3,9 +3,9 @@ package feed
 import com.gu.Box
 import pa._
 import conf.FootballClient
-import org.joda.time.LocalDate
 import common._
 import model.{Competition, TeamNameBuilder}
+import java.time.LocalDate
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -56,7 +56,7 @@ trait LeagueTables extends GuLogging {
   )(implicit executionContext: ExecutionContext): Future[List[LeagueTableEntry]] = {
     log.info(s"refreshing table for ${competition.id}")
     footballClient
-      .leagueTable(competition.id, new LocalDate)
+      .leagueTable(competition.id, LocalDate.now())
       .map {
         _.map { t =>
           val team = t.team.copy(name = teamNameBuilder.withTeam(t.team))
@@ -96,7 +96,7 @@ trait Results extends GuLogging with implicits.Collections {
     log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
-    val startDate = competition.startDate.getOrElse(new LocalDate().minusDays(30))
+    val startDate = competition.startDate.getOrElse(LocalDate.now().minusDays(30))
     footballClient
       .results(competition.id, startDate)
       .map {

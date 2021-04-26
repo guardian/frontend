@@ -3,7 +3,7 @@ package football.controllers
 import common.Edition
 import feed.CompetitionsService
 import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import model._
 import football.model._
 import pa.FootballTeam
@@ -77,7 +77,7 @@ class ResultsController(
 
   /* Public methods */
 
-  def allResults(): Action[AnyContent] = renderForDate(LocalDate.now(Edition.defaultEdition.timezone))
+  def allResults(): Action[AnyContent] = renderForDate(LocalDate.now(Edition.defaultEdition.timezoneId()))
   def allResultsJson(): Action[AnyContent] = allResults()
 
   def allResultsFor(year: String, month: String, day: String): Action[AnyContent] =
@@ -90,7 +90,7 @@ class ResultsController(
     moreResultsFor(year, month, day)
 
   def tagResults(tag: String): Action[AnyContent] =
-    renderForDate(LocalDate.now(Edition.defaultEdition.timezone), Some(tag))
+    renderForDate(LocalDate.now(Edition.defaultEdition.timezoneId), Some(tag))
   def tagResultsJson(tag: String): Action[AnyContent] = tagResults(tag)
 
   def tagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =

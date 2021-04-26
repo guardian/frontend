@@ -149,7 +149,7 @@ object MatchUrl {
       awayTeam: String <- TeamMap(theMatch.awayTeam).tag.flatMap(_.metadata.url)
       if homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/")
     } yield {
-      s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam
+      s"/football/match/${theMatch.date.formatted("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam
         .replace("/football/", "")}"
     }).getOrElse(s"/football/match/${theMatch.id}")
   }

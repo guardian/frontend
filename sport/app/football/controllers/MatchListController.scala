@@ -6,17 +6,20 @@ import football.model.MatchesList
 import implicits.Requests
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, Competition, TeamMap}
-import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
+
+import java.time.{LocalDate, LocalDateTime}
 import pa.FootballTeam
 import play.api.mvc.{BaseController, RequestHeader}
 import play.twirl.api.Html
 
+import java.time.format.DateTimeFormatter
+
 trait MatchListController extends BaseController with Requests {
   def competitionsService: Competitions
-  protected val datePattern = DateTimeFormat.forPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezone)
-  protected def createDate(year: String, month: String, day: String): LocalDate =
-    datePattern.parseDateTime(s"$year$month$day").toLocalDate
+  protected val datePattern = DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezoneId)
+  protected def createDate(year: String, month: String, day: String): LocalDate = {
+    LocalDateTime.from(datePattern.parse(s"$year$month$day")).toLocalDate
+  }
 
   protected def renderMatchList(
       page: FootballPage,

@@ -2,16 +2,17 @@ package implicits
 
 import football.model.FootballMatchTrail
 import model._
-import org.joda.time.{DateTime, Days, Hours, LocalDate}
 import pa._
 import views.MatchStatus
 
+import java.time.temporal.ChronoUnit
+import java.time.{LocalDate, ZonedDateTime}
 import scala.language.implicitConversions
 
 trait Football extends Collections {
 
   implicit class MatchSeq2Sorted(matches: Seq[FootballMatch]) {
-    lazy val sortByDate = matches.sortBy(m => (m.date.getMillis, m.homeTeam.name))
+    lazy val sortByDate = matches.sortBy(m => (m.date.toInstant.toEpochMilli, m.homeTeam.name))
   }
 
   implicit class Content2minByMin(c: ContentType) {
@@ -43,7 +44,7 @@ trait Football extends Collections {
       m.awayTeam.score,
     )
 
-    def isOn(date: LocalDate): Boolean = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
+    def isOn(date: LocalDate): Boolean = m.date.toLocalDate.isAfter(date) && m.date.toLocalDate.isBefore(date.plusDays(1))
 
     //results and fixtures do not actually have a status field in the API
     lazy val matchStatus = m match {
@@ -164,7 +165,8 @@ trait Football extends Collections {
 
 object Football extends Football {
 
-  def hoursTillMatch(theMatch: FootballMatch): Int =
-    Hours.hoursBetween(DateTime.now, theMatch.date).getHours
+  def hoursTillMatch(theMatch: FootballMatch): Long = {
+    ChronoUnit.HOURS.between(ZonedDateTime.now(), theMatch.date)
+  }
 
 }
