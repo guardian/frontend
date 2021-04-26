@@ -113,7 +113,8 @@ case class PrevResult(date: LocalDate, self: MatchDayTeam, foe: MatchDayTeam, wa
 }
 object PrevResult {
   def apply(result: FootballMatch, thisTeamId: String): PrevResult = {
-    if (thisTeamId == result.homeTeam.id) PrevResult(result.date.toLocalDate, result.homeTeam, result.awayTeam, wasHome = true)
+    if (thisTeamId == result.homeTeam.id)
+      PrevResult(result.date.toLocalDate, result.homeTeam, result.awayTeam, wasHome = true)
     else PrevResult(result.date.toLocalDate, result.awayTeam, result.homeTeam, wasHome = false)
   }
 }

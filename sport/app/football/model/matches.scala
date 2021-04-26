@@ -26,7 +26,10 @@ trait MatchesList extends Football with RichList with implicits.Collections {
   // ordering for the displayed matches
   def timeComesFirstInList(d: ZonedDateTime, other: ZonedDateTime): Boolean
   def dateComesFirstInList(d: LocalDate, other: LocalDate): Boolean =
-    timeComesFirstInList(d.atStartOfDay(DateHelpers.defaultFootballZoneId), other.atStartOfDay(DateHelpers.defaultFootballZoneId))
+    timeComesFirstInList(
+      d.atStartOfDay(DateHelpers.defaultFootballZoneId),
+      other.atStartOfDay(DateHelpers.defaultFootballZoneId),
+    )
 
   private lazy val allRelevantMatches: List[(FootballMatch, Competition)] = {
     val matchesWithCompetition = for {

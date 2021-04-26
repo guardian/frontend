@@ -173,7 +173,9 @@ object NxAnswer {
 
 case class Interval(start: ZonedDateTime, end: ZonedDateTime) {
   def contains(dt: ZonedDateTime): Boolean = {
-    (dt.isAfter(start) && dt.isBefore(end)) || dt.isEqual(start) // nb. don't check for equals end as Interval.contains which this replaces is not end-inclusive.
+    (dt.isAfter(start) && dt.isBefore(end)) || dt.isEqual(
+      start,
+    ) // nb. don't check for equals end as Interval.contains which this replaces is not end-inclusive.
   }
 }
 
