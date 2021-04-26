@@ -14,7 +14,7 @@
                 <div class="list-group">
                 @for(fMatch <- matches) {
                     <a href="/admin/football/fronts/match/@fMatch.id" class="list-group-item">
-                        <span class="badge">@fMatch.date.toString("E dd MMMM HH:mm")</span>
+                        <span class="badge">@fMatch.date.formatted("E dd MMMM HH:mm")</span>
                         @fMatch.homeTeam.name v @fMatch.awayTeam.name
                     </a>
                 }

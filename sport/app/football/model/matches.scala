@@ -75,7 +75,7 @@ trait MatchesList extends Football with RichList with implicits.Collections {
   }
   lazy val previousPage: Option[String] = {
     val nextMatchDate = matchDates.takeWhile(dateComesFirstInList(_, date)).lastOption
-    nextMatchDate.map(s"$baseUrl/" + _.toString("yyyy/MMM/dd"))
+    nextMatchDate.map(s"$baseUrl/" + _.formatted("yyyy/MMM/dd"))
   }
 
   def getPageTitle: String = {
