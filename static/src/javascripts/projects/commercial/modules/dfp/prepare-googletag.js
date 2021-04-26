@@ -3,7 +3,6 @@ import {
     onConsentChange,
 } from '@guardian/consent-management-platform';
 import { loadScript, storage } from '@guardian/libs';
-import qwery from 'qwery';
 import config from '../../../../lib/config';
 import fastdom from '../../../../lib/fastdom-promise';
 import raven from '../../../../lib/raven';
