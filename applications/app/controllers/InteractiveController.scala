@@ -11,7 +11,7 @@ import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
 import model.content.InteractiveAtom
-import model.dotcomrendering.PageType
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.apache.commons.lang.StringEscapeUtils
 import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
@@ -117,8 +117,12 @@ class InteractiveController(
     val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
     (requestFormat, renderingTier) match {
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-      case (JsonFormat, DotcomRendering)      => Future.successful(Ok("{}").as("application/json"))
-      case _                                  => RenderItemLegacy(path: String)
+      case (JsonFormat, DotcomRendering) => {
+        val data = InteractivesDotcomRenderingDataObject.makeDataObject()
+        val dataJson = DotcomRenderingDataModel.toJson(data)
+        Future.successful(Ok(dataJson).as("application/json"))
+      }
+      case _ => RenderItemLegacy(path: String)
     }
   }
 
