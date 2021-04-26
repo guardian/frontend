@@ -1,3 +1,4 @@
+@import java.time.format.DateTimeFormatter
 @(fm: pa.FootballMatch, round: pa.Round)
 
 @import implicits.Football._
@@ -24,8 +25,8 @@
             }
             @if(fm.isFixture){
                 <div class="football-match__date">
-                    <span class="football-match__kickoff">@fm.date.formatted("HH:mm")</span>
-                    @fm.date.formatted("E dd MMMM")
+                    <span class="football-match__kickoff">@fm.date.format(DateTimeFormatter.ofPattern("HH:mm"))</span>
+                    @fm.date.format(DateTimeFormatter.ofPattern("E dd MMMM"))
                 </div>
             }
             @fm.comments.map { comments =>

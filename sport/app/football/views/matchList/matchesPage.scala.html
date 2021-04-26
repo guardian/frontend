@@ -3,6 +3,7 @@
 @import common.Edition
 @import model.ApplicationContext
 @import views.html.fragments.commercial.pageLogo
+@import java.time.format.DateTimeFormatter
 @(page: FootballPage, matchesList: MatchesList, filters: Map[String, Seq[CompetitionFilter]])(
     implicit request: RequestHeader, context: ApplicationContext
 )
@@ -43,7 +44,7 @@
                     <div class="football-matches__container" data-show-more-contains="football-matches">
                         @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
                             <div class="football-matches__day">
-                                <div class="date-divider">@date.formatted("EEEE d MMMM yyyy")</div>
+                                <div class="date-divider">@date.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy"))</div>
                                 @competitionMatches.map { case (competition, matches) =>
                                     <div class="football-table__container">
                                         <div class="u-cf">

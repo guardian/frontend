@@ -5,6 +5,7 @@ import implicits.Football
 import model.Competition
 import pa.{FootballMatch, Round}
 
+import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, ZoneId, ZonedDateTime}
 
 trait MatchesList extends Football with RichList with implicits.Collections {
@@ -71,11 +72,11 @@ trait MatchesList extends Football with RichList with implicits.Collections {
 
   lazy val nextPage: Option[String] = {
     val nextMatchDate = matchDates.safeDropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
-    nextMatchDate.map(s"$baseUrl/more/" + _.formatted("yyyy/MMM/dd"))
+    nextMatchDate.map(s"$baseUrl/more/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
   }
   lazy val previousPage: Option[String] = {
     val nextMatchDate = matchDates.takeWhile(dateComesFirstInList(_, date)).lastOption
-    nextMatchDate.map(s"$baseUrl/" + _.formatted("yyyy/MMM/dd"))
+    nextMatchDate.map(s"$baseUrl/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
   }
 
   def getPageTitle: String = {
