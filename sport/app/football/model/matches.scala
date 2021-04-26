@@ -1,6 +1,7 @@
 package football.model
 
 import football.collections.RichList
+import football.controllers.DateHelpers
 import implicits.Football
 import model.Competition
 import pa.{FootballMatch, Round}
@@ -25,7 +26,7 @@ trait MatchesList extends Football with RichList with implicits.Collections {
   // ordering for the displayed matches
   def timeComesFirstInList(d: ZonedDateTime, other: ZonedDateTime): Boolean
   def dateComesFirstInList(d: LocalDate, other: LocalDate): Boolean =
-    timeComesFirstInList(d.atStartOfDay(ZoneId.of("Europe/London")), other.atStartOfDay(ZoneId.of("Europe/London")))
+    timeComesFirstInList(d.atStartOfDay(DateHelpers.defaultFootballZoneId), other.atStartOfDay(DateHelpers.defaultFootballZoneId))
 
   private lazy val allRelevantMatches: List[(FootballMatch, Competition)] = {
     val matchesWithCompetition = for {

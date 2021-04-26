@@ -77,7 +77,7 @@ class ResultsController(
 
   /* Public methods */
 
-  def allResults(): Action[AnyContent] = renderForDate(LocalDate.now(Edition.defaultEdition.timezoneId()))
+  def allResults(): Action[AnyContent] = renderForDate(LocalDate.now(Edition.defaultEdition.timezoneId))
   def allResultsJson(): Action[AnyContent] = allResults()
 
   def allResultsFor(year: String, month: String, day: String): Action[AnyContent] =

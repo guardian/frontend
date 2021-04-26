@@ -45,7 +45,7 @@ class FixturesController(
 
   def tagFixturesJson(tag: String): Action[AnyContent] = tagFixtures(tag)
   def tagFixtures(tag: String): Action[AnyContent] =
-    renderTagFixtures(LocalDate.now(Edition.defaultEdition.timezoneId()), tag)
+    renderTagFixtures(LocalDate.now(Edition.defaultEdition.timezoneId), tag)
 
   def tagFixturesForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     tagFixturesFor(year, month, day, tag)

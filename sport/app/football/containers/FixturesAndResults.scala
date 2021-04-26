@@ -66,7 +66,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
 
       val maybeCompetitionAndGroup = competitionAndGroupFinder.bestForTeam(teamId).filter(_ => leagueTableExists)
 
-      val now = LocalDate.now(ZoneId.of(Edition.defaultEdition.timezone.getID))
+      val now = LocalDate.now(Edition.defaultEdition.timezoneId)
       val fixturesComponent = if (fixtureExists) {
         Some(
           matchesComponent(

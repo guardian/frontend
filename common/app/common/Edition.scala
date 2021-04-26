@@ -36,7 +36,7 @@ abstract class Edition(
 
   def isEditionalised(id: String): Boolean = editionalisedSections.contains(id)
   def matchesCookie(cookieValue: String): Boolean = id.equalsIgnoreCase(cookieValue)
-  def timezoneId() = ZoneId.of(timezone.getID)
+  def timezoneId = ZoneId.of(timezone.getID)
 }
 
 object Edition {
