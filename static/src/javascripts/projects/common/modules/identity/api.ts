@@ -198,14 +198,11 @@ export const getCookie = (): string | null =>
 export const getUrl = (): string => profileRoot;
 
 export const getUserFromApiWithRefreshedCookie = (): Promise<unknown> => {
-	const endpoint = `${idApiRoot}/user/me`;
-	const data = new URLSearchParams();
-	data.append('refreshCookie', 'true');
+	const endpoint = `${idApiRoot}/user/me?refreshCookie=true`;
 
 	return fetch(endpoint, {
 		mode: 'cors',
 		credentials: 'include',
-		body: data.toString(),
 	}).then((resp) => resp.json());
 };
 
@@ -288,14 +285,13 @@ export const sendValidationEmail = (): unknown => {
 		  decodeURIComponent(getUrlVars()?.returnUrl)
 		: profileRoot + defaultReturnEndpoint;
 
-	const data = new URLSearchParams();
-	data.append('method', 'post');
-	data.append('returnUrl', returnUrl);
+	const params = new URLSearchParams();
+	params.append('returnUrl', returnUrl);
 
-	const request = fetch(endpoint, {
+	const request = fetch(`${endpoint}?${params.toString()}`, {
 		mode: 'cors',
 		credentials: 'include',
-		body: data.toString(),
+		method: 'POST',
 	});
 
 	return request;
