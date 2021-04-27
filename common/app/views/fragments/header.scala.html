@@ -8,6 +8,8 @@
 @import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch, AnniversaryLogoHeader}
 @import experiments.{ActiveExperiments, AnniversaryAtom}
 
+@shouldShowLogo = @{AnniversaryLogoHeader.isSwitchedOn && ActiveExperiments.isParticipating(AnniversaryAtom)}
+
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
         "new-header--slim" -> page.metadata.hasSlimHeader
@@ -20,7 +22,9 @@
             aria-label="Guardian sections">
 
             <a href="@LinkTo {/}"
-            class="new-header__logo"
+            class="@{if(shouldShowLogo) {"new-header__logo news-header__logo-anniversary"} else {
+              "new-header__logo"
+            }}"
             data-link-name="nav2 : logo">
 
                 <span class="u-h">The Guardian - Back to home</span>
@@ -28,7 +32,7 @@
                 @if(page.metadata.hasSlimHeader) {
                     @fragments.inlineSvg("the-guardian-roundel", "logo")
                 } else {
-                    @if(AnniversaryLogoHeader.isSwitchedOn && ActiveExperiments.isParticipating(AnniversaryAtom)) {
+                    @if(shouldShowLogo) {
                         @fragments.inlineSvg("guardian-anniversary-logo", "logo")
                     } else {
                         @fragments.inlineSvg("the-guardian-logo", "logo")
