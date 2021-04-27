@@ -3,9 +3,10 @@ package test
 import conf.FootballClient
 import feed.CompetitionsService
 import model.{Competition, Tag, TagProperties, TeamMap}
-import org.joda.time.DateTime
-import com.github.nscala_time.time.Imports._
 import pa._
+
+import java.time.{ZoneId, ZonedDateTime, LocalTime}
+import java.time.format.DateTimeFormatter
 
 trait FootballTestData {
 
@@ -36,15 +37,15 @@ trait FootballTestData {
 
 object FootballTestData {
 
-  private val zone = DateTimeZone.forID("Europe/London")
+  private val zone = ZoneId.of("Europe/London")
 
-  private val today = new org.joda.time.DateTime(zone)
+  private val today = ZonedDateTime.now().withZoneSameInstant(zone)
 
   private val team = MatchDayTeam("1", "Team name", None, None, None, None)
 
   private val matchDay = MatchDay(
     "1234",
-    today.toDateTime,
+    today,
     None,
     Stage("1"),
     Round("1", None),
@@ -63,14 +64,14 @@ object FootballTestData {
     None,
   )
 
-  private val _fixture = Fixture("1234", today.toDateTime, Stage("1"), Round("1", None), "1", team, team, None, None)
+  private val _fixture = Fixture("1234", today, Stage("1"), Round("1", None), "1", team, team, None, None)
 
   private val _result =
-    Result("1234", today.toDateTime, Stage("1"), Round("1", None), "1", false, None, team, team, None, None, None)
+    Result("1234", today, Stage("1"), Round("1", None), "1", false, None, team, team, None, None, None)
 
   private val matchWithReport = Result(
     "1010",
-    new org.joda.time.DateTime(2012, 12, 1, 15, 0, zone),
+    ZonedDateTime.of(2012, 12, 1, 15, 0, 0, 0, zone),
     Stage("1"),
     Round("1", None),
     "",
@@ -91,21 +92,21 @@ object FootballTestData {
       "Premier League",
       "English",
       showInTeamsList = true,
-      startDate = Some((today - 2.months).toLocalDate),
+      startDate = Some((today.minusMonths(2)).toLocalDate),
       matches = Seq(
         matchWithReport,
-        result("Derby", "Blackburn", 0, 1, today - 5.days),
-        result("Stoke", "Villa", 1, 1, today - 4.days).copy(id = "3834132"),
-        result("Fulham", "Norwich", 0, 0, today - 3.days),
-        result("Wigan", "Everton", 1, 1, today - 1.day),
-        result("Sunderland", "West Ham", 1, 1, today.withTime(13, 0, 0, 0)),
-        liveMatch("Arsenal", "Spurs", 1, 0, today.withTime(15, 0, 0, 0)),
-        liveMatch("Chelsea", "Man U", 0, 0, today.withTime(15, 0, 0, 0)),
-        fixture("Liverpool", "Man C", today + 2.days),
-        fixture("Wigan", "Fulham", today + 2.days),
-        fixture("Stoke", "Everton", today + 3.days),
-        fixture("Reading", "QPR", today + 4.days),
-        fixture("Swansea", "Reading", today + 5.days),
+        result("Derby", "Blackburn", 0, 1, today.minusDays(5)),
+        result("Stoke", "Villa", 1, 1, today.minusDays(4)).copy(id = "3834132"),
+        result("Fulham", "Norwich", 0, 0, today.minusDays(3)),
+        result("Wigan", "Everton", 1, 1, today.minusDays(1)),
+        result("Sunderland", "West Ham", 1, 1, today.`with`(LocalTime.of(13, 0))),
+        liveMatch("Arsenal", "Spurs", 1, 0, today.`with`(LocalTime.of(15, 0))),
+        liveMatch("Chelsea", "Man U", 0, 0, today.`with`(LocalTime.of(15, 0))),
+        fixture("Liverpool", "Man C", today.plusDays(2)),
+        fixture("Wigan", "Fulham", today.plusDays(2)),
+        fixture("Stoke", "Everton", today.plusDays(3)),
+        fixture("Reading", "QPR", today.plusDays(4)),
+        fixture("Swansea", "Reading", today.plusDays(5)),
       ),
       leagueTable = Seq(
         leagueEntry("Arsenal", 1),
@@ -123,11 +124,11 @@ object FootballTestData {
       "Champions League",
       "Champions League",
       "European",
-      startDate = Some((today - 2.months).toLocalDate),
+      startDate = Some((today.minusMonths(2)).toLocalDate),
       matches = Seq(
-        result("Bolton", "Derby", 1, 1, today - 1.day, Some("Bolton win 4-2 on penalties.")),
-        liveMatch("Cardiff", "Brighton", 2, 0, today.withTime(15, 0, 0, 0)),
-        fixture("Wolves", "Burnley", today + 2.days),
+        result("Bolton", "Derby", 1, 1, today.minusDays(1), Some("Bolton win 4-2 on penalties.")),
+        liveMatch("Cardiff", "Brighton", 2, 0, today.`with`(LocalTime.of(15, 0))),
+        fixture("Wolves", "Burnley", today.plusDays(2)),
       ),
       leagueTable = Seq(
         leagueEntry("Bolton", 1),
@@ -162,17 +163,17 @@ object FootballTestData {
     ),
   )
 
-  private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) =
+  private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: ZonedDateTime) =
     matchDay.copy(
-      id = s"liveMatch $homeName $awayName $date",
+      id = s"liveMatch $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
       homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
       awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),
     )
 
-  private def fixture(homeName: String, awayName: String, date: DateTime) =
+  private def fixture(homeName: String, awayName: String, date: ZonedDateTime) =
     _fixture.copy(
-      id = s"fixture $homeName $awayName $date",
+      id = s"fixture $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
       homeTeam = team.copy(id = homeName, name = homeName, score = None),
       awayTeam = team.copy(id = awayName, name = awayName, score = None),
@@ -183,11 +184,11 @@ object FootballTestData {
       awayName: String,
       homeScore: Int,
       awayScore: Int,
-      date: DateTime,
+      date: ZonedDateTime,
       comments: Option[String] = None,
   ) =
     _result.copy(
-      id = s"result $homeName $awayName $date",
+      id = s"result $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
       homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
       awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),

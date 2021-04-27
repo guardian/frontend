@@ -1,13 +1,13 @@
 package football.model
 
-import org.joda.time.{DateTime, DateTimeZone, LocalDate}
+import java.time.{ZonedDateTime, ZoneId, LocalDate}
 import pa._
 import feed.Competitions
 import model.Competition
 
 trait MatchTestData {
   // Set a fixed date and time to ensure repeatibility of the tests
-  val now = new DateTime(2016, 8, 4, 10, 30, DateTimeZone.forID("Europe/London"))
+  val now = ZonedDateTime.of(2016, 8, 4, 10, 30, 0, 0, ZoneId.of("Europe/London"))
   val today = now.toLocalDate
 
   val spurs = MatchDayTeam(

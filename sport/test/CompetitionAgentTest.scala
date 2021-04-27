@@ -5,7 +5,8 @@ import model.Competition
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import org.scalatest.concurrent.{ScalaFutures, Eventually}
 import org.scalatest.time.{Millis, Span}
-import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
+import java.time.{ZonedDateTime, Clock, LocalDate}
+import java.time.ZoneId
 
 @DoNotDiscover class CompetitionAgentTest
     extends FlatSpec
@@ -21,22 +22,27 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
     with WithTestExecutionContext
     with ScalaFutures {
 
+  val fixedClock = {
+    val fixedDate = ZonedDateTime.of(2016, 6, 22, 15, 0, 0, 0, ZoneId.systemDefault()).toInstant
+    Clock.fixed(fixedDate, ZoneId.systemDefault())
+  }
+
   override def beforeAll(): Unit = {
     // Tests in this suite are time dependent:
     // => Force date to the day the test files have been generated (Note: time doesn't matter)
-    val fixedDate = new DateTime(2016, 6, 22, 15, 0).getMillis
-    DateTimeUtils.setCurrentMillisFixed(fixedDate)
+    /* val fixedDate = ZonedDateTime.of(2016, 6, 22, 15, 0, 0, 0, ZoneId.systemDefault()).toInstant
+    Clock.fixed(fixedDate, ZoneId.systemDefault()) */
   }
 
   override def afterAll(): Unit = {
-    DateTimeUtils.setCurrentMillisSystem()
+    //Clock.systemDefaultZone()
     super.afterAll()
   }
 
   override implicit val patienceConfig =
     PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 
-  lazy val seasonStart = Some(new LocalDate(2012, 8, 1))
+  lazy val seasonStart = Some(LocalDate.of(2012, 8, 1))
 
   def testCompetitionsService(competition: Competition): CompetitionsService =
     new CompetitionsService(testFootballClient, Seq(competition))
@@ -73,7 +79,7 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
         startDate = seasonStart,
       ),
     )
-    comps.competitionAgents.foreach(_.refreshResults())
+    comps.competitionAgents.foreach(_.refreshResults(fixedClock))
 
     eventually(
       comps.matches.filter(_.isResult).map(_.id) should contain("3528302"),
@@ -85,7 +91,7 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
     val comps = testCompetitionsService(
       Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true),
     )
-    whenReady(comps.refreshMatchDay()) { _ =>
+    whenReady(comps.refreshMatchDay(fixedClock)) { _ =>
       comps.matches.filter(_.isLive).map(_.id) should be(List()) // well, it's off season now...
     }
 
@@ -103,7 +109,7 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
         showInTeamsList = true,
       ),
     )
-    comps.competitionAgents.foreach(_.refresh)
+    comps.competitionAgents.foreach(_.refresh(fixedClock))
 
     eventually(comps.competitions(0).leagueTable(0).team.id should be("23"))
   }

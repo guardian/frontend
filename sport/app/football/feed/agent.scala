@@ -8,6 +8,7 @@ import model.{Competition, TeamNameBuilder}
 import java.time.LocalDate
 
 import scala.concurrent.{ExecutionContext, Future}
+import java.time.Clock
 
 trait Lineups extends GuLogging {
   def footballClient: FootballClient
@@ -28,9 +29,9 @@ trait LiveMatches extends GuLogging {
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getLiveMatches()(implicit executionContext: ExecutionContext): Future[Map[String, Seq[MatchDay]]] =
+  def getLiveMatches(clock: Clock)(implicit executionContext: ExecutionContext): Future[Map[String, Seq[MatchDay]]] =
     footballClient
-      .matchDay(LocalDate.now)
+      .matchDay(LocalDate.now(clock))
       .map { todaysMatches: List[MatchDay] =>
         val matchesWithCompetitions = todaysMatches.filter(_.competition.isDefined)
 
@@ -53,10 +54,11 @@ trait LeagueTables extends GuLogging {
 
   def getLeagueTable(
       competition: Competition,
+      clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[List[LeagueTableEntry]] = {
     log.info(s"refreshing table for ${competition.id}")
     footballClient
-      .leagueTable(competition.id, LocalDate.now())
+      .leagueTable(competition.id, LocalDate.now(clock))
       .map {
         _.map { t =>
           val team = t.team.copy(name = teamNameBuilder.withTeam(t.team))
@@ -92,11 +94,13 @@ trait Results extends GuLogging with implicits.Collections {
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getResults(competition: Competition)(implicit executionContext: ExecutionContext): Future[List[Result]] = {
+  def getResults(competition: Competition, clock: Clock)(implicit
+      executionContext: ExecutionContext,
+  ): Future[List[Result]] = {
     log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
-    val startDate = competition.startDate.getOrElse(LocalDate.now().minusDays(30))
+    val startDate = competition.startDate.getOrElse(LocalDate.now(clock).minusDays(30))
     footballClient
       .results(competition.id, startDate)
       .map {
@@ -127,10 +131,11 @@ class CompetitionAgent(
 
   def refreshFixtures()(implicit executionContext: ExecutionContext): Unit = getFixtures(competition) foreach addMatches
 
-  def refreshResults()(implicit executionContext: ExecutionContext): Unit = getResults(competition) foreach addMatches
+  def refreshResults(clock: Clock)(implicit executionContext: ExecutionContext): Unit =
+    getResults(competition, clock) foreach addMatches
 
-  def refreshLeagueTable()(implicit executionContext: ExecutionContext): Unit =
-    getLeagueTable(competition) foreach { entries =>
+  def refreshLeagueTable(clock: Clock)(implicit executionContext: ExecutionContext): Unit =
+    getLeagueTable(competition, clock) foreach { entries =>
       agent.send { _.copy(leagueTable = entries) }
     }
 
@@ -154,9 +159,9 @@ class CompetitionAgent(
       comp.copy(matches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate)
     }
 
-  def refresh()(implicit executionContext: ExecutionContext): Unit = {
+  def refresh(clock: Clock)(implicit executionContext: ExecutionContext): Unit = {
     refreshFixtures()
-    refreshResults()
-    refreshLeagueTable()
+    refreshResults(clock)
+    refreshLeagueTable(clock)
   }
 }

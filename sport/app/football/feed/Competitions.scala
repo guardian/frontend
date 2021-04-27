@@ -13,6 +13,7 @@ import java.util.Comparator
 import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.Ordering.Implicits._
+import java.time.Clock
 
 trait Competitions extends implicits.Football {
 
@@ -332,11 +333,11 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
 
   override def competitions: Seq[Competition] = competitionAgents.map(_.competition)
 
-  def refreshCompetitionAgent(id: String)(implicit executionContext: ExecutionContext): Unit =
+  def refreshCompetitionAgent(id: String, clock: Clock)(implicit executionContext: ExecutionContext): Unit =
     competitionAgents
       .find { _.competition.id == id }
       .foreach { c =>
-        c.refresh()
+        c.refresh(clock)
         log.info(
           s"Completed refresh of competition '${c.competition.fullName}': currently ${c.competition.matches.length} matches",
         )
@@ -367,9 +368,11 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       .recover(footballClient.logErrorsWithMessage("Failed refreshing competitions data"))
   }
 
-  def refreshMatchDay()(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
+  def refreshMatchDay(
+      clock: Clock,
+  )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     log.info("Refreshing match day data")
-    val result = getLiveMatches().map(_.map {
+    val result = getLiveMatches(clock).map(_.map {
       case (compId, newMatches) =>
         competitionAgents.find(_.competition.id == compId).map { agent =>
           agent.addMatches(newMatches)

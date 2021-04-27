@@ -18,7 +18,7 @@ trait MatchListController extends BaseController with Requests {
   def competitionsService: Competitions
   protected val datePattern = DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezoneId)
   protected def createDate(year: String, month: String, day: String): LocalDate = {
-    LocalDateTime.from(datePattern.parse(s"$year$month$day")).toLocalDate
+    LocalDate.parse(s"$year${month.capitalize}$day", datePattern)
   }
 
   protected def renderMatchList(
