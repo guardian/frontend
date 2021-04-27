@@ -1,4 +1,5 @@
-import $ from '../../../lib/$';
+import { $$ } from '../../../lib/$$';
+import bonzo from 'bonzo';
 import config from '../../../lib/config';
 import mediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
@@ -19,62 +20,64 @@ const getAllowedSizesForImmersive = (availableSpace) => {
 };
 
 export const init = () => {
-    const $col = $('.js-secondary-column');
+    const col = $$('.js-secondary-column');
 
     // article aside ads are added server-side if the container doesn't exist then stop.
-    if (!$col.length || $col.css('display') === 'none') {
+    if (!col.get().length || col.css('display') === 'none') {
         return Promise.resolve(false);
     }
 
-    const $mainCol = $('.js-content-main-column');
-    const $adSlot = $('.js-ad-slot', $col);
-    const $immersiveEls = $('.element--immersive', $mainCol);
+    const mainCol = $$('.js-content-main-column');
+    const adSlotDollar = $$('.js-ad-slot', col.get(0));
+    const immersiveElsDollar = $$('.element--immersive', mainCol.get(0))
+    const adSlot = bonzo(adSlotDollar.get());
+    const immersiveEls = bonzo(immersiveElsDollar.get());
 
-    if (!$adSlot.length || !$mainCol.length) {
+    if (!adSlot.length || !mainCol.get().length) {
         return Promise.resolve(false);
     }
 
     return fastdom
         .measure(
             () => [
-                $mainCol.dim().height,
-                $immersiveEls.offset().top - $mainCol.offset().top,
+                mainCol.dim().height,
+                immersiveEls.offset().top - mainCol.offset().top,
             ]
         )
         .then(([mainColHeight, immersiveOffset]) => {
             // we do all the adjustments server-side if the page has a ShowcaseMainElement!
             if (config.get('page.hasShowcaseMainElement', false)) {
-                return $adSlot[0];
+                return adSlot[0];
             }
             // immersive articles may have an image that overlaps the aside ad so we need to remove
             // the sticky behaviour and conditionally adjust the slot size depending on how far down
             // the page the first immersive image appears.
-            if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
+            if (config.get('page.isImmersive') && immersiveEls.length > 0) {
                 return fastdom.mutate(() => {
-                    $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
-                    $adSlot[0].setAttribute(
+                    adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
+                    adSlot[0].setAttribute(
                         'data-mobile',
                         getAllowedSizesForImmersive(immersiveOffset)
                     );
-                    return $adSlot[0];
+                    return adSlot[0];
                 });
             }
             // most articles are long enough to fit a DMPU. However, the occasional shorter article
             // will need the slot sizes to be adjusted, and the sticky behaviour removed.
             if (mainColHeight < minArticleHeight) {
                 return fastdom.mutate(() => {
-                    $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
-                    $adSlot[0].setAttribute(
+                    adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
+                    adSlot[0].setAttribute(
                         'data-mobile',
                         '1,1|2,2|300,250|300,274|fluid'
                     );
-                    return $adSlot[0];
+                    return adSlot[0];
                 });
             }
-            return $adSlot[0];
+            return adSlot[0];
         })
         .then((adSlot) => {
-            mediator.emit('page:defaultcommercial:right', adSlot);
+            mediator.emit('page:defaultcommercial:right',adSlot);
             return true;
         });
 };
