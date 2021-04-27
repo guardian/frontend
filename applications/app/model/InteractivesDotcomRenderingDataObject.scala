@@ -1,6 +1,9 @@
 package model
 
+import com.gu.commercial.branding.Branding
+import com.gu.commercial.display.AdTargetParam
 import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
+import common.commercial.EditionCommercialProperties
 import common.{Edition, Localisation}
 import conf.Configuration
 import model.dotcomrendering.DotcomRenderingUtils.{designTypeAsString, findPillar, makeMatchUrl}
@@ -17,7 +20,40 @@ object InteractivesDotcomRenderingDataObject {
   def makeDataObject()(implicit request: RequestHeader): DotcomRenderingDataModel = {
 
     val author = Author(Some("author byline"), Some("author twitterHandle"))
-    val config: json.JsObject = Json.obj("name" -> "Something")
+    val config: json.JsObject = Json.obj(
+      "abTests" -> Json.obj(),
+      "adUnit" -> "/59666047/theguardian.com/news/article/ng",
+      "ajaxUrl" -> "https://api.nextgen.guardianapps.co.uk",
+      "ampIframeUrl" -> "https://assets.guim.co.uk/data/vendor/8aef390c60b12c2d4425870583ed8245/amp-iframe.html",
+      "commercialBundleUrl" -> "https://assets.guim.co.uk/javascripts/1ac3825c94468946aa8d/graun.commercial.dcr.js",
+      "contentType" -> "Article",
+      "dcrSentryDsn" -> "https://1937ab71c8804b2b8438178dfdd6468f@sentry.io/1377847",
+      "dfpAccountId" -> "59666047",
+      "discussionApiClientHeader" -> "nextgen",
+      "discussionApiUrl" -> "https://discussion.theguardian.com/discussion-api",
+      "discussionD2Uid" -> "zHoBy6HNKsk",
+      "edition" -> "UK",
+      "frontendAssetsFullURL" -> "https://assets.guim.co.uk/",
+      "googletagUrl" -> "//securepubads.g.doubleclick.net/tag/js/gpt.js",
+      "hbImpl" -> Json.obj(),
+      "idApiUrl" -> "https://idapi.theguardian.com",
+      "isLive" -> false,
+      "isLiveBlog" -> false,
+      "isPhotoEssay" -> false,
+      "isSensitive" -> false,
+      "keywordIds" -> "",
+      "pageId" -> "news/2021/apr/26/iran-sentences-nazanin-zaghari-ratcliffe-to-further-one-year-jail-term",
+      "revisionNumber" -> "DEV",
+      "section" -> "news",
+      "sentryHost" -> "app.getsentry.com/35463",
+      "sentryPublicApiKey" -> "344003a8d11c41d8800fbad8383fdc50",
+      "sharedAdTargeting" -> Json.obj(),
+      "shortUrlId" -> "/p/h7pht",
+      "showRelatedContent" -> true,
+      "stage" -> "PROD",
+      "switches" -> Json.obj(),
+      "videoDuration" -> 0,
+    )
     val pageType = PageType(
       hasShowcaseMainElement = false,
       isFront = false,
@@ -76,6 +112,14 @@ object InteractivesDotcomRenderingDataObject {
       FooterLinks.getFooterByEdition(Edition(request)),
     )
 
+    val commercialProperties =
+      Map(
+        "AU" -> EditionCommercialProperties(None, Set()),
+        "INT" -> EditionCommercialProperties(None, Set()),
+        "UK" -> EditionCommercialProperties(None, Set()),
+        "US" -> EditionCommercialProperties(None, Set()),
+      )
+
     DotcomRenderingDataModel(
       version = 3, // Int
       headline = "headline",
@@ -96,7 +140,7 @@ object InteractivesDotcomRenderingDataObject {
       format = ContentFormat(ArticleDesign, NewsPillar, StandardDisplay),
       designType = "designType",
       tags = List(),
-      pillar = "pillar",
+      pillar = "news",
       isImmersive = false,
       sectionLabel = "sectionLabel",
       sectionUrl = "sectionUrl",
@@ -116,7 +160,7 @@ object InteractivesDotcomRenderingDataObject {
       hasStoryPackage = false,
       beaconURL = "//phar.gu-web.net",
       isCommentable = false,
-      commercialProperties = Map(),
+      commercialProperties = commercialProperties,
       pageType = pageType,
       starRating = None,
       trailText = "trailText",
