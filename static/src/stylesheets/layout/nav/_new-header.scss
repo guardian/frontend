@@ -146,6 +146,21 @@ from scrolling */
     }
 }
 
+.news-header__logo-anniversary {
+    @include mq($until: mobileMedium) {
+        margin-top: 19px;
+    }
+
+    @include mq(mobileMedium) {
+        margin-top: 14px;
+    }
+
+    @include mq(desktop) {
+        margin-top: 10px;
+    }
+
+}
+
 .inline-the-guardian-roundel__svg {
     height: $veggie-burger;
     width: $veggie-burger;
