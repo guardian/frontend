@@ -3,6 +3,11 @@ import { noop } from '../../../../lib/noop';
 import { init } from './gallery';
 import { galleryHtml } from './gallery-html';
 
+/**
+ * An example of this feature is:
+ * https://www.theguardian.com/advertiser-content/microsoft-ai-for-earth/meet-the-changemakers
+ */
+
 jest.mock('../../../../lib/detect', () => ({
     hasPushStateSupport: jest.fn(),
     getBreakpoint: jest.fn(),
