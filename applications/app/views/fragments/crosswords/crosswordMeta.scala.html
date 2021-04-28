@@ -14,7 +14,7 @@
     <div class="content__dateline content__dateline-crossword">
         <time itemprop="datePublished" datetime="@crosswordPage.crossword.date.toString("yyyy-MM-dd'T'HH:mm:ssZ"))"
         data-timestamp="@crosswordPage.crossword.date.getMillis" class="content__dateline-wpd js-wpd">
-            @GUDateTimeFormatNew.formatDateForDisplay(crosswordPage.crossword.date, requestHeader) <span class="content__dateline-time">@GUDateTimeFormatNew.formatTimeForDisplay(crosswordPage.crossword.date, requestHeader)</span>
+            @GUDateTimeFormatNew.formatDateForDisplay(crosswordPage.crossword.webPublicationDate, requestHeader) <span class="content__dateline-time">@GUDateTimeFormatNew.formatTimeForDisplay(crosswordPage.crossword.webPublicationDate, requestHeader)</span>
         </time>
     </div>
 </div>

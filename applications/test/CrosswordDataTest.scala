@@ -32,7 +32,7 @@ import org.scalatest.time.{Millis, Span}
       whenReady(futureCrossword) { result =>
         val maybeCrossword = result.content.flatMap(_.crossword)
         maybeCrossword shouldBe defined
-        val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
+        val crossword = CrosswordData.fromCrossword(maybeCrossword.get, result.content.get)
 
         crossword.entries.size should be(30)
 
@@ -63,7 +63,7 @@ import org.scalatest.time.{Millis, Span}
       whenReady(futureCrosswordWithDateSolutionAvailable) { result =>
         val maybeCrossword = result.content.flatMap(_.crossword)
         maybeCrossword shouldBe defined
-        val crossword = CrosswordData.fromCrossword(maybeCrossword.get)
+        val crossword = CrosswordData.fromCrossword(maybeCrossword.get, result.content.get)
         crossword.solutionAvailable should be(true)
         crossword.dateSolutionAvailable should be(Some(new DateTime(2016, 2, 20, 0, 0, 0)))
       }
