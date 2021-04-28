@@ -27,15 +27,7 @@ import java.time.ZoneId
     Clock.fixed(fixedDate, ZoneId.systemDefault())
   }
 
-  override def beforeAll(): Unit = {
-    // Tests in this suite are time dependent:
-    // => Force date to the day the test files have been generated (Note: time doesn't matter)
-    /* val fixedDate = ZonedDateTime.of(2016, 6, 22, 15, 0, 0, 0, ZoneId.systemDefault()).toInstant
-    Clock.fixed(fixedDate, ZoneId.systemDefault()) */
-  }
-
   override def afterAll(): Unit = {
-    //Clock.systemDefaultZone()
     super.afterAll()
   }
 
