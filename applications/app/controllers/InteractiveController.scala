@@ -118,7 +118,7 @@ class InteractiveController(
     (requestFormat, renderingTier) match {
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
       case (JsonFormat, DotcomRendering) => {
-        val data = InteractivesDotcomRenderingDataObject.makeDataObject()
+        val data = InteractivesDotcomRenderingDataObject.mockDataObject()
         val dataJson = DotcomRenderingDataModel.toJson(data)
         Future.successful(Ok(dataJson))
       }
