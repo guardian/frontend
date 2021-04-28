@@ -28,7 +28,7 @@ class AccountCreationForm extends Component {
         data.append('password', this.state.password);
 
         fetch(url, {
-            method: 'post',
+            method: 'POST',
             headers: {
                 "content-type": "application/x-www-form-urlencoded",
             },
