@@ -20,29 +20,34 @@ class AccountCreationForm extends Component {
             errors: [],
         });
 
-        reqwest({
-            url: '/password/guest',
+        const url = '/password/guest';
+
+        const data = new URLSearchParams();
+        data.append('csrfToken', this.props.csrfToken);
+        data.append('token', this.props.accountToken);
+        data.append('password', this.state.password);
+
+        fetch(url, {
             method: 'post',
-            data: {
-                csrfToken: this.props.csrfToken,
-                token: this.props.accountToken,
-                password: this.state.password,
+            headers: {
+                "content-type": "application/x-www-form-urlencoded",
             },
-            success: () => {
+            body: data.toString(),
+        }).then(response => {
+            if(response.ok) {
                 ophan.record({
                     component: 'set-password',
                     value: 'set-password',
                 });
                 this.props.onAccountCreated();
-            },
-            error: response => {
+            } else {
                 reportError(
                     Error(response),
                     {
                         feature: 'identity-create-account-upsell',
                     },
                     false
-                );
+                    );
                 try {
                     const apiError = JSON.parse(response.responseText)[0];
                     this.setState({
@@ -51,10 +56,17 @@ class AccountCreationForm extends Component {
                 } catch (exception) {
                     this.setState({ errors: [genericErrorStr] });
                 }
-            },
-            complete: () => {
-                this.setState({ isLoading: false });
-            },
+            }
+        }).catch(response => {
+            reportError(
+                Error(response),
+                {
+                    feature: 'identity-create-account-upsell',
+                },
+                false
+                );
+        }).finally(() => {
+            this.setState({ isLoading: false });
         });
     };
 
