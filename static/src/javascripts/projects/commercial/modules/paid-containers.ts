@@ -1,9 +1,8 @@
-import bean from 'bean';
 import fastdom from 'fastdom';
 import { $$ } from '../../../lib/$$';
 
 const onKeyPress = (handler: EventListener) => (event: KeyboardEvent) => {
-	if (event.keyCode === 0x20 || event.keyCode === 0x0d) {
+	if (event.code === 'Enter' || event.code === 'Space') {
 		handler(event);
 	}
 };
@@ -26,8 +25,10 @@ const onOpenClick = (event: Event) => {
 
 const paidContainers = (): Promise<void> => {
 	const showMores = $$('.dumathoin-more > summary').get();
-	bean.on(document, 'click', showMores, onOpenClick);
-	bean.on(document, 'click', showMores, onKeyPress(onOpenClick));
+	showMores.forEach((el) => el.addEventListener('click', onOpenClick));
+	showMores.forEach((el) =>
+		el.addEventListener('keydown', (e) => onKeyPress(onOpenClick)(e)),
+	);
 
 	return Promise.resolve();
 };
