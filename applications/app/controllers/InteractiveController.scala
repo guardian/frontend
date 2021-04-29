@@ -114,7 +114,7 @@ class InteractiveController(
       case Left(model) => {
         val data = InteractivesDotcomRenderingDataObject.mockDataObject(model)
         val dataJson = DotcomRenderingDataModel.toJson(data)
-        Ok(dataJson)
+        Ok(dataJson).as("application/json")
       }
       case Right(other) => RenderOtherStatus(other)
     }
