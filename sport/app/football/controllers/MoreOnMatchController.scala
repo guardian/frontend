@@ -5,7 +5,7 @@ import common._
 import conf.Configuration
 import contentapi.ContentApiClient
 import feed.CompetitionsService
-import football.controllers.DateHelpers.{asZonedDateTime, sameDay, startOfDay}
+import football.datetime.DateHelpers
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -179,50 +179,28 @@ case class Interval(start: ZonedDateTime, end: ZonedDateTime) {
   }
 }
 
-object DateHelpers {
-  val defaultFootballZoneId = ZoneId.of("Europe/London")
-
-  def startOfDay(zdt: ZonedDateTime): ZonedDateTime = {
-    zdt.truncatedTo(ChronoUnit.DAYS)
-  }
-
-  def sameDay(a: ZonedDateTime, b: ZonedDateTime): Boolean = {
-    a.getYear == b.getYear && a.getDayOfYear == b.getDayOfYear
-  }
-
-  def asZonedDateTime(dt: DateTime): ZonedDateTime = {
-    val instant = Instant.ofEpochMilli(dt.getMillis)
-    val zoneId = ZoneId.of(dt.getZone.getID, ZoneId.SHORT_IDS)
-    ZonedDateTime.ofInstant(instant, zoneId)
-  }
-
-  def asZonedDateTime(ld: java.time.LocalDate): ZonedDateTime = {
-    ld.atStartOfDay(defaultFootballZoneId)
-  }
-
-  def parseLocalDate(year: String, month: String, day: String): java.time.LocalDate = {
-    val formatter = DateTimeFormatter.ofPattern("yyyyMMdd").withZone(DateHelpers.defaultFootballZoneId)
-    java.time.LocalDate.parse(s"$year$month$day", formatter)
-  }
-}
-
 object MatchMetadata extends Football {
   def fetchRelatedMatchContent(theMatch: FootballMatch, related: Seq[ContentType])(implicit
       request: RequestHeader,
   ): (Option[FootballMatchTrail], Option[FootballMatchTrail], Option[FootballMatchTrail], FootballMatchTrail) = {
     val matchDate = theMatch.date
     val matchReport = related.find { c =>
-      val webPublicationDate = asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
-      webPublicationDate.isAfter(startOfDay(matchDate)) && c.matchReport && !c.minByMin && !c.preview
+      val webPublicationDate =
+        DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
+      webPublicationDate.isAfter(DateHelpers.startOfDay(matchDate)) && c.matchReport && !c.minByMin && !c.preview
     }
 
     val minByMin = related.find { c =>
-      val webPublicationDate = asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
-      sameDay(webPublicationDate, matchDate) && c.minByMin && !c.preview
+      val webPublicationDate =
+        DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
+      DateHelpers.sameDay(webPublicationDate, matchDate) && c.minByMin && !c.preview
     }
     val preview = related.find { c =>
-      val webPublicationDate = asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
-      webPublicationDate.isBefore(startOfDay(matchDate)) && (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin
+      val webPublicationDate =
+        DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
+      webPublicationDate.isBefore(
+        DateHelpers.startOfDay(matchDate),
+      ) && (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin
     }
     val stats: FootballMatchTrail = FootballMatchTrail.toTrail(theMatch)
     (
@@ -345,8 +323,8 @@ class MoreOnMatchController(
 
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[List[ContentType]] = {
     val matchDate = theMatch.date
-    val startOfDateRange = startOfDay(matchDate.minusDays(2))
-    val endOfDateRange = startOfDay(matchDate.plusDays(2))
+    val startOfDateRange = DateHelpers.startOfDay(matchDate.minusDays(2))
+    val endOfDateRange = DateHelpers.startOfDay(matchDate.plusDays(2))
 
     contentApiClient
       .getResponse(

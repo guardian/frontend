@@ -1,7 +1,7 @@
 package football.model
 
 import football.collections.RichList
-import football.controllers.DateHelpers
+import football.datetime.DateHelpers
 import implicits.Football
 import model.Competition
 import pa.{FootballMatch, Round}

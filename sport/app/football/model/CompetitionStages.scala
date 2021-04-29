@@ -1,6 +1,6 @@
 package football.model
 
-import football.controllers.{DateHelpers, Interval}
+import football.datetime.{DateHelpers, Interval}
 
 import java.time.{ZoneId, ZonedDateTime}
 import model.Competition
