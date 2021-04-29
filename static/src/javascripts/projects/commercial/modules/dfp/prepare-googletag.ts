@@ -49,14 +49,21 @@ initMessenger(
 const setDfpListeners = (): void => {
 	const pubads = window.googletag?.pubads();
 	if (!pubads) return;
-	pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
-	pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
+	pubads.addEventListener(
+		'slotRenderEnded',
+		raven.wrap(onSlotRender) as (arg0: any) => void,
+	);
+	pubads.addEventListener(
+		'slotOnload',
+		raven.wrap(onSlotLoad) as (arg0: any) => void,
+	);
 
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());
 
 	pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
 	if (storage.session.isAvailable()) {
-		const pageViews = storage.session.get('gu.commercial.pageViews') || 0;
+		const pageViews =
+			(storage.session.get('gu.commercial.pageViews') as number) || 0;
 		storage.session.set('gu.commercial.pageViews', pageViews + 1);
 	}
 };
@@ -65,7 +72,7 @@ const setPageTargeting = (): void => {
 	const pubads = window.googletag?.pubads();
 	if (!pubads) return;
 	// because commercialFeatures may export itself as {} in the event of an exception during construction
-	const targeting = getPageTargeting();
+	const targeting = getPageTargeting() as Record<string, any>;
 	Object.keys(targeting).forEach((key) => {
 		pubads.setTargeting(key, targeting[key]);
 	});
@@ -88,19 +95,19 @@ export const init = (): Promise<void> => {
 		// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
 		// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
 		window.googletag?.cmd.push(
-            setDfpListeners,
-            // @ts-ignore
+			setDfpListeners,
+			// @ts-expect-error - googletag.CommandArray.push() !== Array.push, it accepts multiple fn arguments
 			setPageTargeting,
 			refreshOnResize,
 			() => {
-				fillAdvertSlots();
+				void fillAdvertSlots();
 			},
 		);
 
 		onConsentChange((state) => {
 			let canRun = true;
 			if (state.ccpa) {
-                const doNotSell = state.ccpa.doNotSell
+				const doNotSell = state.ccpa.doNotSell;
 				// CCPA mode
 				window.googletag?.cmd.push(() => {
 					window.googletag?.pubads().setPrivacySettings({
@@ -136,7 +143,9 @@ export const init = (): Promise<void> => {
 			// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
 			if (canRun) {
 				void loadScript(
-					config.get(
+					(config as {
+						get: (arg: string, defaultValue: any) => string;
+					}).get(
 						'libs.googletag',
 						'//www.googletagservices.com/tag/js/gpt.js',
 					),
