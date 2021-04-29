@@ -65,6 +65,10 @@ class CrosswordSearchPage extends StandalonePage {
     "weekend",
   )
 
+  def queryParameter(crossType: String): String = {
+    if (crossType == "weekend") "weekend-crossword" else crossType
+  }
+
   val setters: Seq[String] = Seq(
     "Anto",
     "Arachne",
