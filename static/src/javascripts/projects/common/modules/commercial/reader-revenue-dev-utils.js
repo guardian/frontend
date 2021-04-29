@@ -2,7 +2,7 @@ import { storage } from '@guardian/libs';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import {
     getCountryCode,
-    setGeolocation,
+    overrideGeolocation,
 } from '../../../../lib/geolocation';
 import {
     decrementMvtCookie,
@@ -113,7 +113,7 @@ const changeGeolocation = (asExistingSupporter = false) => {
     if (geo === 'UK') {
         alert(`'UK' is not a valid geolocation - please use 'GB' instead!`);
     } else if (geo) {
-        setGeolocation(geo);
+        overrideGeolocation(geo);
         clearCommonReaderRevenueStateAndReload(asExistingSupporter);
     }
 };

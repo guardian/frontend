@@ -1,4 +1,4 @@
-import { getLocale } from '@guardian/libs';
+import { getLocale, storage } from '@guardian/libs';
 import type { CountryCode } from '@guardian/libs/dist/cjs/types/countries';
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
@@ -14,6 +14,7 @@ const editionToGeolocation = (editionKey = 'UK'): string =>
 	editionToGeolocationMap[editionKey];
 
 const countryCookieName = 'GU_geo_country';
+const countryOverrideName = 'gu.geo.override';
 
 let locale: CountryCode | null;
 
@@ -29,12 +30,23 @@ const getCountryCode = (): string => {
 
 	return (
 		locale ??
+		(storage.local.get(countryOverrideName) as string | null) ??
 		(getCookie(countryCookieName) as string | null) ??
 		editionToGeolocation(pageEdition)
 	);
 };
 
 const setGeolocation = (geolocation: CountryCode | null): void => {
+	locale = geolocation;
+};
+
+const overrideGeolocation = (geolocation: CountryCode | null): void => {
+	const currentDate = new Date();
+	storage.local.set(
+		countryOverrideName,
+		geolocation,
+		currentDate.setDate(currentDate.getDate() + 10),
+	);
 	locale = geolocation;
 };
 
@@ -454,7 +466,7 @@ export {
 	getLocalCurrencySymbolSync,
 	getLocalCurrencySymbol,
 	init,
-	setGeolocation,
+	overrideGeolocation,
 	extendedCurrencySymbol,
 	getCountryName,
 };
