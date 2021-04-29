@@ -28,27 +28,24 @@ const template = () => `
         </div>
     `;
 
-export const init = () =>
-    fastdom
-        .mutate(() => {
-            document.body.insertAdjacentHTML('beforeend', template());
-        })
-        .then(() => {
-            const aboutBtns = document.querySelectorAll('.js-hosted-about');
-            const closeBtn = document.querySelector('.js-survey-close');
-            const overlay = document.querySelector('.js-survey-overlay');
-            if (!overlay || !aboutBtns || !closeBtn) return;
+export const init = (): Promise<void> =>
+	fastdom
+		.mutate(() => {
+			document.body.insertAdjacentHTML('beforeend', template());
+		})
+		.then(() => {
+			const aboutBtns = document.querySelectorAll('.js-hosted-about');
+			const closeBtn = document.querySelector('.js-survey-close');
+			const overlay = document.querySelector('.js-survey-overlay');
+			if (!overlay || !aboutBtns.length || !closeBtn) return;
 
-            aboutBtns.forEach(btn => {
-                btn.addEventListener(
-                    'click',
-                    (e) => {
-                        e.preventDefault();
-                        fastdom.mutate(() => overlay.classList.remove('u-h'));
-                    }
-                );
-            });
-            closeBtn.addEventListener('click', () => {
-                fastdom.mutate(() => overlay.classList.add('u-h'));
-            });
-        });
+			aboutBtns.forEach((btn) => {
+				btn.addEventListener('click', (e) => {
+					e.preventDefault();
+					void fastdom.mutate(() => overlay.classList.remove('u-h'));
+				});
+			});
+			closeBtn.addEventListener('click', () => {
+				void fastdom.mutate(() => overlay.classList.add('u-h'));
+			});
+		});
