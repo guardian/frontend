@@ -6,6 +6,7 @@ import contentapi.ContentApiClient
 import conf.switches.Switches
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import model.InteractivePage
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
@@ -22,10 +23,6 @@ import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import services.{CAPILookup, _}
-
-case class InteractivePage(interactive: Interactive, related: RelatedContent) extends ContentPage {
-  override lazy val item = interactive
-}
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
@@ -115,7 +112,7 @@ class InteractiveController(
   def renderDCRJsonObject(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
       case Left(model) => {
-        val data = InteractivesDotcomRenderingDataObject.mockDataObject()
+        val data = InteractivesDotcomRenderingDataObject.mockDataObject(model)
         val dataJson = DotcomRenderingDataModel.toJson(data)
         Ok(dataJson)
       }

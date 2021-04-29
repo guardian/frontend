@@ -17,7 +17,7 @@ import play.api.mvc.RequestHeader
 
 object InteractivesDotcomRenderingDataObject {
 
-  def mockDataObject()(implicit request: RequestHeader): DotcomRenderingDataModel = {
+  def mockDataObject(model: InteractivePage)(implicit request: RequestHeader): DotcomRenderingDataModel = {
 
     val author = Author(Some("author byline"), Some("author twitterHandle"))
     val config: json.JsObject = Json.obj(
