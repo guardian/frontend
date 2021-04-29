@@ -65,7 +65,7 @@ class CrosswordSearchPage extends StandalonePage {
     "weekend",
   )
 
-  def isWeekend(crossType: String): String = {
+  def queryParameter(crossType: String): String = {
     if (crossType == "weekend") "weekend-crossword" else crossType
   }
 
