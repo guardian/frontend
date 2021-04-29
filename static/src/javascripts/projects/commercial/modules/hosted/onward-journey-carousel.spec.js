@@ -1,6 +1,11 @@
 import fastdom from '../../../../lib/fastdom-promise';
-
 import { initHostedCarousel } from './onward-journey-carousel';
+
+/**
+ * An example of this feature is:
+ * https://www.theguardian.com/advertiser-content/we-are-still-in/driving-climate-action
+ * It is the carousel on the RHS
+ */
 
 describe('Hosted onward journey carousel', () => {
     beforeEach(() => {
