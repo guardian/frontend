@@ -120,7 +120,7 @@ class InteractiveController(
       case (JsonFormat, DotcomRendering) => {
         val data = InteractivesDotcomRenderingDataObject.mockDataObject()
         val dataJson = DotcomRenderingDataModel.toJson(data)
-        Future.successful(Ok(dataJson))
+        Future.successful(Ok(dataJson).as("application/json"))
       }
       case _ => RenderItemLegacy(path: String)
     }
