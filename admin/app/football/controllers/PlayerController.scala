@@ -5,8 +5,9 @@ import play.api.mvc._
 import football.services.PaFootballClient
 import pa.{PlayerAppearances, PlayerProfile, StatsSummary}
 import implicits.Requests
-import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
-import org.joda.time.LocalDate
+import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent}
+
+import java.time.LocalDate
 import football.model.PA
 
 import scala.concurrent.Future
@@ -15,6 +16,8 @@ import play.api.libs.json.{JsArray, JsObject, JsString}
 import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 import play.api.libs.ws.WSClient
+
+import java.time.format.DateTimeFormatter
 
 class PlayerController(val wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
     val context: ApplicationContext,
@@ -85,7 +88,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
 
   def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val startDate = LocalDate.parse(startDateStr, DateTimeFormat.forPattern("yyyyMMdd"))
+      val startDate = LocalDate.parse(startDateStr, DateTimeFormatter.ofPattern("yyyyMMdd"))
       for {
         playerProfile <- client.playerProfile(playerId)
         playerStats <- client.playerStats(playerId, startDate, LocalDate.now(), teamId)

@@ -5,6 +5,7 @@ import feed.CompetitionsService
 import implicits.{Football, Requests}
 import model.Cached.WithoutRevalidationResult
 import model.TeamMap.findTeamIdByUrlName
+import football.datetime.DateHelpers
 import model._
 import org.joda.time.format.DateTimeFormat
 import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
@@ -32,7 +33,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
     "footballMatch" -> JsObject(
       Seq(
         "id" -> JsString(theMatch.id),
-        "dateInMillis" -> JsNumber(theMatch.date.getMillis),
+        "dateInMillis" -> JsNumber(theMatch.date.toInstant.toEpochMilli),
         "homeTeam" -> JsString(theMatch.homeTeam.id),
         "awayTeam" -> JsString(theMatch.awayTeam.id),
         "isLive" -> JsBoolean(theMatch.isLive),
@@ -154,8 +155,10 @@ class MatchController(
   def renderMatch(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] =
     (findTeamIdByUrlName(home), findTeamIdByUrlName(away)) match {
       case (Some(homeId), Some(awayId)) =>
-        val date = dateFormat.parseDateTime(year + month + day).toLocalDate
-        render(competitionsService.matchFor(date, homeId, awayId))
+        val date = DateHelpers.parseLocalDate(year, month, day)
+        val startOfDay = date.atStartOfDay(DateHelpers.defaultFootballZoneId)
+        val startOfTomorrow = startOfDay.plusDays(1)
+        render(competitionsService.matchFor(Interval(startOfDay, startOfTomorrow), homeId, awayId))
       case _ => render(None)
     }
 

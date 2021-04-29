@@ -1,3 +1,4 @@
+@import java.time.format.DateTimeFormatter
 @(liveMatches: List[pa.LiveMatch], fixtures: List[pa.Fixture], results: List[pa.Result])(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @views.html.football.main("Matches") {
@@ -14,7 +15,7 @@
                 <div class="list-group">
                 @for(fMatch <- matches) {
                     <a href="/admin/football/fronts/match/@fMatch.id" class="list-group-item">
-                        <span class="badge">@fMatch.date.toString("E dd MMMM HH:mm")</span>
+                        <span class="badge">@fMatch.date.format(DateTimeFormatter.ofPattern("E dd MMMM HH:mm"))</span>
                         @fMatch.homeTeam.name v @fMatch.awayTeam.name
                     </a>
                 }

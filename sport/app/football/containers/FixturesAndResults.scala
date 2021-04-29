@@ -10,7 +10,8 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import slices.{Fixed, FixedContainers}
 import common.Seqs._
-import org.joda.time.LocalDate
+
+import java.time.{LocalDate, ZoneId}
 import football.views.html.matchList.matchesComponent
 import football.views.html.tablesList.tablesComponent
 import implicits.Requests._
@@ -65,7 +66,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
 
       val maybeCompetitionAndGroup = competitionAndGroupFinder.bestForTeam(teamId).filter(_ => leagueTableExists)
 
-      val now = LocalDate.now(Edition.defaultEdition.timezone)
+      val now = LocalDate.now(Edition.defaultEdition.timezoneId)
       val fixturesComponent = if (fixtureExists) {
         Some(
           matchesComponent(

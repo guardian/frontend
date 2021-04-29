@@ -5,7 +5,7 @@ import football.model.PA
 import football.services.PaFootballClient
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, Cors, NoCache}
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import pa._
 import play.api.mvc._
 import play.api.libs.ws.WSClient

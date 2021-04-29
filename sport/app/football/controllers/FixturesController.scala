@@ -4,7 +4,7 @@ import common.Edition
 import feed.CompetitionsService
 import football.model._
 import model._
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import pa.FootballTeam
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 
@@ -25,7 +25,7 @@ class FixturesController(
 
   def allFixturesJson(): Action[AnyContent] = allFixtures()
   def allFixtures(): Action[AnyContent] =
-    renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezone))
+    renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezoneId))
 
   def moreFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderMoreFixtures(createDate(year, month, day))
@@ -45,7 +45,7 @@ class FixturesController(
 
   def tagFixturesJson(tag: String): Action[AnyContent] = tagFixtures(tag)
   def tagFixtures(tag: String): Action[AnyContent] =
-    renderTagFixtures(LocalDate.now(Edition.defaultEdition.timezone), tag)
+    renderTagFixtures(LocalDate.now(Edition.defaultEdition.timezoneId), tag)
 
   def tagFixturesForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     tagFixturesFor(year, month, day, tag)
@@ -90,7 +90,7 @@ class FixturesController(
       competitionsService
         .findTeam(teamId)
         .map { team =>
-          val now = LocalDate.now(Edition.defaultEdition.timezone)
+          val now = LocalDate.now(Edition.defaultEdition.timezoneId)
           val fixtures = TeamFixturesList(now, competitionsService.competitions, teamId)
           val page = new FootballPage(
             s"football/${team.id}/fixtures",

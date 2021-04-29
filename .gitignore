@@ -85,3 +85,7 @@ static/src/stylesheets/pasteup/.npmrc
 *.key
 .vscode/settings.json
 
+# VSCode
+
+.bloop
+metals.sbt

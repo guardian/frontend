@@ -3,11 +3,12 @@ package football.controllers
 import feed.CompetitionsService
 import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import model.{ApplicationContext, Cached}
 import football.model.{CompetitionStage, KnockoutSpider}
-import org.joda.time.DateTime
 import pa.FootballMatch
+
+import java.time.ZonedDateTime
 
 class WallchartController(
     competitionsService: CompetitionsService,
@@ -31,7 +32,7 @@ class WallchartController(
           val competitionStages = new CompetitionStage(competitionsService.competitions)
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
 
-          val nextMatch = WallchartController.nextMatch(competition.matches, DateTime.now())
+          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
           Cached(60) {
             if (embed)
               RevalidatableResult.Ok(
@@ -66,8 +67,8 @@ class WallchartController(
 }
 
 object WallchartController {
-  def nextMatch(matches: Seq[FootballMatch], after: DateTime): Option[FootballMatch] = {
-    val ordered = matches.sortBy(_.date.getMillis)
+  def nextMatch(matches: Seq[FootballMatch], after: ZonedDateTime): Option[FootballMatch] = {
+    val ordered = matches.sortBy(_.date.toInstant.toEpochMilli)
     ordered.find(game => game.date.isAfter(after))
   }
 }

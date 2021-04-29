@@ -56,7 +56,6 @@ val common = library("common")
       identityModel,
       capiAws,
       okhttp,
-      jsonSchema,
     ) ++ jackson,
   )
   .settings(

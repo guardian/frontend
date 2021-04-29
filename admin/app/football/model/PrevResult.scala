@@ -1,9 +1,10 @@
 package football.model
 
-import org.joda.time.DateTime
-import pa.{Result, MatchDayTeam}
+import pa.{MatchDayTeam, Result}
 
-case class PrevResult(date: DateTime, self: MatchDayTeam, foe: MatchDayTeam, wasHome: Boolean) {
+import java.time.ZonedDateTime
+
+case class PrevResult(date: ZonedDateTime, self: MatchDayTeam, foe: MatchDayTeam, wasHome: Boolean) {
 
   val scores = self.score.flatMap { selfScore =>
     foe.score.map { foeScore =>
