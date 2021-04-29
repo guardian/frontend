@@ -1,10 +1,19 @@
 package model.dotcomrendering
 
+import com.gu.contentapi.client.model.v1.{Blocks => APIBlocks}
+import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
+import com.gu.contentapi.client.utils.format.ImmersiveDisplay
+import common.{Edition, Localisation}
 import common.commercial.EditionCommercialProperties
-import model.ContentFormat
-import model.dotcomrendering.pageElements.PageElement
-import navigation.Nav
+import conf.Configuration
+import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
+import model.{ContentFormat, ContentPage, ContentType, GUDateTimeFormatNew, InteractivePage, PageWithStoryPackage, Pillar}
+import navigation.{Nav, NavLink, NavMenu, ReaderRevenueLinks}
+import org.joda.time.DateTime
 import play.api.libs.json._
+import play.api.mvc.RequestHeader
+import views.support.{ImgSrc, Item300}
+
 
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -172,5 +181,148 @@ object DotcomRenderingDataModel {
       }
     val jsValue = Json.toJson(model)
     Json.stringify(withoutNull(jsValue))
+  }
+
+  def forInteractive(
+    page: InteractivePage,
+    request: RequestHeader,
+  ): DotcomRenderingDataModel = ???
+
+  def forArticle(
+    page: PageWithStoryPackage,
+    request: RequestHeader,
+    blocks: APIBlocks,
+    pageType: PageType,
+  ): DotcomRenderingDataModel = ???
+
+  def foo(
+    page: ContentPage,
+    request: RequestHeader,
+    edition: Edition,
+    pagination: Option[Pagination],
+    linkedData: List[LinkedData],
+  ): DotcomRenderingDataModel = {
+
+    def toDCRTag(t: model.Tag): Tag = {
+      Tag(
+        t.id,
+        t.properties.tagType,
+        t.properties.webTitle,
+        t.properties.twitterHandle,
+        t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
+      )
+    }
+
+    def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
+      pillar
+        .map { pillar =>
+          if (designType == AdvertisementFeature) "labs"
+          else if (pillar.toString.toLowerCase == "arts") "culture"
+          else pillar.toString.toLowerCase()
+        }
+        .getOrElse("news")
+    }
+
+    def nav(page: ContentPage, edition: Edition): Nav = {
+      val navMenu = NavMenu(page, edition)
+      Nav(
+        currentUrl = navMenu.currentUrl,
+        pillars = navMenu.pillars,
+        otherLinks = navMenu.otherLinks,
+        brandExtensions = navMenu.brandExtensions,
+        currentNavLinkTitle = navMenu.currentNavLink.map(NavLink.id),
+        currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
+        subNavSections = navMenu.subNavSections,
+        readerRevenueLinks = ReaderRevenueLinks.all,
+      )
+    }
+
+    def secondaryDateString(content: ContentType, request: RequestHeader): String = {
+      def format(dt: DateTime, req: RequestHeader): String = GUDateTimeFormatNew.formatDateTimeForDisplay(dt, req)
+
+      val firstPublicationDate = content.fields.firstPublicationDate
+      val webPublicationDate = content.trail.webPublicationDate
+      val isModified = content.content.hasBeenModified && (!firstPublicationDate.contains(webPublicationDate)
+
+      if (isModified) {
+        "First published on " + format(firstPublicationDate.getOrElse(webPublicationDate), request)
+      } else {
+        "Last modified on " + format(content.fields.lastModified, request)
+      }
+    }
+
+    val content = page.item
+
+    val author: Author = Author(
+      byline = content.trail.byline,
+      twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
+    )
+
+    DotcomRenderingDataModel(
+      // TODO sort alphabetically once finished
+
+      version = 3, // Int
+      headline = content.trail.headline,
+      standfirst = TextCleaner.sanitiseLinks(edition)(content.fields.standfirst.getOrElse("")),
+      webTitle = content.metadata.webTitle,
+      main = content.fields.main,
+      webPublicationDate = content.trail.webPublicationDate.toString,
+
+      // TODO DCR should do these itself
+      webPublicationDateDisplay = GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
+      webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
+
+      editionLongForm = Edition(request).displayName,
+      editionId = edition.id,
+      pageId = content.metadata.id,
+      format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
+      tags = content.tags.tags.map(toDCRTag),
+      shouldHideAds = content.content.shouldHideAdverts,
+      sectionLabel = Localisation(content.content.sectionLabelName.getOrElse(""))(request),
+      sectionUrl = content.content.sectionLabelLink.getOrElse(""),
+      sectionName = content.metadata.section.map(_.value),
+      subMetaSectionLinks = content.content.submetaLinks.sectionLabels
+        .map(SubMetaLink.apply)
+        .filter(_.title.trim.nonEmpty),
+      subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
+      webURL = content.metadata.webUrl,
+      isCommentable = content.trail.isCommentable,
+      isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay),
+      starRating = content.content.starRating,
+      trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
+      pagination = pagination,
+      author = author,
+      hasRelated = content.content.showInRelated,
+      guardianBaseURL = Configuration.site.host,
+      beaconURL = Configuration.debug.beaconUrl,
+      publication = content.content.publication,
+      contributionsServiceUrl = Configuration.contributionsService.url,
+      designType = content.metadata.designType.map(_.toString).getOrElse("Article"),
+      pillar = findPillar(content.metadata.pillar, content.metadata.designType),
+      twitterData = page.getTwitterProperties,
+      openGraphData = page.getOpenGraphProperties,
+      linkedData = linkedData,
+      nav = nav(page, edition),
+
+      // liveblog specific stuff = extend the model rather than redundant fields?
+
+      mainMediaElements = mainBlock.toList.flatMap(_.elements),
+      keyEvents = keyEvents.toList,
+      blocks = bodyBlocks,
+      config = combinedConfig,
+      contentType = jsConfig("contentType").getOrElse(""),
+      hasStoryPackage = page.related.hasStoryPackage,
+      commercialProperties = commercial.editionCommercialProperties,
+      pageType = pageType,
+      showBottomSocialButtons = ContentLayout.showBottomSocialButtons(content),
+      pageFooter = pageFooter,
+      // See pageShouldHideReaderRevenue in contributions-utilities.js
+      shouldHideReaderRevenue = content.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
+      slotMachineFlags = request.slotMachineFlags,
+      badge = badge,
+      matchUrl = makeMatchUrl(page),
+      isSpecialReport = isSpecialReport(page),
+    )
   }
 }
