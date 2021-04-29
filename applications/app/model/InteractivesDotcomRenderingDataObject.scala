@@ -19,6 +19,9 @@ object InteractivesDotcomRenderingDataObject {
 
   def mockDataObject(model: InteractivePage)(implicit request: RequestHeader): DotcomRenderingDataModel = {
 
+    val interactive = model.interactive
+    val relatedContent = model.related
+
     val author = Author(Some("author byline"), Some("author twitterHandle"))
     val config: json.JsObject = Json.obj(
       "abTests" -> Json.obj(),
