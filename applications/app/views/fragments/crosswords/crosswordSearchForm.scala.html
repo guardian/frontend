@@ -14,7 +14,7 @@
                         <label class="label" for="crossword_type">Type</label>
                         <select id="crossword_type" name="crossword_type">
                             @page.crosswordTypes.map { crosswordType =>
-                                <option value="@crosswordType">@crosswordType</option>
+                                <option value="@page.decideIfWeekend(crosswordType)">@crosswordType</option>
                             }
                         </select>
                     </li>

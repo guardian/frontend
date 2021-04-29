@@ -65,6 +65,22 @@ class CrosswordSearchPage extends StandalonePage {
     "weekend",
   )
 
+  val crossword: Seq[String] = Seq(
+    "quick",
+    "cryptic",
+    "prize",
+    "quiptic",
+    "genius",
+    "speedy",
+    "everyman",
+    "azed",
+    "weekend",
+  )
+
+  def decideIfWeekend(crossType: String): String = {
+    if (crossType == "weekend") "weekend-crossword" else crossType
+  }
+
   val setters: Seq[String] = Seq(
     "Anto",
     "Arachne",
