@@ -1,7 +1,6 @@
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import throttle from 'lodash/throttle';
-import qwery from 'qwery';
 import $ from '../../../../lib/$';
 import config from '../../../../lib/config';
 import { getBreakpoint, hasTouchScreen } from '../../../../lib/detect';
@@ -40,17 +39,14 @@ class HostedGallery {
         this.$images = $('.js-hosted-gallery-image', this.$imagesContainer);
         this.$progress = $('.js-hosted-gallery-progress', this.$galleryEl);
         this.$border = $('.js-hosted-gallery-rotating-border', this.$progress);
-        this.prevBtn = qwery('.inline-arrow-up', this.$progress)[0];
-        this.nextBtn = qwery('.inline-arrow-down', this.$progress)[0];
-        this.infoBtn = qwery(
-            '.js-gallery-caption-button',
-            this.$captionContainer
-        )[0];
+        this.prevBtn = this.$progress.get(0).querySelector('.inline-arrow-up');
+        this.nextBtn = this.$progress.get(0).querySelector('.inline-arrow-down');
+        this.infoBtn = this.$captionContainer.get(0).querySelector('.js-gallery-caption-button');
         this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
         this.$ctaFloat = $('.js-hosted-gallery-cta', this.$galleryEl)[0];
         this.$ojFloat = $('.js-hosted-gallery-oj', this.$galleryEl)[0];
         this.$meta = $('.js-hosted-gallery-meta', this.$galleryEl)[0];
-        this.ojClose = qwery('.js-hosted-gallery-oj-close', this.$ojFloat)[0];
+        this.ojClose = this.$ojFloat.querySelector('.js-hosted-gallery-oj-close');
 
         if (this.$galleryEl.length) {
             this.resize = this.trigger.bind(this, 'resize');
@@ -532,7 +528,7 @@ HostedGallery.prototype.states = {
 };
 
 export const init = () => {
-    if (qwery('.js-hosted-gallery-container').length) {
+    if (document.querySelectorAll('.js-hosted-gallery-container').length) {
         return loadCssPromise.then(() => {
             let res;
             const galleryHash = window.location.hash;
