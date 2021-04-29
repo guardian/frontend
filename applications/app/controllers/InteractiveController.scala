@@ -105,9 +105,20 @@ class InteractiveController(
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
-  def RenderItemLegacy(path: String)(implicit request: RequestHeader): Future[Result] = {
+  def renderItemLegacy(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
       case Left(model)  => render(model)
+      case Right(other) => RenderOtherStatus(other)
+    }
+  }
+
+  def renderDCRJsonObject(path: String)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path) map {
+      case Left(model) => {
+        val data = InteractivesDotcomRenderingDataObject.mockDataObject()
+        val dataJson = DotcomRenderingDataModel.toJson(data)
+        Ok(dataJson)
+      }
       case Right(other) => RenderOtherStatus(other)
     }
   }
