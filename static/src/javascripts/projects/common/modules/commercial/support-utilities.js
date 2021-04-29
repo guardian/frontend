@@ -1,6 +1,6 @@
 import {
     countryCodeToSupportInternationalisationId,
-    get as getCountryCode,
+    getCountryCode,
 } from '../../../../lib/geolocation';
 
 const addCountryGroupToSupportLink = (rawUrl) => {

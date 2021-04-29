@@ -17,9 +17,12 @@ const countryCookieName = 'GU_geo_country';
 
 let locale: CountryCode | null;
 
-// Returning locale should cover all/most of the cases
-// but we return cookie or geo from edition as fallbacks if a race condition occurs
-const get = (): string => {
+/*
+   Returning locale should cover all/most of the cases.
+   If race conditions happen or the cookie is not set, we
+   keep fallbacks to cookie or geo from edition.
+*/
+const getCountryCode = (): string => {
 	const pageEdition: string = (config as {
 		get: (arg: string) => string;
 	}).get('page.edition');
@@ -371,7 +374,7 @@ const extendedCurrencySymbol: Record<string, string> = {
 const defaultCurrencySymbol = '£';
 
 const getLocalCurrencySymbolSync = (): string =>
-	extendedCurrencySymbol[countryCodeToCountryGroupId(get())] ||
+	extendedCurrencySymbol[countryCodeToCountryGroupId(getCountryCode())] ||
 	defaultCurrencySymbol;
 
 const getLocalCurrencySymbol = (geolocation: string): string =>
@@ -445,7 +448,7 @@ const getCountryName = (geolocation: string): string | undefined =>
 	geolocation ? countryNames[geolocation] : undefined;
 
 export {
-	get,
+	getCountryCode,
 	countryCodeToCountryGroupId,
 	countryCodeToSupportInternationalisationId,
 	getLocalCurrencySymbolSync,

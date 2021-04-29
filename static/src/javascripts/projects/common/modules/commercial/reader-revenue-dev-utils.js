@@ -1,7 +1,7 @@
 import { storage } from '@guardian/libs';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import {
-    get as getCountryCode,
+    getCountryCode,
     setGeolocation,
 } from '../../../../lib/geolocation';
 import {

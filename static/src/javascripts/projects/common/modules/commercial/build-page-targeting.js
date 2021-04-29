@@ -9,7 +9,7 @@ import {
     getReferrer as detectGetReferrer,
     getViewport,
 } from '../../../../lib/detect';
-import { get as getCountryCode } from '../../../../lib/geolocation';
+import { getCountryCode } from '../../../../lib/geolocation';
 import { getPrivacyFramework } from '../../../../lib/getPrivacyFramework';
 import { getUrlVars } from '../../../../lib/url';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';

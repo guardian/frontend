@@ -10,7 +10,7 @@ import config from '../../../../lib/config';
 import { getCookie } from '../../../../lib/cookies';
 import fastdom from '../../../../lib/fastdom-promise';
 import { fetchJson } from '../../../../lib/fetch-json';
-import { get as getCountryCode } from '../../../../lib/geolocation';
+import { getCountryCode } from '../../../../lib/geolocation';
 import reportError from '../../../../lib/report-error';
 import { trackNonClickInteraction } from '../analytics/google';
 import { getMvtValue } from '../analytics/mvt-cookie';
