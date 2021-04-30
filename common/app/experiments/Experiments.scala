@@ -32,7 +32,7 @@ object HideAnniversaryAtom
       description =
         "Controls the visibility of the the Anniversary interactive atom on articles. If OPTED IN, will NOT show banner.",
       owners = Seq(Owner.withGithub("gtrufitt")),
-      sellByDate = new LocalDate(2021, 5, 19),
+      sellByDate = new LocalDate(2022, 5, 11),
       participationGroup = Perc0D,
     )
 
@@ -41,7 +41,7 @@ object AnniversaryAtom
       name = "anniversary-atom",
       description = "Allows opting into the anniversary atom for testing on prod",
       owners = Seq(Owner.withGithub("gtrufitt")),
-      sellByDate = new LocalDate(2021, 5, 19),
+      sellByDate = new LocalDate(2022, 5, 11),
       participationGroup = Perc0C,
     )
 
