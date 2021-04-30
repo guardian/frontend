@@ -1,7 +1,7 @@
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import throttle from 'lodash/throttle';
-import $ from '../../../../lib/$';
+import { $$ } from '../../../../lib/$$';
 import config from '../../../../lib/config';
 import { getBreakpoint, hasTouchScreen } from '../../../../lib/detect';
 import FiniteStateMachine from '../../../../lib/fsm';
@@ -23,32 +23,27 @@ class HostedGallery {
         this.imageRatios = [];
 
         // ELEMENT BINDINGS
-        this.$galleryEl = $('.js-hosted-gallery-container');
-        this.$galleryFrame = $('.js-hosted-gallery-frame');
-        this.$header = $('.js-hosted-headerwrap');
-        this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
-        this.$captionContainer = $('.js-gallery-caption-bar');
-        this.$captions = $(
-            '.js-hosted-gallery-caption',
-            this.$captionContainer
-        );
-        this.$scrollEl = $(
-            '.js-hosted-gallery-scroll-container',
-            this.$galleryEl
-        );
-        this.$images = $('.js-hosted-gallery-image', this.$imagesContainer);
-        this.$progress = $('.js-hosted-gallery-progress', this.$galleryEl);
-        this.$border = $('.js-hosted-gallery-rotating-border', this.$progress);
-        this.prevBtn = this.$progress.get(0).querySelector('.inline-arrow-up');
-        this.nextBtn = this.$progress.get(0).querySelector('.inline-arrow-down');
-        this.infoBtn = this.$captionContainer.get(0).querySelector('.js-gallery-caption-button');
-        this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
-        this.$ctaFloat = $('.js-hosted-gallery-cta', this.$galleryEl)[0];
-        this.$ojFloat = $('.js-hosted-gallery-oj', this.$galleryEl)[0];
-        this.$meta = $('.js-hosted-gallery-meta', this.$galleryEl)[0];
+        this.$galleryEl = $$('.js-hosted-gallery-container').get(0);
+        this.$galleryFrame = $$('.js-hosted-gallery-frame').get(0);
+        this.$header = $$('.js-hosted-headerwrap').get(0);
+        this.$imagesContainer = $$('.js-hosted-gallery-images', this.$galleryEl).get(0);
+        this.$captionContainer = $$('.js-gallery-caption-bar').get(0);
+        this.$captions = $$('.js-hosted-gallery-caption', this.$captionContainer).get();
+        this.$scrollEl = $$('.js-hosted-gallery-scroll-container', this.$galleryEl).get(0);
+
+        this.$images = $$('.js-hosted-gallery-image', this.$imagesContainer).get();
+        this.$progress = $$('.js-hosted-gallery-progress', this.$galleryEl).get(0);
+        this.$border = $$('.js-hosted-gallery-rotating-border', this.$progress).get(0);
+        this.prevBtn = this.$progress.querySelector('.inline-arrow-up');
+        this.nextBtn = this.$progress.querySelector('.inline-arrow-down');
+        this.infoBtn = this.$captionContainer.querySelector('.js-gallery-caption-button');
+        this.$counter = $$('.js-hosted-gallery-image-count', this.$progress).get(0);
+        this.$ctaFloat = $$('.js-hosted-gallery-cta', this.$galleryEl).get(0);
+        this.$ojFloat = $$('.js-hosted-gallery-oj', this.$galleryEl).get(0);
+        this.$meta = $$('.js-hosted-gallery-meta', this.$galleryEl).get(0);
         this.ojClose = this.$ojFloat.querySelector('.js-hosted-gallery-oj-close');
 
-        if (this.$galleryEl.length) {
+        if (this.$galleryEl) {
             this.resize = this.trigger.bind(this, 'resize');
             mediator.on('window:throttledResize', this.resize);
 
@@ -77,17 +72,17 @@ class HostedGallery {
             this.setPageWidth();
 
             if (this.useSwipe) {
-                this.$galleryEl.addClass('use-swipe');
+                this.$galleryEl.classList.add('use-swipe');
                 this.initSwipe();
             } else {
-                this.$galleryEl.addClass('use-scroll');
+                this.$galleryEl.classList.add('use-scroll');
                 this.initScroll();
             }
         }
     }
 
     toggleOj() {
-        bonzo(this.$ojFloat).toggleClass('minimise-oj');
+        this.$ojFloat.classList.toggle('minimise-oj');
     }
 
     initScroll() {
@@ -112,7 +107,7 @@ class HostedGallery {
             }
         });
 
-        this.$scrollEl[0].addEventListener(
+        this.$scrollEl.addEventListener(
             'scroll',
             throttle(this.fadeContent.bind(this), 20)
         );
@@ -125,7 +120,7 @@ class HostedGallery {
         const updateTime = 20;
         this.$imagesContainer.css('width', `${this.$images.length}00%`);
 
-        this.$galleryEl[0].addEventListener('touchstart', e => {
+        this.$galleryEl.addEventListener('touchstart', e => {
             threshold = this.swipeContainerWidth * this.swipeThreshold;
             ox = e.touches[0].pageX;
             dx = 0;
@@ -140,14 +135,14 @@ class HostedGallery {
             this.translateContent(this.index, dx, updateTime);
         };
 
-        this.$galleryEl[0].addEventListener(
+        this.$galleryEl.addEventListener(
             'touchmove',
             throttle(touchMove, updateTime, {
                 trailing: false,
             })
         );
 
-        this.$galleryEl[0].addEventListener('touchend', () => {
+        this.$galleryEl.addEventListener('touchend', () => {
             let direction;
             if (Math.abs(dx) > threshold) {
                 direction = dx > threshold ? 1 : -1;
@@ -197,7 +192,7 @@ class HostedGallery {
         const setSize = ($image, imageIndex) => {
             if (!that.imageRatios[imageIndex]) {
                 that.imageRatios[imageIndex] =
-                    $image[0].naturalWidth / $image[0].naturalHeight;
+                    $image.naturalWidth / $image.naturalHeight;
             }
             that.resizeImage.call(that, imageIndex);
         };
@@ -205,9 +200,9 @@ class HostedGallery {
         [0, 1, 2]
             .map(i => (index + i === 0 ? count - 1 : (index - 1 + i) % count))
             .forEach(function(i) {
-                $img = $('img', this.$images[i]);
-                if (!$img[0].complete) {
-                    $img[0].addEventListener(
+                $img = this.$images[i].querySelector('img');
+                if (!$img.complete) {
+                    $img.addEventListener(
                         'load',
                         setSize.bind(this, $img, i)
                     );
@@ -218,7 +213,7 @@ class HostedGallery {
     }
 
     resizeImage(imgIndex) {
-        const $galleryFrame = this.$galleryFrame[0];
+        const $galleryFrame = this.$galleryFrame;
         const width = $galleryFrame.clientWidth;
         const height = $galleryFrame.clientHeight;
 
@@ -247,7 +242,7 @@ class HostedGallery {
         const $ojFloat = this.$ojFloat;
         const $meta = this.$meta;
         const $images = this.$images;
-        const $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv);
+        const $sizer = $$('.js-hosted-gallery-image-sizer', $imageDiv).get(0);
         const imgRatio = this.imageRatios[imgIndex];
         const ctaSize = getFrame(0);
         const ctaIndex = HostedGallery.ctaIndex();
@@ -255,10 +250,10 @@ class HostedGallery {
         const imageSize = getFrame(imgRatio);
 
         fastdom.mutate(() => {
-            $sizer.css('width', imageSize.width);
-            $sizer.css('height', imageSize.height);
-            $sizer.css('top', imageSize.topBottom);
-            $sizer.css('left', imageSize.leftRight);
+            $sizer.style.width =  imageSize.width;
+            $sizer.style.height =  imageSize.height;
+            $sizer.style.top =  imageSize.topBottom;
+            $sizer.style.left =  imageSize.leftRight;
             if (imgIndex === ctaIndex) {
                 bonzo($ctaFloat).css('bottom', ctaSize.topBottom);
             }
@@ -282,7 +277,7 @@ class HostedGallery {
 
     translateContent(imgIndex, offset, duration) {
         const px = -1 * (imgIndex - 1) * this.swipeContainerWidth;
-        const galleryEl = this.$imagesContainer[0];
+        const galleryEl = this.$imagesContainer;
         const $meta = this.$meta;
 
         galleryEl.style.webkitTransitionDuration = `${duration}ms`;
@@ -313,7 +308,7 @@ class HostedGallery {
         const newIndex = Math.round(progress + 0.75);
         const ctaIndex = HostedGallery.ctaIndex() || -1;
         fastdom.mutate(() => {
-            this.$images.each((image, index) => {
+            this.$images.forEach((image, index) => {
                 const opacity = ((progress - index + 1) * 16) / 11 - 0.0625;
                 bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
             });
@@ -349,9 +344,9 @@ class HostedGallery {
     scrollTo(index) {
         const scrollEl = this.$scrollEl;
         const length = this.$images.length;
-        const scrollHeight = scrollEl[0].scrollHeight;
+        const scrollHeight = scrollEl.scrollHeight;
         fastdom.mutate(() => {
-            scrollEl.scrollTop(((index - 1) * scrollHeight) / length);
+            bonzo(scrollEl).scrollTop(((index - 1) * scrollHeight) / length);
         });
     }
 
@@ -379,8 +374,8 @@ class HostedGallery {
     }
 
     setPageWidth() {
-        const $imagesContainer = this.$imagesContainer[0];
-        const $gallery = this.$galleryEl[0];
+        const $imagesContainer = this.$imagesContainer;
+        const $gallery = this.$galleryEl;
         const width = $gallery.clientWidth;
         const height = $imagesContainer.clientHeight;
         const $header = this.$header;
@@ -396,11 +391,17 @@ class HostedGallery {
         }
         this.swipeContainerWidth = imageWidth;
         fastdom.mutate(() => {
-            $header.css('width', imageWidth);
-            $footer.css('margin', `0 ${leftRight}`);
-            $footer.css('width', 'auto');
-            $galleryFrame.css('left', leftRight);
-            $galleryFrame.css('right', leftRight);
+            if ($header) {
+                $header.style.width = imageWidth;
+            }
+            if ($footer) {
+                $footer.style.margin = `0 ${leftRight}`;
+                $footer.style.width = 'auto';
+            }
+            if ($gallery) {
+                $galleryFrame.style.left = leftRight;
+                $galleryFrame.style.right = leftRight;
+            }
             that.loadSurroundingImages(that.index, that.$images.length);
         });
     }
@@ -453,7 +454,7 @@ HostedGallery.prototype.states = {
 
             // load prev/current/next
             this.loadSurroundingImages(this.index, this.$images.length);
-            this.$captions.each((caption, index) => {
+            this.$captions.forEach((caption, index) => {
                 bonzo(caption).toggleClass(
                     'current-caption',
                     that.index === index + 1
@@ -508,17 +509,17 @@ HostedGallery.prototype.states = {
                 this.reloadState = true;
             },
             'toggle-info': function() {
-                this.$captionContainer.toggleClass(
+                this.$captionContainer.classList.toggle(
                     'hosted-gallery--show-caption'
                 );
             },
             'hide-info': function() {
-                this.$captionContainer.removeClass(
+                this.$captionContainer.classList.remove(
                     'hosted-gallery--show-caption'
                 );
             },
             'show-info': function() {
-                this.$captionContainer.addClass('hosted-gallery--show-caption');
+                this.$captionContainer.classList.add('hosted-gallery--show-caption');
             },
             resize() {
                 this.onResize();
