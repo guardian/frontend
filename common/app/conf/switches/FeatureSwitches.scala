@@ -450,7 +450,7 @@ trait FeatureSwitches {
     "Enables the anniversary logo SVG in the header",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2022, 5,11),
+    sellByDate = new LocalDate(2022, 5, 11),
     exposeClientSide = true,
   )
 }
