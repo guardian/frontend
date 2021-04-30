@@ -33,8 +33,9 @@ object DateHelpers {
     ld.atStartOfDay(defaultFootballZoneId)
   }
 
+  // Note format of 'yyyyMMdd' required!
   def parseLocalDate(year: String, month: String, day: String): java.time.LocalDate = {
     val formatter = DateTimeFormatter.ofPattern("yyyyMMdd").withZone(DateHelpers.defaultFootballZoneId)
-    java.time.LocalDate.parse(s"$year$month$day", formatter)
+    java.time.LocalDate.parse(s"$year${month.capitalize}$day", formatter)
   }
 }
