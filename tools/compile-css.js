@@ -57,7 +57,7 @@ const getFiles = sassGlob => glob.sync(path.resolve(sassDir, sassGlob));
 
 module.exports = (
     sassGlob,
-    { remify = true, browsers = BROWSERS_LIST } = {}
+    { remify = true, browsers: overrideBrowserslist = BROWSERS_LIST } = {}
 ) => {
     if (typeof sassGlob !== 'string') {
         return Promise.reject(new Error('No glob provided.'));
@@ -80,7 +80,7 @@ module.exports = (
                 SASS_SETTINGS
             );
 
-            const postcssPlugins = [autoprefixer({ browsers })];
+            const postcssPlugins = [autoprefixer({ overrideBrowserslist })];
             if (remify) {
                 postcssPlugins.push(pxtorem(REMIFICATIONS));
             }

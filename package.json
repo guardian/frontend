@@ -13,7 +13,7 @@
     "@emotion/cache": "10.0.19",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
-    "@guardian/atom-renderer": "1.2.2",
+    "@guardian/atom-renderer": "1.2.3-josh-buckland.test.1",
     "@guardian/automat-contributions": "^0.3.6",
     "@guardian/automat-modules": "^0.3.7",
     "@guardian/braze-components": "1.1.0",
@@ -74,7 +74,7 @@
     "@typescript-eslint/parser": "^4.12.0",
     "amphtml-validator": "^1.0.21",
     "any-observable": "^0.2.0",
-    "autoprefixer": "^9.1.5",
+    "autoprefixer": "^10.2.5",
     "aws-sdk": "^2.411.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
@@ -86,7 +86,7 @@
     "btoa": "1.1.2",
     "chalk": "^2.1.0",
     "chance": "^1.0.11",
-    "chokidar": "^1.7.0",
+    "chokidar": "^3.5.1",
     "circular-dependency-plugin": "^5.0.1",
     "core-js": "^2.5.3",
     "cp-file": "^7.0.0",
@@ -124,8 +124,8 @@
     "pa11y": "^4.13.1",
     "perfectionist": "^2.4.0",
     "pify": "^3.0.0",
-    "postcss": "^6.0.10",
-    "postcss-pxtorem": "^4.0.1",
+    "postcss": "^8.2.13",
+    "postcss-pxtorem": "^6.0.0",
     "prettier": "^2.2.1",
     "prettysize": "^0.1.0",
     "raw-loader": "^0.5.1",
@@ -153,7 +153,7 @@
     "yargs": "^11.0.0"
   },
   "optionalDependencies": {
-    "fsevents": "^1.1.2"
+    "fsevents": "^2.3.2"
   },
   "jest": {
     "preset": "ts-jest/presets/js-with-babel",
