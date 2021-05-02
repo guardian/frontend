@@ -255,7 +255,7 @@ class MoreOnMatchController(
               lineup <- competitionsService.getLineup(theMatch)
               filtered <- related map { _ filter hasExactlyTwoTeams }
             } yield {
-              Cached(if (theMatch.isLive) 10 else 300) {
+              Cached(if (theMatch.isLive) 120 else 300) {
                 JsonComponent(
                   Json.toJson(
                     NxAnswer.makeFromFootballMatch(
@@ -275,7 +275,7 @@ class MoreOnMatchController(
             for {
               filtered <- related map { _ filter hasExactlyTwoTeams }
             } yield {
-              Cached(if (theMatch.isLive) 10 else 300) {
+              Cached(if (theMatch.isLive) 120 else 300) {
                 JsonComponent(
                   "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
                   "matchSummary" -> football.views.html.fragments
