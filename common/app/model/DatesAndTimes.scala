@@ -1,7 +1,6 @@
 package model
 
 import java.text.DecimalFormat
-
 import common.Edition
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat
@@ -106,7 +105,8 @@ object GUDateTimeFormatNew {
     date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timeZoneString
   }
   def formatDateForDisplay(date: DateTime, request: RequestHeader): String = {
-    date.toString("E d MMM yyyy")
+    val timezone = Edition(request).timezone
+    date.toString(DateTimeFormat.forPattern("E d MMM yyyy").withZone(timezone))
   }
   def formatTimeForDisplay(date: DateTime, request: RequestHeader): String = {
     val edition = Edition(request)

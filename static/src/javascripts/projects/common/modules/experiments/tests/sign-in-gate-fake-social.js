@@ -21,8 +21,12 @@ export const signInGateFakeSocial = {
 			test: () => {},
 		},
 		{
-			id: 'fake-social-variant',
-            test: () => { },
+			id: 'fake-social-variant-horizontal',
+			test: () => {},
+		},
+		{
+			id: 'fake-social-variant-vertical',
+			test: () => {},
 		},
 	],
 };

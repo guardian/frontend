@@ -7,12 +7,13 @@ import model.Cached.WithoutRevalidationResult
 import model.TeamMap.findTeamIdByUrlName
 import football.datetime.DateHelpers
 import model._
-import org.joda.time.format.DateTimeFormat
 import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import conf.Configuration
 
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import scala.concurrent.Future
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football {
@@ -145,8 +146,6 @@ class MatchController(
     with GuLogging
     with ImplicitControllerExecutionContext {
 
-  private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
-
   def renderMatchIdJson(matchId: String): Action[AnyContent] = renderMatchId(matchId)
   def renderMatchId(matchId: String): Action[AnyContent] = render(competitionsService.findMatch(matchId))
 
@@ -155,7 +154,8 @@ class MatchController(
   def renderMatch(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] =
     (findTeamIdByUrlName(home), findTeamIdByUrlName(away)) match {
       case (Some(homeId), Some(awayId)) =>
-        val date = DateHelpers.parseLocalDate(year, month, day)
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(DateHelpers.defaultFootballZoneId)
+        val date = LocalDate.parse(s"$year${month.capitalize}$day", formatter)
         val startOfDay = date.atStartOfDay(DateHelpers.defaultFootballZoneId)
         val startOfTomorrow = startOfDay.plusDays(1)
         render(competitionsService.matchFor(Interval(startOfDay, startOfTomorrow), homeId, awayId))
