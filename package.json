@@ -40,7 +40,7 @@
     "object-fit-videos": "^1.0.3",
     "ophan-tracker-js": "1.3.25",
     "preact": "^10.5.13",
-    "prebid.js": "https://github.com/guardian/Prebid.js#044a1e18e",
+    "prebid.js": "https://github.com/guardian/Prebid.js#65bee6",
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
     "raven-js": "^3.19.1",
