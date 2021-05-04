@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Tests sticky nav behaviour",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 5, 3),
+    sellByDate = new LocalDate(2021, 5, 31),
     exposeClientSide = true,
   )
 
