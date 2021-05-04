@@ -80,8 +80,8 @@ const setPageTargeting = (): void => {
 
 const setPublisherProvidedId = (): void => {
 	// Also known as PPID
-	getUserFromApi((user: IdentityUser) => {
-		if (user.privateFields.googleTagId) {
+	getUserFromApi((user: IdentityUser | null) => {
+		if (user?.privateFields.googleTagId) {
 			window.googletag
 				?.pubads()
 				.setPublisherProvidedId(user.privateFields.googleTagId);
