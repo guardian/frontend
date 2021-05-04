@@ -133,7 +133,7 @@ object Badges {
     spyCopsScandal,
     theLastChance,
     dreamsInterrupted,
-    anniversary200
+    anniversary200,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {
