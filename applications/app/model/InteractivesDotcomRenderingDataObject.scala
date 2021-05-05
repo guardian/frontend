@@ -131,6 +131,7 @@ object InteractivesDotcomRenderingDataObject {
       blocks = List(),
       pagination = None,
       author = author,
+      contributorBio = Some("Contributor Bio"),
       webPublicationDate = "2021-04-22T14:11:12.000Z",
       webPublicationDateDisplay = "Thu 22 Apr 2021 15.11 BST",
       webPublicationSecondaryDateDisplay = "First published on Thu 22 Apr 2021 11.00 BST",

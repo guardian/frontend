@@ -491,6 +491,7 @@ object DotcomRenderingUtils {
       blocks = bodyBlocks,
       pagination = pagination,
       author = author,
+      contributorBio = article.content.contributorBio,
       webPublicationDate = article.trail.webPublicationDate.toString,
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),

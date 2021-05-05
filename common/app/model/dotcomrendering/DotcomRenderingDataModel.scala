@@ -21,6 +21,7 @@ case class DotcomRenderingDataModel(
     blocks: List[Block],
     pagination: Option[Pagination],
     author: Author,
+    contributorBio: Option[String],
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
     webPublicationSecondaryDateDisplay: String,
@@ -115,6 +116,7 @@ object DotcomRenderingDataModel {
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
         "author" -> model.author,
+        "contributorBio" -> model.contributorBio,
         "webPublicationDate" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
         "webPublicationSecondaryDateDisplay" -> model.webPublicationSecondaryDateDisplay,
