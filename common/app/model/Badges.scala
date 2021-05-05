@@ -88,6 +88,8 @@ object Badges {
   val theLastChance = Badge("environment/series/the-last-chance", Static("images/badges/the-last-chance.svg"))
   val dreamsInterrupted =
     Badge("australia-news/series/dreams-interrupted", Static("images/badges/dreams-interrupted.svg"))
+  val anniversary200 =
+    Badge("media/series/guardian-200", Static("images/badges/anniversary200.svg"))
 
   val allBadges = Seq(
     newArrivals,
@@ -131,6 +133,7 @@ object Badges {
     spyCopsScandal,
     theLastChance,
     dreamsInterrupted,
+    anniversary200,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {
