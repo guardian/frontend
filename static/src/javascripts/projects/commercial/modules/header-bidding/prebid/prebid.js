@@ -41,32 +41,29 @@ const initialise = (window, framework = 'tcfv2') => {
           }
         : { syncEnabled: false };
 
-        let consentManagement = {}
-        if (config.get('switches.consentManagement', false)) {
+		const consentManagement = () => {
 			switch (framework) {
 				case 'aus':
 				case 'ccpa':
 					// https://docs.prebid.org/dev-docs/modules/consentManagementUsp.html
-					consentManagement = {
+					return {
 						usp: {
 							cmpApi: 'iab',
 							timeout: 1500,
 						},
 					};
-					break;
 				case 'tcfv2':
 				default:
 					// https://docs.prebid.org/dev-docs/modules/consentManagement.html
-					consentManagement = {
+					return {
 						gdpr: {
 							cmpApi: 'iab',
 							timeout: 200,
 							defaultGdprScope: true,
 						},
 					};
-					break;
 			}
-		}
+		};
 
     const pbjsConfig = Object.assign(
         {},
@@ -74,9 +71,12 @@ const initialise = (window, framework = 'tcfv2') => {
             bidderTimeout,
             priceGranularity,
             userSync,
-            consentManagement,
         },
     );
+
+    if(config.get('switches.consentManagement', false)) {
+        pbjsConfig.consentManagement = consentManagement()
+    }
 
     window.pbjs.setConfig(pbjsConfig);
 
