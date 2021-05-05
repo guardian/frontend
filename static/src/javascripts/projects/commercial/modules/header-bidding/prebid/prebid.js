@@ -26,7 +26,7 @@ class PrebidAdUnit {
 let requestQueue = Promise.resolve();
 let initialised = false;
 
-const initialise = (window) => {
+const initialise = (window, framework = 'tcfv2') => {
     initialised = true;
 
     const userSync = config.get('switches.prebidUserSync', false)
@@ -43,31 +43,29 @@ const initialise = (window) => {
 
         let consentManagement = {}
         if (config.get('switches.consentManagement', false)) {
-			getLocale().then((country) => {
-				switch (country) {
-					case 'AU':
-					case 'US':
-						// https://docs.prebid.org/dev-docs/modules/consentManagementUsp.html
-						consentManagement = {
-							usp: {
-								cmpApi: 'iab',
-								timeout: 1500,
-							},
-						};
-						break;
-					case 'GB':
-					default:
-						// https://docs.prebid.org/dev-docs/modules/consentManagement.html
-						consentManagement = {
-							gdpr: {
-								cmpApi: 'iab',
-								timeout: 200,
-								defaultGdprScope: true,
-							},
-						};
-						break;
-				}
-			});
+			switch (framework) {
+				case 'aus':
+				case 'ccpa':
+					// https://docs.prebid.org/dev-docs/modules/consentManagementUsp.html
+					consentManagement = {
+						usp: {
+							cmpApi: 'iab',
+							timeout: 1500,
+						},
+					};
+					break;
+				case 'tcfv2':
+				default:
+					// https://docs.prebid.org/dev-docs/modules/consentManagement.html
+					consentManagement = {
+						gdpr: {
+							cmpApi: 'iab',
+							timeout: 200,
+							defaultGdprScope: true,
+						},
+					};
+					break;
+			}
 		}
 
     const pbjsConfig = Object.assign(
