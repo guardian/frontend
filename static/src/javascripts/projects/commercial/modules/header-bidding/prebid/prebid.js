@@ -9,16 +9,6 @@ import { EventTimer } from '@guardian/commercial-core';
 
 const bidderTimeout = 1500;
 
-const consentManagement = {
-    gdpr: {
-        cmpApi: 'iab',
-        timeout: 200,
-        allowAuctionWithoutConsent: true,
-    },
-    usp: {
-        timeout: 1500,
-    },
-};
 
 class PrebidAdUnit {
     constructor(advert, slot) {
@@ -35,7 +25,7 @@ class PrebidAdUnit {
 let requestQueue = Promise.resolve();
 let initialised = false;
 
-const initialise = (window) => {
+const initialise = (window, framework = 'tcfv2') => {
     initialised = true;
 
     const userSync = config.get('switches.prebidUserSync', false)
@@ -50,6 +40,30 @@ const initialise = (window) => {
           }
         : { syncEnabled: false };
 
+		const consentManagement = () => {
+			switch (framework) {
+				case 'aus':
+				case 'ccpa':
+					// https://docs.prebid.org/dev-docs/modules/consentManagementUsp.html
+					return {
+						usp: {
+							cmpApi: 'iab',
+							timeout: 1500,
+						},
+					};
+				case 'tcfv2':
+				default:
+					// https://docs.prebid.org/dev-docs/modules/consentManagement.html
+					return {
+						gdpr: {
+							cmpApi: 'iab',
+							timeout: 200,
+							defaultGdprScope: true,
+						},
+					};
+			}
+		};
+
     const pbjsConfig = Object.assign(
         {},
         {
@@ -57,10 +71,11 @@ const initialise = (window) => {
             priceGranularity,
             userSync,
         },
-        config.get('switches.consentManagement', false)
-            ? { consentManagement }
-            : {}
     );
+
+    if(config.get('switches.consentManagement', false)) {
+        pbjsConfig.consentManagement = consentManagement()
+    }
 
     window.pbjs.setConfig(pbjsConfig);
 
