@@ -182,7 +182,7 @@ const buildBannerPayload = async () => {
         engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt') || undefined,
         subscriptionBannerLastClosedAt: userPrefs.get('subscriptionBannerLastClosedAt') || undefined,
         mvtId: getMvtValue(),
-        countryCode: geolocationGetSync(),
+        countryCode: getCountryCode(),
         weeklyArticleHistory: getWeeklyArticleHistory(),
         hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
         modulesVersion: ModulesVersion,
