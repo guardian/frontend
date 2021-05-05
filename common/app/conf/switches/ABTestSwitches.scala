@@ -26,16 +26,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sticky-nav-test",
-    "Tests sticky nav behaviour",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 5, 31),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-remote-rr-header-links-test",
     "Test serving remote header",
     owners = Seq(Owner.withGithub("tomrf1")),
