@@ -119,10 +119,30 @@ describe('initialise', () => {
         });
     });
 
+    test('should generate correct Prebid config consent management in CCPA', () => {
+        prebid.initialise(window, 'ccpa');
+        expect(window.pbjs.getConfig('consentManagement')).toEqual({
+            usp: {
+                cmpApi: 'iab',
+                timeout: 1500,
+            }
+        })
+    })
+
+    test('should generate correct Prebid config consent management in AUS', () => {
+        prebid.initialise(window, 'aus');
+        expect(window.pbjs.getConfig('consentManagement')).toEqual({
+            usp: {
+                cmpApi: 'iab',
+                timeout: 1500,
+            }
+        })
+    })
+
     test('should generate correct Prebid config when consent management off', () => {
         config.set('switches.consentManagement', false);
         prebid.initialise(window);
-        expect(window.pbjs.getConfig().consentManagement).toEqual({});
+        expect(window.pbjs.getConfig('consentManagement')).toEqual({});
     });
 
     test('should generate correct bidder settings', () => {
