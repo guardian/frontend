@@ -19,9 +19,10 @@ const countryOverrideName = 'gu.geo.override';
 let locale: CountryCode | null;
 
 /*
-   Returning locale should cover all/most of the cases.
-   If race conditions happen or the cookie is not set, we
-   keep fallbacks to cookie or geo from edition.
+   This method can be used as a non async way of getting the country code
+   after init has been called. Returning locale should cover all/most
+   of the cases but if a race condition happen or the cookie is not set,
+   we keep fallbacks to cookie or geo from edition.
 */
 const getCountryCode = (): string => {
 	const pageEdition: string = (config as {
@@ -40,12 +41,16 @@ const setGeolocation = (geolocation: CountryCode | null): void => {
 	locale = geolocation;
 };
 
+/*
+    This method is to be used for dev purposes for example testing different RR banners
+    across different countries. We keep the overridden country for 1 day into localStorage
+*/
 const overrideGeolocation = (geolocation: CountryCode | null): void => {
 	const currentDate = new Date();
 	storage.local.set(
 		countryOverrideName,
 		geolocation,
-		currentDate.setDate(currentDate.getDate() + 10),
+		currentDate.setDate(currentDate.getDate() + 1),
 	);
 	locale = geolocation;
 };
