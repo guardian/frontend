@@ -62,7 +62,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         RevalidatableResult.Ok(
           CrosswordHtmlPage.html(
             CrosswordPageWithSvg(
-              CrosswordContent.make(CrosswordData.fromCrossword(crossword), content),
+              CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
               CrosswordSvg(crossword, None, None, false),
             ),
           ),
@@ -91,7 +91,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
           RevalidatableResult.Ok(
             CrosswordHtmlPage.html(
               AccessibleCrosswordPage(
-                CrosswordContent.make(CrosswordData.fromCrossword(crossword), content),
+                CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
                 AccessibleCrosswordRows(crossword),
               ),
             ),
@@ -107,7 +107,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
           RevalidatableResult.Ok(
             PrintableCrosswordHtmlPage.html(
               CrosswordPageWithSvg(
-                CrosswordContent.make(CrosswordData.fromCrossword(crossword), content),
+                CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
                 CrosswordSvg(crossword, None, None, false),
               ),
             ),

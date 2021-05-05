@@ -10,6 +10,7 @@ import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
+import java.time.Clock
 
 class FootballLifecycle(
     appLifeCycle: ApplicationLifecycle,
@@ -19,6 +20,8 @@ class FootballLifecycle(
     contentApiClient: ContentApiClient,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
+
+  val defaultClock = Clock.systemDefaultZone()
 
   appLifeCycle.addStopHook { () =>
     Future {
@@ -35,12 +38,12 @@ class FootballLifecycle(
         val cron = s"$seconds $minutes/5 * * * ?"
 
         jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
-          competitionsService.refreshCompetitionAgent(id)
+          competitionsService.refreshCompetitionAgent(id, defaultClock)
         }
     }
 
     jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
-      competitionsService.refreshMatchDay()
+      competitionsService.refreshMatchDay(defaultClock)
     }
 
     jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
@@ -69,9 +72,9 @@ class FootballLifecycle(
     akkaAsync.after1s {
       val competitionUpdate = competitionsService.refreshCompetitionData()
       competitionUpdate.foreach { _ =>
-        competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent)
+        competitionsService.competitionIds.foreach(id => competitionsService.refreshCompetitionAgent(id, defaultClock))
       }
-      competitionsService.refreshMatchDay()
+      competitionsService.refreshMatchDay(defaultClock)
       TeamMap.refresh()(contentApiClient, ec)
     }
   }

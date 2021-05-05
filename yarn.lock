@@ -2279,11 +2279,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@kiosked/ulid@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@kiosked/ulid/-/ulid-3.0.0.tgz#2c724de77f13563f26fb9e8858a9e14a84bb6b22"
-  integrity sha512-ZKt2KIgGHDaGfKt6FjYvCpDvBXZRRoE8b+wDOlAV76aXKpq6ITiSUnPYevR4y55NKDnwCvwOrjWe+aVOCAK8kQ==
-
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -2381,6 +2376,11 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
+
+"@types/doubleclick-gpt@^2019111201.0.0":
+  version "2019111201.0.0"
+  resolved "https://registry.yarnpkg.com/@types/doubleclick-gpt/-/doubleclick-gpt-2019111201.0.0.tgz#0028485d2efbb3b8c79a5c1cb107486bd6e56d33"
+  integrity sha512-SNhaQ5wUAWcDsO2QYzhCeAQnnBEqouhAPnNyfjrOZDulR8fWyLq/FHWboqXh9cIVi/V2JULnv9SXJOiHS2gEtw==
 
 "@types/events@*":
   version "3.0.0"
@@ -3826,11 +3826,6 @@ brorand@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
 
-browser-cookies@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/browser-cookies/-/browser-cookies-1.2.0.tgz#fca3ffb9b6a63aadc4d8c0999c6b57d0fa7d29b5"
-  integrity sha1-/KP/ubamOq3E2MCZnGtX0Pp9KbU=
-
 browser-process-hrtime@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-1.0.0.tgz#3c9b4b7d782c8121e56f10106d84c0d0ffc94626"
@@ -5224,18 +5219,6 @@ decimal.js@^10.2.0:
 decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-
-deep-equal@^1.0.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.1.1.tgz#b5c98c942ceffaf7cb051e24e1434a25a2e6076a"
-  integrity sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==
-  dependencies:
-    is-arguments "^1.0.4"
-    is-date-object "^1.0.1"
-    is-regex "^1.0.4"
-    object-is "^1.0.1"
-    object-keys "^1.1.1"
-    regexp.prototype.flags "^1.2.0"
 
 deep-extend@^0.6.0:
   version "0.6.0"
@@ -7264,7 +7247,7 @@ has-values@^1.0.0:
     is-number "^3.0.0"
     kind-of "^4.0.0"
 
-has@^1.0.1, has@^1.0.3:
+has@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/has/-/has-1.0.3.tgz#722d7cbfc1f6aa8241f16dd814e011e1f41e8796"
   dependencies:
@@ -7656,11 +7639,6 @@ is-accessor-descriptor@^1.0.0:
   dependencies:
     kind-of "^6.0.0"
 
-is-arguments@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/is-arguments/-/is-arguments-1.0.4.tgz#3faf966c7cba0ff437fb31f6250082fcf0448cf3"
-  integrity sha512-xPh0Rmt8NE65sNzvyUmWgI1tz3mKq74lGA0mL8LYZcoIzKOzDh6HmrYm3d18k60nHerC8A9Km8kYu87zfSFnLA==
-
 is-arrayish@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/is-arrayish/-/is-arrayish-0.2.1.tgz#77c99840527aa8ecb1a8ba697b80645a7a926a9d"
@@ -7951,12 +7929,6 @@ is-promise@^2.1.0:
 is-property@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-property/-/is-property-1.0.2.tgz#57fe1c4e48474edd65b09911f26b1cd4095dda84"
-
-is-regex@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/is-regex/-/is-regex-1.0.4.tgz#5517489b547091b0930e095654ced25ee97e9491"
-  dependencies:
-    has "^1.0.1"
 
 is-regex@^1.0.5:
   version "1.0.5"
@@ -9031,14 +9003,11 @@ listr@^0.12.0:
     stream-to-observable "^0.1.0"
     strip-ansi "^3.0.1"
 
-live-connect-js@1.1.10:
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-1.1.10.tgz#8839495cd4b9c3ea6b89229795319452eb3f1830"
-  integrity sha512-G/LJKN3b21DZILCQRyataC/znLvJRyogtu7mAkKlkhP9B9UJ8bcOL7ihW/clD2PsT4hVUkeabHhUGsPCmhsjFw==
+live-connect-js@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-2.0.0.tgz#1ad26e04ddece44e7cf7d902ab8003f6bc0b10f4"
+  integrity sha512-Xhrj1JU5LoLjJuujjTlvDfc/n3Shzk2hPlYmLdCx/lsltFFVuCFa9uM8u5mcHlmOUKP5pu9I54bAITxZBMHoXg==
   dependencies:
-    "@kiosked/ulid" "^3.0.0"
-    abab "^2.0.3"
-    browser-cookies "^1.2.0"
     tiny-hashes "1.0.1"
 
 load-json-file@^1.0.0:
@@ -10096,11 +10065,6 @@ object-inspect@^1.8.0, object-inspect@^1.9.0:
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.9.0.tgz#c90521d74e1127b67266ded3394ad6116986533a"
   integrity sha512-i3Bp9iTqwhaLZBxGkRfo5ZbE07BQRT7MGu8+nNgwW9ItGp1TzCTw2DLEoWwjClxBjOFI/hWljTAmYGCEwmtnOw==
 
-object-is@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/object-is/-/object-is-1.0.2.tgz#6b80eb84fe451498f65007982f035a5b445edec4"
-  integrity sha512-Epah+btZd5wrrfjkJZq1AOB9O6OxUQto45hzFd7lXGrpHPGE0W1k+426yrZV+k6NJOzLNNW/nVsmZdIWsAqoOQ==
-
 object-keys@^1.0.10:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
@@ -10918,23 +10882,22 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.13.tgz#85f6c9197ecd736ce8e3bec044d08fd1330fa019"
   integrity sha512-q/vlKIGNwzTLu+jCcvywgGrt+H/1P/oIRSD6mV4ln3hmlC+Aa34C7yfPI4+5bzW8pONyVXYS7SvXosy2dKKtWQ==
 
-"prebid.js@https://github.com/guardian/Prebid.js#681fbb":
-  version "3.26.0"
-  resolved "https://github.com/guardian/Prebid.js#681fbb0bf6b6a0cce186b362655655357a7b13c3"
+"prebid.js@https://github.com/guardian/Prebid.js#e005fa316":
+  version "4.37.0"
+  resolved "https://github.com/guardian/Prebid.js#e005fa3169d48e81d5ded851e0f9d22f22e98ace"
   dependencies:
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^3.0.0"
     core-js-pure "^3.6.5"
     criteo-direct-rsa-validate "^1.1.0"
     crypto-js "^3.3.0"
-    deep-equal "^1.0.1"
     dlv "1.1.3"
     dset "2.0.1"
     express "^4.15.4"
     fun-hooks "^0.9.9"
     jsencrypt "^3.0.0-rc.1"
     just-clone "^1.0.2"
-    live-connect-js "1.1.10"
+    live-connect-js "2.0.0"
 
 prelude-ls@^1.2.1:
   version "1.2.1"
@@ -11520,7 +11483,7 @@ regexp-tree@^0.1.0:
     colors "^1.1.2"
     yargs "^12.0.5"
 
-regexp.prototype.flags@^1.2.0, regexp.prototype.flags@^1.3.0:
+regexp.prototype.flags@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.3.0.tgz#7aba89b3c13a64509dabcf3ca8d9fbb9bdf5cb75"
   integrity sha512-2+Q0C5g951OlYlJz6yu5/M33IcsESLlLfsyIaLJaG4FA2r4yP8MvVMJUUP/fVBkSpbbbZlS5gynbEWLipiiXiQ==

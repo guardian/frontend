@@ -1,10 +1,11 @@
 package common
 
 import java.util.Locale
-
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
+
+import java.time.ZoneId
 
 // describes the ways in which editions differ from each other
 abstract class Edition(
@@ -35,6 +36,7 @@ abstract class Edition(
 
   def isEditionalised(id: String): Boolean = editionalisedSections.contains(id)
   def matchesCookie(cookieValue: String): Boolean = id.equalsIgnoreCase(cookieValue)
+  def timezoneId = ZoneId.of(timezone.getID)
 }
 
 object Edition {

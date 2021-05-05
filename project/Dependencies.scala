@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.239-C2"
   val awsVersion = "1.11.240"
-  val capiVersion = "17.15"
-  val faciaVersion = "3.3.2"
+  val capiVersion = "17.17"
+  val faciaVersion = "3.3.3"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -44,7 +44,7 @@ object Dependencies {
   val json4s = "org.json4s" %% "json4s-native" % "3.5.3"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
-  val paClient = "com.gu" %% "pa-client" % "6.1.0"
+  val paClient = "com.gu" %% "pa-client" % "7.0.5"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.7.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.3"
   val redisClient = "net.debasishg" %% "redisclient" % "3.4"
@@ -78,7 +78,6 @@ object Dependencies {
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
-  val jsonSchema = "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5-M4"
 
   /*
     Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this

@@ -54,11 +54,7 @@ object ProjectSettings {
     resolvers ++= Seq(
       Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
-      "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
-      "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
-      Resolver.bintrayRepo("guardian", "ophan"),
       "Spy" at "https://files.couchbase.com/maven2/",
-      "emueller-bintray" at "https://dl.bintray.com/emueller/maven",
     ),
     evictionWarningOptions in update := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)

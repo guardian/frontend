@@ -1,12 +1,13 @@
 package football.model
 
-import org.joda.time.{DateTime, LocalDate}
+import football.collections.RichList
+import football.datetime.DateHelpers
+import implicits.Football
 import model.Competition
 import pa.{FootballMatch, Round}
-import implicits.Football
-import football.collections.RichList
 
-import scala.collection.immutable
+import java.time.format.DateTimeFormatter
+import java.time.{LocalDate, ZoneId, ZonedDateTime}
 
 trait MatchesList extends Football with RichList with implicits.Collections {
 
@@ -23,9 +24,12 @@ trait MatchesList extends Football with RichList with implicits.Collections {
   def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean
 
   // ordering for the displayed matches
-  def timeComesFirstInList(d: DateTime, other: DateTime): Boolean
+  def timeComesFirstInList(d: ZonedDateTime, other: ZonedDateTime): Boolean
   def dateComesFirstInList(d: LocalDate, other: LocalDate): Boolean =
-    timeComesFirstInList(d.toDateTimeAtStartOfDay, other.toDateTimeAtStartOfDay)
+    timeComesFirstInList(
+      d.atStartOfDay(DateHelpers.defaultFootballZoneId),
+      other.atStartOfDay(DateHelpers.defaultFootballZoneId),
+    )
 
   private lazy val allRelevantMatches: List[(FootballMatch, Competition)] = {
     val matchesWithCompetition = for {
@@ -72,11 +76,11 @@ trait MatchesList extends Football with RichList with implicits.Collections {
 
   lazy val nextPage: Option[String] = {
     val nextMatchDate = matchDates.safeDropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
-    nextMatchDate.map(s"$baseUrl/more/" + _.toString("yyyy/MMM/dd"))
+    nextMatchDate.map(s"$baseUrl/more/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
   }
   lazy val previousPage: Option[String] = {
     val nextMatchDate = matchDates.takeWhile(dateComesFirstInList(_, date)).lastOption
-    nextMatchDate.map(s"$baseUrl/" + _.toString("yyyy/MMM/dd"))
+    nextMatchDate.map(s"$baseUrl/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
   }
 
   def getPageTitle: String = {
@@ -95,12 +99,12 @@ trait Fixtures extends MatchesList {
 
   override val pageType = "fixtures"
   // ordering for the displayed matches
-  override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isBefore(other)
+  override def timeComesFirstInList(d: ZonedDateTime, other: ZonedDateTime): Boolean = d.isBefore(other)
 }
 trait Results extends MatchesList {
   override val baseUrl: String = "/football/results"
   override val pageType = "results"
-  override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isAfter(other)
+  override def timeComesFirstInList(d: ZonedDateTime, other: ZonedDateTime): Boolean = d.isAfter(other)
 }
 trait MatchDays extends MatchesList {
   override val baseUrl: String = "/football/live"
@@ -108,7 +112,7 @@ trait MatchDays extends MatchesList {
   override val daysToDisplay = 1
   override lazy val nextPage: Option[String] = None
   override lazy val previousPage: Option[String] = None
-  override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isBefore(other)
+  override def timeComesFirstInList(d: ZonedDateTime, other: ZonedDateTime): Boolean = d.isBefore(other)
 }
 trait TeamList { val teamId: String }
 trait CompetitionList {

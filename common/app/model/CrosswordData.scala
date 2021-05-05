@@ -1,6 +1,7 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{CrosswordEntry, Crossword}
+import com.gu.contentapi.client.model.v1.{CapiDateTime, Crossword, CrosswordEntry}
+import com.gu.contentapi.client.model.{v1 => contentapi}
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.DateTime
 import play.api.libs.json._
@@ -84,7 +85,7 @@ object CrosswordData {
 
   implicit val jsonWrites = Json.writes[CrosswordData]
 
-  def fromCrossword(crossword: Crossword): CrosswordData = {
+  def fromCrossword(crossword: Crossword, content: contentapi.Content): CrosswordData = {
     // For entry groups, all separator locations for entries within the
     // group are incorrectly stored on the first group entry. We normalize
     // the data to store the separator locations on their corresponding entries.
@@ -154,6 +155,7 @@ object CrosswordData {
       crossword.name,
       creator = for (creator <- crossword.creator) yield CrosswordCreator(creator.name, creator.webUrl),
       crossword.date.toJoda,
+      content.webPublicationDate.fold(crossword.date.toJoda)(_.toJoda),
       sortedNewEntries,
       crossword.solutionAvailable,
       crossword.dateSolutionAvailable.map(_.toJoda),
@@ -171,6 +173,7 @@ case class CrosswordData(
     name: String,
     creator: Option[CrosswordCreator],
     date: DateTime,
+    webPublicationDate: DateTime,
     entries: Seq[Entry],
     solutionAvailable: Boolean,
     dateSolutionAvailable: Option[DateTime],

@@ -11,7 +11,7 @@ import prebid from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
-const loadPrebid = () => {
+const loadPrebid = (framework) => {
     if (
         dfpEnv.hbImpl.prebid &&
         commercialFeatures.dfpAdvertising &&
@@ -23,7 +23,7 @@ const loadPrebid = () => {
         import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid').then(
             () => {
                 getPageTargeting();
-                prebid.initialise(window);
+                prebid.initialise(window, framework);
             }
         );
     }
@@ -33,7 +33,11 @@ const setupPrebid = () => {
     onConsentChange(state => {
         const canRun = getConsentFor('prebid', state);
         if (canRun) {
-            loadPrebid();
+            let framework;
+            if(state.tcfv2) framework = 'tcfv2';
+            if(state.ccpa) framework = 'ccpa';
+            if(state.aus) framework = 'aus';
+            loadPrebid(framework);
         }
     });
 

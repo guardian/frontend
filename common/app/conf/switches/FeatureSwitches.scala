@@ -440,7 +440,7 @@ trait FeatureSwitches {
     "Enables the anniversary interactive atom in DCR",
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 5, 7),
+    sellByDate = new LocalDate(2022, 5, 11),
     exposeClientSide = true,
   )
 
@@ -450,7 +450,7 @@ trait FeatureSwitches {
     "Enables the anniversary logo SVG in the header",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 5, 7),
+    sellByDate = new LocalDate(2022, 5, 11),
     exposeClientSide = true,
   )
 }

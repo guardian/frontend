@@ -53,7 +53,7 @@ trait CompetitionListFilters {
 trait CompetitionTableFilters {
   def competitionsService: CompetitionsService
   def filters: Map[String, Seq[CompetitionFilter]] =
-    competitionsService.competitionsWithTodaysMatchesAndFutureFixtures.competitions
+    competitionsService.competitions
       .filter(_.hasLeagueTable)
       .groupBy(_.nation)
       .map {

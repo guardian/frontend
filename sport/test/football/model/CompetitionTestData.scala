@@ -1,12 +1,13 @@
 package football.model
 
-import org.joda.time.{DateTime, LocalDate}
+import java.time.{ZonedDateTime, LocalDate}
 import pa._
 import model.Competition
+import java.time.temporal.ChronoUnit
 
 trait CompetitionTestData {
-  val now = DateTime.now()
-  val today = LocalDate.now()
+  val now = ZonedDateTime.now()
+  val startOfDay = now.truncatedTo(ChronoUnit.DAYS)
 
   val teams = (0 until 16).map { i =>
     val idStr = i.toString
@@ -20,7 +21,7 @@ trait CompetitionTestData {
 
   private val _matchDay = MatchDay(
     "1234",
-    today.toDateTimeAtStartOfDay,
+    startOfDay,
     None,
     Stage("1"),
     Round("1", None),
@@ -39,10 +40,10 @@ trait CompetitionTestData {
     None,
   )
   private val _fixture =
-    Fixture("1234", today.toDateTimeAtStartOfDay, Stage("1"), Round("1", None), "1", teams(0), teams(1), None, None)
+    Fixture("1234", startOfDay, Stage("1"), Round("1", None), "1", teams(0), teams(1), None, None)
   private val _result = Result(
     "1234",
-    today.toDateTimeAtStartOfDay,
+    startOfDay,
     Stage("1"),
     Round("1", None),
     "1",
@@ -56,7 +57,7 @@ trait CompetitionTestData {
   )
 
   private def liveMatch(
-      date: DateTime,
+      date: ZonedDateTime,
       stage: Stage,
       round: Round,
       leg: String,
@@ -72,7 +73,7 @@ trait CompetitionTestData {
       awayTeam = awayTeam,
     )
   private def fixture(
-      date: DateTime,
+      date: ZonedDateTime,
       stage: Stage,
       round: Round,
       leg: String,
@@ -88,7 +89,7 @@ trait CompetitionTestData {
       awayTeam = awayTeam,
     )
   private def result(
-      date: DateTime,
+      date: ZonedDateTime,
       stage: Stage,
       round: Round,
       leg: String,
@@ -266,7 +267,7 @@ trait CompetitionTestData {
       fullName = "Competition Name",
       shortName = "Short name",
       nation = "English",
-      startDate = Some(today.minusDays(50)),
+      startDate = Some(startOfDay.minusDays(50).toLocalDate()),
       showInTeamsList = false,
       tableDividers = Nil,
     )
@@ -298,7 +299,7 @@ trait CompetitionTestData {
     makeLeagueTable(stage, i => groups(i % 4))
   }
 
-  implicit def dateTimeOrdering: Ordering[DateTime] = Ordering.fromLessThan(_ isBefore _)
+  implicit def dateTimeOrdering: Ordering[ZonedDateTime] = Ordering.fromLessThan(_ isBefore _)
 
   // Premier League
   val league = testCompetition(
