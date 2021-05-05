@@ -6,19 +6,10 @@ import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { stripDfpAdPrefixFrom } from '../utils';
 import { EventTimer } from '@guardian/commercial-core';
+import { getLocale } from '@guardian/libs';
 
 const bidderTimeout = 1500;
 
-const consentManagement = {
-    gdpr: {
-        cmpApi: 'iab',
-        timeout: 200,
-        allowAuctionWithoutConsent: true,
-    },
-    usp: {
-        timeout: 1500,
-    },
-};
 
 class PrebidAdUnit {
     constructor(advert, slot) {
@@ -50,16 +41,43 @@ const initialise = (window) => {
           }
         : { syncEnabled: false };
 
+        let consentManagement = {}
+        if (config.get('switches.consentManagement', false)) {
+			getLocale().then((country) => {
+				switch (country) {
+					case 'AU':
+					case 'US':
+						// https://docs.prebid.org/dev-docs/modules/consentManagementUsp.html
+						consentManagement = {
+							usp: {
+								cmpApi: 'iab',
+								timeout: 1500,
+							},
+						};
+						break;
+					case 'GB':
+					default:
+						// https://docs.prebid.org/dev-docs/modules/consentManagement.html
+						consentManagement = {
+							gdpr: {
+								cmpApi: 'iab',
+								timeout: 200,
+								defaultGdprScope: true,
+							},
+						};
+						break;
+				}
+			});
+		}
+
     const pbjsConfig = Object.assign(
         {},
         {
             bidderTimeout,
             priceGranularity,
             userSync,
+            consentManagement,
         },
-        config.get('switches.consentManagement', false)
-            ? { consentManagement }
-            : {}
     );
 
     window.pbjs.setConfig(pbjsConfig);

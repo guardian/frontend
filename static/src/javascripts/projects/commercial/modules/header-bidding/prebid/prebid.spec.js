@@ -37,8 +37,9 @@ describe('initialise', () => {
     });
 
     test('should generate correct Prebid config when all switches on', () => {
-        prebid.initialise(window);
+        prebid.initialise(window, 'tcfv2');
         expect(window.pbjs.getConfig()).toEqual({
+            _auctionOptions: {},
             _bidderSequence: 'random',
             _bidderTimeout: 1500,
             _customPriceBucket: {
@@ -56,23 +57,22 @@ describe('initialise', () => {
             _debug: false,
             _deviceAccess: true,
             _disableAjaxTimeout: false,
+            _maxNestedIframes: 10,
             _mediaTypePriceGranularity: {},
             _priceGranularity: 'custom',
             _publisherDomain: 'http://testurl.theguardian.com',
             _sendAllBids: true,
             _timeoutBuffer: 400,
             _useBidCache: false,
+            auctionOptions: {},
             bidderSequence: 'random',
             bidderTimeout: 1500,
             consentManagement: {
                 gdpr: {
-                    allowAuctionWithoutConsent: true,
                     cmpApi: 'iab',
+                    defaultGdprScope: true,
                     timeout: 200,
-                },
-                usp: {
-                    timeout: 1500,
-                },
+                }
             },
             customPriceBucket: {
                 buckets: [
@@ -90,6 +90,7 @@ describe('initialise', () => {
             deviceAccess: true,
             disableAjaxTimeout: false,
             enableSendAllBids: true,
+            maxNestedIframes: 10,
             mediaTypePriceGranularity: {},
             priceGranularity: 'custom',
             publisherDomain: 'http://testurl.theguardian.com',
