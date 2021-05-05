@@ -2382,6 +2382,11 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
+"@types/doubleclick-gpt@^2019111201.0.0":
+  version "2019111201.0.0"
+  resolved "https://registry.yarnpkg.com/@types/doubleclick-gpt/-/doubleclick-gpt-2019111201.0.0.tgz#0028485d2efbb3b8c79a5c1cb107486bd6e56d33"
+  integrity sha512-SNhaQ5wUAWcDsO2QYzhCeAQnnBEqouhAPnNyfjrOZDulR8fWyLq/FHWboqXh9cIVi/V2JULnv9SXJOiHS2gEtw==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
