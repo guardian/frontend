@@ -6,7 +6,6 @@ import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { stripDfpAdPrefixFrom } from '../utils';
 import { EventTimer } from '@guardian/commercial-core';
-import { getLocale } from '@guardian/libs';
 
 const bidderTimeout = 1500;
 
