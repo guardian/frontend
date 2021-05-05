@@ -13,7 +13,7 @@
 // @flow
 
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
-import { setGeolocation } from 'static/src/javascripts/lib/geolocation';
+import { setGeolocation } from 'lib/geolocation';
 
 describe('addCountryGroupToSupportLink', () => {
     test('adds country group to subscribe link', () => {
