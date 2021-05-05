@@ -20,3 +20,8 @@
         height: 54px;
     }
 }
+
+// GT: Temporary fix to turn the black badge to white, we need a more perm fix (probably using Format...)
+.content--media a[href*='series/guardian-200'] .badge-slot__img {
+    filter: brightness(0) invert(1);
+}
