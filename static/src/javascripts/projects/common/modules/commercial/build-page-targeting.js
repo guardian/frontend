@@ -9,7 +9,7 @@ import {
     getReferrer as detectGetReferrer,
     getViewport,
 } from '../../../../lib/detect';
-import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
+import { getCountryCode } from '../../../../lib/geolocation';
 import { getPrivacyFramework } from '../../../../lib/getPrivacyFramework';
 import { getUrlVars } from '../../../../lib/url';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
@@ -280,7 +280,7 @@ const rebuildPageTargeting = () => {
             vl: page.videoDuration
                 ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
                 : undefined,
-            cc: geolocationGetSync(),
+            cc: getCountryCode(),
             s: page.section, // for reference in a macro, so cannot be extracted from ad unit
             rp: config.get('isDotcomRendering', false)
                 ? 'dotcom-rendering'

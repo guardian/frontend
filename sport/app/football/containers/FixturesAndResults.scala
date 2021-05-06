@@ -50,7 +50,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
       teamId <- TeamMap.findTeamIdByUrlName(tagId)
       teamName <- teamNameBuilder.withId(teamId)
     } yield {
-      val relevantMatches = competitions.matches
+      val relevantMatches = competitions.sortedMatches
         .filter({ theMatch =>
           theMatch.homeTeam.id == teamId || theMatch.awayTeam.id == teamId
         })

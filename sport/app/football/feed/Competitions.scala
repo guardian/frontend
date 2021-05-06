@@ -97,7 +97,9 @@ trait Competitions extends implicits.Football {
       .find(m => m.hasTeam(team1) && m.hasTeam(team2))
   }
 
-  def matches: Seq[FootballMatch] = competitions.flatMap(_.matches).sortByDate
+  def sortedMatches: Seq[FootballMatch] = matches.sortByDate
+
+  def matches: Seq[FootballMatch] = competitions.flatMap(_.matches)
 
 }
 

@@ -6,6 +6,7 @@ import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz as isInAuOrNz_ } from '../../../common/modules/commercial/geo-utils';
 import { init, resetModule } from './redplanet';
+jest.mock('lib/raven');
 
 const isInAuOrNz = isInAuOrNz_;
 

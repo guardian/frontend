@@ -1,6 +1,5 @@
 import paidContent from 'svgs/commercial/paid-content.svg';
 import crossIcon from 'svgs/icon/cross.svg';
-import $ from '../../../../lib/$';
 import fastdom from '../../../../lib/fastdom-promise';
 
 const template = () => `
@@ -20,8 +19,8 @@ const template = () => `
                 </div>
                 <div class="survey-text">
                     <p class="survey-text__paragraph">
-                        Advertiser content. This article was paid for, produced and controlled by the advertiser rather 
-                        than the publisher. It is subject to regulation by the Advertising Standards Authority. This 
+                        Advertiser content. This article was paid for, produced and controlled by the advertiser rather
+                        than the publisher. It is subject to regulation by the Advertising Standards Authority. This
                         content is produced by the advertiser with no involvement from Guardian News and Media staff.
                     </p>
                 </div>
@@ -29,27 +28,24 @@ const template = () => `
         </div>
     `;
 
-export const init = () =>
-    fastdom
-        .mutate(() => {
-            $(document.body).append(template());
-        })
-        .then(() => {
-            const aboutBtns = document.querySelectorAll('.js-hosted-about');
-            const closeBtn = document.querySelector('.js-survey-close');
-            const overlay = document.querySelector('.js-survey-overlay');
-            if (!overlay || !aboutBtns || !closeBtn) return;
+export const init = (): Promise<void> =>
+	fastdom
+		.mutate(() => {
+			document.body.insertAdjacentHTML('beforeend', template());
+		})
+		.then(() => {
+			const aboutBtns = document.querySelectorAll('.js-hosted-about');
+			const closeBtn = document.querySelector('.js-survey-close');
+			const overlay = document.querySelector('.js-survey-overlay');
+			if (!overlay || !aboutBtns.length || !closeBtn) return;
 
-            aboutBtns.forEach(btn => {
-                btn.addEventListener(
-                    'click',
-                    (e) => {
-                        e.preventDefault();
-                        fastdom.mutate(() => overlay.classList.remove('u-h'));
-                    }
-                );
-            });
-            closeBtn.addEventListener('click', () => {
-                fastdom.mutate(() => overlay.classList.add('u-h'));
-            });
-        });
+			aboutBtns.forEach((btn) => {
+				btn.addEventListener('click', (e) => {
+					e.preventDefault();
+					void fastdom.mutate(() => overlay.classList.remove('u-h'));
+				});
+			});
+			closeBtn.addEventListener('click', () => {
+				void fastdom.mutate(() => overlay.classList.add('u-h'));
+			});
+		});
