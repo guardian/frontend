@@ -107,7 +107,6 @@ const buildEpicPayload = async () => {
     const ophan = config.get('ophan');
     const page = config.get('page');
 
-    // note, there is a race condition so we want to fetch this as late as possible to give a change for the geo local storage value to be set
     const countryCode = getCountryCode();
 
     const tracking = {

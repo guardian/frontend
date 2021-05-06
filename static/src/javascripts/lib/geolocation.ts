@@ -37,10 +37,6 @@ const getCountryCode = (): string => {
 	);
 };
 
-const setGeolocation = (geolocation: CountryCode | null): void => {
-	locale = geolocation;
-};
-
 /*
     This method is to be used for dev purposes for example testing different RR banners
     across different countries. We keep the overridden country for 1 day into localStorage
@@ -58,7 +54,7 @@ const overrideGeolocation = (geolocation: CountryCode | null): void => {
 const init = (): void => {
 	getLocale()
 		.then((countryCode) => {
-			setGeolocation(countryCode);
+            locale = countryCode;
 		})
 		.catch(() => {
 			console.log(`Error getting location from libs/getLocale`);
@@ -67,7 +63,7 @@ const init = (): void => {
 				{},
 				false,
 			);
-			setGeolocation(getCookie(countryCookieName));
+            locale = getCookie(countryCookieName);
 		});
 };
 
