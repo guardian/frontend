@@ -54,7 +54,7 @@ const overrideGeolocation = (geolocation: CountryCode | null): void => {
 const init = (): void => {
 	getLocale()
 		.then((countryCode) => {
-            locale = countryCode;
+			locale = countryCode;
 		})
 		.catch(() => {
 			console.log(`Error getting location from libs/getLocale`);
@@ -63,7 +63,7 @@ const init = (): void => {
 				{},
 				false,
 			);
-            locale = getCookie(countryCookieName);
+			locale = getCookie(countryCookieName) as CountryCode | null;
 		});
 };
 
