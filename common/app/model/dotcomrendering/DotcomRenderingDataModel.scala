@@ -1,18 +1,21 @@
 package model.dotcomrendering
 
-import com.gu.contentapi.client.model.v1.{Blocks => APIBlocks}
+import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
-import common.{Edition, Localisation}
+import common.Maps.RichMap
+import common.{Edition, Localisation, RichRequestHeader}
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
+import conf.switches.Switches
+import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
-import model.{ContentFormat, ContentPage, ContentType, GUDateTimeFormatNew, InteractivePage, PageWithStoryPackage, Pillar}
-import navigation.{Nav, NavLink, NavMenu, ReaderRevenueLinks}
+import model.{ArticleDateTimes, Badges, ContentFormat, ContentPage, ContentType, GUDateTimeFormatNew, InteractivePage, LiveBlogPage, PageWithStoryPackage, Pillar}
+import navigation.{FooterLinks, Nav, NavLink, NavMenu, ReaderRevenueLinks}
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{ImgSrc, Item300}
+import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300, JavaScriptPage}
 
 
 // -----------------------------------------------------------------
@@ -190,18 +193,73 @@ object DotcomRenderingDataModel {
 
   def forArticle(
     page: PageWithStoryPackage,
-    request: RequestHeader,
     blocks: APIBlocks,
-    pageType: PageType,
+    request: RequestHeader,
   ): DotcomRenderingDataModel = ???
 
-  def foo(
+  def apply(
     page: ContentPage,
     request: RequestHeader,
     edition: Edition,
     pagination: Option[Pagination],
     linkedData: List[LinkedData],
+    blocks: APIBlocks,
+    pageType: PageType, // TODO remove as format is better
+    hasStoryPackage: Boolean,
   ): DotcomRenderingDataModel = {
+
+    def toDCRBlock(
+      block: APIBlock,
+      page: ContentPage,
+      shouldAddAffiliateLinks: Boolean,
+      request: RequestHeader,
+      isMainBlock: Boolean,
+      calloutsUrl: Option[String],
+      dateTimes: ArticleDateTimes,
+    ): Block = {
+
+      val content = page.item
+
+      // We are passing through the block data here, not the article
+      // the block dateTime types are used for liveblogs
+      val blockCreatedOn = block.createdDate.map(_.dateTime)
+      val blockCreatedOnDisplay =
+        blockCreatedOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+
+      val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
+      val blockFirstPublishedDisplay =
+        blockFirstPublished.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+
+      val blockLastUpdated = block.lastModifiedDate.map(_.dateTime)
+      val blockLastUpdatedDisplay =
+        blockLastUpdated.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+
+      val displayedDateTimes = ArticleDateTimes.makeDisplayedDateTimesDCR(dateTimes, request)
+      val campaigns = page.getJavascriptConfig.get("campaigns")
+
+      Block(
+        id = block.id,
+        elements = DotcomRenderingUtils.blockElementsToPageElements(
+          block.elements,
+          request,
+          content,
+          shouldAddAffiliateLinks,
+          isMainBlock,
+          content.metadata.format.exists(_.display == ImmersiveDisplay),
+          campaigns,
+          calloutsUrl,
+        ),
+        blockCreatedOn = blockCreatedOn,
+        blockCreatedOnDisplay = blockCreatedOnDisplay,
+        blockLastUpdated = blockLastUpdated,
+        blockLastUpdatedDisplay = blockLastUpdatedDisplay,
+        title = block.title,
+        blockFirstPublished = blockFirstPublished,
+        blockFirstPublishedDisplay = blockFirstPublishedDisplay,
+        primaryDateLine = displayedDateTimes.primaryDateLine,
+        secondaryDateLine = displayedDateTimes.secondaryDateLine,
+      )
+    }
 
     def toDCRTag(t: model.Tag): Tag = {
       Tag(
@@ -242,7 +300,7 @@ object DotcomRenderingDataModel {
 
       val firstPublicationDate = content.fields.firstPublicationDate
       val webPublicationDate = content.trail.webPublicationDate
-      val isModified = content.content.hasBeenModified && (!firstPublicationDate.contains(webPublicationDate)
+      val isModified = content.content.hasBeenModified && (!firstPublicationDate.contains(webPublicationDate))
 
       if (isModified) {
         "First published on " + format(firstPublicationDate.getOrElse(webPublicationDate), request)
@@ -252,15 +310,133 @@ object DotcomRenderingDataModel {
     }
 
     val content = page.item
+    val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
+    val isPaidContent: Boolean = content.metadata.designType.contains(AdvertisementFeature)
+
 
     val author: Author = Author(
       byline = content.trail.byline,
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
+    val shouldAddAffiliateLinks: Boolean = AffiliateLinksCleaner.shouldAddAffiliateLinks(
+      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+      section = content.metadata.sectionId,
+      showAffiliateLinks = content.content.fields.showAffiliateLinks,
+      supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
+      defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
+      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+      tagPaths = content.content.tags.tags.map(_.id),
+      firstPublishedDate = content.content.fields.firstPublicationDate,
+    )
+
+    val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
+      webPublicationDate = content.trail.webPublicationDate,
+      firstPublicationDate = content.fields.firstPublicationDate,
+      hasBeenModified = content.content.hasBeenModified,
+      lastModificationDate = content.fields.lastModified,
+    )
+
+    val switches: Map[String, Boolean] = conf.switches.Switches.all
+      .filter(_.exposeClientSide)
+      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+      })
+
+    val config = Config(
+      switches = switches,
+      abTests = ActiveExperiments.getJsMap(request),
+      commercialBundleUrl = DotcomRenderingUtils.buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
+      ampIframeUrl = DotcomRenderingUtils.buildFullCommercialUrl("data/vendor/amp-iframe.html"),
+      googletagUrl = Configuration.googletag.jsLocation,
+      stage = common.Environment.stage,
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    )
+
+    val jsPageConfig: Map[String, JsValue] = JavaScriptPage.getMap(page, Edition(request), false, request)
+
+    val combinedConfig: JsObject = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+
+    val calloutsUrl: Option[String] = combinedConfig.fields.toList
+      .filter(entry => entry._1 == "calloutsUrl")
+      .headOption
+      .flatMap(entry => entry._2.asOpt[String])
+
+    val mainBlock = {
+      blocks.main.map(block =>
+        toDCRBlock(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes),
+      )
+    }
+
+    // TODO we should not do this branching in this method but before
+    val bodyBlocksRaw: Seq[com.gu.contentapi.client.model.v1.Block] = page match {
+      case lb: LiveBlogPage => DotcomRenderingUtils.blocksForLiveblogPage(lb, blocks)
+      case article          => blocks.body.getOrElse(Nil)
+    }
+
+    val bodyBlocks: List[model.dotcomrendering.Block] = bodyBlocksRaw
+      .filter(_.published || pageType.isPreview)
+      .map(block =>
+        toDCRBlock(
+          block,
+          page,
+          shouldAddAffiliateLinks,
+          request,
+          false,
+          calloutsUrl,
+          contentDateTimes,
+        ),
+      )
+      .toList
+
+    val keyEvents: Seq[model.dotcomrendering.Block] = {
+      blocks.requestedBodyBlocks
+        .getOrElse(Map.empty[String, Seq[APIBlock]])
+        .getOrElse("body:key-events", Seq.empty[APIBlock])
+        .map(block =>
+          toDCRBlock(
+            block,
+            page,
+            shouldAddAffiliateLinks,
+            request,
+            false,
+            calloutsUrl,
+            contentDateTimes,
+          ),
+        )
+    }
+
+    val jsConfig: String => Option[String] = (k: String) => page.getJavascriptConfig.get(k).map(_.as[String])
+
+    val commercial: Commercial = Commercial(
+      editionCommercialProperties = content.metadata.commercial
+        .map { _.perEdition.mapKeys(_.id) }
+        .getOrElse(Map.empty[String, EditionCommercialProperties]),
+
+      prebidIndexSites = (for {
+        commercial <- content.metadata.commercial
+        sites <- commercial.prebidIndexSites
+      } yield sites.toList).getOrElse(List()),
+
+      content.metadata.commercial,
+      pageType,
+    )
+
+    val pageFooter: PageFooter = PageFooter(
+      FooterLinks.getFooterByEdition(Edition(request)),
+    )
+
+    val badge: Option[DCRBadge] = Badges
+      .badgeFor(content)
+      .map(badge =>
+        DCRBadge(
+          badge.seriesTag,
+          badge.imageUrl,
+        ),
+      )
+
     DotcomRenderingDataModel(
       // TODO sort alphabetically once finished
-
       version = 3, // Int
       headline = content.trail.headline,
       standfirst = TextCleaner.sanitiseLinks(edition)(content.fields.standfirst.getOrElse("")),
@@ -312,17 +488,17 @@ object DotcomRenderingDataModel {
       blocks = bodyBlocks,
       config = combinedConfig,
       contentType = jsConfig("contentType").getOrElse(""),
-      hasStoryPackage = page.related.hasStoryPackage,
+      hasStoryPackage = hasStoryPackage,
       commercialProperties = commercial.editionCommercialProperties,
-      pageType = pageType,
+      pageType = pageType, // TODO this info duplicates what is already elsewhere in format?
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(content),
       pageFooter = pageFooter,
       // See pageShouldHideReaderRevenue in contributions-utilities.js
       shouldHideReaderRevenue = content.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
       slotMachineFlags = request.slotMachineFlags,
       badge = badge,
-      matchUrl = makeMatchUrl(page),
-      isSpecialReport = isSpecialReport(page),
+      matchUrl = DotcomRenderingUtils.makeMatchUrl(page),
+      isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
     )
   }
 }

@@ -14,19 +14,7 @@ import conf.{Configuration, Static}
 import experiments.ActiveExperiments
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
-import model.{
-  Article,
-  ArticleDateTimes,
-  ArticlePage,
-  Badges,
-  CanonicalLiveBlog,
-  ContentFormat,
-  DisplayedDateTimesDCR,
-  GUDateTimeFormatNew,
-  LiveBlogPage,
-  PageWithStoryPackage,
-  Pillar,
-}
+import model.{Article, ArticleDateTimes, ArticlePage, Badges, CanonicalLiveBlog, ContentFormat, ContentPage, ContentType, DisplayedDateTimesDCR, GUDateTimeFormatNew, LiveBlogPage, PageWithStoryPackage, Pillar}
 import navigation._
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -43,7 +31,7 @@ import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, I
 
 object DotcomRenderingUtils {
 
-  private def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
+  def makeMatchUrl(articlePage: ContentPage): Option[String] = {
 
     def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
       val sequence = references match {
@@ -80,12 +68,12 @@ object DotcomRenderingUtils {
           .map(_.get) // .get is fundamentally dangerous but fine in this case because we filtered the Nones out.
           .filter(_._1 == "pa-football-team")
     } yield {
-      val pageId = URLEncoder.encode(articlePage.article.metadata.id, "UTF-8")
+      val pageId = URLEncoder.encode(articlePage.metadata.id, "UTF-8")
       entries2.toList match {
         case e1 :: e2 :: _ => {
-          val year = articlePage.article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("yyy"))
-          val month = articlePage.article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("MM"))
-          val day = articlePage.article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("dd"))
+          val year = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("yyy"))
+          val month = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("MM"))
+          val day = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("dd"))
           s"${Configuration.ajax.url}/football/api/match-nav/${year}/${month}/${day}/${e1._2}/${e2._2}.json?dcr=true&page=${pageId}"
         }
         case _ => ""
@@ -105,7 +93,7 @@ object DotcomRenderingUtils {
     designType.map(_.toString).getOrElse("Article")
   }
 
-  private def buildFullCommercialUrl(bundlePath: String): String = {
+  def buildFullCommercialUrl(bundlePath: String): String = {
     // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
     if (Configuration.environment.isProd || Configuration.environment.isCode) {
       Static(bundlePath)
@@ -125,7 +113,7 @@ object DotcomRenderingUtils {
       .getOrElse("news")
   }
 
-  private def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
+  def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
     val last60 = blocks.requestedBodyBlocks
       .getOrElse(Map.empty[String, Seq[APIBlock]])
       .getOrElse(CanonicalLiveBlog.firstPage, Seq.empty[APIBlock])
@@ -164,10 +152,10 @@ object DotcomRenderingUtils {
     } else elems
   }
 
-  private def blockElementsToPageElements(
+  def blockElementsToPageElements(
       capiElems: Seq[ClientBlockElement],
       request: RequestHeader,
-      article: Article,
+      article: ContentType,
       affiliateLinks: Boolean,
       isMainBlock: Boolean,
       isImmersive: Boolean,
@@ -175,7 +163,7 @@ object DotcomRenderingUtils {
       calloutsUrl: Option[String],
   ): List[PageElement] = {
 
-    val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
+    val atoms: Iterable[Atom] = article.atoms.map(_.all).getOrElse(Seq())
     val edition = Edition(request)
 
     val elems = capiElems.toList
@@ -274,7 +262,7 @@ object DotcomRenderingUtils {
     "society/series/this-is-the-nhs",
   )
 
-  def isSpecialReport(page: PageWithStoryPackage): Boolean = {
+  def isSpecialReport(page: ContentPage): Boolean = {
     page.item.tags.tags.exists(t => specialReportTags(t.id))
   }
 
