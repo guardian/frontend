@@ -4,7 +4,7 @@ import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
 } from '../../../../lib/detect';
-import { getSync as getSync_ } from '../../../../lib/geolocation';
+import { getCountryCode as getCountryCode_ } from 'lib/geolocation';
 
 import {
     getBreakpointKey,
@@ -24,7 +24,7 @@ import {
 } from './utils';
 import {isInVariantSynchronous as isInVariantSynchronous_} from "common/modules/experiments/ab";
 
-const getSync = getSync_;
+const getCountryCode = getCountryCode_;
 const getBreakpoint = getBreakpoint_;
 const isBreakpoint = isBreakpoint_;
 const isInVariantSynchronous = isInVariantSynchronous_;
@@ -32,7 +32,7 @@ const isInVariantSynchronous = isInVariantSynchronous_;
 jest.mock('lodash/once', () => a => a);
 
 jest.mock('../../../../lib/geolocation', () => ({
-    getSync: jest.fn(() => 'GB'),
+    getCountryCode: jest.fn(() => 'GB'),
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
@@ -131,19 +131,19 @@ describe('Utils', () => {
             ['SH','off', false]
     ])(`In %s, if switch is %s, shouldIncludeAppNexus should return %s`, (region, switchState, expected) => {
         config.switches.prebidAppnexusUkRow = (switchState === 'on');
-        getSync.mockReturnValue(region);
+        getCountryCode.mockReturnValue(region);
         expect(shouldIncludeAppNexus()).toBe(expected);
     });
 
     test('shouldIncludeOpenx should return true if geolocation is GB', () => {
-        getSync.mockReturnValueOnce('GB');
+        getCountryCode.mockReturnValueOnce('GB');
         expect(shouldIncludeOpenx()).toBe(true);
     });
 
     test('shouldIncludeOpenx should return true if within ROW region', () => {
         const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'IE'];
         for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValueOnce(testGeos[i]);
+            getCountryCode.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeOpenx()).toBe(true);
         }
     });
@@ -151,7 +151,7 @@ describe('Utils', () => {
     test('shouldIncludeOpenx should return false if within US region', () => {
         const testGeos = ['CA', 'US'];
         for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
+            getCountryCode.mockReturnValue(testGeos[i]);
             expect(shouldIncludeOpenx()).toBe(false);
         }
     });
@@ -159,41 +159,41 @@ describe('Utils', () => {
     test('shouldIncludeOpenx should return true if within AU region', () => {
         const testGeos = ['NZ', 'AU'];
         for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
+            getCountryCode.mockReturnValue(testGeos[i]);
             expect(shouldIncludeOpenx()).toBe(true);
         }
     });
 
     test('shouldIncludeTrustX should return true if geolocation is US', () => {
-        getSync.mockReturnValueOnce('US');
+        getCountryCode.mockReturnValueOnce('US');
         expect(shouldIncludeTrustX()).toBe(true);
     });
 
     test('shouldIncludeTrustX should otherwise return false', () => {
         const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
         for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValueOnce(testGeos[i]);
+            getCountryCode.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeTrustX()).toBe(false);
         }
     });
 
     test('shouldIncludeImproveDigital should return true if geolocation is GB', () => {
-        getSync.mockReturnValue('GB');
+        getCountryCode.mockReturnValue('GB');
         expect(shouldIncludeImproveDigital()).toBe(true);
     });
 
     test('shouldIncludeImproveDigital should return true if geolocation is ROW', () => {
-        getSync.mockReturnValue('FR');
+        getCountryCode.mockReturnValue('FR');
         expect(shouldIncludeImproveDigital()).toBe(true);
     });
 
     test('shouldIncludeImproveDigital should return false if geolocation is AU', () => {
-        getSync.mockReturnValue('AU');
+        getCountryCode.mockReturnValue('AU');
         expect(shouldIncludeImproveDigital()).toBe(false);
     });
 
     test('shouldIncludeImproveDigital should return false if geolocation is US', () => {
-        getSync.mockReturnValue('US');
+        getCountryCode.mockReturnValue('US');
         expect(shouldIncludeImproveDigital()).toBe(false);
     });
 
@@ -202,7 +202,7 @@ describe('Utils', () => {
             (testId, variantId) => variantId === 'variant'
         );
         config.set('page.isDev', true);
-        getSync.mockReturnValue('GB');
+        getCountryCode.mockReturnValue('GB');
         expect(shouldIncludeXaxis()).toBe(true);
     });
 
@@ -221,7 +221,7 @@ describe('Utils', () => {
             'NZ',
         ];
         for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
+            getCountryCode.mockReturnValue(testGeos[i]);
             expect(shouldIncludeXaxis()).toBe(false);
         }
     });
@@ -229,7 +229,7 @@ describe('Utils', () => {
     test('shouldIncludeSonobi should return true if geolocation is US', () => {
         const testGeos = ['US', 'CA'];
         for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValueOnce(testGeos[i]);
+            getCountryCode.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeSonobi()).toBe(true);
         }
     });
@@ -237,7 +237,7 @@ describe('Utils', () => {
     test('shouldIncludeSonobi should otherwise return false', () => {
         const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
         for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValueOnce(testGeos[i]);
+            getCountryCode.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeSonobi()).toBe(false);
         }
     });
@@ -279,7 +279,7 @@ describe('Utils', () => {
         test(`should include mobile sticky if geolocation is ${region}, switch is ON and content is Article on mobiles`, () => {
             config.set('page.contentType', 'Article');
             config.set('switches.mobileStickyLeaderboard', true);
-            getSync.mockReturnValue(region);
+            getCountryCode.mockReturnValue(region);
             isBreakpoint.mockReturnValue(true);
             expect(shouldIncludeMobileSticky()).toBe(true);
         });
@@ -289,7 +289,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Network Front');
         config.set('switches.mobileStickyLeaderboard', true);
         isBreakpoint.mockReturnValue(true);
-        getSync.mockReturnValue('US');
+        getCountryCode.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -297,7 +297,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Article');
         isBreakpoint.mockReturnValue(true);
         config.set('switches.mobileStickyLeaderboard', false);
-        getSync.mockReturnValue('US');
+        getCountryCode.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -306,7 +306,7 @@ describe('Utils', () => {
         isBreakpoint.mockReturnValue(true);
         config.set('switches.mobileStickyLeaderboard', true);
         config.set('page.isHosted', true);
-        getSync.mockReturnValue('US');
+        getCountryCode.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -314,7 +314,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
         isBreakpoint.mockReturnValue(true);
-        getSync.mockReturnValue('GB');
+        getCountryCode.mockReturnValue('GB');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -322,7 +322,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
         isBreakpoint.mockReturnValue(false);
-        getSync.mockReturnValue('US');
+        getCountryCode.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -330,7 +330,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Network Front');
         config.set('switches.mobileStickyLeaderboard', false);
         isBreakpoint.mockReturnValue(false);
-        getSync.mockReturnValue('US');
+        getCountryCode.mockReturnValue('US');
         window.location.hash = '#mobile-sticky';
         expect(shouldIncludeMobileSticky()).toBe(true);
     });

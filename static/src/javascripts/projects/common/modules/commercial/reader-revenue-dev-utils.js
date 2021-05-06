@@ -1,8 +1,8 @@
 import { storage } from '@guardian/libs';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import {
-    getSync as geolocationGetSync,
-    setGeolocation,
+    getCountryCode,
+    overrideGeolocation,
 } from '../../../../lib/geolocation';
 import {
     decrementMvtCookie,
@@ -108,12 +108,12 @@ const showPreviousVariant = (asExistingSupporter = false) => {
 
 const changeGeolocation = (asExistingSupporter = false) => {
     const geo = window.prompt(
-        `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`
+        `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${getCountryCode()}.`
     );
     if (geo === 'UK') {
         alert(`'UK' is not a valid geolocation - please use 'GB' instead!`);
     } else if (geo) {
-        setGeolocation(geo);
+        overrideGeolocation(geo);
         clearCommonReaderRevenueStateAndReload(asExistingSupporter);
     }
 };

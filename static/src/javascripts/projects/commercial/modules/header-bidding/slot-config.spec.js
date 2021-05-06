@@ -7,13 +7,15 @@ import {
     shouldIncludeMobileSticky as shouldIncludeMobileSticky_,
 } from './utils';
 
+jest.mock('lib/raven');
+
 const { getSlots } = _;
 
 const getBreakpointKey = getBreakpointKey_;
 const shouldIncludeMobileSticky = shouldIncludeMobileSticky_;
 
 jest.mock('./utils', () => {
-    
+
     const original = jest.requireActual('./utils');
     return {
         ...original,

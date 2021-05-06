@@ -12,7 +12,7 @@ import {
 
 let mockCountryCode;
 jest.mock('../../../../lib/geolocation', () => ({
-    getSync: jest.fn(() => mockCountryCode),
+    getCountryCode: jest.fn(() => mockCountryCode),
 }));
 
 describe('Geolocation Utils', () => {

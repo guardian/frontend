@@ -1,9 +1,9 @@
-import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
+import { getCountryCode } from '../../../../lib/geolocation';
 
 // cache the users location so we only have to look it up once
 let geo;
 const currentGeoLocation = (() => {
-    geo = geo || geolocationGetSync();
+    geo = geo || getCountryCode();
     return geo;
 });
 
