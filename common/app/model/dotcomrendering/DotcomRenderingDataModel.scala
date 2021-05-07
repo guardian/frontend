@@ -12,7 +12,6 @@ import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
-  ArticlePage,
   Badges,
   ContentFormat,
   ContentPage,
@@ -167,17 +166,17 @@ object DotcomRenderingDataModel {
 
   def forInteractive(
       page: InteractivePage,
+      blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
   ): DotcomRenderingDataModel = {
-
     apply(
       page,
       request,
       None,
       linkedData = Nil, // TODO
-      mainBlock = None, // TODO?
-      bodyBlocks = Nil, // TODO?
+      mainBlock = blocks.main,
+      bodyBlocks = blocks.body.getOrElse(Nil),
       pageType,
       page.related.hasStoryPackage,
       keyEvents = Nil,
@@ -190,8 +189,6 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
   ): DotcomRenderingDataModel = {
-    val bodyBlocks = blocks.body.getOrElse(Nil)
-
     val linkedData = LinkedData.forArticle(
       article = page.article,
       baseURL = Configuration.amp.baseUrl,
@@ -204,7 +201,7 @@ object DotcomRenderingDataModel {
       None,
       linkedData,
       blocks.main,
-      bodyBlocks,
+      blocks.body.getOrElse(Nil),
       pageType,
       page.related.hasStoryPackage,
       Nil,
@@ -265,20 +262,6 @@ object DotcomRenderingDataModel {
       hasStoryPackage: Boolean,
       keyEvents: Seq[APIBlock],
   ): DotcomRenderingDataModel = {
-
-    def secondaryDateString(content: ContentType, request: RequestHeader): String = {
-      def format(dt: DateTime, req: RequestHeader): String = GUDateTimeFormatNew.formatDateTimeForDisplay(dt, req)
-
-      val firstPublicationDate = content.fields.firstPublicationDate
-      val webPublicationDate = content.trail.webPublicationDate
-      val isModified = content.content.hasBeenModified && (!firstPublicationDate.contains(webPublicationDate))
-
-      if (isModified) {
-        "First published on " + format(firstPublicationDate.getOrElse(webPublicationDate), request)
-      } else {
-        "Last modified on " + format(content.fields.lastModified, request)
-      }
-    }
 
     val edition = Edition.edition(request)
     val content = page.item
@@ -419,7 +402,7 @@ object DotcomRenderingDataModel {
       webPublicationDate = content.trail.webPublicationDate.toString,
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
-      webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
+      webPublicationSecondaryDateDisplay = DotcomRenderingUtils.secondaryDateString(content, request),
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
     )

@@ -63,21 +63,28 @@ class InteractiveController(
     s"$cdnPath/service-workers/$stage/$deployPath/$file"
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {
+  private def lookup(
+      path: String,
+  )(implicit request: RequestHeader): Future[Either[(InteractivePage, Blocks), Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
     val response: Future[ItemResponse] = contentApiClient.getResponse(
       contentApiClient
         .item(path, edition)
         .showFields("all")
-        .showAtoms("all"),
+        .showAtoms("all")
+        .showBlocks("all"),
     )
 
     val result = response map { response =>
       val interactive = response.content map { Interactive.make }
+      val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
       val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
 
-      ModelOrResult(page, response)
+      ModelOrResult(page, response) match {
+        case Left(page)       => Left((page, blocks))
+        case Right(exception) => Right(exception)
+      }
     }
 
     result recover convertApiExceptions
@@ -104,15 +111,17 @@ class InteractiveController(
 
   def renderItemLegacy(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
-      case Left(model)  => render(model)
-      case Right(other) => RenderOtherStatus(other)
+      case Left((model, _)) => render(model)
+      case Right(other)     => RenderOtherStatus(other)
     }
   }
 
   def renderDCRJsonObject(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
-      case Left(model) => {
-        val data = DotcomRenderingDataModel.forInteractive(model, request, PageType.apply(model, request, context))
+      case Left((model, blocks)) => {
+        println(blocks)
+        val data =
+          DotcomRenderingDataModel.forInteractive(model, blocks, request, PageType.apply(model, request, context))
         val dataJson = DotcomRenderingDataModel.toJson(data)
         Ok(dataJson).as("application/json")
       }

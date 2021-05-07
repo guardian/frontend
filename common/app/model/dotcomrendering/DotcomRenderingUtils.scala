@@ -7,7 +7,8 @@ import common.Edition
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
-import model.{CanonicalLiveBlog, ContentPage, ContentType, LiveBlogPage, Pillar}
+import model.{CanonicalLiveBlog, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -189,4 +190,19 @@ object DotcomRenderingUtils {
   def isSpecialReport(page: ContentPage): Boolean = {
     page.item.tags.tags.exists(t => specialReportTags(t.id))
   }
+
+  def secondaryDateString(content: ContentType, request: RequestHeader): String = {
+    def format(dt: DateTime, req: RequestHeader): String = GUDateTimeFormatNew.formatDateTimeForDisplay(dt, req)
+
+    val firstPublicationDate = content.fields.firstPublicationDate
+    val webPublicationDate = content.trail.webPublicationDate
+    val isModified = content.content.hasBeenModified && (!firstPublicationDate.contains(webPublicationDate))
+
+    if (isModified) {
+      "First published on " + format(firstPublicationDate.getOrElse(webPublicationDate), request)
+    } else {
+      "Last modified on " + format(content.fields.lastModified, request)
+    }
+  }
+
 }
