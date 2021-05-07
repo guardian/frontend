@@ -10882,10 +10882,11 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.13.tgz#85f6c9197ecd736ce8e3bec044d08fd1330fa019"
   integrity sha512-q/vlKIGNwzTLu+jCcvywgGrt+H/1P/oIRSD6mV4ln3hmlC+Aa34C7yfPI4+5bzW8pONyVXYS7SvXosy2dKKtWQ==
 
-"prebid.js@https://github.com/guardian/Prebid.js#e005fa316":
+"prebid.js@https://github.com/guardian/Prebid.js#f509be01":
   version "4.37.0"
-  resolved "https://github.com/guardian/Prebid.js#e005fa3169d48e81d5ded851e0f9d22f22e98ace"
+  resolved "https://github.com/guardian/Prebid.js#f509be01e0b57871978612afdc5b2186ac640e85"
   dependencies:
+    "@guardian/libs" "^1.7.1"
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^3.0.0"
     core-js-pure "^3.6.5"
