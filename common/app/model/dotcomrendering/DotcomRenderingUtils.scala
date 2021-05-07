@@ -93,7 +93,7 @@ object DotcomRenderingUtils {
     designType.map(_.toString).getOrElse("Article")
   }
 
-  def buildFullCommercialUrl(bundlePath: String): String = {
+  def assetURL(bundlePath: String): String = {
     // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
     if (Configuration.environment.isProd || Configuration.environment.isCode) {
       Static(bundlePath)
@@ -288,8 +288,8 @@ object DotcomRenderingUtils {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
-      ampIframeUrl = buildFullCommercialUrl("data/vendor/amp-iframe.html"),
+      commercialBundleUrl = assetURL("javascripts/graun.commercial.dcr.js"),
+      ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),

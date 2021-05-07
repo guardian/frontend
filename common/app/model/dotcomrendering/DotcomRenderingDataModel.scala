@@ -282,16 +282,17 @@ object DotcomRenderingDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl = DotcomRenderingUtils.buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
-      ampIframeUrl = DotcomRenderingUtils.buildFullCommercialUrl("data/vendor/amp-iframe.html"),
+      commercialBundleUrl = DotcomRenderingUtils.assetURL("javascripts/graun.commercial.dcr.js"),
+      ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
     )
 
-    val jsPageConfig: Map[String, JsValue] = JavaScriptPage.getMap(page, Edition(request), false, request)
-
-    val combinedConfig: JsObject = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+    val combinedConfig: JsObject = {
+      val jsPageConfig: Map[String, JsValue] = JavaScriptPage.getMap(page, Edition(request), false, request)
+      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+    }
 
     val calloutsUrl: Option[String] = combinedConfig.fields.toList
       .filter(entry => entry._1 == "calloutsUrl")
@@ -322,36 +323,27 @@ object DotcomRenderingDataModel {
         .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
     }
 
-    val commercial: Commercial = Commercial(
-      editionCommercialProperties = content.metadata.commercial
+    val commercial: Commercial = {
+      val editionCommercialProperties = content.metadata.commercial
         .map { _.perEdition.mapKeys(_.id) }
-        .getOrElse(Map.empty[String, EditionCommercialProperties]),
+        .getOrElse(Map.empty[String, EditionCommercialProperties])
 
-      prebidIndexSites = (for {
+      val prebidIndexSites = (for {
         commercial <- content.metadata.commercial
         sites <- commercial.prebidIndexSites
-      } yield sites.toList).getOrElse(List()),
+      } yield sites.toList).getOrElse(List())
 
-      content.metadata.commercial,
-      pageType,
-    )
-
-    val pageFooter: PageFooter = PageFooter(
-      FooterLinks.getFooterByEdition(Edition(request)),
-    )
-
-    val badge: Option[DCRBadge] = Badges
-      .badgeFor(content)
-      .map(badge =>
-        DCRBadge(
-          badge.seriesTag,
-          badge.imageUrl,
-        ),
+      Commercial(
+        editionCommercialProperties,
+        prebidIndexSites,
+        content.metadata.commercial,
+        pageType,
       )
+    }
 
     DotcomRenderingDataModel(
       author = author,
-      badge = badge,
+      badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
       blocks = bodyBlocks,
       commercialProperties = commercial.editionCommercialProperties,
@@ -377,7 +369,7 @@ object DotcomRenderingDataModel {
       matchUrl = DotcomRenderingUtils.makeMatchUrl(page),
       nav = nav(page, edition),
       openGraphData = page.getOpenGraphProperties,
-      pageFooter = pageFooter,
+      pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,
       pageType = pageType, // TODO this info duplicates what is already elsewhere in format?
       pagination = pagination,
