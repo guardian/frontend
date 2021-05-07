@@ -94,6 +94,10 @@ const addDesktopInlineAds = (isInline1) => {
                 minAbove: 500,
                 minBelow: 0,
             },
+            ' figure.element--image-block': {
+                minAbove: 0,
+                minBelow: 0,
+            },
         },
         filter: filterNearbyCandidates(adSizes.mpu.height),
     };
