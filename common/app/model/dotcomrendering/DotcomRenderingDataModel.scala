@@ -1,21 +1,21 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
+import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Maps.RichMap
-import common.{Edition, Localisation, RichRequestHeader}
 import common.commercial.EditionCommercialProperties
+import common.{Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import conf.switches.Switches
 import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{ArticleDateTimes, Badges, ContentFormat, ContentPage, ContentType, GUDateTimeFormatNew, InteractivePage, LiveBlogPage, PageWithStoryPackage, Pillar}
-import navigation.{FooterLinks, Nav, NavLink, NavMenu, ReaderRevenueLinks}
+import navigation._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300, JavaScriptPage}
+import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
 
 
 // -----------------------------------------------------------------
@@ -208,69 +208,6 @@ object DotcomRenderingDataModel {
     hasStoryPackage: Boolean,
   ): DotcomRenderingDataModel = {
 
-    def toDCRBlock(
-      block: APIBlock,
-      page: ContentPage,
-      shouldAddAffiliateLinks: Boolean,
-      request: RequestHeader,
-      isMainBlock: Boolean,
-      calloutsUrl: Option[String],
-      dateTimes: ArticleDateTimes,
-    ): Block = {
-
-      val content = page.item
-
-      // We are passing through the block data here, not the article
-      // the block dateTime types are used for liveblogs
-      val blockCreatedOn = block.createdDate.map(_.dateTime)
-      val blockCreatedOnDisplay =
-        blockCreatedOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
-
-      val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
-      val blockFirstPublishedDisplay =
-        blockFirstPublished.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
-
-      val blockLastUpdated = block.lastModifiedDate.map(_.dateTime)
-      val blockLastUpdatedDisplay =
-        blockLastUpdated.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
-
-      val displayedDateTimes = ArticleDateTimes.makeDisplayedDateTimesDCR(dateTimes, request)
-      val campaigns = page.getJavascriptConfig.get("campaigns")
-
-      Block(
-        id = block.id,
-        elements = DotcomRenderingUtils.blockElementsToPageElements(
-          block.elements,
-          request,
-          content,
-          shouldAddAffiliateLinks,
-          isMainBlock,
-          content.metadata.format.exists(_.display == ImmersiveDisplay),
-          campaigns,
-          calloutsUrl,
-        ),
-        blockCreatedOn = blockCreatedOn,
-        blockCreatedOnDisplay = blockCreatedOnDisplay,
-        blockLastUpdated = blockLastUpdated,
-        blockLastUpdatedDisplay = blockLastUpdatedDisplay,
-        title = block.title,
-        blockFirstPublished = blockFirstPublished,
-        blockFirstPublishedDisplay = blockFirstPublishedDisplay,
-        primaryDateLine = displayedDateTimes.primaryDateLine,
-        secondaryDateLine = displayedDateTimes.secondaryDateLine,
-      )
-    }
-
-    def toDCRTag(t: model.Tag): Tag = {
-      Tag(
-        t.id,
-        t.properties.tagType,
-        t.properties.webTitle,
-        t.properties.twitterHandle,
-        t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
-      )
-    }
-
     def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
       pillar
         .map { pillar =>
@@ -312,7 +249,6 @@ object DotcomRenderingDataModel {
     val content = page.item
     val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
     val isPaidContent: Boolean = content.metadata.designType.contains(AdvertisementFeature)
-
 
     val author: Author = Author(
       byline = content.trail.byline,
@@ -364,46 +300,26 @@ object DotcomRenderingDataModel {
 
     val mainBlock = {
       blocks.main.map(block =>
-        toDCRBlock(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes),
+        Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes),
       )
     }
 
     // TODO we should not do this branching in this method but before
     val bodyBlocksRaw: Seq[com.gu.contentapi.client.model.v1.Block] = page match {
       case lb: LiveBlogPage => DotcomRenderingUtils.blocksForLiveblogPage(lb, blocks)
-      case article          => blocks.body.getOrElse(Nil)
+      case _          => blocks.body.getOrElse(Nil)
     }
 
     val bodyBlocks: List[model.dotcomrendering.Block] = bodyBlocksRaw
       .filter(_.published || pageType.isPreview)
-      .map(block =>
-        toDCRBlock(
-          block,
-          page,
-          shouldAddAffiliateLinks,
-          request,
-          false,
-          calloutsUrl,
-          contentDateTimes,
-        ),
-      )
+      .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
       .toList
 
     val keyEvents: Seq[model.dotcomrendering.Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block =>
-          toDCRBlock(
-            block,
-            page,
-            shouldAddAffiliateLinks,
-            request,
-            false,
-            calloutsUrl,
-            contentDateTimes,
-          ),
-        )
+        .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
     }
 
     val jsConfig: String => Option[String] = (k: String) => page.getJavascriptConfig.get(k).map(_.as[String])
@@ -480,7 +396,7 @@ object DotcomRenderingDataModel {
       starRating = content.content.starRating,
       subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
       subMetaSectionLinks = content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
-      tags = content.tags.tags.map(toDCRTag),
+      tags = content.tags.tags.map(Tag.apply),
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
