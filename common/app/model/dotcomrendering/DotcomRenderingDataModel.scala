@@ -10,13 +10,23 @@ import conf.Configuration
 import conf.switches.Switches
 import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
-import model.{ArticleDateTimes, Badges, ContentFormat, ContentPage, ContentType, GUDateTimeFormatNew, InteractivePage, LiveBlogPage, PageWithStoryPackage, Pillar}
+import model.{
+  ArticleDateTimes,
+  Badges,
+  ContentFormat,
+  ContentPage,
+  ContentType,
+  GUDateTimeFormatNew,
+  InteractivePage,
+  LiveBlogPage,
+  PageWithStoryPackage,
+  Pillar,
+}
 import navigation._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
-
 
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -187,25 +197,84 @@ object DotcomRenderingDataModel {
   }
 
   def forInteractive(
-    page: InteractivePage,
-    request: RequestHeader,
+      page: InteractivePage,
+      request: RequestHeader,
   ): DotcomRenderingDataModel = ???
 
   def forArticle(
-    page: PageWithStoryPackage,
-    blocks: APIBlocks,
-    request: RequestHeader,
-  ): DotcomRenderingDataModel = ???
+      page: PageWithStoryPackage,
+      blocks: APIBlocks,
+      request: RequestHeader,
+      edition: Edition,
+      hasStoryPackage: Boolean,
+  ): DotcomRenderingDataModel = {
+    val bodyBlocks = blocks.body.getOrElse(Nil)
+
+    val linkedData = LinkedData.forArticle(
+      article = page.article,
+      baseURL = Configuration.amp.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(page, request, edition, None, linkedData, blocks.main, bodyBlocks, ???, hasStoryPackage, Nil)
+  }
+
+  def forLiveblog(
+      page: LiveBlogPage,
+      blocks: APIBlocks,
+      request: RequestHeader,
+      edition: Edition,
+      hasStoryPackage: Boolean,
+  ): DotcomRenderingDataModel = {
+    val pagination = page.currentPage.pagination.map(paginationInfo => {
+      Pagination(
+        currentPage = page.currentPage.currentPage.pageNumber,
+        totalPages = paginationInfo.numberOfPages,
+        newest = paginationInfo.newest.map(_.suffix),
+        newer = paginationInfo.newer.map(_.suffix),
+        oldest = paginationInfo.oldest.map(_.suffix),
+        older = paginationInfo.older.map(_.suffix),
+      )
+    })
+
+    val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
+    val keyEvents =
+      blocks.requestedBodyBlocks
+        .getOrElse(Map.empty[String, Seq[APIBlock]])
+        .getOrElse("body:key-events", Seq.empty[APIBlock])
+
+    val linkedData = LinkedData.forLiveblog(
+      liveblog = page,
+      blocks = bodyBlocks,
+      baseURL = Configuration.amp.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(
+      page,
+      request,
+      edition,
+      pagination,
+      linkedData,
+      blocks.main,
+      bodyBlocks,
+      pageType = ???,
+      hasStoryPackage,
+      keyEvents,
+    )
+  }
 
   def apply(
-    page: ContentPage,
-    request: RequestHeader,
-    edition: Edition,
-    pagination: Option[Pagination],
-    linkedData: List[LinkedData],
-    blocks: APIBlocks,
-    pageType: PageType, // TODO remove as format is better
-    hasStoryPackage: Boolean,
+      page: ContentPage,
+      request: RequestHeader,
+      edition: Edition,
+      pagination: Option[Pagination],
+      linkedData: List[LinkedData],
+      mainBlock: Option[APIBlock],
+      bodyBlocks: Seq[APIBlock],
+      pageType: PageType, // TODO remove as format is better
+      hasStoryPackage: Boolean,
+      keyEvents: Seq[APIBlock],
   ): DotcomRenderingDataModel = {
 
     def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
@@ -216,20 +285,6 @@ object DotcomRenderingDataModel {
           else pillar.toString.toLowerCase()
         }
         .getOrElse("news")
-    }
-
-    def nav(page: ContentPage, edition: Edition): Nav = {
-      val navMenu = NavMenu(page, edition)
-      Nav(
-        currentUrl = navMenu.currentUrl,
-        pillars = navMenu.pillars,
-        otherLinks = navMenu.otherLinks,
-        brandExtensions = navMenu.brandExtensions,
-        currentNavLinkTitle = navMenu.currentNavLink.map(NavLink.id),
-        currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
-        subNavSections = navMenu.subNavSections,
-        readerRevenueLinks = ReaderRevenueLinks.all,
-      )
     }
 
     def secondaryDateString(content: ContentType, request: RequestHeader): String = {
@@ -299,29 +354,17 @@ object DotcomRenderingDataModel {
       .headOption
       .flatMap(entry => entry._2.asOpt[String])
 
-    val mainBlock = {
-      blocks.main.map(block =>
-        Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes),
-      )
+    val mainBlockDCR = {
+      mainBlock.map(block => Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes))
     }
 
-    // TODO lift
-    val bodyBlocksRaw: Seq[com.gu.contentapi.client.model.v1.Block] = page match {
-      case lb: LiveBlogPage => DotcomRenderingUtils.blocksForLiveblogPage(lb, blocks)
-      case _          => blocks.body.getOrElse(Nil)
-    }
-
-    val bodyBlocks: List[model.dotcomrendering.Block] = bodyBlocksRaw
-      .filter(_.published || pageType.isPreview) // TODO lift
+    val bodyBlocksDCR: List[model.dotcomrendering.Block] = bodyBlocks
+      .filter(_.published || pageType.isPreview) // TODO lift?
       .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
       .toList
 
-    val keyEvents: Seq[model.dotcomrendering.Block] = {
-      blocks.requestedBodyBlocks
-        .getOrElse(Map.empty[String, Seq[APIBlock]])
-        .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
-    }
+    val keyEventsDCR =
+      keyEvents.map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
 
     val commercial: Commercial = {
       val editionCommercialProperties = content.metadata.commercial
@@ -345,7 +388,7 @@ object DotcomRenderingDataModel {
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
-      blocks = bodyBlocks,
+      blocks = bodyBlocksDCR,
       commercialProperties = commercial.editionCommercialProperties,
       config = combinedConfig,
       contentType = content.metadata.contentType.map(_.name).getOrElse(""),
@@ -362,12 +405,12 @@ object DotcomRenderingDataModel {
       isCommentable = content.trail.isCommentable,
       isImmersive = isImmersive,
       isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
-      keyEvents = keyEvents.toList,
+      keyEvents = keyEventsDCR.toList,
       linkedData = linkedData,
       main = content.fields.main,
-      mainMediaElements = mainBlock.toList.flatMap(_.elements),
+      mainMediaElements = mainBlockDCR.toList.flatMap(_.elements),
       matchUrl = DotcomRenderingUtils.makeMatchUrl(page),
-      nav = nav(page, edition),
+      nav = Nav(page, edition),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,
@@ -385,13 +428,15 @@ object DotcomRenderingDataModel {
       standfirst = TextCleaner.sanitiseLinks(edition)(content.fields.standfirst.getOrElse("")),
       starRating = content.content.starRating,
       subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
-      subMetaSectionLinks = content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
+      subMetaSectionLinks =
+        content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
       tags = content.tags.tags.map(Tag.apply),
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
       webPublicationDate = content.trail.webPublicationDate.toString,
-      webPublicationDateDisplay = GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
+      webPublicationDateDisplay =
+        GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
