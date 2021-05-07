@@ -18,6 +18,11 @@ class WallchartController(
     with GuLogging
     with ImplicitControllerExecutionContext {
 
+  def test(competitionTag: String): Action[AnyContent] =
+    Action { implicit request =>
+      Ok(competitionTag)
+    }
+
   def renderWallchartEmbed(competitionTag: String): Action[AnyContent] = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false): Action[AnyContent] =
     Action { implicit request =>

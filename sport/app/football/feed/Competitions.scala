@@ -126,6 +126,15 @@ object CompetitionsProvider {
       tableDividers = List(4, 5, 17),
     ),
     Competition(
+      "700",
+      "/football/world-cup-2018",
+      "World Cup 2018",
+      "World Cup 2018",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+    ),
+    Competition(
       "625",
       "/football/bundesligafootball",
       "Bundesliga",

@@ -7,6 +7,9 @@ GET        /assets/*path                                                        
 
 GET        /_healthcheck                                                                       football.controllers.HealthCheck.healthCheck()
 
+# Football Spider
+GET        /football/spider/:competitionTag                                                 football.controllers.WallchartController.renderWallchart(competitionTag)
+
 GET        /sport/cricket/match/:matchDate/:teamId.json                                        cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
 GET        /sport/cricket/match/:matchDate/:teamId                                             cricket.controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 
