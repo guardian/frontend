@@ -11,16 +11,11 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{ImgSrc, Item300}
 
-
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
 // making them incompatible with Dotcomponents. By having our own set of models, there's
 // only one reason for change.
 // Exceptions: we do reuse the existing Nav & BlockElement classes right now
-
-// -----------------------------------------------------------------
-// Supporting Types
-// -----------------------------------------------------------------
 
 case class Tag(
     id: String,
@@ -64,13 +59,13 @@ object Block {
 
   // TODO simplify date fields when DCR is ready
   def apply(
-    block: APIBlock,
-    page: ContentPage,
-    shouldAddAffiliateLinks: Boolean,
-    request: RequestHeader,
-    isMainBlock: Boolean,
-    calloutsUrl: Option[String],
-    dateTimes: ArticleDateTimes,
+      block: APIBlock,
+      page: ContentPage,
+      shouldAddAffiliateLinks: Boolean,
+      request: RequestHeader,
+      isMainBlock: Boolean,
+      calloutsUrl: Option[String],
+      dateTimes: ArticleDateTimes,
   ): Block = {
 
     val content = page.item

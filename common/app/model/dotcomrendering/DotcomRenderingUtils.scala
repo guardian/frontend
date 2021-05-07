@@ -1,33 +1,20 @@
 package model.dotcomrendering
 
-import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
-import common.Maps.RichMap
-import common.{Edition, Localisation, RichRequestHeader}
-import common.commercial.EditionCommercialProperties
-import conf.Configuration.affiliateLinks
-import conf.switches.Switches
+import common.Edition
 import conf.{Configuration, Static}
-import experiments.ActiveExperiments
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
-import model.{Article, ArticleDateTimes, ArticlePage, Badges, CanonicalLiveBlog, ContentFormat, ContentPage, ContentType, DisplayedDateTimesDCR, GUDateTimeFormatNew, LiveBlogPage, PageWithStoryPackage, Pillar}
-import navigation._
-import org.joda.time.DateTime
+import model.{CanonicalLiveBlog, ContentPage, ContentType, LiveBlogPage, Pillar}
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300, JavaScriptPage}
+import views.support.AffiliateLinksCleaner
 
-// We have introduced our own set of objects for serializing data to the DotComponents API,
-// because we don't want people changing the core frontend models and as a side effect,
-// making them incompatible with Dotcomponents. By having our own set of models, there's
-// only one reason for change.
-// exceptions: we do resuse the existing Nav & BlockElement classes right now
+import java.net.URLEncoder
 
 object DotcomRenderingUtils {
 
@@ -89,10 +76,6 @@ object DotcomRenderingUtils {
     }
   }
 
-  private def designTypeAsString(designType: Option[DesignType]): String = {
-    designType.map(_.toString).getOrElse("Article")
-  }
-
   def assetURL(bundlePath: String): String = {
     // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
     if (Configuration.environment.isProd || Configuration.environment.isCode) {
@@ -103,7 +86,7 @@ object DotcomRenderingUtils {
   }
 
   // note: this is duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common! :()
-  private def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
+  def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
     pillar
       .map { pillar =>
         if (designType == AdvertisementFeature) "labs"
@@ -187,65 +170,6 @@ object DotcomRenderingUtils {
     addDisclaimer(withTagLinks, capiElems, affiliateLinks)
   }
 
-  private def toBlock(
-      block: APIBlock,
-      page: PageWithStoryPackage,
-      shouldAddAffiliateLinks: Boolean,
-      request: RequestHeader,
-      isMainBlock: Boolean,
-      isImmersive: Boolean,
-      articleDateTimes: ArticleDateTimes,
-      calloutsUrl: Option[String],
-  ): Block = {
-
-    val article = page.article
-
-    // We are passing through the block data here, not the article
-    // the block dateTime types are used for liveblogs
-    val blockCreatedOn = block.createdDate.map(_.dateTime)
-    val blockCreatedOnDisplay =
-      blockCreatedOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
-
-    val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
-    val blockFirstPublishedDisplay =
-      blockFirstPublished.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
-
-    val blockLastUpdated = block.lastModifiedDate.map(_.dateTime)
-    val blockLastUpdatedDisplay =
-      blockLastUpdated.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
-
-    // last updated (in both versions) and first published (in both versions) are going to
-    // be computed from the article metadata.
-    // For this we introduced ArticleDateTimes in DatesAndTimes.
-    // This is meant to ensure that DCP and DCR use the same dates.
-    val displayedDateTimes: DisplayedDateTimesDCR =
-      ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
-    val campaigns = page.getJavascriptConfig.get("campaigns")
-
-    Block(
-      id = block.id,
-      elements = blockElementsToPageElements(
-        block.elements,
-        request,
-        article,
-        shouldAddAffiliateLinks,
-        isMainBlock,
-        isImmersive,
-        campaigns,
-        calloutsUrl,
-      ),
-      blockCreatedOn = blockCreatedOn,
-      blockCreatedOnDisplay = blockCreatedOnDisplay,
-      blockLastUpdated = blockLastUpdated,
-      blockLastUpdatedDisplay = blockLastUpdatedDisplay,
-      title = block.title,
-      blockFirstPublished = blockFirstPublished,
-      blockFirstPublishedDisplay = blockFirstPublishedDisplay,
-      primaryDateLine = displayedDateTimes.primaryDateLine,
-      secondaryDateLine = displayedDateTimes.secondaryDateLine,
-    )
-  }
-
   val specialReportTags: Set[String] = Set(
     "business/series/undercover-in-the-chicken-industry",
     "business/series/britains-debt-timebomb",
@@ -264,268 +188,5 @@ object DotcomRenderingUtils {
 
   def isSpecialReport(page: ContentPage): Boolean = {
     page.item.tags.tags.exists(t => specialReportTags(t.id))
-  }
-
-  // -----------------------------------------------------------------------
-
-  def fromArticle(
-      page: PageWithStoryPackage,
-      request: RequestHeader,
-      blocks: APIBlocks,
-      pageType: PageType,
-  ): DotcomRenderingDataModel = {
-
-    // Note: To help with readability and discoverability, all the values in this function have their types made explicit.
-
-    val article: Article = page.article
-
-    val switches: Map[String, Boolean] = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
-
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl = assetURL("javascripts/graun.commercial.dcr.js"),
-      ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
-    )
-
-    val jsPageConfig: Map[String, JsValue] = JavaScriptPage.getMap(page, Edition(request), false, request)
-    val combinedConfig: JsObject = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    val calloutsUrl: Option[String] = combinedConfig.fields.toList
-      .filter(entry => entry._1 == "calloutsUrl")
-      .headOption
-      .flatMap(entry => entry._2.asOpt[String])
-
-    // TODO this logic is duplicated from the cleaners, can we consolidate?
-    val shouldAddAffiliateLinks: Boolean = AffiliateLinksCleaner.shouldAddAffiliateLinks(
-      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-      section = article.metadata.sectionId,
-      showAffiliateLinks = article.content.fields.showAffiliateLinks,
-      supportedSections = affiliateLinks.affiliateLinkSections,
-      defaultOffTags = affiliateLinks.defaultOffTags,
-      alwaysOffTags = affiliateLinks.alwaysOffTags,
-      tagPaths = article.content.tags.tags.map(_.id),
-      firstPublishedDate = article.content.fields.firstPublicationDate,
-    )
-
-    val bodyBlocksRaw: Seq[com.gu.contentapi.client.model.v1.Block] = page match {
-      case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
-      case article          => blocks.body.getOrElse(Nil)
-    }
-
-    val articleDateTimes: ArticleDateTimes = ArticleDateTimes(
-      webPublicationDate = article.trail.webPublicationDate,
-      firstPublicationDate = article.fields.firstPublicationDate,
-      hasBeenModified = article.content.hasBeenModified,
-      lastModificationDate = article.fields.lastModified,
-    )
-
-    val bodyBlocks: List[model.dotcomrendering.Block] = bodyBlocksRaw
-      .filter(_.published || pageType.isPreview)
-      .map(block =>
-        toBlock(
-          block,
-          page,
-          shouldAddAffiliateLinks,
-          request,
-          false,
-          article.isImmersive,
-          articleDateTimes,
-          calloutsUrl,
-        ),
-      )
-      .toList
-
-    val pagination: Option[Pagination] = page match {
-      case liveblog: LiveBlogPage =>
-        liveblog.currentPage.pagination.map(paginationInfo => {
-          Pagination(
-            currentPage = liveblog.currentPage.currentPage.pageNumber,
-            totalPages = paginationInfo.numberOfPages,
-            newest = paginationInfo.newest.map(_.suffix),
-            newer = paginationInfo.newer.map(_.suffix),
-            oldest = paginationInfo.oldest.map(_.suffix),
-            older = paginationInfo.older.map(_.suffix),
-          )
-        })
-      case _ => None
-    }
-
-    val mainBlock: Option[model.dotcomrendering.Block] = {
-      blocks.main.map(block =>
-        toBlock(block, page, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes, calloutsUrl),
-      )
-    }
-
-    val keyEvents: Seq[model.dotcomrendering.Block] = {
-      blocks.requestedBodyBlocks
-        .getOrElse(Map.empty[String, Seq[APIBlock]])
-        .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block =>
-          toBlock(
-            block,
-            page,
-            shouldAddAffiliateLinks,
-            request,
-            false,
-            article.isImmersive,
-            articleDateTimes,
-            calloutsUrl,
-          ),
-        )
-    }
-
-    val jsConfig: String => Option[String] = (k: String) => page.getJavascriptConfig.get(k).map(_.as[String])
-
-    // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
-    // For example, we need to provide an image of at least 1200px width to be valid here
-    val linkedData: List[LinkedData] = {
-      page match {
-        case liveblog: LiveBlogPage =>
-          LinkedData.forLiveblog(
-            liveblog = liveblog,
-            blocks = bodyBlocksRaw,
-            baseURL = Configuration.amp.baseUrl,
-            fallbackLogo = Configuration.images.fallbackLogo,
-          )
-        case regular: ArticlePage =>
-          LinkedData.forArticle(
-            article = regular.article,
-            baseURL = Configuration.amp.baseUrl,
-            fallbackLogo = Configuration.images.fallbackLogo,
-          )
-      }
-    }
-
-    val openGraphData: Map[String, String] = page.getOpenGraphProperties;
-    val twitterData: Map[String, String] = page.getTwitterProperties
-
-    val allTags: List[Tag] = article.tags.tags.map(t =>
-      Tag(
-        t.id,
-        t.properties.tagType,
-        t.properties.webTitle,
-        t.properties.twitterHandle,
-        t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
-      ),
-    )
-
-    val nav: Nav = {
-      val navMenu = NavMenu(page, Edition(request))
-      Nav(
-        currentUrl = navMenu.currentUrl,
-        pillars = navMenu.pillars,
-        otherLinks = navMenu.otherLinks,
-        brandExtensions = navMenu.brandExtensions,
-        currentNavLinkTitle = navMenu.currentNavLink.map(NavLink.id),
-        currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
-        subNavSections = navMenu.subNavSections,
-        readerRevenueLinks = ReaderRevenueLinks.all,
-      )
-    }
-
-    val commercial: Commercial = Commercial(
-      editionCommercialProperties = article.metadata.commercial
-        .map { _.perEdition.mapKeys(_.id) }
-        .getOrElse(Map.empty[String, EditionCommercialProperties]),
-      prebidIndexSites = (for {
-        commercial <- article.metadata.commercial
-        sites <- commercial.prebidIndexSites
-      } yield sites.toList).getOrElse(List()),
-      article.metadata.commercial,
-      pageType,
-    )
-
-    val byline: Option[String] = article.trail.byline
-
-    val author: Author = Author(
-      byline = byline,
-      twitterHandle = article.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
-    )
-
-    val badge: Option[DCRBadge] = Badges
-      .badgeFor(article)
-      .map(badge =>
-        DCRBadge(
-          badge.seriesTag,
-          badge.imageUrl,
-        ),
-      )
-
-    val pageFooter: PageFooter = PageFooter(
-      FooterLinks.getFooterByEdition(Edition(request)),
-    )
-
-    val isPaidContent: Boolean = article.metadata.designType.contains(AdvertisementFeature)
-    val edition: Edition = Edition(request)
-
-    val displayedDateTimes: DisplayedDateTimesDCR =
-      ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
-
-    DotcomRenderingDataModel(
-      version = 3, // Int
-      headline = article.trail.headline,
-      standfirst = TextCleaner.sanitiseLinks(edition)(article.fields.standfirst.getOrElse("")),
-      webTitle = article.metadata.webTitle,
-      mainMediaElements = mainBlock.toList.flatMap(_.elements),
-      main = article.fields.main,
-      keyEvents = keyEvents.toList,
-      blocks = bodyBlocks,
-      pagination = pagination,
-      author = author,
-      webPublicationDate = article.trail.webPublicationDate.toString,
-      webPublicationDateDisplay =
-        GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
-      webPublicationSecondaryDateDisplay = displayedDateTimes.secondaryDateLine,
-      editionLongForm = Edition(request).displayName,
-      editionId = edition.id,
-      pageId = article.metadata.id,
-      format = article.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
-      designType = designTypeAsString(article.metadata.designType),
-      tags = allTags,
-      pillar = findPillar(article.metadata.pillar, article.metadata.designType),
-      isImmersive = article.isImmersive,
-      sectionLabel = Localisation(article.content.sectionLabelName.getOrElse(""))(request),
-      sectionUrl = article.content.sectionLabelLink.getOrElse(""),
-      sectionName = article.metadata.section.map(_.value),
-      subMetaSectionLinks = article.content.submetaLinks.sectionLabels
-        .map(SubMetaLink.apply)
-        .filter(_.title.trim.nonEmpty),
-      subMetaKeywordLinks = article.content.submetaLinks.keywords.map(SubMetaLink.apply),
-      shouldHideAds = article.content.shouldHideAdverts,
-      isAdFreeUser = views.support.Commercial.isAdFree(request),
-      webURL = article.metadata.webUrl,
-      linkedData = linkedData,
-      openGraphData = openGraphData,
-      twitterData = twitterData,
-      config = combinedConfig,
-      guardianBaseURL = Configuration.site.host,
-      contentType = jsConfig("contentType").getOrElse(""),
-      hasRelated = article.content.showInRelated,
-      hasStoryPackage = page.related.hasStoryPackage,
-      beaconURL = Configuration.debug.beaconUrl,
-      isCommentable = article.trail.isCommentable,
-      commercialProperties = commercial.editionCommercialProperties,
-      pageType = pageType,
-      starRating = article.content.starRating,
-      trailText = TextCleaner.sanitiseLinks(edition)(article.trail.fields.trailText.getOrElse("")),
-      nav = nav,
-      showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
-      pageFooter = pageFooter,
-      publication = article.content.publication,
-      // See pageShouldHideReaderRevenue in contributions-utilities.js
-      shouldHideReaderRevenue = article.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
-      slotMachineFlags = request.slotMachineFlags,
-      contributionsServiceUrl = Configuration.contributionsService.url,
-      badge = badge,
-      matchUrl = makeMatchUrl(page),
-      isSpecialReport = isSpecialReport(page),
-    )
   }
 }

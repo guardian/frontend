@@ -90,7 +90,10 @@ class ArticleController(
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
-    DotcomRenderingDataModel.toJson(DotcomRenderingUtils.fromArticle(article, request, blocks, pageType))
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel
+        .forArticle(article, blocks, request, pageType),
+    )
   }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit

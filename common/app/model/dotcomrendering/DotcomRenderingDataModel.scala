@@ -1,8 +1,8 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
+import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
-import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Edition, Localisation, RichRequestHeader}
@@ -12,6 +12,7 @@ import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
+  ArticlePage,
   Badges,
   ContentFormat,
   ContentPage,
@@ -20,7 +21,6 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
-  Pillar,
 }
 import navigation._
 import org.joda.time.DateTime
@@ -88,37 +88,6 @@ case class DotcomRenderingDataModel(
     matchUrl: Option[String], // Optional url used for match data
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
 )
-
-object ElementsEnhancer {
-
-  // Note:
-  //     In the file PageElement-Identifiers.md you will find a discussion of identifiers used by PageElements
-  //     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
-
-  def enhanceElement(element: JsValue): JsValue = {
-    element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
-  }
-
-  def enhanceElements(elements: JsValue): IndexedSeq[JsValue] = {
-    elements.as[JsArray].value.map(element => enhanceElement(element))
-  }
-
-  def enhanceObjectWithElementsAtDepth1(obj: JsValue): JsValue = {
-    val elements = obj.as[JsObject].value("elements")
-    obj.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
-  }
-
-  def enhanceObjectsWithElementsAtDepth1(objs: JsValue): IndexedSeq[JsValue] = {
-    objs.as[JsArray].value.map(obj => enhanceObjectWithElementsAtDepth1(obj))
-  }
-
-  def enhanceDcrObject(obj: JsObject): JsObject = {
-    obj ++
-      Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks"))) ++
-      Json.obj("mainMediaElements" -> enhanceElements(obj.value("mainMediaElements"))) ++
-      Json.obj("keyEvents" -> enhanceObjectsWithElementsAtDepth1(obj.value("keyEvents")))
-  }
-}
 
 object DotcomRenderingDataModel {
 
@@ -199,14 +168,27 @@ object DotcomRenderingDataModel {
   def forInteractive(
       page: InteractivePage,
       request: RequestHeader,
-  ): DotcomRenderingDataModel = ???
+      pageType: PageType,
+  ): DotcomRenderingDataModel = {
+
+    apply(
+      page,
+      request,
+      None,
+      linkedData = Nil, // TODO
+      mainBlock = None, // TODO?
+      bodyBlocks = Nil, // TODO?
+      pageType,
+      page.related.hasStoryPackage,
+      keyEvents = Nil,
+    )
+  }
 
   def forArticle(
-      page: PageWithStoryPackage,
+      page: PageWithStoryPackage, // for now, any non-liveblog page type
       blocks: APIBlocks,
       request: RequestHeader,
-      edition: Edition,
-      hasStoryPackage: Boolean,
+      pageType: PageType,
   ): DotcomRenderingDataModel = {
     val bodyBlocks = blocks.body.getOrElse(Nil)
 
@@ -216,15 +198,24 @@ object DotcomRenderingDataModel {
       fallbackLogo = Configuration.images.fallbackLogo,
     )
 
-    apply(page, request, edition, None, linkedData, blocks.main, bodyBlocks, ???, hasStoryPackage, Nil)
+    apply(
+      page,
+      request,
+      None,
+      linkedData,
+      blocks.main,
+      bodyBlocks,
+      pageType,
+      page.related.hasStoryPackage,
+      Nil,
+    )
   }
 
   def forLiveblog(
       page: LiveBlogPage,
       blocks: APIBlocks,
       request: RequestHeader,
-      edition: Edition,
-      hasStoryPackage: Boolean,
+      pageType: PageType,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -253,13 +244,12 @@ object DotcomRenderingDataModel {
     apply(
       page,
       request,
-      edition,
       pagination,
       linkedData,
       blocks.main,
       bodyBlocks,
-      pageType = ???,
-      hasStoryPackage,
+      pageType,
+      page.related.hasStoryPackage,
       keyEvents,
     )
   }
@@ -267,7 +257,6 @@ object DotcomRenderingDataModel {
   def apply(
       page: ContentPage,
       request: RequestHeader,
-      edition: Edition,
       pagination: Option[Pagination],
       linkedData: List[LinkedData],
       mainBlock: Option[APIBlock],
@@ -276,16 +265,6 @@ object DotcomRenderingDataModel {
       hasStoryPackage: Boolean,
       keyEvents: Seq[APIBlock],
   ): DotcomRenderingDataModel = {
-
-    def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
-      pillar
-        .map { pillar =>
-          if (designType == AdvertisementFeature) "labs"
-          else if (pillar.toString.toLowerCase == "arts") "culture"
-          else pillar.toString.toLowerCase()
-        }
-        .getOrElse("news")
-    }
 
     def secondaryDateString(content: ContentType, request: RequestHeader): String = {
       def format(dt: DateTime, req: RequestHeader): String = GUDateTimeFormatNew.formatDateTimeForDisplay(dt, req)
@@ -301,16 +280,17 @@ object DotcomRenderingDataModel {
       }
     }
 
+    val edition = Edition.edition(request)
     val content = page.item
     val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
-    val isPaidContent: Boolean = content.metadata.designType.contains(AdvertisementFeature)
+    val isPaidContent = content.metadata.designType.contains(AdvertisementFeature)
 
     val author: Author = Author(
       byline = content.trail.byline,
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    val shouldAddAffiliateLinks: Boolean = AffiliateLinksCleaner.shouldAddAffiliateLinks(
+    val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
       switchedOn = Switches.AffiliateLinks.isSwitchedOn,
       section = content.metadata.sectionId,
       showAffiliateLinks = content.content.fields.showAffiliateLinks,
@@ -354,9 +334,11 @@ object DotcomRenderingDataModel {
       .headOption
       .flatMap(entry => entry._2.asOpt[String])
 
-    val mainBlockDCR = {
-      mainBlock.map(block => Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes))
-    }
+    val mainMediaElements =
+      mainBlock
+        .map(block => Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes))
+        .toList
+        .flatMap(_.elements)
 
     val bodyBlocksDCR: List[model.dotcomrendering.Block] = bodyBlocks
       .filter(_.published || pageType.isPreview) // TODO lift?
@@ -408,7 +390,7 @@ object DotcomRenderingDataModel {
       keyEvents = keyEventsDCR.toList,
       linkedData = linkedData,
       main = content.fields.main,
-      mainMediaElements = mainBlockDCR.toList.flatMap(_.elements),
+      mainMediaElements = mainMediaElements,
       matchUrl = DotcomRenderingUtils.makeMatchUrl(page),
       nav = Nav(page, edition),
       openGraphData = page.getOpenGraphProperties,
@@ -416,7 +398,7 @@ object DotcomRenderingDataModel {
       pageId = content.metadata.id,
       pageType = pageType, // TODO this info duplicates what is already elsewhere in format?
       pagination = pagination,
-      pillar = findPillar(content.metadata.pillar, content.metadata.designType),
+      pillar = DotcomRenderingUtils.findPillar(content.metadata.pillar, content.metadata.designType),
       publication = content.content.publication,
       sectionLabel = Localisation(content.content.sectionLabelName.getOrElse(""))(request),
       sectionName = content.metadata.section.map(_.value),

@@ -112,7 +112,7 @@ class InteractiveController(
   def renderDCRJsonObject(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
       case Left(model) => {
-        val data = InteractivesDotcomRenderingDataObject.mockDataObject(model)
+        val data = DotcomRenderingDataModel.forInteractive(model, request, PageType.apply(model, request, context))
         val dataJson = DotcomRenderingDataModel.toJson(data)
         Ok(dataJson).as("application/json")
       }
