@@ -1947,6 +1947,11 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-1.9.0.tgz#288e9c338db891ec67f4669bf2e2a30a12e513e4"
   integrity sha512-1JGr4szmYZGhUtvWPKkO8l//5JHlocY7UXnEFszkJOsrbHECJcR3BmqX8KB3Yl+Gu4G1+r0lZ1+QIrgi02xVZw==
 
+"@guardian/src-foundations@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.5.0.tgz#b31d8a2a41c594bbc4551c9d53738f2515f321f5"
+  integrity sha512-Xx5kq1bJLKpghBRnFjzKAfnZsWcP76aQfTf7sA1hgq61o/CXHYTTL2iv3AF186zvxEMZ1oZ+Xo0E8TvzX1aLBQ==
+
 "@guardian/src-grid@2.7.1":
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/@guardian/src-grid/-/src-grid-2.7.1.tgz#e6c524259bcb9edb3d219f29fd04ad96e4d0f655"
