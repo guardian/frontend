@@ -304,14 +304,14 @@ object DotcomRenderingDataModel {
       )
     }
 
-    // TODO we should not do this branching in this method but before
+    // TODO lift
     val bodyBlocksRaw: Seq[com.gu.contentapi.client.model.v1.Block] = page match {
       case lb: LiveBlogPage => DotcomRenderingUtils.blocksForLiveblogPage(lb, blocks)
       case _          => blocks.body.getOrElse(Nil)
     }
 
     val bodyBlocks: List[model.dotcomrendering.Block] = bodyBlocksRaw
-      .filter(_.published || pageType.isPreview)
+      .filter(_.published || pageType.isPreview) // TODO lift
       .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
       .toList
 
@@ -321,8 +321,6 @@ object DotcomRenderingDataModel {
         .getOrElse("body:key-events", Seq.empty[APIBlock])
         .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
     }
-
-    val jsConfig: String => Option[String] = (k: String) => page.getJavascriptConfig.get(k).map(_.as[String])
 
     val commercial: Commercial = Commercial(
       editionCommercialProperties = content.metadata.commercial
@@ -358,7 +356,7 @@ object DotcomRenderingDataModel {
       blocks = bodyBlocks,
       commercialProperties = commercial.editionCommercialProperties,
       config = combinedConfig,
-      contentType = jsConfig("contentType").getOrElse(""),
+      contentType = content.metadata.contentType.map(_.name).getOrElse(""),
       contributionsServiceUrl = Configuration.contributionsService.url,
       designType = content.metadata.designType.map(_.toString).getOrElse("Article"),
       editionId = edition.id,
