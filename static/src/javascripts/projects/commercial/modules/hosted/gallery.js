@@ -1,6 +1,5 @@
 import fastdom from 'fastdom';
 import throttle from 'lodash/throttle';
-import { $$ } from '../../../../lib/$$';
 import config from '../../../../lib/config';
 import { getBreakpoint, hasTouchScreen } from '../../../../lib/detect';
 import FiniteStateMachine from '../../../../lib/fsm';
@@ -22,24 +21,24 @@ class HostedGallery {
         this.imageRatios = [];
 
         // ELEMENT BINDINGS
-        this.$galleryEl = $$('.js-hosted-gallery-container').get(0);
-        this.$galleryFrame = $$('.js-hosted-gallery-frame').get(0);
-        this.$header = $$('.js-hosted-headerwrap').get(0);
-        this.$imagesContainer = $$('.js-hosted-gallery-images', this.$galleryEl).get(0);
-        this.$captionContainer = $$('.js-gallery-caption-bar').get(0);
-        this.$captions = $$('.js-hosted-gallery-caption', this.$captionContainer).get();
-        this.$scrollEl = $$('.js-hosted-gallery-scroll-container', this.$galleryEl).get(0);
+        this.$galleryEl = document.querySelector('.js-hosted-gallery-container');
+        this.$galleryFrame = document.querySelector('.js-hosted-gallery-frame');
+        this.$header = document.querySelector('.js-hosted-headerwrap');
+        this.$imagesContainer = this.$galleryEl.querySelector('.js-hosted-gallery-images');
+        this.$captionContainer = document.querySelector('.js-gallery-caption-bar');
+        this.$captions = [...this.$captionContainer.querySelectorAll('.js-hosted-gallery-caption')];
+        this.$scrollEl = this.$galleryEl.querySelector('.js-hosted-gallery-scroll-container');
 
-        this.$images = $$('.js-hosted-gallery-image', this.$imagesContainer).get();
-        this.$progress = $$('.js-hosted-gallery-progress', this.$galleryEl).get(0);
-        this.$border = $$('.js-hosted-gallery-rotating-border', this.$progress).get(0);
+        this.$images = [...this.$imagesContainer.querySelectorAll('.js-hosted-gallery-image')];
+        this.$progress = this.$galleryEl.querySelector('.js-hosted-gallery-progress');
+        this.$border = this.$progress.querySelector('.js-hosted-gallery-rotating-border');
         this.prevBtn = this.$progress.querySelector('.inline-arrow-up');
         this.nextBtn = this.$progress.querySelector('.inline-arrow-down');
         this.infoBtn = this.$captionContainer.querySelector('.js-gallery-caption-button');
-        this.$counter = $$('.js-hosted-gallery-image-count', this.$progress).get(0);
-        this.$ctaFloat = $$('.js-hosted-gallery-cta', this.$galleryEl).get(0);
-        this.$ojFloat = $$('.js-hosted-gallery-oj', this.$galleryEl).get(0);
-        this.$meta = $$('.js-hosted-gallery-meta', this.$galleryEl).get(0);
+        this.$counter = this.$progress.querySelector('.js-hosted-gallery-image-count');
+        this.$ctaFloat = this.$galleryEl.querySelector('.js-hosted-gallery-cta');
+        this.$ojFloat = this.$galleryEl.querySelector('.js-hosted-gallery-oj');
+        this.$meta = this.$galleryEl.querySelector('.js-hosted-gallery-meta');
         this.ojClose = this.$ojFloat.querySelector('.js-hosted-gallery-oj-close');
 
         if (this.$galleryEl) {
@@ -249,7 +248,7 @@ class HostedGallery {
         const $ojFloat = this.$ojFloat;
         const $meta = this.$meta;
         const $images = this.$images;
-        const $sizer = $$('.js-hosted-gallery-image-sizer', $imageDiv).get(0);
+        const $sizer = $imageDiv.querySelector('.js-hosted-gallery-image-sizer');
         const imgRatio = this.imageRatios[imgIndex];
         const ctaSize = getFrame(0);
         const ctaIndex = HostedGallery.ctaIndex();
