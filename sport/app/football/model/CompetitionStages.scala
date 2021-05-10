@@ -6,7 +6,7 @@ import java.time.{ZoneId, ZonedDateTime}
 import model.Competition
 import pa._
 import implicits.Football._
-
+import play.api.libs.json.{Json, Writes}
 import scala.util.Try
 
 sealed trait CompetitionStageLike {

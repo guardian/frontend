@@ -5,7 +5,7 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import model.{ApplicationContext, Cached}
-import football.model.{CompetitionStage, KnockoutSpider}
+import football.model.{CompetitionStage, KnockoutSpider, WallchartJson}
 import pa.FootballMatch
 
 import java.time.ZonedDateTime
@@ -63,6 +63,22 @@ class WallchartController(
         }
         case _ => NotFound
       }
+    }
+
+  def getWallChartApiJson(competitionTag: String, embed: Boolean = false): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionTag)
+        .map { competition =>
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+
+          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+          Cached(60) {
+            JsonComponent(WallchartJson(competition, competitionStages, nextMatch))
+          }
+        }
+        .getOrElse(NotFound)
     }
 }
 
