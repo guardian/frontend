@@ -84,7 +84,7 @@ const initialise = (window, framework = 'tcfv2') => {
               name: 'permutive',
               waitForIt: true,
               params: {
-                acBidders: ['appnexus', 'rubicon', 'ozone']
+                acBidders: ['appnexus', 'ozone', 'trustx']
               }
             }]
           }
