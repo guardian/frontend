@@ -1,4 +1,3 @@
-import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import throttle from 'lodash/throttle';
 import { $$ } from '../../../../lib/$$';
@@ -83,6 +82,14 @@ class HostedGallery {
 
     toggleOj() {
         this.$ojFloat.classList.toggle('minimise-oj');
+    }
+
+    toggleClass(el, className, opt_condition) {
+        if (el) {
+              typeof opt_condition !== 'undefined' ?
+                opt_condition ? el.classList.add(className) : el.classList.remove(className) :
+                el.toggleClass(className);
+        }
     }
 
     initScroll() {
@@ -255,22 +262,16 @@ class HostedGallery {
             $sizer.style.top =  imageSize.topBottom;
             $sizer.style.left =  imageSize.leftRight;
             if (imgIndex === ctaIndex) {
-                bonzo($ctaFloat).css('bottom', ctaSize.topBottom);
+                $ctaFloat.style.setProperty('bottom', ctaSize.topBottom);
             }
             if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css('bottom', ctaSize.topBottom);
+                $ojFloat.style.setProperty('bottom', ctaSize.topBottom);
             }
             if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css(
-                    'padding-bottom',
-                    ctaSize.topBottom > 40 || width > tabletSize ? 0 : 40
-                );
+                $ojFloat.style.setProperty('padding-bottom', ctaSize.topBottom > 40 || width > tabletSize ? 0 : 40);
             }
             if (imgIndex === 0) {
-                bonzo($meta).css(
-                    'padding-bottom',
-                    imageSize.topBottom > 40 || width > tabletSize ? 20 : 40
-                );
+                $meta.style.setProperty('padding-bottom', imageSize.topBottom > 40 || width > tabletSize ? 20 : 40);
             }
         });
     }
@@ -291,7 +292,7 @@ class HostedGallery {
         galleryEl.style.transform = `translate(${px +
             offset}px,0) translateZ(0)`;
         fastdom.mutate(() => {
-            bonzo($meta).css('opacity', offset !== 0 ? 0 : 1);
+            $meta.style.setProperty('opacity', offset !== 0 ? 0 : 1);
         });
     }
 
@@ -310,27 +311,31 @@ class HostedGallery {
         fastdom.mutate(() => {
             this.$images.forEach((image, index) => {
                 const opacity = ((progress - index + 1) * 16) / 11 - 0.0625;
-                bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
+                image.style.setProperty('opacity', Math.min(Math.max(opacity, 0), 1));
             });
 
-            bonzo(this.$border).css('transform', `rotate(${deg}deg)`);
-            bonzo(this.$border).css('-webkit-transform', `rotate(${deg}deg)`);
+            this.$border.style.setProperty('transform', `rotate(${deg}deg)`);
+            this.$border.style.setProperty('-webkit-transform', `rotate(${deg}deg)`);
 
-            bonzo(this.$galleryEl).toggleClass(
+            this.toggleClass(
+                this.$galleryEl,
                 'show-cta',
                 progress <= ctaIndex && progress >= ctaIndex - 0.25
             );
-            bonzo(this.$galleryEl).toggleClass(
+
+            this.toggleClass(
+                this.$galleryEl,
                 'show-oj',
                 progress >= length - 1.25
             );
 
-            bonzo(this.$progress).toggleClass(
+            this.toggleClass(
+                this.$progress,
                 'first-half',
                 fractionProgress && fractionProgress < 0.5
             );
 
-            bonzo(this.$meta).css('opacity', progress !== 0 ? 0 : 1);
+            this.$meta.style.setProperty('opacity', progress !== 0 ? 0 : 1);
         });
 
         if (newIndex && newIndex !== this.index) {
@@ -346,7 +351,7 @@ class HostedGallery {
         const length = this.$images.length;
         const scrollHeight = scrollEl.scrollHeight;
         fastdom.mutate(() => {
-            bonzo(scrollEl).scrollTop(((index - 1) * scrollHeight) / length);
+            scrollEl.scrollTop = ((index - 1) * scrollHeight) / length;
         });
     }
 
@@ -455,20 +460,23 @@ HostedGallery.prototype.states = {
             // load prev/current/next
             this.loadSurroundingImages(this.index, this.$images.length);
             this.$captions.forEach((caption, index) => {
-                bonzo(caption).toggleClass(
+                this.toggleClass(
+                    caption,
                     'current-caption',
                     that.index === index + 1
                 );
             });
-            bonzo(this.$counter).html(`${this.index}/${this.$images.length}`);
+            this.$counter.textContent = `${this.index}/${this.$images.length}`;
 
             if (this.useSwipe) {
                 this.translateContent(this.index, 0, 100);
-                bonzo(this.$galleryEl).toggleClass(
+                this.toggleClass(
+                    this.$galleryEl,
                     'show-oj',
                     this.index === this.$images.length
                 );
-                bonzo(this.$galleryEl).toggleClass(
+                this.toggleClass(
+                    this.$galleryEl,
                     'show-cta',
                     this.index === HostedGallery.ctaIndex() + 1
                 );
