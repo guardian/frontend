@@ -119,11 +119,10 @@ class InteractiveController(
   def renderDCRJsonObject(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
       case Left((model, blocks)) => {
-        println(blocks)
         val data =
           DotcomRenderingDataModel.forInteractive(model, blocks, request, PageType.apply(model, request, context))
         val dataJson = DotcomRenderingDataModel.toJson(data)
-        Ok(dataJson).as("application/json")
+        common.renderJson(dataJson, model).as("application/json")
       }
       case Right(other) => RenderOtherStatus(other)
     }
@@ -134,12 +133,8 @@ class InteractiveController(
     val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
     (requestFormat, renderingTier) match {
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-      case (JsonFormat, DotcomRendering) => {
-        val data = InteractivesDotcomRenderingDataObject.mockDataObject()
-        val dataJson = DotcomRenderingDataModel.toJson(data)
-        Future.successful(Ok(dataJson).as("application/json"))
-      }
-      case _ => RenderItemLegacy(path: String)
+      case (JsonFormat, DotcomRendering)      => renderDCRJsonObject(path)
+      case _                                  => renderItemLegacy(path: String)
     }
   }
 
