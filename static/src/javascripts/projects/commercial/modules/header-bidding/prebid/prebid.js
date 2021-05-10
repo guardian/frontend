@@ -77,6 +77,19 @@ const initialise = (window, framework = 'tcfv2') => {
         pbjsConfig.consentManagement = consentManagement()
     }
 
+    if(config.get("switches.permutive", false)) {
+        pbjsConfig.realTimeData = {
+            auctionDelay: 50,
+            dataProviders: [{
+              name: 'permutive',
+              waitForIt: true,
+              params: {
+                acBidders: ['appnexus', 'rubicon', 'ozone']
+              }
+            }]
+          }
+    }
+
     window.pbjs.setConfig(pbjsConfig);
 
     if (config.get('switches.prebidAnalytics', false)) {
