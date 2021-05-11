@@ -45,10 +45,10 @@ object NewsletterEmbedDesign
     )
 
 object PrebidWithPermutive
-  extends Experiment(
-    name = "prebid-with-permutive",
-    description = "Enables permutive real-time config for Prebid.js",
-    owners = group(Commercial),
-    sellByDate = new LocalDate(2021, 6, 1),
-    participationGroup = Perc0B,
-  )
+    extends Experiment(
+      name = "prebid-with-permutive",
+      description = "Enables permutive real-time config for Prebid.js",
+      owners = group(Commercial),
+      sellByDate = new LocalDate(2021, 6, 1),
+      participationGroup = Perc0B,
+    )
