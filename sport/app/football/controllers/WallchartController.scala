@@ -23,6 +23,13 @@ class WallchartController(
       Ok(competitionTag)
     }
 
+  object WallchartController {
+    def nextMatch(matches: Seq[FootballMatch], after: ZonedDateTime): Option[FootballMatch] = {
+      val ordered = matches.sortBy(_.date.toInstant.toEpochMilli)
+      ordered.find(game => game.date.isAfter(after))
+    }
+  }
+
   def renderWallchartEmbed(competitionTag: String): Action[AnyContent] = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false): Action[AnyContent] =
     Action { implicit request =>
@@ -52,6 +59,34 @@ class WallchartController(
         .getOrElse(NotFound)
     }
 
+  def renderWallchartHTML(competitionID: String, _embed: Boolean = false): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionID: String)
+        .map { competition =>
+          val page = new FootballPage(
+            competition.url.stripSuffix("/"),
+            "football",
+            s"${competition.fullName} wallchart",
+          )
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+
+          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+          Cached(60) {
+            if (_embed)
+              RevalidatableResult.Ok(
+                football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch),
+              )
+            else
+              RevalidatableResult.Ok(
+                football.views.html.wallchart.page(page, competition, competitionStages, nextMatch),
+              )
+          }
+        }
+        .getOrElse(NotFound)
+    }
+
   def renderWallchartJson(competitionTag: String): Action[AnyContent] =
     Action { implicit request =>
       competitionsService.competitionsWithTag(competitionTag) match {
@@ -69,11 +104,4 @@ class WallchartController(
         case _ => NotFound
       }
     }
-}
-
-object WallchartController {
-  def nextMatch(matches: Seq[FootballMatch], after: ZonedDateTime): Option[FootballMatch] = {
-    val ordered = matches.sortBy(_.date.toInstant.toEpochMilli)
-    ordered.find(game => game.date.isAfter(after))
-  }
 }

@@ -133,6 +133,7 @@ object CompetitionsProvider {
       "Internationals",
       showInTeamsList = true,
       tableDividers = List(2),
+      startDate = Some(LocalDate.of(2018, 6, 1)),
     ),
     Competition(
       "625",
@@ -311,6 +312,16 @@ object CompetitionsProvider {
       "European",
     ),
     Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
+    Competition(
+      "750",
+      "/football/euro-2020",
+      "Euro 2020",
+      "Euro 2020",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2019, 11, 30)),
+    ),
   )
 }
 
