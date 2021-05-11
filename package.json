@@ -15,7 +15,7 @@
     "@emotion/styled": "^10.0.27",
     "@guardian/atom-renderer": "1.2.2",
     "@guardian/automat-contributions": "^0.3.6",
-    "@guardian/automat-modules": "^0.3.7",
+    "@guardian/automat-modules": "^0.3.8",
     "@guardian/braze-components": "1.1.0",
     "@guardian/commercial-core": "^0.16.3",
     "@guardian/consent-management-platform": "^6.11.3",
