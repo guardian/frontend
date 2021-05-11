@@ -42,3 +42,12 @@ object NewsletterEmbedDesign
       sellByDate = new LocalDate(2020, 11, 30),
       participationGroup = Perc20A,
     )
+
+object PrebidWithPermutive
+  extends Experiment(
+    name = "prebid-permutive",
+    description = "Enables permutive real-time config for Prebid.js",
+    owners = Seq(Owner.group("commercial")),
+    sellByDate = new LocalDate(2021, 6, 1),
+    participationGroup = Perc0B,
+  )
