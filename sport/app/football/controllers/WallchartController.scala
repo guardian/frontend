@@ -18,11 +18,6 @@ class WallchartController(
     with GuLogging
     with ImplicitControllerExecutionContext {
 
-  def test(competitionTag: String): Action[AnyContent] =
-    Action { implicit request =>
-      Ok(competitionTag)
-    }
-
   object WallchartController {
     def nextMatch(matches: Seq[FootballMatch], after: ZonedDateTime): Option[FootballMatch] = {
       val ordered = matches.sortBy(_.date.toInstant.toEpochMilli)
@@ -59,7 +54,7 @@ class WallchartController(
         .getOrElse(NotFound)
     }
 
-  def renderWallchartHTML(competitionID: String, _embed: Boolean = false): Action[AnyContent] =
+  def renderWallchartHTML(competitionID: String): Action[AnyContent] =
     Action { implicit request =>
       competitionsService
         .competitionsWithTag(competitionID: String)
@@ -74,14 +69,9 @@ class WallchartController(
 
           val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
           Cached(60) {
-            if (_embed)
-              RevalidatableResult.Ok(
-                football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch),
-              )
-            else
-              RevalidatableResult.Ok(
-                football.views.html.wallchart.page(page, competition, competitionStages, nextMatch),
-              )
+            RevalidatableResult.Ok(
+              football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch),
+            )
           }
         }
         .getOrElse(NotFound)
