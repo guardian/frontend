@@ -84,7 +84,7 @@ object Dependencies {
     may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
     dependencies have been upgraded), then do remember to check for regressions.
    */
-  val jacksonVersion = "2.12.1"
+  val jacksonVersion = "2.11.4"
   val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
