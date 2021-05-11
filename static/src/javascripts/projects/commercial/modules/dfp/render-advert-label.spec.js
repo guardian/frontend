@@ -31,6 +31,10 @@ describe('Rendering advert labels', () => {
             bonzo.create('<div class="js-ad-slot ad-slot--frame"></div>')
         );
 
+        adverts.uh = bonzo(
+            bonzo.create('<div class="js-ad-slot u-h"></div>')
+        );
+
         adverts.topAboveNav = bonzo(
             bonzo.create(`<div class="js-ad-slot" id="dfp-ad--top-above-nav"></div>`)
         );
@@ -71,6 +75,12 @@ describe('Rendering advert labels', () => {
     it('Will not add a label to frame ads', () =>
         renderAdvertLabel(adverts.frame[0]).then(() => {
             const label = adverts.frame[0].querySelector(labelSelector);
+            expect(label).toBeNull();
+        }));
+
+    it('Will not add a label to an ad slot with a hidden u-h class', () =>
+        renderAdvertLabel(adverts.uh[0]).then(() => {
+            const label = adverts.uh[0].querySelector(labelSelector);
             expect(label).toBeNull();
         }));
 
