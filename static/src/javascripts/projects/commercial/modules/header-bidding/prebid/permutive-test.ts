@@ -5,15 +5,5 @@ const config = config_ as {
 	get: (s: string, d?: string) => string;
 };
 
-let isInTest: boolean | undefined;
-
-const isInServerSideTest = (): boolean =>
-	config.get('tests.prebidWithPermutiveVariant') === 'variant';
-
-export const isInPrebidPermutiveTest = (): boolean => {
-	if (isInTest === undefined) {
-		isInTest = isInServerSideTest();
-	}
-
-	return isInTest;
-};
+export const isInPrebidPermutiveTest = (): boolean =>
+	config.get('tests.prebidWithPermutiveVariant', '') === 'variant';
