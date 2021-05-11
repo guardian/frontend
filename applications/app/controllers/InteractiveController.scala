@@ -6,6 +6,7 @@ import contentapi.ContentApiClient
 import conf.switches.Switches
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import model.InteractivePage
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
@@ -22,10 +23,6 @@ import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import services.{CAPILookup, _}
-
-case class InteractivePage(interactive: Interactive, related: RelatedContent) extends ContentPage {
-  override lazy val item = interactive
-}
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
@@ -66,21 +63,28 @@ class InteractiveController(
     s"$cdnPath/service-workers/$stage/$deployPath/$file"
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {
+  private def lookup(
+      path: String,
+  )(implicit request: RequestHeader): Future[Either[(InteractivePage, Blocks), Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
     val response: Future[ItemResponse] = contentApiClient.getResponse(
       contentApiClient
         .item(path, edition)
         .showFields("all")
-        .showAtoms("all"),
+        .showAtoms("all")
+        .showBlocks("all"),
     )
 
     val result = response map { response =>
       val interactive = response.content map { Interactive.make }
+      val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
       val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
 
-      ModelOrResult(page, response)
+      ModelOrResult(page, response) match {
+        case Left(page)       => Left((page, blocks))
+        case Right(exception) => Right(exception)
+      }
     }
 
     result recover convertApiExceptions
@@ -105,9 +109,21 @@ class InteractiveController(
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
-  def RenderItemLegacy(path: String)(implicit request: RequestHeader): Future[Result] = {
+  def renderItemLegacy(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
-      case Left(model)  => render(model)
+      case Left((model, _)) => render(model)
+      case Right(other)     => RenderOtherStatus(other)
+    }
+  }
+
+  def renderDCRJsonObject(path: String)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path) map {
+      case Left((model, blocks)) => {
+        val data =
+          DotcomRenderingDataModel.forInteractive(model, blocks, request, PageType.apply(model, request, context))
+        val dataJson = DotcomRenderingDataModel.toJson(data)
+        common.renderJson(dataJson, model).as("application/json")
+      }
       case Right(other) => RenderOtherStatus(other)
     }
   }
@@ -117,12 +133,8 @@ class InteractiveController(
     val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
     (requestFormat, renderingTier) match {
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-      case (JsonFormat, DotcomRendering) => {
-        val data = InteractivesDotcomRenderingDataObject.mockDataObject()
-        val dataJson = DotcomRenderingDataModel.toJson(data)
-        Future.successful(Ok(dataJson).as("application/json"))
-      }
-      case _ => RenderItemLegacy(path: String)
+      case (JsonFormat, DotcomRendering)      => renderDCRJsonObject(path)
+      case _                                  => renderItemLegacy(path: String)
     }
   }
 

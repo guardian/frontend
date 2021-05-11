@@ -8,7 +8,7 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils}
-import model.{Cached, NoCache, PageWithStoryPackage}
+import model.{ArticlePage, Cached, LiveBlogPage, NoCache, PageWithStoryPackage}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
@@ -74,7 +74,10 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingUtils.fromArticle(page, request, blocks, pageType)
+    val dataModel = page match {
+      case liveblog: LiveBlogPage => DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType)
+      case _                      => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
+    }
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     def handler(response: WSResponse): Result = {
@@ -106,7 +109,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingUtils.fromArticle(page, request, blocks, pageType)
+    val dataModel = DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     def handler(response: WSResponse): Result = {

@@ -1,10 +1,31 @@
 package model.dotcomrendering
 
+import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
+import com.gu.contentapi.client.utils.AdvertisementFeature
+import com.gu.contentapi.client.utils.format.ImmersiveDisplay
+import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import model.ContentFormat
-import model.dotcomrendering.pageElements.PageElement
-import navigation.Nav
+import common.{Edition, Localisation, RichRequestHeader}
+import conf.Configuration
+import conf.switches.Switches
+import experiments.ActiveExperiments
+import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
+import model.{
+  ArticleDateTimes,
+  Badges,
+  ContentFormat,
+  ContentPage,
+  ContentType,
+  GUDateTimeFormatNew,
+  InteractivePage,
+  LiveBlogPage,
+  PageWithStoryPackage,
+}
+import navigation._
+import org.joda.time.DateTime
 import play.api.libs.json._
+import play.api.mvc.RequestHeader
+import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
 
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -66,37 +87,6 @@ case class DotcomRenderingDataModel(
     matchUrl: Option[String], // Optional url used for match data
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
 )
-
-object ElementsEnhancer {
-
-  // Note:
-  //     In the file PageElement-Identifiers.md you will find a discussion of identifiers used by PageElements
-  //     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
-
-  def enhanceElement(element: JsValue): JsValue = {
-    element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
-  }
-
-  def enhanceElements(elements: JsValue): IndexedSeq[JsValue] = {
-    elements.as[JsArray].value.map(element => enhanceElement(element))
-  }
-
-  def enhanceObjectWithElementsAtDepth1(obj: JsValue): JsValue = {
-    val elements = obj.as[JsObject].value("elements")
-    obj.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
-  }
-
-  def enhanceObjectsWithElementsAtDepth1(objs: JsValue): IndexedSeq[JsValue] = {
-    objs.as[JsArray].value.map(obj => enhanceObjectWithElementsAtDepth1(obj))
-  }
-
-  def enhanceDcrObject(obj: JsObject): JsObject = {
-    obj ++
-      Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks"))) ++
-      Json.obj("mainMediaElements" -> enhanceElements(obj.value("mainMediaElements"))) ++
-      Json.obj("keyEvents" -> enhanceObjectsWithElementsAtDepth1(obj.value("keyEvents")))
-  }
-}
 
 object DotcomRenderingDataModel {
 
@@ -172,5 +162,249 @@ object DotcomRenderingDataModel {
       }
     val jsValue = Json.toJson(model)
     Json.stringify(withoutNull(jsValue))
+  }
+
+  def forInteractive(
+      page: InteractivePage,
+      blocks: APIBlocks,
+      request: RequestHeader,
+      pageType: PageType,
+  ): DotcomRenderingDataModel = {
+    apply(
+      page,
+      request,
+      None,
+      linkedData = Nil, // TODO
+      mainBlock = blocks.main,
+      bodyBlocks = blocks.body.getOrElse(Nil),
+      pageType,
+      page.related.hasStoryPackage,
+      keyEvents = Nil,
+    )
+  }
+
+  def forArticle(
+      page: PageWithStoryPackage, // for now, any non-liveblog page type
+      blocks: APIBlocks,
+      request: RequestHeader,
+      pageType: PageType,
+  ): DotcomRenderingDataModel = {
+    val linkedData = LinkedData.forArticle(
+      article = page.article,
+      baseURL = Configuration.amp.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(
+      page,
+      request,
+      None,
+      linkedData,
+      blocks.main,
+      blocks.body.getOrElse(Nil),
+      pageType,
+      page.related.hasStoryPackage,
+      Nil,
+    )
+  }
+
+  def forLiveblog(
+      page: LiveBlogPage,
+      blocks: APIBlocks,
+      request: RequestHeader,
+      pageType: PageType,
+  ): DotcomRenderingDataModel = {
+    val pagination = page.currentPage.pagination.map(paginationInfo => {
+      Pagination(
+        currentPage = page.currentPage.currentPage.pageNumber,
+        totalPages = paginationInfo.numberOfPages,
+        newest = paginationInfo.newest.map(_.suffix),
+        newer = paginationInfo.newer.map(_.suffix),
+        oldest = paginationInfo.oldest.map(_.suffix),
+        older = paginationInfo.older.map(_.suffix),
+      )
+    })
+
+    val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
+    val keyEvents =
+      blocks.requestedBodyBlocks
+        .getOrElse(Map.empty[String, Seq[APIBlock]])
+        .getOrElse("body:key-events", Seq.empty[APIBlock])
+
+    val linkedData = LinkedData.forLiveblog(
+      liveblog = page,
+      blocks = bodyBlocks,
+      baseURL = Configuration.amp.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(
+      page,
+      request,
+      pagination,
+      linkedData,
+      blocks.main,
+      bodyBlocks,
+      pageType,
+      page.related.hasStoryPackage,
+      keyEvents,
+    )
+  }
+
+  def apply(
+      page: ContentPage,
+      request: RequestHeader,
+      pagination: Option[Pagination],
+      linkedData: List[LinkedData],
+      mainBlock: Option[APIBlock],
+      bodyBlocks: Seq[APIBlock],
+      pageType: PageType, // TODO remove as format is better
+      hasStoryPackage: Boolean,
+      keyEvents: Seq[APIBlock],
+  ): DotcomRenderingDataModel = {
+
+    val edition = Edition.edition(request)
+    val content = page.item
+    val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
+    val isPaidContent = content.metadata.designType.contains(AdvertisementFeature)
+
+    val author: Author = Author(
+      byline = content.trail.byline,
+      twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
+    )
+
+    val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
+      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+      section = content.metadata.sectionId,
+      showAffiliateLinks = content.content.fields.showAffiliateLinks,
+      supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
+      defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
+      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+      tagPaths = content.content.tags.tags.map(_.id),
+      firstPublishedDate = content.content.fields.firstPublicationDate,
+    )
+
+    val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
+      webPublicationDate = content.trail.webPublicationDate,
+      firstPublicationDate = content.fields.firstPublicationDate,
+      hasBeenModified = content.content.hasBeenModified,
+      lastModificationDate = content.fields.lastModified,
+    )
+
+    val switches: Map[String, Boolean] = conf.switches.Switches.all
+      .filter(_.exposeClientSide)
+      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+      })
+
+    val config = Config(
+      switches = switches,
+      abTests = ActiveExperiments.getJsMap(request),
+      commercialBundleUrl = DotcomRenderingUtils.assetURL("javascripts/graun.commercial.dcr.js"),
+      ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
+      googletagUrl = Configuration.googletag.jsLocation,
+      stage = common.Environment.stage,
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    )
+
+    val combinedConfig: JsObject = {
+      val jsPageConfig: Map[String, JsValue] = JavaScriptPage.getMap(page, Edition(request), false, request)
+      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+    }
+
+    val calloutsUrl: Option[String] = combinedConfig.fields.toList
+      .filter(entry => entry._1 == "calloutsUrl")
+      .headOption
+      .flatMap(entry => entry._2.asOpt[String])
+
+    val mainMediaElements =
+      mainBlock
+        .map(block => Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes))
+        .toList
+        .flatMap(_.elements)
+
+    val bodyBlocksDCR: List[model.dotcomrendering.Block] = bodyBlocks
+      .filter(_.published || pageType.isPreview) // TODO lift?
+      .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
+      .toList
+
+    val keyEventsDCR =
+      keyEvents.map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
+
+    val commercial: Commercial = {
+      val editionCommercialProperties = content.metadata.commercial
+        .map { _.perEdition.mapKeys(_.id) }
+        .getOrElse(Map.empty[String, EditionCommercialProperties])
+
+      val prebidIndexSites = (for {
+        commercial <- content.metadata.commercial
+        sites <- commercial.prebidIndexSites
+      } yield sites.toList).getOrElse(List())
+
+      Commercial(
+        editionCommercialProperties,
+        prebidIndexSites,
+        content.metadata.commercial,
+        pageType,
+      )
+    }
+
+    DotcomRenderingDataModel(
+      author = author,
+      badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
+      beaconURL = Configuration.debug.beaconUrl,
+      blocks = bodyBlocksDCR,
+      commercialProperties = commercial.editionCommercialProperties,
+      config = combinedConfig,
+      contentType = content.metadata.contentType.map(_.name).getOrElse(""),
+      contributionsServiceUrl = Configuration.contributionsService.url,
+      designType = content.metadata.designType.map(_.toString).getOrElse("Article"),
+      editionId = edition.id,
+      editionLongForm = Edition(request).displayName,
+      format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
+      guardianBaseURL = Configuration.site.host,
+      hasRelated = content.content.showInRelated,
+      hasStoryPackage = hasStoryPackage,
+      headline = content.trail.headline,
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
+      isCommentable = content.trail.isCommentable,
+      isImmersive = isImmersive,
+      isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
+      keyEvents = keyEventsDCR.toList,
+      linkedData = linkedData,
+      main = content.fields.main,
+      mainMediaElements = mainMediaElements,
+      matchUrl = DotcomRenderingUtils.makeMatchUrl(page),
+      nav = Nav(page, edition),
+      openGraphData = page.getOpenGraphProperties,
+      pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
+      pageId = content.metadata.id,
+      pageType = pageType, // TODO this info duplicates what is already elsewhere in format?
+      pagination = pagination,
+      pillar = DotcomRenderingUtils.findPillar(content.metadata.pillar, content.metadata.designType),
+      publication = content.content.publication,
+      sectionLabel = Localisation(content.content.sectionLabelName.getOrElse(""))(request),
+      sectionName = content.metadata.section.map(_.value),
+      sectionUrl = content.content.sectionLabelLink.getOrElse(""),
+      shouldHideAds = content.content.shouldHideAdverts,
+      shouldHideReaderRevenue = content.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
+      showBottomSocialButtons = ContentLayout.showBottomSocialButtons(content),
+      slotMachineFlags = request.slotMachineFlags,
+      standfirst = TextCleaner.sanitiseLinks(edition)(content.fields.standfirst.getOrElse("")),
+      starRating = content.content.starRating,
+      subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
+      subMetaSectionLinks =
+        content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
+      tags = content.tags.tags.map(Tag.apply),
+      trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
+      twitterData = page.getTwitterProperties,
+      version = 3,
+      webPublicationDate = content.trail.webPublicationDate.toString,
+      webPublicationDateDisplay =
+        GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
+      webPublicationSecondaryDateDisplay = DotcomRenderingUtils.secondaryDateString(content, request),
+      webTitle = content.metadata.webTitle,
+      webURL = content.metadata.webUrl,
+    )
   }
 }
