@@ -228,8 +228,8 @@ object DotcomRenderingDataModel {
     val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
     val keyEvents =
       blocks.requestedBodyBlocks
-        .getOrElse(Map.empty[String, Seq[APIBlock]])
-        .getOrElse("body:key-events", Seq.empty[APIBlock])
+        .flatMap(blocks => blocks.get("body:key-events"))
+        .getOrElse(Seq.empty[APIBlock])
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,
