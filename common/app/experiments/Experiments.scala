@@ -10,6 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
     HideAnniversaryAtom,
+    PrebidWithPermutive,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -45,9 +46,9 @@ object NewsletterEmbedDesign
 
 object PrebidWithPermutive
   extends Experiment(
-    name = "prebid-permutive",
+    name = "prebid-with-permutive",
     description = "Enables permutive real-time config for Prebid.js",
-    owners = Seq(Owner.group("commercial")),
+    owners = group(Commercial),
     sellByDate = new LocalDate(2021, 6, 1),
     participationGroup = Perc0B,
   )
