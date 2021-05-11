@@ -28,6 +28,7 @@ class InteractiveController(
     contentApiClient: ContentApiClient,
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -134,6 +135,7 @@ class InteractiveController(
     (requestFormat, renderingTier) match {
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
       case (JsonFormat, DotcomRendering)      => renderDCRJsonObject(path)
+      case (HtmlFormat, DotcomRendering)      => remoteRenderer
       case _                                  => renderItemLegacy(path: String)
     }
   }
