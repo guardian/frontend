@@ -444,16 +444,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val AnniversaryArticleHeader = Switch(
-    SwitchGroup.Feature,
-    "anniversary-article-header",
-    "Enables the anniversary interactive atom in DCR",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2022, 5, 11),
-    exposeClientSide = true,
-  )
-
   val AnniversaryLogoHeader = Switch(
     SwitchGroup.Feature,
     "anniversary-header-svg",
