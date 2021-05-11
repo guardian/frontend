@@ -196,15 +196,15 @@ object DotcomRenderingDataModel {
     )
 
     apply(
-      page,
-      request,
-      None,
-      linkedData,
-      blocks.main,
-      blocks.body.getOrElse(Nil),
-      pageType,
-      page.related.hasStoryPackage,
-      Nil,
+      page = page,
+      request = request,
+      pagination = None,
+      linkedData = linkedData,
+      mainBlock = blocks.main,
+      bodyBlocks = blocks.body.getOrElse(Nil),
+      pageType = pageType,
+      hasStoryPackage = page.related.hasStoryPackage,
+      keyEvents = Nil,
     )
   }
 

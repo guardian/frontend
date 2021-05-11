@@ -65,7 +65,7 @@ class LiveBlogController(
               case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               case true => {
                 val pageType: PageType = PageType(blog, request, context)
-                remoteRenderer.getArticle(ws, path, blog, blocks, pageType)
+                remoteRenderer.getArticle(ws, blog, blocks, pageType)
               }
             }
           }

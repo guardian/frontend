@@ -72,6 +72,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
             .withHeaders("X-GU-Dotcomponents" -> "true")
         case _ =>
+          log.error(s"Request to DCR failed: status ${response.status}, body: ${response.body}")
           NoCache(
             play.api.mvc.Results
               .InternalServerError("Remote renderer error (500)")
