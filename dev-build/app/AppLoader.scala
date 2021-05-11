@@ -85,8 +85,6 @@ trait AppComponents
 
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
-  lazy val remoteRender = wire[renderers.DotcomRenderingService]
-
   override lazy val optionalDevContext = new OptionalDevContext(devContext)
   override lazy val sourceMapper = devContext.map(_.sourceMapper)
 

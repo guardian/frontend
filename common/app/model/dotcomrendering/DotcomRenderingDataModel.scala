@@ -196,15 +196,15 @@ object DotcomRenderingDataModel {
     )
 
     apply(
-      page,
-      request,
-      None,
-      linkedData,
-      blocks.main,
-      blocks.body.getOrElse(Nil),
-      pageType,
-      page.related.hasStoryPackage,
-      Nil,
+      page = page,
+      request = request,
+      pagination = None,
+      linkedData = linkedData,
+      mainBlock = blocks.main,
+      bodyBlocks = blocks.body.getOrElse(Nil),
+      pageType = pageType,
+      hasStoryPackage = page.related.hasStoryPackage,
+      keyEvents = Nil,
     )
   }
 
@@ -228,8 +228,8 @@ object DotcomRenderingDataModel {
     val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
     val keyEvents =
       blocks.requestedBodyBlocks
-        .getOrElse(Map.empty[String, Seq[APIBlock]])
-        .getOrElse("body:key-events", Seq.empty[APIBlock])
+        .flatMap(blocks => blocks.get("body:key-events"))
+        .getOrElse(Seq.empty[APIBlock])
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,

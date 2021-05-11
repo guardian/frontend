@@ -14,7 +14,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRenderingService {
   override def getArticle(
       ws: WSClient,
-      path: String,
       article: PageWithStoryPackage,
       blocks: Blocks,
       pageType: PageType,
