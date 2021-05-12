@@ -84,7 +84,7 @@ const initialise = (window, framework = 'tcfv2') => {
 				{
 					name: 'permutive',
 					params: {
-						acBidders: ['appnexus', 'pubmatic', 'trustx'],
+						acBidders: ['appnexus', 'ozone', 'pubmatic', 'trustx'],
 						overwrites: {
 							pubmatic: function (
 								bid,
