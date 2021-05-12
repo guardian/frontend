@@ -18,6 +18,7 @@ trait ApplicationsControllers {
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
 
+  lazy val remoteRender = wire[renderers.DotcomRenderingService]
   lazy val siteMapController = wire[SiteMapController]
   lazy val crosswordPageController = wire[CrosswordPageController]
   lazy val crosswordSearchController = wire[CrosswordSearchController]

@@ -2,7 +2,7 @@ package pages
 
 import common.Edition
 import conf.switches.Switches.WeAreHiring
-import controllers.InteractivePage
+import model.InteractivePage
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
 import model.{ApplicationContext, Page}

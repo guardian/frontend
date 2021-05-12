@@ -1,5 +1,7 @@
 package navigation
 
+import common.Edition
+import model.ContentPage
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportGifting, SupportSubscribe, SupporterCTA}
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, Writes}
@@ -90,4 +92,18 @@ object Nav {
   }
 
   implicit val writes = Json.writes[Nav]
+
+  def apply(page: ContentPage, edition: Edition): Nav = {
+    val navMenu = NavMenu(page, edition)
+    Nav(
+      currentUrl = navMenu.currentUrl,
+      pillars = navMenu.pillars,
+      otherLinks = navMenu.otherLinks,
+      brandExtensions = navMenu.brandExtensions,
+      currentNavLinkTitle = navMenu.currentNavLink.map(NavLink.id),
+      currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
+      subNavSections = navMenu.subNavSections,
+      readerRevenueLinks = ReaderRevenueLinks.all,
+    )
+  }
 }

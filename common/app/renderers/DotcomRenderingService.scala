@@ -8,7 +8,7 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils}
-import model.{Cached, NoCache, PageWithStoryPackage}
+import model.{ArticlePage, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
@@ -36,7 +36,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       payload: String,
       endpoint: String,
-      handler: WSResponse => Result,
+      page: Page,
   )(implicit request: RequestHeader): Future[Result] = {
 
     def doGet() = {
@@ -61,6 +61,26 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       })
     }
 
+    def handler(response: WSResponse): Result = {
+      response.status match {
+        case 200 =>
+          Cached(page)(RevalidatableResult.Ok(Html(response.body)))
+            .withHeaders("X-GU-Dotcomponents" -> "true")
+            .withPreconnect(HttpPreconnections.defaultUrls)
+        case 400 =>
+          // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
+          NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
+            .withHeaders("X-GU-Dotcomponents" -> "true")
+        case _ =>
+          log.error(s"Request to DCR failed: status ${response.status}, body: ${response.body}")
+          NoCache(
+            play.api.mvc.Results
+              .InternalServerError("Remote renderer error (500)")
+              .withHeaders("X-GU-Dotcomponents" -> "true"),
+          )
+      }
+    }
+
     if (CircuitBreakerSwitch.isSwitchedOn) {
       circuitBreaker.withCircuitBreaker(doGet()).map(handler)
     } else {
@@ -74,62 +94,40 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingUtils.fromArticle(page, request, blocks, pageType)
+
+    val dataModel = page match {
+      case liveblog: LiveBlogPage => DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType)
+      case _                      => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
+    }
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
-    def handler(response: WSResponse): Result = {
-      response.status match {
-        case 200 =>
-          Cached(page)(RevalidatableResult.Ok(Html(response.body)))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
-        case 400 =>
-          // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
-          NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
-        case _ =>
-          // Ensure AMP doesn't cache error responses by redirecting them to non-AMP
-          NoCache(
-            play.api.mvc.Results
-              .TemporaryRedirect(LinkTo(page.metadata.url))
-              .withHeaders("X-GU-Dotcomponents" -> "true"),
-          )
-      }
-    }
-
-    get(ws, json, Configuration.rendering.AMPArticleEndpoint, handler)
+    get(ws, json, Configuration.rendering.AMPArticleEndpoint, page)
   }
 
   def getArticle(
       ws: WSClient,
-      path: String,
       page: PageWithStoryPackage,
       blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingUtils.fromArticle(page, request, blocks, pageType)
+
+    val dataModel = DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-
-    def handler(response: WSResponse): Result = {
-      response.status match {
-        case 200 =>
-          Cached(page)(RevalidatableResult.Ok(Html(response.body)))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
-            .withPreconnect(HttpPreconnections.defaultUrls)
-        case 400 =>
-          // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
-          NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
-        case _ =>
-          NoCache(
-            play.api.mvc.Results
-              .InternalServerError("Remote renderer error (500)")
-              .withHeaders("X-GU-Dotcomponents" -> "true"),
-          )
-      }
-    }
-
-    get(ws, json, Configuration.rendering.renderingEndpoint, handler)
+    get(ws, json, Configuration.rendering.renderingEndpoint, page)
   }
+
+  def getInteractive(
+      ws: WSClient,
+      page: InteractivePage,
+      blocks: Blocks,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+
+    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    get(ws, json, Configuration.rendering.renderingEndpoint, page)
+  }
+
 }
 
 object DotcomRenderingService {
