@@ -87,13 +87,7 @@ const initialise = (window, framework = 'tcfv2') => {
 					params: {
 						acBidders: ['appnexus', 'ozone', 'pubmatic', 'trustx'],
 						overwrites: {
-							pubmatic: pubmatic(
-								bid,
-								data,
-								acEnabled,
-								utils,
-								defaultFn,
-							),
+							pubmatic,
 						},
 					},
 				},
