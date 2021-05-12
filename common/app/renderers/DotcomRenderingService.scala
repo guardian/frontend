@@ -50,13 +50,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
         case _: ConnectException if Configuration.environment.stage == "DEV" =>
           val msg = s"""Connection refused to ${endpoint}.
               |
-              |You are trying to access a DCR page via Frontend. Most of the time you are better off developing directly
-              |on DCR. See https://github.com/guardian/dotcom-rendering for how to get started with this.
+              |You are trying to access a Dotcom Rendering page via Frontend but it
+              |doesn't look like DCR is running locally on the expected port (3030).
               |
-              |If you do need to access DCR via Frontend, then make sure to run DCR locally. E.g (from DCR directory):
+              |Note, for most use cases, we recommend developing directly on DCR.
               |
-              |    $$ make build
-              |    $$ PORT 3030 node dist/frontend.server.js""".stripMargin
+              |To get started with dotcom-rendering, see:
+              |
+              |    https://github.com/guardian/dotcom-rendering""".stripMargin
           Future.failed(new ConnectException(msg))
       })
     }
