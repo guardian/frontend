@@ -7,6 +7,7 @@ import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { stripDfpAdPrefixFrom } from '../utils';
 import { EventTimer } from '@guardian/commercial-core';
 import { isInPrebidPermutiveTest } from './permutive-test';
+import { pubmatic } from './pubmatic';
 
 const bidderTimeout = 1500;
 
@@ -86,48 +87,13 @@ const initialise = (window, framework = 'tcfv2') => {
 					params: {
 						acBidders: ['appnexus', 'ozone', 'pubmatic', 'trustx'],
 						overwrites: {
-							pubmatic: function (
+							pubmatic: pubmatic(
 								bid,
 								data,
 								acEnabled,
 								utils,
 								defaultFn,
-							) {
-								if (defaultFn) {
-									// keep this to move to default function once supported
-									// by RTD submodule
-									bid = defaultFn(bid, data, acEnabled);
-								} else if (
-									acEnabled &&
-									data.ac &&
-									data.ac.length > 0
-								) {
-									const dpName = 'permutive.com';
-									var seg = [];
-									data.ac.forEach(function (item, index) {
-										seg.push({
-											id: item,
-										});
-									});
-									const newData = [
-										{
-											name: dpName,
-											segment: seg,
-										},
-									];
-									pbjs.setBidderConfig({
-										// Note this will replace existing bidder FPD config till merge is supported.
-										bidders: ['pubmatic'],
-										config: {
-											ortb2: {
-												user: {
-													data: newData,
-												},
-											},
-										},
-									});
-								}
-							},
+							),
 						},
 					},
 				},
