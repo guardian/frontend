@@ -67,7 +67,7 @@ class InteractiveController(
   private def lookup(
       path: String,
   )(implicit request: RequestHeader): Future[Either[(InteractivePage, Blocks), Result]] = {
-    val result = capiLookup.lookup(path, range = None) map { response =>
+    val result = capiLookup.lookup(path, range = Some(ArticleBlocks)) map { response =>
       val interactive = response.content map { Interactive.make }
       val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
       val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
@@ -133,10 +133,10 @@ class InteractiveController(
     val requestFormat = request.getRequestFormat
     val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
     (requestFormat, renderingTier) match {
-      case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-      case (JsonFormat, DotcomRendering)      => renderDCRJson(path)
-      case (HtmlFormat, DotcomRendering)      => renderDCR(path)
-      case _                                  => renderItemLegacy(path: String)
+      case (AmpFormat, USElection2020AmpPage)  => renderInteractivePageUSPresidentialElection2020(path)
+      case (JsonFormat, _) if request.forceDCR => renderDCRJson(path)
+      case (HtmlFormat, DotcomRendering)       => renderDCR(path)
+      case _                                   => renderItemLegacy(path: String)
     }
   }
 
