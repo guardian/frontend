@@ -1900,11 +1900,6 @@
   resolved "https://registry.yarnpkg.com/@guardian/eslint-config/-/eslint-config-0.5.0.tgz#ece14ec90b372932c7bf01992fc6d8ce58f7f26e"
   integrity sha512-THJn0wg7i9YjSVM9ofobsJgS+WH9ybrZH1+0CXLAebp0T53RGtgZUkek82mDg1h3DidsM+f7HSZqoQyrCbPzPw==
 
-"@guardian/libs@^1.7.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.1.tgz#22bccd66be7c5bf70cd5bbb1bf7700d94610ccb7"
-  integrity sha512-Q/JPLhNeYa5XhDPJhw/1+fbZmszopvovWW8I7dGEuFPGWeNUmXAbW8J3kzuonDu7l9/tuFZg8jljbKHZlrFx0A==
-
 "@guardian/libs@^1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.0.tgz#ceed9e4fcccc5561493d886ae1a307c03a356e27"
