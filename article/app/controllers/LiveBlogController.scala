@@ -65,7 +65,7 @@ class LiveBlogController(
               case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               case true => {
                 val pageType: PageType = PageType(blog, request, context)
-                remoteRenderer.getArticle(ws, path, blog, blocks, pageType)
+                remoteRenderer.getArticle(ws, blog, blocks, pageType)
               }
             }
           }
@@ -177,7 +177,7 @@ class LiveBlogController(
       blocks: Blocks,
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
-    val model = DotcomRenderingUtils.fromArticle(blog, request, blocks, pageType)
+    val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }
