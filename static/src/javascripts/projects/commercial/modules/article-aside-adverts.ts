@@ -1,83 +1,94 @@
-import { $$ } from '../../../lib/$$';
 import bonzo from 'bonzo';
-import config from '../../../lib/config';
-import mediator from '../../../lib/mediator';
+import { $$ } from '../../../lib/$$';
+import config_ from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
+import mediator from '../../../lib/mediator';
 
 const minArticleHeight = 1300;
 
-const getAllowedSizesForImmersive = (availableSpace) => {
-    // filter ad slot sizes based on the available height
-    // mark: 01303e88-ef1f-462d-9b6e-242419435cec
-    if (availableSpace > 600) {
-        return '1,1|2,2|300,250|300,274|300,600|fluid';
-    } else if (availableSpace > 274) {
-        return '1,1|2,2|300,250|300,274';
-    } else if (availableSpace > 250) {
-        return '1,1|2,2|300,250';
-    }
-    return '1,1|2,2';
+const config = config_ as {
+	get: (s: string, b?: boolean) => string;
 };
 
-export const init = () => {
-    const col = $$('.js-secondary-column');
+const getAllowedSizesForImmersive = (availableSpace: number) => {
+	// filter ad slot sizes based on the available height
+	// mark: 01303e88-ef1f-462d-9b6e-242419435cec
+	if (availableSpace > 600) {
+		return '1,1|2,2|300,250|300,274|300,600|fluid';
+	} else if (availableSpace > 274) {
+		return '1,1|2,2|300,250|300,274';
+	} else if (availableSpace > 250) {
+		return '1,1|2,2|300,250';
+	}
+	return '1,1|2,2';
+};
 
-    // article aside ads are added server-side if the container doesn't exist then stop.
-    if (!col.get().length || col.css('display') === 'none') {
-        return Promise.resolve(false);
-    }
+const removeStickyClasses = (adSlots: Element[]) => {
+	adSlots.forEach((ad) => {
+		// IE does not support multiple arguments for classList.remove()
+		ad.classList.remove('right-sticky');
+		ad.classList.remove('js-sticky-mpu');
+		ad.classList.remove('is-sticky');
+	});
+};
 
-    const mainCol = $$('.js-content-main-column');
-    const adSlotDollar = $$('.js-ad-slot', col.get(0));
-    const immersiveElsDollar = $$('.element--immersive', mainCol.get(0))
-    const adSlot = bonzo(adSlotDollar.get());
-    const immersiveEls = bonzo(immersiveElsDollar.get());
+export const init = (): Promise<void | boolean> => {
+	const col = $$('.js-secondary-column');
 
-    if (!adSlot.length || !mainCol.get().length) {
-        return Promise.resolve(false);
-    }
+	// article aside ads are added server-side if the container doesn't exist then stop.
+	if (!col.get().length || col.get(0).style.display === 'none') {
+		return Promise.resolve(false);
+	}
 
-    return fastdom
-        .measure(
-            () => [
-                mainCol.dim().height,
-                immersiveEls.offset().top - mainCol.offset().top,
-            ]
-        )
-        .then(([mainColHeight, immersiveOffset]) => {
-            // we do all the adjustments server-side if the page has a ShowcaseMainElement!
-            if (config.get('page.hasShowcaseMainElement', false)) {
-                return adSlot[0];
-            }
-            // immersive articles may have an image that overlaps the aside ad so we need to remove
-            // the sticky behaviour and conditionally adjust the slot size depending on how far down
-            // the page the first immersive image appears.
-            if (config.get('page.isImmersive') && immersiveEls.length > 0) {
-                return fastdom.mutate(() => {
-                    adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
-                    adSlot[0].setAttribute(
-                        'data-mobile',
-                        getAllowedSizesForImmersive(immersiveOffset)
-                    );
-                    return adSlot[0];
-                });
-            }
-            // most articles are long enough to fit a DMPU. However, the occasional shorter article
-            // will need the slot sizes to be adjusted, and the sticky behaviour removed.
-            if (mainColHeight < minArticleHeight) {
-                return fastdom.mutate(() => {
-                    adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
-                    adSlot[0].setAttribute(
-                        'data-mobile',
-                        '1,1|2,2|300,250|300,274|fluid'
-                    );
-                    return adSlot[0];
-                });
-            }
-            return adSlot[0];
-        })
-        .then((adSlot) => {
-            mediator.emit('page:defaultcommercial:right',adSlot);
-            return true;
-        });
+	const mainCol = $$('.js-content-main-column');
+	const adSlotDollar = $$('.js-ad-slot', col.get(0));
+	const immersiveElsDollar = $$('.element--immersive', mainCol.get(0));
+	const adSlot = adSlotDollar.get();
+	const immersiveEls = immersiveElsDollar.get();
+
+	if (!adSlot.length || !mainCol.get().length) {
+		return Promise.resolve(false);
+	}
+
+	return fastdom
+		.measure(() => [
+			mainCol.dim().height,
+			immersiveEls.offset().top - mainCol.offset().top,
+		])
+		.then(([mainColHeight, immersiveOffset]) => {
+			// we do all the adjustments server-side if the page has a ShowcaseMainElement!
+			if (config.get('page.hasShowcaseMainElement', false)) {
+				return adSlot[0];
+			}
+			// immersive articles may have an image that overlaps the aside ad so we need to remove
+			// the sticky behaviour and conditionally adjust the slot size depending on how far down
+			// the page the first immersive image appears.
+			if (config.get('page.isImmersive') && immersiveEls.length > 0) {
+				return fastdom.mutate(() => {
+					removeStickyClasses(adSlot);
+					adSlot[0].setAttribute(
+						'data-mobile',
+						getAllowedSizesForImmersive(immersiveOffset),
+					);
+					return adSlot[0];
+				});
+			}
+			// most articles are long enough to fit a DMPU. However, the occasional shorter article
+			// will need the slot sizes to be adjusted, and the sticky behaviour removed.
+			if (mainColHeight < minArticleHeight) {
+				return fastdom.mutate(() => {
+					removeStickyClasses(adSlot);
+					adSlot[0].setAttribute(
+						'data-mobile',
+						'1,1|2,2|300,250|300,274|fluid',
+					);
+					return adSlot[0];
+				});
+			}
+			return adSlot[0];
+		})
+		.then((adSlot) => {
+			mediator.emit('page:defaultcommercial:right', adSlot);
+			return true;
+		});
 };
