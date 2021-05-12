@@ -52,8 +52,6 @@ POST       /email/footer                                                        
 POST       /email                                                               controllers.EmailSignupController.submit()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
-
-
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
 
