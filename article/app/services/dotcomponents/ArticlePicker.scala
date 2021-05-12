@@ -132,8 +132,8 @@ object ArticlePicker {
     val dcrCanRender = checks.values.forall(identity)
 
     val tier =
-      if (request.forceDCROff) LocalRenderArticle
-      else if (request.forceDCR || dcrCanRender) RemoteRender
+      if (request.forceLegacy) LocalRenderArticle
+      else if (request.dcrExperimental || dcrCanRender) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);

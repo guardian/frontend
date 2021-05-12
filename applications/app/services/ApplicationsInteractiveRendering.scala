@@ -32,7 +32,7 @@ object ApplicationsInteractiveRendering {
   def getRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
     val isSpecialElection = ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)
     val isAmp = request.host.contains("amp")
-    val forceDCR = request.forceDCR
+    val forceDCR = request.dcrExperimental
 
     if (isSpecialElection && isAmp) USElection2020AmpPage
     else if (forceDCR) DotcomRendering

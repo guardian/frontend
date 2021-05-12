@@ -86,7 +86,8 @@ class DevParametersHttpRequestHandler(
     if (
       context.environment.mode != Prod &&
       !request.isJson &&
-      !request.forceDCR &&
+      !request.forceLegacy &&
+      !request.dcrExperimental &&
       !request.isLazyLoad &&
       !request.uri.startsWith("/oauth2callback") &&
       !request.uri.startsWith("/px.gif") && // diagnostics box

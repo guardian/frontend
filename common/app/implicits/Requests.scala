@@ -101,9 +101,14 @@ trait Requests {
       .getOrElse(List())
 
     // dotcom-rendering (DCR) parameters
-    lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")
-    lazy val forceDCR: Boolean =
-      r.getQueryString("dcr").isDefined && !forceDCROff // don't check for .contains(true) so people can be lazy
+    lazy val forceLegacy: Boolean = r.getQueryString("force-legacy").isDefined
+    lazy val dcrExperimental = r.getQueryString("dcr-experimental").isDefined
+
+    // For .json?dcr only (to distinguish from older .json endpoints)
+    lazy val forceDCR: Boolean = {
+      val dcrParam = r.getQueryString("dcr")
+      dcrParam.isDefined && dcrParam.exists(dcr => dcr == "" || dcr == "true")
+    }
 
     // slot machine
     lazy val slotMachineFlags = r.getQueryString("slot-machine-flags").getOrElse("")

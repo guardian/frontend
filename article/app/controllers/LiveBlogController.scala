@@ -60,13 +60,13 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) => {
-            val remoteRendering = request.forceDCR && ActiveExperiments.isParticipating(LiveblogRendering)
-            remoteRendering match {
-              case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-              case true => {
-                val pageType: PageType = PageType(blog, request, context)
-                remoteRenderer.getArticle(ws, blog, blocks, pageType)
-              }
+            val remoteRendering = request.dcrExperimental && ActiveExperiments.isParticipating(LiveblogRendering)
+
+            if (remoteRendering) {
+              val pageType: PageType = PageType(blog, request, context)
+              remoteRenderer.getArticle(ws, blog, blocks, pageType)
+            } else {
+              Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
