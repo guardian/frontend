@@ -28,6 +28,7 @@ class InteractiveController(
     contentApiClient: ContentApiClient,
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -66,17 +67,7 @@ class InteractiveController(
   private def lookup(
       path: String,
   )(implicit request: RequestHeader): Future[Either[(InteractivePage, Blocks), Result]] = {
-    val edition = Edition(request)
-    log.info(s"Fetching interactive: $path for edition $edition")
-    val response: Future[ItemResponse] = contentApiClient.getResponse(
-      contentApiClient
-        .item(path, edition)
-        .showFields("all")
-        .showAtoms("all")
-        .showBlocks("all"),
-    )
-
-    val result = response map { response =>
+    val result = capiLookup.lookup(path, range = None) map { response =>
       val interactive = response.content map { Interactive.make }
       val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
       val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
@@ -116,7 +107,17 @@ class InteractiveController(
     }
   }
 
-  def renderDCRJsonObject(path: String)(implicit request: RequestHeader): Future[Result] = {
+  def renderDCR(path: String)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path) flatMap {
+      case Left((model, blocks)) => {
+        val pageType = PageType.apply(model, request, context)
+        remoteRenderer.getInteractive(wsClient, model, blocks, pageType)
+      }
+      case Right(other) => Future.successful(RenderOtherStatus(other))
+    }
+  }
+
+  def renderDCRJson(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
       case Left((model, blocks)) => {
         val data =
@@ -133,7 +134,8 @@ class InteractiveController(
     val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
     (requestFormat, renderingTier) match {
       case (AmpFormat, USElection2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-      case (JsonFormat, DotcomRendering)      => renderDCRJsonObject(path)
+      case (JsonFormat, DotcomRendering)      => renderDCRJson(path)
+      case (HtmlFormat, DotcomRendering)      => renderDCR(path)
       case _                                  => renderItemLegacy(path: String)
     }
   }
