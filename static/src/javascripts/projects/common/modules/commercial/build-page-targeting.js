@@ -1,5 +1,5 @@
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import { storage } from '@guardian/libs';
+import { log, storage } from '@guardian/libs';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import config from '../../../../lib/config';
@@ -315,6 +315,8 @@ const rebuildPageTargeting = () => {
 
     // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
     page.pageAdTargeting = pageTargeting;
+
+    log('commercial', 'pageTargeting object:', pageTargeting)
 
     return pageTargeting;
 }
