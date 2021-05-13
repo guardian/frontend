@@ -63,7 +63,7 @@ We present you with two setup types: _automatic_ and _manual_. They are equivale
     $ cd frontend
     ```
 
-1. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *Frontend*, *CMS fronts* and *CAPI* (You will need access to Janus).
+1. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *Frontend*, *CMS fronts* and *Content API* (You will need access to Janus).
 
 1. Make sure you have the [latest version of Java](#jdk).
 
