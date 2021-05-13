@@ -20,7 +20,7 @@ import { clearPermutiveSegments, getPermutiveSegments } from './permutive';
 import { getUserSegments } from './user-ad-targeting';
 
 let myPageTargetting = {};
-let latestCmpHasInitalised;
+let latestCmpHasInitialised;
 let latestCMPState;
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
@@ -253,7 +253,7 @@ const filterEmptyValues = (pageTargets) => {
 }
 
 const rebuildPageTargeting = () => {
-    latestCmpHasInitalised = cmp.hasInitialised();
+    latestCmpHasInitialised = cmp.hasInitialised();
     const adConsentState = getAdConsentFromState(latestCMPState);
     const ccpaState = latestCMPState.ccpa ? latestCMPState.ccpa.doNotSell : null;
     const tcfv2EventStatus = latestCMPState.tcfv2 ? latestCMPState.tcfv2.eventStatus : 'na';
@@ -324,8 +324,8 @@ const rebuildPageTargeting = () => {
 const getPageTargeting = () => {
 
     if (Object.keys(myPageTargetting).length !== 0) {
-        // If CMP was initalised since the last time myPageTargetting was built - rebuild
-        if (latestCmpHasInitalised !== cmp.hasInitialised()) {
+        // If CMP was initialised since the last time myPageTargetting was built - rebuild
+        if (latestCmpHasInitialised !== cmp.hasInitialised()) {
             myPageTargetting = rebuildPageTargeting();
         }
         return myPageTargetting;
@@ -333,7 +333,7 @@ const getPageTargeting = () => {
 
     // First call binds to onConsentChange and returns {}
     onConsentChange((state)=>{
-    // On every consent change we rebuildPageTageting
+    // On every consent change we rebuildPageTargeting
         latestCMPState = state;
         myPageTargetting = rebuildPageTargeting();
     });
