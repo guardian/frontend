@@ -116,7 +116,7 @@ class WallchartController(
           val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
           Cached(60) {
             RevalidatableResult.Ok(
-              football.views.html.wallchart.spiderEmbed(page, competition, KnockoutSpiderStages, nextMatch),
+              football.views.html.wallchart.spiderEmbed(page, competition, knockoutSpiderStages, nextMatch),
             )
           }
         }
