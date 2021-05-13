@@ -112,7 +112,7 @@ class WallchartController(
           )
           val competitionStages = new CompetitionStage(competitionsService.competitions)
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
-          val KnockoutSpiderStages = competitionStages.collect { case stage: KnockoutSpider => stage }
+          val knockoutSpiderStages = competitionStages.collect { case stage: KnockoutSpider => stage }
           val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
           Cached(60) {
             RevalidatableResult.Ok(
