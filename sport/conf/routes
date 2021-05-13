@@ -56,6 +56,7 @@ GET        /football/:competition/:group/table.json                             
 GET        /football/:team/fixtures-and-results-container                                      football.controllers.FixturesAndResultsContainerController.renderContainer(team)
 
 GET        /football/:competitionTag/overview/embed                                            football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
+GET        /football/:competitionTag/spider/embed                                              football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
 GET        /football/:competitionTag/overview                                                  football.controllers.WallchartController.renderWallchart(competitionTag)
 GET        /football/:competitionTag/wallchart.json                                            football.controllers.WallchartController.renderWallchartJson(competitionTag)
 

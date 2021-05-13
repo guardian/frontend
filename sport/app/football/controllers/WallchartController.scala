@@ -77,6 +77,29 @@ class WallchartController(
         .getOrElse(NotFound)
     }
 
+  def renderSpiderEmbed(competitionTag: String): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionTag)
+        .map { competition =>
+          val page = new FootballPage(
+            competition.url.stripSuffix("/"),
+            "football",
+            s"${competition.fullName} wallchart",
+          )
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+          val KnockoutSpiderStages = competitionStages.collect { case stage: KnockoutSpider => stage }
+          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+          Cached(60) {
+            RevalidatableResult.Ok(
+              football.views.html.wallchart.spiderEmbed(page, competition, KnockoutSpiderStages, nextMatch),
+            )
+          }
+        }
+        .getOrElse(NotFound)
+    }
+
   def renderWallchartJson(competitionTag: String): Action[AnyContent] =
     Action { implicit request =>
       competitionsService.competitionsWithTag(competitionTag) match {
