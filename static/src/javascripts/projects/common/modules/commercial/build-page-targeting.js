@@ -316,7 +316,7 @@ const rebuildPageTargeting = () => {
     // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
     page.pageAdTargeting = pageTargeting;
 
-    log('commercial', 'pageTargeting object:', pageTargeting)
+	log('commercial', 'pageTargeting object:', pageTargeting);
 
     return pageTargeting;
 }
