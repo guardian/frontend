@@ -219,7 +219,7 @@ sizeCallbacks[adSizes.merchandising.toString()] = addFluid250([
 ]);
 
 const addContentClass = (adSlotNode: HTMLElement) => {
-	const adSlotContent = $$('* > div:not(.ad-slot__label)', adSlotNode).get();
+	const adSlotContent = $$('div:not(.ad-slot__label)', adSlotNode).get();
 
 	if (adSlotContent.length) {
 		void fastdom.mutate(() => {
