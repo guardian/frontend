@@ -1,4 +1,3 @@
-import bonzo from 'bonzo';
 import { $$ } from '../../../lib/$$';
 import config_ from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
@@ -32,6 +31,17 @@ const removeStickyClasses = (adSlots: Element[]) => {
 	});
 };
 
+const getTopOffset = (element: Element): number => {
+	const docEl = element.ownerDocument.documentElement;
+	const clientRectTop = element.getBoundingClientRect().top;
+	const yScroll = window.pageYOffset || document.documentElement.scrollTop;
+	return (
+		clientRectTop +
+		yScroll -
+		Math.max(0, docEl.clientTop, window.document.body.clientTop)
+	);
+};
+
 export const init = (): Promise<void | boolean> => {
 	const col = $$('.js-secondary-column');
 
@@ -52,8 +62,10 @@ export const init = (): Promise<void | boolean> => {
 
 	return fastdom
 		.measure(() => [
-			mainCol.dim().height,
-			immersiveEls.offset().top - mainCol.offset().top,
+			mainCol.get(0).scrollHeight,
+			getTopOffset(immersiveEls[0]) - getTopOffset(mainCol.get(0)),
+			//			mainCol.dim().height,
+			//			immersiveEls.offset().top - mainCol.offset().top,
 		])
 		.then(([mainColHeight, immersiveOffset]) => {
 			// we do all the adjustments server-side if the page has a ShowcaseMainElement!
