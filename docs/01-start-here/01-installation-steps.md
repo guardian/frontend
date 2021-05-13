@@ -1,4 +1,4 @@
-# **Quick start guide**
+# Quick start guide
 
 - [Security checks](#security)
 - [Obtain AWS credentials](#obtain-aws-credentials)
@@ -7,33 +7,41 @@
 - [IDE Setup](#ide-setup)
 - [Optional steps](#optional-steps)
 
-# Security checks
+## Security checks
 
 All development laptops must be encrypted. If you are not 100% sure, please ask for help.
 
-## Check your Mac
+### Check your Mac
 
 - Choose Apple menu > System Preferences
 - Security & Privacy.
 - Click the FileVault tab.
 - ensure that FileVault is enabled for your disk
 
-## Checking Linux (including desktop machines)
+### Checking Linux (including desktop machines)
 
 Follow [this link](https://www.google.co.uk) and enter the relevant search string for your system.
 
-# Obtain AWS credentials
+## Basic Tools
+
+You need to have a few command line tools installed on your computer (some are used to install other tools). You should already have them if your laptop has been properly set up as part of your onboarding, otherwise here are what you need: 
+
+- [Homebrew](http://brew.sh/) (this is needed on Mac only)
+	
+	```bash
+	$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	```
+
+	
+
+## Obtain AWS credentials
 
 1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account).
 1. Make your change and push to a new branch (you can review the closed PRs for help).
 1. Submit a PR.
 1. To install local Janus credentials make sure you have `awscli` installed. For this run `brew install awscli` at your terminal.
 
-# Local dev server setup
-
-**Hello there!** 👋 After completing this setup guide, we would greatly appreciate it if you could complete our [Frontend Setup
-Questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSc6CVY0z-cGm2_Jm7gKkWbZ3yIlK0FaKPJZO3jAjxsZNSc5oQ/viewform?c=0&w=1).
-It should only take 3 minutes and will help us improve this documentation and the setup process in the future. Thank you! 🙏
+## Local development server setup
 
 Before checking out the repository you may need to add your guardian email address to your github account and [add an
 SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may
@@ -42,7 +50,9 @@ Make sure your dev manager has added you to the necessary teams, in case you hav
 
 You need a Mac or Linux PC (Ubuntu).
 
-## Automatic
+We present you with two setup types: _automatic_ and _manual_. They are equivalent, the manual set up can be used if for some reasons you still have a problem after doing the automatic set up.
+
+### Automatic Setup
 
 1. Make sure you have `git` installed. Run `brew install git` if required.
 
@@ -53,15 +63,15 @@ You need a Mac or Linux PC (Ubuntu).
     $ cd frontend
     ```
 
-1. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *Frontend* and *CMS fronts* (you will need access to Janus)
+1. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *Frontend*, *CMS fronts* and *CAPI* (You will need access to Janus).
 
-1. Make sure you have the [latest version of Java](#jdk)
+1. Make sure you have the [latest version of Java](#jdk).
 
-1. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](04-troubleshooting.md#npm-eacces)*
+1. Run ```./setup.sh``` to install dependencies and compile assets. (If you get a _EACCES error_ see [here](04-troubleshooting.md#npm-eacces)).
 
 1. All being well, you should be able to [run the app](#running-the-app)
 
-## Manual
+### Manual Setup
 
 ### Configuration
 
@@ -72,14 +82,6 @@ You need one file on your machine:
 ```
 [profile frontend]
 region = eu-west-1
-```
-
-### [Homebrew](http://brew.sh/)
-
-This is needed on Mac only:
-
-```bash
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 ### JDK
@@ -96,11 +98,11 @@ $ sudo apt-get -y install oracle-java8-installer
 
 Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+### Node.js
 
-The frontend uses an `.nvmrc` which specifies Node 10.22 (LTS Dubnium) as a requirement. If you use
-[NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can
-just `nvm use` (or `nvm install` if you don't have 10.22 installed yet).
+Node.js can be found [here](https://github.com/nodejs/node).
+
+We recommend that you use the Node Version Manager to be able to switch easily between versions of nodes. 
 
 To install nvm:
 
@@ -112,7 +114,10 @@ You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9
 `.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc`
 is present.
 
-If you just want to use your system Node, you'll need to install v10.22:
+Frontend uses a `.nvmrc` file which specifies a given version of node as a requirement. If you use
+[nvm](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can run `nvm use` to swich to the version specified by `.nvmrc`. If that version number is not available locally, you might have to install the missing version with `nvm install <version number>`.
+
+Alternatively you could use your system Node, for instance using the following:
 
 Ubuntu:
 
@@ -127,7 +132,6 @@ Mac:
 $ brew install node@10.22
 ```
 
-
 ### Client side code
 
 Install additional dependencies:
@@ -138,8 +142,8 @@ $ make install compile
 
 The frontend application should now be ready to run.
 
-Running the app
-===============
+## Running frontend
+
 Compile the client side assets:
 
 ```bash
@@ -149,61 +153,80 @@ $ make watch
 As a convenience, this command will also watch for changes to client side code and
 automatically inject changes into the browser without requiring a browser refresh.
 
-In another console, run the supplied bash script [sbt].
-You can use the following command to call the bash script. Alternatively, make
-sure you include dot and slash if executing the script directly.
+In another console, run the supplied bash script `./sbt`
 
 ```bash
-$ make sbt
+$ ./sbt
 ```
 
-Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
-it's done when you get a prompt. If it is your first time, clean and compile the project.
+(Do not run your global sbt command you need to use the one provided by frontend, hence `./sbt`)
+
+Wait for sbt to be up and running (this may take few minutes if it's the first time). Then clean and compile at the sbt prompt
 
 ```
-clean
+[root] $ clean
 ```
 
 Then, when it's finished
 
 ```
-compile
+[root] $ compile
 ```
 
-Switch project by typing
+We are first going to run the [article] app which serves most of news articles. 
+
+Switch to the [article] project by typing
+
+```
+[root] $ project article
+```
+
+At this point you cannot actually query an article because frontend now relies on dotcom-rendering to generate HTML documents. Assuming you already have installed [DCR (dotcom-rendering)](https://github.com/guardian/dotcom-rendering) you simply need to run
+
+```
+make dev
+```
+
+**at the DCR repository**. This will be starting your DCR local server. 
+
+With the DCR server running, frontend should now be able to server articles. To do so, you just need to run the [article] app, therefore at the sbt prompt do run
+
+```
+[article] $ run
+```
+
+And then put 
+
+[http://localhost:9000/uk-news/2020/feb/14/77-survivor-thelma-stober-to-lead-grenfell-memorial-commission](http://localhost:9000/uk-news/2020/feb/14/77-survivor-thelma-stober-to-lead-grenfell-memorial-commission)
+
+in your web browser. If everything went fine, frontend running received the request, queried CAPI to retrieve article data, and then queried DCR to get the HTML document. 
+
+If you press [enter] in the terminal window where you are running the [article] app you should be back to the sbt prompt. 
+
+There is another app you can run called "dev-build". It is a more complete version of frontend trying to emulate the entire website. 
+
+If you switch to dev-build and then run it
 
 ```
 project dev-build
+[dev-build] $ run
 ```
 
-Then run the project locally by typing
+You should be able to access more contents of the site, including the fronts. Note that depending on the state of the "DCR migration", some content may still be served by frontend itself and the others with the help of DCR.
 
-```
-run
-```
 
-This also can take a while the first time.
-
-Now check that you are up and running by hitting the following URLs:
-
-* [http://localhost:3000/media](http://localhost:3000/media)
-* [http://localhost:3000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:3000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
-* [http://localhost:3000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:3000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
-
-Please note, `make watch` proxies port 3000 with the ability to live reload assets, you could access all links using port 9000 as well.
+Please note, `make watch` proxies port 3000 with the ability to live reload assets, so if you have `make watch` runing, you can access all frontend local links using port 3000.
 
 If you have [setup local Nginx](https://github.com/guardian/frontend/blob/main/nginx/README.md) then try hitting
 [https://m.thegulocal.com](https://m.thegulocal.com)
 
-Congratulations, you have a local instance running!  Now continue on to set up your IDE.
+## IDE setup
 
-# IDE setup
-
-## EditorConfig plugin
+### EditorConfig plugin
 
 Install to your IDE from http://editorconfig.org/#download
 
-## Scala Editor setup
+### Scala Editor setup
 
 Any Scala editor can be used for the project, but we recommend either Intellij or VS Code.
 
@@ -225,7 +248,7 @@ fail a build in our CI.*
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
-## Client-side development with VSCode
+### Client-side development with VSCode
 
 While IntelliJ is great for Scala, you may want another option if you are writing a lot of JS and CSS, so quite a few people choose to use VSCode.
 
@@ -242,15 +265,15 @@ You can use the Command Palette (shift + cmd + P) to open user or workspace sett
 
 Recommended VSCode extensions are listed in `.vscode/extensions.json` and VSCode should prompt you to install these when you open the project. You can also find and install these by searching for `@recommended` in the extensions pane.
 
-# Optional steps
-
-**Before you go:** We would greatly appreciate it if you could complete our [Frontend Setup
-Questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSc6CVY0z-cGm2_Jm7gKkWbZ3yIlK0FaKPJZO3jAjxsZNSc5oQ/viewform?c=0&w=1).
-It should only take 3 minutes and will help us improve this documentation and the setup process in the future. Thank you! 🙏
-
-## Nginx
+### Nginx
 
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
 [`/nginx/README.md`](https://github.com/guardian/frontend/blob/main/nginx/README.md) in this project.
 This will allow you to access frontend via `https://m.thegulocal.com`
+
+### Optional steps
+
+**Before you go:** We would greatly appreciate it if you could complete our [Frontend Setup
+Questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSc6CVY0z-cGm2_Jm7gKkWbZ3yIlK0FaKPJZO3jAjxsZNSc5oQ/viewform?c=0&w=1).
+It should only take 3 minutes and will help us improve this documentation and the setup process in the future. Thank you! 🙏
