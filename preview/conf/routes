@@ -100,6 +100,7 @@ GET        /football/:competition/:group/table.json                          foo
 GET        /football/:competitionTag/overview/embed                          football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
 GET        /football/:competitionTag/overview                                football.controllers.WallchartController.renderWallchart(competitionTag)
 GET        /football/:competitionTag/groups/embed                            football.controllers.WallchartController.renderGroupTablesEmbed(competitionTag)
+GET        /football/:competitionTag/spider/embed                            football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
 
 GET        /football/api/match-nav/:year/:month/:day/:home/:away.json        football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET        /football/api/match-nav/:year/:month/:day/:home/:away             football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
