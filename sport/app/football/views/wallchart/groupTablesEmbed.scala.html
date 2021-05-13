@@ -1,0 +1,37 @@
+@(page: model.Page, competition: model.Competition, competitionStages: List[football.model.Groups], next: Option[pa.FootballMatch])(implicit request: RequestHeader, context: model.ApplicationContext)
+<!DOCTYPE html>
+
+<html class="js-off is-not-modern id--signed-out" lang="en-GB">
+    <head>
+        <meta name="robots" content="noindex, nofollow" />
+        @fragments.head(Some("football"), Html(""))(page, request, context)
+        <script>guardian.config.page.isFootballWorldCup2014 = true;</script>
+        </head>
+    <body id="top" itemscope itemtype="http://schema.org/WebPage">
+        <div id="js-context" class="football-wallchart-embed">
+            <div class="l-side-margins wc-overview">
+                @competitionStages.map { groupStage =>
+                    <div class="facia-container facia-container--layout-content">
+                        <div class="container">
+                            <div class="facia-container__inner">
+                                <div class="container__border hide-on-mobile"></div>
+                                <div class="fc-container__header">
+                                    <h3 class="container__title">
+                                        <span class="container__title__label u-text-hyphenate">Groups</span>
+                                    </h3>
+                                </div>
+                                <div class="container__body">
+                                    <div data-link-name="@competition.fullName groups">
+                                    @football.views.html.wallchart.groups(competition, groupStage)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                @fragments.analytics.base()(page, request, context)
+            </div>
+        </div>
+    </body>
+</html>

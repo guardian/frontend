@@ -5,7 +5,7 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import model.{ApplicationContext, Cached}
-import football.model.{CompetitionStage, KnockoutSpider}
+import football.model.{CompetitionStage, KnockoutSpider, Groups}
 import pa.FootballMatch
 
 import java.time.ZonedDateTime
@@ -38,7 +38,6 @@ class WallchartController(
           )
           val competitionStages = new CompetitionStage(competitionsService.competitions)
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
-
           val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
           Cached(60) {
             if (embed)
@@ -49,6 +48,30 @@ class WallchartController(
               RevalidatableResult.Ok(
                 football.views.html.wallchart.page(page, competition, competitionStages, nextMatch),
               )
+          }
+        }
+        .getOrElse(NotFound)
+    }
+
+  def renderGroupTablesEmbed(competitionTag: String): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionTag)
+        .map { competition =>
+          val page = new FootballPage(
+            competition.url.stripSuffix("/"),
+            "football",
+            s"${competition.fullName} group tables",
+          )
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+          val groupStages = competitionStages.collect { case stage: Groups => stage }
+
+          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+          Cached(60) {
+            RevalidatableResult.Ok(
+              football.views.html.wallchart.groupTablesEmbed(page, competition, groupStages, nextMatch),
+            )
           }
         }
         .getOrElse(NotFound)
