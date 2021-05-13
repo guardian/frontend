@@ -171,6 +171,16 @@ object CompetitionsProvider {
       tableDividers = List(2, 6, 21),
     ),
     Competition(
+      "700",
+      "/football/world-cup-2018",
+      "World Cup 2018",
+      "World Cup 2018",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2018, 6, 1)),
+    ),
+    Competition(
       "701",
       "/football/world-cup-2022-qualifiers",
       "World Cup 2022 qualifying",
@@ -302,6 +312,16 @@ object CompetitionsProvider {
       "European",
     ),
     Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
+    Competition(
+      "750",
+      "/football/euro-2020",
+      "Euro 2020",
+      "Euro 2020",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2019, 11, 30)),
+    ),
   )
 }
 

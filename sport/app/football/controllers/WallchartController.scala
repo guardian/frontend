@@ -5,7 +5,7 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import model.{ApplicationContext, Cached}
-import football.model.{CompetitionStage, KnockoutSpider}
+import football.model.{CompetitionStage, KnockoutSpider, Groups}
 import pa.FootballMatch
 
 import java.time.ZonedDateTime
@@ -17,6 +17,13 @@ class WallchartController(
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
+
+  object WallchartController {
+    def nextMatch(matches: Seq[FootballMatch], after: ZonedDateTime): Option[FootballMatch] = {
+      val ordered = matches.sortBy(_.date.toInstant.toEpochMilli)
+      ordered.find(game => game.date.isAfter(after))
+    }
+  }
 
   def renderWallchartEmbed(competitionTag: String): Action[AnyContent] = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false): Action[AnyContent] =
@@ -31,7 +38,6 @@ class WallchartController(
           )
           val competitionStages = new CompetitionStage(competitionsService.competitions)
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
-
           val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
           Cached(60) {
             if (embed)
@@ -42,6 +48,76 @@ class WallchartController(
               RevalidatableResult.Ok(
                 football.views.html.wallchart.page(page, competition, competitionStages, nextMatch),
               )
+          }
+        }
+        .getOrElse(NotFound)
+    }
+
+  def renderGroupTablesEmbed(competitionTag: String): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionTag)
+        .map { competition =>
+          val page = new FootballPage(
+            competition.url.stripSuffix("/"),
+            "football",
+            s"${competition.fullName} group tables",
+          )
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+          val groupStages = competitionStages.collect { case stage: Groups => stage }
+
+          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+          Cached(60) {
+            RevalidatableResult.Ok(
+              football.views.html.wallchart.groupTablesEmbed(page, competition, groupStages, nextMatch),
+            )
+          }
+        }
+        .getOrElse(NotFound)
+    }
+
+  def renderWallchartHTML(competitionID: String): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionID: String)
+        .map { competition =>
+          val page = new FootballPage(
+            competition.url.stripSuffix("/"),
+            "football",
+            s"${competition.fullName} wallchart",
+          )
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+
+          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+          Cached(60) {
+            RevalidatableResult.Ok(
+              football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch),
+            )
+          }
+        }
+        .getOrElse(NotFound)
+    }
+
+  def renderSpiderEmbed(competitionTag: String): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionTag)
+        .map { competition =>
+          val page = new FootballPage(
+            competition.url.stripSuffix("/"),
+            "football",
+            s"${competition.fullName} wallchart",
+          )
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+          val knockoutSpiderStages = competitionStages.collect { case stage: KnockoutSpider => stage }
+          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+          Cached(60) {
+            RevalidatableResult.Ok(
+              football.views.html.wallchart.spiderEmbed(page, competition, knockoutSpiderStages, nextMatch),
+            )
           }
         }
         .getOrElse(NotFound)
@@ -64,11 +140,4 @@ class WallchartController(
         case _ => NotFound
       }
     }
-}
-
-object WallchartController {
-  def nextMatch(matches: Seq[FootballMatch], after: ZonedDateTime): Option[FootballMatch] = {
-    val ordered = matches.sortBy(_.date.toInstant.toEpochMilli)
-    ordered.find(game => game.date.isAfter(after))
-  }
 }
