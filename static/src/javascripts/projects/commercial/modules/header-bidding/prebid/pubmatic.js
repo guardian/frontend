@@ -1,3 +1,6 @@
+// Pubmatic custom override script
+// from gist.github.com/abhinavsinha001/de46bd4ac4f02d98eb50c1f4f995545e
+
 export const pubmatic = function (bid, data, acEnabled, utils, defaultFn) {
 	if (defaultFn) {
 		// keep this to move to default function once supported by RTD submodule
