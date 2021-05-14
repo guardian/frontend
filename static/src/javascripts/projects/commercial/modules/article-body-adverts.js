@@ -103,7 +103,7 @@ const addDesktopInlineAds = (isInline1) => {
 				minBelow: 600,
 			},
 			' [data-spacefinder-ignore="numbered-list-title"]': {
-				minAbove: 5,
+				minAbove: 25,
 				minBelow: 0,
 			},
 		},
