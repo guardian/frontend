@@ -1,4 +1,3 @@
-import qwery from 'qwery';
 import fakeConfig from '../../../lib/config';
 import fakeMediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
@@ -45,7 +44,7 @@ describe('Standard Article Aside Adverts', () => {
 
     it('should exist', () => {
         expect(init).toBeDefined();
-        expect(qwery('.ad-slot').length).toBe(1);
+        expect(document.querySelectorAll('.ad-slot').length).toBe(1);
     });
 
     it('should resolve immediately if the secondary column does not exist', done => {
@@ -101,7 +100,7 @@ describe('Immersive Article Aside Adverts', () => {
 
     it('should have correct test elements', () => {
         expect(
-            qwery('.js-content-main-column .element--immersive').length
+            document.querySelectorAll('.js-content-main-column .element--immersive').length
         ).toBe(2);
     });
 

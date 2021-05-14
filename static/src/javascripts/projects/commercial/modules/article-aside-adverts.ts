@@ -31,7 +31,8 @@ const removeStickyClasses = (adSlots: Element[]) => {
 	});
 };
 
-const getTopOffset = (element: HTMLElement): number => {
+const getTopOffset = (element: HTMLElement | undefined): number => {
+	if (!element) return 0;
 	const docEl = element.ownerDocument.documentElement;
 	const clientRectTop = element.getBoundingClientRect().top;
 	const yScroll = window.pageYOffset || document.documentElement.scrollTop;
@@ -53,18 +54,16 @@ export const init = (): Promise<void | boolean> => {
 	const mainCol = $$('.js-content-main-column');
 	const adSlotDollar = $$('.js-ad-slot', col.get(0));
 	const immersiveElsDollar = $$('.element--immersive', mainCol.get(0));
-	const adSlots = adSlotDollar.get();
+	const adSlotsWithinRightCol = adSlotDollar.get();
 	const immersiveEls = immersiveElsDollar.get();
 
-	if (!adSlots.length || !mainCol.get().length) {
+	if (!adSlotsWithinRightCol.length || !mainCol.get().length) {
 		return Promise.resolve(false);
 	}
 
 	return fastdom
 		.measure(() => {
-			const immersiveElementOffset = immersiveEls[0]
-				? getTopOffset(immersiveEls[0])
-				: 0;
+			const immersiveElementOffset = getTopOffset(immersiveEls[0]);
 			const mainColOffset = getTopOffset(mainCol.get(0));
 			return [
 				mainCol.get(0).offsetHeight,
@@ -76,34 +75,34 @@ export const init = (): Promise<void | boolean> => {
 		.then(([mainColHeight, immersiveOffset]) => {
 			// we do all the adjustments server-side if the page has a ShowcaseMainElement!
 			if (config.get('page.hasShowcaseMainElement', false)) {
-				return adSlots[0];
+				return adSlotsWithinRightCol[0];
 			}
 			// immersive articles may have an image that overlaps the aside ad so we need to remove
 			// the sticky behaviour and conditionally adjust the slot size depending on how far down
 			// the page the first immersive image appears.
 			if (config.get('page.isImmersive') && immersiveEls.length > 0) {
 				return fastdom.mutate(() => {
-					removeStickyClasses(adSlots);
-					adSlots[0].setAttribute(
+					removeStickyClasses(adSlotsWithinRightCol);
+					adSlotsWithinRightCol[0].setAttribute(
 						'data-mobile',
 						getAllowedSizesForImmersive(immersiveOffset),
 					);
-					return adSlots[0];
+					return adSlotsWithinRightCol[0];
 				});
 			}
 			// most articles are long enough to fit a DMPU. However, the occasional shorter article
 			// will need the slot sizes to be adjusted, and the sticky behaviour removed.
 			if (mainColHeight < minArticleHeight) {
 				return fastdom.mutate(() => {
-					removeStickyClasses(adSlots);
-					adSlots[0].setAttribute(
+					removeStickyClasses(adSlotsWithinRightCol);
+					adSlotsWithinRightCol[0].setAttribute(
 						'data-mobile',
 						'1,1|2,2|300,250|300,274|fluid',
 					);
-					return adSlots[0];
+					return adSlotsWithinRightCol[0];
 				});
 			}
-			return adSlots[0];
+			return adSlotsWithinRightCol[0];
 		})
 		.then((adSlot) => {
 			mediator.emit('page:defaultcommercial:right', adSlot);
