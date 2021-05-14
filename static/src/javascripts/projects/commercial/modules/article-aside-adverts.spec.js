@@ -3,6 +3,9 @@ import fakeMediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
 import { init } from './article-aside-adverts';
 
+// This module removes sticky behaviour from ads in immersive article. Example below:
+// https://www.theguardian.com/saving-for-a-sunny-day-with-nsandi/2021/apr/20/its-incredibly-liberating-what-saving-for-a-piano-taught-me-about-my-finances
+
 jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         articleAsideAdverts: true,

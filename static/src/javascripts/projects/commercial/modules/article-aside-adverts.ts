@@ -68,8 +68,6 @@ export const init = (): Promise<void | boolean> => {
 			return [
 				mainCol.get(0).offsetHeight,
 				immersiveElementOffset - mainColOffset,
-				// mainCol.dim().height,
-				// immersiveEls.offset().top - mainCol.offset().top,
 			];
 		})
 		.then(([mainColHeight, immersiveOffset]) => {
