@@ -103,8 +103,8 @@ const addDesktopInlineAds = (isInline1) => {
 				minBelow: 600,
 			},
 			' [data-spacefinder-ignore="numbered-list-title"]': {
-				minAbove: 600,
-				minBelow: 600,
+				minAbove: 0,
+				minBelow: 50,
 			},
 		},
 		filter: filterNearbyCandidates(adSizes.halfPage.height),
