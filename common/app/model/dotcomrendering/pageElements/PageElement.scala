@@ -1312,9 +1312,8 @@ object PageElement {
       case Code => {
         (for {
           data <- element.codeTypeData
-          html = data.html
         } yield {
-          CodeBlockElement(html, true)
+          CodeBlockElement(data.html, true)
         }).toList
       }
 
