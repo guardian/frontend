@@ -25,6 +25,8 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 import { EventTimer } from '@guardian/commercial-core';
+import { endpoint } from 'lib/data-lake'
+import logData from 'lib/data-lake'
 
 const commercialModules = [
     ['cm-setAdTestCookie', setAdTestCookie],
@@ -119,6 +121,17 @@ const loadModules = () => {
 export const bootCommercial = () => {
     // Init Commercial event timers
     EventTimer.init();
+
+    // Collect data to send to the lake
+    const analyticsData = logData();
+
+    // Send data to the lake
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            console.log("Testing...")
+            navigator.sendBeacon(endpoint, analyticsData);
+        }
+    });
 
     catchErrorsWithContext(
         [
