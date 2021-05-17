@@ -124,7 +124,7 @@ class HostedGallery {
         let ox;
         let dx;
         const updateTime = 20;
-        this.$imagesContainer.css('width', `${this.$images.length}00%`);
+        this.$imagesContainer.style.setProperty('width', `${this.$images.length}00%`);
 
         this.$galleryEl.addEventListener('touchstart', e => {
             threshold = this.swipeContainerWidth * this.swipeThreshold;
@@ -361,7 +361,7 @@ class HostedGallery {
             (() => {
                 this.loadSurroundingImages(this.index, this.$images.length);
                 if (this.useSwipe) {
-                    this.swipeContainerWidth = this.$galleryFrame.dim().width;
+                    this.swipeContainerWidth = this.$galleryFrame.offsetWidth;
                     this.translateContent(this.index, 0, 0);
                 }
                 this.setPageWidth();
