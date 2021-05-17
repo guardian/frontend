@@ -152,7 +152,7 @@ object ChartAtomBlockElement {
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
 }
 
-case class CodeBlockElement(html: String, isMandatory: Boolean) extends PageElement
+case class CodeBlockElement(html: String, language: Option[String], isMandatory: Boolean) extends PageElement
 object CodeBlockElement {
   implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
 }
@@ -1313,7 +1313,7 @@ object PageElement {
         (for {
           data <- element.codeTypeData
         } yield {
-          CodeBlockElement(data.html, true)
+          CodeBlockElement(data.html, codeLanguage(element), true)
         }).toList
       }
 
@@ -1680,7 +1680,25 @@ object PageElement {
           )
       }
     }
+  }
 
+  private def codeLanguage(element: ApiBlockElement): Option[String] = {
+    /*
+      Date: 17th May 2021
+
+      The list of languages being listed here was taken from DCR. It is important
+      that this list remains a subset (ideally equal) to the list defined in DCR.
+
+      If it ever happens that CAPI delivers a language that is not expected in DCR, then
+      This will guard against it being sent over. Of course the "correct" course of action
+      then will be to add the new language in DCR and then here.
+     */
+    val dcrLanguages = List("text", "typescript", "javascript", "css", "markup", "scala", "elm")
+    for {
+      data <- element.codeTypeData
+      language = data.language
+      if dcrLanguages.contains(language)
+    } yield language
   }
 
   private[pageElements] def containsThirdPartyTracking(embedTracking: Option[EmbedTracking]): Boolean = {
