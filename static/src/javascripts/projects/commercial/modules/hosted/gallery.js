@@ -256,10 +256,10 @@ class HostedGallery {
         const imageSize = getFrame(imgRatio);
 
         fastdom.mutate(() => {
-            $sizer.style.width =  imageSize.width;
-            $sizer.style.height =  imageSize.height;
-            $sizer.style.top =  imageSize.topBottom;
-            $sizer.style.left =  imageSize.leftRight;
+            $sizer.style.setProperty('width', imageSize.width);
+            $sizer.style.setProperty('height', imageSize.height);
+            $sizer.style.setProperty('top', imageSize.topBottom);
+            $sizer.style.setProperty('left', imageSize.leftRight);
             if (imgIndex === ctaIndex) {
                 $ctaFloat.style.setProperty('bottom', ctaSize.topBottom);
             }
@@ -280,17 +280,10 @@ class HostedGallery {
         const galleryEl = this.$imagesContainer;
         const $meta = this.$meta;
 
-        galleryEl.style.webkitTransitionDuration = `${duration}ms`;
-        galleryEl.style.mozTransitionDuration = `${duration}ms`;
-        galleryEl.style.msTransitionDuration = `${duration}ms`;
-        galleryEl.style.transitionDuration = `${duration}ms`;
-        galleryEl.style.webkitTransform = `translate(${px +
-            offset}px,0) translateZ(0)`;
-        galleryEl.style.mozTransform = `translate(${px + offset}px,0)`;
-        galleryEl.style.msTransform = `translate(${px + offset}px,0)`;
-        galleryEl.style.transform = `translate(${px +
-            offset}px,0) translateZ(0)`;
         fastdom.mutate(() => {
+            galleryEl.style.setProperty('transition-duration', `${duration}ms`);
+            galleryEl.style.setProperty('transform', `translate(${px +
+                offset}px,0) translateZ(0)`);
             $meta.style.setProperty('opacity', offset !== 0 ? 0 : 1);
         });
     }
@@ -314,7 +307,6 @@ class HostedGallery {
             });
 
             this.$border.style.setProperty('transform', `rotate(${deg}deg)`);
-            this.$border.style.setProperty('-webkit-transform', `rotate(${deg}deg)`);
 
             this.toggleClass(
                 this.$galleryEl,
@@ -396,15 +388,15 @@ class HostedGallery {
         this.swipeContainerWidth = imageWidth;
         fastdom.mutate(() => {
             if ($header) {
-                $header.style.width = imageWidth;
+                $header.style.setProperty('width', imageWidth);
             }
             if ($footer) {
-                $footer.style.margin = `0 ${leftRight}`;
-                $footer.style.width = 'auto';
+                $footer.style.setProperty('margin', `0 ${leftRight}`);
+                $footer.style.setProperty('width', 'auto');
             }
             if ($gallery) {
-                $galleryFrame.style.left = leftRight;
-                $galleryFrame.style.right = leftRight;
+                $galleryFrame.style.setProperty('left', leftRight);
+                $galleryFrame.style.setProperty('right', leftRight);
             }
             that.loadSurroundingImages(that.index, that.$images.length);
         });
