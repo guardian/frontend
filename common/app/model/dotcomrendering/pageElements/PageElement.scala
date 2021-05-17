@@ -152,7 +152,7 @@ object ChartAtomBlockElement {
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
 }
 
-case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
+case class CodeBlockElement(html: String, isMandatory: Boolean) extends PageElement
 object CodeBlockElement {
   implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
 }
@@ -745,6 +745,7 @@ object PageElement {
       case _: BlockquoteBlockElement      => true
       case _: CalloutBlockElement         => true
       case _: ChartAtomBlockElement       => true
+      case _: CodeBlockElement            => true
       case _: CommentBlockElement         => true
       case _: ContentAtomBlockElement     => true
       case _: DisclaimerBlockElement      => true
@@ -780,7 +781,6 @@ object PageElement {
       case _: VineBlockElement            => true
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
-      case _: CodeBlockElement                                            => true // Currently will just fail over at DCR
 
       case _ => false
     }
@@ -1309,8 +1309,15 @@ object PageElement {
             fields.role,
           )
         }).toList
-      case Code =>
-        List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
+      case Code => {
+        (for {
+          data <- element.codeTypeData
+          html = data.html
+        } yield {
+          CodeBlockElement(html, true)
+        }).toList
+      }
+
       case Form                      => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
