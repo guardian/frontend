@@ -108,6 +108,7 @@ const SDK_OPTIONS = {
     baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
     sessionTimeoutInSeconds: 1,
     minimumIntervalBetweenTriggerActionsInSeconds: 0,
+    devicePropertyAllowlist: [],
 };
 
 const getMessageFromBraze = async (apiKey, brazeUuid) => {
