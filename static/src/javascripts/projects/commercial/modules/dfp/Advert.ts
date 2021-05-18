@@ -137,8 +137,8 @@ class Advert {
 			this.extraNodeClasses,
 			newClasses,
 		);
-		this.node.classList.remove(...classesToRemove);
-		this.node.classList.add(...newClasses);
+		classesToRemove.forEach((cls) => this.node.classList.remove(cls));
+		newClasses.forEach((cls) => this.node.classList.add(cls));
 		this.extraNodeClasses = newClasses;
 	}
 }
