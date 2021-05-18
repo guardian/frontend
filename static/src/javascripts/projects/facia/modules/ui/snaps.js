@@ -17,7 +17,6 @@ const bindIframeMsgReceiverOnce = once(() => {
         const iframe = snapIframes.find(
             snapIframe => snapIframe.contentWindow === event.source
         );
-
         let message;
         if (iframe) {
             message = JSON.parse(event.data);
@@ -189,8 +188,17 @@ const initStandardSnap = (el) => {
     });
 };
 
+const getIframesFromSnap = (snap) =>
+    Array.from(snap.children).filter((e) => e.nodeName === 'IFRAME')
+
+const isInteractiveSnap = (inlinedSnap) => getIframesFromSnap(inlinedSnap).length !== 0
+
 const initInlinedSnap = (el) => {
     addCss(el);
+    if (isInteractiveSnap(el)) {
+        getIframesFromSnap(el).forEach((iframe) => snapIframes.push(iframe))
+        bindIframeMsgReceiverOnce();
+    }
     if (!isIOS) {
         mediator.on('window:throttledResize', () => {
             addCss(el, true);
@@ -218,7 +226,6 @@ const init = () => {
             );
         })
         .filter(el => el.getAttribute('data-snap-uri'));
-
     snaps.forEach(initStandardSnap);
 };
 
