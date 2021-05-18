@@ -152,7 +152,7 @@ object ChartAtomBlockElement {
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
 }
 
-case class CodeBlockElement(html: String, isMandatory: Boolean) extends PageElement
+case class CodeBlockElement(html: String, language: String, isMandatory: Boolean) extends PageElement
 object CodeBlockElement {
   implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
 }
@@ -1313,7 +1313,7 @@ object PageElement {
         (for {
           data <- element.codeTypeData
         } yield {
-          CodeBlockElement(data.html, true)
+          CodeBlockElement(data.html, data.language, false)
         }).toList
       }
 
@@ -1680,7 +1680,6 @@ object PageElement {
           )
       }
     }
-
   }
 
   private[pageElements] def containsThirdPartyTracking(embedTracking: Option[EmbedTracking]): Boolean = {
