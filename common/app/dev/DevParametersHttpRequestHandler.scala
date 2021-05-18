@@ -53,6 +53,7 @@ class DevParametersHttpRequestHandler(
     "pbjs_debug", // set to `true` to enable prebid debugging,
     "amzn_debug_mode", // set to `1` to enable A9 debugging
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
+    "dcr",
   )
 
   val commercialParams = Seq(
