@@ -137,6 +137,7 @@ class Advert {
 			this.extraNodeClasses,
 			newClasses,
 		);
+		// IE11 does not support multiple arguments to classList.add/remove so do these one-by-ones
 		classesToRemove.forEach((cls) => this.node.classList.remove(cls));
 		newClasses.forEach((cls) => this.node.classList.add(cls));
 		this.extraNodeClasses = newClasses;
