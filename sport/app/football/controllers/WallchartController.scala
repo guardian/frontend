@@ -5,8 +5,8 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import model.{ApplicationContext, Cached}
-import football.model.{CompetitionStage, KnockoutSpider, Groups}
-import pa.FootballMatch
+import football.model.{CompetitionStage, Groups, KnockoutSpider}
+import pa.{FootballMatch}
 
 import java.time.ZonedDateTime
 
@@ -65,6 +65,7 @@ class WallchartController(
           )
           val competitionStages = new CompetitionStage(competitionsService.competitions)
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
+
           val groupStages = competitionStages.collect { case stage: Groups => stage }
 
           val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
@@ -72,6 +73,41 @@ class WallchartController(
             RevalidatableResult.Ok(
               football.views.html.wallchart.groupTablesEmbed(page, competition, groupStages, nextMatch),
             )
+          }
+        }
+        .getOrElse(NotFound)
+    }
+
+  def renderIndividualGroupTableEmbed(competitionTag: String, groupId: String): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionTag)
+        .map { competition =>
+          val page = new FootballPage(
+            competition.url.stripSuffix("/"),
+            "football",
+            s"${competition.fullName} group tables",
+          )
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+
+          val groupStages = competitionStages.collectFirst { case stage: Groups => stage }
+
+          groupStages match {
+            case None => NotFound
+            case Some(group) => {
+              group.groupTables.find(x => x._1.roundNumber == groupId) match {
+                case None => NotFound
+                case Some(table) => {
+                  Cached(60) {
+                    RevalidatableResult.Ok(
+                      football.views.html.wallchart.groupTableEmbed(page, competition, group, table),
+                    )
+                  }
+                }
+              }
+
+            }
           }
         }
         .getOrElse(NotFound)
