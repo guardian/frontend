@@ -6,7 +6,6 @@ import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { stripDfpAdPrefixFrom } from '../utils';
 import { EventTimer } from '@guardian/commercial-core';
-import { isInPrebidPermutiveTest } from './permutive-test';
 import { pubmatic } from './pubmatic';
 
 const bidderTimeout = 1500;
@@ -79,7 +78,7 @@ const initialise = (window, framework = 'tcfv2') => {
         pbjsConfig.consentManagement = consentManagement()
     }
 
-    if (config.get('switches.permutive', false) && isInPrebidPermutiveTest()) {
+    if (config.get('switches.permutive', false)) {
 		pbjsConfig.realTimeData = {
 			dataProviders: [
 				{
