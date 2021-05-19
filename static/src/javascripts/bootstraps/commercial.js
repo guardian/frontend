@@ -122,7 +122,7 @@ export const bootCommercial = () => {
 	// Init Commercial event timers
 	EventTimer.init();
 
-	// Send commercial metrics
+	// Send commercial metrics to the lake
 	document.addEventListener('visibilitychange', logData());
 
 	catchErrorsWithContext(

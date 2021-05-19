@@ -2,7 +2,7 @@ import { log } from '@guardian/libs';
 import config_ from '../../lib/config';
 
 const endpoint =
-	'http://performance-events.code.dev-guardianapis.com/commercial-metrics';
+	'https://performance-events.code.dev-guardianapis.com/commercial-metrics';
 
 // This is really a hacky workaround ⚠️
 const config = config_ as {
