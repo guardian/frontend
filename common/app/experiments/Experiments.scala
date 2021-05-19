@@ -33,12 +33,3 @@ object HideAnniversaryAtom
       sellByDate = new LocalDate(2022, 5, 11),
       participationGroup = Perc0D,
     )
-
-object NewsletterEmbedDesign
-    extends Experiment(
-      name = "new-newsletter-embed-designs",
-      description = "New newsletter signup embeds for discoverability OKR",
-      owners = Seq(Owner.withGithub("buck06191")),
-      sellByDate = new LocalDate(2020, 11, 30),
-      participationGroup = Perc20A,
-    )
