@@ -1912,15 +1912,16 @@
   resolved "https://registry.yarnpkg.com/@guardian/automat-contributions/-/automat-contributions-0.3.6.tgz#eeb47307522f88a8cb41ccfb34b7ecae36b363b0"
   integrity sha512-v6LkzMQaE8MaR1aNBA+9QGBSt7ICjvsPOB3iNudhnKft1LP+99TZohOyroJKc1HPYL5fbR0Oe+5CVbpkfABgrg==
 
-"@guardian/automat-modules@file:../automat-client-v2/src/modules/guardian-automat-modules-0.3.7.tgz":
-  version "0.3.7"
-  resolved "file:../automat-client-v2/src/modules/guardian-automat-modules-0.3.7.tgz#52e3cc9cde824ec9a6493be08d51d17052d4aafa"
+"@guardian/automat-modules@^0.3.8":
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/@guardian/automat-modules/-/automat-modules-0.3.8.tgz#e809e26beece699717a1480100a2ec23cb5db422"
+  integrity sha512-fqNmnddNrwInvMFzXOrBAQ80WH1B+Vec5fYKaLfPogV1psLPGx0O25Ya0bhZqdH1eFxnXDSfO7abObKV2fYUdQ==
   dependencies:
     "@emotion/react" "^11.1.5"
-    "@guardian/src-foundations" "^1.9.0"
+    "@guardian/src-foundations" "^3.5.0"
     "@types/react" "^16.9.43"
     "@types/react-dom" "^16.9.8"
-    preact "^10.4.6"
+    preact "^10.5.13"
     react "^16.13.1"
     react-dom "^16.13.1"
 
@@ -2003,10 +2004,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-0.16.1.tgz#d5e52a57012c588d146b05ded7f9fbc4a9af40d5"
   integrity sha512-E6YDqq53gy5CoO8xFPWDBjiYiI0o+4BE1/mFcwkpWGwtpkSnxi21LhkaQ63r+KRxoDB29clc86ChbNHXw9keFA==
 
-"@guardian/src-foundations@^1.9.0":
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-1.9.0.tgz#288e9c338db891ec67f4669bf2e2a30a12e513e4"
-  integrity sha512-1JGr4szmYZGhUtvWPKkO8l//5JHlocY7UXnEFszkJOsrbHECJcR3BmqX8KB3Yl+Gu4G1+r0lZ1+QIrgi02xVZw==
+"@guardian/src-foundations@^3.5.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.6.0.tgz#7bf7d4a7c28f9f4812494fdb22b8019c1c466ef5"
+  integrity sha512-KjcBwR334dhWWB6l1/j6kUcUncDgyIEE0M+ifwHPoVB/n/OVcB0LJl/a7qTCUPBYpxeZ3wukaTcMVr2zz+VL1Q==
 
 "@guardian/src-grid@2.7.1":
   version "2.7.1"
@@ -10937,11 +10938,6 @@ postcss@^7.0.2:
     chalk "^2.4.1"
     source-map "^0.6.1"
     supports-color "^5.5.0"
-
-preact@^10.4.6:
-  version "10.4.6"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.4.6.tgz#86cc43396e4bdd755726a2b4b1f0529e78067cd3"
-  integrity sha512-80WJfXH53yyINig5Wza/8MD9n4lMg9G6aN00ws0ptsAaY/Fu/M7xW4zICf7OLfocVltxS30wvNQ8oIbUyZS1tw==
 
 preact@^10.5.13:
   version "10.5.13"
