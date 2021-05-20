@@ -1,3 +1,4 @@
+import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import config_ from '../../lib/config';
 
@@ -32,14 +33,19 @@ const logData = (): void => {
 
 	const timestamp = new Date().toISOString();
 	const date = timestamp.slice(0, 10);
-
+	const eventTimer = EventTimer.get();
 	const metrics: CommercialMetrics = {
 		browser_id: config.get('ophan.browserId'),
 		page_view_id: window.guardian.ophan.pageViewId,
 		received_timestamp: timestamp,
 		received_date: date,
 		platform: 'NEXT_GEN',
-		metrics: [{ name: 'xxx', value: 123 }],
+		metrics: [
+			{
+				name: 'downlink',
+				value: 9999,
+			},
+		],
 		properties: [{ name: 'xxzzzzzx', value: 123 }],
 	};
 
