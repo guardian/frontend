@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Main Continuous Integration Script
+
 # Explicitly clean sbt targets to prevent cross-branch conflicts
 ./sbt clean
 
