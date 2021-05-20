@@ -3,7 +3,7 @@ import { log } from '@guardian/libs';
 import config_ from '../../lib/config';
 
 const endpoint =
-	'https://performance-events.code.dev-guardianapis.com/commercial-metrics';
+	'//performance-events.code.dev-guardianapis.com/commercial-metrics';
 
 // This is really a hacky workaround ⚠️
 const config = config_ as {
@@ -38,6 +38,7 @@ let logged = false;
 const logData = (): void => {
 	if (logged) return;
 	if (!window.guardian.ophan) return;
+	if (document.visibilityState !== 'hidden') return;
 
 	const timestamp = new Date().toISOString();
 	const date = timestamp.slice(0, 10);
@@ -59,7 +60,7 @@ const logData = (): void => {
 		});
 
 	const metrics: Metrics[] = events.map((event) => {
-		return { name: event.name, value: event.ts };
+		return { name: event.name, value: Math.ceil(event.ts) };
 	});
 
 	const commercialMetrics: CommercialMetrics = {
@@ -72,12 +73,8 @@ const logData = (): void => {
 		properties,
 	};
 
-	const analyticsData = JSON.stringify(commercialMetrics);
-
-	if (document.visibilityState === 'hidden') {
-		log('commercial', 'About to send commercial metrics');
-		logged = navigator.sendBeacon(endpoint, analyticsData);
-	}
+	log('commercial', 'About to send commercial metrics', commercialMetrics);
+	logged = navigator.sendBeacon(endpoint, JSON.stringify(commercialMetrics));
 };
 
 export { logData };
