@@ -7,6 +7,8 @@ import { initCommentAdverts, _ } from './comment-adverts';
 import { refreshAdvert as refreshAdvert_ } from './dfp/load-advert';
 import { getAdvertById as getAdvertById_ } from './dfp/get-advert-by-id';
 import { getBreakpoint as getBreakpoint_ } from '../../../lib/detect';
+import type { Advert } from './dfp/Advert';
+import { mocked } from 'ts-jest/utils';
 
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
 // 'cannot set property [...] which has only a getter' TypeError
@@ -51,8 +53,10 @@ const getAdvertById = getAdvertById_;
 const getBreakpoint = getBreakpoint_;
 const refreshAdvert = refreshAdvert_;
 
-const mockHeight = (height) => {
-    jest.spyOn(fastdom, 'measure').mockReturnValue(Promise.resolve(height));
+const mockHeight = (height: number) => {
+    // this is an issue with fastdom's typing of measure: () => Promise<void>
+    jest.spyOn(fastdom, 'measure')
+        .mockReturnValue(Promise.resolve(height) as unknown as Promise<void>);
 };
 
 const generateInnerHtmlWithAdSlot = () => {
@@ -74,7 +78,7 @@ const generateInnerHtmlWithAdSlot = () => {
 
 describe('createCommentSlots', () => {
     beforeEach(() => {
-        isUserLoggedIn.mockReturnValue(false);
+        mocked(isUserLoggedIn).mockReturnValue(false);
         commercialFeaturesMock.commentAdverts = true;
         if (document.body) {
             document.body.innerHTML = `<div class="js-comments">
@@ -132,10 +136,10 @@ describe('maybeUpgradeSlot', () => {
         const advert = {
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
-        };
+        } as unknown as Advert;
         expect(advert.sizes.desktop).toEqual([[300, 250]]);
 
-        maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot'));
+        maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot') as Element);
         expect(advert.sizes.desktop).toEqual([
             [300, 250],
             [300, 600],
@@ -148,14 +152,14 @@ describe('maybeUpgradeSlot', () => {
         const advert = {
             sizes: { desktop: [[160, 600], [300, 250], [300, 600]] },
             slot: { defineSizeMapping: jest.fn() },
-        };
+        } as unknown as Advert;
         expect(advert.sizes.desktop).toEqual([
             [160, 600],
             [300, 250],
             [300, 600],
         ]);
 
-        maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot'));
+        maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot') as Element);
         expect(advert.sizes.desktop).toEqual([
             [160, 600],
             [300, 250],
@@ -178,39 +182,39 @@ describe('runSecondStage', () => {
     });
 
     it('should upgrade a MPU to DMPU and immediately refresh the slot', () => {
-        const $adSlotContainer = document.querySelector('.js-discussion__ad-slot');
-        const $commentMainColumn = document.querySelector('.js-comments .content__main-column');
+        const $adSlotContainer = document.querySelector('.js-discussion__ad-slot') as Element;
+        const $commentMainColumn = document.querySelector('.js-comments .content__main-column') as Element;
         const advert = {
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
-        };
-        getAdvertById.mockReturnValue(advert);
+        } as unknown as Advert;
+        mocked(getAdvertById).mockReturnValue(advert);
 
         runSecondStage($commentMainColumn, $adSlotContainer);
         expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
-        expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
+        expect(mocked(getAdvertById).mock.calls).toEqual([['dfp-ad--comments']]);
         expect(refreshAdvert).toHaveBeenCalledTimes(1);
     });
 
     it('should not upgrade a DMPU yet still immediately refresh the slot', () => {
-        const $adSlotContainer = document.querySelector('.js-discussion__ad-slot');
-        const $commentMainColumn = document.querySelector('.js-comments .content__main-column');
+        const $adSlotContainer = document.querySelector('.js-discussion__ad-slot') as Element;
+        const $commentMainColumn = document.querySelector('.js-comments .content__main-column') as Element;
         const advert = {
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
-        };
-        getAdvertById.mockReturnValue(advert);
+        } as unknown as Advert;
+        mocked(getAdvertById).mockReturnValue(advert);
 
         runSecondStage($commentMainColumn, $adSlotContainer);
         expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
-        expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
+        expect(mocked(getAdvertById).mock.calls).toEqual([['dfp-ad--comments']]);
         expect(refreshAdvert).toHaveBeenCalledTimes(1);
     });
 });
 
 describe('initCommentAdverts', () => {
     beforeEach(() => {
-        isUserLoggedIn.mockReturnValue(false);
+        mocked(isUserLoggedIn).mockReturnValue(false);
         commercialFeaturesMock.commentAdverts = true;
         if (document.body) {
             document.body.innerHTML = `<div class="js-comments">
@@ -252,7 +256,7 @@ describe('initCommentAdverts', () => {
                 <div class="content__main-column"></div></div>`;
         }
 
-        getBreakpoint.mockReturnValue('mobile')
+        mocked(getBreakpoint).mockReturnValue('mobile')
 
         initCommentAdverts().then(result => {
             expect(result).toBe(false);
@@ -265,9 +269,9 @@ describe('initCommentAdverts', () => {
         initCommentAdverts().then(() => {
             fakeMediator.emit('modules:comments:renderComments:rendered');
             fakeMediator.once('page:commercial:comments', () => {
-                const adSlot = (document.querySelector(
+                const adSlot = document.querySelector(
                     '.js-ad-slot'
-                ));
+                ) as Element;
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
                     '1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|300,600|160,600'
@@ -279,13 +283,13 @@ describe('initCommentAdverts', () => {
 
     it('should insert a DMPU slot if there is space, and the user is logged in', done => {
         mockHeight(600); // at 600px we can insert a DMPU if the user is logged in
-        isUserLoggedIn.mockReturnValue(true);
+        mocked(isUserLoggedIn).mockReturnValue(true);
         initCommentAdverts().then(() => {
             fakeMediator.emit('modules:comments:renderComments:rendered');
             fakeMediator.once('page:commercial:comments', () => {
-                const adSlot = (document.querySelector(
+                const adSlot = document.querySelector(
                     '.js-ad-slot'
-                ));
+                ) as Element;
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
                     '1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|300,600|160,600'
@@ -297,13 +301,13 @@ describe('initCommentAdverts', () => {
 
     it('should insert an MPU if the user is logged in, and the DMPU will not fit', done => {
         mockHeight(300); // at 300px we can insert an MPU if the user is logged in
-        isUserLoggedIn.mockReturnValue(true);
+        mocked(isUserLoggedIn).mockReturnValue(true);
         initCommentAdverts().then(() => {
             fakeMediator.emit('modules:comments:renderComments:rendered');
             fakeMediator.once('page:commercial:comments', () => {
-                const adSlot = (document.querySelector(
+                const adSlot = document.querySelector(
                     '.js-ad-slot'
-                ));
+                ) as Element;
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
                     '1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid'
