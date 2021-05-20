@@ -230,11 +230,11 @@ const canShow = async () => {
 
 const show = () => Promise.all([
     import('react-dom'),
-    import('@emotion/core'),
+    import('@emotion/react'),
     import('@emotion/cache'),
     import(/* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components')
 ]).then((props) => {
-    const [{ render }, { CacheProvider }, createCacheModule, brazeModule] = props
+    const [{ render }, { CacheProvider }, { default: createCache }, brazeModule] = props;
     const container = document.createElement('div');
         container.classList.add('site-message--banner');
 
@@ -264,7 +264,7 @@ const show = () => Promise.all([
                 document.createElement('div'),
             );
 
-            const emotionCache = createCacheModule.default({ key: 'site-message', container: inner });
+            const emotionCache = createCache({ key: 'site-message', container: inner });
 
             const cached = (
                 <CacheProvider value={emotionCache}>
