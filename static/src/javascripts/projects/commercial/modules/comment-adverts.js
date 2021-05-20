@@ -1,4 +1,3 @@
-import $ from '../../../lib/$';
 import config from '../../../lib/config';
 import mediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
@@ -10,8 +9,6 @@ import { createSlots } from './dfp/create-slots';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 import { getBreakpoint } from '../../../lib/detect';
-
-
 
 const createCommentSlots = (
     canBeDmpu
@@ -37,16 +34,16 @@ const insertCommentAd = (
     return (
         fastdom
             .mutate(() => {
-                $commentMainColumn.addClass('discussion__ad-wrapper');
+                $commentMainColumn.classList.add('discussion__ad-wrapper');
                 if (
                     !config.get('page.isLiveBlog') &&
                     !config.get('page.isMinuteArticle')
                 ) {
-                    $commentMainColumn.addClass('discussion__ad-wrapper-wider');
+                    $commentMainColumn.classList.add('discussion__ad-wrapper-wider');
                 }
                 // Append each slot into the adslot container...
                 commentSlots.forEach(adSlot => {
-                    $adSlotContainer.append(adSlot);
+                    $adSlotContainer.appendChild(adSlot);
                 });
                 return commentSlots[0];
             })
@@ -69,7 +66,7 @@ const maybeUpgradeSlot = (ad, $adSlot) => {
         ad.sizes.desktop.push([300, 600], [160, 600]);
         ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
         fastdom.mutate(() => {
-            $adSlot[0].setAttribute(
+            $adSlot.setAttribute(
                 'data-desktop',
                 '1,1|2,2|300,250|300,274|fluid|300,600|160,600'
             );
@@ -82,10 +79,10 @@ const runSecondStage = (
     $commentMainColumn,
     $adSlotContainer
 ) => {
-    const $adSlot = $('.js-ad-slot', $adSlotContainer);
+    const $adSlot = $adSlotContainer.querySelector('.js-ad-slot');
     const commentAdvert = getAdvertById('dfp-ad--comments');
 
-    if (commentAdvert && $adSlot.length) {
+    if (commentAdvert && $adSlot) {
         // when we refresh the slot, the sticky behavior runs again
         // this means the sticky-scroll height is corrected!
         refreshAdvert(maybeUpgradeSlot(commentAdvert, $adSlot));
@@ -97,9 +94,9 @@ const runSecondStage = (
 };
 
 export const initCommentAdverts = () => {
-    const $adSlotContainer = $('.js-discussion__ad-slot');
+    const $adSlotContainer = document.querySelector('.js-discussion__ad-slot');
     const isMobile = getBreakpoint() === 'mobile';
-    if (!commercialFeatures.commentAdverts || !$adSlotContainer.length || isMobile) {
+    if (!commercialFeatures.commentAdverts || !$adSlotContainer || isMobile) {
         return Promise.resolve(false);
     }
 
@@ -107,12 +104,12 @@ export const initCommentAdverts = () => {
         'modules:comments:renderComments:rendered',
         () => {
             const isLoggedIn = isUserLoggedIn();
-            const $commentMainColumn = $(
+            const $commentMainColumn = document.querySelector(
                 '.js-comments .content__main-column'
             );
 
             fastdom
-                .measure(() => $commentMainColumn.dim().height)
+                .measure(() => $commentMainColumn.offsetHeight)
                 .then((mainColHeight) => {
                     // always insert an MPU/DMPU if the user is logged in, since the
                     // containers are reordered, and comments are further from most-pop

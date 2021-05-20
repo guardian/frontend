@@ -1,4 +1,3 @@
-import $ from '../../../lib/$';
 import fakeMediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
 import { addSlot } from './dfp/add-slot';
@@ -136,7 +135,7 @@ describe('maybeUpgradeSlot', () => {
         };
         expect(advert.sizes.desktop).toEqual([[300, 250]]);
 
-        maybeUpgradeSlot(advert, $('.js-discussion__ad-slot'));
+        maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot'));
         expect(advert.sizes.desktop).toEqual([
             [300, 250],
             [300, 600],
@@ -156,7 +155,7 @@ describe('maybeUpgradeSlot', () => {
             [300, 600],
         ]);
 
-        maybeUpgradeSlot(advert, $('.js-discussion__ad-slot'));
+        maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot'));
         expect(advert.sizes.desktop).toEqual([
             [160, 600],
             [300, 250],
@@ -179,8 +178,8 @@ describe('runSecondStage', () => {
     });
 
     it('should upgrade a MPU to DMPU and immediately refresh the slot', () => {
-        const $adSlotContainer = $('.js-discussion__ad-slot');
-        const $commentMainColumn = $('.js-comments .content__main-column');
+        const $adSlotContainer = document.querySelector('.js-discussion__ad-slot');
+        const $commentMainColumn = document.querySelector('.js-comments .content__main-column');
         const advert = {
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
@@ -194,8 +193,8 @@ describe('runSecondStage', () => {
     });
 
     it('should not upgrade a DMPU yet still immediately refresh the slot', () => {
-        const $adSlotContainer = $('.js-discussion__ad-slot');
-        const $commentMainColumn = $('.js-comments .content__main-column');
+        const $adSlotContainer = document.querySelector('.js-discussion__ad-slot');
+        const $commentMainColumn = document.querySelector('.js-comments .content__main-column');
         const advert = {
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
