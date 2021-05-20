@@ -31,7 +31,7 @@ import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
-export const ModulesVersion = 'v2';
+export const ModulesVersion = 'v1';
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
