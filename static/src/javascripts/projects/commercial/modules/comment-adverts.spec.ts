@@ -188,30 +188,30 @@ describe('runSecondStage', () => {
     });
 
     it('should upgrade a MPU to DMPU and immediately refresh the slot', () => {
-        const $adSlotContainer = getElement('.js-discussion__ad-slot');
-        const $commentMainColumn = getElement('.js-comments .content__main-column');
+        const adSlotContainer = getElement('.js-discussion__ad-slot');
+        const commentMainColumn = getElement('.js-comments .content__main-column');
         const advert = createTestAdvert({
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
         });
         mocked(getAdvertById).mockReturnValue(advert);
 
-        runSecondStage($commentMainColumn, $adSlotContainer);
+        runSecondStage(commentMainColumn, adSlotContainer);
         expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
         expect(mocked(getAdvertById).mock.calls).toEqual([['dfp-ad--comments']]);
         expect(refreshAdvert).toHaveBeenCalledTimes(1);
     });
 
     it('should not upgrade a DMPU yet still immediately refresh the slot', () => {
-        const $adSlotContainer = getElement('.js-discussion__ad-slot');
-        const $commentMainColumn = getElement('.js-comments .content__main-column');
+        const adSlotContainer = getElement('.js-discussion__ad-slot');
+        const commentMainColumn = getElement('.js-comments .content__main-column');
         const advert = createTestAdvert({
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
         });
         mocked(getAdvertById).mockReturnValue(advert);
 
-        runSecondStage($commentMainColumn, $adSlotContainer);
+        runSecondStage(commentMainColumn, adSlotContainer);
         expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
         expect(mocked(getAdvertById).mock.calls).toEqual([['dfp-ad--comments']]);
         expect(refreshAdvert).toHaveBeenCalledTimes(1);

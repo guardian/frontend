@@ -24,8 +24,8 @@ const createCommentSlots = (canBeDmpu: boolean): Element[] => {
 };
 
 const insertCommentAd = (
-	$commentMainColumn: Element,
-	$adSlotContainer: Element,
+	commentMainColumn: Element,
+	adSlotContainer: Element,
 	canBeDmpu: boolean,
 ): Promise<void | EventEmitter> => {
 	const commentSlots = createCommentSlots(canBeDmpu);
@@ -33,18 +33,18 @@ const insertCommentAd = (
 	return (
 		fastdom
 			.mutate(() => {
-				$commentMainColumn.classList.add('discussion__ad-wrapper');
+				commentMainColumn.classList.add('discussion__ad-wrapper');
 				if (
 					!config.get('page.isLiveBlog') &&
 					!config.get('page.isMinuteArticle')
 				) {
-					$commentMainColumn.classList.add(
+					commentMainColumn.classList.add(
 						'discussion__ad-wrapper-wider',
 					);
 				}
 				// Append each slot into the adslot container...
 				commentSlots.forEach((adSlot) => {
-					$adSlotContainer.appendChild(adSlot);
+					adSlotContainer.appendChild(adSlot);
 				});
 				return commentSlots[0];
 			})
@@ -63,13 +63,13 @@ const containsDMPU = (ad: Advert): boolean =>
 			(el[0] === 160 && el[1] === 600),
 	);
 
-const maybeUpgradeSlot = (ad: Advert, $adSlot: Element): Advert => {
+const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
 	if (!containsDMPU(ad)) {
 		ad.sizes.desktop.push([300, 600], [160, 600]);
 		const defineSizeMappingFunction = ad.slot.defineSizeMapping as (asm: SizeMapping[]) => Slot;
 		defineSizeMappingFunction([[[0, 0], ad.sizes.desktop]]);
 		void fastdom.mutate(() => {
-			$adSlot.setAttribute(
+			adSlot.setAttribute(
 				'data-desktop',
 				'1,1|2,2|300,250|300,274|fluid|300,600|160,600',
 			);
@@ -79,39 +79,39 @@ const maybeUpgradeSlot = (ad: Advert, $adSlot: Element): Advert => {
 };
 
 const runSecondStage = (
-	$commentMainColumn: Element,
-	$adSlotContainer: Element,
+	commentMainColumn: Element,
+	adSlotContainer: Element,
 ): void => {
-	const $adSlot = $adSlotContainer.querySelector('.js-ad-slot');
+	const adSlot = adSlotContainer.querySelector('.js-ad-slot');
 	const commentAdvert = getAdvertById('dfp-ad--comments');
 
-	if (commentAdvert && $adSlot) {
+	if (commentAdvert && adSlot) {
 		// when we refresh the slot, the sticky behavior runs again
 		// this means the sticky-scroll height is corrected!
-		refreshAdvert(maybeUpgradeSlot(commentAdvert, $adSlot));
+		refreshAdvert(maybeUpgradeSlot(commentAdvert, adSlot));
 	}
 
 	if (!commentAdvert) {
-		insertCommentAd($commentMainColumn, $adSlotContainer, true);
+		insertCommentAd(commentMainColumn, adSlotContainer, true);
 	}
 };
 
 export const initCommentAdverts = () => {
-	const $adSlotContainer = document.querySelector('.js-discussion__ad-slot');
+	const adSlotContainer = document.querySelector('.js-discussion__ad-slot');
 	const isMobile = getBreakpoint() === 'mobile';
-	if (!commercialFeatures.commentAdverts || !$adSlotContainer || isMobile) {
+	if (!commercialFeatures.commentAdverts || !adSlotContainer || isMobile) {
 		return Promise.resolve(false);
 	}
 
 	mediator.once('modules:comments:renderComments:rendered', () => {
 		const isLoggedIn = isUserLoggedIn();
-		const $commentMainColumn = document.querySelector<HTMLElement>(
+		const commentMainColumn = document.querySelector<HTMLElement>(
 			'.js-comments .content__main-column',
 		);
 
-        if ($commentMainColumn) {
+        if (commentMainColumn) {
             fastdom
-                .measure(() => $commentMainColumn?.offsetHeight)
+                .measure(() => commentMainColumn?.offsetHeight)
                 .then((mainColHeight) => {
                     // always insert an MPU/DMPU if the user is logged in, since the
                     // containers are reordered, and comments are further from most-pop
@@ -119,16 +119,16 @@ export const initCommentAdverts = () => {
                         mainColHeight >= 800 ||
                         (isLoggedIn && mainColHeight >= 600)
                     ) {
-                        insertCommentAd($commentMainColumn, $adSlotContainer, true);
+                        insertCommentAd(commentMainColumn, adSlotContainer, true);
                     } else if (isLoggedIn) {
                         insertCommentAd(
-                            $commentMainColumn,
-                            $adSlotContainer,
+                            commentMainColumn,
+                            adSlotContainer,
                             false,
                         );
                     }
                     mediator.on('discussion:comments:get-more-replies', () => {
-                        runSecondStage($commentMainColumn, $adSlotContainer);
+                        runSecondStage(commentMainColumn, adSlotContainer);
                     });
                 });
         }
