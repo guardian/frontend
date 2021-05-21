@@ -67,4 +67,11 @@ const logData = (): void => {
 	logged = navigator.sendBeacon(endpoint, JSON.stringify(commercialMetrics));
 };
 
-export { logData };
+const init = (): void => {
+	//const userIsInSamplingGroup = Math.random() <= 0.01;
+
+	//if (userIsInSamplingGroup)
+	document.addEventListener('visibilitychange', logData);
+};
+
+export { init };

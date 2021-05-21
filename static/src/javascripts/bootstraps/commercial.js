@@ -20,6 +20,7 @@ import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags'
 import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { init as initComscore } from 'commercial/modules/comscore';
 import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
+import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
@@ -55,6 +56,7 @@ if (!commercialFeatures.adFree) {
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],
 		['cm-commentAdverts', initCommentAdverts],
+		['cm-commercial-metrics', initCommercialMetrics],
 		['rr-adblock-ask', initAdblockAsk],
 	);
 }
@@ -96,8 +98,7 @@ const loadModules = () => {
 	const modulePromises = [];
 
 	commercialModules.forEach((module) => {
-		const moduleName = module[0];
-		const moduleInit = module[1];
+		const [moduleName, moduleInit] = module;
 
 		catchErrorsWithContext(
 			[
@@ -121,12 +122,6 @@ const loadModules = () => {
 export const bootCommercial = () => {
 	// Init Commercial event timers
 	EventTimer.init();
-
-	// Sample 1% and send data to the lake
-	const userIsInSamplingGroup = Math.random() <= 0.01;
-
-	if (userIsInSamplingGroup)
-		document.addEventListener('visibilitychange', logData);
 
 	catchErrorsWithContext(
 		[
