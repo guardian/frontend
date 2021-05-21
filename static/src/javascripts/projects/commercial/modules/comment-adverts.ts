@@ -82,7 +82,7 @@ const runSecondStage = (
 	$commentMainColumn: Element,
 	$adSlotContainer: Element,
 ): void => {
-	const $adSlot = $adSlotContainer.querySelector<Element>('.js-ad-slot');
+	const $adSlot = $adSlotContainer.querySelector('.js-ad-slot');
 	const commentAdvert = getAdvertById('dfp-ad--comments');
 
 	if (commentAdvert && $adSlot) {

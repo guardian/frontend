@@ -79,6 +79,9 @@ const generateInnerHtmlWithAdSlot = () => {
 const createTestAdvert = (testAdvert: Partial<Advert>): Advert =>
     ({ ... testAdvert } as Advert);
 
+const getElement = (selector: string): Element =>
+    document.querySelector(selector) as Element
+
 describe('createCommentSlots', () => {
     beforeEach(() => {
         mocked(isUserLoggedIn).mockReturnValue(false);
@@ -142,7 +145,7 @@ describe('maybeUpgradeSlot', () => {
         });
         expect(advert.sizes.desktop).toEqual([[300, 250]]);
 
-        maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot') as Element);
+        maybeUpgradeSlot(advert, getElement('.js-discussion__ad-slot'));
         expect(advert.sizes.desktop).toEqual([
             [300, 250],
             [300, 600],
@@ -162,7 +165,7 @@ describe('maybeUpgradeSlot', () => {
             [300, 600],
         ]);
 
-        maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot') as Element);
+        maybeUpgradeSlot(advert, getElement('.js-discussion__ad-slot'));
         expect(advert.sizes.desktop).toEqual([
             [160, 600],
             [300, 250],
@@ -185,8 +188,8 @@ describe('runSecondStage', () => {
     });
 
     it('should upgrade a MPU to DMPU and immediately refresh the slot', () => {
-        const $adSlotContainer = document.querySelector('.js-discussion__ad-slot') as Element;
-        const $commentMainColumn = document.querySelector('.js-comments .content__main-column') as Element;
+        const $adSlotContainer = getElement('.js-discussion__ad-slot');
+        const $commentMainColumn = getElement('.js-comments .content__main-column');
         const advert = createTestAdvert({
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
@@ -200,8 +203,8 @@ describe('runSecondStage', () => {
     });
 
     it('should not upgrade a DMPU yet still immediately refresh the slot', () => {
-        const $adSlotContainer = document.querySelector('.js-discussion__ad-slot') as Element;
-        const $commentMainColumn = document.querySelector('.js-comments .content__main-column') as Element;
+        const $adSlotContainer = getElement('.js-discussion__ad-slot');
+        const $commentMainColumn = getElement('.js-comments .content__main-column');
         const advert = createTestAdvert({
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
@@ -272,9 +275,7 @@ describe('initCommentAdverts', () => {
         initCommentAdverts().then(() => {
             fakeMediator.emit('modules:comments:renderComments:rendered');
             fakeMediator.once('page:commercial:comments', () => {
-                const adSlot = document.querySelector(
-                    '.js-ad-slot'
-                ) as Element;
+                const adSlot = getElement('.js-ad-slot');
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
                     '1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|300,600|160,600'
@@ -290,9 +291,7 @@ describe('initCommentAdverts', () => {
         initCommentAdverts().then(() => {
             fakeMediator.emit('modules:comments:renderComments:rendered');
             fakeMediator.once('page:commercial:comments', () => {
-                const adSlot = document.querySelector(
-                    '.js-ad-slot'
-                ) as Element;
+                const adSlot = getElement('.js-ad-slot');
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
                     '1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|300,600|160,600'
@@ -308,9 +307,7 @@ describe('initCommentAdverts', () => {
         initCommentAdverts().then(() => {
             fakeMediator.emit('modules:comments:renderComments:rendered');
             fakeMediator.once('page:commercial:comments', () => {
-                const adSlot = document.querySelector(
-                    '.js-ad-slot'
-                ) as Element;
+                const adSlot = getElement('.js-ad-slot');
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
                     '1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid'
