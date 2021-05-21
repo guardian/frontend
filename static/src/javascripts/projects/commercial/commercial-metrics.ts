@@ -29,9 +29,6 @@ type Properties = {
 	name: string;
 	value: string;
 };
-function isPropertyArray(e: [string, unknown]): e is [string, string] {
-	return typeof e === 'string';
-}
 
 let logged = false;
 
