@@ -1,4 +1,3 @@
-import 'prebid.js/build/dist/prebid';
 import config from '../../../../../lib/config';
 import { getAdvertById as getAdvertById_ } from '../../dfp/get-advert-by-id';
 import prebid from './prebid';
@@ -25,14 +24,20 @@ jest.mock('../../../../common/modules/experiments/ab', () => ({
     ),
 }));
 
+const resetPrebid = () => {
+    delete window.pbjs;
+    jest.resetModules();
+    jest.requireActual('prebid.js/build/dist/prebid');
+}
+
 describe('initialise', () => {
     beforeEach(() => {
+        resetPrebid();
         config.set('switches.consentManagement', true);
         config.set('switches.prebidUserSync', true);
         config.set('switches.prebidAppNexus', true);
         config.set('switches.prebidSonobi', true);
         config.set('switches.prebidXaxis', true);
-        window.pbjs.setConfig({ consentManagement: {} });
         getAdvertById.mockReset();
     });
 
@@ -142,7 +147,7 @@ describe('initialise', () => {
     test('should generate correct Prebid config when consent management off', () => {
         config.set('switches.consentManagement', false);
         prebid.initialise(window);
-        expect(window.pbjs.getConfig('consentManagement')).toEqual({});
+        expect(window.pbjs.getConfig('consentManagement')).toBeUndefined();
     });
 
     test('should generate correct bidder settings', () => {
@@ -164,109 +169,138 @@ describe('initialise', () => {
         expect(window.pbjs.getConfig().userSync.syncEnabled).toEqual(false);
     });
 
-    test('should respond to prebid.js bidWon event', () => {
-        let bidWonEventName;
-        let bidWonEventHandler;
-        const dummyAdvert = {
-            size: [200, 200],
-            hasPrebidSize: false,
-        };
+	test('should generate correct Prebid config when both Permutive and prebidPermutiveAudience are true', () => {
+		config.set('switches.permutive', true);
+		config.set('switches.prebidPermutiveAudience', true);
+		prebid.initialise(window);
+        const rtcData = window.pbjs.getConfig('realTimeData').dataProviders[0];
+		expect(rtcData.name).toEqual('permutive');
+		expect(rtcData.params.acBidders).toEqual([
+			'appnexus',
+			'ozone',
+			'pubmatic',
+			'trustx',
+		]);
+	});
 
-        window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
-            bidWonEventName = eventName;
-            bidWonEventHandler = eventHandler;
+    test.each([
+        [true, false],
+        [false, true],
+        [false, false],
+    ])('should not generate RTD when Permutive is %s and prebidPermutiveAudience is %s', (p, a) => {
+        config.set('switches.permutive', p);
+		config.set('switches.prebidPermutiveAudience', a);
+		prebid.initialise(window);
+        const rtcData = window.pbjs.getConfig('realTimeData');
+		expect(rtcData).toBeUndefined();
+	});
+
+    describe('Prebid.js bidWon Events', () => {
+        test('should respond for correct configuration', () => {
+            let bidWonEventName;
+            let bidWonEventHandler;
+            const dummyAdvert = {
+                size: [200, 200],
+                hasPrebidSize: false,
+            };
+
+            window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
+                bidWonEventName = eventName;
+                bidWonEventHandler = eventHandler;
+            });
+
+            getAdvertById.mockImplementation(() => dummyAdvert);
+
+            prebid.initialise(window);
+
+            expect(bidWonEventName).toBe('bidWon');
+            expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
+
+            if (bidWonEventHandler) {
+                bidWonEventHandler({
+                    height: 100,
+                    width: 100,
+                    adUnitCode: 'foo',
+                });
+            }
+
+            expect(getAdvertById).toHaveBeenCalledTimes(1);
+            expect(getAdvertById).toHaveBeenCalledWith('foo');
+            expect(dummyAdvert.size).toMatchObject([100, 100]);
+            expect(dummyAdvert.hasPrebidSize).toBe(true);
         });
 
-        getAdvertById.mockImplementation(() => dummyAdvert);
+        test('should not respond if height missing from prebid data', () => {
+            let bidWonEventName;
+            let bidWonEventHandler;
 
-        prebid.initialise(window);
-
-        expect(bidWonEventName).toBe('bidWon');
-        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
-
-        if (bidWonEventHandler) {
-            bidWonEventHandler({
-                height: 100,
-                width: 100,
-                adUnitCode: 'foo',
+            window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
+                bidWonEventName = eventName;
+                bidWonEventHandler = eventHandler;
             });
-        }
 
-        expect(getAdvertById).toHaveBeenCalledTimes(1);
-        expect(getAdvertById).toHaveBeenCalledWith('foo');
-        expect(dummyAdvert.size).toMatchObject([100, 100]);
-        expect(dummyAdvert.hasPrebidSize).toBe(true);
-    });
+            prebid.initialise(window);
 
-    test('should not respond to prebid.js bidWon event if height missing from prebid data', () => {
-        let bidWonEventName;
-        let bidWonEventHandler;
+            expect(bidWonEventName).toBe('bidWon');
+            expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
 
-        window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
-            bidWonEventName = eventName;
-            bidWonEventHandler = eventHandler;
+            if (bidWonEventHandler) {
+                bidWonEventHandler({
+                    width: 100,
+                    adUnitCode: 'foo',
+                });
+            }
+
+            expect(getAdvertById).not.toHaveBeenCalled();
         });
 
-        prebid.initialise(window);
+        test('should not respond if width missing from prebid data', () => {
+            let bidWonEventName;
+            let bidWonEventHandler;
 
-        expect(bidWonEventName).toBe('bidWon');
-        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
-
-        if (bidWonEventHandler) {
-            bidWonEventHandler({
-                width: 100,
-                adUnitCode: 'foo',
+            window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
+                bidWonEventName = eventName;
+                bidWonEventHandler = eventHandler;
             });
-        }
 
-        expect(getAdvertById).not.toHaveBeenCalled();
-    });
+            prebid.initialise(window);
 
-    test('should not respond to prebid.js bidWon event if width missing from prebid data', () => {
-        let bidWonEventName;
-        let bidWonEventHandler;
+            expect(bidWonEventName).toBe('bidWon');
+            expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
 
-        window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
-            bidWonEventName = eventName;
-            bidWonEventHandler = eventHandler;
+            if (bidWonEventHandler) {
+                bidWonEventHandler({
+                    height: 100,
+                    adUnitCode: 'foo',
+                });
+            }
+
+            expect(getAdvertById).not.toHaveBeenCalled();
         });
 
-        prebid.initialise(window);
+        test('should not respond if adUnitCode missing from prebid data', () => {
+            let bidWonEventName;
+            let bidWonEventHandler;
 
-        expect(bidWonEventName).toBe('bidWon');
-        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
-
-        if (bidWonEventHandler) {
-            bidWonEventHandler({
-                height: 100,
-                adUnitCode: 'foo',
+            window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
+                bidWonEventName = eventName;
+                bidWonEventHandler = eventHandler;
             });
-        }
 
-        expect(getAdvertById).not.toHaveBeenCalled();
-    });
+            prebid.initialise(window);
 
-    test('should not respond to prebid.js bidWon event if adUnitCode missing from prebid data', () => {
-        let bidWonEventName;
-        let bidWonEventHandler;
+            expect(bidWonEventName).toBe('bidWon');
+            expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
 
-        window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
-            bidWonEventName = eventName;
-            bidWonEventHandler = eventHandler;
+            if (bidWonEventHandler) {
+                bidWonEventHandler({
+                    height: 100,
+                    width: 100,
+                });
+            }
+
+            expect(getAdvertById).not.toHaveBeenCalled();
         });
+    })
 
-        prebid.initialise(window);
-
-        expect(bidWonEventName).toBe('bidWon');
-        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
-
-        if (bidWonEventHandler) {
-            bidWonEventHandler({
-                height: 100,
-                width: 100,
-            });
-        }
-
-        expect(getAdvertById).not.toHaveBeenCalled();
-    });
 });
