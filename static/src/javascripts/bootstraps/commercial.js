@@ -122,8 +122,11 @@ export const bootCommercial = () => {
 	// Init Commercial event timers
 	EventTimer.init();
 
-	// Send commercial metrics to the lake
-	document.addEventListener('visibilitychange', logData);
+	// Sample 1% and send data to the lake
+	const userIsInSamplingGroup = Math.random() <= 0.01;
+
+	if (userIsInSamplingGroup)
+		document.addEventListener('visibilitychange', logData);
 
 	catchErrorsWithContext(
 		[

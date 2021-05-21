@@ -42,13 +42,6 @@ const logData = (): void => {
 	const eventTimer = EventTimer.get();
 	const events = eventTimer.events;
 
-	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
-	// for (const [key, value] of Object.entries(object1)) {
-	// 	console.log(`${key}: ${value}`);
-	// }
-
-	// https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
-
 	const properties: Properties[] = Object.entries(eventTimer.properties).map(
 		(property) => {
 			const [name, value] = property;
