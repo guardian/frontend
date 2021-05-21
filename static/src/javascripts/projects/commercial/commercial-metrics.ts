@@ -52,12 +52,12 @@ const logData = (): void => {
 
 	// https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
 
-	const properties: Properties[] = Object.entries(eventTimer.properties)
-		.filter(isPropertyArray)
-		.map((property) => {
+	const properties: Properties[] = Object.entries(eventTimer.properties).map(
+		(property) => {
 			const [name, value] = property;
-			return { name, value };
-		});
+			return { name, value: String(value) };
+		},
+	);
 
 	const metrics: Metrics[] = events.map((event) => {
 		return { name: event.name, value: Math.ceil(event.ts) };
