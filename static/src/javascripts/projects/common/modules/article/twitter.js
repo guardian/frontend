@@ -42,7 +42,6 @@ const renderTweets = () => {
 
 const enhanceTweets = () => {
     if (
-        (getBreakpoint() === 'mobile' && !config.get('page.isMinuteArticle')) ||
         !config.get('switches.enhanceTweets')
     ) {
         return;
