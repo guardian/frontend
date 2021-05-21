@@ -92,23 +92,19 @@ class WallchartController(
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
 
           val groupStages = competitionStages.collectFirst { case stage: Groups => stage }
-
-          groupStages match {
-            case None => NotFound
-            case Some(group) => {
-              group.groupTables.find(x => x._1.roundNumber == groupId) match {
-                case None => NotFound
-                case Some(table) => {
+          groupStages.map {
+            group => {
+              group.groupTables.find(x => x._1.roundNumber == groupId).map {
+                table => {
                   Cached(60) {
                     RevalidatableResult.Ok(
                       football.views.html.wallchart.groupTableEmbed(page, competition, group, table),
                     )
                   }
                 }
-              }
-
+              }.getOrElse(NotFound)
             }
-          }
+          }.getOrElse(NotFound)
         }
         .getOrElse(NotFound)
     }
