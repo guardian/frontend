@@ -76,6 +76,9 @@ const generateInnerHtmlWithAdSlot = () => {
     }
 };
 
+const createTestAdvert = (testAdvert: Partial<Advert>): Advert =>
+    ({ ... testAdvert } as Advert);
+
 describe('createCommentSlots', () => {
     beforeEach(() => {
         mocked(isUserLoggedIn).mockReturnValue(false);
@@ -133,10 +136,10 @@ describe('maybeUpgradeSlot', () => {
     });
 
     it('should upgrade the MPU to a DMPU where necessary', () => {
-        const advert = {
+        const advert = createTestAdvert({
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
-        } as unknown as Advert;
+        });
         expect(advert.sizes.desktop).toEqual([[300, 250]]);
 
         maybeUpgradeSlot(advert, document.querySelector('.js-discussion__ad-slot') as Element);
@@ -149,10 +152,10 @@ describe('maybeUpgradeSlot', () => {
     });
 
     it('should not alter the slot if the slot is already a DMPU', () => {
-        const advert = {
+        const advert = createTestAdvert({
             sizes: { desktop: [[160, 600], [300, 250], [300, 600]] },
             slot: { defineSizeMapping: jest.fn() },
-        } as unknown as Advert;
+        });
         expect(advert.sizes.desktop).toEqual([
             [160, 600],
             [300, 250],
@@ -184,10 +187,10 @@ describe('runSecondStage', () => {
     it('should upgrade a MPU to DMPU and immediately refresh the slot', () => {
         const $adSlotContainer = document.querySelector('.js-discussion__ad-slot') as Element;
         const $commentMainColumn = document.querySelector('.js-comments .content__main-column') as Element;
-        const advert = {
+        const advert = createTestAdvert({
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
-        } as unknown as Advert;
+        });
         mocked(getAdvertById).mockReturnValue(advert);
 
         runSecondStage($commentMainColumn, $adSlotContainer);
@@ -199,10 +202,10 @@ describe('runSecondStage', () => {
     it('should not upgrade a DMPU yet still immediately refresh the slot', () => {
         const $adSlotContainer = document.querySelector('.js-discussion__ad-slot') as Element;
         const $commentMainColumn = document.querySelector('.js-comments .content__main-column') as Element;
-        const advert = {
+        const advert = createTestAdvert({
             sizes: { desktop: [[300, 250]] },
             slot: { defineSizeMapping: jest.fn() },
-        } as unknown as Advert;
+        });
         mocked(getAdvertById).mockReturnValue(advert);
 
         runSecondStage($commentMainColumn, $adSlotContainer);
