@@ -10,7 +10,7 @@
         @defining(knockoutStage.roundMatches(round)) { matches =>
             @if(matches.length != 1){
                 <div class="football-round football-round--@matches.length-matches @if(knockoutStage.isActiveRound(round)){football-round--active}">
-                    <div class="football-round__name">first-half</div>
+                    <div class="football-round__name">@round.name.getOrElse("")</div>
 
                     @defining(matches.length/2) { half =>
                         <div class="football-round__matches">
@@ -99,7 +99,7 @@
                                 <div class="container__border hide-on-mobile"></div>
                                 <div class="fc-container__header">
                                     <h3 class="container__title">
-                                        <span class="container__title__label u-text-hyphenate">Knockout stage @round.name.getOrElse("")</span>
+                                        <span class="container__title__label u-text-hyphenate">Knockout stage</span>
                                     </h3>
                                 </div>
                                 <div class="container__body">

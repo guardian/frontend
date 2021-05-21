@@ -150,13 +150,6 @@ class WallchartController(
               }
             }.getOrElse(NotFound)
           }.getOrElse(NotFound)
-
-//          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
-//          Cached(60) {
-//            RevalidatableResult.Ok(
-//              football.views.html.wallchart.spiderEmbed(page, competition, knockoutSpiderStages, nextMatch),
-//            )
-//          }
         }
         .getOrElse(NotFound)
     }
