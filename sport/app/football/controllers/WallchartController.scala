@@ -123,6 +123,44 @@ class WallchartController(
         .getOrElse(NotFound)
     }
 
+  def renderSpiderEmbedForRound(competitionTag: String, roundId: String): Action[AnyContent] =
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionTag)
+        .map { competition =>
+          val page = new FootballPage(
+            competition.url.stripSuffix("/"),
+            "football",
+            s"${competition.fullName} wallchart",
+          )
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+          val knockoutSpiderStages = competitionStages.collectFirst { case stage: KnockoutSpider => stage }
+
+          knockoutSpiderStages.map {
+            stage => stage.rounds.find(x => x.roundNumber == roundId).map {
+              round => {
+                println(s"round: ${round}")
+                val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+                Cached(60) {
+                  RevalidatableResult.Ok(
+                    football.views.html.wallchart.spiderRoundEmbed(page, competition, stage, round, nextMatch),
+                  )
+                }
+              }
+            }.getOrElse(NotFound)
+          }.getOrElse(NotFound)
+
+//          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+//          Cached(60) {
+//            RevalidatableResult.Ok(
+//              football.views.html.wallchart.spiderEmbed(page, competition, knockoutSpiderStages, nextMatch),
+//            )
+//          }
+        }
+        .getOrElse(NotFound)
+    }
+
   def renderWallchartJson(competitionTag: String): Action[AnyContent] =
     Action { implicit request =>
       competitionsService.competitionsWithTag(competitionTag) match {
