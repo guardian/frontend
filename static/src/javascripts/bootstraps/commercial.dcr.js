@@ -41,6 +41,7 @@ const commercialModules = [
 
 if (!commercialFeatures.adFree) {
 	commercialModules.push(
+		['cm-commercial-metrics', initCommercialMetrics],
 		['cm-prepare-prebid', preparePrebid],
 		['cm-prepare-a9', prepareA9],
 		['cm-thirdPartyTags', initThirdPartyTags],
@@ -58,7 +59,6 @@ if (!commercialFeatures.adFree) {
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],
 		['cm-commentAdverts', initCommentAdverts],
-		['cm-commercial-metrics', initCommercialMetrics],
 	);
 }
 
