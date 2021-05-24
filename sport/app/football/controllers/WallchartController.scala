@@ -127,7 +127,7 @@ class WallchartController(
     Action { implicit request =>
       competitionsService
         .competitionsWithTag(competitionTag)
-        .map { competition =>
+        .flatMap { competition =>
           val page = new FootballPage(
             competition.url.stripSuffix("/"),
             "football",
@@ -137,7 +137,7 @@ class WallchartController(
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
           val knockoutSpiderStages = competitionStages.collectFirst { case stage: KnockoutSpider => stage }
 
-          knockoutSpiderStages.map {
+          knockoutSpiderStages.flatMap {
             stage => stage.rounds.find(x => x.roundNumber == roundId).map {
               round => {
                 println(s"round: ${round}")
@@ -148,8 +148,8 @@ class WallchartController(
                   )
                 }
               }
-            }.getOrElse(NotFound)
-          }.getOrElse(NotFound)
+            }
+          }
         }
         .getOrElse(NotFound)
     }
