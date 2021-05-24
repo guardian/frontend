@@ -1924,10 +1924,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.1.tgz#22bccd66be7c5bf70cd5bbb1bf7700d94610ccb7"
   integrity sha512-Q/JPLhNeYa5XhDPJhw/1+fbZmszopvovWW8I7dGEuFPGWeNUmXAbW8J3kzuonDu7l9/tuFZg8jljbKHZlrFx0A==
 
-"@guardian/libs@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.0.tgz#ceed9e4fcccc5561493d886ae1a307c03a356e27"
-  integrity sha512-pUiY1guSFo4tvPbGQvOwJWxF2A/kM4C35VvSbvA72lvLBHM/6emceLRzMV+elXoiP0mvt1pBIQRAUfQBlYrsTA==
+"@guardian/libs@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-2.0.0.tgz#8582703eb510df2e1c29b4b57aa81213dd63fd6f"
+  integrity sha512-rcl6BnePEh/ecp1Vgd8lA2ZANLjLSiHyG4F7RnlLNsr+G0U756/YJpLZRZ5HevALLLrU+g02c51yiSEqpDXFZw==
 
 "@guardian/prettier@^0.5.0":
   version "0.5.0"
