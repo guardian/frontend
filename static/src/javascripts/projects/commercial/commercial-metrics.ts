@@ -76,7 +76,7 @@ const logData = (): void => {
 };
 
 const init = (): void => {
-	if (!config.get('switches.commercialMetrics')) return;
+	if (!config.get('switches.commercialMetrics', false)) return;
 
 	const userIsInSamplingGroup = Math.random() <= 0.01;
 
