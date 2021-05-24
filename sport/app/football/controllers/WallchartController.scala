@@ -26,6 +26,7 @@ class WallchartController(
   }
 
   def renderWallchartEmbed(competitionTag: String): Action[AnyContent] = renderWallchart(competitionTag, true)
+
   def renderWallchart(competitionTag: String, embed: Boolean = false): Action[AnyContent] =
     Action { implicit request =>
       competitionsService
@@ -82,7 +83,7 @@ class WallchartController(
     Action { implicit request =>
       competitionsService
         .competitionsWithTag(competitionTag)
-        .map { competition =>
+        .flatMap { competition =>
           val page = new FootballPage(
             competition.url.stripSuffix("/"),
             "football",
@@ -92,19 +93,19 @@ class WallchartController(
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
 
           val groupStages = competitionStages.collectFirst { case stage: Groups => stage }
-          groupStages.map {
-            group => {
-              group.groupTables.find(x => x._1.roundNumber == groupId).map {
-                table => {
+          groupStages.flatMap { group =>
+            {
+              group.groupTables.find(x => x._1.roundNumber == groupId).map { table =>
+                {
                   Cached(60) {
                     RevalidatableResult.Ok(
                       football.views.html.wallchart.groupTableEmbed(page, competition, group, table),
                     )
                   }
                 }
-              }.getOrElse(NotFound)
+              }
             }
-          }.getOrElse(NotFound)
+          }
         }
         .getOrElse(NotFound)
     }
