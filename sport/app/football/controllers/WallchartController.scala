@@ -99,7 +99,7 @@ class WallchartController(
                 {
                   Cached(60) {
                     RevalidatableResult.Ok(
-                      football.views.html.wallchart.groupTableEmbed(page, competition, group, table),
+                      football.views.html.wallchart.groupTableEmbed(page, competition, table),
                     )
                   }
                 }

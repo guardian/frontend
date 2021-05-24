@@ -1,59 +1,25 @@
 @import implicits.Football._
 @import pa._
 
-@(page: model.Page, competition: model.Competition, groupStage: football.model.Groups, groupTable: (Round, Seq[LeagueTableEntry]))(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, competition: model.Competition, groupTable: (Round, Seq[LeagueTableEntry]))(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@footballGroup(round: Round, leagueTableEntries: Seq[LeagueTableEntry]) = {
-@defining(groupStage.matchesList(competition, round)) { matches =>
-    <li class="football-group football-group-embed">
-        <div class="football-group__container football-group__container-embed table--hide-from-importance-3">
-            @round.name.map{ name =>
-                <div class="football-group__table">
-                    @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
-                        heading = round.name,
-                        headingLink = groupTag(competition.id, round),
-                        striped = true,
-                        withCrests = true
-                    )
-                </div>
-            }
-        </div>
-    </li>
-}
-}
+@round=@{groupTable._1}
+@leagueTableEntries=@{groupTable._2}
 
-
-
-<!DOCTYPE html>
-
-<html class="js-off is-not-modern id--signed-out" lang="en-GB">
-    <head>
-        <meta name="robots" content="noindex, nofollow" />
-        @fragments.head(Some("football"), Html(""))(page, request, context)
-        <script>guardian.config.page.isFootballWorldCup2014 = true;</script>
-        </head>
-    <body id="top" itemscope itemtype="http://schema.org/WebPage">
-        <div id="js-context" class="football-wallchart-embed">
-            <div class="l-side-margins wc-overview">
-                    <div class="facia-container facia-container--layout-content">
-                        <div class="container">
-                            <div class="facia-container__inner">
-                                <div class="container__border hide-on-mobile"></div>
-                                <div class="container__body">
-                                    <div data-link-name="@competition.fullName groups">
-                                        <ul class="football-groups u-unstyled u-cf">
-                                            @footballGroup(groupTable._1, groupTable._2)
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @fragments.analytics.base()(page, request, context)
+<div class="football-group football-group-embed">
+    <div class="football-group__container football-group__container-embed table--hide-from-importance-3">
+        @round.name.map{ name =>
+            <div class="football-group__table">
+                @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
+                    heading = round.name,
+                    headingLink = groupTag(competition.id, round),
+                    striped = true,
+                    withCrests = true
+                )
             </div>
-        </div>
-    </body>
-</html>
+        }
+    </div>
+</div>
 
 
 
