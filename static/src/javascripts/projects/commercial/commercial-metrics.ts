@@ -7,7 +7,7 @@ const endpoint =
 
 // This is really a hacky workaround ⚠️
 const config = config_ as {
-	get: (s: string) => string;
+	get: (s: string, d?: unknown) => unknown;
 };
 
 type CommercialMetrics = {
@@ -32,7 +32,10 @@ type Properties = {
 
 let logged = false;
 
-const isDev = Boolean(config.get('page.isDev'));
+const isDev = Boolean(config.get('page.isDev', false));
+const devProperties: Properties[] = isDev
+	? [{ name: 'isDev', value: window.location.hostname }]
+	: [];
 
 const logData = (): void => {
 	if (logged) return;
@@ -44,19 +47,21 @@ const logData = (): void => {
 	const eventTimer = EventTimer.get();
 	const events = eventTimer.events;
 
-	const properties: Properties[] = Object.entries(eventTimer.properties).map(
-		(property) => {
+	const properties: Properties[] = Object.entries(eventTimer.properties)
+		.map((property) => {
 			const [name, value] = property;
 			return { name, value: String(value) };
-		},
-	);
+		})
+		.concat(devProperties);
 
 	const metrics: Metrics[] = events.map((event) => {
 		return { name: event.name, value: Math.ceil(event.ts) };
 	});
 
+	const browser_id = config.get('ophan.browserId') as string | undefined;
+
 	const commercialMetrics: CommercialMetrics = {
-		browser_id: config.get('ophan.browserId'),
+		browser_id,
 		page_view_id: window.guardian.ophan.pageViewId,
 		received_timestamp: timestamp,
 		received_date: date,
