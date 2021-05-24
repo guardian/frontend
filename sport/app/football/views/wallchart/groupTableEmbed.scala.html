@@ -1,0 +1,25 @@
+@import implicits.Football._
+@import pa._
+
+@(page: model.Page, competition: model.Competition, groupTable: (Round, Seq[LeagueTableEntry]))(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@round=@{groupTable._1}
+@leagueTableEntries=@{groupTable._2}
+
+<div class="football-group football-group-embed">
+    <div class="football-group__container football-group__container-embed table--hide-from-importance-3">
+        @round.name.map{ name =>
+            <div class="football-group__table">
+                @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
+                    heading = round.name,
+                    headingLink = groupTag(competition.id, round),
+                    striped = true,
+                    withCrests = true
+                )
+            </div>
+        }
+    </div>
+</div>
+
+
+
