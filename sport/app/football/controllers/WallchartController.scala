@@ -137,9 +137,9 @@ class WallchartController(
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
           val knockoutSpiderStages = competitionStages.collectFirst { case stage: KnockoutSpider => stage }
 
-          knockoutSpiderStages.flatMap {
-            stage => stage.rounds.find(x => x.roundNumber == roundId).map {
-              round => {
+          knockoutSpiderStages.flatMap { stage =>
+            stage.rounds.find(x => x.roundNumber == roundId).map { round =>
+              {
                 println(s"round: ${round}")
                 val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
                 Cached(60) {
