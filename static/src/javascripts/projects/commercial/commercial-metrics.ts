@@ -2,9 +2,6 @@ import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import config_ from '../../lib/config';
 
-const endpoint =
-	'//performance-events.code.dev-guardianapis.com/commercial-metrics';
-
 // This is really a hacky workaround ⚠️
 const config = config_ as {
 	get: (s: string, d?: unknown) => unknown;
@@ -36,6 +33,10 @@ const isDev = Boolean(config.get('page.isDev', false));
 const devProperties: Properties[] = isDev
 	? [{ name: 'isDev', value: window.location.hostname }]
 	: [];
+
+const endpoint = isDev
+	? '//performance-events.code.dev-guardianapis.com/commercial-metrics'
+	: '//performance-events.guardianapis.com/commercial-metrics';
 
 const logData = (): void => {
 	if (logged) return;
