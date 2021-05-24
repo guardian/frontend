@@ -297,6 +297,16 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val commercialMetrics: Switch = Switch(
+    group = Commercial,
+    name = "commercial-metrics",
+    description = "Send commercial metric data to the lake via fastly",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
 
 trait PrebidSwitches {
