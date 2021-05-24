@@ -3,6 +3,7 @@ import { log } from '@guardian/libs';
 import config_ from '../../lib/config';
 
 // This is really a hacky workaround ⚠️
+// TODO convert config.js to TypeScript
 const config = config_ as {
 	get: (s: string, d?: unknown) => unknown;
 };
