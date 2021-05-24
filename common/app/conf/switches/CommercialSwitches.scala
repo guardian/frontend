@@ -341,6 +341,16 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val PrebidPermutiveAudience = Switch(
+    Commercial,
+    "prebid-permutive-audience",
+    "Enable Permutive’s Audience Connector to run with Prebid",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val prebidSonobi: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-sonobi",
