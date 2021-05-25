@@ -352,9 +352,9 @@ trait PrebidSwitches {
   )
 
   val PrebidPermutiveAudience = Switch(
-    Commercial,
-    "prebid-permutive-audience",
-    "Enable Permutive’s Audience Connector to run with Prebid",
+    group = CommercialPrebid,
+    name = "prebid-permutive-audience",
+    description = "Enable Permutive’s Audience Connector to run with Prebid",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -502,7 +502,7 @@ trait PrebidSwitches {
   )
 
   val mobileStickyPrebid: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "mobile-sticky-prebid",
     description = "Include Mobile Sticky leaderboard banner in Prebid",
     owners = group(Commercial),
