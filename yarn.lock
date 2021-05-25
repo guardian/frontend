@@ -1878,10 +1878,10 @@
     "@guardian/src-foundations" "3.3.0"
     "@guardian/src-icons" "3.3.0"
 
-"@guardian/commercial-core@^0.16.3":
-  version "0.16.3"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.16.3.tgz#04b41f28aacec6615489fd06110c29f4377a57bd"
-  integrity sha512-p+EE+ompyHod+OnQ5goZLUkJpRIBeCClEVpMnx3KByuaj2HkyoorqREpoQZczeZHNwzeltVC3WZqDGlaavRVKw==
+"@guardian/commercial-core@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.17.0.tgz#2f43375b6a0dee6cc429b4afde2918c110f28088"
+  integrity sha512-nBd7yoUzysoodLtVNr0xQ7zfZmt3vED10iw9/KigIzJwn0QmmBM0bTS9S38MQQp30axgNV7u5qz3yfoSUU05sg==
 
 "@guardian/consent-management-platform@^6.11.3":
   version "6.11.3"
@@ -1900,15 +1900,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/eslint-config/-/eslint-config-0.5.0.tgz#ece14ec90b372932c7bf01992fc6d8ce58f7f26e"
   integrity sha512-THJn0wg7i9YjSVM9ofobsJgS+WH9ybrZH1+0CXLAebp0T53RGtgZUkek82mDg1h3DidsM+f7HSZqoQyrCbPzPw==
 
-"@guardian/libs@^1.7.1":
+"@guardian/libs@^1.7.1", "@guardian/libs@^1.8.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.1.tgz#22bccd66be7c5bf70cd5bbb1bf7700d94610ccb7"
   integrity sha512-Q/JPLhNeYa5XhDPJhw/1+fbZmszopvovWW8I7dGEuFPGWeNUmXAbW8J3kzuonDu7l9/tuFZg8jljbKHZlrFx0A==
-
-"@guardian/libs@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.0.tgz#ceed9e4fcccc5561493d886ae1a307c03a356e27"
-  integrity sha512-pUiY1guSFo4tvPbGQvOwJWxF2A/kM4C35VvSbvA72lvLBHM/6emceLRzMV+elXoiP0mvt1pBIQRAUfQBlYrsTA==
 
 "@guardian/prettier@^0.5.0":
   version "0.5.0"
