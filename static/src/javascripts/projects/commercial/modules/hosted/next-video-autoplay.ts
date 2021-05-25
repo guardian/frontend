@@ -61,6 +61,10 @@ const addCancelListener = (): void => {
 
 const canAutoplay = (): boolean => !!($hostedNext && nextVideoPage);
 
+/*
+    This module appears to setup autoplay for guardian-hosted commercial videos (i.e. not Youtube) - couldn't find any examples of this
+*/
+
 const init = (): Promise<void> =>
 	load().then(() => {
 		$hostedNext = document.querySelector('.js-hosted-next-autoplay');
