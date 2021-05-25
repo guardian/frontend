@@ -11,8 +11,9 @@ const shouldRenderLabel = (adSlotNode: HTMLElement) =>
 		adSlotNode.classList.contains('ad-slot--fluid') ||
 		adSlotNode.classList.contains('ad-slot--frame') ||
 		adSlotNode.classList.contains('ad-slot--gc') ||
-		// u-h class is set for out-of-page ads i.e. 1x1 and 2x2 ads
+		// u-h and ad-slot-collapse class is set for out-of-page ads i.e. 1x1 and 2x2 ads
 		adSlotNode.classList.contains('u-h') ||
+		adSlotNode.classList.contains('ad-slot--collapse') ||
 		adSlotNode.getAttribute('data-label') === 'false' ||
 		adSlotNode.getElementsByClassName('ad-slot__label').length
 	);
