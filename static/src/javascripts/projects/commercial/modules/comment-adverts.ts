@@ -1,4 +1,4 @@
-import config from '../../../lib/config';
+import config_ from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import mediator from '../../../lib/mediator';
@@ -10,6 +10,11 @@ import type { Advert } from './dfp/Advert';
 import { createSlots } from './dfp/create-slots';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
+
+// This is really a hacky workaround ⚠️
+const config = config_ as {
+	get: (s: string, d?: string) => string;
+};
 
 const createCommentSlots = (canBeDmpu: boolean): Element[] => {
 	const sizes = canBeDmpu
@@ -66,7 +71,9 @@ const containsDMPU = (ad: Advert): boolean =>
 const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
 	if (!containsDMPU(ad)) {
 		ad.sizes.desktop.push([300, 600], [160, 600]);
-		const defineSizeMappingFunction = ad.slot.defineSizeMapping as (asm: SizeMapping[]) => Slot;
+		const defineSizeMappingFunction = ad.slot.defineSizeMapping as (
+			asm: SizeMapping[],
+		) => Slot;
 		defineSizeMappingFunction([[[0, 0], ad.sizes.desktop]]);
 		void fastdom.mutate(() => {
 			adSlot.setAttribute(
@@ -92,11 +99,11 @@ const runSecondStage = (
 	}
 
 	if (!commentAdvert) {
-		insertCommentAd(commentMainColumn, adSlotContainer, true);
+		void insertCommentAd(commentMainColumn, adSlotContainer, true);
 	}
 };
 
-export const initCommentAdverts = () => {
+export const initCommentAdverts = (): Promise<boolean> => {
 	const adSlotContainer = document.querySelector('.js-discussion__ad-slot');
 	const isMobile = getBreakpoint() === 'mobile';
 	if (!commercialFeatures.commentAdverts || !adSlotContainer || isMobile) {
@@ -109,29 +116,33 @@ export const initCommentAdverts = () => {
 			'.js-comments .content__main-column',
 		);
 
-        if (commentMainColumn) {
-            fastdom
-                .measure(() => commentMainColumn?.offsetHeight)
-                .then((mainColHeight) => {
-                    // always insert an MPU/DMPU if the user is logged in, since the
-                    // containers are reordered, and comments are further from most-pop
-                    if (
-                        mainColHeight >= 800 ||
-                        (isLoggedIn && mainColHeight >= 600)
-                    ) {
-                        insertCommentAd(commentMainColumn, adSlotContainer, true);
-                    } else if (isLoggedIn) {
-                        insertCommentAd(
-                            commentMainColumn,
-                            adSlotContainer,
-                            false,
-                        );
-                    }
-                    mediator.on('discussion:comments:get-more-replies', () => {
-                        runSecondStage(commentMainColumn, adSlotContainer);
-                    });
-                });
-        }
+		if (commentMainColumn) {
+			void fastdom
+				.measure(() => commentMainColumn.offsetHeight)
+				.then((mainColHeight) => {
+					// always insert an MPU/DMPU if the user is logged in, since the
+					// containers are reordered, and comments are further from most-pop
+					if (
+						mainColHeight >= 800 ||
+						(isLoggedIn && mainColHeight >= 600)
+					) {
+						void insertCommentAd(
+							commentMainColumn,
+							adSlotContainer,
+							true,
+						);
+					} else if (isLoggedIn) {
+						void insertCommentAd(
+							commentMainColumn,
+							adSlotContainer,
+							false,
+						);
+					}
+					mediator.on('discussion:comments:get-more-replies', () => {
+						runSecondStage(commentMainColumn, adSlotContainer);
+					});
+				});
+		}
 	});
 	return Promise.resolve(true);
 };
