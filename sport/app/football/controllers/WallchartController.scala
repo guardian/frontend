@@ -140,7 +140,6 @@ class WallchartController(
           knockoutSpiderStages.flatMap { stage =>
             stage.rounds.find(x => x.roundNumber == roundId).map { round =>
               {
-                println(s"round: ${round}")
                 val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
                 Cached(60) {
                   RevalidatableResult.Ok(
