@@ -424,9 +424,10 @@ export const renderBanner = (response) => {
 };
 
 export const fetchAndRenderEpic = async () => {
+    const isHosted = config.get('page.isHosted');
     const page = config.get('page');
 
-    if (page.contentType === 'Article' || page.contentType === 'LiveBlog') {
+    if (page.contentType === 'Article' || page.contentType === 'LiveBlog' && !isHosted) {
         try {
             const payload = await buildEpicPayload();
 
