@@ -1,6 +1,6 @@
 
 import React, { Component, createRef } from 'react';
-import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import { isIOS, isAndroid } from 'lib/detect';
 
 import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
@@ -82,7 +82,7 @@ const AudioGrid = styled.div({
     },
 });
 
-const Button = styled('button')({
+const Button = styled.button({
     background: 'none',
     border: 0,
     cursor: 'pointer',
@@ -97,7 +97,7 @@ const Button = styled('button')({
     },
 });
 
-const PlayButton = styled(Button)({
+const PlayButton = styled.Button({
     margin: '0 50px',
 
     svg: {
@@ -114,7 +114,7 @@ const PlayButton = styled(Button)({
     },
 });
 
-const JumpButton = styled(Button)(({ playing }) => ({
+const JumpButton = styled.Button(({ playing }) => ({
     svg: {
         width: '31px',
         height: '30px',
@@ -146,7 +146,7 @@ const JumpButton = styled(Button)(({ playing }) => ({
     },
 }));
 
-const VolumeButton = styled(Button)(({ isActive }) => ({
+const VolumeButton = styled.Button(({ isActive }) => ({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -159,7 +159,7 @@ const VolumeButton = styled(Button)(({ isActive }) => ({
     },
 }));
 
-const TimeContainer = styled('div')(({ area }) => ({
+const TimeContainer = styled.div(({ area }) => ({
     [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '10px',
     gridArea: area,
     paddingTop: '4px',
@@ -170,7 +170,7 @@ const TimeContainer = styled('div')(({ area }) => ({
     backgroundColor: '#333333',
 }));
 
-const Controls = styled('div')({
+const Controls = styled.div({
     gridArea: 'controls',
     display: 'flex',
     alignItems: 'center',
@@ -178,7 +178,7 @@ const Controls = styled('div')({
     padding: '60px 0',
 });
 
-const WaveAndTrack = styled('div')({
+const WaveAndTrack = styled.div({
     gridArea: 'wave',
     display: 'flex',
     flexDirection: 'column',
@@ -195,7 +195,7 @@ const WaveAndTrack = styled('div')({
     },
 });
 
-const FakeWave = styled('div')({
+const FakeWave = styled.div({
     height: '100%',
     paddingLeft: '10px',
     paddingRight: '10px',
@@ -235,7 +235,7 @@ const FakeWave = styled('div')({
     },
 });
 
-const ScrubberButton = styled(Button)(({ position, hovering, grabbing }) => ({
+const ScrubberButton = styled.Button(({ position, hovering, grabbing }) => ({
     position: 'absolute',
     background: '#ffe500',
     width: '4px',
@@ -257,7 +257,7 @@ const ScrubberButton = styled(Button)(({ position, hovering, grabbing }) => ({
     },
 }));
 
-const Volume = styled('div')({
+const Volume = styled.div({
     gridArea: 'volume',
     display: 'flex',
     alignItems: 'stretch',

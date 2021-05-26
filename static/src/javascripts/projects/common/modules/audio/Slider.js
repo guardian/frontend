@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 
-const Scrubber = styled('div')(({ left }) => ({
+const Scrubber = styled.div(({ left }) => ({
     backgroundColor: '#ffe500',
     height: '50px',
     left: `${left}px`,

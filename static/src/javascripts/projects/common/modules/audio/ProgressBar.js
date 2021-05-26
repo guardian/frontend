@@ -24,7 +24,7 @@ const Progress = styled.div(
     })
 );
 
-const Track = styled('div')(({ backgroundColor, width }) => ({
+const Track = styled.div(({ backgroundColor, width }) => ({
     width,
     backgroundColor,
 }));
