@@ -5,7 +5,7 @@ import AuralAid from './AuralAid';
 import Slider from './Slider';
 
 
-const Progress = styled('div')(
+const Progress = styled.div(
     ({ backgroundColor, height, highlightColor, barContext }) => ({
         alignItems: 'stretch',
         backgroundColor,

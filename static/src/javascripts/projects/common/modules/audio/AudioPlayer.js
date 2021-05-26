@@ -61,7 +61,7 @@ const palette = {
     },
 };
 
-const AudioGrid = styled('div')({
+const AudioGrid = styled.div({
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
