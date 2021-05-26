@@ -5,8 +5,8 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import model.{ApplicationContext, Cached}
-import football.model.{CompetitionStage, KnockoutSpider, Groups}
-import pa.FootballMatch
+import football.model.{CompetitionStage, Groups, KnockoutSpider}
+import pa.{FootballMatch}
 
 import java.time.ZonedDateTime
 
@@ -26,6 +26,7 @@ class WallchartController(
   }
 
   def renderWallchartEmbed(competitionTag: String): Action[AnyContent] = renderWallchart(competitionTag, true)
+
   def renderWallchart(competitionTag: String, embed: Boolean = false): Action[AnyContent] =
     Action { implicit request =>
       competitionsService
@@ -65,6 +66,7 @@ class WallchartController(
           )
           val competitionStages = new CompetitionStage(competitionsService.competitions)
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
+
           val groupStages = competitionStages.collect { case stage: Groups => stage }
 
           val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
@@ -76,6 +78,34 @@ class WallchartController(
         }
         .getOrElse(NotFound)
     }
+
+  def renderIndividualGroupTableEmbed(competitionTag: String, groupIds: String): Action[AnyContent] = {
+    def convertGroupIdToInt(groupLetter: String): Option[Int] = {
+      val groupIdMap = Map("a" -> 1, "b" -> 2, "c" -> 3, "d" -> 4, "e" -> 5, "f" -> 6, "g" -> 7, "h" -> 8)
+      groupIdMap.get(groupLetter)
+    }
+
+    val groupIdsAsInt = groupIds.split(",").toList.flatMap(convertGroupIdToInt(_))
+    Action { implicit request =>
+      competitionsService
+        .competitionsWithTag(competitionTag)
+        .flatMap { competition =>
+          val competitionStages = new CompetitionStage(competitionsService.competitions)
+            .stagesFromCompetition(competition, KnockoutSpider.orderings)
+
+          val groupStages = competitionStages.collectFirst { case stage: Groups => stage }
+          groupStages.map { group =>
+            Cached(60) {
+              RevalidatableResult.Ok(
+                football.views.html.wallchart
+                  .groupTableEmbed(competition, group, groupIdsAsInt),
+              )
+            }
+          }
+        }
+        .getOrElse(NotFound)
+    }
+  }
 
   def renderWallchartHTML(competitionID: String): Action[AnyContent] =
     Action { implicit request =>

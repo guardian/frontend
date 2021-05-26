@@ -31,7 +31,9 @@ import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
-export const ModulesVersion = 'v1';
+export const ModulesVersion = 'v2';
+
+const isHosted = config.get('page.isHosted');
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -331,7 +333,7 @@ export const fetchPuzzlesData = async () => {
 export const fetchBannerData = async () => {
     const payload = await buildBannerPayload();
 
-    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent || isHosted) {
         return Promise.resolve(null);
     }
 
@@ -426,7 +428,7 @@ export const renderBanner = (response) => {
 export const fetchAndRenderEpic = async () => {
     const page = config.get('page');
 
-    if (page.contentType === 'Article' || page.contentType === 'LiveBlog') {
+    if ((page.contentType === 'Article' || page.contentType === 'LiveBlog') && !isHosted) {
         try {
             const payload = await buildEpicPayload();
 

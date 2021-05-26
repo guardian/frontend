@@ -297,6 +297,16 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val commercialMetrics: Switch = Switch(
+    group = Commercial,
+    name = "commercial-metrics",
+    description = "Send commercial metric data to the lake via fastly",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
 
 trait PrebidSwitches {
@@ -335,6 +345,16 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-user-sync",
     description = "Enable bidders to sync their user data with iframe or image beacons",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val PrebidPermutiveAudience = Switch(
+    group = CommercialPrebid,
+    name = "prebid-permutive-audience",
+    description = "Enable Permutive’s Audience Connector to run with Prebid",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -482,7 +502,7 @@ trait PrebidSwitches {
   )
 
   val mobileStickyPrebid: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "mobile-sticky-prebid",
     description = "Include Mobile Sticky leaderboard banner in Prebid",
     owners = group(Commercial),

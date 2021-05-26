@@ -308,7 +308,8 @@ object DotcomRenderingDataModel {
     )
 
     val combinedConfig: JsObject = {
-      val jsPageConfig: Map[String, JsValue] = JavaScriptPage.getMap(page, Edition(request), false, request)
+      val jsPageConfig: Map[String, JsValue] =
+        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
       Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
     }
 

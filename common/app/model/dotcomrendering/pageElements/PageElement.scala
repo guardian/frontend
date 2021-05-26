@@ -236,18 +236,12 @@ object GenericAtomBlockElement {
   implicit val GenericAtomBlockElementWrites: Writes[GenericAtomBlockElement] = Json.writes[GenericAtomBlockElement]
 }
 
-case class GuideAtomBlockElementItem(title: Option[String], body: String)
-object GuideAtomBlockElementItem {
-  implicit val GuideAtomBlockElementItemWrites: Writes[GuideAtomBlockElementItem] =
-    Json.writes[GuideAtomBlockElementItem]
-}
 case class GuideAtomBlockElement(
     id: String,
     label: String,
     title: String,
     img: Option[String],
     html: String,
-    items: List[GuideAtomBlockElementItem],
     credit: String,
 ) extends PageElement
 object GuideAtomBlockElement {
@@ -1053,7 +1047,6 @@ object PageElement {
             val html = guide.data.items
               .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
               .mkString("")
-            val items = guide.data.items.toList.map(item => GuideAtomBlockElementItem(item.title, item.body))
             Some(
               GuideAtomBlockElement(
                 id = guide.id,
@@ -1061,7 +1054,6 @@ object PageElement {
                 title = guide.atom.title.getOrElse(""),
                 img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
                 html = html,
-                items = items,
                 credit = guide.credit.getOrElse(""),
               ),
             )

@@ -1,0 +1,33 @@
+@import implicits.Football._
+@import pa._
+
+@(competition: model.Competition, groupStage: _root_.football.model.Groups, groupId: List[Int])(implicit request: RequestHeader, context: model.ApplicationContext)
+
+
+
+@footballGroup(round: Round, leagueTableEntries: Seq[LeagueTableEntry], hideAtMobile: Boolean) = {
+    <li class="football-group football-group-embed @{
+        if(hideAtMobile) "hide-on-mobile"
+    }">
+        <div class="football-group__container football-group__container-embed table--hide-from-importance-3">
+        @round.name.map { name =>
+            <div class="football-group__table">
+                @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
+                    heading = round.name,
+                    headingLink = groupTag(competition.id, round),
+                    striped = true,
+                    withCrests = true
+                )
+            </div>
+        }
+        </div>
+    </li>
+}
+
+<ul class="football-groups u-unstyled u-cf">
+@groupStage.groupTables.zipWithIndex.map { case (groupTable, index) =>
+    @footballGroup(groupTable._1, groupTable._2, !groupId.contains(index + 1))
+}
+</ul>
+
+
