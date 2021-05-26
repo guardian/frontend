@@ -427,7 +427,7 @@ export const fetchAndRenderEpic = async () => {
     const isHosted = config.get('page.isHosted');
     const page = config.get('page');
 
-    if (page.contentType === 'Article' || page.contentType === 'LiveBlog' && !isHosted) {
+    if ((page.contentType === 'Article' || page.contentType === 'LiveBlog') && !isHosted) {
         try {
             const payload = await buildEpicPayload();
 
