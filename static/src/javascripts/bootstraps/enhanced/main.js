@@ -300,29 +300,6 @@ const bootEnhanced = () => {
                 );
             }
 
-            // use a #force-sw hash fragment to force service worker registration for local dev
-            if (
-                (window.location.protocol === 'https:' &&
-                    config.get('page.section') !== 'identity') ||
-                window.location.hash.indexOf('force-sw') > -1
-            ) {
-                const navigator = window.navigator;
-
-                if (navigator && navigator.serviceWorker) {
-                    if (config.get('switches.serviceWorkerEnabled')) {
-                        navigator.serviceWorker.register('/service-worker.js');
-                    } else {
-                        navigator.serviceWorker
-                            .getRegistrations()
-                            .then(registrations => {
-                                [...registrations].forEach(registration => {
-                                    registration.unregister();
-                                });
-                            });
-                    }
-                }
-            }
-
             if (config.get('page.pageId') === 'help/accessibility-help') {
                 require.ensure(
                     [],

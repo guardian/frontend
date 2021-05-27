@@ -177,16 +177,6 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val ServiceWorkerEnabled = Switch(
-    SwitchGroup.Performance,
-    "service-worker-enabled",
-    "If switched on the service worker will be enabled",
-    owners = Seq(Owner.withName("dotcom.platform")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val LazyLoadImages = Switch(
     SwitchGroup.Performance,
     "blink-lazy-load-images",
