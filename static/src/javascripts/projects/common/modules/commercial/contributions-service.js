@@ -268,8 +268,7 @@ const getPuzzlesBanner = (payload) => {
 
 const getHeaderLinks = (payload) => {
     const isProd = config.get('page.isProd');
-    // const url = isProd ? 'https://contributions.guardianapis.com/header' : 'https://contributions.code.dev-guardianapis.com/header';
-    const url = 'http://localhost:8082/header'
+    const url = isProd ? 'https://contributions.guardianapis.com/header' : 'https://contributions.code.dev-guardianapis.com/header';
     const json = JSON.stringify(payload);
 
     const forcedVariant = getForcedVariant('header');
