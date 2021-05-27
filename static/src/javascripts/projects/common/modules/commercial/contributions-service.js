@@ -145,6 +145,27 @@ const buildEpicPayload = async () => {
     };
 };
 
+const buildHeaderLinksPayload = () => {
+    const ophan = config.get('ophan');
+    const countryCode = getCountryCode();
+    const edition = config.get('page.edition', '');
+    return {
+        tracking: {
+            ophanPageId: ophan.pageViewId,
+            platformId: 'GUARDIAN_WEB',
+            referrerUrl: window.location.origin + window.location.pathname,
+            clientName: 'frontend',
+        },
+        targeting: {
+            showSupportMessaging: !shouldHideSupportMessaging(),
+            edition,
+            countryCode,
+            modulesVersion: ModulesVersion,
+            mvtId: getMvtValue(),
+        },
+    };
+}
+
 export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp';   // timestamp of when we were last told not to show a RR banner
 const twentyMins = 20*60000;
 
@@ -239,6 +260,22 @@ const getPuzzlesBanner = (payload) => {
     const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
 
     return fetchJson(`${URL}${queryString}`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: json,
+    });
+}
+
+const getHeaderLinks = (payload) => {
+    const isProd = config.get('page.isProd');
+    // const url = isProd ? 'https://contributions.guardianapis.com/header' : 'https://contributions.code.dev-guardianapis.com/header';
+    const url = 'http://localhost:8082/header'
+    const json = JSON.stringify(payload);
+
+    const forcedVariant = getForcedVariant('header');
+    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
+
+    return fetchJson(`${url}${queryString}`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: json,
@@ -451,5 +488,37 @@ export const fetchAndRenderEpic = async () => {
             console.log(`Error importing remote epic: ${error}`);
             reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
         }
+    }
+};
+
+export const fetchAndRenderHeaderLinks = async () => {
+    const requestData = buildHeaderLinksPayload();
+
+    if (!config.get('switches.remoteHeader', false)) {
+        return;
+    }
+
+    try {
+        const response = await getHeaderLinks(requestData);
+        if (!response.data) {
+            return null;
+        }
+        const {module} = response.data;
+        const component = await window.guardianPolyfilledImport(module.url);
+        const Header = component.Header;
+
+        const el = document.createElement('div');
+        const container = document.querySelector('.new-header__cta-bar');
+        container.appendChild(el);
+
+        mountDynamic(
+            el,
+            Header,
+            {submitComponentEvent, ...module.props},
+            true,
+        );
+    } catch (error) {
+        console.log(`Error importing remote header: ${error}`);
+        reportError(new Error(`Error importing remote header: ${error}`), {}, false);
     }
 };
