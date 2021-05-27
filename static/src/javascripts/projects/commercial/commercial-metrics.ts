@@ -1,5 +1,5 @@
-import config_ from '../../lib/config';
 import { sendCommercialMetrics } from '@guardian/commercial-core';
+import config_ from '../../lib/config';
 
 // This is really a hacky workaround ⚠️
 // TODO convert config.js to TypeScript
