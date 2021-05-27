@@ -66,10 +66,6 @@
 
 ## [Archives](99-archives/)
 - [Recipe for Breton crêpes](99-archives/crepes.md)
-- [CSS guideline (out-of-date)](99-archives/css-guidelines.md)
-- [Javascript guidelines (Out of date)](99-archives/javascript-guidelines.md)
-- [Web Font Rendering Test (2013)](99-archives/web-font-rendering-tests.md)
-- [Website benchmark (July 2012)](99-archives/website-benchmark-2013.md)
 
 
 ---

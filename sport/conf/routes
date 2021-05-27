@@ -60,6 +60,7 @@ GET        /football/:competitionTag/groups/embed                             fo
 # :groupIds below should take a comma separated string e.g. a,b or c,d
 GET        /football/:competitionTag/groups/individual/embed/:groupIds        football.controllers.WallchartController.renderIndividualGroupTableEmbed(competitionTag, groupIds: String)
 GET        /football/:competitionTag/spider/embed                             football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
+GET        /football/:competitionTag/spider/:roundId/embed                   football.controllers.WallchartController.renderSpiderEmbedForRound(competitionTag, roundId)
 GET        /football/:competitionTag/overview                                 football.controllers.WallchartController.renderWallchart(competitionTag)
 GET        /football/:competitionTag/wallchart.json                           football.controllers.WallchartController.renderWallchartJson(competitionTag)
 
