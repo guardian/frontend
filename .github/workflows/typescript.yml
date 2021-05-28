@@ -14,19 +14,10 @@ jobs:
 
             - name: Install
               run: yarn
+              
+            - name: Lint files
+              run: yarn eslint static/src/javascripts --ext=ts,tsx
 
             - name: Check typescript
               run: yarn tsc
-    lint:
-        name: Linting
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - uses: guardian/actions-setup-node@main
-
-          - name: Install dependencies
-            uses: bahmutov/npm-install@v1
-
-          - name: Lint files
-            run: yarn eslint static/src/javascripts --ext=ts,tsx
 
