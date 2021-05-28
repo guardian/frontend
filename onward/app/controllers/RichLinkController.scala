@@ -1,5 +1,6 @@
 package controllers
 
+import common.`package`.convertApiExceptionsWithoutEither
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import contentapi.ContentApiClient
 import implicits.Requests
@@ -20,7 +21,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
     with Requests {
   def render(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      contentType(path) map {
+      val resp = contentType(path) map {
         case Some(content) if request.forceDCR =>
           val richLink = RichLink(
             tags =
@@ -41,6 +42,8 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
         case None          => NotFound
       }
+
+      resp.recover(convertApiExceptionsWithoutEither)
     }
 
   private def contentType(path: String)(implicit request: RequestHeader): Future[Option[ContentType]] = {
