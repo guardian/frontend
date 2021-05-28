@@ -245,7 +245,7 @@ const getStickyBottomBanner = (payload) => {
     const json = JSON.stringify(payload);
 
     return fetchJson(URL, {
-        method: 'post',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
@@ -260,7 +260,7 @@ const getPuzzlesBanner = (payload) => {
     const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
 
     return fetchJson(`${URL}${queryString}`, {
-        method: 'post',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
@@ -275,7 +275,7 @@ const getHeaderLinks = (payload) => {
     const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
 
     return fetchJson(`${url}${queryString}`, {
-        method: 'post',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
