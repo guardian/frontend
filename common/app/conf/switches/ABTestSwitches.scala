@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Test serving remote header",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 6, 1),
+    sellByDate = new LocalDate(2021, 7, 1),
     exposeClientSide = true,
   )
 }
