@@ -417,10 +417,20 @@ trait FeatureSwitches {
   val remoteBanner = Switch(
     SwitchGroup.Feature,
     "remote-banner",
-    "Enables the banner fetched from contributions-service",
+    "Enables the banner fetched from support-dotcom-components",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 8, 3),
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val remoteHeader = Switch(
+    SwitchGroup.Feature,
+    "remote-header",
+    "Enables the header fetched from support-dotcom-components",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true,
   )
 
