@@ -28,5 +28,5 @@ jobs:
             uses: bahmutov/npm-install@v1
 
           - name: Lint files
-            run: yarn lint
+            run: yarn eslint static/src/javascripts --ext=ts,tsx
 
