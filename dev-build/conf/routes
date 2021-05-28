@@ -345,11 +345,9 @@ GET            /opt/reset                                                       
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
-GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 GET            /sharecount/*path.json                                                                                            controllers.ShareCountController.fetch(path)
 
-GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
 GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = false, inApp: Boolean = false)

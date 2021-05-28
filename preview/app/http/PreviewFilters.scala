@@ -16,7 +16,7 @@ class PreviewFilters(
 )(implicit mat: Materializer, applicationContext: ApplicationContext, executionContext: ExecutionContext)
     extends HttpFilters {
 
-  private val exemptionsUrls = healthCheck.healthChecks.map(_.path) ++ Seq("/2015-06-24-manifest.json")
+  private val exemptionsUrls = healthCheck.healthChecks.map(_.path)
   private val filterExemptions = new FilterExemptions(exemptionsUrls: _*)
   val previewAuthFilter = new AuthFilterWithExemptions(filterExemptions.loginExemption, filterExemptions.exemptions)(
     mat,

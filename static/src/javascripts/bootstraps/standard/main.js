@@ -216,18 +216,6 @@ const bootStandard = () => {
         storage.local.setRaw(key, alreadyVisited + 1);
     }
 
-    if (
-        config.get('switches.blockIas') &&
-        config.get('switches.serviceWorkerEnabled') &&
-        navigator.serviceWorker
-    ) {
-        navigator.serviceWorker.ready.then(swreg => {
-            const sw = swreg.active;
-            const ias = window.location.hash.includes('noias');
-            sw.postMessage({ ias });
-        });
-    }
-
     ophan.setEventEmitter(mediator);
 
     /*  Membership access
