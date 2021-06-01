@@ -1897,10 +1897,10 @@
     "@guardian/src-foundations" "3.3.0"
     "@guardian/src-icons" "3.3.0"
 
-"@guardian/commercial-core@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.17.0.tgz#2f43375b6a0dee6cc429b4afde2918c110f28088"
-  integrity sha512-nBd7yoUzysoodLtVNr0xQ7zfZmt3vED10iw9/KigIzJwn0QmmBM0bTS9S38MQQp30axgNV7u5qz3yfoSUU05sg==
+"@guardian/commercial-core@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.18.0.tgz#e256038c5c5cd035230097706eedb42e82c7432e"
+  integrity sha512-DFhm3xUEOk9GkYwdJ6ISiQkd+uudz3Jg2kOExtpKNU1pnLpboE0zMnje6pToyYufj02anZQH42kQoYVKwjz93w==
 
 "@guardian/consent-management-platform@^6.11.3":
   version "6.11.3"
