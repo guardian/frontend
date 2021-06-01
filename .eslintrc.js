@@ -1,6 +1,6 @@
 module.exports = {
 	extends: ['prettier'],
-	plugins: ['guardian-frontend', 'jest', 'prettier'],
+	plugins: ['guardian-frontend', 'prettier'],
 	parser: 'babel-eslint',
 	parserOptions: {
 		sourceType: 'module',
