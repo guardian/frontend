@@ -12,7 +12,6 @@ let logged = false;
 const isDev = Boolean(config.get('page.isDev', false));
 
 const init = (): void => {
-	if (logged) return;
 	if (!window.guardian.ophan) return;
 	if (!config.get('switches.commercialMetrics', false)) return;
 
@@ -22,6 +21,7 @@ const init = (): void => {
 
 	if (isDev || userIsInSamplingGroup) {
 		document.addEventListener('visibilitychange', function () {
+			if (logged) return;
 			logged = sendCommercialMetrics(pageViewId, browserId, isDev);
 		});
 	}
