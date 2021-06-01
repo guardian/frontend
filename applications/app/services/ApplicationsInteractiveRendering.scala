@@ -5,7 +5,7 @@ import implicits.Requests._
 
 sealed trait RenderingTier
 object FrontendLegacy extends RenderingTier
-object USElection2020AmpPage extends RenderingTier
+object USElectionTracker2020AmpPage extends RenderingTier
 object DotcomRendering extends RenderingTier
 
 /*
@@ -34,7 +34,7 @@ object ApplicationsInteractiveRendering {
     val isAmp = request.host.contains("amp")
     val forceDCR = request.forceDCR
 
-    if (isSpecialElection && isAmp) USElection2020AmpPage
+    if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
     else if (forceDCR) DotcomRendering
     else FrontendLegacy
   }
