@@ -30,6 +30,7 @@ const getConsentFor = getConsentFor_ as jest.MockedFunction<
 	(vendor: string) => boolean
 >;
 
+// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 const actualFillAdvertSlots = jest.requireActual('./fill-advert-slots')
 	.fillAdvertSlots as () => Promise<void | undefined>;
 
@@ -51,7 +52,7 @@ jest.mock('../../../common/modules/identity/api', () => ({
 	getUrl: jest.fn(),
 }));
 jest.mock('ophan/ng', () => null);
-jest.mock('../../../common/modules/analytics/beacon', () => {});
+jest.mock('../../../common/modules/analytics/beacon', () => void {});
 jest.mock('../../../../lib/detect', () => ({
 	hasCrossedBreakpoint: jest.fn(),
 	isBreakpoint: jest.fn(),
@@ -83,7 +84,7 @@ jest.mock('../../../../lib/detect', () => ({
 	],
 	isGoogleProxy: jest.fn(() => false),
 }));
-jest.mock('../../../common/modules/analytics/google', () => () => {});
+jest.mock('../../../common/modules/analytics/google', () => () => void {});
 jest.mock('./display-lazy-ads', () => ({
 	displayLazyAds: jest.fn(),
 }));
@@ -97,7 +98,9 @@ jest.mock('@guardian/libs', () => {
 	/* */
 	return {
 		loadScript: jest.fn(() => Promise.resolve()),
+		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 		log: jest.requireActual('@guardian/libs').log,
+		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 		storage: jest.requireActual('@guardian/libs').storage,
 	};
 });
@@ -487,12 +490,14 @@ describe('DFP', () => {
 				);
 				expect(googleSlot.addService).toHaveBeenCalledWith(pubAds);
 				if (Array.isArray(data[2])) {
-					data[2].forEach((size: any) => {
-						expect(sizeMapping.addSize).toHaveBeenCalledWith(
-							size[0],
-							size[1],
-						);
-					});
+					data[2].forEach(
+						(size: number[] | Array<number[] | number[][]>) => {
+							expect(sizeMapping.addSize).toHaveBeenCalledWith(
+								size[0],
+								size[1],
+							);
+						},
+					);
 				}
 				expect(googleSlot.defineSizeMapping).toHaveBeenCalledWith(
 					data[2],
