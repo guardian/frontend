@@ -1,5 +1,4 @@
 const chalk = require('chalk');
-const config = '--quiet --color';
 
 const error = ctx => {
     ctx.messages.push(
@@ -13,21 +12,11 @@ const error = ctx => {
 };
 
 module.exports = {
-    description: 'Lint JS',
+    description: 'Compile TS',
     task: [
         {
-            description: 'Static',
-            task: `eslint static/src/javascripts --ext=ts,tsx,js ${config}`,
-            onError: error,
-        },
-        {
-            description: 'Tools etc.',
-            task: `eslint tools ${config}`,
-            onError: error,
-        },
-        {
-            description: 'Git hooks',
-            task: `eslint git-hooks/* ${config}`,
+            description: 'Compile',
+            task: `tsc --noEmit`,
             onError: error,
         },
     ],

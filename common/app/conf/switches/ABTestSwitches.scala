@@ -23,24 +23,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-fake-social",
-    "Show sign in gate with social login buttons",
-    owners = Seq(Owner.withGithub("coldlink")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 12, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-remote-rr-header-links-test",
-    "Test serving remote header",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 6, 1),
-    exposeClientSide = true,
-  )
 }

@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
-import com.gu.contentapi.client.utils.format.ImmersiveDisplay
+import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Edition, Localisation, RichRequestHeader}
@@ -15,14 +15,13 @@ import model.{
   Badges,
   ContentFormat,
   ContentPage,
-  ContentType,
+  DotcomContentType,
   GUDateTimeFormatNew,
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
 }
 import navigation._
-import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
@@ -350,6 +349,19 @@ object DotcomRenderingDataModel {
       )
     }
 
+    val modifiedFormat = {
+      val originalFormat = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
+
+      // TODO move to content-api-scala-client once confirmed as correct
+      // behaviour. At the moment we are seeing interactive articles with other
+      // design types due to CAPI format logic. But interactive design should
+      // always take precendent (or so we think).
+      content.metadata.contentType match {
+        case Some(DotcomContentType.Interactive) => originalFormat.copy(design = InteractiveDesign)
+        case _                                   => originalFormat
+      }
+    }
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
@@ -362,7 +374,7 @@ object DotcomRenderingDataModel {
       designType = content.metadata.designType.map(_.toString).getOrElse("Article"),
       editionId = edition.id,
       editionLongForm = Edition(request).displayName,
-      format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
+      format = modifiedFormat,
       guardianBaseURL = Configuration.site.host,
       hasRelated = content.content.showInRelated,
       hasStoryPackage = hasStoryPackage,
