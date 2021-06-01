@@ -26,16 +26,8 @@ object ArticlePageChecks {
   }
 
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
-    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
-
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case ContentAtomBlockElement(_, atomtype, _) =>
-          // ContentAtomBlockElement was expanded to include atomtype.
-          // To support an atom type, just add it to supportedAtomTypes
-          val supportedAtomTypes =
-            List("audio", "chart", "explainer", "guide", "interactive", "media", "profile", "qanda", "timeline")
-          !supportedAtomTypes.contains(atomtype)
         case InteractiveBlockElement(_, scriptUrl) =>
           scriptUrl match {
             case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
@@ -48,7 +40,6 @@ object ArticlePageChecks {
   }
 
   def hasOnlySupportedMainElements(page: PageWithStoryPackage): Boolean = {
-    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
         // The majority of the remaining atoms appear to be interactive atoms, which aren't supported yet
