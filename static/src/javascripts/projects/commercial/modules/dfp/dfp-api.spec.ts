@@ -2,6 +2,8 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import type { CCPAConsentState } from '@guardian/consent-management-platform/dist/types/ccpa';
+import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import _config from '../../../../lib/config';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -12,22 +14,11 @@ import { getCreativeIDs } from './get-creative-ids';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
 
-type TCFConsentType = {
-	tcfv2: {
-		consents: {
-			'1': boolean | null;
-			'2': boolean | null;
-			'3': boolean | null;
-			'4': boolean | null;
-			'5': boolean | null;
-		};
-		vendorConsents: {
-			'5f1aada6b8e05c306c0597d7': boolean | null;
-		};
-	};
-};
-
-type AUSRejectedType = {
+/*
+Note: Real type can be found at @guardian/consent-management-platform/dist/types/tcfv2
+Using a custom type here because our mock is not complete
+ */
+type AUSRejectedMockType = {
 	aus: {
 		rejectedCategories:
 			| Array<{
@@ -38,15 +29,9 @@ type AUSRejectedType = {
 	};
 };
 
-type CCPAConsentType = {
-	ccpa: {
-		doNotSell: boolean;
-	};
-};
-
 declare global {
 	interface Window {
-		__switch_zero: any;
+		__switch_zero: boolean;
 	}
 }
 
@@ -89,7 +74,7 @@ const actualFillAdvertSlots = jest.requireActual('./fill-advert-slots')
 	.fillAdvertSlots as () => Promise<void | undefined>;
 
 const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
-	(includeTweakpoint: any) => any
+	(includeTweakpoint: boolean) => any
 >;
 const fillAdvertSlots = fillAdvertSlots_ as jest.MockedFunction<
 	() => Promise<void | undefined>
@@ -216,7 +201,7 @@ const tcfv2WithConsent = {
 			'5f1aada6b8e05c306c0597d7': true, // Googletag
 		},
 	},
-};
+} as Partial<TCFv2ConsentState>;
 
 const tcfv2WithoutConsent = {
 	tcfv2: {
@@ -231,7 +216,7 @@ const tcfv2WithoutConsent = {
 			'5f1aada6b8e05c306c0597d7': false, // Googletag
 		},
 	},
-};
+} as Partial<TCFv2ConsentState>;
 
 // TODO: There is no null consent in the new CMP
 const tcfv2NullConsent = {
@@ -247,7 +232,7 @@ const tcfv2NullConsent = {
 			'5f1aada6b8e05c306c0597d7': null, // Googletag
 		},
 	},
-};
+} as Partial<TCFv2ConsentState>;
 
 const tcfv2MixedConsent = {
 	tcfv2: {
@@ -262,7 +247,7 @@ const tcfv2MixedConsent = {
 			'5f1aada6b8e05c306c0597d7': true, // Googletag
 		},
 	},
-};
+} as Partial<TCFv2ConsentState>;
 
 const ausNotRejected = {
 	aus: {
@@ -281,9 +266,13 @@ const ausRejected = {
 	},
 };
 
-const ccpaWithConsent = { ccpa: { doNotSell: false } };
+const ccpaWithConsent = { ccpa: { doNotSell: false } } as {
+	ccpa: CCPAConsentState;
+};
 
-const ccpaWithoutConsent = { ccpa: { doNotSell: true } };
+const ccpaWithoutConsent = { ccpa: { doNotSell: true } } as {
+	ccpa: CCPAConsentState;
+};
 
 describe('DFP', () => {
 	const domSnippet = `
@@ -638,7 +627,7 @@ describe('DFP', () => {
 	describe('keyword targeting', () => {
 		it('should send page level keywords', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFConsentType) => void) =>
+				(callback: (val: Partial<TCFv2ConsentState>) => void) =>
 					callback(tcfv2WithConsent),
 			);
 			getConsentFor.mockReturnValue(true);
@@ -653,7 +642,7 @@ describe('DFP', () => {
 	describe('NPA flag is set correctly', () => {
 		it('when full TCF consent was given', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFConsentType) => void) =>
+				(callback: (val: Partial<TCFv2ConsentState>) => void) =>
 					callback(tcfv2WithConsent),
 			);
 			getConsentFor.mockReturnValue(true);
@@ -662,7 +651,7 @@ describe('DFP', () => {
 		});
 		it('when no TCF consent preferences were specified', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFConsentType) => void) =>
+				(callback: (val: Partial<TCFv2ConsentState>) => void) =>
 					callback(tcfv2NullConsent),
 			);
 			getConsentFor.mockReturnValue(true);
@@ -671,7 +660,7 @@ describe('DFP', () => {
 		});
 		it('when full TCF consent was denied', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFConsentType) => void) =>
+				(callback: (val: Partial<TCFv2ConsentState>) => void) =>
 					callback(tcfv2WithoutConsent),
 			);
 			getConsentFor.mockReturnValue(false);
@@ -680,7 +669,7 @@ describe('DFP', () => {
 		});
 		it('when only partial TCF consent was given', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFConsentType) => void) =>
+				(callback: (val: Partial<TCFv2ConsentState>) => void) =>
 					callback(tcfv2MixedConsent),
 			);
 			getConsentFor.mockReturnValue(false);
@@ -691,7 +680,7 @@ describe('DFP', () => {
 	describe('NPA flag in AUS', () => {
 		it('when AUS has not retracted advertising consent', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: AUSRejectedType) => void) =>
+				(callback: (val: AUSRejectedMockType) => void) =>
 					callback(ausNotRejected),
 			);
 			getConsentFor.mockReturnValue(true);
@@ -700,7 +689,7 @@ describe('DFP', () => {
 		});
 		it('when AUS has retracted advertising consent', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: AUSRejectedType) => void) =>
+				(callback: (val: AUSRejectedMockType) => void) =>
 					callback(ausRejected),
 			);
 			getConsentFor.mockReturnValue(false);
@@ -711,7 +700,7 @@ describe('DFP', () => {
 	describe('restrictDataProcessing flag is set correctly', () => {
 		it('when CCPA consent was given', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: CCPAConsentType) => void) =>
+				(callback: (val: { ccpa: CCPAConsentState }) => void) =>
 					callback(ccpaWithConsent),
 			);
 			getConsentFor.mockReturnValue(true);
@@ -722,7 +711,7 @@ describe('DFP', () => {
 		});
 		it('when CCPA consent was denied', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: CCPAConsentType) => void) =>
+				(callback: (val: { ccpa: CCPAConsentState }) => void) =>
 					callback(ccpaWithoutConsent),
 			);
 			getConsentFor.mockReturnValue(false);
