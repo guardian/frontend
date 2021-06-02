@@ -14,10 +14,7 @@ import { getCreativeIDs } from './get-creative-ids';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
 
-/*
-Note: Real type can be found at @guardian/consent-management-platform/dist/types/tcfv2
-Using a custom type here because our mock is not complete
- */
+// Note: this does not appear to be typed in @guardian/consent-management-platform
 type AUSRejectedMockType = {
 	aus: {
 		rejectedCategories:
