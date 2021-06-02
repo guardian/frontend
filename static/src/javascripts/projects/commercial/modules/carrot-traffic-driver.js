@@ -5,8 +5,13 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { getBreakpoint } from '../../../lib/detect';
 
+const isDotcomRendering = config.get('isDotcomRendering', false);
+const bodySelector = isDotcomRendering
+	? '.article-body-commercial-selector'
+	: '.js-article__body';
+
 const defaultRules = {
-    bodySelector: '.js-article__body',
+    bodySelector,
     slotSelector: ' > p',
     minAbove: 500,
     minBelow: 400,
@@ -51,7 +56,7 @@ const defaultRules = {
 
 // desktop(980) and tablet(740)
 const desktopRules = {
-    bodySelector: '.js-article__body',
+    bodySelector,
     slotSelector: ' > p',
     minAbove: 500,
     minBelow: 400,
@@ -100,7 +105,7 @@ const desktopRules = {
 
 // mobile(320) and above
 const mobileRules = {
-    bodySelector: '.js-article__body',
+    bodySelector,
     slotSelector: ' > p',
     minAbove: 500,
     minBelow: 400,
