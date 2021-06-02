@@ -32,13 +32,16 @@ object ApplicationsInteractiveRendering {
 
   // allowListedPaths is use to jumpstart the router (which decides which between frontend and DRC does the rendering)
   val allowListedPaths = List(
-    "environment/ng-interactive/2021/feb/23/beneath-the-blue-dive-into-a-dazzling-ocean-under-threat-interactive",
+    "/education/ng-interactive/2021/mar/29/which-english-academy-trusts-have-recorded-racism-complaints",
   )
+  def ensureStartingForwardSlash(str: String): String = {
+    if (!str.startsWith("/")) ("/" + str) else str
+  }
 
   def router(path: String)(implicit request: RequestHeader): RenderingTier = {
     // This function decides which paths are sent to DCR for rendering
     // At first we use allowListedPaths
-    if (allowListedPaths.contains(path)) DotcomRendering else FrontendLegacy
+    if (allowListedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering else FrontendLegacy
   }
 
   def getRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
