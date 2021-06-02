@@ -1,9 +1,8 @@
 package form
 
+import com.gu.identity.model.User
 import model.Titles
 import play.api.data.Forms._
-import com.gu.identity.model.{Consent, PrivateFields, User, UserDates}
-import idapiclient.UserUpdateDTO
 import play.api.data.Mapping
 import play.api.i18n.MessagesProvider
 
@@ -20,7 +19,6 @@ class AccountDetailsMapping
       "firstName" -> nonEmptyText,
       "secondName" -> nonEmptyText,
       "address" -> idAddress,
-      "billingAddress" -> optional(idAddress),
       "telephoneNumber" -> optional(telephoneNumberMapping),
       "deleteTelephoneNumber" -> default(boolean, false),
     )(AccountFormData.apply)(AccountFormData.unapply _)
@@ -35,7 +33,6 @@ case class AccountFormData(
     firstName: String,
     secondName: String,
     address: AddressFormData,
-    billingAddress: Option[AddressFormData],
     telephoneNumber: Option[TelephoneNumberFormData],
     deleteTelephone: Boolean = false,
 ) extends UserFormData
@@ -56,31 +53,6 @@ object AccountFormData {
         postcode = user.privateFields.postcode getOrElse "",
         country = user.privateFields.country getOrElse "",
       ),
-      billingAddress = {
-        import user.privateFields._
-        if (
-          List(
-            billingAddress1,
-            billingAddress2,
-            billingAddress3,
-            billingAddress4,
-            billingPostcode,
-            billingCountry,
-          ).flatten.isEmpty
-        )
-          None
-        else
-          Some(
-            AddressFormData(
-              billingAddress1.getOrElse(""),
-              billingAddress2.getOrElse(""),
-              billingAddress3.getOrElse(""),
-              billingAddress4.getOrElse(""),
-              billingPostcode.getOrElse(""),
-              billingCountry.getOrElse(""),
-            ),
-          )
-      },
       telephoneNumber = user.privateFields.telephoneNumber.map(TelephoneNumberFormData(_)),
     )
 }
