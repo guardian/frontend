@@ -48,24 +48,18 @@ object InteractiveRendering {
 
     val isSpecialElection = ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)
 
-    // Date   : 01st June 2021
-    // Author : Pascal
-    // Note   : We define isWeb as the opposite of isAmp because I think it leads to easier to understand code
-    //          If it turns out that somebody disagrees, let me know.
-    val isWeb = !request.host.contains("amp")
+    val isAmp = request.host.contains("amp")
+    val isWeb = !isAmp
 
     val forceDCR = request.forceDCR
 
-    (isSpecialElection, isWeb, forceDCR) match {
-      case (true, false, _) => USElectionTracker2020AmpPage // Election tracker on AMP
-      case (true, true, _)  => FrontendLegacy // Election tracker on web [1]
-      case (_, false, _)    => FrontendLegacy // Regular AMP [2]
-      case (_, true, true)  => DotcomRendering // WEB with forceDCR
-      case _                => decideRenderingTier(path) // [3] Web with no forceDCR flag
-    }
+    if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
+    else if (isSpecialElection && isWeb) FrontendLegacy // [1]
+    else if (isAmp) FrontendLegacy // [2]
+    else if (forceDCR) DotcomRendering
+    else decideRenderingTier(path)
 
     // [1] We will change that in the future, but for the moment we legacy render the election tracker.
     // [2] We will change that in the future, but for the moment we legacy render all amp pages.
-    // [3] This is were the regular routing is performed, same job as the Article Picker.
   }
 }
