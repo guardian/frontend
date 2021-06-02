@@ -1,11 +1,9 @@
 import { getCLS, getFID, getLCP, getFCP, getTTFB } from 'web-vitals';
 import { getCookie } from 'lib/cookies';
 
-
 export const init = () => {
     coreVitals();
 };
-
 
 type CoreWebVitalsPayload = {
     page_view_id: string | null;
@@ -113,6 +111,7 @@ const coreVitals = (): void => {
     getFCP(jsonToSend);
     getTTFB(jsonToSend);
 };
+
 
 
 
