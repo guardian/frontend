@@ -74,7 +74,7 @@ const sentryOptions = {
             isInSample &&
             !isIgnored &&
             !adblockBeingUsed &&
-            !isDev
+            isDev
         );
     },
 };
