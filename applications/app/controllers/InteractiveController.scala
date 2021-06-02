@@ -131,12 +131,12 @@ class InteractiveController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
-    val renderingTier = ApplicationsInteractiveRendering.getRenderingTier(path)
+    val renderingTier = InteractiveRendering.getRenderingTier(path)
     (requestFormat, renderingTier) match {
-      case (AmpFormat, USElection2020AmpPage)  => renderInteractivePageUSPresidentialElection2020(path)
-      case (JsonFormat, _) if request.forceDCR => renderDCRJson(path)
-      case (HtmlFormat, DotcomRendering)       => renderDCR(path)
-      case _                                   => renderItemLegacy(path: String)
+      case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
+      case (JsonFormat, _) if request.forceDCR       => renderDCRJson(path)
+      case (HtmlFormat, DotcomRendering)             => renderDCR(path)
+      case _                                         => renderItemLegacy(path: String)
     }
   }
 
