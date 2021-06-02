@@ -28,7 +28,7 @@ object DotcomRendering extends RenderingTier
   We are now moving towards supporting interactives in DCR 🙂
  */
 
-object ApplicationsInteractiveRendering {
+object InteractiveRendering {
 
   // allowListedPaths is use to jumpstart the router (which decides which between frontend and DRC does the rendering)
   val allowListedPaths = List(
@@ -38,7 +38,7 @@ object ApplicationsInteractiveRendering {
     if (!str.startsWith("/")) ("/" + str) else str
   }
 
-  def router(path: String)(implicit request: RequestHeader): RenderingTier = {
+  def decideRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
     // This function decides which paths are sent to DCR for rendering
     // At first we use allowListedPaths
     if (allowListedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering else FrontendLegacy
@@ -61,7 +61,7 @@ object ApplicationsInteractiveRendering {
       case (true, true, _)  => FrontendLegacy // Election tracker on web [1]
       case (_, false, _)    => FrontendLegacy // Regular AMP [2]
       case (_, true, true)  => DotcomRendering // WEB with forceDCR
-      case _                => router(path) // [3] Web with no forceDCR flag
+      case _                => decideRenderingTier(path) // [3] Web with no forceDCR flag
     }
 
     // [1] We will change that in the future, but for the moment we legacy render the election tracker.
