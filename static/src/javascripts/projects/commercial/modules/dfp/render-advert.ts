@@ -1,5 +1,4 @@
 import { $$ } from '../../../../lib/$$';
-import config from '../../../../lib/config';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
 import { geoMostPopular } from '../../../common/modules/onward/geo-most-popular';
