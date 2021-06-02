@@ -32,7 +32,7 @@ object ApplicationsInteractiveRendering {
 
   // allowListedPaths is use to jumpstart the router (which decides which between frontend and DRC does the rendering)
   val allowListedPaths = List(
-    "/education/ng-interactive/2021/mar/29/which-english-academy-trusts-have-recorded-racism-complaints",
+    "/sport/ng-interactive/2018/dec/26/lebron-james-comments-nba-nfl-divide",
   )
   def ensureStartingForwardSlash(str: String): String = {
     if (!str.startsWith("/")) ("/" + str) else str
