@@ -41,21 +41,62 @@ object InteractiveRendering {
     if (!str.startsWith("/")) ("/" + str) else str
   }
 
-  def getPathDate(path: String): LocalDate = {
-    LocalDate.now()
+  def dateTransform(date: String): String = {
+    val monthLookupMap = Map(
+      "jan" -> "01",
+      "feb" -> "02",
+      "mar" -> "03",
+      "apr" -> "04",
+      "may" -> "05",
+      "jun" -> "06",
+      "jul" -> "07",
+      "aug" -> "08",
+      "sep" -> "09",
+      "oct" -> "10",
+      "nov" -> "11",
+      "dec" -> "12",
+    )
+    // This function takes a date in the form "2021/mar/05" and transforms it to be "2021-03-05"
+    // We first replace "/" by "-" and then we try and substitute the month by its corresponding number.
+    monthLookupMap.keys.fold(date.replace("/", "-")) { (date, month) =>
+      date.replace(month, monthLookupMap(month))
+    }
   }
 
-  def dateIsPostTransition(date: LocalDate): Boolean = {
-    true
+  def getPathDate(path: String): Option[String] = {
+    /*
+      This function takes a path like books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more
+      and then
+        1. First extract the date "2021/mar/05"
+        2. Transform it in YYYY-MM-DD format to be "2021-03-05"
+     */
+    val regex = """\d\d\d\d\/\w+\/\d\d""".r
+    val date = regex.findFirstMatchIn(path).map(_.toString()).map(dateTransform)
+    println(date)
+    date
+  }
+
+  def dateIsPostTransition(date: String): Boolean = {
+    // It's the responsibility of the caller of this function to ensure that the date
+    // is given as string in format "YYYY-MM-DD", otherwise "results may vary".
+    date >= "2021-06-01"
   }
 
   def decideRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
     // This function decides which paths are sent to DCR for rendering
     // We first check whether or not the path has been allow listed and then check the date
-    println(getPathDate(path: String))
+
     if (allowListedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering
-    else if (dateIsPostTransition(getPathDate(path))) DotcomRendering
-    else FrontendLegacy
+    else {
+      getPathDate(path) match {
+        case Some(date) => if (dateIsPostTransition(date)) DotcomRendering else FrontendLegacy
+        case None       => FrontendLegacy // [1]
+      }
+    }
+    /*
+      [1] We could as well decide to send those to DCR 🤔 , but right now I am assuming that if it happens
+          it's because of old contents not following the expected path format.
+     */
   }
 
   def getRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
