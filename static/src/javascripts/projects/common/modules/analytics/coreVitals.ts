@@ -82,6 +82,21 @@ const coreVitals = (): void => {
 				? 'https://performance-events.code.dev-guardianapis.com/core-web-vitals'
 				: 'https://performance-events.guardianapis.com/core-web-vitals';
 
+		const sendData = () => {
+			fetch(endpoint, {
+				method: 'POST', // *GET, POST, PUT, DELETE, etc.
+				mode: 'cors', // no-cors, *cors, same-origin
+				cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+				credentials: 'same-origin', // include, *same-origin, omit
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				redirect: 'follow',
+				referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-w
+				body: JSON.stringify(jsonData),
+			}).catch((error) => console.log(error));
+		};
+
 		// Browser support
 		// getCLS(): Chromium,
 		// getFCP(): Chromium, Firefox, Safari Technology Preview
@@ -96,19 +111,10 @@ const coreVitals = (): void => {
 		// https://github.com/GoogleChrome/web-vitals/blob/main/CHANGELOG.md#v200-2021-06-01
 		if (jsonToSend.name === 'FCP') {
 			if (jsonData.fcp !== null && jsonData.fcp > 0) {
-				fetch(endpoint, {
-					method: 'POST', // *GET, POST, PUT, DELETE, etc.
-					mode: 'cors', // no-cors, *cors, same-origin
-					cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-					credentials: 'same-origin', // include, *same-origin, omit
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					redirect: 'follow',
-					referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-w
-					body: JSON.stringify(jsonData),
-				}).catch((error) => console.log(error));
+				sendData();
 			}
+		} else {
+			sendData();
 		}
 	};
 
