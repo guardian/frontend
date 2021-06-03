@@ -39,7 +39,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: Page,
   )(implicit request: RequestHeader): Future[Result] = {
 
-    def doGet() = {
+    def doPost() = {
       val resp = ws
         .url(endpoint)
         .withRequestTimeout(Configuration.rendering.timeout)
@@ -83,9 +83,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     if (CircuitBreakerSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(doGet()).map(handler)
+      circuitBreaker.withCircuitBreaker(doPost()).map(handler)
     } else {
-      doGet().map(handler)
+      doPost().map(handler)
     }
   }
 
@@ -102,7 +102,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
-    get(ws, json, Configuration.rendering.AMPArticleEndpoint, page)
+    get(ws, json, Configuration.rendering.baseURL + "/AMPArticle", page)
   }
 
   def getArticle(
@@ -114,7 +114,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    get(ws, json, Configuration.rendering.renderingEndpoint, page)
+    get(ws, json, Configuration.rendering.baseURL + "/Article", page)
   }
 
   def getInteractive(
@@ -126,7 +126,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    get(ws, json, Configuration.rendering.renderingEndpoint, page)
+    get(ws, json, Configuration.rendering.baseURL + "/Interactive", page)
+  }
+
+  def getAMPInteractive(
+      ws: WSClient,
+      page: InteractivePage,
+      blocks: Blocks,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+
+    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    get(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page)
   }
 
 }
