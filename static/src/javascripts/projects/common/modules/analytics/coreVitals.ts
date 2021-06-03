@@ -113,7 +113,7 @@ const coreVitals = (): void => {
 			if (jsonData.fcp !== null && jsonData.fcp > 0) {
 				sendData();
 			}
-		} else {
+		} else if (jsonToSend.name !== 'CLS') {
 			sendData();
 		}
 	};
