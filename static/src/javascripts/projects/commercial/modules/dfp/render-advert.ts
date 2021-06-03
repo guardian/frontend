@@ -31,6 +31,7 @@ const addClassIfHasClass = (newClassNames: string[]) =>
 					newClassNames.forEach((className) => {
 						advert.node.classList.add(className);
 					});
+					const allClasses: DOMTokenList = advert.node.classList;
 					// Add fluid styles from _adslot.scss
 					// mark: 9473ae05-a901-4a8d-a51d-1b9c894d6e1f
 					// Temporary typing until config.js is converted to TypeScript
@@ -39,6 +40,7 @@ const addClassIfHasClass = (newClassNames: string[]) =>
 					}).get('isDotcomRendering', false);
 					if (
 						isDotcomRendering &&
+						!allClasses.contains('ad-slot--carrot') &&
 						newClassNames.includes('ad-slot--fluid')
 					) {
 						advert.node.style.minHeight = '250px';
@@ -46,9 +48,8 @@ const addClassIfHasClass = (newClassNames: string[]) =>
 						advert.node.style.padding = '0';
 						advert.node.style.margin = '0';
 						if (
-							!newClassNames.includes('ad-slot--im') &&
-							!newClassNames.includes('ad-slot--carrot') &&
-							!newClassNames.includes('ad-slot--offset-right')
+							!allClasses.contains('ad-slot--im') &&
+							!allClasses.contains('ad-slot--offset-right')
 						)
 							advert.node.style.width = '100%';
 					}

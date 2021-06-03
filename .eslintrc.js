@@ -35,5 +35,13 @@ module.exports = {
 				],
 			},
 		},
+        {
+            files: ['*.spec.ts'],
+            rules: {
+              // This rule erroneously flags up instances where you expect(obj.fn).toHaveBeenCalled
+              // Enabled for test files only
+              '@typescript-eslint/unbound-method': 'off',
+            },
+          },
 	],
 };
