@@ -56,7 +56,7 @@ const bootEnhanced = () => {
             },
         ],
 
-        ['core-vitals', initCoreVitals],
+        ['core-web-vitals', initCoreVitals],
 
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
 

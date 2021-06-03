@@ -74,8 +74,7 @@ const coreVitals = (): void => {
 			jsonData.browser_id = getCookie('bwid');
 		}
 
-		const endpoint =
-			window.location.hostname === 'm.code.dev-theguardian.com' ||
+		const endpoint = window.location.hostname === 'm.code.dev-theguardian.com' ||
 			window.location.hostname === 'localhost' ||
 			window.location.hostname === 'preview.gutools.co.uk'
 				? 'http://performance-events.code.dev-guardianapis.com/core-web-vitals'
