@@ -131,12 +131,19 @@ class InteractiveController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
-    val renderingTier = InteractiveRendering.getRenderingTier(path)
-    (requestFormat, renderingTier) match {
-      case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-      case (JsonFormat, _) if request.forceDCR       => renderDCRJson(path)
-      case (HtmlFormat, DotcomRendering)             => renderDCR(path)
-      case _                                         => renderItemLegacy(path)
+    lookupWithoutModelConvertion(path).flatMap { response =>
+      response.content match {
+        case Some(content) => {
+          val renderingTier = InteractiveRendering.getRenderingTier(path, content)
+          (requestFormat, renderingTier) match {
+            case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
+            case (JsonFormat, _) if request.forceDCR       => renderDCRJson(path)
+            case (HtmlFormat, DotcomRendering)             => renderDCR(path)
+            case _                                         => renderItemLegacy(path)
+          }
+        }
+        case None => Future.successful(Ok("error: b8577769-0b56-4da6-aced-c267276f71a9"))
+      }
     }
   }
 

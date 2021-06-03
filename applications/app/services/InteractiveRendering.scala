@@ -1,5 +1,6 @@
 package services
 
+import com.gu.contentapi.client.model.v1.ItemResponse
 import play.api.mvc.RequestHeader
 import implicits.Requests._
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
@@ -9,6 +10,8 @@ sealed trait RenderingTier
 object FrontendLegacy extends RenderingTier
 object USElectionTracker2020AmpPage extends RenderingTier
 object DotcomRendering extends RenderingTier
+
+import com.gu.contentapi.client.model.v1.Content
 
 /*
   Date: 21st Jan 2020
@@ -41,55 +44,21 @@ object InteractiveRendering {
     if (!str.startsWith("/")) ("/" + str) else str
   }
 
-  def dateTransform(date: String): String = {
-    val monthLookupMap = Map(
-      "jan" -> "01",
-      "feb" -> "02",
-      "mar" -> "03",
-      "apr" -> "04",
-      "may" -> "05",
-      "jun" -> "06",
-      "jul" -> "07",
-      "aug" -> "08",
-      "sep" -> "09",
-      "oct" -> "10",
-      "nov" -> "11",
-      "dec" -> "12",
-    )
-    // This function takes a date in the form "2021/mar/05" and transforms it to be "2021-03-05"
-    // We first replace "/" by "-" and then we try and substitute the month by its corresponding number.
-    monthLookupMap.keys.fold(date.replace("/", "-")) { (date, month) =>
-      date.replace(month, monthLookupMap(month))
-    }
-  }
-
-  def getPathDate(path: String): Option[String] = {
-    /*
-      This function takes a path like books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more
-      and then
-        1. First extract the date "2021/mar/05"
-        2. Transform it in YYYY-MM-DD format to be "2021-03-05"
-     */
-    val regex = """\d\d\d\d\/\w+\/\d\d""".r
-    val date = regex.findFirstMatchIn(path).map(_.toString()).map(dateTransform)
-    println(date)
-    date
-  }
-
   def dateIsPostTransition(date: String): Boolean = {
     // It's the responsibility of the caller of this function to ensure that the date
     // is given as string in format "YYYY-MM-DD", otherwise "results may vary".
+    println(date)
     date >= "2021-06-01"
   }
 
-  def decideRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
+  def decideRenderingTier(path: String, content: Content)(implicit request: RequestHeader): RenderingTier = {
     // This function decides which paths are sent to DCR for rendering
-    // We first check whether or not the path has been allow listed and then check the date
+    // We first check whether or not the path has been allow listed and then check the date of the atom
 
     if (allowListedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering
     else {
-      getPathDate(path) match {
-        case Some(date) => if (dateIsPostTransition(date)) DotcomRendering else FrontendLegacy
+      content.webPublicationDate match {
+        case Some(date) => if (dateIsPostTransition(date.iso8601.substring(0, 10))) DotcomRendering else FrontendLegacy
         case None       => FrontendLegacy // [1]
       }
     }
@@ -99,7 +68,7 @@ object InteractiveRendering {
      */
   }
 
-  def getRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
+  def getRenderingTier(path: String, content: Content)(implicit request: RequestHeader): RenderingTier = {
 
     val isSpecialElection = ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)
 
@@ -112,7 +81,7 @@ object InteractiveRendering {
     else if (isSpecialElection && isWeb) FrontendLegacy // [1]
     else if (isAmp) FrontendLegacy // [2]
     else if (forceDCR) DotcomRendering
-    else decideRenderingTier(path)
+    else decideRenderingTier(path, content)
 
     // [1] We will change that in the future, but for the moment we legacy render the election tracker.
     // [2] We will change that in the future, but for the moment we legacy render all amp pages.
