@@ -12,6 +12,7 @@ const sentryOptions = {
         // localhost will not log errors, but call `shouldSendCallback`
         /localhost/,
         /assets\.guim\.co\.uk/,
+        /assets-code\.guim\.co\.uk/,
         /ophan\.co\.uk/,
     ],
 
