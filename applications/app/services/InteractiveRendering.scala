@@ -2,6 +2,8 @@ package services
 
 import play.api.mvc.RequestHeader
 import implicits.Requests._
+import org.joda.time.{DateTime, DateTimeZone, LocalDate}
+import org.joda.time.format.DateTimeFormat
 
 sealed trait RenderingTier
 object FrontendLegacy extends RenderingTier
@@ -34,14 +36,26 @@ object InteractiveRendering {
   val allowListedPaths = List(
     "/sport/ng-interactive/2018/dec/26/lebron-james-comments-nba-nfl-divide",
   )
+
   def ensureStartingForwardSlash(str: String): String = {
     if (!str.startsWith("/")) ("/" + str) else str
   }
 
+  def getPathDate(path: String): LocalDate = {
+    LocalDate.now()
+  }
+
+  def dateIsPostTransition(date: LocalDate): Boolean = {
+    true
+  }
+
   def decideRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
     // This function decides which paths are sent to DCR for rendering
-    // At first we use allowListedPaths
-    if (allowListedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering else FrontendLegacy
+    // We first check whether or not the path has been allow listed and then check the date
+    println(getPathDate(path: String))
+    if (allowListedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering
+    else if (dateIsPostTransition(getPathDate(path))) DotcomRendering
+    else FrontendLegacy
   }
 
   def getRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
