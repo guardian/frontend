@@ -1,5 +1,5 @@
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
-import { getCookie } from 'lib/cookies';
+import { cookies } from '@guardian/libs';
 
 export const init = () => {
 	coreVitals();
@@ -64,17 +64,17 @@ const coreVitals = (): void => {
 
 		// Some browser ID's are not caputured (and if they have no cookie there won't be one)
 		// but there are occassions of reoccuring users without a browser ID being sent.
-		// eslint/no-unnecessary-condition
-		// eslint/prefer-optional-chain
-		if (window.guardian && window.guardian.ophan) {
+		// eslint-disable-no-unnecessary-condition @typescript-eslint/no-unnecessary-condition
+		// eslint-disable-prefer-optional-chain @typescript-eslint/prefer-optional-chain
+		if (window.guardian.ophan) {
 			jsonData.page_view_id = window.guardian.ophan.pageViewId;
 			// jsonData.browser_id = window.guardian.config.ophan.browserId;
 		}
 
 		// Fallback to check for browser ID
-		// eslint/prefer-optional-chain
-		if (getCookie('bwid')) {
-			jsonData.browser_id = getCookie('bwid');
+		// eslint-disable-prefer-optional-chain @typescript-eslint/prefer-optional-chain
+		if (cookies.GetCookie('bwid')) {
+			jsonData.browser_id = cookies.GetCookie('bwid');
 		}
 
 		const endpoint =
@@ -93,7 +93,7 @@ const coreVitals = (): void => {
 
 		// We will send all data whenever any update. This means `null` values will appear in the lake
 		// and need handling.
-		// eslint/no-empty-function
+		// eslint-disable-no-empty-function @typescript-eslint/no-empty-function
 		fetch(endpoint, {
 			method: 'POST', // *GET, POST, PUT, DELETE, etc.
 			mode: 'cors', // no-cors, *cors, same-origin
