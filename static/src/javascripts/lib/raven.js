@@ -59,6 +59,9 @@ const sentryOptions = {
             typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
         const { enableSentryReporting } = config.get('switches');
         const isSentinelLoggingEvent = data.tags.tag === 'commercial-sentinel'
+
+        // isInSample is always true if the tag is commercial-sentinel.
+        // Otherwise, sample at .08%
         const isInSample = isSentinelLoggingEvent
                 ? true
                 : Math.random() < 0.008;
