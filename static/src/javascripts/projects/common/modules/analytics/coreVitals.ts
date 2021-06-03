@@ -1,5 +1,5 @@
+import { getCookie } from '@guardian/libs';
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
-import { cookies } from '@guardian/libs';
 
 export const init = () => {
 	coreVitals();
@@ -73,8 +73,8 @@ const coreVitals = (): void => {
 
 		// Fallback to check for browser ID
 		// eslint-disable-prefer-optional-chain @typescript-eslint/prefer-optional-chain
-		if (cookies.GetCookie('bwid')) {
-			jsonData.browser_id = cookies.GetCookie('bwid');
+		if (getCookie({ name: 'bwid' })) {
+			jsonData.browser_id = getCookie({ name: 'bwid' });
 		}
 
 		const endpoint =
@@ -105,7 +105,7 @@ const coreVitals = (): void => {
 			redirect: 'follow',
 			referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-w
 			body: JSON.stringify(jsonData),
-		}).catch(() => {});
+		}).catch((error) => console.log(error));
 	};
 
 	getCLS(jsonToSend, false);
