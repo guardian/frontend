@@ -57,8 +57,8 @@ const sentryOptions = {
         const isIgnored =
             typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
         const { enableSentryReporting } = config.get('switches');
-        const isInSample =
-            data.tags.tag === 'commercial-sentinel'
+        const isSentinelLoggingEvent = data.tags.tag === 'commercial-sentinel'
+        const isInSample = isSentinelLoggingEvent
                 ? true
                 : Math.random() < 0.008;
 
@@ -74,7 +74,7 @@ const sentryOptions = {
             isInSample &&
             !isIgnored &&
             !adblockBeingUsed &&
-            isDev
+            (!isDev || isSentinelLoggingEvent)
         );
     },
 };

@@ -12,6 +12,8 @@ jest.mock('../../common/modules/commercial/commercial-features', () => ({
     },
 }));
 
+jest.mock('../../../lib/raven');
+
 const fastdomMeasureSpy = jest.spyOn(fastdom, 'measure');
 
 const sharedBeforeEach = (domSnippet) => () => {
