@@ -81,7 +81,7 @@ class InteractiveController(
     result recover convertApiExceptions
   }
 
-  private def lookupWithoutModelConvertion(path: String): Future[ItemResponse] = {
+  private def lookupItemResponse(path: String): Future[ItemResponse] = {
     val edition = Edition.defaultEdition
     val response: Future[ItemResponse] = contentApiClient.getResponse(
       contentApiClient
@@ -130,7 +130,7 @@ class InteractiveController(
   }
 
   def getCapiWebPublicationDate(path: String)(implicit request: RequestHeader): Future[Option[CapiDateTime]] = {
-    lookupWithoutModelConvertion(path).map(_.content.flatMap(_.webPublicationDate))
+    lookupItemResponse(path).map(_.content.flatMap(_.webPublicationDate))
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
@@ -159,7 +159,7 @@ class InteractiveController(
       This version retrieve the AMP version directly but rely on a predefined map between paths and amp page ids
      */
     val capiLookupString = ApplicationsUSElection2020AmpPages.pathToAmpAtomId(path)
-    val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
+    val response: Future[ItemResponse] = lookupItemResponse(capiLookupString)
     response.map { response =>
       response.interactive match {
         case Some(i2) => {
