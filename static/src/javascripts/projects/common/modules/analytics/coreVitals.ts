@@ -62,8 +62,6 @@ const coreVitals = (): void => {
 				break;
 		}
 
-		// Some browser ID's are not caputured (and if they have no cookie there won't be one)
-		// but there are occassions of reoccuring users without a browser ID being sent.
 		// eslint-disable-no-unnecessary-condition @typescript-eslint/no-unnecessary-condition
 		// eslint-disable-prefer-optional-chain @typescript-eslint/prefer-optional-chain
 		if (window.guardian.ophan) {
@@ -93,19 +91,25 @@ const coreVitals = (): void => {
 
 		// We will send all data whenever any update. This means `null` values will appear in the lake
 		// and need handling.
-		// eslint-disable-no-empty-function @typescript-eslint/no-empty-function
-		fetch(endpoint, {
-			method: 'POST', // *GET, POST, PUT, DELETE, etc.
-			mode: 'cors', // no-cors, *cors, same-origin
-			cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-			credentials: 'same-origin', // include, *same-origin, omit
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			redirect: 'follow',
-			referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-w
-			body: JSON.stringify(jsonData),
-		}).catch((error) => console.log(error));
+
+		// As of Version 2.0, CLS values should only be sent when FCP is sent
+		// https://github.com/GoogleChrome/web-vitals/blob/main/CHANGELOG.md#v200-2021-06-01
+		if (jsonToSend.name === 'FCP') {
+			if (jsonData.fcp !== null && jsonData.fcp > 0) {
+				fetch(endpoint, {
+					method: 'POST', // *GET, POST, PUT, DELETE, etc.
+					mode: 'cors', // no-cors, *cors, same-origin
+					cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+					credentials: 'same-origin', // include, *same-origin, omit
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					redirect: 'follow',
+					referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-w
+					body: JSON.stringify(jsonData),
+				}).catch((error) => console.log(error));
+			}
+		}
 	};
 
 	getCLS(jsonToSend, false);
