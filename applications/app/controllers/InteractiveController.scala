@@ -127,14 +127,14 @@ class InteractiveController(
     }
   }
 
-  def getCapiWebPublicationDate(path: String)(implicit request: RequestHeader): Future[Option[CapiDateTime]] = {
-    lookupItemResponse(path).map(_.content.flatMap(_.webPublicationDate))
+  def itemResponseToCapiDateTime(ir: ItemResponse)(implicit request: RequestHeader): Option[CapiDateTime] = {
+    ir.content.flatMap(_.webPublicationDate)
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
-    getCapiWebPublicationDate(path).flatMap { maybeDate =>
-      maybeDate match {
+    lookupItemResponse(path).flatMap { itemResponse =>
+      itemResponseToCapiDateTime(itemResponse) match {
         case Some(date) => {
           val renderingTier = InteractiveRendering.getRenderingTier(path, date)
           (requestFormat, renderingTier) match {
@@ -144,7 +144,7 @@ class InteractiveController(
             case _                                         => renderItemLegacy(path)
           }
         }
-        case None => Future.successful(Ok("error: b8577769-0b56-4da6-aced-c267276f71a9"))
+        case None => Future.successful(Ok("error: 915efe11-2287-45fe-be84-7f9d77d9bad1"))
       }
     }
   }
