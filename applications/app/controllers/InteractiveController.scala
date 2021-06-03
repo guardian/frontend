@@ -77,19 +77,11 @@ class InteractiveController(
         case Right(exception) => Right(exception)
       }
     }
-
     result recover convertApiExceptions
   }
 
-  private def lookupItemResponse(path: String): Future[ItemResponse] = {
-    val edition = Edition.defaultEdition
-    val response: Future[ItemResponse] = contentApiClient.getResponse(
-      contentApiClient
-        .item(path, edition)
-        .showFields("all")
-        .showAtoms("all"),
-    )
-    response
+  private def lookupItemResponse(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
+    capiLookup.lookup(path, range = Some(ArticleBlocks))
   }
 
   private def render(model: InteractivePage)(implicit request: RequestHeader) = {
@@ -154,7 +146,7 @@ class InteractiveController(
   // ---------------------------------------------
   // US Presidential Election 2020
 
-  def renderInteractivePageUSPresidentialElection2020(path: String): Future[Result] = {
+  def renderInteractivePageUSPresidentialElection2020(path: String)(implicit request: RequestHeader): Future[Result] = {
     /*
       This version retrieve the AMP version directly but rely on a predefined map between paths and amp page ids
      */
