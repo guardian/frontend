@@ -98,15 +98,15 @@ class InteractiveController(
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
-  def renderItemLegacy(path: String)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(lookupItemResponse(path: String)) map {
+  def renderItemLegacy(ir: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
+    fItemResponseToFE(Future.successful(ir)) map {
       case Left((model, _)) => render(model)
       case Right(other)     => RenderOtherStatus(other)
     }
   }
 
-  def renderDCR(path: String)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(lookupItemResponse(path: String)) flatMap {
+  def renderDCR(ir: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
+    fItemResponseToFE(Future.successful(ir)) flatMap {
       case Left((model, blocks)) => {
         val pageType = PageType.apply(model, request, context)
         remoteRenderer.getInteractive(wsClient, model, blocks, pageType)
@@ -115,8 +115,8 @@ class InteractiveController(
     }
   }
 
-  def renderDCRJson(path: String)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(lookupItemResponse(path: String)) map {
+  def renderDCRJson(ir: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
+    fItemResponseToFE(Future.successful(ir)) map {
       case Left((model, blocks)) => {
         val data =
           DotcomRenderingDataModel.forInteractive(model, blocks, request, PageType.apply(model, request, context))
@@ -139,9 +139,9 @@ class InteractiveController(
           val renderingTier = InteractiveRendering.getRenderingTier(path, date)
           (requestFormat, renderingTier) match {
             case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-            case (JsonFormat, _) if request.forceDCR       => renderDCRJson(path)
-            case (HtmlFormat, DotcomRendering)             => renderDCR(path)
-            case _                                         => renderItemLegacy(path)
+            case (JsonFormat, _) if request.forceDCR       => renderDCRJson(itemResponse)
+            case (HtmlFormat, DotcomRendering)             => renderDCR(itemResponse)
+            case _                                         => renderItemLegacy(itemResponse)
           }
         }
         case None => Future.successful(Ok("error: 915efe11-2287-45fe-be84-7f9d77d9bad1"))
