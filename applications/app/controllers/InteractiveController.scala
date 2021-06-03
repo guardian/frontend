@@ -136,7 +136,7 @@ class InteractiveController(
       case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
       case (JsonFormat, _) if request.forceDCR       => renderDCRJson(path)
       case (HtmlFormat, DotcomRendering)             => renderDCR(path)
-      case _                                         => renderItemLegacy(path: String)
+      case _                                         => renderItemLegacy(path)
     }
   }
 
@@ -153,7 +153,7 @@ class InteractiveController(
       response.interactive match {
         case Some(i2) => {
           val interactive = InteractiveAtom.make(i2)
-          Ok(StringEscapeUtils.unescapeHtml(interactive.html)).withHeaders("Content-Type" -> "text/html")
+          Ok(StringEscapeUtils.unescapeHtml(interactive.html)).as("text/html")
         }
         case None => Ok("error: 6a0a6be4-e702-4b51-8f26-01f9921c6b74")
       }
