@@ -136,7 +136,7 @@ class InteractiveController(
       case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
       case (JsonFormat, _) if request.forceDCR       => renderDCRJson(path)
       case (HtmlFormat, DotcomRendering)             => renderDCR(path)
-      case _                                         => renderItemLegacy(path: String)
+      case _                                         => renderItemLegacy(path)
     }
   }
 
