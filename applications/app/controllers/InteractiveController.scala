@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Blocks, CapiDateTime, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
@@ -129,12 +129,16 @@ class InteractiveController(
     }
   }
 
+  def getCapiWebPublicationDate(path: String)(implicit request: RequestHeader): Future[Option[CapiDateTime]] = {
+    lookupWithoutModelConvertion(path).map(_.content.flatMap(_.webPublicationDate))
+  }
+
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
-    lookupWithoutModelConvertion(path).flatMap { response =>
-      response.content match {
-        case Some(content) => {
-          val renderingTier = InteractiveRendering.getRenderingTier(path, content)
+    getCapiWebPublicationDate(path).flatMap { maybeDate =>
+      maybeDate match {
+        case Some(date) => {
+          val renderingTier = InteractiveRendering.getRenderingTier(path, date)
           (requestFormat, renderingTier) match {
             case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
             case (JsonFormat, _) if request.forceDCR       => renderDCRJson(path)

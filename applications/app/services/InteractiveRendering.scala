@@ -1,6 +1,6 @@
 package services
 
-import com.gu.contentapi.client.model.v1.ItemResponse
+import com.gu.contentapi.client.model.v1.{CapiDateTime, ItemResponse}
 import play.api.mvc.RequestHeader
 import implicits.Requests._
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
@@ -47,28 +47,19 @@ object InteractiveRendering {
   def dateIsPostTransition(date: String): Boolean = {
     // It's the responsibility of the caller of this function to ensure that the date
     // is given as string in format "YYYY-MM-DD", otherwise "results may vary".
-    println(date)
     date >= "2021-06-01"
   }
 
-  def decideRenderingTier(path: String, content: Content)(implicit request: RequestHeader): RenderingTier = {
+  def decideRenderingTier(path: String, date: CapiDateTime)(implicit request: RequestHeader): RenderingTier = {
     // This function decides which paths are sent to DCR for rendering
     // We first check whether or not the path has been allow listed and then check the date of the atom
 
     if (allowListedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering
-    else {
-      content.webPublicationDate match {
-        case Some(date) => if (dateIsPostTransition(date.iso8601.substring(0, 10))) DotcomRendering else FrontendLegacy
-        case None       => FrontendLegacy // [1]
-      }
-    }
-    /*
-      [1] We could as well decide to send those to DCR 🤔 , but right now I am assuming that if it happens
-          it's because of old contents not following the expected path format.
-     */
+    else if (dateIsPostTransition(date.iso8601.substring(0, 10))) DotcomRendering
+    else FrontendLegacy
   }
 
-  def getRenderingTier(path: String, content: Content)(implicit request: RequestHeader): RenderingTier = {
+  def getRenderingTier(path: String, date: CapiDateTime)(implicit request: RequestHeader): RenderingTier = {
 
     val isSpecialElection = ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)
 
@@ -81,7 +72,7 @@ object InteractiveRendering {
     else if (isSpecialElection && isWeb) FrontendLegacy // [1]
     else if (isAmp) FrontendLegacy // [2]
     else if (forceDCR) DotcomRendering
-    else decideRenderingTier(path, content)
+    else decideRenderingTier(path, date)
 
     // [1] We will change that in the future, but for the moment we legacy render the election tracker.
     // [2] We will change that in the future, but for the moment we legacy render all amp pages.
