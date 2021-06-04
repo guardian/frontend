@@ -38,7 +38,8 @@ const coreVitals = (): void => {
 		value: number;
 	};
 
-	let hasFCPBeenSent = false;
+	// Needed when we start using version 2
+	// let hasFCPBeenSent = false;
 
 	const nineDigitPrecision = (value: number) => {
 		// The math functions are to make sure the length of number is <= 9
@@ -106,8 +107,10 @@ const coreVitals = (): void => {
 		// We will send all data whenever any update. This means `null` values will appear in the lake
 		// and need handling.
 
-		// As of Version 2.0, CLS values should only be sent if FCP has been sent
-		// https://github.com/GoogleChrome/web-vitals/blob/main/CHANGELOG.md#v200-2021-06-01
+		/*
+		    --> The logic below is only needed for Version 2 of Google's Core Web Vitals<--
+		    As of Version 2.0, CLS values should only be sent if FCP has been sent
+	        https://github.com/GoogleChrome/web-vitals/blob/main/CHANGELOG.md#v200-2021-06-01
 		if (jsonToSend.name === 'CLS' && hasFCPBeenSent) {
 			if (jsonData.cls !== null && jsonData.cls > 0) {
 				sendData();
@@ -117,7 +120,9 @@ const coreVitals = (): void => {
 			if (jsonToSend.name === 'FCP') {
 				hasFCPBeenSent = true;
 			}
-		}
+		} */
+
+		sendData();
 	};
 
 	getCLS(jsonToSend, false);
