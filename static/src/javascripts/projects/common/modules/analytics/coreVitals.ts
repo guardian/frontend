@@ -112,7 +112,7 @@ const coreVitals = (): void => {
 		    As of Version 2.0, CLS values should only be sent if FCP has been sent
 	        https://github.com/GoogleChrome/web-vitals/blob/main/CHANGELOG.md#v200-2021-06-01
 		if (jsonToSend.name === 'CLS' && hasFCPBeenSent) {
-			if (jsonData.cls !== null && jsonData.cls > 0) {
+			if (jsonData.cls !== null) {
 				sendData();
 			}
 		} else {
