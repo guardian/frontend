@@ -510,4 +510,15 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val sentinelLogger: Switch = Switch(
+    group = Commercial,
+    name = "sentinel-logger",
+    description = "Send logs to Sentry allowing devs to discover from which pages legacy code is run",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
 }
