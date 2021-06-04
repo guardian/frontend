@@ -54,7 +54,6 @@ export type IdentityUser = {
 	};
 	statusFields: {
 		userEmailValidated: boolean;
-		hasRepermissioned: boolean;
 	};
 	privateFields: {
 		brazeUuid: string;

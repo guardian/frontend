@@ -44,7 +44,7 @@ GET         /email-prefs                            controllers.editprofile.Edit
 ########################################################################################################################
 GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
 
-POST        /complete-consents                      controllers.editprofile.EditProfileController.submitRepermissionedFlag
+POST        /complete-consents                      controllers.editprofile.EditProfileController.completeConsents
 GET         /complete-consents                      controllers.editprofile.EditProfileController.displayConsentComplete()
 ########################################################################################################################
 
