@@ -19,21 +19,10 @@ afterEach(() => {
 });
 
 describe('canShowPreChecks', () => {
-    describe('when not a supporter', () => {
-        it('returns false', () => {
-            const result = canShowPreChecks({
-                userIsGuSupporter: false,
-                pageConfig: {isPaidContent: false},
-            })
-
-            expect(result).toBe(false);
-        });
-    });
 
     describe('when viewing paid content', () => {
         it('returns false', () => {
             const result = canShowPreChecks({
-                userIsGuSupporter: true,
                 pageConfig: {isPaidContent: true},
             })
 
@@ -44,7 +33,6 @@ describe('canShowPreChecks', () => {
     describe('when all checks pass', () => {
         it('returns true', () => {
             const result = canShowPreChecks({
-                userIsGuSupporter: true,
                 pageConfig: {isPaidContent: false},
             })
 

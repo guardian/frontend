@@ -49,9 +49,8 @@ const hasRequiredConsents = () =>
     });
 
 const canShowPreChecks = ({
-    userIsGuSupporter,
     pageConfig,
-}) => Boolean(userIsGuSupporter && !pageConfig.isPaidContent);
+}) => Boolean(!pageConfig.isPaidContent);
 
 let message;
 
@@ -200,7 +199,6 @@ const canShow = async () => {
     }
 
     if (!canShowPreChecks({
-        userIsGuSupporter: shouldNotBeShownSupportMessaging(),
         pageConfig: config.get('page'),
     })) {
         // Currently all active web canvases in Braze target existing supporters,
