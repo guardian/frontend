@@ -64,15 +64,12 @@ const coreVitals = (): void => {
 				break;
 		}
 
-		// eslint-disable-no-unnecessary-condition @typescript-eslint/no-unnecessary-condition
-		// eslint-disable-prefer-optional-chain @typescript-eslint/prefer-optional-chain
 		if (window.guardian.ophan) {
 			jsonData.page_view_id = window.guardian.ophan.pageViewId;
 			// jsonData.browser_id = window.guardian.config.ophan.browserId;
 		}
 
 		// Fallback to check for browser ID
-		// eslint-disable-prefer-optional-chain @typescript-eslint/prefer-optional-chain
 		if (getCookie({ name: 'bwid' })) {
 			jsonData.browser_id = getCookie({ name: 'bwid' });
 		}
