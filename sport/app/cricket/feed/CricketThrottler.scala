@@ -31,7 +31,7 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
       overflowStrategy = OverflowStrategy.dropNew,
     )
     .throttle(1, 500.millisecond, 1, ThrottleMode.Shaping)
-    .to(Sink.actorRef(self, NotUsed, _ => ()))
+    .to(Sink.actorRef(self, NotUsed, t => Failure(t)))
     .run()
 
   override def receive: PartialFunction[Any, Unit] = {
