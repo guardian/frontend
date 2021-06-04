@@ -514,7 +514,7 @@ trait PrebidSwitches {
   val sentinelLogger: Switch = Switch(
     group = Commercial,
     name = "sentinel-logger",
-    description = "Send sentinel logs to Sentry",
+    description = "Send sentinel logs to Sentry to enable functions to ",
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
