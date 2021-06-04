@@ -1,4 +1,3 @@
-import { amIUsed } from 'commercial/sentinel';
 import { $$ } from '../../../lib/$$';
 import config_ from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
@@ -46,7 +45,7 @@ const getTopOffset = (element: HTMLElement | undefined): number => {
 
 export const init = (): Promise<void | boolean> => {
 	const col = $$('.js-secondary-column');
-	amIUsed('article-aside-adverts', 'init');
+
 	// article aside ads are added server-side if the container doesn't exist then stop.
 	if (!col.get().length || col.get(0).style.display === 'none') {
 		return Promise.resolve(false);
