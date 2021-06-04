@@ -18,18 +18,13 @@ jest.mock('../../lib/config', () => ({
 }));
 
 describe('sentinel', () => {
-	beforeEach(() => {
+	afterEach(() => {
 		jest.clearAllMocks();
 	});
 
-	test('does not send a message when switches.sentinelLogger defaults to false', () => {
-		amIUsed('moduleName', 'functioName');
-		expect(raven.captureMessage).not.toHaveBeenCalled();
-	});
-
 	test('does not send a message when switches.sentinelLogger is false', () => {
-		amIUsed('moduleName', 'functioName');
 		mocked(config.get).mockReturnValue(false);
+		amIUsed('moduleName', 'functioName');
 		expect(raven.captureMessage).not.toHaveBeenCalled();
 	});
 
@@ -37,5 +32,41 @@ describe('sentinel', () => {
 		mocked(config.get).mockReturnValue(true);
 		amIUsed('moduleName', 'functioName');
 		expect(raven.captureMessage).toHaveBeenCalledTimes(1);
+	});
+
+	test('does not attach a label when it is not present', () => {
+		mocked(config.get).mockReturnValue(true);
+		amIUsed('moduleName', 'functionName');
+		expect(raven.captureMessage).toHaveBeenCalledWith(
+			'moduleName.functionName',
+			expect.any(Object),
+		);
+	});
+
+	test('does attach a label when it is present', () => {
+		mocked(config.get).mockReturnValue(true);
+		amIUsed('moduleName', 'functionName', 'label=test');
+		expect(raven.captureMessage).toHaveBeenCalledWith(
+			'moduleName.functionName.label=test',
+			expect.any(Object),
+		);
+	});
+
+	test('does log the event at the info level', () => {
+		mocked(config.get).mockReturnValue(true);
+		amIUsed('moduleName', 'functionName');
+		expect(raven.captureMessage).toHaveBeenCalledWith(
+			expect.any(String),
+			expect.objectContaining({ level: 'info' }),
+		);
+	});
+
+	test('does use the commercial-sentinel tag', () => {
+		mocked(config.get).mockReturnValue(true);
+		amIUsed('moduleName', 'functionName');
+		expect(raven.captureMessage).toHaveBeenCalledWith(
+			expect.any(String),
+			expect.objectContaining({ tags: { tag: 'commercial-sentinel' } }),
+		);
 	});
 });
