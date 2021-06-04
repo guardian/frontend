@@ -1,10 +1,9 @@
-import { log } from '@guardian/libs';
 import raven from 'lib/raven';
 import config_ from '../../lib/config';
 
 // This is really a hacky workaround ⚠️
 const config = config_ as {
-	get: (s: string, d?: unknown) => unknown;
+	get: (s: string, d: boolean) => boolean;
 };
 
 /**
@@ -36,6 +35,4 @@ export const amIUsed = (
 		level: 'info',
 		tags: { tag: 'commercial-sentinel' },
 	});
-
-	log('commercial', 'Data sent to Sentry');
 };
