@@ -45,7 +45,7 @@
     "videojs-ima": "googleads/videojs-ima#0.3.0",
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
     "videojs-playlist": "guardian/videojs-playlist#0.1.4",
-    "web-vitals": "^0.2.4",
+    "web-vitals": "^1.1.1",
     "wolfy87-eventemitter": "~5.2.4"
   },
   "devDependencies": {
