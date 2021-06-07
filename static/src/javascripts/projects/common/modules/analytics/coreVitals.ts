@@ -1,6 +1,6 @@
 import { getCookie } from '@guardian/libs';
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
-import reportError from "lib/report-error";
+import reportError from 'lib/report-error';
 
 type CoreWebVitalsPayload = {
 	page_view_id: string | null;
