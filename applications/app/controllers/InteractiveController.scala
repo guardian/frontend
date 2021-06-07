@@ -117,6 +117,16 @@ class InteractiveController(
     }
   }
 
+  def renderDCRAmp(path: String)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path) flatMap {
+      case Left((model, blocks)) => {
+        val pageType = PageType.apply(model, request, context)
+        remoteRenderer.getAMPInteractive(wsClient, model, blocks, pageType)
+      }
+      case Right(other) => Future.successful(RenderOtherStatus(other))
+    }
+  }
+
   def renderDCRJson(path: String)(implicit request: RequestHeader): Future[Result] = {
     lookup(path) map {
       case Left((model, blocks)) => {
@@ -134,7 +144,8 @@ class InteractiveController(
     val renderingTier = InteractiveRendering.getRenderingTier(path)
     (requestFormat, renderingTier) match {
       case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-      case (JsonFormat, _) if request.forceDCR       => renderDCRJson(path)
+      case (AmpFormat, DotcomRendering)              => renderDCRAmp(path)
+      case (JsonFormat, DotcomRendering)             => renderDCRJson(path)
       case (HtmlFormat, DotcomRendering)             => renderDCR(path)
       case _                                         => renderItemLegacy(path)
     }
