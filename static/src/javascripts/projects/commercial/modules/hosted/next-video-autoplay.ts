@@ -1,4 +1,5 @@
 import fastdom from 'fastdom';
+import { amIUsed } from 'commercial/sentinel';
 import { trackNonClickInteraction } from '../../../common/modules/analytics/google';
 import { load } from './next-video';
 
@@ -24,6 +25,7 @@ const triggerAutoplay = (
 	getCurrentTimeFn: () => number,
 	duration: number,
 ): void => {
+	amIUsed('next-video-autoplay', 'triggerAutoplay');
 	nextVideoInterval = setInterval(() => {
 		const timeLeft = duration - Math.ceil(getCurrentTimeFn());
 		const countdownLength = 10; // seconds before the end when to show the timer
