@@ -1,10 +1,6 @@
 import { getCookie } from '@guardian/libs';
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 
-export const init = () => {
-	coreVitals();
-};
-
 type CoreWebVitalsPayload = {
 	page_view_id: string | null;
 	received_timestamp: string | null;
@@ -32,7 +28,12 @@ const jsonData: CoreWebVitalsPayload = {
 	ttfb: null,
 };
 
-const coreVitals = (): void => {
+export const coreVitals = (): void => {
+	const inSample = Math.floor(Math.random() * 100);
+	if (inSample != 1) {
+		return;
+	}
+
 	type CoreVitalsArgs = {
 		name: string;
 		value: number;
