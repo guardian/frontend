@@ -1,5 +1,6 @@
 import { getCookie } from '@guardian/libs';
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
+import reportError from "lib/report-error";
 
 type CoreWebVitalsPayload = {
 	page_view_id: string | null;
@@ -96,7 +97,7 @@ export const coreVitals = (): void => {
 				redirect: 'follow',
 				referrerPolicy: 'no-referrer',
 				body: JSON.stringify(jsonData),
-			}).catch((error) => console.log(error));
+			}).catch((error) => reportError(error, 'core-web-vitals'));
 		};
 
 		// Browser support
