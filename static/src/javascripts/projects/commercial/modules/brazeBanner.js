@@ -1,18 +1,24 @@
-import config from 'lib/config';
-import reportError from 'lib/report-error';
-import {onConsentChange} from '@guardian/consent-management-platform';
-import {mountDynamic} from "@guardian/automat-modules";
-import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
-import { getUrlVars } from 'lib/url';
+import React from 'react';
+
+import { onConsentChange } from '@guardian/consent-management-platform';
+import { storage } from '@guardian/libs';
+import { shouldNotBeShownSupportMessaging } from 'common/modules/commercial/user-features';
 import ophan from 'ophan/ng';
-import {getUserFromApi} from 'common/modules/identity/api';
-import {shouldNotBeShownSupportMessaging} from "common/modules/commercial/user-features";
-import {measureTiming} from './measure-timing';
+import config from '../../../lib/config';
+import reportError from '../../../lib/report-error';
+import { getUrlVars } from '../../../lib/url';
 import {
+    submitComponentEvent,
+    submitViewEvent,
+} from '../../common/modules/commercial/acquisitions-ophan';
+import { getUserFromApi } from '../../common/modules/identity/api';
+import {
+    clearHasCurrentBrazeUser,
     hasCurrentBrazeUser,
     setHasCurrentBrazeUser,
-    clearHasCurrentBrazeUser,
-} from "./hasCurrentBrazeUser"
+} from './hasCurrentBrazeUser';
+import { measureTiming } from './measure-timing';
+import { BrazeMessages, LocalMessageCache } from '@guardian/braze-components/logic'
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -47,8 +53,7 @@ const canShowPreChecks = ({
     pageConfig,
 }) => Boolean(userIsGuSupporter && !pageConfig.isPaidContent);
 
-let messageConfig;
-let appboy;
+let message;
 
 const FORCE_BRAZE_ALLOWLIST = [
     'preview.gutools.co.uk',
@@ -57,30 +62,40 @@ const FORCE_BRAZE_ALLOWLIST = [
     'm.thegulocal.com',
 ];
 
-const getMessageFromQueryString = () => {
-    const qsArg = 'force-braze-message';
+const getMessageFromUrlFragment = () => {
+    if (window.location.hash){
+        // This is intended for use on development domains for preview purposes.
+		// It won't run in PROD.
 
-    const params = getUrlVars();
-    const value = params[qsArg];
+        const key = 'force-braze-message';
 
-    if (value) {
-        if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
-            console.log(`${qsArg} is not supported on this domain`)
-            return null;
-        }
+        const hashString = window.location.hash;
 
-        try {
-            const dataFromBraze = JSON.parse(value);
+        if (hashString.includes(key)) {
+            if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
+                console.log(`${key} is not supported on this domain`)
+                return null;
+            }
 
-            return {
-                extras: dataFromBraze,
-            };
-        } catch (e) {
-            // Parsing failed. Log a message and fall through.
-            console.log(
-                `There was an error with ${qsArg}:`,
-                e.message,
+            const forcedMessage = hashString.slice(
+                hashString.indexOf(`${key}=`) + key.length + 1,
+                hashString.length,
             );
+
+            try {
+                const dataFromBraze = JSON.parse(decodeURIComponent(forcedMessage));
+                return {
+                    extras: dataFromBraze,
+                    logImpression: () => {},
+                    logButtonClick: () => {}
+                };
+            } catch (e) {
+                // Parsing failed. Log a message and fall through.
+                console.log(
+                    `There was an error with ${key}:`,
+                    e.message,
+                );
+            }
         }
     }
 
@@ -93,13 +108,14 @@ const SDK_OPTIONS = {
     baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
     sessionTimeoutInSeconds: 1,
     minimumIntervalBetweenTriggerActionsInSeconds: 0,
+    devicePropertyAllowlist: [],
 };
 
 const getMessageFromBraze = async (apiKey, brazeUuid) => {
     const sdkLoadTiming = measureTiming('braze-sdk-load');
     sdkLoadTiming.start();
 
-    appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+    const appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
 
     const sdkLoadTimeTaken = sdkLoadTiming.end();
     ophan.record({
@@ -112,35 +128,16 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
 
     appboy.initialize(apiKey, SDK_OPTIONS);
 
-    const canShowPromise = new Promise(resolve => {
-        // Needed to keep Flow happy
-        if (!appboy) {
-            resolve(false);
-            return;
-        }
+    const errorHandler = (error) => { reportError(error, {}, false) };
+    const brazeMessages = new BrazeMessages(appboy, LocalMessageCache, errorHandler);
 
-        let subscriptionId;
+    setHasCurrentBrazeUser();
+    appboy.changeUser(brazeUuid);
+    appboy.openSession();
 
-        const callback = (message) => {
-            if (message.extras) {
-                messageConfig = message;
-                resolve(true);
-            } else {
-                resolve(false);
-            }
-
-            if (appboy && subscriptionId) {
-                appboy.removeSubscription(subscriptionId);
-            }
-        };
-
-        // Keep hold of the subscription ID so that we can unsubscribe in the
-        // callback, ensuring that the callback is only invoked once per page
-        subscriptionId = appboy.subscribeToInAppMessage(callback);
-
-        setHasCurrentBrazeUser();
-        appboy.changeUser(brazeUuid);
-        appboy.openSession();
+    const canShowPromise = brazeMessages.getMessageForBanner().then((m) => {
+        message = m;
+        return true;
     });
 
     canShowPromise.then(() => {
@@ -158,14 +155,18 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     return canShowPromise
 };
 
-const maybeWipeUserData = async (apiKey, brazeUuid) => {
-    if (!brazeUuid && hasCurrentBrazeUser()) {
-        appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
+    const userHasLoggedOut = !brazeUuid && hasCurrentBrazeUser();
+    const userHasRemovedConsent = !consent && hasCurrentBrazeUser();
 
-        appboy.initialize(apiKey, SDK_OPTIONS);
-
+    if (userHasLoggedOut || userHasRemovedConsent) {
         try {
+            const appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+            appboy.initialize(apiKey, SDK_OPTIONS);
             appboy.wipeData();
+
+            LocalMessageCache.clear();
+
             clearHasCurrentBrazeUser();
         } catch(error) {
             reportError(error, {}, false);
@@ -177,9 +178,9 @@ const canShow = async () => {
     const bannerTiming = measureTiming('braze-banner');
     bannerTiming.start();
 
-    const forcedBrazeMessage = getMessageFromQueryString();
+    const forcedBrazeMessage = getMessageFromUrlFragment();
     if (forcedBrazeMessage) {
-        messageConfig = forcedBrazeMessage;
+        message = forcedBrazeMessage;
         return true;
     }
 
@@ -192,7 +193,7 @@ const canShow = async () => {
 
     const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
 
-    await maybeWipeUserData(apiKey, brazeUuid);
+    await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
 
     if (!(brazeUuid && hasGivenConsent)) {
         return false;
@@ -227,11 +228,14 @@ const canShow = async () => {
     }
 };
 
-const show = () => import(
-    /* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components'
-    )
-    .then((module) => {
-        const container = document.createElement('div');
+const show = () => Promise.all([
+    import('react-dom'),
+    import('@emotion/react'),
+    import('@emotion/cache'),
+    import(/* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components')
+]).then((props) => {
+    const [{ render }, { CacheProvider }, { default: createCache }, brazeModule] = props;
+    const container = document.createElement('div');
         container.classList.add('site-message--banner');
 
         // The condition here is to keep flow happy
@@ -239,35 +243,56 @@ const show = () => import(
             document.body.appendChild(container);
         }
 
-        mountDynamic(
-            container,
-            module.BrazeMessage,
-            {
-                componentName: messageConfig.extras.componentName,
-                logButtonClickWithBraze: (buttonId) => {
-                    if (appboy) {
-                        const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
-                        appboy.logInAppMessageButtonClick(
-                            thisButton, messageConfig
-                        );
-                    }
-                },
-                submitComponentEvent,
-                brazeMessageProps: messageConfig.extras,
-            },
-            true,
-        );
+        const Component = brazeModule.BrazeMessageComponent
 
-        if (appboy) {
-            // Log the impression with Braze
-            appboy.logInAppMessageImpression(messageConfig);
+        // IE does not support shadow DOM, so instead we just render
+        if (!container.attachShadow) {
+            render(
+                <Component
+                    componentName={ message.extras.componentName}
+                    logButtonClickWithBraze={(buttonId) => {
+                        message.logButtonClick(buttonId)
+                    }}
+                    submitComponentEvent={submitComponentEvent}
+                    brazeMessageProps={message.extras}
+                />
+            , container);
+        } else {
+            const shadowRoot = container.attachShadow({ mode: 'open' });
+            const inner = shadowRoot.appendChild(document.createElement('div'));
+            const renderContainer = inner.appendChild(
+                document.createElement('div'),
+            );
+
+            const emotionCache = createCache({ key: 'site-message', container: inner });
+
+            const cached = (
+                <CacheProvider value={emotionCache}>
+                    <Component
+                        componentName={ message.extras.componentName}
+                        logButtonClickWithBraze={(buttonId) => {
+                            message.logButtonClick(buttonId)
+                        }}
+                        submitComponentEvent={submitComponentEvent}
+                        brazeMessageProps={message.extras}
+                    />
+                </CacheProvider>
+            );
+
+            render(
+                cached,
+                renderContainer
+            );
         }
+
+        // Log the impression with Braze
+        message.logImpression();
 
         // Log the impression with Ophan
         submitViewEvent({
             component: {
                 componentType: 'RETENTION_ENGAGEMENT_BANNER',
-                id: messageConfig.extras.componentName,
+                id: message.extras.componentName,
             },
         });
 

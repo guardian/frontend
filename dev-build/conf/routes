@@ -170,6 +170,8 @@ GET            /football/:team/fixtures-and-results-container                   
 
 GET            /football/:competitionTag/overview/embed                                                                          football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
 GET            /football/:competitionTag/overview                                                                                football.controllers.WallchartController.renderWallchart(competitionTag)
+GET            /football/:competitionTag/groups/embed                                                                            football.controllers.WallchartController.renderGroupTablesEmbed(competitionTag)
+GET            /football/:competitionTag/spider/embed                                                                            football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
 
 GET            /football/api/match-nav/:year/:month/:day/:home/:away.json                                                        football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET            /football/api/match-nav/:year/:month/:day/:home/:away                                                             football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
@@ -313,10 +315,6 @@ POST        /commercial/adops/ads-txt                                           
 GET         /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 
-# Breaking News
-GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()
-POST           /news-alert/alert                                                                                                 controllers.NewsAlertController.create()
-
 # dev-build only
 GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
 GET            /commercial/magento/resource                                                                                      controllers.commercial.magento.ApiSandbox.getResource(t: String)
@@ -347,11 +345,9 @@ GET            /opt/reset                                                       
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
-GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 GET            /sharecount/*path.json                                                                                            controllers.ShareCountController.fetch(path)
 
-GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
 GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = false, inApp: Boolean = false)

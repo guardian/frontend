@@ -1,9 +1,7 @@
-import { getUrlVars } from 'lib/url';
-import config from 'lib/config';
-import { breakpoints } from 'lib/detect';
-import uniqBy from 'lodash/uniqBy';
-import flatten from 'lodash/flatten';
 import once from 'lodash/once';
+import config from '../../../../lib/config';
+import { breakpoints } from '../../../../lib/detect';
+import { getUrlVars } from '../../../../lib/url';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();
@@ -38,10 +36,19 @@ const buildSizeMapping = (sizes) => {
 const getSizeOpts = (sizesByBreakpoint) => {
     const sizeMapping = buildSizeMapping(sizesByBreakpoint);
     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-    const sizes = uniqBy(
-        flatten(sizeMapping.map(size => size[1])),
-        size => `${size[0]}-${size[1]}`
-    );
+    const flattenSizeMappings = sizeMapping.map(size => size[1]).reduce((acc, current) => {
+        if (!current.length) {
+            return [...acc, current];
+        }
+        return [...acc, ...current]
+    }, []);
+
+    let sizes = [];
+    flattenSizeMappings.forEach(arr => {
+        if (!sizes.some(size => `${size[0]}-${size[1]}` === `${arr[0]}-${arr[1]}` )) {
+            sizes.push(arr);
+        }
+    });
 
     return {
         sizeMapping,
@@ -107,11 +114,11 @@ const defineSlot = (adSlotNode, sizes) => {
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
     if (config.get('switches.iasAdTargeting', false)) {
-        /* eslint-disable no-underscore-dangle */
+
         // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
         window.__iasPET = window.__iasPET || {};
         const iasPET = window.__iasPET;
-        /* eslint-disable no-underscore-enable */
+
 
         iasPET.queue = iasPET.queue || [];
         iasPET.pubId = '10249';

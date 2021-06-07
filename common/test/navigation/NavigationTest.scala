@@ -31,7 +31,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   }
 
   "Simple menu" should "just return the 5 primary links" in {
-    NavMenu(Uk).pillars should be(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar))
+    SimpleMenu(Uk).pillars should be(
+      Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar),
+    )
   }
 
   "On `/index/contributors`, the parent" should "be Opinion" in {

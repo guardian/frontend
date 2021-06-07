@@ -1,11 +1,11 @@
-import fetchJson_ from 'lib/fetch-json';
+import {fetchJson as fetchJson_} from '../../../../lib/fetch-json';
 import { loadOnwardComponent, _ } from './onward.js';
 
 const { insertHTMLfromPlaceholders, generateUrlFromConfig } = _;
 
 const fetchJson = fetchJson_;
 
-jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('../../../../lib/fetch-json', () => ({ fetchJson: jest.fn() }));
 
 describe('URL generator', () => {
     it('generates correct URL from valid config', () => {

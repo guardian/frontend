@@ -1,13 +1,13 @@
-import { Sticky } from 'common/modules/ui/sticky';
+import { Sticky } from '../../common/modules/ui/sticky';
 import { init } from './paidfor-band';
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         paidforBand: true,
     },
 }));
 
-jest.mock('common/modules/ui/sticky', () => ({
+jest.mock('../../common/modules/ui/sticky', () => ({
     Sticky: class {},
 }));
 

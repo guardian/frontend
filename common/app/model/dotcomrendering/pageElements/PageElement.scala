@@ -23,6 +23,10 @@ import views.support.{ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
 
+// ------------------------------------------------------
+// PageElement Supporting Types and Traits
+// ------------------------------------------------------
+
 // TODO dates are being rendered as strings to avoid duplication of the
 // to-string logic, but ultimately we should pass unformatted date info to
 // DCR.
@@ -31,6 +35,8 @@ case class TimelineEvent(
     date: String,
     body: Option[String],
     toDate: Option[String],
+    unixDate: Long,
+    toUnixDate: Option[Long],
 )
 object TimelineEvent {
   implicit val TimelineEventWrites: Writes[TimelineEvent] = Json.writes[TimelineEvent]
@@ -73,6 +79,12 @@ object NSImage1 {
   }
 }
 
+trait ThirdPartyEmbeddedContent {
+  def isThirdPartyTracking: Boolean
+  def source: Option[String]
+  def sourceDomain: Option[String]
+}
+
 // ------------------------------------------------------
 // PageElement
 // ------------------------------------------------------
@@ -84,9 +96,9 @@ object NSImage1 {
 
 sealed trait PageElement
 
-trait ThirdPartyEmbeddedContent {
-  def isThirdPartyTracking: Boolean
-}
+// Note:
+//     In the file PageElement-Identifiers.md you will find a discussion of identifiers used by PageElements
+//     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
 
 case class AudioAtomBlockElement(
     id: String,
@@ -96,9 +108,7 @@ case class AudioAtomBlockElement(
     trackUrl: String,
     duration: Int,
     contentId: String,
-    isThirdPartyTracking: Boolean,
 ) extends PageElement
-    with ThirdPartyEmbeddedContent
 object AudioAtomBlockElement {
   implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
 }
@@ -142,7 +152,7 @@ object ChartAtomBlockElement {
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
 }
 
-case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
+case class CodeBlockElement(html: String, language: String, isMandatory: Boolean) extends PageElement
 object CodeBlockElement {
   implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
 }
@@ -176,6 +186,8 @@ case class DocumentBlockElement(
     title: Option[String],
     isMandatory: Option[Boolean],
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object DocumentBlockElement {
@@ -189,6 +201,8 @@ case class EmbedBlockElement(
     isMandatory: Boolean,
     role: Option[String],
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object EmbedBlockElement {
@@ -222,18 +236,12 @@ object GenericAtomBlockElement {
   implicit val GenericAtomBlockElementWrites: Writes[GenericAtomBlockElement] = Json.writes[GenericAtomBlockElement]
 }
 
-case class GuideAtomBlockElementItem(title: Option[String], body: String)
-object GuideAtomBlockElementItem {
-  implicit val GuideAtomBlockElementItemWrites: Writes[GuideAtomBlockElementItem] =
-    Json.writes[GuideAtomBlockElementItem]
-}
 case class GuideAtomBlockElement(
     id: String,
     label: String,
     title: String,
     img: Option[String],
     html: String,
-    items: List[GuideAtomBlockElementItem],
     credit: String,
 ) extends PageElement
 object GuideAtomBlockElement {
@@ -277,13 +285,21 @@ case class InteractiveAtomBlockElement(
     css: Option[String],
     js: Option[String],
     placeholderUrl: Option[String],
+    role: Option[String],
 ) extends PageElement
 object InteractiveAtomBlockElement {
   implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
     Json.writes[InteractiveAtomBlockElement]
 }
 
-case class InteractiveBlockElement(url: String) extends PageElement
+case class InteractiveBlockElement(
+    url: Option[String],
+    alt: Option[String],
+    scriptUrl: Option[String],
+    role: Option[String],
+    isMandatory: Option[Boolean],
+    caption: Option[String],
+) extends PageElement
 object InteractiveBlockElement {
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
 }
@@ -293,6 +309,8 @@ case class InstagramBlockElement(
     html: Option[String],
     hasCaption: Boolean,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object InstagramBlockElement {
@@ -302,12 +320,13 @@ object InstagramBlockElement {
 case class MapBlockElement(
     embedUrl: String,
     originalUrl: String,
-    source: String,
+    source: Option[String],
     caption: String,
     title: String,
     width: Int,
     height: Int,
     isThirdPartyTracking: Boolean,
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object MapBlockElement {
@@ -378,6 +397,8 @@ case class PullquoteBlockElement(
     role: Role,
     attribution: Option[String],
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object PullquoteBlockElement {
@@ -432,6 +453,8 @@ case class SoundcloudBlockElement(
     isTrack: Boolean,
     isMandatory: Boolean,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object SoundcloudBlockElement {
@@ -445,6 +468,8 @@ case class SpotifyBlockElement(
     title: Option[String],
     caption: Option[String],
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object SpotifyBlockElement {
@@ -479,6 +504,8 @@ case class TweetBlockElement(
     hasMedia: Boolean,
     role: Role,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object TweetBlockElement {
@@ -498,6 +525,8 @@ case class VideoBlockElement(
     width: Int,
     role: Role,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VideoBlockElement {
@@ -513,6 +542,8 @@ case class VideoFacebookBlockElement(
     width: Int,
     role: Role,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VideoFacebookBlockElement {
@@ -529,6 +560,8 @@ case class VideoVimeoBlockElement(
     width: Int,
     role: Role,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VideoVimeoBlockElement {
@@ -544,6 +577,8 @@ case class VideoYoutubeBlockElement(
     width: Int,
     role: Role,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VideoYoutubeBlockElement {
@@ -551,8 +586,15 @@ object VideoYoutubeBlockElement {
 }
 
 case class VineBlockElement(
-    html: Option[String],
+    url: String,
+    height: Int,
+    width: Int,
+    originalUrl: String,
+    title: String,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
+    role: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VineBlockElement {
@@ -627,10 +669,31 @@ object WitnessTypeDataVideo {
   implicit val w3Writes: Writes[WitnessTypeDataVideo] = Json.writes[WitnessTypeDataVideo]
 }
 
+case class WitnessTypeDataText(
+    `type`: String,
+    url: Option[String],
+    originalUrl: Option[String],
+    witnessEmbedType: Option[String],
+    source: Option[String],
+    title: Option[String],
+    description: Option[String],
+    authorName: Option[String],
+    authorUsername: Option[String],
+    authorWitnessProfileUrl: Option[String],
+    authorGuardianProfileUrl: Option[String],
+    apiUrl: Option[String],
+    dateCreated: Option[String],
+) extends WitnessTypeData
+object WitnessTypeDataText {
+  implicit val WitnessTypeDataTextWrites: Writes[WitnessTypeDataText] = Json.writes[WitnessTypeDataText]
+}
+
 case class WitnessBlockElement(
     assets: Seq[WitnessBlockElementAssetsElement],
     witnessTypeData: WitnessTypeData,
     isThirdPartyTracking: Boolean,
+    source: Option[String],
+    sourceDomain: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object WitnessBlockElement {
@@ -648,9 +711,7 @@ case class YoutubeBlockElement(
     expired: Boolean,
     duration: Option[Long],
     altText: Option[String],
-    isThirdPartyTracking: Boolean,
 ) extends PageElement
-    with ThirdPartyEmbeddedContent
 /*
   The difference between `overrideImage` and `posterImage`
 
@@ -678,6 +739,7 @@ object PageElement {
       case _: BlockquoteBlockElement      => true
       case _: CalloutBlockElement         => true
       case _: ChartAtomBlockElement       => true
+      case _: CodeBlockElement            => true
       case _: CommentBlockElement         => true
       case _: ContentAtomBlockElement     => true
       case _: DisclaimerBlockElement      => true
@@ -710,10 +772,9 @@ object PageElement {
       case _: VideoYoutubeBlockElement    => true
       case _: YoutubeBlockElement         => true
       case _: WitnessBlockElement         => true
-
+      case _: VineBlockElement            => true
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
-      case _: CodeBlockElement                                            => true // Currently will just fail over at DCR
 
       case _ => false
     }
@@ -731,11 +792,18 @@ object PageElement {
       overrideImage: Option[ImageElement],
       edition: Edition,
   ): List[PageElement] = {
+
     def extractAtom: Option[Atom] =
       for {
-        contentAtom <- element.contentAtomTypeData
-        atom <- atoms.find(_.id == contentAtom.atomId)
+        d <- element.contentAtomTypeData
+        atom <- atoms.find(_.id == d.atomId)
       } yield atom
+
+    val elementRole: Option[String] =
+      for {
+        d <- element.contentAtomTypeData
+        role <- d.role
+      } yield role
 
     element.`type` match {
 
@@ -771,6 +839,8 @@ object PageElement {
             element.assets.nonEmpty,
             Role(data.role),
             containsThirdPartyTracking(element.tracking),
+            data.source,
+            data.sourceDomain,
           )
         }).toList
       }
@@ -951,7 +1021,6 @@ object PageElement {
                 trackUrl = audio.data.trackUrl,
                 duration = audio.data.duration,
                 contentId = audio.data.contentId,
-                isThirdPartyTracking = containsThirdPartyTracking(element.tracking),
               ),
             )
           }
@@ -978,7 +1047,6 @@ object PageElement {
             val html = guide.data.items
               .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
               .mkString("")
-            val items = guide.data.items.toList.map(item => GuideAtomBlockElementItem(item.title, item.body))
             Some(
               GuideAtomBlockElement(
                 id = guide.id,
@@ -986,7 +1054,6 @@ object PageElement {
                 title = guide.atom.title.getOrElse(""),
                 img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
                 html = html,
-                items = items,
                 credit = guide.credit.getOrElse(""),
               ),
             )
@@ -1002,6 +1069,7 @@ object PageElement {
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
+                role = elementRole,
               ),
             )
           }
@@ -1022,7 +1090,6 @@ object PageElement {
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
                     altText = if (isMainBlock) altText else None,
-                    isThirdPartyTracking = containsThirdPartyTracking(element.tracking),
                   )
                 })
               }
@@ -1085,6 +1152,8 @@ object PageElement {
                     date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
                     body = event.body,
                     toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
+                    unixDate = event.date,
+                    toUnixDate = event.toDate,
                   ),
                 ),
               ),
@@ -1140,17 +1209,36 @@ object PageElement {
             caption = mapElem.caption.getOrElse("")
             title = mapElem.title.getOrElse("")
             thirdPartyTracking = containsThirdPartyTracking(element.tracking)
-          } yield MapBlockElement(embedUrl, originalUrl, source, caption, title, width, height, thirdPartyTracking)
+          } yield MapBlockElement(
+            embedUrl,
+            originalUrl,
+            Some(source),
+            caption,
+            title,
+            width,
+            height,
+            thirdPartyTracking,
+            mapElem.sourceDomain,
+          )
         }.toList
 
       case Pullquote =>
         element.pullquoteTypeData
           .map(d =>
-            PullquoteBlockElement(d.html, Role(d.role), d.attribution, containsThirdPartyTracking(element.tracking)),
+            PullquoteBlockElement(
+              d.html,
+              Role(d.role),
+              d.attribution,
+              containsThirdPartyTracking(element.tracking),
+              d.source,
+              d.sourceDomain,
+            ),
           )
           .toList
       case Interactive =>
-        element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveBlockElement(url)).toList
+        element.interactiveTypeData
+          .map(d => InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl, d.role, d.isMandatory, d.caption))
+          .toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => {
         (for {
@@ -1160,6 +1248,7 @@ object PageElement {
           embedType match {
             case "image" => Some(makeWitnessBlockElementImage(element, wtd))
             case "video" => Some(makeWitnessBlockElementVideo(element, wtd))
+            case "text"  => Some(makeWitnessBlockElementText(element, wtd))
             case _       => None
           }
 
@@ -1176,6 +1265,8 @@ object PageElement {
               d.title,
               d.isMandatory,
               containsThirdPartyTracking(element.tracking),
+              d.source,
+              d.sourceDomain,
             ),
           )
           .toList
@@ -1187,13 +1278,37 @@ object PageElement {
               d.html,
               d.caption.isDefined,
               containsThirdPartyTracking(element.tracking),
+              Some(d.source),
+              d.sourceDomain,
             ),
           )
           .toList
       case Vine =>
-        element.vineTypeData.map(d => VineBlockElement(d.html, containsThirdPartyTracking(element.tracking))).toList
-      case Code =>
-        List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
+        (for {
+          fields <- element.vineTypeData
+          html <- fields.html
+          iframeSrc <- getIframeSrc(html)
+        } yield {
+          VineBlockElement(
+            iframeSrc,
+            getIframeHeight(html).getOrElse(0),
+            getIframeWidth(html).getOrElse(0),
+            fields.originalUrl,
+            fields.title,
+            containsThirdPartyTracking(element.tracking),
+            Some(fields.source),
+            fields.sourceDomain,
+            fields.role,
+          )
+        }).toList
+      case Code => {
+        (for {
+          data <- element.codeTypeData
+        } yield {
+          CodeBlockElement(data.html, data.language, false)
+        }).toList
+      }
+
       case Form                      => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
@@ -1234,6 +1349,8 @@ object PageElement {
         dateCreated = wtd.dateCreated.map(date => date.iso8601),
       ),
       containsThirdPartyTracking(element.tracking),
+      wtd.source,
+      wtd.sourceDomain,
     )
   }
 
@@ -1265,6 +1382,32 @@ object PageElement {
         youtubeHtml = wtd.youtubeHtml,
       ),
       containsThirdPartyTracking(element.tracking),
+      wtd.source,
+      wtd.sourceDomain,
+    )
+  }
+
+  private def makeWitnessBlockElementText(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
+    WitnessBlockElement(
+      assets = makeWitnessAssets(element),
+      witnessTypeData = WitnessTypeDataText(
+        `type` = "text",
+        url = wtd.url,
+        originalUrl = wtd.originalUrl,
+        witnessEmbedType = wtd.witnessEmbedType,
+        source = wtd.source,
+        title = wtd.title,
+        description = wtd.description,
+        authorName = wtd.authorName,
+        authorUsername = wtd.authorUsername,
+        authorWitnessProfileUrl = wtd.authorWitnessProfileUrl,
+        authorGuardianProfileUrl = wtd.authorGuardianProfileUrl,
+        apiUrl = wtd.apiUrl,
+        dateCreated = wtd.dateCreated.map(date => date.iso8601),
+      ),
+      containsThirdPartyTracking(element.tracking),
+      wtd.source,
+      wtd.sourceDomain,
     )
   }
 
@@ -1287,14 +1430,28 @@ object PageElement {
       html: String,
       isMandatory: Boolean,
       thirdPartyTracking: Boolean,
+      source: Option[String],
+      sourceDomain: Option[String],
   ): Option[SoundcloudBlockElement] = {
     val src = getIframeSrc(html)
     src.flatMap { s =>
       (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
         case (Some(track), _) =>
-          Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory, thirdPartyTracking))
+          Some(
+            SoundcloudBlockElement(html, track, isTrack = true, isMandatory, thirdPartyTracking, source, sourceDomain),
+          )
         case (_, Some(playlist)) =>
-          Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory, thirdPartyTracking))
+          Some(
+            SoundcloudBlockElement(
+              html,
+              playlist,
+              isTrack = false,
+              isMandatory,
+              thirdPartyTracking,
+              source,
+              sourceDomain,
+            ),
+          )
         case _ =>
           None
       }
@@ -1305,13 +1462,15 @@ object PageElement {
       html: String,
       role: Option[String],
       thirdPartyTracking: Boolean,
+      source: Option[String],
+      sourceDomain: Option[String],
   ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
       src <- getIframeSrc(html)
       if src.contains("charts-datawrapper.s3.amazonaws.com")
     } yield {
-      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking)
+      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain)
     }
   }
 
@@ -1319,12 +1478,14 @@ object PageElement {
       html: String,
       role: Option[String],
       thirdPartyTracking: Boolean,
+      source: Option[String],
+      sourceDomain: Option[String],
   ): Option[EmbedBlockElement] = {
     // This returns a EmbedBlockELement to handle any iframe that wasn't captured by extractChartDatawrapperEmbedBlockElement
     for {
       src <- getIframeSrc(html)
     } yield {
-      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking)
+      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain)
     }
   }
 
@@ -1348,6 +1509,8 @@ object PageElement {
         d.title,
         d.caption,
         thirdPartyTracking,
+        d.source,
+        d.sourceDomain,
       )
     }
   }
@@ -1380,18 +1543,19 @@ object PageElement {
         payload. It was decided that handling those as they come up will be an ongoing health task of the dotcom team,
         and not part of the original DCR migration.
        */
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking).getOrElse {
+      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
         extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
-          extractChartDatawrapperEmbedBlockElement(html, d.role, thirdPartyTracking).getOrElse {
-            extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking).getOrElse {
-              // This version of AudioBlockElement is not currently supported in DCR
-              // AudioBlockElement(element.assets.map(AudioAsset.make))
+          extractChartDatawrapperEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain)
+            .getOrElse {
+              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
+                // This version of AudioBlockElement is not currently supported in DCR
+                // AudioBlockElement(element.assets.map(AudioAsset.make))
 
-              // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
-              // incorrect payload.
-              AudioBlockElement("This audio element cannot be displayed at this time")
+                // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
+                // incorrect payload.
+                AudioBlockElement("This audio element cannot be displayed at this time")
+              }
             }
-          }
         }
       }
     }
@@ -1408,9 +1572,18 @@ object PageElement {
       mandatory = d.isMandatory.getOrElse(false)
       thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking).getOrElse {
+      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
         CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
-          EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory, d.role, thirdPartyTracking)
+          EmbedBlockElement(
+            html,
+            d.safeEmbedCode,
+            d.alt,
+            mandatory,
+            d.role,
+            thirdPartyTracking,
+            d.source,
+            d.sourceDomain,
+          )
         }
       }
     }
@@ -1445,8 +1618,8 @@ object PageElement {
       url = data.url.getOrElse(originalUrl)
       thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
-      source match {
-        case "YouTube" =>
+      source.toLowerCase match {
+        case "youtube" =>
           VideoYoutubeBlockElement(
             caption,
             url,
@@ -1456,8 +1629,10 @@ object PageElement {
             width,
             Role(data.role),
             thirdPartyTracking,
+            data.source,
+            data.sourceDomain,
           )
-        case "Vimeo" =>
+        case "vimeo" =>
           VideoVimeoBlockElement(
             caption,
             url,
@@ -1467,8 +1642,10 @@ object PageElement {
             width,
             Role(data.role),
             thirdPartyTracking,
+            data.source,
+            data.sourceDomain,
           )
-        case "Facebook" =>
+        case "facebook" =>
           VideoFacebookBlockElement(
             caption,
             url,
@@ -1478,11 +1655,23 @@ object PageElement {
             width,
             Role(data.role),
             thirdPartyTracking,
+            data.source,
+            data.sourceDomain,
           )
-        case _ => VideoBlockElement(caption, url, originalUrl, height, width, Role(data.role), thirdPartyTracking)
+        case _ =>
+          VideoBlockElement(
+            caption,
+            url,
+            originalUrl,
+            height,
+            width,
+            Role(data.role),
+            thirdPartyTracking,
+            data.source,
+            data.sourceDomain,
+          )
       }
     }
-
   }
 
   private[pageElements] def containsThirdPartyTracking(embedTracking: Option[EmbedTracking]): Boolean = {
@@ -1493,5 +1682,15 @@ object PageElement {
     }
   }
 
+  /*
+     Note: The JSON serialization of `PageElement`s shows a "_type" attribute (that is a crucial part of how DCR
+     recognise and parse `BlockElement`s). This attribute is added by Play Framework itself.
+     See: https://www.playframework.com/documentation/2.7.x/ScalaJsonAutomated#Requirements
+
+     TODO:
+       Because this attribute is a defacto a part of the frontend DCR datamodel contract, it would be nice to stop
+       relying on the framework to provide it (for safety)
+   */
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
+
 }

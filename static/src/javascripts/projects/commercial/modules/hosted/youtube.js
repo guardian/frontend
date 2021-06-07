@@ -1,20 +1,19 @@
-
 import {
     init as initNextVideoAutoPlay,
     canAutoplay as canAutoplayNextVideo,
     addCancelListener,
     triggerAutoplay,
     triggerEndSlate,
-} from 'commercial/modules/hosted/next-video-autoplay';
-import { isOn } from 'common/modules/accessibility/main';
-import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
+} from './next-video-autoplay';
+import { isOn } from '../../../common/modules/accessibility/main';
+import { initYoutubePlayer } from '../../../common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
     initYoutubeEvents,
-} from 'common/modules/atoms/youtube-tracking';
-import config from 'lib/config';
-import { isBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+} from '../../../common/modules/atoms/youtube-tracking';
+import config from '../../../../lib/config';
+import { isBreakpoint } from '../../../../lib/detect';
+import mediator from '../../../../lib/mediator';
 
 // https://developers.google.com/youtube/iframe_api_reference
 

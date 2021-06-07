@@ -1,5 +1,4 @@
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
-import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.gu.Dependencies._
@@ -42,7 +41,7 @@ val common = library("common")
       jerseyClient,
       cssParser,
       w3cSac,
-      logback2,// logback2: to prevent "error: reference to logback is ambiguous;"
+      logback2, // logback2: to prevent "error: reference to logback is ambiguous;"
       kinesisLogbackAppender,
       targetingClient,
       scanamo,
@@ -57,7 +56,6 @@ val common = library("common")
       identityModel,
       capiAws,
       okhttp,
-      jsonSchema,
     ) ++ jackson,
   )
   .settings(
@@ -93,7 +91,6 @@ val sport = application("sport")
   .settings(
     libraryDependencies ++= Seq(
       paClient,
-      akkaContrib,
     ),
   )
 
@@ -214,10 +211,6 @@ val main = root()
     rss,
   )
   .settings(
-    riffRaffBuildIdentifier := System
-      .getenv()
-      .getOrDefault("BUILD_NUMBER", "0")
-      .replaceAll("\"", ""),
     riffRaffUploadArtifactBucket := Some(
       System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity"),
     ),

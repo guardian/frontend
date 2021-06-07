@@ -1,32 +1,32 @@
 import Chance from 'chance';
-import { addEventListener as addEventListenerSpy } from 'lib/events';
+import { addEventListener as addEventListenerSpy } from '../../../lib/events';
 import { init, _ } from './sticky-top-banner';
 
 const { resizeStickyBanner, update, onScroll } = _;
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../lib/detect', () => ({
     isBreakpoint: jest.fn(() => true),
 }));
-jest.mock('commercial/modules/messenger', () => ({
+jest.mock('./messenger', () => ({
     register: jest.fn(),
 }));
-jest.mock('commercial/modules/dfp/track-ad-render', () => ({
+jest.mock('./dfp/track-ad-render', () => ({
     trackAdRender: () => Promise.resolve(true),
 }));
-jest.mock('lib/events', () => ({
+jest.mock('../../../lib/events', () => ({
     addEventListener: jest.fn(),
 }));
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         stickyTopBannerAd: true,
     },
 }));
-jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
+jest.mock('./dfp/get-advert-by-id', () => ({
     getAdvertById: jest.fn(() => ({
         size: [0, 1],
     })),
 }));
-const registerSpy = require('commercial/modules/messenger').register;
+const registerSpy = require('./messenger').register;
 
 Element.prototype.getBoundingClientRect = jest.fn(() => ({ height: 500 }));
 

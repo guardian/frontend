@@ -1,6 +1,9 @@
 import { loadScript } from '@guardian/libs';
-import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import {
+    onConsentChange as onConsentChange_,
+    getConsentFor as getConsentFor_,
+} from '@guardian/consent-management-platform';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { init, _ } from './comscore';
 
 jest.mock('@guardian/consent-management-platform', () => ({
@@ -41,11 +44,25 @@ const ccpaWithoutConsentMock = (callback) =>
         },
     });
 
+const AusWithoutConsentMock = (callback) =>
+    callback({
+        aus: {
+            doNotSell: true,
+        },
+    });
+
+const AusWithConsentMock = (callback) =>
+    callback({
+        aus: {
+            doNotSell: false,
+        },
+    });
+
 jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         comscore: true,
     },
@@ -91,8 +108,20 @@ describe('comscore init', () => {
             expect(loadScript).toBeCalled();
         });
 
-        it('CCPA without consent: runs', () => {
+        it('CCPA without consent: does not run', () => {
             onConsentChange.mockImplementation(ccpaWithoutConsentMock);
+            init();
+            expect(loadScript).not.toBeCalled();
+        });
+
+        it('Aus without consent: runs', () => {
+            onConsentChange.mockImplementation(AusWithoutConsentMock);
+            init();
+            expect(loadScript).toBeCalled();
+        });
+
+        it('Aus with consent: runs', () => {
+            onConsentChange.mockImplementation(AusWithConsentMock);
             init();
             expect(loadScript).toBeCalled();
         });
@@ -114,7 +143,7 @@ describe('comscore initOnConsent', () => {
         _.initOnConsent(true);
         _.initOnConsent(true);
 
-        
+
         expect(loadScript).toBeCalledTimes(1);
     });
 });

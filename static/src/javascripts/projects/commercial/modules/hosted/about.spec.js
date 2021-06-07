@@ -1,4 +1,10 @@
-import { init } from 'commercial/modules/hosted/about';
+import { init } from './about';
+
+/**
+ * An example of this feature is:
+ * https://www.theguardian.com/advertiser-content/we-are-still-in/driving-climate-action
+ * It is activated by clicking on "commercial content explainer"
+ */
 
 describe('Hosted About Popup', () => {
     beforeEach(() => {

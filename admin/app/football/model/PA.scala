@@ -1,7 +1,10 @@
 package football.model
 
-import pa.{Team, Season}
+import pa.{Season, Team}
 import implicits.Collections
+import org.joda.time.DateTime
+
+import java.time.ZoneId
 
 object PA extends Collections {
 
@@ -61,7 +64,7 @@ object PA extends Collections {
   def filterCompetitions(competitions: List[Season]): List[Season] = {
     competitions
       .filter(comp => approvedCompetitions.contains(comp.competitionId))
-      .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis)
+      .sortBy(_.startDate.atStartOfDay().atZone(ZoneId.of("Europe/London")).toInstant.toEpochMilli)
       .reverse
       .distinctBy(_.competitionId)
       .sortBy(_.competitionId)

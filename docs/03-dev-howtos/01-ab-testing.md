@@ -390,6 +390,7 @@ Example Header Hacker configuration for putting yourself into a 50% test on CODE
     https://code.dev-theguardian.com/	ServerTest3 (Replace X-GU-Experiment-50perc)
 
     ```
+You can determine the header you need to set by looking at the [list of headers found here](https://github.com/guardian/frontend/blob/0657f594e2fd51125d28df9048c48d6eede26bb6/common/app/experiments/ParticipationGroups.scala#L10).
 
  ## Getting the results
 

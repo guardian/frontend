@@ -6,7 +6,7 @@
 @import model.Page
 @import views.support.{SeoThumbnail, StripHtmlTags}
 @import conf.switches.Switches.{ComscoreSwitch, SmartAppBanner}
-@import play.api.Mode.Dev
+@import play.api.Mode.{Dev, Prod}
 
 <meta charset="utf-8">
 @page.metadata.description.map { description =>
@@ -30,7 +30,9 @@
 <link rel="preconnect" href="@Configuration.assets.path" />
 <link rel="preconnect" href="@Configuration.images.host" />
 <link rel="preconnect" href="//interactive.guim.co.uk" />
-
+@if(context.environment.mode == Prod){
+    <link rel="preconnect" href="https://sourcepoint.theguardian.com" />
+}
 
 @if(ComscoreSwitch.isSwitchedOn) {
     <link rel="dns-prefetch" href="//sb.scorecardresearch.com" />
@@ -42,9 +44,6 @@
 <link rel="apple-touch-icon" sizes="114x114" href="@Static("images/favicons/114x114.png")" />
 <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
 <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
-
-<link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
-
 
 @Page.getContentPage(page).map { page =>
     @if(page.item.content.shouldAmplify) {

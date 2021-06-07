@@ -1,25 +1,26 @@
-import { addCookie, removeCookie } from 'lib/cookies';
-import { isUserLoggedIn } from 'common/modules/identity/api';
+import { storage } from '@guardian/libs';
+import { addCookie, removeCookie } from '../../../../lib/cookies';
+import {
+    getCountryCode,
+    overrideGeolocation,
+} from '../../../../lib/geolocation';
+import {
+    decrementMvtCookie,
+    incrementMvtCookie,
+    initMvtCookie,
+} from '../analytics/mvt-cookie';
+import { clearParticipations } from '../experiments/ab-local-storage';
+import { isUserLoggedIn } from '../identity/api';
+import userPrefs from '../user-prefs';
+import { clearViewLog as clearEpicViewLog } from './acquisitions-view-log';
+import { pageShouldHideReaderRevenue } from './contributions-utilities';
 import {
     fakeOneOffContributor,
     readerRevenueRelevantCookies,
-} from 'common/modules/commercial/user-features';
-import { clearViewLog as clearEpicViewLog } from 'common/modules/commercial/acquisitions-view-log';
-import {
-    clearBannerHistory,
-    minArticlesBeforeShowingBanner,
-} from 'common/modules/commercial/membership-engagement-banner';
-import { storage } from '@guardian/libs';
-import {
-    initMvtCookie,
-    decrementMvtCookie,
-    incrementMvtCookie,
-} from 'common/modules/analytics/mvt-cookie';
-import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
-import config from 'lib/config';
-import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
-import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+} from './user-features';
+
+const lastClosedAtKey = 'engagementBannerLastClosedAt';
+const minArticlesBeforeShowingBanner = 2;
 
 const clearCommonReaderRevenueStateAndReload = (
     asExistingSupporter
@@ -72,19 +73,11 @@ const showMeTheEpic = (asExistingSupporter = false) => {
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
+const clearBannerHistory = () => {
+    userPrefs.remove(lastClosedAtKey);
+};
+
 const showMeTheBanner = (asExistingSupporter = false) => {
-    if (!config.get('switches.membershipEngagementBanner')) {
-        alert(
-            'Membership engagement banner switch is turned off on the dotcom switchboard'
-        );
-        return;
-    }
-
-    if (isBlocked()) {
-        alert('Banner is blocked by a switch in the dotcom switchboard');
-        return;
-    }
-
     clearBannerHistory();
 
     // The banner only displays after a certain number of pageviews. So let's get there quick!
@@ -115,12 +108,12 @@ const showPreviousVariant = (asExistingSupporter = false) => {
 
 const changeGeolocation = (asExistingSupporter = false) => {
     const geo = window.prompt(
-        `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`
+        `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${getCountryCode()}.`
     );
     if (geo === 'UK') {
         alert(`'UK' is not a valid geolocation - please use 'GB' instead!`);
     } else if (geo) {
-        setGeolocation(geo);
+        overrideGeolocation(geo);
         clearCommonReaderRevenueStateAndReload(asExistingSupporter);
     }
 };

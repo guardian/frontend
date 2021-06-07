@@ -17,7 +17,6 @@ import endslateTpl from 'common/views/content/endslate.html';
 import loaderTpl from 'common/views/content/loader.html';
 import shareButtonTpl from 'common/views/content/share-button.html';
 import { loadCssPromise } from 'lib/load-css-promise';
-import fetch from 'lib/fetch';
 
 
 
@@ -142,16 +141,6 @@ class GalleryLightbox {
                 url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
                     config.get('page.webTitle')
                 )}&url=${encodeURIComponent(`${blockShortUrl}/stw#img-${i}`)}`,
-            },
-            {
-                text: 'Pinterest',
-                css: 'pinterest',
-                icon: inlineSvg('sharePinterest', ['icon']),
-                url: encodeURI(
-                    `http://www.pinterest.com/pin/create/button/?description=${config.get(
-                        'page.webTitle'
-                    )}&url=${blockShortUrl}&media=${urlPrefix}${img.src}`
-                ),
             },
         ];
 

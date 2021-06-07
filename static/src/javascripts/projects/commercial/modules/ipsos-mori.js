@@ -1,6 +1,9 @@
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
-import config from 'lib/config';
-import { loadScript, getLocale } from '@guardian/libs';
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
+import { getLocale, loadScript } from '@guardian/libs';
+import config from '../../../lib/config';
 
 const loadIpsosScript = () => {
 

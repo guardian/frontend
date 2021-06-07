@@ -1,5 +1,5 @@
-import config from 'lib/config';
-import { adSizes } from 'commercial/modules/ad-sizes';
+import config from '../../../../lib/config';
+import { adSizes } from '../ad-sizes';
 
 const inlineDefinition = {
     sizeMappings: {

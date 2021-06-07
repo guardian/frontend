@@ -2,7 +2,7 @@ package controllers
 
 import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
-import common.{ImplicitControllerExecutionContext, LinkTo, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -14,7 +14,7 @@ import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.newsletters.{EmailEmbedAgent, NewsletterApi}
+import services.newsletters.NewsletterSignupAgent
 import utils.RemoteAddress
 
 import scala.concurrent.Future
@@ -69,7 +69,7 @@ class EmailSignupController(
     val controllerComponents: ControllerComponents,
     csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
-    emailEmbedAgent: EmailEmbedAgent,
+    emailEmbedAgent: NewsletterSignupAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext

@@ -29,7 +29,7 @@ const avatarify = (container) => {
                 const url = avatarApi.deterministicUrl(avatarUserId);
                 avatar.attr('src', url);
             })
-            .always(() => {
+            .finally(() => {
                 updateCleanup(updating, avatar);
             });
     } else {

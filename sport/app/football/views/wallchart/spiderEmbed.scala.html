@@ -1,0 +1,7 @@
+@(page: model.Page, competition: model.Competition, competitionStages: List[football.model.KnockoutSpider], next: Option[pa.FootballMatch])(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@competitionStages.map { knockoutStage =>
+    <div class="knockout-container" data-link-name="@competition.fullName knockout chart">
+    @football.views.html.wallchart.knockoutSpider(competition, knockoutStage)
+    </div>
+}

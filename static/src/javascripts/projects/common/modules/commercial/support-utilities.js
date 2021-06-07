@@ -1,12 +1,10 @@
 import {
     countryCodeToSupportInternationalisationId,
-    getFromStorage,
-} from 'lib/geolocation';
+    getCountryCode,
+} from '../../../../lib/geolocation';
 
-// Will not change the link if there's no country code in localStorage
-// (i.e. it bypasses the edition fallback of getSync from lib/geolocation)
 const addCountryGroupToSupportLink = (rawUrl) => {
-    const countryCode = getFromStorage();
+    const countryCode = getCountryCode();
     if (countryCode) {
         const countryGroup = countryCodeToSupportInternationalisationId(
             countryCode

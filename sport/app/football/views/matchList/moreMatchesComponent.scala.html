@@ -1,10 +1,11 @@
 
+@import java.time.format.DateTimeFormatter
 @(matchesList: football.model.MatchesList)(implicit request: RequestHeader)
 
 <div data-component="football-matches-embed" class="football-matches">
     @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
     <div class="football-embed football-matches__day">
-        <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
+        <div class="date-divider">@date.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy"))</div>
         @competitionMatches.map { case (competition, matches) =>
         <div class="football-table__container">
             <div class="u-cf">

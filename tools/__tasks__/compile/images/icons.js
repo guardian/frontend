@@ -6,10 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const btoa = require('btoa');
-const SVGO = require('svgo');
+const { optimize, extendDefaultPlugins } = require('svgo')
 const mkdirp = require('mkdirp');
-
-const svgo = new SVGO();
 
 const getSVG = iconPath =>
     new Promise((resolve, reject) => {
@@ -17,12 +15,17 @@ const getSVG = iconPath =>
         fs.readFile(iconPath, { encoding: 'utf-8' }, (err, data) => {
             if (err) return reject(err);
             try {
-                svgo.optimize(data, result =>
-                    resolve({
-                        name: path.parse(iconPath).name,
-                        data: result,
+                resolve({
+                    name: path.parse(iconPath).name,
+                    data: optimize(data, {
+                        plugins: extendDefaultPlugins([
+                            {
+                                name: 'removeViewBox',
+                                active: false,
+                            },
+                        ]),
                     })
-                );
+                })
             } catch (e) {
                 return reject(e);
             }

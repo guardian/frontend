@@ -2,21 +2,21 @@ package pages
 
 import common.Edition
 import conf.switches.Switches.WeAreHiring
-import controllers.InteractivePage
+import model.InteractivePage
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
 import model.{ApplicationContext, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments.commercial.pageSkin
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
+import views.html.fragments.page.body.{bodyTag, mainContent, skipToMainContent}
 import views.html.fragments.page.head._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
 import views.html.stacked
 import html.HtmlPageHelpers.ContentCSSFile
-import services.ApplicationsSpecial2020Election
+import services.ApplicationsUSElection2020AmpPages
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
@@ -50,7 +50,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       ),
     )
 
-    val ampTag = ApplicationsSpecial2020Election.ampTagHtml(request.path)
+    val ampTag = ApplicationsUSElection2020AmpPages.ampTagHtml(request.path)
 
     htmlTag(
       headTag(
@@ -68,7 +68,6 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
         mainContent(),
-        breakingNewsDiv(),
         interactiveBody(page),
         footer(),
         message(),

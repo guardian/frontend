@@ -32,11 +32,6 @@ In order for content to be discoverable (via search) and served in Google's cach
 
 * Validate in your browser - Add `#development=1` to your URL, and check the developer console for messages
 * [Google validation UI](https://validator.ampproject.org/)
-* [Guardian amp validation tool](https://github.com/guardian/frontend/tree/main/tools/amp-validation)
-    * 3 ways this tool can be used:
-        1. Validate your local changes on a hardcoded set of endpoints - `make validate-amp` - **please see note below!**
-        2. Validate `amp.theguardian.com` on the same endpoints - `node ./tools/amp-validation/index.js`
-        3. Validate `amp.theguardian.com` on today's top 50 most-read articles (according to Ophan) - `node ./tools/amp-validation/top-traffic.js`
 
 Please note to enable browsersync when styling amp pages we have added this code:
 

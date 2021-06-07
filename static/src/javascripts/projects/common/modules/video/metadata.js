@@ -1,6 +1,5 @@
 import config from 'lib/config';
-import fetch from 'lib/fetch';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 
 
 const isGeoBlocked = (el) => {
@@ -40,7 +39,7 @@ const getVideoInfo = (el) => {
     const url = `${config.get('page.ajaxUrl')}/${canonicalUrl}/info.json`;
 
     return new Promise(resolve => {
-        fetchJSON(url, {
+        fetchJson(url, {
             mode: 'cors',
         })
             .then(resolve)

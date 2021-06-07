@@ -1,4 +1,4 @@
-import { hideElement } from 'commercial/modules/hide-element';
+import { hideElement } from '../hide-element';
 
 const init = (register) => {
     register('hide', (specs, ret, iframe) => {

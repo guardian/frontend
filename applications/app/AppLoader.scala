@@ -23,7 +23,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services._
 import router.Routes
-import services.newsletters.{EmailEmbedAgent, EmailEmbedLifecycle, NewsletterApi}
+import services.newsletters.{NewsletterSignupLifecycle, NewsletterSignupAgent, NewsletterApi}
 
 import scala.concurrent.ExecutionContext
 
@@ -43,7 +43,7 @@ trait ApplicationsServices {
   lazy val facebookGraphApiClient = wire[FacebookGraphApiClient]
   lazy val facebookGraphApi = wire[FacebookGraphApi]
   lazy val newsletterApi = wire[NewsletterApi]
-  lazy val emailEmbedAgent = wire[EmailEmbedAgent]
+  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
 }
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
@@ -69,7 +69,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
-    wire[EmailEmbedLifecycle],
+    wire[NewsletterSignupLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

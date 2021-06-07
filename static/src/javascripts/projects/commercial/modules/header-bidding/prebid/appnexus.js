@@ -1,10 +1,13 @@
-import config from 'lib/config';
+import config from '../../../../../lib/config';
 import {
     getPageTargeting,
     buildAppNexusTargetingObject,
-} from 'common/modules/commercial/build-page-targeting';
+} from '../../../../common/modules/commercial/build-page-targeting';
 
-import { isInUsOrCa, isInAuOrNz } from 'common/modules/commercial/geo-utils';
+import {
+    isInUsOrCa,
+    isInAuOrNz,
+} from '../../../../common/modules/commercial/geo-utils';
 
 import {
     getLargestSize,
@@ -113,16 +116,6 @@ export const getAppNexusDirectBidParams = sizes => {
         keywords: buildAppNexusTargetingObject(getPageTargeting()),
     };
 };
-
-// TODO are we using getAppNexusServerSideBidParams anywhere?
-export const getAppNexusServerSideBidParams = sizes =>
-    Object.assign(
-        {},
-        {
-            placementId: getAppNexusPlacementId(sizes),
-            keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-        }
-    );
 
 export const _ = {
     getAppNexusPlacementId,

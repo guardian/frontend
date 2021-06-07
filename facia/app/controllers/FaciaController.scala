@@ -20,6 +20,7 @@ import conf.switches.Switches.InlineEmailStyles
 import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
+import conf.Configuration
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -193,9 +194,9 @@ trait FaciaController
             if (request.isRss) {
               val body = TrailsToRss.fromPressedPage(faciaPage)
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-            } else if (request.isJson)
+            } else if (request.isJson) {
               JsonFront(faciaPage)
-            else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
+            } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
@@ -411,19 +412,10 @@ trait FaciaController
 
   def ampRsaPublicKey: Action[AnyContent] = {
     Action {
-      val rsakey: String = """-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArLbfdMxclHAJvmVW7IXf
-SYjWoLl6qtwRY7CzX3Y7xV2vUx0O0YIyvXhjRsqrIBdUatDyukAM+m/3pPlYLTV5
-LniZcSDq/vjjaueCoTWjfpnp/cgS2mvOmReaa9lTdvQhYvckJaLD5vrr37XRqq8r
-McdNaVF84z8zdZoEAXigQVgQ7uPlBGiBTDl+nrNyUpBC4nL/9yozTS8To7MkNT1w
-X4fw/fFcAzZ4mizXr/msHGHtXU9lc/TS2yKMWjunSwQOxDIKnxueU8LMkdduYrve
-/bSPgXHAMlJ/Oz8df4e/8hz1FISnD4Y4morh/oPg0yemFfMya7GplzqWd27moE/R
-aQIDAQAB
------END PUBLIC KEY-----"""
-      Ok(rsakey).as("text/plain")
+      // The private key is in the CAPI account, see the documentation at https://github.com/guardian/fastly-cache-purger
+      Ok(Configuration.amp.flushPublicKey).as("text/plain")
     }
   }
-
 }
 
 class FaciaControllerImpl(

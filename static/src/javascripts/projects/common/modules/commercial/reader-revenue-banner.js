@@ -1,7 +1,6 @@
-import { fetchBannerData, renderBanner, } from 'common/modules/commercial/contributions-service';
-import config from "lib/config";
-import reportError from "lib/report-error";
-
+import config from 'lib/config';
+import reportError from 'lib/report-error';
+import { fetchBannerData, renderBanner } from './contributions-service';
 
 const messageCode = 'reader-revenue-banner';
 

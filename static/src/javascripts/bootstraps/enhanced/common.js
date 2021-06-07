@@ -21,7 +21,6 @@ import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
-import { emailSignInBanner } from 'common/modules/identity/email-sign-in-banner/index';
 import {
     initMembership,
     membershipBanner,
@@ -41,10 +40,8 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
-import { initPinterest } from 'common/modules/social/pinterest';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
-import { breakingNews } from 'common/modules/onward/breaking-news';
 import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
 import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
@@ -57,6 +54,7 @@ import {
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { brazeBanner } from 'commercial/modules/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
+import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
 import { getArticleCountConsent } from 'common/modules/commercial/contributions-service';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 
@@ -283,23 +281,22 @@ const initPublicApi = () => {
     window.guardian.api = {};
 };
 
-const startPinterest = () => {
-    if (/Article|LiveBlog|Gallery|Video/.test(config.get('page.contentType'))) {
-        initPinterest();
-    }
-};
-
 const initialiseBanner = () => {
+    const isPreview = config.get('page.isPreview', false)
     // ordered by priority
-    const bannerList = [
+    // in preview we don't want to show most banners as they are an unnecessary interruption
+    // however braze banner does use preview for testing
+    const bannerList = isPreview ? [
         cmpBannerCandidate,
-        breakingNews,
+        brazeBanner,
+    ] : [
+        cmpBannerCandidate,
         signInGate,
         membershipBanner,
+        puzzlesBanner,
         readerRevenueBanner,
         smartAppBanner,
         adFreeBanner,
-        emailSignInBanner,
         brazeBanner,
     ];
 
@@ -339,7 +336,6 @@ const init = () => {
         ['c-public-api', initPublicApi],
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
-        ['c-pinterest', startPinterest],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-banner-picker', initialiseBanner],

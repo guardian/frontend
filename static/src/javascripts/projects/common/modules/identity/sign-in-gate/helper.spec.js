@@ -2,9 +2,12 @@ import {
     hasUserDismissedGateInWindow,
     hasUserDismissedGateMoreThanCount,
     incrementUserDismissedGateCount,
-    isCountry,
     isInvalidTag,
 } from './helper';
+
+jest.mock('../../../../../lib/cookies', () => ({
+    getCookie: jest.fn(() => null),
+}));
 
 jest.mock('bean', () => ({
     record: jest.fn(),
@@ -198,22 +201,6 @@ describe('Sign In Gate Helper functions', () => {
                     0
                 )
             ).toBe(false);
-        });
-    });
-
-    describe("isCountry('countryCode')", () => {
-        test('geolocation is US', () => {
-            fakeLocal.get.mockReturnValueOnce('US');
-            expect(isCountry('US')).toBe(true);
-        });
-
-        test('geolocation is not US', () => {
-            fakeLocal.get.mockReturnValueOnce('GB');
-            expect(isCountry('US')).toBe(false);
-        });
-
-        test('geolocation is false if not set', () => {
-            expect(isCountry('US')).toBe(false);
         });
     });
 

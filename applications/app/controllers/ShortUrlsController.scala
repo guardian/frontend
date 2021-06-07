@@ -29,9 +29,9 @@ class ShortUrlsController(
       .getResponse(contentApiClient.item(shortUrl))
       .map { response =>
         response.content
-          .map(_.id)
-          .map { id =>
-            Redirect(LinkTo(s"/$id"), queryString = queryString, status = MOVED_PERMANENTLY)
+          .map(_.webUrl)
+          .map { url =>
+            Redirect(LinkTo(url), queryStringParams = queryString, status = MOVED_PERMANENTLY)
           }
           .getOrElse(NotFound)
       }

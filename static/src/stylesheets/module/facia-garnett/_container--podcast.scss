@@ -41,7 +41,7 @@
 
 .fc-podcast-container__episode,
 .fc-podcast-container__series {
-    border-top: solid 1px #c70000;
+    border-top: solid 1px #fc6dfb;
 }
 
 .fc-podcast-container__episode-details {
@@ -90,7 +90,7 @@
 
 .fc-podcast-container__episode-details .fc-item__kicker,
 .fc-podcast-container__series .fc-item__kicker {
-    color: #ff6a56;
+    color: #fc6dfb;
 }
 
 /* GENERIC IMAGE */
@@ -208,7 +208,7 @@
     width: 23px;
     height: 23px;
     display: inline-block;
-    background-color: #ff6a56;
+    background-color: #fc6dfb;
     border-radius: 50%;
 
     svg {

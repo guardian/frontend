@@ -22,14 +22,15 @@ case class StatusNotificationMessage(
 )
 
 object StatusNotification {
+  lazy val log = Logger(getClass)
   lazy val partitionKey: String = "facia-tool-updates"
 
   object KinesisLoggingAsyncHandler extends AsyncHandler[PutRecordRequest, PutRecordResult] {
     def onError(exception: Exception) {
-      Logger.logger.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
+      log.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
     }
     def onSuccess(request: PutRecordRequest, result: PutRecordResult) {
-      Logger.logger.info(s"Kinesis status notification sent to stream:${request.getStreamName}")
+      log.info(s"Kinesis status notification sent to stream:${request.getStreamName}")
     }
   }
 
@@ -74,7 +75,7 @@ object StatusNotification {
               .withData(ByteBuffer.wrap(Json.toJson(message).toString.getBytes("UTF-8"))),
             KinesisLoggingAsyncHandler,
           )
-        case None => Logger.logger.info("Kinesis status notification not configured.")
+        case None => log.info("Kinesis status notification not configured.")
       }
     }
   }

@@ -1,12 +1,18 @@
-import fastdom from 'lib/fastdom-promise';
-import { addSlot } from 'commercial/modules/dfp/add-slot';
-import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { spaceFiller } from 'common/modules/article/space-filler';
-import { getBreakpoint } from 'lib/detect';
+import fastdom from '../../../lib/fastdom-promise';
+import { addSlot } from './dfp/add-slot';
+import { createSlots } from './dfp/create-slots';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+import { spaceFiller } from '../../common/modules/article/space-filler';
+import { getBreakpoint } from '../../../lib/detect';
+import config from '../../../lib/config';
+
+const isDotcomRendering = config.get('isDotcomRendering', false);
+const bodySelector = isDotcomRendering
+	? '.article-body-commercial-selector'
+	: '.js-article__body';
 
 const defaultRules = {
-    bodySelector: '.js-article__body',
+    bodySelector,
     slotSelector: ' > p',
     minAbove: 500,
     minBelow: 400,
@@ -51,7 +57,7 @@ const defaultRules = {
 
 // desktop(980) and tablet(740)
 const desktopRules = {
-    bodySelector: '.js-article__body',
+    bodySelector,
     slotSelector: ' > p',
     minAbove: 500,
     minBelow: 400,
@@ -100,7 +106,7 @@ const desktopRules = {
 
 // mobile(320) and above
 const mobileRules = {
-    bodySelector: '.js-article__body',
+    bodySelector,
     slotSelector: ' > p',
     minAbove: 500,
     minBelow: 400,

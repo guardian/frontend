@@ -19,7 +19,7 @@ object ProjectSettings {
     organization := "com.gu",
     maxErrors := 20,
     javacOptions := Seq("-g", "-encoding", "utf8"),
-    scalacOptions := Seq(
+    scalacOptions ++= Seq(
       "-unchecked",
       "-deprecation",
       "-target:jvm-1.8",
@@ -32,12 +32,12 @@ object ProjectSettings {
     publishArtifact in (Compile, packageDoc) := false,
     sources in (Compile, doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
-    scalaVersion := "2.12.12",
+    scalaVersion := "2.12.13",
     initialize := {
       val _ = initialize.value
       assert(
-        sys.props("java.specification.version") == "1.8",
-        "Java 8 is required for this project.",
+        Set("1.8", "11").contains(sys.props("java.specification.version")),
+        "Java 8 or 11 is required for this project.",
       )
     },
     cleanAll := Def.taskDyn {
@@ -54,11 +54,7 @@ object ProjectSettings {
     resolvers ++= Seq(
       Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
-      "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
-      "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
-      Resolver.bintrayRepo("guardian", "ophan"),
       "Spy" at "https://files.couchbase.com/maven2/",
-      "emueller-bintray" at "http://dl.bintray.com/emueller/maven",
     ),
     evictionWarningOptions in update := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)

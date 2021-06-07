@@ -1,12 +1,6 @@
 import ophan from 'ophan/ng';
-import config from 'lib/config';
-import { constructQuery as constructURLQuery } from 'lib/url';
-
-
-
-
-
-const ACQUISITION_DATA_FIELD = 'acquisitionData';
+import config from '../../../../lib/config';
+import { constructQuery as constructURLQuery } from '../../../../lib/url';
 
 export const submitComponentEvent = (componentEvent) => {
     ophan.record({ componentEvent });
@@ -31,43 +25,6 @@ export const submitClickEvent = (componentEvent) =>
         ...componentEvent,
         action: 'CLICK',
     });
-
-// Treats url as immutable, i.e. returns a new object
-// rather than modifying the existing one in place.
-// If the url already has an acquisitionData JSON parameter,
-// it will add or overwrite individual properties rather than
-// replacing the entire param.
-export const updateAcquisitionData = (
-    url,
-    acquisitionData
-) => {
-    let existingAcquisitionData;
-
-    try {
-        const existingAcquisitionJsonString = url.searchParams.get(
-            ACQUISITION_DATA_FIELD
-        );
-
-        if (!existingAcquisitionJsonString) return url;
-
-        existingAcquisitionData = JSON.parse(existingAcquisitionJsonString);
-    } catch (e) {
-        return url;
-    }
-
-    // make a copy
-    const newUrl = new URL(url.toString());
-
-    newUrl.searchParams.set(
-        ACQUISITION_DATA_FIELD,
-        JSON.stringify({
-            ...existingAcquisitionData,
-            ...acquisitionData,
-        })
-    );
-
-    return newUrl;
-};
 
 export const addReferrerData = (acquisitionData) =>
     // Note: the current page is the referrer data in the context of the acquisition.

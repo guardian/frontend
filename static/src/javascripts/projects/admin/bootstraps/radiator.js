@@ -1,4 +1,4 @@
-import fetchJson from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import flattenDeep from 'lodash/flattenDeep';
 
 const initRadiator = () => {

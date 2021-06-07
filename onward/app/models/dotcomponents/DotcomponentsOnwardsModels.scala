@@ -1,7 +1,7 @@
 package models.dotcomponents
 
-import com.gu.contentapi.client.utils.{DesignType}
-import model.{DotcomContentType, Pillar}
+import com.gu.contentapi.client.utils.DesignType
+import model.{ContentFormat, DotcomContentType, Pillar}
 import play.api.libs.json.Json
 
 // duplicated in dotcomponentsdatamodel
@@ -26,6 +26,7 @@ case class RichLink(
     contributorImage: Option[String],
     url: String,
     pillar: String,
+    format: ContentFormat,
 )
 
 object RichLink {

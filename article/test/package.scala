@@ -9,11 +9,7 @@ class ArticleTestSuite
       new MainMediaWidthsTest,
       new AnalyticsFeatureTest,
       new ArticleControllerTest,
-      new ArticleMetaDataTest,
-      new ArticleFeatureTest,
       new CdnHealthCheckTest,
-      new SectionsNavigationFeatureTest,
-      new MembershipAccessTest,
       new PublicationControllerTest,
       new LiveBlogControllerTest,
     )

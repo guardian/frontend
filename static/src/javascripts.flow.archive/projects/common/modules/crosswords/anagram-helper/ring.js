@@ -11,7 +11,7 @@
  */
 
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 
 const round = x => Math.round(x * 100) / 100;
 /**

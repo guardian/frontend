@@ -348,6 +348,8 @@ class GuardianConfiguration extends GuLogging {
     private lazy val scheme = configuration.getStringProperty("amp.scheme").getOrElse("")
     lazy val host = configuration.getStringProperty("amp.host").getOrElse("")
     lazy val baseUrl = scheme + host
+
+    lazy val flushPublicKey = configuration.getMandatoryStringProperty("google.amp.flush.key.public")
   }
 
   object id {
@@ -705,10 +707,6 @@ class GuardianConfiguration extends GuLogging {
     val url = configuration.getMandatoryStringProperty("email.signup.url")
   }
 
-  object NewsAlert {
-    lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
-  }
-
   object Logstash {
     lazy val enabled = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
     lazy val stream = configuration.getStringProperty("logstash.stream.name")
@@ -735,7 +733,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val host = configuration.getStringProperty("newsletterApi.host")
     lazy val origin = configuration.getStringProperty("newsletterApi.origin")
   }
-
 }
 
 object ManifestData {

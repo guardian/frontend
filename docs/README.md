@@ -50,7 +50,7 @@
 - [Accessibility](04-quality/03-accessibility.md)
 
 ## [Commercial](05-commercial/)
-- [How do DFP adverts work?](05-commercial/01-DFP-Advertising.md)
+- [⚠️ Moved to https://github.com/guardian/commercial-core/blob/3a8c75e619c2e4ac2d731d251f5bf186f7af89dd/docs/GAM-Advertising.md ⚠️](05-commercial/01-DFP-Advertising.md)
 - [Integration of commercial components](05-commercial/02-commercial-components.md)
 - [Commercial javascript](05-commercial/03-commercial-javascript.md)
 
@@ -66,10 +66,6 @@
 
 ## [Archives](99-archives/)
 - [Recipe for Breton crêpes](99-archives/crepes.md)
-- [CSS guideline (out-of-date)](99-archives/css-guidelines.md)
-- [Javascript guidelines (Out of date)](99-archives/javascript-guidelines.md)
-- [Web Font Rendering Test (2013)](99-archives/web-font-rendering-tests.md)
-- [Website benchmark (July 2012)](99-archives/website-benchmark-2013.md)
 
 
 ---

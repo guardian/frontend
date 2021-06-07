@@ -21,6 +21,7 @@ static/vendor/data/cmp_vendorlist.json
 .sbt
 .sbt.*
 .metals
+.bsp
 
 log
 logs
@@ -58,7 +59,6 @@ static/riffraff
 
 static/src/stylesheets/icons/*
 
-
 # emacs temp #
 **~
 
@@ -82,5 +82,11 @@ static/src/stylesheets/pasteup/.npmrc
 # SSL certificates
 *.crt
 *.key
-.vscode/settings.json
 
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+
+# Scala tooling
+.bloop
+metals.sbt

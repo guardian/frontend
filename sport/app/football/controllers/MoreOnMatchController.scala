@@ -1,23 +1,27 @@
 package football.controllers
 
+import com.github.nscala_time.time.Imports._
 import common._
 import conf.Configuration
 import contentapi.ContentApiClient
 import feed.CompetitionsService
+import football.datetime.DateHelpers
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{Cached, Competition, Content, ContentType, NoCache, TeamColours}
-import org.joda.time.{DateTime, Days, LocalDate}
-import org.joda.time.format.DateTimeFormat
-import com.github.nscala_time.time.Imports
-import com.github.nscala_time.time.Imports._
+import model.{Cached, Competition, Content, ContentType, TeamColours}
+import org.joda.time.DateTime
 import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
 
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import java.time.{Instant, ZoneId, ZonedDateTime}
 import scala.concurrent.Future
+
+// TODO import java.time.LocalDate and do not import DateHelpers.
 
 case class Report(trail: FootballMatchTrail, name: String)
 
@@ -167,24 +171,36 @@ object NxAnswer {
   implicit val MatchDataAnswerWrites: Writes[NxMatchData] = Json.writes[NxMatchData]
 }
 
-object MatchMetadata extends Football with implicits.Dates {
+case class Interval(start: ZonedDateTime, end: ZonedDateTime) {
+  def contains(dt: ZonedDateTime): Boolean = {
+    (dt.isAfter(start) && dt.isBefore(end)) || dt.isEqual(
+      start,
+    ) // nb. don't check for equals end as Interval.contains which this replaces is not end-inclusive.
+  }
+}
+
+object MatchMetadata extends Football {
   def fetchRelatedMatchContent(theMatch: FootballMatch, related: Seq[ContentType])(implicit
       request: RequestHeader,
   ): (Option[FootballMatchTrail], Option[FootballMatchTrail], Option[FootballMatchTrail], FootballMatchTrail) = {
-    val matchDate = theMatch.date.toLocalDate
+    val matchDate = theMatch.date
     val matchReport = related.find { c =>
-      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) >= matchDate.toDateTimeAtStartOfDay &&
-      c.matchReport && !c.minByMin && !c.preview
+      val webPublicationDate =
+        DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
+      webPublicationDate.isAfter(DateHelpers.startOfDay(matchDate)) && c.matchReport && !c.minByMin && !c.preview
     }
 
     val minByMin = related.find { c =>
-      val dateOfPublication = c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London"))
-      val dateOfMatch = theMatch.date.withZone(DateTimeZone.forID("Europe/London"))
-      dateOfPublication.sameDay(dateOfMatch) && c.minByMin && !c.preview
+      val webPublicationDate =
+        DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
+      DateHelpers.sameDay(webPublicationDate, matchDate) && c.minByMin && !c.preview
     }
     val preview = related.find { c =>
-      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate.toDateTimeAtStartOfDay &&
-      (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin
+      val webPublicationDate =
+        DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
+      webPublicationDate.isBefore(
+        DateHelpers.startOfDay(matchDate),
+      ) && (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin
     }
     val stats: FootballMatchTrail = FootballMatchTrail.toTrail(theMatch)
     (
@@ -204,19 +220,20 @@ class MoreOnMatchController(
     with Football
     with Requests
     with GuLogging
-    with ImplicitControllerExecutionContext
-    with implicits.Dates {
-  def interval(contentDate: LocalDate): Imports.Interval =
-    new Interval(contentDate.toDateTimeAtStartOfDay - 2.days, contentDate.toDateTimeAtStartOfDay + 3.days)
+    with ImplicitControllerExecutionContext {
 
-  private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd").withZone(DateTimeZone.forID("Europe/London"))
+  def interval(contentDate: java.time.LocalDate): Interval = {
+    val twoDaysAgo = DateHelpers.asZonedDateTime(contentDate).minusDays(2)
+    val threeDaysAhead = DateHelpers.asZonedDateTime(contentDate).plusDays(3)
+    Interval(twoDaysAgo, threeDaysAhead)
+  }
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
   def matchNavJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
     matchNav(year, month, day, team1, team2)
   def matchNav(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
 
       val maybeResponse: Option[Future[Result]] =
         competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
@@ -265,7 +282,7 @@ class MoreOnMatchController(
                     .matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
                   "hasStarted" -> theMatch.hasStarted,
                   "group" -> group,
-                  "matchDate" -> DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
+                  "matchDate" -> theMatch.date.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")).toLowerCase(),
                   "dropdown" -> views.html.fragments.dropdown("")(Html("")),
                 )
               }
@@ -305,9 +322,9 @@ class MoreOnMatchController(
     }
 
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[List[ContentType]] = {
-    val matchDate = theMatch.date.toLocalDate
-    val startOfDateRange = matchDate.minusDays(2).toDateTimeAtStartOfDay
-    val endOfDateRange = matchDate.plusDays(2).toDateTimeAtStartOfDay
+    val matchDate = theMatch.date
+    val startOfDateRange = DateHelpers.startOfDay(matchDate.minusDays(2))
+    val endOfDateRange = DateHelpers.startOfDay(matchDate.plusDays(2))
 
     contentApiClient
       .getResponse(
@@ -317,8 +334,8 @@ class MoreOnMatchController(
           .tag(
             "tone/minutebyminute|tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch",
           )
-          .fromDate(jodaToJavaInstant(startOfDateRange))
-          .toDate(jodaToJavaInstant(endOfDateRange))
+          .fromDate(startOfDateRange.toInstant)
+          .toDate(endOfDateRange.toInstant)
           .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}"),
       )
       .map { response =>
@@ -334,7 +351,7 @@ class MoreOnMatchController(
 
   def redirectToMatch(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
       val maybeMatch = competitionsService.matchFor(interval(contentDate), home, away)
       canonicalRedirectForMatch(maybeMatch, request)
     }
@@ -352,7 +369,7 @@ class MoreOnMatchController(
 
   def matchSummaryMf2(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
 
       val maybeResponse: Option[Future[Result]] =
         competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>

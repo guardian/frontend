@@ -1,5 +1,5 @@
-import { addCookie, getCookie } from 'lib/cookies';
-import { onConsentSet } from 'common/modules/analytics/send-privacy-prefs';
+import { addCookie, getCookie } from '../../../../lib/cookies';
+import { onConsentSet } from '../analytics/send-privacy-prefs';
 
 
 

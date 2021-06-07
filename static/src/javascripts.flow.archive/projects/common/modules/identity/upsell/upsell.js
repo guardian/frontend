@@ -12,7 +12,7 @@
 
 // @flow
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import React, { render } from 'preact-compat';
+import React, { render } from 'preact/compat';
 import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 import loadEnhancers from 'common/modules/identity/modules/loadEnhancers';

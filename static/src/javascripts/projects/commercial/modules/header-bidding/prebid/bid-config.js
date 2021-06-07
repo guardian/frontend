@@ -1,35 +1,32 @@
-import config from 'lib/config';
-import { pbTestNameMap } from 'lib/url';
-import isEmpty from 'lodash/isEmpty';
+import config from '../../../../../lib/config';
+import { pbTestNameMap } from '../../../../../lib/url';
 import {
     buildAppNexusTargeting,
     buildAppNexusTargetingObject,
     getPageTargeting,
-} from 'common/modules/commercial/build-page-targeting';
-import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+} from '../../../../common/modules/commercial/build-page-targeting';
 import {
-    isInUk,
-    isInUsOrCa,
     isInAuOrNz,
     isInRow,
-} from 'common/modules/commercial/geo-utils';
+    isInUk,
+    isInUsOrCa,
+} from '../../../../common/modules/commercial/geo-utils';
 import {
     containsBillboard,
     containsDmpu,
     containsLeaderboard,
     containsLeaderboardOrBillboard,
+    containsMobileSticky,
     containsMpu,
     containsMpuOrDmpu,
-    containsMobileSticky,
     getBreakpointKey,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeSonobi,
-    shouldIncludeTrustX,
     shouldIncludeTripleLift,
+    shouldIncludeTrustX,
     shouldIncludeXaxis,
     shouldUseOzoneAdaptor,
     stripDfpAdPrefixFrom,
@@ -40,9 +37,6 @@ import { getAppNexusDirectBidParams } from './appnexus';
 
 // The below line is needed for page skins to show
 getPageTargeting();
-
-const isInSafeframeTestVariant = () =>
-    isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
 
 const isArticle = config.get('page.contentType') === 'Article';
 
@@ -101,53 +95,13 @@ const getTrustXAdUnitId = (slotId, isDesktopArticle) => {
 };
 
 const getIndexSiteId = () => {
-    if (isInSafeframeTestVariant()) {
-        switch (getBreakpointKey()) {
-            case 'D':
-                return '287246';
-            case 'T':
-                return '287247';
-            case 'M':
-                return '287248';
-            default:
-                return '-1';
-        }
-    } else {
-        const site = config
-            .get('page.pbIndexSites', [])
-            .find(s => s.bp === getBreakpointKey());
-        return site && site.id ? site.id.toString() : '';
-    }
+    const site = config
+        .get('page.pbIndexSites', [])
+        .find(s => s.bp === getBreakpointKey());
+    return site && site.id ? site.id.toString() : '';
 };
 
 const getImprovePlacementId = sizes => {
-    if (isInSafeframeTestVariant()) {
-        switch (getBreakpointKey()) {
-            case 'D':
-                if (containsDmpu(sizes)) {
-                    return 1116408;
-                }
-                if (containsMpu(sizes)) {
-                    return 1116407;
-                }
-                if (containsLeaderboardOrBillboard(sizes)) {
-                    return 1116409;
-                }
-                return -1;
-            case 'T':
-                if (containsMpu(sizes)) {
-                    return 1116410;
-                }
-                if (containsLeaderboard(sizes)) {
-                    return 1116411;
-                }
-                return -1;
-            case 'M':
-                return 1116412;
-            default:
-                return -1;
-        }
-    }
     if (isInUk()) {
         switch (getBreakpointKey()) {
             case 'D':
@@ -219,10 +173,31 @@ const getImproveSizeParam = slotId => {
 };
 
 const getXaxisPlacementId = sizes => {
-    if (containsDmpu(sizes)) return 13663297;
-    if (containsMpu(sizes)) return 13663304;
-    if (containsBillboard(sizes)) return 13663284;
-    return 13663304;
+    switch (getBreakpointKey()) {
+        case 'D':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943665;
+            }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return 20943666;
+            }
+            return 20943668;
+        case 'M':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943669;
+            }
+            return 20943670;
+        case 'T':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943671;
+            }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return 20943672;
+            }
+            return 20943674;
+        default:
+            return -1;
+    }
 };
 
 const getTripleLiftInventoryCode = (slotId, sizes) => {
@@ -248,7 +223,7 @@ const getOzoneTargeting = () => {
 };
 
 // Is pbtest being used?
-const isPbTestOn = () => !isEmpty(pbTestNameMap());
+const isPbTestOn = () => Object.keys(pbTestNameMap()).length > 0;
 // Helper for conditions
 const inPbTestOr = liveClause => isPbTestOn() || liveClause;
 
@@ -311,16 +286,12 @@ const sonobiBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
     bidParams: slotId =>
-        Object.assign(
-            {},
-            {
-                ad_unit: config.get('page.adUnit'),
-                dom_id: slotId,
-                appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
-                pageViewId: config.get('ophan.pageViewId'),
-            },
-            isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
-        ),
+        ({
+                   ad_unit: config.get('page.adUnit'),
+                   dom_id: slotId,
+                   appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
+                   pageViewId: config.get('ophan.pageViewId'),
+               })
 };
 
 const getPubmaticPublisherId = () => {
@@ -459,6 +430,7 @@ export const bids = (slotId, slotSizes) =>
 export const _ = {
     getIndexSiteId,
     getImprovePlacementId,
+    getXaxisPlacementId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 };

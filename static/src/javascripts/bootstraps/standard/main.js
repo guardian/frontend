@@ -17,13 +17,10 @@ import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import { storage } from '@guardian/libs';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { addEventListener } from 'lib/events';
-import {
-    isUserLoggedIn,
-    init as identityInit,
-} from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { addCookie } from 'lib/cookies';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
@@ -46,7 +43,7 @@ const showHiringMessage = () => {
                     '%cHello.\n' +
                     '\n' +
                     '%cWe are hiring – ever thought about joining us? \n' +
-                    '%chttps://workforus.theguardian.com/careers/digital-development%c \n' +
+                    '%chttps://workforus.theguardian.com/careers/product-engineering%c \n' +
                     '\n',
                 'font-family: Georgia, serif; font-size: 32px; color: #052962',
                 'font-family: Georgia, serif; font-size: 16px; color: #767676',
@@ -88,7 +85,7 @@ const handleMembershipAccess = () => {
     };
 
     if (isUserLoggedIn()) {
-        fetchJSON(`${membershipUrl}/user/me`, {
+        fetchJson(`${membershipUrl}/user/me`, {
             mode: 'cors',
             credentials: 'include',
         })
@@ -219,18 +216,6 @@ const bootStandard = () => {
         storage.local.setRaw(key, alreadyVisited + 1);
     }
 
-    if (
-        config.get('switches.blockIas') &&
-        config.get('switches.serviceWorkerEnabled') &&
-        navigator.serviceWorker
-    ) {
-        navigator.serviceWorker.ready.then(swreg => {
-            const sw = swreg.active;
-            const ias = window.location.hash.includes('noias');
-            sw.postMessage({ ias });
-        });
-    }
-
     ophan.setEventEmitter(mediator);
 
     /*  Membership access
@@ -243,8 +228,6 @@ const bootStandard = () => {
     if (config.get('page.requiresMembershipAccess')) {
         handleMembershipAccess();
     }
-
-    identityInit();
 
     newHeaderInit();
 

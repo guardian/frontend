@@ -7,16 +7,6 @@ import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
-  val DotcomRendering = Switch(
-    SwitchGroup.Feature,
-    "dotcom-rendering",
-    "If this switch is on, we will use the dotcom rendering tier for articles which are supported by it",
-    owners = Seq(Owner.withGithub("MatthewJWalls")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
@@ -172,16 +162,6 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val BreakingNewsSwitch = Switch(
-    SwitchGroup.Feature,
-    "breaking-news",
-    "If this is switched on then the breaking news feed is requested and articles are displayed",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
@@ -437,10 +417,50 @@ trait FeatureSwitches {
   val remoteBanner = Switch(
     SwitchGroup.Feature,
     "remote-banner",
-    "Enables the banner fetched from contributions-service",
+    "Enables the banner fetched from support-dotcom-components",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 8, 3),
+    sellByDate = never,
     exposeClientSide = true,
+  )
+
+  val remoteHeader = Switch(
+    SwitchGroup.Feature,
+    "remote-header",
+    "Enables the header fetched from support-dotcom-components",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val puzzlesBanner = Switch(
+    SwitchGroup.Feature,
+    "puzzles-banner",
+    "Enables the puzzles banner on puzzles pages",
+    owners = Seq(Owner.withGithub("i-hardy")),
+    safeState = Off,
+    sellByDate = new LocalDate(2022, 3, 31),
+    exposeClientSide = true,
+  )
+
+  val AnniversaryLogoHeader = Switch(
+    SwitchGroup.Feature,
+    "anniversary-header-svg",
+    "Enables the anniversary logo SVG in the header",
+    owners = Seq(Owner.withGithub("buck06191")),
+    safeState = Off,
+    sellByDate = new LocalDate(2022, 5, 11),
+    exposeClientSide = true,
+  )
+
+  val FiverEmailEuro2020Banner = Switch(
+    SwitchGroup.Feature,
+    "fiver-email-euro-2020-banner",
+    "Enables a Euro 2020 version of the banner on the fiver email",
+    owners = Seq(Owner.withGithub("jfsoul")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 7, 20),
+    exposeClientSide = false,
   )
 }
