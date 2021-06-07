@@ -11,7 +11,7 @@ import scala.util.matching.Regex
    This code will live as long as we want to the Election Tracker to have an AMP URL.
  */
 
-object ApplicationsUSElection2020AmpPages {
+object USElection2020AmpPages {
 
   val specialPathsToCapiIdsMap = Map(
     "/world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready" -> "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page",
@@ -68,7 +68,7 @@ object ApplicationsUSElection2020AmpPages {
   }
 
   def ampTagHtml(path: String)(implicit request: RequestHeader): Html = {
-    if (ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)) {
+    if (USElection2020AmpPages.pathIsSpecialHanding(path)) {
       Html(
         s"""<link rel="amphtml" href="https://amp.theguardian.com${ensureStartingForwardSlash(path)}">""",
       )

@@ -16,8 +16,8 @@ import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.apache.commons.lang.StringEscapeUtils
 import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
-import services.ApplicationsUSElection2020AmpPages
-import services.ApplicationsUSElection2020AmpPages.pathToAmpAtomId
+import services.USElection2020AmpPages
+import services.USElection2020AmpPages.pathToAmpAtomId
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 
 import scala.concurrent.duration._
@@ -167,7 +167,7 @@ class InteractiveController(
     /*
       This version retrieve the AMP version directly but rely on a predefined map between paths and amp page ids
      */
-    val capiLookupString = ApplicationsUSElection2020AmpPages.pathToAmpAtomId(path)
+    val capiLookupString = USElection2020AmpPages.pathToAmpAtomId(path)
     val response: Future[ItemResponse] = lookupItemResponse(capiLookupString)
     response.map { response =>
       response.interactive match {

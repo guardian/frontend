@@ -11,6 +11,7 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
 import { fetchAndRenderEpic, fetchAndRenderHeaderLinks } from "common/modules/commercial/contributions-service";
+import { coreVitals } from 'common/modules/analytics/coreVitals';
 
 const bootEnhanced = () => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -54,6 +55,8 @@ const bootEnhanced = () => {
                 ]);
             },
         ],
+
+        ['core-web-vitals', coreVitals],
 
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
 

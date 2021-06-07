@@ -1,4 +1,3 @@
-import bean from 'bean';
 import checkIcon from 'svgs/icon/tick.svg';
 import config from '../../../../lib/config';
 import { hasUserAcknowledgedBanner, Message } from '../ui/message';
@@ -28,12 +27,8 @@ const show = () => {
         trackDisplay: true,
         cssModifierClass: messageCode,
         customJs() {
-            bean.on(
-                document,
-                'click',
-                '.js-ad-free-banner-dismiss-button',
-                () => hideBanner(this)
-            );
+            const dismissButton = document.querySelector('.js-ad-free-banner-dismiss-button');
+            dismissButton?.addEventListener('click', () => hideBanner(this))
         },
     }).show(`
         <div class="site-message__copy-text">
