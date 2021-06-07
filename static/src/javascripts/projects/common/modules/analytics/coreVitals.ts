@@ -67,6 +67,7 @@ const coreVitals = (): void => {
 
 		if (window.guardian.ophan) {
 			jsonData.page_view_id = window.guardian.ophan.pageViewId;
+			// 'window.guardian.config.ophan' does not exist here, so the fallback below might be the solution we go with
 			// jsonData.browser_id = window.guardian.config.ophan.browserId;
 		}
 
@@ -84,15 +85,15 @@ const coreVitals = (): void => {
 
 		const sendData = () => {
 			fetch(endpoint, {
-				method: 'POST', // *GET, POST, PUT, DELETE, etc.
-				mode: 'cors', // no-cors, *cors, same-origin
-				cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-				credentials: 'same-origin', // include, *same-origin, omit
+				method: 'POST',
+				mode: 'cors',
+				cache: 'no-cache',
+				credentials: 'same-origin',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				redirect: 'follow',
-				referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-w
+				referrerPolicy: 'no-referrer',
 				body: JSON.stringify(jsonData),
 			}).catch((error) => console.log(error));
 		};
