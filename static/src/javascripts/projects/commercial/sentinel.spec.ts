@@ -1,7 +1,11 @@
 import { mocked } from 'ts-jest/utils';
 import raven_ from 'lib/raven';
 import config_ from '../../lib/config';
-import { amIUsed } from './sentinel';
+import type { amIUsed as amIUsed_ } from './sentinel';
+
+const { amIUsed }: { amIUsed: typeof amIUsed_ } = jest.requireActual(
+	'./sentinel',
+);
 
 const raven = raven_;
 

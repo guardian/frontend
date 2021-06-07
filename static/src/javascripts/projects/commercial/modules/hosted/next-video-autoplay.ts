@@ -1,5 +1,5 @@
 import fastdom from 'fastdom';
-import { amIUsed } from 'commercial/sentinel';
+import { amIUsed } from '../../../commercial/sentinel';
 import { trackNonClickInteraction } from '../../../common/modules/analytics/google';
 import { load } from './next-video';
 
