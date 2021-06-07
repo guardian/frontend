@@ -7,39 +7,15 @@ import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat
 
 sealed trait RenderingTier
+object DotcomRendering extends RenderingTier
 object FrontendLegacy extends RenderingTier
 object USElectionTracker2020AmpPage extends RenderingTier
-object DotcomRendering extends RenderingTier
-
-import com.gu.contentapi.client.model.v1.Content
-
-/*
-  Date: 21st Jan 2020
-  Author: Pascal
-
-  This object was introduced in late 2020, to handle the routing between regular rendering of interactives
-  versus the code that had been written to handle the US Presidential Election Tracker amp page.
-
-  The tracker (an ng-interactive) didn't have a AMP page and there were two ways to provide one to it.
-  1. Implement the support for it in DCR, or
-  2. Implement support for it directly in the [applications] app, using the AMP page already present in CAPI.
-
-  The former would have taken too long so we went for the latter.
-
-  ----------------
-  Author: Pascal
-  Date: 21st April 2021
-
-  We are now moving towards supporting interactives in DCR 🙂
- */
 
 object InteractiveRendering {
 
-  // allowListedPaths is use to jumpstart the router (which decides which between frontend and DRC does the rendering)
-  val allowListedPaths = List(
+  val migratedPaths = List(
     "/sport/ng-interactive/2018/dec/26/lebron-james-comments-nba-nfl-divide",
   )
-
   def ensureStartingForwardSlash(str: String): String = {
     if (!str.startsWith("/")) ("/" + str) else str
   }
@@ -54,27 +30,19 @@ object InteractiveRendering {
     // This function decides which paths are sent to DCR for rendering
     // We first check whether or not the path has been allow listed and then check the date of the atom
 
-    if (allowListedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering
+    if (migratedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering
     else if (dateIsPostTransition(date.iso8601.substring(0, 10))) DotcomRendering
     else FrontendLegacy
   }
 
   def getRenderingTier(path: String, date: CapiDateTime)(implicit request: RequestHeader): RenderingTier = {
-
     val isSpecialElection = ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)
-
     val isAmp = request.host.contains("amp")
-    val isWeb = !isAmp
-
     val forceDCR = request.forceDCR
+    val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
 
-    if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
-    else if (isSpecialElection && isWeb) FrontendLegacy // [1]
-    else if (isAmp) FrontendLegacy // [2]
-    else if (forceDCR) DotcomRendering
+    if (forceDCR || isMigrated) DotcomRendering
+    else if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
     else decideRenderingTier(path, date)
-
-    // [1] We will change that in the future, but for the moment we legacy render the election tracker.
-    // [2] We will change that in the future, but for the moment we legacy render all amp pages.
   }
 }

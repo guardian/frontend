@@ -127,6 +127,16 @@ class InteractiveController(
     }
   }
 
+  def renderDCRAmp(ir: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
+    fItemResponseToFE(Future.successful(ir)) flatMap {
+      case Left((model, blocks)) => {
+        val pageType = PageType.apply(model, request, context)
+        remoteRenderer.getAMPInteractive(wsClient, model, blocks, pageType)
+      }
+      case Right(other) => Future.successful(RenderOtherStatus(other))
+    }
+  }
+
   def itemResponseToCapiDateTime(ir: ItemResponse)(implicit request: RequestHeader): Option[CapiDateTime] = {
     ir.content.flatMap(_.webPublicationDate)
   }
@@ -139,6 +149,7 @@ class InteractiveController(
           val renderingTier = InteractiveRendering.getRenderingTier(path, date)
           (requestFormat, renderingTier) match {
             case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
+            case (AmpFormat, DotcomRendering)              => renderDCRAmp(itemResponse)
             case (JsonFormat, _) if request.forceDCR       => renderDCRJson(itemResponse)
             case (HtmlFormat, DotcomRendering)             => renderDCR(itemResponse)
             case _                                         => renderItemLegacy(itemResponse)

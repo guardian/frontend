@@ -57,12 +57,18 @@ const sentryOptions = {
         const isIgnored =
             typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
         const { enableSentryReporting } = config.get('switches');
-        const isInSample = Math.random() < 0.008; // 0.8%
+        const isSentinelLoggingEvent = data?.tags?.tag === 'commercial-sentinel'
+
+        // isInSample is always true if the tag is commercial-sentinel.
+        // Otherwise, sample at .08%
+        const isInSample = isSentinelLoggingEvent
+                ? true
+                : Math.random() < 0.008;
 
         if (isDev && !isIgnored) {
             // Some environments don't support or don't always expose the console Object
             if (window.console && window.console.warn) {
-                window.console.warn('Raven captured error.', data);
+                window.console.warn('Raven captured event.', data);
             }
         }
 
@@ -71,7 +77,7 @@ const sentryOptions = {
             isInSample &&
             !isIgnored &&
             !adblockBeingUsed &&
-            !isDev
+            (!isDev || isSentinelLoggingEvent)
         );
     },
 };

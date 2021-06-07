@@ -453,4 +453,14 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2022, 5, 11),
     exposeClientSide = true,
   )
+
+  val FiverEmailEuro2020Banner = Switch(
+    SwitchGroup.Feature,
+    "fiver-email-euro-2020-banner",
+    "Enables a Euro 2020 version of the banner on the fiver email",
+    owners = Seq(Owner.withGithub("jfsoul")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 7, 20),
+    exposeClientSide = false,
+  )
 }

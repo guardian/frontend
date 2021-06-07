@@ -40,14 +40,16 @@ object ArticlePageChecks {
   }
 
   def hasOnlySupportedMainElements(page: PageWithStoryPackage): Boolean = {
-    def unsupportedElement(blockElement: BlockElement) =
+
+    def unsupportedElement(blockElement: BlockElement) = {
       blockElement match {
         // The majority of the remaining atoms appear to be interactive atoms, which aren't supported yet
-        case ContentAtomBlockElement(_, atomtype, _) if atomtype != "media" => true
+        case ContentAtomBlockElement(_, atomtype, _) if !List("media", "interactive").contains(atomtype) => true
         // Everything else should be supported, but there are some element types that don't
         // get used in main media, for which there are no guarantees
         case _ => false
       }
+    }
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
   }
