@@ -16,7 +16,7 @@ object InteractiveRendering {
   )
 
   def getRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
-    val isSpecialElection = ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)
+    val isSpecialElection = USElection2020AmpPages.pathIsSpecialHanding(path)
     val isAmp = request.host.contains("amp")
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
