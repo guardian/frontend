@@ -77,9 +77,8 @@ const coreVitals = (): void => {
 		}
 
 		const endpoint =
-			window.location.hostname === 'm.code.dev-theguardian.com' ||
-			window.location.hostname === 'localhost' ||
-			window.location.hostname === 'preview.gutools.co.uk'
+			window.location.href ===
+			'https://www.theguardian.com/science/grrlscientist/2012/aug/07/3?dcr=false'
 				? 'https://performance-events.code.dev-guardianapis.com/core-web-vitals'
 				: 'https://performance-events.guardianapis.com/core-web-vitals';
 
