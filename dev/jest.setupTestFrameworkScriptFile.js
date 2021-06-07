@@ -1,6 +1,8 @@
 // Polyfill test environment (done by polyfill.io in production)
 require('core-js');
 
+jest.mock('lib/raven');
+
 // Stub global Guardian config
 // eslint-disable-next-line id-denylist -- this is on purpose
 window.guardian = {
