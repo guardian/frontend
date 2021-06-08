@@ -48,9 +48,6 @@ const hasRequiredConsents = () =>
         })
     });
 
-const canShowPreChecks = ({
-    pageConfig,
-}) => Boolean(!pageConfig.isPaidContent);
 
 let message;
 
@@ -198,13 +195,8 @@ const canShow = async () => {
         return false;
     }
 
-    if (!canShowPreChecks({
-        pageConfig: config.get('page'),
-    })) {
-        // Currently all active web canvases in Braze target existing supporters,
-        // subscribers or otherwise those with a Guardian product. We can use the
-        // value of `shouldNotBeShownSupportMessaging` to identify these users,
-        // limiting the number of requests we need to initialise Braze on the page:
+    // Don't load Braze SDK for paid content
+    if (config.get('page').isPaidContent) {
         return false;
     }
 
@@ -313,5 +305,4 @@ export {
     brazeBanner,
     brazeVendorId,
     hasRequiredConsents,
-    canShowPreChecks,
 }
