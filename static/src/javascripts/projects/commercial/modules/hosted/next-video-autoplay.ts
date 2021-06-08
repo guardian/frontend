@@ -69,7 +69,6 @@ const canAutoplay = (): boolean => !!($hostedNext && nextVideoPage);
 
 const init = (): Promise<void> =>
 	load().then(() => {
-		amIUsed('next-video-autoplay', 'init');
 		$hostedNext = document.querySelector('.js-hosted-next-autoplay');
 		$timer = document.querySelector('.js-autoplay-timer');
 		nextVideoPage = $timer?.dataset.nextPage;
