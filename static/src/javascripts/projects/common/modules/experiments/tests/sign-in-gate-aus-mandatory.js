@@ -5,8 +5,8 @@ export const signInGateAusMandatory = {
 	author: 'Mahesh Makani',
 	description:
 		'Compare mandatory gate (an article sigin gate without the dismiss button) with the main signin gate for australia only',
-	audience: 0.05,
-	audienceOffset: 0.85,
+	audience: 0.01,
+	audienceOffset: 0.89,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria:
 		'3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss or reshown after 5 dismisses, not on help, info sections etc. exclude iOS 9 and guardian-live-australia, AUS only, only users with specific CMP consents. Suppresses other banners, and appears over epics',
