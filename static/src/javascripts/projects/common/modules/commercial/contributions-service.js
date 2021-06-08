@@ -23,6 +23,7 @@ import {
 } from './contributions-utilities';
 import {
     ARTICLES_VIEWED_OPT_OUT_COOKIE,
+    getLastOneOffContributionTimestamp,
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
@@ -130,7 +131,7 @@ const buildEpicPayload = async () => {
         showSupportMessaging: !shouldHideSupportMessaging(),
         isRecurringContributor: isRecurringContributor(),
         lastOneOffContributionDate:
-            getLastOneOffContributionDate() || undefined,
+            getLastOneOffContributionTimestamp() || undefined,
         mvtId: getMvtValue(),
         countryCode,
         epicViewLog: getViewLog(),
@@ -162,6 +163,7 @@ const buildHeaderLinksPayload = () => {
             countryCode,
             modulesVersion: ModulesVersion,
             mvtId: getMvtValue(),
+            lastOneOffContributionDate: getLastOneOffContributionDate() || undefined,
         },
     };
 }

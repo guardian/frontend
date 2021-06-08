@@ -9,7 +9,7 @@ import {
     isRecurringContributor,
     accountDataUpdateWarning,
     isDigitalSubscriber,
-    getLastOneOffContributionDate,
+    getLastOneOffContributionTimestamp,
     getDaysSinceLastOneOffContribution,
     isRecentOneOffContributor,
     shouldNotBeShownSupportMessaging,
@@ -455,24 +455,24 @@ describe('getting the last one-off contribution date of a user', () => {
     const contributionDateTimeEpoch = Date.parse(contributionDate);
 
     it("returns null if the user hasn't previously contributed", () => {
-        expect(getLastOneOffContributionDate()).toBe(null);
+        expect(getLastOneOffContributionTimestamp()).toBe(null);
     });
 
     it('return the correct date if the user support-frontend contribution cookie is set', () => {
         setSupportFrontendOneOffContributionCookie(
             contributionDateTimeEpoch.toString()
         );
-        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
+        expect(getLastOneOffContributionTimestamp()).toBe(contributionDateTimeEpoch);
     });
 
     it('returns null if the cookie has been set with an invalid value', () => {
         setSupportFrontendOneOffContributionCookie('invalid value');
-        expect(getLastOneOffContributionDate()).toBe(null);
+        expect(getLastOneOffContributionTimestamp()).toBe(null);
     });
 
     it('returns the correct date if cookie from attributes is set', () => {
         setAttributesOneOffContributionCookie(contributionDate.toString());
-        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
+        expect(getLastOneOffContributionTimestamp()).toBe(contributionDateTimeEpoch);
     });
 });
 
