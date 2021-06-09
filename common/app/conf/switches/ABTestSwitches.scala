@@ -23,4 +23,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-aus-mandatory",
+    "Mandatory sign in gate to users in australia split test",
+    owners = Seq(Owner.withGithub("coldlink")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 12, 1),
+    exposeClientSide = true,
+  )
 }
