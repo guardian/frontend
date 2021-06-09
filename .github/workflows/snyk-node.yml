@@ -31,6 +31,7 @@ jobs:
                   args: --org=the-guardian --project-name=${{ github.repository }} --dev=true --sarif-file-output=snyk-node.sarif
                   command: ${{ env.SNYK_COMMAND }}
             - name: Upload result to GitHub Code Scanning
+              if: github.ref != 'refs/heads/main'
               uses: github/codeql-action/upload-sarif@v1
               with:
                   sarif_file: snyk-node.sarif
