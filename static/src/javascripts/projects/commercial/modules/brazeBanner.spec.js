@@ -1,6 +1,5 @@
 import {
     brazeVendorId,
-    canShowPreChecks,
     hasRequiredConsents,
 } from './brazeBanner';
 
@@ -16,42 +15,6 @@ jest.mock('@guardian/consent-management-platform', () => ({
 
 afterEach(() => {
     mockOnConsentChangeResult = undefined;
-});
-
-describe('canShowPreChecks', () => {
-    describe('when not a supporter', () => {
-        it('returns false', () => {
-            const result = canShowPreChecks({
-                userIsGuSupporter: false,
-                pageConfig: {isPaidContent: false},
-            })
-
-            expect(result).toBe(false);
-        });
-    });
-
-    describe('when viewing paid content', () => {
-        it('returns false', () => {
-            const result = canShowPreChecks({
-                userIsGuSupporter: true,
-                pageConfig: {isPaidContent: true},
-            })
-
-            expect(result).toBe(false);
-        });
-    });
-
-    describe('when all checks pass', () => {
-        it('returns true', () => {
-            const result = canShowPreChecks({
-                userIsGuSupporter: true,
-                pageConfig: {isPaidContent: false},
-            })
-
-            expect(result).toBe(true);
-
-        })
-    })
 });
 
 describe('hasRequiredConsents', () => {
