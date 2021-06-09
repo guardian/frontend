@@ -53,7 +53,7 @@ const bodySelector = isDotcomRendering
 	? '.article-body-commercial-selector'
 	: '.js-article__body';
 
-const defaultRules: SpacefinderRules = {
+const wideRules: SpacefinderRules = {
 	bodySelector,
 	slotSelector: ' > p',
 	minAbove: 500,
@@ -97,31 +97,11 @@ const defaultRules: SpacefinderRules = {
 	fromBottom: true,
 };
 
-// desktop(980) and tablet(740)
+// anything below leftCol (1140) : desktop, tablet, ..., mobile
 const desktopRules: SpacefinderRules = {
-	...defaultRules,
+	...wideRules,
 	selectors: {
-		...defaultRules.selectors,
-		' .element-rich-link': {
-			minAbove: 400,
-			minBelow: 400,
-		},
-		' .ad-slot': {
-			minAbove: 400,
-			minBelow: 400,
-		},
-		' .ad-slot--im': {
-			minAbove: 400,
-			minBelow: 400,
-		},
-	},
-};
-
-// mobile(320) and above
-const mobileRules = {
-	...defaultRules,
-	selectors: {
-		...defaultRules.selectors,
+		...wideRules.selectors,
 		' .element-rich-link': {
 			minAbove: 400,
 			minBelow: 400,
@@ -153,16 +133,11 @@ const insertSlot = (paras: HTMLElement[]): Promise<void> => {
 
 const getRules = (): SpacefinderRules => {
 	switch (getBreakpoint()) {
-		case 'mobile':
-		case 'mobileMedium':
-		case 'mobileLandscape':
-		case 'phablet':
-			return mobileRules;
-		case 'tablet':
-		case 'desktop':
-			return desktopRules;
+		case 'leftCol':
+		case 'wide':
+			return wideRules;
 		default:
-			return defaultRules;
+			return desktopRules;
 	}
 };
 
