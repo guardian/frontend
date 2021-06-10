@@ -33,7 +33,7 @@ jobs:
 
             - name: Run Snyk monitor to update snyk.io
               if: github.ref == 'refs/heads/main'
-              uses: snyk/actions/node@0.3.0
+              uses: snyk/actions/scala@0.3.0
               continue-on-error: true # To make sure that SARIF upload gets called
               env:
                   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
