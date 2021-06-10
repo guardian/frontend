@@ -90,8 +90,8 @@ object Badges {
     Badge("australia-news/series/dreams-interrupted", Static("images/badges/dreams-interrupted.svg"))
   val anniversary200 =
     Badge("media/series/guardian-200", Static("images/badges/anniversary200.svg"))
-  val euro2021 =
-    Badge("football/euro-2021", Static("images/badges/euro-2021.svg"))
+  val euro2020 =
+    Badge("football/euro-2020", Static("images/badges/euro-2020.svg"))
 
   val allBadges = Seq(
     newArrivals,
@@ -136,7 +136,7 @@ object Badges {
     theLastChance,
     dreamsInterrupted,
     anniversary200,
-    euro2021,
+    euro2020,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {
