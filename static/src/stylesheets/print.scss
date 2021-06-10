@@ -169,14 +169,16 @@ $logoHeight: 110px;
     // ironically browsers don't widely support it.
     @supports (zoom: 100%) {
         .content__head {
-            margin-top: $logoHeight * .5 !important;
+            margin-top: 75px !important;
+            margin-right: 25px !important;
         }
 
         &.content--article:before {
             display: block;
             zoom: 50%;
-            width: $logoWidth * .5 !important;
             height: $logoHeight * .5 !important;
+            padding-right: 64px;
+            padding-top: 35px;
         }
     }
 }
@@ -195,6 +197,9 @@ $logoHeight: 110px;
     // Clearfix
     overflow: hidden;
     width: auto !important;
+    padding-top: 30px !important;
+    padding-bottom: 25px !important;
+
 }
 
 .crossword__container__grid-wrapper {
