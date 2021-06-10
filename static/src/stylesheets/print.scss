@@ -279,9 +279,3 @@ $logoHeight: 110px;
     font-size: 13px;
     text-align: left;
 }
-
-@media print {
-    crossword__clues--wrapper {
-        height: 60rem !important;
-    }
-}
