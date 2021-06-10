@@ -179,7 +179,7 @@ const outOfPageCallback = (
 	if (!event.slot.getOutOfPage()) {
 		const parent = advert.node.parentNode as HTMLElement;
 		return fastdom.mutate(() => {
-			advert.node.classList.add('u-h');
+			advert.node.classList.add('ad-slot--collapse');
 			// if in a slice, add the 'no mpu' class
 			if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
 				parent.classList.add('fc-slice__item--no-mpu');
