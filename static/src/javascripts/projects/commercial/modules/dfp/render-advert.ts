@@ -1,5 +1,4 @@
 import { $$ } from '../../../../lib/$$';
-import config from '../../../../lib/config';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
 import { geoMostPopular } from '../../../common/modules/onward/geo-most-popular';
@@ -31,28 +30,6 @@ const addClassIfHasClass = (newClassNames: string[]) =>
 					newClassNames.forEach((className) => {
 						advert.node.classList.add(className);
 					});
-					const allClasses: DOMTokenList = advert.node.classList;
-					// Add fluid styles from _adslot.scss
-					// mark: 9473ae05-a901-4a8d-a51d-1b9c894d6e1f
-					// Temporary typing until config.js is converted to TypeScript
-					const isDotcomRendering: boolean = (config as {
-						get: (arg: string, defaultValue: any) => boolean;
-					}).get('isDotcomRendering', false);
-					if (
-						isDotcomRendering &&
-						!allClasses.contains('ad-slot--carrot') &&
-						newClassNames.includes('ad-slot--fluid')
-					) {
-						advert.node.style.minHeight = '250px';
-						advert.node.style.lineHeight = '10px';
-						advert.node.style.padding = '0';
-						advert.node.style.margin = '0';
-						if (
-							!allClasses.contains('ad-slot--im') &&
-							!allClasses.contains('ad-slot--offset-right')
-						)
-							advert.node.style.width = '100%';
-					}
 				});
 			}
 			return Promise.resolve();
