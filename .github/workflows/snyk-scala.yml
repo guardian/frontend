@@ -12,15 +12,9 @@ on:
 jobs:
     security:
         runs-on: ubuntu-latest
-        env:
-            SNYK_COMMAND: test
         steps:
             - name: Checkout branch
               uses: actions/checkout@v2
-
-            - name: Set command to monitor
-              if: github.ref == 'refs/heads/main'
-              run: echo "SNYK_COMMAND=monitor" >> $GITHUB_ENV
 
             - name: Run Snyk to check for vulnerabilities
               uses: snyk/actions/scala@0.3.0
@@ -30,9 +24,19 @@ jobs:
               with:
                   args: --org=the-guardian --project-name=${{ github.repository }} --file=build.sbt --sarif-file-output=snyk-scala.sarif
 
-                  command: ${{ env.SNYK_COMMAND }}
+                  command: test
             - name: Upload result to GitHub Code Scanning
               if: github.ref != 'refs/heads/main'
               uses: github/codeql-action/upload-sarif@v1
               with:
                   sarif_file: snyk-scala.sarif
+
+            - name: Run Snyk monitor to update snyk.io
+              if: github.ref == 'refs/heads/main'
+              uses: snyk/actions/node@0.3.0
+              continue-on-error: true # To make sure that SARIF upload gets called
+              env:
+                  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+              with:
+                  args: --org=the-guardian --project-name=${{ github.repository }} --file=build.sbt
+                  command: monitor
