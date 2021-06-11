@@ -67,7 +67,6 @@ import scala.concurrent.Future
     )
     val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
-      new AccountDetailsMapping,
       new PrivacyMapping,
     )
 
