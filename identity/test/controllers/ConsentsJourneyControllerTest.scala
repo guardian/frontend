@@ -101,26 +101,20 @@ import scala.concurrent.Future
 
     "using any journey" should {
 
-      "set a repermission flag on submit" in new ConsentsJourneyFixture {
-        val updatedUser = user.copy(
-          statusFields = StatusFields(hasRepermissioned = Some(true)),
-        )
-
+      "update Identity user on submit" in new ConsentsJourneyFixture {
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             "returnUrl" -> returnUrlVerifier.defaultReturnUrl,
           )
 
         when(api.saveUser(any[String], any[UserUpdateDTO], any[Auth]))
-          .thenReturn(Future.successful(Right(updatedUser)))
+          .thenReturn(Future.successful(Right(user)))
 
-        val result = controller.submitRepermissionedFlag.apply(fakeRequest)
+        val result = controller.completeConsents.apply(fakeRequest)
         status(result) should be(303)
 
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
-        val userUpdate = userUpdateCapture.getValue
-        userUpdate.statusFields.get.hasRepermissioned should equal(Some(true))
       }
 
     }
