@@ -1,22 +1,11 @@
 package services.dotcomponents
 
 import implicits.Requests._
-import model.liveblog.{BlockElement, CodeBlockElement, ContentAtomBlockElement, InteractiveBlockElement}
+import model.liveblog.{BlockElement, InteractiveBlockElement}
 import model.{ArticlePage, PageWithStoryPackage}
-import model.dotcomrendering.DotcomRenderingUtils
-import model.liveblog._
 import play.api.mvc.RequestHeader
-import views.support.Commercial
 
 object ArticlePageChecks {
-
-  def isAdFree(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
-    page.item.content.shouldHideAdverts || Commercial.isAdFree(request)
-  }
-
-  def isDiscussionDisabled(page: PageWithStoryPackage): Boolean = {
-    (!page.article.content.trail.isCommentable) && page.article.content.trail.isClosedForComments
-  }
 
   def isSupportedType(page: PageWithStoryPackage): Boolean = {
     page match {
@@ -39,22 +28,7 @@ object ArticlePageChecks {
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
-  def hasOnlySupportedMainElements(page: PageWithStoryPackage): Boolean = {
-
-    def unsupportedElement(blockElement: BlockElement) = {
-      blockElement match {
-        // The majority of the remaining atoms appear to be interactive atoms, which aren't supported yet
-        case ContentAtomBlockElement(_, atomtype, _) if !List("media", "interactive").contains(atomtype) => true
-        // Everything else should be supported, but there are some element types that don't
-        // get used in main media, for which there are no guarantees
-        case _ => false
-      }
-    }
-
-    !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
-  }
-
-  // Custom Tag that can be added to articles + special reports tags while we don't support them
+  // Custom Tag that can be added to articles while we don't support them
   private[this] val tagsBlockList: Set[String] = Set(
     "tracking/platformfunctional/dcrblacklist",
   )
@@ -68,8 +42,6 @@ object ArticlePageChecks {
   def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
 
   def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
-
-  def isNotOpinion(page: PageWithStoryPackage): Boolean = !page.item.tags.isComment
 
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.article.tags.isPaidContent
 
@@ -89,7 +61,6 @@ object ArticlePicker {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
-      ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
@@ -106,8 +77,6 @@ object ArticlePicker {
         "isNotAGallery",
         "isNotLiveBlog",
         "isNotAMP",
-        "isNotInTagBlockList",
-        "isNotPaidContent",
       ),
     )
 
@@ -124,12 +93,10 @@ object ArticlePicker {
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
-    val isAddFree = ArticlePageChecks.isAdFree(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
     // include features that we wish to log but not allow-list against
     val features = checks.mapValues(_.toString) +
-      ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
       ("dcrCouldRender" -> dcrCanRender.toString) +
       ("pageTones" -> pageTones)
