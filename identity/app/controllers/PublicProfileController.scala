@@ -41,6 +41,8 @@ class PublicProfileController(
       futureUser: => Future[Response[User]],
   ): Action[AnyContent] =
     Action.async { implicit request =>
+      logger.info(s"PublicProfileController findProfileDataAndRender URI is ${request.uri} - Referer is ${request.headers.get("Referer")}")
+
       futureUser.flatMap {
         case Left(errors) =>
           logger.info(s"public profile page returned errors ${errors.toString()}")
