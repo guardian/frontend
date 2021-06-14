@@ -15,7 +15,7 @@
         lazyLoadIndex: Int = 0,
 )(implicit request: RequestHeader)
 
-<picture>
+<picture id="@lazyLoadIndex">
     @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
     <!--[if IE 9]><video style="display: none;"><![endif]-->
     @widths.breakpoints.map { breakpointWidth =>
