@@ -75,7 +75,7 @@ trait ConsentsJourney extends EditProfileControllerComponents {
     displayConsentComplete(ConsentJourneyPageDefault, None, guestPasswordForm)
 
   /** POST /complete-consents */
-  def submitRepermissionedFlag: Action[AnyContent] =
+  def completeConsents: Action[AnyContent] =
     csrfCheck {
       consentAuthWithIdapiUserAction.async { implicit request =>
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
@@ -90,17 +90,16 @@ trait ConsentsJourney extends EditProfileControllerComponents {
                 request.user.id,
                 UserUpdateDTO(
                   consents = Some(newConsents),
-                  statusFields = Some(StatusFields(hasRepermissioned = Some(true))),
                 ),
                 request.user.auth,
               )
               .map {
                 case Left(idapiErrors) =>
-                  logger.error(s"Failed to set hasRepermissioned flag for user ${request.user.id}: $idapiErrors")
+                  logger.error(s"Failed to set save user consents ${request.user.id}: $idapiErrors")
                   InternalServerError(Json.toJson(idapiErrors))
 
                 case Right(updatedUser) =>
-                  logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
+                  logger.info(s"Successfully set consents for user ${request.user.id}")
                   Redirect(
                     s"${routes.EditProfileController.displayConsentComplete().url}",
                     Map("returnUrl" -> Seq(returnUrl)),
