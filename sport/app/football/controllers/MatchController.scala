@@ -11,7 +11,6 @@ import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import conf.Configuration
-import model.CompetitionDisplayHelpers.cleanTeamName
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -106,7 +105,7 @@ object NsAnswer {
     val players = makePlayers(teamV2)
     TeamAnswer(
       teamV1.id,
-      cleanTeamName(teamV1.name),
+      teamV1.name,
       players = players,
       score = teamV1.score.getOrElse(0),
       scorers = teamV1.scorers.fold(Nil: List[String])(_.split(",").toList),
