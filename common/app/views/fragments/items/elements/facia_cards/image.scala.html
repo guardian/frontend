@@ -15,7 +15,7 @@
         lazyLoadIndex: Int = 0,
 )(implicit request: RequestHeader)
 
-<picture id="@lazyLoadIndex">
+<picture>
     @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
     <!--[if IE 9]><video style="display: none;"><![endif]-->
     @widths.breakpoints.map { breakpointWidth =>
@@ -28,6 +28,6 @@
     }
     <!--[if IE 9]></video><![endif]-->
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath.map(ImgSrc(_, ImageProfile(width = widths.desktop.map(_.get))))).map { src =>
-        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn || lazyLoadIndex > 2) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
+        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn || lazyLoadIndex > 2) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src" id="@lazyLoadIndex"/>
     }
 </picture>
