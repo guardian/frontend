@@ -71,7 +71,7 @@
                 @containerDefinition.container match {
 
                     case _: Dynamic | _: Fixed => {
-                        <div class="fc-container__inner">
+                        <div class="fc-container__inner container-@{containerDefinition.index + 1} | @componentName">
                             @standardContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding, frontId)
                         </div>
                     }
