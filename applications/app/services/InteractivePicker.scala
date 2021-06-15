@@ -1,7 +1,7 @@
 package services
 
 import com.gu.contentapi.client.model.v1.{CapiDateTime, ItemResponse, Tag}
-import conf.switches.Switches.InteractivePicker
+import conf.switches.Switches.InteractivePickerFeature
 import play.api.mvc.RequestHeader
 import implicits.Requests._
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
@@ -34,16 +34,6 @@ object InteractivePicker {
     date >= "2021-06-17"
   }
 
-  def decideRenderingTier(path: String, date: CapiDateTime)(implicit request: RequestHeader): RenderingTier = {
-    // This function decides which paths are sent to DCR for rendering
-    // We first check whether or not the path has been allow listed and then check the date of the atom
-
-    if (migratedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering
-    else if (!InteractivePicker.isSwitchedOn) FrontendLegacy
-    else if (dateIsPostTransition(date.iso8601.substring(0, 10))) DotcomRendering
-    else FrontendLegacy
-  }
-
   def isInTagBlockList(tags: List[Tag]): Boolean = {
     tags.exists(t => tagsBlockList(t.id))
   }
@@ -58,7 +48,9 @@ object InteractivePicker {
 
     if (forceDCR || isMigrated) DotcomRendering
     else if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
+    else if (!InteractivePickerFeature.isSwitchedOn) FrontendLegacy
     else if (isInTagBlockList(data.tags)) FrontendLegacy
-    else decideRenderingTier(path, data.datetime)
+    else if (dateIsPostTransition(data.datetime.iso8601.substring(0, 10))) DotcomRendering
+    else FrontendLegacy
   }
 }
