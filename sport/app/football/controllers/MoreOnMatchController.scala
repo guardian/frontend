@@ -15,6 +15,7 @@ import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
+import model.CompetitionDisplayHelpers.cleanTeamName
 
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -112,7 +113,7 @@ object NxAnswer {
     val players = makePlayers(teamV2)
     NxTeam(
       teamV1.id,
-      teamV1.name,
+      cleanTeamName(teamV1.name),
       players = players,
       score = teamV1.score.getOrElse(0),
       scorers = teamV1.scorers.fold(Nil: List[String])(

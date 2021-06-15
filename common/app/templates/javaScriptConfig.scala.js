@@ -22,11 +22,6 @@
             }
         },
         "images": {
-            "commercial": {
-                "ab-icon": "@Static("images/commercial/ab-icon.png")",
-                "abp-icon": "@Static("images/commercial/abp-icon.png")",
-                "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
-            },
             "acquisitions": {
                 "payment-methods": "@Static("images/acquisitions/payment-methods.png")",
                 "payment-methods-us": "@Static("images/acquisitions/payment-methods-us.png")",
