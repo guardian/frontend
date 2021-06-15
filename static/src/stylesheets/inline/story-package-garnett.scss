@@ -101,10 +101,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
     }
 
-    .fc-container__toggle {
-        display: none;
-    }
-
     .fc-container__header__title {
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
         margin-bottom: $gs-baseline / 2;
