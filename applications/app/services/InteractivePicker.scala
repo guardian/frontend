@@ -1,6 +1,6 @@
 package services
 
-import com.gu.contentapi.client.model.v1.{CapiDateTime, ItemResponse}
+import com.gu.contentapi.client.model.v1.{CapiDateTime, ItemResponse, Tag}
 import conf.switches.Switches.InteractivePicker
 import play.api.mvc.RequestHeader
 import implicits.Requests._
@@ -12,11 +12,18 @@ object DotcomRendering extends RenderingTier
 object FrontendLegacy extends RenderingTier
 object USElectionTracker2020AmpPage extends RenderingTier
 
-object InteractiveRendering {
+case class InteractivePickerInputData(datetime: CapiDateTime, tags: List[Tag])
+
+object InteractivePicker {
 
   val migratedPaths = List(
     "/sport/ng-interactive/2018/dec/26/lebron-james-comments-nba-nfl-divide",
   )
+
+  val tagsBlockList: Set[String] = Set(
+    "tracking/platformfunctional/dcrblacklist",
+  )
+
   def ensureStartingForwardSlash(str: String): String = {
     if (!str.startsWith("/")) ("/" + str) else str
   }
@@ -37,7 +44,13 @@ object InteractiveRendering {
     else FrontendLegacy
   }
 
-  def getRenderingTier(path: String, date: CapiDateTime)(implicit request: RequestHeader): RenderingTier = {
+  def isInTagBlockList(tags: List[Tag]): Boolean = {
+    tags.exists(t => tagsBlockList(t.id))
+  }
+
+  def getRenderingTier(path: String, data: InteractivePickerInputData)(implicit
+      request: RequestHeader,
+  ): RenderingTier = {
     val isSpecialElection = USElection2020AmpPages.pathIsSpecialHanding(path)
     val isAmp = request.host.contains("amp")
     val forceDCR = request.forceDCR
@@ -45,6 +58,7 @@ object InteractiveRendering {
 
     if (forceDCR || isMigrated) DotcomRendering
     else if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
-    else decideRenderingTier(path, date)
+    else if (isInTagBlockList(data.tags)) FrontendLegacy
+    else decideRenderingTier(path, data.datetime)
   }
 }

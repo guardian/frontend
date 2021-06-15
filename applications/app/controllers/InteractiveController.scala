@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringEscapeUtils
 import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
 import services.USElection2020AmpPages
-import services.USElection2020AmpPages.pathToAmpAtomId
+import services.InteractivePickerInputData
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 
 import scala.concurrent.duration._
@@ -137,16 +137,21 @@ class InteractiveController(
     }
   }
 
-  def itemResponseToCapiDateTime(ir: ItemResponse)(implicit request: RequestHeader): Option[CapiDateTime] = {
-    ir.content.flatMap(_.webPublicationDate)
+  def itemResponseToInteractivePickerInputData(ir: ItemResponse)(implicit
+      request: RequestHeader,
+  ): Option[InteractivePickerInputData] = {
+    for {
+      datetime <- ir.content.flatMap(_.webPublicationDate)
+      tags <- ir.content.map(_.tags)
+    } yield InteractivePickerInputData(datetime, tags.toList)
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
     lookupItemResponse(path).flatMap { itemResponse =>
-      itemResponseToCapiDateTime(itemResponse) match {
-        case Some(date) => {
-          val renderingTier = InteractiveRendering.getRenderingTier(path, date)
+      itemResponseToInteractivePickerInputData(itemResponse) match {
+        case Some(data) => {
+          val renderingTier = InteractivePicker.getRenderingTier(path, data)
           (requestFormat, renderingTier) match {
             case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
             case (AmpFormat, DotcomRendering)              => renderDCRAmp(itemResponse)
