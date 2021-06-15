@@ -1,6 +1,7 @@
 package services
 
 import com.gu.contentapi.client.model.v1.{CapiDateTime, ItemResponse}
+import conf.switches.Switches.InteractivePicker
 import play.api.mvc.RequestHeader
 import implicits.Requests._
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
@@ -31,6 +32,7 @@ object InteractiveRendering {
     // We first check whether or not the path has been allow listed and then check the date of the atom
 
     if (migratedPaths.contains(ensureStartingForwardSlash(path))) DotcomRendering
+    else if (!InteractivePicker.isSwitchedOn) FrontendLegacy
     else if (dateIsPostTransition(date.iso8601.substring(0, 10))) DotcomRendering
     else FrontendLegacy
   }
