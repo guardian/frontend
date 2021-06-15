@@ -22,7 +22,7 @@ jobs:
               env:
                   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
               with:
-                  args: --org=the-guardian --project-name=${{ github.repository }} --file=build.sbt --sarif-file-output=snyk-scala.sarif
+                  args: --org=the-guardian --project-name=${{ github.repository }} --file=build.sbt --prune-repeated-subdependencies --sarif-file-output=snyk-scala.sarif
 
                   command: test
             - name: Upload result to GitHub Code Scanning
@@ -38,5 +38,5 @@ jobs:
               env:
                   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
               with:
-                  args: --org=the-guardian --project-name=${{ github.repository }} --file=build.sbt
+                  args: --org=the-guardian --project-name=${{ github.repository }} --file=build.sbt --prune-repeated-subdependencies
                   command: monitor
