@@ -463,4 +463,14 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2021, 7, 20),
     exposeClientSide = false,
   )
+
+  val InteractivePicker = Switch(
+    SwitchGroup.Feature,
+    "interactive-picker",
+    "Activate the Interactive Picker (routing interactives between frontend and DCR)",
+    owners = Seq(Owner.withName("Pascal")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 9, 30),
+    exposeClientSide = false,
+  )
 }
