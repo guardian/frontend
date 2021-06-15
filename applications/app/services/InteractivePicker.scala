@@ -46,8 +46,8 @@ object InteractivePicker {
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
 
-    if (forceDCR || isMigrated) DotcomRendering
-    else if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
+    if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
+    else if (forceDCR || isMigrated) DotcomRendering
     else if (!InteractivePickerFeature.isSwitchedOn) FrontendLegacy
     else if (isInTagBlockList(data.tags)) FrontendLegacy
     else if (dateIsPostTransition(data.datetime.iso8601.substring(0, 10))) DotcomRendering
