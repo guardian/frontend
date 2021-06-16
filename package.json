@@ -18,7 +18,7 @@
     "@guardian/automat-contributions": "^0.3.6",
     "@guardian/automat-modules": "^0.3.8",
     "@guardian/braze-components": "^2.1.0",
-    "@guardian/commercial-core": "^0.18.0",
+    "@guardian/commercial-core": "^0.19.0",
     "@guardian/consent-management-platform": "^6.11.3",
     "@guardian/libs": "^1.8.0",
     "@guardian/shimport": "^1.0.2",
