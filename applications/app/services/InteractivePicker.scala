@@ -31,7 +31,7 @@ object InteractivePicker {
   def dateIsPostTransition(date: String): Boolean = {
     // It's the responsibility of the caller of this function to ensure that the date
     // is given as string in format "YYYY-MM-DD", otherwise "results may vary".
-    date >= "2021-06-17"
+    date >= "2021-06-21"
   }
 
   def isInTagBlockList(tags: List[Tag]): Boolean = {
