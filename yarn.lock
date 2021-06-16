@@ -1902,10 +1902,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.19.0.tgz#aa3a1db0f7bb45a3e7ab4e94b3457206277ff1b8"
   integrity sha512-K91YUAXnLAvaJtak55glUeVv81/RRTPLDkgFzc5FH0mMl1jeY0myC5kyZIID6dxTb3PpNbHmQIvy4c5syF2ixw==
 
-"@guardian/consent-management-platform@^6.11.3":
-  version "6.11.3"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.11.3.tgz#92a7a6221587bcd86851e6a90198ad618f51b1e9"
-  integrity sha512-xKocfioFtkq5v9MuupT1ugo290NfSD4yIMl7m89xek6W+7B2fKjh0cAMHj4u2LQSXmEoyQ76vs2IaB3w5+98ZQ==
+"@guardian/consent-management-platform@^6.11.4":
+  version "6.11.4"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.11.4.tgz#b34c312cf6694278afcaa8541e09cd5e2f8b1ad3"
+  integrity sha512-1H06cb3rnrrk/lzecNS+P5/mXXytEazSSmBtEwuUiMdiRE6RDkOVLyvzNyfHy9z2/xndrfaonR2clWmzkEWgbQ==
 
 "@guardian/eslint-config-typescript@^0.5.0":
   version "0.5.0"
