@@ -1,18 +1,15 @@
 .new-header__cta-bar {
-    position: absolute;
-    top: 30px;
-    left: $gs-gutter / 2;
-
-    @include mq(mobileMedium) {
-        top: 37px;
-    }
+    padding-top: 33px;
+    padding-left: 10px;
+    max-width: 310px;
 
     @include mq(mobileLandscape) {
-        left: $gs-gutter;
+        padding-left: $gs-gutter;
     }
 
     @include mq(tablet) {
-        top: 0;
+        padding-top: 4px;
+        padding-bottom: 20px;
     }
 
     @include mq(desktop) {
