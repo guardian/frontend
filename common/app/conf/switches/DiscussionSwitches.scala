@@ -54,3 +54,5 @@ trait DiscussionSwitches {
   )
 
 }
+
+object Playground {}

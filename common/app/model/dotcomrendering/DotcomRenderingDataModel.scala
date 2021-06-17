@@ -22,6 +22,7 @@ import model.{
   PageWithStoryPackage,
 }
 import navigation._
+import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
@@ -53,6 +54,7 @@ case class DotcomRenderingDataModel(
     tags: List[Tag],
     pillar: String,
     isImmersive: Boolean,
+    isLegacyInteractive: Boolean,
     sectionLabel: String,
     sectionUrl: String,
     sectionName: Option[String],
@@ -114,6 +116,7 @@ object DotcomRenderingDataModel {
         "designType" -> model.designType,
         "tags" -> model.tags,
         "pillar" -> model.pillar,
+        "isLegacyInteractive" -> model.isLegacyInteractive,
         "isImmersive" -> model.isImmersive,
         "sectionLabel" -> model.sectionLabel,
         "sectionUrl" -> model.sectionUrl,
@@ -362,6 +365,9 @@ object DotcomRenderingDataModel {
       }
     }
 
+    val isLegacyInteractive =
+      modifiedFormat.design == InteractiveDesign // TODO update to check if webPublicationDate is after switchover date (once we switch)
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
@@ -382,6 +388,7 @@ object DotcomRenderingDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       isCommentable = content.trail.isCommentable,
       isImmersive = isImmersive,
+      isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
       keyEvents = keyEventsDCR.toList,
       linkedData = linkedData,
