@@ -20,7 +20,7 @@
     "@guardian/braze-components": "^2.1.0",
     "@guardian/commercial-core": "^0.19.0",
     "@guardian/consent-management-platform": "^6.11.3",
-    "@guardian/libs": "^1.8.0",
+    "@guardian/libs": "^2",
     "@guardian/shimport": "^1.0.2",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
