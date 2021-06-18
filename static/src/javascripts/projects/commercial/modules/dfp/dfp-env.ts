@@ -1,4 +1,3 @@
-import { getSwitches } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { getUrlVars as _getUrlVars } from '../../../../lib/url';
 import type { Advert } from './Advert';
