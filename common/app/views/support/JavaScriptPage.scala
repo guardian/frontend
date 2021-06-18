@@ -54,12 +54,6 @@ object JavaScriptPage {
       }),
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
-      "hbImpl" -> JsObject(
-        Seq(
-          "prebid" -> JsBoolean(prebidSwitch.isSwitchedOn),
-          "a9" -> JsBoolean(a9Switch.isSwitchedOn),
-        ),
-      ),
       "isSensitive" -> JsBoolean(page.metadata.sensitive),
     ) ++ sponsorshipType
 

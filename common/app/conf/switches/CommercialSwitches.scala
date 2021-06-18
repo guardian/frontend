@@ -275,7 +275,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val redplanetForAUSSwitch: Switch = Switch(
@@ -318,7 +318,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val prebidAnalytics: Switch = Switch(
