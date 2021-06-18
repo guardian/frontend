@@ -1,3 +1,4 @@
+import { getSwitches } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { getUrlVars as _getUrlVars } from '../../../../lib/url';
 import type { Advert } from './Advert';
@@ -18,6 +19,8 @@ interface DfpEnv {
 	shouldLazyLoad: () => boolean;
 }
 
+const switches = await getSwitches();
+
 export const dfpEnv: DfpEnv = {
 	/* renderStartTime: integer. Point in time when DFP kicks in */
 	renderStartTime: -1,
@@ -26,9 +29,13 @@ export const dfpEnv: DfpEnv = {
 	adSlotSelector: '.js-ad-slot',
 
 	/* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
-	hbImpl: (config as {
-		get: (arg: string) => Record<string, boolean>;
-	}).get('page.hbImpl'),
+	hbImpl: {
+		// TODO: fix the Switch type upstream
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- it could be undefined
+		prebid: switches.prebidSwitch ?? false,
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- it could be undefined
+		a9: switches.a9Switch ?? false,
+	},
 
 	/* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
 	lazyLoadEnabled: false,
