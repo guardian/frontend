@@ -40,7 +40,7 @@ interface Window {
 			pageViewId: string;
 		};
 		config: {
-			switches: Record<string, boolean>;
+			switches: Record<string, boolean | undefined>;
 		};
 	};
 }

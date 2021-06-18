@@ -31,9 +31,7 @@ export const dfpEnv: DfpEnv = {
 	/* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
 	hbImpl: {
 		// TODO: fix the Switch type upstream
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- it could be undefined
 		prebid: switches.prebidHeaderBidding ?? false,
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- it could be undefined
 		a9: switches.a9HeaderBidding ?? false,
 	},
 	/* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
