@@ -268,7 +268,7 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val a9Switch: Switch = Switch(
+  val a9HeaderBidding: Switch = Switch(
     group = CommercialPrebid,
     name = "a9-header-bidding",
     description = "Turn on A9 header bidding",
@@ -311,7 +311,7 @@ trait CommercialSwitches {
 
 trait PrebidSwitches {
 
-  val prebidSwitch: Switch = Switch(
+  val prebidHeaderBidding: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-header-bidding",
     description = "Turn on Prebid header bidding (takes priority over Sonobi)",

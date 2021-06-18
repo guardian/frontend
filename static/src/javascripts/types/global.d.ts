@@ -39,5 +39,8 @@ interface Window {
 			viewId: string;
 			pageViewId: string;
 		};
+		config: {
+			switches: Record<string, boolean>;
+		};
 	};
 }
