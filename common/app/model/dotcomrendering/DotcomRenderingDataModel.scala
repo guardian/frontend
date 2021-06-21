@@ -366,7 +366,7 @@ object DotcomRenderingDataModel {
     }
 
     val isLegacyInteractive =
-      modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate.isAfter(InteractiveSwitchOver.date)
+        modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate.isBefore(InteractiveSwitchOver.date)
 
     DotcomRenderingDataModel(
       author = author,
