@@ -1,7 +1,7 @@
 import {
     isPayingMember,
     accountDataUpdateWarning,
-    getLastOneOffContributionDate,
+    getLastOneOffContributionTimestamp,
     getLastRecurringContributionDate,
 } from 'common/modules/commercial/user-features';
 import fastdom from 'lib/fastdom-promise';
@@ -144,7 +144,7 @@ export const membershipBanner = {
 };
 
 export const initMembership = () => {
-    const lastOneOff = getLastOneOffContributionDate();
+    const lastOneOff = getLastOneOffContributionTimestamp();
     const lastRecurring = getLastRecurringContributionDate();
 
     if (lastOneOff) {
