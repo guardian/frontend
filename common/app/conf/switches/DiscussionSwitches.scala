@@ -54,5 +54,3 @@ trait DiscussionSwitches {
   )
 
 }
-
-object Playground {}
