@@ -160,18 +160,18 @@ object KnockoutSpider {
     ),
     // Euro 2020
     "750" -> List(
-      ZonedDateTime.of(2021, 6, 26, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 37
-      ZonedDateTime.of(2021, 6, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 38
-      ZonedDateTime.of(2021, 6, 27, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 39
       ZonedDateTime.of(2021, 6, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 40
-      ZonedDateTime.of(2021, 6, 28, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 41
+      ZonedDateTime.of(2021, 6, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 38
       ZonedDateTime.of(2021, 6, 28, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 42
-      ZonedDateTime.of(2021, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 43
+      ZonedDateTime.of(2021, 6, 28, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 41
       ZonedDateTime.of(2021, 6, 29, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 44
-      ZonedDateTime.of(2021, 7, 2, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 45
+      ZonedDateTime.of(2021, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 43
+      ZonedDateTime.of(2021, 6, 27, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 39
+      ZonedDateTime.of(2021, 6, 26, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 37
       ZonedDateTime.of(2021, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 46
-      ZonedDateTime.of(2021, 7, 3, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 47
+      ZonedDateTime.of(2021, 7, 2, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 45
       ZonedDateTime.of(2021, 7, 3, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 48
+      ZonedDateTime.of(2021, 7, 3, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 47
       ZonedDateTime.of(2021, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 49
       ZonedDateTime.of(2021, 7, 7, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 50
       ZonedDateTime.of(2021, 7, 11, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final         // Match 51
