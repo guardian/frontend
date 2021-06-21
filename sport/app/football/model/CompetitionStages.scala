@@ -119,6 +119,12 @@ case class KnockoutSpider(
 object KnockoutSpider {
   // Pay attention to the timezone for the orderings
   // If the dates of the matches don't line up with the ordering dates, the ordering will be ignored.
+
+  /*
+    How to find the line ordering ?
+    To avoid the same drama every two or so years, see this PR: https://github.com/guardian/frontend/pull/23929
+   */
+
   val orderings: Map[String, List[ZonedDateTime]] = Map(
     // world cup 2018
     "700" -> List(
