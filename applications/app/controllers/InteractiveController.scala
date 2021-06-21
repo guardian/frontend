@@ -19,6 +19,7 @@ import renderers.DotcomRenderingService
 import services.USElection2020AmpPages
 import services.InteractivePickerInputData
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
+import org.joda.time.DateTime
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
@@ -141,7 +142,8 @@ class InteractiveController(
       request: RequestHeader,
   ): Option[InteractivePickerInputData] = {
     for {
-      datetime <- ir.content.flatMap(_.webPublicationDate)
+      capiDatetime <- ir.content.flatMap(_.webPublicationDate)
+      datetime = DateTime.parse(capiDatetime.iso8601)
       tags <- ir.content.map(_.tags)
     } yield InteractivePickerInputData(datetime, tags.toList)
   }

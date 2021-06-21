@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.{CapiDateTime, ItemResponse, Tag}
 import conf.switches.Switches.InteractivePickerFeature
 import play.api.mvc.RequestHeader
 import implicits.Requests._
+import model.dotcomrendering.InteractiveSwitchOver
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat
 
@@ -12,7 +13,7 @@ object DotcomRendering extends RenderingTier
 object FrontendLegacy extends RenderingTier
 object USElectionTracker2020AmpPage extends RenderingTier
 
-case class InteractivePickerInputData(datetime: CapiDateTime, tags: List[Tag])
+case class InteractivePickerInputData(datetime: DateTime, tags: List[Tag])
 
 object InteractivePicker {
 
@@ -28,10 +29,10 @@ object InteractivePicker {
     if (!str.startsWith("/")) ("/" + str) else str
   }
 
-  def dateIsPostTransition(date: String): Boolean = {
+  def dateIsPostTransition(date: DateTime): Boolean = {
     // It's the responsibility of the caller of this function to ensure that the date
     // is given as string in format "YYYY-MM-DD", otherwise "results may vary".
-    date >= "2021-06-21"
+    date.isAfter(InteractiveSwitchOver.date)
   }
 
   def isInTagBlockList(tags: List[Tag]): Boolean = {
@@ -50,7 +51,7 @@ object InteractivePicker {
     else if (forceDCR || isMigrated) DotcomRendering
     else if (!InteractivePickerFeature.isSwitchedOn) FrontendLegacy
     else if (isInTagBlockList(data.tags)) FrontendLegacy
-    else if (dateIsPostTransition(data.datetime.iso8601.substring(0, 10))) DotcomRendering
+    else if (dateIsPostTransition(data.datetime)) DotcomRendering
     else FrontendLegacy
   }
 }
