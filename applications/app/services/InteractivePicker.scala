@@ -44,8 +44,7 @@ object InteractivePicker {
 
     if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
     else if (forceDCR || isMigrated) DotcomRendering
-    else if (!switchOn || isOptedOut(tags)) FrontendLegacy
-    else if (publishedPostSwitch) DotcomRendering
+    else if (switchOn && !isOptedOut(tags) && publishedPostSwitch) DotcomRendering
     else FrontendLegacy
   }
 }
