@@ -12,8 +12,6 @@ object DotcomRendering extends RenderingTier
 object FrontendLegacy extends RenderingTier
 object USElectionTracker2020AmpPage extends RenderingTier
 
-case class InteractivePickerInputData(datetime: CapiDateTime, tags: List[Tag])
-
 object InteractivePicker {
 
   val migratedPaths = List(
@@ -38,7 +36,7 @@ object InteractivePicker {
     tags.exists(t => tagsBlockList(t.id))
   }
 
-  def getRenderingTier(path: String, data: InteractivePickerInputData)(implicit
+  def getRenderingTier(path: String, datetime: CapiDateTime, tags: List[Tag])(implicit
       request: RequestHeader,
   ): RenderingTier = {
     val isSpecialElection = USElection2020AmpPages.pathIsSpecialHanding(path)
@@ -46,11 +44,11 @@ object InteractivePicker {
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
     val switchOn = InteractivePickerFeature.isSwitchedOn
-    val publishedPostSwitch = dateIsPostTransition(data.datetime.iso8601.substring(0, 10))
+    val publishedPostSwitch = dateIsPostTransition(datetime.iso8601.substring(0, 10))
 
     if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
     else if (forceDCR || isMigrated) DotcomRendering
-    else if (!switchOn || isInTagBlockList(data.tags)) FrontendLegacy
+    else if (!switchOn || isInTagBlockList(tags)) FrontendLegacy
     else if (publishedPostSwitch) DotcomRendering
     else FrontendLegacy
   }
