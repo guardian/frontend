@@ -13,16 +13,10 @@ object DotcomRendering extends RenderingTier
 object FrontendLegacy extends RenderingTier
 object USElectionTracker2020AmpPage extends RenderingTier
 
-case class InteractivePickerInputData(datetime: DateTime, tags: List[Tag])
-
 object InteractivePicker {
 
   val migratedPaths = List(
     "/sport/ng-interactive/2018/dec/26/lebron-james-comments-nba-nfl-divide",
-  )
-
-  val tagsBlockList: Set[String] = Set(
-    "tracking/platformfunctional/dcrblacklist",
   )
 
   def ensureStartingForwardSlash(str: String): String = {
@@ -30,28 +24,26 @@ object InteractivePicker {
   }
 
   def dateIsPostTransition(date: DateTime): Boolean = {
-    // It's the responsibility of the caller of this function to ensure that the date
-    // is given as string in format "YYYY-MM-DD", otherwise "results may vary".
     date.isAfter(InteractiveSwitchOver.date)
   }
 
-  def isInTagBlockList(tags: List[Tag]): Boolean = {
-    tags.exists(t => tagsBlockList(t.id))
+  def isOptedOut(tags: List[Tag]): Boolean = {
+    tags.exists(t => t.id == "tracking/platformfunctional/dcrblacklist")
   }
 
-  def getRenderingTier(path: String, data: InteractivePickerInputData)(implicit
+  def getRenderingTier(path: String, datetime: DateTime, tags: List[Tag])(implicit
       request: RequestHeader,
   ): RenderingTier = {
     val isSpecialElection = USElection2020AmpPages.pathIsSpecialHanding(path)
     val isAmp = request.host.contains("amp")
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
+    val switchOn = InteractivePickerFeature.isSwitchedOn
+    val publishedPostSwitch = dateIsPostTransition(datetime)
 
     if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
     else if (forceDCR || isMigrated) DotcomRendering
-    else if (!InteractivePickerFeature.isSwitchedOn) FrontendLegacy
-    else if (isInTagBlockList(data.tags)) FrontendLegacy
-    else if (dateIsPostTransition(data.datetime)) DotcomRendering
+    else if (switchOn && !isOptedOut(tags) && publishedPostSwitch) DotcomRendering
     else FrontendLegacy
   }
 }
