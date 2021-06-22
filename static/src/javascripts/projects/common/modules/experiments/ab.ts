@@ -32,7 +32,7 @@ export const getAsyncTestsToRun = (): Promise<
 export const getSynchronousParticipations = (): Participations =>
 	runnableTestsToParticipations(getSynchronousTestsToRun());
 
-    // This excludes epic & banner tests
+// This excludes epic & banner tests
 export const isInVariantSynchronous = (
 	test: ABTest,
 	variantId: string,
