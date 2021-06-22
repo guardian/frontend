@@ -2,13 +2,18 @@ import {
 	getMvtNumValues,
 	getMvtValue,
 } from 'common/modules/analytics/mvt-cookie';
-import config from 'lib/config';
-import { isExpired } from 'lib/time-utils';
 import { logAutomatEvent } from 'common/modules/experiments/automatLog';
-import { getVariantFromLocalStorage } from './ab-local-storage';
-import { getVariantFromUrl, getIgnoreCanRunFromUrl } from './ab-url';
+import config_ from 'lib/config';
+import { isExpired } from 'lib/time-utils';
 import { NOT_IN_TEST } from './ab-constants';
+import { getVariantFromLocalStorage } from './ab-local-storage';
+import { getIgnoreCanRunFromUrl, getVariantFromUrl } from './ab-url';
 import { isTestSwitchedOn } from './ab-utils';
+
+// This is really a hacky workaround ⚠️
+const config = config_ as {
+	get: (s: string, d?: string) => string | boolean;
+};
 
 // We only take account of a variant's canRun function if it's defined.
 // If it's not, assume the variant can be run.
@@ -20,7 +25,7 @@ const testCanBeRun = (test: ABTest): boolean => {
 	const isSensitive = config.get('page.isSensitive');
 	const shouldShowForSensitive = !!test.showForSensitive;
 	const isTestOn = isTestSwitchedOn(test.id);
-	const canTestBeRun = !test.canRun || test.canRun();
+	const canTestBeRun = test.canRun();
 
 	logAutomatEvent({
 		key: test.id,
@@ -78,7 +83,7 @@ export const runnableTest = <T extends ABTest>(
 	const fromUrl = getVariantFromUrl(test);
 	const fromLocalStorage = getVariantFromLocalStorage(test);
 	const fromCookie = computeVariantFromMvtCookie(test);
-	const variantToRun = fromUrl || fromLocalStorage || fromCookie;
+	const variantToRun = fromUrl ?? fromLocalStorage ?? fromCookie;
 	const ignoreCanRun = fromUrl && getIgnoreCanRunFromUrl(); // check fromUrl to only ignore can run for forced tests
 
 	if (variantToRun && ignoreCanRun) {
@@ -91,10 +96,11 @@ export const runnableTest = <T extends ABTest>(
 
 	return null;
 };
+
 export const allRunnableTests = <T extends ABTest>(
 	tests: readonly T[],
 ): ReadonlyArray<Runnable<T>> =>
-	tests.reduce((accumulator, currentValue) => {
+	tests.reduce<ReadonlyArray<Runnable<T>>>((accumulator, currentValue) => {
 		const rt = runnableTest(currentValue);
 		return rt ? [...accumulator, rt] : accumulator;
 	}, []);
