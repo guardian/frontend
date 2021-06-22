@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Blocks, CapiDateTime, ItemResponse, Tag, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Tag}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches

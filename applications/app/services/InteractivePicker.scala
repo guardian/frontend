@@ -1,12 +1,11 @@
 package services
 
-import com.gu.contentapi.client.model.v1.{CapiDateTime, ItemResponse, Tag}
+import com.gu.contentapi.client.model.v1.Tag
 import conf.switches.Switches.InteractivePickerFeature
 import play.api.mvc.RequestHeader
 import implicits.Requests._
 import model.dotcomrendering.InteractiveSwitchOver
-import org.joda.time.{DateTime, DateTimeZone, LocalDate}
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.DateTime
 
 sealed trait RenderingTier
 object DotcomRendering extends RenderingTier
