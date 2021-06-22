@@ -68,7 +68,7 @@ class InteractiveController(
     capiLookup.lookup(path, range = Some(ArticleBlocks))
   }
 
-  def fItemResponseToFE(item: Future[ItemResponse])(implicit
+  def itemResponseToModel(item: Future[ItemResponse])(implicit
       request: RequestHeader,
   ): Future[Either[(InteractivePage, Blocks), Result]] = {
     val result = item map { response =>
@@ -87,7 +87,7 @@ class InteractiveController(
   private def lookup(
       path: String,
   )(implicit request: RequestHeader): Future[Either[(InteractivePage, Blocks), Result]] = {
-    fItemResponseToFE(lookupItemResponse(path: String))
+    itemResponseToModel(lookupItemResponse(path: String))
   }
 
   private def render(model: InteractivePage)(implicit request: RequestHeader) = {
@@ -99,14 +99,14 @@ class InteractiveController(
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
   def renderItemLegacy(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(Future.successful(item)) map {
+    itemResponseToModel(Future.successful(item)) map {
       case Left((model, _)) => render(model)
       case Right(other)     => RenderOtherStatus(other)
     }
   }
 
   def renderDCR(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(Future.successful(item)) flatMap {
+    itemResponseToModel(Future.successful(item)) flatMap {
       case Left((model, blocks)) => {
         val pageType = PageType.apply(model, request, context)
         remoteRenderer.getInteractive(wsClient, model, blocks, pageType)
@@ -116,7 +116,7 @@ class InteractiveController(
   }
 
   def renderDCRJson(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(Future.successful(item)) map {
+    itemResponseToModel(Future.successful(item)) map {
       case Left((model, blocks)) => {
         val data =
           DotcomRenderingDataModel.forInteractive(model, blocks, request, PageType.apply(model, request, context))
@@ -128,7 +128,7 @@ class InteractiveController(
   }
 
   def renderDCRAmp(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(Future.successful(item)) flatMap {
+    itemResponseToModel(Future.successful(item)) flatMap {
       case Left((model, blocks)) => {
         val pageType = PageType.apply(model, request, context)
         remoteRenderer.getAMPInteractive(wsClient, model, blocks, pageType)
