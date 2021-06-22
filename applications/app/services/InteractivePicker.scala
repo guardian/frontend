@@ -18,10 +18,6 @@ object InteractivePicker {
     "/sport/ng-interactive/2018/dec/26/lebron-james-comments-nba-nfl-divide",
   )
 
-  val tagsBlockList: Set[String] = Set(
-    "tracking/platformfunctional/dcrblacklist",
-  )
-
   def ensureStartingForwardSlash(str: String): String = {
     if (!str.startsWith("/")) ("/" + str) else str
   }
@@ -32,8 +28,8 @@ object InteractivePicker {
     date >= "2021-06-23"
   }
 
-  def isInTagBlockList(tags: List[Tag]): Boolean = {
-    tags.exists(t => tagsBlockList(t.id))
+  def isOptedOut(tags: List[Tag]): Boolean = {
+    tags.exists(t => t.id == "tracking/platformfunctional/dcrblacklist")
   }
 
   def getRenderingTier(path: String, datetime: CapiDateTime, tags: List[Tag])(implicit
@@ -48,7 +44,7 @@ object InteractivePicker {
 
     if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
     else if (forceDCR || isMigrated) DotcomRendering
-    else if (!switchOn || isInTagBlockList(tags)) FrontendLegacy
+    else if (!switchOn || isOptedOut(tags)) FrontendLegacy
     else if (publishedPostSwitch) DotcomRendering
     else FrontendLegacy
   }
