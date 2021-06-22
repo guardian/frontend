@@ -51,8 +51,9 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
     val bodyInteractiveBlockScripts = for {
       blocks <- page.article.blocks.toSeq
       body <- blocks.body
-      interactiveElement <- body.elements if interactiveElement.isInstanceOf[InteractiveBlockElement]
-      scriptUrl <- Try(interactiveElement.asInstanceOf[InteractiveBlockElement]).toOption
+      element <- body.elements if element.isInstanceOf[InteractiveBlockElement]
+      interactiveElement <- Try(element.asInstanceOf[InteractiveBlockElement]).toOption
+      scriptUrl <- interactiveElement.scriptUrl
     } yield scriptUrl
 
     List(
