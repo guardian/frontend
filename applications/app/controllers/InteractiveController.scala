@@ -160,7 +160,10 @@ class InteractiveController(
             case _                                         => renderItemLegacy(itemResponse)
           }
         }
-        case None => Future.successful(Ok("error: 915efe11-2287-45fe-be84-7f9d77d9bad1"))
+        case None =>
+          Future.successful(
+            NotFound("Could not determine InteractivePicker input data [error: 915efe11-2287-45fe-be84-7f9d77d9bad1]"),
+          )
       }
     }
   }
