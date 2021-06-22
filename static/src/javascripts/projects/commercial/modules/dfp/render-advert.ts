@@ -18,7 +18,10 @@ import { renderAdvertLabel } from './render-advert-label';
  *
  */
 
-type Callback = {
+/**
+ * Types of events that are returned when executing a size change callback
+ */
+type CallbackEvent = {
 	event: {
 		slot: {
 			getOutOfPage: () => unknown;
@@ -28,7 +31,7 @@ type Callback = {
 
 const addClassIfHasClass = (newClassNames: string[]) =>
 	function hasClass(classNames: string[]) {
-		return function onAdvertRendered(_: Callback, advert: Advert) {
+		return function onAdvertRendered(_: CallbackEvent, advert: Advert) {
 			if (
 				classNames.some((className) =>
 					advert.node.classList.contains(className),
@@ -62,7 +65,7 @@ const removeStyleFromAdIframe = (
 
 const sizeCallbacks: Record<
 	string,
-	undefined | ((arg0: Callback, arg1: Advert) => Promise<void>)
+	undefined | ((arg0: CallbackEvent, arg1: Advert) => Promise<void>)
 > = {};
 
 /**
@@ -71,7 +74,7 @@ const sizeCallbacks: Record<
  * CSS transitions when expanding/collapsing various native style formats.
  */
 sizeCallbacks[adSizes.fluid.toString()] = (
-	renderSlotEvent: Callback,
+	renderSlotEvent: CallbackEvent,
 	advert: Advert,
 ) =>
 	addFluid(['ad-slot'])(renderSlotEvent, advert).then(() =>
@@ -82,7 +85,7 @@ sizeCallbacks[adSizes.fluid.toString()] = (
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
 sizeCallbacks[adSizes.mpu.toString()] = (
-	_: Callback,
+	_: CallbackEvent,
 	advert: Advert,
 ): Promise<void> =>
 	fastdom.measure(() => {
@@ -100,7 +103,10 @@ sizeCallbacks[adSizes.mpu.toString()] = (
 /**
  * Resolve the stickyMpu.whenRendered promise
  */
-sizeCallbacks[adSizes.halfPage.toString()] = (_: Callback, advert: Advert) =>
+sizeCallbacks[adSizes.halfPage.toString()] = (
+	_: CallbackEvent,
+	advert: Advert,
+) =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('ad-slot--right')) {
 			stickyMpu(advert.node);
@@ -111,7 +117,10 @@ sizeCallbacks[adSizes.halfPage.toString()] = (_: Callback, advert: Advert) =>
 		void fastdom.mutate(() => advert.updateExtraSlotClasses());
 	});
 
-sizeCallbacks[adSizes.skyscraper.toString()] = (_: Callback, advert: Advert) =>
+sizeCallbacks[adSizes.skyscraper.toString()] = (
+	_: CallbackEvent,
+	advert: Advert,
+) =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('ad-slot--right')) {
 			stickyMpu(advert.node);
@@ -124,13 +133,13 @@ sizeCallbacks[adSizes.skyscraper.toString()] = (_: Callback, advert: Advert) =>
 		);
 	});
 
-sizeCallbacks[adSizes.video.toString()] = (_: Callback, advert: Advert) =>
+sizeCallbacks[adSizes.video.toString()] = (_: CallbackEvent, advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('u-h');
 	});
 
 sizeCallbacks[adSizes.outstreamDesktop.toString()] = (
-	_: Callback,
+	_: CallbackEvent,
 	advert: Advert,
 ) =>
 	fastdom.mutate(() => {
@@ -138,7 +147,7 @@ sizeCallbacks[adSizes.outstreamDesktop.toString()] = (
 	});
 
 sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (
-	_: Callback,
+	_: CallbackEvent,
 	advert: Advert,
 ) =>
 	fastdom.mutate(() => {
@@ -146,14 +155,17 @@ sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (
 	});
 
 sizeCallbacks[adSizes.outstreamMobile.toString()] = (
-	_: Callback,
+	_: CallbackEvent,
 	advert: Advert,
 ) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.googleCard.toString()] = (_: Callback, advert: Advert) =>
+sizeCallbacks[adSizes.googleCard.toString()] = (
+	_: CallbackEvent,
+	advert: Advert,
+) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--gc');
 	});
@@ -162,7 +174,7 @@ sizeCallbacks[adSizes.googleCard.toString()] = (_: Callback, advert: Advert) =>
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
  * and their containers closed up.
  */
-const outOfPageCallback = ({ event }: Callback, advert: Advert) => {
+const outOfPageCallback = ({ event }: CallbackEvent, advert: Advert) => {
 	if (!event.slot.getOutOfPage()) {
 		const parent = advert.node.parentNode as HTMLElement;
 		return fastdom.mutate(() => {
