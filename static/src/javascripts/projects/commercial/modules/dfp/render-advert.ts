@@ -18,9 +18,17 @@ import { renderAdvertLabel } from './render-advert-label';
  *
  */
 
+type Callback = {
+	event: {
+		slot: {
+			getOutOfPage: () => unknown;
+		};
+	};
+};
+
 const addClassIfHasClass = (newClassNames: string[]) =>
 	function hasClass(classNames: string[]) {
-		return function onAdvertRendered(_: any, advert: Advert) {
+		return function onAdvertRendered(_: Callback, advert: Advert) {
 			if (
 				classNames.some((className) =>
 					advert.node.classList.contains(className),
@@ -39,7 +47,10 @@ const addClassIfHasClass = (newClassNames: string[]) =>
 const addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
 const addFluid = addClassIfHasClass(['ad-slot--fluid']);
 
-const removeStyleFromAdIframe = (advert: { node: HTMLElement }, style: any) => {
+const removeStyleFromAdIframe = (
+	advert: { node: HTMLElement },
+	style: string,
+) => {
 	const adIframe = advert.node.querySelector('iframe');
 
 	void fastdom.mutate(() => {
@@ -51,7 +62,7 @@ const removeStyleFromAdIframe = (advert: { node: HTMLElement }, style: any) => {
 
 const sizeCallbacks: Record<
 	string,
-	undefined | ((arg1: any, arg2: Advert) => Promise<void>)
+	undefined | ((arg0: Callback, arg1: Advert) => Promise<void>)
 > = {};
 
 /**
@@ -60,7 +71,7 @@ const sizeCallbacks: Record<
  * CSS transitions when expanding/collapsing various native style formats.
  */
 sizeCallbacks[adSizes.fluid.toString()] = (
-	renderSlotEvent: any,
+	renderSlotEvent: Callback,
 	advert: Advert,
 ) =>
 	addFluid(['ad-slot'])(renderSlotEvent, advert).then(() =>
@@ -71,9 +82,9 @@ sizeCallbacks[adSizes.fluid.toString()] = (
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
 sizeCallbacks[adSizes.mpu.toString()] = (
-	_: any,
+	_: Callback,
 	advert: Advert,
-): Promise<any> =>
+): Promise<void> =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('js-sticky-mpu')) {
 			if (advert.node.classList.contains('ad-slot--right')) {
@@ -89,7 +100,7 @@ sizeCallbacks[adSizes.mpu.toString()] = (
 /**
  * Resolve the stickyMpu.whenRendered promise
  */
-sizeCallbacks[adSizes.halfPage.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.halfPage.toString()] = (_: Callback, advert: Advert) =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('ad-slot--right')) {
 			stickyMpu(advert.node);
@@ -100,7 +111,7 @@ sizeCallbacks[adSizes.halfPage.toString()] = (_: any, advert: Advert) =>
 		void fastdom.mutate(() => advert.updateExtraSlotClasses());
 	});
 
-sizeCallbacks[adSizes.skyscraper.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.skyscraper.toString()] = (_: Callback, advert: Advert) =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('ad-slot--right')) {
 			stickyMpu(advert.node);
@@ -113,30 +124,36 @@ sizeCallbacks[adSizes.skyscraper.toString()] = (_: any, advert: Advert) =>
 		);
 	});
 
-sizeCallbacks[adSizes.video.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.video.toString()] = (_: Callback, advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('u-h');
 	});
 
-sizeCallbacks[adSizes.outstreamDesktop.toString()] = (_: any, advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--outstream');
-	});
-
-sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (
-	_: any,
+sizeCallbacks[adSizes.outstreamDesktop.toString()] = (
+	_: Callback,
 	advert: Advert,
 ) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.outstreamMobile.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (
+	_: Callback,
+	advert: Advert,
+) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.googleCard.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.outstreamMobile.toString()] = (
+	_: Callback,
+	advert: Advert,
+) =>
+	fastdom.mutate(() => {
+		advert.updateExtraSlotClasses('ad-slot--outstream');
+	});
+
+sizeCallbacks[adSizes.googleCard.toString()] = (_: Callback, advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--gc');
 	});
@@ -145,14 +162,7 @@ sizeCallbacks[adSizes.googleCard.toString()] = (_: any, advert: Advert) =>
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
  * and their containers closed up.
  */
-const outOfPageCallback = (
-	event: {
-		slot: {
-			getOutOfPage: () => unknown;
-		};
-	},
-	advert: Advert,
-) => {
+const outOfPageCallback = ({ event }: Callback, advert: Advert) => {
 	if (!event.slot.getOutOfPage()) {
 		const parent = advert.node.parentNode as HTMLElement;
 		return fastdom.mutate(() => {
@@ -217,12 +227,12 @@ const addContentClass = (adSlotNode: HTMLElement) => {
 export const renderAdvert = (
 	advert: Advert,
 	slotRenderEndedEvent: Event,
-): Promise<any> => {
+): Promise<boolean> => {
 	addContentClass(advert.node);
 
 	return getAdIframe(advert.node)
 		.then((isRendered) => {
-			const callSizeCallback = (): Promise<any> => {
+			const callSizeCallback = () => {
 				if (advert.size) {
 					let size = advert.size.toString();
 
@@ -246,7 +256,7 @@ export const renderAdvert = (
 							  }),
 					);
 				}
-				return Promise.resolve(null);
+				return Promise.resolve();
 			};
 
 			const addRenderedClass = () =>
