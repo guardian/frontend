@@ -71,10 +71,7 @@ const containsDMPU = (ad: Advert): boolean =>
 const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
 	if (!containsDMPU(ad)) {
 		ad.sizes.desktop.push([300, 600], [160, 600]);
-		const defineSizeMappingFunction = ad.slot.defineSizeMapping as (
-			asm: SizeMapping[],
-		) => Slot;
-		defineSizeMappingFunction([[[0, 0], ad.sizes.desktop]]);
+		ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
 		void fastdom.mutate(() => {
 			adSlot.setAttribute(
 				'data-desktop',
