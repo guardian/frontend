@@ -1,13 +1,19 @@
-import config from 'lib/config';
-import toPairs from 'lodash/toPairs';
 import fromPairs from 'lodash/fromPairs';
+import toPairs from 'lodash/toPairs';
+import config_ from 'lib/config';
 import { NOT_IN_TEST, notInTestVariant } from './ab-constants';
 
+// This is really a hacky workaround ⚠️
+const config = config_ as {
+	get: <T>(s: string, d?: T) => T;
+};
+
 export const testSwitchExists = (testId: string): boolean =>
-	config.get(`switches.ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND';
+	config.get<boolean | string>(`switches.ab${testId}`, 'NOT_FOUND') !==
+	'NOT_FOUND';
 
 export const isTestSwitchedOn = (testId: string): boolean =>
-	config.get(`switches.ab${testId}`, false);
+	config.get<boolean>(`switches.ab${testId}`, false);
 
 export const runnableTestsToParticipations = (
 	runnableTests: ReadonlyArray<Runnable<ABTest>>,
@@ -47,7 +53,11 @@ export const testAndParticipationsToVariant = (
 	test: ABTest,
 	participations: Participations,
 ): Variant | null | undefined => {
-	const participation = participations[test.id];
+	// TODO: enable noUncheckedIndexedAccess in tsconfig
+	const participation = participations[test.id] as
+		| { variant: string }
+		| undefined;
+
 	if (participation) {
 		// We need to return something concrete here to ensure
 		// that a notintest variant actually prevents other variants running.
