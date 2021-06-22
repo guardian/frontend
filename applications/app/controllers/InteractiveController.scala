@@ -68,10 +68,10 @@ class InteractiveController(
     capiLookup.lookup(path, range = Some(ArticleBlocks))
   }
 
-  def fItemResponseToFE(fir: Future[ItemResponse])(implicit
+  def fItemResponseToFE(item: Future[ItemResponse])(implicit
       request: RequestHeader,
   ): Future[Either[(InteractivePage, Blocks), Result]] = {
-    val result = fir map { response =>
+    val result = item map { response =>
       val interactive = response.content map { Interactive.make }
       val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
       val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
@@ -98,15 +98,15 @@ class InteractiveController(
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
-  def renderItemLegacy(ir: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(Future.successful(ir)) map {
+  def renderItemLegacy(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
+    fItemResponseToFE(Future.successful(item)) map {
       case Left((model, _)) => render(model)
       case Right(other)     => RenderOtherStatus(other)
     }
   }
 
-  def renderDCR(ir: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(Future.successful(ir)) flatMap {
+  def renderDCR(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
+    fItemResponseToFE(Future.successful(item)) flatMap {
       case Left((model, blocks)) => {
         val pageType = PageType.apply(model, request, context)
         remoteRenderer.getInteractive(wsClient, model, blocks, pageType)
@@ -115,8 +115,8 @@ class InteractiveController(
     }
   }
 
-  def renderDCRJson(ir: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(Future.successful(ir)) map {
+  def renderDCRJson(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
+    fItemResponseToFE(Future.successful(item)) map {
       case Left((model, blocks)) => {
         val data =
           DotcomRenderingDataModel.forInteractive(model, blocks, request, PageType.apply(model, request, context))
@@ -127,8 +127,8 @@ class InteractiveController(
     }
   }
 
-  def renderDCRAmp(ir: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    fItemResponseToFE(Future.successful(ir)) flatMap {
+  def renderDCRAmp(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
+    fItemResponseToFE(Future.successful(item)) flatMap {
       case Left((model, blocks)) => {
         val pageType = PageType.apply(model, request, context)
         remoteRenderer.getAMPInteractive(wsClient, model, blocks, pageType)
@@ -137,12 +137,12 @@ class InteractiveController(
     }
   }
 
-  def itemResponseToInteractivePickerInputData(ir: ItemResponse)(implicit
+  def itemResponseToInteractivePickerInputData(item: ItemResponse)(implicit
       request: RequestHeader,
   ): Option[InteractivePickerInputData] = {
     for {
-      datetime <- ir.content.flatMap(_.webPublicationDate)
-      tags <- ir.content.map(_.tags)
+      datetime <- item.content.flatMap(_.webPublicationDate)
+      tags <- item.content.map(_.tags)
     } yield InteractivePickerInputData(datetime, tags.toList)
   }
 
