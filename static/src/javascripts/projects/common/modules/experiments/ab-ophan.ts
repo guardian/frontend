@@ -1,12 +1,19 @@
-import { noop } from 'lib/noop';
-import config from 'lib/config';
-import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
+import config_ from 'lib/config';
+import { noop } from 'lib/noop';
+import reportError from 'lib/report-error';
 
-const not = (f) => (...args: any[]): boolean => !f(...args);
+// This is really a hacky workaround ⚠️
+const config = config_ as {
+	get: (s: string, d?: string) => string;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- generics don’t play nice
+type BooleanFunction = (...args: any[]) => boolean;
+const not = (f: BooleanFunction): BooleanFunction => (...args) => !f(...args);
 
 const submit = (payload: OphanABPayload): void =>
-	ophan.record({
+	void ophan.record({
 		abTestRegister: payload,
 	});
 
@@ -62,7 +69,7 @@ const registerCompleteEvent = (complete: boolean) => (
 	test: Runnable<ABTest>,
 ): void => {
 	const variant = test.variantToRun;
-	const listener = (complete ? variant.success : variant.impression) || noop;
+	const listener = (complete ? variant.success : variant.impression) ?? noop;
 
 	try {
 		listener(buildOphanSubmitter(test, variant, complete));
@@ -83,7 +90,7 @@ export const buildOphanPayload = (
 	tests: ReadonlyArray<Runnable<ABTest>>,
 ): OphanABPayload => {
 	try {
-		const log = {};
+		const log: OphanABPayload = {};
 		const serverSideTests = Object.keys(config.get('tests')).filter(
 			(test) => !!config.get(`tests.${test}`),
 		);
