@@ -6,7 +6,7 @@ import { testAndParticipationsToVariant } from './ab-utils';
 // Reading
 // -------
 export const getParticipationsFromLocalStorage = (): Participations =>
-	storage.local.get(participationsKey) || {};
+	(storage.local.get(participationsKey) as Participations | undefined) ?? {};
 
 // If the given test has a variant specified in localStorage, return it.
 export const getVariantFromLocalStorage = (
