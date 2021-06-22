@@ -45,12 +45,13 @@ object InteractivePicker {
     val isAmp = request.host.contains("amp")
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
+    val switchOn = InteractivePickerFeature.isSwitchedOn
+    val publishedPostSwitch = dateIsPostTransition(data.datetime.iso8601.substring(0, 10))
 
     if (isSpecialElection && isAmp) USElectionTracker2020AmpPage
     else if (forceDCR || isMigrated) DotcomRendering
-    else if (!InteractivePickerFeature.isSwitchedOn) FrontendLegacy
-    else if (isInTagBlockList(data.tags)) FrontendLegacy
-    else if (dateIsPostTransition(data.datetime.iso8601.substring(0, 10))) DotcomRendering
+    else if (!switchOn || isInTagBlockList(data.tags)) FrontendLegacy
+    else if (publishedPostSwitch) DotcomRendering
     else FrontendLegacy
   }
 }
