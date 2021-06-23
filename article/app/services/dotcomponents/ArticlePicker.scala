@@ -19,8 +19,17 @@ object ArticlePageChecks {
       blockElement match {
         case InteractiveBlockElement(_, scriptUrl) =>
           scriptUrl match {
-            case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
-            case _                                                                       => true
+            case Some(
+                  "https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js", // standard iframe wrapper boot
+                ) | Some(
+                  "https://open-module.appspot.com/boot.js", // script no longer exists, i.e. parity with frontend
+                ) | Some("https://embed.actionbutton.co/widget/boot.js") | // supported in DCR
+                Some("https://interactive.guim.co.uk/2017/07/booklisted/boot.js") | // not supported but fallback ok
+                Some(
+                  "https://interactive.guim.co.uk/page-enhancers/super-lists/boot.js", // broken on frontend anyway
+                ) =>
+              false
+            case _ => true
           }
         case _ => false
       }
