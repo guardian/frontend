@@ -67,14 +67,6 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     response map extractUser
   }
 
-  def userFromVanityUrl(vanityUrl: String, auth: Auth = Anonymous): Future[Response[User]] = {
-    val apiPath = urlJoin("user", "vanityurl", vanityUrl)
-    val params = buildParams(Some(auth))
-    val headers = buildHeaders(Some(auth))
-    val response = httpClient.GET(apiUrl(apiPath), None, params, headers)
-    response map extractUser
-  }
-
   def userFromQueryParam(param: String, field: String, auth: Auth = Anonymous): Future[Response[User]] = {
     val apiPath = s"/user?${field}=${param}"
     val params = buildParams(Some(auth))
