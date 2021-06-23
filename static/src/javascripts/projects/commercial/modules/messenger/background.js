@@ -108,6 +108,7 @@ const setBackground = (specs, adSlot) => {
                     if (specs.scrollType === 'interscroller') {
                         adSlot.style.height = '85vh';
                         adSlot.style.marginBottom = '12px';
+                        adSlot.style.position = 'relative';
 
                         if (specs.ctaUrl != null) {
                             const ctaURLAnchor = document.createElement('a');
