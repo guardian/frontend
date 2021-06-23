@@ -162,10 +162,10 @@ class InteractiveController(
           case Some((datetime, tags)) => {
             val renderingTier = InteractivePicker.getRenderingTier(path, datetime, tags)
             (requestFormat, renderingTier) match {
-              case (AmpFormat, DotcomRendering)        => renderDCRAmp(itemResponse)
-              case (JsonFormat, _) if request.forceDCR => renderDCRJson(itemResponse)
-              case (HtmlFormat, DotcomRendering)       => renderDCR(itemResponse)
-              case _                                   => renderItemLegacy(itemResponse)
+              case (AmpFormat, DotcomRendering)  => renderDCRAmp(itemResponse)
+              case (JsonFormat, DotcomRendering) => renderDCRJson(itemResponse)
+              case (HtmlFormat, DotcomRendering) => renderDCR(itemResponse)
+              case _                             => renderItemLegacy(itemResponse)
             }
           }
           case None => renderItemLegacy(itemResponse)
