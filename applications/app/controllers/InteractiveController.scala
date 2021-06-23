@@ -149,6 +149,11 @@ class InteractiveController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
+    /*
+       Calling lookupItemResponse(path) on an election tracker path, 404 in CAPI, the atom is retrived using the atom Id.
+       This is the reason why we need to process those paths before performing the logic for the Interactive Picker
+       (ie: before calling the CAPI response and extracting the input parameters for `getRenderingTier`)
+     */
     if (USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat) {
       renderInteractivePageUSPresidentialElection2020(path)
     } else {
@@ -157,11 +162,10 @@ class InteractiveController(
           case Some((datetime, tags)) => {
             val renderingTier = InteractivePicker.getRenderingTier(path, datetime, tags)
             (requestFormat, renderingTier) match {
-              case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-              case (AmpFormat, DotcomRendering)              => renderDCRAmp(itemResponse)
-              case (JsonFormat, _) if request.forceDCR       => renderDCRJson(itemResponse)
-              case (HtmlFormat, DotcomRendering)             => renderDCR(itemResponse)
-              case _                                         => renderItemLegacy(itemResponse)
+              case (AmpFormat, DotcomRendering)  => renderDCRAmp(itemResponse)
+              case (JsonFormat, DotcomRendering) => renderDCRJson(itemResponse)
+              case (HtmlFormat, DotcomRendering) => renderDCR(itemResponse)
+              case _                             => renderItemLegacy(itemResponse)
             }
           }
           case None => renderItemLegacy(itemResponse)
