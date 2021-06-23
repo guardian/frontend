@@ -26,7 +26,7 @@ function emptyFunction() {
 }
 
 jest.mock('common/modules/analytics/mvt-cookie');
-jest.mock('common/modules/experiments/ab-tests');
+jest.mock('common/modules/experiments/ab-tests'); // __mocks__/ab-tests
 jest.mock('common/modules/experiments/ab-ophan', () => ({
 	registerImpressionEvents: emptyFunction,
 	registerCompleteEvents: emptyFunction,
@@ -79,7 +79,8 @@ describe('A/B', () => {
 				jest.spyOn(concurrentTests[2].variants[0], 'test'),
 			];
 
-			expect.assertions(1);
+			expect.assertions(shouldRun.length + shouldNotRun.length);
+
 			return runAndTrackAbTests().then(() => {
 				shouldRun.forEach((spy) => expect(spy).toHaveBeenCalled());
 				shouldNotRun.forEach((spy) =>
@@ -89,11 +90,12 @@ describe('A/B', () => {
 		});
 
 		test('renamed/deleted tests should be removed from localStorage', () => {
+			expect.assertions(1);
+
 			setParticipationsInLocalStorage({
 				noTestSwitchForThisOne: { variant: 'Control' },
 			});
 
-			expect.assertions(1);
 			return runAndTrackAbTests().then(() => {
 				expect(getParticipationsFromLocalStorage()).toEqual({
 					DummyTest: { variant: 'control' },
@@ -102,13 +104,14 @@ describe('A/B', () => {
 		});
 
 		test('tests with notintest participations should not run, but this should be persisted to localStorage', () => {
+			expect.assertions(3);
+
 			const spy = jest.spyOn(concurrentTests[0].variants[0], 'test');
 			expect(spy).not.toHaveBeenCalled();
 			setParticipationsInLocalStorage({
 				DummyTest: { variant: NOT_IN_TEST },
 			});
 
-			expect.assertions(1);
 			return runAndTrackAbTests().then(() => {
 				expect(spy).not.toHaveBeenCalled();
 				expect(getParticipationsFromLocalStorage()).toEqual({
@@ -118,9 +121,10 @@ describe('A/B', () => {
 		});
 
 		test('URL participations for non-existent variants that are not notintest should not be persisted to localStorage', () => {
+			expect.assertions(1);
+
 			window.location.hash = '#ab-DummyTest=bad_variant';
 
-			expect.assertions(1);
 			return runAndTrackAbTests().then(() => {
 				expect(getParticipationsFromLocalStorage()).toEqual({
 					DummyTest: { variant: 'control' },
@@ -129,6 +133,8 @@ describe('A/B', () => {
 		});
 
 		test('URL participations for tests which cannot be run on this pageview should not be persisted to localStorage', () => {
+			expect.assertions(1);
+
 			cfg.switches = {
 				abDummyTest: true,
 				abDummyTest2: true,
@@ -136,7 +142,6 @@ describe('A/B', () => {
 			};
 			window.location.hash = '#ab-DummyTest3CanRunIsFalse=control';
 
-			expect.assertions(1);
 			return runAndTrackAbTests().then(() => {
 				expect(getParticipationsFromLocalStorage()).toEqual({
 					DummyTest: { variant: 'control' },
@@ -146,14 +151,14 @@ describe('A/B', () => {
 		});
 
 		test('URL participations for variants which cannot be run should not be preserved in localStorage', () => {
+			expect.assertions(1);
+
 			cfg.switches = {
 				abDummyTest: true,
 				abDummyTest4ControlCanRunIsFalse: true,
 			};
-
 			window.location.hash = '#ab-DummyTest4ControlCanRunIsFalse=control';
 
-			expect.assertions(1);
 			return runAndTrackAbTests().then(() => {
 				expect(getParticipationsFromLocalStorage()).toEqual({
 					DummyTest: { variant: 'control' },
@@ -162,12 +167,13 @@ describe('A/B', () => {
 		});
 
 		test('URL participations for tests which can be run on this pageview should be persisted to localStorage', () => {
+			expect.assertions(2);
+
 			window.location.hash = '#ab-DummyTest=variant';
 			expect(getSynchronousTestsToRun()[0].variantToRun.id).toEqual(
 				'variant',
 			);
 
-			expect.assertions(1);
 			return runAndTrackAbTests().then(() => {
 				expect(getParticipationsFromLocalStorage()).toEqual({
 					DummyTest: { variant: 'variant' },
@@ -231,6 +237,8 @@ describe('A/B', () => {
 		// Note that memoize has been mocked to just call the function each time!
 		// Otherwise this test would be a bit pointless
 		test('should give the same result whether called before or after runAndTrackAbTests', () => {
+			expect.assertions(2);
+
 			cfg.switches = {
 				abDummyTest: true,
 				abDummyTest2: true,
@@ -264,7 +272,6 @@ describe('A/B', () => {
 					expectedTestsToRun,
 				);
 
-			expect.assertions(1);
 			return getAsyncTestsToRun()
 				.then((asyncTests) =>
 					checkTests([...asyncTests, ...getSynchronousTestsToRun()]),
