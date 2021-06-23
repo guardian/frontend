@@ -149,19 +149,23 @@ class InteractiveController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
-    lookupItemResponse(path).flatMap { itemResponse =>
-      itemResponseToInteractivePickerInputData(itemResponse) match {
-        case Some((datetime, tags)) => {
-          val renderingTier = InteractivePicker.getRenderingTier(path, datetime, tags)
-          (requestFormat, renderingTier) match {
-            case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
-            case (AmpFormat, DotcomRendering)              => renderDCRAmp(itemResponse)
-            case (JsonFormat, _) if request.forceDCR       => renderDCRJson(itemResponse)
-            case (HtmlFormat, DotcomRendering)             => renderDCR(itemResponse)
-            case _                                         => renderItemLegacy(itemResponse)
+    if (USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat) {
+      renderInteractivePageUSPresidentialElection2020(path)
+    } else {
+      lookupItemResponse(path).flatMap { itemResponse =>
+        itemResponseToInteractivePickerInputData(itemResponse) match {
+          case Some((datetime, tags)) => {
+            val renderingTier = InteractivePicker.getRenderingTier(path, datetime, tags)
+            (requestFormat, renderingTier) match {
+              case (AmpFormat, USElectionTracker2020AmpPage) => renderInteractivePageUSPresidentialElection2020(path)
+              case (AmpFormat, DotcomRendering)              => renderDCRAmp(itemResponse)
+              case (JsonFormat, _) if request.forceDCR       => renderDCRJson(itemResponse)
+              case (HtmlFormat, DotcomRendering)             => renderDCR(itemResponse)
+              case _                                         => renderItemLegacy(itemResponse)
+            }
           }
+          case None => renderItemLegacy(itemResponse)
         }
-        case None => renderItemLegacy(itemResponse)
       }
     }
   }
