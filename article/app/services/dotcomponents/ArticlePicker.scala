@@ -28,15 +28,6 @@ object ArticlePageChecks {
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
-  // Custom Tag that can be added to articles while we don't support them
-  private[this] val tagsBlockList: Set[String] = Set(
-    "tracking/platformfunctional/dcrblacklist",
-  )
-
-  def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(t => tagsBlockList(t.id))
-  }
-
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
   def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
@@ -62,7 +53,6 @@ object ArticlePicker {
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
-      ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
     )
   }
 
