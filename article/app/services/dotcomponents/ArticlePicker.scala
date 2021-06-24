@@ -43,8 +43,6 @@ object ArticlePageChecks {
 
   def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
 
-  def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.article.tags.isPaidContent
-
 }
 
 object ArticlePicker {
@@ -64,7 +62,6 @@ object ArticlePicker {
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
-      ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
     )
   }
