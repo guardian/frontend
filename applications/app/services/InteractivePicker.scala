@@ -1,6 +1,6 @@
 package services
 
-import com.gu.contentapi.client.model.v1.Tag
+import model.Tag
 import conf.switches.Switches.InteractivePickerFeature
 import play.api.mvc.RequestHeader
 import implicits.Requests._

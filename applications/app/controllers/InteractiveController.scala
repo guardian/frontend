@@ -1,28 +1,24 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Tag}
+import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse}
 import common._
-import contentapi.ContentApiClient
-import conf.switches.Switches
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model._
-import model.InteractivePage
-import play.api.libs.ws.WSClient
-import play.api.mvc._
-import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
+import conf.switches.Switches
+import contentapi.ContentApiClient
+import implicits.{AmpFormat, HtmlFormat, JsonFormat}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.{InteractivePage, _}
 import model.content.InteractiveAtom
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.apache.commons.lang.StringEscapeUtils
 import pages.InteractiveHtmlPage
+import play.api.libs.ws.WSClient
+import play.api.mvc._
 import renderers.DotcomRenderingService
-import services.USElection2020AmpPages
-import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
-import org.joda.time.DateTime
+import services.{CAPILookup, USElection2020AmpPages, _}
 
-import scala.concurrent.duration._
 import scala.concurrent.Future
-import services.{CAPILookup, _}
+import scala.concurrent.duration._
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
@@ -68,121 +64,90 @@ class InteractiveController(
     capiLookup.lookup(path, range = Some(ArticleBlocks))
   }
 
-  def itemResponseToModel(item: Future[ItemResponse])(implicit
+  def toModel(response: ItemResponse)(implicit
       request: RequestHeader,
-  ): Future[Either[(InteractivePage, Blocks), Result]] = {
-    val result = item map { response =>
-      val interactive = response.content map { Interactive.make }
-      val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
-      val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
+  ): Either[(InteractivePage, Blocks), Result] = {
+    val interactive = response.content map { Interactive.make }
+    val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
+    val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
 
-      ModelOrResult(page, response) match {
-        case Left(page)       => Left((page, blocks))
-        case Right(exception) => Right(exception)
-      }
+    ModelOrResult(page, response) match {
+      case Left(page)       => Left((page, blocks))
+      case Right(exception) => Right(exception)
     }
-    result recover convertApiExceptions
-  }
-
-  private def render(model: InteractivePage)(implicit request: RequestHeader) = {
-    val htmlResponse = () => InteractiveHtmlPage.html(model)
-    val jsonResponse = () => views.html.fragments.interactiveBody(model)
-    renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
-  def renderItemLegacy(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    itemResponseToModel(Future.successful(item)) map {
-      case Left((model, _)) => render(model)
-      case Right(other)     => RenderOtherStatus(other)
-    }
+  def renderNonDCR(page: InteractivePage)(implicit request: RequestHeader): Future[Result] = {
+    val htmlResponse = () => InteractiveHtmlPage.html(page)
+    val jsonResponse = () => views.html.fragments.interactiveBody(page)
+    val res = renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+    Future.successful(res)
   }
 
-  def renderDCR(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    itemResponseToModel(Future.successful(item)) flatMap {
-      case Left((model, blocks)) => {
-        val pageType = PageType.apply(model, request, context)
-        remoteRenderer.getInteractive(wsClient, model, blocks, pageType)
-      }
-      case Right(other) => Future.successful(RenderOtherStatus(other))
-    }
+  def renderHtml(page: InteractivePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val pageType = PageType.apply(page, request, context)
+    remoteRenderer.getInteractive(wsClient, page, blocks, pageType)
   }
 
-  def renderDCRJson(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    itemResponseToModel(Future.successful(item)) map {
-      case Left((model, blocks)) => {
-        val data =
-          DotcomRenderingDataModel.forInteractive(model, blocks, request, PageType.apply(model, request, context))
-        val dataJson = DotcomRenderingDataModel.toJson(data)
-        common.renderJson(dataJson, model).as("application/json")
-      }
-      case Right(other) => RenderOtherStatus(other)
-    }
+  def renderJson(page: InteractivePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val data =
+      DotcomRenderingDataModel.forInteractive(page, blocks, request, PageType.apply(page, request, context))
+    val dataJson = DotcomRenderingDataModel.toJson(data)
+    val res = common.renderJson(dataJson, page).as("application/json")
+    Future.successful(res)
   }
 
-  def renderDCRAmp(item: ItemResponse)(implicit request: RequestHeader): Future[Result] = {
-    itemResponseToModel(Future.successful(item)) flatMap {
-      case Left((model, blocks)) => {
-        val pageType = PageType.apply(model, request, context)
-        remoteRenderer.getAMPInteractive(wsClient, model, blocks, pageType)
-      }
-      case Right(other) => Future.successful(RenderOtherStatus(other))
-    }
-  }
-
-  def itemResponseToInteractivePickerInputData(item: ItemResponse)(implicit
-      request: RequestHeader,
-  ): Option[(DateTime, List[Tag])] = {
-    for {
-      capiDatetime <- item.content.flatMap(_.webPublicationDate)
-      datetime = DateTime.parse(capiDatetime.iso8601)
-      tags <- item.content.map(_.tags)
-    } yield (datetime, tags.toList)
+  def renderAmp(page: InteractivePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val pageType = PageType.apply(page, request, context)
+    remoteRenderer.getAMPInteractive(wsClient, page, blocks, pageType)
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
-    /*
-       Calling lookupItemResponse(path) on an election tracker path, 404 in CAPI, the atom is retrived using the atom Id.
-       This is the reason why we need to process those paths before performing the logic for the Interactive Picker
-       (ie: before calling the CAPI response and extracting the input parameters for `getRenderingTier`)
-     */
-    if (USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat) {
-      renderInteractivePageUSPresidentialElection2020(path)
-    } else {
-      val res = lookupItemResponse(path).flatMap { itemResponse =>
-        itemResponseToInteractivePickerInputData(itemResponse) match {
-          case Some((datetime, tags)) => {
-            val renderingTier = InteractivePicker.getRenderingTier(path, datetime, tags)
-            (requestFormat, renderingTier) match {
-              case (AmpFormat, DotcomRendering)  => renderDCRAmp(itemResponse)
-              case (JsonFormat, DotcomRendering) => renderDCRJson(itemResponse)
-              case (HtmlFormat, DotcomRendering) => renderDCR(itemResponse)
-              case _                             => renderItemLegacy(itemResponse)
-            }
+    val isUSElectionAMP = USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat
+
+    def render(model: Either[(InteractivePage, Blocks), Result]): Future[Result] = {
+      model match {
+        case Left((page, blocks)) => {
+          val tags = page.interactive.tags.tags
+          val date = page.interactive.trail.webPublicationDate
+          val tier = InteractivePicker.getRenderingTier(path, date, tags)
+
+          (requestFormat, tier) match {
+            case (AmpFormat, DotcomRendering)  => renderAmp(page, blocks)
+            case (JsonFormat, DotcomRendering) => renderJson(page, blocks)
+            case (HtmlFormat, DotcomRendering) => renderHtml(page, blocks)
+            case _                             => renderNonDCR(page)
           }
-          case None => renderItemLegacy(itemResponse)
         }
+        case Right(result) => Future.successful(result)
       }
+    }
+
+    if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
+      renderUSElectionAMPPage(path)
+    } else {
+      val res = for {
+        resp <- lookupItemResponse(path)
+        model = toModel(resp)
+        result <- render(model)
+      } yield result
 
       res.recover(convertApiExceptionsWithoutEither)
     }
   }
 
-  // ---------------------------------------------
-  // US Presidential Election 2020
+  def renderUSElectionAMPPage(path: String)(implicit request: RequestHeader): Future[Result] = {
+    // We use the same AMP atom/page for various US election pages.
+    val capiPath = USElection2020AmpPages.pathToAmpAtomId(path)
+    val response = lookupItemResponse(capiPath)
 
-  def renderInteractivePageUSPresidentialElection2020(path: String)(implicit request: RequestHeader): Future[Result] = {
-    /*
-      This version retrieve the AMP version directly but rely on a predefined map between paths and amp page ids
-     */
-    val capiLookupString = USElection2020AmpPages.pathToAmpAtomId(path)
-    val response: Future[ItemResponse] = lookupItemResponse(capiLookupString)
     response.map { response =>
       response.interactive match {
-        case Some(i2) => {
-          val interactive = InteractiveAtom.make(i2)
+        case Some(atom) => {
+          val interactive = InteractiveAtom.make(atom)
           Ok(StringEscapeUtils.unescapeHtml(interactive.html)).as("text/html")
         }
         case None => Ok("error: 6a0a6be4-e702-4b51-8f26-01f9921c6b74")
