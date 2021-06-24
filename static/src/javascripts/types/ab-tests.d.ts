@@ -2,8 +2,6 @@ import type { ABTest, Variant } from '@guardian/ab-core';
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
 import type { TickerSettings } from 'common/modules/commercial/ticker';
 
-type ListenerFunction = (f: () => void) => void;
-
 declare type EpicCta = { url: string; ctaText: string };
 
 declare type EpicTemplate = (
@@ -137,13 +135,3 @@ declare type Interaction = {
 	component: string;
 	value: string;
 };
-
-/**
- * the structure stored in localStorage
- */
-declare type Participations = Record<
-	string,
-	{
-		variant: string;
-	}
->;
