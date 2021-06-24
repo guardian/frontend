@@ -151,7 +151,7 @@ class InteractiveController(
     if (USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat) {
       renderInteractivePageUSPresidentialElection2020(path)
     } else {
-      lookupItemResponse(path).flatMap { itemResponse =>
+      val res = lookupItemResponse(path).flatMap { itemResponse =>
         itemResponseToInteractivePickerInputData(itemResponse) match {
           case Some((datetime, tags)) => {
             val renderingTier = InteractivePicker.getRenderingTier(path, datetime, tags)
@@ -165,6 +165,8 @@ class InteractiveController(
           case None => renderItemLegacy(itemResponse)
         }
       }
+
+      res.recover(convertApiExceptionsWithoutEither)
     }
   }
 
