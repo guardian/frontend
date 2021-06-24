@@ -32,6 +32,18 @@ declare module '*.svg' {
 	export default content;
 }
 
+declare module 'ophan/ng' {
+	const ophan: {
+		setEventEmitter: unkown;
+		trackComponentAttention: unkown;
+		record: (...args: unkown[]) => void;
+		viewId: unkown;
+		pageViewId: string;
+	};
+	// eslint-disable-next-line import/no-default-export -- that’s the ophan way
+	export default ophan;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -39,5 +51,6 @@ interface Window {
 			viewId: string;
 			pageViewId: string;
 		};
+		config?: unknown;
 	};
 }

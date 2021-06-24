@@ -6,7 +6,7 @@ const { amIUsed }: { amIUsed: typeof amIUsed_ } = jest.requireActual(
 	'./sentinel',
 );
 
-const config = config_ as {
+const config = (config_ as unknown) as {
 	get: jest.MockedFunction<(s: string, d: boolean) => boolean>;
 };
 
