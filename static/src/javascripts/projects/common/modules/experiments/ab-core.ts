@@ -109,4 +109,4 @@ export const firstRunnableTest = <T extends ABTest>(
 ): Runnable<T> | null | undefined =>
 	tests
 		.map((test: T) => runnableTest(test))
-		.find((rt: Runnable<T> | null | undefined) => rt !== null);
+		.find((rt?: Runnable<T> | null) => rt !== null);
