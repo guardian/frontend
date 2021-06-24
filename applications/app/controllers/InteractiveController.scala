@@ -84,12 +84,6 @@ class InteractiveController(
     result recover convertApiExceptions
   }
 
-  private def lookup(
-      path: String,
-  )(implicit request: RequestHeader): Future[Either[(InteractivePage, Blocks), Result]] = {
-    itemResponseToModel(lookupItemResponse(path: String))
-  }
-
   private def render(model: InteractivePage)(implicit request: RequestHeader) = {
     val htmlResponse = () => InteractiveHtmlPage.html(model)
     val jsonResponse = () => views.html.fragments.interactiveBody(model)
