@@ -166,7 +166,7 @@ data-test-id="facia-card"
                         fallbackImage.imageMedia,
                         inlineImage = containerIndex == 0 && index < 4,
                         widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint),
-                        index = if(containerIndex >= 2) true else false
+                        index = if(containerIndex > 2) true else false
                     )
                 </div>
             }
@@ -180,7 +180,7 @@ data-test-id="facia-card"
                         images,
                         inlineImage = containerIndex == 0 && index < 4,
                         widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint),
-                        index = if(containerIndex >= 2) true else false
+                        index = if(containerIndex > 2) true else false
                     )
                 </div>
             }
