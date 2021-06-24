@@ -464,7 +464,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val InteractivePicker = Switch(
+  val InteractivePickerFeature = Switch(
     SwitchGroup.Feature,
     "interactive-picker",
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
