@@ -1,3 +1,5 @@
+import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
+
 export const genVariant = (id: string, canRun?: boolean): Variant => ({
 	id,
 	test: () => undefined,
@@ -34,7 +36,7 @@ export const genAbTest = (
 export const genRunnableAbTestWhereControlIsRunnable = (
 	id: string,
 	canRun?: boolean,
-): Runnable<ABTest> => {
+): Runnable => {
 	const abTest = genAbTest(id, canRun);
 	return { ...abTest, variantToRun: abTest.variants[0] };
 };
@@ -42,7 +44,7 @@ export const genRunnableAbTestWhereControlIsRunnable = (
 export const genRunnableAbTestWhereVariantIsRunnable = (
 	id: string,
 	canRun?: boolean,
-): Runnable<ABTest> => {
+): Runnable => {
 	const abTest = genAbTest(id, canRun);
 	return { ...abTest, variantToRun: abTest.variants[1] };
 };

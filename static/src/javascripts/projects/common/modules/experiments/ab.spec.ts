@@ -1,3 +1,4 @@
+import type { Runnable } from '@guardian/ab-core';
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import {
 	getAsyncTestsToRun,
@@ -267,7 +268,7 @@ describe('A/B', () => {
 				...expectedSynchronousTestsToRun,
 			};
 
-			const checkTests = (tests: ReadonlyArray<Runnable<ABTest>>) =>
+			const checkTests = (tests: readonly Runnable[]) =>
 				expect(runnableTestsToParticipations(tests)).toEqual(
 					expectedTestsToRun,
 				);

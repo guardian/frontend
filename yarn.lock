@@ -1851,6 +1851,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@guardian/ab-core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/ab-core/-/ab-core-2.0.0.tgz#d8a9408d5a66ff1f8c684ed458c99517bbee15b1"
+  integrity sha512-E5p6l0l37hY0GNFaZmA5/22TlVuavzlMHR3OeweD5eDcY2gB3nGgzPK/d3M67dkbDAJkGjB4a0W84Z5N2YScvQ==
+
 "@guardian/atom-renderer@1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-1.2.2.tgz#db10b98ed73636c4bd6941ec103c9f60ff15549e"
