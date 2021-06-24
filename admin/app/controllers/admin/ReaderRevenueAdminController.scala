@@ -4,7 +4,7 @@ import com.gu.googleauth.UserIdentity
 import common.{ImplicitControllerExecutionContext, GuLogging}
 import model.{ApplicationContext, NoCache}
 import model.readerRevenue._
-import org.joda.time.DateTime
+import java.time.Instant
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import services.S3
@@ -48,7 +48,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
         ) { region: ReaderRevenueRegion =>
           val requester: String =
             UserIdentity.fromRequest(request) map (_.fullName) getOrElse "unknown user (dev-build?)"
-          val millisSinceEpoch = DateTime.now.getMillis()
+          val millisSinceEpoch = Instant.now().toEpochMilli()
           val jsonLog: JsValue = Json.toJson(BannerDeploy(millisSinceEpoch))
           val message =
             s"${bannerType.name} banner in ${region.name} redeploy by $requester at ${millisSinceEpoch.toString}}"
