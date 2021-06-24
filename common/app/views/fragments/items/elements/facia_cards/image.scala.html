@@ -12,7 +12,7 @@
     maybeImageMedia: Option[ImageMedia] = None,
     maybePath: Option[String] = None,
     maybeSrc: Option[String] = None,
-        lazyLoadIndex: Int = 0,
+        lazyLoadIndex: Boolean = false,
 )(implicit request: RequestHeader)
 
 <picture>
@@ -28,6 +28,6 @@
     }
     <!--[if IE 9]></video><![endif]-->
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath.map(ImgSrc(_, ImageProfile(width = widths.desktop.map(_.get))))).map { src =>
-        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn || lazyLoadIndex > 2) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src" id="@lazyLoadIndex"/>
+        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn || lazyLoadIndex) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src" id="@lazyLoadIndex"/>
     }
 </picture>

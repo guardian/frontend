@@ -1,4 +1,4 @@
-@(imageMedia: model.ImageMedia, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None, index: Int = 0)(implicit request: RequestHeader)
+@(imageMedia: model.ImageMedia, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None, index: Boolean = false)(implicit request: RequestHeader)
 
 @import views.support.ImgSrc
 @import views.html.fragments.items.elements.facia_cards.image
