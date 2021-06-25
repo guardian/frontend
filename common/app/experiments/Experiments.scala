@@ -19,6 +19,15 @@ object LiveblogRendering
       name = "liveblog-rendering",
       description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 8, 2),
+      sellByDate = new LocalDate(2021, 11, 30),
       participationGroup = Perc0A,
+    )
+
+object InteractiveLibrarian
+    extends Experiment(
+      name = "interactive-librarian",
+      description = "Private experiment to develop archiving backup for Interactives",
+      owners = Seq(Owner.withGithub("shtukas")),
+      sellByDate = new LocalDate(2021, 8, 31),
+      participationGroup = Perc0B,
     )
