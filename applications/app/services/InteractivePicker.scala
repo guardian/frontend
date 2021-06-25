@@ -2,6 +2,7 @@ package services
 
 import model.Tag
 import conf.switches.Switches.InteractivePickerFeature
+import implicits.{AmpFormat, RequestFormat}
 import play.api.mvc.RequestHeader
 import implicits.Requests._
 import model.dotcomrendering.InteractiveSwitchOver
@@ -30,16 +31,22 @@ object InteractivePicker {
     tags.exists(t => t.id == "tracking/platformfunctional/dcroptout")
   }
 
-  def getRenderingTier(path: String, datetime: DateTime, tags: List[Tag])(implicit
+  def isAmpOptedIn(tags: List[Tag]): Boolean = {
+    tags.exists(t => t.id == "tracking/platformfunctional/ampinteractive")
+  }
+
+  def getRenderingTier(requestFormat: RequestFormat, path: String, datetime: DateTime, tags: List[Tag])(implicit
       request: RequestHeader,
   ): RenderingTier = {
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
     val switchOn = InteractivePickerFeature.isSwitchedOn
     val publishedPostSwitch = dateIsPostTransition(datetime)
+    val isOptedInAmp = (requestFormat == AmpFormat) && isAmpOptedIn(tags)
+    val isWebNotOptedOut = (requestFormat == AmpFormat) && !isOptedOut(tags)
 
-    if (forceDCR || isMigrated) DotcomRendering
-    else if (switchOn && !isOptedOut(tags) && publishedPostSwitch) DotcomRendering
+    if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
+    else if (switchOn && publishedPostSwitch && isWebNotOptedOut) DotcomRendering
     else FrontendLegacy
   }
 }
