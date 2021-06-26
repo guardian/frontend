@@ -3,6 +3,8 @@ package dfp
 import common.Edition
 import common.dfp._
 
+import java.time.{LocalDateTime, ZoneId}
+
 case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem]) {
 
   val hasValidLineItems: Boolean = lineItems.nonEmpty
@@ -52,9 +54,16 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
     }
   }
 
+  def localDateTimeToMilliseconds(ldt: LocalDateTime) = {
+    ldt.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()
+  }
+
   def dateSort(lineItems: => Seq[GuLineItem]): Seq[GuLineItem] =
     lineItems sortBy { lineItem =>
-      (lineItem.startTime.getMillis, lineItem.endTime.map(_.getMillis).getOrElse(0L))
+      (
+        localDateTimeToMilliseconds(lineItem.startTime),
+        lineItem.endTime.map(x => localDateTimeToMilliseconds(x)).getOrElse(0L),
+      )
     }
 
   val topAboveNavSlotTakeovers: Seq[GuLineItem] = dateSort {

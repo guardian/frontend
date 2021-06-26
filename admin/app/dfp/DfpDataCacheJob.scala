@@ -7,6 +7,12 @@ import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
 import scala.concurrent.{ExecutionContext, Future}
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.{Date, TimeZone}
+import java.time.LocalDateTime
+import java.time.Instant
+import java.time.ZoneOffset
 
 class DfpDataCacheJob(
     adUnitAgent: AdUnitAgent,
@@ -46,6 +52,21 @@ class DfpDataCacheJob(
     }
   }
 
+  def dateTimeToLocalDateTime(date: DateTime): LocalDateTime = {
+    LocalDateTime.ofInstant(
+      Instant.ofEpochMilli(
+        date
+          .toInstant()
+          .getMillis,
+      ),
+      ZoneId.systemDefault,
+    )
+  }
+
+  def localDateTimeToDateTime(ldt: LocalDateTime): DateTime = {
+    DateTime.parse(ldt.toString)
+  }
+
   private def loadLineItems(): DfpDataExtractor = {
 
     def fetchCachedLineItems(): DfpLineItems = {
@@ -58,7 +79,7 @@ class DfpDataCacheJob(
 
     val loadSummary = loadLineItems(
       fetchCachedLineItems(),
-      dfpApi.readLineItemsModifiedSince,
+      ldt => dfpApi.readLineItemsModifiedSince(localDateTimeToDateTime(ldt)),
       dfpApi.readCurrentLineItems,
     )
 
@@ -70,9 +91,14 @@ class DfpDataCacheJob(
 
   def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
 
+  def localDateTimeToMilliseconds(ldt: LocalDateTime): Long = {
+    val timezone = ZoneId.of("UTC")
+    ldt.atZone(timezone).toInstant.toEpochMilli
+  }
+
   def loadLineItems(
       cachedLineItems: => DfpLineItems,
-      lineItemsModifiedSince: DateTime => DfpLineItems,
+      lineItemsModifiedSince: LocalDateTime => DfpLineItems,
       allActiveLineItems: => DfpLineItems,
   ): LineItemLoadSummary = {
 
@@ -87,7 +113,7 @@ class DfpDataCacheJob(
 
       // Calculate the most recent modified timestamp of the existing cache items,
       // and find line items modified since that timestamp.
-      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(_.getMillis)
+      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(x => localDateTimeToMilliseconds(x))
       val recentlyModified = lineItemsModifiedSince(threshold)
 
       // Update existing items with a patch of new items.
@@ -131,7 +157,7 @@ class DfpDataCacheJob(
   private def write(data: DfpDataExtractor): Unit = {
 
     if (data.hasValidLineItems) {
-      val now = printLondonTime(DateTime.now())
+      val now = printLondonTime(LocalDateTime.now())
 
       val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
       Store.putInlineMerchandisingSponsorships(
