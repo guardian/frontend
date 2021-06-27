@@ -88,7 +88,7 @@ class DfpDataCacheJob(
 
       // Calculate the most recent modified timestamp of the existing cache items,
       // and find line items modified since that timestamp.
-      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(x => toMilliSeconds(x))
+      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(toMilliSeconds)
       val recentlyModified = lineItemsModifiedSince(threshold)
 
       // Update existing items with a patch of new items.
