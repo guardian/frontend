@@ -7,7 +7,6 @@ import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 private[dfp] object ApiHelper extends GuLogging {
 
   def isPageSkin(dfpLineItem: LineItem): Boolean = {
-
     def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {
       placeholders.exists {
         _.getCompanions.exists { companion =>
@@ -16,22 +15,8 @@ private[dfp] object ApiHelper extends GuLogging {
         }
       }
     }
-
     (dfpLineItem.getRoadblockingType == RoadblockingType.CREATIVE_SET) &&
     hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
-  }
-
-  def toJodaTime(time: DateTime): JodaDateTime = {
-    val date = time.getDate
-    new JodaDateTime(
-      date.getYear,
-      date.getMonth,
-      date.getDay,
-      time.getHour,
-      time.getMinute,
-      time.getSecond,
-      DateTimeZone.forID(time.getTimeZoneId),
-    )
   }
 
   def toSeq[A](as: Array[A]): Seq[A] = Option(as) map (_.toSeq) getOrElse Nil
