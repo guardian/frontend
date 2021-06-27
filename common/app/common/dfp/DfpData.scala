@@ -391,7 +391,7 @@ object GuCreative {
 
   def lastModified(cs: Seq[GuCreative]): Option[LocalDateTime] = {
     if (cs.isEmpty) None
-    else Some(cs.map(_.lastModified).maxBy(x => toMilliSeconds(x)))
+    else Some(cs.map(_.lastModified).maxBy(toMilliSeconds))
   }
 
   def merge(old: Seq[GuCreative], recent: Seq[GuCreative]): Seq[GuCreative] = {
