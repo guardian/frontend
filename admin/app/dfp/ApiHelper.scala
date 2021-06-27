@@ -2,8 +2,6 @@ package dfp
 
 import com.google.api.ads.admanager.axis.v202011._
 import common.GuLogging
-import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
-
 import java.time.LocalDateTime
 
 private[dfp] object ApiHelper extends GuLogging {
