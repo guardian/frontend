@@ -191,7 +191,7 @@ class DataMapper(
     GuCreative(
       id = dfpCreative.getId,
       name = dfpCreative.getName,
-      lastModified = toJodaTime(dfpCreative.getLastModifiedDateTime),
+      lastModified = toLocalDateTime(dfpCreative.getLastModifiedDateTime),
       args = Option(dfpCreative.getCreativeTemplateVariableValues).map(_.map(arg)).map(_.toMap).getOrElse(Map.empty),
       templateId = Some(dfpCreative.getCreativeTemplateId),
       snippet = None,

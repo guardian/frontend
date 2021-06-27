@@ -8,6 +8,8 @@ import common.GuLogging
 import common.dfp._
 import org.joda.time.DateTime
 
+import java.time.{LocalDateTime, ZoneId}
+
 case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
 class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuLogging {
@@ -109,11 +111,15 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
     }
   }
 
-  def readTemplateCreativesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
+  def toMilliSeconds(ldt: LocalDateTime): Long = {
+    ldt.atZone(ZoneId.of("UTC")).toInstant.toEpochMilli()
+  }
+
+  def readTemplateCreativesModifiedSince(threshold: LocalDateTime): Seq[GuCreative] = {
 
     val stmtBuilder = new StatementBuilder()
       .where("lastModifiedDateTime > :threshold")
-      .withBindVariableValue("threshold", threshold.getMillis)
+      .withBindVariableValue("threshold", toMilliSeconds(threshold))
 
     withDfpSession {
       _.creatives.get(stmtBuilder) collect {

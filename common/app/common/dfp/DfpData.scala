@@ -91,9 +91,7 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 }
 
 object CustomTarget {
-
   implicit val customTargetFormats: Format[CustomTarget] = Json.format[CustomTarget]
-
 }
 
 case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
@@ -113,9 +111,7 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 }
 
 object CustomTargetSet {
-
   implicit val customTargetSetFormats: Format[CustomTargetSet] = Json.format[CustomTargetSet]
-
 }
 
 case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String) {
@@ -130,9 +126,7 @@ case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name
 }
 
 object GeoTarget {
-
   implicit val geoTargetFormats: Format[GeoTarget] = Json.format[GeoTarget]
-
 }
 
 case class GuCustomField(
@@ -383,7 +377,7 @@ object GuCreativeTemplateParameter {
 case class GuCreative(
     id: Long,
     name: String,
-    lastModified: DateTime,
+    lastModified: LocalDateTime,
     args: Map[String, String],
     templateId: Option[Long],
     snippet: Option[String],
@@ -396,9 +390,9 @@ object GuCreative {
     ldt.atZone(ZoneId.of("UTC")).toInstant.toEpochMilli()
   }
 
-  def lastModified(cs: Seq[GuCreative]): Option[DateTime] = {
+  def lastModified(cs: Seq[GuCreative]): Option[LocalDateTime] = {
     if (cs.isEmpty) None
-    else Some(cs.map(_.lastModified).maxBy(_.getMillis))
+    else Some(cs.map(_.lastModified).maxBy(x => toMilliSeconds(x)))
   }
 
   def merge(old: Seq[GuCreative], recent: Seq[GuCreative]): Seq[GuCreative] = {
