@@ -3,6 +3,7 @@ package dfp
 import common.Edition
 import common.dfp._
 import java.time.{LocalDateTime, ZoneId}
+import dfp.ApiHelper.toMilliSeconds
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem]) {
 
@@ -53,15 +54,11 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
     }
   }
 
-  def localDateTimeToMilliseconds(ldt: LocalDateTime) = {
-    ldt.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()
-  }
-
   def dateSort(lineItems: => Seq[GuLineItem]): Seq[GuLineItem] =
     lineItems sortBy { lineItem =>
       (
-        localDateTimeToMilliseconds(lineItem.startTime),
-        lineItem.endTime.map(x => localDateTimeToMilliseconds(x)).getOrElse(0L),
+        toMilliSeconds(lineItem.startTime),
+        lineItem.endTime.map(x => toMilliSeconds(x)).getOrElse(0L),
       )
     }
 

@@ -7,8 +7,8 @@ import com.google.api.ads.admanager.axis.v202011._
 import common.GuLogging
 import common.dfp._
 import org.joda.time.DateTime
-
-import java.time.{LocalDateTime, ZoneId}
+import dfp.ApiHelper.toMilliSeconds
+import java.time.LocalDateTime
 
 case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
@@ -109,10 +109,6 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
     withDfpSession {
       _.creativeTemplates(stmtBuilder) map dataMapper.toGuCreativeTemplate filterNot (_.isForApps)
     }
-  }
-
-  def toMilliSeconds(ldt: LocalDateTime): Long = {
-    ldt.atZone(ZoneId.of("UTC")).toInstant.toEpochMilli()
   }
 
   def readTemplateCreativesModifiedSince(threshold: LocalDateTime): Seq[GuCreative] = {

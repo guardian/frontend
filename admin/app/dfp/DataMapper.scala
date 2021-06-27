@@ -3,7 +3,6 @@ package dfp
 import com.google.api.ads.admanager.axis.v202011._
 import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toSeq, toLocalDateTime}
-import java.time.LocalDateTime
 
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
 class DataMapper(

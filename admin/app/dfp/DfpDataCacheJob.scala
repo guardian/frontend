@@ -2,13 +2,12 @@ package dfp
 
 import common.dfp._
 import common.GuLogging
-import org.joda.time.DateTime
+import dfp.ApiHelper.localDateTimeToDateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 import scala.concurrent.{ExecutionContext, Future}
-import java.time.ZoneId
 import java.time.LocalDateTime
-import java.time.Instant
+import dfp.ApiHelper.toMilliSeconds
 
 class DfpDataCacheJob(
     adUnitAgent: AdUnitAgent,
@@ -48,21 +47,6 @@ class DfpDataCacheJob(
     }
   }
 
-  def dateTimeToLocalDateTime(date: DateTime): LocalDateTime = {
-    LocalDateTime.ofInstant(
-      Instant.ofEpochMilli(
-        date
-          .toInstant()
-          .getMillis,
-      ),
-      ZoneId.systemDefault,
-    )
-  }
-
-  def localDateTimeToDateTime(ldt: LocalDateTime): DateTime = {
-    DateTime.parse(ldt.toString) // Todo: Is this correct ?
-  }
-
   private def loadLineItems(): DfpDataExtractor = {
 
     def fetchCachedLineItems(): DfpLineItems = {
@@ -87,10 +71,6 @@ class DfpDataCacheJob(
 
   def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
 
-  def localDateTimeToMilliseconds(ldt: LocalDateTime): Long = {
-    ldt.atZone(ZoneId.of("UTC")).toInstant.toEpochMilli()
-  }
-
   def loadLineItems(
       cachedLineItems: => DfpLineItems,
       lineItemsModifiedSince: LocalDateTime => DfpLineItems,
@@ -108,7 +88,7 @@ class DfpDataCacheJob(
 
       // Calculate the most recent modified timestamp of the existing cache items,
       // and find line items modified since that timestamp.
-      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(x => localDateTimeToMilliseconds(x))
+      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(x => toMilliSeconds(x))
       val recentlyModified = lineItemsModifiedSince(threshold)
 
       // Update existing items with a patch of new items.

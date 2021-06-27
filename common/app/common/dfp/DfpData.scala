@@ -2,7 +2,6 @@ package common.dfp
 
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
-import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import java.time.{LocalDateTime, ZoneId}

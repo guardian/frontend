@@ -3,7 +3,6 @@ package dfp
 import common.dfp.GuCreative
 import play.api.libs.json.Json
 import tools.Store
-
 import java.time.LocalDateTime
 import scala.concurrent.{ExecutionContext, Future}
 
