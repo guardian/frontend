@@ -2,7 +2,7 @@ package dfp
 
 import com.google.api.ads.admanager.axis.v202011._
 import common.dfp._
-import dfp.ApiHelper.{isPageSkin, optJavaInt, toSeq}
+import dfp.ApiHelper.{isPageSkin, optJavaInt, toSeq, toLocalDateTime}
 import java.time.LocalDateTime
 
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
@@ -110,18 +110,6 @@ class DataMapper(
       val size = placeholder.size
       (size.width, size.height)
     }
-  }
-
-  def toLocalDateTime(gdt: com.google.api.ads.admanager.axis.v202011.DateTime): LocalDateTime = {
-    val gd: com.google.api.ads.admanager.axis.v202011.Date = gdt.getDate
-    LocalDateTime.of(
-      gd.getYear,
-      gd.getMonth,
-      gd.getDay,
-      gdt.getHour,
-      gdt.getMinute,
-      gdt.getSecond,
-    )
   }
 
   def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem): GuLineItem =

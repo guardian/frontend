@@ -2,7 +2,9 @@ package dfp
 
 import com.google.api.ads.admanager.axis.v202011._
 import common.GuLogging
-import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
+import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
+
+import java.time.LocalDateTime
 
 private[dfp] object ApiHelper extends GuLogging {
 
@@ -23,4 +25,16 @@ private[dfp] object ApiHelper extends GuLogging {
 
   //noinspection IfElseToOption
   def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
+
+  def toLocalDateTime(gdt: com.google.api.ads.admanager.axis.v202011.DateTime): LocalDateTime = {
+    val gd: com.google.api.ads.admanager.axis.v202011.Date = gdt.getDate
+    LocalDateTime.of(
+      gd.getYear,
+      gd.getMonth,
+      gd.getDay,
+      gdt.getHour,
+      gdt.getMinute,
+      gdt.getSecond,
+    )
+  }
 }
