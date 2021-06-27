@@ -58,7 +58,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
     lineItems sortBy { lineItem =>
       (
         toMilliSeconds(lineItem.startTime),
-        lineItem.endTime.map(x => toMilliSeconds(x)).getOrElse(0L),
+        lineItem.endTime.map(toMilliSeconds).getOrElse(0L),
       )
     }
 
