@@ -3,17 +3,12 @@ package common.dfp
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import org.joda.time.DateTime
-import org.joda.time.DateTime.now
-import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
-import play.api.libs.json.JodaReads._
-
-import java.text.SimpleDateFormat
 import java.time.{LocalDateTime, ZoneId}
 import java.time.format.DateTimeFormatter
-import java.util.{Date, TimeZone}
 import scala.language.postfixOps
+import play.api.libs.json.JodaReads._
 
 sealed trait GuLineItemType {
   val asString: String
@@ -398,8 +393,7 @@ case class GuCreative(
 object GuCreative {
 
   def toMilliSeconds(ldt: LocalDateTime): Long = {
-    val timezone = ZoneId.of("UTC")
-    ldt.atZone(timezone).toInstant.toEpochMilli
+    ldt.atZone(ZoneId.of("UTC")).toInstant.toEpochMilli()
   }
 
   def lastModified(cs: Seq[GuCreative]): Option[DateTime] = {

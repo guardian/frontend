@@ -1,4 +1,3 @@
-import org.joda.time.format.{DateTimeFormat}
 import java.text.SimpleDateFormat
 import java.time.{ZoneId, LocalDateTime}
 import java.util.TimeZone

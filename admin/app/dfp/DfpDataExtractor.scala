@@ -2,7 +2,6 @@ package dfp
 
 import common.Edition
 import common.dfp._
-
 import java.time.{LocalDateTime, ZoneId}
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem]) {

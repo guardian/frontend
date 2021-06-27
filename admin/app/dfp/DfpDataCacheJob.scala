@@ -5,14 +5,10 @@ import common.GuLogging
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
-
 import scala.concurrent.{ExecutionContext, Future}
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.{Date, TimeZone}
 import java.time.LocalDateTime
 import java.time.Instant
-import java.time.ZoneOffset
 
 class DfpDataCacheJob(
     adUnitAgent: AdUnitAgent,
@@ -64,7 +60,7 @@ class DfpDataCacheJob(
   }
 
   def localDateTimeToDateTime(ldt: LocalDateTime): DateTime = {
-    DateTime.parse(ldt.toString)
+    DateTime.parse(ldt.toString) // Todo: Is this correct ?
   }
 
   private def loadLineItems(): DfpDataExtractor = {
@@ -92,8 +88,7 @@ class DfpDataCacheJob(
   def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
 
   def localDateTimeToMilliseconds(ldt: LocalDateTime): Long = {
-    val timezone = ZoneId.of("UTC")
-    ldt.atZone(timezone).toInstant.toEpochMilli
+    ldt.atZone(ZoneId.of("UTC")).toInstant.toEpochMilli()
   }
 
   def loadLineItems(
