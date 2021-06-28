@@ -4,14 +4,6 @@ import pa.{LineUpPlayer, Team}
 import common.GuLogging
 import play.twirl.api.Html
 
-object ShortName {
-
-  val names = Map("44" -> "Wolves")
-
-  def apply(team: Team): String = names.getOrElse(team.id, team.name)
-
-}
-
 object MatchStatus extends GuLogging {
 
   // This is the list of possible statuses from the docs
