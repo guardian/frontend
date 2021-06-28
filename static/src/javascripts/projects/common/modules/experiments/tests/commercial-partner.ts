@@ -1,9 +1,7 @@
-import { forceUserInABTest } from 'commercial/commercial-metrics';
-
 export const commercialPartner: ABTest = {
-	id: 'commercial-partner',
+	id: 'CommercialPartner',
 	start: '2021-06-21',
-	expiry: '2021-07-01',
+	expiry: '2021-09-01',
 	author: 'mxdvl',
 	description: 'Some fake test for functionality',
 	audience: 0,
@@ -11,11 +9,18 @@ export const commercialPartner: ABTest = {
 	successMeasure: 'n/a',
 	audienceCriteria: 'n/a',
 	showForSensitive: true,
+	forceCommercialMetrics: true,
 	variants: [
 		{
-			id: 'variant',
+			id: 'force-commercial-metrics',
 			test: (): void => {
-				forceUserInABTest();
+				// debugger;
+			},
+		},
+		{
+			id: 'control',
+			test: (): void => {
+				// do nothing;
 			},
 		},
 	],

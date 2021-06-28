@@ -1,4 +1,6 @@
 import { sendCommercialMetrics } from '@guardian/commercial-core';
+import { log } from '@guardian/libs';
+import { getSynchronousTestsToRun } from 'common/modules/experiments/ab';
 import config_ from '../../lib/config';
 
 // This is really a hacky workaround ⚠️
@@ -11,26 +13,29 @@ let logged = false;
 
 const isDev = Boolean(config.get('page.isDev', false));
 
-let userInABTest = false;
-
-const init = (): void => {
-	if (!window.guardian.ophan) return;
-	if (!config.get('switches.commercialMetrics', false)) return;
+const init = (): Promise<void> => {
+	if (!window.guardian.ophan) return Promise.resolve();
+	if (!config.get('switches.commercialMetrics', false))
+		return Promise.resolve();
 
 	const userIsInSamplingGroup = Math.random() <= 0.01;
+	const shouldForceMetrics = getSynchronousTestsToRun().some(
+		(test) => test.forceCommercialMetrics,
+	);
 	const pageViewId = window.guardian.ophan.pageViewId;
 	const browserId = config.get('ophan.browserId') as string | undefined;
 
-	if (isDev || userInABTest || userIsInSamplingGroup) {
+	log('commercial', 'getSynchronousTestsToRun', getSynchronousTestsToRun());
+
+	if (isDev || shouldForceMetrics || userIsInSamplingGroup) {
+		log('commercial', { isDev, shouldForceMetrics, userIsInSamplingGroup });
 		document.addEventListener('visibilitychange', function () {
 			if (logged) return;
 			logged = sendCommercialMetrics(pageViewId, browserId, isDev);
 		});
 	}
+
+	return Promise.resolve();
 };
 
-const forceUserInABTest = (): void => {
-	userInABTest = true;
-};
-
-export { init, forceUserInABTest };
+export { init };
