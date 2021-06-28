@@ -21,17 +21,10 @@ import { renderAdvertLabel } from './render-advert-label';
 /**
  * Types of events that are returned when executing a size change callback
  */
-type CallbackEvent = {
-	event: {
-		slot: {
-			getOutOfPage: () => unknown;
-		};
-	};
-};
 
 const addClassIfHasClass = (newClassNames: string[]) =>
 	function hasClass(classNames: string[]) {
-		return function onAdvertRendered(_: CallbackEvent, advert: Advert) {
+		return function onAdvertRendered(advert: Advert) {
 			if (
 				classNames.some((className) =>
 					advert.node.classList.contains(className),
@@ -65,7 +58,7 @@ const removeStyleFromAdIframe = (
 
 const sizeCallbacks: Record<
 	string,
-	undefined | ((arg0: CallbackEvent, arg1: Advert) => Promise<void>)
+	undefined | ((arg0: Advert, arg1?: SlotRenderEndedEvent) => Promise<void>)
 > = {};
 
 /**
@@ -73,21 +66,15 @@ const sizeCallbacks: Record<
  * The vertical-align property found on DFP iframes affects the smoothness of
  * CSS transitions when expanding/collapsing various native style formats.
  */
-sizeCallbacks[adSizes.fluid.toString()] = (
-	renderSlotEvent: CallbackEvent,
-	advert: Advert,
-) =>
-	addFluid(['ad-slot'])(renderSlotEvent, advert).then(() =>
+sizeCallbacks[adSizes.fluid.toString()] = (advert: Advert) =>
+	addFluid(['ad-slot'])(advert).then(() =>
 		removeStyleFromAdIframe(advert, 'vertical-align'),
 	);
 
 /**
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
-sizeCallbacks[adSizes.mpu.toString()] = (
-	_: CallbackEvent,
-	advert: Advert,
-): Promise<void> =>
+sizeCallbacks[adSizes.mpu.toString()] = (advert: Advert): Promise<void> =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('js-sticky-mpu')) {
 			if (advert.node.classList.contains('ad-slot--right')) {
@@ -103,10 +90,7 @@ sizeCallbacks[adSizes.mpu.toString()] = (
 /**
  * Resolve the stickyMpu.whenRendered promise
  */
-sizeCallbacks[adSizes.halfPage.toString()] = (
-	_: CallbackEvent,
-	advert: Advert,
-) =>
+sizeCallbacks[adSizes.halfPage.toString()] = (advert: Advert) =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('ad-slot--right')) {
 			stickyMpu(advert.node);
@@ -117,10 +101,7 @@ sizeCallbacks[adSizes.halfPage.toString()] = (
 		void fastdom.mutate(() => advert.updateExtraSlotClasses());
 	});
 
-sizeCallbacks[adSizes.skyscraper.toString()] = (
-	_: CallbackEvent,
-	advert: Advert,
-) =>
+sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('ad-slot--right')) {
 			stickyMpu(advert.node);
@@ -133,39 +114,27 @@ sizeCallbacks[adSizes.skyscraper.toString()] = (
 		);
 	});
 
-sizeCallbacks[adSizes.video.toString()] = (_: CallbackEvent, advert: Advert) =>
+sizeCallbacks[adSizes.video.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('u-h');
 	});
 
-sizeCallbacks[adSizes.outstreamDesktop.toString()] = (
-	_: CallbackEvent,
-	advert: Advert,
-) =>
+sizeCallbacks[adSizes.outstreamDesktop.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (
-	_: CallbackEvent,
-	advert: Advert,
-) =>
+sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.outstreamMobile.toString()] = (
-	_: CallbackEvent,
-	advert: Advert,
-) =>
+sizeCallbacks[adSizes.outstreamMobile.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.googleCard.toString()] = (
-	_: CallbackEvent,
-	advert: Advert,
-) =>
+sizeCallbacks[adSizes.googleCard.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--gc');
 	});
@@ -174,8 +143,8 @@ sizeCallbacks[adSizes.googleCard.toString()] = (
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
  * and their containers closed up.
  */
-const outOfPageCallback = ({ event }: CallbackEvent, advert: Advert) => {
-	if (!event.slot.getOutOfPage()) {
+const outOfPageCallback = (advert: Advert, event?: SlotRenderEndedEvent) => {
+	if (!event?.slot.getOutOfPage()) {
 		const parent = advert.node.parentNode as HTMLElement;
 		return fastdom.mutate(() => {
 			advert.node.classList.add('ad-slot--collapse');
@@ -238,7 +207,7 @@ const addContentClass = (adSlotNode: HTMLElement) => {
  */
 export const renderAdvert = (
 	advert: Advert,
-	slotRenderEndedEvent: Event,
+	slotRenderEndedEvent: SlotRenderEndedEvent,
 ): Promise<boolean> => {
 	addContentClass(advert.node);
 
@@ -259,10 +228,10 @@ export const renderAdvert = (
 					 * */
 					advert.hasPrebidSize = false;
 
+					const sizeCallback = sizeCallbacks[size];
 					return Promise.resolve(
-						sizeCallbacks[size]
-							? // @ts-expect-error - We check if sizeCallbacks[size] is truthy above
-							  sizeCallbacks[size](slotRenderEndedEvent, advert)
+						sizeCallback !== undefined
+							? sizeCallback(advert, slotRenderEndedEvent)
 							: fastdom.mutate(() => {
 									advert.updateExtraSlotClasses();
 							  }),

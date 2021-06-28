@@ -46,6 +46,7 @@ type Slot = {
 	getAdUnitPath: GetString;
 	getAttributeKeys: GetStrings;
 	getCategoryExclusions: GetStrings;
+	getOutOfPage: () => boolean;
 	getResponseInformation: GetResponseInformation;
 	getSlotElementId: GetString;
 	getTargeting: GetTargeting;
