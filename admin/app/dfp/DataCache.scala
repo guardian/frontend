@@ -1,9 +1,9 @@
 package dfp
 
-import org.joda.time.DateTime
+import java.time.LocalDateTime
 
-case class DataCache[K, V](timestamp: DateTime, data: Map[K, V])
+case class DataCache[K, V](timestamp: LocalDateTime, data: Map[K, V])
 
 object DataCache {
-  def apply[K, V](data: Map[K, V]): DataCache[K, V] = DataCache(DateTime.now, data)
+  def apply[K, V](data: Map[K, V]): DataCache[K, V] = DataCache(LocalDateTime.now(), data)
 }
