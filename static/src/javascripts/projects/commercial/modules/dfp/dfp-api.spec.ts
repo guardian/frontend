@@ -15,14 +15,12 @@ import { init as prepareGoogletag } from './prepare-googletag';
 
 // Note: this does not appear to be typed in @guardian/consent-management-platform
 type AUSRejectedMockType = {
-	aus: {
-		rejectedCategories:
-			| Array<{
-					_id: string;
-					name: string;
-			  }>
-			| never[];
-	};
+	rejectedCategories:
+		| Array<{
+				_id: string;
+				name: string;
+		  }>
+		| never[];
 };
 
 declare global {
@@ -59,19 +57,17 @@ const config = _config as {
 };
 
 interface TCFv2ConsentStateMockType {
-	tcfv2: {
-		consents: Record<string, boolean | null>;
-		vendorConsents: Record<string, boolean | null>;
-	};
+	consents: Record<string, boolean | null>;
+	vendorConsents: Record<string, boolean | null>;
 }
 
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
 	(
 		fn: (
 			arg0:
-				| TCFv2ConsentStateMockType
+				| { tcfv2: TCFv2ConsentStateMockType }
 				| { ccpa: CCPAConsentState }
-				| AUSRejectedMockType,
+				| { aus: AUSRejectedMockType },
 		) => void,
 	) => void
 >;
@@ -211,7 +207,7 @@ const tcfv2WithConsent = {
 			'5f1aada6b8e05c306c0597d7': true, // Googletag
 		},
 	},
-} as TCFv2ConsentStateMockType;
+};
 
 const tcfv2WithoutConsent = {
 	tcfv2: {
@@ -226,7 +222,7 @@ const tcfv2WithoutConsent = {
 			'5f1aada6b8e05c306c0597d7': false, // Googletag
 		},
 	},
-} as TCFv2ConsentStateMockType;
+};
 
 // TODO: There is no null consent in the new CMP
 const tcfv2NullConsent = {
@@ -242,7 +238,7 @@ const tcfv2NullConsent = {
 			'5f1aada6b8e05c306c0597d7': null, // Googletag
 		},
 	},
-} as TCFv2ConsentStateMockType;
+};
 
 const tcfv2MixedConsent = {
 	tcfv2: {
@@ -257,7 +253,7 @@ const tcfv2MixedConsent = {
 			'5f1aada6b8e05c306c0597d7': true, // Googletag
 		},
 	},
-} as TCFv2ConsentStateMockType;
+};
 
 const ausNotRejected = {
 	aus: {
@@ -637,8 +633,11 @@ describe('DFP', () => {
 	describe('keyword targeting', () => {
 		it('should send page level keywords', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFv2ConsentStateMockType) => void) =>
-					callback(tcfv2WithConsent),
+				(
+					callback: (val: {
+						tcfv2: TCFv2ConsentStateMockType;
+					}) => void,
+				) => callback(tcfv2WithConsent),
 			);
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
@@ -652,8 +651,11 @@ describe('DFP', () => {
 	describe('NPA flag is set correctly', () => {
 		it('when full TCF consent was given', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFv2ConsentStateMockType) => void) =>
-					callback(tcfv2WithConsent),
+				(
+					callback: (val: {
+						tcfv2: TCFv2ConsentStateMockType;
+					}) => void,
+				) => callback(tcfv2WithConsent),
 			);
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
@@ -661,8 +663,11 @@ describe('DFP', () => {
 		});
 		it('when no TCF consent preferences were specified', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFv2ConsentStateMockType) => void) =>
-					callback(tcfv2NullConsent),
+				(
+					callback: (val: {
+						tcfv2: TCFv2ConsentStateMockType;
+					}) => void,
+				) => callback(tcfv2NullConsent),
 			);
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
@@ -670,8 +675,11 @@ describe('DFP', () => {
 		});
 		it('when full TCF consent was denied', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFv2ConsentStateMockType) => void) =>
-					callback(tcfv2WithoutConsent),
+				(
+					callback: (val: {
+						tcfv2: TCFv2ConsentStateMockType;
+					}) => void,
+				) => callback(tcfv2WithoutConsent),
 			);
 			getConsentFor.mockReturnValue(false);
 			await prepareGoogletag();
@@ -679,8 +687,11 @@ describe('DFP', () => {
 		});
 		it('when only partial TCF consent was given', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: TCFv2ConsentStateMockType) => void) =>
-					callback(tcfv2MixedConsent),
+				(
+					callback: (val: {
+						tcfv2: TCFv2ConsentStateMockType;
+					}) => void,
+				) => callback(tcfv2MixedConsent),
 			);
 			getConsentFor.mockReturnValue(false);
 			await prepareGoogletag();
@@ -690,7 +701,7 @@ describe('DFP', () => {
 	describe('NPA flag in AUS', () => {
 		it('when AUS has not retracted advertising consent', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: AUSRejectedMockType) => void) =>
+				(callback: (val: { aus: AUSRejectedMockType }) => void) =>
 					callback(ausNotRejected),
 			);
 			getConsentFor.mockReturnValue(true);
@@ -699,7 +710,7 @@ describe('DFP', () => {
 		});
 		it('when AUS has retracted advertising consent', async () => {
 			onConsentChange.mockImplementation(
-				(callback: (val: AUSRejectedMockType) => void) =>
+				(callback: (val: { aus: AUSRejectedMockType }) => void) =>
 					callback(ausRejected),
 			);
 			getConsentFor.mockReturnValue(false);
