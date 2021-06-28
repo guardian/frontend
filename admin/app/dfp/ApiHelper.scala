@@ -1,6 +1,11 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.v202011._
+import com.google.api.ads.admanager.axis.v202011.{
+  LineItem,
+  CreativePlaceholder,
+  RoadblockingType,
+  DateTime => DfpDateTime,
+}
 import common.GuLogging
 import java.time.{LocalDateTime, ZoneId}
 
@@ -24,7 +29,7 @@ private[dfp] object ApiHelper extends GuLogging {
   //noinspection IfElseToOption
   def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 
-  def toLocalDateTime(gdt: com.google.api.ads.admanager.axis.v202011.DateTime): LocalDateTime = {
+  def toLocalDateTime(gdt: DfpDateTime): LocalDateTime = {
     val gd: com.google.api.ads.admanager.axis.v202011.Date = gdt.getDate
     LocalDateTime.of(
       gd.getYear,
