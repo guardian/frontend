@@ -5,8 +5,8 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.switches.Switches.prebidSwitch
-import conf.switches.Switches.a9Switch
+import conf.switches.Switches.prebidHeaderBidding
+import conf.switches.Switches.a9HeaderBidding
 import model.IpsosTags.{getScriptTag}
 import conf.{Configuration, DiscussionAsset}
 import model._
@@ -56,8 +56,8 @@ object JavaScriptPage {
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
       "hbImpl" -> JsObject(
         Seq(
-          "prebid" -> JsBoolean(prebidSwitch.isSwitchedOn),
-          "a9" -> JsBoolean(a9Switch.isSwitchedOn),
+          "prebid" -> JsBoolean(prebidHeaderBidding.isSwitchedOn),
+          "a9" -> JsBoolean(a9HeaderBidding.isSwitchedOn),
         ),
       ),
       "isSensitive" -> JsBoolean(page.metadata.sensitive),
