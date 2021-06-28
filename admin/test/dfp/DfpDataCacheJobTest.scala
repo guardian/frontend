@@ -5,6 +5,7 @@ import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
 import test._
 import java.time.LocalDateTime
+import java.time.LocalDate
 
 class DfpDataCacheJobTest
     extends FlatSpec
@@ -30,7 +31,7 @@ class DfpDataCacheJobTest
       0L,
       name,
       Sponsorship,
-      startTime = java.time.LocalDate.now.atStartOfDay,
+      startTime = LocalDate.now.atStartOfDay,
       endTime = None,
       isPageSkin = false,
       sponsor = None,
@@ -44,7 +45,7 @@ class DfpDataCacheJobTest
         geoTargetsExcluded = Nil,
         customTargetSets = Nil,
       ),
-      lastModified = java.time.LocalDate.now.atStartOfDay,
+      lastModified = LocalDate.now.atStartOfDay,
     )
   }
 
