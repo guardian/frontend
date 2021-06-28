@@ -164,12 +164,7 @@ object CompetitionDisplayHelpers {
       .replace("Holland", "The Netherlands")
   }
 
-  // This function has specifically raised for the 2021 Euros after some clarification.
-  // "We're happy with "Netherlands" as a label, like the keyword for football and also the news one you can see here:
-  // https://www.theguardian.com/world/2021/jun/11/princess-amalia-heir-to-dutch-throne-waives-right-to-yearly-income"
-  // - Philip Cornwall, 16/6/21
-  // I don't know if this is permanent going forward hence the separate function.
-  def cleanTeamName2021(teamName: String): String = {
+  def cleanTeamNameNextGenApi(teamName: String): String = {
     teamName
       .replace("Ladies", "")
       .replace("Holland", "Netherlands")
