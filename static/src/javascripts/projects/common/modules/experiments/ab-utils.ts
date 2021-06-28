@@ -1,3 +1,9 @@
+import type {
+	ABTest,
+	Participations,
+	Runnable,
+	Variant,
+} from '@guardian/ab-core';
 import fromPairs from 'lodash/fromPairs';
 import toPairs from 'lodash/toPairs';
 import config_ from 'lib/config';
@@ -16,7 +22,7 @@ export const isTestSwitchedOn = (testId: string): boolean =>
 	config.get<boolean>(`switches.ab${testId}`, false);
 
 export const runnableTestsToParticipations = (
-	runnableTests: ReadonlyArray<Runnable<ABTest>>,
+	runnableTests: readonly Runnable[],
 ): Participations =>
 	runnableTests.reduce(
 		(participations: Participations, { id: testId, variantToRun }) => ({

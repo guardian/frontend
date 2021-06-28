@@ -1,3 +1,4 @@
+import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
 import {
 	getMvtNumValues,
 	getMvtValue,
@@ -77,13 +78,11 @@ const computeVariantFromMvtCookie = (
 //
 // This function can be called at any time, before or after participations are
 // persisted to localStorage. It should always give the same result for a given pageview.
-export const runnableTest = <T extends ABTest>(
-	test: T,
-): Runnable<T> | null | undefined => {
+export const runnableTest = (test: ABTest): Runnable | null => {
 	const fromUrl = getVariantFromUrl(test);
 	const fromLocalStorage = getVariantFromLocalStorage(test);
 	const fromCookie = computeVariantFromMvtCookie(test);
-	const variantToRun = fromUrl ?? fromLocalStorage ?? fromCookie;
+	const variantToRun = fromUrl ?? fromLocalStorage ?? fromCookie ?? null;
 	const ignoreCanRun = fromUrl && getIgnoreCanRunFromUrl(); // check fromUrl to only ignore can run for forced tests
 
 	if (variantToRun && ignoreCanRun) {
@@ -97,16 +96,15 @@ export const runnableTest = <T extends ABTest>(
 	return null;
 };
 
-export const allRunnableTests = <T extends ABTest>(
-	tests: readonly T[],
-): ReadonlyArray<Runnable<T>> =>
-	tests.reduce<ReadonlyArray<Runnable<T>>>((accumulator, currentValue) => {
+export const allRunnableTests = (
+	tests: readonly ABTest[],
+): readonly Runnable[] =>
+	tests.reduce<readonly Runnable[]>((accumulator, currentValue) => {
 		const rt = runnableTest(currentValue);
 		return rt ? [...accumulator, rt] : accumulator;
 	}, []);
-export const firstRunnableTest = <T extends ABTest>(
-	tests: readonly T[],
-): Runnable<T> | null | undefined =>
+
+export const firstRunnableTest = (tests: readonly ABTest[]): Runnable | null =>
 	tests
-		.map((test: T) => runnableTest(test))
-		.find((rt: Runnable<T> | null | undefined) => rt !== null);
+		.map((test: ABTest) => runnableTest(test))
+		.find((rt?: Runnable | null) => rt !== null) ?? null;

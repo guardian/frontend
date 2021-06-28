@@ -1,3 +1,4 @@
+import type { ABTest, Participations, Variant } from '@guardian/ab-core';
 import { testAndParticipationsToVariant } from './ab-utils';
 
 export const getForcedParticipationsFromUrl = (): Participations => {
