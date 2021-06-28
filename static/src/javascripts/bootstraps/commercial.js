@@ -38,7 +38,7 @@ const commercialModules = [
 
 if (!commercialFeatures.adFree) {
 	commercialModules.push(
-		['cm-commercial-metrics', initCommercialMetrics],
+		['cm-commercial-metrics', initCommercialMetrics], // In DCR, see App.tsx
 		['cm-prepare-prebid', preparePrebid],
 		['cm-prepare-a9', prepareA9],
 		['cm-thirdPartyTags', initThirdPartyTags],
