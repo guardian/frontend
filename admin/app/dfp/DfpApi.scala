@@ -6,7 +6,8 @@ import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
 import com.google.api.ads.admanager.axis.v202011._
 import common.GuLogging
 import common.dfp._
-import org.joda.time.DateTime
+import dfp.ApiHelper.toMilliSeconds
+import java.time.LocalDateTime
 
 case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
@@ -64,11 +65,11 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
     readLineItems(stmtBuilder)
   }
 
-  def readLineItemsModifiedSince(threshold: DateTime): DfpLineItems = {
+  def readLineItemsModifiedSince(threshold: LocalDateTime): DfpLineItems = {
 
     val stmtBuilder = new StatementBuilder()
       .where("lastModifiedDateTime > :threshold")
-      .withBindVariableValue("threshold", threshold.getMillis)
+      .withBindVariableValue("threshold", toMilliSeconds(threshold))
 
     readLineItems(stmtBuilder)
   }
@@ -109,11 +110,11 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
     }
   }
 
-  def readTemplateCreativesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
+  def readTemplateCreativesModifiedSince(threshold: LocalDateTime): Seq[GuCreative] = {
 
     val stmtBuilder = new StatementBuilder()
       .where("lastModifiedDateTime > :threshold")
-      .withBindVariableValue("threshold", threshold.getMillis)
+      .withBindVariableValue("threshold", toMilliSeconds(threshold))
 
     withDfpSession {
       _.creatives.get(stmtBuilder) collect {

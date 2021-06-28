@@ -2,6 +2,8 @@ package dfp
 
 import common.Edition
 import common.dfp._
+import java.time.{LocalDateTime, ZoneId}
+import dfp.ApiHelper.toMilliSeconds
 
 case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem]) {
 
@@ -54,7 +56,10 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
 
   def dateSort(lineItems: => Seq[GuLineItem]): Seq[GuLineItem] =
     lineItems sortBy { lineItem =>
-      (lineItem.startTime.getMillis, lineItem.endTime.map(_.getMillis).getOrElse(0L))
+      (
+        toMilliSeconds(lineItem.startTime),
+        lineItem.endTime.map(toMilliSeconds).getOrElse(0L),
+      )
     }
 
   val topAboveNavSlotTakeovers: Seq[GuLineItem] = dateSort {
