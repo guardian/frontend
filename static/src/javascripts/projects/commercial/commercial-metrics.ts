@@ -11,6 +11,8 @@ let logged = false;
 
 const isDev = Boolean(config.get('page.isDev', false));
 
+let userInABTest = false;
+
 const init = (): void => {
 	if (!window.guardian.ophan) return;
 	if (!config.get('switches.commercialMetrics', false)) return;
@@ -19,7 +21,7 @@ const init = (): void => {
 	const pageViewId = window.guardian.ophan.pageViewId;
 	const browserId = config.get('ophan.browserId') as string | undefined;
 
-	if (isDev || userIsInSamplingGroup) {
+	if (isDev || userInABTest || userIsInSamplingGroup) {
 		document.addEventListener('visibilitychange', function () {
 			if (logged) return;
 			logged = sendCommercialMetrics(pageViewId, browserId, isDev);
@@ -27,4 +29,8 @@ const init = (): void => {
 	}
 };
 
-export { init };
+const forceUserInABTest = (): void => {
+	userInABTest = true;
+};
+
+export { init, forceUserInABTest };
