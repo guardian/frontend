@@ -11,7 +11,7 @@ import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
 import org.joda.time.DateTime
-import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
+import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam, TeamCodes}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -66,6 +66,7 @@ case class NxPlayer(
 case class NxTeam(
     id: String,
     name: String,
+    codename: String,
     players: Seq[NxPlayer],
     score: Int,
     scorers: List[String],
@@ -114,6 +115,7 @@ object NxAnswer {
     NxTeam(
       teamV1.id,
       cleanTeamName2021(teamV1.name),
+      codename = TeamCodes.codeFor(teamV1),
       players = players,
       score = teamV1.score.getOrElse(0),
       scorers = teamV1.scorers.fold(Nil: List[String])(

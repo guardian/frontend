@@ -24,4 +24,13 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-us-mandatory",
+    "Mandatory sign in gate to users in US split test",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 12, 1),
+    exposeClientSide = true,
+  )
 }

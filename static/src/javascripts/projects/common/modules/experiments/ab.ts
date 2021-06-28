@@ -1,3 +1,4 @@
+import type { ABTest, Participations, Runnable } from '@guardian/ab-core';
 import memoize from 'lodash/memoize';
 import { allRunnableTests } from 'common/modules/experiments/ab-core';
 import {
@@ -22,11 +23,10 @@ import {
 // We memoize this because it can't change for a given pageview, and because getParticipations()
 // and isInVariantSynchronous() depend on it and these are called in many places.
 export const getSynchronousTestsToRun = memoize(() =>
-	allRunnableTests<ABTest>(concurrentTests),
+	allRunnableTests(concurrentTests),
 );
-export const getAsyncTestsToRun = (): Promise<
-	ReadonlyArray<Runnable<ABTest>>
-> => Promise.all([]).then((tests) => tests.filter(Boolean));
+export const getAsyncTestsToRun = (): Promise<readonly Runnable[]> =>
+	Promise.all([]).then((tests) => tests.filter(Boolean));
 
 // This excludes epic & banner tests
 export const getSynchronousParticipations = (): Participations =>
@@ -49,7 +49,9 @@ export const isInABTestSynchronous = (test: ABTest): boolean =>
 export const runAndTrackAbTests = (): Promise<void> => {
 	const testsToRun = getSynchronousTestsToRun();
 
-	testsToRun.forEach((test) => test.variantToRun.test(test));
+	testsToRun.forEach((test) =>
+		test.variantToRun.test((test as unknown) as Record<string, unknown>),
+	);
 
 	registerImpressionEvents(testsToRun);
 	registerCompleteEvents(testsToRun);
@@ -72,7 +74,11 @@ export const runAndTrackAbTests = (): Promise<void> => {
 	});
 
 	return getAsyncTestsToRun().then((tests) => {
-		tests.forEach((test) => test.variantToRun.test(test));
+		tests.forEach((test) =>
+			test.variantToRun.test(
+				(test as unknown) as Record<string, unknown>,
+			),
+		);
 
 		registerImpressionEvents(tests);
 		registerCompleteEvents(tests);

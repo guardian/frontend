@@ -1,3 +1,4 @@
+import type { ABTest, Participations, Variant } from '@guardian/ab-core';
 import { storage } from '@guardian/libs';
 import { participationsKey } from './ab-constants';
 import { testAndParticipationsToVariant } from './ab-utils';

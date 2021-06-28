@@ -1,3 +1,4 @@
+import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
 import ophan from 'ophan/ng';
 import config_ from 'lib/config';
 import { noop } from 'lib/noop';
@@ -65,9 +66,7 @@ const buildOphanSubmitter = (
  *
  * @see {@link defersImpression}
  */
-const registerCompleteEvent = (complete: boolean) => (
-	test: Runnable<ABTest>,
-): void => {
+const registerCompleteEvent = (complete: boolean) => (test: Runnable): void => {
 	const variant = test.variantToRun;
 	const listener = (complete ? variant.success : variant.impression) ?? noop;
 
@@ -78,16 +77,14 @@ const registerCompleteEvent = (complete: boolean) => (
 	}
 };
 
-export const registerCompleteEvents = (
-	tests: ReadonlyArray<Runnable<ABTest>>,
-): void => tests.forEach(registerCompleteEvent(true));
+export const registerCompleteEvents = (tests: readonly Runnable[]): void =>
+	tests.forEach(registerCompleteEvent(true));
 
-export const registerImpressionEvents = (
-	tests: ReadonlyArray<Runnable<ABTest>>,
-): void => tests.filter(defersImpression).forEach(registerCompleteEvent(false));
+export const registerImpressionEvents = (tests: readonly Runnable[]): void =>
+	tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
 export const buildOphanPayload = (
-	tests: ReadonlyArray<Runnable<ABTest>>,
+	tests: readonly Runnable[],
 ): OphanABPayload => {
 	try {
 		const log: OphanABPayload = {};
@@ -115,6 +112,6 @@ export const buildOphanPayload = (
 		return {};
 	}
 };
-export const trackABTests = (tests: ReadonlyArray<Runnable<ABTest>>): void =>
+export const trackABTests = (tests: readonly Runnable[]): void =>
 	submit(buildOphanPayload(tests));
 export { buildOphanSubmitter };
