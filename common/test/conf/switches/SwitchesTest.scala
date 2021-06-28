@@ -1,7 +1,7 @@
 package conf.switches
 
-import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
-import org.joda.time.LocalDate
+import java.time.DayOfWeek.{SATURDAY, SUNDAY}
+import java.time.LocalDate
 import org.scalatest.{AppendedClues, FlatSpec, Matchers}
 
 class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
@@ -15,7 +15,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
   private val testSwitchGroup = new SwitchGroup("category")
 
   private val switchExpiryDate = {
-    val today = new LocalDate()
+    val today = LocalDate.now()
     if (today.getDayOfWeek == SATURDAY) today.plusDays(2)
     else if (today.getDayOfWeek == SUNDAY) today.plusDays(1)
     else today
@@ -28,7 +28,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
       "exciting switch",
       owners = Seq(Owner.withGithub("FakeOwner")),
       safeState = Off,
-      sellByDate = switchExpiryDate,
+      sellByDate = Some(switchExpiryDate),
       exposeClientSide = true,
     )
 

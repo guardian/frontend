@@ -1,7 +1,7 @@
 package experiments
 
 import conf.switches.Owner
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import org.scalatest.{FlatSpec, Matchers}
 import test.TestRequest
 import ParticipationGroups._
@@ -111,7 +111,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
           "experiment0",
           "an experiment",
           Seq(Owner.withName("Fake owner")),
-          new LocalDate(2100, 1, 1),
+          LocalDate.of(2100, 1, 1),
           participationGroup = Perc0A,
         )
     object experiment1
@@ -119,7 +119,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
           "experiment1",
           "another experiment",
           Seq(Owner.withName("Fake owner")),
-          new LocalDate(2100, 1, 1),
+          LocalDate.of(2100, 1, 1),
           participationGroup = Perc1A,
         )
     object experiment2
@@ -127,7 +127,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
           "experiment2",
           "still another experiment",
           Seq(Owner.withName("Fake owner")),
-          new LocalDate(2100, 1, 1),
+          LocalDate.of(2100, 1, 1),
           participationGroup = Perc1B,
         )
     object experimentWithTruePriorCondition
@@ -135,7 +135,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
           "experiment-with-true-prior-condition",
           "an experiment",
           Seq(Owner.withName("Fake owner")),
-          new LocalDate(2100, 1, 1),
+          LocalDate.of(2100, 1, 1),
           participationGroup = Perc1C,
         ) {
       override def priorCondition(implicit request: RequestHeader): Boolean = true
@@ -145,7 +145,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
           "experiment-with-false-prior-condition",
           "an experiment",
           Seq(Owner.withName("Fake owner")),
-          new LocalDate(2100, 1, 1),
+          LocalDate.of(2100, 1, 1),
           participationGroup = Perc1D,
         ) {
       override def priorCondition(implicit request: RequestHeader): Boolean = false
@@ -155,7 +155,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
           "experiment-with-extra-header",
           "an experiment",
           Seq(Owner.withName("Fake owner")),
-          new LocalDate(2100, 1, 1),
+          LocalDate.of(2100, 1, 1),
           participationGroup = Perc1E,
         ) {
       override val extraHeader: Option[ExperimentHeader] = Some(ExperimentHeader("extraCond", "true"))

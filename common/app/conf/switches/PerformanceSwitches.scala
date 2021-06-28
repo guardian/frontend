@@ -1,7 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
+import java.time.LocalDate
 
 trait PerformanceSwitches {
 
@@ -183,7 +183,7 @@ trait PerformanceSwitches {
     "If switched on, explicitly request lazy loading of images on supporting browsers.",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2029, 9, 3),
+    sellByDate = LocalDate.of(2029, 9, 3),
     exposeClientSide = false,
   )
 }
