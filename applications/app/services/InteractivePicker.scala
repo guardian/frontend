@@ -43,7 +43,7 @@ object InteractivePicker {
     val switchOn = InteractivePickerFeature.isSwitchedOn
     val publishedPostSwitch = dateIsPostTransition(datetime)
     val isOptedInAmp = (requestFormat == AmpFormat) && isAmpOptedIn(tags)
-    val isWebNotOptedOut = (requestFormat == AmpFormat) && !isOptedOut(tags)
+    val isWebNotOptedOut = (requestFormat == HtmlFormat) && !isOptedOut(tags)
 
     if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
     else if (switchOn && publishedPostSwitch && isWebNotOptedOut) DotcomRendering
