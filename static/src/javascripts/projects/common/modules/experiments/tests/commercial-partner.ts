@@ -1,3 +1,5 @@
+import { ABTest } from "@guardian/ab-core";
+
 export const commercialPartner: ABTest = {
 	id: 'CommercialPartner',
 	start: '2021-06-21',
@@ -9,7 +11,7 @@ export const commercialPartner: ABTest = {
 	successMeasure: 'n/a',
 	audienceCriteria: 'n/a',
 	showForSensitive: true,
-	forceCommercialMetrics: true,
+	commercialMetrics: true,
 	variants: [
 		{
 			id: 'force-commercial-metrics',

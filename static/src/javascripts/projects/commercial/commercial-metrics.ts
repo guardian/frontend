@@ -20,7 +20,7 @@ const init = (): Promise<void> => {
 
 	const userIsInSamplingGroup = Math.random() <= 0.01;
 	const shouldForceMetrics = getSynchronousTestsToRun().some(
-		(test) => test.forceCommercialMetrics,
+		(test) => test.commercialMetrics,
 	);
 	const pageViewId = window.guardian.ophan.pageViewId;
 	const browserId = config.get('ophan.browserId') as string | undefined;
