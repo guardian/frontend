@@ -113,7 +113,7 @@ class InteractiveController(
         case Left((page, blocks)) => {
           val tags = page.interactive.tags.tags
           val date = page.interactive.trail.webPublicationDate
-          val tier = InteractivePicker.getRenderingTier(path, date, tags)
+          val tier = InteractivePicker.getRenderingTier(requestFormat, path, date, tags)
 
           (requestFormat, tier) match {
             case (AmpFormat, DotcomRendering)  => renderAmp(page, blocks)
