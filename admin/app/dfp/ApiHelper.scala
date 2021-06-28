@@ -2,7 +2,6 @@ package dfp
 
 import com.google.api.ads.admanager.axis.v202011._
 import common.GuLogging
-import org.joda.time.DateTime
 import java.time.{LocalDateTime, ZoneId}
 
 private[dfp] object ApiHelper extends GuLogging {
@@ -39,9 +38,5 @@ private[dfp] object ApiHelper extends GuLogging {
 
   def toMilliSeconds(ldt: LocalDateTime): Long = {
     ldt.atZone(ZoneId.of("UTC")).toInstant.toEpochMilli()
-  }
-
-  def localDateTimeToDateTime(ldt: LocalDateTime): DateTime = {
-    DateTime.parse(ldt.toString)
   }
 }

@@ -2,7 +2,6 @@ package dfp
 
 import common.dfp._
 import common.GuLogging
-import dfp.ApiHelper.localDateTimeToDateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 import scala.concurrent.{ExecutionContext, Future}
@@ -59,7 +58,7 @@ class DfpDataCacheJob(
 
     val loadSummary = loadLineItems(
       fetchCachedLineItems(),
-      ldt => dfpApi.readLineItemsModifiedSince(localDateTimeToDateTime(ldt)),
+      ldt => dfpApi.readLineItemsModifiedSince(ldt),
       dfpApi.readCurrentLineItems,
     )
 
