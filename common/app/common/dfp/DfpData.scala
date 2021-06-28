@@ -236,7 +236,7 @@ case class GuLineItem(
   val now = LocalDateTime.now()
 
   val isCurrent = startTime.isBefore(now) && (endTime.isEmpty || endTime.exists(_.isAfter(now)))
-  val isExpired = endTime.exists(_.isBefore(LocalDateTime.now()))
+  val isExpired = endTime.exists(_.isBefore(now))
   val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
   val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
@@ -279,7 +279,7 @@ case class GuLineItem(
     targeting.geoTargetsIncluded.exists { geoTarget =>
       geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
     } &&
-    startTime.isBefore(LocalDateTime.now().plusDays(1)) &&
+    startTime.isBefore(now.plusDays(1)) &&
     (endTime.isEmpty || endTime.exists(_.isAfter(now)))
   }
 
