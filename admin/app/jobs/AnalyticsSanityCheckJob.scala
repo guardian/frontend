@@ -60,11 +60,11 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {
   }
 
   private def ophanViews()(implicit executionContext: ExecutionContext): Future[Long] = {
-    val fifteenMinsAgo: Long = LocalDateTime.now().minusMinutes(15).atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()
+    val instant: Long = LocalDateTime.now().minusMinutes(15).atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()
     ophanApi.getBreakdown("next-gen", hours = 1).map { json =>
       (json \\ "data").flatMap { line =>
         val recent = line.asInstanceOf[play.api.libs.json.JsArray].value.filter { entry =>
-          (entry \ "dateTime").as[Long] > fifteenMinsAgo
+          (entry \ "dateTime").as[Long] > instant
         }
         recent.map(r => (r \ "count").as[Long])
       }.sum
