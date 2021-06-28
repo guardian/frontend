@@ -2,7 +2,7 @@ package services
 
 import model.Tag
 import conf.switches.Switches.InteractivePickerFeature
-import implicits.{AmpFormat, RequestFormat}
+import implicits.{AmpFormat, HtmlFormat, RequestFormat}
 import play.api.mvc.RequestHeader
 import implicits.Requests._
 import model.dotcomrendering.InteractiveSwitchOver
