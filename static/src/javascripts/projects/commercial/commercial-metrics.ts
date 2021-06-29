@@ -1,5 +1,4 @@
 import { sendCommercialMetrics } from '@guardian/commercial-core';
-import { log } from '@guardian/libs';
 import { getSynchronousTestsToRun } from 'common/modules/experiments/ab';
 import config_ from '../../lib/config';
 
@@ -27,10 +26,7 @@ const init = (): Promise<void> => {
 	const pageViewId = window.guardian.ophan.pageViewId;
 	const browserId = config.get('ophan.browserId') as string | undefined;
 
-	log('commercial', 'getSynchronousTestsToRun', getSynchronousTestsToRun());
-
 	if (isDev || shouldForceMetrics || userIsInSamplingGroup) {
-		log('commercial', { isDev, shouldForceMetrics, userIsInSamplingGroup });
 		document.addEventListener('visibilitychange', function () {
 			if (logged) return;
 			logged = sendCommercialMetrics(pageViewId, browserId, isDev);
