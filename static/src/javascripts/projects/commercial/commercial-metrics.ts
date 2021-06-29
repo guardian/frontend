@@ -19,8 +19,10 @@ const init = (): Promise<void> => {
 		return Promise.resolve();
 
 	const userIsInSamplingGroup = Math.random() <= 0.01;
-	const shouldForceMetrics = getSynchronousTestsToRun().some(
-		(test) => test.commercialMetrics,
+	const shouldForceMetrics = getSynchronousTestsToRun().some((test) =>
+		// The convention is that if a test ID starts with “Commercial”,
+		// we track all the commercial metrics for it
+		test.id.startsWith('Commercial'),
 	);
 	const pageViewId = window.guardian.ophan.pageViewId;
 	const browserId = config.get('ophan.browserId') as string | undefined;

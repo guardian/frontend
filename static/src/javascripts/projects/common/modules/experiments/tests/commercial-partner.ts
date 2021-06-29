@@ -1,4 +1,4 @@
-import { ABTest } from "@guardian/ab-core";
+import type { ABTest } from '@guardian/ab-core';
 
 export const commercialPartner: ABTest = {
 	id: 'CommercialPartner',
@@ -11,7 +11,6 @@ export const commercialPartner: ABTest = {
 	successMeasure: 'n/a',
 	audienceCriteria: 'n/a',
 	showForSensitive: true,
-	commercialMetrics: true,
 	variants: [
 		{
 			id: 'force-commercial-metrics',
