@@ -1,10 +1,8 @@
 package experiments
 
-import conf.switches.{Owner, SwitchGroup}
+import conf.switches.Owner
 import experiments.ParticipationGroups._
-import org.joda.time.LocalDate
-import conf.switches.Owner.group
-import conf.switches.SwitchGroup.Commercial
+import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
@@ -19,7 +17,7 @@ object LiveblogRendering
       name = "liveblog-rendering",
       description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 11, 30),
+      sellByDate = LocalDate.of(2021, 11, 30),
       participationGroup = Perc0A,
     )
 
@@ -28,6 +26,6 @@ object InteractiveLibrarian
       name = "interactive-librarian",
       description = "Private experiment to develop archiving backup for Interactives",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 8, 31),
+      sellByDate = LocalDate.of(2021, 8, 31),
       participationGroup = Perc0B,
     )

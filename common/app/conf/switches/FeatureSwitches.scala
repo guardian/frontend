@@ -1,7 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.Commercial
 
@@ -440,7 +440,7 @@ trait FeatureSwitches {
     "Enables the puzzles banner on puzzles pages",
     owners = Seq(Owner.withGithub("i-hardy")),
     safeState = Off,
-    sellByDate = new LocalDate(2022, 3, 31),
+    sellByDate = LocalDate.of(2022, 3, 31),
     exposeClientSide = true,
   )
 
@@ -450,7 +450,7 @@ trait FeatureSwitches {
     "Enables the anniversary logo SVG in the header",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2022, 5, 11),
+    sellByDate = LocalDate.of(2022, 5, 11),
     exposeClientSide = true,
   )
 
@@ -460,7 +460,7 @@ trait FeatureSwitches {
     "Enables a Euro 2020 version of the banner on the fiver email",
     owners = Seq(Owner.withGithub("jfsoul")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 7, 20),
+    sellByDate = LocalDate.of(2021, 7, 20),
     exposeClientSide = false,
   )
 
@@ -470,7 +470,7 @@ trait FeatureSwitches {
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
     owners = Seq(Owner.withName("Pascal")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 9, 30),
+    sellByDate = LocalDate.of(2021, 9, 30),
     exposeClientSide = false,
   )
 }
