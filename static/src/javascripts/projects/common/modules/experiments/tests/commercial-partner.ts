@@ -4,8 +4,8 @@ export const commercialPartner: ABTest = {
 	id: 'CommercialPartner',
 	start: '2021-06-21',
 	expiry: '2021-09-01',
-	author: 'mxdvl',
-	description: 'Some fake test for functionality',
+	author: 'Max Duval (@mxdvl)',
+	description: 'Empty commercial partner test for subsequent use',
 	audience: 0,
 	audienceOffset: 0,
 	successMeasure: 'n/a',
@@ -13,15 +13,9 @@ export const commercialPartner: ABTest = {
 	showForSensitive: true,
 	variants: [
 		{
-			id: 'force-commercial-metrics',
+			id: 'variant',
 			test: (): void => {
 				// debugger;
-			},
-		},
-		{
-			id: 'control',
-			test: (): void => {
-				// do nothing;
 			},
 		},
 	],
