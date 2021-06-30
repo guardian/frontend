@@ -2,11 +2,11 @@ package dfp
 
 import common.dfp._
 import common.GuLogging
+import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
+
 import scala.concurrent.{ExecutionContext, Future}
-import java.time.LocalDateTime
-import dfp.ApiHelper.toMilliSeconds
 
 class DfpDataCacheJob(
     adUnitAgent: AdUnitAgent,
@@ -58,7 +58,7 @@ class DfpDataCacheJob(
 
     val loadSummary = loadLineItems(
       fetchCachedLineItems(),
-      ldt => dfpApi.readLineItemsModifiedSince(ldt),
+      dfpApi.readLineItemsModifiedSince,
       dfpApi.readCurrentLineItems,
     )
 
@@ -72,7 +72,7 @@ class DfpDataCacheJob(
 
   def loadLineItems(
       cachedLineItems: => DfpLineItems,
-      lineItemsModifiedSince: LocalDateTime => DfpLineItems,
+      lineItemsModifiedSince: DateTime => DfpLineItems,
       allActiveLineItems: => DfpLineItems,
   ): LineItemLoadSummary = {
 
@@ -87,7 +87,7 @@ class DfpDataCacheJob(
 
       // Calculate the most recent modified timestamp of the existing cache items,
       // and find line items modified since that timestamp.
-      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(toMilliSeconds)
+      val threshold = cachedLineItems.validItems.map(_.lastModified).maxBy(_.getMillis)
       val recentlyModified = lineItemsModifiedSince(threshold)
 
       // Update existing items with a patch of new items.
@@ -131,7 +131,7 @@ class DfpDataCacheJob(
   private def write(data: DfpDataExtractor): Unit = {
 
     if (data.hasValidLineItems) {
-      val now = printLondonTime(LocalDateTime.now())
+      val now = printLondonTime(DateTime.now())
 
       val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
       Store.putInlineMerchandisingSponsorships(

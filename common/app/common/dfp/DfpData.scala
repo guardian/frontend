@@ -2,12 +2,14 @@ package common.dfp
 
 import common.Edition
 import common.dfp.AdSize.{leaderboardSize, responsiveSize}
+import org.joda.time.DateTime
+import org.joda.time.DateTime.now
+import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
-import java.time.{LocalDateTime, ZoneId}
-import java.time.format.DateTimeFormatter
-import scala.language.postfixOps
 import play.api.libs.json.JodaReads._
+
+import scala.language.postfixOps
 
 sealed trait GuLineItemType {
   val asString: String
@@ -90,7 +92,9 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 }
 
 object CustomTarget {
+
   implicit val customTargetFormats: Format[CustomTarget] = Json.format[CustomTarget]
+
 }
 
 case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
@@ -110,7 +114,9 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 }
 
 object CustomTargetSet {
+
   implicit val customTargetSetFormats: Format[CustomTargetSet] = Json.format[CustomTargetSet]
+
 }
 
 case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String) {
@@ -125,7 +131,9 @@ case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name
 }
 
 object GeoTarget {
+
   implicit val geoTargetFormats: Format[GeoTarget] = Json.format[GeoTarget]
+
 }
 
 case class GuCustomField(
@@ -222,21 +230,19 @@ case class GuLineItem(
     orderId: Long,
     name: String,
     lineItemType: GuLineItemType,
-    startTime: LocalDateTime,
-    endTime: Option[LocalDateTime],
+    startTime: DateTime,
+    endTime: Option[DateTime],
     isPageSkin: Boolean,
     sponsor: Option[String],
     status: String,
     costType: String,
     creativePlaceholders: Seq[GuCreativePlaceholder],
     targeting: GuTargeting,
-    lastModified: LocalDateTime,
+    lastModified: DateTime,
 ) {
 
-  val now = LocalDateTime.now()
-
-  val isCurrent = startTime.isBefore(now) && (endTime.isEmpty || endTime.exists(_.isAfter(now)))
-  val isExpired = endTime.exists(_.isBefore(now))
+  val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
+  val isExpired = endTime.exists(_.isBeforeNow)
   val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
   val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
@@ -280,7 +286,7 @@ case class GuLineItem(
       geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
     } &&
     startTime.isBefore(now.plusDays(1)) &&
-    (endTime.isEmpty || endTime.exists(_.isAfter(now)))
+    (endTime.isEmpty || endTime.exists(_.isAfterNow))
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)
@@ -288,7 +294,7 @@ case class GuLineItem(
 
 object GuLineItem {
 
-  private val timeFormatter = DateTimeFormatter.ISO_DATE_TIME
+  private val timeFormatter = ISODateTimeFormat.dateTime().withZoneUTC()
 
   implicit val lineItemWrites = new Writes[GuLineItem] {
     def writes(lineItem: GuLineItem): JsValue = {
@@ -297,21 +303,17 @@ object GuLineItem {
         "orderId" -> lineItem.orderId,
         "name" -> lineItem.name,
         "lineItemType" -> lineItem.lineItemType,
-        "startTime" -> timeFormatter.format(lineItem.startTime),
-        "endTime" -> lineItem.endTime.map(timeFormatter.format),
+        "startTime" -> timeFormatter.print(lineItem.startTime),
+        "endTime" -> lineItem.endTime.map(timeFormatter.print(_)),
         "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
         "status" -> lineItem.status,
         "costType" -> lineItem.costType,
         "creativePlaceholders" -> lineItem.creativePlaceholders,
         "targeting" -> lineItem.targeting,
-        "lastModified" -> timeFormatter.format(lineItem.lastModified),
+        "lastModified" -> timeFormatter.print(lineItem.lastModified),
       )
     }
-  }
-
-  def localDateTimeParser(str: String): LocalDateTime = {
-    LocalDateTime.parse(str, timeFormatter)
   }
 
   implicit val lineItemReads: Reads[GuLineItem] = (
@@ -319,15 +321,15 @@ object GuLineItem {
       (JsPath \ "orderId").read[Long] and
       (JsPath \ "name").read[String] and
       (JsPath \ "lineItemType").read[GuLineItemType] and
-      (JsPath \ "startTime").read[String].map(localDateTimeParser) and
-      (JsPath \ "endTime").readNullable[String].map(_.map(localDateTimeParser)) and
+      (JsPath \ "startTime").read[String].map(timeFormatter.parseDateTime) and
+      (JsPath \ "endTime").readNullable[String].map(_.map(timeFormatter.parseDateTime)) and
       (JsPath \ "isPageSkin").read[Boolean] and
       (JsPath \ "sponsor").readNullable[String] and
       (JsPath \ "status").read[String] and
       (JsPath \ "costType").read[String] and
       (JsPath \ "creativePlaceholders").read[Seq[GuCreativePlaceholder]] and
       (JsPath \ "targeting").read[GuTargeting] and
-      (JsPath \ "lastModified").read[String].map(localDateTimeParser)
+      (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
   )(GuLineItem.apply _)
 
   def asMap(lineItems: Seq[GuLineItem]): Map[Long, GuLineItem] = lineItems.map(item => item.id -> item).toMap
@@ -376,7 +378,7 @@ object GuCreativeTemplateParameter {
 case class GuCreative(
     id: Long,
     name: String,
-    lastModified: LocalDateTime,
+    lastModified: DateTime,
     args: Map[String, String],
     templateId: Option[Long],
     snippet: Option[String],
@@ -385,13 +387,9 @@ case class GuCreative(
 
 object GuCreative {
 
-  def toMilliSeconds(ldt: LocalDateTime): Long = {
-    ldt.atZone(ZoneId.of("UTC")).toInstant.toEpochMilli()
-  }
-
-  def lastModified(cs: Seq[GuCreative]): Option[LocalDateTime] = {
+  def lastModified(cs: Seq[GuCreative]): Option[DateTime] = {
     if (cs.isEmpty) None
-    else Some(cs.map(_.lastModified).maxBy(toMilliSeconds))
+    else Some(cs.map(_.lastModified).maxBy(_.getMillis))
   }
 
   def merge(old: Seq[GuCreative], recent: Seq[GuCreative]): Seq[GuCreative] = {

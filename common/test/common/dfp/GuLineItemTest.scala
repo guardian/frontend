@@ -1,8 +1,9 @@
 package common.dfp
 
 import common.dfp.AdSize.leaderboardSize
+import org.joda.time.DateTime
+import org.joda.time.DateTime.now
 import org.scalatest.{FlatSpec, Matchers}
-import java.time.LocalDateTime
 
 class GuLineItemTest extends FlatSpec with Matchers {
 
@@ -27,7 +28,7 @@ class GuLineItemTest extends FlatSpec with Matchers {
   }
 
   private def lineItem(
-      endTime: Option[LocalDateTime] = None,
+      endTime: Option[DateTime] = None,
       costType: String = "CPD",
       creativePlaceholders: Seq[GuCreativePlaceholder] = defaultCreativePlaceholders,
       targeting: GuTargeting = defaultTargeting,
@@ -37,7 +38,7 @@ class GuLineItemTest extends FlatSpec with Matchers {
       orderId = 0L,
       name = "name",
       Sponsorship,
-      startTime = LocalDateTime.now(),
+      startTime = now,
       endTime,
       isPageSkin = false,
       sponsor = None,
@@ -45,7 +46,7 @@ class GuLineItemTest extends FlatSpec with Matchers {
       costType,
       creativePlaceholders,
       targeting,
-      lastModified = LocalDateTime.now(),
+      lastModified = now,
     )
   }
 
@@ -81,6 +82,6 @@ class GuLineItemTest extends FlatSpec with Matchers {
   }
 
   it should "be false for a completed campaign" in {
-    lineItem(endTime = Some(LocalDateTime.now().minusDays(1))) should not be 'suitableForTopAboveNavSlot
+    lineItem(endTime = Some(now.minusDays(1))) should not be 'suitableForTopAboveNavSlot
   }
 }

@@ -2,7 +2,7 @@ package dfp
 
 import com.google.api.ads.admanager.axis.v202011._
 import common.dfp._
-import dfp.ApiHelper.{isPageSkin, optJavaInt, toSeq, toLocalDateTime}
+import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
 class DataMapper(
@@ -117,10 +117,10 @@ class DataMapper(
       orderId = dfpLineItem.getOrderId,
       name = dfpLineItem.getName,
       lineItemType = GuLineItemType.fromDFPLineItemType(dfpLineItem.getLineItemType.getValue),
-      startTime = toLocalDateTime(dfpLineItem.getStartDateTime),
+      startTime = toJodaTime(dfpLineItem.getStartDateTime),
       endTime = {
         if (dfpLineItem.getUnlimitedEndDateTime) None
-        else Some(toLocalDateTime(dfpLineItem.getEndDateTime))
+        else Some(toJodaTime(dfpLineItem.getEndDateTime))
       },
       isPageSkin = isPageSkin(dfpLineItem),
       sponsor = customFieldService.sponsor(dfpLineItem),
@@ -130,7 +130,7 @@ class DataMapper(
       targeting = toGuTargeting(session)(dfpLineItem.getTargeting),
       status = dfpLineItem.getStatus.toString,
       costType = dfpLineItem.getCostType.toString,
-      lastModified = toLocalDateTime(dfpLineItem.getLastModifiedDateTime),
+      lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime),
     )
 
   def toGuCreativeTemplate(dfpCreativeTemplate: CreativeTemplate): GuCreativeTemplate = {
@@ -178,7 +178,7 @@ class DataMapper(
     GuCreative(
       id = dfpCreative.getId,
       name = dfpCreative.getName,
-      lastModified = toLocalDateTime(dfpCreative.getLastModifiedDateTime),
+      lastModified = toJodaTime(dfpCreative.getLastModifiedDateTime),
       args = Option(dfpCreative.getCreativeTemplateVariableValues).map(_.map(arg)).map(_.toMap).getOrElse(Map.empty),
       templateId = Some(dfpCreative.getCreativeTemplateId),
       snippet = None,
