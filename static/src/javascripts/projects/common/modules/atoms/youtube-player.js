@@ -133,10 +133,9 @@ const createAdsConfig = (
         },
     };
 
-    if (ccpaStateFlag === null) {
-        adsConfig.nonPersonalizedAd = !tcfStateFlag;
-    } else {
+    if (ccpaStateFlag !== null) {
         adsConfig.restrictedDataProcessor = ccpaStateFlag;
+        adsConfig.nonPersonalizedAd = !ccpaStateFlag;
     }
 
     return adsConfig;

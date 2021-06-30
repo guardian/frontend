@@ -53,12 +53,9 @@ describe('create ads config', () => {
         expect(result.disableAds).toBeFalsy();
     });
 
-    it('in non ad-free, returns false nonPersonalizedAd without consent in TCF', () => {
+    it('in non ad-free, returns no nonPersonalizedAd without consent in TCF', () => {
         const result = youtubePlayer.createAdsConfig(false, false, null);
-
-        if (result.hasOwnProperty('nonPersonalizedAd')) {
-            expect(result.nonPersonalizedAd).toBeTruthy();
-        }
+        expect(result.hasOwnProperty('nonPersonalizedAd')).toBeFalsy();
     });
 
     it('in non ad-free, returns true nonPersonalizedAd with consent in TCF', () => {
@@ -89,10 +86,10 @@ describe('create ads config', () => {
         }
     });
 
-    it('in non ad-free, returns no nonPersonalizedAd param in CCPA', () => {
+    it('in non ad-free, returns nonPersonalizedAd param in CCPA', () => {
         const result = youtubePlayer.createAdsConfig(false, null, false);
 
-        expect(result.nonPersonalizedAd).toBeUndefined();
+        expect(result.nonPersonalizedAd).toBeDefined();
     });
 
     it('in non ad-free includes adUnit', () => {
