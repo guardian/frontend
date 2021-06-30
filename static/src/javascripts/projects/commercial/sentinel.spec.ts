@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access -- TBC */
 //import raven from 'lib/raven';
 import config_ from '../../lib/config';
 //import { amIUsed } from './sentinel';
@@ -13,7 +14,7 @@ const config = (config_ as unknown) as {
 
 //const PROD_ENDPOINT = '//logs.guardianapis.com/log';
 
-const DEV_ENDPOINT = '//logs.code.dev-guardianapis.com/log';
+//const DEV_ENDPOINT = '//logs.code.dev-guardianapis.com/log';
 
 /*
 jest.mock('lib/raven', () => ({
@@ -53,13 +54,13 @@ describe('sentinel', () => {
 		expect(navigator.sendBeacon as jest.Mock).toHaveBeenCalledTimes(1);
 	});
 
-	test('does not attach a label when it is not present', () => {
+	test('does not attach properties when they', () => {
 		config.get.mockReturnValue(true);
 		amIUsed('moduleName', 'functionName');
-		expect(navigator.sendBeacon as jest.Mock).toHaveBeenCalledWith(
-			DEV_ENDPOINT,
-			expect.any(String),
-		);
+		expect(
+			JSON.parse((navigator.sendBeacon as jest.Mock).mock.calls[0][1])
+				.properties.length,
+		).toEqual(3);
 	});
 	/*
 	test('does attach a label when it is present', () => {
