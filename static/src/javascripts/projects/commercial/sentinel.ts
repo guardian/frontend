@@ -65,7 +65,5 @@ export const amIUsed = (
 			: properties,
 	};
 
-	if (window.navigator.sendBeacon(endpoint, JSON.stringify(event))) {
-		console.log('🚀 Data sent!', event);
-	}
+	window.navigator.sendBeacon(endpoint, JSON.stringify(event));
 };
