@@ -15,12 +15,6 @@ type Timings = {
 	lazyWaitComplete: number | null;
 };
 
-// Temporary definition until './define-slot' is converted to TypeScript
-type SlotDefinition = {
-	slot: Record<string, any>;
-	slotReady: Promise<void>;
-};
-
 /** A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
  *
@@ -50,7 +44,7 @@ class Advert {
 	node: HTMLElement;
 	sizes: AdSizes;
 	size: AdSize | null = null;
-	slot: Record<string, unknown>;
+	slot: googletag.Slot;
 	isEmpty: boolean | null = null;
 	isLoading = false;
 	isRendering = false;
@@ -77,7 +71,7 @@ class Advert {
 
 	constructor(adSlotNode: HTMLElement) {
 		const sizes = getAdBreakpointSizes(adSlotNode);
-		const slotDefinition = defineSlot(adSlotNode, sizes) as SlotDefinition;
+		const slotDefinition = defineSlot(adSlotNode, sizes);
 
 		this.id = adSlotNode.id;
 		this.node = adSlotNode;
