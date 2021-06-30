@@ -1,11 +1,10 @@
 package dfp
 
 import common.dfp.{GuLineItem, GuTargeting, Sponsorship}
+import org.joda.time.DateTime
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
 import test._
-import java.time.LocalDateTime
-import java.time.LocalDate
 
 class DfpDataCacheJobTest
     extends FlatSpec
@@ -31,7 +30,7 @@ class DfpDataCacheJobTest
       0L,
       name,
       Sponsorship,
-      startTime = LocalDate.now.atStartOfDay,
+      startTime = DateTime.now.withTimeAtStartOfDay,
       endTime = None,
       isPageSkin = false,
       sponsor = None,
@@ -45,7 +44,7 @@ class DfpDataCacheJobTest
         geoTargetsExcluded = Nil,
         customTargetSets = Nil,
       ),
-      lastModified = LocalDate.now.atStartOfDay,
+      lastModified = DateTime.now.withTimeAtStartOfDay,
     )
   }
 
@@ -57,7 +56,7 @@ class DfpDataCacheJobTest
   private val allReadyOrDeliveringLineItems = DfpLineItems(Seq.empty, Seq.empty)
 
   "loadLineItems" should "dedupe line items that have changed in an unknown way" in {
-    def lineItemsModifiedSince(threshold: LocalDateTime): DfpLineItems =
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems =
       DfpLineItems(
         validItems = Seq(
           lineItem(1, "a-fresh"),
@@ -79,7 +78,7 @@ class DfpDataCacheJobTest
   }
 
   it should "dedupe line items that have changed in a known way" in {
-    def lineItemsModifiedSince(threshold: LocalDateTime): DfpLineItems =
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems =
       DfpLineItems(
         validItems = Seq(
           lineItem(1, "d"),
@@ -105,7 +104,7 @@ class DfpDataCacheJobTest
   }
 
   it should "omit line items whose state has changed to no longer be ready or delivering" in {
-    def lineItemsModifiedSince(threshold: LocalDateTime): DfpLineItems =
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems =
       DfpLineItems(
         validItems = Seq(
           lineItem(1, "a", completed = true),

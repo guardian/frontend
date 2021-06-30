@@ -4,12 +4,12 @@ import app.LifecycleComponent
 import com.gu.Box
 import com.gu.commercial.display.SurgeLookupService
 import common._
+import org.joda.time.DateTime
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.{JsArray, JsValue}
 import services.OphanApi
 
 import scala.concurrent.{ExecutionContext, Future}
-import java.time.LocalDateTime
 
 object SurgingContentAgent extends SurgeLookupService with GuLogging {
 
@@ -29,7 +29,7 @@ object SurgingContentAgent extends SurgeLookupService with GuLogging {
   override def pageViewsPerMinute(pageId: String): Option[Int] = getSurging.surges.get(pageId)
 }
 
-case class SurgingContent(surges: Map[String, Int] = Map.empty, lastUpdated: LocalDateTime = LocalDateTime.now()) {
+case class SurgingContent(surges: Map[String, Int] = Map.empty, lastUpdated: DateTime = DateTime.now()) {
   lazy val sortedSurges: Seq[(String, Int)] = surges.toSeq.sortBy(_._2).reverse
 }
 

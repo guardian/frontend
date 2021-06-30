@@ -3,10 +3,9 @@ package dfp
 import concurrent.BlockingOperations
 import common.dfp.{GuAdUnit, GuLineItem, GuTargeting, Sponsorship}
 import com.google.api.ads.admanager.axis.v202011._
+import org.joda.time.DateTime
 import org.scalatest._
 import akka.actor.ActorSystem
-import java.time.LocalDateTime
-import java.time.LocalDate
 
 class DfpApiValidationTest extends FlatSpec with Matchers {
 
@@ -20,7 +19,7 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
       orderId = 0L,
       name = "test line item",
       Sponsorship,
-      startTime = java.time.LocalDate.now.atStartOfDay,
+      startTime = DateTime.now.withTimeAtStartOfDay,
       endTime = None,
       isPageSkin = false,
       sponsor = None,
@@ -34,7 +33,7 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
         geoTargetsExcluded = Nil,
         customTargetSets = Nil,
       ),
-      lastModified = java.time.LocalDate.now.atStartOfDay,
+      lastModified = DateTime.now.withTimeAtStartOfDay,
     )
   }
 
