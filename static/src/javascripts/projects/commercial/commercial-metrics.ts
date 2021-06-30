@@ -1,5 +1,6 @@
 import { sendCommercialMetrics } from '@guardian/commercial-core';
 import { getSynchronousTestsToRun } from 'common/modules/experiments/ab';
+import { commercialPartner } from 'common/modules/experiments/tests/commercial-partner';
 import config_ from '../../lib/config';
 
 // This is really a hacky workaround ⚠️
@@ -19,9 +20,7 @@ const init = (): Promise<void> => {
 
 	const userIsInSamplingGroup = Math.random() <= 0.01;
 	const shouldForceMetrics = getSynchronousTestsToRun().some((test) =>
-		// The convention is that if a test ID starts with “Commercial”,
-		// we track all the commercial metrics for it
-		test.id.startsWith('Commercial'),
+		[commercialPartner].map((t) => t.id).includes(test.id),
 	);
 	const pageViewId = window.guardian.ophan.pageViewId;
 	const browserId = config.get('ophan.browserId') as string | undefined;
