@@ -5,7 +5,7 @@ const config = config_ as {
 	get: (s: string, d: boolean) => boolean;
 };
 
-type LoggingEvent = {
+export type LoggingEvent = {
 	received_timestamp: Date;
 	received_date: string;
 	label: string;
