@@ -43,7 +43,7 @@ afterAll(() => {
 describe('sentinel', () => {
 	test('should not send an event when switches.sentinelLogger is false', () => {
 		config.get.mockReturnValue(false);
-		amIUsed('functionName', 'moduleName');
+		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon as jest.Mock).not.toHaveBeenCalled();
 	});
 
