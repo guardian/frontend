@@ -5,22 +5,16 @@ const config = config_ as {
 	get: (s: string, d: boolean) => boolean;
 };
 
-export type LoggingEvent = {
+export type SentinelLoggingEvent = {
 	received_timestamp: Date;
 	received_date: string;
 	label: string;
 	properties?: Property[];
-	metrics?: Metrics[];
 };
 
 type Property = {
 	name: string;
 	value: string;
-};
-
-type Metrics = {
-	name: string;
-	value: number;
 };
 
 /**
@@ -51,7 +45,7 @@ export const amIUsed = (
 		{ name: 'function_name', value: functionName },
 		{ name: 'URL', value: window.location.href },
 	];
-	const event: LoggingEvent = {
+	const event: SentinelLoggingEvent = {
 		received_timestamp: receivedTimestamp,
 		received_date: receivedDate,
 		label: 'commercial.sentinel',

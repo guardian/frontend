@@ -1,6 +1,6 @@
 import MockDate from 'mockdate';
 import config_ from '../../lib/config';
-import type { amIUsed as amIUsed_, LoggingEvent } from './sentinel';
+import type { amIUsed as amIUsed_, SentinelLoggingEvent } from './sentinel';
 
 const { amIUsed }: { amIUsed: typeof amIUsed_ } = jest.requireActual(
 	'./sentinel',
@@ -18,7 +18,7 @@ const TEST_URL = 'http://testurl.theguardian.com/';
 
 const owner = 'commercial.sentinel';
 const mockDate = new Date();
-const defaultEvent: LoggingEvent = {
+const defaultEvent: SentinelLoggingEvent = {
 	received_timestamp: mockDate,
 	received_date: mockDate.toISOString().slice(0, 10),
 	label: owner,
