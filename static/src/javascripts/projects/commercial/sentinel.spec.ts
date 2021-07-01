@@ -49,13 +49,13 @@ describe('sentinel', () => {
 
 	test('should send an event when switches.sentinelLogger is true', () => {
 		config.get.mockReturnValue(true);
-		amIUsed('moduleName', 'functioName');
+		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon as jest.Mock).toHaveBeenCalledTimes(1);
 	});
 
 	test('should use the correct logging CODE endpoint', () => {
 		config.get.mockReturnValueOnce(true).mockReturnValueOnce(true); // first get checks switches.sentinelLogger, the second page.isDev
-		amIUsed('moduleName', 'functioName');
+		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon as jest.Mock).toHaveBeenCalledWith(
 			CODE_ENDPOINT,
 			expect.any(String),
@@ -64,7 +64,7 @@ describe('sentinel', () => {
 
 	test('should use the correct logging DEV endpoint', () => {
 		config.get.mockReturnValueOnce(true).mockReturnValueOnce(false); // first get checks switches.sentinelLogger, the second page.isDev
-		amIUsed('moduleName', 'functioName');
+		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon as jest.Mock).toHaveBeenCalledWith(
 			PROD_ENDPOINT,
 			expect.any(String),
