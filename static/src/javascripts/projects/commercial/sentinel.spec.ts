@@ -28,9 +28,7 @@ jest.mock('../../lib/config', () => ({
 	get: jest.fn(),
 }));
 
-beforeEach(() => {
-	navigator.sendBeacon = jest.fn();
-});
+navigator.sendBeacon = jest.fn();
 
 afterEach(() => {
 	jest.clearAllMocks();
@@ -44,19 +42,19 @@ describe('sentinel', () => {
 	test('should not send an event when switches.sentinelLogger is false', () => {
 		config.get.mockReturnValue(false);
 		amIUsed('moduleName', 'functionName');
-		expect(navigator.sendBeacon as jest.Mock).not.toHaveBeenCalled();
+		expect(navigator.sendBeacon).not.toHaveBeenCalled();
 	});
 
 	test('should send an event when switches.sentinelLogger is true', () => {
 		config.get.mockReturnValue(true);
 		amIUsed('moduleName', 'functionName');
-		expect(navigator.sendBeacon as jest.Mock).toHaveBeenCalledTimes(1);
+		expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
 	});
 
 	test('should use the correct logging CODE endpoint', () => {
 		config.get.mockReturnValueOnce(true).mockReturnValueOnce(true); // first get checks switches.sentinelLogger, the second page.isDev
 		amIUsed('moduleName', 'functionName');
-		expect(navigator.sendBeacon as jest.Mock).toHaveBeenCalledWith(
+		expect(navigator.sendBeacon).toHaveBeenCalledWith(
 			CODE_ENDPOINT,
 			expect.any(String),
 		);
@@ -65,7 +63,7 @@ describe('sentinel', () => {
 	test('should use the correct logging DEV endpoint', () => {
 		config.get.mockReturnValueOnce(true).mockReturnValueOnce(false); // first get checks switches.sentinelLogger, the second page.isDev
 		amIUsed('moduleName', 'functionName');
-		expect(navigator.sendBeacon as jest.Mock).toHaveBeenCalledWith(
+		expect(navigator.sendBeacon).toHaveBeenCalledWith(
 			PROD_ENDPOINT,
 			expect.any(String),
 		);
@@ -74,7 +72,6 @@ describe('sentinel', () => {
 	test('should not attach any extra properties if the property parameter is not passed', () => {
 		config.get.mockReturnValue(true);
 		amIUsed('moduleName', 'functionName');
-		console.log((navigator.sendBeacon as jest.Mock).mock.calls);
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
 			[
 				CODE_ENDPOINT,
@@ -112,8 +109,8 @@ describe('sentinel', () => {
 	test('should convert parameter values to strings', () => {
 		config.get.mockReturnValue(true);
 		amIUsed('moduleName', 'functionName', {
-			conditionA: true,
-			conditionB: false,
+			conditionA: 'true',
+			conditionB: 'false',
 		});
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
 			[

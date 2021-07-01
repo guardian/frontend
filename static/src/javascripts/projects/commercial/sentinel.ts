@@ -17,6 +17,12 @@ type Property = {
 	value: string;
 };
 
+type RestrictedProperty = Property & {
+	name: RestrictedKeys;
+};
+
+type RestrictedKeys = 'module_name' | 'function_name' | 'URL';
+
 /**
  * This function is used to send a logging event to BigQuery, which is
  * logged into the `fastly_logging` table within the `logging` dataset.
@@ -28,7 +34,9 @@ type Property = {
 export const amIUsed = (
 	moduleName: string,
 	functionName: string,
-	parameters?: Record<string, unknown>,
+	parameters?: Partial<
+		Record<string, string> & Record<RestrictedKeys, never>
+	>,
 ): void => {
 	// The function will return early if the sentinelLogger switch is disabled.
 	if (!config.get('switches.sentinelLogger', false)) return;
@@ -40,7 +48,7 @@ export const amIUsed = (
 	const receivedTimestamp = new Date();
 	const receivedDate = receivedTimestamp.toISOString().slice(0, 10);
 
-	const properties: Property[] = [
+	const properties: RestrictedProperty[] = [
 		{ name: 'module_name', value: moduleName },
 		{ name: 'function_name', value: functionName },
 		{ name: 'URL', value: window.location.href },
@@ -50,12 +58,13 @@ export const amIUsed = (
 		received_date: receivedDate,
 		label: 'commercial.sentinel',
 		properties: parameters
-			? properties.concat(
-					Object.entries(parameters).map(([name, value]) => ({
+			? [
+					...properties,
+					...Object.entries(parameters).map(([name, value]) => ({
 						name,
 						value: String(value),
 					})),
-			  )
+			  ]
 			: properties,
 	};
 
