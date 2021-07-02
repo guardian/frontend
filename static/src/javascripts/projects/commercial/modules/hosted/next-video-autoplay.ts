@@ -9,6 +9,7 @@ let $timer: HTMLElement | null;
 let nextVideoPage: string | undefined;
 
 const cancelAutoplay = () => {
+	amIUsed('next-video-autoplay', 'cancelAutoplay');
 	fastdom.mutate(() => {
 		$hostedNext?.classList.add('hosted-slide-out');
 	});
@@ -16,6 +17,7 @@ const cancelAutoplay = () => {
 };
 
 const cancelAutoplayMobile = () => {
+	amIUsed('next-video-autoplay', 'cancelAutoplayMobile');
 	fastdom.mutate(() => {
 		$hostedNext?.classList.add('u-h');
 	});
@@ -44,6 +46,7 @@ const triggerAutoplay = (
 };
 
 const triggerEndSlate = (): void => {
+	amIUsed('next-video-autoplay', 'triggerEndSlate');
 	fastdom.mutate(() => {
 		$hostedNext?.classList.add('js-autoplay-start');
 	});
@@ -55,25 +58,30 @@ const triggerEndSlate = (): void => {
 };
 
 const addCancelListener = (): void => {
+	amIUsed('next-video-autoplay', 'addCancelListener');
 	const element = document.querySelector('.js-autoplay-cancel');
 	element?.addEventListener('click', () => {
 		cancelAutoplay();
 	});
 };
 
-const canAutoplay = (): boolean => !!($hostedNext && nextVideoPage);
+const canAutoplay = (): boolean => {
+	amIUsed('next-video-autoplay', 'canAutoplay');
+	return !!($hostedNext && nextVideoPage);
+};
 
 /*
     This module appears to setup autoplay for guardian-hosted commercial videos (i.e. not Youtube) - couldn't find any examples of this
 */
 
-const init = (): Promise<void> =>
-	load().then(() => {
+const init = (): Promise<void> => {
+	amIUsed('next-video-autoplay', 'init');
+	return load().then(() => {
 		$hostedNext = document.querySelector('.js-hosted-next-autoplay');
 		$timer = document.querySelector('.js-autoplay-timer');
 		nextVideoPage = $timer?.dataset.nextPage;
 	});
-
+};
 export {
 	init,
 	canAutoplay,
