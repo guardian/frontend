@@ -15,12 +15,22 @@ object ArticlePageChecks {
   }
 
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
+
+    val supportedInteractiveScriptPrefixes: List[String] = List(
+      "https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js", // standard iframe wrapper boot
+      "https://open-module.appspot.com/boot.js", // script no longer exists, i.e. parity with frontend
+      "https://embed.actionbutton.co/widget/boot.js", // supported in DCR
+      "https://interactive.guim.co.uk/2017/07/booklisted/boot.js", // not supported but fallback ok
+      "https://interactive.guim.co.uk/page-enhancers/super-lists/boot.js", // broken on frontend anyway
+      "https://gdn-cdn.s3.amazonaws.com/quiz-builder/", // old quiz builder quizzes work fine
+    )
+
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
         case InteractiveBlockElement(_, scriptUrl) =>
           scriptUrl match {
-            case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
-            case _                                                                       => true
+            case Some(scriptUrl) if supportedInteractiveScriptPrefixes.exists(scriptUrl.startsWith) => false
+            case _                                                                                  => true
           }
         case _ => false
       }
@@ -28,22 +38,11 @@ object ArticlePageChecks {
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
-  // Custom Tag that can be added to articles while we don't support them
-  private[this] val tagsBlockList: Set[String] = Set(
-    "tracking/platformfunctional/dcrblacklist",
-  )
-
-  def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(t => tagsBlockList(t.id))
-  }
-
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
   def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
 
   def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
-
-  def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.article.tags.isPaidContent
 
 }
 
@@ -64,8 +63,6 @@ object ArticlePicker {
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
-      ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
-      ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
     )
   }
 

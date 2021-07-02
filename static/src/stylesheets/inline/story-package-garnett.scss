@@ -74,6 +74,10 @@ $block-height: 58px; // Note: duplicated from _item.scss
 }
 
 .fc-container--story-package {
+    
+    .fc-container__header {
+        z-index: 1;   
+    }
 
     .fc-container__body {
         position: relative;

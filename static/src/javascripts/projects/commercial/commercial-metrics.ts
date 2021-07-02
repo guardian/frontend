@@ -1,4 +1,6 @@
 import { sendCommercialMetrics } from '@guardian/commercial-core';
+import { getSynchronousTestsToRun } from 'common/modules/experiments/ab';
+import { commercialPartner } from 'common/modules/experiments/tests/commercial-partner';
 import config_ from '../../lib/config';
 
 // This is really a hacky workaround ⚠️
@@ -11,20 +13,26 @@ let logged = false;
 
 const isDev = Boolean(config.get('page.isDev', false));
 
-const init = (): void => {
-	if (!window.guardian.ophan) return;
-	if (!config.get('switches.commercialMetrics', false)) return;
+const init = (): Promise<void> => {
+	if (!window.guardian.ophan) return Promise.resolve();
+	if (!config.get('switches.commercialMetrics', false))
+		return Promise.resolve();
 
 	const userIsInSamplingGroup = Math.random() <= 0.01;
+	const shouldForceMetrics = getSynchronousTestsToRun().some((test) =>
+		[commercialPartner].map((t) => t.id).includes(test.id),
+	);
 	const pageViewId = window.guardian.ophan.pageViewId;
 	const browserId = config.get('ophan.browserId') as string | undefined;
 
-	if (isDev || userIsInSamplingGroup) {
+	if (isDev || shouldForceMetrics || userIsInSamplingGroup) {
 		document.addEventListener('visibilitychange', function () {
 			if (logged) return;
 			logged = sendCommercialMetrics(pageViewId, browserId, isDev);
 		});
 	}
+
+	return Promise.resolve();
 };
 
 export { init };

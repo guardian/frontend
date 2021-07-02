@@ -22,6 +22,9 @@ import http.HttpPreconnections
 
 import java.net.ConnectException
 
+// Introduced as CAPI error handling elsewhere would smother a regular ConnectException.
+case class DCRLocalConnectException(message: String) extends ConnectException(message)
+
 class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload {
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
@@ -32,7 +35,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     resetTimeout = Configuration.rendering.timeout * 4,
   )
 
-  private[this] def get(
+  private[this] def post(
       ws: WSClient,
       payload: String,
       endpoint: String,
@@ -58,7 +61,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
               |To get started with dotcom-rendering, see:
               |
               |    https://github.com/guardian/dotcom-rendering""".stripMargin
-          Future.failed(new ConnectException(msg))
+          Future.failed(new DCRLocalConnectException(msg))
       })
     }
 
@@ -102,7 +105,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
-    get(ws, json, Configuration.rendering.baseURL + "/AMPArticle", page)
+    post(ws, json, Configuration.rendering.baseURL + "/AMPArticle", page)
   }
 
   def getArticle(
@@ -114,7 +117,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    get(ws, json, Configuration.rendering.baseURL + "/Article", page)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", page)
   }
 
   def getInteractive(
@@ -126,7 +129,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    get(ws, json, Configuration.rendering.baseURL + "/Interactive", page)
+    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page)
   }
 
   def getAMPInteractive(
@@ -138,7 +141,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    get(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page)
+    post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page)
   }
 
 }

@@ -10,6 +10,12 @@ import type { Advert } from './dfp/Advert';
 import { getAdvertById as getAdvertById_ } from './dfp/get-advert-by-id';
 import { refreshAdvert as refreshAdvert_ } from './dfp/load-advert';
 
+// Mock advert type by overwriting slot property with only one function for defining size mapping
+// This avoids having to set the rest of the slot properties that are unnecessary for the tests
+type MockAdvert = Omit<Advert, 'slot'> & {
+	slot: { defineSizeMapping: (asm: SizeMapping[]) => googletag.Slot };
+};
+
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
 // 'cannot set property [...] which has only a getter' TypeError
 Object.defineProperty(HTMLElement.prototype, 'dataset', {
@@ -75,7 +81,7 @@ const generateInnerHtmlWithAdSlot = () => {
             </div>`;
 };
 
-const createTestAdvert = (testAdvert: Partial<Advert>): Advert =>
+const createTestAdvert = (testAdvert: Partial<MockAdvert>): Advert =>
 	({ ...testAdvert } as Advert);
 
 const getElement = (selector: string): Element =>

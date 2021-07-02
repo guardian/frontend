@@ -1,4 +1,4 @@
-import { fetchNewsletters, fetchUserConsents } from './fetch';
+import { fetchUserConsents } from './fetch';
 import { consentTypeList } from './types';
 
 const getAllUserConsents = () =>
@@ -7,28 +7,6 @@ const getAllUserConsents = () =>
 const getUserConsent = (consentId) =>
     fetchUserConsents.then(cs =>
         cs.find(consent => consent.consent.id === consentId)
-    );
-
-const getUserConsents = (
-    consentIds
-) =>
-    fetchUserConsents.then(consents =>
-        consents.filter(consent => consentIds.includes(consent.consent.id))
-    );
-
-const getAllNewsletterConsents = () =>
-    fetchNewsletters;
-
-const getNewsletterConsent = (consentId) =>
-    fetchNewsletters.then(cs =>
-        cs.find(consent => consent.consent.id === consentId)
-    );
-
-const getNewsLetterConsents = (
-    consentIds
-) =>
-    fetchNewsletters.then(consents =>
-        consents.filter(consent => consentIds.includes(consent.consent.id))
     );
 
 const setConsentsInApi = (consents) => {
@@ -50,10 +28,6 @@ const setConsentsInApi = (consents) => {
 
 export {
     getUserConsent,
-    getUserConsents,
     getAllUserConsents,
-    getNewsletterConsent,
-    getNewsLetterConsents,
-    getAllNewsletterConsents,
     setConsentsInApi,
 };

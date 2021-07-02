@@ -1851,6 +1851,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@guardian/ab-core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/ab-core/-/ab-core-2.0.0.tgz#d8a9408d5a66ff1f8c684ed458c99517bbee15b1"
+  integrity sha512-E5p6l0l37hY0GNFaZmA5/22TlVuavzlMHR3OeweD5eDcY2gB3nGgzPK/d3M67dkbDAJkGjB4a0W84Z5N2YScvQ==
+
 "@guardian/atom-renderer@1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-1.2.2.tgz#db10b98ed73636c4bd6941ec103c9f60ff15549e"
@@ -1897,12 +1902,12 @@
     "@guardian/src-foundations" "3.3.0"
     "@guardian/src-icons" "3.3.0"
 
-"@guardian/commercial-core@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.19.0.tgz#aa3a1db0f7bb45a3e7ab4e94b3457206277ff1b8"
-  integrity sha512-K91YUAXnLAvaJtak55glUeVv81/RRTPLDkgFzc5FH0mMl1jeY0myC5kyZIID6dxTb3PpNbHmQIvy4c5syF2ixw==
+"@guardian/commercial-core@^0.19.1":
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.19.1.tgz#48740ad167ba1e0f85e2711901a1ed1471d7abf2"
+  integrity sha512-Aa/rTBPvduJxbqgOU9NvorqV+4VDvTyEJCZxuG7clocO+1shvlkjx32egIxVfot0Fd/i5c76+hHkv02PcifEVg==
 
-"@guardian/consent-management-platform@^6.11.3":
+"@guardian/consent-management-platform@6.11.5":
   version "6.11.5"
   resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.11.5.tgz#93681cbf61de0fadb4b65d835d7fc445cb847b31"
   integrity sha512-ap7b09qk8I/EfoWB3NR8kT63hBpm4ATFGpRicCQ61DLMw2PgCWunMvizdbSmo5wNCQKPFgmX9cfRT5IGfPneKw==
@@ -1921,7 +1926,7 @@
   resolved "https://registry.yarnpkg.com/@guardian/eslint-config/-/eslint-config-0.5.0.tgz#ece14ec90b372932c7bf01992fc6d8ce58f7f26e"
   integrity sha512-THJn0wg7i9YjSVM9ofobsJgS+WH9ybrZH1+0CXLAebp0T53RGtgZUkek82mDg1h3DidsM+f7HSZqoQyrCbPzPw==
 
-"@guardian/libs@^1", "@guardian/libs@^1.7.1":
+"@guardian/libs@^1", "@guardian/libs@^1.7.1", "@guardian/libs@^1.8.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.1.tgz#22bccd66be7c5bf70cd5bbb1bf7700d94610ccb7"
   integrity sha512-Q/JPLhNeYa5XhDPJhw/1+fbZmszopvovWW8I7dGEuFPGWeNUmXAbW8J3kzuonDu7l9/tuFZg8jljbKHZlrFx0A==
@@ -9541,6 +9546,11 @@ mkdirp@^0.5.3:
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
   dependencies:
     minimist "^1.2.5"
+
+mockdate@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.5.tgz#789be686deb3149e7df2b663d2bc4392bc3284fb"
+  integrity sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==
 
 move-concurrently@^1.0.1:
   version "1.0.1"

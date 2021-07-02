@@ -10,6 +10,7 @@ export const puzzlesBanner = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'n/a',
+    showForSensitive: false,
     canRun: () => true,
     variants: [
         {
