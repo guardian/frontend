@@ -106,7 +106,7 @@ describe('sentinel', () => {
 		]);
 	});
 
-	test('should convert parameter values to strings', () => {
+	test('should chain optional parameters to the properties array', () => {
 		config.get.mockReturnValue(true);
 		amIUsed('moduleName', 'functionName', {
 			conditionA: 'true',

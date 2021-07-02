@@ -28,7 +28,7 @@ type RestrictedKeys = 'module_name' | 'function_name' | 'URL';
  * logged into the `fastly_logging` table within the `logging` dataset.
  * @param moduleName the name of the JS/TS module (e.g. `article-body-adverts`)
  * @param functionName the name of the function within the module (e.g. `init`)
- * @param parameters an optional object to add function-specific information (e.g. `{ conditionA: true, conditionB: false }`)
+ * @param parameters an optional object to add function-specific information (e.g. `{ conditionA: 'true', conditionB: 'false' }`)
  * @returns void.
  */
 export const amIUsed = (
