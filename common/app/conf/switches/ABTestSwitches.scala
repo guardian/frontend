@@ -40,7 +40,7 @@ trait ABTestSwitches {
     "Test commercial partner that tracks metrics",
     owners = Seq(Owner.withGithub("mxdvl")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 9, 1),
+    sellByDate = Some(LocalDate.of(2021, 9, 1)),
     exposeClientSide = true,
   )
 }
