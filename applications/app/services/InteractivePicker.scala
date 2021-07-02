@@ -27,6 +27,16 @@ object InteractivePicker {
     date.isAfter(InteractiveSwitchOver.date)
   }
 
+  def isCartoon(tags: List[Tag]): Boolean = {
+    tags.exists(t => t.id == "tone/cartoons")
+  }
+
+  def isSupported(tags: List[Tag]): Boolean = {
+    // This will be expanded more as we support more interactives
+    if (isCartoon((tags)))  true
+    else false
+  }
+
   def isOptedOut(tags: List[Tag]): Boolean = {
     tags.exists(t => t.id == "tracking/platformfunctional/dcroptout")
   }
@@ -47,6 +57,7 @@ object InteractivePicker {
 
     if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
     else if (switchOn && publishedPostSwitch && isWebNotOptedOut) DotcomRendering
+    else if (switchOn && isSupported(tags)) DotcomRendering
     else FrontendLegacy
   }
 }
