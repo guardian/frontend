@@ -33,7 +33,7 @@ object InteractivePicker {
 
   def isSupported(tags: List[Tag]): Boolean = {
     // This will be expanded more as we support more interactives
-    if (isCartoon((tags)))  true
+    if (isCartoon((tags))) true
     else false
   }
 
