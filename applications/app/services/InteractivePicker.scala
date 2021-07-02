@@ -33,8 +33,7 @@ object InteractivePicker {
 
   def isSupported(tags: List[Tag]): Boolean = {
     // This will be expanded more as we support more interactives
-    if (isCartoon((tags))) true
-    else false
+    isCartoon(tags)
   }
 
   def isOptedOut(tags: List[Tag]): Boolean = {
@@ -57,7 +56,7 @@ object InteractivePicker {
 
     if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
     else if (switchOn && publishedPostSwitch && isWebNotOptedOut) DotcomRendering
-    else if (switchOn && isSupported(tags)) DotcomRendering
+    else if (switchOn && isSupported(tags) && isWebNotOptedOut) DotcomRendering
     else FrontendLegacy
   }
 }
