@@ -51,6 +51,8 @@ interface Window {
 			viewId: string;
 			pageViewId: string;
 		};
-		config?: unknown;
+		config: {
+			switches: Record<string, boolean | undefined>;
+		};
 	};
 }

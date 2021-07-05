@@ -23,6 +23,7 @@
     "@guardian/consent-management-platform": "6.11.5",
     "@guardian/libs": "^1.8.0",
     "@guardian/shimport": "^1.0.2",
+    "@guardian/types": "^6",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "bootstrap-sass": "^3.4.1",
