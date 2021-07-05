@@ -20,8 +20,7 @@ import services.{CAPILookup, USElection2020AmpPages, _}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import experiments.{ActiveExperiments, InteractiveLibrarianExp}
-import services.InteractiveLibrarian
-import services.InteractiveLibrarian.log
+import services.dotcomrendering.InteractiveLibrarian
 
 class InteractiveController(
     contentApiClient: ContentApiClient,

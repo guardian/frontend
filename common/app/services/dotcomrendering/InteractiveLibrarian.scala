@@ -1,4 +1,4 @@
-package services
+package services.dotcomrendering
 
 import common.GuLogging
 import conf.Configuration
@@ -21,7 +21,7 @@ object InteractiveLibrarian extends GuLogging {
     log.info(s"Nx100-03: commitToS3: ${s3path}")
     try {
       // On local bucket is: aws-frontend-archive-code-originals
-      S3ArchiveOriginals.putPublic(s3path, document, "text/html")
+      services.S3ArchiveOriginals.putPublic(s3path, document, "text/html")
       s"Document stored to S3 archive path: ${s3path}, length: ${document.length}"
     } catch {
       case e: Exception => e.getMessage
@@ -66,7 +66,7 @@ object InteractiveLibrarian extends GuLogging {
         case 200 => {
           val livedocument = response.body
           val status = commitToS3("testing-1152", livedocument)
-          S3ArchiveOriginals.get("testing-1152").getOrElse(s"Default String 15:16 - (${status})")
+          services.S3ArchiveOriginals.get("testing-1152").getOrElse(s"Default String 15:16 - (${status})")
         }
         case non200 => s"Unexpected response from ${wsRequest.uri}, status code: $non200"
       }
