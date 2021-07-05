@@ -15,7 +15,7 @@ object InteractiveLibrarian extends GuLogging {
   // ----------------------------------------------------------
   // Basic S3 I/O
 
-  private def commitToS3(s3path: String, document: String): (Boolean, String) = {
+  private def commitOriginalToS3(s3path: String, document: String): (Boolean, String) = {
     try {
       // On local bucket is: aws-frontend-archive-code-originals
       services.S3ArchiveOriginals.putPublic(s3path, document, "text/html")
@@ -25,20 +25,28 @@ object InteractiveLibrarian extends GuLogging {
     }
   }
 
-  private def retrieveFromS3(path: String): Option[String] = {
-    // Here we retrieve the cleaned version.
-    Some(s"Retrived document at path ${path}")
+  private def retrieveOriginalFromS3(s3path: String): Option[String] = {
+    services.S3ArchiveOriginals.get(s3path)
   }
 
   // ----------------------------------------------------------
   // Cleaning
 
-  def getDocumentFromLiveSite(path: String): Future[String] = {
-    Future.successful("Document retrieved from live URL")
+  def cleanOriginalDocument(document: String): String = {
+    // For the moment this function is the identity
+    document
   }
 
-  def pressLiveSiteDocument(path: String): Future[Boolean] = {
-    Future.successful(false)
+  def applyCleaning(s3path: String): Boolean = {
+    // This function takes a s3 path pointing at an original document (meaning something pressed from live contents)
+    // and writes the cleaned version.
+    retrieveOriginalFromS3(s3path) match {
+      case Some(document) => {
+        val cleaned = cleanOriginalDocument(document)
+        false // for the moment
+      }
+      case None => false
+    }
   }
 
   // ----------------------------------------------------------
@@ -61,7 +69,7 @@ object InteractiveLibrarian extends GuLogging {
       response.status match {
         case 200 => {
           val liveDocument = response.body
-          val status = commitToS3(s3path, liveDocument)
+          val status = commitOriginalToS3(s3path, liveDocument)
           if (status._1) {
             s"Live Contents S3 Pressing. Operation successful. Path: ${path}. Length: ${liveDocument.length}"
           } else {
