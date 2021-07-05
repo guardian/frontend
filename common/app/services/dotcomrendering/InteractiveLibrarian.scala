@@ -49,10 +49,10 @@ object InteractiveLibrarian extends GuLogging {
   }
 
   def getServableDocument(path: String, wsClient: WSClient): Future[String] = {
-    pressFromLive(wsClient, path).map { message => s"${message} ; Serveable document from S3" }
+    pressLiveContents(wsClient, path).map { message => s"${message} ; Serveable document from S3" }
   }
 
-  def pressFromLive(wsClient: WSClient, path: String): Future[String] = {
+  def pressLiveContents(wsClient: WSClient, path: String): Future[String] = {
     log.info(s"Interactive Librarian. Pressing path: ${path}")
     val liveUrl = s"https://www.theguardian.com/${path}"
     val s3path = s"www.theguardian.com/${path}"

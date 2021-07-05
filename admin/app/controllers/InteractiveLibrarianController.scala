@@ -19,7 +19,7 @@ class InteractiveLibrarianController(
 
   def liveContentsPress(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      InteractiveLibrarian.pressFromLive(wsClient, path).map { message =>
+      InteractiveLibrarian.pressLiveContents(wsClient, path).map { message =>
         Ok(message)
       }
     }
