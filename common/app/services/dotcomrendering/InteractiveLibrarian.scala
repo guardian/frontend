@@ -18,7 +18,6 @@ object InteractiveLibrarian extends GuLogging {
   def commitToS3(s3path: String, document: String): String = {
     // we store the document at this path on S3, we should put both the "original/full" version and a cleaned version
 
-    log.info(s"Nx100-03: commitToS3: ${s3path}")
     try {
       // On local bucket is: aws-frontend-archive-code-originals
       services.S3ArchiveOriginals.putPublic(s3path, document, "text/html")
@@ -52,21 +51,20 @@ object InteractiveLibrarian extends GuLogging {
   }
 
   def getServableDocument(path: String, wsClient: WSClient): Future[String] = {
-    log.info(s"Nx100-02: getServableDocument: ${path}")
-    pressFromLive(wsClient).map { message => s"${message} ; Serveable document from S3" }
+    pressFromLive(wsClient, path).map { message => s"${message} ; Serveable document from S3" }
   }
 
-  def pressFromLive(wsClient: WSClient): Future[String] = {
-    val urlIn =
-      "https://www.theguardian.com/us-news/2017/may/01/michelle-obama-school-lunch-let-girls-learn-scrapped-trump"
-    val wsRequest = wsClient.url(urlIn)
-    // println(s"Calling ${wsRequest.uri}")
+  def pressFromLive(wsClient: WSClient, path: String): Future[String] = {
+    log.info(s"Interactive Librarian. Pressing path: ${path}")
+    val liveUrl = s"https://www.theguardian.com/${path}"
+    val s3path = s"www.theguardian.com/${path}"
+    val wsRequest = wsClient.url(liveUrl)
     wsRequest.get().map { response =>
       response.status match {
         case 200 => {
           val livedocument = response.body
-          val status = commitToS3("testing-1152", livedocument)
-          services.S3ArchiveOriginals.get("testing-1152").getOrElse(s"Default String 15:16 - (${status})")
+          val status = commitToS3(s3path, livedocument)
+          services.S3ArchiveOriginals.get(s3path).getOrElse(s"[error retrieving from S3] (${status})")
         }
         case non200 => s"Unexpected response from ${wsRequest.uri}, status code: $non200"
       }

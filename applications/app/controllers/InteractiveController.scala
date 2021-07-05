@@ -128,8 +128,6 @@ class InteractiveController(
       }
     }
 
-    log.info(s"Nx100-01: renderItem: ${path}")
-
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
     } else if (ActiveExperiments.isParticipating(InteractiveLibrarianExp)) {
