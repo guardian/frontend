@@ -44,8 +44,10 @@ object InteractiveLibrarian extends GuLogging {
   // ----------------------------------------------------------
   // Operations
 
-  def getDocumentFromS3(path: String): String = {
+  def getDocumentFromS3(path: String): Option[String] = {
     "Document from S3"
+    val s3path = s"www.theguardian.com/${path}"
+    services.S3ArchiveOriginals.get(s3path)
   }
 
   def pressLiveContents(wsClient: WSClient, path: String): Future[String] = {
@@ -61,7 +63,6 @@ object InteractiveLibrarian extends GuLogging {
         case 200 => {
           val liveDocument = response.body
           val status = commitToS3(s3path, liveDocument)
-          // services.S3ArchiveOriginals.get(s3path).getOrElse(s"[error retrieving from S3] (${status})")
           if (status._1) {
             s"Live Contents S3 Pressing. Operation successful. Path: ${path}. Length: ${liveDocument.length}"
           } else {
