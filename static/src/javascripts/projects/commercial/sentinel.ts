@@ -41,14 +41,9 @@ export const amIUsed = (
 	// The function will return early if the sentinelLogger switch is disabled.
 	if (!config.get('switches.sentinelLogger', false)) return;
 
-	const TEST_URL =
-		new URL(window.location.href).searchParams.get('k') ?? undefined;
-
-	// force logging in PROD with ?k=force_sentinel
-	const endpoint =
-		TEST_URL === 'force_sentinel'
-			? '//logs.guardianapis.com/log'
-			: '//logs.code.dev-guardianapis.com/log';
+	const endpoint = config.get('page.isDev', false)
+		? '//logs.code.dev-guardianapis.com/log'
+		: '//logs.guardianapis.com/log';
 
 	const receivedTimestamp = new Date();
 	const receivedDate = receivedTimestamp.toISOString().slice(0, 10);

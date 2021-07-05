@@ -264,7 +264,6 @@ const doInit = () => {
 };
 
 export const init = () => {
-    amIUsed('article-body-adverts', 'init', { comment: 'PROD test'})
     // Also init when the main article is redisplayed
     // For instance by the signin gate.
     mediator.on('page:article:redisplayed', doInit);

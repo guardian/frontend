@@ -60,7 +60,7 @@ describe('sentinel', () => {
 		);
 	});
 
-	test.skip('should use the correct logging DEV endpoint', () => {
+	test('should use the correct logging DEV endpoint', () => {
 		config.get.mockReturnValueOnce(true).mockReturnValueOnce(false); // first get checks switches.sentinelLogger, the second page.isDev
 		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon).toHaveBeenCalledWith(
