@@ -15,7 +15,8 @@ const submitOphanInsert = (
     variantId,
     componentType,
     products,
-    campaignCode
+    campaignCode,
+    labels,
 ) => {
     submitInsertEvent({
         component: {
@@ -23,6 +24,7 @@ const submitOphanInsert = (
             products,
             campaignCode,
             id: campaignCode,
+            labels,
         },
         abTest: {
             name: testId,
@@ -39,6 +41,7 @@ const setupOphanView = (
     trackingCampaignId,
     componentType,
     products,
+    labels,
 ) => {
     const inView = elementInView(element, window, {
         top: 18,
@@ -53,6 +56,7 @@ const setupOphanView = (
                     products,
                     campaignCode,
                     id: campaignCode,
+                    labels,
                 },
                 abTest: {
                     name: testId,

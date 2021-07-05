@@ -327,13 +327,14 @@ const renderEpic = async (module, meta) => {
         componentType,
         products = [],
         campaignCode,
-        campaignId
+        campaignId,
+        labels,
     } = meta;
 
     const el = epicEl();
     mountDynamic(el, component.ContributionsEpic, module.props, true);
 
-    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode, labels);
     setupOphanView(
         el,
         abTestName,
@@ -342,6 +343,7 @@ const renderEpic = async (module, meta) => {
         campaignId,
         componentType,
         products,
+        labels,
     );
 };
 
