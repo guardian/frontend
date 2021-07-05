@@ -17,7 +17,7 @@ class InteractiveLibrarianController(
     with GuLogging
     with ImplicitControllerExecutionContext {
 
-  def testing(path: String): Action[AnyContent] = {
+  def liveContentsPress(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       InteractiveLibrarian.pressFromLive(wsClient, path).map { message =>
         Ok(message)
