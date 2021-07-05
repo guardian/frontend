@@ -28,8 +28,8 @@ object InteractivePicker {
   }
 
   def isCartoon(tags: List[Tag]): Boolean = {
-    def isCartoonTag(tag: Tag) = List("tone/cartoons", "profile/david-squires").contains(tag.id)
-    tags.exists(isCartoonTag)
+    val cartoonTagIds = Set("tone/cartoons", "profile/david-squires")
+    tags.exists(tag => cartoonTagIds.contains(tag.id))
   }
 
   def isSupported(tags: List[Tag]): Boolean = {
