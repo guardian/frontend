@@ -38,6 +38,7 @@ object InteractiveLibrarian extends GuLogging {
   }
 
   def applyCleaning(s3path: String): Boolean = {
+    log.info(s"Interactive Librarian. Apply cleaning. s3path: ${s3path}")
     // This function takes a s3 path pointing at an original document (meaning something pressed from live contents)
     // and writes the cleaned version.
     retrieveOriginalFromS3(s3path) match {
