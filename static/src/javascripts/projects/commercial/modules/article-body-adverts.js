@@ -10,7 +10,6 @@ import { createSlots } from './dfp/create-slots';
 
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { initCarrot } from './carrot-traffic-driver';
-import { amIUsed } from 'commercial/sentinel';
 
 
 
