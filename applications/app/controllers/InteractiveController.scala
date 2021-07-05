@@ -19,6 +19,9 @@ import services.{CAPILookup, USElection2020AmpPages, _}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import experiments.{ActiveExperiments, InteractiveLibrarianExp}
+import services.InteractiveLibrarian
+import services.InteractiveLibrarian.log
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
@@ -126,8 +129,14 @@ class InteractiveController(
       }
     }
 
+    log.info(s"Nx100-01: renderItem: ${path}")
+
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
+    } else if (ActiveExperiments.isParticipating(InteractiveLibrarianExp)) {
+      InteractiveLibrarian.getServableDocument(path, wsClient).flatMap { document =>
+        Future.successful(Ok(document).as("text/plain"))
+      }
     } else {
       val res = for {
         resp <- lookupItemResponse(path)
