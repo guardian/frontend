@@ -131,7 +131,7 @@ class InteractiveController(
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
     } else if (ActiveExperiments.isParticipating(InteractiveLibrarianExp)) {
-      InteractiveLibrarian.getServableDocument(path, wsClient).flatMap { document =>
+      InteractiveLibrarian.getDocumentFromS3(path).flatMap { document =>
         Future.successful(Ok(document).as("text/plain"))
       }
     } else {

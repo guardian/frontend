@@ -15,7 +15,7 @@ object InteractiveLibrarian extends GuLogging {
   // ----------------------------------------------------------
   // Basic S3 I/O
 
-  def commitToS3(s3path: String, document: String): (Boolean, String) = {
+  private def commitToS3(s3path: String, document: String): (Boolean, String) = {
     try {
       // On local bucket is: aws-frontend-archive-code-originals
       services.S3ArchiveOriginals.putPublic(s3path, document, "text/html")
@@ -25,13 +25,13 @@ object InteractiveLibrarian extends GuLogging {
     }
   }
 
-  def retrieveFromS3(path: String): Option[String] = {
+  private def retrieveFromS3(path: String): Option[String] = {
     // Here we retrieve the cleaned version.
     Some(s"Retrived document at path ${path}")
   }
 
   // ----------------------------------------------------------
-  // Archiving Process
+  // Cleaning
 
   def getDocumentFromLiveSite(path: String): Future[String] = {
     Future.successful("Document retrieved from live URL")
@@ -42,17 +42,16 @@ object InteractiveLibrarian extends GuLogging {
   }
 
   // ----------------------------------------------------------
-  // Serving
+  // Operations
 
   def getDocumentFromS3(path: String): String = {
     "Document from S3"
   }
 
-  def getServableDocument(path: String, wsClient: WSClient): Future[String] = {
-    pressLiveContents(wsClient, path).map { message => s"${message} ; Serveable document from S3" }
-  }
-
   def pressLiveContents(wsClient: WSClient, path: String): Future[String] = {
+    // 1. Takes a path ( books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
+    // 2. Queries the live contents ( https://www.theguardian.com/books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
+    // 3. Stores the document at S3 path ( www.theguardian.com/books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
     log.info(s"Interactive Librarian. Pressing path: ${path}")
     val liveUrl = s"https://www.theguardian.com/${path}"
     val s3path = s"www.theguardian.com/${path}"
