@@ -45,7 +45,6 @@ object InteractiveLibrarian extends GuLogging {
   // Operations
 
   def getDocumentFromS3(path: String): Option[String] = {
-    "Document from S3"
     val s3path = s"www.theguardian.com/${path}"
     services.S3ArchiveOriginals.get(s3path)
   }
