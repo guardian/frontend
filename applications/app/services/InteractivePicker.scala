@@ -29,7 +29,7 @@ object InteractivePicker {
 
   def isCartoon(tags: List[Tag]): Boolean = {
     def isCartoonTagId(tag: Tag) = List("tone/cartoons", "profile/david-squires").contains(tag.id)
-    tags.exists(isCartoonTagId _)
+    tags.exists(isCartoonTagId)
   }
 
   def isSupported(tags: List[Tag]): Boolean = {
