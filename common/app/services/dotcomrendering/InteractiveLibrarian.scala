@@ -15,15 +15,13 @@ object InteractiveLibrarian extends GuLogging {
   // ----------------------------------------------------------
   // Basic S3 I/O
 
-  def commitToS3(s3path: String, document: String): String = {
-    // we store the document at this path on S3, we should put both the "original/full" version and a cleaned version
-
+  def commitToS3(s3path: String, document: String): (Boolean, String) = {
     try {
       // On local bucket is: aws-frontend-archive-code-originals
       services.S3ArchiveOriginals.putPublic(s3path, document, "text/html")
-      s"Document stored to S3 archive path: ${s3path}, length: ${document.length}"
+      (true, "")
     } catch {
-      case e: Exception => e.getMessage
+      case e: Exception => (false, e.getMessage)
     }
   }
 
@@ -62,9 +60,14 @@ object InteractiveLibrarian extends GuLogging {
     wsRequest.get().map { response =>
       response.status match {
         case 200 => {
-          val livedocument = response.body
-          val status = commitToS3(s3path, livedocument)
-          services.S3ArchiveOriginals.get(s3path).getOrElse(s"[error retrieving from S3] (${status})")
+          val liveDocument = response.body
+          val status = commitToS3(s3path, liveDocument)
+          // services.S3ArchiveOriginals.get(s3path).getOrElse(s"[error retrieving from S3] (${status})")
+          if (status._1) {
+            s"Live Contents S3 Pressing. Operation successful. Path: ${path}. Length: ${liveDocument.length}"
+          } else {
+            s"Live Contents S3 Pressing. Operation not successful. Path: ${path}. Error: ${status._2}"
+          }
         }
         case non200 => s"Unexpected response from ${wsRequest.uri}, status code: $non200"
       }
