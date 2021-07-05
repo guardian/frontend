@@ -499,6 +499,10 @@ export const fetchAndRenderHeaderLinks = async () => {
         return;
     }
 
+    if (config.get('page.contentType') === 'Gallery') {
+        return;
+    }
+
     try {
         const response = await getHeaderLinks(requestData);
         if (!response.data) {
