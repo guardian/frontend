@@ -1,6 +1,7 @@
 package services
 
-import model.Tag
+import com.gu.contentapi.client.utils.format.ImmersiveDisplay
+import model.{ContentFormat, Interactive, Tag}
 import conf.switches.Switches.InteractivePickerFeature
 import implicits.{AmpFormat, HtmlFormat, RequestFormat}
 import play.api.mvc.RequestHeader
@@ -15,49 +16,57 @@ object USElectionTracker2020AmpPage extends RenderingTier
 
 object InteractivePicker {
 
-  val migratedPaths = List(
-    "/sport/ng-interactive/2018/dec/26/lebron-james-comments-nba-nfl-divide",
-  )
-
-  def ensureStartingForwardSlash(str: String): String = {
-    if (!str.startsWith("/")) ("/" + str) else str
-  }
-
+  // Interactives since the switchover are developed in DCR and so known to
+  // work. (And are almost certainly broken in Frontend.)
   def dateIsPostTransition(date: DateTime): Boolean = {
     date.isAfter(InteractiveSwitchOver.date)
-  }
-
-  def isCartoon(tags: List[Tag]): Boolean = {
-    val cartoonTagIds = Set("tone/cartoons", "profile/david-squires")
-    tags.exists(tag => cartoonTagIds.contains(tag.id))
-  }
-
-  def isSupported(tags: List[Tag]): Boolean = {
-    // This will be expanded more as we support more interactives
-    isCartoon(tags)
   }
 
   def isOptedOut(tags: List[Tag]): Boolean = {
     tags.exists(t => t.id == "tracking/platformfunctional/dcroptout")
   }
 
-  def isAmpOptedIn(tags: List[Tag]): Boolean = {
-    tags.exists(t => t.id == "tracking/platformfunctional/ampinteractive")
+  def isAmpOptedIn(format: RequestFormat, tags: List[Tag]): Boolean = {
+    format == AmpFormat && tags.exists(t => t.id == "tracking/platformfunctional/ampinteractive")
   }
 
-  def getRenderingTier(requestFormat: RequestFormat, path: String, datetime: DateTime, tags: List[Tag])(implicit
+  // A test article which we went live with early to gain confidence.
+  def isAllowList(id: String): Boolean = {
+    id == "sport/ng-interactive/2018/dec/26/lebron-james-comments-nba-nfl-divide"
+  }
+
+  // Cartoons represent almost 50% of published interactives and we know these
+  // work now on DCR.
+  def isCartoon(tags: List[Tag]): Boolean = {
+    val cartoonTagIds = Set("tone/cartoons", "profile/david-squires")
+    tags.exists(tag => cartoonTagIds.contains(tag.id))
+  }
+
+  // Immersives tend to work fairly well in DCR as they don't rely on modifying
+  // existing page markup.
+  def isImmersive(format: Option[ContentFormat]): Boolean = {
+    format.exists(_.display == ImmersiveDisplay)
+  }
+
+  def getRenderingTier(interactive: Interactive, requestFormat: RequestFormat)(implicit
       request: RequestHeader,
   ): RenderingTier = {
+    val tags = interactive.tags.tags
     val forceDCR = request.forceDCR
-    val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
     val switchOn = InteractivePickerFeature.isSwitchedOn
-    val publishedPostSwitch = dateIsPostTransition(datetime)
-    val isOptedInAmp = (requestFormat == AmpFormat) && isAmpOptedIn(tags)
-    val isWebNotOptedOut = (requestFormat == HtmlFormat) && !isOptedOut(tags)
 
-    if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
-    else if (switchOn && publishedPostSwitch && isWebNotOptedOut) DotcomRendering
-    else if (switchOn && isSupported(tags) && isWebNotOptedOut) DotcomRendering
+    if (!switchOn) FrontendLegacy
+    else if (forceDCR) DotcomRendering
+    else if (
+      !isOptedOut(tags) && (
+        dateIsPostTransition(interactive.trail.webPublicationDate) ||
+        isCartoon(tags) ||
+        isImmersive(interactive.metadata.format) ||
+        isAmpOptedIn(requestFormat, tags) ||
+        isAllowList(interactive.metadata.id)
+      )
+    )
+      DotcomRendering
     else FrontendLegacy
   }
 }
