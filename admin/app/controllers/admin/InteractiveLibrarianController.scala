@@ -27,7 +27,8 @@ class InteractiveLibrarianController(
 
   def readCleanWrite(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      Future.successful(Ok("Pascal [1437]"))
+      val status = InteractiveLibrarian.readCleanWrite(path)
+      Future.successful(Ok(status.toString()))
     }
   }
 }
