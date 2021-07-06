@@ -27,6 +27,16 @@ object InteractivePicker {
     date.isAfter(InteractiveSwitchOver.date)
   }
 
+  def isCartoon(tags: List[Tag]): Boolean = {
+    val cartoonTagIds = Set("tone/cartoons", "profile/david-squires")
+    tags.exists(tag => cartoonTagIds.contains(tag.id))
+  }
+
+  def isSupported(tags: List[Tag]): Boolean = {
+    // This will be expanded more as we support more interactives
+    isCartoon(tags)
+  }
+
   def isOptedOut(tags: List[Tag]): Boolean = {
     tags.exists(t => t.id == "tracking/platformfunctional/dcroptout")
   }
@@ -47,6 +57,7 @@ object InteractivePicker {
 
     if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
     else if (switchOn && publishedPostSwitch && isWebNotOptedOut) DotcomRendering
+    else if (switchOn && isSupported(tags) && isWebNotOptedOut) DotcomRendering
     else FrontendLegacy
   }
 }
