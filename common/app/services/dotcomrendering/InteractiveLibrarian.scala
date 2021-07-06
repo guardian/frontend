@@ -97,11 +97,6 @@ object InteractiveLibrarian extends GuLogging {
   // ----------------------------------------------------------
   // Operations
 
-  def getDocumentFromS3(path: String): Option[String] = {
-    val s3path = s"www.theguardian.com/${path}"
-    retrieveCleanedDocumentFromS3(s3path)
-  }
-
   def pressLiveContents(wsClient: WSClient, path: String): Future[String] = {
     // 1. Takes a path ( books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
     // 2. Queries the live contents ( https://www.theguardian.com/books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
@@ -124,5 +119,10 @@ object InteractiveLibrarian extends GuLogging {
         case non200 => s"Unexpected response from ${wsRequest.uri}, status code: $non200"
       }
     }
+  }
+
+  def getDocumentFromS3(path: String): Option[String] = {
+    val s3path = s"www.theguardian.com/${path}"
+    retrieveCleanedDocumentFromS3(s3path)
   }
 }
