@@ -47,7 +47,7 @@ GET         /ajax/clear                                                         
 POST        /ajax/clear                                                                             controllers.cache.PageDecacheController.decacheAjax()
 
 # Interactive Pressing
-GET         /interactive-librarian/live-presser/*path                                               controllers.admin.InteractiveLibrarianController.liveContentsPress(path: String)
+POST        /interactive-librarian/live-presser/*path                                               controllers.admin.InteractiveLibrarianController.liveContentsPress(path: String)
 
 # Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
