@@ -2,13 +2,14 @@ package controllers.admin
 
 import com.gu.googleauth.UserIdentity
 import common._
-import conf.switches.Switches
 import conf.Configuration
+import conf.switches.Switches
+import model.{ApplicationContext, NoCache}
 import play.api.mvc._
-import scala.concurrent.Future
 import services.SwitchNotification
 import tools.Store
-import model.{ApplicationContext, NoCache}
+
+import scala.concurrent.Future
 
 class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,

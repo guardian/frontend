@@ -1,8 +1,8 @@
 package controllers.admin
 
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.GuLogging
 import model.{ApplicationContext, NoCache}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 class SportTroubleshooterController(val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,
