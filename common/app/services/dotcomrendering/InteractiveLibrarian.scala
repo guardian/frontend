@@ -122,10 +122,14 @@ object InteractiveLibrarian extends GuLogging {
   }
 
   def readCleanWrite(path: String): (Boolean, String) = {
+
     // The first component of the return value says whether the operation completed successfully,
     // in the negative case the string indicates what happened.
 
-    (false, "not implemented")
+    val s3path = s"www.theguardian.com/${path}"
+    retrieveOriginalDocumentFromS3(s3path).fold(
+      (false, s"could not retrieve the original document at ${s3path}"),
+    )(document => commitCleanedDocumentToS3(s3path, cleanOriginalDocument(document)))
   }
 
   def getDocumentFromS3(path: String): Option[String] = {
