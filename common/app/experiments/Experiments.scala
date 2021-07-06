@@ -7,6 +7,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
+    InteractiveLibrarianExp,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -21,7 +22,7 @@ object LiveblogRendering
       participationGroup = Perc0A,
     )
 
-object InteractiveLibrarian
+object InteractiveLibrarianExp
     extends Experiment(
       name = "interactive-librarian",
       description = "Private experiment to develop archiving backup for Interactives",

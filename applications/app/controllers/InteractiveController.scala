@@ -19,6 +19,8 @@ import services.{CAPILookup, USElection2020AmpPages, _}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import experiments.{ActiveExperiments, InteractiveLibrarianExp}
+import services.dotcomrendering.InteractiveLibrarian
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
@@ -128,6 +130,12 @@ class InteractiveController(
 
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
+    } else if (ActiveExperiments.isParticipating(InteractiveLibrarianExp)) {
+      val result = InteractiveLibrarian.getDocumentFromS3(path) match {
+        case Some(document) => Ok(document).as("text/plain") // purposely set to "text/plain" for the moment
+        case None           => NotFound(s"Could not retrieve stored document at www.theguardian.com/${path}")
+      }
+      Future.successful(result)
     } else {
       val res = for {
         resp <- lookupItemResponse(path)

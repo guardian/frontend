@@ -2,12 +2,12 @@ package controllers.admin
 
 import java.io.File
 import java.net.URL
-
-import common.{AkkaAsync, ImplicitControllerExecutionContext, GuLogging}
+import common.{AkkaAsync, GuLogging, ImplicitControllerExecutionContext}
 import model.{ApplicationContext, R2PressMessage}
 import play.api.mvc._
 import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier, RedirectService}
 
+import scala.concurrent.Future
 import scala.util.Try
 
 class R2PressController(
