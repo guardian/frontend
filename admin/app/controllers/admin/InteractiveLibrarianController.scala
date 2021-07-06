@@ -1,12 +1,10 @@
 package controllers.admin
 
 import common.{AkkaAsync, GuLogging, ImplicitControllerExecutionContext}
-import model.{ApplicationContext}
+import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.dotcomrendering.InteractiveLibrarian
-
-import scala.concurrent.Future
 
 class InteractiveLibrarianController(
     wsClient: WSClient,
