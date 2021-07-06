@@ -1,14 +1,14 @@
 package controllers.admin
 
-import java.io.File
-
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.GuLogging
 import model.ApplicationContext
-import play.api.data._
 import play.api.data.Forms._
-import services.RedirectService.{PermanentRedirect => GuardianRedirect}
+import play.api.data._
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services.RedirectService
+import services.RedirectService.{PermanentRedirect => GuardianRedirect}
+
+import java.io.File
 
 case class PageRedirect(from: String, to: String) {
   lazy val trim = this.copy(from = from.trim, to = to.trim)

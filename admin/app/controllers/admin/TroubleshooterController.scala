@@ -1,20 +1,19 @@
 package controllers.admin
 
-import contentapi.{CapiHttpClient, ContentApiClient, PreviewContentApi, PreviewSigner}
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import common.{ImplicitControllerExecutionContext, GuLogging}
-import model.{ApplicationContext, NoCache}
-import play.api.libs.ws.WSClient
-import tools.LoadBalancer
-import com.amazonaws.services.ec2.{AmazonEC2, AmazonEC2ClientBuilder}
 import com.amazonaws.services.ec2.model.{DescribeInstancesRequest, Filter}
+import com.amazonaws.services.ec2.{AmazonEC2, AmazonEC2ClientBuilder}
+import common.{GuLogging, ImplicitControllerExecutionContext}
+import conf.Configuration.aws.credentials
+import contentapi.{CapiHttpClient, ContentApiClient, PreviewContentApi, PreviewSigner}
+import model.{ApplicationContext, NoCache}
+import play.api.Mode
+import play.api.libs.ws.WSClient
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import tools.LoadBalancer
 
 import scala.collection.JavaConverters._
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import conf.Configuration.aws.credentials
-import play.api.Mode
-
 import scala.util.Random
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)

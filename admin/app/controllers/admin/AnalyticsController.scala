@@ -1,8 +1,8 @@
 package controllers.admin
 
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import common.{ImplicitControllerExecutionContext, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext}
 import model.{ApplicationContext, NoCache}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 import scala.concurrent.Future
 

@@ -1,12 +1,11 @@
 package controllers.admin
 
-import common.{ImplicitControllerExecutionContext, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext}
 import implicits.Requests
 import model.NoCache
-import model.deploys.{ApiResults, RiffRaffService}
-import play.api.mvc._
-import model.deploys._
+import model.deploys.{ApiResults, RiffRaffService, _}
 import play.api.libs.ws.WSClient
+import play.api.mvc._
 
 trait DeploysController extends BaseController with GuLogging with Requests with ImplicitControllerExecutionContext {
 
