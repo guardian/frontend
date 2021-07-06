@@ -1,8 +1,8 @@
 package controllers.admin
 
 import com.gu.googleauth.AuthAction
-import play.api.mvc._
 import model.{ApplicationContext, NoCache}
+import play.api.mvc._
 
 trait AdminAuthController {
 
