@@ -44,6 +44,15 @@ declare module 'ophan/ng' {
 	export default ophan;
 }
 
+// This comes from Scala:
+// https://github.com/guardian/frontend/tree/main/common/app/common/commercial/PrebidIndexSite.scala#L10
+// https://github.com/guardian/frontend/tree/main/common/app/views/support/JavaScriptPage.scala#L54
+type PrebidBreakpoint = 'D' | 'T' | 'M';
+type PrebidIndexSite = {
+	bp: PrebidBreakpoint;
+	id: number;
+};
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -52,6 +61,9 @@ interface Window {
 			pageViewId: string;
 		};
 		config: {
+			page: {
+				pbIndexSites: PrebidIndexSite[];
+			};
 			switches: Record<string, boolean | undefined>;
 		};
 	};
