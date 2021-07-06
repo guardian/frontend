@@ -21,9 +21,22 @@ object GoogleAuthFilters {
   ) extends Filter {
 
     val authCookie = new AuthCookie(httpConfiguration)
+
+    // Date: 06 July 2021
+    // Author: Pascal
+
+    // Condition [1], below, was added in July 2021, as part of posing the ground for the interactive migration.
+    // It should be removed when the Interactives migration is complete, meaning when we no longer need the route
+    // POST /interactive-librarian/live-presser/*path
+    // in [admin].
+    // Note that a slightly better solution would have been to set up a new entry in AdminFilters's FilterExemptions
+    // But they do not interpret wildcards, as a consequence the next best solution is to add a migration specific
+    // clause to doNotAuthenticate
+
     private def doNotAuthenticate(request: RequestHeader) =
       context.environment.mode == Mode.Test ||
         request.path.startsWith(loginUrl.path) ||
+        request.path.startsWith("/interactive-librarian/live-presser/") || // Condition [1]
         exemptions.exists(exemption => request.path.startsWith(exemption.path))
 
     def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
