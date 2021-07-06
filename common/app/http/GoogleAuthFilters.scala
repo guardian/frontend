@@ -26,17 +26,18 @@ object GoogleAuthFilters {
     // Author: Pascal
 
     // Condition [1], below, was added in July 2021, as part of posing the ground for the interactive migration.
-    // It should be removed when the Interactives migration is complete, meaning when we no longer need the route
+    // It should be removed when the Interactives migration is complete, meaning when we no longer need the routes
     // POST /interactive-librarian/live-presser/*path
+    // POST /interactive-librarian/read-clean-write/*path
     // in [admin].
     // Note that a slightly better solution would have been to set up a new entry in AdminFilters's FilterExemptions
-    // But they do not interpret wildcards, as a consequence the next best solution is to add a migration specific
+    // but they do not interpret wildcards. As a consequence the next best solution is to add a migration specific
     // clause to doNotAuthenticate
 
     private def doNotAuthenticate(request: RequestHeader) =
       context.environment.mode == Mode.Test ||
         request.path.startsWith(loginUrl.path) ||
-        request.path.startsWith("/interactive-librarian/live-presser/") || // Condition [1]
+        request.path.startsWith("/interactive-librarian/") || // Condition [1]
         exemptions.exists(exemption => request.path.startsWith(exemption.path))
 
     def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
