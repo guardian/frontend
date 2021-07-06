@@ -30,31 +30,34 @@ const addVideoStartedClass = (el) => {
     }
 };
 
-let tcfState = null;
-let ccpaState = null;
 let tcfData = {};
-onConsentChange((consentState) => {
-    if (consentState.ccpa) {
-        // if ccpa region
-        // ccpaState = true when doNotSell == true
-        // ccpaState = false when doNotSell == false
-        ccpaState = consentState.doNotSell;
-    }
-    else if (consentState.aus) {
-        // if aus region
-        // ccpaState = false when personalisedAdvertising == true
-        // ccpaState = true when personalisedAdvertising == false
-        ccpaState = !consentState.aus.personalisedAdvertising;
-    }
 
+let consentState = {
+    region: null,
+    canTarget: false,
+};
+
+onConsentChange((cmpConsent) => {
+    if (cmpConsent.ccpa) {
+        consentState = {
+            region: 'ccpa',
+            canTarget: !cmpConsent.doNotSell,
+        }
+    }
+    else if (cmpConsent.aus) {
+        consentState = {
+            region: 'aus',
+            canTarget: cmpConsent.aus.personalisedAdvertising,
+        }
+    }
     else {
-        // if tcf region
-        // tcfState = true if all tcfData values are true
-        // tcfState = false if any tcfData values are false
-        tcfData = consentState.tcfv2;
-        tcfState = tcfData
-            ? Object.values(tcfData.consents).every(Boolean)
-            : false
+        tcfData = cmpConsent.tcfv2;
+        consentState = {
+            region: 'tcfv2',
+            canTarget: tcfData
+                ? Object.values(tcfData.consents).every(Boolean)
+                : false,
+        }
     }
 });
 
@@ -120,8 +123,7 @@ const onPlayerReadyEvent = (event, handlers, el) => {
 
 const createAdsConfig = (
     adFree,
-    tcfStateFlag,
-    ccpaStateFlag
+    consentState
 ) => {
     if (adFree) {
         return { disableAds: true };
@@ -140,9 +142,10 @@ const createAdsConfig = (
         },
     };
 
-    if (ccpaStateFlag !== null) {
-        adsConfig.restrictedDataProcessor = ccpaStateFlag;
-        adsConfig.nonPersonalizedAd = !ccpaStateFlag;
+    if (consentState.region === 'ccpa') {
+        adsConfig.restrictedDataProcessor = !consentState.canTarget;
+    } else {
+        adsConfig.nonPersonalizedAd = !consentState.canTarget;
     }
 
     return adsConfig;
@@ -169,8 +172,7 @@ const setupPlayer = (
 
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
-        tcfState,
-        ccpaState
+        consentState
     );
 
     return new window.YT.Player(elt.id, {
