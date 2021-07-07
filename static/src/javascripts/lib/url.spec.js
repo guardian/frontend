@@ -143,7 +143,7 @@ describe('url', () => {
         const state = { foo: 'bar' };
 
         window.history[historyMethod] = jest.fn();
-        window.title = title;
+        document.title = title;
 
         moduleMethod({ state, querystring, title });
         expect(window.history[historyMethod]).toHaveBeenCalledWith(
