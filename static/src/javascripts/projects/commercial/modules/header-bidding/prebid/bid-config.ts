@@ -13,8 +13,6 @@ import {
 	isInUsOrCa,
 } from '../../../../common/modules/commercial/geo-utils';
 import {
-	containsBillboard,
-	containsDmpu,
 	containsLeaderboard,
 	containsLeaderboardOrBillboard,
 	containsMobileSticky,
@@ -281,22 +279,18 @@ const openxClientSideBidder: PrebidBidder = {
 const ozoneClientSideBidder: PrebidBidder = {
 	name: 'ozone',
 	switchName: 'prebidOzone',
-	bidParams: (): PrebidOzoneParams =>
-		Object.assign(
-			{},
-			(() => ({
-				publisherId: 'OZONEGMG0001',
-				siteId: '4204204209',
-				placementId: '0420420500',
-				customData: [
-					{
-						settings: {},
-						targeting: getOzoneTargeting(),
-					},
-				],
-				ozoneData: {}, // TODO: confirm if we need to send any
-			}))(),
-		),
+	bidParams: (): PrebidOzoneParams => ({
+		publisherId: 'OZONEGMG0001',
+		siteId: '4204204209',
+		placementId: '0420420500',
+		customData: [
+			{
+				settings: {},
+				targeting: getOzoneTargeting(),
+			},
+		],
+		ozoneData: {}, // TODO: confirm if we need to send any
+	}),
 };
 
 const sonobiBidder: PrebidBidder = {
@@ -323,14 +317,10 @@ const getPubmaticPublisherId = (): string => {
 const pubmaticBidder: PrebidBidder = {
 	name: 'pubmatic',
 	switchName: 'prebidPubmatic',
-	bidParams: (slotId: string): PrebidPubmaticParams =>
-		Object.assign(
-			{},
-			{
-				publisherId: getPubmaticPublisherId(),
-				adSlot: stripDfpAdPrefixFrom(slotId),
-			},
-		),
+	bidParams: (slotId: string): PrebidPubmaticParams => ({
+		publisherId: getPubmaticPublisherId(),
+		adSlot: stripDfpAdPrefixFrom(slotId),
+	}),
 };
 
 const trustXBidder: PrebidBidder = {
