@@ -49,42 +49,42 @@ describe('create ads config', () => {
 
     it('does not disable ads when we are not in ad-free', () => {
         const result = youtubePlayer.createAdsConfig(false, { region: 'test', canTarget: true });
-        expect(result.disableAds).toBeUndefined();
+        expect(result.hasOwnProperty('disableAds')).toBeFalsy();
     });
 
     it('in non ad-free, returns adsConfig without consent in TCF', () => {
         const result = youtubePlayer.createAdsConfig(false, { region: 'tcfv2', canTarget: false });
-        expect(result.restrictedDataProcessor).toBeUndefined();
+        expect(result.hasOwnProperty('restrictedDataProcessor')).toBeFalsy();
         expect(result.nonPersonalizedAd).toBeTruthy();
     });
 
     it('in non ad-free, returns adsConfig with consent in TCF', () => {
         const result = youtubePlayer.createAdsConfig(false, { region: 'tcfv2', canTarget: true });
-        expect(result.restrictedDataProcessor).toBeUndefined();
+        expect(result.hasOwnProperty('restrictedDataProcessor')).toBeFalsy();
         expect(result.nonPersonalizedAd).toBeFalsy();
     });
 
     it('in non ad-free, returns adsConfig without consent in CCPA', () => {
         const result = youtubePlayer.createAdsConfig(false, { region: 'ccpa', canTarget: false });
         expect(result.restrictedDataProcessor).toBeTruthy();
-        expect(result.nonPersonalizedAd).toBeUndefined();
+        expect(result.hasOwnProperty('nonPersonalizedAd')).toBeFalsy();
     });
 
     it('in non ad-free, returns adsConfig with consent in CCPA', () => {
         const result = youtubePlayer.createAdsConfig(false, { region: 'ccpa', canTarget: true });
         expect(result.restrictedDataProcessor).toBeFalsy();
-        expect(result.nonPersonalizedAd).toBeUndefined();
+        expect(result.hasOwnProperty('nonPersonalizedAd')).toBeFalsy();
     });
 
     it('in non ad-free, returns adsConfig without consent in aus', () => {
         const result = youtubePlayer.createAdsConfig(false, { region: 'aus', canTarget: false });
-        expect(result.restrictedDataProcessor).toBeUndefined();
+        expect(result.hasOwnProperty('restrictedDataProcessor')).toBeFalsy();
         expect(result.nonPersonalizedAd).toBeTruthy();
     });
 
     it('in non ad-free, returns adsConfig with consent in aus', () => {
         const result = youtubePlayer.createAdsConfig(false, { region: 'aus', canTarget: true });
-        expect(result.restrictedDataProcessor).toBeUndefined();
+        expect(result.hasOwnProperty('restrictedDataProcessor')).toBeFalsy();
         expect(result.nonPersonalizedAd).toBeFalsy();
     });
 
