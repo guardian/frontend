@@ -8,11 +8,11 @@ const supportsPushState = hasPushStateSupport() as boolean;
 // Returns a map { <bidderName>: true } of bidders
 // according to the pbtest URL parameter
 
-const pbTestNameMap: () => Record<string, true> = memoize(
-	(): Record<string, true> =>
+const pbTestNameMap: () => Record<string, true | undefined> = memoize(
+	(): Record<string, undefined | true> =>
 		new URLSearchParams(window.location.search)
 			.getAll('pbtest')
-			.reduce<Record<string, true>>((acc, value) => {
+			.reduce<Record<string, undefined | true>>((acc, value) => {
 				acc[value] = true;
 				return acc;
 			}, {}),
@@ -25,7 +25,10 @@ const pbTestNameMap: () => Record<string, true> = memoize(
 const getCurrentQueryString = (): string =>
 	window.location.search.replace(/^\?/, '');
 
-type QueryStringMap = Record<string | number | symbol, string | true>;
+type QueryStringMap = Record<
+	string | number | symbol,
+	string | true | undefined
+>;
 
 const queryStringToUrlVars = memoize(
 	(queryString: string): QueryStringMap =>

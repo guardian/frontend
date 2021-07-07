@@ -1,28 +1,29 @@
+import once from 'lodash/once';
 import {
 	isInAuOrNz,
 	isInRow,
 	isInUk,
 	isInUsOrCa,
 } from 'common/modules/commercial/geo-utils';
-import once from 'lodash/once';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
 
 type StringManipulation = (a: string, b: string) => string;
+type RegExpRecords = Record<string, RegExp | undefined>;
 
-const SUFFIX_REGEXPS: Record<string, RegExp> = {};
+const SUFFIX_REGEXPS: RegExpRecords = {};
 const stripSuffix: StringManipulation = (s, suffix) => {
 	const re =
-		SUFFIX_REGEXPS[suffix] ||
+		SUFFIX_REGEXPS[suffix] ??
 		(SUFFIX_REGEXPS[suffix] = new RegExp(`${suffix}$`));
 	return s.replace(re, '');
 };
 
-const PREFIX_REGEXPS: Record<string, RegExp> = {};
+const PREFIX_REGEXPS: RegExpRecords = {};
 const stripPrefix: StringManipulation = (s, prefix) => {
 	const re =
-		PREFIX_REGEXPS[prefix] ||
+		PREFIX_REGEXPS[prefix] ??
 		(PREFIX_REGEXPS[prefix] = new RegExp(`^${prefix}`));
 	return s.replace(re, '');
 };
@@ -125,12 +126,14 @@ export const shouldIncludeAdYouLike = (
 
 // TODO: Check is we want regional restrictions on where we load the ozoneBidAdapter
 export const shouldUseOzoneAdaptor = (): boolean =>
-	!isInUsOrCa() && !isInAuOrNz() && (window.guardian.config.switches.prebidOzone ?? false);
+	!isInUsOrCa() &&
+	!isInAuOrNz() &&
+	(window.guardian.config.switches.prebidOzone ?? false);
 
 export const shouldIncludeAppNexus = (): boolean =>
 	isInAuOrNz() ||
-	((window.guardian.config.switches.prebidAppnexusUkRow && !isInUsOrCa()) ||
-        !!pbTestNameMap().and);
+	(window.guardian.config.switches.prebidAppnexusUkRow && !isInUsOrCa()) ||
+	!!pbTestNameMap().and;
 
 export const shouldIncludeXaxis = (): boolean => isInUk();
 
@@ -138,7 +141,7 @@ export const shouldIncludeImproveDigital = (): boolean => isInUk() || isInRow();
 
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>
-		window.location.hash.indexOf('#mobile-sticky') !== -1 ||
+		window.location.hash.includes('#mobile-sticky') ||
 		(!!window.guardian.config.switches.mobileStickyLeaderboard &&
 			isBreakpoint({
 				min: 'mobile',
@@ -158,5 +161,4 @@ export const stripTrailingNumbersAbove1 = (s: string): string =>
 export const containsWS = (sizes: HeaderBiddingSize[]): boolean =>
 	contains(sizes, [160, 600]);
 
-export const shouldIncludeOnlyA9 =
-	window.location.hash.indexOf('#only-a9') !== -1;
+export const shouldIncludeOnlyA9 = window.location.hash.includes('#only-a9');
