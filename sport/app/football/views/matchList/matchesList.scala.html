@@ -1,4 +1,5 @@
 @import java.time.format.DateTimeFormatter
+@import football.model.GuTeamCodes
 @(matchesList: List[pa.FootballMatch],
     competition: model.Competition,
     date: java.time.LocalDate,
@@ -53,14 +54,14 @@
                 <td class="football-match__teams table-column--main">
                     <a @(theMatch.smartUrl.map(url => s"href=${LinkTo(url)}").getOrElse("")) class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
                         <div class="football-match__team football-match__team--home football-team">
-                            <div class="football-team__name team-name" data-abbr="@pa.TeamCodes.codeFor(theMatch.homeTeam)">
+                            <div class="football-team__name team-name" data-abbr="@GuTeamCodes.codeFor(theMatch.homeTeam)">
                                 <span class="team-name__long">@cleanTeamName(theMatch.homeTeam.name)</span>
                             </div>
                             <div class="football-team__score">@theMatch.homeTeam.score</div>
                         </div>
 
                         <div class="football-match__team football-match__team--away football-team">
-                            <div class="football-team__name team-name" data-abbr="@pa.TeamCodes.codeFor(theMatch.awayTeam)">
+                            <div class="football-team__name team-name" data-abbr="@GuTeamCodes.codeFor(theMatch.awayTeam)">
                                 <span class="team-name__long">@cleanTeamName(theMatch.awayTeam.name)</span>
                             </div>
                             <div class="football-team__score">@theMatch.awayTeam.score</div>

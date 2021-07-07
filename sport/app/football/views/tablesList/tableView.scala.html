@@ -4,6 +4,7 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import model.CompetitionDisplayHelpers.cleanTeamName
 
+@import football.model.GuTeamCodes
 @(competition: Competition, group: Group,
     heading: Option[String] = None,
     headingLink: Option[String] = None,
@@ -41,7 +42,7 @@
                         "table-row--divider" -> competition.tableDividers.contains(entry.team.rank-1)))">
                     <td class="table-column--sub">@entry.team.rank</td>
                     <td class="table-column--main">
-                        <span class="team-name" data-abbr="@pa.TeamCodes.codeFor(entry.team)">
+                        <span class="team-name" data-abbr="@GuTeamCodes.codeFor(entry.team)">
                             <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/60/@{entry.team.id}.png" />
                             @TeamUrl(entry.team).map{ url =>
                                 <a href="@TeamUrl(entry.team)" data-link-name="View team" class="team-name__long">

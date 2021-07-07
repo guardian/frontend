@@ -5,6 +5,7 @@
 @import pa.LineUpPlayer
 @import model.CompetitionDisplayHelpers.{cleanTeamName, cleanTeamCode}
 
+@import football.model.GuTeamCodes
 @(page: MatchPage)(implicit request: RequestHeader)
 
 @team(players: Seq[LineUpPlayer]) = {
@@ -47,8 +48,8 @@
                        data-chart-show-values="true">
                     <thead hidden>
                         <tr>
-                            <th>@cleanTeamCode(pa.TeamCodes.codeFor(away))</th>
-                            <th>@cleanTeamCode(pa.TeamCodes.codeFor(home))</th>
+                            <th>@cleanTeamCode(GuTeamCodes.codeFor(away))</th>
+                            <th>@cleanTeamCode(GuTeamCodes.codeFor(home))</th>
                         </tr>
                     </thead>
                     <tbody>
