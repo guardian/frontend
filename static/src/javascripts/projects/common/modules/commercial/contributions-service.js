@@ -138,6 +138,7 @@ const buildEpicPayload = async () => {
         weeklyArticleHistory: getWeeklyArticleHistory(),
         hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
         modulesVersion: ModulesVersion,
+        url: window.location.origin + window.location.pathname,
     };
 
     return {
