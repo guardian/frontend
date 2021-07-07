@@ -434,6 +434,11 @@ case object AustraliasModernOutback extends FrontEmailMetadata {
   override val banner = Some("aus-modern-outback.png")
 }
 
+case object TechScape extends FrontEmailMetadata {
+  val name = "TechScape"
+  override val banner = Some("techscape.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -517,6 +522,7 @@ object EmailAddons {
     DesignReview,
     Documentaries,
     AustraliasModernOutback,
+    TechScape,
   )
 
   implicit class EmailContentType(p: Page) {
