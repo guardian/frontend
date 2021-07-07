@@ -6,6 +6,8 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.dotcomrendering.InteractiveLibrarian
 
+import scala.concurrent.Future
+
 class InteractiveLibrarianController(
     wsClient: WSClient,
     akkaAsync: AkkaAsync,
@@ -20,6 +22,13 @@ class InteractiveLibrarianController(
       InteractiveLibrarian.pressLiveContents(wsClient, path).map { message =>
         Ok(message)
       }
+    }
+  }
+
+  def readCleanWrite(path: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      val status = InteractiveLibrarian.readCleanWrite(path)
+      Future.successful(Ok(status.toString()))
     }
   }
 }
