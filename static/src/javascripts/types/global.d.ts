@@ -56,7 +56,7 @@ type PrebidIndexSite = {
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
-		ophan?: {
+		ophan: {
 			viewId: string;
 			pageViewId: string;
 		};

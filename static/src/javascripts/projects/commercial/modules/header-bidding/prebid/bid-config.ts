@@ -300,7 +300,7 @@ const sonobiBidder: PrebidBidder = {
 		ad_unit: config.get('page.adUnit'),
 		dom_id: slotId,
 		appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
-		pageViewId: config.get('ophan.pageViewId'),
+		pageViewId: window.guardian.ophan.pageViewId,
 	}),
 };
 
