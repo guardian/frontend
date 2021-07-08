@@ -107,6 +107,10 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 	if (isInUk()) {
 		switch (getBreakpointKey()) {
 			case 'D':
+				// TODO: make this a test
+				if (Math.random() < 0.5) {
+					return 22526482;
+				}
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116396;
 				}
@@ -134,6 +138,9 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 	if (isInRow()) {
 		switch (getBreakpointKey()) {
 			case 'D':
+				if (Math.random() > 0.5) {
+					return 22526483;
+				}
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116420;
 				}
