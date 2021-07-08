@@ -12,4 +12,14 @@ trait ServerSideExperimentSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val InteractiveLibrarianAdminRoutes = Switch(
+    SwitchGroup.ServerSideExperiments,
+    "interactive-librarian-admin-routes",
+    "Enables the Interactive Librarian routes for pressing and cleaning (use only if you know what you're doing).",
+    owners = Seq(Owner.withGithub("shtukas")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }

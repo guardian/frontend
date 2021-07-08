@@ -1,6 +1,7 @@
 package controllers.admin
 
 import common.{AkkaAsync, GuLogging, ImplicitControllerExecutionContext}
+import conf.switches.Switches.InteractiveLibrarianAdminRoutes
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -19,16 +20,24 @@ class InteractiveLibrarianController(
 
   def liveContentsPress(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      InteractiveLibrarian.pressLiveContents(wsClient, path).map { message =>
-        Ok(message)
+      if (InteractiveLibrarianAdminRoutes.isSwitchedOn) {
+        InteractiveLibrarian.pressLiveContents(wsClient, path).map { message =>
+          Ok(message)
+        }
+      } else {
+        Future.successful(NotFound)
       }
     }
   }
 
   def readCleanWrite(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      val status = InteractiveLibrarian.readCleanWrite(path)
-      Future.successful(Ok(status.toString()))
+      if (InteractiveLibrarianAdminRoutes.isSwitchedOn) {
+        val status = InteractiveLibrarian.readCleanWrite(path)
+        Future.successful(Ok(status.toString()))
+      } else {
+        Future.successful(NotFound)
+      }
     }
   }
 }
