@@ -62,9 +62,15 @@ interface CommercialPageConfig {
 	adUnit: AdUnit;
 }
 
+interface Config {
+	page: PageConfig;
+	switches: Record<string, boolean | undefined>;
+}
+
 // Currently only the commercial-dev team uses this declaration file
-// TODO: interface PageConfig extends CommercialPageConfig { … }
-type PageConfig = CommercialPageConfig;
+interface PageConfig extends CommercialPageConfig {
+	isSensitive: boolean;
+}
 
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
@@ -73,9 +79,6 @@ interface Window {
 			viewId: string;
 			pageViewId: string;
 		};
-		config: {
-			page: PageConfig;
-			switches: Record<string, boolean | undefined>;
-		};
+		config: Config;
 	};
 }
