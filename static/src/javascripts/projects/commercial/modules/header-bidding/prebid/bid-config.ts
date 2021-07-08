@@ -297,7 +297,7 @@ const sonobiBidder: PrebidBidder = {
 	name: 'sonobi',
 	switchName: 'prebidSonobi',
 	bidParams: (slotId: string): PrebidSonobiParams => ({
-		ad_unit: config.get('page.adUnit'),
+		ad_unit: window.guardian.config.page.adUnit,
 		dom_id: slotId,
 		appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
 		pageViewId: window.guardian.ophan.pageViewId,
