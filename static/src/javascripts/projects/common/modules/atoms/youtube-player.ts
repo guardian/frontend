@@ -5,7 +5,6 @@ import fastdom from 'fastdom';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
-import $ from 'lib/$';
 import config from 'lib/config';
 import { constructQuery } from 'lib/url';
 import { getPermutivePFPSegments } from '../commercial/permutive';
@@ -109,11 +108,9 @@ const onPlayerStateChangeEvent = (
 								(status as unknown) as YT.PlayerState
 							],
 					);
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- $
-					const fcItem = $.ancestor(el, 'fc-item');
+					const fcItem = el.closest('fc-item');
 					if (fcItem) {
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- $
-						$(fcItem)[0].classList.toggle(
+						fcItem.classList.toggle(
 							`fc-item--has-video-main-media__${status.toLocaleLowerCase()}`,
 							event.data ===
 								window.YT.PlayerState[
@@ -140,13 +137,9 @@ const onPlayerReadyEvent = (
 	fastdom.mutate(() => {
 		if (el) {
 			el.classList.add('youtube__video-ready');
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- $
-			const fcItem = $.ancestor(el, 'fc-item');
+			const fcItem = el.closest('fc-item');
 			if (fcItem) {
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- $
-				$(fcItem)[0].classList.add(
-					'fc-item--has-video-main-media__ready',
-				);
+				fcItem.classList.add('fc-item--has-video-main-media__ready');
 			}
 		}
 	});
