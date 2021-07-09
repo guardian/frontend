@@ -60,6 +60,7 @@ export const containsBillboard = (sizes: HeaderBiddingSize[]): boolean =>
 
 export const containsMpuOrDmpu = (sizes: HeaderBiddingSize[]): boolean =>
 	containsMpu(sizes) || containsDmpu(sizes);
+
 export const containsMobileSticky = (sizes: HeaderBiddingSize[]): boolean =>
 	contains(sizes, [320, 50]);
 
