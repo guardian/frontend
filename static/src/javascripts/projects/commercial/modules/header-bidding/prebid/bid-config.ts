@@ -166,7 +166,7 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 const getImproveSkinPlacementId = (): number => {
 	if (isInUk()) {
 		switch (getBreakpointKey()) {
-			case 'D':
+			case 'D': // Desktop
 				return 22526482;
 			default:
 				return -1;
@@ -174,7 +174,7 @@ const getImproveSkinPlacementId = (): number => {
 	}
 	if (isInRow()) {
 		switch (getBreakpointKey()) {
-			case 'D':
+			case 'D': // Desktop
 				return 22526483;
 			default:
 				return -1;

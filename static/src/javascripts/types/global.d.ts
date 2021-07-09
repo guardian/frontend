@@ -72,13 +72,15 @@ interface PageConfig extends CommercialPageConfig {
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc7/common/app/model/meta.scala#L352
 }
 
+interface Ophan {
+	viewId: string;
+	pageViewId: string;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
-		ophan: {
-			viewId: string;
-			pageViewId: string;
-		};
+		ophan: Ophan;
 		config: Config;
 	};
 }
