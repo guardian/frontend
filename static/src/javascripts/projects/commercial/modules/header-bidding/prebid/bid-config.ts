@@ -1,4 +1,6 @@
 import { log } from '@guardian/libs';
+import { isInABTestSynchronous } from 'common/modules/experiments/ab';
+import { improveSkins } from 'common/modules/experiments/tests/improve-skins';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
 import {
@@ -106,9 +108,11 @@ const getIndexSiteId = (): string => {
 const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 	if (isInUk()) {
 		switch (getBreakpointKey()) {
-			case 'D':
-				// TODO: make this a test
-				if (Math.random() < 0.5) {
+			case 'D': // Desktop
+				if (
+					window.guardian.config.page.isFront &&
+					isInABTestSynchronous(improveSkins)
+				) {
 					return 22526482;
 				}
 				if (containsMpuOrDmpu(sizes)) {
@@ -137,8 +141,11 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 	}
 	if (isInRow()) {
 		switch (getBreakpointKey()) {
-			case 'D':
-				if (Math.random() > 0.5) {
+			case 'D': // Desktop
+				if (
+					window.guardian.config.page.isFront &&
+					isInABTestSynchronous(improveSkins)
+				) {
 					return 22526483;
 				}
 				if (containsMpuOrDmpu(sizes)) {
