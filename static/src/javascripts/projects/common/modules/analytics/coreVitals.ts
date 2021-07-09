@@ -67,11 +67,9 @@ export const coreVitals = (): void => {
 				break;
 		}
 
-		if (window.guardian.ophan) {
-			jsonData.page_view_id = window.guardian.ophan.pageViewId;
-			// 'window.guardian.config.ophan' does not exist here, so the fallback below might be the solution we go with
-			// jsonData.browser_id = window.guardian.config.ophan.browserId;
-		}
+		jsonData.page_view_id = window.guardian.ophan.pageViewId;
+		// 'window.guardian.config.ophan' does not exist here, so the fallback below might be the solution we go with
+		// jsonData.browser_id = window.guardian.config.ophan.browserId;
 
 		// Fallback to check for browser ID
 		if (getCookie({ name: 'bwid' })) {

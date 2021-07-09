@@ -14,7 +14,6 @@ let logged = false;
 const isDev = Boolean(config.get('page.isDev', false));
 
 const init = (): Promise<void> => {
-	if (!window.guardian.ophan) return Promise.resolve();
 	if (!config.get('switches.commercialMetrics', false))
 		return Promise.resolve();
 

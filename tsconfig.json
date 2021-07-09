@@ -9,7 +9,8 @@
     "lib": [
       "esnext",
       "es2015",
-      "dom"
+      "dom",
+      "dom.iterable"
     ],
     "module": "ESNext",
     "moduleResolution": "node",
