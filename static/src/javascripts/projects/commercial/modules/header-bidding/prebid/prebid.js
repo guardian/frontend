@@ -17,7 +17,7 @@ class PrebidAdUnit {
         this.code = advert.id;
         this.bids = bids(advert.id, slot.sizes);
         this.mediaTypes = { banner: { sizes: slot.sizes } };
-        log('commercial', 'PrebidAdUnit', this );
+        log('commercial', `PrebidAdUnit ${this.code}`, this.bids );
     }
 
     isEmpty() {
