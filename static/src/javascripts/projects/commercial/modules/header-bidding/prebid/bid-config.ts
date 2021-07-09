@@ -24,6 +24,7 @@ import {
 	shouldIncludeAdYouLike,
 	shouldIncludeAppNexus,
 	shouldIncludeImproveDigital,
+	shouldIncludeImproveDigitalSkin,
 	shouldIncludeOpenx,
 	shouldIncludeSonobi,
 	shouldIncludeTripleLift,
@@ -37,6 +38,7 @@ import {
 import { getAppNexusDirectBidParams } from './appnexus';
 
 // The below line is needed for page skins to show
+// Why? Does it trigger an eager building of the page targeting?
 getPageTargeting();
 
 const isArticle = config.get('page.contentType') === 'Article';
@@ -109,12 +111,6 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 	if (isInUk()) {
 		switch (getBreakpointKey()) {
 			case 'D': // Desktop
-				if (
-					window.guardian.config.page.isFront &&
-					isInABTestSynchronous(improveSkins)
-				) {
-					return 22526482;
-				}
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116396;
 				}
@@ -142,12 +138,6 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 	if (isInRow()) {
 		switch (getBreakpointKey()) {
 			case 'D': // Desktop
-				if (
-					window.guardian.config.page.isFront &&
-					isInABTestSynchronous(improveSkins)
-				) {
-					return 22526483;
-				}
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116420;
 				}
@@ -171,6 +161,16 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 			default:
 				return -1;
 		}
+	}
+	return -1;
+};
+
+const getImproveSkinPlacementId = (): number => {
+	if (isInUk()) {
+		return 22526482;
+	}
+	if (isInRow()) {
+		return 22526483;
 	}
 	return -1;
 };
@@ -368,6 +368,15 @@ const improveDigitalBidder: PrebidBidder = {
 	}),
 };
 
+const improveDigitalSkinBidder: PrebidBidder = {
+	name: 'improvedigital',
+	switchName: 'prebidImproveDigital',
+	bidParams: (slotId: string): PrebidImproveParams => ({
+		placementId: getImproveSkinPlacementId(),
+		size: {},
+	}),
+};
+
 const xaxisBidder: PrebidBidder = {
 	name: 'xhb',
 	switchName: 'prebidXaxis',
@@ -438,6 +447,9 @@ const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 		...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
 		...(inPbTestOr(shouldIncludeImproveDigital())
 			? [improveDigitalBidder]
+			: []),
+		...(inPbTestOr(shouldIncludeImproveDigitalSkin())
+			? [improveDigitalSkinBidder]
 			: []),
 		...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
 		pubmaticBidder,
