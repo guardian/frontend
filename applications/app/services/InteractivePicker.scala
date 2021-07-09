@@ -44,8 +44,10 @@ object InteractivePicker {
 
   // Immersives tend to work fairly well in DCR as they don't rely on modifying
   // existing page markup.
-  def isImmersive(format: Option[ContentFormat]): Boolean = {
-    format.exists(_.display == ImmersiveDisplay)
+  def isSupportedImmersive(interactive: Interactive): Boolean = {
+    val supportedTagIds = Set("tone/documentaries")
+    val isSupportedTag = interactive.tags.tags.exists(tag => supportedTagIds.contains(tag.id))
+    interactive.metadata.format.exists(_.display == ImmersiveDisplay) && isSupportedTag
   }
 
   def getRenderingTier(interactive: Interactive, requestFormat: RequestFormat)(implicit
@@ -61,7 +63,7 @@ object InteractivePicker {
       !isOptedOut(tags) && (
         dateIsPostTransition(interactive.trail.webPublicationDate) ||
         isCartoon(tags) ||
-        isImmersive(interactive.metadata.format) ||
+        isSupportedImmersive(interactive) ||
         isAmpOptedIn(requestFormat, tags) ||
         isAllowList(interactive.metadata.id)
       )
