@@ -67,9 +67,9 @@ interface Config {
 	switches: Record<string, boolean | undefined>;
 }
 
-// Currently only the commercial-dev team uses this declaration file
 interface PageConfig extends CommercialPageConfig {
 	isSensitive: boolean;
+	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc7/common/app/model/meta.scala#L352
 }
 
 interface Window {
