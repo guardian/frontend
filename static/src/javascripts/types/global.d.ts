@@ -44,15 +44,41 @@ declare module 'ophan/ng' {
 	export default ophan;
 }
 
+// This comes from Scala:
+// https://github.com/guardian/frontend/blob/main/common/app/common/commercial/PrebidIndexSite.scala#L10
+// https://github.com/guardian/frontend/blob/main/common/app/views/support/JavaScriptPage.scala#L54
+type PrebidBreakpoint = 'D' | 'T' | 'M';
+type PrebidIndexSite = {
+	bp: PrebidBreakpoint;
+	id: number;
+};
+
+// This comes from Scala:
+// https://github.com/guardian/frontend/blob/main/common/app/model/meta.scala#L349
+type AdUnit = string;
+
+interface CommercialPageConfig {
+	pbIndexSites: PrebidIndexSite[];
+	adUnit: AdUnit;
+}
+
+interface Config {
+	page: PageConfig;
+	switches: Record<string, boolean | undefined>;
+}
+
+// Currently only the commercial-dev team uses this declaration file
+interface PageConfig extends CommercialPageConfig {
+	isSensitive: boolean;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
-		ophan?: {
+		ophan: {
 			viewId: string;
 			pageViewId: string;
 		};
-		config: {
-			switches: Record<string, boolean | undefined>;
-		};
+		config: Config;
 	};
 }
