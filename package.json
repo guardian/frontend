@@ -66,6 +66,7 @@
     "@types/doubleclick-gpt": "^2019111201.0.0",
     "@types/jest": "^26.0.20",
     "@types/lodash-es": "^4.17.4",
+    "@types/youtube": "^0.0.44",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "amphtml-validator": "^1.0.21",

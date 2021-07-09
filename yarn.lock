@@ -2529,6 +2529,11 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@types/youtube@^0.0.44":
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/@types/youtube/-/youtube-0.0.44.tgz#7e8d0bc792f7dbda645118a5cf01b598a8308ba3"
+  integrity sha512-bvBETO6kkqq32Yuk5CI3k0V/UCOTzhsqImJsboABsnCUA8BzawvnrgaRe51wqXQPqZkTwLFkRvhS7iSvsgp4pg==
+
 "@typescript-eslint/eslint-plugin@^4.12.0":
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.12.0.tgz#00d1b23b40b58031e6d7c04a5bc6c1a30a2e834a"

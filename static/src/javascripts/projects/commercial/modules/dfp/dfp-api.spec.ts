@@ -23,12 +23,6 @@ type AUSRejectedMockType = {
 		| never[];
 };
 
-declare global {
-	interface Window {
-		__switch_zero: boolean;
-	}
-}
-
 const config = _config as {
 	get: (k: string) => string;
 	set: (
@@ -386,7 +380,9 @@ describe('DFP', () => {
 		} as unknown) as googletag.Googletag;
 
 		window.googletag = googleTag;
-		window.__switch_zero = false;
+		((window as unknown) as {
+			__switch_zero: boolean;
+		}).__switch_zero = false;
 
 		commercialFeatures.dfpAdvertising = true;
 	});
