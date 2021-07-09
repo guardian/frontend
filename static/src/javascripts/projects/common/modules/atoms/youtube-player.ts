@@ -10,8 +10,9 @@ import { constructQuery } from 'lib/url';
 import { getPermutivePFPSegments } from '../commercial/permutive';
 
 interface WindowLocal extends Window {
-	YT?: typeof YT;
+	ga: UniversalAnalytics.ga;
 	onYouTubeIframeAPIReady?: () => void;
+	YT?: typeof YT;
 }
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
@@ -272,7 +273,7 @@ export const initYoutubePlayer = (
 		) as string;
 
 		const onAdStart = () => {
-			window.ga(
+			(window as WindowLocal).ga(
 				`${gaTracker}.send`,
 				'event',
 				buildPfpEvent('adStart', videoId),
@@ -280,7 +281,7 @@ export const initYoutubePlayer = (
 		};
 
 		const onAdEnd = () => {
-			window.ga(
+			(window as WindowLocal).ga(
 				`${gaTracker}.send`,
 				'event',
 				buildPfpEvent('adEnd', videoId),
