@@ -282,8 +282,14 @@ const initPublicApi = () => {
 };
 
 const initialiseBanner = () => {
+    const isPreview = config.get('page.isPreview', false)
     // ordered by priority
-    const bannerList = [
+    // in preview we don't want to show most banners as they are an unnecessary interruption
+    // however braze banner does use preview for testing
+    const bannerList = isPreview ? [
+        cmpBannerCandidate,
+        brazeBanner,
+    ] : [
         cmpBannerCandidate,
         signInGate,
         membershipBanner,

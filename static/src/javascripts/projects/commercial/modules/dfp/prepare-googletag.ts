@@ -51,11 +51,15 @@ const setDfpListeners = (): void => {
 	if (!pubads) return;
 	pubads.addEventListener(
 		'slotRenderEnded',
-		raven.wrap(onSlotRender) as (arg0: any) => void,
+		raven.wrap(onSlotRender) as (
+			event: googletag.events.SlotRenderEndedEvent,
+		) => void,
 	);
 	pubads.addEventListener(
 		'slotOnload',
-		raven.wrap(onSlotLoad) as (arg0: any) => void,
+		raven.wrap(onSlotLoad) as (
+			event: googletag.events.SlotOnloadEvent,
+		) => void,
 	);
 
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());
@@ -72,7 +76,7 @@ const setPageTargeting = (): void => {
 	const pubads = window.googletag?.pubads();
 	if (!pubads) return;
 	// because commercialFeatures may export itself as {} in the event of an exception during construction
-	const targeting = getPageTargeting() as Record<string, any>;
+	const targeting = getPageTargeting() as Record<string, string | string[]>;
 	Object.keys(targeting).forEach((key) => {
 		pubads.setTargeting(key, targeting[key]);
 	});
@@ -144,7 +148,7 @@ export const init = (): Promise<void> => {
 			if (canRun) {
 				void loadScript(
 					(config as {
-						get: (arg: string, defaultValue: any) => string;
+						get: (arg: string, defaultValue: string) => string;
 					}).get(
 						'libs.googletag',
 						'//www.googletagservices.com/tag/js/gpt.js',

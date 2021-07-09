@@ -1,4 +1,3 @@
-import qwery from 'qwery';
 import { dfpEnv } from './dfp-env';
 import { Advert } from './Advert';
 import { queueAdvert } from './queue-advert';

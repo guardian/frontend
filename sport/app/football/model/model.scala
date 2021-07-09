@@ -164,6 +164,18 @@ object CompetitionDisplayHelpers {
       .replace("Holland", "The Netherlands")
   }
 
+  def cleanTeamNameNextGenApi(teamName: String): String = {
+    teamName
+      .replace("Ladies", "")
+      .replace("Holland", "Netherlands")
+  }
+
+  def cleanTeamNameSpider(teamName: String): String = {
+    teamName
+      .replace("Czech Republic", "Czech Rep.")
+      .replace("Holland", "Netherlands")
+  }
+
   def cleanTeamCode(teamCode: String): String = {
     teamCode
       .replace("JAP", "JPN")

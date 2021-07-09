@@ -158,6 +158,9 @@ object MatchUrl {
 
   def smartUrl(theMatch: FootballMatch): Option[String] = {
     if (Football.hoursTillMatch(theMatch) > 72) None
-    else Some(s"/football/match-redirect/${theMatch.id}")
+    // We are trialling using the football subdomain for smart match redirects
+    // This is because they will still work on web (with an extra redirect), but
+    // importantly they will not be intercepted by apps and so work there too (via a webview)
+    else Some(s"https://football.theguardian.com/match-redirect/${theMatch.id}")
   }
 }

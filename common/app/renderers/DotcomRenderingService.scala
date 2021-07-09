@@ -22,6 +22,9 @@ import http.HttpPreconnections
 
 import java.net.ConnectException
 
+// Introduced as CAPI error handling elsewhere would smother a regular ConnectException.
+case class DCRLocalConnectException(message: String) extends ConnectException(message)
+
 class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload {
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
@@ -32,14 +35,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     resetTimeout = Configuration.rendering.timeout * 4,
   )
 
-  private[this] def get(
+  private[this] def post(
       ws: WSClient,
       payload: String,
       endpoint: String,
       page: Page,
   )(implicit request: RequestHeader): Future[Result] = {
 
-    def doGet() = {
+    def doPost() = {
       val resp = ws
         .url(endpoint)
         .withRequestTimeout(Configuration.rendering.timeout)
@@ -50,14 +53,15 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
         case _: ConnectException if Configuration.environment.stage == "DEV" =>
           val msg = s"""Connection refused to ${endpoint}.
               |
-              |You are trying to access a DCR page via Frontend. Most of the time you are better off developing directly
-              |on DCR. See https://github.com/guardian/dotcom-rendering for how to get started with this.
+              |You are trying to access a Dotcom Rendering page via Frontend but it
+              |doesn't look like DCR is running locally on the expected port (3030).
               |
-              |If you do need to access DCR via Frontend, then make sure to run DCR locally. E.g (from DCR directory):
+              |Note, for most use cases, we recommend developing directly on DCR.
               |
-              |    $$ make build
-              |    $$ PORT 3030 node dist/frontend.server.js""".stripMargin
-          Future.failed(new ConnectException(msg))
+              |To get started with dotcom-rendering, see:
+              |
+              |    https://github.com/guardian/dotcom-rendering""".stripMargin
+          Future.failed(new DCRLocalConnectException(msg))
       })
     }
 
@@ -82,9 +86,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     if (CircuitBreakerSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(doGet()).map(handler)
+      circuitBreaker.withCircuitBreaker(doPost()).map(handler)
     } else {
-      doGet().map(handler)
+      doPost().map(handler)
     }
   }
 
@@ -101,7 +105,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
-    get(ws, json, Configuration.rendering.AMPArticleEndpoint, page)
+    post(ws, json, Configuration.rendering.baseURL + "/AMPArticle", page)
   }
 
   def getArticle(
@@ -113,7 +117,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    get(ws, json, Configuration.rendering.renderingEndpoint, page)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", page)
   }
 
   def getInteractive(
@@ -125,7 +129,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    get(ws, json, Configuration.rendering.renderingEndpoint, page)
+    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page)
+  }
+
+  def getAMPInteractive(
+      ws: WSClient,
+      page: InteractivePage,
+      blocks: Blocks,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+
+    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page)
   }
 
 }

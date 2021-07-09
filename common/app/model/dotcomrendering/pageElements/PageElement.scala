@@ -152,7 +152,7 @@ object ChartAtomBlockElement {
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
 }
 
-case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
+case class CodeBlockElement(html: String, language: String, isMandatory: Boolean) extends PageElement
 object CodeBlockElement {
   implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
 }
@@ -236,18 +236,12 @@ object GenericAtomBlockElement {
   implicit val GenericAtomBlockElementWrites: Writes[GenericAtomBlockElement] = Json.writes[GenericAtomBlockElement]
 }
 
-case class GuideAtomBlockElementItem(title: Option[String], body: String)
-object GuideAtomBlockElementItem {
-  implicit val GuideAtomBlockElementItemWrites: Writes[GuideAtomBlockElementItem] =
-    Json.writes[GuideAtomBlockElementItem]
-}
 case class GuideAtomBlockElement(
     id: String,
     label: String,
     title: String,
     img: Option[String],
     html: String,
-    items: List[GuideAtomBlockElementItem],
     credit: String,
 ) extends PageElement
 object GuideAtomBlockElement {
@@ -745,6 +739,7 @@ object PageElement {
       case _: BlockquoteBlockElement      => true
       case _: CalloutBlockElement         => true
       case _: ChartAtomBlockElement       => true
+      case _: CodeBlockElement            => true
       case _: CommentBlockElement         => true
       case _: ContentAtomBlockElement     => true
       case _: DisclaimerBlockElement      => true
@@ -780,7 +775,6 @@ object PageElement {
       case _: VineBlockElement            => true
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
-      case _: CodeBlockElement                                            => true // Currently will just fail over at DCR
 
       case _ => false
     }
@@ -1053,7 +1047,6 @@ object PageElement {
             val html = guide.data.items
               .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
               .mkString("")
-            val items = guide.data.items.toList.map(item => GuideAtomBlockElementItem(item.title, item.body))
             Some(
               GuideAtomBlockElement(
                 id = guide.id,
@@ -1061,7 +1054,6 @@ object PageElement {
                 title = guide.atom.title.getOrElse(""),
                 img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
                 html = html,
-                items = items,
                 credit = guide.credit.getOrElse(""),
               ),
             )
@@ -1309,8 +1301,14 @@ object PageElement {
             fields.role,
           )
         }).toList
-      case Code =>
-        List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
+      case Code => {
+        (for {
+          data <- element.codeTypeData
+        } yield {
+          CodeBlockElement(data.html, data.language, false)
+        }).toList
+      }
+
       case Form                      => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
@@ -1674,7 +1672,6 @@ object PageElement {
           )
       }
     }
-
   }
 
   private[pageElements] def containsThirdPartyTracking(embedTracking: Option[EmbedTracking]): Boolean = {

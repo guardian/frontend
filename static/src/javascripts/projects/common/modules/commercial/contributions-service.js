@@ -23,6 +23,7 @@ import {
 } from './contributions-utilities';
 import {
     ARTICLES_VIEWED_OPT_OUT_COOKIE,
+    getLastOneOffContributionTimestamp,
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
@@ -31,7 +32,9 @@ import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
-export const ModulesVersion = 'v1';
+export const ModulesVersion = 'v2';
+
+const isHosted = config.get('page.isHosted');
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -128,13 +131,14 @@ const buildEpicPayload = async () => {
         showSupportMessaging: !shouldHideSupportMessaging(),
         isRecurringContributor: isRecurringContributor(),
         lastOneOffContributionDate:
-            getLastOneOffContributionDate() || undefined,
+            getLastOneOffContributionTimestamp() || undefined,
         mvtId: getMvtValue(),
         countryCode,
         epicViewLog: getViewLog(),
         weeklyArticleHistory: getWeeklyArticleHistory(),
         hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
         modulesVersion: ModulesVersion,
+        url: window.location.origin + window.location.pathname,
     };
 
     return {
@@ -142,6 +146,28 @@ const buildEpicPayload = async () => {
         targeting,
     };
 };
+
+const buildHeaderLinksPayload = () => {
+    const ophan = config.get('ophan');
+    const countryCode = getCountryCode();
+    const edition = config.get('page.edition', '');
+    return {
+        tracking: {
+            ophanPageId: ophan.pageViewId,
+            platformId: 'GUARDIAN_WEB',
+            referrerUrl: window.location.origin + window.location.pathname,
+            clientName: 'frontend',
+        },
+        targeting: {
+            showSupportMessaging: !shouldHideSupportMessaging(),
+            edition,
+            countryCode,
+            modulesVersion: ModulesVersion,
+            mvtId: getMvtValue(),
+            lastOneOffContributionDate: getLastOneOffContributionDate() || undefined,
+        },
+    };
+}
 
 export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp';   // timestamp of when we were last told not to show a RR banner
 const twentyMins = 20*60000;
@@ -222,7 +248,7 @@ const getStickyBottomBanner = (payload) => {
     const json = JSON.stringify(payload);
 
     return fetchJson(URL, {
-        method: 'post',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
@@ -237,7 +263,22 @@ const getPuzzlesBanner = (payload) => {
     const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
 
     return fetchJson(`${URL}${queryString}`, {
-        method: 'post',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: json,
+    });
+}
+
+const getHeaderLinks = (payload) => {
+    const isProd = config.get('page.isProd');
+    const url = isProd ? 'https://contributions.guardianapis.com/header' : 'https://contributions.code.dev-guardianapis.com/header';
+    const json = JSON.stringify(payload);
+
+    const forcedVariant = getForcedVariant('header');
+    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
+
+    return fetchJson(`${url}${queryString}`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
@@ -287,13 +328,14 @@ const renderEpic = async (module, meta) => {
         componentType,
         products = [],
         campaignCode,
-        campaignId
+        campaignId,
+        labels,
     } = meta;
 
     const el = epicEl();
     mountDynamic(el, component.ContributionsEpic, module.props, true);
 
-    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode, labels);
     setupOphanView(
         el,
         abTestName,
@@ -302,6 +344,7 @@ const renderEpic = async (module, meta) => {
         campaignId,
         componentType,
         products,
+        labels,
     );
 };
 
@@ -331,7 +374,7 @@ export const fetchPuzzlesData = async () => {
 export const fetchBannerData = async () => {
     const payload = await buildBannerPayload();
 
-    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent || isHosted) {
         return Promise.resolve(null);
     }
 
@@ -426,7 +469,7 @@ export const renderBanner = (response) => {
 export const fetchAndRenderEpic = async () => {
     const page = config.get('page');
 
-    if (page.contentType === 'Article' || page.contentType === 'LiveBlog') {
+    if ((page.contentType === 'Article' || page.contentType === 'LiveBlog') && !isHosted) {
         try {
             const payload = await buildEpicPayload();
 
@@ -449,5 +492,41 @@ export const fetchAndRenderEpic = async () => {
             console.log(`Error importing remote epic: ${error}`);
             reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
         }
+    }
+};
+
+export const fetchAndRenderHeaderLinks = async () => {
+    const requestData = buildHeaderLinksPayload();
+
+    if (!config.get('switches.remoteHeader', false)) {
+        return;
+    }
+
+    if (config.get('page.contentType') === 'Gallery') {
+        return;
+    }
+
+    try {
+        const response = await getHeaderLinks(requestData);
+        if (!response.data) {
+            return null;
+        }
+        const {module} = response.data;
+        const component = await window.guardianPolyfilledImport(module.url);
+        const Header = component.Header;
+
+        const el = document.createElement('div');
+        const container = document.querySelector('.new-header__cta-bar');
+        container.appendChild(el);
+
+        mountDynamic(
+            el,
+            Header,
+            {submitComponentEvent, ...module.props},
+            true,
+        );
+    } catch (error) {
+        console.log(`Error importing remote header: ${error}`);
+        reportError(new Error(`Error importing remote header: ${error}`), {}, false);
     }
 };

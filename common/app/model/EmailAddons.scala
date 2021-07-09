@@ -1,6 +1,7 @@
 package model
 
 import conf.Static
+import conf.switches.Switches.FiverEmailEuro2020Banner
 
 sealed trait EmailMetadata[T] extends Product with Serializable {
   def name: String
@@ -43,7 +44,8 @@ case object WorldCupFiver extends ArticleEmailMetadata {
 
 case object TheFiver extends ArticleEmailMetadata {
   val name = "The Fiver"
-  override val banner = Some("the-fiver.png")
+  override val banner =
+    if (FiverEmailEuro2020Banner.isSwitchedOn) Some("the-fiver-euro-2020.png") else Some("the-fiver.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "football/series/thefiver")
 }
 
@@ -230,6 +232,13 @@ case object USElectionBriefingForAustralia extends ArticleEmailMetadata {
   override val banner = Some("us-election-briefing-australia.png")
   def test(c: ContentPage): Boolean =
     c.item.tags.series.exists(_.id == "australia-news/series/us-election-2020-briefing-australia")
+}
+
+case object TechScape extends ArticleEmailMetadata {
+  val name = "TechScape"
+  override val banner = Some("techscape.png")
+  def test(c: ContentPage): Boolean =
+    c.item.tags.series.exists(_.id == "technology/series/techscape")
 }
 
 case object TheFlyer extends FrontEmailMetadata {
@@ -471,6 +480,7 @@ object EmailAddons {
     CoronavirusAustraliaAtAGlance,
     CoronavirusinThePacific,
     USElectionBriefingForAustralia,
+    TechScape,
   )
   private val frontEmails = Seq(
     SocialCareNetwork,

@@ -21,12 +21,11 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
       .flatMap { case (_, agent) => agent().get(date) }
 
   def findMatch(team: CricketTeam, date: String): Option[Match] = {
-    // A test match runs over 5 days, so check the dates for the whole period.
     val dateFormat = PaFeed.dateFormat
     val requestDate = dateFormat.parseLocalDate(date)
 
     val matchObjects = for {
-      day <- 0 until 5
+      day <- 0 until 6 // normally test matches are 5 days but we have seen at least 6 days in practice
       date <- Some(dateFormat.print(requestDate.minusDays(day)))
     } yield {
       getMatch(team, date)

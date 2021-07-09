@@ -1,7 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.Commercial
 
@@ -417,10 +417,20 @@ trait FeatureSwitches {
   val remoteBanner = Switch(
     SwitchGroup.Feature,
     "remote-banner",
-    "Enables the banner fetched from contributions-service",
+    "Enables the banner fetched from support-dotcom-components",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 8, 3),
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val remoteHeader = Switch(
+    SwitchGroup.Feature,
+    "remote-header",
+    "Enables the header fetched from support-dotcom-components",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true,
   )
 
@@ -430,17 +440,7 @@ trait FeatureSwitches {
     "Enables the puzzles banner on puzzles pages",
     owners = Seq(Owner.withGithub("i-hardy")),
     safeState = Off,
-    sellByDate = new LocalDate(2022, 3, 31),
-    exposeClientSide = true,
-  )
-
-  val AnniversaryArticleHeader = Switch(
-    SwitchGroup.Feature,
-    "anniversary-article-header",
-    "Enables the anniversary interactive atom in DCR",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2022, 5, 11),
+    sellByDate = LocalDate.of(2022, 3, 31),
     exposeClientSide = true,
   )
 
@@ -450,7 +450,27 @@ trait FeatureSwitches {
     "Enables the anniversary logo SVG in the header",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2022, 5, 11),
+    sellByDate = LocalDate.of(2022, 5, 11),
     exposeClientSide = true,
+  )
+
+  val FiverEmailEuro2020Banner = Switch(
+    SwitchGroup.Feature,
+    "fiver-email-euro-2020-banner",
+    "Enables a Euro 2020 version of the banner on the fiver email",
+    owners = Seq(Owner.withGithub("jfsoul")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2021, 7, 20),
+    exposeClientSide = false,
+  )
+
+  val InteractivePickerFeature = Switch(
+    SwitchGroup.Feature,
+    "interactive-picker",
+    "Activate the Interactive Picker (routing interactives between frontend and DCR)",
+    owners = Seq(Owner.withName("Pascal")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2021, 9, 30),
+    exposeClientSide = false,
   )
 }

@@ -1,22 +1,11 @@
 package services.dotcomponents
 
 import implicits.Requests._
-import model.liveblog.{BlockElement, CodeBlockElement, ContentAtomBlockElement, InteractiveBlockElement}
+import model.liveblog.{BlockElement, InteractiveBlockElement}
 import model.{ArticlePage, PageWithStoryPackage}
-import model.dotcomrendering.DotcomRenderingUtils
-import model.liveblog._
 import play.api.mvc.RequestHeader
-import views.support.Commercial
 
 object ArticlePageChecks {
-
-  def isAdFree(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
-    page.item.content.shouldHideAdverts || Commercial.isAdFree(request)
-  }
-
-  def isDiscussionDisabled(page: PageWithStoryPackage): Boolean = {
-    (!page.article.content.trail.isCommentable) && page.article.content.trail.isClosedForComments
-  }
 
   def isSupportedType(page: PageWithStoryPackage): Boolean = {
     page match {
@@ -26,21 +15,22 @@ object ArticlePageChecks {
   }
 
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
-    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
+
+    val supportedInteractiveScriptPrefixes: List[String] = List(
+      "https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js", // standard iframe wrapper boot
+      "https://open-module.appspot.com/boot.js", // script no longer exists, i.e. parity with frontend
+      "https://embed.actionbutton.co/widget/boot.js", // supported in DCR
+      "https://interactive.guim.co.uk/2017/07/booklisted/boot.js", // not supported but fallback ok
+      "https://interactive.guim.co.uk/page-enhancers/super-lists/boot.js", // broken on frontend anyway
+      "https://gdn-cdn.s3.amazonaws.com/quiz-builder/", // old quiz builder quizzes work fine
+    )
 
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: CodeBlockElement                     => true
-        case ContentAtomBlockElement(_, atomtype, _) =>
-          // ContentAtomBlockElement was expanded to include atomtype.
-          // To support an atom type, just add it to supportedAtomTypes
-          val supportedAtomTypes =
-            List("audio", "chart", "explainer", "guide", "interactive", "media", "profile", "qanda", "timeline")
-          !supportedAtomTypes.contains(atomtype)
         case InteractiveBlockElement(_, scriptUrl) =>
           scriptUrl match {
-            case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
-            case _                                                                       => true
+            case Some(scriptUrl) if supportedInteractiveScriptPrefixes.exists(scriptUrl.startsWith) => false
+            case _                                                                                  => true
           }
         case _ => false
       }
@@ -48,42 +38,11 @@ object ArticlePageChecks {
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
-  def hasOnlySupportedMainElements(page: PageWithStoryPackage): Boolean = {
-    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
-    def unsupportedElement(blockElement: BlockElement) =
-      blockElement match {
-        // This has never been used but we know we don't yet support them due to a required CAPI update
-        case _: CodeBlockElement => true
-        // The majority of the remaining atoms appear to be interactive atoms, which aren't supported yet
-        case ContentAtomBlockElement(_, atomtype, _) if atomtype != "media" => true
-        // Everything else should be supported, but there are some element types that don't
-        // get used in main media, for which there are no guarantees
-        case _ => false
-      }
-
-    !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
-  }
-
-  // Custom Tag that can be added to articles + special reports tags while we don't support them
-  private[this] val tagsBlockList: Set[String] = Set(
-    "tracking/platformfunctional/dcrblacklist",
-  )
-
-  def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(t => tagsBlockList(t.id))
-  }
-
-  def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
-
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
   def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
 
   def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
-
-  def isNotOpinion(page: PageWithStoryPackage): Boolean = !page.item.tags.isComment
-
-  def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.article.tags.isPaidContent
 
 }
 
@@ -101,13 +60,9 @@ object ArticlePicker {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
-      ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
-      ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
-      ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
-      ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
 
@@ -119,8 +74,6 @@ object ArticlePicker {
         "isNotAGallery",
         "isNotLiveBlog",
         "isNotAMP",
-        "isNotInTagBlockList",
-        "isNotPaidContent",
       ),
     )
 
@@ -137,12 +90,10 @@ object ArticlePicker {
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
-    val isAddFree = ArticlePageChecks.isAdFree(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
     // include features that we wish to log but not allow-list against
     val features = checks.mapValues(_.toString) +
-      ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
       ("dcrCouldRender" -> dcrCanRender.toString) +
       ("pageTones" -> pageTones)

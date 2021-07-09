@@ -48,6 +48,7 @@
 - [Browsers support](04-quality/01-browser-support.md)
 - [Browser support principles](04-quality/02-browser-support-principles.md)
 - [Accessibility](04-quality/03-accessibility.md)
+- [Security](04-quality/04-security.md)
 
 ## [Commercial](05-commercial/)
 - [⚠️ Moved to https://github.com/guardian/commercial-core/blob/3a8c75e619c2e4ac2d731d251f5bf186f7af89dd/docs/GAM-Advertising.md ⚠️](05-commercial/01-DFP-Advertising.md)
@@ -62,14 +63,8 @@
 ## [Performance](07-performance/)
 - [Performance reading list](07-performance/01-performance-reading.md)
 
-## [Design](08-design/)
-
 ## [Archives](99-archives/)
 - [Recipe for Breton crêpes](99-archives/crepes.md)
-- [CSS guideline (out-of-date)](99-archives/css-guidelines.md)
-- [Javascript guidelines (Out of date)](99-archives/javascript-guidelines.md)
-- [Web Font Rendering Test (2013)](99-archives/web-font-rendering-tests.md)
-- [Website benchmark (July 2012)](99-archives/website-benchmark-2013.md)
 
 
 ---

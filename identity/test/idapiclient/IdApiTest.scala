@@ -79,7 +79,6 @@ class IdApiTest
       |        "publicFields": {
       |            "username": "testUsername",
       |            "displayName": "testUsername",
-      |            "vanityUrl": "testVanityUrl",
       |            "usernameLowerCase": "testusername"
       |        },
       |        "statusFields": {

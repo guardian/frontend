@@ -180,7 +180,7 @@ const isPayingMember = () =>
     isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
 // Expects milliseconds since epoch
-const getSupportFrontendOneOffContributionDate = () => {
+const getSupportFrontendOneOffContributionTimestamp = () => {
     const supportFrontendCookie = getCookie(
         SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE
     );
@@ -194,7 +194,7 @@ const getSupportFrontendOneOffContributionDate = () => {
 };
 
 // Expects YYYY-MM-DD format
-const getAttributesOneOffContributionDate = () => {
+const getAttributesOneOffContributionTimestamp = () => {
     const attributesCookie = getCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE);
 
     if (attributesCookie) {
@@ -207,9 +207,24 @@ const getAttributesOneOffContributionDate = () => {
 
 // number returned is Epoch time in milliseconds.
 // null value signifies no last contribution date.
-const getLastOneOffContributionDate = () =>
-    getSupportFrontendOneOffContributionDate() ||
-    getAttributesOneOffContributionDate();
+const getLastOneOffContributionTimestamp = () =>
+    getSupportFrontendOneOffContributionTimestamp() ||
+    getAttributesOneOffContributionTimestamp();
+
+const getLastOneOffContributionDate = () => {
+	const timestamp = getLastOneOffContributionTimestamp();
+
+	if (timestamp === null) {
+		return null;
+	}
+
+	const date = new Date(timestamp);
+	const year = date.getFullYear();
+	const month = (date.getMonth() + 1).toString().padStart(2, '0');
+	const day = date.getDate().toString().padStart(2, '0');
+
+	return `${year}-${month}-${day}`;
+}
 
 const getLastRecurringContributionDate = () => {
     // Check for cookies, ensure that cookies parse, and ensure parsed results are integers
@@ -236,7 +251,7 @@ const getLastRecurringContributionDate = () => {
 };
 
 const getDaysSinceLastOneOffContribution = () => {
-    const lastContributionDate = getLastOneOffContributionDate();
+    const lastContributionDate = getLastOneOffContributionTimestamp();
     if (lastContributionDate === null) {
         return null;
     }
@@ -336,6 +351,7 @@ export {
     shouldHideSupportMessaging,
     refresh,
     deleteOldData,
+    getLastOneOffContributionTimestamp,
     getLastOneOffContributionDate,
     getLastRecurringContributionDate,
     getDaysSinceLastOneOffContribution,

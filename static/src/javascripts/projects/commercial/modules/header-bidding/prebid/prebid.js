@@ -6,6 +6,7 @@ import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { stripDfpAdPrefixFrom } from '../utils';
 import { EventTimer } from '@guardian/commercial-core';
+import { pubmatic } from './pubmatic';
 
 const bidderTimeout = 1500;
 
@@ -40,29 +41,29 @@ const initialise = (window, framework = 'tcfv2') => {
           }
         : { syncEnabled: false };
 
-		const consentManagement = () => {
-			switch (framework) {
-				case 'aus':
-				case 'ccpa':
-					// https://docs.prebid.org/dev-docs/modules/consentManagementUsp.html
-					return {
-						usp: {
-							cmpApi: 'iab',
-							timeout: 1500,
-						},
-					};
-				case 'tcfv2':
-				default:
-					// https://docs.prebid.org/dev-docs/modules/consentManagement.html
-					return {
-						gdpr: {
-							cmpApi: 'iab',
-							timeout: 200,
-							defaultGdprScope: true,
-						},
-					};
-			}
-		};
+	const consentManagement = () => {
+		switch (framework) {
+			case 'aus':
+			case 'ccpa':
+				// https://docs.prebid.org/dev-docs/modules/consentManagementUsp.html
+				return {
+					usp: {
+						cmpApi: 'iab',
+						timeout: 1500,
+					},
+				};
+			case 'tcfv2':
+			default:
+				// https://docs.prebid.org/dev-docs/modules/consentManagement.html
+				return {
+					gdpr: {
+						cmpApi: 'iab',
+						timeout: 200,
+						defaultGdprScope: true,
+					},
+				};
+		}
+	};
 
     const pbjsConfig = Object.assign(
         {},
@@ -76,6 +77,25 @@ const initialise = (window, framework = 'tcfv2') => {
     if(config.get('switches.consentManagement', false)) {
         pbjsConfig.consentManagement = consentManagement()
     }
+
+    if (
+		config.get('switches.permutive', false) &&
+		config.get('switches.prebidPermutiveAudience', false)
+	) {
+		pbjsConfig.realTimeData = {
+			dataProviders: [
+				{
+					name: 'permutive',
+					params: {
+						acBidders: ['appnexus', 'ozone', 'pubmatic', 'trustx'],
+						overwrites: {
+							pubmatic,
+						},
+					},
+				},
+			],
+		};
+	}
 
     window.pbjs.setConfig(pbjsConfig);
 

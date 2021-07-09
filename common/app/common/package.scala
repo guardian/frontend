@@ -1,7 +1,6 @@
 package common
 
 import java.util.concurrent.TimeoutException
-
 import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
@@ -19,6 +18,7 @@ import play.twirl.api.Html
 import model.ApplicationContext
 import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
+import renderers.DCRLocalConnectException
 
 object `package`
     extends implicits.Strings
@@ -62,6 +62,10 @@ object `package`
     case timeout: TimeoutException =>
       log.error(s"Got a timeout while calling content api: ${timeout.getMessage}, path: ${request.path}", timeout)
       NoCache(GatewayTimeout(timeout.getMessage))
+
+    // This is thrown when locally unable to connect to DCR.
+    case error: DCRLocalConnectException => throw error
+
     case error =>
       log.error(s"Content api exception: ${error.getMessage}", error)
       Option(error.getCause).foreach { cause =>

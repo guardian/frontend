@@ -1,7 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
+import java.time.LocalDate
 
 trait PerformanceSwitches {
 
@@ -177,23 +177,13 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val ServiceWorkerEnabled = Switch(
-    SwitchGroup.Performance,
-    "service-worker-enabled",
-    "If switched on the service worker will be enabled",
-    owners = Seq(Owner.withName("dotcom.platform")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val LazyLoadImages = Switch(
     SwitchGroup.Performance,
     "blink-lazy-load-images",
     "If switched on, explicitly request lazy loading of images on supporting browsers.",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2029, 9, 3),
+    sellByDate = LocalDate.of(2029, 9, 3),
     exposeClientSide = false,
   )
 }

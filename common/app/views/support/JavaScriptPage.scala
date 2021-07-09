@@ -5,8 +5,6 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.switches.Switches.prebidSwitch
-import conf.switches.Switches.a9Switch
 import model.IpsosTags.{getScriptTag}
 import conf.{Configuration, DiscussionAsset}
 import model._
@@ -54,12 +52,6 @@ object JavaScriptPage {
       }),
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
-      "hbImpl" -> JsObject(
-        Seq(
-          "prebid" -> JsBoolean(prebidSwitch.isSwitchedOn),
-          "a9" -> JsBoolean(a9Switch.isSwitchedOn),
-        ),
-      ),
       "isSensitive" -> JsBoolean(page.metadata.sensitive),
     ) ++ sponsorshipType
 

@@ -1,7 +1,4 @@
-const fs = require('fs');
-
 const chalk = require('chalk');
-
 const config = '--quiet --color';
 
 const error = ctx => {
@@ -14,9 +11,6 @@ const error = ctx => {
         )}`
     );
 };
-
-const dirs = p =>
-    fs.readdirSync(p).filter(f => fs.statSync(`${p}/${f}`).isDirectory());
 
 module.exports = {
     description: 'Lint JS',

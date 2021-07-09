@@ -20,150 +20,152 @@ import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags'
 import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { init as initComscore } from 'commercial/modules/comscore';
 import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
+import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 import { EventTimer } from '@guardian/commercial-core';
+import { logData } from 'commercial/commercial-metrics';
 
 const commercialModules = [
-    ['cm-setAdTestCookie', setAdTestCookie],
-    ['cm-adFreeSlotRemove', adFreeSlotRemove],
-    ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-comscore', initComscore],
-    ['cm-ipsosmori', initIpsosMori]
+	['cm-setAdTestCookie', setAdTestCookie],
+	['cm-adFreeSlotRemove', adFreeSlotRemove],
+	['cm-closeDisabledSlots', closeDisabledSlots],
+	['cm-comscore', initComscore],
+	['cm-ipsosmori', initIpsosMori],
 ];
 
 if (!commercialFeatures.adFree) {
-    commercialModules.push(
-        ['cm-prepare-prebid', preparePrebid],
-        ['cm-prepare-a9', prepareA9],
-        ['cm-thirdPartyTags', initThirdPartyTags],
-        // Permutive init code must run before google tag enableServices()
-        // The permutive lib however is loaded async with the third party tags
-        ['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
-        ['cm-redplanet', initRedplanet],
-        ['cm-prepare-adverification', prepareAdVerification],
-        ['cm-mobileSticky', initMobileSticky],
-        ['cm-highMerch', initHighMerch],
-        ['cm-articleAsideAdverts', initArticleAsideAdverts],
-        ['cm-articleBodyAdverts', initArticleBodyAdverts],
-        ['cm-liveblogAdverts', initLiveblogAdverts],
-        ['cm-stickyTopBanner', initStickyTopBanner],
-        ['cm-paidContainers', paidContainers],
-        ['cm-paidforBand', initPaidForBand],
-        ['cm-commentAdverts', initCommentAdverts],
-        ['rr-adblock-ask', initAdblockAsk],
-    );
+	commercialModules.push(
+		['cm-commercial-metrics', initCommercialMetrics], // In DCR, see App.tsx
+		['cm-prepare-prebid', preparePrebid],
+		['cm-prepare-a9', prepareA9],
+		['cm-thirdPartyTags', initThirdPartyTags],
+		// Permutive init code must run before google tag enableServices()
+		// The permutive lib however is loaded async with the third party tags
+		['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
+		['cm-redplanet', initRedplanet],
+		['cm-prepare-adverification', prepareAdVerification],
+		['cm-mobileSticky', initMobileSticky],
+		['cm-highMerch', initHighMerch],
+		['cm-articleAsideAdverts', initArticleAsideAdverts],
+		['cm-articleBodyAdverts', initArticleBodyAdverts],
+		['cm-liveblogAdverts', initLiveblogAdverts],
+		['cm-stickyTopBanner', initStickyTopBanner],
+		['cm-paidContainers', paidContainers],
+		['cm-paidforBand', initPaidForBand],
+		['cm-commentAdverts', initCommentAdverts],
+		['rr-adblock-ask', initAdblockAsk],
+	);
 }
 
 const loadHostedBundle = () => {
-    if (config.get('page.isHosted')) {
-        return new Promise(resolve => {
-            require.ensure(
-                [],
-                require => {
-                    const hostedAbout = require('commercial/modules/hosted/about');
-                    const initHostedVideo = require('commercial/modules/hosted/video');
-                    const hostedGallery = require('commercial/modules/hosted/gallery');
-                    const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel');
-                    const loadOnwardComponent = require('commercial/modules/hosted/onward');
-                    commercialModules.push(
-                        ['cm-hostedAbout', hostedAbout.init],
-                        ['cm-hostedVideo', initHostedVideo.initHostedVideo],
-                        ['cm-hostedGallery', hostedGallery.init],
-                        [
-                            'cm-hostedOnward',
-                            loadOnwardComponent.loadOnwardComponent,
-                        ],
-                        [
-                            'cm-hostedOJCarousel',
-                            initHostedCarousel.initHostedCarousel,
-                        ]
-                    );
-                    resolve();
-                },
-                'commercial-hosted'
-            );
-        });
-    }
-    return Promise.resolve();
+	if (config.get('page.isHosted')) {
+		return new Promise((resolve) => {
+			require.ensure(
+				[],
+				(require) => {
+					const hostedAbout = require('commercial/modules/hosted/about');
+					const initHostedVideo = require('commercial/modules/hosted/video');
+					const hostedGallery = require('commercial/modules/hosted/gallery');
+					const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel');
+					const loadOnwardComponent = require('commercial/modules/hosted/onward');
+					commercialModules.push(
+						['cm-hostedAbout', hostedAbout.init],
+						['cm-hostedVideo', initHostedVideo.initHostedVideo],
+						['cm-hostedGallery', hostedGallery.init],
+						[
+							'cm-hostedOnward',
+							loadOnwardComponent.loadOnwardComponent,
+						],
+						[
+							'cm-hostedOJCarousel',
+							initHostedCarousel.initHostedCarousel,
+						],
+					);
+					resolve();
+				},
+				'commercial-hosted',
+			);
+		});
+	}
+	return Promise.resolve();
 };
 
 const loadModules = () => {
-    const modulePromises = [];
+	const modulePromises = [];
 
-    commercialModules.forEach(module => {
-        const moduleName = module[0];
-        const moduleInit = module[1];
+	commercialModules.forEach((module) => {
+		const [moduleName, moduleInit] = module;
 
-        catchErrorsWithContext(
-            [
-                [
-                    moduleName,
-                    function pushAfterComplete() {
-                        const result = moduleInit();
-                        modulePromises.push(result);
-                    },
-                ],
-            ],
-            {
-                feature: 'commercial',
-            }
-        );
-    });
+		catchErrorsWithContext(
+			[
+				[
+					moduleName,
+					function pushAfterComplete() {
+						const result = moduleInit();
+						modulePromises.push(result);
+					},
+				],
+			],
+			{
+				feature: 'commercial',
+			},
+		);
+	});
 
-    return Promise.all(modulePromises);
+	return Promise.all(modulePromises);
 };
 
 export const bootCommercial = () => {
-    // Init Commercial event timers
-    EventTimer.init();
+	// Init Commercial event timers
+	EventTimer.init();
 
-    catchErrorsWithContext(
-        [
-            [
-                'ga-user-timing-commercial-start',
-                function runTrackPerformance() {
-                    EventTimer.get().trigger('commercialStart');
-                },
-            ],
-        ],
-        {
-            feature: 'commercial',
-        }
-    );
+	catchErrorsWithContext(
+		[
+			[
+				'ga-user-timing-commercial-start',
+				function runTrackPerformance() {
+					EventTimer.get().trigger('commercialStart');
+				},
+			],
+		],
+		{
+			feature: 'commercial',
+		},
+	);
 
-    // Stub the command queue
-    window.googletag = {
-        cmd: [],
-    };
+	// Stub the command queue
+	window.googletag = {
+		cmd: [],
+	};
 
-    return loadHostedBundle()
-        .then(loadModules)
-        .then(() => {
-            catchErrorsWithContext(
-                [
-                    [
-                        'ga-user-timing-commercial-end',
-                        function runTrackPerformance() {
-                            EventTimer.get().trigger('commercialEnd');
-                        },
-                    ],
-                ],
-                {
-                    feature: 'commercial',
-                }
-            );
-        })
-        .catch(err => {
-            // report async errors in bootCommercial to Sentry with the commercial feature tag
-            reportError(
-                err,
-                {
-                    feature: 'commercial',
-                },
-                false
-            );
-        });
+	return loadHostedBundle()
+		.then(loadModules)
+		.then(() => {
+			catchErrorsWithContext(
+				[
+					[
+						'ga-user-timing-commercial-end',
+						function runTrackPerformance() {
+							EventTimer.get().trigger('commercialEnd');
+						},
+					],
+				],
+				{
+					feature: 'commercial',
+				},
+			);
+		})
+		.catch((err) => {
+			// report async errors in bootCommercial to Sentry with the commercial feature tag
+			reportError(
+				err,
+				{
+					feature: 'commercial',
+				},
+				false,
+			);
+		});
 };

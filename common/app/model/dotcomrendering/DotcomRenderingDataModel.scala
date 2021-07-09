@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
-import com.gu.contentapi.client.utils.format.ImmersiveDisplay
+import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Edition, Localisation, RichRequestHeader}
@@ -15,7 +15,7 @@ import model.{
   Badges,
   ContentFormat,
   ContentPage,
-  ContentType,
+  DotcomContentType,
   GUDateTimeFormatNew,
   InteractivePage,
   LiveBlogPage,
@@ -54,6 +54,7 @@ case class DotcomRenderingDataModel(
     tags: List[Tag],
     pillar: String,
     isImmersive: Boolean,
+    isLegacyInteractive: Boolean,
     sectionLabel: String,
     sectionUrl: String,
     sectionName: Option[String],
@@ -115,6 +116,7 @@ object DotcomRenderingDataModel {
         "designType" -> model.designType,
         "tags" -> model.tags,
         "pillar" -> model.pillar,
+        "isLegacyInteractive" -> model.isLegacyInteractive,
         "isImmersive" -> model.isImmersive,
         "sectionLabel" -> model.sectionLabel,
         "sectionUrl" -> model.sectionUrl,
@@ -308,7 +310,8 @@ object DotcomRenderingDataModel {
     )
 
     val combinedConfig: JsObject = {
-      val jsPageConfig: Map[String, JsValue] = JavaScriptPage.getMap(page, Edition(request), false, request)
+      val jsPageConfig: Map[String, JsValue] =
+        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
       Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
     }
 
@@ -349,6 +352,23 @@ object DotcomRenderingDataModel {
       )
     }
 
+    val modifiedFormat = {
+      val originalFormat = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
+
+      // TODO move to content-api-scala-client once confirmed as correct
+      // behaviour. At the moment we are seeing interactive articles with other
+      // design types due to CAPI format logic. But interactive design should
+      // always take precendent (or so we think).
+      content.metadata.contentType match {
+        case Some(DotcomContentType.Interactive) => originalFormat.copy(design = InteractiveDesign)
+        case _                                   => originalFormat
+      }
+    }
+
+    val isLegacyInteractive =
+      modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate
+        .isBefore(InteractiveSwitchOver.date)
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
@@ -361,7 +381,7 @@ object DotcomRenderingDataModel {
       designType = content.metadata.designType.map(_.toString).getOrElse("Article"),
       editionId = edition.id,
       editionLongForm = Edition(request).displayName,
-      format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
+      format = modifiedFormat,
       guardianBaseURL = Configuration.site.host,
       hasRelated = content.content.showInRelated,
       hasStoryPackage = hasStoryPackage,
@@ -369,6 +389,7 @@ object DotcomRenderingDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       isCommentable = content.trail.isCommentable,
       isImmersive = isImmersive,
+      isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
       keyEvents = keyEventsDCR.toList,
       linkedData = linkedData,

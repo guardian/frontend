@@ -268,14 +268,14 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val a9Switch: Switch = Switch(
+  val a9HeaderBidding: Switch = Switch(
     group = CommercialPrebid,
     name = "a9-header-bidding",
     description = "Turn on A9 header bidding",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val redplanetForAUSSwitch: Switch = Switch(
@@ -297,18 +297,28 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val commercialMetrics: Switch = Switch(
+    group = Commercial,
+    name = "commercial-metrics",
+    description = "Send commercial metric data to the lake via fastly",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
 
 trait PrebidSwitches {
 
-  val prebidSwitch: Switch = Switch(
+  val prebidHeaderBidding: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-header-bidding",
     description = "Turn on Prebid header bidding (takes priority over Sonobi)",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val prebidAnalytics: Switch = Switch(
@@ -335,6 +345,16 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-user-sync",
     description = "Enable bidders to sync their user data with iframe or image beacons",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val PrebidPermutiveAudience = Switch(
+    group = CommercialPrebid,
+    name = "prebid-permutive-audience",
+    description = "Enable Permutive’s Audience Connector to run with Prebid",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -482,7 +502,7 @@ trait PrebidSwitches {
   )
 
   val mobileStickyPrebid: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "mobile-sticky-prebid",
     description = "Include Mobile Sticky leaderboard banner in Prebid",
     owners = group(Commercial),
@@ -490,4 +510,15 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val sentinelLogger: Switch = Switch(
+    group = Commercial,
+    name = "sentinel-logger",
+    description = "Send logs to BigQuery allowing devs to discover from which pages legacy code is run",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
 }

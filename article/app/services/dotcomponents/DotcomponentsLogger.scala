@@ -3,9 +3,10 @@ package services.dotcomponents
 import common.GuLogging
 import common.LoggingField._
 import model.PageWithStoryPackage
+import model.liveblog.InteractiveBlockElement
 import play.api.mvc.RequestHeader
 
-import scala.util.Random
+import scala.util.{Random, Try}
 
 case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
 
@@ -47,6 +48,14 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
       element <- main.elements
     } yield element.getClass.getSimpleName
 
+    val bodyInteractiveBlockScripts = for {
+      blocks <- page.article.blocks.toSeq
+      body <- blocks.body
+      element <- body.elements if element.isInstanceOf[InteractiveBlockElement]
+      interactiveElement <- Try(element.asInstanceOf[InteractiveBlockElement]).toOption
+      scriptUrl <- interactiveElement.scriptUrl
+    } yield scriptUrl
+
     List(
       LogFieldString(
         "page.elements",
@@ -59,6 +68,10 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
       LogFieldString(
         "page.tone",
         page.article.tags.tones.headOption.map(_.name).getOrElse(""),
+      ),
+      LogFieldString(
+        "page.bodyInteractiveElementScripts",
+        bodyInteractiveBlockScripts.distinct.mkString(", "),
       ),
     )
   }

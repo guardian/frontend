@@ -1,8 +1,10 @@
-import qwery from 'qwery';
 import fakeConfig from '../../../lib/config';
 import fakeMediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
 import { init } from './article-aside-adverts';
+
+// This module removes sticky behaviour from ads in immersive article. Example below:
+// https://www.theguardian.com/saving-for-a-sunny-day-with-nsandi/2021/apr/20/its-incredibly-liberating-what-saving-for-a-piano-taught-me-about-my-finances
 
 jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
@@ -45,7 +47,7 @@ describe('Standard Article Aside Adverts', () => {
 
     it('should exist', () => {
         expect(init).toBeDefined();
-        expect(qwery('.ad-slot').length).toBe(1);
+        expect(document.querySelectorAll('.ad-slot').length).toBe(1);
     });
 
     it('should resolve immediately if the secondary column does not exist', done => {
@@ -101,7 +103,7 @@ describe('Immersive Article Aside Adverts', () => {
 
     it('should have correct test elements', () => {
         expect(
-            qwery('.js-content-main-column .element--immersive').length
+            document.querySelectorAll('.js-content-main-column .element--immersive').length
         ).toBe(2);
     });
 

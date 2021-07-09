@@ -1,9 +1,10 @@
 package controllers
 
+import common.`package`.convertApiExceptionsWithoutEither
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import contentapi.ContentApiClient
 import implicits.Requests
-import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType}
+import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType, ImageAsset}
 import models.dotcomponents.{OnwardsUtils, RichLink, RichLinkTag}
 import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
 import play.twirl.api.Html
@@ -20,13 +21,14 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
     with Requests {
   def render(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      contentType(path) map {
+      val resp = contentType(path) map {
         case Some(content) if request.forceDCR =>
           val richLink = RichLink(
             tags =
               content.tags.tags.map(t => RichLinkTag(t.properties.id, t.properties.tagType, t.properties.webTitle)),
             cardStyle = content.content.cardStyle.toneString,
             thumbnailUrl = content.trail.trailPicture.flatMap(tp => Item460.bestSrcFor(tp)),
+            imageAsset = content.trail.trailPicture.flatMap(tp => Item460.bestFor(tp)),
             headline = content.trail.headline,
             contentType = content.metadata.contentType,
             starRating = content.content.starRating,
@@ -41,6 +43,8 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
         case None          => NotFound
       }
+
+      resp.recover(convertApiExceptionsWithoutEither)
     }
 
   private def contentType(path: String)(implicit request: RequestHeader): Future[Option[ContentType]] = {

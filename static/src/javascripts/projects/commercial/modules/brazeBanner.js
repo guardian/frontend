@@ -48,10 +48,6 @@ const hasRequiredConsents = () =>
         })
     });
 
-const canShowPreChecks = ({
-    userIsGuSupporter,
-    pageConfig,
-}) => Boolean(userIsGuSupporter && !pageConfig.isPaidContent);
 
 let message;
 
@@ -108,6 +104,7 @@ const SDK_OPTIONS = {
     baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
     sessionTimeoutInSeconds: 1,
     minimumIntervalBetweenTriggerActionsInSeconds: 0,
+    devicePropertyAllowlist: [],
 };
 
 const getMessageFromBraze = async (apiKey, brazeUuid) => {
@@ -157,7 +154,6 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
 const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
     const userHasLoggedOut = !brazeUuid && hasCurrentBrazeUser();
     const userHasRemovedConsent = !consent && hasCurrentBrazeUser();
-    const slotNames = ['Banner','EndOfArticle'];
 
     if (userHasLoggedOut || userHasRemovedConsent) {
         try {
@@ -165,16 +161,9 @@ const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
             appboy.initialize(apiKey, SDK_OPTIONS);
             appboy.wipeData();
 
-            // DCR has an implementation of LocalMessageCache but Frontend does not
-            // We should still wipe the cache from Frontend if the user logs out
-            const localStorageKeyBase = 'gu.brazeMessageCache'
-            slotNames.forEach(slotName => {
-                const key = `${localStorageKeyBase}.${slotName}`
-                storage.local.remove(key);
-            })
+            LocalMessageCache.clear();
 
             clearHasCurrentBrazeUser();
-            LocalMessageCache.clear();
         } catch(error) {
             reportError(error, {}, false);
         }
@@ -206,14 +195,8 @@ const canShow = async () => {
         return false;
     }
 
-    if (!canShowPreChecks({
-        userIsGuSupporter: shouldNotBeShownSupportMessaging(),
-        pageConfig: config.get('page'),
-    })) {
-        // Currently all active web canvases in Braze target existing supporters,
-        // subscribers or otherwise those with a Guardian product. We can use the
-        // value of `shouldNotBeShownSupportMessaging` to identify these users,
-        // limiting the number of requests we need to initialise Braze on the page:
+    // Don't load Braze SDK for paid content
+    if (config.get('page').isPaidContent) {
         return false;
     }
 
@@ -237,11 +220,11 @@ const canShow = async () => {
 
 const show = () => Promise.all([
     import('react-dom'),
-    import('@emotion/core'),
+    import('@emotion/react'),
     import('@emotion/cache'),
     import(/* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components')
 ]).then((props) => {
-    const [{ render }, { CacheProvider }, createCacheModule, brazeModule] = props
+    const [{ render }, { CacheProvider }, { default: createCache }, brazeModule] = props;
     const container = document.createElement('div');
         container.classList.add('site-message--banner');
 
@@ -271,7 +254,7 @@ const show = () => Promise.all([
                 document.createElement('div'),
             );
 
-            const emotionCache = createCacheModule.default({ key: 'site-message', container: inner });
+            const emotionCache = createCache({ key: 'site-message', container: inner });
 
             const cached = (
                 <CacheProvider value={emotionCache}>
@@ -322,5 +305,4 @@ export {
     brazeBanner,
     brazeVendorId,
     hasRequiredConsents,
-    canShowPreChecks,
 }
