@@ -95,7 +95,7 @@ const resetConfig = () => {
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
     config.set('switches.prebidTriplelift', true);
-    config.set('ophan', { pageViewId: 'pvid' });
+    window.guardian.ophan = { pageViewId: 'pvid' };
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
     config.set('page.isDev', false);
