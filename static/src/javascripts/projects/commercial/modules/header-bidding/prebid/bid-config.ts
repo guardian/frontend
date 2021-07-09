@@ -1,6 +1,4 @@
 import { log } from '@guardian/libs';
-import { isInABTestSynchronous } from 'common/modules/experiments/ab';
-import { improveSkins } from 'common/modules/experiments/tests/improve-skins';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
 import {
@@ -371,7 +369,7 @@ const improveDigitalBidder: PrebidBidder = {
 const improveDigitalSkinBidder: PrebidBidder = {
 	name: 'improvedigital',
 	switchName: 'prebidImproveDigital',
-	bidParams: (slotId: string): PrebidImproveParams => ({
+	bidParams: (): PrebidImproveParams => ({
 		placementId: getImproveSkinPlacementId(),
 		size: {},
 	}),
