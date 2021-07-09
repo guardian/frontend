@@ -122,12 +122,12 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 					return 1116397;
 				}
 				return -1;
-			case 'M':
+			case 'M': // Mobile
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116400;
 				}
 				return -1;
-			case 'T':
+			case 'T': // Tablet
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116398;
 				}
@@ -155,12 +155,12 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 					return 1116421;
 				}
 				return -1;
-			case 'M':
+			case 'M': // Mobile
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116424;
 				}
 				return -1;
-			case 'T':
+			case 'T': // Tablet
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116422;
 				}
