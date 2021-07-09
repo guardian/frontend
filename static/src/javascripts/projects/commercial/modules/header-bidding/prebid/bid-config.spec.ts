@@ -337,10 +337,12 @@ describe('indexExchangeBidders', () => {
 		expect(bidders).toEqual([
 			expect.objectContaining<Partial<PrebidBidder>>({
 				name: 'ix',
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- it actually works
 				bidParams: expect.any(Function),
 			}),
 			expect.objectContaining({
 				name: 'ix',
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- it works
 				bidParams: expect.any(Function),
 			}),
 		]);
