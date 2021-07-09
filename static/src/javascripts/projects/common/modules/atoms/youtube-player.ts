@@ -36,30 +36,30 @@ const addVideoStartedClass = (el: HTMLElement | null) => {
 let tcfData: TCFv2ConsentState | undefined = undefined;
 
 interface ConsentState {
-	region: null | string;
+	framework: null | string;
 	canTarget: boolean;
 }
 
 let consentState: ConsentState = {
-	region: null,
+	framework: null,
 	canTarget: false,
 };
 
 onConsentChange((cmpConsent) => {
 	if (cmpConsent.ccpa) {
 		consentState = {
-			region: 'ccpa',
+			framework: 'ccpa',
 			canTarget: !cmpConsent.ccpa.doNotSell,
 		};
 	} else if (cmpConsent.aus) {
 		consentState = {
-			region: 'aus',
+			framework: 'aus',
 			canTarget: cmpConsent.aus.personalisedAdvertising,
 		};
 	} else {
 		tcfData = cmpConsent.tcfv2;
 		consentState = {
-			region: 'tcfv2',
+			framework: 'tcfv2',
 			canTarget: tcfData
 				? Object.values(tcfData.consents).every(Boolean)
 				: false,
@@ -184,7 +184,7 @@ const createAdsConfig = (
 		},
 	};
 
-	if (consentState.region === 'ccpa') {
+	if (consentState.framework === 'ccpa') {
 		adsConfig.restrictedDataProcessor = !consentState.canTarget;
 	} else {
 		adsConfig.nonPersonalizedAd = !consentState.canTarget;
