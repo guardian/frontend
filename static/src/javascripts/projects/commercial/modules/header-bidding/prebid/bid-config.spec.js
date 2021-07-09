@@ -58,6 +58,7 @@ const getBidders = () =>
 const {
     getIndexSiteId,
     getImprovePlacementId,
+    getImproveSkinPlacementId,
     getXaxisPlacementId,
     getTrustXAdUnitId,
     indexExchangeBidders,
@@ -227,6 +228,70 @@ describe('getImprovePlacementId', () => {
     });
 
 });
+
+describe('getImproveSkinPlacementId', () => {
+    beforeEach(() => {
+        resetConfig();
+        getBreakpointKey.mockReturnValue('D');
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    const ID_UK = 22526482;
+    const ID_ROW = 22526483;
+
+    test('should return ' + ID_UK + ' if in the UK', () => {
+        isInUk.mockReturnValue(true);
+        expect(getImproveSkinPlacementId()).toBe(ID_UK);
+    });
+
+    test(`should return ${ID_UK} when geolocated in UK and on desktop device`, () => {
+        isInUk.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('D');
+        expect(getImproveSkinPlacementId()).toEqual(ID_UK);
+    });
+
+    test('should return -1 when geolocated in UK and on tablet device', () => {
+        isInUk.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('T');
+        expect(getImproveSkinPlacementId()).toEqual(-1);
+    });
+
+    test('should return -1 values when geolocated in UK and on mobile device', () => {
+        isInUk.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('M');
+        expect(getImproveSkinPlacementId()).toEqual(-1);
+    });
+
+    test('should return ' + ID_ROW  + ' when geolocated in ROW region and on desktop device', () => {
+        isInRow.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('D');
+        expect(getImproveSkinPlacementId()).toEqual(ID_ROW);
+    });
+
+    test('should return -1 when not geolocated in ROW region and on tablet device', () => {
+        isInRow.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('T');
+        expect(getImproveSkinPlacementId()).toEqual(-1);
+    });
+
+    test('should return -1 when geolocated in ROW region and on mobile device', () => {
+        isInRow.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('M');
+        expect(getImproveSkinPlacementId()).toEqual(-1);
+    });
+
+    test('should return -1 if geolocated in US or AU regions', () => {
+        isInUsOrCa.mockReturnValue(true);
+        expect(getImproveSkinPlacementId()).toEqual(-1);
+        isInAuOrNz.mockReturnValue(true);
+        expect(getImproveSkinPlacementId()).toEqual(-1);
+    });
+
+});
+
 
 describe('getTrustXAdUnitId', () => {
     beforeEach(() => {

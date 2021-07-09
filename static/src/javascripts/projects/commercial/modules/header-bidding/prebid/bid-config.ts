@@ -165,10 +165,20 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 
 const getImproveSkinPlacementId = (): number => {
 	if (isInUk()) {
-		return 22526482;
+		switch (getBreakpointKey()) {
+			case 'D':
+				return 22526482;
+			default:
+				return -1;
+		}
 	}
 	if (isInRow()) {
-		return 22526483;
+		switch (getBreakpointKey()) {
+			case 'D':
+				return 22526483;
+			default:
+				return -1;
+		}
 	}
 	return -1;
 };
@@ -475,6 +485,7 @@ export const bids = (
 export const _ = {
 	getIndexSiteId,
 	getImprovePlacementId,
+	getImproveSkinPlacementId,
 	getXaxisPlacementId,
 	getTrustXAdUnitId,
 	indexExchangeBidders,
