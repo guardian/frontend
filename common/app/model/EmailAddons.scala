@@ -480,8 +480,7 @@ object EmailAddons {
     CoronavirusAustraliaAtAGlance,
     CoronavirusinThePacific,
     USElectionBriefingForAustralia,
-    TechScape
-
+    TechScape,
   )
   private val frontEmails = Seq(
     SocialCareNetwork,
@@ -525,7 +524,7 @@ object EmailAddons {
     TheGuideStayingIn,
     DesignReview,
     Documentaries,
-    AustraliasModernOutback
+    AustraliasModernOutback,
   )
 
   implicit class EmailContentType(p: Page) {
