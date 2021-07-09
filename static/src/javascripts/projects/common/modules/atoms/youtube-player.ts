@@ -185,7 +185,7 @@ const createAdsConfig = (
 		},
 	};
 
-	if (consentState.framework === 'ccpa') {
+	if (consentState.framework === 'ccpa' || consentState.framework === 'aus') {
 		adsConfig.restrictedDataProcessor = !consentState.canTarget;
 	} else {
 		adsConfig.nonPersonalizedAd = !consentState.canTarget;

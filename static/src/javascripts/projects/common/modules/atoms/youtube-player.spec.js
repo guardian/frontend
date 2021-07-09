@@ -78,14 +78,14 @@ describe('create ads config', () => {
 
     it('in non ad-free, returns adsConfig without consent in aus', () => {
         const result = youtubePlayer.createAdsConfig(false, { framework: 'aus', canTarget: false });
-        expect(result.hasOwnProperty('restrictedDataProcessor')).toBeFalsy();
-        expect(result.nonPersonalizedAd).toBeTruthy();
+        expect(result.restrictedDataProcessor).toBeTruthy();
+        expect(result.hasOwnProperty('nonPersonalizedAd')).toBeFalsy();
     });
 
     it('in non ad-free, returns adsConfig with consent in aus', () => {
         const result = youtubePlayer.createAdsConfig(false, { framework: 'aus', canTarget: true });
-        expect(result.hasOwnProperty('restrictedDataProcessor')).toBeFalsy();
-        expect(result.nonPersonalizedAd).toBeFalsy();
+        expect(result.restrictedDataProcessor).toBeFalsy();
+        expect(result.hasOwnProperty('nonPersonalizedAd')).toBeFalsy();
     });
 
     it('in non ad-free includes adUnit', () => {
