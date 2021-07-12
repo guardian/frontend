@@ -26,16 +26,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-us-mandatory",
-    "Mandatory sign in gate to users in US split test",
-    owners = Seq(Owner.withGithub("quarpt")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 12, 1)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-partner",
     "Test commercial partner that tracks metrics",
     owners = Seq(Owner.withGithub("mxdvl")),
