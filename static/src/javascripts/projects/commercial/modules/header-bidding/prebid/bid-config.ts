@@ -22,6 +22,7 @@ import {
 	shouldIncludeAdYouLike,
 	shouldIncludeAppNexus,
 	shouldIncludeImproveDigital,
+	shouldIncludeImproveDigitalSkin,
 	shouldIncludeOpenx,
 	shouldIncludeSonobi,
 	shouldIncludeTripleLift,
@@ -35,6 +36,7 @@ import {
 import { getAppNexusDirectBidParams } from './appnexus';
 
 // The below line is needed for page skins to show
+// Why? Does it trigger an eager building of the page targeting?
 getPageTargeting();
 
 const isArticle = config.get('page.contentType') === 'Article';
@@ -106,7 +108,7 @@ const getIndexSiteId = (): string => {
 const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 	if (isInUk()) {
 		switch (getBreakpointKey()) {
-			case 'D':
+			case 'D': // Desktop
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116396;
 				}
@@ -114,12 +116,12 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 					return 1116397;
 				}
 				return -1;
-			case 'M':
+			case 'M': // Mobile
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116400;
 				}
 				return -1;
-			case 'T':
+			case 'T': // Tablet
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116398;
 				}
@@ -133,7 +135,7 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 	}
 	if (isInRow()) {
 		switch (getBreakpointKey()) {
-			case 'D':
+			case 'D': // Desktop
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116420;
 				}
@@ -141,12 +143,12 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 					return 1116421;
 				}
 				return -1;
-			case 'M':
+			case 'M': // Mobile
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116424;
 				}
 				return -1;
-			case 'T':
+			case 'T': // Tablet
 				if (containsMpuOrDmpu(sizes)) {
 					return 1116422;
 				}
@@ -154,6 +156,26 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 					return 1116423;
 				}
 				return -1;
+			default:
+				return -1;
+		}
+	}
+	return -1;
+};
+
+const getImproveSkinPlacementId = (): number => {
+	if (isInUk()) {
+		switch (getBreakpointKey()) {
+			case 'D': // Desktop
+				return 22526482;
+			default:
+				return -1;
+		}
+	}
+	if (isInRow()) {
+		switch (getBreakpointKey()) {
+			case 'D': // Desktop
+				return 22526483;
 			default:
 				return -1;
 		}
@@ -354,6 +376,15 @@ const improveDigitalBidder: PrebidBidder = {
 	}),
 };
 
+const improveDigitalSkinBidder: PrebidBidder = {
+	name: 'improvedigital',
+	switchName: 'prebidImproveDigital',
+	bidParams: (): PrebidImproveParams => ({
+		placementId: getImproveSkinPlacementId(),
+		size: {},
+	}),
+};
+
 const xaxisBidder: PrebidBidder = {
 	name: 'xhb',
 	switchName: 'prebidXaxis',
@@ -425,6 +456,9 @@ const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 		...(inPbTestOr(shouldIncludeImproveDigital())
 			? [improveDigitalBidder]
 			: []),
+		...(inPbTestOr(shouldIncludeImproveDigitalSkin())
+			? [improveDigitalSkinBidder]
+			: []),
 		...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
 		pubmaticBidder,
 		...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
@@ -451,6 +485,7 @@ export const bids = (
 export const _ = {
 	getIndexSiteId,
 	getImprovePlacementId,
+	getImproveSkinPlacementId,
 	getXaxisPlacementId,
 	getTrustXAdUnitId,
 	indexExchangeBidders,

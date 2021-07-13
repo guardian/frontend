@@ -7,6 +7,7 @@ import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { stripDfpAdPrefixFrom } from '../utils';
 import { EventTimer } from '@guardian/commercial-core';
 import { pubmatic } from './pubmatic';
+import { log } from '@guardian/libs';
 
 const bidderTimeout = 1500;
 
@@ -16,6 +17,7 @@ class PrebidAdUnit {
         this.code = advert.id;
         this.bids = bids(advert.id, slot.sizes);
         this.mediaTypes = { banner: { sizes: slot.sizes } };
+        log('commercial', `PrebidAdUnit ${this.code}`, this.bids );
     }
 
     isEmpty() {
