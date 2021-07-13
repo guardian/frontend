@@ -7,6 +7,7 @@ import common.Edition
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
+import model.pressed.SpecialReport
 import model.{CanonicalLiveBlog, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -171,24 +172,8 @@ object DotcomRenderingUtils {
     addDisclaimer(withTagLinks, capiElems, affiliateLinks)
   }
 
-  val specialReportTags: Set[String] = Set(
-    "business/series/undercover-in-the-chicken-industry",
-    "business/series/britains-debt-timebomb",
-    "environment/series/the-polluters",
-    "news/series/hsbc-files",
-    "news/series/panama-papers",
-    "us-news/homan-square",
-    "uk-news/series/the-new-world-of-work",
-    "world/series/the-new-arrivals",
-    "news/series/nauru-files",
-    "us-news/series/counted-us-police-killings",
-    "australia-news/series/healthcare-in-detention",
-    "society/series/this-is-the-nhs",
-  )
-
-  def isSpecialReport(page: ContentPage): Boolean = {
-    page.item.tags.tags.exists(t => specialReportTags(t.id))
-  }
+  def isSpecialReport(page: ContentPage): Boolean =
+    page.item.content.cardStyle == SpecialReport
 
   def secondaryDateString(content: ContentType, request: RequestHeader): String = {
     def format(dt: DateTime, req: RequestHeader): String = GUDateTimeFormatNew.formatDateTimeForDisplay(dt, req)
