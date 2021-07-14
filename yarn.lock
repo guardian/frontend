@@ -2391,6 +2391,11 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/google.analytics@^0.0.42":
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/@types/google.analytics/-/google.analytics-0.0.42.tgz#efe6ef9251a22ec8208dbb09f221a48a1863d720"
+  integrity sha512-w0ZFj3SHznQXSq99kFCuO8tkN6w4T14znjrF2alLCSDnHOXEnpzneyNwxLvekcsDBInr8b5mXmzYh03GArqEyw==
+
 "@types/graceful-fs@^4.1.2":
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/@types/graceful-fs/-/graceful-fs-4.1.3.tgz#039af35fe26bec35003e8d86d2ee9c586354348f"
@@ -2528,6 +2533,11 @@
   integrity sha512-sw6JBfeZeE7ep9Pmhcysxo4lgaMLlHuQ8ie0srx5VOEnN4RNJgLryCuvxCUotw6Jmd50zBwCJHs3iwjLyIJgbQ==
   dependencies:
     "@types/yargs-parser" "*"
+
+"@types/youtube@^0.0.44":
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/@types/youtube/-/youtube-0.0.44.tgz#7e8d0bc792f7dbda645118a5cf01b598a8308ba3"
+  integrity sha512-bvBETO6kkqq32Yuk5CI3k0V/UCOTzhsqImJsboABsnCUA8BzawvnrgaRe51wqXQPqZkTwLFkRvhS7iSvsgp4pg==
 
 "@typescript-eslint/eslint-plugin@^4.12.0":
   version "4.12.0"
