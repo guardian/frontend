@@ -2,7 +2,6 @@ package common
 
 import java.io.StringWriter
 import java.util.regex.Pattern
-
 import com.gu.facia.api.models.LinkSnap
 import com.sun.syndication.feed.module.DCModuleImpl
 import com.sun.syndication.feed.module.mediarss._
@@ -11,13 +10,21 @@ import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import model._
 import model.pressed.PressedStory
-import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
-import views.support.{Item140, Item460, ImageProfile}
+import views.support.{ImageProfile, Item140, Item460}
 
+import java.text.SimpleDateFormat
+import java.util.{Date, TimeZone}
 import scala.collection.JavaConverters._
-import scala.collection.JavaConverters._
+
+object RssDates {
+  def getYear(date: Date): String = {
+    val formatter = new SimpleDateFormat("YYYY")
+    formatter.setTimeZone(TimeZone.getTimeZone("Europe/London"))
+    formatter.format(date)
+  }
+}
 
 object TrailsToRss extends implicits.Collections {
 
@@ -63,10 +70,11 @@ object TrailsToRss extends implicits.Collections {
     feed.setLink("https://www.theguardian.com" + url.getOrElse(""))
     feed.setLanguage("en-gb")
     feed.setCopyright(
-      s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}",
+      s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${RssDates
+        .getYear(new Date())}",
     )
     feed.setImage(image)
-    feed.setPublishedDate(DateTime.now.toDate)
+    feed.setPublishedDate(new Date())
     feed.setEncoding("utf-8")
 
     // Feed: entries
@@ -178,10 +186,10 @@ object TrailsToRss extends implicits.Collections {
     feed.setLink("https://www.theguardian.com" + url)
     feed.setLanguage("en-gb")
     feed.setCopyright(
-      s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}",
+      s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${RssDates.getYear(new Date())}",
     )
     feed.setImage(image)
-    feed.setPublishedDate(DateTime.now.toDate)
+    feed.setPublishedDate(new Date())
     feed.setEncoding("utf-8")
 
     // Feed: entries
