@@ -12,7 +12,7 @@ import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
-import models.{
+import model.dotcomrendering.{
   MostPopularGeoResponse,
   MostPopularNx2,
   OnwardCollectionResponse,

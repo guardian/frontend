@@ -9,6 +9,7 @@ import model.{FrontProperties, RelatedContent, Tag}
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
 import model.pressed.{CollectionConfig}
 import services.CollectionConfigWithId
+import model.dotcomrendering.OnwardItemNx2
 
 case class Series(id: String, tag: Tag, trails: RelatedContent) {
   lazy val displayName = tag.id match {

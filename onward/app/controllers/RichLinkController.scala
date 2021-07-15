@@ -5,7 +5,8 @@ import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonCompo
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType, ImageAsset}
-import models.dotcomponents.{OnwardsUtils, RichLink, RichLinkTag}
+import models.dotcomponents.{RichLink, RichLinkTag}
+import model.dotcomrendering.OnwardsUtils
 import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
 import play.twirl.api.Html
 import views.support.{ImgSrc, Item460, RichLinkContributor}
