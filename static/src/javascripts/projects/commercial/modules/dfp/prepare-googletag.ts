@@ -122,25 +122,28 @@ export const init = (): Promise<void> => {
 					window.googletag?.cmd.push(setPublisherProvidedId);
 				}
 			} else {
-				let npaFlag = false;
 				if (state.tcfv2) {
 					// TCFv2 mode
-					npaFlag =
-						Object.keys(state.tcfv2.consents).length === 0 ||
-						Object.values(state.tcfv2.consents).includes(false);
+					const canTarget = Object.values(state.tcfv2.consents).every(
+						Boolean,
+					);
+					if (canTarget) {
+						window.googletag?.cmd.push(setPublisherProvidedId);
+					}
+
 					canRun = getConsentFor('googletag', state);
 				} else if (state.aus) {
 					// AUS mode
 					// canRun stays true, set NPA flag if consent is retracted
-					npaFlag = !getConsentFor('googletag', state);
-				}
-				window.googletag?.cmd.push(() => {
-					window.googletag
-						?.pubads()
-						.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
-				});
-				if (!npaFlag) {
-					window.googletag?.cmd.push(setPublisherProvidedId);
+					const npaFlag = !getConsentFor('googletag', state);
+					window.googletag?.cmd.push(() => {
+						window.googletag
+							?.pubads()
+							.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
+					});
+					if (!npaFlag) {
+						window.googletag?.cmd.push(setPublisherProvidedId);
+					}
 				}
 			}
 			// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
