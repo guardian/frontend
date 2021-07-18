@@ -56,7 +56,7 @@ object ProjectSettings {
       Resolver.sonatypeRepo("releases"),
       "Spy" at "https://files.couchbase.com/maven2/",
     ),
-    evictionWarningOptions in update := EvictionWarningOptions.default
+    update / evictionWarningOptions := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)
       .withWarnDirectEvictions(false)
       .withWarnScalaVersionEviction(false),
@@ -94,7 +94,7 @@ object ProjectSettings {
       testAll := (Test / test)
         .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))
         .value,
-      upload := riffRaffUpload.in(LocalRootProject).value,
+      upload := (LocalRootProject / riffRaffUpload).value,
       testThenUpload := Def
         .taskDyn({
           testAll.result.value match {
@@ -126,7 +126,7 @@ object ProjectSettings {
       .settings(frontendTestSettings)
       .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(macwire, commonsIo))
-      .settings(packageName in Universal := applicationName)
+      .settings(Universal / packageName := applicationName)
   }
 
   def library(applicationName: String): Project = {
