@@ -1,7 +1,6 @@
 package common.Assets
 
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 class AssetsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {

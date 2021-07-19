@@ -1,8 +1,8 @@
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
-import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
+import common.Assets.DiscussionExternalAssetsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common._
 import common.dfp.DfpAgentLifecycle
