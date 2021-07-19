@@ -1,2 +1,2 @@
 PlayKeys.playDefaultPort := 9009
-testOptions in Test += Tests.Argument("-oF")
+Test / testOptions += Tests.Argument("-oF")
