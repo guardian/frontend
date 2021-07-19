@@ -82,10 +82,6 @@ object ShareLinks {
   ): ShareLink = {
 
     val encodedHref = href.urlEncoded
-    val fullMediaPath: Option[String] = mediaPath.map { originalPath =>
-      if (originalPath.startsWith("//")) { "http:" + originalPath }
-      else { originalPath }
-    }
 
     lazy val facebookParams = List(
       Some("app_id" -> facebookAppId),
