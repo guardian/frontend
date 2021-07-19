@@ -134,7 +134,7 @@
 .ad-slot--crossword-banner,
 .ad-slot--top-banner-ad-desktop {
     margin: 0 auto;
-    min-height: 250px;
+    min-height: 90px;
     padding-bottom: $gs-row-height / 2;
 
     @include mq($until: tablet) {
@@ -175,6 +175,10 @@
 
     &.ad-slot--fluid {
         width: 100%;
+    }
+
+    &.ad-slot--top-above-nav-experiment-variant {
+        min-height: 250px;
     }
 }
 
