@@ -5,7 +5,7 @@ import containers.Containers
 import contentapi.ContentApiClient
 import model._
 import model.dotcomrendering.{
-  OnwardItemNx2,
+  OnwardItem,
   OnwardCollectionResponse
 }
 import play.api.libs.json._
@@ -36,7 +36,7 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
         val json = JsonComponent(
           OnwardCollectionResponse(
             heading = "More on this story",
-            trails = items.map(_.faciaContent).map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
+            trails = items.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(10),
           ),
         )
         Cached(5.minutes)(json)

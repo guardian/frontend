@@ -17,7 +17,7 @@ import model.dotcomrendering.{
   MostPopularNx2,
   OnwardCollectionResponse,
   OnwardCollectionResponseDCR,
-  OnwardItemNx2,
+  OnwardItem,
 }
 import implicits.FaciaContentFrontendHelpers._
 import play.api.libs.json._
@@ -133,14 +133,14 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = section.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
+        trails = section.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
@@ -153,10 +153,10 @@ class MostPopularController(
       OnwardCollectionResponse(nx2.heading, nx2.trails)
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
@@ -166,7 +166,7 @@ class MostPopularController(
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = mostPopular.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
+      trails = mostPopular.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
     )
     Cached(900)(JsonComponent(data))
   }
