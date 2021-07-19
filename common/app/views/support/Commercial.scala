@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringEscapeUtils._
 import play.api.libs.json.JsBoolean
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
+import experiments.{ActiveExperiments, TopAboveNavHeight}
 
 object Commercial {
   def isAdFree(request: RequestHeader): Boolean = {
@@ -160,7 +161,16 @@ object Commercial {
       classes mkString " "
     }
 
-    val slotCssClasses = Seq("top-banner-ad", "top-banner-ad-desktop")
+    def slotCssClasses(implicit request: RequestHeader): Seq[String] = {
+      val baseClasses = Seq("top-banner-ad", "top-banner-ad-desktop")
+      val variant = ActiveExperiments.isParticipating(TopAboveNavHeight)
+      if(variant) {
+        Seq("top-above-nav-experiment-variant") ++ baseClasses
+      } else {
+        baseClasses
+      }
+    }
+
   }
 
   object container {
