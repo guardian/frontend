@@ -1,7 +1,6 @@
 package model
 
 import conf.Static
-import conf.switches.Switches.FiverEmailEuro2020Banner
 
 sealed trait EmailMetadata[T] extends Product with Serializable {
   def name: String
@@ -44,8 +43,7 @@ case object WorldCupFiver extends ArticleEmailMetadata {
 
 case object TheFiver extends ArticleEmailMetadata {
   val name = "The Fiver"
-  override val banner =
-    if (FiverEmailEuro2020Banner.isSwitchedOn) Some("the-fiver-euro-2020.png") else Some("the-fiver.png")
+  override val banner = Some("the-fiver.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "football/series/thefiver")
 }
 

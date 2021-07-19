@@ -454,16 +454,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val FiverEmailEuro2020Banner = Switch(
-    SwitchGroup.Feature,
-    "fiver-email-euro-2020-banner",
-    "Enables a Euro 2020 version of the banner on the fiver email",
-    owners = Seq(Owner.withGithub("jfsoul")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2021, 7, 20),
-    exposeClientSide = false,
-  )
-
   val InteractivePickerFeature = Switch(
     SwitchGroup.Feature,
     "interactive-picker",
