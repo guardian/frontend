@@ -1,4 +1,3 @@
-import MockDate from 'mockdate';
 import config_ from '../../lib/config';
 import type { amIUsed as amIUsed_, SentinelLoggingEvent } from './sentinel';
 
@@ -10,17 +9,12 @@ const config = (config_ as unknown) as {
 	get: jest.MockedFunction<(s: string, d: boolean) => boolean>;
 };
 
-MockDate.set(new Date('2021-01-01T00:00:00Z'));
-
 const CODE_ENDPOINT = '//logs.code.dev-guardianapis.com/log';
 const PROD_ENDPOINT = '//logs.guardianapis.com/log';
 const TEST_URL = 'http://testurl.theguardian.com/';
 
 const owner = 'commercial.sentinel';
-const mockDate = new Date();
 const defaultEvent: SentinelLoggingEvent = {
-	received_timestamp: mockDate,
-	received_date: mockDate.toISOString().slice(0, 10),
 	label: owner,
 };
 
@@ -32,10 +26,6 @@ navigator.sendBeacon = jest.fn();
 
 afterEach(() => {
 	jest.clearAllMocks();
-});
-
-afterAll(() => {
-	MockDate.reset();
 });
 
 describe('sentinel', () => {

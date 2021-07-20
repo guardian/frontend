@@ -2,7 +2,7 @@ import { amIUsed } from 'commercial/sentinel';
 import { hideElement } from '../hide-element';
 
 const init = (register) => {
-    amIUsed('hide', 'init');
+    //amIUsed('hide', 'init', { comment: 'testing without time/date'});
     register('hide', (specs, ret, iframe) => {
         amIUsed('hide', 'init', { nested_function_name: 'register' });
         if (iframe) {

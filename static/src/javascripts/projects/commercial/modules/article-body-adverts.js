@@ -10,7 +10,7 @@ import { createSlots } from './dfp/create-slots';
 
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { initCarrot } from './carrot-traffic-driver';
-
+import { amIUsed } from 'commercial/sentinel';
 
 
 const isPaidContent = config.get('page.isPaidContent', false);
@@ -263,6 +263,7 @@ const doInit = () => {
 };
 
 export const init = () => {
+    amIUsed('article-body-adverts', 'init', { comment: 'Testing timestamp'})
     // Also init when the main article is redisplayed
     // For instance by the signin gate.
     mediator.on('page:article:redisplayed', doInit);

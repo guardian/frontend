@@ -6,8 +6,6 @@ const config = config_ as {
 };
 
 export type SentinelLoggingEvent = {
-	received_timestamp: Date;
-	received_date: string;
 	label: string;
 	properties?: Property[];
 };
@@ -45,17 +43,12 @@ export const amIUsed = (
 		? '//logs.code.dev-guardianapis.com/log'
 		: '//logs.guardianapis.com/log';
 
-	const receivedTimestamp = new Date();
-	const receivedDate = receivedTimestamp.toISOString().slice(0, 10);
-
 	const properties: RestrictedProperty[] = [
 		{ name: 'module_name', value: moduleName },
 		{ name: 'function_name', value: functionName },
 		{ name: 'URL', value: window.location.href },
 	];
 	const event: SentinelLoggingEvent = {
-		received_timestamp: receivedTimestamp,
-		received_date: receivedDate,
 		label: 'commercial.sentinel',
 		properties: parameters
 			? [
