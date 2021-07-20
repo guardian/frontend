@@ -7,10 +7,7 @@ import containers.Containers
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
-import model.dotcomrendering.{
-  OnwardItem,
-  OnwardCollectionResponse
-}
+import model.dotcomrendering.{OnwardItem, OnwardCollectionResponse}
 import play.api.mvc._
 import services._
 

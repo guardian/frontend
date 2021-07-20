@@ -6,10 +6,7 @@ import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model.Cached.RevalidatableResult
 import model._
-import model.dotcomrendering.{
-  OnwardItem,
-  OnwardCollectionResponse
-}
+import model.dotcomrendering.{OnwardItem, OnwardCollectionResponse}
 import play.api.libs.json._
 import play.api.mvc._
 import services._

@@ -4,10 +4,7 @@ import common._
 import containers.Containers
 import contentapi.ContentApiClient
 import model._
-import model.dotcomrendering.{
-  OnwardItem,
-  OnwardCollectionResponse
-}
+import model.dotcomrendering.{OnwardItem, OnwardCollectionResponse}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
