@@ -12,6 +12,7 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { initCarrot } from './carrot-traffic-driver';
 
 
+
 const isPaidContent = config.get('page.isPaidContent', false);
 
 const adSlotClassSelectorSizes = {
