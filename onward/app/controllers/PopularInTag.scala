@@ -43,8 +43,7 @@ class PopularInTag(
         JsonComponent(
           OnwardCollectionResponse(
             heading = "Related content",
-            trails =
-              trails.items.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(numberOfCards),
+            trails = trails.items.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(numberOfCards),
           ),
         )
       } else {
