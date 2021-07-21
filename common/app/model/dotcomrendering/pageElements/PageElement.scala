@@ -470,6 +470,7 @@ case class SpotifyBlockElement(
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
+    role: Role,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object SpotifyBlockElement {
@@ -1511,6 +1512,7 @@ object PageElement {
         thirdPartyTracking,
         d.source,
         d.sourceDomain,
+        Role(d.role),
       )
     }
   }
