@@ -1,15 +1,14 @@
-package assets
-
-import java.net.URI
+package common.Assets
 
 import app.LifecycleComponent
 import com.gu.Box
-import common.{GuardianConfiguration, JobScheduler, GuLogging}
+import common.{GuLogging, GuardianConfiguration, JobScheduler}
 import conf.switches.Switches
 import play.api.libs.ws.{WSClient, WSResponse}
 
-import scala.concurrent.{ExecutionContext, Future}
+import java.net.URI
 import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 /**

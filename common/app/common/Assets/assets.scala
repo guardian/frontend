@@ -1,16 +1,15 @@
 package common.Assets
 
-import java.nio.charset.Charset
-
 import common.{GuLogging, RelativePathEscaper}
 import conf.Configuration
+import html.HtmlPageHelpers.{ContentCSSFile, FaciaCSSFile, RichLinksCSSFile}
 import model.ApplicationContext
 import org.apache.commons.io.IOUtils
-import play.api.libs.json._
 import play.api.Mode
-import html.HtmlPageHelpers.{ContentCSSFile, FaciaCSSFile, RichLinksCSSFile}
+import play.api.libs.json._
 import play.api.mvc.RequestHeader
 
+import java.nio.charset.Charset
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
 
