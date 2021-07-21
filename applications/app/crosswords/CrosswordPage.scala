@@ -92,6 +92,7 @@ class CrosswordSearchPage extends StandalonePage {
     "Egoist",
     "Enigmatist",
     "Fawley",
+    "Fed",
     "Fidelio",
     "Fiore",
     "Gemini",
