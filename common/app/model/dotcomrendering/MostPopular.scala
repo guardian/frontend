@@ -193,9 +193,10 @@ object MostPopularNx2 {
 }
 
 object OnwardsUtils {
-  def normalisePillar(pillar: Option[Pillar]): String = pillar match {
-    case Some(Pillar("arts")) => "culture"
-    case Some(Pillar(p)) => p
-    case None => "news"
-  }
+  def normalisePillar(pillar: Option[Pillar]): String =
+    pillar match {
+      case Some(Pillar("arts")) => "culture"
+      case Some(Pillar(p))      => p
+      case None                 => "news"
+    }
 }
