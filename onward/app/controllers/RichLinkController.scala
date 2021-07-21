@@ -37,7 +37,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
             contributorImage = content.tags.contributors.headOption
               .flatMap(_.properties.contributorLargeImagePath.map(ImgSrc(_, RichLinkContributor))),
             url = content.metadata.url,
-            pillar = OnwardsUtils.determinePillar(content.metadata.pillar),
+            pillar = OnwardsUtils.normalisePillar(content.metadata.pillar),
             format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
           )
           Cached(900)(JsonComponent(richLink)(request, RichLink.writes))

@@ -109,7 +109,7 @@ object OnwardItem {
       carouselImages = getImageSources(maybeContent.trail.trailPicture),
       ageWarning = None,
       isLiveBlog = isLiveBlog,
-      pillar = OnwardsUtils.correctPillar(pillar.toString.toLowerCase),
+      pillar = OnwardsUtils.normalisePillar(Some(pillar)),
       designType = metadata.designType.toString,
       format = metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = webPublicationDate,
@@ -193,17 +193,9 @@ object MostPopularNx2 {
 }
 
 object OnwardsUtils {
-
-  def determinePillar(pillar: Option[Pillar]): String = {
-    pillar.map { pillar => correctPillar(pillar.toString.toLowerCase()) }.getOrElse("news")
+  def normalisePillar(pillar: Option[Pillar]): String = pillar match {
+    case Some(Pillar("arts")) => "culture"
+    case Some(Pillar(p)) => p
+    case None => "news"
   }
-
-  def correctPillar(pillar: String): String = {
-    if (pillar == "arts") {
-      "culture"
-    } else {
-      pillar
-    }
-  }
-
 }
