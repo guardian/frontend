@@ -48,7 +48,7 @@ import scala.concurrent.Await
         fronts = Map(
           "music" -> frontJson,
           "inline-embeds" -> frontJson,
-          "uk" -> frontJson,
+          "uk" -> frontJson.copy(collections = List("88f95182-aa85-4f00-a374-ea5fd3dc0be0")),
           "au/media" -> frontJson,
           "email/uk/daily" -> frontJson,
         ),
@@ -231,5 +231,11 @@ import scala.concurrent.Await
     contentAsString(emailJsonResponse) should include("<!DOCTYPE html")
     val responseHeaders = headers(emailJsonResponse)
     responseHeaders("Surrogate-Control") should include("max-age=900")
+  }
+
+  it should "render container json trails)" in {
+    val request = FakeRequest("GET", "/container/data/88f95182-aa85-4f00-a374-ea5fd3dc0be0.json")
+    val result = faciaController.renderContainerDataJson("88f95182-aa85-4f00-a374-ea5fd3dc0be0")(request)
+    status(result) should be(200)
   }
 }
