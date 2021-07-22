@@ -19,7 +19,6 @@ import { init as disableRefresh } from '../messenger/disable-refresh';
 import { init as initGetPageTargeting } from '../messenger/get-page-targeting';
 import { init as initGetPageUrl } from '../messenger/get-page-url';
 import { init as getStyles } from '../messenger/get-stylesheet';
-import { init as hide } from '../messenger/hide';
 import { init as resize } from '../messenger/resize';
 import { init as scroll } from '../messenger/scroll';
 import { init as type } from '../messenger/type';
@@ -38,7 +37,6 @@ initMessenger(
 	initGetPageUrl,
 	initMeasureAdLoad,
 	resize,
-	hide,
 	scroll,
 	viewport,
 	sendClick,
