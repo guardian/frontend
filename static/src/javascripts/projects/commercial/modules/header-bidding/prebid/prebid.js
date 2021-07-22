@@ -67,14 +67,14 @@ const initialise = (window, framework = 'tcfv2') => {
 		}
 	};
 
-    const pbjsConfig = Object.assign(
-        {},
-        {
-            bidderTimeout,
-            priceGranularity,
-            userSync,
-        },
-    );
+	const pbjsConfig = Object.assign(
+		{},
+		{
+			bidderTimeout,
+			priceGranularity,
+			userSync,
+		},
+	);
 
     if(config.get('switches.consentManagement', false)) {
         pbjsConfig.consentManagement = consentManagement()
@@ -134,6 +134,24 @@ const initialise = (window, framework = 'tcfv2') => {
                 return bidCpm * 1.05;
             }
         };
+    }
+
+    if(config.get('switches.prebidImproveDigital', false)) {
+        // Add placement ID for Improve Digital, reading from the bid response
+        const REGEX_PID = new RegExp(/placement_id=\\?\"(\d+)\\?\"/)
+        window.pbjs.bidderSettings.improvedigital = {
+            adserverTargeting: [
+                {
+                    key: 'hb_pid',
+                    val(bidResponse) {
+                        const matches = REGEX_PID.exec(bidResponse.ad);
+                        const pid = matches && matches[1];
+                        return pid ?? null;
+                    }
+                }
+            ],
+            suppressEmptyKeys: true,
+        }
     }
 
     // Adjust slot size when prebid ad loads

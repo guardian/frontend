@@ -157,11 +157,31 @@ describe('initialise', () => {
         );
     });
 
-    test('should generate correct bidder settings when Xaxis off', () => {
-        config.set('switches.prebidXaxis', false);
-        prebid.initialise(window);
-        expect(window.pbjs.bidderSettings).toEqual({});
-    });
+    describe('bidderSettings', () => {
+
+        beforeEach(() => {
+            config.set('switches.prebidXaxis', false);
+            config.set('switches.prebidImproveDigital', false);
+        })
+
+        test('should generate correct bidder settings when bidder switches are off', () => {
+            prebid.initialise(window);
+            expect(window.pbjs.bidderSettings).toEqual({});
+        });
+
+        test('should generate correct bidder settings when Xaxis is on', () => {
+            config.set('switches.prebidXaxis', true);
+            prebid.initialise(window);
+            expect(window.pbjs.bidderSettings).toHaveProperty('xhb');
+        });
+
+        test('should generate correct bidder settings when Improve Digital is on', () => {
+            config.set('switches.prebidImproveDigital', true);
+            prebid.initialise(window);
+            expect(window.pbjs.bidderSettings).toHaveProperty('improvedigital');
+        });
+
+    })
 
     test('should generate correct Prebid config when user-sync off', () => {
         config.set('switches.prebidUserSync', false);
