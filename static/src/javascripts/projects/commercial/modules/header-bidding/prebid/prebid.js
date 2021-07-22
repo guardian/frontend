@@ -136,20 +136,21 @@ const initialise = (window, framework = 'tcfv2') => {
         };
     }
 
-    // Add placement ID for Improve Digital, reading from the bid response
-    const REGEX_PID = new RegExp(/placement_id=\\?\"(\d+)\\?\"/)
-    window.pbjs.bidderSettings.improvedigital = {
-        adserverTargeting: [
-            {
-                key: 'hb_pid',
-                val(bidResponse) {
-                    const matches = REGEX_PID.exec(bidResponse.ad);
-                    const pid = matches && matches[1];
-                    log('commercial', 'Improve Digital Bid', {pid, matches, bidResponse})
-                    return pid ?? '';
+    if(config.get('switches.prebidImproveDigital', false)) {
+        // Add placement ID for Improve Digital, reading from the bid response
+        const REGEX_PID = new RegExp(/placement_id=\\?\"(\d+)\\?\"/)
+        window.pbjs.bidderSettings.improvedigital = {
+            adserverTargeting: [
+                {
+                    key: 'hb_pid',
+                    val(bidResponse) {
+                        const matches = REGEX_PID.exec(bidResponse.ad);
+                        const pid = matches && matches[1];
+                        return pid ?? '';
+                    }
                 }
-            }
-        ]
+            ]
+        }
     }
 
     // Adjust slot size when prebid ad loads
