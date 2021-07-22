@@ -119,3 +119,5 @@ type PrebidMediaTypes = {
 		sizes: HeaderBiddingSize[];
 	};
 };
+
+type SlotFlatMap = (slot: HeaderBiddingSlot) => HeaderBiddingSlot[];
