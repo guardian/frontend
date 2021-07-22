@@ -149,7 +149,8 @@ const initialise = (window, framework = 'tcfv2') => {
                         return pid ?? null;
                     }
                 }
-            ]
+            ],
+            suppressEmptyKeys: true,
         }
     }
 
