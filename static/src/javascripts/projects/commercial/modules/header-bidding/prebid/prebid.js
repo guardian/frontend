@@ -146,7 +146,7 @@ const initialise = (window, framework = 'tcfv2') => {
                     val(bidResponse) {
                         const matches = REGEX_PID.exec(bidResponse.ad);
                         const pid = matches && matches[1];
-                        return pid ?? '';
+                        return pid ?? null;
                     }
                 }
             ]
