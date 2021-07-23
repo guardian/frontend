@@ -69,7 +69,8 @@ interface Config {
 
 interface PageConfig extends CommercialPageConfig {
 	isSensitive: boolean;
-	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc7/common/app/model/meta.scala#L352
+	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
+	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 }
 
 interface Ophan {
