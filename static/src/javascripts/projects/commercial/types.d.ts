@@ -91,8 +91,8 @@ type SlotVisibilityChangedEvent = {
 	slot: Slot;
 };
 
-type GuAdSize = {
+type GuAdSize = Readonly<{
 	width: number;
 	height: number;
-	toString: (_: void) => string;
-};
+	toString: () => string;
+}>;
