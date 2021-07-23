@@ -130,8 +130,6 @@ declare global {
 	}
 }
 
-window.pbjs;
-
 const bidderTimeout = 1500;
 
 class PrebidAdUnit {
