@@ -20,6 +20,7 @@ import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
 import model.dotcomrendering.PageType
+import utils.UnsafeContent
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
@@ -81,14 +82,14 @@ class LiveBlogController(
 
   def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
     Action.async { implicit request =>
-      page.map(ParseBlockId.fromPageParam) match {
+      (page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) => renderWithRange(path, PageWithBlock(id)) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
         case None => renderWithRange(path, CanonicalLiveBlog) // no page param
-      }
+      })
     }
   }
 
@@ -202,7 +203,16 @@ class LiveBlogController(
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
+    // Hack to error if body unsafe
+    val isUnsafe = (for {
+      content <- response.content
+      fields <- content.fields
+    } yield UnsafeContent.isVidme(fields.body.getOrElse(""))).getOrElse(false)
+
     val content = supportedContentResult.left.flatMap {
+      case _ if isUnsafe =>
+        log.error(s"Unsafe content found for path: ${request.path}")
+        Right(NoCache(play.api.mvc.Results.InternalServerError("Unsafe content error (500)")))
       case minute: Article if minute.isTheMinute =>
         Left(MinutePage(minute, StoryPackages(minute.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
