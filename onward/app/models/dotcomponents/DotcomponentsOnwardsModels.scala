@@ -33,19 +33,3 @@ case class RichLink(
 object RichLink {
   implicit val writes = Json.writes[RichLink]
 }
-
-object OnwardsUtils {
-
-  def determinePillar(pillar: Option[Pillar]): String = {
-    pillar.map { pillar => correctPillar(pillar.toString.toLowerCase()) }.getOrElse("news")
-  }
-
-  def correctPillar(pillar: String): String = {
-    if (pillar == "arts") {
-      "culture"
-    } else {
-      pillar
-    }
-  }
-
-}

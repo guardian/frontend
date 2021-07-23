@@ -1,18 +1,17 @@
-package models
+package model.dotcomrendering
 
 import com.github.nscala_time.time.Imports.DateTimeZone
-import com.gu.commercial.branding.{Branding, BrandingType, Sponsored, Logo, Dimensions}
+import com.gu.commercial.branding.{Branding, BrandingType, Sponsored, Logo => CommercialLogo, Dimensions}
 import common.{Edition, LinkTo}
-import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
 import views.support.{ContentOldAgeDescriber, ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
 import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
-import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
+import model.pressed.PressedContent
 
-case class OnwardItemNx2(
+case class OnwardItem(
     url: String,
     linkText: String,
     showByline: Boolean,
@@ -34,7 +33,7 @@ case class OnwardItemNx2(
     branding: Option[Branding],
 )
 
-object OnwardItemNx2 {
+object OnwardItem {
 
   implicit val brandingTypeWrites = new Writes[BrandingType] {
     def writes(bt: BrandingType) = {
@@ -46,11 +45,11 @@ object OnwardItemNx2 {
 
   implicit val dimensionsWrites = Json.writes[Dimensions]
 
-  implicit val logoWrites = Json.writes[Logo]
+  implicit val logoWrites = Json.writes[CommercialLogo]
 
   implicit val brandingWrites = Json.writes[Branding]
 
-  implicit val onwardItemNx2Writes = Json.writes[OnwardItemNx2]
+  implicit val OnwardItemWrites = Json.writes[OnwardItem]
 
   private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
@@ -89,7 +88,7 @@ object OnwardItemNx2 {
     images.toMap
   }
 
-  def contentCardToOnwardItemNx2(contentCard: ContentCard): Option[OnwardItemNx2] = {
+  def contentCardToOnwardItem(contentCard: ContentCard): Option[OnwardItem] = {
     for {
       properties <- contentCard.properties
       maybeContent <- properties.maybeContent
@@ -101,7 +100,7 @@ object OnwardItemNx2 {
       showByline = properties.showByline
       webPublicationDate <- contentCard.webPublicationDate.map(x => x.toDateTime().toString())
       shortUrl <- contentCard.shortUrl
-    } yield OnwardItemNx2(
+    } yield OnwardItem(
       url = url,
       linkText = "",
       showByline = showByline,
@@ -110,7 +109,7 @@ object OnwardItemNx2 {
       carouselImages = getImageSources(maybeContent.trail.trailPicture),
       ageWarning = None,
       isLiveBlog = isLiveBlog,
-      pillar = correctPillar(pillar.toString.toLowerCase),
+      pillar = OnwardsUtils.normalisePillar(Some(pillar)),
       designType = metadata.designType.toString,
       format = metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = webPublicationDate,
@@ -124,9 +123,9 @@ object OnwardItemNx2 {
     )
   }
 
-  def pressedContentToOnwardItemNx2(content: PressedContent)(implicit
+  def pressedContentToOnwardItem(content: PressedContent)(implicit
       request: RequestHeader,
-  ): OnwardItemNx2 = {
+  ): OnwardItem = {
 
     def pillarToString(pillar: Pillar): String = {
       pillar.toString.toLowerCase() match {
@@ -134,7 +133,7 @@ object OnwardItemNx2 {
         case other  => other
       }
     }
-    OnwardItemNx2(
+    OnwardItem(
       url = LinkTo(content.header.url),
       linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
       showByline = content.properties.showByline,
@@ -160,7 +159,7 @@ object OnwardItemNx2 {
 
 case class OnwardCollectionResponse(
     heading: String,
-    trails: Seq[OnwardItemNx2],
+    trails: Seq[OnwardItem],
 )
 object OnwardCollectionResponse {
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
@@ -168,8 +167,8 @@ object OnwardCollectionResponse {
 
 case class OnwardCollectionResponseDCR(
     tabs: Seq[OnwardCollectionResponse],
-    mostCommented: Option[OnwardItemNx2],
-    mostShared: Option[OnwardItemNx2],
+    mostCommented: Option[OnwardItem],
+    mostShared: Option[OnwardItem],
 )
 object OnwardCollectionResponseDCR {
   implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseDCR]
@@ -178,7 +177,7 @@ object OnwardCollectionResponseDCR {
 case class MostPopularGeoResponse(
     country: Option[String],
     heading: String,
-    trails: Seq[OnwardItemNx2],
+    trails: Seq[OnwardItem],
 )
 object MostPopularGeoResponse {
   implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
@@ -187,8 +186,17 @@ object MostPopularGeoResponse {
 // MostPopularNx2 was introduced to replace the less flexible [common] MostPopular
 // which is heavily relying on pressed.PressedContent
 // because we want to be able to create MostPopularNx2 from trails coming from the DeeplyReadAgent
-case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardItemNx2])
+case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardItem])
 
 object MostPopularNx2 {
   implicit val mostPopularNx2Writes = Json.writes[MostPopularNx2]
+}
+
+object OnwardsUtils {
+  def normalisePillar(pillar: Option[Pillar]): String =
+    pillar match {
+      case Some(Pillar("arts")) => "culture"
+      case Some(Pillar(p))      => p
+      case None                 => "news"
+    }
 }
