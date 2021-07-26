@@ -101,7 +101,7 @@ type BidderSettings = {
 
 declare global {
 	interface Window {
-		pbjs: {
+		pbjs?: {
 			que: {
 				push: (cb: () => void) => void;
 			};
@@ -119,6 +119,16 @@ declare global {
 				auctionId?: string;
 			}): void;
 			setConfig: (config: PbjsConfig) => void;
+			getConfig: (
+				item?: string,
+			) => PbjsConfig & {
+				dataProviders: Array<{
+					name: string;
+					params: {
+						acBidders: string[];
+					};
+				}>;
+			};
 			bidderSettings: BidderSettings;
 			enableAnalytics: (arg0: [EnableAnalyticsConfig]) => void;
 			onEvent: (event: PbjsEvent, handler: PbjsEventHandler) => void;
@@ -153,6 +163,10 @@ let requestQueue: Promise<void> = Promise.resolve();
 let initialised = false;
 
 const initialise = (window: Window, framework = 'tcfv2'): void => {
+	if (!window.pbjs) {
+		console.warn('window.pbjs not found on window');
+		return void 0; // We couldn’t initialise
+	}
 	initialised = true;
 
 	const userSync: UserSync = window.guardian.config.switches.prebidUserSync
@@ -330,7 +344,7 @@ const requestBids = (
 		.then(
 			() =>
 				new Promise<void>((resolve) => {
-					window.pbjs.que.push(() => {
+					window.pbjs?.que.push(() => {
 						adUnits.forEach((adUnit) => {
 							if (isString(adUnit.code))
 								eventTimer.trigger(
@@ -338,11 +352,11 @@ const requestBids = (
 									stripDfpAdPrefixFrom(adUnit.code),
 								);
 						});
-						window.pbjs.requestBids({
+						window.pbjs?.requestBids({
 							adUnits,
 							bidsBackHandler() {
 								if (isString(adUnits[0].code))
-									window.pbjs.setTargetingForGPTAsync([
+									window.pbjs?.setTargetingForGPTAsync([
 										adUnits[0].code,
 									]);
 

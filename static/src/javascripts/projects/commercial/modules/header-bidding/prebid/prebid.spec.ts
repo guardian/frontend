@@ -6,7 +6,7 @@ const prebid = {
 	initialise,
 };
 
-const getAdvertById = getAdvertById_;
+const getAdvertById = getAdvertById_ as jest.Mock;
 
 jest.mock('../../../../../lib/raven');
 
@@ -47,7 +47,7 @@ describe('initialise', () => {
 
     test('should generate correct Prebid config when all switches on', () => {
         prebid.initialise(window, 'tcfv2');
-        expect(window.pbjs.getConfig()).toEqual({
+        expect(window.pbjs?.getConfig()).toEqual({
             _auctionOptions: {},
             _bidderSequence: 'random',
             _bidderTimeout: 1500,
@@ -130,7 +130,7 @@ describe('initialise', () => {
 
     test('should generate correct Prebid config consent management in CCPA', () => {
         prebid.initialise(window, 'ccpa');
-        expect(window.pbjs.getConfig('consentManagement')).toEqual({
+        expect(window.pbjs?.getConfig('consentManagement')).toEqual({
             usp: {
                 cmpApi: 'iab',
                 timeout: 1500,
@@ -140,7 +140,7 @@ describe('initialise', () => {
 
     test('should generate correct Prebid config consent management in AUS', () => {
         prebid.initialise(window, 'aus');
-        expect(window.pbjs.getConfig('consentManagement')).toEqual({
+        expect(window.pbjs?.getConfig('consentManagement')).toEqual({
             usp: {
                 cmpApi: 'iab',
                 timeout: 1500,
@@ -151,12 +151,12 @@ describe('initialise', () => {
 	test('should generate correct Prebid config when consent management off', () => {
 		config.set('switches.consentManagement', false);
 		prebid.initialise(window);
-		expect(window.pbjs.getConfig('consentManagement')).toBeUndefined();
+		expect(window.pbjs?.getConfig('consentManagement')).toBeUndefined();
 	});
 
     test('should generate correct bidder settings', () => {
         prebid.initialise(window);
-        expect(window.pbjs.bidderSettings.xhb).toHaveProperty(
+        expect(window.pbjs?.bidderSettings.xhb).toHaveProperty(
             'adserverTargeting'
         );
     });
@@ -170,19 +170,19 @@ describe('initialise', () => {
 
         test('should generate correct bidder settings when bidder switches are off', () => {
             prebid.initialise(window);
-            expect(window.pbjs.bidderSettings).toEqual({});
+            expect(window.pbjs?.bidderSettings).toEqual({});
         });
 
         test('should generate correct bidder settings when Xaxis is on', () => {
             config.set('switches.prebidXaxis', true);
             prebid.initialise(window);
-            expect(window.pbjs.bidderSettings).toHaveProperty('xhb');
+            expect(window.pbjs?.bidderSettings).toHaveProperty('xhb');
         });
 
         test('should generate correct bidder settings when Improve Digital is on', () => {
             config.set('switches.prebidImproveDigital', true);
             prebid.initialise(window);
-            expect(window.pbjs.bidderSettings).toHaveProperty('improvedigital');
+            expect(window.pbjs?.bidderSettings).toHaveProperty('improvedigital');
         });
 
     })
@@ -190,16 +190,17 @@ describe('initialise', () => {
     test('should generate correct Prebid config when user-sync off', () => {
         config.set('switches.prebidUserSync', false);
         prebid.initialise(window);
-        expect(window.pbjs.getConfig().userSync.syncEnabled).toEqual(false);
+		// @ts-expect-error -- it works with the alternative type
+        expect(window.pbjs?.getConfig().userSync.syncEnabled).toEqual(false);
     });
 
 	test('should generate correct Prebid config when both Permutive and prebidPermutiveAudience are true', () => {
 		config.set('switches.permutive', true);
 		config.set('switches.prebidPermutiveAudience', true);
 		prebid.initialise(window);
-		const rtcData = window.pbjs.getConfig('realTimeData').dataProviders[0];
-		expect(rtcData.name).toEqual('permutive');
-		expect(rtcData.params.acBidders).toEqual([
+		const rtcData = window.pbjs?.getConfig('realTimeData').dataProviders[0];
+		expect(rtcData?.name).toEqual('permutive');
+		expect(rtcData?.params.acBidders).toEqual([
 			'appnexus',
 			'ozone',
 			'pubmatic',
@@ -217,20 +218,27 @@ describe('initialise', () => {
 			config.set('switches.permutive', p);
 			config.set('switches.prebidPermutiveAudience', a);
 			prebid.initialise(window);
-			const rtcData = window.pbjs.getConfig('realTimeData');
+			const rtcData = window.pbjs?.getConfig('realTimeData');
 			expect(rtcData).toBeUndefined();
 		},
 	);
 
+	type BidWonHandler = (arg0: {
+		height: number;
+		width: number;
+		adUnitCode: string;
+	}) => void;
+
 	describe('Prebid.js bidWon Events', () => {
 		test('should respond for correct configuration', () => {
 			let bidWonEventName;
-			let bidWonEventHandler;
+			let bidWonEventHandler: BidWonHandler;
 			const dummyAdvert = {
 				size: [200, 200],
 				hasPrebidSize: false,
 			};
 
+			if (!window.pbjs) return false;
 			window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
 				bidWonEventName = eventName;
 				bidWonEventHandler = eventHandler;
@@ -243,6 +251,8 @@ describe('initialise', () => {
 			expect(bidWonEventName).toBe('bidWon');
 			expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
 
+			// @ts-expect-error -- this is handled by onEvent
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- it used to be that way
 			if (bidWonEventHandler) {
 				bidWonEventHandler({
 					height: 100,
@@ -283,8 +293,9 @@ describe('initialise', () => {
 			'should not respond if %s is missing from prebid data',
 			(_, data) => {
 				let bidWonEventName;
-				let bidWonEventHandler;
+				let bidWonEventHandler: BidWonHandler;
 
+				if (!window.pbjs) return false;
 				window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
 					bidWonEventName = eventName;
 					bidWonEventHandler = eventHandler;
@@ -295,7 +306,10 @@ describe('initialise', () => {
 				expect(bidWonEventName).toBe('bidWon');
 				expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
 
+				// @ts-expect-error -- this is handled by onEvent
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- it used to be that way
 				if (bidWonEventHandler) {
+					// @ts-expect-error -- we’re testing malformed data
 					bidWonEventHandler(data);
 				}
 
