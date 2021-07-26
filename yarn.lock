@@ -1893,14 +1893,15 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-2.1.0.tgz#d878bf2d7351fd682ee8e5d588970d18a62efd8a"
-  integrity sha512-PofC9Ao2fjUhT9tQcLh5ZFy4n+AwJE2eDNd2UdKM0pnhnfhqLZV+II3wARKuVc8K+4EjDJLnNOY9UA+NbXgE2Q==
+"@guardian/braze-components@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-3.0.1.tgz#4624b9ff327f283a2a7478b2dfbaf9fc4963269d"
+  integrity sha512-zcACdXim/lhiM10mLcXq+BVmB2N5FyhYf8Y0KxrGGzaQ89VI9HCN4dnsueizgGgbShcKJ/AJjocmul/degwaxA==
   dependencies:
     "@guardian/src-button" "3.3.0"
     "@guardian/src-foundations" "3.3.0"
     "@guardian/src-icons" "3.3.0"
+    dialog-polyfill "^0.5.4"
 
 "@guardian/commercial-core@^0.19.1":
   version "0.19.1"
@@ -5296,6 +5297,11 @@ detective@^4.3.1:
 dev-ip@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dev-ip/-/dev-ip-1.0.1.tgz#a76a3ed1855be7a012bb8ac16cb80f3c00dc28f0"
+
+dialog-polyfill@^0.5.4:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/dialog-polyfill/-/dialog-polyfill-0.5.6.tgz#7507b4c745a82fcee0fa07ce64d835979719599a"
+  integrity sha512-ZbVDJI9uvxPAKze6z146rmfUZjBqNEwcnFTVamQzXH+svluiV7swmVIGr7miwADgfgt1G2JQIytypM9fbyhX4w==
 
 diff-sequences@^26.6.2:
   version "26.6.2"
