@@ -81,6 +81,7 @@ private object NavLinks {
   val usBusiness =
     ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness, retail))
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate, retail))
+  val greenLight = NavLink("Green light", "/environment/series/green-light")
 
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
@@ -291,6 +292,7 @@ private object NavLinks {
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}?INTCMP=DOTCOM_NAV_NEWSLETTER_US"),
+      greenLight,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
