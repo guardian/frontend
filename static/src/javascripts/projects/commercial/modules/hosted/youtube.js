@@ -56,13 +56,17 @@ export const initHostedYoutube = (el) => {
             onPlayerStateChange(event) {
                 const player = event.target;
 
-                // update current time
-                const currentTime = Math.floor(player.getCurrentTime());
-                const seconds = currentTime % 60;
-                const minutes = (currentTime - seconds) / 60;
-                youtubeTimer.textContent =
-                    minutes + (seconds < 10 ? ':0' : ':') + seconds;
-
+                if (event.data === window.YT.PlayerState.ENDED) {
+                    trackYoutubeEvent('end', atomId);
+                    youtubeTimer.textContent = '0:00';
+                } else {
+                    // update current time
+                    const currentTime = Math.floor(player.getCurrentTime());
+                    const seconds = currentTime % 60;
+                    const minutes = (currentTime - seconds) / 60;
+                    youtubeTimer.textContent =
+                        minutes + (seconds < 10 ? ':0' : ':') + seconds;
+                }
 
                 if (event.data === window.YT.PlayerState.PLAYING) {
                     trackYoutubeEvent('play', atomId);
