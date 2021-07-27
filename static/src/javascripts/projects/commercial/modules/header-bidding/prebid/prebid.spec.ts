@@ -1,10 +1,6 @@
 import config from '../../../../../lib/config';
 import { getAdvertById as getAdvertById_ } from '../../dfp/get-advert-by-id';
-import { initialise } from './prebid';
-
-const prebid = {
-	initialise,
-};
+import { prebid } from './prebid';
 
 const getAdvertById = getAdvertById_ as jest.Mock;
 

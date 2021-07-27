@@ -5,7 +5,7 @@ import {
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import prebid from '../header-bidding/prebid/prebid';
+import { prebid } from '../header-bidding/prebid/prebid';
 import { dfpEnv } from './dfp-env';
 import { _ } from './prepare-prebid';
 
@@ -18,7 +18,9 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 }));
 
 jest.mock('../header-bidding/prebid/prebid', () => ({
-    initialise: jest.fn(),
+	prebid: {
+		initialise: jest.fn(),
+	},
 }));
 
 jest.mock('./Advert', () =>

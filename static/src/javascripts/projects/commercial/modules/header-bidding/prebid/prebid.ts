@@ -382,4 +382,4 @@ const requestBids = (
 	return requestQueue;
 };
 
-export { initialise, requestBids };
+export const prebid = { initialise, requestBids };
