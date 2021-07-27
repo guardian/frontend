@@ -57,6 +57,7 @@ private object NavLinks {
   val borrowing = NavLink("Borrowing", "/money/debt")
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/tone/obituaries")
+  val greenLight = NavLink("Green light", "/environment/series/green-light")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -72,6 +73,7 @@ private object NavLinks {
   val ukEnvironment =
     NavLink("Environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
   val auEnvironment = ukEnvironment.copy(children = List(globalDevelopment, ourWideBrownLand))
+  val usEnvironment = ukEnvironment.copy(children = List(climateChange, wildlife, energy, pollution, greenLight))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
     "Business",
@@ -81,7 +83,6 @@ private object NavLinks {
   val usBusiness =
     ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness, retail))
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate, retail))
-  val greenLight = NavLink("Green light", "/environment/series/green-light")
 
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
@@ -285,7 +286,7 @@ private object NavLinks {
     List(
       usNews,
       world,
-      ukEnvironment,
+      usEnvironment,
       soccer,
       usPolitics,
       usBusiness,
