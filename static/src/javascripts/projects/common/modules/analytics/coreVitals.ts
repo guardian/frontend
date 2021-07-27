@@ -30,8 +30,16 @@ const jsonData: CoreWebVitalsPayload = {
 };
 
 export const coreVitals = (): void => {
-	const inSample = Math.floor(Math.random() * 100);
-	if (inSample != 1) {
+	// If the current user is part of a server-side AB test
+	// then we always want to sample their core web vitals data.
+	const userInTest =
+		window.guardian.config.tests &&
+		Object.values(window.guardian.config.tests).includes('variant');
+
+	// Otherwise, only send core web vitals data for 1% of users.
+	const inSample = Math.floor(Math.random() * 100) == 1;
+
+	if (!userInTest && !inSample) {
 		return;
 	}
 

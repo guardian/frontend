@@ -65,6 +65,10 @@ interface CommercialPageConfig {
 interface Config {
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
+	tests?: {
+		testName: string;
+		groupName: string;
+	};
 }
 
 interface PageConfig extends CommercialPageConfig {
