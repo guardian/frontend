@@ -177,7 +177,15 @@
         width: 100%;
     }
 
-    &.ad-slot--top-above-nav-experiment-variant {
+    &.ad-slot--top-above-nav-experiment-variant-150 {
+        min-height: 150px;
+    }
+
+    &.ad-slot--top-above-nav-experiment-variant-200 {
+        min-height: 200px;
+    }
+
+    &.ad-slot--top-above-nav-experiment-variant-250 {
         min-height: 250px;
     }
 }
