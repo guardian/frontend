@@ -14,7 +14,6 @@ import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.{ArticlePicker, _}
-import utils.UnsafeContent
 import views.support._
 
 import scala.concurrent.Future
@@ -134,16 +133,7 @@ class ArticleController(
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-    // Hack to error if body unsafe
-    val isUnsafe = (for {
-      content <- response.content
-      fields <- content.fields
-    } yield UnsafeContent.isVidme(fields.body.getOrElse(""))).getOrElse(false)
-
     ModelOrResult(supportedContent, response) match {
-      case _ if isUnsafe =>
-        log.error(s"Unsafe content found for path: ${request.path}")
-        Right(NoCache(play.api.mvc.Results.InternalServerError("Unsafe content error (500)")))
       case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Right(r)               => Right(r)
       case _                      => Right(NotFound)
