@@ -2,7 +2,7 @@ package model
 
 object IpsosTags {
 
-  val tags = Map(
+  private val guardianToIpsosTagMapping = Map(
     "uk" -> "uk",
     "us" -> "us",
     "au" -> "au",
@@ -117,7 +117,7 @@ object IpsosTags {
 
   // Default to top level `guardian` tag if key is not found
   def getScriptTag(id: String): String = {
-    tags.getOrElse(id, "guardian")
+    guardianToIpsosTagMapping.getOrElse(id, "guardian")
   }
 
 }
