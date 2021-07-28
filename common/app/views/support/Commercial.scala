@@ -166,11 +166,11 @@ object Commercial {
       val userInVariant150 = ActiveExperiments.isParticipating(TopAboveNavHeight150)
       val userInVariant200 = ActiveExperiments.isParticipating(TopAboveNavHeight200)
       val userInVariant250 = ActiveExperiments.isParticipating(TopAboveNavHeight250)
-      if(userInVariant150) {
+      if (userInVariant150) {
         Seq("top-above-nav-experiment-variant-150") ++ baseClasses
-      } else if(userInVariant200) {
+      } else if (userInVariant200) {
         Seq("top-above-nav-experiment-variant-200") ++ baseClasses
-      } else if(userInVariant250) {
+      } else if (userInVariant250) {
         Seq("top-above-nav-experiment-variant-250") ++ baseClasses
       } else {
         baseClasses
