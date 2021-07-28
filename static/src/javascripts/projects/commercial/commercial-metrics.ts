@@ -2,7 +2,6 @@ import type { ABTest } from '@guardian/ab-core';
 import { sendCommercialMetrics } from '@guardian/commercial-core';
 import { getSynchronousTestsToRun } from 'common/modules/experiments/ab';
 import { commercialPartner } from 'common/modules/experiments/tests/commercial-partner';
-import { improveSkins } from 'common/modules/experiments/tests/improve-skins';
 import config_ from '../../lib/config';
 
 // This is really a hacky workaround ⚠️
@@ -19,7 +18,7 @@ const init = (): Promise<void> => {
 	if (!config.get('switches.commercialMetrics', false))
 		return Promise.resolve();
 
-	const testsToForceMetricsFor: ABTest[] = [commercialPartner, improveSkins];
+	const testsToForceMetricsFor: ABTest[] = [commercialPartner];
 
 	const userIsInSamplingGroup = Math.random() <= 0.01;
 	const shouldForceMetrics = getSynchronousTestsToRun().some((test) =>

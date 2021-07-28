@@ -33,15 +33,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2021, 9, 1)),
     exposeClientSide = true,
   )
-
-  // tests/improve-skins.ts
-  Switch(
-    ABTests,
-    "ab-improve-skins",
-    "Serve Improve page skins via Prebid and measure performance",
-    owners = Seq(Owner.withGithub("mxdvl")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 8, 3)),
-    exposeClientSide = true,
-  )
 }
