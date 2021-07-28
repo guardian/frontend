@@ -203,52 +203,6 @@ const tcfv2WithConsent = {
 	},
 };
 
-const tcfv2WithoutConsent = {
-	tcfv2: {
-		consents: {
-			'1': false,
-			'2': false,
-			'3': false,
-			'4': false,
-			'5': false,
-		},
-		vendorConsents: {
-			'5f1aada6b8e05c306c0597d7': false, // Googletag
-		},
-	},
-};
-
-// TODO: There is no null consent in the new CMP
-const tcfv2NullConsent = {
-	tcfv2: {
-		consents: {
-			'1': null,
-			'2': null,
-			'3': null,
-			'4': null,
-			'5': null,
-		},
-		vendorConsents: {
-			'5f1aada6b8e05c306c0597d7': null, // Googletag
-		},
-	},
-};
-
-const tcfv2MixedConsent = {
-	tcfv2: {
-		consents: {
-			'1': true,
-			'2': false,
-			'3': false,
-			'4': true,
-			'5': false,
-		},
-		vendorConsents: {
-			'5f1aada6b8e05c306c0597d7': true, // Googletag
-		},
-	},
-};
-
 const ausNotRejected = {
 	aus: {
 		rejectedCategories: [],
@@ -644,56 +598,6 @@ describe('DFP', () => {
 		});
 	});
 
-	describe('NPA flag is set correctly', () => {
-		it('when full TCF consent was given', async () => {
-			onConsentChange.mockImplementation(
-				(
-					callback: (val: {
-						tcfv2: TCFv2ConsentStateMockType;
-					}) => void,
-				) => callback(tcfv2WithConsent),
-			);
-			getConsentFor.mockReturnValue(true);
-			await prepareGoogletag();
-			expect(pubAds.setRequestNonPersonalizedAds).toHaveBeenCalledWith(0);
-		});
-		it('when no TCF consent preferences were specified', async () => {
-			onConsentChange.mockImplementation(
-				(
-					callback: (val: {
-						tcfv2: TCFv2ConsentStateMockType;
-					}) => void,
-				) => callback(tcfv2NullConsent),
-			);
-			getConsentFor.mockReturnValue(true);
-			await prepareGoogletag();
-			expect(pubAds.setRequestNonPersonalizedAds).toHaveBeenCalledWith(0);
-		});
-		it('when full TCF consent was denied', async () => {
-			onConsentChange.mockImplementation(
-				(
-					callback: (val: {
-						tcfv2: TCFv2ConsentStateMockType;
-					}) => void,
-				) => callback(tcfv2WithoutConsent),
-			);
-			getConsentFor.mockReturnValue(false);
-			await prepareGoogletag();
-			expect(pubAds.setRequestNonPersonalizedAds).toHaveBeenCalledWith(1);
-		});
-		it('when only partial TCF consent was given', async () => {
-			onConsentChange.mockImplementation(
-				(
-					callback: (val: {
-						tcfv2: TCFv2ConsentStateMockType;
-					}) => void,
-				) => callback(tcfv2MixedConsent),
-			);
-			getConsentFor.mockReturnValue(false);
-			await prepareGoogletag();
-			expect(pubAds.setRequestNonPersonalizedAds).toHaveBeenCalledWith(1);
-		});
-	});
 	describe('NPA flag in AUS', () => {
 		it('when AUS has not retracted advertising consent', async () => {
 			onConsentChange.mockImplementation(
