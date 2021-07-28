@@ -36,7 +36,7 @@ object InteractiveLibrarianExp
 
 object TopAboveNavHeight150
     extends Experiment(
-      name = "top-above-nav-height",
+      name = "top-above-nav-height-150",
       description = "Set minimum height of top-above-nav ad slot to 150px rather than current height of 90px",
       owners = Seq(Owner.withGithub("zekehuntergreen")),
       sellByDate = LocalDate.of(2021, 8, 31),
@@ -45,7 +45,7 @@ object TopAboveNavHeight150
 
 object TopAboveNavHeight200
     extends Experiment(
-      name = "top-above-nav-height",
+      name = "top-above-nav-height-200",
       description = "Set minimum height of top-above-nav ad slot to 200px rather than current height of 90px",
       owners = Seq(Owner.withGithub("zekehuntergreen")),
       sellByDate = LocalDate.of(2021, 8, 31),
@@ -54,7 +54,7 @@ object TopAboveNavHeight200
 
 object TopAboveNavHeight250
     extends Experiment(
-      name = "top-above-nav-height",
+      name = "top-above-nav-height-250",
       description = "Set minimum height of top-above-nav ad slot to 250px rather than current height of 90px",
       owners = Seq(Owner.withGithub("zekehuntergreen")),
       sellByDate = LocalDate.of(2021, 8, 31),
