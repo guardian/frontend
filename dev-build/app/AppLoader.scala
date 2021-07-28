@@ -1,5 +1,4 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
-import assets.DiscussionExternalAssetsLifecycle
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
 import common.DiagnosticsLifecycle
@@ -30,8 +29,9 @@ import rugby.controllers.RugbyControllers
 import services._
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
+import common.Assets.DiscussionExternalAssetsLifecycle
 import concurrent.BlockingOperations
-import services.newsletters.{NewsletterSignupLifecycle, NewsletterSignupAgent, NewsletterApi}
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import play.api.OptionalDevContext
 
 class AppLoader extends FrontendApplicationLoader {

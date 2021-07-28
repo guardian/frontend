@@ -470,6 +470,7 @@ case class SpotifyBlockElement(
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
+    role: Role,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object SpotifyBlockElement {
@@ -1237,7 +1238,9 @@ object PageElement {
           .toList
       case Interactive =>
         element.interactiveTypeData
-          .map(d => InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl, d.role, d.isMandatory, d.caption))
+          .map(d =>
+            InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl.map(ensureHTTPS), d.role, d.isMandatory, d.caption),
+          )
           .toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => {
@@ -1313,6 +1316,14 @@ object PageElement {
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
+  }
+
+  private[this] def ensureHTTPS(url: String): String = {
+    val http = "http://"
+
+    if (url.startsWith(http)) {
+      "https://" + url.stripPrefix(http)
+    } else url
   }
 
   private def makeWitnessAssets(element: ApiBlockElement): Seq[WitnessBlockElementAssetsElement] = {
@@ -1511,6 +1522,7 @@ object PageElement {
         thirdPartyTracking,
         d.source,
         d.sourceDomain,
+        Role(d.role),
       )
     }
   }

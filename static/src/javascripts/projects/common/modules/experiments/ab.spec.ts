@@ -36,14 +36,6 @@ jest.mock('common/modules/experiments/ab-ophan', () => ({
 }));
 jest.mock('lodash/memoize', () => (f: (...args: unknown[]) => unknown) => f);
 
-// from https://github.com/joonhocho/tsdef
-// makes all properties optional recursively, including nested object
-type DeepPartial<T> = {
-	[P in keyof T]?: T[P] extends Array<infer I>
-		? Array<DeepPartial<I>>
-		: DeepPartial<T[P]>;
-};
-
 const cfg: DeepPartial<Config> = window.guardian.config;
 
 describe('A/B', () => {

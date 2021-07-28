@@ -102,8 +102,8 @@ object TagLinker {
       val keyword = keywords.find(tag => el.html.contains(tag.name))
 
       keyword.map(tag => {
-        def mapper(tag: Tag)(m: Match) = Some(m.group("start") + link(tag, edition) + m.group("end"))
-        val updatedHtml = keywordRegex(tag.name).replaceSomeIn(el.html, mapper(tag))
+        // $1 and $3 here are 'start' and 'end' regex match groups.
+        val updatedHtml = keywordRegex(tag.name).replaceFirstIn(el.html, "$1" + link(tag, edition) + "$3")
         (TextBlockElement(updatedHtml), terms + tag.name)
       }) getOrElse (el, terms)
     } else {

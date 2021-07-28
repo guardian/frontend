@@ -57,6 +57,7 @@ private object NavLinks {
   val borrowing = NavLink("Borrowing", "/money/debt")
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/tone/obituaries")
+  val greenLight = NavLink("Green light", "/environment/series/green-light")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -72,6 +73,7 @@ private object NavLinks {
   val ukEnvironment =
     NavLink("Environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
   val auEnvironment = ukEnvironment.copy(children = List(globalDevelopment, ourWideBrownLand))
+  val usEnvironment = ukEnvironment.copy(children = List(climateChange, wildlife, energy, pollution, greenLight))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
     "Business",
@@ -92,13 +94,12 @@ private object NavLinks {
 
   /* SPORT */
 
-  val Euro2020 = NavLink("Euro 2020", "/football/euro-2020")
+  val Tokyo2020 = NavLink("Tokyo 2020", "/sport/olympic-games-2020")
 
   val football = NavLink(
     "Football",
     "/football",
     children = List(
-      Euro2020,
       NavLink("Live scores", "/football/live", Some("football/live")),
       NavLink("Tables", "/football/tables", Some("football/tables")),
       NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
@@ -285,13 +286,14 @@ private object NavLinks {
     List(
       usNews,
       world,
-      ukEnvironment,
+      usEnvironment,
       soccer,
       usPolitics,
       usBusiness,
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}?INTCMP=DOTCOM_NAV_NEWSLETTER_US"),
+      greenLight,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -358,7 +360,7 @@ private object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
-      Euro2020,
+      Tokyo2020,
       football,
       cricket,
       rugbyUnion,
@@ -374,6 +376,7 @@ private object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
+      Tokyo2020,
       football,
       AFL,
       NRL,
@@ -387,6 +390,7 @@ private object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
+      Tokyo2020,
       soccer,
       NFL,
       tennis,
@@ -398,7 +402,7 @@ private object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
-      Euro2020,
+      Tokyo2020,
       football,
       cricket,
       rugbyUnion,
