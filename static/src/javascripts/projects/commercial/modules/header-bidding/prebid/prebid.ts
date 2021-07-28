@@ -329,6 +329,9 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		 * set here when adjusting the slot size.
 		 * */
 		advert.hasPrebidSize = true;
+
+		// Part of improve skin test 2021-07-28
+		if (data.bidderCode === 'improvedigital') captureCommercialMetrics();
 	});
 };
 

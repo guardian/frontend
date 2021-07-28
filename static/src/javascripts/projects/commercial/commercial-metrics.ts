@@ -10,9 +10,15 @@ const config = config_ as {
 	get: (s: string, d?: unknown) => unknown;
 };
 
-let logged = false;
-
 const isDev = Boolean(config.get('page.isDev', false));
+const { pageViewId } = window.guardian.ophan;
+const { browserId } = window.guardian.config.ophan;
+
+let logged = false;
+const sendMetrics = (): void => {
+	if (logged) return;
+	logged = sendCommercialMetrics(pageViewId, browserId, isDev);
+};
 
 const init = (): Promise<void> => {
 	if (!config.get('switches.commercialMetrics', false))
@@ -24,17 +30,20 @@ const init = (): Promise<void> => {
 	const shouldForceMetrics = getSynchronousTestsToRun().some((test) =>
 		testsToForceMetricsFor.map((t) => t.id).includes(test.id),
 	);
-	const pageViewId = window.guardian.ophan.pageViewId;
-	const browserId = config.get('ophan.browserId') as string | undefined;
 
 	if (isDev || shouldForceMetrics || userIsInSamplingGroup) {
-		document.addEventListener('visibilitychange', function () {
-			if (logged) return;
-			logged = sendCommercialMetrics(pageViewId, browserId, isDev);
-		});
+		document.addEventListener('visibilitychange', sendMetrics);
 	}
 
 	return Promise.resolve();
 };
 
-export { init };
+/**
+ * A way to override the metrics sampling.
+ * It is safe to call this method repeatedly, as per [the `EventListener` docs](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#multiple_identical_event_listeners)
+ */
+const captureCommercialMetrics = (): void => {
+	document.addEventListener('visibilitychange', sendMetrics);
+};
+
+export { init, captureCommercialMetrics };
