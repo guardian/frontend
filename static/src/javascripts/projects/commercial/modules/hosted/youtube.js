@@ -1,47 +1,14 @@
-import {
-    init as initNextVideoAutoPlay,
-    canAutoplay as canAutoplayNextVideo,
-    addCancelListener,
-    triggerAutoplay,
-    triggerEndSlate,
-} from './next-video-autoplay';
-import { isOn } from '../../../common/modules/accessibility/main';
 import { initYoutubePlayer } from '../../../common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
     initYoutubeEvents,
 } from '../../../common/modules/atoms/youtube-tracking';
-import config from '../../../../lib/config';
-import { isBreakpoint } from '../../../../lib/detect';
 import mediator from '../../../../lib/mediator';
 
 // https://developers.google.com/youtube/iframe_api_reference
 
 
 const EVENTSFIRED = [];
-
-const isDesktop = isBreakpoint({ min: 'desktop' });
-
-const shouldAutoplay = (
-    page,
-    switches
-) => {
-    const flashingElementsAllowed = () => isOn('flashing-elements');
-    const isVideoArticle = () => page.contentType.toLowerCase() === 'video';
-    const isUSContent = () => page.productionOffice.toLowerCase() === 'us';
-    const isSwitchedOn = switches.hostedVideoAutoplay || false;
-
-    if (!page.contentType || !page.productionOffice) {
-        return false;
-    }
-
-    return (
-        isSwitchedOn &&
-        isUSContent() &&
-        isVideoArticle() &&
-        flashingElementsAllowed()
-    );
-};
 
 const sendPercentageCompleteEvents = (
     atomId,
@@ -89,16 +56,9 @@ export const initHostedYoutube = (el) => {
             onPlayerStateChange(event) {
                 const player = event.target;
 
-                // show end slate when movie finishes
                 if (event.data === window.YT.PlayerState.ENDED) {
                     trackYoutubeEvent('end', atomId);
                     youtubeTimer.textContent = '0:00';
-                    if (canAutoplayNextVideo()) {
-                        // on mobile show the next video link in the end of the currently watching video
-                        if (!isDesktop) {
-                            triggerEndSlate();
-                        }
-                    }
                 } else {
                     // update current time
                     const currentTime = Math.floor(player.getCurrentTime());
@@ -121,25 +81,6 @@ export const initHostedYoutube = (el) => {
                 } else {
                     window.clearInterval(playTimer);
                 }
-            },
-            onPlayerReady(event) {
-                if (
-                    shouldAutoplay(
-                        config.get('page', {}),
-                        config.get('switches', {})
-                    )
-                ) {
-                    event.target.playVideo();
-                }
-                initNextVideoAutoPlay().then(() => {
-                    if (canAutoplayNextVideo() && isDesktop) {
-                        addCancelListener();
-                        triggerAutoplay(
-                            event.target.getCurrentTime.bind(event.target),
-                            duration
-                        );
-                    }
-                });
             },
         },
         el.dataset.assetId

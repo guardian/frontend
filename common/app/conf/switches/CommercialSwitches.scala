@@ -56,16 +56,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val HostedVideoAutoplay = Switch(
-    Commercial,
-    "hosted-video-autoplay",
-    "When ON, hosted video content may be allowed to autoplay",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val AdFreeStrictExpiryEnforcement = Switch(
     Commercial,
     "ad-free-strict-expiry-enforcement",
