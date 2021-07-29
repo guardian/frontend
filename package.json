@@ -67,6 +67,7 @@
     "@types/google.analytics": "^0.0.42",
     "@types/jest": "^26.0.20",
     "@types/lodash-es": "^4.17.4",
+    "@types/webpack-env": "^1.16.2",
     "@types/youtube": "^0.0.44",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
