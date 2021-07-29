@@ -143,6 +143,7 @@ export const shouldIncludeXaxis = (): boolean => isInUk();
 export const shouldIncludeImproveDigital = (): boolean => isInUk() || isInRow();
 export const shouldIncludeImproveDigitalSkin = (): boolean => {
 	return (
+		isInABTestSynchronous(improveSkins) &&
 		window.guardian.config.page.isFront &&
 		isInUk() &&
 		getBreakpointKey() === 'D' // Desktop only
