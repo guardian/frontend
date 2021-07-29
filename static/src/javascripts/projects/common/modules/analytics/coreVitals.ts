@@ -37,7 +37,7 @@ export const coreVitals = (): void => {
 		Object.values(window.guardian.config.tests).includes('variant');
 
 	// Otherwise, only send core web vitals data for 1% of users.
-	const inSample = Math.floor(Math.random() * 100) == 1;
+	const inSample = Math.random() < 1 / 100;
 
 	if (!userInTest && !inSample) {
 		return;
