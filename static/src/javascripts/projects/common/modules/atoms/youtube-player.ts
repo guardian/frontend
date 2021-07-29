@@ -70,9 +70,7 @@ onConsentChange((cmpConsent) => {
 
 interface LocalEvent extends Omit<Event, 'target'> {
 	data: string;
-	target: {
-		getCurrentTime: () => number;
-	};
+	target: YT.Player;
 }
 
 interface Handlers {
