@@ -29,6 +29,10 @@ const jsonData: CoreWebVitalsPayload = {
 	ttfb: null,
 };
 
+/**
+* Sends core web vitals data for a sample of page views to the data lake.
+* Equivalent dotcom-rendering functionality is here: https://git.io/JBRIt
+*/
 export const coreVitals = (): void => {
 	// If the current user is part of a server-side AB test
 	// then we always want to sample their core web vitals data.
