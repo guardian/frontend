@@ -143,8 +143,8 @@ const bootCommercial = () => {
 		cmd: [],
 	};
 
-	return loadHostedBundle()
-		.then(loadModules)
+    // no Hosted content on DCR
+	return loadModules()
 		.then(() => {
 			catchErrorsWithContext(
 				[
