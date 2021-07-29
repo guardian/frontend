@@ -29,6 +29,7 @@ import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
 import { EventTimer } from '@guardian/commercial-core';
+import { amIUsed } from 'commercial/sentinel';
 
 const commercialModules = [
 	['cm-setAdTestCookie', setAdTestCookie],
@@ -64,6 +65,7 @@ if (!commercialFeatures.adFree) {
 
 const loadHostedBundle = () => {
 	if (config.get('page.isHosted')) {
+        amIUsed('commercial.dcr.js', 'loadHostedBundle', { isHosted: 'true'})
 		return new Promise((resolve) => {
 			require.ensure(
 				[],
