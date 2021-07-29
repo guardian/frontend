@@ -6,7 +6,7 @@ export const improveSkins: ABTest = {
 	expiry: '2021-08-09',
 	author: 'Max Duval (@mxdvl)',
 	description: 'Serve Improve page skins via Prebid and measure performance',
-	audience: 0.01,
+	audience: 0.002,
 	audienceOffset: 0.25,
 	successMeasure: 'no significant impact on ad speed performance',
 	audienceCriteria: 'n/a',
