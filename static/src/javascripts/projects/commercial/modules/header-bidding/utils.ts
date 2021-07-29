@@ -140,11 +140,11 @@ export const shouldIncludeXaxis = (): boolean => isInUk();
 
 export const shouldIncludeImproveDigital = (): boolean => isInUk() || isInRow();
 export const shouldIncludeImproveDigitalSkin = (): boolean => {
-	return [
-		window.guardian.config.page.isFront,
-		isInUk(),
-		getBreakpointKey() === 'D',
-	].every(Boolean);
+	return (
+		window.guardian.config.page.isFront &&
+		isInUk() &&
+		getBreakpointKey() === 'D' // Desktop only
+	);
 };
 
 export const shouldIncludeMobileSticky = once(
