@@ -19,6 +19,20 @@ import { commercialFeatures } from './commercial-features';
 import { clearPermutiveSegments, getPermutiveSegments } from './permutive';
 import { getUserSegments } from './user-ad-targeting';
 
+/*
+ * Inside:
+ * - static/src/javascripts/projects/commercial/modules/dfp/prepare-googletag.ts
+ * - static/src/javascripts/projects/commercial/modules/dfp/prepare-prebid.js
+ * - static/src/javascripts/projects/commercial/modules/header-bidding/prebid/appnexus.js
+ * - static/src/javascripts/projects/commercial/modules/header-bidding/prebid/bid-config.ts
+ *
+ * Outside:
+ * - static/src/javascripts/projects/common/modules/atoms/youtube-player.ts
+ *
+ * - static/src/javascripts/projects/common/modules/commercial/build-page-targeting.spec.js
+ */
+
+
 let myPageTargetting = {};
 let latestCmpHasInitialised;
 let latestCMPState;

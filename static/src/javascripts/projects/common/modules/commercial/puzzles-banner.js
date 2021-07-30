@@ -1,6 +1,14 @@
 import reportError from 'lib/report-error';
 import { fetchPuzzlesData, renderBanner } from './contributions-service';
 
+/*
+ * Where is this file used outside the commercial bundle?
+ * - /static/src/javascripts/bootstraps/enhanced/common.js
+ *
+ * inside bundle
+ * - /static/src/javascripts/projects/common/modules/commercial/contributions-service.js
+ */
+
 const messageCode = 'puzzles-banner';
 
 let data = null;

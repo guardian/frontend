@@ -31,6 +31,15 @@ import {
 import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
+/*
+ * This module is used outside of the commercial bundle:
+ * - static/src/javascripts/bootstraps/enhanced/common.js
+ * - static/src/javascripts/bootstraps/enhanced/main.js
+ * - static/src/javascripts/projects/common/modules/commercial/puzzles-banner.js
+ * - static/src/javascripts/projects/common/modules/commercial/reader-revenue-banner.js
+ */
+
+
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
 export const ModulesVersion = 'v2';
 

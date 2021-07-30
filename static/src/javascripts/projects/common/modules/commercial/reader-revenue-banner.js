@@ -2,6 +2,14 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { fetchBannerData, renderBanner } from './contributions-service';
 
+/*
+ * Inside the bundle:
+ *
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/bootstraps/enhanced/common.js
+ *
+ */
+
 const messageCode = 'reader-revenue-banner';
 
 let data = null;

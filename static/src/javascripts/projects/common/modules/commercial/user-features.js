@@ -4,6 +4,33 @@ import { fetchJson } from '../../../../lib/fetch-json';
 import { isUserLoggedIn } from '../identity/api';
 import { dateDiffDays } from '../../../../lib/time-utils';
 
+/*
+ * Inside the bundle:
+ * - static/src/javascripts/bootstraps/commercial.dcr.ts
+ * - static/src/javascripts/projects/commercial/adblock-ask.ts
+ * - static/src/javascripts/projects/commercial/modules/brazeBanner.js
+ *
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/bootstraps/enhanced/common.js
+ * - static/src/javascripts/bootstraps/enhanced/membership.js
+ * - static/src/javascripts/projects/atoms/services.js
+ * - static/src/javascripts/projects/common/modules/audio/index.js
+ *
+ * - static/src/javascripts/projects/common/modules/commercial/ad-free-banner.js
+ * - static/src/javascripts/projects/common/modules/commercial/commercial-features.js
+ * - static/src/javascripts/projects/common/modules/commercial/commercial-features.spec.js
+ * - static/src/javascripts/projects/common/modules/commercial/contributions-service.js
+ * - static/src/javascripts/projects/common/modules/commercial/reader-revenue-dev-utils.js
+ * - static/src/javascripts/projects/common/modules/commercial/user-features.spec.js
+ *
+ * - static/src/javascripts/projects/common/modules/navigation/membership.js
+ * - static/src/javascripts/projects/common/modules/navigation/supporter-cta.js
+ * - static/src/javascripts/projects/common/modules/onward/history.js
+ * - static/src/javascripts/projects/facia/modules/ui/container-show-more.js
+ */
+
+
+
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';

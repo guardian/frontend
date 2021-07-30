@@ -1,5 +1,11 @@
 import { storage } from '@guardian/libs';
 
+/*
+ * Outside the bundle:
+ * - /static/src/javascripts/projects/common/modules/commercial/contributions-utilities.js
+ * - /static/src/javascripts/projects/common/modules/commercial/reader-revenue-dev-utils.js
+ */
+
 const viewKey = 'gu.contributions.views';
 const viewLog = storage.local.get(viewKey) || [];
 

@@ -19,6 +19,14 @@ import {
     readerRevenueRelevantCookies,
 } from './user-features';
 
+/*
+ * Inside the bundle:
+ *
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/bootstraps/enhanced/common.js
+ *
+ */
+
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 const minArticlesBeforeShowingBanner = 2;
 

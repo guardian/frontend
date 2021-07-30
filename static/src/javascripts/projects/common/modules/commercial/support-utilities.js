@@ -3,6 +3,20 @@ import {
     getCountryCode,
 } from '../../../../lib/geolocation';
 
+/*
+ * Inside the bundle:
+ * - static/src/javascripts/projects/commercial/adblock-ask.ts
+ *
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/projects/common/modules/commercial/acquisitions-link-enrichment.js
+ * - static/src/javascripts/projects/common/modules/commercial/support-utilities.spec.js
+ *
+ * - static/src/javascripts/projects/journalism/modules/audio-series-add-contributions.js
+ *
+ */
+
+
+
 const addCountryGroupToSupportLink = (rawUrl) => {
     const countryCode = getCountryCode();
     if (countryCode) {

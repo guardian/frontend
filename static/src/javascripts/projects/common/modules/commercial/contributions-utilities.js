@@ -4,6 +4,18 @@ import { elementInView } from '../../../../lib/element-inview';
 import { submitInsertEvent, submitViewEvent } from './acquisitions-ophan';
 import { logView } from './acquisitions-view-log';
 
+/*
+ * Inside the bundle:
+ * - static/src/javascripts/projects/commercial/adblock-ask.ts
+ *
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/projects/common/modules/commercial/contributions-service.js
+ * - static/src/javascripts/projects/common/modules/commercial/reader-revenue-dev-utils.js
+ *
+ */
+
+
+
 const getVisitCount = () => parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
 const pageShouldHideReaderRevenue = () =>

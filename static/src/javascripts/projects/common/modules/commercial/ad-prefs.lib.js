@@ -1,7 +1,12 @@
 import { addCookie, getCookie } from '../../../../lib/cookies';
 import { onConsentSet } from '../analytics/send-privacy-prefs';
 
-
+/*
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/bootstraps/enhanced/common.js
+ * - static/src/javascripts/projects/common/modules/identity/ad-prefs.js
+ * - static/src/javascripts/projects/common/modules/identity/ad-prefs/wordings.js
+ */
 
 const cookieExpiryDate = 30 * 18;
 

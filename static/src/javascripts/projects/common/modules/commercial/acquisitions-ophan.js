@@ -2,6 +2,19 @@ import ophan from 'ophan/ng';
 import config from '../../../../lib/config';
 import { constructQuery as constructURLQuery } from '../../../../lib/url';
 
+
+/*
+ * Inside the bundle:
+ * - static/src/javascripts/projects/commercial/modules/brazeBanner.js
+ *
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/bootstraps/enhanced/common.js
+ * - static/src/javascripts/projects/common/modules/commercial/acquisitions-link-enrichment.js
+ * - static/src/javascripts/projects/common/modules/commercial/contributions-service.js
+ * - static/src/javascripts/projects/common/modules/commercial/contributions-utilities.js
+ * - static/src/javascripts/projects/common/modules/navigation/membership.js
+ */
+
 export const submitComponentEvent = (componentEvent) => {
     ophan.record({ componentEvent });
 };

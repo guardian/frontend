@@ -1,5 +1,19 @@
 import { storage } from '@guardian/libs';
 
+/*
+ * Inside the bundle:
+ * [None]
+ *
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/projects/common/modules/atoms/youtube-player.ts
+ *
+ * - static/src/javascripts/projects/common/modules/commercial/build-page-targeting.js
+ * - static/src/javascripts/projects/common/modules/commercial/permutive.spec.js
+ *
+ */
+
+
+
 const PERMUTIVE_KEY = `_papns`;
 const PERMUTIVE_PFP_KEY = `_pdfps`;
 

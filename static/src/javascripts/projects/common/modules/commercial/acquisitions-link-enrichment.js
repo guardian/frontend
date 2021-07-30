@@ -1,6 +1,11 @@
 import { addReferrerData } from './acquisitions-ophan';
 import { addCountryGroupToSupportLink } from './support-utilities';
 
+/*
+ * Where is this file used outside the commercial bundle?
+ * /static/src/javascripts/bootstraps/enhanced/main.js
+ */
+
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
 // Work needs to be done so we don't have to hard code what campaigns are running.

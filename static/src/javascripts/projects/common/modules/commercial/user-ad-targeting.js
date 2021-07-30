@@ -1,6 +1,19 @@
 import { storage } from '@guardian/libs';
 import { getUserFromCookie, getUserFromApi } from '../identity/api';
 
+/*
+ * Inside the bundle:
+ * - static/src/javascripts/projects/common/modules/commercial/build-page-targeting.js
+ * - static/src/javascripts/projects/common/modules/commercial/build-page-targeting.spec.js
+ * - static/src/javascripts/projects/common/modules/commercial/user-ad-targeting.spec.js
+ *
+ * Where is this file used outside the commercial bundle?
+ * - static/src/javascripts/bootstraps/enhanced/common.js
+ *
+ */
+
+
+
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
 const getUserSegments = (adConsentState) => {

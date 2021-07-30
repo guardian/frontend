@@ -3,6 +3,11 @@ import config from '../../../../lib/config';
 import { hasUserAcknowledgedBanner, Message } from '../ui/message';
 import { isAdFreeUser } from './user-features';
 
+/*
+ * Where is this file used outside the commercial bundle?
+ * - /static/src/javascripts/bootstraps/enhanced/common.js
+ */
+
 const messageCode = 'ad-free-banner';
 const image = config.get('images.acquisitions.ad-free', '');
 

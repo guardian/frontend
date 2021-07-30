@@ -4,6 +4,16 @@ import { isAdFreeUser } from './user-features';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 
+/*
+ * This file is used outside of the commercial bundle:
+ * - static/src/javascripts/projects/common/modules/article/rich-links.js
+ * - static/src/javascripts/projects/common/modules/atoms/youtube-player.ts
+ * - static/src/javascripts/projects/common/modules/onward/related.js
+ * 
+ * It’s also used by common/commercial:
+ * - build-page-targetting
+ */
+
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
 
@@ -44,7 +54,7 @@ class CommercialFeatures {
         ].includes(config.get('page.pageId', ''));
 
         // Feature switches
-        this.adFree = !!forceAdFree || isAdFreeUser();
+        this.adFree = forceAdFree || isAdFreeUser();
 
         this.dfpAdvertising =
             forceAds ||

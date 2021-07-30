@@ -1,6 +1,11 @@
 import { mountDynamic } from '@guardian/automat-modules';
 import $ from '../../../../lib/$';
 
+/**
+ * Where is this used outside of the commercial bundle?
+ * - /static/src/javascripts/projects/common/modules/commercial/contributions-service.js
+ */
+
 const getBlockToInsertEpicAfter = () => {
     const blocks = document.getElementsByClassName('block');
     const epicsAlreadyOnPage = document.getElementsByClassName('is-epic');
