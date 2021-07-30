@@ -62,6 +62,39 @@ if (!commercialFeatures.adFree) {
 	);
 }
 
+const loadHostedBundle = () => {
+	if (config.get('page.isHosted')) {
+		return new Promise((resolve) => {
+			require.ensure(
+				[],
+				(require) => {
+					const hostedAbout = require('commercial/modules/hosted/about');
+					const initHostedVideo = require('commercial/modules/hosted/video');
+					const hostedGallery = require('commercial/modules/hosted/gallery');
+					const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel');
+					const loadOnwardComponent = require('commercial/modules/hosted/onward');
+					commercialModules.push(
+						['cm-hostedAbout', hostedAbout.init],
+						['cm-hostedVideo', initHostedVideo.initHostedVideo],
+						['cm-hostedGallery', hostedGallery.init],
+						[
+							'cm-hostedOnward',
+							loadOnwardComponent.loadOnwardComponent,
+						],
+						[
+							'cm-hostedOJCarousel',
+							initHostedCarousel.initHostedCarousel,
+						],
+					);
+					resolve();
+				},
+				'commercial-hosted',
+			);
+		});
+	}
+	return Promise.resolve();
+};
+
 const loadModules = () => {
 	const modulePromises = [];
 
@@ -110,8 +143,8 @@ const bootCommercial = () => {
 		cmd: [],
 	};
 
-    // no Hosted content on DCR
-	return loadModules()
+	return loadHostedBundle()
+		.then(loadModules)
 		.then(() => {
 			catchErrorsWithContext(
 				[
