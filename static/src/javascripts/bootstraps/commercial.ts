@@ -59,6 +59,7 @@ if (!commercialFeatures.adFree) {
 	);
 }
 
+// TODO (cm):  make the hosted bundle separate
 const loadHostedBundle = (): Promise<void> => {
 	if (window.guardian.config.page.isHosted) {
 		return new Promise((resolve) => {

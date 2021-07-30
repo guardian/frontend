@@ -22,6 +22,7 @@ module.exports = webpackMerge.smart(config, {
     resolve: {
         alias: {
             "ophan/ng": path.join(__dirname, 'static', 'src', 'javascripts', 'bootstraps', 'commercial-ophan.dcr.js'),
+            // TODO: Add similar logic for `@guardian/consent-management-platform`
         },
     },
 });
