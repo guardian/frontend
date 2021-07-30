@@ -222,7 +222,7 @@ const show = () => Promise.all([
     import('react-dom'),
     import('@emotion/react'),
     import('@emotion/cache'),
-    import(/* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components')
+    import(/* webpackChunkName: "guardian-braze-components-banner" */ '@guardian/braze-components/banner')
 ]).then((props) => {
     const [{ render }, { CacheProvider }, { default: createCache }, brazeModule] = props;
     const container = document.createElement('div');
@@ -233,7 +233,7 @@ const show = () => Promise.all([
             document.body.appendChild(container);
         }
 
-        const Component = brazeModule.BrazeMessageComponent
+        const Component = brazeModule.BrazeBannerComponent
 
         // IE does not support shadow DOM, so instead we just render
         if (!container.attachShadow) {

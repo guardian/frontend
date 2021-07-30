@@ -21,6 +21,7 @@ import { removeDisabledSlots as closeDisabledSlots } from 'commercial/modules/re
 import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
+import { amIUsed } from 'commercial/sentinel';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
 import config from 'lib/config';
@@ -62,6 +63,7 @@ if (!commercialFeatures.adFree) {
 
 const loadHostedBundle = (): Promise<void> => {
 	if (config.get('page.isHosted')) {
+		amIUsed('commercial.dcr.js', 'loadHostedBundle', { isHosted: 'true' });
 		return new Promise((resolve) => {
 			require.ensure(
 				[],
