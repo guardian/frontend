@@ -1,4 +1,5 @@
 import { EventTimer } from '@guardian/commercial-core';
+import { initAdblockAsk } from 'commercial/adblock-ask';
 import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
@@ -21,7 +22,6 @@ import { removeDisabledSlots as closeDisabledSlots } from 'commercial/modules/re
 import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
-import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
