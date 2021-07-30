@@ -83,5 +83,8 @@ interface Window {
 	guardian: {
 		ophan: Ophan;
 		config: Config;
+		queue: Array<() => Promise<void>>;
+		mustardCut?: boolean;
+		polyfilled?: boolean;
 	};
 }

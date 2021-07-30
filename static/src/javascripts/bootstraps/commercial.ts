@@ -26,8 +26,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
-
-export type Modules = Array<[string, () => Promise<unknown>]>;
+import type { Modules } from './types';
 
 const commercialModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
