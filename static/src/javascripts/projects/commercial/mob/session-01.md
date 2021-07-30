@@ -26,6 +26,8 @@ switch logic to prevent initialising further code.
 We will identify all the common/commercial/*.(ts|js) files use outside of the
 commercial bundle, and identified this as comments in the code.
 
+### https://github.com/guardian/frontend/pull/24047
+
 ## Next steps
 
 - Create cards from above?
