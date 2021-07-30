@@ -27,7 +27,7 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
 
-const commercialModules: Array<[string, () => Promise<void>]> = [
+const commercialModules: Array<[string, () => Promise<unknown>]> = [
 	['cm-setAdTestCookie', setAdTestCookie],
 	['cm-adFreeSlotRemove', adFreeSlotRemove],
 	['cm-closeDisabledSlots', closeDisabledSlots],
@@ -102,7 +102,7 @@ const loadHostedBundle = (): Promise<void> => {
 };
 
 const loadModules = () => {
-	const modulePromises: Array<Promise<void>> = [];
+	const modulePromises: Array<Promise<unknown>> = [];
 
 	commercialModules.forEach((module) => {
 		const [moduleName, moduleInit] = module;
@@ -145,6 +145,7 @@ export const bootCommercial = (): Promise<void> => {
 	);
 
 	// Stub the command queue
+	// @ts-expect-error -- it’s a stub, not the whole Googletag object
 	window.googletag = {
 		cmd: [],
 	};
