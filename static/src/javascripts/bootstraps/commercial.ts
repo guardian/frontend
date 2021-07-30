@@ -23,7 +23,6 @@ import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
 import type { Modules } from './types';
@@ -61,7 +60,7 @@ if (!commercialFeatures.adFree) {
 }
 
 const loadHostedBundle = (): Promise<void> => {
-	if (config.get('page.isHosted')) {
+	if (window.guardian.config.page.isHosted) {
 		return new Promise((resolve) => {
 			require.ensure(
 				[],
