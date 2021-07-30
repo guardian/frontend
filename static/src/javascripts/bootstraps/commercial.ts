@@ -27,7 +27,9 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
 
-const commercialModules: Array<[string, () => Promise<unknown>]> = [
+export type Modules = Array<[string, () => Promise<unknown>]>;
+
+const commercialModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
 	['cm-adFreeSlotRemove', adFreeSlotRemove],
 	['cm-closeDisabledSlots', closeDisabledSlots],
@@ -65,19 +67,20 @@ const loadHostedBundle = (): Promise<void> => {
 			require.ensure(
 				[],
 				(require) => {
-					type Init = {
-						init: () => Promise<void>;
-						initHostedVideo: () => Promise<void>;
-						loadOnwardComponent: () => Promise<void>;
-						initHostedCarousel: () => Promise<void>;
-					};
-					/* eslint-disable @typescript-eslint/no-var-requires -- these are chunked by webpack */
-					const hostedAbout = require('commercial/modules/hosted/about') as Init;
-					const initHostedVideo = require('commercial/modules/hosted/video') as Init;
-					const hostedGallery = require('commercial/modules/hosted/gallery') as Init;
-					const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel') as Init;
-					const loadOnwardComponent = require('commercial/modules/hosted/onward') as Init;
-					/* eslint-enable @typescript-eslint/no-var-requires */
+					/* eslint-disable
+					 	@typescript-eslint/no-var-requires,
+						@typescript-eslint/consistent-type-imports,
+						--
+						these are chunked by webpack */
+					const hostedAbout = require('commercial/modules/hosted/about') as typeof import('commercial/modules/hosted/about');
+					const initHostedVideo = require('commercial/modules/hosted/video') as typeof import('commercial/modules/hosted/video');
+					const hostedGallery = require('commercial/modules/hosted/gallery') as typeof import('commercial/modules/hosted/gallery');
+					const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel') as typeof import('commercial/modules/hosted/onward-journey-carousel');
+					const loadOnwardComponent = require('commercial/modules/hosted/onward') as typeof import('commercial/modules/hosted/onward');
+					/* eslint-enable
+						@typescript-eslint/no-var-requires,
+						@typescript-eslint/consistent-type-imports,
+						*/
 
 					commercialModules.push(
 						['cm-hostedAbout', hostedAbout.init],
