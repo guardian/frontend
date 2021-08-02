@@ -26,7 +26,7 @@ const askHtml = `
 </div>
 `;
 
-const canShow = () =>
+const canShow = (): boolean =>
 	!shouldHideSupportMessaging() &&
 	!pageShouldHideReaderRevenue() &&
 	!config.get('page.hasShowcaseMainElement');
@@ -42,4 +42,9 @@ export const initAdblockAsk = (): Promise<void> => {
 				slot.insertAdjacentHTML('beforeend', askHtml);
 			});
 		});
+};
+
+export const _ = {
+	params,
+	canShow,
 };
