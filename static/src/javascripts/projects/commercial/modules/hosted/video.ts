@@ -1,7 +1,9 @@
 import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 
 export const initHostedVideo = (): Promise<void> => {
-	const youtubeIframe = document.querySelectorAll('.js-hosted-youtube-video');
+	const youtubeIframe: NodeListOf<HTMLElement> = document.querySelectorAll(
+		'.js-hosted-youtube-video',
+	);
 
 	if (!youtubeIframe.length) {
 		// Halt execution if there are no video containers on the page.
