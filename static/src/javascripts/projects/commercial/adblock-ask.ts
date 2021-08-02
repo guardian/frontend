@@ -1,3 +1,4 @@
+import $ from 'lib/$';
 import config from '../../lib/config';
 import fastdom from '../../lib/fastdom-promise';
 import { pageShouldHideReaderRevenue } from '../common/modules/commercial/contributions-utilities';
@@ -22,12 +23,16 @@ const canShow = () =>
 export const initAdblockAsk = (): Promise<void> => {
 	if (!canShow()) return Promise.resolve();
 
-	return fastdom
-		.measure(() => document.querySelector('.js-aside-slot-container'))
-		.then((slot) => {
-			if (!slot) return;
-			return fastdom.mutate(() => {
-				slot.append(askHtml);
-			});
-		});
+	return (
+		fastdom
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- TODO: fix it
+			.measure(() => $('.js-aside-slot-container'))
+			.then((slot) => {
+				if (!slot) return;
+				return fastdom.mutate(() => {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call -- TODO: fix it
+					slot.append(askHtml);
+				});
+			})
+	);
 };
