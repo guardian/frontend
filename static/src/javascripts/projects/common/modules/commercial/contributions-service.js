@@ -28,7 +28,6 @@ import {
     isRecurringContributor,
     shouldHideSupportMessaging,
 } from './user-features';
-import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
@@ -351,16 +350,13 @@ const renderEpic = async (module, meta) => {
 export const fetchPuzzlesData = async () => {
     const page = config.get('page');
     const payload = await buildBannerPayload();
-    const forcePuzzlesBannerTest = isInVariantSynchronous(puzzlesBanner, 'variant');
-    const isPuzzlesBannerSwitchOn = config.get('switches.puzzlesBanner', false);
-    const userShouldSeeBanner = forcePuzzlesBannerTest || isPuzzlesBannerSwitchOn;
     const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
 
     if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
         return null;
     }
 
-    if (userShouldSeeBanner && isPuzzlesPage) {
+    if (isPuzzlesPage) {
         return getPuzzlesBanner(payload).then(json => {
             if (!json.data) {
                 return null;
