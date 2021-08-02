@@ -434,6 +434,16 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
+  val puzzlesBanner = Switch(
+    SwitchGroup.Feature,
+    "puzzles-banner",
+    "Enables the puzzles banner on puzzles pages",
+    owners = Seq(Owner.withGithub("i-hardy")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2022, 3, 31),
+    exposeClientSide = true,
+  )
+
   val AnniversaryLogoHeader = Switch(
     SwitchGroup.Feature,
     "anniversary-header-svg",
