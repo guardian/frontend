@@ -475,30 +475,6 @@ const showInMegaNavEnable = (bool) => {
     saveSummary(summary);
 };
 
-const incrementDailyArticleCount = (pageConfig) => {
-    if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
-        const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
-
-        if (dailyCount[0] && dailyCount[0].day && dailyCount[0].day === today) {
-            dailyCount[0].count += 1;
-        } else {
-            // New day
-            dailyCount.unshift({ day: today, count: 1 });
-
-            // Remove any days older than 60
-            const cutOff = today - 60;
-            const firstOldDayIndex = dailyCount.findIndex(
-                c => c.day && c.day < cutOff
-            );
-            if (firstOldDayIndex > 0) {
-                dailyCount.splice(firstOldDayIndex);
-            }
-        }
-
-        storage.local.set(storageKeyDailyArticleCount, dailyCount);
-    }
-};
-
 const incrementWeeklyArticleCount = (pageConfig) => {
     if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
         const weeklyArticleCount =
@@ -574,7 +550,6 @@ export {
     reset,
     seriesSummary,
     mostViewedSeries,
-    incrementDailyArticleCount,
     incrementWeeklyArticleCount,
     getArticleViewCountForDays,
     getArticleViewCountForWeeks,

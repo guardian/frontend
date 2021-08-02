@@ -29,7 +29,6 @@ import {
     logHistory,
     logSummary,
     showInMegaNav,
-    incrementDailyArticleCount,
     incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
@@ -174,7 +173,6 @@ const updateArticleCounts = async () => {
     const hasConsentedToArticleCounts = await getArticleCountConsent();
 
     if (page && hasConsentedToArticleCounts) {
-        incrementDailyArticleCount(page);
         incrementWeeklyArticleCount(page);
     }
 };

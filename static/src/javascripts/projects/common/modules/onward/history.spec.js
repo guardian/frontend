@@ -11,7 +11,6 @@ import {
     mostViewedSeries,
     getArticleViewCountForDays,
     _,
-    incrementDailyArticleCount,
     getMondayFromDate,
     getArticleViewCountForWeeks,
     incrementWeeklyArticleCount,
@@ -393,35 +392,6 @@ describe('history', () => {
         storageStub.local.set('gu.history.dailyArticleCount', counts);
 
         expect(getArticleViewCountForDays(2)).toEqual(2);
-    });
-
-    it('increments the daily article count', () => {
-        const counts = [{ day: today, count: 1 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        incrementDailyArticleCount(pageConfig);
-
-        expect(getArticleViewCountForDays(1)).toEqual(2);
-    });
-
-    it('increments the yearly article count', () => {
-        const counts = [{ day: today, count: 1 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        incrementDailyArticleCount(pageConfig);
-
-        expect(getArticleViewCountForDays(1)).toEqual(2);
-    });
-
-    it('removes old daily history while incrementing the article count', () => {
-        const counts = [{ day: today - 70, count: 9 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        incrementDailyArticleCount(pageConfig);
-
-        expect(storageStub.local.get('gu.history.dailyArticleCount')).toEqual([
-            { day: today, count: 1 },
-        ]);
     });
 
     // weeklyArticleCountB tests
