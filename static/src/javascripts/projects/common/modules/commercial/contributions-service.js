@@ -350,13 +350,14 @@ const renderEpic = async (module, meta) => {
 export const fetchPuzzlesData = async () => {
     const page = config.get('page');
     const payload = await buildBannerPayload();
+    const isPuzzlesBannerSwitchOn = config.get('switches.puzzlesBanner', false);
     const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
 
     if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
         return null;
     }
 
-    if (isPuzzlesPage) {
+    if (isPuzzlesBannerSwitchOn && isPuzzlesPage) {
         return getPuzzlesBanner(payload).then(json => {
             if (!json.data) {
                 return null;
