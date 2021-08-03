@@ -1,15 +1,15 @@
 import once from 'lodash/once';
+import config from '../../../../lib/config';
+import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
+import { pbTestNameMap } from '../../../../lib/url';
 import {
 	isInAuOrNz,
 	isInRow,
 	isInUk,
 	isInUsOrCa,
-} from 'common/modules/commercial/geo-utils';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { improveSkins } from 'common/modules/experiments/tests/improve-skins';
-import config from '../../../../lib/config';
-import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
-import { pbTestNameMap } from '../../../../lib/url';
+} from '../../../common/modules/commercial/geo-utils';
+import { isInVariantSynchronous } from '../../../common/modules/experiments/ab';
+import { improveSkins } from '../../../common/modules/experiments/tests/improve-skins';
 
 type StringManipulation = (a: string, b: string) => string;
 type RegExpRecords = Record<string, RegExp | undefined>;
