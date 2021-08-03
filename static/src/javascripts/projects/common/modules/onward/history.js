@@ -487,7 +487,7 @@ const articleHasBeenViewedThisWeek = (pageId) => {
             },
         });
 
-        return !!currentCount;
+        return currentCount > 0;
     } else {
         // It's a new week
         storage.local.set(storageKeyForArticleCountsThisWeek, {
