@@ -22,7 +22,7 @@ import model.{
   PageWithStoryPackage,
 }
 import navigation._
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
@@ -42,9 +42,11 @@ case class DotcomRenderingDataModel(
     blocks: List[Block],
     pagination: Option[Pagination],
     author: Author,
-    webPublicationDate: String,
+    webPublicationDate: DateTime,
+    webPublicationDateDeprecated: String,
+    lastModifiedDate: DateTime,
     webPublicationDateDisplay: String, // TODO remove
-    webPublicationSecondaryDateDisplay: String,
+    webPublicationSecondaryDateDisplay: String, // TODO remove
     editionLongForm: String,
     editionId: String,
     pageId: String,
@@ -106,8 +108,9 @@ object DotcomRenderingDataModel {
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
         "author" -> model.author,
-        "webPublicationDate" -> model.webPublicationDate,
-        "webPublicationDateDeprecated" -> model.webPublicationDate,
+        "webPublicationDate" -> model.webPublicationDate.withZone(DateTimeZone.UTC).toString,
+        "lastModifiedDate" -> model.lastModifiedDate.withZone(DateTimeZone.UTC).toString,
+        "webPublicationDateDeprecated" -> model.webPublicationDateDeprecated,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
         "webPublicationSecondaryDateDisplay" -> model.webPublicationSecondaryDateDisplay,
         "editionLongForm" -> model.editionLongForm,
@@ -393,6 +396,7 @@ object DotcomRenderingDataModel {
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
       keyEvents = keyEventsDCR.toList,
+      lastModifiedDate = content.fields.lastModified,
       linkedData = linkedData,
       main = content.fields.main,
       mainMediaElements = mainMediaElements,
@@ -421,7 +425,8 @@ object DotcomRenderingDataModel {
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
-      webPublicationDate = content.trail.webPublicationDate.toString,
+      webPublicationDate = content.trail.webPublicationDate,
+      webPublicationDateDeprecated = content.trail.webPublicationDate.toString,
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
       webPublicationSecondaryDateDisplay = DotcomRenderingUtils.secondaryDateString(content, request),

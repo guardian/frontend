@@ -42,15 +42,18 @@ object Tag {
 case class Block(
     id: String,
     elements: List[PageElement],
-    blockCreatedOn: Option[Long],
-    blockCreatedOnDisplay: Option[String],
-    blockLastUpdated: Option[Long],
-    blockLastUpdatedDisplay: Option[String],
-    blockFirstPublished: Option[Long],
-    blockFirstPublishedDisplay: Option[String],
+    createdDate: Option[String],
+    firstPublishedDate: Option[String],
+    lastModifiedDate: Option[String],
+    blockCreatedOn: Option[Long], // TODO remove
+    blockCreatedOnDisplay: Option[String], // TODO remove
+    blockLastUpdated: Option[Long], // TODO remove
+    blockLastUpdatedDisplay: Option[String], // TODO remove
+    blockFirstPublished: Option[Long], // TODO remove
+    blockFirstPublishedDisplay: Option[String], // TODO remove
     title: Option[String],
-    primaryDateLine: String,
-    secondaryDateLine: String,
+    primaryDateLine: String, // TODO remove
+    secondaryDateLine: String, // TODO remove
 )
 
 object Block {
@@ -99,6 +102,9 @@ object Block {
         campaigns,
         calloutsUrl,
       ),
+      createdDate = block.createdDate.map(_.iso8601),
+      firstPublishedDate = block.firstPublishedDate.map(_.iso8601),
+      lastModifiedDate = block.lastModifiedDate.map(_.iso8601),
       blockCreatedOn = blockCreatedOn,
       blockCreatedOnDisplay = blockCreatedOnDisplay,
       blockLastUpdated = blockLastUpdated,
