@@ -66,109 +66,76 @@ if (!commercialFeatures.adFree) {
 /**
  * Load modules that are specific to `frontend`.
  */
-const loadFrontendBundle = (): Promise<void> => {
-	if (isDotcomRendering) return Promise.resolve();
+const loadFrontendBundle = async (): Promise<void> => {
+	if (isDotcomRendering) return void 0;
 
-	return new Promise((resolve) => {
-		require.ensure(
-			[],
-			(require) => {
-				/* eslint-disable
-					 	@typescript-eslint/no-var-requires,
-						@typescript-eslint/consistent-type-imports,
-						--
-						these are chunked by webpack */
-				const commercialMetrics = require('commercial/commercial-metrics') as typeof import('commercial/commercial-metrics');
-				/* eslint-enable
-							@typescript-eslint/no-var-requires,
-							@typescript-eslint/consistent-type-imports,
-						*/
+	const commercialMetrics = await import(
+		/* webpackChunkName: "commercial-frontend" */
+		'commercial/commercial-metrics'
+	);
 
-				commercialModules.push(
-					['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
-				);
-				resolve();
-			},
-			'commercial-frontend',
-		);
-	});
+	commercialModules.push(
+		['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
+	);
+
+	return void 0;
 };
 
 /**
  * Load modules specific to `dotcom-rendering`.
+ * Not sure if this is needed. Currently no separate chunk is created
+ * Introduced by @tomrf1
  */
-const loadDcrBundle = (): Promise<void> => {
-	if (!isDotcomRendering) return Promise.resolve();
+const loadDcrBundle = async (): Promise<void> => {
+	if (!isDotcomRendering) return void 0;
 
-	return new Promise((resolve) => {
-		require.ensure(
-			[],
-			(require) => {
-				/* eslint-disable
-					 	@typescript-eslint/no-var-requires,
-						@typescript-eslint/consistent-type-imports,
-						--
-						these are chunked by webpack */
-				const userFeatures = require('common/modules/commercial/user-features') as typeof import('common/modules/commercial/user-features');
-				/* eslint-enable
-							@typescript-eslint/no-var-requires,
-							@typescript-eslint/consistent-type-imports,
-						*/
+	const userFeatures = await import(
+		/* webpackChunkName: "commercial-dcr" */
+		'common/modules/commercial/user-features'
+	);
 
-				commercialModules.push(
-					['c-user-features', userFeatures.refresh], // In DCR, see App.tsx
-				);
-				resolve();
-			},
-			'commercial-dotcom-rendering',
-		);
-	});
+	commercialModules.push(
+		['c-user-features', userFeatures.refresh], // In DCR, see App.tsx
+	);
+	return void 0;
 };
 
 /**
  * Load commercial modules that are used in hosted pages
  */
-const loadHostedBundle = (): Promise<void> => {
-	if (!config.get('page.isHosted')) return Promise.resolve();
+const loadHostedBundle = async (): Promise<void> => {
+	if (!config.get('page.isHosted')) return void 0;
 
 	amIUsed('commercial.dcr.ts', 'loadHostedBundle', { isHosted: 'true' });
-	return new Promise((resolve) => {
-		require.ensure(
-			[],
-			(require) => {
-				/* eslint-disable
-					 	@typescript-eslint/no-var-requires,
-						@typescript-eslint/consistent-type-imports,
-						--
-						these are chunked by webpack */
-				const hostedAbout = require('commercial/modules/hosted/about') as typeof import('commercial/modules/hosted/about');
-				const initHostedVideo = require('commercial/modules/hosted/video') as typeof import('commercial/modules/hosted/video');
-				const hostedGallery = require('commercial/modules/hosted/gallery') as typeof import('commercial/modules/hosted/gallery');
-				const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel') as typeof import('commercial/modules/hosted/onward-journey-carousel');
-				const loadOnwardComponent = require('commercial/modules/hosted/onward') as typeof import('commercial/modules/hosted/onward');
-				/* eslint-enable
-						@typescript-eslint/no-var-requires,
-						@typescript-eslint/consistent-type-imports,
-					*/
 
-				commercialModules.push(
-					['cm-hostedAbout', hostedAbout.init],
-					['cm-hostedVideo', initHostedVideo.initHostedVideo],
-					['cm-hostedGallery', hostedGallery.init],
-					[
-						'cm-hostedOnward',
-						loadOnwardComponent.loadOnwardComponent,
-					],
-					[
-						'cm-hostedOJCarousel',
-						initHostedCarousel.initHostedCarousel,
-					],
-				);
-				resolve();
-			},
-			'commercial-hosted',
-		);
-	});
+	const hostedAbout = await import(
+		/* webpackChunkName: "commercial-hosted" */
+		'commercial/modules/hosted/about'
+	);
+	const initHostedVideo = await import(
+		/* webpackChunkName: "commercial-hosted" */
+		'commercial/modules/hosted/video'
+	);
+	const hostedGallery = await import(
+		/* webpackChunkName: "commercial-hosted" */
+		'commercial/modules/hosted/gallery'
+	);
+	const initHostedCarousel = await import(
+		/* webpackChunkName: "commercial-hosted" */
+		'commercial/modules/hosted/onward-journey-carousel'
+	);
+	const loadOnwardComponent = await import(
+		/* webpackChunkName: "commercial-hosted" */
+		'commercial/modules/hosted/onward'
+	);
+
+	commercialModules.push(
+		['cm-hostedAbout', hostedAbout.init],
+		['cm-hostedVideo', initHostedVideo.initHostedVideo],
+		['cm-hostedGallery', hostedGallery.init],
+		['cm-hostedOnward', loadOnwardComponent.loadOnwardComponent],
+		['cm-hostedOJCarousel', initHostedCarousel.initHostedCarousel],
+	);
 };
 
 const loadModules = () => {
