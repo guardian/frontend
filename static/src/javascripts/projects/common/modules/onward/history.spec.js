@@ -9,7 +9,6 @@ import {
     reset,
     seriesSummary,
     mostViewedSeries,
-    getArticleViewCountForDays,
     _,
     getMondayFromDate,
     getArticleViewCountForWeeks,
@@ -87,7 +86,6 @@ const lessVisited = {
 describe('history', () => {
     let mockContains;
     let mockSummary;
-    let mockDailyArticleCount;
     let mockWeeklyArticleCount;
 
     beforeEach(() => {
@@ -98,8 +96,6 @@ describe('history', () => {
                 return mockContains;
             } else if (key === 'gu.history.summary') {
                 return mockSummary;
-            } else if (key === 'gu.history.dailyArticleCount') {
-                return mockDailyArticleCount;
             } else if (key === 'gu.history.weeklyArticleCount') {
                 return mockWeeklyArticleCount;
             }
@@ -110,8 +106,6 @@ describe('history', () => {
                 mockContains = data;
             } else if (key === 'gu.history.summary') {
                 mockSummary = data;
-            } else if (key === 'gu.history.dailyArticleCount') {
-                mockDailyArticleCount = data;
             } else if (key === 'gu.history.weeklyArticleCount') {
                 mockWeeklyArticleCount = data;
             }
@@ -377,21 +371,6 @@ describe('history', () => {
 
         expect(getContributors().length).toEqual(1);
         expect(getContributors()[0][0]).toEqual('Finbarr Saunders');
-    });
-
-    // dailyArticleCount tests
-    it('gets article count for today only', () => {
-        const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        expect(getArticleViewCountForDays(1)).toEqual(1);
-    });
-
-    it('gets article count for 2 days', () => {
-        const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        expect(getArticleViewCountForDays(2)).toEqual(2);
     });
 
     // weeklyArticleCountB tests

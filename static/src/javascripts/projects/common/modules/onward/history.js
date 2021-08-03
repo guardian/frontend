@@ -68,7 +68,6 @@ const forgetUniquesAfter = 10;
 const historySize = 50;
 const storageKeyHistory = 'gu.history';
 const storageKeySummary = 'gu.history.summary';
-const storageKeyDailyArticleCount = 'gu.history.dailyArticleCount'; // Array containing an article count for each day
 const storageKeyWeeklyArticleCount = 'gu.history.weeklyArticleCount';
 const storageKeyForArticleCountsThisWeek = 'gu.history.articleCountsThisWeek';
 
@@ -346,7 +345,6 @@ const reset = () => {
     summaryCache = undefined;
     storage.local.remove(storageKeyHistory);
     storage.local.remove(storageKeySummary);
-    storage.local.remove(storageKeyDailyArticleCount);
 };
 
 const logHistory = (pageConfig) => {
@@ -538,21 +536,6 @@ const incrementWeeklyArticleCount = (pageConfig) => {
     }
 };
 
-const getArticleViewCountForDays = (days) => {
-    const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
-    const cutOff = today - days;
-
-    const firstOldDayIndex = dailyCount.findIndex(
-        c => c.day && c.day <= cutOff
-    );
-    const dailyCountWindow =
-        firstOldDayIndex >= 0
-            ? dailyCount.slice(0, firstOldDayIndex)
-            : dailyCount;
-
-    return dailyCountWindow.reduce((acc, current) => current.count + acc, 0);
-};
-
 const getArticleViewCountForWeeks = (weeks) => {
     const weeklyCount = storage.local.get(storageKeyWeeklyArticleCount) || [];
     const cutOff = startOfThisWeek - weeks * 7;
@@ -583,10 +566,8 @@ export {
     seriesSummary,
     mostViewedSeries,
     incrementWeeklyArticleCount,
-    getArticleViewCountForDays,
     getArticleViewCountForWeeks,
     getMondayFromDate,
-    storageKeyDailyArticleCount,
     storageKeyWeeklyArticleCount,
 };
 
