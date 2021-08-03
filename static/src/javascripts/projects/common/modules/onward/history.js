@@ -474,8 +474,7 @@ const showInMegaNavEnable = (bool) => {
     saveSummary(summary);
 };
 
-// Returns true if the article has already been viewed this week
-const updateCountForArticleThisWeek = (pageId) => {
+const articleHasBeenViewedThisWeek = (pageId) => {
     const articleCounts = storage.local.get(storageKeyForArticleCountsThisWeek);
     if (articleCounts && articleCounts.week === startOfThisWeek) {
         const currentCount = articleCounts.articles[pageId] || 0;
@@ -502,8 +501,7 @@ const updateCountForArticleThisWeek = (pageId) => {
 
 const incrementWeeklyArticleCount = (pageConfig) => {
     if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
-        const hasBeenViewedThisWeek = updateCountForArticleThisWeek(pageConfig.pageId);
-        console.log('hasBeenViewedThisWeek', hasBeenViewedThisWeek)
+        const hasBeenViewedThisWeek = articleHasBeenViewedThisWeek(pageConfig.pageId);
 
         if (!hasBeenViewedThisWeek) {
             const weeklyArticleCount =
