@@ -5,7 +5,7 @@ import {
 	isInUk,
 	isInUsOrCa,
 } from 'common/modules/commercial/geo-utils';
-import { isInABTestSynchronous } from 'common/modules/experiments/ab';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { improveSkins } from 'common/modules/experiments/tests/improve-skins';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
@@ -143,7 +143,7 @@ export const shouldIncludeXaxis = (): boolean => isInUk();
 export const shouldIncludeImproveDigital = (): boolean => isInUk() || isInRow();
 export const shouldIncludeImproveDigitalSkin = (): boolean => {
 	return (
-		isInABTestSynchronous(improveSkins) &&
+		isInVariantSynchronous(improveSkins, 'variant') &&
 		window.guardian.config.page.isFront &&
 		isInUk() &&
 		getBreakpointKey() === 'D' // Desktop only
