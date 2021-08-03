@@ -5,7 +5,7 @@ module.exports = {
         require('./clean'),
         require('./copy'),
         require('./webpack.dev'),
-        require('./webpack-dcr.dev'),
+        require('./webpack-commercial.dev'),
         require('./bundle-polyfills'),
     ],
 };

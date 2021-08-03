@@ -1,4 +1,3 @@
-import 'lib/dotcom-rendering/public-path';
 import { EventTimer } from '@guardian/commercial-core';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
@@ -23,11 +22,16 @@ import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banne
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { amIUsed } from 'commercial/sentinel';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
 import type { Modules } from './types';
+
+const { isDotcomRendering, page } = window.guardian.config;
+
+const assetsPath = page.frontendAssetsFullURL ?? page.assetsPath;
+
+__webpack_public_path__ = `${assetsPath}javascripts/commercial/`;
 
 const commercialModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
@@ -35,12 +39,10 @@ const commercialModules: Modules = [
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
 	['cm-ipsosmori', initIpsosMori],
-	['c-user-features', refreshUserFeatures], // temp fix for DCR @tomrf1
 ];
 
 if (!commercialFeatures.adFree) {
 	commercialModules.push(
-		// 'cm-commercial-metrics' is Frontend only.
 		['cm-prepare-prebid', preparePrebid],
 		['cm-prepare-a9', prepareA9],
 		['cm-thirdPartyTags', initThirdPartyTags],
@@ -61,48 +63,112 @@ if (!commercialFeatures.adFree) {
 	);
 }
 
-const loadHostedBundle = (): Promise<void> => {
-	if (config.get('page.isHosted')) {
-		amIUsed('commercial.dcr.ts', 'loadHostedBundle', { isHosted: 'true' });
-		return new Promise((resolve) => {
-			require.ensure(
-				[],
-				(require) => {
-					/* eslint-disable
+/**
+ * Load modules that are specific to `frontend`.
+ */
+const loadFrontendBundle = (): Promise<void> => {
+	if (isDotcomRendering) return Promise.resolve();
+
+	return new Promise((resolve) => {
+		require.ensure(
+			[],
+			(require) => {
+				/* eslint-disable
 					 	@typescript-eslint/no-var-requires,
 						@typescript-eslint/consistent-type-imports,
 						--
 						these are chunked by webpack */
-					const hostedAbout = require('commercial/modules/hosted/about') as typeof import('commercial/modules/hosted/about');
-					const initHostedVideo = require('commercial/modules/hosted/video') as typeof import('commercial/modules/hosted/video');
-					const hostedGallery = require('commercial/modules/hosted/gallery') as typeof import('commercial/modules/hosted/gallery');
-					const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel') as typeof import('commercial/modules/hosted/onward-journey-carousel');
-					const loadOnwardComponent = require('commercial/modules/hosted/onward') as typeof import('commercial/modules/hosted/onward');
-					/* eslint-enable
-						@typescript-eslint/no-var-requires,
-						@typescript-eslint/consistent-type-imports,
+				const commercialMetrics = require('commercial/commercial-metrics') as typeof import('commercial/commercial-metrics');
+				/* eslint-enable
+							@typescript-eslint/no-var-requires,
+							@typescript-eslint/consistent-type-imports,
 						*/
 
-					commercialModules.push(
-						['cm-hostedAbout', hostedAbout.init],
-						['cm-hostedVideo', initHostedVideo.initHostedVideo],
-						['cm-hostedGallery', hostedGallery.init],
-						[
-							'cm-hostedOnward',
-							loadOnwardComponent.loadOnwardComponent,
-						],
-						[
-							'cm-hostedOJCarousel',
-							initHostedCarousel.initHostedCarousel,
-						],
-					);
-					resolve();
-				},
-				'commercial-hosted',
-			);
-		});
-	}
-	return Promise.resolve();
+				commercialModules.push(
+					['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
+				);
+				resolve();
+			},
+			'commercial-frontend',
+		);
+	});
+};
+
+/**
+ * Load modules specific to `dotcom-rendering`.
+ */
+const loadDcrBundle = (): Promise<void> => {
+	if (!isDotcomRendering) return Promise.resolve();
+
+	return new Promise((resolve) => {
+		require.ensure(
+			[],
+			(require) => {
+				/* eslint-disable
+					 	@typescript-eslint/no-var-requires,
+						@typescript-eslint/consistent-type-imports,
+						--
+						these are chunked by webpack */
+				const userFeatures = require('common/modules/commercial/user-features') as typeof import('common/modules/commercial/user-features');
+				/* eslint-enable
+							@typescript-eslint/no-var-requires,
+							@typescript-eslint/consistent-type-imports,
+						*/
+
+				commercialModules.push(
+					['c-user-features', userFeatures.refresh], // In DCR, see App.tsx
+				);
+				resolve();
+			},
+			'commercial-dotcom-rendering',
+		);
+	});
+};
+
+/**
+ * Load commercial modules that are used in hosted pages
+ */
+const loadHostedBundle = (): Promise<void> => {
+	if (!config.get('page.isHosted')) return Promise.resolve();
+
+	amIUsed('commercial.dcr.ts', 'loadHostedBundle', { isHosted: 'true' });
+	return new Promise((resolve) => {
+		require.ensure(
+			[],
+			(require) => {
+				/* eslint-disable
+					 	@typescript-eslint/no-var-requires,
+						@typescript-eslint/consistent-type-imports,
+						--
+						these are chunked by webpack */
+				const hostedAbout = require('commercial/modules/hosted/about') as typeof import('commercial/modules/hosted/about');
+				const initHostedVideo = require('commercial/modules/hosted/video') as typeof import('commercial/modules/hosted/video');
+				const hostedGallery = require('commercial/modules/hosted/gallery') as typeof import('commercial/modules/hosted/gallery');
+				const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel') as typeof import('commercial/modules/hosted/onward-journey-carousel');
+				const loadOnwardComponent = require('commercial/modules/hosted/onward') as typeof import('commercial/modules/hosted/onward');
+				/* eslint-enable
+						@typescript-eslint/no-var-requires,
+						@typescript-eslint/consistent-type-imports,
+					*/
+
+				commercialModules.push(
+					['cm-hostedAbout', hostedAbout.init],
+					['cm-hostedVideo', initHostedVideo.initHostedVideo],
+					['cm-hostedGallery', hostedGallery.init],
+					[
+						'cm-hostedOnward',
+						loadOnwardComponent.loadOnwardComponent,
+					],
+					[
+						'cm-hostedOJCarousel',
+						initHostedCarousel.initHostedCarousel,
+					],
+				);
+				resolve();
+			},
+			'commercial-hosted',
+		);
+	});
 };
 
 const loadModules = () => {
@@ -130,7 +196,7 @@ const loadModules = () => {
 	return Promise.all(modulePromises);
 };
 
-const bootCommercial = (): Promise<void> => {
+const bootCommercial = async (): Promise<void> => {
 	// Init Commercial event timers
 	EventTimer.init();
 
@@ -154,33 +220,35 @@ const bootCommercial = (): Promise<void> => {
 		cmd: [],
 	};
 
-	return loadHostedBundle()
-		.then(loadModules)
-		.then(() => {
-			catchErrorsWithContext(
+	try {
+		await loadFrontendBundle();
+		await loadDcrBundle();
+		await loadHostedBundle();
+		await loadModules();
+
+		return catchErrorsWithContext(
+			[
 				[
-					[
-						'ga-user-timing-commercial-end',
-						function runTrackPerformance(): void {
-							EventTimer.get().trigger('commercialEnd');
-						},
-					],
+					'ga-user-timing-commercial-end',
+					function runTrackPerformance(): void {
+						EventTimer.get().trigger('commercialEnd');
+					},
 				],
-				{
-					feature: 'commercial',
-				},
-			);
-		})
-		.catch((err) => {
-			// report async errors in bootCommercial to Sentry with the commercial feature tag
-			reportError(
-				err,
-				{
-					feature: 'commercial',
-				},
-				false,
-			);
-		});
+			],
+			{
+				feature: 'commercial',
+			},
+		);
+	} catch (error) {
+		// report async errors in bootCommercial to Sentry with the commercial feature tag
+		reportError(
+			error,
+			{
+				feature: 'commercial',
+			},
+			false,
+		);
+	}
 };
 
 if (window.guardian.mustardCut || window.guardian.polyfilled) {

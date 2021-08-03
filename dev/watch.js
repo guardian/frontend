@@ -67,9 +67,9 @@ const mainWebpackBundler = webpack(require('../webpack.config.dev.js'));
 
 mainWebpackBundler.watch(...watchArguments);
 
-const dcrWebpackBundler = webpack(require('../webpack.config.dcr.dev.js'));
+const CommercialWebpackBundler = webpack(require('../webpack.config.commercial.dev.js'));
 
-dcrWebpackBundler.watch(...watchArguments);
+CommercialWebpackBundler.watch(...watchArguments);
 
 // ********************************** Sass **********************************
 

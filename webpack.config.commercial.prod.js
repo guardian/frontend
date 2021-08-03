@@ -4,21 +4,21 @@ const Visualizer = require('webpack-visualizer-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const config = require('./webpack.config.dcr.js');
+const config = require('./webpack.config.commercial.js');
 
 module.exports = webpackMerge.smart(config, {
     mode: 'production',
     output: {
-        filename: `[chunkhash]/graun.[name].dcr.js`,
-        chunkFilename: `[chunkhash]/graun.[name].dcr.js`,
+        filename: `[chunkhash]/graun.[name].universal.js`,
+        chunkFilename: `[chunkhash]/graun.[name].universal.js`,
     },
     devtool: 'source-map',
     plugins: [
         new Visualizer({
-            filename: './dcr-webpack-stats.html',
+            filename: './commercial-webpack-stats.html',
         }),
         new BundleAnalyzerPlugin({
-            reportFilename: './dcr-bundle-analyzer-report.html',
+            reportFilename: './commercial-bundle-analyzer-report.html',
             analyzerMode: 'static',
             openAnalyzer: false,
         }),
