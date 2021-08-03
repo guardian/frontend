@@ -29,9 +29,21 @@ const jsonData: CoreWebVitalsPayload = {
 	ttfb: null,
 };
 
+/**
+ * Sends core web vitals data for a sample of page views to the data lake.
+ * Equivalent dotcom-rendering functionality is here: https://git.io/JBRIt
+ */
 export const coreVitals = (): void => {
-	const inSample = Math.floor(Math.random() * 100);
-	if (inSample != 1) {
+	// If the current user is part of a server-side AB test
+	// then we always want to sample their core web vitals data.
+	const userInTest =
+		window.guardian.config.tests &&
+		Object.values(window.guardian.config.tests).includes('variant');
+
+	// Otherwise, only send core web vitals data for 1% of users.
+	const inSample = Math.random() < 1 / 100;
+
+	if (!userInTest && !inSample) {
 		return;
 	}
 

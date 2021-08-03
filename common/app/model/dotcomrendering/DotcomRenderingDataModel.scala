@@ -107,6 +107,7 @@ object DotcomRenderingDataModel {
         "pagination" -> model.pagination,
         "author" -> model.author,
         "webPublicationDate" -> model.webPublicationDate,
+        "webPublicationDateDeprecated" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
         "webPublicationSecondaryDateDisplay" -> model.webPublicationSecondaryDateDisplay,
         "editionLongForm" -> model.editionLongForm,

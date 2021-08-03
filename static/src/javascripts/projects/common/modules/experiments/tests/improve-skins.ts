@@ -3,7 +3,7 @@ import type { ABTest } from '@guardian/ab-core';
 export const improveSkins: ABTest = {
 	id: 'ImproveSkins',
 	start: '2021-07-09',
-	expiry: '2021-08-09',
+	expiry: '2021-08-17',
 	author: 'Max Duval (@mxdvl) / @guardian/commercial-dev',
 	description: 'Serve Improve page skins via Prebid and measure performance',
 	audience: 1 / 100,

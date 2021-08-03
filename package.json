@@ -18,7 +18,7 @@
     "@guardian/atom-renderer": "1.2.2",
     "@guardian/automat-contributions": "^0.3.6",
     "@guardian/automat-modules": "^0.3.8",
-    "@guardian/braze-components": "^2.1.0",
+    "@guardian/braze-components": "^3.2.0",
     "@guardian/commercial-core": "^0.19.1",
     "@guardian/consent-management-platform": "6.11.5",
     "@guardian/libs": "^2.8.0",
@@ -47,7 +47,7 @@
     "videojs-ima": "googleads/videojs-ima#0.3.0",
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
     "videojs-playlist": "guardian/videojs-playlist#0.1.4",
-    "web-vitals": "^1.1.1",
+    "web-vitals": "^2.1.0",
     "wolfy87-eventemitter": "~5.2.4"
   },
   "devDependencies": {
@@ -67,6 +67,7 @@
     "@types/google.analytics": "^0.0.42",
     "@types/jest": "^26.0.20",
     "@types/lodash-es": "^4.17.4",
+    "@types/webpack-env": "^1.16.2",
     "@types/youtube": "^0.0.44",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
