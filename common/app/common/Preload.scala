@@ -7,7 +7,7 @@ import experiments.ActiveExperiments
 
 object Preload {
 
-  def commercialBundleName(implicit request: RequestHeader): String = "graun.commercial.js"
+  def commercialBundleName(implicit request: RequestHeader): String = "commercial/graun.commercial.universal.js"
 
   def isPolyFillIOFallbackMin: Seq[PreloadAsset] =
     if (conf.switches.Switches.PolyfillIOFallbackMin.isSwitchedOn)

@@ -77,8 +77,8 @@ const go = () => {
         // eslint-disable-next-line no-nested-ternary
         const fetchCommercial = config.get('switches.commercial')
             ? (markTime('commercial request'),
-              import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial'))
-            : Promise.resolve({ bootCommercial: () => {} });
+              import(/* webpackIgnore: true */ `${window.guardian.config.page.assetsPath}javascripts/commercial/graun.commercial.universal.js`))
+            : Promise.resolve();
 
         const fetchEnhanced = window.guardian.isEnhanced
             ? (markTime('enhanced request'),
@@ -86,24 +86,7 @@ const go = () => {
             : Promise.resolve({ bootEnhanced: () => {} });
 
         Promise.all([
-            fetchCommercial.then(({ bootCommercial }) => {
-                markTime('commercial boot');
-                try {
-                    return bootCommercial();
-                } catch (err) {
-                    /**
-                     * report sync errors in bootCommercial to
-                     * Sentry with the commercial feature tag
-                     *  */
-                    reportError(
-                        err,
-                        {
-                            feature: 'commercial',
-                        },
-                        false
-                    );
-                }
-            }),
+            fetchCommercial,
             fetchEnhanced.then(({ bootEnhanced }) => {
                 markTime('enhanced boot');
                 try {
