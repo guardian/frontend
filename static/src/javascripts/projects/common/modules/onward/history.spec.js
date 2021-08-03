@@ -444,4 +444,32 @@ describe('history', () => {
 
         expect(getArticleViewCountForWeeks(1)).toEqual(1);
     });
+
+    it('increments the weekly article count if not a duplicate article', () => {
+        const counts = [{ week: startOfThisWeek, count: 1 }];
+        storageStub.local.set('gu.history.weeklyArticleCount', counts);
+        storageStub.local.set('gu.history.articleCountsThisWeek', {
+            week: startOfThisWeek,
+            articles: { someOtherArticle: 1 },
+        });
+        getCookie.mockReturnValue(new Date().getTime().toString());
+
+        incrementWeeklyArticleCount(pageConfig);
+
+        expect(getArticleViewCountForWeeks(1)).toEqual(1);
+    });
+
+    it('does not increment the weekly article count if duplicate article', () => {
+        const counts = [{ week: startOfThisWeek, count: 1 }];
+        storageStub.local.set('gu.history.weeklyArticleCount', counts);
+        storageStub.local.set('gu.history.articleCountsThisWeek', {
+            week: startOfThisWeek,
+            articles: { [pageConfig.pageId]: 1 },
+        });
+        getCookie.mockReturnValue(new Date().getTime().toString());
+
+        incrementWeeklyArticleCount(pageConfig);
+
+        expect(getArticleViewCountForWeeks(1)).toEqual(1);
+    });
 });

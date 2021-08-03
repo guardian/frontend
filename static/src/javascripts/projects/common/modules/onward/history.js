@@ -70,6 +70,7 @@ const storageKeyHistory = 'gu.history';
 const storageKeySummary = 'gu.history.summary';
 const storageKeyDailyArticleCount = 'gu.history.dailyArticleCount'; // Array containing an article count for each day
 const storageKeyWeeklyArticleCount = 'gu.history.weeklyArticleCount';
+const storageKeyForArticleCountsThisWeek = 'gu.history.articleCountsThisWeek';
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 const startOfThisWeek = getMondayFromDate(new Date());
@@ -475,34 +476,65 @@ const showInMegaNavEnable = (bool) => {
     saveSummary(summary);
 };
 
+// Returns true if the article has already been viewed this week
+const updateCountForArticleThisWeek = (pageId) => {
+    const articleCounts = storage.local.get(storageKeyForArticleCountsThisWeek);
+    if (articleCounts && articleCounts.week === startOfThisWeek) {
+        const currentCount = articleCounts.articles[pageId] || 0;
+
+        storage.local.set(storageKeyForArticleCountsThisWeek, {
+            week: startOfThisWeek,
+            articles: {
+                ...articleCounts.articles,
+                [pageId]: currentCount + 1,
+            },
+        });
+
+        return !!currentCount;
+    } else {
+        // It's a new week
+        storage.local.set(storageKeyForArticleCountsThisWeek, {
+            week: startOfThisWeek,
+            articles: { [pageId]: 1 },
+        });
+
+        return false;
+    }
+}
+
 const incrementWeeklyArticleCount = (pageConfig) => {
     if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
-        const weeklyArticleCount =
-            storage.local.get(storageKeyWeeklyArticleCount) || [];
-        if (
-            weeklyArticleCount[0] &&
-            weeklyArticleCount[0].week &&
-            weeklyArticleCount[0].week === startOfThisWeek
-        ) {
-            weeklyArticleCount[0].count += 1;
-        } else {
-            // New day
-            weeklyArticleCount.unshift({
-                week: startOfThisWeek,
-                count: 1,
-            });
+        const hasBeenViewedThisWeek = updateCountForArticleThisWeek(pageConfig.pageId);
+        console.log('hasBeenViewedThisWeek', hasBeenViewedThisWeek)
 
-            // Remove any weeks older than a year
-            const cutOff = startOfThisWeek - 365;
-            const firstOldWeekIndex = weeklyArticleCount.findIndex(
-                c => c.week && c.week < cutOff
-            );
-            if (firstOldWeekIndex > 0) {
-                weeklyArticleCount.splice(firstOldWeekIndex);
+        if (!hasBeenViewedThisWeek) {
+            const weeklyArticleCount =
+                storage.local.get(storageKeyWeeklyArticleCount) || [];
+            if (
+                weeklyArticleCount[0] &&
+                weeklyArticleCount[0].week &&
+                weeklyArticleCount[0].week === startOfThisWeek
+            ) {
+                weeklyArticleCount[0].count += 1;
+            } else {
+                // New day
+                weeklyArticleCount.unshift({
+                    week: startOfThisWeek,
+                    count: 1,
+                });
+
+                // Remove any weeks older than a year
+                const cutOff = startOfThisWeek - 365;
+                const firstOldWeekIndex = weeklyArticleCount.findIndex(
+                    c => c.week && c.week < cutOff
+                );
+                if (firstOldWeekIndex > 0) {
+                    weeklyArticleCount.splice(firstOldWeekIndex);
+                }
             }
-        }
 
-        storage.local.set(storageKeyWeeklyArticleCount, weeklyArticleCount);
+            storage.local.set(storageKeyWeeklyArticleCount, weeklyArticleCount);
+        }
     }
 };
 
