@@ -10,7 +10,6 @@ import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { fillAdvertSlots as fillAdvertSlots_ } from './fill-advert-slots';
 import { getAdvertById } from './get-advert-by-id';
-import { getCreativeIDs } from './get-creative-ids';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
 
@@ -60,7 +59,7 @@ const getAdverts = (withEmpty: boolean) =>
 	Object.keys(dfpEnv.advertIds).reduce(
 		(advertsById: Record<string, Advert | null>, id) => {
 			const advert = getAdvertById(id);
-			// Do not return empty slots unless explicitely requested
+			// Do not return empty slots unless explicitly requested
 			if (withEmpty || (advert && !advert.isEmpty)) {
 				advertsById[id] = advert;
 			}
@@ -68,6 +67,8 @@ const getAdverts = (withEmpty: boolean) =>
 		},
 		{},
 	);
+
+const getCreativeIDs = () => dfpEnv.creativeIDs;
 
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
 	(
