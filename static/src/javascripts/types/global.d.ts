@@ -63,6 +63,11 @@ interface CommercialPageConfig {
 }
 
 interface Config {
+	ophan: {
+		// somewhat redundant with guardian.ophan
+		pageViewId: string;
+		browserId?: string;
+	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
 	tests?: Record<string, 'control' | 'variant'>;
