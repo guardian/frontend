@@ -33,13 +33,7 @@ declare module '*.svg' {
 }
 
 declare module 'ophan/ng' {
-	const ophan: {
-		setEventEmitter: unkown;
-		trackComponentAttention: unkown;
-		record: (...args: unkown[]) => void;
-		viewId: unkown;
-		pageViewId: string;
-	};
+	const ophan: Ophan;
 	// eslint-disable-next-line import/no-default-export -- that’s the ophan way
 	export default ophan;
 }
@@ -66,6 +60,7 @@ interface Config {
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
 	tests?: Record<string, 'control' | 'variant'>;
+	isDotcomRendering: boolean;
 }
 
 interface PageConfig extends CommercialPageConfig {
@@ -73,10 +68,15 @@ interface PageConfig extends CommercialPageConfig {
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
+	assetsPath: string;
+	frontendAssetsFullURL?: string; // only in DCR
 }
 
 interface Ophan {
-	viewId: string;
+	setEventEmitter: unknown;
+	trackComponentAttention: unknown;
+	record: (...args: unknown[]) => void;
+	viewId: unknown;
 	pageViewId: string;
 }
 
