@@ -80,14 +80,16 @@ const updateTOC = changed => {
     }
     return changed;
 };
-const commercialGraph = () =>
-    execa(
+const commercialGraph = changed => {
+    if (!changed.some(file => file.includes('/commercial/'))) return changed;
+    return execa(
         './tools/task-runner/runner',
         ['commercial/graph', '--verbose'],
         {
             stdio: 'inherit',
         }
-    );
+    ).then(() => changed);
+}
 confirmIfMain
     .then(validate)
     .then(getChangedFiles)
