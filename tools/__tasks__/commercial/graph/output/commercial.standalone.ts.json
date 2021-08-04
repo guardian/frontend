@@ -624,7 +624,7 @@
  ],
  "../projects/common/modules/user-prefs.js": [],
  "../projects/common/modules/video/ga-helper.js": [],
- "commercial.universal.ts": [
+ "commercial.standalone.ts": [
   "../lib/config.js",
   "../lib/report-error.js",
   "../lib/robust.js",
