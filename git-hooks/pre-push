@@ -80,11 +80,20 @@ const updateTOC = changed => {
     }
     return changed;
 };
+const commercialGraph = () =>
+    execa(
+        './tools/task-runner/runner',
+        ['commercial/graph', '--verbose'],
+        {
+            stdio: 'inherit',
+        }
+    );
 confirmIfMain
     .then(validate)
     .then(getChangedFiles)
     .then(checkYarnLock)
     .then(updateTOC)
+    .then(commercialGraph)
     .catch(e => {
         console.log(`\n${e}\n`);
         process.exit(1);
