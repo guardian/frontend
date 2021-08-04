@@ -16,7 +16,13 @@ window.guardian = {
 			commercial: {},
 		},
 		libs: {},
+        ophan: {
+            browserId: 'dummy_bwid_24680'
+        }
 	},
+    ophan: {
+        pageViewId: 'dummy_pvid_123456790',
+    },
 	css: {},
 	adBlockers: {
 		active: undefined,

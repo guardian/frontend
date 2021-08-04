@@ -283,8 +283,6 @@ describe('DFP', () => {
 
 		config.set('images.commercial', {});
 
-		config.set('ophan.pageViewId', 'dummyOphanPageViewId');
-
 		document.body.innerHTML = domSnippet;
 
 		$style = document.createElement('style');

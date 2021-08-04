@@ -57,10 +57,25 @@ type PbjsConfig = {
 };
 
 type PbjsEvent = 'bidWon';
+// from https://docs.prebid.org/dev-docs/publisher-api-reference/getBidResponses.html
 type PbjsEventData = {
 	width: number;
 	height: number;
 	adUnitCode: string;
+	bidderCode?: BidderCode;
+	statusMessage?: string;
+	adId?: string;
+	creative_id?: number;
+	cpm?: number;
+	adUrl?: string;
+	requestTimestamp?: number;
+	responseTimestamp?: number;
+	timeToRespond?: number;
+	bidder?: string;
+	usesGenericKeys?: boolean;
+	size?: string;
+	adserverTargeting?: Record<string, unknown>;
+	[x: string]: unknown;
 };
 type PbjsEventHandler = (data: PbjsEventData) => void;
 
@@ -125,7 +140,7 @@ declare global {
 				dataProviders: Array<{
 					name: string;
 					params: {
-						acBidders: string[];
+						acBidders: BidderCode[];
 					};
 				}>;
 			};
