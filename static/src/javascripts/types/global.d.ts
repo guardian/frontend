@@ -83,7 +83,7 @@ interface Ophan {
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
-		ophan: Ophan;
+		ophan?: Partial<Ophan>;
 		config: Config;
 		queue: Array<() => Promise<void>>;
 		mustardCut?: boolean;
