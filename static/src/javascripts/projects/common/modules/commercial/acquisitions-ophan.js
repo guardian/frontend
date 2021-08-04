@@ -1,8 +1,6 @@
+import ophan from 'ophan/ng';
 import config from '../../../../lib/config';
 import { constructQuery as constructURLQuery } from '../../../../lib/url';
-
-// registed on window by bootStandard() in javascripts/boot.js#L32
-const ophan = window.guardian.ophan;
 
 export const submitComponentEvent = (componentEvent) => {
     ophan.record({ componentEvent });

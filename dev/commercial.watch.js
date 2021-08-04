@@ -65,11 +65,13 @@ const watchArguments = [
 
 const mainWebpackBundler = webpack(require('../webpack.config.dev.js'));
 
-mainWebpackBundler.watch(...watchArguments);
+mainWebpackBundler.run(() => {
+    console.log(chalk.blue('initial frontend bundle created, only watching commercial now'))
+});
 
-const dcrWebpackBundler = webpack(require('../webpack.config.commercial.dev.js'));
+const CommercialWebpackBundler = webpack(require('../webpack.config.commercial.dev.js'));
 
-dcrWebpackBundler.watch(...watchArguments);
+CommercialWebpackBundler.watch(...watchArguments);
 
 // ********************************** Sass **********************************
 

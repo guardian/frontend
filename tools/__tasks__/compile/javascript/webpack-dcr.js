@@ -6,10 +6,10 @@ const Observable = require('any-observable');
 const webpack = require('webpack');
 const chalk = require('chalk');
 
-const config = require('../../../../webpack.config.commercial.dev.js');
+const config = require('../../../../webpack.config.dcr.prod.js');
 
 module.exports = {
-    description: 'Create Universal commercial.js bundle for development',
+    description: 'Create Webpack commercial.js bundle for dotcom-rendering',
     task: () =>
         new Observable(observer => {
             config.plugins = [

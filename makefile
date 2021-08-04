@@ -132,3 +132,6 @@ commercial-compile: install # PRIVATE
 
 commercial-graph: install # PRIVATE
 	@./tools/task-runner/runner commercial/graph --verbose
+
+commercial-watch: commercial-compile
+	@./dev/commercial.watch.js

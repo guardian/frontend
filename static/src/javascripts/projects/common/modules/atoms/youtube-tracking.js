@@ -1,9 +1,7 @@
 import mediator from 'lib/mediator';
 import config from 'lib/config';
+import ophan from 'ophan/ng';
 import { buildGoogleAnalyticsEvent } from 'common/modules/video/ga-helper';
-
-// registed on window by bootStandard() in javascripts/boot.js#L32
-const ophan = window.guardian.ophan;
 
 const buildEventId = (event, videoId) =>
     `${event}:${videoId}`;

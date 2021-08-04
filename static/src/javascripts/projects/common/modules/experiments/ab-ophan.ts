@@ -1,4 +1,5 @@
 import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
+import ophan from 'ophan/ng';
 import config_ from 'lib/config';
 import { noop } from 'lib/noop';
 import reportError from 'lib/report-error';
@@ -7,9 +8,6 @@ import reportError from 'lib/report-error';
 const config = config_ as {
 	get: (s: string, d?: string) => string;
 };
-
-// registed on window by bootStandard() in javascripts/boot.js#L32
-const ophan = window.guardian.ophan;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- generics don’t play nice
 type BooleanFunction = (...args: any[]) => boolean;
