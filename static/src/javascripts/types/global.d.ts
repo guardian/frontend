@@ -73,9 +73,9 @@ interface PageConfig extends CommercialPageConfig {
 }
 
 interface Ophan {
-	setEventEmitter: unknown;
-	trackComponentAttention: unknown;
-	record: (...args: unknown[]) => void;
+	setEventEmitter?: unknown;
+	trackComponentAttention?: unknown;
+	record?: (...args: unknown[]) => void;
 	viewId: unknown;
 	pageViewId: string;
 }
@@ -83,7 +83,7 @@ interface Ophan {
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
-		ophan?: Partial<Ophan>;
+		ophan: Ophan;
 		config: Config;
 		queue: Array<() => Promise<void>>;
 		mustardCut?: boolean;
