@@ -73,9 +73,9 @@ interface PageConfig extends CommercialPageConfig {
 }
 
 interface Ophan {
-	setEventEmitter?: unknown;
-	trackComponentAttention?: unknown;
-	record?: (...args: unknown[]) => void;
+	setEventEmitter: unknown;
+	trackComponentAttention: unknown;
+	record: (...args: unknown[]) => void;
 	viewId: unknown;
 	pageViewId: string;
 }
