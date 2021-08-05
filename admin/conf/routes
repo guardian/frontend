@@ -96,11 +96,6 @@ GET         /commercial/adops/app-ads-txt                                       
 POST        /commercial/adops/app-ads-txt                                                           controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 GET         /commercial/prebid/revenue                                                              controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
 
-# Config
-
-GET         /config                                                                                 controllers.AppConfigController.renderAppConfig()
-GET         /config/parameter/*key                                                                  controllers.AppConfigController.findParameter(key: String)
-
 # Metrics
 GET         /metrics/loadbalancers                                                                  controllers.admin.MetricsController.renderLoadBalancers()
 GET         /metrics/fastly                                                                         controllers.admin.FastlyController.renderFastly()
