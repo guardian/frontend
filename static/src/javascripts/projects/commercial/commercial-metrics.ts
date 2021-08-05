@@ -1,8 +1,5 @@
-import type { ABTest } from '@guardian/ab-core';
 import { sendCommercialMetrics } from '@guardian/commercial-core';
-import { getSynchronousTestsToRun } from 'common/modules/experiments/ab';
-import { commercialPartner } from 'common/modules/experiments/tests/commercial-partner';
-import { improveSkins } from '../common/modules/experiments/tests/improve-skins';
+import { shouldCaptureMetrics } from 'common/modules/analytics/shouldCaptureMetrics';
 
 const { isDev } = window.guardian.config.page;
 const { pageViewId } = window.guardian.ophan;
@@ -18,14 +15,9 @@ const init = (): Promise<void> => {
 	if (!window.guardian.config.switches.commercialMetrics)
 		return Promise.resolve();
 
-	const testsToForceMetricsFor: ABTest[] = [commercialPartner, improveSkins];
-
 	const userIsInSamplingGroup = Math.random() <= 0.01;
-	const shouldForceMetrics = getSynchronousTestsToRun().some((test) =>
-		testsToForceMetricsFor.map((t) => t.id).includes(test.id),
-	);
 
-	if (isDev || shouldForceMetrics || userIsInSamplingGroup) {
+	if (isDev || shouldCaptureMetrics() || userIsInSamplingGroup) {
 		document.addEventListener('visibilitychange', sendMetrics);
 	}
 
