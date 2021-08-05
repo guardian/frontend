@@ -72,16 +72,27 @@ const go = () => {
             });
         }
 
+        const useStandaloneBundle = window.guardian.config.tests.standaloneCommercialBundleVariant === "variant";
+        const commercialBundle = useStandaloneBundle
+			? import(
+					/* webpackIgnore: true */
+					`${window.guardian.config.page.assetsPath}javascripts/commercial/graun.standalone.commercial.js`
+			  )
+			: import(
+					/* webpackChunkName: "commercial" */
+					'bootstraps/commercial'
+			  );
+
+
         // Start downloading these ASAP
+
 
         // eslint-disable-next-line no-nested-ternary
         const fetchCommercial = config.get('switches.commercial')
             ? (markTime('commercial request'),
-              import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial'))
+              commercialBundle)
             : Promise.resolve({ bootCommercial: () => {} });
 
-        // TODO: use the standalone commercial bundle
-        // import(/* webpackIgnore: true */ `${window.guardian.config.page.assetsPath}javascripts/commercial/graun.commercial.standalone.js`))
 
         const fetchEnhanced = window.guardian.isEnhanced
             ? (markTime('enhanced request'),
