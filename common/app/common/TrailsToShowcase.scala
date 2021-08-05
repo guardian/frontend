@@ -203,22 +203,21 @@ case class GArticle(
 case class ArticleGroup(role: Option[String], articles: Seq[GArticle])
 
 class RssAtomModuleGenerator extends ModuleGenerator {
-  private val NS = Namespace.getNamespace("atom", RssAtomModule.URI)
 
   override def getNamespaceUri: String = RssAtomModule.URI
 
-  override def getNamespaces: util.Set[_] = Set(NS).asJava
+  override def getNamespaces: util.Set[_] = Set(RssAtomModuleGenerator.NS).asJava
 
   override def generate(module: Module, element: Element): Unit = {
     module match {
       case rssAtomModule: RssAtomModule => {
         rssAtomModule.getPublished.foreach { published =>
-          val publishedElement = new org.jdom.Element("published", NS)
+          val publishedElement = new org.jdom.Element("published", RssAtomModuleGenerator.NS)
           publishedElement.addContent(ISODateTimeFormat.dateTimeNoMillis().print(published))
           element.addContent(publishedElement)
         }
         rssAtomModule.getUpdated.foreach { updated =>
-          val publishedElement = new org.jdom.Element("updated", NS)
+          val publishedElement = new org.jdom.Element("updated", RssAtomModuleGenerator.NS)
           publishedElement.addContent(ISODateTimeFormat.dateTimeNoMillis().print(updated))
           element.addContent(publishedElement)
         }
@@ -227,19 +226,21 @@ class RssAtomModuleGenerator extends ModuleGenerator {
   }
 }
 
+object RssAtomModuleGenerator {
+  val NS: Namespace = Namespace.getNamespace("atom", RssAtomModule.URI)
+}
+
 class GModuleGenerator extends ModuleGenerator {
   private val NS = Namespace.getNamespace("g", GModule.URI)
-  private val RSS_ATOM_NS = Namespace.getNamespace("atom", RssAtomModule.URI) // TOOD deduplicate
-
   private val rssAtomModuleGenerator = new RssAtomModuleGenerator()
 
   override def getNamespaceUri: String = GModule.URI
 
-  override def getNamespaces: util.Set[_] = Set(NS, RSS_ATOM_NS).asJava
+  override def getNamespaces: util.Set[_] = Set(NS, RssAtomModuleGenerator.NS).asJava
 
   override def generate(module: Module, element: Element): Unit = {
     module match {
-      case gModule: GModule => {
+      case gModule: GModule =>
         gModule.getPanel.foreach { panel =>
           val panelElement = new org.jdom.Element("panel", NS)
           panelElement.addContent(panel)
@@ -279,7 +280,6 @@ class GModuleGenerator extends ModuleGenerator {
 
           element.addContent(articleGroupElement)
         }
-      }
     }
   }
 }
