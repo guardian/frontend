@@ -75,7 +75,9 @@ private object NavLinks {
   )
   val ukEnvironment =
     NavLink("Environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
-  val auEnvironment = ukEnvironment.copy(children = List(climateChange, energy, wildlife, biodiversity, oceans, pollution, greatBarrierReef))
+  val auEnvironment = ukEnvironment.copy(children =
+    List(climateChange, energy, wildlife, biodiversity, oceans, pollution, greatBarrierReef),
+  )
   val usEnvironment = ukEnvironment.copy(children = List(climateChange, wildlife, energy, pollution, greenLight))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
