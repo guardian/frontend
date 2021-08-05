@@ -508,7 +508,8 @@
  "../projects/common/modules/atoms/youtube-tracking.js": [
   "../lib/config.js",
   "../lib/mediator.js",
-  "../projects/common/modules/video/ga-helper.js"
+  "../projects/common/modules/video/ga-helper.js",
+  "ophan.standalone.ts"
  ],
  "../projects/common/modules/commercial/build-page-targeting.js": [
   "../lib/config.js",
@@ -660,5 +661,6 @@
   "../projects/common/modules/commercial/user-features.js",
   "types.ts"
  ],
+ "ophan.standalone.ts": [],
  "types.ts": []
 }
