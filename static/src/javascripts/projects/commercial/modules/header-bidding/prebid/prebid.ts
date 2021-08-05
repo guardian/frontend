@@ -245,7 +245,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 				provider: 'gu',
 				options: {
 					ajaxUrl: window.guardian.config.page.ajaxUrl,
-					pv: window.guardian.ophan?.pageViewId ?? '',
+					pv: window.guardian.ophan.pageViewId,
 				},
 			},
 		]);
