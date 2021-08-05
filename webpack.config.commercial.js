@@ -10,7 +10,7 @@ config.entry = {
         'src',
         'javascripts',
         'bootstraps',
-        'commercial.universal.ts'
+        'commercial.standalone.ts'
     ),
 };
 
@@ -20,8 +20,8 @@ module.exports = webpackMerge.smart(config, {
         path: path.join(__dirname, 'static', 'target', 'javascripts', 'commercial'),
     },
     resolve: {
-        // alias: {
-        //     "ophan/ng": path.join(__dirname, 'static', 'src', 'javascripts', 'bootstraps', 'commercial-ophan.dcr.ts'),
-        // },
+        alias: {
+            "ophan/ng": path.join(__dirname, 'static', 'src', 'javascripts', 'bootstraps', 'ophan.standalone.ts'),
+        },
     },
 });

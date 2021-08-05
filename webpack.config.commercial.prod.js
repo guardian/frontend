@@ -9,8 +9,8 @@ const config = require('./webpack.config.commercial.js');
 module.exports = webpackMerge.smart(config, {
     mode: 'production',
     output: {
-        filename: `[chunkhash]/graun.[name].universal.js`,
-        chunkFilename: `[chunkhash]/graun.[name].universal.js`,
+        filename: `[chunkhash]/graun.standalone.commercial.js`,
+        chunkFilename: `[chunkhash]/graun.[name].commercial.js`,
     },
     devtool: 'source-map',
     plugins: [

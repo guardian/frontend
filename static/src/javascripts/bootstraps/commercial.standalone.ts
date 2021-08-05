@@ -70,7 +70,7 @@ const loadFrontendBundle = async (): Promise<void> => {
 	if (isDotcomRendering) return void 0;
 
 	const commercialMetrics = await import(
-		/* webpackChunkName: "commercial-frontend" */
+		/* webpackChunkName: "frontend" */
 		'commercial/commercial-metrics'
 	);
 
@@ -90,7 +90,7 @@ const loadDcrBundle = async (): Promise<void> => {
 	if (!isDotcomRendering) return void 0;
 
 	const userFeatures = await import(
-		/* webpackChunkName: "commercial-dcr" */
+		/* webpackChunkName: "dcr" */
 		'common/modules/commercial/user-features'
 	);
 
@@ -109,23 +109,23 @@ const loadHostedBundle = async (): Promise<void> => {
 	amIUsed('commercial.dcr.ts', 'loadHostedBundle', { isHosted: 'true' });
 
 	const hostedAbout = await import(
-		/* webpackChunkName: "commercial-hosted" */
+		/* webpackChunkName: "hosted" */
 		'commercial/modules/hosted/about'
 	);
 	const initHostedVideo = await import(
-		/* webpackChunkName: "commercial-hosted" */
+		/* webpackChunkName: "hosted" */
 		'commercial/modules/hosted/video'
 	);
 	const hostedGallery = await import(
-		/* webpackChunkName: "commercial-hosted" */
+		/* webpackChunkName: "hosted" */
 		'commercial/modules/hosted/gallery'
 	);
 	const initHostedCarousel = await import(
-		/* webpackChunkName: "commercial-hosted" */
+		/* webpackChunkName: "hosted" */
 		'commercial/modules/hosted/onward-journey-carousel'
 	);
 	const loadOnwardComponent = await import(
-		/* webpackChunkName: "commercial-hosted" */
+		/* webpackChunkName: "hosted" */
 		'commercial/modules/hosted/onward'
 	);
 
