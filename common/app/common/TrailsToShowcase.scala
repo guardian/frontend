@@ -68,6 +68,14 @@ object TrailsToShowcase {
     gModule.setPanel(Some("RUNDOWN"))
     gModule.setPanelTitle(Some(title))
 
+    // Take the trail picture from the first available from our link trails. TODO this needs to be an editor's choice
+    trails.flatMap(mediaContentFrom).headOption.foreach { mediaContent =>
+      val mediaModule = new MediaEntryModuleImpl()
+      mediaModule.setMediaContents(Seq(mediaContent).toArray)
+      mediaModule.setMetadata(new Metadata())
+      addModuleTo(entry, mediaModule)
+    }
+
     // Build article group
     val articles = trails.map { trail =>
       GArticle(

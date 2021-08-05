@@ -80,6 +80,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers with TestTrails {
     rundownPanelGuid.text should be("rundown-container-id")
     rundownPanelGuid.attribute("isPermaLink").get.head.text should be("false")
 
+    val rundownPanelMedia = (rundownPanel \ "content").filter(_.prefix == "media")
+    rundownPanelMedia.size should be(1)
+    rundownPanelMedia.head.attribute("url").head.text shouldBe "http://localhost/trail.jpg"
+
     // Rundown panels content nested items in the single article group
     val articleGroups = (rundownPanel \ "article_group").filter(_.prefix == "g")
     articleGroups.size should be(1)
