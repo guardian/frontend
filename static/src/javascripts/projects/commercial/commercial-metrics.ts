@@ -14,18 +14,20 @@ const sendMetrics = (): void => {
 	logged = sendCommercialMetrics(pageViewId, browserId, isDev);
 };
 
+const shouldForceMetrics = (): boolean => {
+	const testsToForceMetricsFor: ABTest[] = [commercialPartner, improveSkins];
+	return getSynchronousTestsToRun().some((test) =>
+		testsToForceMetricsFor.map((t) => t.id).includes(test.id),
+	);
+};
+
 const init = (): Promise<void> => {
 	if (!window.guardian.config.switches.commercialMetrics)
 		return Promise.resolve();
 
-	const testsToForceMetricsFor: ABTest[] = [commercialPartner, improveSkins];
-
 	const userIsInSamplingGroup = Math.random() <= 0.01;
-	const shouldForceMetrics = getSynchronousTestsToRun().some((test) =>
-		testsToForceMetricsFor.map((t) => t.id).includes(test.id),
-	);
 
-	if (isDev || shouldForceMetrics || userIsInSamplingGroup) {
+	if (isDev || shouldForceMetrics() || userIsInSamplingGroup) {
 		document.addEventListener('visibilitychange', sendMetrics);
 	}
 
@@ -40,4 +42,8 @@ const captureCommercialMetrics = (): void => {
 	document.addEventListener('visibilitychange', sendMetrics);
 };
 
-export { init, captureCommercialMetrics };
+export {
+	init,
+	captureCommercialMetrics,
+	shouldForceMetrics as shouldForceCommercialMetrics,
+};

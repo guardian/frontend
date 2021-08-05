@@ -1,6 +1,7 @@
 import { getCookie } from '@guardian/libs';
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 import reportError from 'lib/report-error';
+import { shouldForceCommercialMetrics } from '../../../commercial/commercial-metrics';
 
 type CoreWebVitalsPayload = {
 	page_view_id: string | null;
@@ -43,7 +44,7 @@ export const coreVitals = (): void => {
 	// Otherwise, only send core web vitals data for 1% of users.
 	const inSample = Math.random() < 1 / 100;
 
-	if (!userInTest && !inSample) {
+	if (!userInTest && !shouldForceCommercialMetrics() && !inSample) {
 		return;
 	}
 
