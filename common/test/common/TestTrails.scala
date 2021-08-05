@@ -2,7 +2,7 @@ package common
 
 import com.gu.contentapi.client.model.v1.{CapiDateTime, ContentFields, Content => ApiContent}
 import implicits.Dates.jodaToJavaInstant
-import model.{ContentType, Trail}
+import model.{ContentType, ImageMedia, Trail}
 import org.joda.time.DateTime
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 
@@ -13,8 +13,8 @@ trait TestTrails {
   def testTrail(id: String, customTitle: Option[String] = None, byline: Option[String] = Some("Chadders"), webUrl: String = "",
                 trailText: Option[String] = None,
                 webPublicationDate: Option[DateTime] = None,
-                lastModified: Option[DateTime] = None
-               ): Trail = {
+                lastModified: Option[DateTime] = None,
+                trailPicture: Option[ImageMedia] = None): Trail = {
     val contentItem = ApiContent(
         id = id,
         sectionId = None,
@@ -25,13 +25,13 @@ trait TestTrails {
         elements = None,
         webTitle = customTitle getOrElse "hello …",
         fields = Some(
-         ContentFields(liveBloggingNow = Some(true), byline = byline, trailText = trailText,
-          lastModified = lastModified.map(l => jodaToCapiDateTime(l))
-        )
+          ContentFields(liveBloggingNow = Some(true), byline = byline, trailText = trailText,
+            lastModified = lastModified.map(l => jodaToCapiDateTime(l))
+          )
         )
     )
 
-    model.Content(contentItem).trail
+    model.Content(contentItem).trail.copy(trailPicture = trailPicture)
   }
 
   private def jodaToCapiDateTime(dateTime: DateTime): CapiDateTime = {

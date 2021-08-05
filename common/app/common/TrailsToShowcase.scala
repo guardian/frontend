@@ -1,9 +1,11 @@
 package common
 
 import com.sun.syndication.feed.module.Module
+import com.sun.syndication.feed.module.mediarss.{MediaEntryModuleImpl, MediaModule}
+import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
 import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl}
 import com.sun.syndication.io.ModuleGenerator
-import model.Trail
+import model.{ImageMedia, Trail}
 import org.jdom.{Element, Namespace}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
@@ -38,6 +40,20 @@ object TrailsToShowcase {
     gModule.setPanel(Some("SINGLE_STORY"))
     addModuleTo(entry, gModule)
 
+    val withoutMedia = entry.getModules.asScala.filter { module =>
+      module.asInstanceOf[Module].getUri != MediaModule.URI
+    }
+    entry.setModules(withoutMedia.asJava)
+
+    // and add the showcase formatted asset
+    mediaContentFrom(trail).foreach { mediaContent =>
+      val mediaModule = new MediaEntryModuleImpl()
+      mediaModule.setMediaContents(Seq(mediaContent).toArray)
+      mediaModule.setMetadata(new Metadata())
+      addModuleTo(entry, mediaModule)
+    }
+
+    // Showcase expects the publication dates to be shown as atom module fields.
     val atomModule = new RssAtomModuleImpl
     atomModule.setPublished(Some(trail.webPublicationDate))
     atomModule.setUpdated(Some(trail.fields.lastModified))
@@ -74,6 +90,18 @@ object TrailsToShowcase {
   private def addModuleTo(entry: SyndEntry, module: Module): Unit = {
     val modules = entry.getModules
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
+  }
+
+  private def mediaContentFrom(trail: Trail): Option[MediaContent] = {
+    trail.trailPicture.flatMap { trailPicture =>
+      trailImageCropToUse(trailPicture).map { imageToUse =>
+        new MediaContent(new UrlReference(imageToUse))
+      }
+    }
+  }
+
+  private def trailImageCropToUse(trailPicture: ImageMedia): Option[String] = {
+    trailPicture.allImages.headOption.flatMap(_.url) // TODO confirm correct pick
   }
 
   private def guidFor(trail: Trail): String = "http://www.theguardian.com/" + trail.metadata.id // TODO deduplicate

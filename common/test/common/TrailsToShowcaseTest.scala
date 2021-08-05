@@ -12,12 +12,13 @@ import play.api.test.FakeRequest
 import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import implicits.Dates.jodaToJavaInstant
-import model.Trail
+import model.{ImageAsset, ImageMedia, Trail}
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.sun.syndication.feed.module
 import com.sun.syndication.feed.module.georss.GMLModuleImpl
+import com.sun.syndication.feed.module.mediarss.MediaEntryModule
 import implicits.Dates.jodaToJavaInstant
 
 import java.util.Date
@@ -29,19 +30,26 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers with TestTrails {
 
   val request = FakeRequest()
 
-  "TrailsToShowcase" should "set showcase namespace in feed header" in {
-    val trail = testTrail("a", customTitle = Some("A title"), byline = Some("Trail byline"), webUrl = "https://www.theguardian.com/an-article")
+  val imageMedia = {
+    val asset = ImageAsset(fields = Map.empty, mediaType = "", mimeType = Some("image/jpeg"), url = Some("http://localhost/trail.jpg"))
+    ImageMedia(Seq(asset))
+  }
+
+  "TrailsToShowcase" should "set module namespaces in feed header" in {
+    val trail = testTrail("a", customTitle = Some("A title"), byline = Some("Trail byline"), webUrl = "https://www.theguardian.com/an-article", trailPicture = Some(imageMedia))
     val singleStoryTrails = Seq(trail)
 
     val rss = XML.loadString(TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
 
     rss.getNamespace("g") should be("http://schemas.google.com/pcn/2020")
+    rss.getNamespace("media") should be("http://search.yahoo.com/mrss/")
   }
 
   "TrailsToShowcase" can "render feed with Single Story and Rundown panels" in {
     val wayBackWhen = new DateTime(2021, 3, 2, 12, 30, 1)
     val trail = testTrail("a", customTitle = Some("A title"), byline = Some("Trail byline"), webUrl = "https://www.theguardian.com/an-article",
-      webPublicationDate = Some(wayBackWhen), lastModified = Some(wayBackWhen.plusHours(1)))
+      webPublicationDate = Some(wayBackWhen), lastModified = Some(wayBackWhen.plusHours(1)),
+      trailPicture = Some(imageMedia))
     val singleStoryTrails = Seq(trail)
     val rundownTrails = Seq(trail, trail)
 
@@ -62,6 +70,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers with TestTrails {
     (singleStoryPanel \ "creator").filter(_.prefix == "dc").head.text should be("Trail byline") // TODO should be <author> in Google Showcase docs
     (singleStoryPanel \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
     (singleStoryPanel \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
+
+    val singleStoryPanelMedia = (singleStoryPanel \ "content").filter(_.prefix == "media")
+    singleStoryPanelMedia.size should be(1)
+    singleStoryPanelMedia.head.attribute("url").head.text shouldBe "http://localhost/trail.jpg"
 
     val rundownPanel = rundownPanels.head
     val rundownPanelGuid = (rundownPanel \ "guid").head
@@ -107,6 +119,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers with TestTrails {
     gModule.getPanel should be(Some("SINGLE_STORY"))
     gModule.getPanelTitle should be(None)
 
+    // Single panel stories require a media element
+    val mediaModule = singleStoryPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
+    mediaModule should be(null)
+
     // TODO gModule.getOverline should be(Some("Trail text / Kicker"))
   }
 
@@ -137,6 +153,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers with TestTrails {
     firstItemInArticleGroup.published should be(trail.webPublicationDate)
     firstItemInArticleGroup.updated should be(trail.fields.lastModified)
 
+    // Rundown panel stories require a media element
+    val mediaModule = rundownPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
     //TODO firstItemInArticleGroupGModule.getOverline should be(Some("Kicker"))
   }
 
