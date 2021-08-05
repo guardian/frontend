@@ -51,6 +51,9 @@ private object NavLinks {
   val wildlife = NavLink("Wildlife", "/environment/wildlife")
   val energy = NavLink("Energy", "/environment/energy")
   val pollution = NavLink("Pollution", "/environment/pollution")
+  val biodiversity = NavLink("Biodiversity", "/environment/biodiversity")
+  val oceans = NavLink("Oceans", "/environment/oceans")
+  val greatBarrierReef = NavLink("Great Barrier Reef", "/environment/great-barrier-reef")
   val property = NavLink("Property", "/money/property")
   val pensions = NavLink("Pensions", "/money/pensions")
   val savings = NavLink("Savings", "/money/savings")
@@ -72,7 +75,7 @@ private object NavLinks {
   )
   val ukEnvironment =
     NavLink("Environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
-  val auEnvironment = ukEnvironment.copy(children = List(globalDevelopment, ourWideBrownLand))
+  val auEnvironment = ukEnvironment.copy(children = List(climateChange, energy, wildlife, biodiversity, oceans, pollution, greatBarrierReef))
   val usEnvironment = ukEnvironment.copy(children = List(climateChange, wildlife, energy, pollution, greenLight))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
