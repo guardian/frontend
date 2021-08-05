@@ -5,7 +5,7 @@ module.exports = webpackMerge.smart(config, {
     devtool: 'inline-source-map',
     mode: 'development',
     output: {
-        filename: `graun.[name].commercial.js`,
+        filename: `graun.standalone.commercial.js`,
         chunkFilename: `graun.[name].commercial.js`,
     },
 });
