@@ -7,7 +7,7 @@
 
 echo "##teamcity[progressMessage 'sbt compile assets scalafmtCheckAll test riffRaffUpload']"
 
-export JDK_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export JDK_HOME=${JDK_11}
 export JAVA_HOME=${JDK_HOME}
 
 echo "********** Java version **********"
