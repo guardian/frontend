@@ -4,12 +4,11 @@ import com.gu.Box
 import common.GuLogging
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
-import org.joda.time.DateTime
 
-import java.time.{Duration, Instant, LocalDate, LocalDateTime, ZoneId}
+import java.time.{Duration, LocalDate}
 import java.text.SimpleDateFormat
-import java.util.{Date, TimeZone}
-import scala.concurrent.{ExecutionContext, Future}
+import java.util.{TimeZone}
+import scala.concurrent.{ExecutionContext}
 
 import utils.Chronos
 
@@ -19,17 +18,6 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   private val dateFormatUTC = new SimpleDateFormat("yyyy/MMM/dd")
   dateFormatUTC.setTimeZone(TimeZone.getTimeZone("Europe/London"))
-
-  private def dateTimeToLocalDateTime(date: DateTime): LocalDateTime = {
-    LocalDateTime.ofInstant(
-      Instant.ofEpochMilli(
-        date
-          .toInstant()
-          .getMillis,
-      ),
-      ZoneId.systemDefault,
-    )
-  }
 
   def getMatch(team: CricketTeam, date: String): Option[Match] =
     cricketStatsAgents
