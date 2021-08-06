@@ -73,6 +73,7 @@
     }
 
     &.hidden {
+        display: initial;
         visibility: hidden;
     }
 }
