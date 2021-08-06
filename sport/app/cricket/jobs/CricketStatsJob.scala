@@ -15,8 +15,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
 
-  private val dateFormatUTC = new SimpleDateFormat("yyyy/MMM/dd")
-  dateFormatUTC.setTimeZone(TimeZone.getTimeZone("Europe/London"))
+  private val dateFormatUTC = Chronos.dateFormatter("yyyy/MMM/dd", TimeZone.getTimeZone("Europe/London"))
 
   def getMatch(team: CricketTeam, date: String): Option[Match] =
     cricketStatsAgents
