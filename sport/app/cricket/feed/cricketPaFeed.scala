@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 case class CricketFeedException(message: String) extends RuntimeException(message)
 
 object PaFeed {
-  val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
+  val dateFormat = new SimpleDateFormat("yyyy-MM-dd") // Note that there is an implicit timezone assumption here
 }
 
 class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends GuLogging {
