@@ -10,7 +10,8 @@ object Preload {
   def commercialBundleName(implicit request: RequestHeader): String = "commercial/graun.commercial.dcr.js"
 
   // TODO: start using it
-  def commercialStandaloneBundleName(implicit request: RequestHeader): String = "commercial/graun.commercial.standalone.js"
+  def commercialStandaloneBundleName(implicit request: RequestHeader): String =
+    "commercial/graun.commercial.standalone.js"
 
   def isPolyFillIOFallbackMin: Seq[PreloadAsset] =
     if (conf.switches.Switches.PolyfillIOFallbackMin.isSwitchedOn)

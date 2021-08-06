@@ -304,7 +304,8 @@ object DotcomRenderingDataModel {
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
       commercialBundleUrl = DotcomRenderingUtils.assetURL("javascripts/graun.commercial.dcr.js"),
-      commercialStandaloneBundleUrl = DotcomRenderingUtils.assetURL("javascripts/commercial/graun.commercial.standalone.js"),
+      commercialStandaloneBundleUrl =
+        DotcomRenderingUtils.assetURL("javascripts/commercial/graun.commercial.standalone.js"),
       ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
