@@ -24,7 +24,7 @@ object ProjectSettings {
     scalacOptions ++= Seq(
       "-unchecked",
       "-deprecation",
-      s"-target:$requiredJavaVersion",
+      "-target:jvm-1.8",
       "-Xcheckinit",
       "-encoding",
       "utf8",
