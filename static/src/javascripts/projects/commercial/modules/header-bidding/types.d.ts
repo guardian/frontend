@@ -78,8 +78,21 @@ type PrebidAdYouLikeParams = {
 	placement: string;
 };
 
+type BidderCode =
+	| 'adyoulike'
+	| 'and'
+	| 'appnexus'
+	| 'improvedigital'
+	| 'ix'
+	| 'oxd'
+	| 'ozone'
+	| 'pubmatic'
+	| 'sonobi'
+	| 'triplelift'
+	| 'trustx'
+	| 'xhb';
 type PrebidBidder = {
-	name: string;
+	name: BidderCode;
 	switchName: string;
 	bidParams: (
 		slotId: string,

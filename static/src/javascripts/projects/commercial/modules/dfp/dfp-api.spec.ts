@@ -6,10 +6,10 @@ import type { CCPAConsentState } from '@guardian/consent-management-platform/dis
 import _config from '../../../../lib/config';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { fillAdvertSlots as fillAdvertSlots_ } from './fill-advert-slots';
-import { getAdverts } from './get-adverts';
-import { getCreativeIDs } from './get-creative-ids';
+import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
 
@@ -54,6 +54,21 @@ interface TCFv2ConsentStateMockType {
 	consents: Record<string, boolean | null>;
 	vendorConsents: Record<string, boolean | null>;
 }
+
+const getAdverts = (withEmpty: boolean) =>
+	Object.keys(dfpEnv.advertIds).reduce(
+		(advertsById: Record<string, Advert | null>, id) => {
+			const advert = getAdvertById(id);
+			// Do not return empty slots unless explicitly requested
+			if (withEmpty || (advert && !advert.isEmpty)) {
+				advertsById[id] = advert;
+			}
+			return advertsById;
+		},
+		{},
+	);
+
+const getCreativeIDs = () => dfpEnv.creativeIDs;
 
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
 	(
@@ -267,8 +282,6 @@ describe('DFP', () => {
 		});
 
 		config.set('images.commercial', {});
-
-		config.set('ophan.pageViewId', 'dummyOphanPageViewId');
 
 		document.body.innerHTML = domSnippet;
 

@@ -1,15 +1,15 @@
 import once from 'lodash/once';
+import config from '../../../../lib/config';
+import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
+import { pbTestNameMap } from '../../../../lib/url';
 import {
 	isInAuOrNz,
 	isInRow,
 	isInUk,
 	isInUsOrCa,
-} from 'common/modules/commercial/geo-utils';
-import { isInABTestSynchronous } from 'common/modules/experiments/ab';
-import { improveSkins } from 'common/modules/experiments/tests/improve-skins';
-import config from '../../../../lib/config';
-import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
-import { pbTestNameMap } from '../../../../lib/url';
+} from '../../../common/modules/commercial/geo-utils';
+import { isInVariantSynchronous } from '../../../common/modules/experiments/ab';
+import { improveSkins } from '../../../common/modules/experiments/tests/improve-skins';
 
 type StringManipulation = (a: string, b: string) => string;
 type RegExpRecords = Record<string, RegExp | undefined>;
@@ -142,11 +142,11 @@ export const shouldIncludeXaxis = (): boolean => isInUk();
 
 export const shouldIncludeImproveDigital = (): boolean => isInUk() || isInRow();
 export const shouldIncludeImproveDigitalSkin = (): boolean => {
-	if (!(isInUk() || isInRow())) return false;
 	return (
+		isInVariantSynchronous(improveSkins, 'variant') &&
 		window.guardian.config.page.isFront &&
-		getBreakpointKey() === 'D' &&
-		isInABTestSynchronous(improveSkins)
+		isInUk() &&
+		getBreakpointKey() === 'D' // Desktop only
 	);
 };
 

@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Serve Improve page skins via Prebid and measure performance",
     owners = Seq(Owner.withGithub("mxdvl")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 8, 3)),
+    sellByDate = Some(LocalDate.of(2021, 8, 17)),
     exposeClientSide = true,
   )
 }
