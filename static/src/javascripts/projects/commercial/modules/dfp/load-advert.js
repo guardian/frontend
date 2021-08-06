@@ -1,4 +1,4 @@
-import prebid from '../header-bidding/prebid/prebid';
+import { prebid } from '../header-bidding/prebid/prebid';
 import { markTime } from '../../../../lib/user-timing';
 import a9 from '../header-bidding/a9/a9';
 import { stripDfpAdPrefixFrom } from '../header-bidding/utils';

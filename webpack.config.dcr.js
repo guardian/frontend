@@ -10,7 +10,7 @@ config.entry = {
         'src',
         'javascripts',
         'bootstraps',
-        'commercial.dcr.js'
+        'commercial.dcr.ts'
     ),
 };
 

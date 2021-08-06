@@ -7,7 +7,7 @@ import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import prebid from '../header-bidding/prebid/prebid';
+import { prebid } from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 

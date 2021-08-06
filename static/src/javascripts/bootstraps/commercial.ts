@@ -1,34 +1,33 @@
-import config from 'lib/config';
-import { catchErrorsWithContext } from 'lib/robust';
-import reportError from 'lib/report-error';
-import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
-import { init as initHighMerch } from 'commercial/modules/high-merch';
-import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
-import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
-import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
-import { removeDisabledSlots as closeDisabledSlots } from 'commercial/modules/remove-slots';
+import { EventTimer } from '@guardian/commercial-core';
+import { initAdblockAsk } from 'commercial/adblock-ask';
+import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
-import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
-import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
-import { initPermutive } from 'commercial/modules/dfp/prepare-permutive';
-import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
+import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
+import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
+import { initCommentAdverts } from 'commercial/modules/comment-adverts';
+import { init as initComscore } from 'commercial/modules/comscore';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
+import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
+import { initPermutive } from 'commercial/modules/dfp/prepare-permutive';
+import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
+import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
+import { init as initHighMerch } from 'commercial/modules/high-merch';
+import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
+import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
+import { paidContainers } from 'commercial/modules/paid-containers';
+import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
+import { removeDisabledSlots as closeDisabledSlots } from 'commercial/modules/remove-slots';
+import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
-import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
-import { init as initComscore } from 'commercial/modules/comscore';
-import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
-import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
-import { paidContainers } from 'commercial/modules/paid-containers';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { initCommentAdverts } from 'commercial/modules/comment-adverts';
-import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
-import { EventTimer } from '@guardian/commercial-core';
-import { logData } from 'commercial/commercial-metrics';
+import reportError from 'lib/report-error';
+import { catchErrorsWithContext } from 'lib/robust';
+import type { Modules } from './types';
 
-const commercialModules = [
+const commercialModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
 	['cm-adFreeSlotRemove', adFreeSlotRemove],
 	['cm-closeDisabledSlots', closeDisabledSlots],
@@ -60,17 +59,27 @@ if (!commercialFeatures.adFree) {
 	);
 }
 
-const loadHostedBundle = () => {
-	if (config.get('page.isHosted')) {
+const loadHostedBundle = (): Promise<void> => {
+	if (window.guardian.config.page.isHosted) {
 		return new Promise((resolve) => {
 			require.ensure(
 				[],
 				(require) => {
-					const hostedAbout = require('commercial/modules/hosted/about');
-					const initHostedVideo = require('commercial/modules/hosted/video');
-					const hostedGallery = require('commercial/modules/hosted/gallery');
-					const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel');
-					const loadOnwardComponent = require('commercial/modules/hosted/onward');
+					/* eslint-disable
+					 	@typescript-eslint/no-var-requires,
+						@typescript-eslint/consistent-type-imports,
+						--
+						these are chunked by webpack */
+					const hostedAbout = require('commercial/modules/hosted/about') as typeof import('commercial/modules/hosted/about');
+					const initHostedVideo = require('commercial/modules/hosted/video') as typeof import('commercial/modules/hosted/video');
+					const hostedGallery = require('commercial/modules/hosted/gallery') as typeof import('commercial/modules/hosted/gallery');
+					const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel') as typeof import('commercial/modules/hosted/onward-journey-carousel');
+					const loadOnwardComponent = require('commercial/modules/hosted/onward') as typeof import('commercial/modules/hosted/onward');
+					/* eslint-enable
+						@typescript-eslint/no-var-requires,
+						@typescript-eslint/consistent-type-imports,
+						*/
+
 					commercialModules.push(
 						['cm-hostedAbout', hostedAbout.init],
 						['cm-hostedVideo', initHostedVideo.initHostedVideo],
@@ -94,7 +103,7 @@ const loadHostedBundle = () => {
 };
 
 const loadModules = () => {
-	const modulePromises = [];
+	const modulePromises: Array<Promise<unknown>> = [];
 
 	commercialModules.forEach((module) => {
 		const [moduleName, moduleInit] = module;
@@ -103,7 +112,7 @@ const loadModules = () => {
 			[
 				[
 					moduleName,
-					function pushAfterComplete() {
+					function pushAfterComplete(): void {
 						const result = moduleInit();
 						modulePromises.push(result);
 					},
@@ -118,7 +127,7 @@ const loadModules = () => {
 	return Promise.all(modulePromises);
 };
 
-export const bootCommercial = () => {
+export const bootCommercial = (): Promise<void> => {
 	// Init Commercial event timers
 	EventTimer.init();
 
@@ -137,6 +146,7 @@ export const bootCommercial = () => {
 	);
 
 	// Stub the command queue
+	// @ts-expect-error -- it’s a stub, not the whole Googletag object
 	window.googletag = {
 		cmd: [],
 	};
@@ -148,7 +158,7 @@ export const bootCommercial = () => {
 				[
 					[
 						'ga-user-timing-commercial-end',
-						function runTrackPerformance() {
+						function runTrackPerformance(): void {
 							EventTimer.get().trigger('commercialEnd');
 						},
 					],

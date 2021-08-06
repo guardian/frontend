@@ -63,13 +63,22 @@ interface CommercialPageConfig {
 }
 
 interface Config {
+	ophan: {
+		// somewhat redundant with guardian.ophan
+		pageViewId: string;
+		browserId?: string;
+	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
+	tests?: Record<string, 'control' | 'variant'>;
 }
 
 interface PageConfig extends CommercialPageConfig {
+	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
 	isSensitive: boolean;
-	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc7/common/app/model/meta.scala#L352
+	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
+	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
+	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
 }
 
 interface Ophan {
@@ -82,5 +91,8 @@ interface Window {
 	guardian: {
 		ophan: Ophan;
 		config: Config;
+		queue: Array<() => Promise<void>>;
+		mustardCut?: boolean;
+		polyfilled?: boolean;
 	};
 }
