@@ -5,16 +5,17 @@ import akka.stream.Materializer
 import common.GuLogging
 import cricket.feed.CricketThrottler
 import org.joda.time.{DateTime, LocalDate}
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.XML
 
+import java.text.SimpleDateFormat
+
 case class CricketFeedException(message: String) extends RuntimeException(message)
 
 object PaFeed {
-  val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+  val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
 }
 
 class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends GuLogging {
