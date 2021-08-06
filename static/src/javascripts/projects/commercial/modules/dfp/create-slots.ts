@@ -268,8 +268,7 @@ export const createSlots = (
 	return createAdSlotElements(
 		slotName,
 		(Object.keys(attributes) as Array<keyof SlotAttributes>).reduce(
-			(result, key) =>
-				Object.assign({}, result, { [`data-${key}`]: attributes[key] }),
+			(result, key) => ({ ...result, [`data-${key}`]: attributes[key] }),
 			{},
 		),
 		classes,
