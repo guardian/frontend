@@ -5,17 +5,12 @@ import common.GuLogging
 import common.Chronos
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
-
 import java.time.{Duration, LocalDate}
-import java.text.SimpleDateFormat
-import java.util.{TimeZone}
-import scala.concurrent.{ExecutionContext}
+import scala.concurrent.ExecutionContext
 
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
-
-  private val dateFormatUTC = Chronos.dateFormatter("yyyy/MMM/dd", TimeZone.getTimeZone("Europe/London"))
 
   def getMatch(team: CricketTeam, date: String): Option[Match] =
     cricketStatsAgents
