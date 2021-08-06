@@ -19,9 +19,4 @@ module.exports = webpackMerge.smart(config, {
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts', 'commercial'),
     },
-    resolve: {
-        alias: {
-            "ophan/ng": path.join(__dirname, 'static', 'src', 'javascripts', 'bootstraps', 'ophan.standalone.ts'),
-        },
-    },
 });
