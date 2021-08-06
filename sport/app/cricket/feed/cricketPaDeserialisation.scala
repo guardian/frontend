@@ -1,5 +1,7 @@
 package conf.cricketPa
 
+import common.Chronos
+
 import xml.{NodeSeq, XML}
 import scala.language.postfixOps
 import java.time
@@ -39,12 +41,9 @@ object Parser {
   )
 
   private object Date {
-    def toLocalDate(date: Date): LocalDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-
-    private val dateTimeParser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-    dateTimeParser.setTimeZone(TimeZone.getTimeZone("Europe/London"))
-
-    def apply(dateTime: String): LocalDateTime = toLocalDate(dateTimeParser.parse(dateTime))
+    private val dateTimePattern = "yyyy-MM-dd'T'HH:mm:ss"
+    private val dateTimeParser = Chronos.dateFormatter(dateTimePattern, TimeZone.getTimeZone("Europe/London"))
+    def apply(dateTime: String): LocalDateTime = Chronos.toLocalDateTime(dateTimeParser.parse(dateTime))
   }
 
   private def inningsDescription(inningsOrder: Int, battingTeam: String): String = {
