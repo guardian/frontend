@@ -1,7 +1,8 @@
-package utils
+package common
+
+import org.joda.time.DateTime
 
 import java.time.ZoneId
-import java.util
 
 object Chronos {
 
@@ -14,6 +15,10 @@ object Chronos {
 
   def toLocalDate(date: java.util.Date): java.time.LocalDate = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+  }
+
+  def toDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
+    DateTime.parse(date.toString)
   }
 
 }

@@ -2,6 +2,7 @@ package jobs
 
 import com.gu.Box
 import common.GuLogging
+import common.Chronos
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
 
@@ -9,8 +10,6 @@ import java.time.{Duration, LocalDate}
 import java.text.SimpleDateFormat
 import java.util.{TimeZone}
 import scala.concurrent.{ExecutionContext}
-
-import utils.Chronos
 
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 

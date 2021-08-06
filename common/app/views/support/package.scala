@@ -174,12 +174,6 @@ object `package` {
 
 object GuDateFormatLegacy {
 
-  def apply2(date: java.time.LocalDateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit
-      request: RequestHeader,
-  ): String = {
-    apply(DateTime.parse(date.toString), Edition(request), pattern, tzOverride)
-  }
-
   def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit
       request: RequestHeader,
   ): String = {
