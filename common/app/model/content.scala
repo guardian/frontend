@@ -509,7 +509,7 @@ object Article {
       content.trail.byline.getOrElse("Guardian Staff")
     }
 
-    val opengraphProperties: Map[String, String] = Map(
+    var opengraphProperties: Map[String, String] = Map(
       ("og:type", "article"),
       ("article:published_time", trail.webPublicationDate.toString()),
       ("article:modified_time", content.fields.lastModified.toString()),
@@ -518,6 +518,23 @@ object Article {
       ("article:publisher", "https://www.facebook.com/theguardian"),
       ("article:author", authorOrPA(author)),
     )
+
+    // When we migrated to https in 2016 we kept all og:urls as http to preserve engagement counts.
+    // In 2021 at Facebook's request we began advertising https urls for newly published articles and live blogs
+    // Live blogs are instances of Articles
+    val shouldPublishHttpsUrlToFacebook = {
+      content.fields.firstPublicationDate.exists { firstPublished: DateTime =>
+        val startDateForArticleHttpsFacebookUrls = new DateTime(2021, 8, 6, 9, 0, 0).withZone(DateTimeZone.UTC)
+        // We have permission from Audience to test on UK Weather articles; losing counts if we need to
+        val isTestPath = content.tags.tags.exists(t => t.id == "uk/weather")
+        firstPublished.isAfter(startDateForArticleHttpsFacebookUrls) && isTestPath
+      }
+    }
+
+    if (shouldPublishHttpsUrlToFacebook) {
+      // Override the default http rendering of webUrl provided by meta.scala with the https webUrl
+      opengraphProperties = opengraphProperties + ("og:url" -> content.metadata.webUrl)
+    }
 
     content.metadata.copy(
       contentType = Some(contentType),
