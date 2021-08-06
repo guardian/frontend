@@ -1,3 +1,5 @@
+@import java.time.format.DateTimeFormatter
+@import java.time.ZoneId
 @(theMatch: cricketModel.Match, matchUrl: String)(implicit request: RequestHeader)
 @import common.LinkTo
 @import views.support.GuDateFormatLegacy
@@ -5,8 +7,8 @@
 <div class="sport-summary sport-summary--cricket" itemscope itemtype="http://schema.org/SportsEvent">
 
     <h2 class="u-h">
-        <time class="u-h" datetime="@theMatch.gameDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@theMatch.gameDate.getMillis">
-        @GuDateFormatLegacy(theMatch.gameDate, "d MMM y")
+        <time class="u-h" datetime="@theMatch.gameDate.format(DateTimeFormatter.ISO_DATE)" data-timestamp="@theMatch.gameDate.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()">
+        @GuDateFormatLegacy.apply2(theMatch.gameDate, "d MMM y")
         </time>
         @theMatch.competitionName, @theMatch.venueName
     </h2>

@@ -56,7 +56,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
         val loadedMatches = agent().values
           .filter(cricketMatch =>
             // Omit any recent match within the last 5 days, to account for test matches.
-            Duration.between(dateTimeToLocalDateTime(cricketMatch.gameDate), LocalDate.now).toDays() > 5,
+            Duration.between(cricketMatch.gameDate, LocalDate.now).toDays() > 5,
           )
           .map(_.matchId)
           .toSeq

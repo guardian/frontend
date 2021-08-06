@@ -2,9 +2,12 @@ package conf.cricketPa
 
 import xml.{NodeSeq, XML}
 import scala.language.postfixOps
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.DateTime
+import java.time
+import java.text.SimpleDateFormat
 import cricketModel._
+
+import java.time.{LocalDate, LocalDateTime, ZoneId}
+import java.util.{Date, TimeZone}
 
 object Parser {
 
@@ -31,14 +34,17 @@ object Parser {
       competitionName: String,
       venueName: String,
       result: String,
-      gameDate: DateTime,
+      gameDate: LocalDateTime,
       officials: List[String],
   )
 
   private object Date {
-    private val dateTimeParser = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")
+    def toLocalDate(date: Date): LocalDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
 
-    def apply(dateTime: String): DateTime = dateTimeParser.parseDateTime(dateTime)
+    private val dateTimeParser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    dateTimeParser.setTimeZone(TimeZone.getTimeZone("Europe/London"))
+
+    def apply(dateTime: String): LocalDateTime = toLocalDate(dateTimeParser.parse(dateTime))
   }
 
   private def inningsDescription(inningsOrder: Int, battingTeam: String): String = {
