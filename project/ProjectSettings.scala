@@ -13,8 +13,6 @@ import com.typesafe.sbt.packager.Keys.packageName
 
 object ProjectSettings {
 
-  val requiredJavaVersion = "11"
-
   val cleanAll = taskKey[Unit]("Cleans all projects in a build, regardless of dependencies")
 
   val frontendCompilationSettings = Seq(
@@ -38,7 +36,7 @@ object ProjectSettings {
     initialize := {
       val _ = initialize.value
       assert(
-        Set("1.8", requiredJavaVersion).contains(sys.props("java.specification.version")),
+        Set("1.8", "11").contains(sys.props("java.specification.version")),
         "Java 8 or 11 is required for this project.",
       )
     },
