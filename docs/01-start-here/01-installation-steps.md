@@ -95,7 +95,7 @@ $ sdk current java
 Using java version 11.0.11.hs-adpt
 $ java -version
 openjdk version "11.0.11" 2021-04-20
-...
+```
 
 ### Node.js
 
