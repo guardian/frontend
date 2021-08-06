@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat
 import java.util.{Date, TimeZone}
 import scala.concurrent.{ExecutionContext, Future}
 
+import utils.Chronos
+
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
@@ -18,7 +20,6 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
   private val dateFormatUTC = new SimpleDateFormat("yyyy/MMM/dd")
   dateFormatUTC.setTimeZone(TimeZone.getTimeZone("Europe/London"))
 
-  private def toLocalDate(date: Date): LocalDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
   private def dateTimeToLocalDateTime(date: DateTime): LocalDateTime = {
     LocalDateTime.ofInstant(
       Instant.ofEpochMilli(
@@ -41,7 +42,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
     val matchObjects = for {
       day <- 0 until 6 // normally test matches are 5 days but we have seen at least 6 days in practice
-      date <- Some(dateFormat.format(toLocalDate(requestDate).minusDays(day)))
+      date <- Some(dateFormat.format(Chronos.toLocalDate(requestDate).minusDays(day)))
     } yield {
       getMatch(team, date)
     }
