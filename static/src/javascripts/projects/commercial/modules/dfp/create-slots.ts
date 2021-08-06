@@ -66,7 +66,20 @@ const inlineDefinition: AdSlotDefinition = {
 
  */
 
-const adSlotDefinitions: Record<string, AdSlotDefinition | undefined> = {
+type SlotTypes =
+	| 'im'
+	| 'high-merch'
+	| 'high-merch-lucky'
+	| 'high-merch-paid'
+	| 'inline'
+	| 'mostpop'
+	| 'comments'
+	| 'top-above-nav'
+	| 'carrot'
+	| 'epic'
+	| 'mobile-sticky';
+
+const adSlotDefinitions: Record<SlotTypes, AdSlotDefinition> = {
 	im: {
 		label: false,
 		refresh: false,
@@ -204,7 +217,7 @@ const createAdSlotElements = (
 };
 
 export const createSlots = (
-	type: string,
+	type: SlotTypes,
 	options: {
 		name?: string;
 		classes?: string;
@@ -213,10 +226,6 @@ export const createSlots = (
 ): HTMLDivElement[] => {
 	const attributes: SlotAttributes = {};
 	const definition = adSlotDefinitions[type];
-
-	if (definition === undefined) {
-		return [];
-	}
 
 	const slotName = options.name ?? definition.name ?? type;
 	const classes = options.classes
