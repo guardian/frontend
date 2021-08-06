@@ -4,16 +4,31 @@ import com.gu.Box
 import common.GuLogging
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
-import org.joda.time.{DateTimeZone, Days, LocalDate}
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.DateTime
 
+import java.time.{Duration, Instant, LocalDate, LocalDateTime, ZoneId}
+import java.text.SimpleDateFormat
+import java.util.{Date, TimeZone}
 import scala.concurrent.{ExecutionContext, Future}
 
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
 
-  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
+  private val dateFormatUTC = new SimpleDateFormat("yyyy/MMM/dd")
+  dateFormatUTC.setTimeZone(TimeZone.getTimeZone("Europe/London"))
+
+  private def toLocalDate(date: Date): LocalDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+  private def dateTimeToLocalDateTime(date: DateTime): LocalDateTime = {
+    LocalDateTime.ofInstant(
+      Instant.ofEpochMilli(
+        date
+          .toInstant()
+          .getMillis,
+      ),
+      ZoneId.systemDefault,
+    )
+  }
 
   def getMatch(team: CricketTeam, date: String): Option[Match] =
     cricketStatsAgents
@@ -22,11 +37,11 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   def findMatch(team: CricketTeam, date: String): Option[Match] = {
     val dateFormat = PaFeed.dateFormat
-    val requestDate = dateFormat.parseLocalDate(date)
+    val requestDate = dateFormat.parse(date)
 
     val matchObjects = for {
       day <- 0 until 6 // normally test matches are 5 days but we have seen at least 6 days in practice
-      date <- Some(dateFormat.print(requestDate.minusDays(day)))
+      date <- Some(dateFormat.format(toLocalDate(requestDate).minusDays(day)))
     } yield {
       getMatch(team, date)
     }
@@ -41,7 +56,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
         val loadedMatches = agent().values
           .filter(cricketMatch =>
             // Omit any recent match within the last 5 days, to account for test matches.
-            Days.daysBetween(cricketMatch.gameDate.toLocalDate, LocalDate.now).getDays > 5,
+            Duration.between(dateTimeToLocalDateTime(cricketMatch.gameDate), LocalDate.now).toDays() > 5,
           )
           .map(_.matchId)
           .toSeq
@@ -56,7 +71,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
               paFeed
                 .getMatch(matchId)
                 .map { matchData =>
-                  val date = PaFeed.dateFormat.print(matchData.gameDate)
+                  val date = PaFeed.dateFormat.format(matchData.gameDate)
                   log.info(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date")
                   agent.send(_ + (date -> matchData))
                 }

@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import common.GuLogging
 import cricket.feed.CricketThrottler
-import org.joda.time.{DateTime, LocalDate}
+import java.time.LocalDate
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -78,8 +78,8 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
     credentials
       .map(header =>
         throttler.throttle { () =>
-          val start = PaFeed.dateFormat.print(startDate)
-          val end = PaFeed.dateFormat.print(endDate)
+          val start = PaFeed.dateFormat.format(startDate)
+          val end = PaFeed.dateFormat.format(endDate)
           val endpoint = s"$paEndpoint/team/${team.paId}/$matchType"
 
           wsClient
