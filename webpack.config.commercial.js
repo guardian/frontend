@@ -10,7 +10,7 @@ config.entry = {
         'src',
         'javascripts',
         'bootstraps',
-        'commercial.standalone.ts'
+        'standalone.commercial.ts'
     ),
 };
 
