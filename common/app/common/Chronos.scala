@@ -27,6 +27,10 @@ object Chronos {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
   }
 
+  def toMilliSeconds(date: java.time.LocalDateTime): Long = {
+    date.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()
+  }
+
   def dateFormatter(pattern: String, timezone: TimeZone): SimpleDateFormat = {
     val dateTimeParser = new SimpleDateFormat(pattern)
     dateTimeParser.setTimeZone(timezone)

@@ -10,7 +10,7 @@
 <div class="sport-summary sport-summary--cricket" itemscope itemtype="http://schema.org/SportsEvent">
 
     <h2 class="u-h">
-        <time class="u-h" datetime="@theMatch.gameDate.format(DateTimeFormatter.ISO_DATE)" data-timestamp="@theMatch.gameDate.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()">
+        <time class="u-h" datetime="@theMatch.gameDate.format(DateTimeFormatter.ISO_DATE)" data-timestamp="@Chronos.toMilliSeconds(theMatch.gameDate)">
         @GuDateFormatLegacy(Chronos.toDateTime(theMatch.gameDate), "d MMM y")
         </time>
         @theMatch.competitionName, @theMatch.venueName
