@@ -2,13 +2,13 @@
 
 # Main Continuous Integration Script
 
+export JDK_HOME=${JDK_11}
+export JAVA_HOME=${JDK_HOME}
+
 # Explicitly clean sbt targets to prevent cross-branch conflicts
 ./sbt clean
 
 echo "##teamcity[progressMessage 'sbt compile assets scalafmtCheckAll test riffRaffUpload']"
-
-export JDK_HOME=${JDK_11}
-export JAVA_HOME=${JDK_HOME}
 
 echo "********** Java version **********"
 ${JAVA_HOME}/bin/java -version
