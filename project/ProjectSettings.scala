@@ -36,7 +36,7 @@ object ProjectSettings {
     initialize := {
       val _ = initialize.value
       assert(
-        Set("11").contains(sys.props("java.specification.version")),
+        sys.props("java.specification.version") == "11",
         "Java 11 is required for this project.",
       )
     },
