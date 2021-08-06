@@ -224,7 +224,6 @@ export const createSlots = (
 		sizes?: Partial<Record<Breakpoints, GuAdSize[]>>;
 	} = {},
 ): HTMLDivElement[] => {
-	const attributes: SlotAttributes = {};
 	const definition = adSlotDefinitions[type];
 
 	const slotName = options.name ?? definition.name ?? type;
@@ -253,7 +252,7 @@ export const createSlots = (
 		(size) => (sizeStrings[size] = sizes[size]?.join('|')),
 	);
 
-	Object.assign(attributes, sizeStrings);
+	const attributes: SlotAttributes = { ...sizeStrings };
 
 	if (definition.label === false) {
 		attributes.label = 'false';
