@@ -6,14 +6,14 @@ import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.util.TimeZone
 
+// Introduced in August 2021 by Pascal to help and support the migration from joda.time to java.time
+// Contains both helper functions implementing patterns emerging during the migration as well as more permanent
+// functions.
+
+// DO NOT attempt to simplify, until otherwise specified, the signatures of the functions.
+// The arguments are verbose type to help with reading and understanding. This will be simplified in due course.
+
 object Chronos {
-
-  // Introduced in August 2021 by Pascal to help and support the migration from joda.time to java.time
-  // Contains both helper functions implementing patterns emerging during the migration as well as more permanent
-  // functions.
-
-  // DO NOT attempt to simplify, until otherwise specified, the signatures of the functions.
-  // The arguments are verbose type to help with reading and understanding. This will be simplified in due course.
 
   def toDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
     DateTime.parse(date.toString)
