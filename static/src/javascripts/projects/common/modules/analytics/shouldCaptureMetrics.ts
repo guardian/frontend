@@ -4,7 +4,7 @@ import { commercialPartner } from '../experiments/tests/commercial-partner';
 import { improveSkins } from '../experiments/tests/improve-skins';
 
 const defaultClientSideTests: ABTest[] = [commercialPartner, improveSkins];
-const serverSideTests: String[] = [
+const serverSideTests: string[] = [
 	'topAboveNavHeight150Variant',
 	'topAboveNavHeight200Variant',
 	'topAboveNavHeight250Variant',
