@@ -7,5 +7,6 @@ GET        /_healthcheck                           controllers.HealthCheck.healt
 
 GET        /$leftSide<[^+]+>+*rightSide/rss                            controllers.RssController.renderCombinerRss(leftSide, rightSide)
 GET        /*path/rss                                                  controllers.RssController.renderRss(path)
+GET        /*path/showcase                                             controllers.ShowcaseController.renderShowcase(path)
 
 # TODO move these Facia endpoints here, too

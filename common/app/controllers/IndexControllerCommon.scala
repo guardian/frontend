@@ -2,7 +2,6 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
-import common.`package`.Gone
 import model.Cached.WithoutRevalidationResult
 import model._
 import play.api.mvc._
@@ -46,13 +45,15 @@ trait IndexControllerCommon
 
   def renderRss(path: String): Action[AnyContent] = render(path)
 
+  def renderShowcase(path: String): Action[AnyContent] = render(path)
+
   def render(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       renderItem(path)
     }
 
-  private def redirect(id: String, isRss: Boolean) =
-    WithoutRevalidationResult(MovedPermanently(if (isRss) s"/$id/rss" else s"/$id"))
+  private def redirect(id: String, isRss: Boolean, isShowcase: Boolean) =
+    WithoutRevalidationResult(MovedPermanently(if (isRss) s"/$id/rss" else if (isShowcase) s"/$id/showcase" else s"/$id"))
 
   def renderTrailsJson(path: String): Action[AnyContent] = renderTrails(path)
 
@@ -75,7 +76,7 @@ trait IndexControllerCommon
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     path match {
       //if this is a section tag e.g. football/football
-      case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss)))
+      case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss, request.isShowcase)))
       case _ => {
         logGoogleBot(request)
         index(Edition(request), path, inferPage(request), request.isRss) map {

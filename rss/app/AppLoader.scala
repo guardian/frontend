@@ -6,7 +6,7 @@ import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi._
-import controllers.{HealthCheck, RssController}
+import controllers.{HealthCheck, RssController, ShowcaseController}
 import dev.DevParametersHttpRequestHandler
 import http.CommonFilters
 import model.ApplicationIdentity
@@ -35,6 +35,7 @@ trait AppComponents extends FrontendComponents {
   // Controllers
   lazy val healthCheck = wire[HealthCheck]
   lazy val rssController = wire[RssController]
+  lazy val showcaseController = wire[ShowcaseController]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
