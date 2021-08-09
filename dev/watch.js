@@ -59,6 +59,11 @@ const watchArguments = [
         }
 
         // announce the changes
+        console.log(stats.toString({
+            all: false,
+            entrypoints: true, // show which entry points have been modified
+            colors: true,
+          }));
         return browserSync.reload();
     },
 ];
@@ -70,6 +75,11 @@ mainWebpackBundler.watch(...watchArguments);
 const dcrWebpackBundler = webpack(require('../webpack.config.dcr.dev.js'));
 
 dcrWebpackBundler.watch(...watchArguments);
+
+// Watch changes to the standalone commercial bundle
+const commercialWebpackBundler = webpack(require('../webpack.config.commercial.dev.js'));
+
+commercialWebpackBundler.watch(...watchArguments);
 
 // ********************************** Sass **********************************
 
