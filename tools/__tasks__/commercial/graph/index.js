@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const madge = require('madge');
 
-const filename = "commercial.standalone.ts";
+const filename = "standalone.commercial.ts";
 const entry = process.cwd() + "/static/src/javascripts/bootstraps/" + filename;
 const config = {
     webpackConfig: 'webpack.config.commercial.prod.js',

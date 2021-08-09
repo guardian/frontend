@@ -49,10 +49,7 @@
  ],
  "../lib/window-performance.js": [],
  "../projects/commercial/commercial-metrics.ts": [
-  "../lib/config.js",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-partner.ts",
-  "../projects/common/modules/experiments/tests/improve-skins.ts"
+  "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
  ],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
   "../lib/$$.ts",
@@ -491,6 +488,11 @@
  "../projects/common/modules/analytics/mvt-cookie.js": [
   "../lib/cookies.js"
  ],
+ "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/commercial-partner.ts",
+  "../projects/common/modules/experiments/tests/improve-skins.ts"
+ ],
  "../projects/common/modules/article/space-filler.js": [
   "../lib/fastdom-promise.js",
   "../lib/raven.js",
@@ -508,8 +510,7 @@
  "../projects/common/modules/atoms/youtube-tracking.js": [
   "../lib/config.js",
   "../lib/mediator.js",
-  "../projects/common/modules/video/ga-helper.js",
-  "ophan.standalone.ts"
+  "../projects/common/modules/video/ga-helper.js"
  ],
  "../projects/common/modules/commercial/build-page-targeting.js": [
   "../lib/config.js",
@@ -572,7 +573,6 @@
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../projects/common/modules/experiments/tests/commercial-partner.ts",
   "../projects/common/modules/experiments/tests/improve-skins.ts",
-  "../projects/common/modules/experiments/tests/puzzles-banner.js",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -595,7 +595,6 @@
  "../projects/common/modules/experiments/automatLog.ts": [],
  "../projects/common/modules/experiments/tests/commercial-partner.ts": [],
  "../projects/common/modules/experiments/tests/improve-skins.ts": [],
- "../projects/common/modules/experiments/tests/puzzles-banner.js": [],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
@@ -625,7 +624,7 @@
  ],
  "../projects/common/modules/user-prefs.js": [],
  "../projects/common/modules/video/ga-helper.js": [],
- "commercial.standalone.ts": [
+ "standalone.commercial.ts": [
   "../lib/config.js",
   "../lib/report-error.js",
   "../lib/robust.js",
@@ -661,6 +660,5 @@
   "../projects/common/modules/commercial/user-features.js",
   "types.ts"
  ],
- "ophan.standalone.ts": [],
  "types.ts": []
 }
