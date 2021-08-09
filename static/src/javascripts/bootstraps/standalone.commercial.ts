@@ -33,6 +33,11 @@ const assetsPath = page.frontendAssetsFullURL ?? page.assetsPath;
 
 __webpack_public_path__ = `${assetsPath}javascripts/commercial/`;
 
+const tags: Record<string, unknown> = {
+	feature: 'commercial',
+	bundle: 'standalone',
+};
+
 const commercialModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
 	['cm-adFreeSlotRemove', adFreeSlotRemove],
@@ -154,9 +159,7 @@ const loadModules = () => {
 					},
 				],
 			],
-			{
-				feature: 'commercial',
-			},
+			tags,
 		);
 	});
 
@@ -202,19 +205,11 @@ const bootCommercial = async (): Promise<void> => {
 					},
 				],
 			],
-			{
-				feature: 'commercial',
-			},
+			tags,
 		);
 	} catch (error) {
 		// report async errors in bootCommercial to Sentry with the commercial feature tag
-		reportError(
-			error,
-			{
-				feature: 'commercial',
-			},
-			false,
-		);
+		reportError(error, tags, false);
 	}
 };
 
