@@ -73,10 +73,10 @@ const go = () => {
         }
 
         const useStandaloneBundle = config.get('tests.standaloneCommercialBundleVariant', false) === "variant";
-        const commercialBundle = useStandaloneBundle
+        const commercialBundle = () => useStandaloneBundle
 			? import(
 					/* webpackIgnore: true */
-					`${window.guardian.config.page.assetsPath}javascripts/commercial/graun.standalone.commercial.js`
+					`${__webpack_public_path__}commercial/graun.standalone.commercial.js`
 			  )
 			: import(
 					/* webpackChunkName: "commercial" */
@@ -90,7 +90,7 @@ const go = () => {
         // eslint-disable-next-line no-nested-ternary
         const fetchCommercial = config.get('switches.commercial')
             ? (markTime('commercial request'),
-              commercialBundle)
+              commercialBundle())
             : Promise.resolve({ bootCommercial: () => {} });
 
 
