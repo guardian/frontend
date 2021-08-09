@@ -32,8 +32,15 @@ const jsonData: CoreWebVitalsPayload = {
 
 // By default, sample 1% of users
 const userInSample = Math.random() < 1 / 100;
-// Unless we are forcing metrics for this user
+// unless we are forcing metrics for this user because they are participating in an AB test
+// for which we need to capture all metrics
 const captureMetrics = shouldCaptureMetrics();
+// or we are force sending for this page view for some other reason.
+var forceSendMetrics = false;
+
+export const setForceSendMetrics = (val: boolean): void => {
+	forceSendMetrics = val;
+};
 
 /**
  * Calls functions of web-vitals library to collect core web vitals data, registering callbacks which
@@ -55,7 +62,7 @@ export const coreVitals = (): void => {
 	};
 
 	const jsonToSend = ({ name, value }: CoreVitalsArgs): void => {
-		if (!captureMetrics && !userInSample) {
+		if (!captureMetrics && !userInSample && !forceSendMetrics) {
 			return;
 		}
 
