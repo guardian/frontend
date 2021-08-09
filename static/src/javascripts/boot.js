@@ -72,7 +72,7 @@ const go = () => {
             });
         }
 
-        const useStandaloneBundle = window.guardian.config.tests.standaloneCommercialBundleVariant === "variant";
+        const useStandaloneBundle = config.get('tests.standaloneCommercialBundleVariant', false) === "variant";
         const commercialBundle = useStandaloneBundle
 			? import(
 					/* webpackIgnore: true */
