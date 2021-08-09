@@ -242,32 +242,58 @@ object ContentFormat {
       )
   }
 
-  /*
-    Date: 03 March 2021
+  // TODO I am sure these should be in shared code, but not aware of any at time
+  //  of writing. Let's move it somewhere common in the future.
 
-    The only reason `contentFormatBuilder` exists is to define `contentFormatReads`, and the only
-    reason `contentFormatReads` exists is to help define `contentFormatFormat` in `object PressedMetadata`
-    (see PressedMetadata.scala) to make compilation possible.
+  def parseDesign(s: String): Design =
+    s match {
+      case "ArticleDesign"     => ArticleDesign
+      case "MediaDesign"       => MediaDesign
+      case "ReviewDesign"      => ReviewDesign
+      case "AnalysisDesign"    => AnalysisDesign
+      case "CommentDesign"     => CommentDesign
+      case "LetterDesign"      => LetterDesign
+      case "FeatureDesign"     => FeatureDesign
+      case "LiveBlogDesign"    => LiveBlogDesign
+      case "DeadBlogDesign"    => DeadBlogDesign
+      case "RecipeDesign"      => RecipeDesign
+      case "MatchReportDesign" => MatchReportDesign
+      case "InterviewDesign"   => InterviewDesign
+      case "EditorialDesign"   => EditorialDesign
+      case "QuizDesign"        => QuizDesign
+      case "InteractiveDesign" => InteractiveDesign
+      case "PhotoEssayDesign"  => PhotoEssayDesign
+      case "PrintShopDesign"   => PrintShopDesign
+      case "ObituaryDesign"    => ObituaryDesign
+      case _                   => ArticleDesign
+    }
 
-    As such, the fact that contentFormatReads always return ContentFormat(ArticleDesign, NewsPillar, StandardDisplay)
-    is perfectly fine, because it's not actually used anywhere.
+  def parseTheme(s: String): Theme =
+    s match {
+      case "NewsPillar"         => NewsPillar
+      case "OpinionPillar"      => OpinionPillar
+      case "SportPillar"        => SportPillar
+      case "CulturePillar"      => CulturePillar
+      case "LifestylePillar"    => LifestylePillar
+      case "SpecialReportTheme" => SpecialReportTheme
+      case "Labs"               => Labs
+      case _                    => NewsPillar
+    }
 
-    If one day this changes, then it will be just enough to replace
+  def parseDisplay(s: String): Display =
+    s match {
+      case "StandardDisplay"     => StandardDisplay
+      case "ImmersiveDisplay"    => ImmersiveDisplay
+      case "ShowcaseDisplay"     => ShowcaseDisplay
+      case "NumberedListDisplay" => NumberedListDisplay
+      case "ColumnDisplay"       => ColumnDisplay
+      case _                     => StandardDisplay
+    }
 
-        v => ArticleDesign
-        v => NewsPillar
-        v => StandardDisplay
-
-      by the relevant functions:
-
-        String -> Design
-        String -> Pillar
-        String -> Display
-   */
-
-  val contentFormatBuilder = (JsPath \ "design").read[String].map(_ => ArticleDesign) and
-    (JsPath \ "theme").read[String].map(_ => NewsPillar) and
-    (JsPath \ "display").readNullable[String].map(_ => StandardDisplay)
+  val contentFormatBuilder =
+    (JsPath \ "design").read[String].map(parseDesign) and
+      (JsPath \ "theme").read[String].map(parseTheme) and
+      (JsPath \ "display").readNullable[String].map(_.map(parseDisplay).getOrElse(StandardDisplay))
 
   implicit val contentFormatReads = contentFormatBuilder.apply(ContentFormat.apply _)
 }
