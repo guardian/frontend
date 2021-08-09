@@ -2,19 +2,21 @@ package conf.cricketPa
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
+import common.Chronos
 import common.GuLogging
 import cricket.feed.CricketThrottler
-import org.joda.time.{DateTime, LocalDate}
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+
+import java.time.{LocalDate, ZoneId}
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.XML
+import java.util.TimeZone
 
 case class CricketFeedException(message: String) extends RuntimeException(message)
 
 object PaFeed {
-  val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+  val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", TimeZone.getTimeZone(ZoneId.of("UTC")))
 }
 
 class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends GuLogging {
@@ -77,8 +79,8 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
     credentials
       .map(header =>
         throttler.throttle { () =>
-          val start = PaFeed.dateFormat.print(startDate)
-          val end = PaFeed.dateFormat.print(endDate)
+          val start = PaFeed.dateFormat.format(startDate)
+          val end = PaFeed.dateFormat.format(endDate)
           val endpoint = s"$paEndpoint/team/${team.paId}/$matchType"
 
           wsClient
