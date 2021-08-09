@@ -1,9 +1,8 @@
 import type { ABTest } from '@guardian/ab-core';
 import { getSynchronousTestsToRun } from '../experiments/ab';
 import { commercialPartner } from '../experiments/tests/commercial-partner';
-import { improveSkins } from '../experiments/tests/improve-skins';
 
-const defaultClientSideTests: ABTest[] = [commercialPartner, improveSkins];
+const defaultClientSideTests: ABTest[] = [commercialPartner];
 const serverSideTests: string[] = [
 	'topAboveNavHeight150Variant',
 	'topAboveNavHeight200Variant',

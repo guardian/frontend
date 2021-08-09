@@ -461,6 +461,16 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val prebidImproveDigitalSkins: Switch = Switch(
+    group = CommercialPrebid,
+    "prebid-improve-digital-skins",
+    "Serve Improve page skins via Prebid",
+    owners = Seq(Owner.withGithub("mxdvl")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val prebidXaxis: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-xaxis",
