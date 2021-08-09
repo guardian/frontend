@@ -2,6 +2,7 @@ package conf.cricketPa
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
+import common.Chronos
 import common.GuLogging
 import cricket.feed.CricketThrottler
 
@@ -10,14 +11,12 @@ import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.XML
-import java.text.SimpleDateFormat
 import java.util.TimeZone
 
 case class CricketFeedException(message: String) extends RuntimeException(message)
 
 object PaFeed {
-  val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
-  dateFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")))
+  val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", TimeZone.getTimeZone(ZoneId.of("UTC")))
 }
 
 class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends GuLogging {
