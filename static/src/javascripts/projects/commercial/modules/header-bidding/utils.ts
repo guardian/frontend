@@ -142,7 +142,7 @@ export const shouldIncludeImproveDigital = (): boolean => isInUk() || isInRow();
 export const shouldIncludeImproveDigitalSkin = (): boolean =>
 	!!window.guardian.config.switches.prebidImproveDigitalSkins &&
 	window.guardian.config.page.isFront &&
-	isInUk() &&
+	(isInUk() || isInRow()) &&
 	getBreakpointKey() === 'D'; // Desktop only
 
 export const shouldIncludeMobileSticky = once(
