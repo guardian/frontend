@@ -378,7 +378,7 @@ const improveDigitalBidder: PrebidBidder = {
 
 const improveDigitalSkinBidder: PrebidBidder = {
 	name: 'improvedigital',
-	switchName: 'prebidImproveDigital',
+	switchName: 'prebidImproveDigitalSkins',
 	bidParams: (): PrebidImproveParams => ({
 		placementId: getImproveSkinPlacementId(),
 		size: {},
