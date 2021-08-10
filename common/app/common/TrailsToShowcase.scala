@@ -1,11 +1,12 @@
 package common
 
 import com.sun.syndication.feed.module.Module
-import com.sun.syndication.feed.module.mediarss.{MediaEntryModuleImpl, MediaModule}
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
+import com.sun.syndication.feed.module.mediarss.{MediaEntryModuleImpl, MediaModule}
 import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl}
 import com.sun.syndication.io.ModuleGenerator
-import model.{ImageMedia, Trail}
+import model.ImageMedia
+import model.pressed.{PressedContent, PressedTrail}
 import org.jdom.{Element, Namespace}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
@@ -18,13 +19,13 @@ import scala.collection.JavaConverters._
 object TrailsToShowcase {
 
   def apply(
-      feedTitle: Option[String],
-      singleStories: Seq[Trail],
-      rundownStories: Seq[Trail],
-      rundownContainerTitle: String,
-      rundownContainerId: String,
-      url: Option[String] = None,
-      description: Option[String] = None,
+             feedTitle: Option[String],
+             singleStories: Seq[PressedContent],
+             rundownStories: Seq[PressedContent],
+             rundownContainerTitle: String,
+             rundownContainerId: String,
+             url: Option[String] = None,
+             description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
     val feed = TrailsToRss.syndFeedOf(feedTitle, Seq.empty, url, description)
     val entries =
@@ -33,11 +34,19 @@ object TrailsToShowcase {
     TrailsToRss.asString(feed)
   }
 
-  def asSingleStoryPanel(trail: Trail): SyndEntry = {
-    val entry = TrailsToRss.asEntry(trail)
+  def asSingleStoryPanel(content: PressedContent): SyndEntry = {
+    val entry = new SyndEntryImpl()
+    entry.setLink(webUrl(content))
+    entry.setTitle(stripInvalidXMLCharacters(content.header.headline))
+    content.properties.byline.foreach { byline =>
+      if (byline.nonEmpty) {
+        entry.setAuthor(byline)
+      }
+    }
 
     val gModule = new GModuleImpl();
     gModule.setPanel(Some("SINGLE_STORY"))
+    gModule.setOverline(content.header.kicker.flatMap(_.properties.kickerText))
     addModuleTo(entry, gModule)
 
     val withoutMedia = entry.getModules.asScala.filter { module =>
@@ -46,7 +55,7 @@ object TrailsToShowcase {
     entry.setModules(withoutMedia.asJava)
 
     // and add the showcase formatted asset
-    mediaContentFrom(trail).foreach { mediaContent =>
+    mediaContentFrom(content).foreach { mediaContent =>
       val mediaModule = new MediaEntryModuleImpl()
       mediaModule.setMediaContents(Seq(mediaContent).toArray)
       mediaModule.setMetadata(new Metadata())
@@ -55,13 +64,13 @@ object TrailsToShowcase {
 
     // Showcase expects the publication dates to be shown as atom module fields.
     val atomModule = new RssAtomModuleImpl
-    atomModule.setPublished(Some(trail.webPublicationDate))
-    atomModule.setUpdated(Some(trail.fields.lastModified))
+    atomModule.setPublished(content.card.webPublicationDateOption)
+    //atomModule.setUpdated(content.card.webPublicationDateOption)  // TODO better field?
     addModuleTo(entry, atomModule)
     entry
   }
 
-  def asRundownPanel(title: String, trails: Seq[Trail], id: String): SyndEntry = {
+  def asRundownPanel(title: String, content: Seq[PressedContent], id: String): SyndEntry = {
     val entry = new SyndEntryImpl
     entry.setUri(id)
     val gModule = new GModuleImpl();
@@ -69,7 +78,7 @@ object TrailsToShowcase {
     gModule.setPanelTitle(Some(title))
 
     // Take the trail picture from the first available from our link trails. TODO this needs to be an editor's choice
-    trails.flatMap(mediaContentFrom).headOption.foreach { mediaContent =>
+    content.flatMap(mediaContentFrom).headOption.foreach { mediaContent =>
       val mediaModule = new MediaEntryModuleImpl()
       mediaModule.setMediaContents(Seq(mediaContent).toArray)
       mediaModule.setMetadata(new Metadata())
@@ -77,14 +86,14 @@ object TrailsToShowcase {
     }
 
     // Build article group
-    val articles = trails.map { trail =>
+    val articles = content.map { contentItem =>
       GArticle(
-        guidFor(trail),
-        stripInvalidXMLCharacters(trail.fields.linkText),
-        trail.metadata.webUrl,
-        trail.webPublicationDate,
-        trail.fields.lastModified,
-        None,
+        guidFor(contentItem),
+        stripInvalidXMLCharacters(contentItem.header.headline),
+        webUrl(contentItem),
+        contentItem.card.webPublicationDateOption.get,  //TODO naked get
+        contentItem.card.webPublicationDateOption.get,  //TODO naked get not last modified,
+        contentItem.header.kicker.flatMap(_.properties.kickerText),
         None,
       )
     }
@@ -100,10 +109,12 @@ object TrailsToShowcase {
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
   }
 
-  private def mediaContentFrom(trail: Trail): Option[MediaContent] = {
-    trail.trailPicture.flatMap { trailPicture =>
-      trailImageCropToUse(trailPicture).map { imageToUse =>
-        new MediaContent(new UrlReference(imageToUse))
+  private def mediaContentFrom(content: PressedContent): Option[MediaContent] = {
+    content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
+      trail.trailPicture.flatMap { trailPicture =>
+        trailImageCropToUse(trailPicture).map { imageToUse =>
+          new MediaContent(new UrlReference(imageToUse))
+        }
       }
     }
   }
@@ -112,7 +123,9 @@ object TrailsToShowcase {
     trailPicture.allImages.headOption.flatMap(_.url) // TODO confirm correct pick
   }
 
-  private def guidFor(trail: Trail): String = "http://www.theguardian.com/" + trail.metadata.id // TODO deduplicate
+  private def guidFor(content: PressedContent): String = "http://www.theguardian.com" + content.header.url // As per Trail RSS
+
+  private def webUrl(content: PressedContent): String = "https://www.theguardian.com" + content.header.url // TODO duplicate with RSS
 
   // TODO duplication
   val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")

@@ -1,26 +1,25 @@
 package controllers
 
-import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
-import com.gu.facia.client.models.TargetedTerritory
+import common._
+import conf.Configuration
+import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
-import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
+import implicits.GUHeaders
+import layout.slices._
+import layout.{Front => _, _}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
+import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
-import layout.slices._
+import utils.TargetedCollections
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
-import conf.switches.Switches.InlineEmailStyles
-import implicits.GUHeaders
-import pages.{FrontEmailHtmlPage, FrontHtmlPage}
-import utils.TargetedCollections
-import conf.Configuration
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -115,6 +114,28 @@ trait FaciaController
       else
         renderFrontPressResult(path)
     }
+
+  def renderFrontShowcase(path: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      frontJsonFapi.get(path, liteRequestType).map {
+        case Some(faciaPage: PressedPage) =>
+          val singleStoriesCollection = faciaPage.collections.find(_.displayName == "sport")
+          val rundownStoriesCollection = faciaPage.collections.find(_.displayName == "in depth")
+          val singleStories = singleStoriesCollection.map(_.curated).getOrElse(Seq.empty)
+          val rundownStories = rundownStoriesCollection.map(_.curated).getOrElse(Seq.empty)
+
+          val showcase = TrailsToShowcase(feedTitle = faciaPage.metadata.title, singleStories = singleStories, rundownStories = rundownStories,
+            rundownContainerId = rundownStoriesCollection.map(_.id).getOrElse(""),
+            rundownContainerTitle = rundownStoriesCollection.map(_.displayName).getOrElse(""),
+            url = Some(faciaPage.metadata.url), description = faciaPage.metadata.description)
+
+          Ok(showcase)
+
+        case None =>
+          Ok("NOT OK")
+      }
+    }
+  }
 
   def rootEditionRedirect(): Action[AnyContent] = renderFront(path = "")
 
