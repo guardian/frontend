@@ -10,6 +10,7 @@ import { stripDfpAdPrefixFrom } from '../utils';
 import { bids } from './bid-config';
 import { priceGranularity } from './price-config';
 import { pubmatic } from './pubmatic';
+import { setForceSendMetrics } from '../../../../common/modules/analytics/coreVitals';
 
 type CmpApi = 'iab' | 'static';
 // https://docs.prebid.org/dev-docs/modules/consentManagement.html
@@ -330,7 +331,14 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		 * */
 		advert.hasPrebidSize = true;
 
-		if (data.bidderCode === 'improvedigital') captureCommercialMetrics();
+		/**
+		 * If improve skin has won auction, toggle force send metrics on.
+		 * TODO remove after improve skin release.
+		 * */
+		if (data.bidderCode === 'improvedigital') {
+			setForceSendMetrics(true);
+			captureCommercialMetrics();
+		}
 	});
 };
 
