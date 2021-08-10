@@ -464,7 +464,7 @@ trait PrebidSwitches {
   val prebidImproveDigitalSkins: Switch = Switch(
     group = CommercialPrebid,
     "prebid-improve-digital-skins",
-    "Serve Improve page skins via Prebid",
+    "Include Collective page skins via Improve Digital adapter in Prebid auctions",
     owners = Seq(Owner.withGithub("mxdvl")),
     safeState = Off,
     sellByDate = never,
