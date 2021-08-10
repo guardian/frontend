@@ -36,7 +36,7 @@ const userInSample = Math.random() < 1 / 100;
 // for which we need to capture all metrics
 const captureMetrics = shouldCaptureMetrics();
 // or we are force sending for this page view for some other reason.
-var forceSendMetrics = false;
+let forceSendMetrics = false;
 
 export const setForceSendMetrics = (val: boolean): void => {
 	forceSendMetrics = val;

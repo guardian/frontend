@@ -3,6 +3,7 @@ import { isString, log } from '@guardian/libs';
 import { captureCommercialMetrics } from 'commercial/commercial-metrics';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import config from '../../../../../lib/config';
+import { setForceSendMetrics } from '../../../../common/modules/analytics/coreVitals';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { getHeaderBiddingAdSlots } from '../slot-config';
@@ -10,7 +11,6 @@ import { stripDfpAdPrefixFrom } from '../utils';
 import { bids } from './bid-config';
 import { priceGranularity } from './price-config';
 import { pubmatic } from './pubmatic';
-import { setForceSendMetrics } from '../../../../common/modules/analytics/coreVitals';
 
 type CmpApi = 'iab' | 'static';
 // https://docs.prebid.org/dev-docs/modules/consentManagement.html
