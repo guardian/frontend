@@ -133,7 +133,7 @@ const buildEpicPayload = async () => {
             getLastOneOffContributionTimestamp() || undefined,
         mvtId: getMvtValue(),
         countryCode,
-        epicViewLog: getViewLog(),
+        epicViewLog: getViewLog(storage.local),
         weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
         hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
         modulesVersion: ModulesVersion,
