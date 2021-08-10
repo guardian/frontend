@@ -99,8 +99,6 @@ private object NavLinks {
 
   /* SPORT */
 
-  val Tokyo2020 = NavLink("Tokyo 2020", "/sport/olympic-games-2020")
-
   val football = NavLink(
     "Football",
     "/football",
@@ -365,7 +363,6 @@ private object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
-      Tokyo2020,
       football,
       cricket,
       rugbyUnion,
@@ -381,7 +378,6 @@ private object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
-      Tokyo2020,
       football,
       AFL,
       NRL,
@@ -395,7 +391,6 @@ private object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      Tokyo2020,
       soccer,
       NFL,
       tennis,
@@ -407,7 +402,6 @@ private object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
-      Tokyo2020,
       football,
       cricket,
       rugbyUnion,
