@@ -10562,10 +10562,10 @@ openurl@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/openurl/-/openurl-1.1.1.tgz#3875b4b0ef7a52c156f0db41d4609dbb0f94b387"
 
-ophan-tracker-js@1.3.25:
-  version "1.3.25"
-  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.3.25.tgz#7a43b4a232d940cd68f74a82a712bd2a1ddb4b6f"
-  integrity sha512-jufAOME9FLSuzEMgWhDd6O6xoMJTv2I/GJISiOuaT0W1YVs9upP7zTeXVEPQi12NMe1ZliqFBWnqCea8gVx+2g==
+ophan-tracker-js@1.3.27:
+  version "1.3.27"
+  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.3.27.tgz#a9913e3cc49ba39b712578659150acf202b6b8c1"
+  integrity sha512-0UXITRMb5tNJhYQzu6tDFsBLFqltYVAbbAqe4m9iVNyX8pV1xCTx+z6rA4MeM4vZEmf1yV+ERUzfEYfrCGyCOQ==
 
 opn@5.3.0:
   version "5.3.0"

@@ -1,7 +1,8 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { isString, log } from '@guardian/libs';
+import { captureCommercialMetrics } from 'commercial/commercial-metrics';
+import type { Advert } from 'commercial/modules/dfp/Advert';
 import config from '../../../../../lib/config';
-import type { Advert } from '../../dfp/Advert';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { getHeaderBiddingAdSlots } from '../slot-config';
@@ -328,6 +329,8 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		 * set here when adjusting the slot size.
 		 * */
 		advert.hasPrebidSize = true;
+
+		if (data.bidderCode === 'improvedigital') captureCommercialMetrics();
 	});
 };
 

@@ -8,8 +8,6 @@ import {
 	isInUk,
 	isInUsOrCa,
 } from '../../../common/modules/commercial/geo-utils';
-import { isInVariantSynchronous } from '../../../common/modules/experiments/ab';
-import { improveSkins } from '../../../common/modules/experiments/tests/improve-skins';
 
 type StringManipulation = (a: string, b: string) => string;
 type RegExpRecords = Record<string, RegExp | undefined>;
@@ -141,14 +139,11 @@ export const shouldIncludeAppNexus = (): boolean =>
 export const shouldIncludeXaxis = (): boolean => isInUk();
 
 export const shouldIncludeImproveDigital = (): boolean => isInUk() || isInRow();
-export const shouldIncludeImproveDigitalSkin = (): boolean => {
-	return (
-		isInVariantSynchronous(improveSkins, 'variant') &&
-		window.guardian.config.page.isFront &&
-		isInUk() &&
-		getBreakpointKey() === 'D' // Desktop only
-	);
-};
+export const shouldIncludeImproveDigitalSkin = (): boolean =>
+	!!window.guardian.config.switches.prebidImproveDigitalSkins &&
+	window.guardian.config.page.isFront &&
+	(isInUk() || isInRow()) &&
+	getBreakpointKey() === 'D'; // Desktop only
 
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>
