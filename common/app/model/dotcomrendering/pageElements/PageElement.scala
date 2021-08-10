@@ -203,6 +203,7 @@ case class EmbedBlockElement(
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
+    caption: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object EmbedBlockElement {
@@ -1475,13 +1476,14 @@ object PageElement {
       thirdPartyTracking: Boolean,
       source: Option[String],
       sourceDomain: Option[String],
+      caption: Option[String],
   ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
       src <- getIframeSrc(html)
       if src.contains("charts-datawrapper.s3.amazonaws.com")
     } yield {
-      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain)
+      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain, caption)
     }
   }
 
@@ -1491,12 +1493,13 @@ object PageElement {
       thirdPartyTracking: Boolean,
       source: Option[String],
       sourceDomain: Option[String],
+      caption: Option[String],
   ): Option[EmbedBlockElement] = {
     // This returns a EmbedBlockELement to handle any iframe that wasn't captured by extractChartDatawrapperEmbedBlockElement
     for {
       src <- getIframeSrc(html)
     } yield {
-      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain)
+      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain, caption)
     }
   }
 
@@ -1555,21 +1558,29 @@ object PageElement {
         payload. It was decided that handling those as they come up will be an ongoing health task of the dotcom team,
         and not part of the original DCR migration.
        */
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
-        extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
-          extractChartDatawrapperEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain)
-            .getOrElse {
-              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
-                // This version of AudioBlockElement is not currently supported in DCR
-                // AudioBlockElement(element.assets.map(AudioAsset.make))
+      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
+        .getOrElse {
+          extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
+            extractChartDatawrapperEmbedBlockElement(
+              html,
+              d.role,
+              thirdPartyTracking,
+              d.source,
+              d.sourceDomain,
+              d.caption,
+            ).getOrElse {
+              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
+                .getOrElse {
+                  // This version of AudioBlockElement is not currently supported in DCR
+                  // AudioBlockElement(element.assets.map(AudioAsset.make))
 
-                // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
-                // incorrect payload.
-                AudioBlockElement("This audio element cannot be displayed at this time")
-              }
+                  // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
+                  // incorrect payload.
+                  AudioBlockElement("This audio element cannot be displayed at this time")
+                }
             }
+          }
         }
-      }
     }
   }
 
@@ -1595,6 +1606,7 @@ object PageElement {
             thirdPartyTracking,
             d.source,
             d.sourceDomain,
+            d.caption,
           )
         }
       }
