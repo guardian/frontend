@@ -91,40 +91,29 @@ type BidderCode =
 	| 'triplelift'
 	| 'trustx'
 	| 'xhb';
+
+type PrebidParams =
+	| PrebidSonobiParams
+	| PrebidIndexExchangeParams
+	| PrebidTrustXParams
+	| PrebidTripleLiftParams
+	| PrebidImproveParams
+	| PrebidXaxisParams
+	| PrebidAppNexusParams
+	| PrebidOpenXParams
+	| PrebidOzoneParams
+	| PrebidAdYouLikeParams
+	| PrebidPubmaticParams;
+
 type PrebidBidder = {
 	name: BidderCode;
 	switchName: string;
-	bidParams: (
-		slotId: string,
-		sizes: HeaderBiddingSize[],
-	) =>
-		| PrebidSonobiParams
-		| PrebidIndexExchangeParams
-		| PrebidTrustXParams
-		| PrebidTripleLiftParams
-		| PrebidImproveParams
-		| PrebidXaxisParams
-		| PrebidAppNexusParams
-		| PrebidOpenXParams
-		| PrebidOzoneParams
-		| PrebidAdYouLikeParams
-		| PrebidPubmaticParams;
+	bidParams: (slotId: string, sizes: HeaderBiddingSize[]) => PrebidParams;
 };
 
 type PrebidBid = {
 	bidder: string;
-	params:
-		| PrebidSonobiParams
-		| PrebidIndexExchangeParams
-		| PrebidTrustXParams
-		| PrebidTripleLiftParams
-		| PrebidImproveParams
-		| PrebidXaxisParams
-		| PrebidAppNexusParams
-		| PrebidOpenXParams
-		| PrebidOzoneParams
-		| PrebidAdYouLikeParams
-		| PrebidPubmaticParams;
+	params: PrebidParams;
 };
 
 type PrebidMediaTypes = {
