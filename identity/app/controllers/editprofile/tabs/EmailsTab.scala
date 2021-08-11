@@ -16,8 +16,5 @@ trait EmailsTab extends EditProfileControllerComponents {
     }
 
   /** GET /email-prefs */
-  def redirectToEmailPrefs: Action[AnyContent] = redirectToManage("email-prefs")
-
-  /** GET /privacy/edit */
-  def displayPrivacyFormRedirect: Action[AnyContent] = redirectToManage("email-prefs")
+  def redirectToManageEmailPrefs: Action[AnyContent] = redirectToManage("email-prefs")
 }
