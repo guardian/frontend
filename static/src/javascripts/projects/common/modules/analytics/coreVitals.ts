@@ -1,6 +1,7 @@
 import { getCookie } from '@guardian/libs';
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 import reportError from 'lib/report-error';
+import { forceSendMetrics } from './forceSendMetrics';
 import { shouldCaptureMetrics } from './shouldCaptureMetrics';
 
 type CoreWebVitalsPayload = {
@@ -35,12 +36,7 @@ const userInSample = Math.random() < 1 / 100;
 // unless we are forcing metrics for this user because they are participating in an AB test
 // for which we need to capture all metrics
 const captureMetrics = shouldCaptureMetrics();
-// or we are force sending for this page view for some other reason.
-let forceSendMetrics = false;
-
-export const setForceSendMetrics = (val: boolean): void => {
-	forceSendMetrics = val;
-};
+// or we are force sending for this page view for some other reason with forceSendMetrics.
 
 /**
  * Calls functions of web-vitals library to collect core web vitals data, registering callbacks which
