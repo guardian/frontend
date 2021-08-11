@@ -31,7 +31,7 @@ const { isDotcomRendering, page } = window.guardian.config;
 
 const assetsPath = page.frontendAssetsFullURL ?? page.assetsPath;
 
-__webpack_public_path__ = `${assetsPath}javascripts/commercial/`;
+__webpack_public_path__ = `${assetsPath}javascripts/`;
 
 const tags: Record<string, unknown> = {
 	feature: 'commercial',

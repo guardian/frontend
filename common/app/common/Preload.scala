@@ -9,7 +9,7 @@ object Preload {
 
   def commercialBundleName(implicit request: RequestHeader): String =
     if (ActiveExperiments.isParticipating(StandaloneCommercialBundle)) {
-      "commercial/graun.standalone.commercial.js"
+      "graun.standalone.commercial.js"
     } else {
       "graun.commercial.js"
     }
