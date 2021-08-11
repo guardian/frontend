@@ -40,12 +40,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       payload: String,
       endpoint: String,
       page: Page,
+      timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
 
     def doPost() = {
       val resp = ws
         .url(endpoint)
-        .withRequestTimeout(Configuration.rendering.timeout)
+        .withRequestTimeout(timeout)
         .addHttpHeaders("Content-Type" -> "application/json")
         .post(payload)
 
@@ -129,7 +130,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page)
+
+    // Nb. interactives have a longer timeout because some of them are very
+    // large unfortunately. E.g.
+    // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
+    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page, 4.seconds)
   }
 
   def getAMPInteractive(
