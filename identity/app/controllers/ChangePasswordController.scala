@@ -8,10 +8,10 @@ import utils.SafeLogging
 import conf.Configuration
 
 class ChangePasswordController(
-                                val controllerComponents: ControllerComponents,
-                                val httpConfiguration: HttpConfiguration
-                              )(implicit context: ApplicationContext)
-  extends BaseController
+    val controllerComponents: ControllerComponents,
+    val httpConfiguration: HttpConfiguration,
+)(implicit context: ApplicationContext)
+    extends BaseController
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
