@@ -76,7 +76,7 @@ const go = () => {
         const commercialBundle = () => useStandaloneBundle
 			? import(
 					/* webpackIgnore: true */
-					`${__webpack_public_path__}graun.standalone.commercial.js`
+					config.get('page.commercialBundleUrl')
 			  )
 			: import(
 					/* webpackChunkName: "commercial" */

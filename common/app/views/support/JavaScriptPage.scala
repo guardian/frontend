@@ -5,11 +5,12 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import model.IpsosTags.{getScriptTag}
+import model.IpsosTags.getScriptTag
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
-import model.IpsosTags.{getScriptTag}
+import model.IpsosTags.getScriptTag
+import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
@@ -76,6 +77,7 @@ object JavaScriptPage {
       ("mmaUrl", JsString(Configuration.id.mmaUrl)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
       ("assetsPath", JsString(Configuration.assets.path)),
+      ("commercialBundleUrl", JsString(assetURL("javascripts/graun.standalone.commercial.js"))),
       ("isPreview", JsBoolean(isPreview)),
       ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),
       ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
