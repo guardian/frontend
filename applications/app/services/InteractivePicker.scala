@@ -27,14 +27,14 @@ object InteractivePicker {
     date.isAfter(InteractiveSwitchOver.date)
   }
 
-  def isCartoon(tags: List[Tag]): Boolean = {
-    val cartoonTagIds = Set("tone/cartoons", "profile/david-squires")
-    tags.exists(tag => cartoonTagIds.contains(tag.id))
-  }
-
   def isSupported(tags: List[Tag]): Boolean = {
-    // This will be expanded more as we support more interactives
-    isCartoon(tags)
+    val supported = Set(
+      "tone/cartoons",
+      "profile/david-squires",
+      "tone/documentaries",
+    )
+
+    tags.exists(tag => supported.contains(tag.id))
   }
 
   def isOptedOut(tags: List[Tag]): Boolean = {
