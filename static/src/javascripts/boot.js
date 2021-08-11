@@ -8,7 +8,7 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import { getLocale } from '@guardian/libs';
+import { getLocale, loadScript } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { trackPerformance } from 'common/modules/analytics/google';
 
@@ -72,16 +72,19 @@ const go = () => {
             });
         }
 
-        const useStandaloneBundle = config.get('tests.standaloneCommercialBundleVariant', false) === "variant";
-        const commercialBundle = () => useStandaloneBundle
-			? import(
-					/* webpackIgnore: true */
-					config.get('page.commercialBundleUrl')
-			  )
-			: import(
-					/* webpackChunkName: "commercial" */
-					'bootstraps/commercial'
-			  );
+        const fakeBootCommercial = { bootCommercial: () => {} }
+        const useStandaloneBundle =
+			config.get('tests.standaloneCommercialBundleVariant', false) ===
+			'variant';
+		const commercialBundle = () =>
+			useStandaloneBundle
+				? loadScript(
+						config.get('page.commercialBundleUrl'),
+				  ).then(() => (fakeBootCommercial))
+				: import(
+						/* webpackChunkName: "commercial" */
+						'bootstraps/commercial'
+				  );
 
 
         // Start downloading these ASAP
@@ -91,7 +94,7 @@ const go = () => {
         const fetchCommercial = config.get('switches.commercial')
             ? (markTime('commercial request'),
               commercialBundle())
-            : Promise.resolve({ bootCommercial: () => {} });
+            : Promise.resolve(fakeBootCommercial);
 
 
         const fetchEnhanced = window.guardian.isEnhanced
