@@ -35,16 +35,13 @@ const jsonData: CoreWebVitalsPayload = {
  * Equivalent dotcom-rendering functionality is here: https://git.io/JBRIt
  */
 export const coreVitals = (): void => {
-	// If the current user is part of a server-side AB test
-	// then we always want to sample their core web vitals data.
-	const userInTest =
-		window.guardian.config.tests &&
-		Object.values(window.guardian.config.tests).includes('variant');
-
-	// Otherwise, only send core web vitals data for 1% of users.
+	// By default, sample 1% of users
 	const inSample = Math.random() < 1 / 100;
 
-	if (!userInTest && !shouldCaptureMetrics() && !inSample) {
+	// Unless we are forcing metrics for this user
+	const captureMetrics = shouldCaptureMetrics();
+
+	if (!captureMetrics && !inSample) {
 		return;
 	}
 
