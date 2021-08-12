@@ -15,7 +15,9 @@ import common.Edition
 import conf.Configuration
 import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
+import model.dotcomrendering.InteractiveSwitchOver
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
+import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
@@ -793,6 +795,7 @@ object PageElement {
       calloutsUrl: Option[String],
       overrideImage: Option[ImageElement],
       edition: Edition,
+      webPublicationDate: DateTime,
   ): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
@@ -1062,12 +1065,19 @@ object PageElement {
           }
 
           case Some(interactive: InteractiveAtom) => {
+            val isLegacy = InteractiveSwitchOver.date.isAfter(webPublicationDate)
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(
               InteractiveAtomBlockElement(
                 id = interactive.id,
                 url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId",
-                html = Some(interactive.html),
+                // Note, we parse legacy interactives to do minimal cleaning of
+                // the HTML (e.g. to ensure all tags are closed). Some break
+                // without this. E.g.
+                // https://www.theguardian.com/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend.
+                html =
+                  if (isLegacy) Some(Jsoup.parseBodyFragment(interactive.html).outerHtml)
+                  else Some(interactive.html),
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
