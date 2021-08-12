@@ -191,7 +191,7 @@ class MetaDataTest extends FlatSpec with Matchers {
     )
   }
 
-  it should "pages with explict first published date should continue to show http og:urls" in {
+  it should "pages with no explict first published date should continue to show http og:urls" in {
     val content = contentApi(
       publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
       firstPublicationDate = None,
