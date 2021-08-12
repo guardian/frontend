@@ -43,6 +43,7 @@ class MetaDataTest extends FlatSpec with Matchers {
   val cutoffDate = new DateTime("2017-07-03T12:00:00.000Z")
   val dateBeforeCutoff = new DateTime("2017-07-02T12:00:00.000Z")
   val dateAfterCutoff = new DateTime("2017-07-04T12:00:00.000Z")
+  val dateBeforeHttpsMigration = new DateTime("2013-07-02T12:00:00.000Z")
 
   private def contentApi(
       shouldHideReaderRevenue: Option[Boolean] = None,
@@ -50,6 +51,7 @@ class MetaDataTest extends FlatSpec with Matchers {
       isSensitive: Boolean = false,
       shouldHideAdverts: Boolean = false,
       publicationDate: DateTime,
+      webUrl: String = "webUrl"
   ) = {
 
     val pubDateOffset = jodaToJavaInstant(publicationDate).atOffset(ZoneOffset.UTC)
@@ -60,7 +62,7 @@ class MetaDataTest extends FlatSpec with Matchers {
       sectionName = None,
       webPublicationDate = Some(pubDateOffset.toCapiDateTime),
       webTitle = "webTitle",
-      webUrl = "webUrl",
+      webUrl = webUrl,
       apiUrl = "apiUrl",
       tags = defaultTag :: (if (isPaid) List(paidContentTag) else Nil),
       elements = None,
@@ -137,4 +139,15 @@ class MetaDataTest extends FlatSpec with Matchers {
     Fields.shouldHideReaderRevenue(notSensitiveOldContent, cutoffDate) should be(true)
     Fields.shouldHideReaderRevenue(notSensitiveNewContent, cutoffDate) should be(true)
   }
+
+  it should "show http urls for Facebook og:url to preserve engagement counts for content published before the https migration" in {
+    val content = contentApi(publicationDate = dateBeforeHttpsMigration, webUrl = "https://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals")
+    val fields = Fields.make(content)
+    val metaData = MetaData.make(fields, content)
+
+    val opengraphProperties = metaData.opengraphProperties
+
+    opengraphProperties.get("og:url") should be(Some("http://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals"))
+  }
+
 }
