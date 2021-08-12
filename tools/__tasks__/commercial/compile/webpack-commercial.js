@@ -8,7 +8,7 @@ const chalk = require('chalk');
 const config = require('../../../../webpack.config.commercial.prod.js');
 
 module.exports = {
-	description: 'Create Universal commercial.js bundle for production',
+	description: 'Create Webpack standalone.commercial.js bundle for production',
 	task: () =>
 		new Observable((observer) => {
 			config.plugins = [
