@@ -39,6 +39,17 @@ class MetaDataTest extends FlatSpec with Matchers {
     references = Nil,
   )
 
+  val ukWeatherTag = ApiTag(
+    id = "uk/weather",
+    `type` = TagType.Keyword,
+    webTitle = "",
+    sectionId = None,
+    sectionName = None,
+    webUrl = "",
+    apiUrl = "apiurl",
+    references = Nil,
+  )
+
   val cutoffDate = new DateTime("2017-07-03T12:00:00.000Z")
   val dateBeforeCutoff = new DateTime("2017-07-02T12:00:00.000Z")
   val dateAfterCutoff = new DateTime("2017-07-04T12:00:00.000Z")
@@ -52,7 +63,8 @@ class MetaDataTest extends FlatSpec with Matchers {
       shouldHideAdverts: Boolean = false,
       publicationDate: DateTime,
       firstPublicationDate: Option[DateTime] = None,
-      webUrl: String = "webUrl"
+      webUrl: String = "webUrl",
+      tag: ApiTag = defaultTag
   ) = {
 
     val pubDateOffset = jodaToJavaInstant(publicationDate).atOffset(ZoneOffset.UTC)
@@ -68,7 +80,7 @@ class MetaDataTest extends FlatSpec with Matchers {
       webTitle = "webTitle",
       webUrl = webUrl,
       apiUrl = "apiUrl",
-      tags = defaultTag :: (if (isPaid) List(paidContentTag) else Nil),
+      tags = tag :: (if (isPaid) List(paidContentTag) else Nil),
       elements = None,
       fields = Some(
         ContentFields(
@@ -148,7 +160,8 @@ class MetaDataTest extends FlatSpec with Matchers {
   it should "show https Facebook og:url for content first published after our decision to start advertisng https canonical urls to Facebook" in {
     val content = contentApi(publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
       firstPublicationDate = Some(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook),
-      webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals")
+      webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals",
+      tag = ukWeatherTag)
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
 
@@ -160,7 +173,8 @@ class MetaDataTest extends FlatSpec with Matchers {
   it should "show http Facebook og:url to preserve engagement counts for content published before the https migration but before switch over to advertising https urls" in {
     val content = contentApi(publicationDate = dateBeforeHttpsMigration,
       firstPublicationDate = Some(dateBeforeHttpsMigration),
-      webUrl = "https://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals")
+      webUrl = "https://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals",
+      tag = ukWeatherTag)
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
 
@@ -172,7 +186,8 @@ class MetaDataTest extends FlatSpec with Matchers {
   it should "pages with explict first published date should continue to show http og:urls" in {
     val content = contentApi(publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
       firstPublicationDate = None,
-      webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals")
+      webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals",
+      tag = ukWeatherTag)
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
 

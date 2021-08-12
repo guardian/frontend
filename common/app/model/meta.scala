@@ -185,7 +185,7 @@ object MetaData {
       twitterPropertiesOverrides = twitterPropertiesOverrides,
       commercial = commercial,
       isFoundation = isFoundation,
-      firstPublicationDate = firstPublicationDate
+      firstPublicationDate = firstPublicationDate,
     )
   }
 
@@ -195,6 +195,9 @@ object MetaData {
     val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
     val contentFormat: ContentFormat = ContentFormat(apiContent.design, apiContent.theme, apiContent.display)
+
+    // We have permission from Audience to test on UK Weather articles; losing counts if we need to
+    val isFacebookHttpsTest = apiContent.tags.exists(t => t.id == "uk/weather")
 
     MetaData(
       id = id,
@@ -219,7 +222,8 @@ object MetaData {
       commercial = Some(CommercialProperties.fromContent(apiContent)),
       sensitive = fields.sensitive.getOrElse(false),
       isFoundation = Tags.make(apiContent).isFoundation,
-      firstPublicationDate = fields.firstPublicationDate
+      firstPublicationDate = fields.firstPublicationDate,
+      isFacebookHttpsTest = isFacebookHttpsTest,
     )
   }
 }
@@ -340,6 +344,7 @@ final case class MetaData(
     sensitive: Boolean = false,
     isFoundation: Boolean = false,
     firstPublicationDate: Option[DateTime] = None,
+    isFacebookHttpsTest: Boolean = false,
 ) {
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
@@ -392,10 +397,8 @@ final case class MetaData(
       // In 2021 at Facebook's request we began advertising https urls for newly published content
       // Any page which was able to supply a known first publication date with it's page meta data can benefit from this.
 
-      val startDateForArticleHttpsFacebookUrls = new DateTime(2021, 8, 6, 9, 0, 0).withZone(DateTimeZone.UTC)
-      // We have permission from Audience to test on UK Weather articles; losing counts if we need to
-      // val isTestPath = content.tags.tags.exists(t => t.id == "uk/weather")
-      firstPublished.isAfter(startDateForArticleHttpsFacebookUrls) // && isTestPath
+      val startDateForArticleHttpsFacebookUrls = new DateTime(2021, 8, 12, 9, 0, 0).withZone(DateTimeZone.UTC)
+      firstPublished.isAfter(startDateForArticleHttpsFacebookUrls) && isFacebookHttpsTest
     }
 
     val webUrlToAdvertise = if (shouldAdvertiseHttpsUrlToFacebook) {
