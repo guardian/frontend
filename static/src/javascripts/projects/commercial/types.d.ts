@@ -91,15 +91,8 @@ type SlotVisibilityChangedEvent = {
 	slot: Slot;
 };
 
-/**
- * Strings that represent possible ad sizes
- *
- * Examples: `fluid` `320,50` `728,90`
- */
-type GuAdSizeString = 'fluid' | `${number},${number}`;
-
-type GuAdSize = Readonly<{
+type GuAdSize = {
 	width: number;
 	height: number;
-	toString: () => GuAdSizeString;
-}>;
+	toString: (_: void) => string;
+};
