@@ -53,11 +53,15 @@ object InteractivePicker {
     val switchOn = InteractivePickerFeature.isSwitchedOn
     val publishedPostSwitch = dateIsPostTransition(datetime)
     val isOptedInAmp = (requestFormat == AmpFormat) && isAmpOptedIn(tags)
-    val isWebNotOptedOut = (requestFormat == HtmlFormat) && !isOptedOut(tags)
+    val isWeb = requestFormat == HtmlFormat
+    val isOptOut = isOptedOut(tags)
+
+    // Temporarily force documentaries into DCR while Composer doesn't allow easy removal of opt-out tag.
+    val isDocumentary = tags.exists(tag => tag.id == "tone/documentaries")
 
     if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
-    else if (switchOn && publishedPostSwitch && isWebNotOptedOut) DotcomRendering
-    else if (switchOn && isSupported(tags) && isWebNotOptedOut) DotcomRendering
+    else if (switchOn && publishedPostSwitch && isWeb && !isOptOut) DotcomRendering
+    else if (switchOn && isSupported(tags) && isWeb && (!isOptOut || isDocumentary)) DotcomRendering
     else FrontendLegacy
   }
 }
