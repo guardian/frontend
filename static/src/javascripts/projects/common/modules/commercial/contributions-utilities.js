@@ -48,7 +48,7 @@ const setupOphanView = (
     });
 
     inView.on('firstview', () => {
-        logView(testId);
+        logView(storage.local, testId);
 
         submitViewEvent({
                 component: {
