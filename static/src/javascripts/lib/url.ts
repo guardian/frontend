@@ -1,5 +1,5 @@
 import memoize from 'lodash/memoize';
-import { hasPushStateSupport } from 'lib/detect';
+import { hasPushStateSupport } from './detect';
 
 // TODO: typescript detect.js
 const supportsPushState = hasPushStateSupport() as boolean;

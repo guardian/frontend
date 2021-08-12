@@ -6,7 +6,7 @@
    user data.
 */
 
-import raven from 'lib/raven';
+import raven from './raven';
 
 
 

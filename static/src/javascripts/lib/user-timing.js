@@ -1,4 +1,4 @@
-import performanceAPI from 'lib/window-performance';
+import performanceAPI from './window-performance';
 
 const timings = {};
 const startDate = new Date().getTime();

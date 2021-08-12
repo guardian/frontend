@@ -1,4 +1,4 @@
-import { noop } from 'lib/noop';
+import { noop } from './noop';
 
 /*
     simple practical and flexible "finite state machine" implementation

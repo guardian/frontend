@@ -1,5 +1,5 @@
 import { sendCommercialMetrics } from '@guardian/commercial-core';
-import { shouldCaptureMetrics } from 'common/modules/analytics/shouldCaptureMetrics';
+import { shouldCaptureMetrics } from '../common/modules/analytics/shouldCaptureMetrics';
 
 const { isDev } = window.guardian.config.page;
 const { pageViewId } = window.guardian.ophan;

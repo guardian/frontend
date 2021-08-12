@@ -1,5 +1,5 @@
-import config from 'lib/config';
-import mediator from 'lib/mediator';
+import config from './config';
+import mediator from './mediator';
 
 
 
@@ -57,11 +57,11 @@ let supportsPushState;
 // #?: Consider dropping support for vendor-specific implementations
 let pageVisibility =
     document.visibilityState ||
-    
+
     document.webkitVisibilityState ||
-    
+
     document.mozVisibilityState ||
-    
+
     document.msVisibilityState ||
     'visible';
 

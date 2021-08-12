@@ -1,4 +1,4 @@
-import config_ from 'lib/config';
+import config_ from './config';
 
 // This is really a hacky workaround ⚠️
 const config = config_ as {
