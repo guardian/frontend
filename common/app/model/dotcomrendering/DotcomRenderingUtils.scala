@@ -164,6 +164,7 @@ object DotcomRenderingUtils {
           calloutsUrl,
           article.elements.thumbnail,
           edition,
+          article.trail.webPublicationDate,
         ),
       )
       .filter(PageElement.isSupported)
