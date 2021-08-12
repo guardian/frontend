@@ -71,7 +71,7 @@ object JavaScriptPage {
 
     val commercialBundleUrl: Map[String, JsString] =
       if (ActiveExperiments.isParticipating(StandaloneCommercialBundle)(request))
-        Map("commercialBundleUrl" -> JsString(assetURL("javascripts/graun.standalone.commercial.js")))
+        Map("commercialBundleUrl" -> JsString(assetURL("javascripts/commercial/graun.standalone.commercial.js")))
       else
         Map("commercialBundleUrl" -> JsString(assetURL("javascripts/graun.commercial.dcr.js")))
 
