@@ -7,6 +7,7 @@ const entry = process.cwd() + "/static/src/javascripts/bootstraps/" + filename;
 const config = {
     webpackConfig: 'webpack.config.commercial.prod.js',
     tsConfig: 'tsconfig.json',
+    includeNpm: true,
 }
 
 module.exports = {
