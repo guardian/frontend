@@ -61,7 +61,6 @@ class EmailVerificationControllerTest
   val EmailValidatedMessage = "Your email address has been validated."
   when(identityUrlBuilder.buildUrl(anyString(), anyVararg[(String, String)]())) thenAnswer returnsFirstArg()
   when(idRequestParser.apply(any[Request[_]])) thenReturn idRequest
-  when(authenticationService.userIsFullyAuthenticated(any[Request[_]])) thenReturn true
   when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
   val controller = new EmailVerificationController(
