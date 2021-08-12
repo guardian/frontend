@@ -27,8 +27,10 @@ type SizeKeys =
 	| '160x600';
 
 const getAdSize = (width: number, height: number): GuAdSize => {
-	const toString = () =>
-		width === height && height === 0 ? 'fluid' : `${width},${height}`;
+	const toString = (): GuAdSizeString =>
+		width === 0 && height === 0
+			? 'fluid'
+			: (`${width},${height}` as `${number},${number}`);
 
 	return Object.freeze({
 		width,
