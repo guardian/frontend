@@ -397,7 +397,7 @@ final case class MetaData(
       // In 2021 at Facebook's request we began advertising https urls for newly published content
       // Any page which was able to supply a known first publication date with it's page meta data can benefit from this.
 
-      val startDateForArticleHttpsFacebookUrls = new DateTime(2021, 8, 12, 9, 0, 0).withZone(DateTimeZone.UTC)
+      val startDateForArticleHttpsFacebookUrls = new DateTime(2021, 8, 9, 9, 0, 0).withZone(DateTimeZone.UTC)
       firstPublished.isAfter(startDateForArticleHttpsFacebookUrls) && isFacebookHttpsTest
     }
 
