@@ -44,6 +44,7 @@ class MetaDataTest extends FlatSpec with Matchers {
   val dateBeforeCutoff = new DateTime("2017-07-02T12:00:00.000Z")
   val dateAfterCutoff = new DateTime("2017-07-04T12:00:00.000Z")
   val dateBeforeHttpsMigration = new DateTime("2013-07-02T12:00:00.000Z")
+  val dateAfterWeStartedAdvertistingHttpsUrlsToFacebook = new DateTime("2021-11-02T12:00:00.000Z")
 
   private def contentApi(
       shouldHideReaderRevenue: Option[Boolean] = None,
@@ -140,8 +141,18 @@ class MetaDataTest extends FlatSpec with Matchers {
     Fields.shouldHideReaderRevenue(notSensitiveNewContent, cutoffDate) should be(true)
   }
 
-  it should "show http urls for Facebook og:url to preserve engagement counts for content published before the https migration" in {
-    val content = contentApi(publicationDate = dateBeforeHttpsMigration, webUrl = "https://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals")
+  it should "show https Facebook og:url for content first published after our decision to start advertisng https canonical urls to Facebook" in {
+    val content = contentApi(publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook, webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals")
+    val fields = Fields.make(content)
+    val metaData = MetaData.make(fields, content)
+
+    val opengraphProperties = metaData.opengraphProperties
+
+    opengraphProperties.get("og:url") should be(Some("https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals"))
+  }
+
+  it should "show http Facebook og:url to preserve engagement counts for content published before the https migration but before switch over to advertising https urls" in {
+    val content = contentApi(publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook, webUrl = "https://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals")
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
 
