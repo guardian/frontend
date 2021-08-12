@@ -14,6 +14,7 @@ case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam)
     id = s"/sport/cricket/match/$matchId/${team.wordsForUrl}",
     section = Some(SectionId.fromId("cricket")),
     webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}",
+    firstPublicationDate = None,
   )
 }
 

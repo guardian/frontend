@@ -40,6 +40,7 @@ class FootballPage(
       webTitle = webTitle,
       pagination = pagination,
       description = description,
+      firstPublicationDate = None,
     )
     .copy(
       commercial = Some(

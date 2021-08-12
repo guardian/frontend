@@ -42,6 +42,7 @@ class MostPopularController(
       "most-read",
       Some(SectionId.fromId("most-read")),
       "Most read",
+      firstPublicationDate = None,
     ),
   )
 

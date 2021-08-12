@@ -11,6 +11,7 @@ object SubjectIndexPageMetaData {
       section = Some(SectionId.fromId(tagType)),
       webTitle = page.capitalize,
       customSignPosting = signPosting,
+      firstPublicationDate = None,
     )
 }
 
@@ -25,5 +26,6 @@ object ContributorsIndexPageMetaData {
       section = Some(SectionId.fromId(tagType)),
       webTitle = page.capitalize,
       customSignPosting = signPosting,
+      firstPublicationDate = None,
     )
 }

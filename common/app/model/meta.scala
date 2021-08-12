@@ -1,30 +1,32 @@
 package model
 
-import com.github.nscala_time.time.Implicits._
-import com.github.nscala_time.time.Imports.DateTimeZone
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.{RenderingFormat, RichContent}
 import com.gu.contentapi.client.utils.DesignType
 import com.gu.contentapi.client.utils.format._
+import com.gu.contentapi.client.utils.CapiModelEnrichment.{RenderingFormat, RichContent}
 import com.gu.facia.api.models.{ContentFormat => fapiContentFormat}
+import implicits.Dates.CapiRichDateTime
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
 import common.{Edition, ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
-import implicits.Dates.CapiRichDateTime
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
-import navigation.GuardianFoundationHelper
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
-import play.api.libs.functional.syntax._
+import com.github.nscala_time.time.Implicits._
 import play.api.libs.json._
+import play.api.libs.json.JodaWrites.JodaDateTimeWrites
+import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
-import utils.ShortUrls
+import navigation.GuardianFoundationHelper
+import services.newsletters.{NewsletterResponse}
+import org.joda.time.DateTimeZone
 
 import scala.util.matching.Regex
+import utils.ShortUrls
 
 object Commercial {
 

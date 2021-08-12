@@ -22,6 +22,7 @@ case class CommercialPage() extends StandalonePage {
       "keywordIds" -> JsString("live-better"),
       "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng"),
     ),
+    firstPublicationDate = None,
   )
 }
 

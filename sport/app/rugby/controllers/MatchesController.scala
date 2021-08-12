@@ -14,6 +14,7 @@ case class MatchPage(liveScore: Match) extends StandalonePage {
       s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}",
     section = Some(SectionId.fromId("rugby")),
     webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}",
+    firstPublicationDate = None,
   )
 }
 

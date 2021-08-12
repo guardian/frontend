@@ -22,5 +22,6 @@ case class IdentityPage(
     webTitle = webTitle,
     contentType = Some(DotcomContentType.Identity),
     javascriptConfigOverrides = javascriptConfig,
+    firstPublicationDate = None,
   )
 }

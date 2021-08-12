@@ -22,6 +22,7 @@ class MostViewedGalleryController(
       "More galleries",
       Some(SectionId.fromId("inpictures")),
       "More galleries",
+      firstPublicationDate = None,
     ),
   )
   private val dataId: String = "multimedia/gallery"
