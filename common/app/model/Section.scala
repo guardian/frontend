@@ -42,6 +42,7 @@ object Section {
       commercial = Some(CommercialProperties.fromSection(section)),
       isFoundation = GuardianFoundationHelper.urlIsGuardianFoundation(section.webUrl) || GuardianFoundationHelper
         .sectionIdIsGuardianFoundation(id: String),
+      firstPublicationDate = None   // TODO questionable
     )
 
     Section(

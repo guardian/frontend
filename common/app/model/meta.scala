@@ -1,31 +1,30 @@
 package model
 
+import com.github.nscala_time.time.Implicits._
+import com.github.nscala_time.time.Imports.DateTimeZone
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.{RenderingFormat, RichContent}
 import com.gu.contentapi.client.utils.DesignType
 import com.gu.contentapi.client.utils.format._
-import com.gu.contentapi.client.utils.CapiModelEnrichment.{RenderingFormat, RichContent}
 import com.gu.facia.api.models.{ContentFormat => fapiContentFormat}
-import implicits.Dates.CapiRichDateTime
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
 import common.{Edition, ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
+import implicits.Dates.CapiRichDateTime
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
+import navigation.GuardianFoundationHelper
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
-import com.github.nscala_time.time.Implicits._
-import play.api.libs.json._
-import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import navigation.GuardianFoundationHelper
-import services.newsletters.{NewsletterResponse}
+import utils.ShortUrls
 
 import scala.util.matching.Regex
-import utils.ShortUrls
 
 object Commercial {
 
@@ -154,6 +153,7 @@ object MetaData {
       twitterPropertiesOverrides: Map[String, String] = Map(),
       commercial: Option[CommercialProperties] = None,
       isFoundation: Boolean = false,
+      firstPublicationDate: Option[DateTime] = None,
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -182,6 +182,8 @@ object MetaData {
       isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides,
       commercial = commercial,
+      isFoundation = isFoundation,
+      firstPublicationDate = firstPublicationDate
     )
   }
 
@@ -215,6 +217,7 @@ object MetaData {
       commercial = Some(CommercialProperties.fromContent(apiContent)),
       sensitive = fields.sensitive.getOrElse(false),
       isFoundation = Tags.make(apiContent).isFoundation,
+      firstPublicationDate = fields.firstPublicationDate
     )
   }
 }
@@ -334,6 +337,7 @@ final case class MetaData(
     isNewRecipeDesign: Boolean = false,
     sensitive: Boolean = false,
     isFoundation: Boolean = false,
+    firstPublicationDate: Option[DateTime] = None,
 ) {
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
@@ -381,8 +385,25 @@ final case class MetaData(
     )
 
   def opengraphProperties: Map[String, String] = {
-    // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
-    def ogUrl = webUrl.replaceFirst("^https:", "http:")
+    val shouldAdvertiseHttpsUrlToFacebook = firstPublicationDate.exists { firstPublished =>
+      // When we migrated to https in 2016 we kept all og:urls as http to preserve engagement counts.
+      // In 2021 at Facebook's request we began advertising https urls for newly published content
+      // Any page which was able to supply a known first publication date with it's page meta data can benefit from this.
+
+      val startDateForArticleHttpsFacebookUrls = new DateTime(2021, 8, 6, 9, 0, 0).withZone(DateTimeZone.UTC)
+      // We have permission from Audience to test on UK Weather articles; losing counts if we need to
+      // val isTestPath = content.tags.tags.exists(t => t.id == "uk/weather")
+      firstPublished.isAfter(startDateForArticleHttpsFacebookUrls) // && isTestPath
+    }
+
+    val webUrlToAdvertise = if (shouldAdvertiseHttpsUrlToFacebook) {
+      webUrl
+    } else {
+      // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
+      webUrl.replaceFirst("^https:", "http:")
+    }
+
+    def ogUrl = webUrlToAdvertise
 
     Map(
       "og:site_name" -> "the Guardian",
@@ -513,6 +534,7 @@ case class CommercialExpiryPage(id: String) extends StandalonePage {
     section = Some(SectionId.fromId("global")),
     webTitle = "This page has been removed",
     shouldGoogleIndex = false,
+    firstPublicationDate = None,
   )
 }
 
@@ -537,6 +559,13 @@ case class TagCombiner(
 
   private val webTitle: String = webTitleOverrides.getOrElse(id, s"${leftTag.name} + ${rightTag.name}")
 
+  private val firstPossiblePublicationDate = for {
+    left <- leftTag.metadata.firstPublicationDate
+    right <- rightTag.metadata.firstPublicationDate
+  } yield {
+    Seq(left, right).max
+  }
+
   override val metadata: MetaData = MetaData.make(
     id = id,
     section = leftTag.metadata.section,
@@ -551,6 +580,7 @@ case class TagCombiner(
         prebidIndexSites = leftTag.properties.commercial.flatMap(_.prebidIndexSites),
       ),
     ),
+    firstPublicationDate = firstPossiblePublicationDate
   )
 }
 

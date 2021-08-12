@@ -56,6 +56,7 @@ object Tag {
       twitterPropertiesOverrides = Map("twitter:card" -> "summary"),
       commercial = tag.commercial,
       isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(tag.sectionId),
+      firstPublicationDate = None // TODO can we do better?
     )
   }
 

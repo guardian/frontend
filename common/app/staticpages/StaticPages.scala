@@ -20,6 +20,7 @@ object StaticPages {
         contentType = Some(DotcomContentType.Survey),
         iosType = None,
         shouldGoogleIndex = false,
+        firstPublicationDate = None,
       ),
     )
 
@@ -32,6 +33,7 @@ object StaticPages {
         contentType = Some(DotcomContentType.Signup),
         iosType = None,
         shouldGoogleIndex = false,
+        firstPublicationDate = None,
       ),
     )
 
@@ -47,6 +49,7 @@ object StaticPages {
         contentType = Some(DotcomContentType.Signup),
         iosType = None,
         shouldGoogleIndex = true,
+        firstPublicationDate = None,
       ),
       groupedNewsletterResponses,
     )
