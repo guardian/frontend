@@ -303,10 +303,6 @@ object DotcomRenderingDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl =
-        if (ActiveExperiments.isParticipating(StandaloneCommercialBundle)(request))
-          DotcomRenderingUtils.assetURL("javascripts/graun.standalone.commercial.js")
-        else DotcomRenderingUtils.assetURL("javascripts/graun.commercial.dcr.js"),
       ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,

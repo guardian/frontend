@@ -10,6 +10,7 @@ import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
 import model.IpsosTags.getScriptTag
+import experiments.{ActiveExperiments, StandaloneCommercialBundle}
 import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
 
@@ -68,6 +69,12 @@ object JavaScriptPage {
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
+    val commercialBundleUrl: Map[String, JsString] =
+      if (ActiveExperiments.isParticipating(StandaloneCommercialBundle)(request))
+        Map("commercialBundleUrl" -> JsString(assetURL("javascripts/graun.standalone.commercial.js")))
+      else
+        Map("commercialBundleUrl" -> JsString(assetURL("javascripts/graun.commercial.dcr.js")))
+
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
@@ -77,7 +84,6 @@ object JavaScriptPage {
       ("mmaUrl", JsString(Configuration.id.mmaUrl)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
       ("assetsPath", JsString(Configuration.assets.path)),
-      ("commercialBundleUrl", JsString(assetURL("javascripts/graun.standalone.commercial.js"))),
       ("isPreview", JsBoolean(isPreview)),
       ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),
       ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
@@ -87,6 +93,6 @@ object JavaScriptPage {
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife"))),
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
-    )
+    ) ++ commercialBundleUrl
   }
 }
