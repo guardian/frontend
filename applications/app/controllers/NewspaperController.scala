@@ -25,7 +25,6 @@ class NewspaperController(
         "theguardian",
         Some(SectionId.fromId("todayspaper")),
         "Main section | News | The Guardian",
-        firstPublicationDate = None,
       )
       val todaysPaper = newspaperQuery
         .fetchLatestGuardianNewspaper()
@@ -41,7 +40,6 @@ class NewspaperController(
         "theobserver",
         Some(SectionId.fromId("theobserver")),
         "Main section | From the Observer | The Guardian",
-        firstPublicationDate = None,
       )
 
       val todaysPaper = newspaperQuery
@@ -60,14 +58,12 @@ class NewspaperController(
             "theguardian",
             Some(SectionId.fromId("todayspaper")),
             "Top Stories | From the Guardian | The Guardian",
-            firstPublicationDate = None,
           )
         case "theobserver" =>
           MetaData.make(
             "theobserver",
             Some(SectionId.fromId("theobserver")),
             "News | From the Observer | The Guardian",
-            firstPublicationDate = None,
           )
       }
 

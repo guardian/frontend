@@ -234,7 +234,6 @@ object RenderOtherStatus {
         webTitle = "This page has been removed",
         canonicalUrl,
         contentType = Some(model.DotcomContentType.Unknown),
-        firstPublicationDate = None
       ),
     )
   }

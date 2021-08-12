@@ -15,7 +15,6 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike, val contro
         id = s"discussion/profile/${profile.userId}/$pageType",
         section = Some(SectionId.fromId("Discussion")),
         webTitle = s"${profile.displayName}'s activity",
-        firstPublicationDate = None,
       ),
     )
 

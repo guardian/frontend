@@ -6,7 +6,6 @@ case class SubjectsListing(listings: TagIndexListings) extends StandalonePage {
     section = Some(SectionId.fromId("Index")),
     webTitle = "subjects",
     customSignPosting = Some(IndexNav.keywordsAlpha),
-    firstPublicationDate = None,
   )
 }
 
@@ -16,6 +15,5 @@ case class ContributorsListing(listings: TagIndexListings) extends StandalonePag
     section = Some(SectionId.fromId("Index")),
     webTitle = "contributors",
     customSignPosting = Some(IndexNav.contributorsAlpha),
-    firstPublicationDate = None,
   )
 }

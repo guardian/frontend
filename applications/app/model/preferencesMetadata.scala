@@ -8,6 +8,5 @@ class PreferencesMetaData extends StandalonePage {
     section = Some(SectionId.fromId("Index")),
     webTitle = "Preferences",
     javascriptConfigOverrides = Map("isPreferencesPage" -> JsBoolean(true)),
-    firstPublicationDate = None,
   )
 }

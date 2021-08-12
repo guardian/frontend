@@ -82,7 +82,6 @@ class CommentsController(
       "/reportAbuse",
       Some(SectionId.fromId("Discussion")),
       "Report Abuse",
-      firstPublicationDate = None,
     ),
   )
   def reportAbuseForm(commentId: Int): Action[AnyContent] =
@@ -99,7 +98,6 @@ class CommentsController(
       "/reportAbuseThankYou",
       Some(SectionId.fromId("Discussion")),
       "Report Abuse Thank You",
-      firstPublicationDate = None,
     ),
   )
 

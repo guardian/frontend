@@ -27,7 +27,6 @@ case class ThreadedCommentPage(val discussionComments: DiscussionComments) exten
     webTitle = discussionComments.discussion.title,
     url = Some(s"/discussion$id"),
     pagination = Some(discussionComments.pagination),
-    firstPublicationDate = None,
   )
 }
 
@@ -39,6 +38,5 @@ case class UnthreadedCommentPage(val discussionComments: DiscussionComments) ext
     webTitle = discussionComments.discussion.title,
     url = Some(s"/discussion$id"),
     pagination = Some(discussionComments.pagination),
-    firstPublicationDate = None,
   )
 }

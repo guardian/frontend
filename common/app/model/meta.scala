@@ -536,7 +536,6 @@ case class CommercialExpiryPage(id: String) extends StandalonePage {
     section = Some(SectionId.fromId("global")),
     webTitle = "This page has been removed",
     shouldGoogleIndex = false,
-    firstPublicationDate = None,
   )
 }
 
@@ -561,13 +560,6 @@ case class TagCombiner(
 
   private val webTitle: String = webTitleOverrides.getOrElse(id, s"${leftTag.name} + ${rightTag.name}")
 
-  private val firstPossiblePublicationDate = for {
-    left <- leftTag.metadata.firstPublicationDate
-    right <- rightTag.metadata.firstPublicationDate
-  } yield {
-    Seq(left, right).max
-  }
-
   override val metadata: MetaData = MetaData.make(
     id = id,
     section = leftTag.metadata.section,
@@ -582,7 +574,6 @@ case class TagCombiner(
         prebidIndexSites = leftTag.properties.commercial.flatMap(_.prebidIndexSites),
       ),
     ),
-    firstPublicationDate = firstPossiblePublicationDate
   )
 }
 

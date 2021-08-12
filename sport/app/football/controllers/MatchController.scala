@@ -47,7 +47,6 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
     webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score
       .getOrElse("")} ${theMatch.awayTeam.name}",
     javascriptConfigOverrides = javascriptConfig,
-    firstPublicationDate = None,
   )
 }
 

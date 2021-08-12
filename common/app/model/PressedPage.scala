@@ -61,7 +61,6 @@ object PressedPage {
       twitterPropertiesOverrides = twitterProperties,
       commercial = frontProperties.commercial,
       isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(id),
-      firstPublicationDate = None
     )
   }
 }

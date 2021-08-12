@@ -28,7 +28,7 @@ class RelatedController(
   private val RelatedLabel: String = "Related stories"
 
   private val page = SimplePage(
-    MetaData.make("related-content", Some(SectionId.fromId("related-content")), RelatedLabel, firstPublicationDate = None),
+    MetaData.make("related-content", Some(SectionId.fromId("related-content")), RelatedLabel),
   )
 
   def renderHtml(path: String): Action[AnyContent] = render(path)

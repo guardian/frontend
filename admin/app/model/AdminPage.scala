@@ -7,7 +7,6 @@ object AdminPage {
         id = "admin-" + title,
         webTitle = title,
         section = Some(SectionId.fromId("admin")),
-        firstPublicationDate = None,
       ),
     )
 }

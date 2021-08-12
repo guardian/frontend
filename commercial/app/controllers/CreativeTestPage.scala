@@ -28,7 +28,6 @@ case class TestPage(specifiedKeywords: List[String] = Nil) extends model.Standal
     isFront = true,
     contentType = Some(contentType),
     javascriptConfigOverrides = newMetaData,
-    firstPublicationDate = None,
   )
 
   val navSection: String = "Commercial"

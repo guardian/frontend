@@ -67,7 +67,6 @@ class TopStoriesController(
         "top-stories",
         Some(SectionId.fromId("top-stories")),
         "Top Stories",
-        firstPublicationDate = None,
       ),
     )
 

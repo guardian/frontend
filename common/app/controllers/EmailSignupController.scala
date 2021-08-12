@@ -22,7 +22,7 @@ import scala.concurrent.duration._
 
 object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
-  override val metadata = MetaData.make(id = id, section = None, webTitle = "Email Landing Page", firstPublicationDate = None)
+  override val metadata = MetaData.make(id = id, section = None, webTitle = "Email Landing Page")
 }
 
 case class EmailForm(

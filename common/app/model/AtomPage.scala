@@ -26,7 +26,6 @@ case class ChartAtomPage(
     id = atom.id,
     webTitle = atom.title,
     section = None,
-    firstPublicationDate = None,
   )
 }
 
@@ -43,7 +42,6 @@ case class GuideAtomPage(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Guide"),
     section = None,
-    firstPublicationDate = None,
   )
 }
 
@@ -60,7 +58,6 @@ case class InteractiveAtomPage(
     id = atom.id,
     webTitle = atom.title,
     section = None,
-    firstPublicationDate = None,
   )
 }
 
@@ -78,7 +75,6 @@ case class MediaAtomPage(
     id = atom.id,
     webTitle = atom.title,
     section = None,
-    firstPublicationDate = None,
   )
 }
 
@@ -95,7 +91,6 @@ case class ProfileAtomPage(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Profile"),
     section = None,
-    firstPublicationDate = None,
   )
 }
 
@@ -112,7 +107,6 @@ case class QandaAtomPage(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Q&A"),
     section = None,
-    firstPublicationDate = None,
   )
 }
 
@@ -129,6 +123,5 @@ case class TimelineAtomPage(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Timeline"),
     section = None,
-    firstPublicationDate = None,
   )
 }

@@ -48,7 +48,6 @@ class CrosswordSearchPage extends StandalonePage {
     id = "crosswords/search",
     section = Some(SectionId.fromId("crosswords")),
     webTitle = "Crosswords search",
-    firstPublicationDate = None,
   )
 
   val year = LocalDateTime.now().getYear
