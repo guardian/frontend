@@ -64,7 +64,7 @@ class MetaDataTest extends FlatSpec with Matchers {
       publicationDate: DateTime,
       firstPublicationDate: Option[DateTime] = None,
       webUrl: String = "webUrl",
-      tag: ApiTag = defaultTag
+      tag: ApiTag = defaultTag,
   ) = {
 
     val pubDateOffset = jodaToJavaInstant(publicationDate).atOffset(ZoneOffset.UTC)
@@ -158,42 +158,54 @@ class MetaDataTest extends FlatSpec with Matchers {
   }
 
   it should "show https Facebook og:url for content first published after our decision to start advertisng https canonical urls to Facebook" in {
-    val content = contentApi(publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
+    val content = contentApi(
+      publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
       firstPublicationDate = Some(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook),
       webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals",
-      tag = ukWeatherTag)
+      tag = ukWeatherTag,
+    )
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
 
     val opengraphProperties = metaData.opengraphProperties
 
-    opengraphProperties.get("og:url") should be(Some("https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals"))
+    opengraphProperties.get("og:url") should be(
+      Some("https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals"),
+    )
   }
 
   it should "show http Facebook og:url to preserve engagement counts for content published before the https migration but before switch over to advertising https urls" in {
-    val content = contentApi(publicationDate = dateBeforeHttpsMigration,
+    val content = contentApi(
+      publicationDate = dateBeforeHttpsMigration,
       firstPublicationDate = Some(dateBeforeHttpsMigration),
       webUrl = "https://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals",
-      tag = ukWeatherTag)
+      tag = ukWeatherTag,
+    )
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
 
     val opengraphProperties = metaData.opengraphProperties
 
-    opengraphProperties.get("og:url") should be(Some("http://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals"))
+    opengraphProperties.get("og:url") should be(
+      Some("http://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals"),
+    )
   }
 
   it should "pages with explict first published date should continue to show http og:urls" in {
-    val content = contentApi(publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
+    val content = contentApi(
+      publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
       firstPublicationDate = None,
       webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals",
-      tag = ukWeatherTag)
+      tag = ukWeatherTag,
+    )
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
 
     val opengraphProperties = metaData.opengraphProperties
 
-    opengraphProperties.get("og:url") should be(Some("http://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals"))
+    opengraphProperties.get("og:url") should be(
+      Some("http://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals"),
+    )
   }
 
 }
