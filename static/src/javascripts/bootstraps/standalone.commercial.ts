@@ -1,4 +1,5 @@
 import { EventTimer } from '@guardian/commercial-core';
+import { log } from '@guardian/libs';
 import config from '../lib/config';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
@@ -167,6 +168,8 @@ const loadModules = () => {
 };
 
 const bootCommercial = async (): Promise<void> => {
+	log('commercial', '📦 standalone.commercial.ts', __webpack_public_path__);
+
 	// Init Commercial event timers
 	EventTimer.init();
 
