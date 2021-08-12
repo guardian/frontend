@@ -1,25 +1,26 @@
 package controllers
 
-import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
 import common._
-import conf.Configuration
-import conf.switches.Switches.InlineEmailStyles
+import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
+import com.gu.facia.client.models.TargetedTerritory
 import controllers.front._
-import implicits.GUHeaders
-import layout.slices._
-import layout.{Front => _, _}
+import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
-import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
 import services.{CollectionConfigWithId, ConfigAgent}
-import utils.TargetedCollections
+import layout.slices._
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
+import conf.switches.Switches.InlineEmailStyles
+import implicits.GUHeaders
+import pages.{FrontEmailHtmlPage, FrontHtmlPage}
+import utils.TargetedCollections
+import conf.Configuration
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful

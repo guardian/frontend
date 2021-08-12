@@ -52,8 +52,8 @@ trait IndexControllerCommon
       renderItem(path)
     }
 
-  private def redirect(id: String, isRss: Boolean, isShowcase: Boolean) =
-    WithoutRevalidationResult(MovedPermanently(if (isRss) s"/$id/rss" else if (isShowcase) s"/$id/showcase" else s"/$id"))
+  private def redirect(id: String, isRss: Boolean) =
+    WithoutRevalidationResult(MovedPermanently(if (isRss) s"/$id/rss" else s"/$id"))
 
   def renderTrailsJson(path: String): Action[AnyContent] = renderTrails(path)
 
@@ -76,7 +76,7 @@ trait IndexControllerCommon
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     path match {
       //if this is a section tag e.g. football/football
-      case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss, request.isShowcase)))
+      case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss)))
       case _ => {
         logGoogleBot(request)
         index(Edition(request), path, inferPage(request), request.isRss) map {
