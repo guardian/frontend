@@ -1,6 +1,6 @@
 @import common.InlineJs
 @import conf.switches.Switches.{AsyncCss, FontSwitch}
-@import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance, loadApp}
+@import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, shouldEnhance, loadApp}
 @import templates.inlineJS.blocking.polyfills.js.{details, raf, setTimeout}
 
 @()(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
@@ -32,11 +32,6 @@
 
     // apply render conditions
     @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
-
-    // try and load fonts before we use the stylesheets
-    @if(FontSwitch.isSwitchedOn) {
-        @InlineJs(loadFonts().body, "loadFonts.js")
-    }
 
     @if(AsyncCss.isSwitchedOn) {
         // enable non-blocking stylesheets
