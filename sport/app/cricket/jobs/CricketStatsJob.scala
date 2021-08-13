@@ -2,15 +2,18 @@ package jobs
 
 import com.gu.Box
 import common.GuLogging
-import common.Chronos
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
-import java.time.{Duration, LocalDate}
-import scala.concurrent.ExecutionContext
+import org.joda.time.{DateTimeZone, Days, LocalDate}
+import org.joda.time.format.DateTimeFormat
+
+import scala.concurrent.{ExecutionContext, Future}
 
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
+
+  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
   def getMatch(team: CricketTeam, date: String): Option[Match] =
     cricketStatsAgents
@@ -19,11 +22,11 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   def findMatch(team: CricketTeam, date: String): Option[Match] = {
     val dateFormat = PaFeed.dateFormat
-    val requestDate = dateFormat.parse(date)
+    val requestDate = dateFormat.parseLocalDate(date)
 
     val matchObjects = for {
       day <- 0 until 6 // normally test matches are 5 days but we have seen at least 6 days in practice
-      date <- Some(dateFormat.format(Chronos.toLocalDate(requestDate).minusDays(day)))
+      date <- Some(dateFormat.print(requestDate.minusDays(day)))
     } yield {
       getMatch(team, date)
     }
@@ -38,7 +41,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
         val loadedMatches = agent().values
           .filter(cricketMatch =>
             // Omit any recent match within the last 5 days, to account for test matches.
-            Duration.between(cricketMatch.gameDate, LocalDate.now).toDays() > 5,
+            Days.daysBetween(cricketMatch.gameDate.toLocalDate, LocalDate.now).getDays > 5,
           )
           .map(_.matchId)
           .toSeq
@@ -53,7 +56,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
               paFeed
                 .getMatch(matchId)
                 .map { matchData =>
-                  val date = PaFeed.dateFormat.format(matchData.gameDate)
+                  val date = PaFeed.dateFormat.print(matchData.gameDate)
                   log.info(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date")
                   agent.send(_ + (date -> matchData))
                 }
