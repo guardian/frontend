@@ -40,7 +40,6 @@ trait ApplicationsControllers {
   lazy val siteVerificationController = wire[SiteVerificationController]
   lazy val shareCountController = wire[ShareCountController]
   lazy val youtubeController = wire[YoutubeController]
-  lazy val fontLoaderController = wire[FontLoaderController]
   lazy val nx1ConfigController = wire[Nx1ConfigController]
 
   // A fake geolocation controller to test it locally
