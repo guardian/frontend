@@ -1,11 +1,11 @@
 @(styles: html.Styles)(implicit applicationContext: model.ApplicationContext, request: RequestHeader)
 
+@import conf.switches.Switches.{FontSwitch}
 @import conf.Static
 
-@* placeholder <style>'s for font to go in *@
-
-@fragments.fontFaces()
-
+@if(FontSwitch.isSwitchedOn) {
+    @fragments.fontFaces()
+}
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style class="js-loggable">
