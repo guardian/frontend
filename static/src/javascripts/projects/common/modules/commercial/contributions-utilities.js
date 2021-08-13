@@ -1,7 +1,7 @@
 import { storage } from '@guardian/libs';
 import { logView } from '@guardian/automat-contributions';
-import config from 'lib/config';
-import { elementInView } from 'lib/element-inview';
+import config from '../../../../lib/config';
+import { elementInView } from '../../../../lib/element-inview';
 import { submitInsertEvent, submitViewEvent } from './acquisitions-ophan';
 
 const getVisitCount = () => parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
