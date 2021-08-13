@@ -125,10 +125,15 @@ trait FaciaController
           val singleStories = singleStoriesCollection.map(_.curated).getOrElse(Seq.empty)
           val rundownStories = rundownStoriesCollection.map(_.curated).getOrElse(Seq.empty)
 
-          val showcase = TrailsToShowcase(feedTitle = faciaPage.metadata.title, singleStories = singleStories, rundownStories = rundownStories,
+          val showcase = TrailsToShowcase(
+            feedTitle = faciaPage.metadata.title,
+            singleStories = singleStories,
+            rundownStories = rundownStories,
             rundownContainerId = rundownStoriesCollection.map(_.id).getOrElse(""),
             rundownContainerTitle = rundownStoriesCollection.map(_.displayName).getOrElse(""),
-            url = Some(faciaPage.metadata.url), description = faciaPage.metadata.description)
+            url = Some(faciaPage.metadata.url),
+            description = faciaPage.metadata.description,
+          )
 
           Ok(showcase)
 

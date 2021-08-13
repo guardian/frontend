@@ -19,13 +19,13 @@ import scala.collection.JavaConverters._
 object TrailsToShowcase {
 
   def apply(
-             feedTitle: Option[String],
-             singleStories: Seq[PressedContent],
-             rundownStories: Seq[PressedContent],
-             rundownContainerTitle: String,
-             rundownContainerId: String,
-             url: Option[String] = None,
-             description: Option[String] = None,
+      feedTitle: Option[String],
+      singleStories: Seq[PressedContent],
+      rundownStories: Seq[PressedContent],
+      rundownContainerTitle: String,
+      rundownContainerId: String,
+      url: Option[String] = None,
+      description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
     val feed = TrailsToRss.syndFeedOf(feedTitle, Seq.empty, url, description)
     val entries =
@@ -91,8 +91,8 @@ object TrailsToShowcase {
         guidFor(contentItem),
         stripInvalidXMLCharacters(contentItem.header.headline),
         webUrl(contentItem),
-        contentItem.card.webPublicationDateOption.get,  //TODO naked get
-        contentItem.card.webPublicationDateOption.get,  //TODO naked get not last modified,
+        contentItem.card.webPublicationDateOption.get, //TODO naked get
+        contentItem.card.webPublicationDateOption.get, //TODO naked get not last modified,
         contentItem.header.kicker.flatMap(_.properties.kickerText),
         None,
       )
@@ -123,9 +123,11 @@ object TrailsToShowcase {
     trailPicture.allImages.headOption.flatMap(_.url) // TODO confirm correct pick
   }
 
-  private def guidFor(content: PressedContent): String = "http://www.theguardian.com" + content.header.url // As per Trail RSS
+  private def guidFor(content: PressedContent): String =
+    "http://www.theguardian.com" + content.header.url // As per Trail RSS
 
-  private def webUrl(content: PressedContent): String = "https://www.theguardian.com" + content.header.url // TODO duplicate with RSS
+  private def webUrl(content: PressedContent): String =
+    "https://www.theguardian.com" + content.header.url // TODO duplicate with RSS
 
   // TODO duplication
   val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
