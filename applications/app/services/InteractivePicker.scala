@@ -32,6 +32,7 @@ object InteractivePicker {
       "tone/cartoons",
       "profile/david-squires",
       "tone/documentaries",
+      "tone/resource", // university guides, e.g. https://www.theguardian.com/education/2009/may/10/universityguide-bath-spa-uni
     )
 
     tags.exists(tag => supported.contains(tag.id))
