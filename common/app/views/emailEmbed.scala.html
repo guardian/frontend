@@ -10,6 +10,8 @@
 
 <!doctype html>
 <head>
+    @fragments.fontFaces()
+
     @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.email-signup.css")" />
     } else {
@@ -17,14 +19,6 @@
         @Html(common.Assets.css.head(Some("email-signup")))
         </style>
     }
-
-    @fragments.fontDefinitions()
-
-    <script id="gu">
-    @if(FontSwitch.isSwitchedOn) {
-        @InlineJs(loadFonts().body, "loadFonts.js")
-    }
-    </script>
 
     <script>
         @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
