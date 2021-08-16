@@ -100,9 +100,7 @@ const loadDcrBundle = async (): Promise<void> => {
 		'common/modules/commercial/user-features'
 	);
 
-	commercialModules.push(
-		['c-user-features', userFeatures.refresh], // In DCR, see App.tsx
-	);
+	commercialModules.push(['c-user-features', userFeatures.refresh]);
 	return void 0;
 };
 
