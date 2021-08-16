@@ -146,7 +146,7 @@
     "typescript": "^4.1.3",
     "uglify-js": "^2.7.4",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.44.2",
+    "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
