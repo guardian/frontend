@@ -24,7 +24,6 @@ import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercia
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
 import { init as initStickyTopBanner } from '../projects/commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
-import { amIUsed } from '../projects/commercial/sentinel';
 import { commercialFeatures } from '../projects/common/modules/commercial/commercial-features';
 import type { Modules } from './types';
 
@@ -109,8 +108,6 @@ const loadDcrBundle = async (): Promise<void> => {
  */
 const loadHostedBundle = async (): Promise<void> => {
 	if (!config.get('page.isHosted')) return void 0;
-
-	amIUsed('commercial.dcr.ts', 'loadHostedBundle', { isHosted: 'true' });
 
 	const hostedAbout = await import(
 		/* webpackChunkName: "hosted" */
