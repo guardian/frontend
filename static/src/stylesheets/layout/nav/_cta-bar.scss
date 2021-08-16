@@ -114,7 +114,7 @@
         right: 3px;
         top: 50%;
         transform: translate(0, -50%);
-        transition: transform 0.3s ease-in-out;
+        transition: transform .3s ease-in-out;
 
         @include mq($until: mobileMedium) {
             display: none;
