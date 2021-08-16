@@ -1,139 +1,139 @@
 .new-header__cta-bar {
-	padding-top: 39px;
-	padding-left: 10px;
-	max-width: 340px;
+    padding-top: 39px;
+    padding-left: 10px;
+    max-width: 340px;
 
-	@include mq(mobileMedium) {
-		padding-top: 44px;
-	}
+    @include mq(mobileMedium) {
+        padding-top: 44px;
+    }
 
-	@include mq(mobileLandscape) {
-		padding-left: $gs-gutter;
-	}
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
 
-	@include mq(tablet) {
-		padding-top: 4px;
-		padding-bottom: 20px;
-	}
+    @include mq(tablet) {
+        padding-top: 4px;
+        padding-bottom: 20px;
+    }
 
-	@include mq(desktop) {
-		max-width: 320px;
-	}
+    @include mq(desktop) {
+        max-width: 320px;
+    }
 
-	@include mq(leftCol) {
-		body:not(.has-page-skin) & {
-			max-width: 500px;
-		}
-	}
+    @include mq(leftCol) {
+        body:not(.has-page-skin) & {
+            max-width: 500px;
+        }
+    }
 
-	.new-header--slim & {
-		top: 10px;
+    .new-header--slim & {
+        top: 10px;
 
-		@include mq(tablet) {
-			display: none;
-		}
-	}
+        @include mq(tablet) {
+            display: none;
+        }
+    }
 
-	.cta-bar__heading {
-		body:not(.has-page-skin) & {
-			@include mq(leftCol) {
-				@include fs-headline(5, true);
-			}
-		}
-	}
+    .cta-bar__heading {
+        body:not(.has-page-skin) & {
+            @include mq(leftCol) {
+                @include fs-headline(5, true);
+            }
+        }
+    }
 }
 
 .cta-bar__text {
-	display: block;
-	margin: ($gs-baseline / 4) 0 9px;
+    display: block;
+    margin: ($gs-baseline / 4) 0 9px;
 
-	@include mq($until: tablet) {
-		// These changes are only visible in the footer
-		border-top: 1px solid $brand-pastel;
-		padding-top: $gs-baseline / 4;
-	}
+    @include mq($until: tablet) {
+        // These changes are only visible in the footer
+        border-top: 1px solid $brand-pastel;
+        padding-top: $gs-baseline / 4;
+    }
 }
 
 .cta-bar__heading {
-	@include fs-headline(3);
-	color: $highlight-main;
-	font-weight: 700;
+    @include fs-headline(3);
+    color: $highlight-main;
+    font-weight: 700;
 
-	@include mq(desktop) {
-		@include fs-headline(4, true);
-	}
+    @include mq(desktop) {
+        @include fs-headline(4, true);
+    }
 
-	body:not(.has-page-skin) & {
-		@include mq(leftCol) {
-			@include fs-headline(6, true);
-		}
-	}
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            @include fs-headline(6, true);
+        }
+    }
 }
 
 .cta-bar__subheading {
-	@include fs-textSans(5);
-	color: $brightness-100;
-	font-weight: 400;
-	line-height: 1.2;
-	margin-top: $gs-baseline / 4;
+    @include fs-textSans(5);
+    color: $brightness-100;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-top: $gs-baseline / 4;
 }
 
 .cta-bar__cta {
-	@include fs-textSans(5);
-	font-weight: 700;
-	background-color: $highlight-main;
-	border-radius: 18px;
-	box-sizing: border-box;
-	color: $brand-main;
-	display: block;
-	line-height: 1;
-	height: 29px;
-	padding: 6px 11px 0;
-	margin-bottom: $gs-baseline / 2;
-	margin-right: $gs-gutter / 2;
-	position: relative;
-	float: left;
+    @include fs-textSans(5);
+    font-weight: 700;
+    background-color: $highlight-main;
+    border-radius: 18px;
+    box-sizing: border-box;
+    color: $brand-main;
+    display: block;
+    line-height: 1;
+    height: 29px;
+    padding: 6px 11px 0;
+    margin-bottom: $gs-baseline / 2;
+    margin-right: $gs-gutter / 2;
+    position: relative;
+    float: left;
 
-	@include mq(mobileMedium) {
-		padding: 6px 32px 0 10px;
-	}
+    @include mq(mobileMedium) {
+        padding: 6px 32px 0 10px;
+    }
 
-	.inline-arrow-right {
-		margin: 0 -2px 0 0;
-	}
+    .inline-arrow-right {
+        margin: 0 -2px 0 0;
+    }
 
-	@include mq(tablet) {
-		height: 32px;
-		padding: 7px 34px 0 12px;
-	}
+    @include mq(tablet) {
+        height: 32px;
+        padding: 7px 34px 0 12px;
+    }
 
-	.inline-arrow-right {
-		position: absolute;
-		height: 32px;
-		width: 32px;
-		right: 3px;
-		top: 50%;
-		transform: translate(0, -50%);
-		transition: transform 0.3s ease-in-out;
+    .inline-arrow-right {
+        position: absolute;
+        height: 32px;
+        width: 32px;
+        right: 3px;
+        top: 50%;
+        transform: translate(0, -50%);
+        transition: transform 0.3s ease-in-out;
 
-		@include mq($until: mobileMedium) {
-			display: none;
-		}
-	}
+        @include mq($until: mobileMedium) {
+            display: none;
+        }
+    }
 
-	.inline-arrow-right__svg {
-		fill: currentColor;
-		height: 32px;
-		width: 32px;
-	}
+    .inline-arrow-right__svg {
+        fill: currentColor;
+        height: 32px;
+        width: 32px;
+    }
 
-	&:hover,
-	&:focus {
-		color: $brand-main;
-		text-decoration: none;
+    &:hover,
+    &:focus {
+        color: $brand-main;
+        text-decoration: none;
 
-		.inline-arrow-right {
-			transform: translate(3px, -50%);
-		}
-	}
+        .inline-arrow-right {
+            transform: translate(3px, -50%);
+        }
+    }
 }
