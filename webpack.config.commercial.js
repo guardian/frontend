@@ -4,18 +4,24 @@ const config = require('./webpack.config.js');
 
 // override JS entry points
 config.entry = {
-    'commercial': path.join(
-        __dirname,
-        'static',
-        'src',
-        'javascripts',
-        'bootstraps',
-        'standalone.commercial.ts'
-    ),
+	'commercial-standalone': path.join(
+		__dirname,
+		'static',
+		'src',
+		'javascripts',
+		'bootstraps',
+		'standalone.commercial.ts',
+	),
 };
 
 module.exports = webpackMerge.smart(config, {
-    output: {
-        path: path.join(__dirname, 'static', 'target', 'javascripts', 'commercial'),
-    },
+	output: {
+		path: path.join(
+			__dirname,
+			'static',
+			'target',
+			'javascripts',
+			'commercial',
+		),
+	},
 });
