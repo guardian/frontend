@@ -2,7 +2,7 @@ const path = require('path');
 const webpackMerge = require('webpack-merge');
 const config = require('./webpack.config.js');
 
-const standaloneEntry = 'commercial';
+const standaloneEntry = 'commercial-standalone';
 if(Object.keys(config.entry).includes(standaloneEntry))
     throw new Error(`Conflicting entry name: ${standaloneEntry}`)
 
