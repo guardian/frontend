@@ -15,7 +15,9 @@ import common.Edition
 import conf.Configuration
 import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
+import model.dotcomrendering.InteractiveSwitchOver
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
+import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
@@ -203,6 +205,7 @@ case class EmbedBlockElement(
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
+    caption: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object EmbedBlockElement {
@@ -792,6 +795,7 @@ object PageElement {
       calloutsUrl: Option[String],
       overrideImage: Option[ImageElement],
       edition: Edition,
+      webPublicationDate: DateTime,
   ): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
@@ -1061,12 +1065,19 @@ object PageElement {
           }
 
           case Some(interactive: InteractiveAtom) => {
+            val isLegacy = InteractiveSwitchOver.date.isAfter(webPublicationDate)
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(
               InteractiveAtomBlockElement(
                 id = interactive.id,
                 url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId",
-                html = Some(interactive.html),
+                // Note, we parse legacy interactives to do minimal cleaning of
+                // the HTML (e.g. to ensure all tags are closed). Some break
+                // without this. E.g.
+                // https://www.theguardian.com/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend.
+                html =
+                  if (isLegacy) Some(Jsoup.parseBodyFragment(interactive.html).outerHtml)
+                  else Some(interactive.html),
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
@@ -1475,13 +1486,14 @@ object PageElement {
       thirdPartyTracking: Boolean,
       source: Option[String],
       sourceDomain: Option[String],
+      caption: Option[String],
   ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
       src <- getIframeSrc(html)
       if src.contains("charts-datawrapper.s3.amazonaws.com")
     } yield {
-      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain)
+      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain, caption)
     }
   }
 
@@ -1491,12 +1503,13 @@ object PageElement {
       thirdPartyTracking: Boolean,
       source: Option[String],
       sourceDomain: Option[String],
+      caption: Option[String],
   ): Option[EmbedBlockElement] = {
     // This returns a EmbedBlockELement to handle any iframe that wasn't captured by extractChartDatawrapperEmbedBlockElement
     for {
       src <- getIframeSrc(html)
     } yield {
-      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain)
+      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain, caption)
     }
   }
 
@@ -1555,21 +1568,29 @@ object PageElement {
         payload. It was decided that handling those as they come up will be an ongoing health task of the dotcom team,
         and not part of the original DCR migration.
        */
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
-        extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
-          extractChartDatawrapperEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain)
-            .getOrElse {
-              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
-                // This version of AudioBlockElement is not currently supported in DCR
-                // AudioBlockElement(element.assets.map(AudioAsset.make))
+      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
+        .getOrElse {
+          extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
+            extractChartDatawrapperEmbedBlockElement(
+              html,
+              d.role,
+              thirdPartyTracking,
+              d.source,
+              d.sourceDomain,
+              d.caption,
+            ).getOrElse {
+              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
+                .getOrElse {
+                  // This version of AudioBlockElement is not currently supported in DCR
+                  // AudioBlockElement(element.assets.map(AudioAsset.make))
 
-                // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
-                // incorrect payload.
-                AudioBlockElement("This audio element cannot be displayed at this time")
-              }
+                  // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
+                  // incorrect payload.
+                  AudioBlockElement("This audio element cannot be displayed at this time")
+                }
             }
+          }
         }
-      }
     }
   }
 
@@ -1595,6 +1616,7 @@ object PageElement {
             thirdPartyTracking,
             d.source,
             d.sourceDomain,
+            d.caption,
           )
         }
       }

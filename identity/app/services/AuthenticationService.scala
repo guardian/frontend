@@ -57,9 +57,6 @@ class AuthenticationService(
       .unsafeRunSync()
   }
 
-  def userIsFullyAuthenticated(request: RequestHeader): Boolean =
-    fullyAuthenticatedUser(request).isDefined
-
   def consentCookieAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] =
     for {
       scGuRp <- request.cookies.get("SC_GU_RP")

@@ -1,6 +1,6 @@
 package cricketModel
 
-import java.time.LocalDateTime
+import org.joda.time.DateTime
 
 case class Match(
     teams: List[Team],
@@ -8,7 +8,7 @@ case class Match(
     competitionName: String,
     venueName: String,
     result: String,
-    gameDate: LocalDateTime,
+    gameDate: DateTime,
     officials: List[String],
     matchId: String,
 ) {

@@ -12,7 +12,6 @@ import {
 import { clearParticipations } from '../experiments/ab-local-storage';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
-import { clearViewLog as clearEpicViewLog } from './acquisitions-view-log';
 import { pageShouldHideReaderRevenue } from './contributions-utilities';
 import {
     fakeOneOffContributor,
@@ -21,6 +20,11 @@ import {
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 const minArticlesBeforeShowingBanner = 2;
+
+const viewKey = 'gu.contributions.views';
+const clearEpicViewLog = () => {
+    storage.local.remove(viewKey);
+};
 
 const clearCommonReaderRevenueStateAndReload = (
     asExistingSupporter

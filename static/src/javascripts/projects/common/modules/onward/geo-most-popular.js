@@ -2,7 +2,6 @@
  Module: geo-most-popular.js
  Description: Shows popular trails for a given country.
  */
-import qwery from 'qwery';
 import fastdom from '../../../../lib/fastdom-promise';
 import { Component } from '../component';
 import mediator from '../../../../lib/mediator';
@@ -39,7 +38,7 @@ const showMostPopularThreshold = 1500;
 const fetchMostPopular = (articleBodyHeight) => {
     if (articleBodyHeight > showMostPopularThreshold) {
         new GeoMostPopular().fetch(
-            qwery('.js-components-container'),
+            document.querySelectorAll('.js-components-container'),
             'rightHtml'
         );
     }

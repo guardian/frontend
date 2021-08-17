@@ -21,9 +21,11 @@ import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
 
 import java.net.ConnectException
+import java.util.concurrent.TimeoutException
 
-// Introduced as CAPI error handling elsewhere would smother a regular ConnectException.
+// Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
+case class DCRTimeoutException(message: String) extends TimeoutException(message)
 
 class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload {
 
@@ -40,12 +42,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       payload: String,
       endpoint: String,
       page: Page,
+      timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
 
     def doPost() = {
       val resp = ws
         .url(endpoint)
-        .withRequestTimeout(Configuration.rendering.timeout)
+        .withRequestTimeout(timeout)
         .addHttpHeaders("Content-Type" -> "application/json")
         .post(payload)
 
@@ -61,7 +64,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
               |To get started with dotcom-rendering, see:
               |
               |    https://github.com/guardian/dotcom-rendering""".stripMargin
-          Future.failed(new DCRLocalConnectException(msg))
+          Future.failed(DCRLocalConnectException(msg))
+        case t: TimeoutException => Future.failed(DCRTimeoutException(t.getMessage))
       })
     }
 
@@ -129,7 +133,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page)
+
+    // Nb. interactives have a longer timeout because some of them are very
+    // large unfortunately. E.g.
+    // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
+    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page, 4.seconds)
   }
 
   def getAMPInteractive(

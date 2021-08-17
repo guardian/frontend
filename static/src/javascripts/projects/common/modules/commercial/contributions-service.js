@@ -6,6 +6,7 @@ import {
 import { mountDynamic } from '@guardian/automat-modules';
 import { onConsentChange } from '@guardian/consent-management-platform';
 import userPrefs from 'common/modules/user-prefs';
+import { storage } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { getCookie } from '../../../../lib/cookies';
 import fastdom from '../../../../lib/fastdom-promise';
@@ -28,7 +29,6 @@ import {
     isRecurringContributor,
     shouldHideSupportMessaging,
 } from './user-features';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
 export const ModulesVersion = 'v2';
@@ -133,8 +133,8 @@ const buildEpicPayload = async () => {
             getLastOneOffContributionTimestamp() || undefined,
         mvtId: getMvtValue(),
         countryCode,
-        epicViewLog: getViewLog(),
-        weeklyArticleHistory: getWeeklyArticleHistory(),
+        epicViewLog: getViewLog(storage.local),
+        weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
         hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
         modulesVersion: ModulesVersion,
         url: window.location.origin + window.location.pathname,
@@ -207,7 +207,7 @@ const buildBannerPayload = async () => {
         subscriptionBannerLastClosedAt: userPrefs.get('subscriptionBannerLastClosedAt') || undefined,
         mvtId: getMvtValue(),
         countryCode: getCountryCode(),
-        weeklyArticleHistory: getWeeklyArticleHistory(),
+        weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
         hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
         modulesVersion: ModulesVersion,
     };

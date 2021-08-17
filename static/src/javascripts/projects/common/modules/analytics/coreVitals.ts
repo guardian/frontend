@@ -1,6 +1,7 @@
 import { getCookie } from '@guardian/libs';
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 import reportError from 'lib/report-error';
+import { forceSendMetrics } from './forceSendMetrics';
 import { shouldCaptureMetrics } from './shouldCaptureMetrics';
 
 type CoreWebVitalsPayload = {
@@ -30,21 +31,19 @@ const jsonData: CoreWebVitalsPayload = {
 	ttfb: null,
 };
 
+// By default, sample 1% of users
+const userInSample = Math.random() < 1 / 100;
+// unless we are forcing metrics for this user because they are participating in an AB test
+// for which we need to capture all metrics
+const captureMetrics = shouldCaptureMetrics();
+// or we are force sending for this page view for some other reason with forceSendMetrics.
+
 /**
- * Sends core web vitals data for a sample of page views to the data lake.
+ * Calls functions of web-vitals library to collect core web vitals data, registering callbacks which
+ * send it to the data lake for a sample of page views.
  * Equivalent dotcom-rendering functionality is here: https://git.io/JBRIt
  */
 export const coreVitals = (): void => {
-	// By default, sample 1% of users
-	const inSample = Math.random() < 1 / 100;
-
-	// Unless we are forcing metrics for this user
-	const captureMetrics = shouldCaptureMetrics();
-
-	if (!captureMetrics && !inSample) {
-		return;
-	}
-
 	type CoreVitalsArgs = {
 		name: string;
 		value: number;
@@ -59,6 +58,10 @@ export const coreVitals = (): void => {
 	};
 
 	const jsonToSend = ({ name, value }: CoreVitalsArgs): void => {
+		if (!captureMetrics && !userInSample && !forceSendMetrics) {
+			return;
+		}
+
 		switch (name) {
 			case 'FCP':
 				jsonData.fcp = nineDigitPrecision(value);
