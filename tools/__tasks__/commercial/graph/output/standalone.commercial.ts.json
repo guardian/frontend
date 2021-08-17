@@ -354,7 +354,8 @@
   "../projects/commercial/modules/header-bidding/prebid/price-config.ts",
   "../projects/commercial/modules/header-bidding/prebid/pubmatic.js",
   "../projects/commercial/modules/header-bidding/slot-config.ts",
-  "../projects/commercial/modules/header-bidding/utils.ts"
+  "../projects/commercial/modules/header-bidding/utils.ts",
+  "../projects/common/modules/analytics/forceSendMetrics.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
@@ -519,9 +520,7 @@
   "../lib/config.js",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
- "../projects/commercial/sentinel.ts": [
-  "../lib/config.js"
- ],
+ "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.js": [
   "../../../../node_modules/web-vitals/dist/web-vitals.umd.js",
   "../lib/config.js",
@@ -687,7 +686,6 @@
  ],
  "../projects/common/modules/onward/geo-most-popular.js": [
   "../../../../node_modules/lodash-es/once.js",
-  "../../../../node_modules/qwery/qwery.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js",
   "../projects/common/modules/component.js"
@@ -740,7 +738,6 @@
   "../projects/commercial/modules/set-adtest-cookie.js",
   "../projects/commercial/modules/sticky-top-banner.js",
   "../projects/commercial/modules/third-party-tags.js",
-  "../projects/commercial/sentinel.ts",
   "../projects/common/modules/commercial/commercial-features.js",
   "../projects/common/modules/commercial/user-features.js",
   "types.ts"
