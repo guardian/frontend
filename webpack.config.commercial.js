@@ -16,6 +16,7 @@ config.entry = {
 
 module.exports = webpackMerge.smart(config, {
 	output: {
+		jsonpFunction: 'commercialJsonp',
 		path: path.join(
 			__dirname,
 			'static',
