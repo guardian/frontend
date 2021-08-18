@@ -26,13 +26,17 @@
 
                 <span class="u-h">The Guardian - Back to home</span>
 
-                @if(page.metadata.hasSlimHeader) {
-                    @fragments.inlineSvg("the-guardian-roundel", "logo")
-                } else {
-                    @if(AnniversaryLogoHeader.isSwitchedOn) {
-                        @fragments.inlineSvg("guardian-anniversary-logo", "logo")
-                    } else {
-                        @fragments.inlineSvg("the-guardian-logo", "logo")
+                @defining(Edition(request).id.toLowerCase()) { editionId =>
+                    @{
+                        if(page.metadata.hasSlimHeader) {
+                            fragments.inlineSvg("the-guardian-roundel", "logo")
+                        } else if(editionId == "uk" && AnniversaryLogoHeader.isSwitchedOn) {
+                            fragments.inlineSvg("guardian-anniversary-logo-uk", "logo")
+                        } else if(AnniversaryLogoHeader.isSwitchedOn) {
+                            fragments.inlineSvg("guardian-anniversary-logo", "logo")
+                        } else {
+                            fragments.inlineSvg("the-guardian-logo", "logo")
+                        }
                     }
                 }
             </a>
