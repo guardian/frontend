@@ -5,7 +5,7 @@
 import fastdom from '../../../../lib/fastdom-promise';
 import { Component } from '../component';
 import mediator from '../../../../lib/mediator';
-import once from 'lodash/once';
+import { once } from 'lodash-es';
 
 const promise = new Promise((resolve, reject) => {
     mediator.on('modules:onward:geo-most-popular:ready', resolve);
