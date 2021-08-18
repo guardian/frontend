@@ -52,7 +52,7 @@
  ],
  "../lib/time-utils.js": [],
  "../lib/url.ts": [
-  "../../../../node_modules/@types/lodash/memoize.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/detect.js"
  ],
  "../lib/user-timing.js": [
@@ -64,7 +64,7 @@
   "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
  ],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
-  "../../../../node_modules/@types/lodash/once.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/$$.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -149,7 +149,7 @@
   "../projects/commercial/modules/ad-sizes.js"
  ],
  "../projects/commercial/modules/dfp/define-slot.js": [
-  "../../../../node_modules/lodash-es/once.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../lib/config.js",
   "../lib/detect.js",
   "../lib/url.ts"
@@ -191,7 +191,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.js": [
-  "../../../../node_modules/lodash-es/once.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.js"
@@ -208,7 +208,7 @@
   "../projects/commercial/modules/messenger/post-message.js"
  ],
  "../projects/commercial/modules/dfp/on-slot-render.js": [
-  "../../../../node_modules/lodash-es/once.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../lib/config.js",
   "../lib/mediator.js",
   "../lib/report-error.js",
@@ -230,7 +230,7 @@
  ],
  "../projects/commercial/modules/dfp/prepare-a9.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/lodash-es/once.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../lib/a9-apstag.js",
   "../lib/config.js",
   "../lib/detect.js",
@@ -274,7 +274,7 @@
  ],
  "../projects/commercial/modules/dfp/prepare-prebid.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/lodash-es/once.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../../../../node_modules/prebid.js/build/dist/prebid.js",
   "../lib/config.js",
   "../lib/detect.js",
@@ -319,7 +319,7 @@
   "../projects/commercial/modules/dfp/wait-for-advert.js"
  ],
  "../projects/commercial/modules/dfp/wait-for-advert.js": [
-  "../../../../node_modules/lodash-es/memoize.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts"
  ],
  "../projects/commercial/modules/header-bidding/a9/a9.js": [
@@ -365,7 +365,7 @@
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/header-bidding/utils.ts": [
-  "../../../../node_modules/@types/lodash/once.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.js",
   "../lib/detect.js",
   "../lib/url.ts",
@@ -382,7 +382,7 @@
  ],
  "../projects/commercial/modules/hosted/gallery.js": [
   "../../../../node_modules/fastdom/fastdom.js",
-  "../../../../node_modules/lodash-es/throttle.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../lib/config.js",
   "../lib/detect.js",
   "../lib/fsm.js",
@@ -479,7 +479,7 @@
   "../projects/common/modules/ui/sticky.js"
  ],
  "../projects/commercial/modules/remove-slots.ts": [
-  "../../../../node_modules/@types/lodash/once.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
@@ -567,8 +567,7 @@
  "../projects/common/modules/commercial/build-page-targeting.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../../../../node_modules/lodash-es/once.js",
-  "../../../../node_modules/lodash-es/pick.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../lib/config.js",
   "../lib/cookies.js",
   "../lib/detect.js",
@@ -685,14 +684,14 @@
   "../lib/url.ts"
  ],
  "../projects/common/modules/onward/geo-most-popular.js": [
-  "../../../../node_modules/lodash-es/once.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js",
   "../projects/common/modules/component.js"
  ],
  "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/bean/bean.js",
-  "../../../../node_modules/lodash-es/memoize.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../../../../node_modules/qwery/qwery.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js"
