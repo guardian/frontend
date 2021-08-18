@@ -1,7 +1,6 @@
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { log, storage } from '@guardian/libs';
-import once from 'lodash/once';
-import pick from 'lodash/pick';
+import { once, pick } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getCookie } from '../../../../lib/cookies';
 import {

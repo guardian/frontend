@@ -1,4 +1,4 @@
-import memoize from 'lodash/memoize';
+import { memoize } from 'lodash-es';
 import { hasPushStateSupport } from './detect';
 
 // TODO: typescript detect.js

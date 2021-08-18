@@ -1,5 +1,5 @@
 import fastdom from 'fastdom';
-import throttle from 'lodash/throttle';
+import { throttle } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getBreakpoint, hasTouchScreen } from '../../../../lib/detect';
 import FiniteStateMachine from '../../../../lib/fsm';

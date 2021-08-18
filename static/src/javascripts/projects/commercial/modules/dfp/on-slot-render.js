@@ -1,4 +1,4 @@
-import once from 'lodash/once';
+import { once } from 'lodash-es';
 import mediator from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
 import { dfpEnv } from './dfp-env';

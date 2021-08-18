@@ -1,4 +1,4 @@
-import once from 'lodash/once';
+import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { breakpoints } from '../../../../lib/detect';
 import { getUrlVars } from '../../../../lib/url';
