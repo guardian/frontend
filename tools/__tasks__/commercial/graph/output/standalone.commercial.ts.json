@@ -648,14 +648,13 @@
  ],
  "../projects/common/modules/experiments/ab-utils.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../../../../node_modules/@types/lodash/fromPairs.d.ts",
-  "../../../../node_modules/@types/lodash/toPairs.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.js",
   "../projects/common/modules/experiments/ab-constants.ts"
  ],
  "../projects/common/modules/experiments/ab.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../../../../node_modules/@types/lodash/memoize.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/common/modules/experiments/ab-core.ts",
   "../projects/common/modules/experiments/ab-local-storage.ts",
   "../projects/common/modules/experiments/ab-ophan.ts",
