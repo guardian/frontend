@@ -30,9 +30,9 @@
                     @{
                         if(page.metadata.hasSlimHeader) {
                             fragments.inlineSvg("the-guardian-roundel", "logo")
-                        } else if(editionId == "uk" && AnniversaryLogoHeader.isSwitchedOn) {
-                            fragments.inlineSvg("guardian-anniversary-logo-uk", "logo")
                         } else if(page.metadata.isFront && editionId == "uk" && AnniversaryLogoHeader.isSwitchedOn) {
+                            fragments.inlineSvg("guardian-anniversary-logo-uk", "logo")
+                        } else if(editionId == "uk" && AnniversaryLogoHeader.isSwitchedOn) {
                             fragments.inlineSvg("guardian-anniversary-logo-uk", "logo")
                         } else if(AnniversaryLogoHeader.isSwitchedOn) {
                             fragments.inlineSvg("guardian-anniversary-logo", "logo")
