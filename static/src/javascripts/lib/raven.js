@@ -1,6 +1,6 @@
 import raven from 'raven-js';
-import config from 'lib/config';
-import { adblockInUse } from 'lib/detect';
+import config from './config';
+import { adblockInUse } from './detect';
 
 const { sentryPublicApiKey, sentryHost } = config.get('page', {});
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;

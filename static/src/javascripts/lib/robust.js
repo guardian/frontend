@@ -3,7 +3,7 @@
     For example "comments throwing an exception should not stop auto refresh"
  */
 
-import reportError from 'lib/report-error';
+import reportError from './report-error';
 
 const catchErrors = (fn) => {
     let error;

@@ -25,7 +25,7 @@ const setupA9 = () => {
             !config.get('page.hasPageSkin') &&
             !isGoogleProxy())
     ) {
-        moduleLoadResult = import('../../../../lib/a9-apstag.js').then(() => {
+        moduleLoadResult = import(/* webpackChunkName: "a9" */ '../../../../lib/a9-apstag.js').then(() => {
             a9.initialise();
 
             return Promise.resolve();

@@ -1,8 +1,8 @@
 import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
 import ophan from 'ophan/ng';
-import config_ from 'lib/config';
-import { noop } from 'lib/noop';
-import reportError from 'lib/report-error';
+import config_ from '../../../../lib/config';
+import { noop } from '../../../../lib/noop';
+import reportError from '../../../../lib/report-error';
 
 // This is really a hacky workaround ⚠️
 const config = config_ as {

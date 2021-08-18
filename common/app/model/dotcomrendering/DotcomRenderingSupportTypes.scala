@@ -139,7 +139,6 @@ object Commercial {
 case class Config(
     switches: Map[String, Boolean],
     abTests: Map[String, String],
-    commercialBundleUrl: String,
     googletagUrl: String,
     stage: String,
     frontendAssetsFullURL: String,
