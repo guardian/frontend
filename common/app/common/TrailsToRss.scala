@@ -88,11 +88,9 @@ object TrailsToRss extends implicits.Collections {
       }.asJava
 
       // Entry: description
-      val description = new SyndContentImpl
       val standfirst = trail.fields.standfirst.getOrElse("")
       val intro = Jsoup.parseBodyFragment(trail.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
-      val readMore = s""" <a href="${trail.metadata.webUrl}">Continue reading...</a>"""
-      description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
+      val description = makeEntryDescriptionUsing(standfirst, intro, trail.metadata.webUrl)
 
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
         profile: ImageProfile <- List(Item140, Item460)
@@ -203,14 +201,11 @@ object TrailsToRss extends implicits.Collections {
       }.asJava
 
       // Entry: description
-      val description = new SyndContentImpl
       val standfirst = faciaContent.fields.standfirst.getOrElse("")
       val intro =
         Jsoup.parseBodyFragment(faciaContent.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
-
       val webUrl = faciaContent.metadata.webUrl
-      val readMore = s""" <a href="$webUrl">Continue reading...</a>"""
-      description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
+      val description = makeEntryDescriptionUsing(standfirst, intro, webUrl)
 
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
         profile: ImageProfile <- List(Item140, Item460)
@@ -261,5 +256,12 @@ object TrailsToRss extends implicits.Collections {
     output.output(feed, writer)
     writer.close()
     writer.toString
+  }
+
+  private def makeEntryDescriptionUsing(standfirst: String, intro: String, webUrl: String): SyndContentImpl = {
+    val readMore = s""" <a href="$webUrl">Continue reading...</a>"""
+    val description = new SyndContentImpl
+    description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
+    description
   }
 }
