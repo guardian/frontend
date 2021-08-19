@@ -17,7 +17,7 @@ import scala.xml._
 class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   val request = FakeRequest()
-  lazy val trails = Seq(testTrail("a", standfirst = Some("The standfist")), testTrail("b"))
+  lazy val trails = Seq(testTrail("a", standfirst = Some("The standfist"), body = Some("<p>Paragraph1</p><p>Paragraph 2</p><p>Paragraph 3</p>")), testTrail("b"))
 
   "TrailsToRss" should "produce a valid RSS feed" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
@@ -29,11 +29,10 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     (rss \ "channel" \ "item").size should be(2)
   }
 
-  "TrailsToRss" should "produce a item description from each trail made up of the standfirst an intro and a read more prompt" in {
+  "TrailsToRss" should "produce a item description from each trail made up of the standfirst, an intro extracted from the first 2 paragraphs of the body and a read more prompt" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
     val firstTrailDescription = (rss \ "channel" \ "item" \ "description").head.text
-    println(firstTrailDescription)
-    firstTrailDescription should be("The standfist <a href=\"\">Continue reading...</a>")
+    firstTrailDescription should be("The standfist<p>Paragraph1</p><p>Paragraph 2</p> <a href=\"\">Continue reading...</a>")
   }
 
   "TrailsToRss" should "not strip valid Unicode characters from XML" in {
@@ -78,7 +77,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       scala.xml.XML.loadString(s)
     }.isSuccess
 
-  def testTrail(url: String, customTitle: Option[String] = None, standfirst: Option[String] = None): Trail = {
+  def testTrail(url: String, customTitle: Option[String] = None, standfirst: Option[String] = None, body: Option[String] = None): Trail = {
 
     val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 
@@ -91,7 +90,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       webPublicationDate = Some(offsetDate.toCapiDateTime),
       elements = None,
       webTitle = customTitle getOrElse "hello …",
-      fields = Some(ContentFields(liveBloggingNow = Some(true), byline = Some("Chadders"), standfirst = standfirst)),
+      fields = Some(ContentFields(liveBloggingNow = Some(true), byline = Some("Chadders"), standfirst = standfirst, body = body)),
     )
     model.Content(contentItem).trail
   }
