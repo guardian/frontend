@@ -259,9 +259,10 @@ object TrailsToRss extends implicits.Collections {
   }
 
   private def makeEntryDescriptionUsing(standfirst: String, intro: String, webUrl: String): SyndContentImpl = {
-    val readMore = s""" <a href="$webUrl">Continue reading...</a>"""
+    val descriptionComponents = Seq(standfirst, intro, s""" <a href="$webUrl">Continue reading...</a>""").filter(_.size < 5000)
+
     val description = new SyndContentImpl
-    description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
+    description.setValue(stripInvalidXMLCharacters(descriptionComponents.mkString))
     description
   }
 }

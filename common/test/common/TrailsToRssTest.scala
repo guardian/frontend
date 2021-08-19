@@ -36,13 +36,14 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   }
 
   "TrailsToRss" should "produce live blog item descriptions which have reasonable sizes similar to normal articles" in {
+    val liveblogStandfirst = scala.io.Source.fromFile(getClass.getClassLoader.getResource("liveblog-standfirst.html").getFile).mkString
     val liveblogBody = scala.io.Source.fromFile(getClass.getClassLoader.getResource("liveblog-body.html").getFile).mkString
-    val trail = testTrail("a", standfirst = Some("The standfist"), body = Some(liveblogBody))
+    val trail = testTrail("a", standfirst = Some(liveblogStandfirst), body = Some(liveblogBody))
     val liveblogTrails = Seq(trail)
 
     val rss = XML.loadString(TrailsToRss(Option("foo"), liveblogTrails)(request))
     val firstTrailDescription = (rss \ "channel" \ "item" \ "description").head.text
-    firstTrailDescription.size < 1000 shouldBe(true)  // TODO 30k or more is not uncommon
+    firstTrailDescription.size < 5000 shouldBe(true)
   }
 
   "TrailsToRss" should "not strip valid Unicode characters from XML" in {
