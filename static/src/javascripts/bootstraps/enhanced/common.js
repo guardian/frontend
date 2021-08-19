@@ -173,7 +173,7 @@ const updateArticleCounts = async () => {
     const page = config.get('page');
     const hasConsentedToArticleCounts = await getArticleCountConsent();
 
-    if (page && hasConsentedToArticleCounts) {
+    if (page && !page.isFront && hasConsentedToArticleCounts) {
         incrementDailyArticleCount(page);
         incrementWeeklyArticleCount(storage.local, page.pageId);
     }
