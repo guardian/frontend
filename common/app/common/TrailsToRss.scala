@@ -271,7 +271,7 @@ object TrailsToRss extends implicits.Collections {
       .map { blocks: Blocks =>
         // Collect html from the body block text elements who have an html snippet to offer
         // Then take the first 2 of them
-        val bodyBlocks = blocks.requestedBodyBlocks.getOrElse("body:latest:10", Seq.empty)
+        val bodyBlocks = blocks.requestedBodyBlocks.getOrElse("body:oldest:10", Seq.empty)
         val elementHtml = bodyBlocks
           .flatMap { bodyBlock =>
             bodyBlock.elements

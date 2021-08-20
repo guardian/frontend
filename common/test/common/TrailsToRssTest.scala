@@ -120,7 +120,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 
     val blocks = bodyBlockTextElements.map { htmls =>
-      textElementRequestedBodyBlocksFor(htmls, "body:latest:10")
+      textElementRequestedBodyBlocksFor(htmls, "body:oldest:10")
     }
 
     val contentItem = ApiContent(
