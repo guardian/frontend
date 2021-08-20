@@ -7,7 +7,7 @@ import com.sun.syndication.feed.module.mediarss.types.{Credit, MediaContent, Met
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import model._
-import model.liveblog.{Blocks, TextBlockElement}
+import model.liveblog.{Blocks, BodyBlock, TextBlockElement}
 import model.pressed.PressedStory
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
@@ -265,7 +265,8 @@ object TrailsToRss extends implicits.Collections {
     content.fields.blocks.map { blocks: Blocks =>
       // Collect html from the body block text elements who have an html snippet to offer
       // Then take the first 2 of them
-      val elementHtml = blocks.body.flatMap { bodyBlock =>
+      val bodyBlocks = blocks.requestedBodyBlocks.getOrElse("body:latest:10", Seq.empty)
+      val elementHtml = bodyBlocks.flatMap { bodyBlock =>
         bodyBlock.elements
       }.flatMap {
         case TextBlockElement(html) => html

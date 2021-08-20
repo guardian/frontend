@@ -98,7 +98,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 
     val blocks = bodyBlockTextElements.map { htmls =>
-      textElementBodyBlocksFor(htmls)
+      textElementRequestedBodyBlocksFor(htmls, "body:latest:10")
     }
 
     val contentItem = ApiContent(
@@ -116,7 +116,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     model.Content(contentItem).content
   }
 
-  private def textElementBodyBlocksFor(htmls: Seq[String]) = {
+  private def textElementRequestedBodyBlocksFor(htmls: Seq[String], requestedBlocks: String) = {
     val textElements = htmls.map { html =>
       BlockElement(
         `type` = ElementType.Text,
@@ -139,10 +139,14 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       lastModifiedDate = None,
       createdBy = None,
       lastModifiedBy = None,
-      elements = textElements
+      elements = textElements,
     )
 
-    Blocks(body = Some(Seq(block)))
+    val requestedBodyBlocks = Map {
+      requestedBlocks -> Seq(block)
+    }
+
+    Blocks(body = None, requestedBodyBlocks = Some(requestedBodyBlocks))
   }
 
 }
