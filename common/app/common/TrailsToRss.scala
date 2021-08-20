@@ -56,8 +56,13 @@ object TrailsToRss extends implicits.Collections {
   def apply(metaData: MetaData, content: Seq[Content])(implicit request: RequestHeader): String =
     TrailsToRss(Some(metaData.webTitle), content, Some(metaData.url), metaData.description)
 
-  def apply(title: Option[String], content: Seq[Content], url: Option[String] = None, description: Option[String] = None)(
-      implicit request: RequestHeader,
+  def apply(
+      title: Option[String],
+      content: Seq[Content],
+      url: Option[String] = None,
+      description: Option[String] = None,
+  )(implicit
+      request: RequestHeader,
   ): String = {
     val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
 
@@ -262,22 +267,28 @@ object TrailsToRss extends implicits.Collections {
   }
 
   private def introFromContent(content: Content): String = {
-    content.fields.blocks.map { blocks: Blocks =>
-      // Collect html from the body block text elements who have an html snippet to offer
-      // Then take the first 2 of them
-      val bodyBlocks = blocks.requestedBodyBlocks.getOrElse("body:latest:10", Seq.empty)
-      val elementHtml = bodyBlocks.flatMap { bodyBlock =>
-        bodyBlock.elements
-      }.flatMap {
-        case TextBlockElement(html) => html
-        case _ => None
-      }.take(2)
-      elementHtml.mkString
-    }.getOrElse("")
+    content.fields.blocks
+      .map { blocks: Blocks =>
+        // Collect html from the body block text elements who have an html snippet to offer
+        // Then take the first 2 of them
+        val bodyBlocks = blocks.requestedBodyBlocks.getOrElse("body:latest:10", Seq.empty)
+        val elementHtml = bodyBlocks
+          .flatMap { bodyBlock =>
+            bodyBlock.elements
+          }
+          .flatMap {
+            case TextBlockElement(html) => html
+            case _                      => None
+          }
+          .take(2)
+        elementHtml.mkString
+      }
+      .getOrElse("")
   }
 
   private def makeEntryDescriptionUsing(standfirst: String, intro: String, webUrl: String): SyndContentImpl = {
-    val descriptionComponents = Seq(standfirst, intro, s""" <a href="$webUrl">Continue reading...</a>""").filter(_.size < 5000)
+    val descriptionComponents =
+      Seq(standfirst, intro, s""" <a href="$webUrl">Continue reading...</a>""").filter(_.size < 5000)
 
     val description = new SyndContentImpl
     description.setValue(stripInvalidXMLCharacters(descriptionComponents.mkString))

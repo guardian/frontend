@@ -167,7 +167,7 @@ trait Index extends ConciergeRepository with Collections {
         .page(pageNum)
         .pageSize(pageSize)
         .showFields(fields)
-        .showBlocks(blocks)
+        .showBlocks(blocks),
     ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(_ => tag(response, pageNum)) orElse
