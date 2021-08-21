@@ -1,1 +1,1 @@
-export type Modules = Array<[string, () => Promise<unknown>]>;
+export type Modules = Array<[`${string}-${string}`, () => Promise<unknown>]>;

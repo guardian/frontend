@@ -2,9 +2,9 @@
  Module: geo-most-popular.js
  Description: Shows popular trails for a given country.
  */
-import fastdom from 'lib/fastdom-promise';
-import { Component } from 'common/modules/component';
-import mediator from 'lib/mediator';
+import fastdom from '../../../../lib/fastdom-promise';
+import { Component } from '../component';
+import mediator from '../../../../lib/mediator';
 import once from 'lodash/once';
 
 const promise = new Promise((resolve, reject) => {

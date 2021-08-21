@@ -1,21 +1,21 @@
 import type { ABTest, Participations, Runnable } from '@guardian/ab-core';
 import memoize from 'lodash/memoize';
-import { allRunnableTests } from 'common/modules/experiments/ab-core';
+import { allRunnableTests } from './ab-core';
 import {
 	getParticipationsFromLocalStorage,
 	setParticipationsInLocalStorage,
-} from 'common/modules/experiments/ab-local-storage';
+} from './ab-local-storage';
 import {
 	registerCompleteEvents,
 	registerImpressionEvents,
 	trackABTests,
-} from 'common/modules/experiments/ab-ophan';
-import { concurrentTests } from 'common/modules/experiments/ab-tests';
-import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-url';
+} from './ab-ophan';
+import { concurrentTests } from './ab-tests';
+import { getForcedParticipationsFromUrl } from './ab-url';
 import {
 	runnableTestsToParticipations,
 	testExclusionsWhoseSwitchExists,
-} from 'common/modules/experiments/ab-utils';
+} from './ab-utils';
 
 // These are the tests which will actually take effect on this pageview.
 // Note that this is a subset of the potentially runnable tests,

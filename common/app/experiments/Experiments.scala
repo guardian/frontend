@@ -11,6 +11,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     TopAboveNavHeight150,
     TopAboveNavHeight200,
     TopAboveNavHeight250,
+    StandaloneCommercialBundle,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -59,4 +60,13 @@ object TopAboveNavHeight250
       owners = Seq(Owner.withGithub("zekehuntergreen")),
       sellByDate = LocalDate.of(2021, 8, 31),
       participationGroup = Perc1C,
+    )
+
+object StandaloneCommercialBundle
+    extends Experiment(
+      name = "standalone-commercial-bundle",
+      description = "Serve a standalone commercial bundle to a subset of users",
+      owners = Seq(Owner.withGithub("mxdvl")),
+      sellByDate = LocalDate.of(2021, 10, 1),
+      participationGroup = Perc0E,
     )

@@ -59,27 +59,19 @@ const watchArguments = [
         }
 
         // announce the changes
-        console.log(stats.toString({
-            all: false,
-            entrypoints: true, // show which entry points have been modified
-            colors: true,
-          }));
         return browserSync.reload();
     },
 ];
 
 const mainWebpackBundler = webpack(require('../webpack.config.dev.js'));
 
-mainWebpackBundler.watch(...watchArguments);
+mainWebpackBundler.run(() => {
+    console.log(chalk.blue('initial frontend bundle created, only watching commercial now'))
+});
 
-const dcrWebpackBundler = webpack(require('../webpack.config.dcr.dev.js'));
+const CommercialWebpackBundler = webpack(require('../webpack.config.commercial.dev.js'));
 
-dcrWebpackBundler.watch(...watchArguments);
-
-// Watch changes to the standalone commercial bundle
-const commercialWebpackBundler = webpack(require('../webpack.config.commercial.dev.js'));
-
-commercialWebpackBundler.watch(...watchArguments);
+CommercialWebpackBundler.watch(...watchArguments);
 
 // ********************************** Sass **********************************
 
