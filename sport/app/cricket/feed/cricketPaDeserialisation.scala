@@ -42,8 +42,8 @@ object Parser {
 
   private object Date {
     private val dateTimePattern = "yyyy-MM-dd'T'HH:mm:ss"
-    private val dateTimeParser = Chronos.dateFormatter(dateTimePattern, TimeZone.getTimeZone("Europe/London"))
-    def apply(dateTime: String): LocalDateTime = Chronos.toLocalDateTime(dateTimeParser.parse(dateTime))
+    private val dateTimeParser = Chronos.dateFormatter(dateTimePattern, TimeZone.getTimeZone("Europe/London").toZoneId)
+    def apply(dateTime: String): LocalDateTime = LocalDateTime.parse(dateTime, dateTimeParser)
   }
 
   private def inningsDescription(inningsOrder: Int, battingTeam: String): String = {

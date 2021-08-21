@@ -2,9 +2,8 @@ package common
 
 import org.joda.time.DateTime
 
-import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.time.ZoneId
-import java.util.TimeZone
 
 // Introduced in August 2021 by Pascal to help and support the migration from joda.time to java.time
 // Contains both helper functions implementing patterns emerging during the migration as well as more permanent
@@ -15,15 +14,15 @@ import java.util.TimeZone
 
 object Chronos {
 
-  def toDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
+  def toJodaDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
     DateTime.parse(date.toString)
   }
 
-  def toLocalDate(date: java.util.Date): java.time.LocalDate = {
+  def jodaDateToLocalDate(date: java.util.Date): java.time.LocalDate = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
   }
 
-  def toLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
+  def jodaDateToLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
   }
 
@@ -31,10 +30,9 @@ object Chronos {
     date.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()
   }
 
-  def dateFormatter(pattern: String, timezone: TimeZone): SimpleDateFormat = {
-    val dateTimeParser = new SimpleDateFormat(pattern)
-    dateTimeParser.setTimeZone(timezone)
-    dateTimeParser
+  def dateFormatter(pattern: String, timeZoneId: ZoneId): DateTimeFormatter = {
+    val format = DateTimeFormatter.ofPattern(pattern)
+    format.withZone(timeZoneId)
+    format
   }
-
 }

@@ -16,7 +16,7 @@ import java.util.TimeZone
 case class CricketFeedException(message: String) extends RuntimeException(message)
 
 object PaFeed {
-  val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", TimeZone.getTimeZone(ZoneId.of("UTC")))
+  val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", ZoneId.of("UTC"))
 }
 
 class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends GuLogging {
