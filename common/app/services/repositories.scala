@@ -127,7 +127,7 @@ trait Index extends ConciergeRepository with Collections {
   ): Future[Either[IndexPage, PlayResult]] = {
 
     val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
-    val blocks = if (isRss) "body:oldest:10" else ""
+    val blocks = if (isRss) Some("body:oldest:10") else None
 
     val maybeSection = sectionsLookUp.get(path)
 
@@ -161,14 +161,15 @@ trait Index extends ConciergeRepository with Collections {
     val reducedPageSize = 5 // Determined through trial and error.
     val pageSize = if (isRss && isExceptionalProfileForRss) reducedPageSize else IndexPagePagination.pageSize
 
-    val promiseOfResponse = contentApiClient.getResponse(
-      contentApiClient
-        .item(queryPath, edition)
-        .page(pageNum)
-        .pageSize(pageSize)
-        .showFields(fields)
-        .showBlocks(blocks),
-    ) map { response =>
+    val itemQuery = contentApiClient
+      .item(queryPath, edition)
+      .page(pageNum)
+      .pageSize(pageSize)
+      .showFields(fields)
+      .showBlocks(blocks)
+    val withBlocks = blocks.map(itemQuery.showBlocks(_)).getOrElse(itemQuery)
+
+    val promiseOfResponse = contentApiClient.getResponse(withBlocks) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(_ => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
