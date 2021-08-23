@@ -112,7 +112,7 @@ private object NavLinks {
     ),
   )
   val soccer = football.copy(title = "Soccer")
-
+  val paralympics = NavLink("Tokyo 2020 Paralympic Games", "/sport/tokyo-paralympic-games-2020")
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -363,6 +363,7 @@ private object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
+      paralympics,
       football,
       cricket,
       rugbyUnion,
