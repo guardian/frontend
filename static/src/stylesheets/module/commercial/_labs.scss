@@ -255,7 +255,7 @@
             }
         }
         
-        @include mq(leftCol) {
+        @include mq(wide) {
             padding: $gs-baseline 0;
         }
     }
