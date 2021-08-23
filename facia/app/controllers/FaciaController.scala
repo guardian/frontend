@@ -120,8 +120,8 @@ trait FaciaController
     Action.async { implicit request =>
       frontJsonFapi.get(path, liteRequestType).map {
         case Some(faciaPage: PressedPage) =>
-          val singleStoriesCollection = faciaPage.collections.find(_.displayName == "sport")
-          val rundownStoriesCollection = faciaPage.collections.find(_.displayName == "in depth")
+          val singleStoriesCollection = faciaPage.collections.find(_.displayName == "Standalone")
+          val rundownStoriesCollection = faciaPage.collections.find(_.displayName == "Rundown")
           val singleStories = singleStoriesCollection.map(_.curated).getOrElse(Seq.empty)
           val rundownStories = rundownStoriesCollection.map(_.curated).getOrElse(Seq.empty)
 
