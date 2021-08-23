@@ -1,0 +1,37 @@
+#!/usr/bin/ruby
+
+# encoding: utf-8
+
+require "net/http"
+require "uri"
+
+require "json"
+
+def httpGet(url)
+    uri = URI(url)
+    res = Net::HTTP.get_response(uri)
+    res.body
+end
+
+def capiURL(pn)
+    "https://content.guardianapis.com/search?tag=type/interactive&api-key=[REMOVE]&page-size=100&page=#{pn}"
+end
+
+def capiObjectAtPageNumber(pn)
+    JSON.parse(httpGet(capiURL(pn)))
+end
+
+(1..40).each{|pn|
+    object = capiObjectAtPageNumber(pn)
+    object["response"]["results"].each{|result|
+        puts result["id"]
+        command = "curl -X POST \"https://frontend.gutools.co.uk/interactive-librarian/read-clean-write/#{result["id"]}\""
+        puts command
+        output = `#{command}`.strip
+        puts output
+        if !output.include?("(true,)") then
+            File.open("/[MODIFIED]/07-cleaning-failures.txt", "a"){|f| f.puts(result["id"]) }
+        end
+    }
+}
+

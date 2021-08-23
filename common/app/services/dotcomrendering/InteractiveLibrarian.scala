@@ -32,10 +32,14 @@ import scala.xml.Document
 
   Which proportion of the past interactives will be served by the Librarian is still to be determined.
 
-  In the "worst" case scenario all past interacives will be served from their stored version by the Librarian. In the
+  In the "worst" case scenario all past interactives will be served from their stored version by the Librarian. In the
   best case scenario they will all be renderable by DCR and in fact the InteractiveLibrarian will be removed from the
   code. It is likely that reality will be a situation where most past interactives are rendered by DCR and a few are
   rendered from their pressed version using the Librarian.
+
+  Update: 23th August 2021
+  Documentation covering Librarian operations has been added to frontend.
+  See [frontend]/docs/06-features-and-components/04-The-Interactive-Librarian
 
  */
 
