@@ -29,9 +29,9 @@ object LiveblogRendering
 object InteractiveLibrarianExp
     extends Experiment(
       name = "interactive-librarian",
-      description = "Private experiment to develop archiving backup for Interactives",
+      description = "The Interactive Librarian private experiment",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = LocalDate.of(2021, 8, 31),
+      sellByDate = LocalDate.of(2022, 1, 31),
       participationGroup = Perc0B,
     )
 
