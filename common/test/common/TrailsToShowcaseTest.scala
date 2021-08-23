@@ -1,6 +1,7 @@
 package common
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.ContentFields
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.facia.api.utils.Editorial
 import com.sun.syndication.feed.module.mediarss.MediaEntryModule
@@ -29,6 +30,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   val wayBackWhen = new DateTime(2021, 3, 2, 12, 30, 1)
+  val lastModifiedWayBackWhen = wayBackWhen.plusHours(1)
 
   "TrailsToShowcase" should "set module namespaces in feed header" in {
     val singleStoryTrails =
@@ -41,7 +43,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailsToShowcase" can "render feed with Single Story and Rundown panels" in {
-    val content = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
+    val content = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+    )
     val singleStoryTrails = Seq(content)
     val rundownTrails = Seq(content, content)
 
@@ -74,7 +80,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       "Trail byline",
     ) // TODO should be <author> in Google Showcase docs
     (singleStoryPanel \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
-    //(singleStoryPanel \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
+    (singleStoryPanel \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
 
     val singleStoryPanelMedia = (singleStoryPanel \ "content").filter(_.prefix == "media")
     singleStoryPanelMedia.size should be(1)
@@ -108,7 +114,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
     )
     (rundownArticle \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
-    //(rundownArticle \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
+    (rundownArticle \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
   }
 
   "TrailToShowcase" should "omit rundown panel if there are no rundown trials" in {
@@ -125,7 +131,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase" can "create Single Story panels from single trails" in {
-    val curatedContent = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
+    val curatedContent = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+    )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent)
 
@@ -142,7 +152,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val rssAtomModule = singleStoryPanel.getModule(RssAtomModule.URI).asInstanceOf[RssAtomModule]
     rssAtomModule.getPublished should be(Some(wayBackWhen))
-    //rssAtomModule.getUpdated should be(webPublicationDate)  // TODO better value
+    rssAtomModule.getUpdated should be(Some(lastModifiedWayBackWhen))
 
     // Single panel stories require a media element which we take from the mayBeContent trail
     val mediaModule = singleStoryPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
@@ -152,14 +162,19 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
   }
 
+  "TrailToShowcase" can "should default single panel last updated to web publication date if no last updated value is available" in {
+    val curatedContent = makePressedContent(webPublicationDate = Some(wayBackWhen))
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent)
+
+    val rssAtomModule = singleStoryPanel.getModule(RssAtomModule.URI).asInstanceOf[RssAtomModule]
+    rssAtomModule.getUpdated should be(Some(wayBackWhen))
+  }
+
   "TrailToShowcase" can "create Rundown panels from a group of trials" in {
-    // testTrail("a", customTitle = Some("A title"), byline = Some("Trail byline"), webUrl = "https://theguardian.com/an-article",
-    // webPublicationDate = Some(wayBackWhen), lastModified = Some(wayBackWhen.plusHours(1))
-    val trail = makePressedContent(webPublicationDate = Some(wayBackWhen))
+    val trail = makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
     val anotherTrail =
-      makePressedContent(webPublicationDate =
-        Some(wayBackWhen),
-      ) // testTrail("a", customTitle = Some("Another title"), byline = Some("Trail byline"), webUrl = "https://theguardian.com/another-article")
+      makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
 
     val content = Seq(trail, anotherTrail)
 
@@ -189,7 +204,22 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val mediaModule = rundownPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
   }
 
-  private def makePressedContent(webPublicationDate: Option[DateTime], trailPicture: Option[ImageMedia] = None) = {
+  "TrailToShowcase" can "should default rundown items updated publication date if no last updated value is available" in {
+    val content = makePressedContent(webPublicationDate = Some(wayBackWhen))
+
+    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(content), "rundown-container-id")
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.size should be(1)
+    articleGroup.articles.head.updated shouldBe (wayBackWhen)
+  }
+
+  private def makePressedContent(
+      webPublicationDate: Option[DateTime] = None,
+      lastModified: Option[DateTime] = None,
+      trailPicture: Option[ImageMedia] = None,
+  ) = {
     val byline = Some("Trail byline")
     val url = "/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"
     val webUrl =
@@ -197,10 +227,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val title = "A title"
     val headline = "A headline"
     val trailText = Some("Some trail text")
-    val lastModified = Some(DateTime.now().minusMinutes(30))
 
     // Create a maybe content with trail to present or trail image
     // This seems to be the most promising media element for a Card.
+
     val apiContent = ApiContent(
       id = "an-id",
       `type` = com.gu.contentapi.client.model.v1.ContentType.Article,
@@ -260,6 +290,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       id = "sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
       cardStyle = CardStyle.make(Editorial),
       webPublicationDateOption = webPublicationDate,
+      lastModifiedOption = lastModified,
       trailText = trailText,
       mediaType = None,
       starRating = None,

@@ -67,9 +67,12 @@ object TrailsToShowcase {
     }
 
     // Showcase expects the publication dates to be shown as atom module fields.
+    // TODO probably duplicated with rundown items
     val atomModule = new RssAtomModuleImpl
     atomModule.setPublished(content.card.webPublicationDateOption)
-    //atomModule.setUpdated(content.card.webPublicationDateOption)  // TODO better field?
+    atomModule.setUpdated(
+      Seq(content.card.lastModifiedOption, content.card.webPublicationDateOption).flatten.headOption,
+    )
     addModuleTo(entry, atomModule)
     entry
   }
@@ -91,12 +94,14 @@ object TrailsToShowcase {
 
     // Build article group
     val articles = content.map { contentItem =>
+      val webPublicationDate: DateTime = contentItem.card.webPublicationDateOption.get //TODO naked get
+      val lastModified: DateTime = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
       GArticle(
         guidFor(contentItem),
         stripInvalidXMLCharacters(contentItem.header.headline),
         webUrl(contentItem),
-        contentItem.card.webPublicationDateOption.get, //TODO naked get
-        contentItem.card.webPublicationDateOption.get, //TODO naked get not last modified,
+        webPublicationDate,
+        lastModified,
         contentItem.header.kicker.flatMap(_.properties.kickerText),
         None,
       )
