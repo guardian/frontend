@@ -95,6 +95,8 @@ $ sdk current java
 Using java version 11.0.11.hs-adpt
 $ java -version
 openjdk version "11.0.11" 2021-04-20
+$ sdk use java 11.0.11.hs-adpt
+Using java version 11.0.11.hs-adpt in this shell.
 ```
 
 ### Node.js
