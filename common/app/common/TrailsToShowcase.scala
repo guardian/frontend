@@ -28,8 +28,12 @@ object TrailsToShowcase {
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
     val feed = TrailsToRss.syndFeedOf(feedTitle, Seq.empty, url, description)
-    val entries =
+    val entries = if (rundownStories.nonEmpty) {
       singleStories.map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)
+    } else {
+      singleStories.map(asSingleStoryPanel)
+    }
+
     feed.setEntries(entries.asJava)
     TrailsToRss.asString(feed)
   }

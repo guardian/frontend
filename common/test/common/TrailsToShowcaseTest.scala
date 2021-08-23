@@ -111,6 +111,19 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     //(rundownArticle \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
   }
 
+  "TrailToShowcase" should "omit rundown panel if there are no rundown trials" in {
+    val singleStoryTrails =
+      Seq(makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia)))
+
+    val rss = XML.loadString(TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
+
+    val rundownPanels =
+      (rss \ "channel" \ "item").filter(node =>
+        (node \ "panel").filter(_.prefix == "g").filter(_.text == "RUNDOWN").nonEmpty,
+      )
+    rundownPanels.size should be(0)
+  }
+
   "TrailToShowcase" can "create Single Story panels from single trails" in {
     val curatedContent = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
 
