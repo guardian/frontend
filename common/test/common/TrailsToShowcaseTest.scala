@@ -215,6 +215,46 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     articleGroup.articles.head.updated shouldBe (wayBackWhen)
   }
 
+  "TrailToShowcase validation" should "omit single panel g:panel_titles longer than 74 characters" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "omit single panel g:overlines longer than 30 characters" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "reject single panels with titles longer than 86 characters" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "omit single panel author fields longer than 42 characters" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "reject single panels with no image" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "reject single panels with images smaller than 640x320" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "reject rundown panels with g:panel_titles longer than 74 characters" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "omit rundown panel articles g:overlines longer than 30 characters" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "reject rundown panel articles with titles longer than 64 characters" in {
+    fail
+  }
+
+  "TrailToShowcase validation" should "reject rundown panel articles with images smaller than 1200x900" in {
+    fail
+  }
+
   private def makePressedContent(
       webPublicationDate: Option[DateTime] = None,
       lastModified: Option[DateTime] = None,
