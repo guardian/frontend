@@ -379,6 +379,7 @@ private object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
+      paralympics,
       football,
       AFL,
       NRL,
@@ -392,6 +393,7 @@ private object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
+      paralympics,
       soccer,
       NFL,
       tennis,
