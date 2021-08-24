@@ -167,7 +167,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase" can "should default single panel last updated to web publication date if no last updated value is available" in {
-    val curatedContent = makePressedContent(webPublicationDate = Some(wayBackWhen))
+    val curatedContent = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
 
@@ -279,16 +279,23 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
-      byline = Some(longerThan42)
+      byline = Some(longerThan42),
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withLongByline).get
 
-    singleStoryPanel.getAuthor should be("")  // TODO Javadoc says this should be null
+    singleStoryPanel.getAuthor should be("") // TODO Javadoc says this should be null
   }
 
   "TrailToShowcase validation" should "reject single panels with no image" in {
-    fail
+    val withNoImage = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+    )
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withNoImage)
+
+    singleStoryPanel should be(None)
   }
 
   "TrailToShowcase validation" should "reject single panels with images smaller than 640x320" in {

@@ -47,16 +47,14 @@ object TrailsToShowcase {
   def asSingleStoryPanel(content: PressedContent): Option[SyndEntry] = {
     val entry = new SyndEntryImpl()
     entry.setLink(webUrl(content))
-    // Collect all mandatory values; any missing will result in a None entry
-    val proposedTitle = Some(stripInvalidXMLCharacters(content.header.headline)).filter(_.length <= MaxLengthForSinglePanelTitle)
 
-    proposedTitle.map { title =>
+    for {
+      // Collect all mandatory values; any missing will result in a None entry
+      title <- Some(stripInvalidXMLCharacters(content.header.headline)).filter(_.length <= MaxLengthForSinglePanelTitle)
+      mediaContent <- mediaContentFrom(content)
+
+    } yield {
       entry.setTitle(title)
-
-      // Set optional fields
-      content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor).foreach { byline =>
-        entry.setAuthor(byline)
-      }
 
       val gModule = new GModuleImpl();
       gModule.setPanel(Some("SINGLE_STORY"))
@@ -64,18 +62,11 @@ object TrailsToShowcase {
       gModule.setOverline(kickerText)
       addModuleTo(entry, gModule)
 
-      val withoutMedia = entry.getModules.asScala.filter { module =>
-        module.asInstanceOf[Module].getUri != MediaModule.URI
-      }
-      entry.setModules(withoutMedia.asJava)
-
       // and add the showcase formatted asset
-      mediaContentFrom(content).foreach { mediaContent =>
-        val mediaModule = new MediaEntryModuleImpl()
-        mediaModule.setMediaContents(Seq(mediaContent).toArray)
-        mediaModule.setMetadata(new Metadata())
-        addModuleTo(entry, mediaModule)
-      }
+      val mediaModule = new MediaEntryModuleImpl()
+      mediaModule.setMediaContents(Seq(mediaContent).toArray)
+      mediaModule.setMetadata(new Metadata())
+      addModuleTo(entry, mediaModule)
 
       // Showcase expects the publication dates to be shown as atom module fields.
       // TODO probably duplicated with rundown items
@@ -85,6 +76,11 @@ object TrailsToShowcase {
         Seq(content.card.lastModifiedOption, content.card.webPublicationDateOption).flatten.headOption,
       )
       addModuleTo(entry, atomModule)
+
+      // Set optional fields
+      content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor).foreach { byline =>
+        entry.setAuthor(byline)
+      }
       entry
     }
   }
