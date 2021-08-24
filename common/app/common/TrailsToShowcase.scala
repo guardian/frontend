@@ -23,6 +23,7 @@ object TrailsToShowcase {
   private val MaxOverlineLength = 30
 
   private val MaxLengthForRundownPanelTitle = 74
+  private val MaxLengthForRundownPanelArticleTitle = 64
 
   def apply(
       feedTitle: Option[String],
@@ -94,8 +95,8 @@ object TrailsToShowcase {
 
     } yield {
       val entry = new SyndEntryImpl
-
       entry.setUri(id)
+
       val gModule = new GModuleImpl();
       gModule.setPanel(Some("RUNDOWN"))
       gModule.setPanelTitle(Some(title))
@@ -109,20 +110,24 @@ object TrailsToShowcase {
       }
 
       // Build article group
-      val articles = content.map { contentItem =>
-        val webPublicationDate: DateTime = contentItem.card.webPublicationDateOption.get //TODO naked get
-        val lastModified: DateTime = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
-        val kickerText = contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
-
-        GArticle(
-          guidFor(contentItem),
-          stripInvalidXMLCharacters(contentItem.header.headline),
-          webUrl(contentItem),
-          webPublicationDate,
-          lastModified,
-          kickerText,
-          None,
-        )
+      val articles = content.flatMap { contentItem =>
+        // Collect the mandatory fields for the article. If any of these are missing we can skip this item
+        for {
+          webPublicationDate <- contentItem.card.webPublicationDateOption
+          title <- Some(stripInvalidXMLCharacters(contentItem.header.headline)).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelArticleTitle)
+        } yield {
+          val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
+          val kickerText = contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
+          GArticle(
+            guidFor(contentItem),
+            title,
+            webUrl(contentItem),
+            webPublicationDate,
+            lastModified,
+            kickerText,
+            None,
+          )
+        }
       }
       val articleGroup = ArticleGroup(role = Some("RUNDOWN"), articles)
       gModule.setArticleGroup(Some(articleGroup))

@@ -359,7 +359,21 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase validation" should "reject rundown panel articles with titles longer than 64 characters" in {
-    fail
+    val longerThan30 = "This sentence is way longer than 30 characters and should be omitted"
+    val longerThan64 = longerThan30 + longerThan30 + "blah blah"
+    longerThan64.length > 64 should be(true)
+
+    val withTooHeadline = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      headline = longerThan64,
+    )
+
+    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(withTooHeadline), "rundown-container-id").get
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.isEmpty should be(true) // TODO empty articles should really collapse the whole panel
   }
 
   "TrailToShowcase validation" should "reject rundown panel articles with images smaller than 1200x900" in {
