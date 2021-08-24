@@ -5,7 +5,7 @@ import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, U
 import com.sun.syndication.feed.module.mediarss.{MediaEntryModuleImpl, MediaModule}
 import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl}
 import com.sun.syndication.io.ModuleGenerator
-import model.ImageMedia
+import model.{ImageAsset, ImageMedia}
 import model.pressed.{PressedContent, PressedTrail}
 import org.jdom.{Element, Namespace}
 import org.joda.time.DateTime
@@ -21,6 +21,8 @@ object TrailsToShowcase {
   private val MaxLengthForSinglePanelTitle = 86
   private val MaxLengthForSinglePanelAuthor = 42
   private val MaxOverlineLength = 30
+
+  private val MaxLengthForRundownPanelTitle = 74
 
   def apply(
       feedTitle: Option[String],
@@ -92,30 +94,30 @@ object TrailsToShowcase {
     gModule.setPanel(Some("RUNDOWN"))
     gModule.setPanelTitle(Some(title))
 
-    // Take the trail picture from the first available from our link trails. TODO this needs to be an editor's choice
-    content.flatMap(mediaContentFrom).headOption.foreach { mediaContent =>
-      val mediaModule = new MediaEntryModuleImpl()
-      mediaModule.setMediaContents(Seq(mediaContent).toArray)
-      mediaModule.setMetadata(new Metadata())
-      addModuleTo(entry, mediaModule)
-    }
+      // Take the trail picture from the first available from our link trails. TODO this needs to be an editor's choice
+      content.flatMap(mediaContentFrom).headOption.foreach { mediaContent =>
+        val mediaModule = new MediaEntryModuleImpl()
+        mediaModule.setMediaContents(Seq(mediaContent).toArray)
+        mediaModule.setMetadata(new Metadata())
+        addModuleTo(entry, mediaModule)
+      }
 
-    // Build article group
-    val articles = content.map { contentItem =>
-      val webPublicationDate: DateTime = contentItem.card.webPublicationDateOption.get //TODO naked get
-      val lastModified: DateTime = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
-      GArticle(
-        guidFor(contentItem),
-        stripInvalidXMLCharacters(contentItem.header.headline),
-        webUrl(contentItem),
-        webPublicationDate,
-        lastModified,
-        contentItem.header.kicker.flatMap(_.properties.kickerText),
-        None,
-      )
-    }
-    val articleGroup = ArticleGroup(role = Some("RUNDOWN"), articles)
-    gModule.setArticleGroup(Some(articleGroup))
+      // Build article group
+      val articles = content.map { contentItem =>
+        val webPublicationDate: DateTime = contentItem.card.webPublicationDateOption.get //TODO naked get
+        val lastModified: DateTime = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
+        GArticle(
+          guidFor(contentItem),
+          stripInvalidXMLCharacters(contentItem.header.headline),
+          webUrl(contentItem),
+          webPublicationDate,
+          lastModified,
+          contentItem.header.kicker.flatMap(_.properties.kickerText),
+          None,
+        )
+      }
+      val articleGroup = ArticleGroup(role = Some("RUNDOWN"), articles)
+      gModule.setArticleGroup(Some(articleGroup))
 
     addModuleTo(entry, gModule)
     entry
@@ -128,16 +130,18 @@ object TrailsToShowcase {
 
   private def mediaContentFrom(content: PressedContent): Option[MediaContent] = {
     content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
-      trail.trailPicture.flatMap { trailPicture =>
-        trailImageCropToUse(trailPicture).map { imageToUse =>
-          new MediaContent(new UrlReference(imageToUse))
+      trail.trailPicture.flatMap { imageMedia =>
+        cropToUseForSingleStoryPanel(imageMedia).flatMap { imageToUse =>
+          imageToUse.url.map { url => new MediaContent(new UrlReference(url)) }
         }
       }
     }
   }
 
-  private def trailImageCropToUse(trailPicture: ImageMedia): Option[String] = {
-    trailPicture.allImages.headOption.flatMap(_.url) // TODO confirm correct pick
+  private def cropToUseForSingleStoryPanel(imageMedia: ImageMedia): Option[ImageAsset] = {
+    imageMedia.largestImage.filter { imageAsset =>
+      imageAsset.width >= 640 && imageAsset.height >= 320
+    }
   }
 
   private def guidFor(content: PressedContent): String =

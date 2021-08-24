@@ -21,7 +21,23 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
   val imageMedia: ImageMedia = {
     val asset = ImageAsset(
-      fields = Map.empty,
+      fields = Map(
+        "width" -> "1200",
+        "height" -> "800",
+      ),
+      mediaType = "",
+      mimeType = Some("image/jpeg"),
+      url = Some("http://localhost/trail.jpg"),
+    )
+    ImageMedia(Seq(asset))
+  }
+
+  val smallImageMedia: ImageMedia = {
+    val asset = ImageAsset(
+      fields = Map(
+        "width" -> "320",
+        "height" -> "200",
+      ),
       mediaType = "",
       mimeType = Some("image/jpeg"),
       url = Some("http://localhost/trail.jpg"),
@@ -215,7 +231,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   "TrailToShowcase" can "should default rundown items updated publication date if no last updated value is available" in {
     val content = makePressedContent(webPublicationDate = Some(wayBackWhen))
 
-    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(content), "rundown-container-id")
+    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(content), "rundown-container-id").get
 
     val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
     val articleGroup = gModule.getArticleGroup.get
@@ -299,11 +315,31 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase validation" should "reject single panels with images smaller than 640x320" in {
-    fail
+    val withTooSmallImage = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(smallImageMedia),
+    )
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage)
+
+    singleStoryPanel should be(None)
   }
 
   "TrailToShowcase validation" should "reject rundown panels with g:panel_titles longer than 74 characters" in {
-    fail
+    val trail = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+    )
+    val anotherTrail = makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
+
+    val content = Seq(trail, anotherTrail)
+    val longerThan74 = "The container name is really really long is Showcase aer well within their rights to reject this"
+    longerThan74.length > 74 should be(true)
+
+    val rundownPanel = TrailsToShowcase.asRundownPanel(longerThan74, content, "rundown-container-id")
+
+    rundownPanel should be(None)
   }
 
   "TrailToShowcase validation" should "omit rundown panel articles g:overlines longer than 30 characters" in {
