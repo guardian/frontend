@@ -18,6 +18,10 @@ import scala.collection.JavaConverters._
 
 object TrailsToShowcase {
 
+  private val MaxLengthForSinglePanelTitle = 86
+  private val MaxLengthForSinglePanelAuthor = 42
+  private val MaxOverlineLength = 30
+
   def apply(
       feedTitle: Option[String],
       singleStories: Seq[PressedContent],
@@ -28,53 +32,61 @@ object TrailsToShowcase {
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
     val feed = TrailsToRss.syndFeedOf(feedTitle, Seq.empty, url, description)
+
+    val singleStoryPanels = singleStories.flatMap(asSingleStoryPanel)
     val entries = if (rundownStories.nonEmpty) {
-      singleStories.map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)
+      singleStoryPanels :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)
     } else {
-      singleStories.map(asSingleStoryPanel)
+      singleStoryPanels
     }
 
     feed.setEntries(entries.asJava)
     TrailsToRss.asString(feed)
   }
 
-  def asSingleStoryPanel(content: PressedContent): SyndEntry = {
+  def asSingleStoryPanel(content: PressedContent): Option[SyndEntry] = {
     val entry = new SyndEntryImpl()
     entry.setLink(webUrl(content))
-    entry.setTitle(stripInvalidXMLCharacters(content.header.headline))
-    content.properties.byline.foreach { byline =>
-      if (byline.nonEmpty) {
+    // Collect all mandatory values; any missing will result in a None entry
+    val proposedTitle = Some(stripInvalidXMLCharacters(content.header.headline)).filter(_.length <= MaxLengthForSinglePanelTitle)
+
+    proposedTitle.map { title =>
+      entry.setTitle(title)
+
+      // Set optional fields
+      content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor).foreach { byline =>
         entry.setAuthor(byline)
       }
+
+      val gModule = new GModuleImpl();
+      gModule.setPanel(Some("SINGLE_STORY"))
+      val kickerText = content.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
+      gModule.setOverline(kickerText)
+      addModuleTo(entry, gModule)
+
+      val withoutMedia = entry.getModules.asScala.filter { module =>
+        module.asInstanceOf[Module].getUri != MediaModule.URI
+      }
+      entry.setModules(withoutMedia.asJava)
+
+      // and add the showcase formatted asset
+      mediaContentFrom(content).foreach { mediaContent =>
+        val mediaModule = new MediaEntryModuleImpl()
+        mediaModule.setMediaContents(Seq(mediaContent).toArray)
+        mediaModule.setMetadata(new Metadata())
+        addModuleTo(entry, mediaModule)
+      }
+
+      // Showcase expects the publication dates to be shown as atom module fields.
+      // TODO probably duplicated with rundown items
+      val atomModule = new RssAtomModuleImpl
+      atomModule.setPublished(content.card.webPublicationDateOption)
+      atomModule.setUpdated(
+        Seq(content.card.lastModifiedOption, content.card.webPublicationDateOption).flatten.headOption,
+      )
+      addModuleTo(entry, atomModule)
+      entry
     }
-
-    val gModule = new GModuleImpl();
-    gModule.setPanel(Some("SINGLE_STORY"))
-    gModule.setOverline(content.header.kicker.flatMap(_.properties.kickerText))
-    addModuleTo(entry, gModule)
-
-    val withoutMedia = entry.getModules.asScala.filter { module =>
-      module.asInstanceOf[Module].getUri != MediaModule.URI
-    }
-    entry.setModules(withoutMedia.asJava)
-
-    // and add the showcase formatted asset
-    mediaContentFrom(content).foreach { mediaContent =>
-      val mediaModule = new MediaEntryModuleImpl()
-      mediaModule.setMediaContents(Seq(mediaContent).toArray)
-      mediaModule.setMetadata(new Metadata())
-      addModuleTo(entry, mediaModule)
-    }
-
-    // Showcase expects the publication dates to be shown as atom module fields.
-    // TODO probably duplicated with rundown items
-    val atomModule = new RssAtomModuleImpl
-    atomModule.setPublished(content.card.webPublicationDateOption)
-    atomModule.setUpdated(
-      Seq(content.card.lastModifiedOption, content.card.webPublicationDateOption).flatten.headOption,
-    )
-    addModuleTo(entry, atomModule)
-    entry
   }
 
   def asRundownPanel(title: String, content: Seq[PressedContent], id: String): SyndEntry = {
