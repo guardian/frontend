@@ -342,7 +342,20 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase validation" should "omit rundown panel articles g:overlines longer than 30 characters" in {
-    fail
+    val longerThan30 = "This sentence is way longer than 30 characters and should be omitted"
+    longerThan30.length > 30 should be(true)
+
+    val withTooLongKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      kickerText = Some(longerThan30),
+    )
+
+    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(withTooLongKicker), "rundown-container-id").get
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.head.overline should be(None)
   }
 
   "TrailToShowcase validation" should "reject rundown panel articles with titles longer than 64 characters" in {

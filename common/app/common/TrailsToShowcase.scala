@@ -112,13 +112,15 @@ object TrailsToShowcase {
       val articles = content.map { contentItem =>
         val webPublicationDate: DateTime = contentItem.card.webPublicationDateOption.get //TODO naked get
         val lastModified: DateTime = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
+        val kickerText = contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
+
         GArticle(
           guidFor(contentItem),
           stripInvalidXMLCharacters(contentItem.header.headline),
           webUrl(contentItem),
           webPublicationDate,
           lastModified,
-          contentItem.header.kicker.flatMap(_.properties.kickerText),
+          kickerText,
           None,
         )
       }
