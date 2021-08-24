@@ -35,14 +35,14 @@ object TrailsToShowcase {
   )(implicit request: RequestHeader): String = {
     val feed = TrailsToRss.syndFeedOf(feedTitle, Seq.empty, url, description)
 
-    val singleStoryPanels = singleStories.flatMap(asSingleStoryPanel)
+    val singleStoryPanels = singleStories.map(asSingleStoryPanel)
     val entries = if (rundownStories.nonEmpty) {
       singleStoryPanels :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)
     } else {
       singleStoryPanels
     }
 
-    feed.setEntries(entries.asJava)
+    feed.setEntries(entries.flatten.asJava)
     TrailsToRss.asString(feed)
   }
 
@@ -87,12 +87,18 @@ object TrailsToShowcase {
     }
   }
 
-  def asRundownPanel(title: String, content: Seq[PressedContent], id: String): SyndEntry = {
-    val entry = new SyndEntryImpl
-    entry.setUri(id)
-    val gModule = new GModuleImpl();
-    gModule.setPanel(Some("RUNDOWN"))
-    gModule.setPanelTitle(Some(title))
+  def asRundownPanel(title: String, content: Seq[PressedContent], id: String): Option[SyndEntry] = {
+    // Collect mandatory fields. If any of these is missing we can yield None
+    for {
+      title <- Some(title).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelTitle)
+
+    } yield {
+      val entry = new SyndEntryImpl
+
+      entry.setUri(id)
+      val gModule = new GModuleImpl();
+      gModule.setPanel(Some("RUNDOWN"))
+      gModule.setPanelTitle(Some(title))
 
       // Take the trail picture from the first available from our link trails. TODO this needs to be an editor's choice
       content.flatMap(mediaContentFrom).headOption.foreach { mediaContent =>
@@ -119,8 +125,9 @@ object TrailsToShowcase {
       val articleGroup = ArticleGroup(role = Some("RUNDOWN"), articles)
       gModule.setArticleGroup(Some(articleGroup))
 
-    addModuleTo(entry, gModule)
-    entry
+      addModuleTo(entry, gModule)
+      entry
+    }
   }
 
   private def addModuleTo(entry: SyndEntry, module: Module): Unit = {

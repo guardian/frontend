@@ -200,9 +200,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val anotherTrail =
       makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
 
-    val content = Seq(trail, anotherTrail)
+    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(trail, anotherTrail), "rundown-container-id").get
 
-    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", content, "rundown-container-id")
     rundownPanel.getLink should be(null) // TODO
     rundownPanel.getUri should be("rundown-container-id") // Guid for rundown item is the container id.
 
