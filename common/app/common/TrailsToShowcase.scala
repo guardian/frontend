@@ -55,7 +55,7 @@ object TrailsToShowcase {
     for {
       // Collect all mandatory values; any missing will result in a None entry
       title <- Some(stripInvalidXMLCharacters(content.header.headline)).filter(_.length <= MaxLengthForSinglePanelTitle)
-      mediaContent <- mediaContentFrom(content)
+      mediaContent <- singleStoryMediaContentFrom(content)
 
     } yield {
       entry.setTitle(title)
@@ -103,7 +103,7 @@ object TrailsToShowcase {
       gModule.setPanelTitle(Some(title))
 
       // Take the trail picture from the first available from our link trails. TODO this needs to be an editor's choice
-      content.flatMap(mediaContentFrom).headOption.foreach { mediaContent =>
+      content.flatMap(singleStoryMediaContentFrom).headOption.foreach { mediaContent => // TODO specs for this image
         val mediaModule = new MediaEntryModuleImpl()
         mediaModule.setMediaContents(Seq(mediaContent).toArray)
         mediaModule.setMetadata(new Metadata())
@@ -119,7 +119,7 @@ object TrailsToShowcase {
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           val kickerText = contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
-          val mediaContent = mediaContentFrom(contentItem)
+          val mediaContent = rundownPanelArticleMediaContentFrom(contentItem)
 
           GArticle(
             guidFor(contentItem),
@@ -145,19 +145,35 @@ object TrailsToShowcase {
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
   }
 
-  private def mediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
+  private def singleStoryMediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
+    def cropToUse(imageMedia: ImageMedia): Option[ImageAsset] = {
+      imageMedia.largestImage.filter { imageAsset =>
+        imageAsset.width >= 640 && imageAsset.height >= 320
+      }
+    }
+
     content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
       trail.trailPicture.flatMap { imageMedia =>
-        cropToUseForSingleStoryPanel(imageMedia).flatMap { imageToUse =>
+        cropToUse(imageMedia).flatMap { imageToUse =>
           imageToUse.url.map { url => new MediaContent(new UrlReference(url)) }
         }
       }
     }
   }
 
-  private def cropToUseForSingleStoryPanel(imageMedia: ImageMedia): Option[ImageAsset] = {
-    imageMedia.largestImage.filter { imageAsset =>
-      imageAsset.width >= 640 && imageAsset.height >= 320
+  private def rundownPanelArticleMediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
+    def cropToUse(imageMedia: ImageMedia): Option[ImageAsset] = {
+      imageMedia.largestImage.filter { imageAsset =>
+        imageAsset.width >= 1200 && imageAsset.height >= 900
+      }
+    }
+
+    content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
+      trail.trailPicture.flatMap { imageMedia =>
+        cropToUse(imageMedia).flatMap { imageToUse =>
+          imageToUse.url.map { url => new MediaContent(new UrlReference(url)) }
+        }
+      }
     }
   }
 
