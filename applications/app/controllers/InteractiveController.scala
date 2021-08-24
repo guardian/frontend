@@ -132,7 +132,7 @@ class InteractiveController(
       renderUSElectionAMPPage(path)
     } else if (ActiveExperiments.isParticipating(InteractiveLibrarianExp)) {
       val result = InteractiveLibrarian.getDocumentFromS3(path) match {
-        case Some(document) => Ok(document).as("text/plain") // purposely set to "text/plain" for the moment
+        case Some(document) => Ok(document).as("text/html")
         case None           => NotFound(s"Could not retrieve stored document at www.theguardian.com/${path}")
       }
       Future.successful(result)
