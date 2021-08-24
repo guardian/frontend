@@ -1,12 +1,13 @@
 package common
 
 import com.sun.syndication.feed.module.Module
+import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl
+import com.sun.syndication.feed.module.mediarss.io.MediaModuleGenerator
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
-import com.sun.syndication.feed.module.mediarss.{MediaEntryModuleImpl, MediaModule}
 import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl}
 import com.sun.syndication.io.ModuleGenerator
-import model.{ImageAsset, ImageMedia}
 import model.pressed.{PressedContent, PressedTrail}
+import model.{ImageAsset, ImageMedia}
 import org.jdom.{Element, Namespace}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
@@ -118,6 +119,8 @@ object TrailsToShowcase {
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           val kickerText = contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
+          val mediaContent = mediaContentFrom(contentItem)
+
           GArticle(
             guidFor(contentItem),
             title,
@@ -125,7 +128,7 @@ object TrailsToShowcase {
             webPublicationDate,
             lastModified,
             kickerText,
-            None,
+            mediaContent,
           )
         }
       }
@@ -142,7 +145,7 @@ object TrailsToShowcase {
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
   }
 
-  private def mediaContentFrom(content: PressedContent): Option[MediaContent] = {
+  private def mediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
     content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
       trail.trailPicture.flatMap { imageMedia =>
         cropToUseForSingleStoryPanel(imageMedia).flatMap { imageToUse =>
@@ -284,7 +287,7 @@ case class GArticle(
     published: DateTime,
     updated: DateTime,
     overline: Option[String],
-    mediaContent: Option[String],
+    mediaContent: Option[MediaContent],
 )
 case class ArticleGroup(role: Option[String], articles: Seq[GArticle])
 
@@ -319,6 +322,7 @@ object RssAtomModuleGenerator {
 class GModuleGenerator extends ModuleGenerator {
   private val NS = Namespace.getNamespace("g", GModule.URI)
   private val rssAtomModuleGenerator = new RssAtomModuleGenerator()
+  private val mediaModuleGenerator = new MediaModuleGenerator()
 
   override def getNamespaceUri: String = GModule.URI
 
@@ -355,6 +359,13 @@ class GModuleGenerator extends ModuleGenerator {
             val linkElement = new Element("link")
             linkElement.addContent(article.link)
             articleElement.addContent(linkElement)
+
+            article.mediaContent.map { mediaContent =>
+              val mediaModule = new MediaEntryModuleImpl()
+              mediaModule.setMediaContents(Seq(mediaContent).toArray)
+              mediaModule.setMetadata(new Metadata())
+              mediaModuleGenerator.generate(mediaModule, articleElement)
+            }
 
             val rssAtomModule = new RssAtomModuleImpl()
             rssAtomModule.setPublished(Some(article.published))

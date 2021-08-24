@@ -23,7 +23,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val asset = ImageAsset(
       fields = Map(
         "width" -> "1200",
-        "height" -> "800",
+        "height" -> "1000",
       ),
       mediaType = "",
       mimeType = Some("image/jpeg"),
@@ -37,6 +37,19 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       fields = Map(
         "width" -> "320",
         "height" -> "200",
+      ),
+      mediaType = "",
+      mimeType = Some("image/jpeg"),
+      url = Some("http://localhost/trail.jpg"),
+    )
+    ImageMedia(Seq(asset))
+  }
+
+  val mediumImageMedia: ImageMedia = {
+    val asset = ImageAsset(
+      fields = Map(
+        "width" -> "1024",
+        "height" -> "768",
       ),
       mediaType = "",
       mimeType = Some("image/jpeg"),
@@ -132,6 +145,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
     (rundownArticle \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
     (rundownArticle \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
+    (rundownArticle \ "content").filter(_.prefix == "media").head.attribute("url").get.head.text should be("http://localhost/trail.jpg")
   }
 
   "TrailToShowcase" should "omit rundown panel if there are no rundown trials" in {
@@ -196,6 +210,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       kickerText = Some("A Kicker"),
+      trailPicture = Some(imageMedia),
     )
     val anotherTrail =
       makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
@@ -204,6 +219,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     rundownPanel.getLink should be(null) // TODO
     rundownPanel.getUri should be("rundown-container-id") // Guid for rundown item is the container id.
+
 
     val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
     gModule.getPanel should be(Some("RUNDOWN"))
@@ -222,9 +238,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     firstItemInArticleGroup.published should be(wayBackWhen)
     firstItemInArticleGroup.updated should be(lastModifiedWayBackWhen)
     firstItemInArticleGroup.overline should be(Some("A Kicker"))
+    firstItemInArticleGroup.mediaContent.get.getReference.toString should be("http://localhost/trail.jpg")
 
     // Rundown panel stories require a media element
-    val mediaModule = rundownPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
+    val rundownPanelMediaModule = rundownPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
   }
 
   "TrailToShowcase" can "should default rundown items updated publication date if no last updated value is available" in {
@@ -376,8 +393,18 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     articleGroup.articles.isEmpty should be(true) // TODO empty articles should really collapse the whole panel
   }
 
-  "TrailToShowcase validation" should "reject rundown panel articles with images smaller than 1200x900" in {
-    fail
+  "TrailToShowcase validation" should "omit smaller than 1200x90 from rundown panel articles" in {
+    val withTooSmallImage = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(mediumImageMedia)
+    )
+
+    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(withTooSmallImage), "rundown-container-id").get
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.head.mediaContent should be(None)
   }
 
   private def makePressedContent(
