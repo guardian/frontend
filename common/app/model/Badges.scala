@@ -100,9 +100,9 @@ object Badges {
   val tokyo2020 =
     Badge("sport/olympic-games-2020", Static("images/badges/tokyo-2020.svg"))
   val paralympics2020 =
-    Badge("sport/tokyo-paralympic-games-2020", Static("images/badges/tokyo-2020.svg"))
+    Badge("sport/paralympic-games-2020", Static("images/badges/tokyo-2020.svg"))
   val tokyoparalympics2020 =
-    Badge("sport/tokyo-paralympic-games-2020", Static("images/badges/tokyo-2020.svg"))
+    Badge("sport/paralympic-games-2020", Static("images/badges/tokyo-2020.svg"))
 
   val allBadges = Seq(
     newArrivals,
