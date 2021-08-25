@@ -14,15 +14,15 @@ import java.time.ZoneId
 
 object Chronos {
 
-  def toJodaDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
+  def javaLocalDateTimeToJodaDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
     DateTime.parse(date.toString)
   }
 
-  def jodaDateToLocalDate(date: java.util.Date): java.time.LocalDate = {
+  def javaDateToLocalDate(date: java.util.Date): java.time.LocalDate = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
   }
 
-  def jodaDateToLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
+  def javaDateToLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
   }
 
