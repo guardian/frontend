@@ -83,7 +83,6 @@ object InteractiveLibrarian extends GuLogging {
   // Cleaning
 
   def cleanOriginalDocument(document: String): String = {
-    // For the moment this function is the identity
     val cleaners =
       Seq(InteractiveImmersiveHtmlCleaner)
     val parsedDoc = Jsoup.parse(document)
