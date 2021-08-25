@@ -130,23 +130,6 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     ) map extractUnit
   }
 
-  // Passwords
-  def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
-    val body: JObject = "password" -> password
-    put(
-      "guest/password",
-      None,
-      None,
-      Some(compactRender(body)),
-      List(
-        "X-Guest-Registration-Token" -> token,
-        "Content-Type" -> "application/json",
-        "X-GU-ID-Client-Access-Token" -> conf.apiClientToken,
-      ),
-      List("validate-email" -> "0"),
-    ).map(extract(jsonField("cookies")))
-  }
-
   // ACCOUNT DELETION
   def executeAccountDeletionStepFunction(
       userId: String,
