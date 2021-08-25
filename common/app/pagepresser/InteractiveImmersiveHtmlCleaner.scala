@@ -20,7 +20,7 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
     removeScripts(document)
     removeByTagName(document, "noscript")
     if (convertToHttps) secureDocument(document)
-    document
+    addPressedIndicatorToDocument(document)
   }
 
   override def removeScripts(document: Document): Document = {
@@ -59,6 +59,15 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
   def removeReaderRevenueCallouts(document: Document): Document = {
     removeHeaderCallout(document)
     removeFooterCallout(document)
+  }
+
+  def addPressedIndicatorToDocument(document: Document): Document = {
+    document
+      .getElementsByClass("really-serious-copyright")
+      .asScala
+      .foreach(_.append("(pressed)"))
+
+    document
   }
 
 }

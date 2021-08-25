@@ -9,16 +9,16 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
 
   "InteractiveImmersiveHtmlCleaner" should "only clean interactive immersives" in {
     val doc = Jsoup.parse("""<html>
-                          |<head>
-                          |<link rel="canonical" href="https://www.theguardian.com/world/ng-interactive/2020/apr/08/coronavirus-100">
-                          |</head>
-                          |<body class="is-immersive is-immersive-interactive"></body>
-                          |</html>""")
+              |<head>
+              |<link rel="canonical" href="https://www.theguardian.com/world/ng-interactive/2020/apr/08/coronavirus-100">
+              |</head>
+              |<body class="is-immersive is-immersive-interactive"></body>
+              |</html>""")
 
     InteractiveImmersiveHtmlCleaner.canClean(doc) should be(true)
   }
 
- "Interactive immersives" should "have top banner ads removed" in {
+ "Cleaned interactive immersives" should "have top banner ads removed" in {
     val doc = Jsoup.parse("""<html>
               |<body>
               |<div id="bannerandheader">
@@ -92,6 +92,32 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |<div class="colophon__list">
               |</div>
               |</div>
+              |</div>
+              |</footer>
+              |</body>
+              |</html>""".stripMargin).toString
+
+    InteractiveImmersiveHtmlCleaner.clean(doc, true).toString should equal(want)
+  }
+
+  it should "have '(pressed)' appended to the copyright" in {
+    val doc = Jsoup.parse("""<html>
+              |<body>
+              |<footer>
+              |<div class="copyright-container">
+              |<div class="really-serious-copyright">
+              |All rights reserved.</div>
+              |</div>
+              |</footer>
+              |</body>
+              |</html>""".stripMargin)
+
+    val want = Jsoup.parse("""<html>
+              |<body>
+              |<footer>
+              |<div class="copyright-container">
+              |<div class="really-serious-copyright">
+              |All rights reserved. (pressed)</div>
               |</div>
               |</footer>
               |</body>
