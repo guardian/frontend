@@ -2,8 +2,8 @@ package common
 
 import org.joda.time.DateTime
 
+import java.time.{Instant, LocalDateTime, ZoneId}
 import java.time.format.DateTimeFormatter
-import java.time.ZoneId
 
 // Introduced in August 2021 by Pascal to help and support the migration from joda.time to java.time
 // Contains both helper functions implementing patterns emerging during the migration as well as more permanent
@@ -18,11 +18,22 @@ object Chronos {
     DateTime.parse(date.toString)
   }
 
-  def javaDateToLocalDate(date: java.util.Date): java.time.LocalDate = {
+  def jodaDateTimeToJavaDateTime(date: org.joda.time.DateTime): java.time.LocalDateTime = {
+    LocalDateTime.ofInstant(
+      Instant.ofEpochMilli(
+        date
+          .toInstant()
+          .getMillis,
+      ),
+      ZoneId.systemDefault,
+    )
+  }
+
+  def javaDateToJavaLocalDate(date: java.util.Date): java.time.LocalDate = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
   }
 
-  def javaDateToLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
+  def javaDateToJavaLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
   }
 

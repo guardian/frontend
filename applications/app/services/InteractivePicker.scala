@@ -26,7 +26,11 @@ object InteractivePicker {
   }
 
   def dateIsPostTransition(date: DateTime): Boolean = {
-    date.isAfter(InteractiveSwitchOver.date)
+    Chronos
+      .jodaDateTimeToJavaDateTime(date)
+      .isAfter(
+        Chronos.jodaDateTimeToJavaDateTime(InteractiveSwitchOver.date),
+      )
   }
 
   def isSupported(tags: List[Tag]): Boolean = {
