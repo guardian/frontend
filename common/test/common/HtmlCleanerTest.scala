@@ -8,17 +8,19 @@ import pagepresser.{InteractiveImmersiveHtmlCleaner}
 class HtmlCleanerTest extends FlatSpec with Matchers {
 
   "InteractiveImmersiveHtmlCleaner" should "only clean interactive immersives" in {
-    val doc = Jsoup.parse("""<html>
+    val doc = Jsoup.parse(
+      """<html>
               |<head>
               |<link rel="canonical" href="https://www.theguardian.com/world/ng-interactive/2020/apr/08/coronavirus-100">
               |</head>
               |<body class="is-immersive is-immersive-interactive"></body>
-              |</html>""")
+              |</html>""",
+    )
 
     InteractiveImmersiveHtmlCleaner.canClean(doc) should be(true)
   }
 
- "Cleaned interactive immersives" should "have top banner ads removed" in {
+  "Cleaned interactive immersives" should "have top banner ads removed" in {
     val doc = Jsoup.parse("""<html>
               |<body>
               |<div id="bannerandheader">
