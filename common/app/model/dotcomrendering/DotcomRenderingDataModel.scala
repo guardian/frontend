@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import common.{Edition, Localisation, RichRequestHeader}
+import common.{Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import conf.switches.Switches
 import experiments.{ActiveExperiments, StandaloneCommercialBundle}
@@ -367,7 +367,7 @@ object DotcomRenderingDataModel {
 
     val isLegacyInteractive =
       modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate
-        .isBefore(InteractiveSwitchOver.date)
+        .isBefore(Chronos.javaLocalDateTimeToJodaDateTime(InteractiveSwitchOver.date))
 
     DotcomRenderingDataModel(
       author = author,

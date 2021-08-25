@@ -25,12 +25,8 @@ object InteractivePicker {
     if (!str.startsWith("/")) ("/" + str) else str
   }
 
-  def dateIsPostTransition(date: DateTime): Boolean = {
-    Chronos
-      .jodaDateTimeToJavaDateTime(date)
-      .isAfter(
-        Chronos.jodaDateTimeToJavaDateTime(InteractiveSwitchOver.date),
-      )
+  def dateIsPostTransition(date: LocalDateTime): Boolean = {
+    date.isAfter(InteractiveSwitchOver.date)
   }
 
   def isSupported(tags: List[Tag]): Boolean = {
@@ -59,7 +55,7 @@ object InteractivePicker {
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
     val switchOn = InteractivePickerFeature.isSwitchedOn
-    val publishedPostSwitch = dateIsPostTransition(datetime)
+    val publishedPostSwitch = dateIsPostTransition(Chronos.jodaDateTimeToJavaDateTime(datetime))
     val isOptedInAmp = (requestFormat == AmpFormat) && isAmpOptedIn(tags)
     val isWeb = requestFormat == HtmlFormat
     val isOptOut = isOptedOut(tags)
