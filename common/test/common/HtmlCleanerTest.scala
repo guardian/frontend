@@ -107,7 +107,9 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
     val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
     val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
 
-    cleanedDoc.getElementsByTag("body").first().text() should equal(s"This article was archived on ${date}. Some elements may be out of date.")
+    cleanedDoc.getElementsByTag("body").first().text() should equal(
+      s"This article was archived on ${date}. Some elements may be out of date.",
+    )
   }
 
   it should "have email signup removed" in {
