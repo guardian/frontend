@@ -34,7 +34,8 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
   }
 
   def hideReaderRevenue(document: Document): Document = {
-    document.getElementsByTag("head")
+    document
+      .getElementsByTag("head")
       .first()
       .appendElement("script")
       .text("window.guardian.config.page.shouldHideReaderRevenue=true")
