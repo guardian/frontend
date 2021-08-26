@@ -158,7 +158,7 @@ jest.mock('@guardian/libs', () => {
 		storage: jest.requireActual('@guardian/libs').storage,
 	};
 });
-jest.mock('lodash/once', () => <T>(fn: () => T) => fn);
+jest.mock('lodash-es/once', () => <T>(fn: (...args: unknown[]) => T) => fn);
 jest.mock('./refresh-on-resize', () => ({
 	refreshOnResize: jest.fn(),
 }));
