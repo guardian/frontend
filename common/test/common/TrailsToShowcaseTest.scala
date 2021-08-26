@@ -241,7 +241,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailPicture = Some(imageMedia),
     )
     val anotherTrail =
-      makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
+      makePressedContent(
+        webPublicationDate = Some(wayBackWhen),
+        lastModified = Some(lastModifiedWayBackWhen),
+        trailPicture = Some(imageMedia),
+      )
 
     val rundownPanel = TrailsToShowcase
       .asRundownPanel("Rundown container name", Seq(trail, anotherTrail, anotherTrail), "rundown-container-id")
@@ -278,7 +282,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase" can "should default rundown items updated publication date if no last updated value is available" in {
-    val content = makePressedContent(webPublicationDate = Some(wayBackWhen))
+    val content = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
 
     val rundownPanel = TrailsToShowcase
       .asRundownPanel("Rundown container name", Seq(content, content, content), "rundown-container-id")
@@ -427,12 +431,13 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase validation" should "omit rundown panel articles g:overlines longer than 30 characters" in {
-    val longerThan30 = "This sentence is way longer than 30 characters and should be omitted"
+    val longerThan30 = "This kicker is way longer than 30 characters and should be omitted"
     longerThan30.length > 30 should be(true)
 
     val withTooLongKicker = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
       kickerText = Some(longerThan30),
     )
 
@@ -469,7 +474,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel should be(None)
   }
 
-  "TrailToShowcase validation" should "omit smaller than 1200x90 from rundown panel articles" in {
+  "TrailToShowcase validation" should "reject rundown panel articles with images smaller than 1200x900" in {
     val withTooSmallImage = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
@@ -482,11 +487,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
         Seq(withTooSmallImage, withTooSmallImage, withTooSmallImage),
         "rundown-container-id",
       )
-      .get
 
-    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
-    val articleGroup = gModule.getArticleGroup.get
-    articleGroup.articles.head.mediaContent should be(None)
+    rundownPanel should be(None)
   }
 
   private def makePressedContent(

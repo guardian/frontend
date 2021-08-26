@@ -98,11 +98,11 @@ object TrailsToShowcase {
           title <- Some(stripInvalidXMLCharacters(contentItem.header.headline))
             .filter(_.nonEmpty)
             .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
+          mediaContent <- rundownPanelArticleMediaContentFrom(contentItem)
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           val kickerText =
             contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
-          val mediaContent = rundownPanelArticleMediaContentFrom(contentItem)
 
           GArticle(
             guidFor(contentItem),
@@ -111,7 +111,7 @@ object TrailsToShowcase {
             webPublicationDate,
             lastModified,
             kickerText,
-            mediaContent,
+            Some(mediaContent),
           )
         }
       }
