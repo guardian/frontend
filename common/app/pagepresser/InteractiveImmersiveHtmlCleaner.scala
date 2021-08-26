@@ -2,7 +2,7 @@ package pagepresser
 
 import com.netaporter.uri.Uri._
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{Element, Document}
+import org.jsoup.nodes.{Element, Document, Node}
 import scala.collection.JavaConverters._
 import scala.io.Source
 
@@ -33,6 +33,15 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
     removeByClass(document, "top-banner-ad-container js-top-banner")
   }
 
+  def hideReaderRevenue(document: Document): Document = {
+    document.getElementsByTag("head")
+      .first()
+      .appendElement("script")
+      .text("window.guardian.config.page.shouldHideReaderRevenue=true")
+
+    document
+  }
+
   def removeHeaderCallout(document: Document): Document = {
     removeByClass(document, "new-header__cta-bar")
   }
@@ -58,6 +67,7 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
   }
 
   def removeReaderRevenueCallouts(document: Document): Document = {
+    hideReaderRevenue(document)
     removeHeaderCallout(document)
     removeFooterCallout(document)
   }

@@ -25,16 +25,27 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |<body>
               |<div id="bannerandheader">
               |<div class="top-banner-ad-container js-top-banner"></div>
-              |<header></header>
               |</div>
               |</body>
               |</html>""".stripMargin)
 
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
+    cleanedDoc.getElementsByClass("top-banner-ad-container").isEmpty should be(true)
+  }
+
+  it should "set page config to hide reader revenue" in {
+    val doc = Jsoup.parse("""<html>
+              |<head>
+              |</head>
+              |<body>
+              |</body>
+              |</html>""".stripMargin)
+
     val want = Jsoup.parse("""<html>
+               |<head>
+               |<script>window.guardian.config.page.shouldHideReaderRevenue=true</script>
+               |</head>
                |<body>
-               |<div id="bannerandheader">
-               |<header></header>
-               |</div>
                |</body>
                |</html>""".stripMargin).toString
 
@@ -54,18 +65,9 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val want = Jsoup.parse("""<html>
-               |<body>
-               |<div id="bannerandheader">
-               |<header>
-               |<nav>
-               |</nav>
-               |</header>
-               |</div>
-               |</body>
-               |</html>""".stripMargin).toString
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
 
-    InteractiveImmersiveHtmlCleaner.clean(doc, true).toString should equal(want)
+    cleanedDoc.getElementsByClass("new-header__cta-bar").isEmpty should be(true)
   }
 
   it should "have reader revenue callouts in the footer removed" in {
@@ -85,21 +87,11 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val want = Jsoup.parse("""<html>
-              |<body>
-              |<footer>
-              |<div class="l-footer__secondary js-footer__secondary">
-              |<div class="colophon__lists-container">
-              |<ul class="colophon__list"></ul>
-              |<div class="colophon__list">
-              |</div>
-              |</div>
-              |</div>
-              |</footer>
-              |</body>
-              |</html>""".stripMargin).toString
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
 
-    InteractiveImmersiveHtmlCleaner.clean(doc, true).toString should equal(want)
+    cleanedDoc.getElementsByAttributeValue("data-link-name", "footer : contribute-cta").isEmpty should be(true)
+    cleanedDoc.getElementsByAttributeValue("data-link-name", "footer : subscribe-cta").isEmpty should be(true)
+    cleanedDoc.getElementsByClass("cta-bar__text").isEmpty should be(true)
   }
 
   it should "have '(pressed)' appended to the copyright" in {
@@ -114,18 +106,9 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val want = Jsoup.parse("""<html>
-              |<body>
-              |<footer>
-              |<div class="copyright-container">
-              |<div class="really-serious-copyright">
-              |All rights reserved. (pressed)</div>
-              |</div>
-              |</footer>
-              |</body>
-              |</html>""".stripMargin).toString
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
 
-    InteractiveImmersiveHtmlCleaner.clean(doc, true).toString should equal(want)
+    cleanedDoc.getElementsByClass("really-serious-copyright").html() should equal("All rights reserved. (pressed)")
   }
 
   it should "have email signup removed" in {
@@ -138,14 +121,9 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val want = Jsoup.parse("""<html>
-              |<body>
-              |<footer>
-              |</footer>
-              |</body>
-              |</html>""".stripMargin).toString
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
 
-    InteractiveImmersiveHtmlCleaner.clean(doc, true).toString should equal(want)
+    cleanedDoc.getElementsByClass("footer__email-container").isEmpty should be(true)
   }
 
 }
