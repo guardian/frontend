@@ -2,9 +2,11 @@ package pagepresser
 
 import com.netaporter.uri.Uri._
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{Element, Document, Node}
+import org.jsoup.nodes.{Element, Document}
 import scala.collection.JavaConverters._
 import scala.io.Source
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
@@ -21,7 +23,7 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
     removeScripts(document)
     removeByTagName(document, "noscript")
     if (convertToHttps) secureDocument(document)
-    addPressedIndicatorToDocument(document)
+    addExtraCopyToDocument(document)
   }
 
   override def removeScripts(document: Document): Document = {
@@ -77,11 +79,13 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
     removeByClass(document, "footer__email-container")
   }
 
-  def addPressedIndicatorToDocument(document: Document): Document = {
-    document
-      .getElementsByClass("really-serious-copyright")
-      .asScala
-      .foreach(_.append("(pressed)"))
+  def addExtraCopyToDocument(document: Document): Document = {
+    val el = new Element("p")
+    val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+    el.html(s"<i>This article was archived on ${date}. Some elements may be out of date.</i>")
+
+    val footers = document.getElementsByTag("footer")
+    if (!footers.isEmpty()) footers.first().before(el)
 
     document
   }

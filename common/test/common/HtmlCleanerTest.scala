@@ -2,6 +2,8 @@ package common
 
 import org.jsoup.Jsoup
 import org.scalatest.{FlatSpec, Matchers}
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 import pagepresser.{InteractiveImmersiveHtmlCleaner}
 
@@ -94,21 +96,18 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
     cleanedDoc.getElementsByClass("cta-bar__text").isEmpty should be(true)
   }
 
-  it should "have '(pressed)' appended to the copyright" in {
+  it should "have appended additional copy" in {
     val doc = Jsoup.parse("""<html>
               |<body>
               |<footer>
-              |<div class="copyright-container">
-              |<div class="really-serious-copyright">
-              |All rights reserved.</div>
-              |</div>
               |</footer>
               |</body>
               |</html>""".stripMargin)
 
     val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
+    val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
 
-    cleanedDoc.getElementsByClass("really-serious-copyright").html() should equal("All rights reserved. (pressed)")
+    cleanedDoc.getElementsByTag("body").first().text() should equal(s"This article was archived on ${date}. Some elements may be out of date.")
   }
 
   it should "have email signup removed" in {
