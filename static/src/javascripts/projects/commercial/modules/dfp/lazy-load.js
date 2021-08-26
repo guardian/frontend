@@ -1,4 +1,4 @@
-import once from 'lodash/once';
+import { once } from 'lodash-es';
 import { dfpEnv } from './dfp-env';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert, refreshAdvert } from './load-advert';

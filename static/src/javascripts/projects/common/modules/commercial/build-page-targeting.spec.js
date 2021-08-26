@@ -54,7 +54,8 @@ jest.mock('./user-ad-targeting', () => ({
 jest.mock('../experiments/ab', () => ({
     getSynchronousParticipations: jest.fn(),
 }));
-jest.mock('lodash/once', () => fn => fn);
+jest.mock('lodash-es/once', () => fn => fn);
+jest.mock('lodash-es/memoize', () => fn => fn);
 jest.mock('./commercial-features', () => ({
     commercialFeatures() {},
 }));

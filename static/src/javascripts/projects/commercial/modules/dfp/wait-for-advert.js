@@ -1,4 +1,4 @@
-import memoize from 'lodash/memoize';
+import { memoize } from 'lodash-es';
 import { getAdvertById } from './get-advert-by-id';
 
 export const waitForAdvert = memoize(

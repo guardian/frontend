@@ -34,7 +34,7 @@ jest.mock('common/modules/experiments/ab-ophan', () => ({
 	trackABTests: emptyFunction,
 	buildOphanPayload: emptyFunction,
 }));
-jest.mock('lodash/memoize', () => (f: (...args: unknown[]) => unknown) => f);
+jest.mock('lodash-es/memoize', () => <T>(f: (...args: unknown[]) => T) => f);
 
 const cfg: DeepPartial<Config> = window.guardian.config;
 
