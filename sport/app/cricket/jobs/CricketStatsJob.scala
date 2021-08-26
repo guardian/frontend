@@ -5,7 +5,8 @@ import common.GuLogging
 import common.Chronos
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
-import java.time.{Duration, LocalDate}
+
+import java.time.{Duration, LocalDate, LocalDateTime}
 import scala.concurrent.ExecutionContext
 
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
@@ -38,7 +39,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
         val loadedMatches = agent().values
           .filter(cricketMatch =>
             // Omit any recent match within the last 5 days, to account for test matches.
-            Duration.between(cricketMatch.gameDate, LocalDate.now).toDays() > 5,
+            Duration.between(cricketMatch.gameDate, LocalDateTime.now).toDays() > 5,
           )
           .map(_.matchId)
           .toSeq

@@ -4,8 +4,7 @@ import type {
 	Runnable,
 	Variant,
 } from '@guardian/ab-core';
-import fromPairs from 'lodash/fromPairs';
-import toPairs from 'lodash/toPairs';
+import { fromPairs, toPairs } from 'lodash-es';
 import config_ from '../../../../lib/config';
 import { NOT_IN_TEST, notInTestVariant } from './ab-constants';
 

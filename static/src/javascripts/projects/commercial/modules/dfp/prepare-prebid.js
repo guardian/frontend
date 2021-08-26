@@ -2,7 +2,7 @@ import {
     getConsentFor,
     onConsentChange,
 } from '@guardian/consent-management-platform';
-import once from 'lodash/once';
+import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';

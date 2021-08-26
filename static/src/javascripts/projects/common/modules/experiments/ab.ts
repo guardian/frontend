@@ -1,5 +1,5 @@
 import type { ABTest, Participations, Runnable } from '@guardian/ab-core';
-import memoize from 'lodash/memoize';
+import { memoize } from 'lodash-es';
 import { allRunnableTests } from './ab-core';
 import {
 	getParticipationsFromLocalStorage,
