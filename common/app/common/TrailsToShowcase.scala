@@ -116,7 +116,15 @@ object TrailsToShowcase {
         }
       }
       // We require exactly 3 articles for a valid rundown panel
-      Some(validArticles.take(3)).filter(_.size == 3)
+      Some(validArticles.take(3)).filter(_.size == 3).flatMap { articles =>
+        // If a kicker is used on any article it must be used on all of them
+        val kickerUsed = articles.exists(_.overline.nonEmpty)
+        if (kickerUsed && articles.exists(_.overline.isEmpty)) {
+          None
+        } else {
+          Some(articles)
+        }
+      }
     }
 
     // Collect mandatory fields. If any of these is missing we can yield None

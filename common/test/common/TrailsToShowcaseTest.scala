@@ -245,6 +245,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
         webPublicationDate = Some(wayBackWhen),
         lastModified = Some(lastModifiedWayBackWhen),
         trailPicture = Some(imageMedia),
+        kickerText = Some("Another Kicker"),
       )
 
     val rundownPanel = TrailsToShowcase
@@ -485,6 +486,29 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       .asRundownPanel(
         "Rundown container name",
         Seq(withTooSmallImage, withTooSmallImage, withTooSmallImage),
+        "rundown-container-id",
+      )
+
+    rundownPanel should be(None)
+  }
+
+  "TrailToShowcase validation" should "reject rundown panels which use kickers but not for all articles" in {
+    val withKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      kickerText = Some("Kicker")
+    )
+    val withoutKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+    )
+
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel(
+        "Rundown container name",
+        Seq(withKicker, withKicker, withoutKicker),
         "rundown-container-id",
       )
 
