@@ -29,7 +29,7 @@ const getBreakpoint = getBreakpoint_;
 const isBreakpoint = isBreakpoint_;
 const isInVariantSynchronous = isInVariantSynchronous_;
 
-jest.mock('lodash/once', () => a => a);
+jest.mock('lodash-es/once', () => fn => fn);
 
 jest.mock('../../../../lib/geolocation', () => ({
     getCountryCode: jest.fn(() => 'GB'),
