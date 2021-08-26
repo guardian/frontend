@@ -8,15 +8,15 @@ import fastdom from '../../../../lib/fastdom-promise';
 
 const shouldRenderLabel = (adSlotNode: HTMLElement) =>
 	!(
-		adSlotNode.classList.contains('ad-slot--fluid') ||
+		(adSlotNode.classList.contains('ad-slot--fluid') &&
+			adSlotNode.getAttribute('data-show-label') === 'no') ||
 		adSlotNode.classList.contains('ad-slot--frame') ||
 		adSlotNode.classList.contains('ad-slot--gc') ||
 		adSlotNode.classList.contains('u-h') ||
 		// set for out-of-page (1x1) and empty (2x2) ads
 		adSlotNode.classList.contains('ad-slot--collapse') ||
 		adSlotNode.getAttribute('data-label') === 'false' ||
-		adSlotNode.getElementsByClassName('ad-slot__label').length ||
-		adSlotNode.getAttribute('data-show-label') === 'no'
+		adSlotNode.getElementsByClassName('ad-slot__label').length
 	);
 
 const createAdCloseDiv = () => {
