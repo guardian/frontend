@@ -15,7 +15,8 @@ const shouldRenderLabel = (adSlotNode: HTMLElement) =>
 		// set for out-of-page (1x1) and empty (2x2) ads
 		adSlotNode.classList.contains('ad-slot--collapse') ||
 		adSlotNode.getAttribute('data-label') === 'false' ||
-		adSlotNode.getElementsByClassName('ad-slot__label').length
+		adSlotNode.getElementsByClassName('ad-slot__label').length ||
+		adSlotNode.getAttribute('data-show-label') === 'no'
 	);
 
 const createAdCloseDiv = () => {
