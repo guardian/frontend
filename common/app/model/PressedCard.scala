@@ -32,7 +32,7 @@ object PressedCard {
         curatedContent => curatedContent.content.fields.flatMap(_.lastModified),
         supportingCuratedContent => supportingCuratedContent.content.fields.flatMap(_.lastModified),
         _ => None,
-        latestSnap => latestSnap.latestContent.flatMap(_.fields.flatMap(_.lastModified))
+        latestSnap => latestSnap.latestContent.flatMap(_.fields.flatMap(_.lastModified)),
       ).map(_.toJodaDateTime)
     }
 
