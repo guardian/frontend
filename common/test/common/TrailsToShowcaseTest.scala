@@ -122,8 +122,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanelGuid.attribute("isPermaLink").get.head.text should be("false")
 
     val rundownPanelMedia = (rundownPanel \ "content").filter(_.prefix == "media")
-    rundownPanelMedia.size should be(1)
-    rundownPanelMedia.head.attribute("url").head.text shouldBe "http://localhost/trail.jpg"
+    rundownPanelMedia.size should be(0)
 
     // Rundown panels content nested items in the single article group
     val articleGroups = (rundownPanel \ "article_group").filter(_.prefix == "g")
@@ -223,6 +222,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     rundownPanel.getLink should be(null) // TODO
     rundownPanel.getUri should be("rundown-container-id") // Guid for rundown item is the container id.
+
+    // Rundown panels have no image of their own
+    val mediaModule = rundownPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
+    mediaModule should be(null)
 
     val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
     gModule.getPanel should be(Some("RUNDOWN"))
