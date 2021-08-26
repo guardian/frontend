@@ -128,4 +128,24 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
     InteractiveImmersiveHtmlCleaner.clean(doc, true).toString should equal(want)
   }
 
+  it should "have email signup removed" in {
+    val doc = Jsoup.parse("""<html>
+              |<body>
+              |<footer>
+              |<div class="footer__email-container">
+              |</div>
+              |</footer>
+              |</body>
+              |</html>""".stripMargin)
+
+    val want = Jsoup.parse("""<html>
+              |<body>
+              |<footer>
+              |</footer>
+              |</body>
+              |</html>""".stripMargin).toString
+
+    InteractiveImmersiveHtmlCleaner.clean(doc, true).toString should equal(want)
+  }
+
 }

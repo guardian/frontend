@@ -17,6 +17,7 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
     universalClean(document)
     removeTopBannerAds(document)
     removeReaderRevenueCallouts(document)
+    removeEmailSignup(document)
     removeScripts(document)
     removeByTagName(document, "noscript")
     if (convertToHttps) secureDocument(document)
@@ -59,6 +60,10 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequ
   def removeReaderRevenueCallouts(document: Document): Document = {
     removeHeaderCallout(document)
     removeFooterCallout(document)
+  }
+
+  def removeEmailSignup(document: Document): Document = {
+    removeByClass(document, "footer__email-container")
   }
 
   def addPressedIndicatorToDocument(document: Document): Document = {
