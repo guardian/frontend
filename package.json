@@ -16,7 +16,7 @@
     "@emotion/styled": "^10.0.27",
     "@guardian/ab-core": "^2.0.0",
     "@guardian/atom-renderer": "1.2.2",
-    "@guardian/automat-contributions": "^0.3.6",
+    "@guardian/automat-contributions": "^0.4.0",
     "@guardian/automat-modules": "^0.3.8",
     "@guardian/braze-components": "^3.2.0",
     "@guardian/commercial-core": "^0.19.1",
@@ -116,6 +116,7 @@
     "lodash.merge": "^4.6.2",
     "lodash.takewhile": "^4.6.0",
     "lodash.uniq": "^4.5.0",
+    "madge": "^5.0.1",
     "megalog": "^0.1.0",
     "mkdirp": "0.5.1",
     "mockdate": "^3.0.5",
@@ -145,7 +146,7 @@
     "typescript": "^4.1.3",
     "uglify-js": "^2.7.4",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.44.2",
+    "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
@@ -200,7 +201,7 @@
     "testEnvironment": "jest-environment-jsdom-global",
     "testURL": "http://testurl.theguardian.com",
     "transformIgnorePatterns": [
-      "/node_modules/(?!@guardian/)"
+      "/node_modules/(?!(@guardian|lodash-es)/)"
     ]
   },
   "scripts": {

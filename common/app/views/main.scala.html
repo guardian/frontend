@@ -31,7 +31,7 @@
     <body
         id="top"
         class="@RenderClasses(Map(
-            ("has-page-skin", page.metadata.hasPageSkin(request)),
+            ("has-page-skin", page.metadata.hasPageSkin(request) && showAdverts),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
             ("has-super-sticky-banner", false),

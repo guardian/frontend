@@ -8,7 +8,7 @@ import common.commercial.EditionCommercialProperties
 import common.{Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import conf.switches.Switches
-import experiments.ActiveExperiments
+import experiments.{ActiveExperiments, StandaloneCommercialBundle}
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
@@ -303,7 +303,6 @@ object DotcomRenderingDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl = DotcomRenderingUtils.assetURL("javascripts/graun.commercial.dcr.js"),
       ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,

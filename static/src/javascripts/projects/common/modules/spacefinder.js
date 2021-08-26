@@ -2,9 +2,9 @@
 
 import qwery from 'qwery';
 import bean from 'bean';
-import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
-import memoize from 'lodash/memoize';
+import fastdom from '../../../lib/fastdom-promise';
+import mediator from '../../../lib/mediator';
+import { memoize } from 'lodash-es';
 
 
 

@@ -47,7 +47,7 @@ private object NavLinks {
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
   val smallBusiness = NavLink("Small business", "/business/us-small-business")
   val projectSyndicate = NavLink("Project Syndicate", "/business/series/project-syndicate-economists")
-  val climateChange = NavLink("Climate change", "/environment/climate-change")
+  val climateCrisis = NavLink("Climate crisis", "/environment/climate-crisis")
   val wildlife = NavLink("Wildlife", "/environment/wildlife")
   val energy = NavLink("Energy", "/environment/energy")
   val pollution = NavLink("Pollution", "/environment/pollution")
@@ -74,11 +74,11 @@ private object NavLinks {
     children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, globalDevelopment),
   )
   val ukEnvironment =
-    NavLink("Environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
+    NavLink("Environment", "/environment", children = List(climateCrisis, wildlife, energy, pollution))
   val auEnvironment = ukEnvironment.copy(children =
-    List(climateChange, energy, wildlife, biodiversity, oceans, pollution, greatBarrierReef),
+    List(climateCrisis, energy, wildlife, biodiversity, oceans, pollution, greatBarrierReef),
   )
-  val usEnvironment = ukEnvironment.copy(children = List(climateChange, wildlife, energy, pollution, greenLight))
+  val usEnvironment = ukEnvironment.copy(children = List(climateCrisis, wildlife, energy, pollution, greenLight))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
     "Business",
@@ -112,7 +112,7 @@ private object NavLinks {
     ),
   )
   val soccer = football.copy(title = "Soccer")
-
+  val paralympics = NavLink("Tokyo 2020 Paralympics", "/sport/paralympic-games-2020")
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -363,6 +363,7 @@ private object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
+      paralympics,
       football,
       cricket,
       rugbyUnion,
@@ -378,6 +379,7 @@ private object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
+      paralympics,
       football,
       AFL,
       NRL,
@@ -391,6 +393,7 @@ private object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
+      paralympics,
       soccer,
       NFL,
       tennis,
@@ -628,6 +631,7 @@ private object NavLinks {
     "business/diversity-and-equality",
     "business/us-small-business",
     "environment/climate-change",
+    "environment/climate-crisis",
     "environment/wildlife",
     "environment/energy",
     "environment/pollution",

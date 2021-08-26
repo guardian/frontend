@@ -82,7 +82,15 @@ jest.mock('../../../../../lib/cookies', () => ({
 }));
 
 const resetConfig = () => {
-	window.guardian.ophan = { pageViewId: 'pvid', viewId: 'v_id' };
+	window.guardian.ophan = {
+		pageViewId: 'pvid',
+		viewId: 'v_id',
+		record: () => {
+			// do nothing;
+		},
+		setEventEmitter: null,
+		trackComponentAttention: null,
+	};
 	window.guardian.config.switches = {
 		prebidAppnexus: true,
 		prebidAppnexusInvcode: true,

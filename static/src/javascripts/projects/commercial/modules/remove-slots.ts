@@ -1,4 +1,4 @@
-import once from 'lodash/once';
+import { once } from 'lodash-es';
 import fastdom from '../../../lib/fastdom-promise';
 import { dfpEnv } from './dfp/dfp-env';
 

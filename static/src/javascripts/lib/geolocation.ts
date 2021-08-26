@@ -1,8 +1,8 @@
 import { getLocale, storage } from '@guardian/libs';
 import type { CountryCode } from '@guardian/types';
-import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
-import reportError from 'lib/report-error';
+import config from './config';
+import { getCookie } from './cookies';
+import reportError from './report-error';
 
 const editionToGeolocationMap: Record<string, string> = {
 	UK: 'GB',

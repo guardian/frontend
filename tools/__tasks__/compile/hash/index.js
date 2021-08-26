@@ -103,7 +103,17 @@ module.exports = {
                                         )]: assetMap[webpackEntryBundle],
                                     }),
                                 {}
-                            )
+                            ),
+                            webpackEntryBundles.reduce(
+                                (map, webpackEntryBundle) =>
+                                    Object.assign(map, {
+                                        [webpackEntryBundle.replace(
+                                            /(javascripts\/commercial\/)(.+\/)/,
+                                            '$1'
+                                        )]: assetMap[webpackEntryBundle],
+                                    }),
+                                {}
+                            ),
                         );
                     })
                     .then((

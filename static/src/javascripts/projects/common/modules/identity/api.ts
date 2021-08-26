@@ -1,11 +1,11 @@
 import { storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
-import { createAuthenticationComponentEventParams } from 'common/modules/identity/auth-component-event-params';
-import config_ from 'lib/config';
-import { getCookie as getCookieByName } from 'lib/cookies';
-import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
-import { getUrlVars } from 'lib/url';
+import config_ from '../../../../lib/config';
+import { getCookie as getCookieByName } from '../../../../lib/cookies';
+import { fetchJson } from '../../../../lib/fetch-json';
+import mediator from '../../../../lib/mediator';
+import { getUrlVars } from '../../../../lib/url';
+import { createAuthenticationComponentEventParams } from './auth-component-event-params';
 
 // This is really a hacky workaround ⚠️
 const config = config_ as {

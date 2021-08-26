@@ -8,6 +8,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
     InteractiveLibrarianExp,
+    StandaloneCommercialBundle,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -25,8 +26,17 @@ object LiveblogRendering
 object InteractiveLibrarianExp
     extends Experiment(
       name = "interactive-librarian",
-      description = "Private experiment to develop archiving backup for Interactives",
+      description = "The Interactive Librarian private experiment",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = LocalDate.of(2021, 8, 31),
+      sellByDate = LocalDate.of(2022, 1, 31),
       participationGroup = Perc0B,
+    )
+
+object StandaloneCommercialBundle
+    extends Experiment(
+      name = "standalone-commercial-bundle",
+      description = "Serve a standalone commercial bundle to a subset of users",
+      owners = Seq(Owner.withGithub("mxdvl")),
+      sellByDate = LocalDate.of(2021, 10, 1),
+      participationGroup = Perc0E,
     )

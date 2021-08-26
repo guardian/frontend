@@ -1,0 +1,37 @@
+#!/usr/bin/ruby
+
+# encoding: utf-8
+
+require "net/http"
+require "uri"
+
+require "json"
+
+def httpGet(url)
+    uri = URI(url)
+    res = Net::HTTP.get_response(uri)
+    res.body
+end
+
+def capiURL(pn)
+    "https://content.guardianapis.com/search?tag=type/interactive&api-key=[REMOVED]&page-size=100&page=#{pn}"
+end
+
+def capiObjectAtPageNumber(pn)
+    JSON.parse(httpGet(capiURL(pn)))
+end
+
+(1..40).each{|pn|
+    object = capiObjectAtPageNumber(pn)
+    object["response"]["results"].each{|result|
+        puts result["id"]
+        command = "curl -X POST \"https://frontend.gutools.co.uk/interactive-librarian/live-presser/#{result["id"]}\""
+        puts command
+        output = `#{command}`.strip
+        puts output
+        if !output.include?("Operation successful") then
+            File.open("/[MODIFIED]/05-original-pressing-failures.txt", "a"){|f| f.puts(result["id"]) }
+        end
+    }
+}
+

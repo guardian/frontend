@@ -30,8 +30,8 @@ import {
     logSummary,
     showInMegaNav,
     incrementDailyArticleCount,
-    incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
+import { incrementWeeklyArticleCount } from '@guardian/automat-contributions';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
@@ -173,9 +173,9 @@ const updateArticleCounts = async () => {
     const page = config.get('page');
     const hasConsentedToArticleCounts = await getArticleCountConsent();
 
-    if (page && hasConsentedToArticleCounts) {
+    if (page && !page.isFront && hasConsentedToArticleCounts) {
         incrementDailyArticleCount(page);
-        incrementWeeklyArticleCount(page);
+        incrementWeeklyArticleCount(storage.local, page.pageId);
     }
 };
 

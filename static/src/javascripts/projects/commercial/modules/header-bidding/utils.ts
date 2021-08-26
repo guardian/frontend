@@ -1,4 +1,4 @@
-import once from 'lodash/once';
+import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';

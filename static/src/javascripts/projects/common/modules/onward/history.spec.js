@@ -13,8 +13,6 @@ import {
     _,
     incrementDailyArticleCount,
     getMondayFromDate,
-    getArticleViewCountForWeeks,
-    incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import { storage as storageStub } from '@guardian/libs';
@@ -422,56 +420,5 @@ describe('history', () => {
         expect(storageStub.local.get('gu.history.dailyArticleCount')).toEqual([
             { day: today, count: 1 },
         ]);
-    });
-
-    // weeklyArticleCountB tests
-    it('gets weekly count for this week only', () => {
-        const counts = [
-            { week: startOfThisWeek, count: 1 },
-            { week: startOfThisWeek - 7, count: 1 },
-        ];
-        storageStub.local.set('gu.history.weeklyArticleCount', counts);
-
-        expect(getArticleViewCountForWeeks(1)).toEqual(1);
-    });
-
-    it('gets article count for 2 weeks', () => {
-        const counts = [
-            { week: startOfThisWeek, count: 1 },
-            { week: startOfThisWeek - 7, count: 1 },
-        ];
-        storageStub.local.set('gu.history.weeklyArticleCount', counts);
-
-        expect(getArticleViewCountForWeeks(2)).toEqual(2);
-    });
-
-    it('increments the weekly article count', () => {
-        const counts = [{ week: startOfThisWeek, count: 1 }];
-        storageStub.local.set('gu.history.weeklyArticleCount', counts);
-
-        incrementWeeklyArticleCount(pageConfig);
-
-        expect(getArticleViewCountForWeeks(1)).toEqual(2);
-    });
-
-    it('removes old weekly history while incrementing the article count', () => {
-        const counts = [{ week: startOfThisWeek - 400, count: 9 }];
-        storageStub.local.set('gu.history.weeklyArticleCount', counts);
-
-        incrementWeeklyArticleCount(pageConfig);
-
-        expect(storageStub.local.get('gu.history.weeklyArticleCount')).toEqual([
-            { week: startOfThisWeek, count: 1 },
-        ]);
-    });
-
-    it('does not increment the weekly article count if opt-out cookie set', () => {
-        const counts = [{ week: startOfThisWeek, count: 1 }];
-        storageStub.local.set('gu.history.weeklyArticleCount', counts);
-        getCookie.mockReturnValue(new Date().getTime().toString());
-
-        incrementWeeklyArticleCount(pageConfig);
-
-        expect(getArticleViewCountForWeeks(1)).toEqual(1);
     });
 });

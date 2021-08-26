@@ -1,7 +1,11 @@
 .new-header__cta-bar {
-    padding-top: 33px;
+    padding-top: 39px;
     padding-left: 10px;
-    max-width: 310px;
+    max-width: 340px;
+
+    @include mq(mobileMedium) {
+        padding-top: 44px;
+    }
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;

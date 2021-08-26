@@ -42,7 +42,7 @@ const setupRedplanet = () => {
 
         if (!initialised && canRun) {
             initialised = true;
-            return import('../../../../lib/launchpad.js').then(() => {
+            return import(/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js').then(() => {
                 initialise();
                 return Promise.resolve();
             });
