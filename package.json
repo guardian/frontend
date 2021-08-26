@@ -201,7 +201,7 @@
     "testEnvironment": "jest-environment-jsdom-global",
     "testURL": "http://testurl.theguardian.com",
     "transformIgnorePatterns": [
-      "/node_modules/(?!@guardian/)"
+      "/node_modules/(?!(@guardian|lodash-es)/)"
     ]
   },
   "scripts": {
