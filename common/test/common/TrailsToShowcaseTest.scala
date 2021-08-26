@@ -65,9 +65,36 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val singleStoryTrails =
       Seq(makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia)))
 
-    val rss = XML.loadString(TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
+    val rss = XML.loadString(
+      TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "Rundown panel name", "rundown-panel-id")(request),
+    )
 
     rss.getNamespace("g") should be("http://schemas.google.com/pcn/2020")
+    rss.getNamespace("media") should be("http://search.yahoo.com/mrss/")
+  }
+
+  "TrailsToShowcase" should "propogate media module usage up from rundown panel articles" in {
+    val content = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
+
+    val rss = XML.loadString(
+      TrailsToShowcase(
+        Option("foo"),
+        Seq.empty,
+        Seq(content, content, content),
+        "Rundown panel name",
+        "rundown-panel-id",
+      )(request),
+    )
+
+    // Given no single story panels and a rundown panel the media module needs to propogate from the rundown panel
+    val channelItems = rss \ "channel" \ "item"
+    val singleStoryPanels =
+      channelItems.filter(node => (node \ "panel").filter(_.prefix == "g").filter(_.text == "SINGLE_STORY").nonEmpty)
+    singleStoryPanels.size should be(0)
+    val rundownPanels =
+      channelItems.filter(node => (node \ "panel").filter(_.prefix == "g").filter(_.text == "RUNDOWN").nonEmpty)
+    rundownPanels.size should be(1)
+
     rss.getNamespace("media") should be("http://search.yahoo.com/mrss/")
   }
 
