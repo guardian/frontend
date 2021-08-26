@@ -79,7 +79,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       byline = Some("Trail byline"),
     )
     val singleStoryTrails = Seq(content)
-    val rundownTrails = Seq(content, content)
+    val rundownTrails = Seq(content, content, content)
 
     val rss = XML.loadString(
       TrailsToShowcase(
@@ -133,7 +133,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     // Examine the nested article items
     val articles = articleGroup \ "item"
-    articles.size should be(2)
+    articles.size should be(3)
 
     val rundownArticle = articles.head
     (rundownArticle \ "guid").text should be(
@@ -145,7 +145,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
     (rundownArticle \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
     (rundownArticle \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
-    (rundownArticle \ "content").filter(_.prefix == "media").head.attribute("url").get.head.text should be("http://localhost/trail.jpg")
+    (rundownArticle \ "content").filter(_.prefix == "media").head.attribute("url").get.head.text should be(
+      "http://localhost/trail.jpg",
+    )
   }
 
   "TrailToShowcase" should "omit rundown panel if there are no rundown trials" in {
@@ -215,11 +217,12 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val anotherTrail =
       makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
 
-    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(trail, anotherTrail), "rundown-container-id").get
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel("Rundown container name", Seq(trail, anotherTrail, anotherTrail), "rundown-container-id")
+      .get
 
     rundownPanel.getLink should be(null) // TODO
     rundownPanel.getUri should be("rundown-container-id") // Guid for rundown item is the container id.
-
 
     val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
     gModule.getPanel should be(Some("RUNDOWN"))
@@ -227,7 +230,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val articleGroup = gModule.getArticleGroup.get
     articleGroup.role should be(Some("RUNDOWN"))
-    articleGroup.articles.size should be(2)
+    articleGroup.articles.size should be(3)
 
     val firstItemInArticleGroup: GArticle = articleGroup.articles.head
     firstItemInArticleGroup.title should be("A headline")
@@ -247,11 +250,12 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   "TrailToShowcase" can "should default rundown items updated publication date if no last updated value is available" in {
     val content = makePressedContent(webPublicationDate = Some(wayBackWhen))
 
-    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(content), "rundown-container-id").get
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel("Rundown container name", Seq(content, content, content), "rundown-container-id")
+      .get
 
     val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
     val articleGroup = gModule.getArticleGroup.get
-    articleGroup.articles.size should be(1)
     articleGroup.articles.head.updated shouldBe (wayBackWhen)
   }
 
@@ -342,18 +346,52 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryPanel should be(None)
   }
 
+  "TrailToShowcase validation" should "reject rundown panels with less than 3 articles" in {
+    val content = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+    )
+
+    val rundownPanel =
+      TrailsToShowcase.asRundownPanel("Rundown container with too few articles", Seq(content), "rundown-container-id")
+
+    rundownPanel should be(None)
+  }
+
+  "TrailToShowcase validation" should "trim rundown panels to 3 articles if too many are supplied" in {
+    val content = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+    )
+
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel(
+        "Rundown container with too many articles",
+        Seq(content, content, content, content),
+        "rundown-container-id",
+      )
+      .get
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.size should be(3)
+  }
+
   "TrailToShowcase validation" should "reject rundown panels with g:panel_titles longer than 74 characters" in {
     val trail = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
     )
-    val anotherTrail = makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
+    val anotherTrail =
+      makePressedContent(webPublicationDate = Some(wayBackWhen), lastModified = Some(lastModifiedWayBackWhen))
 
-    val content = Seq(trail, anotherTrail)
-    val longerThan74 = "The container name is really really long is Showcase aer well within their rights to reject this"
+    val longerThan74 =
+      "The container name is really really long is Showcase aer well within their rights to reject this"
     longerThan74.length > 74 should be(true)
 
-    val rundownPanel = TrailsToShowcase.asRundownPanel(longerThan74, content, "rundown-container-id")
+    val rundownPanel = TrailsToShowcase.asRundownPanel(longerThan74, Seq(trail, anotherTrail), "rundown-container-id")
 
     rundownPanel should be(None)
   }
@@ -368,7 +406,13 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       kickerText = Some(longerThan30),
     )
 
-    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(withTooLongKicker), "rundown-container-id").get
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel(
+        "Rundown container name",
+        Seq(withTooLongKicker, withTooLongKicker, withTooLongKicker),
+        "rundown-container-id",
+      )
+      .get
 
     val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
     val articleGroup = gModule.getArticleGroup.get
@@ -380,27 +424,35 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val longerThan64 = longerThan30 + longerThan30 + "blah blah"
     longerThan64.length > 64 should be(true)
 
-    val withTooHeadline = makePressedContent(
+    val withTooLongHeadline = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       headline = longerThan64,
     )
 
-    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(withTooHeadline), "rundown-container-id").get
+    val rundownPanel = TrailsToShowcase.asRundownPanel(
+      "Rundown container name",
+      Seq(withTooLongHeadline, withTooLongHeadline, withTooLongHeadline),
+      "rundown-container-id",
+    )
 
-    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
-    val articleGroup = gModule.getArticleGroup.get
-    articleGroup.articles.isEmpty should be(true) // TODO empty articles should really collapse the whole panel
+    rundownPanel should be(None)
   }
 
   "TrailToShowcase validation" should "omit smaller than 1200x90 from rundown panel articles" in {
     val withTooSmallImage = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
-      trailPicture = Some(mediumImageMedia)
+      trailPicture = Some(mediumImageMedia),
     )
 
-    val rundownPanel = TrailsToShowcase.asRundownPanel("Rundown container name", Seq(withTooSmallImage), "rundown-container-id").get
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel(
+        "Rundown container name",
+        Seq(withTooSmallImage, withTooSmallImage, withTooSmallImage),
+        "rundown-container-id",
+      )
+      .get
 
     val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
     val articleGroup = gModule.getArticleGroup.get

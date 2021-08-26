@@ -90,10 +90,39 @@ object TrailsToShowcase {
   }
 
   def asRundownPanel(title: String, content: Seq[PressedContent], id: String): Option[SyndEntry] = {
+    def makeArticlesFrom(content: Seq[PressedContent]): Option[Seq[GArticle]] = {
+      val validArticles = content.flatMap { contentItem =>
+        // Collect the mandatory fields for the article. If any of these are missing we can skip this item
+        for {
+          webPublicationDate <- contentItem.card.webPublicationDateOption
+          title <- Some(stripInvalidXMLCharacters(contentItem.header.headline))
+            .filter(_.nonEmpty)
+            .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
+        } yield {
+          val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
+          val kickerText =
+            contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
+          val mediaContent = rundownPanelArticleMediaContentFrom(contentItem)
+
+          GArticle(
+            guidFor(contentItem),
+            title,
+            webUrl(contentItem),
+            webPublicationDate,
+            lastModified,
+            kickerText,
+            mediaContent,
+          )
+        }
+      }
+      // We require exactly 3 articles for a valid rundown panel
+      Some(validArticles.take(3)).filter(_.size == 3)
+    }
+
     // Collect mandatory fields. If any of these is missing we can yield None
     for {
       title <- Some(title).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelTitle)
-
+      articles <- makeArticlesFrom(content)
     } yield {
       val entry = new SyndEntryImpl
       entry.setUri(id)
@@ -110,28 +139,6 @@ object TrailsToShowcase {
         addModuleTo(entry, mediaModule)
       }
 
-      // Build article group
-      val articles = content.flatMap { contentItem =>
-        // Collect the mandatory fields for the article. If any of these are missing we can skip this item
-        for {
-          webPublicationDate <- contentItem.card.webPublicationDateOption
-          title <- Some(stripInvalidXMLCharacters(contentItem.header.headline)).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelArticleTitle)
-        } yield {
-          val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
-          val kickerText = contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
-          val mediaContent = rundownPanelArticleMediaContentFrom(contentItem)
-
-          GArticle(
-            guidFor(contentItem),
-            title,
-            webUrl(contentItem),
-            webPublicationDate,
-            lastModified,
-            kickerText,
-            mediaContent,
-          )
-        }
-      }
       val articleGroup = ArticleGroup(role = Some("RUNDOWN"), articles)
       gModule.setArticleGroup(Some(articleGroup))
 
