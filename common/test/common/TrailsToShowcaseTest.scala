@@ -32,18 +32,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     ImageMedia(Seq(asset))
   }
 
-  val replacedImageMedia: ImageMedia = {
-    val asset = ImageAsset(
-      fields = Map(
-        "width" -> "1200",
-        "height" -> "1000",
-      ),
-      mediaType = "",
-      mimeType = Some("image/jpeg"),
-      url = Some("http://localhost/replaced-image.jpg"),
-    )
-    ImageMedia(Seq(asset))
-  }
+  val replacedImage = Replace("http://localhost/replaced-image.jpg", "1200", "1000")
 
   val smallImageMedia: ImageMedia = {
     val asset = ImageAsset(
@@ -242,7 +231,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
-      replacedImage = Some(replacedImageMedia),
+      replacedImage = Some(replacedImage),
       headline = "My unique headline",
       byline = Some("Trail byline"),
       kickerText = Some("A Kicker"),
@@ -330,6 +319,26 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val articleGroup = gModule.getArticleGroup.get
     val firstItemInArticleGroup = articleGroup.articles.head
     firstItemInArticleGroup.author should be(Some("An author"))
+  }
+
+  "TrailToShowcase" can "rundown panels articles should prefer replaced images over content trail image" in {
+    val withReplacedImage = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      replacedImage = Some(replacedImage),
+      headline = "My unique headline",
+    )
+
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel("Rundown contained", Seq(withReplacedImage, withReplacedImage, withReplacedImage), "rundown-id")
+      .get
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.head.mediaContent.get.getReference shouldBe (new com.sun.syndication.feed.module.mediarss.types.UrlReference(
+      "http://localhost/replaced-image.jpg",
+    ))
   }
 
   "TrailToShowcase" can "should default rundown items updated publication date if no last updated value is available" in {
@@ -624,7 +633,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate: Option[DateTime] = None,
       lastModified: Option[DateTime] = None,
       trailPicture: Option[ImageMedia] = None,
-      replacedImage: Option[ImageMedia] = None,
+      replacedImage: Option[Image] = None,
       headline: String = "A headline",
       byline: Option[String] = None,
       kickerText: Option[String] = None,
@@ -666,7 +675,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       isLiveBlog = false,
       isCrossword = false,
       byline = byline,
-      image = None,
+      image = replacedImage,
       webTitle = title,
       linkText = None,
       embedType = None,
