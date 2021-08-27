@@ -37,7 +37,8 @@ object TrailsToShowcase {
   )(implicit request: RequestHeader): String = {
     val feed = TrailsToRss.syndFeedOf(feedTitle, Seq.empty, url, description)
 
-    val entries = (singleStories.map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)).flatten
+    val entries = (singleStories
+      .map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)).flatten
 
     feed.setEntries(entries.asJava)
     TrailsToRss.asString(feed)
@@ -108,24 +109,28 @@ object TrailsToShowcase {
         }
       }
       // We require exactly 3 articles for a valid rundown panel
-      Some(validArticles.take(3)).filter(_.size == 3).flatMap { articles =>
-        // If an author is used on any article it must be used on all of them
-        // If a kicker is used on any article it must be used on all of them
-        val authorUsed = articles.exists(_.author.nonEmpty)
-        val kickerUsed = articles.exists(_.overline.nonEmpty)
+      val threeArticlesToUse = Some(validArticles.take(3)).filter(_.size == 3)
 
-        val withValidKickers = if (kickerUsed && articles.exists(_.overline.isEmpty)) {
-          None
+      // Ensure author and kickers are consistant with validation rules
+      // If an author is used on any article it must be used on all of them
+      // If a kicker is used on any article it must be used on all of them
+      // You cannot mix authors and kickers
+      threeArticlesToUse.map { articles =>
+        // Most of our content has bylines. Kicker is an optional override in our tools
+        // Therefore we should default to using author tags if it is available on all the articles.
+        // If kickers have been supplied for all articles we will use that in preference to authors
+        val allAuthorsPresent = articles.forall(_.author.nonEmpty)
+        val allKickersPresent = articles.forall(_.overline.nonEmpty)
+
+        if (allKickersPresent) {
+          // Use kickers; remove any authors
+          articles.map(_.copy(author = None))
+        } else if (allAuthorsPresent) {
+          // Use authors; remove any kickers
+          articles.map(_.copy(overline = None))
         } else {
-          Some(articles)
-        }
-
-        withValidKickers.flatMap { articles =>
-          if (authorUsed && articles.exists(_.author.isEmpty)) {
-            None
-          } else {
-            Some(articles)
-          }
+          // Use neither
+          articles.map(_.copy(author = None, overline = None))
         }
       }
     }

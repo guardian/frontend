@@ -493,7 +493,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel should be(None)
   }
 
-  "TrailToShowcase validation" should "reject rundown panel articles with images smaller than 1200x900" in {
+  "TrailToShowcase validation" should "reject rundown panels containing articles with images smaller than 1200x900" in {
     val withTooSmallImage = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
@@ -510,7 +510,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel should be(None)
   }
 
-  "TrailToShowcase validation" should "reject rundown panels which use kickers but not on all articles" in {
+  "TrailToShowcase validation" should "omit kickers from rundown panels if kicker is not set on all articles" in {
     val withKicker = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
@@ -529,11 +529,15 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
         Seq(withKicker, withKicker, withoutKicker),
         "rundown-container-id",
       )
+      .get
 
-    rundownPanel should be(None)
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.size should be(3)
+    articleGroup.articles.forall(_.overline.isEmpty) should be(true)
   }
 
-  "TrailToShowcase validation" should "reject rundown panels which use author but not on all articles" in {
+  "TrailToShowcase validation" should "omit authors from rundown panel articles of author has not been set on all articles" in {
     val withAuthor = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
@@ -552,32 +556,36 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
         Seq(withAuthor, withAuthor, withoutAuthor),
         "rundown-container-id",
       )
+      .get
 
-    rundownPanel should be(None)
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.size should be(3)
+    articleGroup.articles.forall(_.author.isEmpty) should be(true)
   }
 
-  "TrailToShowcase validation" should "reject rundown panels which use authors and kickers" in {
-    val withAuthor = makePressedContent(
+  "TrailToShowcase validation" should "choose kickers over authors" in {
+    val withAuthorAndKicker = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
       byline = Some("An author"),
-    )
-    val withKicker = makePressedContent(
-      webPublicationDate = Some(wayBackWhen),
-      lastModified = Some(lastModifiedWayBackWhen),
-      trailPicture = Some(imageMedia),
-      kickerText = Some("Kicker"),
+      kickerText = Some("A kicker"),
     )
 
     val rundownPanel = TrailsToShowcase
       .asRundownPanel(
         "Rundown container name",
-        Seq(withAuthor, withAuthor, withKicker),
+        Seq(withAuthorAndKicker, withAuthorAndKicker, withAuthorAndKicker),
         "rundown-container-id",
       )
+      .get
 
-    rundownPanel should be(None)
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.size should be(3)
+    articleGroup.articles.forall(_.overline.nonEmpty) should be(true)
+    articleGroup.articles.forall(_.author.isEmpty) should be(true)
   }
 
   private def makePressedContent(
