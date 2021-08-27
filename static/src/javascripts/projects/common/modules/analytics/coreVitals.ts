@@ -2,7 +2,7 @@ import { getCookie, log } from '@guardian/libs';
 import type { ReportHandler } from 'web-vitals';
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 import reportError from 'lib/report-error';
-import { forceSendMetrics, setForceSendMetrics } from './forceSendMetrics';
+import { forceSendMetrics } from './forceSendMetrics';
 import { shouldCaptureMetrics } from './shouldCaptureMetrics';
 
 type CoreWebVitalsPayload = {
