@@ -62,8 +62,7 @@ object TrailsToShowcase {
 
       val gModule = new GModuleImpl();
       gModule.setPanel(Some("SINGLE_STORY"))
-      val kickerText = content.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
-      gModule.setOverline(kickerText)
+      gModule.setOverline(kickerFrom(content))
       addModuleTo(entry, gModule)
 
       // and add the showcase formatted asset
@@ -82,7 +81,7 @@ object TrailsToShowcase {
       addModuleTo(entry, atomModule)
 
       // Set optional fields
-      content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor).foreach { byline =>
+      bylineFrom(content).foreach { byline =>
         entry.setAuthor(byline)
       }
       entry
@@ -101,28 +100,37 @@ object TrailsToShowcase {
           mediaContent <- rundownPanelArticleMediaContentFrom(contentItem)
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
-          val kickerText =
-            contentItem.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
-
           GArticle(
             guidFor(contentItem),
             title,
             webUrl(contentItem),
             webPublicationDate,
             lastModified,
-            kickerText,
+            bylineFrom(contentItem),
+            kickerFrom(contentItem),
             Some(mediaContent),
           )
         }
       }
       // We require exactly 3 articles for a valid rundown panel
       Some(validArticles.take(3)).filter(_.size == 3).flatMap { articles =>
+        // If an author is used on any article it must be used on all of them
         // If a kicker is used on any article it must be used on all of them
+        val authorUsed = articles.exists(_.author.nonEmpty)
         val kickerUsed = articles.exists(_.overline.nonEmpty)
-        if (kickerUsed && articles.exists(_.overline.isEmpty)) {
+
+        val withValidKickers = if (kickerUsed && articles.exists(_.overline.isEmpty)) {
           None
         } else {
           Some(articles)
+        }
+
+        withValidKickers.flatMap { articles =>
+          if (authorUsed && articles.exists(_.author.isEmpty)) {
+            None
+          } else {
+            Some(articles)
+          }
         }
       }
     }
@@ -191,6 +199,14 @@ object TrailsToShowcase {
   val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
   private def stripInvalidXMLCharacters(s: String) = {
     pattern.matcher(s).replaceAll("")
+  }
+
+  private def bylineFrom(content: PressedContent): Option[String] = {
+    content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
+  }
+
+  private def kickerFrom(content: PressedContent): Option[String] = {
+    content.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
   }
 
 }
@@ -306,6 +322,7 @@ case class GArticle(
     link: String,
     published: DateTime,
     updated: DateTime,
+    author: Option[String],
     overline: Option[String],
     mediaContent: Option[MediaContent],
 )
@@ -379,6 +396,12 @@ class GModuleGenerator extends ModuleGenerator {
             val linkElement = new Element("link")
             linkElement.addContent(article.link)
             articleElement.addContent(linkElement)
+
+            article.author.foreach { author =>
+              val authorElement = new Element("author")
+              authorElement.addContent(author)
+              articleElement.addContent(authorElement)
+            }
 
             article.mediaContent.map { mediaContent =>
               val mediaModule = new MediaEntryModuleImpl()
