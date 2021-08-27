@@ -6,8 +6,8 @@ import com.sun.syndication.feed.module.mediarss.io.MediaModuleGenerator
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
 import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl}
 import com.sun.syndication.io.ModuleGenerator
+import model.ImageAsset
 import model.pressed.{PressedContent, PressedTrail, Replace}
-import model.{ImageAsset, ImageMedia}
 import org.jdom.{Element, Namespace}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
@@ -158,27 +158,19 @@ object TrailsToShowcase {
   }
 
   private def singleStoryMediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
-    def cropToUse(imageMedia: ImageMedia): Option[ImageAsset] = {
-      imageMedia.largestImage.filter { imageAsset =>
-        imageAsset.width >= 640 && imageAsset.height >= 320
-      }
-    }
-
-    content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
-      trail.trailPicture.flatMap { imageMedia =>
-        cropToUse(imageMedia).flatMap { imageToUse =>
-          imageToUse.url.map { url => new MediaContent(new UrlReference(url)) }
-        }
-      }
-    }
+    def bigEnoughForSingleStoryPanel(imageAsset: ImageAsset) = imageAsset.width >= 640 && imageAsset.height >= 320
+    findBestImageFor(content, bigEnoughForSingleStoryPanel)
   }
 
   private def rundownPanelArticleMediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
-
     def bigEnoughForRundownPanel(imageAsset: ImageAsset) = imageAsset.width >= 1200 && imageAsset.height >= 900
+    findBestImageFor(content, bigEnoughForRundownPanel)
+  }
 
-    def cropToUse(imageMedia: ImageMedia): Option[ImageAsset] = imageMedia.largestImage.filter(bigEnoughForRundownPanel)
-
+  private def findBestImageFor(
+      content: PressedContent,
+      imageSizeFilter: ImageAsset => Boolean,
+  ): Option[MediaContent] = {
     // There will be a default trail image on the content attached to this trail.
     // There may also be a replacement image on the trail itself if the editor has replaced the image.
     val replacementImageAsset = content.properties.image
@@ -194,16 +186,17 @@ object TrailsToShowcase {
         }
         case _ => None
       }
-      .filter(bigEnoughForRundownPanel)
 
     val contentTrailImageAsset = content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
       trail.trailPicture.flatMap { imageMedia =>
-        cropToUse(imageMedia)
+        imageMedia.largestImage
       }
     }
 
-    Seq(replacementImageAsset, contentTrailImageAsset).flatten.headOption.flatMap { imageToUse =>
-      imageToUse.url.map { url => new MediaContent(new UrlReference(url)) }
+    // Of the available image assets take the first which is large enough and has a url
+    Seq(replacementImageAsset, contentTrailImageAsset).flatten.filter(imageSizeFilter).flatMap(_.url).headOption.map {
+      imageUrlToUse =>
+        new MediaContent(new UrlReference(imageUrlToUse))
     }
   }
 
