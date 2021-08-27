@@ -3,7 +3,6 @@
 import bean from 'bean';
 import bonzo from 'bonzo';
 import { fetchJson } from '../../../lib/fetch-json';
-import qwery from 'qwery';
 
 class ComponentError {
     constructor(message) {
@@ -237,7 +236,9 @@ class Component {
             return this.elems[elemName];
         }
 
-        const elem = qwery(this.getClass(elemName), this.elem)[0];
+        const selector = this.getClass(elemName);
+        // const elem = qwery(selector, this.elem)[0];
+        const elem = selector ? this.elem.querySelectorAll(selector)[0] : this.elem && this.elem.children[0];
 
         if (elem && this.elems) {
             this.elems[elemName] = elem;
@@ -255,7 +256,8 @@ class Component {
             className = (this.classes && this.classes[elemName]) || '';
         }
 
-        return (sansDot ? '' : '.') + className;
+        const selector = (sansDot ? '' : '.') + className;
+        return selector === '' || selector === '.' ? undefined : selector;
     }
 
     setState(state, elemName) {
