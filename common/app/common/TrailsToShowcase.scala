@@ -19,6 +19,9 @@ import scala.collection.JavaConverters._
 
 object TrailsToShowcase {
 
+  private val Rundown = "RUNDOWN"
+  private val SingleStory = "SINGLE_STORY"
+
   private val MaxLengthForSinglePanelTitle = 86
   private val MaxLengthForSinglePanelAuthor = 42
   private val MaxOverlineLength = 30
@@ -57,7 +60,7 @@ object TrailsToShowcase {
       entry.setTitle(title)
 
       val gModule = new GModuleImpl();
-      gModule.setPanel(Some("SINGLE_STORY"))
+      gModule.setPanel(Some(SingleStory))
       gModule.setOverline(kickerFrom(content))
       addModuleTo(entry, gModule)
 
@@ -144,9 +147,9 @@ object TrailsToShowcase {
       entry.setUri(id)
 
       val gModule = new GModuleImpl();
-      gModule.setPanel(Some("RUNDOWN"))
+      gModule.setPanel(Some(Rundown))
       gModule.setPanelTitle(Some(title))
-      gModule.setArticleGroup(Some(ArticleGroup(role = Some("RUNDOWN"), articles)))
+      gModule.setArticleGroup(Some(ArticleGroup(role = Some(Rundown), articles)))
       addModuleTo(entry, gModule)
       entry
     }
