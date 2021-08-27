@@ -51,7 +51,7 @@ object TrailsToShowcase {
     for {
       // Collect all mandatory values; any missing will result in a None entry
       title <- Some(stripInvalidXMLCharacters(content.header.headline)).filter(_.length <= MaxLengthForSinglePanelTitle)
-      mediaContent <- singleStoryMediaContentFrom(content)
+      imageUrl <- singleStoryImageUrlFor(content)
 
     } yield {
       entry.setTitle(title)
@@ -63,7 +63,7 @@ object TrailsToShowcase {
 
       // and add the showcase formatted asset
       val mediaModule = new MediaEntryModuleImpl()
-      mediaModule.setMediaContents(Seq(mediaContent).toArray)
+      mediaModule.setMediaContents(Seq(new MediaContent(new UrlReference(imageUrl))).toArray)
       mediaModule.setMetadata(new Metadata())
       addModuleTo(entry, mediaModule)
 
@@ -93,7 +93,7 @@ object TrailsToShowcase {
           title <- Some(stripInvalidXMLCharacters(contentItem.header.headline))
             .filter(_.nonEmpty)
             .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
-          mediaContent <- rundownPanelArticleMediaContentFrom(contentItem)
+          imageUrl <- rundownPanelArticleImageUrlFor(contentItem)
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           GArticle(
@@ -104,14 +104,14 @@ object TrailsToShowcase {
             lastModified,
             bylineFrom(contentItem),
             kickerFrom(contentItem),
-            Some(mediaContent),
+            Some(new MediaContent(new UrlReference(imageUrl))),
           )
         }
       }
       // We require exactly 3 articles for a valid rundown panel
       val threeArticlesToUse = Some(validArticles.take(3)).filter(_.size == 3)
 
-      // Ensure author and kickers are consistant with validation rules
+      // Ensure author and kickers are consistent with validation rules
       // If an author is used on any article it must be used on all of them
       // If a kicker is used on any article it must be used on all of them
       // You cannot mix authors and kickers
@@ -157,12 +157,12 @@ object TrailsToShowcase {
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
   }
 
-  private def singleStoryMediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
+  private def singleStoryImageUrlFor(content: PressedContent): Option[String] = {
     def bigEnoughForSingleStoryPanel(imageAsset: ImageAsset) = imageAsset.width >= 640 && imageAsset.height >= 320
     findBestImageFor(content, bigEnoughForSingleStoryPanel)
   }
 
-  private def rundownPanelArticleMediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
+  private def rundownPanelArticleImageUrlFor(content: PressedContent): Option[String] = {
     def bigEnoughForRundownPanel(imageAsset: ImageAsset) = imageAsset.width >= 1200 && imageAsset.height >= 900
     findBestImageFor(content, bigEnoughForRundownPanel)
   }
@@ -170,7 +170,7 @@ object TrailsToShowcase {
   private def findBestImageFor(
       content: PressedContent,
       imageSizeFilter: ImageAsset => Boolean,
-  ): Option[MediaContent] = {
+  ): Option[String] = {
     // There will be a default trail image on the content attached to this trail.
     // There may also be a replacement image on the trail itself if the editor has replaced the image.
     val replacementImageAsset = content.properties.image
@@ -194,10 +194,7 @@ object TrailsToShowcase {
     }
 
     // Of the available image assets take the first which is large enough and has a url
-    Seq(replacementImageAsset, contentTrailImageAsset).flatten.filter(imageSizeFilter).flatMap(_.url).headOption.map {
-      imageUrlToUse =>
-        new MediaContent(new UrlReference(imageUrlToUse))
-    }
+    Seq(replacementImageAsset, contentTrailImageAsset).flatten.filter(imageSizeFilter).flatMap(_.url).headOption
   }
 
   private def guidFor(content: PressedContent): String =
@@ -414,7 +411,7 @@ class GModuleGenerator extends ModuleGenerator {
               articleElement.addContent(authorElement)
             }
 
-            article.mediaContent.map { mediaContent =>
+            article.mediaContent.foreach { mediaContent =>
               val mediaModule = new MediaEntryModuleImpl()
               mediaModule.setMediaContents(Seq(mediaContent).toArray)
               mediaModule.setMetadata(new Metadata())
