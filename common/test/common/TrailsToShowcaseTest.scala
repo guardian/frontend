@@ -32,6 +32,19 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     ImageMedia(Seq(asset))
   }
 
+  val replacedImageMedia: ImageMedia = {
+    val asset = ImageAsset(
+      fields = Map(
+        "width" -> "1200",
+        "height" -> "1000",
+      ),
+      mediaType = "",
+      mimeType = Some("image/jpeg"),
+      url = Some("http://localhost/replaced-image.jpg"),
+    )
+    ImageMedia(Seq(asset))
+  }
+
   val smallImageMedia: ImageMedia = {
     val asset = ImageAsset(
       fields = Map(
@@ -221,6 +234,25 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     mediaModule.getMediaContents.size should be(1)
     mediaModule.getMediaContents.head.getReference() should be(
       new com.sun.syndication.feed.module.mediarss.types.UrlReference("http://localhost/trail.jpg"),
+    )
+  }
+
+  "TrailToShowcase" can "single story panels should prefer replaced images over content trail image" in {
+    val curatedContent = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      replacedImage = Some(replacedImageMedia),
+      headline = "My unique headline",
+      byline = Some("Trail byline"),
+      kickerText = Some("A Kicker"),
+    )
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
+    val mediaModule = singleStoryPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
+    mediaModule.getMediaContents.size should be(1)
+    mediaModule.getMediaContents.head.getReference() should be(
+      new com.sun.syndication.feed.module.mediarss.types.UrlReference("http://localhost/replaced-image.jpg"),
     )
   }
 
@@ -592,6 +624,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate: Option[DateTime] = None,
       lastModified: Option[DateTime] = None,
       trailPicture: Option[ImageMedia] = None,
+      replacedImage: Option[ImageMedia] = None,
       headline: String = "A headline",
       byline: Option[String] = None,
       kickerText: Option[String] = None,
