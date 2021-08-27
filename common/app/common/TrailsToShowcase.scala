@@ -6,7 +6,7 @@ import com.sun.syndication.feed.module.mediarss.io.MediaModuleGenerator
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
 import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl}
 import com.sun.syndication.io.ModuleGenerator
-import model.pressed.{PressedContent, PressedTrail}
+import model.pressed.{PressedContent, PressedTrail, Replace}
 import model.{ImageAsset, ImageMedia}
 import org.jdom.{Element, Namespace}
 import org.joda.time.DateTime
@@ -174,18 +174,36 @@ object TrailsToShowcase {
   }
 
   private def rundownPanelArticleMediaContentFrom(content: PressedContent): Option[MediaContent] = { // TODO Too early to be passing RSS classes
-    def cropToUse(imageMedia: ImageMedia): Option[ImageAsset] = {
-      imageMedia.largestImage.filter { imageAsset =>
-        imageAsset.width >= 1200 && imageAsset.height >= 900
+
+    def bigEnoughForRundownPanel(imageAsset: ImageAsset) = imageAsset.width >= 1200 && imageAsset.height >= 900
+
+    def cropToUse(imageMedia: ImageMedia): Option[ImageAsset] = imageMedia.largestImage.filter(bigEnoughForRundownPanel)
+
+    // There will be a default trail image on the content attached to this trail.
+    // There may also be a replacement image on the trail itself if the editor has replaced the image.
+    val replacementImageAsset = content.properties.image
+      .flatMap {
+        case replace: Replace => {
+          val empty = Map(
+            "width" -> replace.imageSrcWidth,
+            "height" -> replace.imageSrcHeight,
+          )
+          Some(
+            ImageAsset(url = Some(replace.imageSrc), mimeType = None, mediaType = "", fields = empty),
+          ) // TODO incomplete mapping
+        }
+        case _ => None
+      }
+      .filter(bigEnoughForRundownPanel)
+
+    val contentTrailImageAsset = content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
+      trail.trailPicture.flatMap { imageMedia =>
+        cropToUse(imageMedia)
       }
     }
 
-    content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
-      trail.trailPicture.flatMap { imageMedia =>
-        cropToUse(imageMedia).flatMap { imageToUse =>
-          imageToUse.url.map { url => new MediaContent(new UrlReference(url)) }
-        }
-      }
+    Seq(replacementImageAsset, contentTrailImageAsset).flatten.headOption.flatMap { imageToUse =>
+      imageToUse.url.map { url => new MediaContent(new UrlReference(url)) }
     }
   }
 
