@@ -8,7 +8,7 @@ import scala.io.Source
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-object InteractiveImmersiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
+object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
 
   override def canClean(document: Document): Boolean = {
     !document.getElementsByClass("is-immersive-interactive").isEmpty() &&

@@ -86,9 +86,13 @@ object InteractiveLibrarian extends GuLogging {
     val cleaners =
       Seq(InteractiveImmersiveHtmlCleaner)
     val parsedDoc = Jsoup.parse(document)
+
+    // In the clean function below we hardcode argument convertToHttps to false.
+    // Interactive immersives use http links to, for example, ensure svgs load,
+    // so we don't want to force these links to be relative.
     val doc: Document = cleaners
       .find(_.canClean(parsedDoc))
-      .map(_.clean(parsedDoc, true))
+      .map(_.clean(parsedDoc, false))
       .getOrElse(parsedDoc)
     doc.toString
   }

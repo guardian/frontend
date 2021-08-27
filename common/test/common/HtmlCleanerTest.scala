@@ -31,7 +31,7 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, false)
     cleanedDoc.getElementsByClass("top-banner-ad-container").isEmpty should be(true)
   }
 
@@ -43,15 +43,10 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val want = Jsoup.parse("""<html>
-               |<head>
-               |<script>window.guardian.config.page.shouldHideReaderRevenue=true</script>
-               |</head>
-               |<body>
-               |</body>
-               |</html>""".stripMargin).toString
-
-    InteractiveImmersiveHtmlCleaner.clean(doc, true).toString should equal(want)
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, false)
+    cleanedDoc.getElementsByTag("script").text() should equal(
+      "window.guardian.config.page.shouldHideReaderRevenue=true",
+    )
   }
 
   it should "have reader revenue callouts in the header removed" in {
@@ -67,7 +62,7 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, false)
 
     cleanedDoc.getElementsByClass("new-header__cta-bar").isEmpty should be(true)
   }
@@ -89,7 +84,7 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, false)
 
     cleanedDoc.getElementsByAttributeValue("data-link-name", "footer : contribute-cta").isEmpty should be(true)
     cleanedDoc.getElementsByAttributeValue("data-link-name", "footer : subscribe-cta").isEmpty should be(true)
@@ -104,7 +99,7 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, false)
     val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
 
     cleanedDoc.getElementsByTag("body").first().text() should equal(
@@ -122,7 +117,7 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |</body>
               |</html>""".stripMargin)
 
-    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, true)
+    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, false)
 
     cleanedDoc.getElementsByClass("footer__email-container").isEmpty should be(true)
   }
