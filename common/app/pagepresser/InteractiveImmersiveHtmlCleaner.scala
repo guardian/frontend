@@ -16,19 +16,17 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
   }
 
   override def clean(document: Document, convertToHttps: Boolean): Document = {
+    clean(document, convertToHttps, LocalDateTime.now())
+  }
+
+  def clean(document: Document, convertToHttps: Boolean, now: LocalDateTime): Document = {
     universalClean(document)
     removeTopBannerAds(document)
     removeReaderRevenueCallouts(document)
     removeEmailSignup(document)
-    removeScripts(document)
     removeByTagName(document, "noscript")
     if (convertToHttps) secureDocument(document)
-    addExtraCopyToDocument(document)
-  }
-
-  override def removeScripts(document: Document): Document = {
-    // TODO: decide how to handle scripts
-    document
+    addExtraCopyToDocument(document, now)
   }
 
   def removeTopBannerAds(document: Document): Document = {
@@ -60,7 +58,6 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
       .asScala
       .foreach(_.remove())
 
-    // TODO: improve this?
     document
       .getElementsByClass("cta-bar__text")
       .asScala
@@ -79,9 +76,9 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
     removeByClass(document, "footer__email-container")
   }
 
-  def addExtraCopyToDocument(document: Document): Document = {
+  def addExtraCopyToDocument(document: Document, now: LocalDateTime): Document = {
     val el = new Element("p")
-    val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+    val date = now.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
     el.html(s"<i>This article was archived on ${date}. Some elements may be out of date.</i>")
 
     val footers = document.getElementsByTag("footer")
