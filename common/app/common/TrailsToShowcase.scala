@@ -200,8 +200,7 @@ object TrailsToShowcase {
     Seq(replacementImageAsset, contentTrailImageAsset).flatten.filter(imageSizeFilter).flatMap(_.url).headOption
   }
 
-  private def guidFor(content: PressedContent): String =
-    "http://www.theguardian.com" + content.header.url // As per Trail RSS
+  private def guidFor(content: PressedContent): String = webUrl(content)
 
   private def webUrl(content: PressedContent): String =
     "https://www.theguardian.com" + content.header.url // TODO duplicate with RSS

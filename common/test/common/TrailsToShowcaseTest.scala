@@ -137,8 +137,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanels.size should be(1)
 
     val singleStoryPanel = singleStoryPanels.head
-    // (singleStoryPanel \ "guid").text should be("https://www.theguardian.com/an-articlce") // TODO Correct?
     (singleStoryPanel \ "title").text should be("A headline")
+    (singleStoryPanel \ "guid").text should be(
+      "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
+    )
     (singleStoryPanel \ "link").text should be(
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
     )
@@ -177,7 +179,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val rundownArticle = articles.head
     (rundownArticle \ "guid").text should be(
-      "http://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
+      "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
     )
     (rundownArticle \ "title").text should be("A headline")
     (rundownArticle \ "link").text should be(
@@ -305,7 +307,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     firstItemInArticleGroup.link should be(
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
     )
-    // firstItemInArticleGroup.guid should be("http://www.theguardian.com/a") //TODO
+    firstItemInArticleGroup.guid should be(
+      "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
+    )
     firstItemInArticleGroup.published should be(wayBackWhen)
     firstItemInArticleGroup.updated should be(lastModifiedWayBackWhen)
     firstItemInArticleGroup.overline should be(Some("A Kicker"))
