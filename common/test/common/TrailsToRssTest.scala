@@ -49,7 +49,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   }
 
   "TrailsToRss" should "use link as the item guid as thats what we did for pressed fronts for along time" in {
-    val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
+    val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
     val item =  (rss \ "channel" \ "item").head
     (item \ "link").text should be ("https://www.theguardian.com/a")
     (item \ "guid").text should be ("http://www.theguardian.com/a")
