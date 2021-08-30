@@ -101,14 +101,21 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailsToShowcase" can "render feed with Single Story and Rundown panels" in {
-    val content = makePressedContent(
+    val singleStoryContent = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      byline = Some("Trail byline"),
+      kickerText = Some("Kicker"),
+    )
+    val rundownArticleContent = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
       byline = Some("Trail byline"),
     )
-    val singleStoryTrails = Seq(content)
-    val rundownTrails = Seq(content, content, content)
+    val singleStoryTrails = Seq(singleStoryContent)
+    val rundownTrails = Seq(rundownArticleContent, rundownArticleContent, rundownArticleContent)
 
     val rss = XML.loadString(
       TrailsToShowcase(
@@ -138,6 +145,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     (singleStoryPanel \ "creator").filter(_.prefix == "dc").head.text should be(
       "Trail byline",
     ) // TODO should be <author> in Google Showcase docs
+    // Single story panels are allowed to have author and kicker at the same time
+    (singleStoryPanel \ "overline").filter(_.prefix == "g").head.text should be(
+      "Kicker",
+    )
+
     (singleStoryPanel \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
     (singleStoryPanel \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
 

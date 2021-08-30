@@ -384,6 +384,11 @@ class GModuleGenerator extends ModuleGenerator {
           panelElement.addContent(panel)
           element.addContent(panelElement)
         }
+        gModule.getOverline.foreach { overline =>
+          val overlineElement = new org.jdom.Element("overline", NS)
+          overlineElement.addContent(overline)
+          element.addContent(overlineElement)
+        }
         gModule.getArticleGroup.foreach { articleGroup =>
           val articleGroupElement = new org.jdom.Element("article_group", NS)
           val roleElement = new org.jdom.Element("role", NS)
