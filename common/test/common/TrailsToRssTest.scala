@@ -30,11 +30,12 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   lazy val content = Seq(
     testContent(
       "a",
+      "https://www.theguardian.com/a",
       standfirst = Some("The standfist"),
       body = Some("<p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p>"),
       bodyBlockTextElements = Some(Seq("<p>Paragraph 1</p>", "<p>Paragraph 2</p>", "<p>Paragraph 3</p>")),
     ),
-    testContent("b"),
+    testContent("b", "https://www.theguardian.com/b"),
   )
 
   "TrailsToRss" should "produce a valid RSS feed" in {
@@ -45,6 +46,13 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   "TrailsToRss" should "create an RSS entry per given trail" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
     (rss \ "channel" \ "item").size should be(2)
+  }
+
+  "TrailsToRss" should "use link as the item guid as thats what we did for pressed fronts for along time" in {
+    val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
+    val item =  (rss \ "channel" \ "item").head
+    (item \ "link").text should be ("https://www.theguardian.com/a")
+    (item \ "guid").text should be ("http://www.theguardian.com/a")
   }
 
   "TrailsToRss" should "produce a item description from each trail made up of the standfirst, an intro extracted from the first 2 paragraphs of the body and a read more prompt" in {
@@ -60,7 +68,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       scala.io.Source.fromFile(getClass.getClassLoader.getResource("liveblog-standfirst.html").getFile).mkString
     val liveblogBody =
       scala.io.Source.fromFile(getClass.getClassLoader.getResource("liveblog-body.html").getFile).mkString
-    val trail = testContent("a", standfirst = Some(liveblogStandfirst), body = Some(liveblogBody))
+    val trail = testContent("a", "https://www.theguardian.com/a", standfirst = Some(liveblogStandfirst), body = Some(liveblogBody))
     val liveblogTrails = Seq(trail)
 
     val rss = XML.loadString(TrailsToRss(Option("foo"), liveblogTrails)(request))
@@ -78,7 +86,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       TrailsToRss(
         Option("foo"),
         Seq(
-          testContent("h", customTitle = Some("\u0000LOL")),
+          testContent("h", webUrl = "https://www.theguardian.com/h", customTitle = Some("\u0000LOL")),
         ),
       )(request),
     ) shouldBe true
@@ -89,11 +97,11 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       TrailsToRss(
         Option("foo"),
         Seq(
-          testContent("c", customTitle = Some("TV & Radio")),
-          testContent("d", customTitle = Some("Scala < Haskell")),
-          testContent("e", customTitle = Some("Scala > JavaScript")),
-          testContent("f", customTitle = Some("Let's get a pizza")),
-          testContent("g", customTitle = Some(""" "No, let's not." """)),
+          testContent("c", webUrl = "https://www.theguardian.com/c", customTitle = Some("TV & Radio")),
+          testContent("d", webUrl = "https://www.theguardian.com/d", customTitle = Some("Scala < Haskell")),
+          testContent("e", webUrl = "https://www.theguardian.com/e", customTitle = Some("Scala > JavaScript")),
+          testContent("f", webUrl = "https://www.theguardian.com/f", customTitle = Some("Let's get a pizza")),
+          testContent("g", webUrl = "https://www.theguardian.com/g", customTitle = Some(""" "No, let's not." """)),
         ),
       )(request),
     ) shouldBe true
@@ -111,7 +119,8 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     }.isSuccess
 
   private def testContent(
-      url: String,
+      id: String,
+      webUrl: String,
       customTitle: Option[String] = None,
       standfirst: Option[String] = None,
       body: Option[String] = None,
@@ -124,10 +133,10 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     }
 
     val contentItem = ApiContent(
-      id = url,
+      id = id,
       sectionId = None,
       sectionName = None,
-      webUrl = "",
+      webUrl = webUrl,
       apiUrl = "",
       webPublicationDate = Some(offsetDate.toCapiDateTime),
       elements = None,
