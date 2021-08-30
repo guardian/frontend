@@ -52,7 +52,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
     val item =  (rss \ "channel" \ "item").head
     (item \ "link").text should be ("https://www.theguardian.com/a")
-    (item \ "guid").text should be ("http://www.theguardian.com/a")
+    (item \ "guid").text should be ("http://www.theguardian.com/a") // TODO this is not been applied to press page feeds
   }
 
   "TrailsToRss" should "produce a item description from each trail made up of the standfirst, an intro extracted from the first 2 paragraphs of the body and a read more prompt" in {
