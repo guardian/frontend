@@ -39,22 +39,11 @@ class MetaDataTest extends FlatSpec with Matchers {
     references = Nil,
   )
 
-  val ukWeatherTag = ApiTag(
-    id = "uk/weather",
-    `type` = TagType.Keyword,
-    webTitle = "",
-    sectionId = None,
-    sectionName = None,
-    webUrl = "",
-    apiUrl = "apiurl",
-    references = Nil,
-  )
-
   val cutoffDate = new DateTime("2017-07-03T12:00:00.000Z")
   val dateBeforeCutoff = new DateTime("2017-07-02T12:00:00.000Z")
   val dateAfterCutoff = new DateTime("2017-07-04T12:00:00.000Z")
   val dateBeforeHttpsMigration = new DateTime("2013-07-02T12:00:00.000Z")
-  val dateAfterWeStartedAdvertistingHttpsUrlsToFacebook = new DateTime("2021-11-02T12:00:00.000Z")
+  val dateAfterWeStartedAdvertistingHttpsUrlsToFacebook = MetaData.StartDateForHttpsFacebookUrls.plusWeeks(2)
 
   private def contentApi(
       shouldHideReaderRevenue: Option[Boolean] = None,
@@ -162,7 +151,6 @@ class MetaDataTest extends FlatSpec with Matchers {
       publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
       firstPublicationDate = Some(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook),
       webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals",
-      tag = ukWeatherTag,
     )
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
@@ -179,7 +167,6 @@ class MetaDataTest extends FlatSpec with Matchers {
       publicationDate = dateBeforeHttpsMigration,
       firstPublicationDate = Some(dateBeforeHttpsMigration),
       webUrl = "https://www.theguardian.com/football/2013/jan/16/top-flight-team-conceded-most-goals",
-      tag = ukWeatherTag,
     )
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
@@ -196,7 +183,6 @@ class MetaDataTest extends FlatSpec with Matchers {
       publicationDate = dateAfterWeStartedAdvertistingHttpsUrlsToFacebook,
       firstPublicationDate = None,
       webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals",
-      tag = ukWeatherTag,
     )
     val fields = Fields.make(content)
     val metaData = MetaData.make(fields, content)
