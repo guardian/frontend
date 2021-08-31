@@ -23,6 +23,7 @@ import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
 import navigation.GuardianFoundationHelper
 import services.newsletters.{NewsletterResponse}
+import org.joda.time.DateTimeZone
 
 import scala.util.matching.Regex
 import utils.ShortUrls
@@ -154,6 +155,7 @@ object MetaData {
       twitterPropertiesOverrides: Map[String, String] = Map(),
       commercial: Option[CommercialProperties] = None,
       isFoundation: Boolean = false,
+      firstPublicationDate: Option[DateTime] = None,
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -182,6 +184,8 @@ object MetaData {
       isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides,
       commercial = commercial,
+      isFoundation = isFoundation,
+      firstPublicationDate = firstPublicationDate,
     )
   }
 
@@ -191,6 +195,9 @@ object MetaData {
     val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
     val contentFormat: ContentFormat = ContentFormat(apiContent.design, apiContent.theme, apiContent.display)
+
+    // We have permission from Audience to test on UK Weather articles; losing counts if we need to
+    val isFacebookHttpsTest = apiContent.tags.exists(t => t.id == "uk/weather")
 
     MetaData(
       id = id,
@@ -215,6 +222,8 @@ object MetaData {
       commercial = Some(CommercialProperties.fromContent(apiContent)),
       sensitive = fields.sensitive.getOrElse(false),
       isFoundation = Tags.make(apiContent).isFoundation,
+      firstPublicationDate = fields.firstPublicationDate,
+      isFacebookHttpsTest = isFacebookHttpsTest,
     )
   }
 }
@@ -334,6 +343,8 @@ final case class MetaData(
     isNewRecipeDesign: Boolean = false,
     sensitive: Boolean = false,
     isFoundation: Boolean = false,
+    firstPublicationDate: Option[DateTime] = None,
+    isFacebookHttpsTest: Boolean = false,
 ) {
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
@@ -381,8 +392,23 @@ final case class MetaData(
     )
 
   def opengraphProperties: Map[String, String] = {
-    // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
-    def ogUrl = webUrl.replaceFirst("^https:", "http:")
+    val shouldAdvertiseHttpsUrlToFacebook = firstPublicationDate.exists { firstPublished =>
+      // When we migrated to https in 2016 we kept all og:urls as http to preserve engagement counts.
+      // In 2021 at Facebook's request we began advertising https urls for newly published content
+      // Any page which was able to supply a known first publication date with it's page meta data can benefit from this.
+
+      val startDateForArticleHttpsFacebookUrls = new DateTime(2021, 8, 9, 9, 0, 0).withZone(DateTimeZone.UTC)
+      firstPublished.isAfter(startDateForArticleHttpsFacebookUrls) && isFacebookHttpsTest
+    }
+
+    val webUrlToAdvertise = if (shouldAdvertiseHttpsUrlToFacebook) {
+      webUrl
+    } else {
+      // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
+      webUrl.replaceFirst("^https:", "http:")
+    }
+
+    def ogUrl = webUrlToAdvertise
 
     Map(
       "og:site_name" -> "the Guardian",
