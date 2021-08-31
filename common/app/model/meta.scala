@@ -22,10 +22,11 @@ import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
 import navigation.GuardianFoundationHelper
-import org.joda.time.DateTimeZone
 
 import scala.util.matching.Regex
 import utils.ShortUrls
+
+import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
 
 object Commercial {
 
@@ -129,7 +130,7 @@ final case class Fields(
 
 object MetaData {
 
-  val StartDateForHttpsFacebookUrls: DateTime = new DateTime(2021, 9, 3, 12, 0, 0).withZone(DateTimeZone.UTC)
+  val StartDateForHttpsFacebookUrls: OffsetDateTime = OffsetDateTime.of(2021, 9, 3, 12, 0, 0, 0, ZoneOffset.UTC)
 
   def make(
       id: String,
@@ -392,7 +393,8 @@ final case class MetaData(
       // When we migrated to https in 2016 we kept all og:urls as http to preserve engagement counts.
       // In 2021 at Facebook's request we began advertising https urls for newly published content
       // Any page which was able to supply a known first publication date with it's page meta data can benefit from this.
-      firstPublished.isAfter(MetaData.StartDateForHttpsFacebookUrls)
+      val firstPublishedLocalDateTime = firstPublished.date.toInstant.atZone(ZoneId.systemDefault()).toLocalDateTime
+      firstPublishedLocalDateTime.isAfter(MetaData.StartDateForHttpsFacebookUrls.toLocalDateTime)
     }
 
     val webUrlToAdvertise = if (shouldAdvertiseHttpsUrlToFacebook) {
