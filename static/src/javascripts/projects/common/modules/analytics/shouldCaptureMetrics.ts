@@ -11,8 +11,8 @@ const serverSideTests: string[] = [
 
 /**
  * Function to check wether metrics should be captured for the current page
- * @param tests - optional array of ABTest to check against, default to above.
- * @returns true if the user is in a one of a set of client or server-side tests
+ * @param tests - optional array of ABTest to check against.
+ * @returns {boolean} whether the user is in a one of a set of client or server-side tests
  * for which we want to always capture metrics.
  */
 const shouldCaptureMetrics = (tests = defaultClientSideTests): boolean => {
