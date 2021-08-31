@@ -3,11 +3,7 @@ import { getSynchronousTestsToRun } from '../experiments/ab';
 import { commercialPartner } from '../experiments/tests/commercial-partner';
 
 const defaultClientSideTests: ABTest[] = [commercialPartner];
-const serverSideTests: string[] = [
-	'topAboveNavHeight150Variant',
-	'topAboveNavHeight200Variant',
-	'topAboveNavHeight250Variant',
-];
+const serverSideTests: string[] = [];
 
 /**
  * Function to check wether metrics should be captured for the current page
