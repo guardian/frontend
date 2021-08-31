@@ -7,7 +7,7 @@ import com.sun.syndication.feed.module.mediarss.types.{Credit, MediaContent, Met
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import model._
-import model.liveblog.{Blocks, BodyBlock, TextBlockElement}
+import model.liveblog.{Blocks, TextBlockElement}
 import model.pressed.PressedStory
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
@@ -281,7 +281,10 @@ object TrailsToRss extends implicits.Collections {
             case _                      => None
           }
           .take(2)
-        elementHtml.mkString
+
+        // Then apply the long standing paragraph extraction as text elements can contain more than 1 paragraph
+        val sumOfFirstTextElements = elementHtml.mkString
+        Jsoup.parseBodyFragment(sumOfFirstTextElements).select("p:lt(2)").toArray.map(_.toString).mkString("")
       }
       .getOrElse("")
   }
