@@ -1,18 +1,12 @@
 // total_hours_spent_maintaining_this = 72
 
-import qwery from 'qwery';
 import bean from 'bean';
 import fastdom from '../../../lib/fastdom-promise';
 import mediator from '../../../lib/mediator';
 import { memoize } from 'lodash-es';
 
-
-
-
-
-
-
-
+const query = (selector, context) =>
+    [...(context ?? document).querySelectorAll(selector)];
 
 // maximum time (in ms) to wait for images to be loaded and rich links
 // to be upgraded
@@ -46,7 +40,7 @@ const getFuncId = (rules) =>
     rules.bodySelector || 'document';
 
 const onImagesLoaded = memoize((rules) => {
-    const notLoaded = qwery('img', rules.body).filter(
+    const notLoaded = query('img', rules.body).filter(
         img => !img.complete
     );
 
@@ -67,7 +61,7 @@ const onImagesLoaded = memoize((rules) => {
 
 const onRichLinksUpgraded = memoize(
     (rules) =>
-        qwery('.element-rich-link--not-upgraded', rules.body).length === 0
+        query('.element-rich-link--not-upgraded', rules.body).length === 0
             ? Promise.resolve()
             : new Promise(resolve => {
                   mediator.once('rich-link:loaded', resolve);
@@ -77,7 +71,7 @@ const onRichLinksUpgraded = memoize(
 
 const onInteractivesLoaded = memoize(
     (rules) => {
-        const notLoaded = qwery(
+        const notLoaded = query(
             '.element-interactive',
             rules.body
         ).filter(
@@ -267,7 +261,7 @@ const getCandidates = (
     rules,
     exclusions
 ) => {
-    let candidates = qwery(
+    let candidates = query(
         rules.bodySelector + rules.slotSelector
     );
     if (rules.fromBottom) {
@@ -321,7 +315,7 @@ const getMeasurements = (
     const opponents = rules.selectors
         ? Object.keys(rules.selectors).map(selector => [
               selector,
-              qwery(rules.bodySelector + selector),
+              query(rules.bodySelector + selector),
           ])
         : null;
 
