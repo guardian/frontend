@@ -2,11 +2,7 @@ import type { ABTest } from '@guardian/ab-core';
 import { getSynchronousTestsToRun } from '../experiments/ab';
 
 const defaultClientSideTests: ABTest[] = [];
-const serverSideTests: string[] = [
-	'topAboveNavHeight150Variant',
-	'topAboveNavHeight200Variant',
-	'topAboveNavHeight250Variant',
-];
+const serverSideTests: string[] = [];
 
 /**
  * Function to check wether metrics should be captured for the current page
