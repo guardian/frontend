@@ -1,8 +1,7 @@
 import type { ABTest } from '@guardian/ab-core';
 import { getSynchronousTestsToRun } from '../experiments/ab';
-import { commercialPartner } from '../experiments/tests/commercial-partner';
 
-const defaultClientSideTests: ABTest[] = [commercialPartner];
+const defaultClientSideTests: ABTest[] = [];
 const serverSideTests: string[] = [];
 
 /**

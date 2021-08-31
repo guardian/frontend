@@ -23,14 +23,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2021, 12, 1)),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-commercial-partner",
-    "Test commercial partner that tracks metrics",
-    owners = Seq(Owner.withGithub("mxdvl")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 9, 1)),
-    exposeClientSide = true,
-  )
 }
