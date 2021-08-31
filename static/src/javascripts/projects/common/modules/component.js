@@ -237,14 +237,17 @@ class Component {
         }
 
         const selector = this.getClass(elemName);
-        // Previously we used the qwery library to select elements from the DOM.
+        // Previously we used the qwery library to select elements from the DOM
         // The method signature of qwery is: `qwery(selector, context)`
+        // qwery defaults context to document
+        const context = this.elem ?? document;
         // The previous code was: `const elem = qwery(selector, this.elem)[0];`
-        // qwery has a quirk in that it accepts invalid selectors and
-        // returns the children of context node (i.e. this.elem).
-        // We kept this behaviour to maintain backwards compatibility
+        // qwery has a quirk in the case of an invalid selector it returns
+        // the children of the context node (i.e. this.elem)
+        // querySelectorAll will however throw an exception
+        // We kept the qwery behaviour to maintain backwards compatibility
         const elem = selector ?
-            this.elem.querySelectorAll(selector)[0] : this.elem && this.elem.children[0];
+            context.querySelectorAll(selector)[0] : context.children[0];
 
         if (elem && this.elems) {
             this.elems[elemName] = elem;
