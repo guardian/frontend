@@ -82,6 +82,13 @@
  */
 
 .top-banner-ad-container {
+
+    // Don’t show below tablet
+    // On mobile, top-above-nav is inline
+    @include mq($until: tablet) {
+        display: none !important;
+    }
+
     background-color: $brightness-100;
     border-bottom: 1px solid $brightness-86;
 
