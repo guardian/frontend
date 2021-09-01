@@ -88,8 +88,8 @@
     min-height: 250px + 24px;
     padding-bottom: $gs-row-height / 2;
     display: flex;
-    flex-wrap: wrap;
-    align-content: center;
+    flex-direction: column;
+    justify-content: center;
 
     // Needed for compatibility with IE11/Edge.
     top: 0;
