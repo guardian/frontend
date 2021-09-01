@@ -46,7 +46,7 @@ object PressedStory {
       ),
       PressedFields(
         fields.main,
-        TrailsToRss.introFromContent(model.Content.make(apiContent)).toUpperCase(), // TODO
+        TrailsToRss.introFromContent(model.Content.make(apiContent)),
         fields.standfirst,
       ),
       PressedElements(
