@@ -3,11 +3,15 @@ package common
 import com.sun.syndication.feed.module.Module
 import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
-import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl}
+import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl, SyndFeed, SyndFeedImpl}
+import com.sun.syndication.io.SyndFeedOutput
+import common.TrailsToRss.image
 import model.ImageAsset
 import model.pressed.{PressedContent, PressedTrail, Replace}
 import play.api.mvc.RequestHeader
 
+import java.io.StringWriter
+import java.util.Date
 import java.util.regex.Pattern
 import scala.collection.JavaConverters._
 import scala.collection.immutable.WrappedString
@@ -35,13 +39,10 @@ object TrailsToShowcase {
       url: Option[String] = None,
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
-    val feed = TrailsToRss.syndFeedOf(feedTitle, Seq.empty, url, description)
-
     val entries = (singleStories
       .map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)).flatten
-
-    feed.setEntries(entries.asJava)
-    TrailsToRss.asString(feed)
+    val feed = syndFeedOf(feedTitle, url, description, entries)
+    asString(feed)
   }
 
   def asSingleStoryPanel(content: PressedContent): Option[SyndEntry] = {
@@ -232,6 +233,42 @@ object TrailsToShowcase {
     } else {
       None
     }
+  }
+
+  private def syndFeedOf(
+      title: Option[String],
+      url: Option[String],
+      description: Option[String],
+      entries: Seq[SyndEntry],
+  ): SyndFeed = {
+    val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
+
+    // Feed
+    val feed = new SyndFeedImpl
+    feed.setFeedType("rss_2.0")
+    feed.setTitle(feedTitle)
+    feed.setDescription(
+      description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"),
+    )
+    feed.setLink("https://www.theguardian.com" + url.getOrElse(""))
+    feed.setLanguage("en-gb")
+    feed.setCopyright(
+      s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${RssDates
+        .getYear(new Date())}",
+    )
+    feed.setImage(image)
+    feed.setPublishedDate(new Date())
+    feed.setEncoding("utf-8")
+    feed.setEntries(entries.asJava)
+    feed
+  }
+
+  private def asString(feed: SyndFeed) = {
+    val writer = new StringWriter()
+    val output = new SyndFeedOutput()
+    output.output(feed, writer)
+    writer.close()
+    writer.toString
   }
 
   // TODO duplication
