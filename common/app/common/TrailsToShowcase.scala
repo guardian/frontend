@@ -10,6 +10,7 @@ import play.api.mvc.RequestHeader
 
 import java.util.regex.Pattern
 import scala.collection.JavaConverters._
+import scala.collection.immutable.WrappedString
 
 object TrailsToShowcase {
 
@@ -19,6 +20,8 @@ object TrailsToShowcase {
   private val MaxLengthForSinglePanelTitle = 86
   private val MaxLengthForSinglePanelAuthor = 42
   private val MaxOverlineLength = 30
+  private val MaxBulletLength = 118
+  private val MaxBulletsAllowed = 3
 
   private val MaxLengthForRundownPanelTitle = 74
   private val MaxLengthForRundownPanelArticleTitle = 64
@@ -56,6 +59,7 @@ object TrailsToShowcase {
       val gModule = new GModuleImpl();
       gModule.setPanel(Some(SingleStory))
       gModule.setOverline(kickerFrom(content))
+      gModule.setBulletList(content.card.trailText.flatMap(extractBulletsFrom))
       addModuleTo(entry, gModule)
 
       // and add the showcase formatted asset
@@ -205,6 +209,29 @@ object TrailsToShowcase {
 
   private def kickerFrom(content: PressedContent): Option[String] = {
     content.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
+  }
+
+  private def extractBulletsFrom(trailText: String): Option[BulletList] = {
+    val bulletTrailPrefix = "-"
+    val lines = new WrappedString(trailText).lines.toSeq
+
+    val proposedBulletTexts = lines
+      .map(_.stripLeading)
+      .filter { line =>
+        line.startsWith(bulletTrailPrefix)
+      }
+      .map(_.replaceFirst(bulletTrailPrefix, "").trim)
+
+    val validBulletTexts = proposedBulletTexts.filter(_.length <= MaxBulletLength)
+
+    val bulletListItemsToUse =
+      validBulletTexts.map(BulletListItem).take(MaxBulletsAllowed) // 3 is the maximum permitted number of bullets
+
+    if (bulletListItemsToUse.nonEmpty) {
+      Some(BulletList(bulletListItemsToUse))
+    } else {
+      None
+    }
   }
 
   // TODO duplication

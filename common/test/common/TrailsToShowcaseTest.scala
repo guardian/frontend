@@ -101,12 +101,19 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailsToShowcase" can "render feed with Single Story and Rundown panels" in {
+    val bulletEncodedTrailText = """
+    - Bullet 1
+     - Bullet 2
+     - Bullet 3
+    """
+
     val singleStoryContent = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
       byline = Some("Trail byline"),
       kickerText = Some("Kicker"),
+      trailText = Some(bulletEncodedTrailText),
     )
     val rundownArticleContent = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
@@ -158,6 +165,13 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val singleStoryPanelMedia = (singleStoryPanel \ "content").filter(_.prefix == "media")
     singleStoryPanelMedia.size should be(1)
     singleStoryPanelMedia.head.attribute("url").head.text shouldBe "http://localhost/trail.jpg"
+
+    // Bullet list rendering
+    val bulletListElement = (singleStoryPanel \ "bullet_list").filter(_.prefix == "g")
+    bulletListElement.nonEmpty shouldBe (true)
+    val bulletListItems = (bulletListElement \ "list_item").filter(_.prefix == "g")
+    bulletListItems.size should be(3)
+    bulletListItems.head.text should be("Bullet 1")
 
     val rundownPanel = rundownPanels.head
     val rundownPanelGuid = (rundownPanel \ "guid").head
@@ -238,6 +252,105 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     mediaModule.getMediaContents.head.getReference() should be(
       new com.sun.syndication.feed.module.mediarss.types.UrlReference("http://localhost/trail.jpg"),
     )
+  }
+
+  "TrailToShowcase" can "encode single panel bullet lists from trailtext lines" in {
+    val bulletEncodedTrailText =
+      """
+        | - Bullet 1
+        | - Bullet 2
+        | - Bullet 3
+        |""".stripMargin
+
+    val bulletedContent = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some(bulletEncodedTrailText),
+    )
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).get
+
+    val gModule = singleStoryPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    gModule.getBulletList.nonEmpty should be(true)
+    val bulletList: BulletList = gModule.getBulletList.get
+    val bulletListItems = bulletList.listItems
+    bulletListItems.size should be(3)
+    bulletListItems.head.text should be("Bullet 1")
+    bulletListItems.last.text should be("Bullet 3")
+  }
+
+  "TrailToShowcase" should "reject single story panel bullets which are too long" in {
+    val bulletEncodedTrailText =
+      """
+        | - Bullet 1
+        | - Bullet 2
+        | - Bullet 3 is way way too long because the size limit for bullets is 118 characters and this is more than that so no surprise that it's dropped
+        |""".stripMargin
+
+    val bulletedContent = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some(bulletEncodedTrailText),
+    )
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).get
+
+    val gModule = singleStoryPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    gModule.getBulletList.nonEmpty should be(true)
+    val bulletList: BulletList = gModule.getBulletList.get
+    val bulletListItems = bulletList.listItems
+    bulletListItems.size should be(2)
+    bulletListItems.head.text should be("Bullet 1")
+    bulletListItems.last.text should be("Bullet 2")
+  }
+
+  "TrailToShowcase" should "omit the bullet list if no valid bullets are found" in {
+    val bulletEncodedTrailText =
+      """
+        | - Bullet 1 is way way too long because the size limit for bullets is 118 characters and this is more than that so no surprise that it's dropped
+        | - Bullet 2 is way way too long because the size limit for bullets is 118 characters and this is more than that so no surprise that it's dropped
+        | - Bullet 3 is way way too long because the size limit for bullets is 118 characters and this is more than that so no surprise that it's dropped
+        |""".stripMargin
+
+    val bulletedContent = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some(bulletEncodedTrailText),
+    )
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).get
+
+    val gModule = singleStoryPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    gModule.getBulletList.isEmpty should be(true)
+  }
+
+  "TrailToShowcase" should "trim single story bullets to 3 at most" in {
+    val bulletEncodedTrailText =
+      """
+        | - Bullet 1
+        | - Bullet 2
+        | - Bullet 3
+        | - Bullet 4 should be dropped
+        |""".stripMargin
+
+    val bulletedContent = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some(bulletEncodedTrailText),
+    )
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).get
+
+    val gModule = singleStoryPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    gModule.getBulletList.nonEmpty should be(true)
+    val bulletList: BulletList = gModule.getBulletList.get
+    val bulletListItems = bulletList.listItems
+    bulletListItems.size should be(3)
+    bulletListItems.last.text should be("Bullet 3")
   }
 
   "TrailToShowcase" can "single story panels should prefer replaced images over content trail image" in {
@@ -653,12 +766,12 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       headline: String = "A headline",
       byline: Option[String] = None,
       kickerText: Option[String] = None,
+      trailText: Option[String] = Some("Some trail text"),
   ) = {
     val url = "/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"
     val webUrl =
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"
     val title = "A title"
-    val trailText = Some("Some trail text")
 
     // Create a maybe content with trail to present or trail image
     // This seems to be the most promising media element for a Card.

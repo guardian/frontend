@@ -10,6 +10,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
 import java.util
+import scala.collection.JavaConverters._
 
 trait RssAtomModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
   override def getUri: String = RssAtomModule.URI
@@ -70,6 +71,10 @@ trait GModule extends com.sun.syndication.feed.module.Module with Serializable w
   def getArticleGroup: Option[ArticleGroup]
 
   def setArticleGroup(articleGroup: Option[ArticleGroup])
+
+  def getBulletList: Option[BulletList]
+
+  def setBulletList(bulletList: Option[BulletList])
 }
 
 class GModuleImpl() extends GModule {
@@ -77,6 +82,7 @@ class GModuleImpl() extends GModule {
   private var panelTitle: Option[String] = None
   private var overline: Option[String] = None
   private var articleGroup: Option[ArticleGroup] = None
+  private var bulletList: Option[BulletList] = None
 
   override def getPanel: Option[String] = panel
 
@@ -94,6 +100,10 @@ class GModuleImpl() extends GModule {
 
   override def setArticleGroup(articleGroup: Option[ArticleGroup]): Unit = this.articleGroup = articleGroup
 
+  override def getBulletList: Option[BulletList] = bulletList
+
+  override def setBulletList(bulletList: Option[BulletList]): Unit = this.bulletList = bulletList
+
   override def getInterface: Class[_] = classOf[GModule]
 
   override def clone: Object = {
@@ -108,6 +118,7 @@ class GModuleImpl() extends GModule {
     setPanelTitle(source.getPanelTitle)
     setOverline(source.getOverline)
     setArticleGroup(source.getArticleGroup) // TODO copy
+    setBulletList((source.getBulletList)) // TODO copy
   }
 
 }
@@ -126,7 +137,12 @@ case class GArticle(
     overline: Option[String],
     mediaContent: Option[MediaContent],
 )
+
 case class ArticleGroup(role: Option[String], articles: Seq[GArticle])
+
+case class BulletList(listItems: Seq[BulletListItem])
+
+case class BulletListItem(text: String)
 
 class RssAtomModuleGenerator extends ModuleGenerator {
 
@@ -222,8 +238,17 @@ class GModuleGenerator extends ModuleGenerator {
 
             articleGroupElement.addContent(articleElement)
           }
-
           element.addContent(articleGroupElement)
+        }
+
+        gModule.getBulletList.foreach { bulletList =>
+          val bulletListElement = new org.jdom.Element("bullet_list", NS)
+          bulletList.listItems.foreach { listItem =>
+            val listItemElement = new org.jdom.Element("list_item", NS)
+            listItemElement.addContent(listItem.text)
+            bulletListElement.addContent(listItemElement)
+          }
+          element.addContent(bulletListElement)
         }
     }
   }
