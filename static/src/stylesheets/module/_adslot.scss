@@ -85,6 +85,12 @@
     background-color: $brightness-100;
     border-bottom: 1px solid $brightness-86;
 
+    min-height: 250px + 24px;
+    padding-bottom: $gs-row-height / 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+
     // Needed for compatibility with IE11/Edge.
     top: 0;
 
@@ -134,15 +140,15 @@
 .ad-slot--crossword-banner,
 .ad-slot--top-banner-ad-desktop {
     margin: 0 auto;
-    min-height: 250px;
-    padding-bottom: $gs-row-height / 2;
+    min-height: 90px;
+    padding-bottom: 0;
 
     @include mq($until: tablet) {
         display: none;
     }
 
     text-align: left;
-    display: table;
+    display: block;
 
     &.ad-slot--fabric {
         > .ad-slot__label {
