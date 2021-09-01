@@ -85,6 +85,7 @@
 
     // Don’t show below tablet
     // On mobile, top-above-nav is inline
+    // See also .ad-slot--top-banner-ad-desktop
     @include mq($until: tablet) {
         display: none !important;
     }
