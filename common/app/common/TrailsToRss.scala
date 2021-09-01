@@ -29,6 +29,9 @@ object RssDates {
 
 object TrailsToRss extends implicits.Collections {
 
+  // The CAPI blocks we would like consumers to request to build our item intro text from
+  val BlocksToGenerateRssIntro = "body:oldest:10"
+
   /*
     This regex pattern matches all invalid XML characters (see https://www.w3.org/TR/xml/#charsets)
     by specifying individual and ranges of valid ones in a negated set.  The final range \\u10000-\\u10FFFF

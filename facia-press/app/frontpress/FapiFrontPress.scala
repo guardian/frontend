@@ -209,7 +209,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
 
   val showFields =
     "displayHint,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalPageCode,main"
-  val showBlocks = "body:oldest:10"
+  val showBlocks = TrailsToRss.BlocksToGenerateRssIntro
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
       .showSection(true)

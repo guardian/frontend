@@ -127,7 +127,7 @@ trait Index extends ConciergeRepository with Collections {
   ): Future[Either[IndexPage, PlayResult]] = {
 
     val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
-    val blocks = if (isRss) Some("body:oldest:10") else None
+    val blocks = if (isRss) Some(TrailsToRss.BlocksToGenerateRssIntro) else None
 
     val maybeSection = sectionsLookUp.get(path)
 
