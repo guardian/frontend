@@ -1,17 +1,17 @@
 import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 
 export const initHostedVideo = (): Promise<void> => {
-	const youtubeIframe: NodeListOf<HTMLElement> = document.querySelectorAll(
-		'.js-hosted-youtube-video',
+	const playerContainers: NodeListOf<HTMLElement> = document.querySelectorAll(
+		'div.js-hosted-youtube-video',
 	);
 
-	if (!youtubeIframe.length) {
+	if (!playerContainers.length) {
 		// Halt execution if there are no video containers on the page.
 		return Promise.resolve();
 	}
 
-	void new Promise(() => {
-		Array.from(youtubeIframe).forEach(initHostedYoutube);
+	return new Promise((resolve) => {
+		Array.from(playerContainers).forEach(initHostedYoutube);
+		resolve();
 	});
-	return Promise.resolve();
 };
