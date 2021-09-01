@@ -1,36 +1,75 @@
 package common
 
-import java.time.ZoneOffset
-
+import com.gu.contentapi.client.model.v1.{
+  Block,
+  BlockAttributes,
+  BlockElement,
+  Blocks,
+  ContentFields,
+  ElementType,
+  TextElementFields,
+  Content => ApiContent,
+}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import implicits.Dates.jodaToJavaInstant
+import model._
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
-import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
-import implicits.Dates.jodaToJavaInstant
-import model.Trail
 
+import java.time.ZoneOffset
+import java.util.UUID
 import scala.util.Try
 import scala.xml._
 
 class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   val request = FakeRequest()
-  lazy val trails = Seq(testTrail("a"), testTrail("b"))
+
+  lazy val content = Seq(
+    testContent(
+      "a",
+      standfirst = Some("The standfist"),
+      body = Some("<p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p>"),
+      bodyBlockTextElements = Some(Seq("<p>Paragraph 1</p>", "<p>Paragraph 2</p>", "<p>Paragraph 3</p>")),
+    ),
+    testContent("b"),
+  )
 
   "TrailsToRss" should "produce a valid RSS feed" in {
-    val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
+    val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
     (rss \ "channel" \ "title").text should be("foo | The Guardian")
   }
 
   "TrailsToRss" should "create an RSS entry per given trail" in {
-    val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
+    val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
     (rss \ "channel" \ "item").size should be(2)
   }
 
+  "TrailsToRss" should "produce a item description from each trail made up of the standfirst, an intro extracted from the first 2 paragraphs of the body and a read more prompt" in {
+    val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
+    val firstTrailDescription = (rss \ "channel" \ "item" \ "description").head.text
+    firstTrailDescription should be(
+      "The standfist<p>Paragraph 1</p><p>Paragraph 2</p> <a href=\"\">Continue reading...</a>",
+    )
+  }
+
+  "TrailsToRss" should "produce live blog item descriptions which have reasonable sizes similar to normal articles" in {
+    val liveblogStandfirst =
+      scala.io.Source.fromFile(getClass.getClassLoader.getResource("liveblog-standfirst.html").getFile).mkString
+    val liveblogBody =
+      scala.io.Source.fromFile(getClass.getClassLoader.getResource("liveblog-body.html").getFile).mkString
+    val trail = testContent("a", standfirst = Some(liveblogStandfirst), body = Some(liveblogBody))
+    val liveblogTrails = Seq(trail)
+
+    val rss = XML.loadString(TrailsToRss(Option("foo"), liveblogTrails)(request))
+    val firstTrailDescription = (rss \ "channel" \ "item" \ "description").head.text
+    firstTrailDescription.size < 5000 shouldBe (true)
+  }
+
   "TrailsToRss" should "not strip valid Unicode characters from XML" in {
-    val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
+    val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
     (rss \\ "item" \\ "title")(1).text should be("hello …")
   }
 
@@ -39,7 +78,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       TrailsToRss(
         Option("foo"),
         Seq(
-          testTrail("h", customTitle = Some("\u0000LOL")),
+          testContent("h", customTitle = Some("\u0000LOL")),
         ),
       )(request),
     ) shouldBe true
@@ -50,18 +89,18 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       TrailsToRss(
         Option("foo"),
         Seq(
-          testTrail("c", customTitle = Some("TV & Radio")),
-          testTrail("d", customTitle = Some("Scala < Haskell")),
-          testTrail("e", customTitle = Some("Scala > JavaScript")),
-          testTrail("f", customTitle = Some("Let's get a pizza")),
-          testTrail("g", customTitle = Some(""" "No, let's not." """)),
+          testContent("c", customTitle = Some("TV & Radio")),
+          testContent("d", customTitle = Some("Scala < Haskell")),
+          testContent("e", customTitle = Some("Scala > JavaScript")),
+          testContent("f", customTitle = Some("Let's get a pizza")),
+          testContent("g", customTitle = Some(""" "No, let's not." """)),
         ),
       )(request),
     ) shouldBe true
   }
 
   "TrailsToRss" should "should include published date and byline" in {
-    val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
+    val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
     (rss \\ "item" \\ "creator").filter(_.prefix == "dc").head.text should be("Chadders")
     (rss \\ "item" \\ "pubDate").size should be(2)
   }
@@ -71,9 +110,18 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       scala.xml.XML.loadString(s)
     }.isSuccess
 
-  def testTrail(url: String, customTitle: Option[String] = None): Trail = {
-
+  private def testContent(
+      url: String,
+      customTitle: Option[String] = None,
+      standfirst: Option[String] = None,
+      body: Option[String] = None,
+      bodyBlockTextElements: Option[Seq[String]] = None,
+  ): Content = {
     val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+
+    val blocks = bodyBlockTextElements.map { htmls =>
+      textElementRequestedBodyBlocksFor(htmls, "body:oldest:10")
+    }
 
     val contentItem = ApiContent(
       id = url,
@@ -84,9 +132,47 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       webPublicationDate = Some(offsetDate.toCapiDateTime),
       elements = None,
       webTitle = customTitle getOrElse "hello …",
-      fields = Some(ContentFields(liveBloggingNow = Some(true), byline = Some("Chadders"))),
+      fields = Some(
+        ContentFields(liveBloggingNow = Some(true), byline = Some("Chadders"), standfirst = standfirst, body = body),
+      ),
+      blocks = blocks,
     )
-    model.Content(contentItem).trail
+    model.Content(contentItem).content
+  }
+
+  private def textElementRequestedBodyBlocksFor(htmls: Seq[String], requestedBlocks: String) = {
+    val textElements = htmls.map { html =>
+      BlockElement(
+        `type` = ElementType.Text,
+        textTypeData = Some(
+          TextElementFields(
+            html = Some(html),
+          ),
+        ),
+      )
+    }
+
+    val block = Block(
+      id = UUID.randomUUID().toString,
+      bodyHtml = "",
+      bodyTextSummary = "",
+      title = None,
+      attributes = BlockAttributes(),
+      published = true,
+      createdDate = None,
+      firstPublishedDate = None,
+      publishedDate = None,
+      lastModifiedDate = None,
+      createdBy = None,
+      lastModifiedBy = None,
+      elements = textElements,
+    )
+
+    val requestedBodyBlocks = Map {
+      requestedBlocks -> Seq(block)
+    }
+
+    Blocks(body = None, requestedBodyBlocks = Some(requestedBodyBlocks))
   }
 
 }
