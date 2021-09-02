@@ -136,7 +136,7 @@ trait FaciaController
               url = Some(faciaPage.metadata.url),
               description = faciaPage.metadata.description,
             )
-            Cached(CacheTime.Showcase)(RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase))
+            Cached(CacheTime.Default)(RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase))
 
           }).getOrElse {
             Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
@@ -242,8 +242,7 @@ trait FaciaController
           result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
         } else result
       case None => {
-        val z = successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-        z
+        successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
       }
     }
 
