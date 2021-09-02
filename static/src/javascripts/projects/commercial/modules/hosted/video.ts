@@ -2,7 +2,7 @@ import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 
 export const initHostedVideo = (): Promise<void> => {
 	const playerContainers = document.querySelectorAll<HTMLElement>(
-		'div.js-hosted-youtube-video',
+		'.js-hosted-youtube-video',
 	);
 
 	if (!playerContainers.length) {
