@@ -8,6 +8,7 @@ import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
 import model.ImageAsset
 import model.pressed.{PressedContent, PressedTrail, Replace}
+import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 
 import java.io.StringWriter
@@ -70,16 +71,11 @@ object TrailsToShowcase {
       mediaModule.setMetadata(new Metadata())
       addModuleTo(entry, mediaModule)
 
-      // Showcase expects the publication dates to be shown as atom module fields.
-      // TODO probably duplicated with rundown items
-      val atomModule = new RssAtomModuleImpl
-      atomModule.setPublished(content.card.webPublicationDateOption)
-      atomModule.setUpdated(
-        Seq(content.card.lastModifiedOption, content.card.webPublicationDateOption).flatten.headOption,
-      )
+      val published = content.card.webPublicationDateOption
+      val updated = Seq(content.card.lastModifiedOption, content.card.webPublicationDateOption).flatten.headOption
+      val atomModule = atomDatesModuleFor(published, updated)
       addModuleTo(entry, atomModule)
 
-      // Set optional fields
       bylineFrom(content).foreach { byline =>
         entry.setAuthor(byline)
       }
@@ -151,16 +147,21 @@ object TrailsToShowcase {
       gModule.setArticleGroup(Some(ArticleGroup(role = Some(Rundown), articles)))
       addModuleTo(entry, gModule)
 
-      // TODO better quality dates
-      val atomModule = new RssAtomModuleImpl
-      atomModule.setPublished(content.head.card.webPublicationDateOption)
-      atomModule.setUpdated(
-        Seq(content.head.card.lastModifiedOption, content.head.card.webPublicationDateOption).flatten.headOption,
-      )
-      addModuleTo(entry, atomModule)
-
+      // Make a questionable inference of the panels publication and update times from it's articles
+      val published = articles.map(_.published).head // TODO max
+      val updated = articles.map(_.updated).head // TODO max
+      addModuleTo(entry, atomDatesModuleFor(Some(published), Some(updated)))
       entry
     }
+  }
+
+  private def atomDatesModuleFor(published: Option[DateTime], updated: Option[DateTime]): RssAtomModuleImpl = {
+    val atomModule = new RssAtomModuleImpl
+    atomModule.setPublished(published)
+    atomModule.setUpdated(
+      updated,
+    )
+    atomModule
   }
 
   private def addModuleTo(entry: SyndEntry, module: Module): Unit = {
