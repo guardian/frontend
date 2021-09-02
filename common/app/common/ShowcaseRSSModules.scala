@@ -189,6 +189,11 @@ class GModuleGenerator extends ModuleGenerator {
           panelElement.setAttribute(new Attribute("type", panel))
           element.addContent(panelElement)
         }
+        gModule.getPanelTitle.foreach { panelTitle =>
+          val panelTitleElement = new org.jdom.Element("panel_title", NS)
+          panelTitleElement.addContent(panelTitle)
+          element.addContent(panelTitleElement)
+        }
         gModule.getOverline.foreach { overline =>
           val overlineElement = new org.jdom.Element("overline", NS)
           overlineElement.addContent(overline)

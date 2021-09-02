@@ -65,7 +65,13 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
   "TrailsToShowcase" should "set module namespaces in feed header" in {
     val singleStoryTrails =
-      Seq(makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia)))
+      Seq(
+        makePressedContent(
+          webPublicationDate = Some(wayBackWhen),
+          trailPicture = Some(imageMedia),
+          trailText = Some("- A bullet"),
+        ),
+      )
 
     val rss = XML.loadString(
       TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "Rundown panel name", "rundown-panel-id")(request),
@@ -177,6 +183,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanelGuid.text should be("rundown-container-id")
     rundownPanelGuid.attribute("isPermaLink").get.head.text should be("false")
 
+    (rundownPanel \ "panel_title").filter(_.prefix == "g").head.text should be("Rundown container title")
+
     val rundownPanelMedia = (rundownPanel \ "content").filter(_.prefix == "media")
     rundownPanelMedia.size should be(0)
 
@@ -223,6 +231,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       headline = "My unique headline",
       byline = Some("Trail byline"),
       kickerText = Some("A Kicker"),
+      trailText = Some("- A bullet"),
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
@@ -317,10 +326,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some(bulletEncodedTrailText),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
 
-    val gModule = singleStoryPanel.getModule(GModule.URI).asInstanceOf[GModule]
-    gModule.getBulletList.isEmpty should be(true)
+    singleStoryPanel should be(None)
   }
 
   "TrailToShowcase" should "trim single story bullets to 3 at most" in {
@@ -374,9 +382,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       headline = "My unique headline",
       byline = Some("Trail byline"),
       kickerText = Some("A Kicker"),
+      trailText = Some("- A bullet"),
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
+
     val mediaModule = singleStoryPanel.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
     mediaModule.getMediaContents.size should be(1)
     mediaModule.getMediaContents.head.getReference() should be(
@@ -385,7 +395,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase" can "should default single panel last updated to web publication date if no last updated value is available" in {
-    val curatedContent = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
+    val curatedContent = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some("- A bullet"),
+    )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
 
@@ -500,6 +514,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
+      trailText = Some("- A bullet"),
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(content).get
@@ -517,6 +532,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
       kickerText = Some(longerThan30),
+      trailText = Some("- A bullet"),
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(content).get
@@ -551,6 +567,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
       byline = Some(longerThan42),
+      trailText = Some("- A bullet"),
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withLongByline).get
