@@ -13,7 +13,6 @@ import play.api.mvc.RequestHeader
 
 import java.io.StringWriter
 import java.util.Date
-import java.util.regex.Pattern
 import scala.collection.JavaConverters._
 import scala.collection.immutable.WrappedString
 
@@ -52,7 +51,8 @@ object TrailsToShowcase {
 
     for {
       // Collect all mandatory values; any missing will result in a None entry
-      title <- Some(stripInvalidXMLCharacters(content.header.headline)).filter(_.length <= MaxLengthForSinglePanelTitle)
+      title <-
+        Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))).filter(_.length <= MaxLengthForSinglePanelTitle)
       imageUrl <- singleStoryImageUrlFor(content)
       bulletList <- content.card.trailText.flatMap(extractBulletsFrom)
 
@@ -89,7 +89,7 @@ object TrailsToShowcase {
         // Collect the mandatory fields for the article. If any of these are missing we can skip this item
         for {
           webPublicationDate <- contentItem.card.webPublicationDateOption
-          title <- Some(stripInvalidXMLCharacters(contentItem.header.headline))
+          title <- Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem)))
             .filter(_.nonEmpty)
             .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
           imageUrl <- rundownPanelArticleImageUrlFor(contentItem)
@@ -214,6 +214,8 @@ object TrailsToShowcase {
   private def webUrl(content: PressedContent): String =
     "https://www.theguardian.com" + content.header.url // TODO duplicate with RSS
 
+  private def titleFrom(content: PressedContent): String = content.header.headline
+
   private def bylineFrom(content: PressedContent): Option[String] = {
     content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
   }
@@ -279,12 +281,6 @@ object TrailsToShowcase {
     output.output(feed, writer)
     writer.close()
     writer.toString
-  }
-
-  // TODO duplication
-  val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
-  private def stripInvalidXMLCharacters(s: String) = {
-    pattern.matcher(s).replaceAll("")
   }
 
 }
