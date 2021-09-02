@@ -8,7 +8,7 @@ import common.commercial.EditionCommercialProperties
 import common.{Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import conf.switches.Switches
-import experiments.{ActiveExperiments, StandaloneCommercialBundle}
+import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
