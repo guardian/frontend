@@ -349,6 +349,22 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     bulletListItems.last.text should be("Bullet 3")
   }
 
+  "TrailToShowcase" should "omit single story panels with no bullets" in {
+    val singleStoryTrails =
+      Seq(
+        makePressedContent(
+          webPublicationDate = Some(wayBackWhen),
+          trailPicture = Some(imageMedia),
+          trailText = Some("No valid bullets here"),
+        ),
+      )
+
+    val rss = XML.loadString(TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
+
+    val singleStoryPanels = (rss \ "channel" \ "item").filter(ofSingleStoryPanelType)
+    singleStoryPanels.size should be(0)
+  }
+
   "TrailToShowcase" can "single story panels should prefer replaced images over content trail image" in {
     val curatedContent = makePressedContent(
       webPublicationDate = Some(wayBackWhen),

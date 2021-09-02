@@ -53,6 +53,7 @@ object TrailsToShowcase {
       // Collect all mandatory values; any missing will result in a None entry
       title <- Some(stripInvalidXMLCharacters(content.header.headline)).filter(_.length <= MaxLengthForSinglePanelTitle)
       imageUrl <- singleStoryImageUrlFor(content)
+      bulletList <- content.card.trailText.flatMap(extractBulletsFrom)
 
     } yield {
       entry.setTitle(title)
@@ -60,7 +61,7 @@ object TrailsToShowcase {
       val gModule = new GModuleImpl();
       gModule.setPanel(Some(SingleStory))
       gModule.setOverline(kickerFrom(content))
-      gModule.setBulletList(content.card.trailText.flatMap(extractBulletsFrom))
+      gModule.setBulletList(Some(bulletList))
       addModuleTo(entry, gModule)
 
       // and add the showcase formatted asset
