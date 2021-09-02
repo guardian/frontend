@@ -13,7 +13,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import play.api.test.FakeRequest
 
 import java.time.ZoneOffset
-import scala.xml.XML
+import scala.xml.{Node, NodeSeq, XML}
 
 class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
@@ -90,11 +90,12 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     // Given no single story panels and a rundown panel the media module needs to propogate from the rundown panel
     val channelItems = rss \ "channel" \ "item"
-    val singleStoryPanels =
-      channelItems.filter(node => (node \ "panel").filter(_.prefix == "g").filter(_.text == "SINGLE_STORY").nonEmpty)
+
+    val singleStoryPanels = channelItems.filter(ofSingleStoryPanelType)
+    println("SSS " + singleStoryPanels)
     singleStoryPanels.size should be(0)
-    val rundownPanels =
-      channelItems.filter(node => (node \ "panel").filter(_.prefix == "g").filter(_.text == "RUNDOWN").nonEmpty)
+    val rundownPanels = channelItems.filter(ofRundownPanelType)
+    println("RRR " + rundownPanels)
     rundownPanels.size should be(1)
 
     rss.getNamespace("media") should be("http://search.yahoo.com/mrss/")
@@ -135,12 +136,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
 
     val channelItems = rss \ "channel" \ "item"
-    val singleStoryPanels =
-      channelItems.filter(node => (node \ "panel").filter(_.prefix == "g").filter(_.text == "SINGLE_STORY").nonEmpty)
+    val singleStoryPanels = channelItems.filter(ofSingleStoryPanelType)
     singleStoryTrails.size should be(1)
 
-    val rundownPanels =
-      channelItems.filter(node => (node \ "panel").filter(_.prefix == "g").filter(_.text == "RUNDOWN").nonEmpty)
+    val rundownPanels = channelItems.filter(ofRundownPanelType)
     rundownPanels.size should be(1)
 
     val singleStoryPanel = singleStoryPanels.head
@@ -212,10 +211,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val rss = XML.loadString(TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
 
-    val rundownPanels =
-      (rss \ "channel" \ "item").filter(node =>
-        (node \ "panel").filter(_.prefix == "g").filter(_.text == "RUNDOWN").nonEmpty,
-      )
+    val rundownPanels = (rss \ "channel" \ "item").filter(ofRundownPanelType)
     rundownPanels.size should be(0)
   }
 
@@ -756,6 +752,24 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     articleGroup.articles.size should be(3)
     articleGroup.articles.forall(_.overline.nonEmpty) should be(true)
     articleGroup.articles.forall(_.author.isEmpty) should be(true)
+  }
+
+  private def ofSingleStoryPanelType(node: Node) = {
+    (node \ "panel")
+      .filter(_.prefix == "g")
+      .filter { node =>
+        node.attribute("type").map(_.text) == Some("SINGLE_STORY")
+      }
+      .nonEmpty
+  }
+
+  private def ofRundownPanelType(node: Node) = {
+    (node \ "panel")
+      .filter(_.prefix == "g")
+      .filter { node =>
+        node.attribute("type").map(_.text) == Some("RUNDOWN")
+      }
+      .nonEmpty
   }
 
   private def makePressedContent(

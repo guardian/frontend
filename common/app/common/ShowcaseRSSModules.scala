@@ -5,7 +5,7 @@ import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl
 import com.sun.syndication.feed.module.mediarss.io.MediaModuleGenerator
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata}
 import com.sun.syndication.io.ModuleGenerator
-import org.jdom.{Element, Namespace}
+import org.jdom.{Attribute, Element, Namespace}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
@@ -186,7 +186,7 @@ class GModuleGenerator extends ModuleGenerator {
       case gModule: GModule =>
         gModule.getPanel.foreach { panel =>
           val panelElement = new org.jdom.Element("panel", NS)
-          panelElement.addContent(panel)
+          panelElement.setAttribute(new Attribute("type", panel))
           element.addContent(panelElement)
         }
         gModule.getOverline.foreach { overline =>
