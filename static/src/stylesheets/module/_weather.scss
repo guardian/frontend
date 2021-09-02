@@ -148,7 +148,7 @@ $weather-large-size: 50px;
 
     @include mq($from: phablet) {
         width: 70%;
-        border-top: none;
+        border-top: 0;
     }
 
     @include mq($until: tablet) {
@@ -314,8 +314,8 @@ $weather-large-size: 50px;
     }
 
     @include mq($until: desktop) {
-      padding-left: 2px;
-      min-width: gs-span(2);
+        padding-left: 2px;
+        min-width: gs-span(2);
     }
 }
 
@@ -323,12 +323,12 @@ $weather-large-size: 50px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background-color: #121212;
+    background-color: $brightness-7;
     width: 24px;
     height: 24px;
     border-radius: 50%;
     svg {
-        fill: white;
+        fill: $brightness-100;
     }
 }
 
