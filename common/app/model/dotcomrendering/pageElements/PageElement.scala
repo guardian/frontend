@@ -2,18 +2,11 @@ package model.dotcomrendering.pageElements
 
 import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
-import com.gu.contentapi.client.model.v1.{
-  ElementType,
-  EmbedTracking,
-  SponsorshipType,
-  WitnessElementFields,
-  BlockElement => ApiBlockElement,
-  Sponsorship => ApiSponsorship,
-}
+import com.gu.contentapi.client.model.v1.{ElementType, EmbedTracking, SponsorshipType, WitnessElementFields, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import common.Edition
 import conf.Configuration
-import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
+import layout.ContentWidths.{BodyMedia, DotcomRenderingImageRoleWidthByBreakpointMapping, ImageRoleWidthsByBreakpointMapping, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
@@ -867,27 +860,37 @@ object PageElement {
         val imageAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
-        val imageSources: Seq[ImageSource] = DotcomRenderingImageRoleWidthByBreakpointMapping.all.map {
-          case (weighting, widths) =>
-            val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
-              Seq(
-                ImgSrc.srcsetForBreakpoint(
-                  b,
-                  DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(imageAssets)),
-                ),
-                ImgSrc.srcsetForBreakpoint(
-                  b,
-                  DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(imageAssets)),
-                  hidpi = true,
-                ),
-              )
-            }.flatten
-            // A few very old articles use non-https hosts, which won't render
-            val httpsSrcSet = srcSet.map(set => set.copy(src = ensureHTTPS(set.src)))
-            ImageSource(weighting, httpsSrcSet)
-        }.toSeq
+        def getImageBreakpointMapping (isMainMedia: Boolean, isImmersive: Boolean): ImageRoleWidthsByBreakpointMapping  = {
+          if (isMainMedia) MainMedia
+          else if (isImmersive) ImmersiveMedia
+          else BodyMedia
+        }
+
+        def makeImageSources (breakPointMapping: ImageRoleWidthsByBreakpointMapping): Seq[ImageSource] = {
+          breakPointMapping.all.map {
+            case (weighting, widths) =>
+              val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
+                Seq(
+                  ImgSrc.srcsetForBreakpoint(
+                    b,
+                    breakPointMapping.immersive.breakpoints,
+                    maybeImageMedia = Some(ImageMedia(imageAssets)),
+                  ),
+                  ImgSrc.srcsetForBreakpoint(
+                    b,
+                    breakPointMapping.immersive.breakpoints,
+                    maybeImageMedia = Some(ImageMedia(imageAssets)),
+                    hidpi = true,
+                  ),
+                )
+              }.flatten
+              // A few very old articles use non-https hosts, which won't render
+              val httpsSrcSet = srcSet.map(set => set.copy(src = ensureHTTPS(set.src)))
+              ImageSource(weighting, httpsSrcSet)
+          }.toSeq
+        }
+
+        val imageSources = makeImageSources(getImageBreakpointMapping(isMainBlock, isImmersive))
 
         // The default role is used when an image doesn't have one and is then meant to be Inline,
         // that having been said, there are exceptions to this rule.
