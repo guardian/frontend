@@ -201,11 +201,9 @@ class GModuleGenerator extends ModuleGenerator {
         }
         gModule.getArticleGroup.foreach { articleGroup =>
           val articleGroupElement = new org.jdom.Element("article_group", NS)
-          val roleElement = new org.jdom.Element("role", NS)
           articleGroup.role.foreach { role =>
-            roleElement.addContent(role)
+            articleGroupElement.setAttribute("role", role)  // TODO yield mandatory field
           }
-          articleGroupElement.addContent(roleElement)
 
           articleGroup.articles.foreach { article =>
             // Slightly regrettable but limited duplication with the main rss entry generation

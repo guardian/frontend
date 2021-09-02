@@ -192,7 +192,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val articleGroups = (rundownPanel \ "article_group").filter(_.prefix == "g")
     articleGroups.size should be(1)
     val articleGroup = articleGroups.head
-    (articleGroup \ "role").filter(_.prefix == "g").text should be("RUNDOWN")
+    articleGroup.attribute("role").get.head.text should be("RUNDOWN")
 
     // Examine the nested article items
     val articles = articleGroup \ "item"
