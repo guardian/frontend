@@ -9,6 +9,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     LiveblogRendering,
     InteractiveLibrarianExp,
     StandaloneCommercialBundle,
+    StandaloneCommercialBundleTracking,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
