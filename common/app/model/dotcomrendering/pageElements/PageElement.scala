@@ -2,7 +2,14 @@ package model.dotcomrendering.pageElements
 
 import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
-import com.gu.contentapi.client.model.v1.{ElementType, EmbedTracking, SponsorshipType, WitnessElementFields, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
+import com.gu.contentapi.client.model.v1.{
+  ElementType,
+  EmbedTracking,
+  SponsorshipType,
+  WitnessElementFields,
+  BlockElement => ApiBlockElement,
+  Sponsorship => ApiSponsorship,
+}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import common.Edition
 import conf.Configuration
@@ -860,13 +867,16 @@ object PageElement {
         val imageAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
-        def getImageBreakpointMapping (isMainMedia: Boolean, isImmersive: Boolean): ImageRoleWidthsByBreakpointMapping  = {
+        def getImageBreakpointMapping(
+            isMainMedia: Boolean,
+            isImmersive: Boolean,
+        ): ImageRoleWidthsByBreakpointMapping = {
           if (isMainMedia) MainMedia
           else if (isImmersive) ImmersiveMedia
           else BodyMedia
         }
 
-        def makeImageSources (breakPointMapping: ImageRoleWidthsByBreakpointMapping): Seq[ImageSource] = {
+        def makeImageSources(breakPointMapping: ImageRoleWidthsByBreakpointMapping): Seq[ImageSource] = {
           breakPointMapping.all.map {
             case (weighting, widths) =>
               val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
