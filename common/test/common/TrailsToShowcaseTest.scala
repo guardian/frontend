@@ -82,7 +82,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailsToShowcase" should "propogate media module usage up from rundown panel articles" in {
-    val content = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
+    val content = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      trailPicture = Some(imageMedia),
+      kickerText = Some("Kicker"),
+    )
 
     val rss = XML.loadString(
       TrailsToShowcase(
@@ -98,10 +102,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val channelItems = rss \ "channel" \ "item"
 
     val singleStoryPanels = channelItems.filter(ofSingleStoryPanelType)
-    println("SSS " + singleStoryPanels)
     singleStoryPanels.size should be(0)
     val rundownPanels = channelItems.filter(ofRundownPanelType)
-    println("RRR " + rundownPanels)
     rundownPanels.size should be(1)
 
     rss.getNamespace("media") should be("http://search.yahoo.com/mrss/")
@@ -486,6 +488,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailPicture = Some(imageMedia),
       replacedImage = Some(replacedImage),
       headline = "My unique headline",
+      kickerText = Some("Kicker"),
     )
 
     val rundownPanel = TrailsToShowcase
@@ -500,7 +503,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase" can "should default rundown items updated publication date if no last updated value is available" in {
-    val content = makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia))
+    val content = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      trailPicture = Some(imageMedia),
+      kickerText = Some("Kicker"),
+    )
 
     val rundownPanel = TrailsToShowcase
       .asRundownPanel("Rundown container name", Seq(content, content, content), "rundown-container-id")
@@ -619,6 +626,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
+      kickerText = Some("Kicker"),
     )
 
     val rundownPanel = TrailsToShowcase
@@ -668,11 +676,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
         Seq(withTooLongKicker, withTooLongKicker, withTooLongKicker),
         "rundown-container-id",
       )
-      .get
 
-    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
-    val articleGroup = gModule.getArticleGroup.get
-    articleGroup.articles.head.overline should be(None)
+    rundownPanel should be(None)
   }
 
   "TrailToShowcase validation" should "reject rundown panel articles with titles longer than 64 characters" in {
@@ -718,11 +723,13 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
       kickerText = Some("Kicker"),
+      byline = Some("A byline"),
     )
     val withoutKicker = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
+      byline = Some("A byline"),
     )
 
     val rundownPanel = TrailsToShowcase
@@ -758,12 +765,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
         Seq(withAuthor, withAuthor, withoutAuthor),
         "rundown-container-id",
       )
-      .get
 
-    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
-    val articleGroup = gModule.getArticleGroup.get
-    articleGroup.articles.size should be(3)
-    articleGroup.articles.forall(_.author.isEmpty) should be(true)
+    rundownPanel should be(None)
   }
 
   "TrailToShowcase validation" should "choose kickers over authors" in {
