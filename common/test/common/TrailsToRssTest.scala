@@ -50,9 +50,9 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "TrailsToRss" should "use webUrl as item guid" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), content)(request))
-    val item =  (rss \ "channel" \ "item").head
-    (item \ "link").text should be ("https://www.theguardian.com/a")
-    (item \ "guid").text should be ("https://www.theguardian.com/a")
+    val item = (rss \ "channel" \ "item").head
+    (item \ "link").text should be("https://www.theguardian.com/a")
+    (item \ "guid").text should be("https://www.theguardian.com/a")
   }
 
   "TrailsToRss" should "produce a item description from each trail made up of the standfirst, an intro extracted from the first 2 paragraphs of the body and a read more prompt" in {
@@ -68,7 +68,12 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       scala.io.Source.fromFile(getClass.getClassLoader.getResource("liveblog-standfirst.html").getFile).mkString
     val liveblogBody =
       scala.io.Source.fromFile(getClass.getClassLoader.getResource("liveblog-body.html").getFile).mkString
-    val trail = testContent("a", "https://www.theguardian.com/a", standfirst = Some(liveblogStandfirst), body = Some(liveblogBody))
+    val trail = testContent(
+      "a",
+      "https://www.theguardian.com/a",
+      standfirst = Some(liveblogStandfirst),
+      body = Some(liveblogBody),
+    )
     val liveblogTrails = Seq(trail)
 
     val rss = XML.loadString(TrailsToRss(Option("foo"), liveblogTrails)(request))
