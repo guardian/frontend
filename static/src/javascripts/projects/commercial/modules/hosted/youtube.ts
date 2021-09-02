@@ -36,7 +36,7 @@ const sendPercentageCompleteEvents = (
 	);
 };
 
-export const initHostedYoutube = (el: HTMLElement): void => {
+export const initHostedYoutube = async (el: HTMLElement): Promise<void> => {
 	const atomId = el.getAttribute('data-media-id');
 	const duration = Number(el.getAttribute('data-duration')) || null;
 
@@ -50,7 +50,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
 	let playTimer: number | undefined;
 	initYoutubeEvents(atomId);
 
-	void initYoutubePlayer(
+	return initYoutubePlayer(
 		el,
 		{
 			onPlayerReady: () => {
@@ -90,5 +90,5 @@ export const initHostedYoutube = (el: HTMLElement): void => {
 			},
 		},
 		el.dataset.assetId as string,
-	);
+	).then(() => void 0);
 };
