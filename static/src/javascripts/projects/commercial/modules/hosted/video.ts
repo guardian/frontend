@@ -10,8 +10,7 @@ export const initHostedVideo = (): Promise<void> => {
 		return Promise.resolve();
 	}
 
-	return new Promise((resolve) => {
-		playerContainers.forEach((el) => initHostedYoutube(el));
-		resolve();
-	});
+	return Promise.all(
+		Array.from(playerContainers).map((el) => initHostedYoutube(el)),
+	).then(() => void 0);
 };
