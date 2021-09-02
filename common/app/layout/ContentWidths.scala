@@ -172,15 +172,6 @@ object ContentWidths {
     )
   }
 
-  object DotcomRenderingImageRoleWidthByBreakpointMapping extends ImageRoleWidthsByBreakpointMapping {
-    override val inline = BodyMedia.inline
-    override val supporting = BodyMedia.supporting
-    override val showcase = MainMedia.showcase
-    override val immersive = ImmersiveMedia.immersive
-    override val thumbnail = BodyMedia.thumbnail
-    override val halfwidth = BodyMedia.inline
-  }
-
   object ImageContentMedia {
     // ImageContentMedia does not support hinting/weighting, so does not extend ContentRelation.
     val inline = WidthsByBreakpoint(

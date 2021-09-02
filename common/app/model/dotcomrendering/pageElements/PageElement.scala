@@ -6,7 +6,7 @@ import com.gu.contentapi.client.model.v1.{ElementType, EmbedTracking, Sponsorshi
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import common.Edition
 import conf.Configuration
-import layout.ContentWidths.{BodyMedia, DotcomRenderingImageRoleWidthByBreakpointMapping, ImageRoleWidthsByBreakpointMapping, ImmersiveMedia, MainMedia}
+import layout.ContentWidths.{BodyMedia, ImageRoleWidthsByBreakpointMapping, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
