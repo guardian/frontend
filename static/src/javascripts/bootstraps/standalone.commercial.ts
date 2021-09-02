@@ -177,9 +177,7 @@ const bootCommercial = async (): Promise<void> => {
 				},
 			],
 		],
-		{
-			feature: 'commercial',
-		},
+		tags,
 	);
 
 	// Stub the command queue
