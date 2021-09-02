@@ -45,8 +45,6 @@ trait IndexControllerCommon
 
   def renderRss(path: String): Action[AnyContent] = render(path)
 
-  def renderShowcase(path: String): Action[AnyContent] = render(path)
-
   def render(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       renderItem(path)

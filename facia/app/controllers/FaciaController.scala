@@ -116,32 +116,38 @@ trait FaciaController
         renderFrontPressResult(path)
     }
 
-  def renderFrontShowcase(path: String): Action[AnyContent] = {
+  def renderFrontShowcase(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      frontJsonFapi.get(path, liteRequestType).map {
+      val futureResult = frontJsonFapi.get(path, liteRequestType).map {
         case Some(faciaPage: PressedPage) =>
-          val singleStoriesCollection = faciaPage.collections.find(_.displayName == "Standalone")
-          val rundownStoriesCollection = faciaPage.collections.find(_.displayName == "Rundown")
-          val singleStories = singleStoriesCollection.map(_.curated).getOrElse(Seq.empty)
-          val rundownStories = rundownStoriesCollection.map(_.curated).getOrElse(Seq.empty)
+          (for {
+            // We are using the presence of the Showcase collections to decide if this front is a Showcase feed
+            singleStoriesCollection <- faciaPage.collections.find(_.displayName == "Standalone")
+            rundownStoriesCollection <- faciaPage.collections.find(_.displayName == "Rundown")
+          } yield {
+            val singleStories = singleStoriesCollection.curated
+            val rundownStories = rundownStoriesCollection.curated
+            val showcase = TrailsToShowcase(
+              feedTitle = faciaPage.metadata.title,
+              singleStories = singleStories,
+              rundownStories = rundownStories,
+              rundownContainerId = rundownStoriesCollection.id,
+              rundownContainerTitle = rundownStoriesCollection.displayName,
+              url = Some(faciaPage.metadata.url),
+              description = faciaPage.metadata.description,
+            )
+            Ok(showcase)
 
-          val showcase = TrailsToShowcase(
-            feedTitle = faciaPage.metadata.title,
-            singleStories = singleStories,
-            rundownStories = rundownStories,
-            rundownContainerId = rundownStoriesCollection.map(_.id).getOrElse(""),
-            rundownContainerTitle = rundownStoriesCollection.map(_.displayName).getOrElse(""),
-            url = Some(faciaPage.metadata.url),
-            description = faciaPage.metadata.description,
-          )
-
-          Ok(showcase)
-
+          }).getOrElse{
+            NotFound
+          }
         case None =>
-          Ok("NOT OK")
+          NotFound
       }
+
+      futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
+      futureResult
     }
-  }
 
   def rootEditionRedirect(): Action[AnyContent] = renderFront(path = "")
 
