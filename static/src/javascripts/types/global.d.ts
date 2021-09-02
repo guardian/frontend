@@ -1,3 +1,5 @@
+type ServerSideABTest = `${string}${'Variant' | 'Control'}`;
+
 declare const twttr: {
 	widgets?: {
 		load?: (arg0: Element | null | undefined) => void;
@@ -64,7 +66,7 @@ interface Config {
 	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
-	tests?: Record<string, 'control' | 'variant'>;
+	tests?: Record<ServerSideABTest, 'control' | 'variant'>;
 	isDotcomRendering: boolean;
 }
 
