@@ -185,6 +185,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     (rundownPanel \ "panel_title").filter(_.prefix == "g").head.text should be("Rundown container title")
 
+    (rundownPanel \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
+    (rundownPanel \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
+
     val rundownPanelMedia = (rundownPanel \ "content").filter(_.prefix == "media")
     rundownPanelMedia.size should be(0)
 

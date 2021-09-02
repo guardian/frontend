@@ -150,6 +150,15 @@ object TrailsToShowcase {
       gModule.setPanelTitle(Some(title))
       gModule.setArticleGroup(Some(ArticleGroup(role = Some(Rundown), articles)))
       addModuleTo(entry, gModule)
+
+      // TODO better quality dates
+      val atomModule = new RssAtomModuleImpl
+      atomModule.setPublished(content.head.card.webPublicationDateOption)
+      atomModule.setUpdated(
+        Seq(content.head.card.lastModifiedOption, content.head.card.webPublicationDateOption).flatten.headOption,
+      )
+      addModuleTo(entry, atomModule)
+
       entry
     }
   }
