@@ -118,22 +118,21 @@ object TrailsToShowcase {
       // If an author is used on any article it must be used on all of them
       // If a kicker is used on any article it must be used on all of them
       // You cannot mix authors and kickers
-      threeArticlesToUse.map { articles =>
+      threeArticlesToUse.flatMap { articles =>
         // Most of our content has bylines. Kicker is an optional override in our tools
         // Therefore we should default to using author tags if it is available on all the articles.
         // If kickers have been supplied for all articles we will use that in preference to authors
         val allAuthorsPresent = articles.forall(_.author.nonEmpty)
         val allKickersPresent = articles.forall(_.overline.nonEmpty)
-
         if (allKickersPresent) {
           // Use kickers; remove any authors
-          articles.map(_.copy(author = None))
+          Some(articles.map(_.copy(author = None)))
         } else if (allAuthorsPresent) {
           // Use authors; remove any kickers
-          articles.map(_.copy(overline = None))
+          Some(articles.map(_.copy(overline = None)))
         } else {
-          // Use neither
-          articles.map(_.copy(author = None, overline = None))
+          // We can't use these articles as all author or all overline is a requirement
+          None // TODO tested?
         }
       }
     }
