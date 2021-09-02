@@ -21,6 +21,7 @@ object CacheTime {
   object RecentlyUpdated extends CacheTime(60)
   // There is lambda which invalidates the cache on press events, so the facia cache time can be high.
   object Facia extends CacheTime(60, Some(900))
+  object Showcase extends CacheTime(60, Some(900))
   object ArchiveRedirect extends CacheTime(60, Some(300))
   object ShareCount extends CacheTime(60, Some(600))
   object NotFound extends CacheTime(10) // This will be overwritten by fastly

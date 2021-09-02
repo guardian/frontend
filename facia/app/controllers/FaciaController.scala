@@ -136,13 +136,13 @@ trait FaciaController
               url = Some(faciaPage.metadata.url),
               description = faciaPage.metadata.description,
             )
-            Ok(showcase)
+            Cached(CacheTime.Showcase)(RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase))
 
-          }).getOrElse{
-            NotFound
+          }).getOrElse {
+            Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
           }
         case None =>
-          NotFound
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
       }
 
       futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
@@ -241,7 +241,10 @@ trait FaciaController
         if (targetedTerritories) {
           result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
         } else result
-      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      case None => {
+        val z = successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+        z
+      }
     }
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
