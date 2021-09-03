@@ -223,7 +223,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
   }
 
-  "TrailsToShowcase" can "render rndown panels articles with kickers" in {
+  "TrailsToShowcase" can "render rundown panels articles with kickers" in {
     val withKicker = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
@@ -249,6 +249,35 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val rundownArticle = articles.head
 
     (rundownArticle \ "overline").text should be("A kicker")
+  }
+
+  "TrailsToShowcase" should "render item single story bylines on author tag rather than dc:creator" in {
+    // Showcase expects a byline (ie. 'By An Author') on the author tag.
+    // The RSS spec says that this tag is for the email address of the item author.
+    // Most RSS implementations put the byline on the dc:creator field.
+    // For Showcase we need to make the byline appear on the author tag.
+    val withByline = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some(" - Bullet"),
+      byline = Some("I showed up on the author tag right?"),
+    )
+
+    val rss = XML.loadString(
+      TrailsToShowcase(
+        Option("foo"),
+        Seq(withByline),
+        Seq.empty,
+        "Rundown container title",
+        "rundown-container-id",
+      )(request),
+    )
+
+    val channelItems = rss \ "channel" \ "item"
+    val panel = channelItems.filter(ofSingleStoryPanelType).head
+
+    (panel \ "author").text should be("I showed up on the author tag right?")
   }
 
   "TrailToShowcase" should "omit rundown panel if there are no rundown trials" in {
