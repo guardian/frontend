@@ -202,7 +202,7 @@ class GModuleGenerator extends ModuleGenerator {
         gModule.getArticleGroup.foreach { articleGroup =>
           val articleGroupElement = new org.jdom.Element("article_group", NS)
           articleGroup.role.foreach { role =>
-            articleGroupElement.setAttribute("role", role)  // TODO yield mandatory field
+            articleGroupElement.setAttribute("role", role) // TODO yield mandatory field
           }
 
           articleGroup.articles.foreach { article =>
