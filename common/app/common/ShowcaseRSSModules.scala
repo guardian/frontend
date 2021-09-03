@@ -117,8 +117,8 @@ class GModuleImpl() extends GModule {
     setPanel(source.getPanel)
     setPanelTitle(source.getPanelTitle)
     setOverline(source.getOverline)
-    setArticleGroup(source.getArticleGroup) // TODO copy
-    setBulletList((source.getBulletList)) // TODO copy
+    setArticleGroup(source.getArticleGroup.map(_.copy()))
+    setBulletList(source.getBulletList.map(_.copy()))
   }
 
 }
@@ -152,7 +152,7 @@ class RssAtomModuleGenerator extends ModuleGenerator {
 
   override def generate(module: Module, element: Element): Unit = {
     module match {
-      case rssAtomModule: RssAtomModule => {
+      case rssAtomModule: RssAtomModule =>
         rssAtomModule.getPublished.foreach { published =>
           val publishedElement = new org.jdom.Element("published", RssAtomModuleGenerator.NS)
           publishedElement.addContent(ISODateTimeFormat.dateTimeNoMillis().print(published))
@@ -163,7 +163,6 @@ class RssAtomModuleGenerator extends ModuleGenerator {
           publishedElement.addContent(ISODateTimeFormat.dateTimeNoMillis().print(updated))
           element.addContent(publishedElement)
         }
-      }
     }
   }
 }
@@ -199,11 +198,14 @@ class GModuleGenerator extends ModuleGenerator {
           overlineElement.addContent(overline)
           element.addContent(overlineElement)
         }
-        gModule.getArticleGroup.foreach { articleGroup =>
+
+        // Article group element needs article group and role
+        for {
+          articleGroup <- gModule.getArticleGroup
+          role <- articleGroup.role
+        } yield {
           val articleGroupElement = new org.jdom.Element("article_group", NS)
-          articleGroup.role.foreach { role =>
-            articleGroupElement.setAttribute("role", role) // TODO yield mandatory field
-          }
+          articleGroupElement.setAttribute("role", role)
 
           articleGroup.articles.foreach { article =>
             // Slightly regrettable but limited duplication with the main rss entry generation
