@@ -279,7 +279,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     (panel \ "author").text should be("I showed up on the author tag right?")
   }
 
-  "TrailToShowcase" should "omit rundown panel if there are no rundown trials" in {
+  "TrailToShowcase" should "omit rundown panel if there are no rundown trails" in {
     val singleStoryTrails =
       Seq(makePressedContent(webPublicationDate = Some(wayBackWhen), trailPicture = Some(imageMedia)))
 
@@ -480,7 +480,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rssAtomModule.getUpdated should be(Some(wayBackWhen))
   }
 
-  "TrailToShowcase" can "create Rundown panels from a group of trials" in {
+  "TrailToShowcase" can "create Rundown panels from a group of trails" in {
     val trail = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
       lastModified = Some(lastModifiedWayBackWhen),
