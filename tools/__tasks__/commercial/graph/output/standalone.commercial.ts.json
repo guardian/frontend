@@ -607,7 +607,6 @@
  "../projects/common/modules/component.js": [
   "../../../../node_modules/bean/bean.js",
   "../../../../node_modules/bonzo/bonzo.js",
-  "../../../../node_modules/qwery/qwery.js",
   "../lib/fetch-json.ts"
  ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
@@ -686,7 +685,6 @@
  "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/bean/bean.js",
   "../../../../node_modules/lodash-es/lodash.js",
-  "../../../../node_modules/qwery/qwery.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js"
  ],

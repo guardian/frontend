@@ -24,10 +24,6 @@ const promise = new Promise<void>((resolve) => {
 	}
 });
 
-const loadYoutubeJs = () => {
-	void loadScript(scriptSrc, {});
-};
-
 const addVideoStartedClass = (el: HTMLElement | null) => {
 	if (el) {
 		el.classList.add('youtube__video-started');
@@ -242,60 +238,60 @@ const hasPlayerStarted = (event: LocalEvent) =>
 const getPlayerIframe = (videoId: string) =>
 	document.getElementById(`youtube-${videoId}`);
 
-export const initYoutubePlayer = (
+export const initYoutubePlayer = async (
 	el: HTMLElement,
 	handlers: Handlers,
 	videoId: string,
 ): Promise<YT.Player> => {
-	loadYoutubeJs();
-	return promise.then(() => {
-		const onPlayerStateChange = (event: LocalEvent) => {
-			onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
-		};
+	await loadScript(scriptSrc, {});
+	await promise;
 
-		const onPlayerReady = (event: LocalEvent) => {
-			const iframe = getPlayerIframe(videoId);
-			if (hasPlayerStarted(event)) {
-				addVideoStartedClass(iframe);
-			}
-			onPlayerReadyEvent(event, handlers, iframe);
-		};
+	const onPlayerStateChange = (event: LocalEvent) => {
+		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
+	};
 
-		const onPlayerError = (event: LocalEvent) => {
-			console.error(`YOUTUBE: ${event.data}`);
-			console.dir(event);
-		};
+	const onPlayerReady = (event: LocalEvent) => {
+		const iframe = getPlayerIframe(videoId);
+		if (hasPlayerStarted(event)) {
+			addVideoStartedClass(iframe);
+		}
+		onPlayerReadyEvent(event, handlers, iframe);
+	};
 
-		const gaTracker = config.get(
-			'googleAnalytics.trackers.editorial',
-		) as string;
+	const onPlayerError = (event: LocalEvent) => {
+		console.error(`YOUTUBE: ${event.data}`);
+		console.dir(event);
+	};
 
-		const onAdStart = () => {
-			(window as WindowLocal).ga(
-				`${gaTracker}.send`,
-				'event',
-				buildPfpEvent('adStart', videoId),
-			);
-		};
+	const gaTracker = config.get(
+		'googleAnalytics.trackers.editorial',
+	) as string;
 
-		const onAdEnd = () => {
-			(window as WindowLocal).ga(
-				`${gaTracker}.send`,
-				'event',
-				buildPfpEvent('adEnd', videoId),
-			);
-		};
-
-		return setupPlayer(
-			el,
-			videoId,
-			onPlayerReady,
-			onPlayerStateChange,
-			onPlayerError,
-			onAdStart,
-			onAdEnd,
+	const onAdStart = () => {
+		(window as WindowLocal).ga(
+			`${gaTracker}.send`,
+			'event',
+			buildPfpEvent('adStart', videoId),
 		);
-	});
+	};
+
+	const onAdEnd = () => {
+		(window as WindowLocal).ga(
+			`${gaTracker}.send`,
+			'event',
+			buildPfpEvent('adEnd', videoId),
+		);
+	};
+
+	return setupPlayer(
+		el,
+		videoId,
+		onPlayerReady,
+		onPlayerStateChange,
+		onPlayerError,
+		onAdStart,
+		onAdEnd,
+	);
 };
 
 export const _ = { createAdsConfig };
