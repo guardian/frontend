@@ -71,6 +71,7 @@ const pageSkin = () => {
             );
             if (topBannerAdContainer) {
                 topBannerAdContainer.style.borderBottom = 'none';
+                topBannerAdContainer.style.minHeight = 0;
             }
             initTopPositionOnce();
             shrinkElement(header);
