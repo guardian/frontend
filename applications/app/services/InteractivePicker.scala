@@ -7,6 +7,8 @@ import play.api.mvc.RequestHeader
 import implicits.Requests._
 import model.dotcomrendering.InteractiveSwitchOver
 import org.joda.time.DateTime
+import java.time.LocalDateTime
+import common.Chronos
 
 sealed trait RenderingTier
 object DotcomRendering extends RenderingTier
@@ -23,7 +25,7 @@ object InteractivePicker {
     if (!str.startsWith("/")) ("/" + str) else str
   }
 
-  def dateIsPostTransition(date: DateTime): Boolean = {
+  def dateIsPostTransition(date: LocalDateTime): Boolean = {
     date.isAfter(InteractiveSwitchOver.date)
   }
 
@@ -53,7 +55,7 @@ object InteractivePicker {
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
     val switchOn = InteractivePickerFeature.isSwitchedOn
-    val publishedPostSwitch = dateIsPostTransition(datetime)
+    val publishedPostSwitch = dateIsPostTransition(Chronos.jodaDateTimeToJavaDateTime(datetime))
     val isOptedInAmp = (requestFormat == AmpFormat) && isAmpOptedIn(tags)
     val isWeb = requestFormat == HtmlFormat
     val isOptOut = isOptedOut(tags)

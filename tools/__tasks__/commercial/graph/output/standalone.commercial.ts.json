@@ -537,8 +537,7 @@
  ],
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-partner.ts"
+  "../projects/common/modules/experiments/ab.ts"
  ],
  "../projects/common/modules/article/space-filler.js": [
   "../lib/fastdom-promise.js",
@@ -608,7 +607,6 @@
  "../projects/common/modules/component.js": [
   "../../../../node_modules/bean/bean.js",
   "../../../../node_modules/bonzo/bonzo.js",
-  "../../../../node_modules/qwery/qwery.js",
   "../lib/fetch-json.ts"
  ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
@@ -637,7 +635,6 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/tests/commercial-partner.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -663,9 +660,6 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
- "../projects/common/modules/experiments/tests/commercial-partner.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts"
- ],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
@@ -691,7 +685,6 @@
  "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/bean/bean.js",
   "../../../../node_modules/lodash-es/lodash.js",
-  "../../../../node_modules/qwery/qwery.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js"
  ],

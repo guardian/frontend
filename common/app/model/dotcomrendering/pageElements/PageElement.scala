@@ -11,7 +11,7 @@ import com.gu.contentapi.client.model.v1.{
   Sponsorship => ApiSponsorship,
 }
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
-import common.Edition
+import common.{Chronos, Edition}
 import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImageRoleWidthsByBreakpointMapping, ImmersiveMedia, MainMedia}
 import model.content._
@@ -1070,7 +1070,7 @@ object PageElement {
           }
 
           case Some(interactive: InteractiveAtom) => {
-            val isLegacy = InteractiveSwitchOver.date.isAfter(webPublicationDate)
+            val isLegacy = InteractiveSwitchOver.date.isAfter(Chronos.jodaDateTimeToJavaDateTime(webPublicationDate))
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(
               InteractiveAtomBlockElement(
