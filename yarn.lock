@@ -1898,14 +1898,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-3.2.0.tgz#f24117252a516bd7b1e39fe952a55d935646f746"
-  integrity sha512-NY5K/BoV0MAzEOpUUajUM91RPxHT7OeLzUuqHluZp7gIKtmfZKglrebct0ALQSsrORCTVbT3PTBtK9svI01jRQ==
-  dependencies:
-    "@guardian/src-button" "3.3.0"
-    "@guardian/src-foundations" "3.3.0"
-    "@guardian/src-icons" "3.3.0"
+"@guardian/braze-components@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-3.4.0.tgz#55930a56b75a645bd4e3f45aafe52d1352a65458"
+  integrity sha512-I6Yr0AwPAvdCwd4YblQX5NUjpbNz2hTgo/XbkQbLRFzSQiPKv3DWx2JbbvUJHXGvaoFMfwdefdBx9sAN8o5Yyg==
 
 "@guardian/commercial-core@^0.19.1":
   version "0.19.1"
@@ -1965,18 +1961,23 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.3.0.tgz#729eb05649c68f295ea174a3f1ae2056ffeb6772"
   integrity sha512-ephhrEZ2aDQYkc4FM5g1OQju5C2oMS/QCRaSUw58SHNsU1br0Sh3q/KUaTsxO/aJrtk2w9oRMqX2EceRsDdz5Q==
 
-"@guardian/src-foundations@^3.5.0", "@guardian/src-foundations@^3.6.0":
+"@guardian/src-foundations@^3.5.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.6.0.tgz#7bf7d4a7c28f9f4812494fdb22b8019c1c466ef5"
   integrity sha512-KjcBwR334dhWWB6l1/j6kUcUncDgyIEE0M+ifwHPoVB/n/OVcB0LJl/a7qTCUPBYpxeZ3wukaTcMVr2zz+VL1Q==
 
+"@guardian/src-foundations@^3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.9.0.tgz#573cc294ff607698941f90e544826f598fd66fad"
+  integrity sha512-jc0tA10MFeJ/mXKFSQngF9CAQIpZVvUD3GI/qWlMyRUttjEBsYlEbvFddqsTz2GdFZxrzyERSfIVunNQ8jTQgA==
+
 "@guardian/src-helpers@^3.3.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@guardian/src-helpers/-/src-helpers-3.6.0.tgz#85c5c4bd73ccf9d6a768f228f664671ecadc3982"
-  integrity sha512-Y3mrvH1qaXoMkM2/U/7dfDO5ZUiyfSi9iRrioVMabS4CnrRVELVJkt0aTk5FAG2A966z6mYkHzbTOTWaESLCmw==
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-helpers/-/src-helpers-3.9.0.tgz#257b8d158aac28177fcfc0a1a5379c41733ab273"
+  integrity sha512-JjP31frx+E1cN8cajE8wC6eLxEFW0w8H5vOiPgXlYmSV0sWAtH4bqo/ohQBl+ra6RPYrReAbNDmMjJJ57m3lMQ==
   dependencies:
-    "@guardian/src-foundations" "^3.6.0"
-    mini-svg-data-uri "^1.2.3"
+    "@guardian/src-foundations" "^3.9.0"
+    mini-svg-data-uri "^1.3.3"
 
 "@guardian/src-icons@3.3.0":
   version "3.3.0"
@@ -9853,7 +9854,7 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
-mini-svg-data-uri@^1.2.3:
+mini-svg-data-uri@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.3.3.tgz#91d2c09f45e056e5e1043340b8b37ba7b50f4fac"
   integrity sha512-+fA2oRcR1dJI/7ITmeQJDrYWks0wodlOz0pAEhKYJ2IVc1z0AnwJUsKY2fzFmPAM3Jo9J0rBx8JAA9QQSJ5PuA==
