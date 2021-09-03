@@ -23,6 +23,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       "Fastly-FF",
       "Fastly-SSL",
       "Fastly-Digest",
+      "Accept-Encoding", // TODO remove if seen after 2021/09/03
     )
     val allHeadersFields = request
       .map {
@@ -52,6 +53,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
         List[LogField](
           "resp.status" -> r.header.status,
           "resp.dotcomponents" -> r.header.headers.get("X-GU-Dotcomponents").isDefined,
+          "resp.Vary" -> r.header.headers.get("Vary").getOrElse(""), // TODO remove if seen after 2021/09/03
         )
       }
       .getOrElse(Nil)
