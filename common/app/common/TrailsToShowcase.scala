@@ -151,9 +151,9 @@ object TrailsToShowcase {
       addModuleTo(entry, gModule)
 
       // Make a questionable inference of the panels publication and update times from it's articles
-      val published = articles.map(_.published).head // TODO max
-      val updated = articles.map(_.updated).head // TODO max
-      addModuleTo(entry, atomDatesModuleFor(Some(published), Some(updated)))
+      val published = articles.map(_.published).sortBy(_.getMillis).lastOption
+      val updated = articles.map(_.updated).sortBy(_.getMillis).lastOption
+      addModuleTo(entry, atomDatesModuleFor(published, updated))
       entry
     }
   }
