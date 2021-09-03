@@ -226,6 +226,11 @@ class GModuleGenerator extends ModuleGenerator {
               authorElement.addContent(author)
               articleElement.addContent(authorElement)
             }
+            article.overline.foreach { overline =>
+              val overlineElement = new Element("overline", NS)
+              overlineElement.addContent(overline)
+              articleElement.addContent(overlineElement)
+            }
 
             article.mediaContent.foreach { mediaContent =>
               val mediaModule = new MediaEntryModuleImpl()

@@ -148,9 +148,6 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val singleStoryPanels = channelItems.filter(ofSingleStoryPanelType)
     singleStoryTrails.size should be(1)
 
-    val rundownPanels = channelItems.filter(ofRundownPanelType)
-    rundownPanels.size should be(1)
-
     val singleStoryPanel = singleStoryPanels.head
     (singleStoryPanel \ "title").text should be("A headline")
     (singleStoryPanel \ "guid").text should be(
@@ -180,6 +177,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val bulletListItems = (bulletListElement \ "list_item").filter(_.prefix == "g")
     bulletListItems.size should be(3)
     bulletListItems.head.text should be("Bullet 1")
+
+    // Rundown panel
+    val rundownPanels = channelItems.filter(ofRundownPanelType)
+    rundownPanels.size should be(1)
 
     val rundownPanel = rundownPanels.head
     val rundownPanelGuid = (rundownPanel \ "guid").head
@@ -212,11 +213,42 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     (rundownArticle \ "link").text should be(
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
     )
+    (rundownArticle \ "author").text should be("Trail byline")
+
+    (rundownArticle \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
     (rundownArticle \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
     (rundownArticle \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
     (rundownArticle \ "content").filter(_.prefix == "media").head.attribute("url").get.head.text should be(
       "http://localhost/trail.jpg",
     )
+  }
+
+  "TrailsToShowcase" can "render rndown panels articles with kickers" in {
+    val withKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      kickerText = Some("A kicker"),
+    )
+    val rundownTrails = Seq(withKicker, withKicker, withKicker)
+
+    val rss = XML.loadString(
+      TrailsToShowcase(
+        Option("foo"),
+        Seq.empty,
+        rundownTrails,
+        "Rundown container title",
+        "rundown-container-id",
+      )(request),
+    )
+
+    val channelItems = rss \ "channel" \ "item"
+    val rundownPanel = channelItems.filter(ofRundownPanelType).head
+    val articleGroup = (rundownPanel \ "article_group").filter(_.prefix == "g").head
+    val articles = articleGroup \ "item"
+    val rundownArticle = articles.head
+
+    (rundownArticle \ "overline").text should be("A kicker")
   }
 
   "TrailToShowcase" should "omit rundown panel if there are no rundown trials" in {
@@ -906,15 +938,15 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   private def makePressedContent(
-                                  webPublicationDate: Option[DateTime] = None,
-                                  lastModified: Option[DateTime] = None,
-                                  trailPicture: Option[ImageMedia] = None,
-                                  replacedImage: Option[Image] = None,
-                                  headline: String = "A headline",
-                                  byline: Option[String] = None,
-                                  kickerText: Option[String] = None,
-                                  trailText: Option[String] = Some("Some trail text"),
-                                ) = {
+      webPublicationDate: Option[DateTime] = None,
+      lastModified: Option[DateTime] = None,
+      trailPicture: Option[ImageMedia] = None,
+      replacedImage: Option[Image] = None,
+      headline: String = "A headline",
+      byline: Option[String] = None,
+      kickerText: Option[String] = None,
+      trailText: Option[String] = Some("Some trail text"),
+  ) = {
     val url = "/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"
     val webUrl =
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"
