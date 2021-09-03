@@ -110,7 +110,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailsToShowcase" can "render feed with Single Story and Rundown panels" in {
-    val bulletEncodedTrailText = """
+    val bulletEncodedTrailText =
+      """
     - Bullet 1
      - Bullet 2
      - Bullet 3
@@ -481,6 +482,99 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     firstItemInArticleGroup.author should be(Some("An author"))
   }
 
+  "TrailToShowcase" can "create Rundown panel articles with kickers" in {
+    val withKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      kickerText = Some("A kicker"),
+      trailPicture = Some(imageMedia),
+    )
+
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel("Rundown container name", Seq(withKicker, withKicker, withKicker), "rundown-container-id")
+      .get
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    val firstItemInArticleGroup = articleGroup.articles.head
+    firstItemInArticleGroup.overline should be(Some("A kicker"))
+  }
+
+  "TrailToShowcase" should " prefer kickers over authors if both are supplied for all rundown articles" in {
+    val withAuthorAndKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      kickerText = Some("A kicker"),
+      byline = Some("A byline"),
+      trailPicture = Some(imageMedia),
+    )
+
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel(
+        "Rundown container name",
+        Seq(withAuthorAndKicker, withAuthorAndKicker, withAuthorAndKicker),
+        "rundown-container-id",
+      )
+      .get
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    val firstItemInArticleGroup = articleGroup.articles.head
+    firstItemInArticleGroup.overline should be(Some("A kicker"))
+    firstItemInArticleGroup.author should be(None)
+  }
+
+  "TrailToShowcase" should "fall back to authors of some rundown articles are miss kickers" in {
+    val withAuthorAndKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      kickerText = Some("A kicker"),
+      byline = Some("A byline"),
+      trailPicture = Some(imageMedia),
+    )
+
+    val withMissingKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      byline = Some("A byline"),
+      trailPicture = Some(imageMedia),
+    )
+
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel(
+        "Rundown container name",
+        Seq(withAuthorAndKicker, withAuthorAndKicker, withMissingKicker),
+        "rundown-container-id",
+      )
+      .get
+
+    val gModule = rundownPanel.getModule(GModule.URI).asInstanceOf[GModule]
+    val articleGroup = gModule.getArticleGroup.get
+    articleGroup.articles.forall(_.author.nonEmpty) should be(true)
+    articleGroup.articles.forall(_.overline.isEmpty) should be(true)
+  }
+
+  "TrailToShowcase" should "reject rundown panels if the articles do not have a complete set of authors of kickers" in {
+    val withKicker = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      kickerText = Some("A kicker"),
+      trailPicture = Some(imageMedia),
+    )
+
+    val withAuthor = makePressedContent(
+      webPublicationDate = Some(wayBackWhen),
+      lastModified = Some(lastModifiedWayBackWhen),
+      byline = Some("A byline"),
+      trailPicture = Some(imageMedia),
+    )
+
+    val rundownPanel = TrailsToShowcase
+      .asRundownPanel("Rundown container name", Seq(withKicker, withKicker, withAuthor), "rundown-container-id")
+
+    rundownPanel should be(None)
+  }
+
   "TrailToShowcase" can "rundown panels articles should prefer replaced images over content trail image" in {
     val withReplacedImage = makePressedContent(
       webPublicationDate = Some(wayBackWhen),
@@ -812,15 +906,15 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   private def makePressedContent(
-      webPublicationDate: Option[DateTime] = None,
-      lastModified: Option[DateTime] = None,
-      trailPicture: Option[ImageMedia] = None,
-      replacedImage: Option[Image] = None,
-      headline: String = "A headline",
-      byline: Option[String] = None,
-      kickerText: Option[String] = None,
-      trailText: Option[String] = Some("Some trail text"),
-  ) = {
+                                  webPublicationDate: Option[DateTime] = None,
+                                  lastModified: Option[DateTime] = None,
+                                  trailPicture: Option[ImageMedia] = None,
+                                  replacedImage: Option[Image] = None,
+                                  headline: String = "A headline",
+                                  byline: Option[String] = None,
+                                  kickerText: Option[String] = None,
+                                  trailText: Option[String] = Some("Some trail text"),
+                                ) = {
     val url = "/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"
     val webUrl =
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"

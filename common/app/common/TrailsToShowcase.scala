@@ -128,7 +128,7 @@ object TrailsToShowcase {
           Some(articles.map(_.copy(overline = None)))
         } else {
           // We can't use these articles as all author or all overline is a requirement
-          None // TODO tested?
+          None
         }
       }
     }
