@@ -19,6 +19,7 @@ import _root_.play.api.http.HttpConfiguration
 import _root_.play.api.mvc._
 import _root_.play.api.test.Helpers._
 import services._
+import services.newsletters.NewsletterSignupAgent
 import test._
 
 import scala.concurrent.Future
@@ -46,6 +47,7 @@ import scala.concurrent.Future
     val returnUrlVerifier = mock[ReturnUrlVerifier]
     val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
     val httpConfiguration = HttpConfiguration.createWithDefaults()
+    val newsletterSignupAgent = mock[NewsletterSignupAgent]
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
@@ -79,6 +81,7 @@ import scala.concurrent.Future
     when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(
       Right(Subscriber("Text", List(EmailList("37")), "subscribed")),
     )
+    when(newsletterSignupAgent.getNewsletters()) thenReturn Right(Nil)
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -90,6 +93,7 @@ import scala.concurrent.Future
       returnUrlVerifier,
       newsletterService,
       signinService,
+      newsletterSignupAgent,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
