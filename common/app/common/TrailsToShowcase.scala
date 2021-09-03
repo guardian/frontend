@@ -3,7 +3,7 @@ package common
 import com.sun.syndication.feed.module.Module
 import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
-import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl, SyndFeed, SyndFeedImpl}
+import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
 import model.ImageAsset
@@ -77,7 +77,10 @@ object TrailsToShowcase {
       addModuleTo(entry, atomModule)
 
       bylineFrom(content).foreach { byline =>
-        entry.setAuthor(byline)
+        // Sidestep Rome's attempt to follow the RSS spec and only populate the author tag with email addresses
+        val bylinePretendingToBePerson = new SyndPersonImpl()
+        bylinePretendingToBePerson.setEmail(byline)
+        entry.setAuthors(Seq(bylinePretendingToBePerson).asJava)
       }
       entry
     }

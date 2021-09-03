@@ -1,10 +1,10 @@
 package common
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.contentapi.client.model.v1.ContentFields
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.facia.api.utils.Editorial
 import com.sun.syndication.feed.module.mediarss.MediaEntryModule
+import com.sun.syndication.feed.synd.SyndPerson
 import implicits.Dates.jodaToJavaInstant
 import model.pressed._
 import model.{ImageAsset, ImageMedia}
@@ -13,7 +13,8 @@ import org.scalatest.{FlatSpec, Matchers}
 import play.api.test.FakeRequest
 
 import java.time.ZoneOffset
-import scala.xml.{Node, NodeSeq, XML}
+import scala.collection.JavaConverters._
+import scala.xml.{Node, XML}
 
 class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
@@ -156,9 +157,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     (singleStoryPanel \ "link").text should be(
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
     )
-    (singleStoryPanel \ "creator").filter(_.prefix == "dc").head.text should be(
-      "Trail byline",
-    ) // TODO should be <author> in Google Showcase docs
+    (singleStoryPanel \ "author").head.text should be("Trail byline")
     // Single story panels are allowed to have author and kicker at the same time
     (singleStoryPanel \ "overline").filter(_.prefix == "g").head.text should be(
       "Kicker",
@@ -302,9 +301,16 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
-
     singleStoryPanel.getTitle should be("My unique headline")
-    singleStoryPanel.getAuthor should be("Trail byline")
+
+    // We use a person with an email address to get the free form byline through Rome and onto the author tag
+    // See https://github.com/rometools/rome/blob/001d1cca5448817a031e3746f417519652ede4e9/rome/src/main/java/com/rometools/rome/feed/synd/impl/ConverterForRSS094.java#L139
+    val authorsEmail = singleStoryPanel.getAuthors().asScala.headOption.flatMap {
+      case person: SyndPerson => Some(person.getEmail)
+      case _                  => None
+    }
+    authorsEmail should be(Some("Trail byline"))
+
     singleStoryPanel.getLink should be(
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
     )
