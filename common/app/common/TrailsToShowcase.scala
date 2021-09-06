@@ -197,7 +197,7 @@ object TrailsToShowcase {
           )
           Some(
             ImageAsset(url = Some(replace.imageSrc), mimeType = None, mediaType = "", fields = empty),
-          ) // TODO incomplete mapping
+          ) // Caution this is an incomplete mapping
         }
         case _ => None
       }
