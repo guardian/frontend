@@ -46,20 +46,20 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Option[SyndEntry] = {
-    val entry = new SyndEntryImpl()
-    entry.setLink(webUrl(content))
-
     for {
       // Collect all mandatory values; any missing will result in a None entry
       title <-
         Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))).filter(_.length <= MaxLengthForSinglePanelTitle)
+      webUrl <- webUrl(content)
       imageUrl <- singleStoryImageUrlFor(content)
       bulletList <- content.card.trailText.flatMap(extractBulletsFrom)
 
     } yield {
+      val entry = new SyndEntryImpl()
       entry.setTitle(title)
+      entry.setLink(webUrl)
 
-      val gModule = new GModuleImpl();
+      val gModule = new GModuleImpl()
       gModule.setPanel(Some(SingleStory))
       gModule.setOverline(kickerFrom(content))
       gModule.setBulletList(Some(bulletList))
@@ -95,13 +95,15 @@ object TrailsToShowcase {
           title <- Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem)))
             .filter(_.nonEmpty)
             .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
+          guid <- guidFor(contentItem)
+          webUrl <- webUrl(contentItem)
           imageUrl <- rundownPanelArticleImageUrlFor(contentItem)
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           GArticle(
-            guidFor(contentItem),
+            guid,
             title,
-            webUrl(contentItem),
+            webUrl,
             webPublicationDate,
             lastModified,
             bylineFrom(contentItem),
@@ -144,7 +146,7 @@ object TrailsToShowcase {
       val entry = new SyndEntryImpl
       entry.setUri(id)
 
-      val gModule = new GModuleImpl();
+      val gModule = new GModuleImpl()
       gModule.setPanel(Some(Rundown))
       gModule.setPanelTitle(Some(title))
       gModule.setArticleGroup(Some(ArticleGroup(role = Some(Rundown), articles)))
@@ -190,7 +192,7 @@ object TrailsToShowcase {
     // There may also be a replacement image on the trail itself if the editor has replaced the image.
     val replacementImageAsset = content.properties.image
       .flatMap {
-        case replace: Replace => {
+        case replace: Replace =>
           val empty = Map(
             "width" -> replace.imageSrcWidth,
             "height" -> replace.imageSrcHeight,
@@ -198,11 +200,10 @@ object TrailsToShowcase {
           Some(
             ImageAsset(url = Some(replace.imageSrc), mimeType = None, mediaType = "", fields = empty),
           ) // Caution this is an incomplete mapping
-        }
         case _ => None
       }
 
-    val contentTrailImageAsset = content.properties.maybeContent.map(_.trail).flatMap { trail: PressedTrail =>
+    val contentTrailImageAsset = content.properties.maybeContent.map(_.trail).flatMap { trail =>
       trail.trailPicture.flatMap { imageMedia =>
         imageMedia.largestImage
       }
@@ -212,10 +213,10 @@ object TrailsToShowcase {
     Seq(replacementImageAsset, contentTrailImageAsset).flatten.filter(imageSizeFilter).flatMap(_.url).headOption
   }
 
-  private def guidFor(content: PressedContent): String = webUrl(content)
+  private def guidFor(content: PressedContent): Option[String] = webUrl(content)
 
-  private def webUrl(content: PressedContent): String =
-    "https://www.theguardian.com" + content.header.url // TODO duplicate with RSS
+  private def webUrl(content: PressedContent): Option[String] =
+    content.properties.maybeContent.map(_.metadata.webUrl)
 
   private def titleFrom(content: PressedContent): String = content.header.headline
 
