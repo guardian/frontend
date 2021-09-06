@@ -123,8 +123,8 @@
   "../lib/config.js",
   "../projects/common/modules/commercial/commercial-features.js"
  ],
- "../projects/commercial/modules/creatives/page-skin.js": [
-  "../../../../node_modules/fastdom/fastdom.js",
+ "../projects/commercial/modules/creatives/page-skin.ts": [
+  "../../../../node_modules/fastdom/fastdom.d.ts",
   "../lib/config.js",
   "../lib/detect.js",
   "../lib/mediator.js",
@@ -160,7 +160,7 @@
   "../projects/commercial/modules/dfp/Advert.ts"
  ],
  "../projects/commercial/modules/dfp/display-ads.js": [
-  "../projects/commercial/modules/creatives/page-skin.js",
+  "../projects/commercial/modules/creatives/page-skin.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/load-advert.js"
  ],
