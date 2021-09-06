@@ -1,18 +1,13 @@
 import fastdom from 'fastdom';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import config_ from '../../../../lib/config';
 import { hasCrossedBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import mediator from '../../../../lib/mediator';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: <T>(s: string, d?: T) => T;
-};
 
 const pageSkin = (): void => {
 	const bodyEl = document.body;
 	const hasPageSkin = window.guardian.config.page.hasPageSkin;
-	const isInAUEdition = config.get('page.edition', '').toLowerCase() === 'au';
+	const isInAUEdition =
+		window.guardian.config.page.edition.toLowerCase() === 'au';
 	const adLabelHeight = 24;
 	let topPosition = 0;
 	let truskinRendered = false;
