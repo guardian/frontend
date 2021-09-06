@@ -2,7 +2,7 @@ import type { ABTest } from '@guardian/ab-core';
 
 export const removeStickyNav: ABTest = {
 	id: 'RemoveStickyNav',
-	start: '2021-09-10',
+	start: '2021-09-06',
 	expiry: '2021-10-10',
 	author: 'Mario Savarese',
 	description:
