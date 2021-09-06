@@ -130,7 +130,7 @@ final case class Fields(
 
 object MetaData {
 
-  val StartDateForHttpsFacebookUrls: OffsetDateTime = OffsetDateTime.of(2021, 9, 3, 12, 0, 0, 0, ZoneOffset.UTC)
+  val StartDateForHttpsFacebookUrls: OffsetDateTime = OffsetDateTime.of(2021, 9, 6, 16, 0, 0, 0, ZoneOffset.UTC)
 
   def make(
       id: String,
