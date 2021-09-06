@@ -1,5 +1,4 @@
 import { loadScript } from '@guardian/libs';
-import config from 'lib/config';
 
 const errorHandler = (error: Error) => {
 	// Looks like some plugins block ad-verification
@@ -10,7 +9,7 @@ const errorHandler = (error: Error) => {
 export const init = async (): Promise<void> => {
 	const host = 'confiant-integrations.global.ssl.fastly.net';
 
-	if (config.get('switches.confiantAdVerification')) {
+	if (window.guardian.config.switches.confiantAdVerification) {
 		await loadScript(
 			`//${host}/7oDgiTsq88US4rrBG0_Nxpafkrg/gpt_and_prebid/config.js`,
 			{ async: true },
