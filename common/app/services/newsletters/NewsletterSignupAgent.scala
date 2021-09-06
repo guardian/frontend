@@ -78,13 +78,9 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
   }
 
-  def getGroupedNewsletters(): Either[String, GroupedNewslettersResponse] = {
-    groupedNewslettersAgent.get() match {
-      case Left(err) => Left(err)
-      case Right(groupedNewsletters) =>
-        Right(groupedNewsletters)
-    }
-  }
+  def getGroupedNewsletters(): Either[String, GroupedNewslettersResponse] = groupedNewslettersAgent.get()
+
+  def getNewsletters(): Either[String, List[NewsletterResponse]] = newslettersAgent.get()
 
   def refresh()(implicit ec: ExecutionContext): Unit = {
     refreshNewsletters()

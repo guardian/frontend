@@ -13,6 +13,7 @@ import play.api.i18n.MessagesProvider
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, DiscardingCookie, Result}
 import services.PlaySigninService
+import services.newsletters.NewsletterSignupAgent
 import utils.ConsentOrder.userWithOrderedConsents
 import utils.ConsentsJourneyType.AnyConsentsJourney
 
@@ -23,6 +24,8 @@ trait ConsentsJourney extends EditProfileControllerComponents {
   import authenticatedActions._
 
   def signinService: PlaySigninService
+
+  def newsletterSignupAgent: NewsletterSignupAgent
 
   /** GET /consents/thank-you */
   def displayConsentsJourneyThankYou: Action[AnyContent] =
@@ -101,6 +104,17 @@ trait ConsentsJourney extends EditProfileControllerComponents {
       }
     }
 
+  private def newsletters() = {
+    newsletterSignupAgent
+      .getNewsletters()
+      .left
+      .map { error =>
+        logger.error(s"ConsentsJourney newsletters not available $error")
+        Nil
+      }
+      .merge
+  }
+
   private def consentCompleteView(
       page: IdentityPage,
       user: User,
@@ -117,7 +131,7 @@ trait ConsentsJourney extends EditProfileControllerComponents {
             user.primaryEmailAddress,
             emailFilledForm,
             newsletterService.getEmailSubscriptions(emailFilledForm),
-            EmailNewsletters.publicNewsletters,
+            newsletters(),
           ),
         )(page, request, context),
       )
@@ -145,7 +159,7 @@ trait ConsentsJourney extends EditProfileControllerComponents {
               idUrlBuilder,
               emailFilledForm,
               newsletterService.getEmailSubscriptions(emailFilledForm),
-              EmailNewsletters.publicNewsletters,
+              newsletters(),
               consentHint,
               skin = None,
             ),
