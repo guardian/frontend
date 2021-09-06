@@ -24,7 +24,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-    Switch(
+  Switch(
     ABTests,
     "ab-remove-sticky-nav",
     "Remove sticky behaviour from the navigation and subnavigation bar",
