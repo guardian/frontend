@@ -23,4 +23,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2021, 12, 1)),
     exposeClientSide = true,
   )
+
+    Switch(
+    ABTests,
+    "ab-remove-sticky-nav",
+    "Remove sticky behaviour from the navigation and subnavigation bar",
+    owners = Seq(Owner.withGithub("MarSavar")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2021, 10, 10)),
+    exposeClientSide = true,
+  )
 }
