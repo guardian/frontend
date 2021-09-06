@@ -2,7 +2,9 @@ import type { ABTest } from '@guardian/ab-core';
 import { getSynchronousTestsToRun } from '../experiments/ab';
 
 const defaultClientSideTests: ABTest[] = [];
-const serverSideTests: string[] = [];
+const serverSideTests: ServerSideABTest[] = [
+	'standaloneCommercialBundleTrackingVariant',
+];
 
 /**
  * Function to check wether metrics should be captured for the current page
@@ -18,7 +20,7 @@ const shouldCaptureMetrics = (tests = defaultClientSideTests): boolean => {
 	const userInServerSideTest =
 		window.guardian.config.tests !== undefined &&
 		Object.keys(window.guardian.config.tests).some((test) =>
-			serverSideTests.includes(test),
+			serverSideTests.includes(test as ServerSideABTest),
 		);
 	return userInClientSideTest || userInServerSideTest;
 };

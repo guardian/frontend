@@ -5,12 +5,11 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import model.IpsosTags.getScriptTag
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
 import model.IpsosTags.getScriptTag
-import experiments.{ActiveExperiments, StandaloneCommercialBundle}
+import experiments.{ActiveExperiments, StandaloneCommercialBundle, StandaloneCommercialBundleTracking}
 import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
 
@@ -70,7 +69,10 @@ object JavaScriptPage {
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
     val commercialBundleUrl: Map[String, JsString] =
-      if (ActiveExperiments.isParticipating(StandaloneCommercialBundle)(request))
+      if (
+        ActiveExperiments.isParticipating(StandaloneCommercialBundle)(request)
+        || ActiveExperiments.isParticipating(StandaloneCommercialBundleTracking)(request)
+      )
         Map("commercialBundleUrl" -> JsString(assetURL("javascripts/commercial/graun.standalone.commercial.js")))
       else
         Map("commercialBundleUrl" -> JsString(assetURL("javascripts/graun.commercial.dcr.js")))

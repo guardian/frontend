@@ -9,6 +9,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     LiveblogRendering,
     InteractiveLibrarianExp,
     StandaloneCommercialBundle,
+    StandaloneCommercialBundleTracking,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -38,5 +39,14 @@ object StandaloneCommercialBundle
       description = "Serve a standalone commercial bundle to a subset of users",
       owners = Seq(Owner.withGithub("mxdvl")),
       sellByDate = LocalDate.of(2021, 10, 1),
-      participationGroup = Perc0E,
+      participationGroup = Perc5A,
+    )
+
+object StandaloneCommercialBundleTracking
+    extends Experiment(
+      name = "standalone-commercial-bundle-tracking",
+      description = "Track performance metrics for the standalone commercial bundle",
+      owners = Seq(Owner.withGithub("mxdvl")),
+      sellByDate = LocalDate.of(2021, 10, 1),
+      participationGroup = Perc1A,
     )
