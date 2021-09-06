@@ -3,7 +3,7 @@ import type { ABTest } from '@guardian/ab-core';
 export const removeStickyNav: ABTest = {
 	id: 'RemoveStickyNav',
 	start: '2021-09-06',
-	expiry: '2021-10-10',
+	expiry: '2021-10-08',
 	author: 'Mario Savarese',
 	description:
 		'Remove the sticky behaviour of the navigation and subnavigation bars',

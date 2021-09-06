@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Remove sticky behaviour from the navigation and subnavigation bar",
     owners = Seq(Owner.withGithub("MarSavar")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 10, 10)),
+    sellByDate = Some(LocalDate.of(2021, 10, 8)),
     exposeClientSide = true,
   )
 }
