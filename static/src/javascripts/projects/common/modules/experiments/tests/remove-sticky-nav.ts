@@ -8,7 +8,7 @@ export const removeStickyNav: ABTest = {
 	description:
 		'Remove the sticky behaviour of the navigation and subnavigation bars',
 	audience: 0.01,
-	audienceOffset: 0,
+	audienceOffset: 0.5,
 	successMeasure: 'Ad viewability score shows improvement.',
 	audienceCriteria: 'DCR-rendered articles',
 	showForSensitive: true,
