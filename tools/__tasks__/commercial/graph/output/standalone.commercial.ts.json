@@ -21,7 +21,7 @@
   "../lib/config.js"
  ],
  "../lib/fsm.js": [
-  "../lib/noop.js"
+  "../lib/noop.ts"
  ],
  "../lib/geolocation.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -38,7 +38,7 @@
  "../lib/mediator.js": [
   "../../../../node_modules/wolfy87-eventemitter/EventEmitter.js"
  ],
- "../lib/noop.js": [],
+ "../lib/noop.ts": [],
  "../lib/raven.js": [
   "../../../../node_modules/raven-js/src/singleton.js",
   "../lib/config.js",
@@ -71,9 +71,14 @@
   "../projects/common/modules/commercial/commercial-features.js"
  ],
  "../projects/commercial/modules/ad-sizes.js": [],
- "../projects/commercial/modules/ad-verification/prepare-ad-verification.js": [
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../lib/config.js"
+ "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/commercial/commercial-metrics.ts",
+  "../projects/commercial/modules/dfp/get-advert-by-id.ts",
+  "../projects/commercial/modules/dfp/load-advert.js",
+  "../projects/common/modules/analytics/forceSendMetrics.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/refresh-confiant-blocked-ads.ts"
  ],
  "../projects/commercial/modules/article-aside-adverts.ts": [
   "../lib/$$.ts",
@@ -629,11 +634,12 @@
  "../projects/common/modules/experiments/ab-ophan.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/config.js",
-  "../lib/noop.js",
+  "../lib/noop.ts",
   "../lib/report-error.js"
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../projects/common/modules/experiments/tests/refresh-confiant-blocked-ads.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -659,6 +665,10 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
+ "../projects/common/modules/experiments/tests/refresh-confiant-blocked-ads.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
@@ -703,7 +713,7 @@
   "../lib/robust.js",
   "../projects/commercial/commercial-metrics.ts",
   "../projects/commercial/modules/ad-free-slot-remove.ts",
-  "../projects/commercial/modules/ad-verification/prepare-ad-verification.js",
+  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
   "../projects/commercial/modules/article-aside-adverts.ts",
   "../projects/commercial/modules/article-body-adverts.js",
   "../projects/commercial/modules/comment-adverts.ts",
