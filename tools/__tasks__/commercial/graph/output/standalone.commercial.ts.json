@@ -25,7 +25,7 @@
  ],
  "../lib/geolocation.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../../../../node_modules/@guardian/types/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.js",
   "../lib/cookies.js",
   "../lib/report-error.js"

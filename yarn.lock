@@ -1932,10 +1932,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.1.tgz#22bccd66be7c5bf70cd5bbb1bf7700d94610ccb7"
   integrity sha512-Q/JPLhNeYa5XhDPJhw/1+fbZmszopvovWW8I7dGEuFPGWeNUmXAbW8J3kzuonDu7l9/tuFZg8jljbKHZlrFx0A==
 
-"@guardian/libs@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-2.8.0.tgz#23e53a131152c2029a330c007194eaf7cccdfa44"
-  integrity sha512-JnqfdNE7LOF/KtQIMdaFnH4DfAp4Kc7okENK/3D93xBZhhRCvJ51hS7ceXPhBcd1CaYd/VGWdhfa50zd+0nO2A==
+"@guardian/libs@^3.1.0":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-3.2.1.tgz#96368fcd76f63b842708ea1489275bd3200f5e4b"
+  integrity sha512-/o84jYYlodIfKs+aRj1QoluHnQ/OdgJN/v1FONwGCf7eGn6RYn9BCh5QvHRujpoSqzgq435tzx5Ug3EF1wWvfQ==
 
 "@guardian/prettier@^0.5.0":
   version "0.5.0"
@@ -1983,11 +1983,6 @@
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@guardian/src-icons/-/src-icons-3.3.0.tgz#795933179be040feba0a58b995d76701cc954dcf"
   integrity sha512-sUFGSm0emuE8MM+/fqcCBPOgo+nOlcCmGxt9Za4SI34ujzmr78ossPfpLjaW+2+hAVeTA9+/DOEFdVvA11vaFg==
-
-"@guardian/types@^6":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/types/-/types-6.1.0.tgz#5189c34c5cc4da1e549f70706c78276fa69ef7d3"
-  integrity sha512-CP1bmqOutfG/hLQrAzBaqj9EitCNPJQ1qTyHfiCAElFsWKofYuEzMgHYM2ut5nSrkSC+n0AhXUt3qItl+2A3eQ==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"

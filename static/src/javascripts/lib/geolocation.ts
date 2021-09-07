@@ -1,5 +1,5 @@
 import { getLocale, storage } from '@guardian/libs';
-import type { CountryCode } from '@guardian/types';
+import type { CountryCode } from '@guardian/libs';
 import config from './config';
 import { getCookie } from './cookies';
 import reportError from './report-error';
