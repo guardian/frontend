@@ -1,8 +1,8 @@
 import { loadScript, log } from '@guardian/libs';
-import { captureCommercialMetrics } from 'commercial/commercial-metrics';
-import { setForceSendMetrics } from 'common/modules/analytics/forceSendMetrics';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { refreshConfiantBlockedAds } from 'common/modules/experiments/tests/refresh-confiant-blocked-ads';
+import { setForceSendMetrics } from '../../../common/modules/analytics/forceSendMetrics';
+import { isInVariantSynchronous } from '../../../common/modules/experiments/ab';
+import { refreshConfiantBlockedAds } from '../../../common/modules/experiments/tests/refresh-confiant-blocked-ads';
+import { captureCommercialMetrics } from '../../commercial-metrics';
 import { getAdvertById } from '../dfp/get-advert-by-id';
 import { refreshAdvert } from '../dfp/load-advert';
 
