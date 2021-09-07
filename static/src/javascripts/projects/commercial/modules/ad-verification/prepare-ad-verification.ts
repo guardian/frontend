@@ -15,7 +15,7 @@ const confiantRefreshedSlots: string[] = [];
 const shouldRefresh = () =>
 	isInVariantSynchronous(refreshConfiantBlockedAds, 'variant');
 
-const refreshBlockedSlotOnce: ConfiantCallback = (
+const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 	blockingType,
 	blockingId,
 	isBlocked,
@@ -27,18 +27,25 @@ const refreshBlockedSlotOnce: ConfiantCallback = (
 	const dfpSlotElementId = impressionsData?.dfp?.s;
 	const blockedSlotPath = prebidSlotElementId ?? dfpSlotElementId;
 
-	// check if ad is blocked and haven't refreshed the slot yet.
-	if (
-		isBlocked &&
-		!!blockedSlotPath &&
-		!confiantRefreshedSlots.includes(blockedSlotPath)
-	) {
-		log('commercial', '🚫 Blocked bad ad with Confiant', {
+	log(
+		'commercial',
+		`${isBlocked ? '🚫 Blocked' : '🚨 Screened'} bad ad with Confiant`,
+		{
+			blockedSlotPath,
 			blockingType,
 			blockingId,
 			wrapperId,
 			tagId,
-		});
+		},
+	);
+
+	// check if ad is blocked and haven't refreshed the slot yet.
+	if (
+		shouldRefresh() &&
+		isBlocked &&
+		!!blockedSlotPath &&
+		!confiantRefreshedSlots.includes(blockedSlotPath)
+	) {
 		const slots = window.googletag?.pubads().getSlots() ?? [];
 		slots.forEach((currentSlot) => {
 			if (blockedSlotPath === currentSlot.getSlotElementId()) {
@@ -50,7 +57,6 @@ const refreshBlockedSlotOnce: ConfiantCallback = (
 			}
 		});
 	}
-	return Promise.resolve();
 };
 
 export const init = async (): Promise<void> => {
@@ -67,8 +73,7 @@ export const init = async (): Promise<void> => {
 		if (window.location.hash === '#confiantDevMode')
 			window.confiant.settings.devMode = true;
 
-		if (shouldRefresh())
-			window.confiant.settings.callback = refreshBlockedSlotOnce;
+		window.confiant.settings.callback = maybeRefreshBlockedSlotOnce;
 	}
 
 	return;
