@@ -1,4 +1,6 @@
 import { loadScript, log } from '@guardian/libs';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { refreshConfiantBlockedAds } from 'common/modules/experiments/tests/refresh-confiant-blocked-ads';
 import { getAdvertById } from '../dfp/get-advert-by-id';
 import { refreshAdvert } from '../dfp/load-advert';
 
@@ -9,6 +11,9 @@ const errorHandler = (error: Error) => {
 };
 
 const confiantRefreshedSlots: string[] = [];
+
+const shouldRefresh = () =>
+	isInVariantSynchronous(refreshConfiantBlockedAds, 'variant');
 
 const refreshBlockedSlotOnce: ConfiantCallback = (
 	blockingType,
@@ -57,7 +62,7 @@ export const init = async (): Promise<void> => {
 			{ async: true },
 		).catch(errorHandler);
 
-		if (window.confiant?.settings) {
+		if (shouldRefresh() && window.confiant?.settings) {
 			if (window.location.hash === '#confiantDevMode')
 				window.confiant.settings.devMode = true;
 			window.confiant.settings.callback = refreshBlockedSlotOnce;
