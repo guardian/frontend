@@ -87,3 +87,10 @@ export const init = async (): Promise<void> => {
 
 	return;
 };
+
+export const _ = {
+	init,
+	maybeRefreshBlockedSlotOnce,
+	shouldRefresh,
+	confiantRefreshedSlots,
+};
