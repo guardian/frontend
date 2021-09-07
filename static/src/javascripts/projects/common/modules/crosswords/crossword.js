@@ -775,7 +775,7 @@ class Crossword extends Component {
                                                 {focused.direction}
                                             </span>
                                         </strong>{' '}
-                                        {focused.clue}
+                                        <span dangerouslySetInnerHTML={{ __html: focused.clue }} />
                                     </div>
                                 </div>
                             )}
