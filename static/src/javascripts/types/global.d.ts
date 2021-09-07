@@ -70,12 +70,16 @@ interface Config {
 	isDotcomRendering: boolean;
 }
 
+type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
+
 interface PageConfig extends CommercialPageConfig {
+	edition: Edition;
 	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
 	isSensitive: boolean;
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
+	hasPageSkin: boolean; //https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L48
 	assetsPath: string;
 	frontendAssetsFullURL?: string; // only in DCR
 }
