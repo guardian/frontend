@@ -14,7 +14,7 @@ const errorHandler = (error: Error) => {
 
 const confiantRefreshedSlots: string[] = [];
 
-const shouldRefresh = () =>
+const shouldRefresh = (): boolean =>
 	isInVariantSynchronous(refreshConfiantBlockedAds, 'variant');
 
 const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
