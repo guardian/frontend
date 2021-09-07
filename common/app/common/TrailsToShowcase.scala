@@ -7,7 +7,7 @@ import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
 import model.ImageAsset
-import model.pressed.{PressedContent, PressedTrail, Replace}
+import model.pressed.{PressedContent, Replace}
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 
@@ -39,55 +39,56 @@ object TrailsToShowcase {
       url: Option[String] = None,
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
-    val entries = (singleStories
-      .map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)).flatten
+    val panels = makePanelsFor(singleStories, rundownStories, rundownContainerTitle, rundownContainerId)
+
+    // Map panels to RSS items
+    val entries = panels.map {
+      case singleStoryPanel: SingleStoryPanel => asSyndEntry(singleStoryPanel)
+      case rundownPanel: RundownPanel         => asSyndEntry(rundownPanel)
+    }
+
     val feed = syndFeedOf(feedTitle, url, description, entries)
     asString(feed)
   }
 
-  def asSingleStoryPanel(content: PressedContent): Option[SyndEntry] = {
+  def makePanelsFor(
+      singleStories: Seq[PressedContent],
+      rundownStories: Seq[PressedContent],
+      rundownContainerTitle: String,
+      rundownContainerId: String,
+  ): Seq[Panel] = {
+    (singleStories
+      .map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)).flatten
+  }
+
+  def asSingleStoryPanel(content: PressedContent): Option[SingleStoryPanel] = {
     for {
       // Collect all mandatory values; any missing will result in a None entry
       title <-
         Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))).filter(_.length <= MaxLengthForSinglePanelTitle)
       webUrl <- webUrl(content)
       imageUrl <- singleStoryImageUrlFor(content)
-      bulletList <- content.card.trailText.flatMap(extractBulletsFrom)
+      bulletList: BulletList <- content.card.trailText.flatMap(extractBulletsFrom)
 
     } yield {
-      val entry = new SyndEntryImpl()
-      entry.setTitle(title)
-      entry.setLink(webUrl)
-
-      val gModule = new GModuleImpl()
-      gModule.setPanel(Some(SingleStory))
-      gModule.setOverline(kickerFrom(content))
-      gModule.setBulletList(Some(bulletList))
-      addModuleTo(entry, gModule)
-
-      // and add the showcase formatted asset
-      val mediaModule = new MediaEntryModuleImpl()
-      mediaModule.setMediaContents(Seq(new MediaContent(new UrlReference(imageUrl))).toArray)
-      mediaModule.setMetadata(new Metadata())
-      addModuleTo(entry, mediaModule)
-
+      // Build a panel
       val published = content.card.webPublicationDateOption
       val updated = Seq(content.card.lastModifiedOption, content.card.webPublicationDateOption).flatten.headOption
-      val atomModule = atomDatesModuleFor(published, updated)
-      addModuleTo(entry, atomModule)
-
-      bylineFrom(content).foreach { byline =>
-        // Sidestep Rome's attempt to follow the RSS spec and only populate the author tag with email addresses
-        val bylinePretendingToBePerson = new SyndPersonImpl()
-        bylinePretendingToBePerson.setEmail(byline)
-        entry.setAuthors(Seq(bylinePretendingToBePerson).asJava)
-      }
-      entry
+      SingleStoryPanel(
+        title = title,
+        link = webUrl,
+        author = bylineFrom(content),
+        overline = kickerFrom(content),
+        bulletList = Some(bulletList),
+        imageUrl = imageUrl,
+        published = published,
+        updated = updated,
+      )
     }
   }
 
-  def asRundownPanel(title: String, content: Seq[PressedContent], id: String): Option[SyndEntry] = {
-    def makeArticlesFrom(content: Seq[PressedContent]): Option[Seq[GArticle]] = {
+  def asRundownPanel(panelTitle: String, content: Seq[PressedContent], id: String): Option[RundownPanel] = {
+    def makeArticlesFrom(content: Seq[PressedContent]): Option[Seq[RundownArticle]] = {
       val validArticles = content.flatMap { contentItem =>
         // Collect the mandatory fields for the article. If any of these are missing we can skip this item
         for {
@@ -100,7 +101,7 @@ object TrailsToShowcase {
           imageUrl <- rundownPanelArticleImageUrlFor(contentItem)
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
-          GArticle(
+          RundownArticle(
             guid,
             title,
             webUrl,
@@ -108,7 +109,7 @@ object TrailsToShowcase {
             lastModified,
             bylineFrom(contentItem),
             kickerFrom(contentItem),
-            Some(new MediaContent(new UrlReference(imageUrl))),
+            Some(imageUrl),
           )
         }
       }
@@ -140,23 +141,21 @@ object TrailsToShowcase {
 
     // Collect mandatory fields. If any of these is missing we can yield None
     for {
-      title <- Some(title).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelTitle)
+      panelTitle <- Some(panelTitle).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelTitle)
       articles <- makeArticlesFrom(content)
     } yield {
-      val entry = new SyndEntryImpl
-      entry.setUri(id)
-
-      val gModule = new GModuleImpl()
-      gModule.setPanel(Some(Rundown))
-      gModule.setPanelTitle(Some(title))
-      gModule.setArticleGroup(Some(ArticleGroup(role = Some(Rundown), articles)))
-      addModuleTo(entry, gModule)
-
+      // Create a rundown panel
       // Make a questionable inference of the panels publication and update times from it's articles
       val published = articles.map(_.published).sortBy(_.getMillis).lastOption
       val updated = articles.map(_.updated).sortBy(_.getMillis).lastOption
-      addModuleTo(entry, atomDatesModuleFor(published, updated))
-      entry
+
+      RundownPanel(
+        guid = id,
+        panelTitle = panelTitle,
+        articles = articles,
+        published = published,
+        updated = updated,
+      )
     }
   }
 
@@ -286,5 +285,106 @@ object TrailsToShowcase {
     writer.close()
     writer.toString
   }
+
+  def asSyndEntry(singleStoryPanel: SingleStoryPanel): SyndEntry = {
+    val entry = new SyndEntryImpl()
+    entry.setTitle(singleStoryPanel.title)
+    entry.setLink(singleStoryPanel.link)
+    entry.setUri(singleStoryPanel.guid)
+
+    val gModule = new GModuleImpl()
+    gModule.setPanel(Some(singleStoryPanel.`type`))
+    gModule.setOverline(singleStoryPanel.overline)
+    gModule.setBulletList(singleStoryPanel.bulletList)
+    addModuleTo(entry, gModule)
+
+    // and add the showcase formatted asset
+    val mediaModule = new MediaEntryModuleImpl()
+    mediaModule.setMediaContents(Seq(new MediaContent(new UrlReference(singleStoryPanel.imageUrl))).toArray)
+    mediaModule.setMetadata(new Metadata())
+    addModuleTo(entry, mediaModule)
+
+    val atomModule = atomDatesModuleFor(singleStoryPanel.published, singleStoryPanel.updated)
+    addModuleTo(entry, atomModule)
+
+    singleStoryPanel.author.foreach { byline =>
+      // Sidestep Rome's attempt to follow the RSS spec and only populate the author tag with email addresses
+      val bylinePretendingToBePerson = new SyndPersonImpl()
+      bylinePretendingToBePerson.setEmail(byline)
+      entry.setAuthors(Seq(bylinePretendingToBePerson).asJava)
+    }
+    entry
+  }
+
+  def asSyndEntry(rundownPanel: RundownPanel): SyndEntry = {
+
+    def asGArticle(rundownArticle: RundownArticle): GArticle = {
+      GArticle(
+        rundownArticle.guid,
+        rundownArticle.title,
+        rundownArticle.link,
+        rundownArticle.published,
+        rundownArticle.updated,
+        rundownArticle.author,
+        rundownArticle.overline,
+        rundownArticle.imageUrl.map(i => new MediaContent(new UrlReference(i))),
+      )
+    }
+
+    val entry = new SyndEntryImpl
+    entry.setUri(rundownPanel.guid)
+
+    val gModule = new GModuleImpl()
+    gModule.setPanel(Some(rundownPanel.`type`))
+    gModule.setPanelTitle(Some(rundownPanel.panelTitle))
+    gModule.setArticleGroup(Some(ArticleGroup(role = Some(Rundown), rundownPanel.articles.map(asGArticle))))
+    addModuleTo(entry, gModule)
+
+    addModuleTo(entry, atomDatesModuleFor(rundownPanel.published, rundownPanel.updated))
+    entry
+  }
+
+  trait Panel {
+    def `type`: String
+    def guid: String
+    def published: Option[DateTime]
+    def updated: Option[DateTime]
+  }
+
+  case class SingleStoryPanel(
+      title: String,
+      link: String,
+      overline: Option[String],
+      bulletList: Option[BulletList],
+      imageUrl: String,
+      author: Option[String],
+      published: Option[DateTime],
+      updated: Option[DateTime],
+      panelTitle: Option[String] = None,
+  ) extends Panel {
+    val `type`: String = SingleStory
+    def guid: String = link
+  }
+
+  case class RundownPanel(
+      guid: String,
+      panelTitle: String,
+      articles: Seq[RundownArticle],
+      published: Option[DateTime],
+      updated: Option[DateTime],
+  ) extends Panel {
+    val `type`: String = Rundown
+  }
+
+  case class RundownArticle(
+      guid: String,
+      title: String,
+      link: String,
+      published: DateTime,
+      updated: DateTime,
+      author: Option[String],
+      overline: Option[String],
+      imageUrl: Option[String],
+  )
 
 }
