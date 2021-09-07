@@ -1,4 +1,5 @@
 import type { ABTest } from '@guardian/ab-core';
+import { refreshConfiantBlockedAds } from './tests/refresh-confiant-blocked-ads';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
@@ -9,4 +10,5 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateMainVariant,
 	signInGateMainControl,
 	remoteRRHeaderLinksTest,
+	refreshConfiantBlockedAds,
 ];
