@@ -24,13 +24,13 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-    Switch(
+  Switch(
     ABTests,
-    "ab-remove-sticky-nav",
-    "Remove sticky behaviour from the navigation and subnavigation bar",
-    owners = Seq(Owner.withGithub("MarSavar")),
+    "ab-refresh-confiant-blocked-ads",
+    "Check whether refreshing blocked ads lead to revenue uplift",
+    owners = Seq(Owner.withGithub("mxdvl")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 10, 10)),
+    sellByDate = Some(LocalDate.of(2021, 10, 1)),
     exposeClientSide = true,
   )
 }
