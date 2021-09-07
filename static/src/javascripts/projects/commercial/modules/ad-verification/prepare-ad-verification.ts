@@ -1,4 +1,6 @@
 import { loadScript, log } from '@guardian/libs';
+import { captureCommercialMetrics } from 'commercial/commercial-metrics';
+import { setForceSendMetrics } from 'common/modules/analytics/forceSendMetrics';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { refreshConfiantBlockedAds } from 'common/modules/experiments/tests/refresh-confiant-blocked-ads';
 import { getAdvertById } from '../dfp/get-advert-by-id';
@@ -46,6 +48,9 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 		!!blockedSlotPath &&
 		!confiantRefreshedSlots.includes(blockedSlotPath)
 	) {
+		setForceSendMetrics(true);
+		captureCommercialMetrics();
+
 		const slots = window.googletag?.pubads().getSlots() ?? [];
 		slots.forEach((currentSlot) => {
 			if (blockedSlotPath === currentSlot.getSlotElementId()) {
