@@ -51,7 +51,10 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 			if (blockedSlotPath === currentSlot.getSlotElementId()) {
 				// refresh the blocked slot to get new ad
 				const advert = getAdvertById(blockedSlotPath);
-				if (advert) refreshAdvert(advert);
+				if (advert) {
+					advert.slot.setTargeting('confiant', String(blockingType));
+					refreshAdvert(advert);
+				}
 				// mark it as refreshed so it won't refresh multiple time
 				confiantRefreshedSlots.push(blockedSlotPath);
 			}
