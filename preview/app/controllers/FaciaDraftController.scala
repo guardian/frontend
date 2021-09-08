@@ -1,10 +1,11 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
+import common.TrailsToShowcase
 import contentapi.{ContentApiClient, SectionsLookUp}
 import controllers.front.FrontJsonFapiDraft
-import model.ApplicationContext
-import play.api.mvc.{ControllerComponents, RequestHeader, Result}
+import model.{ApplicationContext, PressedPage}
+import play.api.mvc._
 import services.ConfigAgent
 
 import scala.concurrent.Future
@@ -32,4 +33,32 @@ class FaciaDraftController(
   override def canRender(path: String): Boolean = ConfigAgent.getPathIds.contains(path)
 
   override def canRender(item: ItemResponse): Boolean = indexController.canRender(item)
+
+  override def renderFrontShowcase(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      frontJsonFapi.get(path, liteRequestType).map {
+        case Some(faciaPage: PressedPage) => {
+          (for {
+            // We are using the presence of the Showcase collections to decide if this front is a Showcase feed
+            singleStoriesCollection <- faciaPage.collections.find(_.displayName == "Standalone")
+            rundownStoriesCollection <- faciaPage.collections.find(_.displayName == "Rundown")
+          } yield {
+            val singleStoryPanels = singleStoriesCollection.curated.flatMap(TrailsToShowcase.asSingleStoryPanel)
+            val rundownPanel = TrailsToShowcase.asRundownPanel(
+              rundownStoriesCollection.displayName,
+              rundownStoriesCollection.curated,
+              rundownStoriesCollection.id,
+            )
+            Ok(views.html.showcase(singleStoryPanels, rundownPanel))
+
+          }).getOrElse {
+            // Not a Showcase front
+            NotFound
+          }
+        }
+        case _ =>
+          NotFound
+      }
+    }
+
 }
