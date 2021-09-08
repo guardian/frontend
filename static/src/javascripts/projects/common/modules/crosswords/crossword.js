@@ -772,9 +772,9 @@ class Crossword extends Component {
                                         <strong>
                                             {focused.number}{' '}
                                             <span className="crossword__sticky-clue__direction">
-                                                {focused.direction}
+                                                {focused.direction}{' '}
                                             </span>
-                                        </strong>{' '}
+                                        </strong>
                                         <span dangerouslySetInnerHTML={{ __html: focused.clue }} />
                                     </div>
                                 </div>
