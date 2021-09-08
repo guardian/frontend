@@ -69,14 +69,20 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
-    val proposedTitle = TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))
+    val proposedTitle = Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content)))
+      .filter(_.length <= MaxLengthForSinglePanelTitle)
+      .map(Right(_))
+      .getOrElse(Left("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters"))
     val proposedImageUrl = singleStoryImageUrlFor(content)
+    val proposedBulletList =
+      content.card.trailText.map(extractBulletsFrom).getOrElse(Left("No trail text available"))
+
     val maybePanel = for {
       // Collect all mandatory values; any missing will result in a None entry
-      title <- Some(proposedTitle).filter(_.length <= MaxLengthForSinglePanelTitle)
+      title <- proposedTitle.right.toOption
       webUrl <- webUrl(content)
-      imageUrl <- proposedImageUrl
-      bulletList: BulletList <- content.card.trailText.flatMap(extractBulletsFrom)
+      imageUrl <- proposedImageUrl.right.toOption
+      bulletList <- proposedBulletList.right.toOption
 
     } yield {
       // Build a panel
@@ -93,19 +99,10 @@ object TrailsToShowcase {
         updated = updated,
       )
     }
+
     maybePanel.map { Right(_) }.getOrElse {
-      // Possible errors
-      val titleTooLong = if (proposedTitle.length > MaxLengthForSinglePanelTitle) {
-        Some("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters")
-      } else {
-        None
-      }
-      val noImage = if (proposedImageUrl.isEmpty) {
-        Some("Single story panel had no image")
-      } else {
-        None
-      }
-      Left(Seq(titleTooLong, noImage).flatten)
+      // Round up all of the potential source of hard errors and collect their objections
+      Left(Seq(proposedTitle, proposedImageUrl, proposedBulletList).flatMap(_.left.toOption))
     }
   }
 
@@ -120,7 +117,7 @@ object TrailsToShowcase {
             .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
           guid <- guidFor(contentItem)
           webUrl <- webUrl(contentItem)
-          imageUrl <- rundownPanelArticleImageUrlFor(contentItem)
+          imageUrl <- rundownPanelArticleImageUrlFor(contentItem).right.toOption
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           RundownArticle(
@@ -195,20 +192,19 @@ object TrailsToShowcase {
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
   }
 
-  private def singleStoryImageUrlFor(content: PressedContent): Option[String] = {
-    def bigEnoughForSingleStoryPanel(imageAsset: ImageAsset) = imageAsset.width >= 640 && imageAsset.height >= 320
-    findBestImageFor(content, bigEnoughForSingleStoryPanel)
-  }
+  private def singleStoryImageUrlFor(content: PressedContent): Either[String, String] =
+    findBestImageFor(content, 640, 320)
 
-  private def rundownPanelArticleImageUrlFor(content: PressedContent): Option[String] = {
-    def bigEnoughForRundownPanel(imageAsset: ImageAsset) = imageAsset.width >= 1200 && imageAsset.height >= 900
-    findBestImageFor(content, bigEnoughForRundownPanel)
-  }
+  private def rundownPanelArticleImageUrlFor(content: PressedContent): Either[String, String] =
+    findBestImageFor(content, 1200, 900)
 
   private def findBestImageFor(
       content: PressedContent,
-      imageSizeFilter: ImageAsset => Boolean,
-  ): Option[String] = {
+      minimumWidth: Int,
+      minimumHeight: Int,
+  ): Either[String, String] = {
+    def bigEnough(imageAsset: ImageAsset) = imageAsset.width >= minimumWidth && imageAsset.height >= minimumHeight
+
     // There will be a default trail image on the content attached to this trail.
     // There may also be a replacement image on the trail itself if the editor has replaced the image.
     val replacementImageAsset = content.properties.image
@@ -231,7 +227,17 @@ object TrailsToShowcase {
     }
 
     // Of the available image assets take the first which is large enough and has a url
-    Seq(replacementImageAsset, contentTrailImageAsset).flatten.filter(imageSizeFilter).flatMap(_.url).headOption
+    val availableImages = Seq(replacementImageAsset, contentTrailImageAsset).flatten
+    if (availableImages.nonEmpty) {
+      availableImages
+        .filter(bigEnough)
+        .flatMap(_.url)
+        .headOption
+        .map(Right(_))
+        .getOrElse(Left(s"No image bigger than the minimum required size: ${minimumWidth}x${minimumHeight}"))
+    } else {
+      Left("No image available")
+    }
   }
 
   private def guidFor(content: PressedContent): Option[String] = webUrl(content)
@@ -249,7 +255,7 @@ object TrailsToShowcase {
     content.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
   }
 
-  private def extractBulletsFrom(trailText: String): Option[BulletList] = {
+  private def extractBulletsFrom(trailText: String): Either[String, BulletList] = {
     val bulletTrailPrefix = "-"
     val lines = new WrappedString(trailText).lines.toSeq
 
@@ -266,9 +272,9 @@ object TrailsToShowcase {
       validBulletTexts.map(BulletListItem).take(MaxBulletsAllowed) // 3 is the maximum permitted number of bullets
 
     if (bulletListItemsToUse.nonEmpty) {
-      Some(BulletList(bulletListItemsToUse))
+      Right(BulletList(bulletListItemsToUse))
     } else {
-      None
+      Left("Trail text is not formatted as a bullet list")
     }
   }
 

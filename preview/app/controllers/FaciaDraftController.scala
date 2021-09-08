@@ -46,7 +46,7 @@ class FaciaDraftController(
             val singleStoryPanelCreationOutcomes =
               singleStoriesCollection.curated.map(TrailsToShowcase.asSingleStoryPanel)
             val singleStoryPanels = singleStoryPanelCreationOutcomes.flatMap(_.toOption)
-            val problems = singleStoryPanelCreationOutcomes.flatMap(_.left.toOption)
+            val problems = singleStoryPanelCreationOutcomes.flatMap(_.left.toOption).flatten
 
             val rundownPanel = TrailsToShowcase.asRundownPanel(
               rundownStoriesCollection.displayName,

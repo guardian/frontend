@@ -420,9 +420,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some(bulletEncodedTrailText),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).toOption
+    val outcome = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
 
-    singleStoryPanel should be(None)
+    outcome.right.toOption should be(None)
+    outcome.left.get.contains("Trail text is not formatted as a bullet list") shouldBe (true)
   }
 
   "TrailToShowcase" should "trim single story bullets to 3 at most" in {
@@ -780,7 +781,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     outcome.right.toOption should be(None)
     println("SSS: " + outcome.left.get)
-    outcome.left.get.contains("Single story panel had no image") shouldBe (true)
+    outcome.left.get.contains("No image available") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject single panels with images smaller than 640x320" in {
@@ -793,7 +794,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage)
 
     outcome.right.toOption should be(None)
-    outcome.left.get.contains("Single story panel did not have an image bigger than 640x320") shouldBe (true)
+    val value1: Seq[String] = outcome.left.get
+    println(value1)
+    outcome.left.get.contains("No image bigger than the minimum required size: 640x320") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject rundown panels with less than 3 articles" in {
