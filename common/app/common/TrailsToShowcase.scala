@@ -68,13 +68,14 @@ object TrailsToShowcase {
       )
   }
 
-  def asSingleStoryPanel(content: PressedContent): Either[String, SingleStoryPanel] = {
+  def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
+    val proposedTitle = TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))
+    val proposedImageUrl = singleStoryImageUrlFor(content)
     val maybePanel = for {
       // Collect all mandatory values; any missing will result in a None entry
-      title <-
-        Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))).filter(_.length <= MaxLengthForSinglePanelTitle)
+      title <- Some(proposedTitle).filter(_.length <= MaxLengthForSinglePanelTitle)
       webUrl <- webUrl(content)
-      imageUrl <- singleStoryImageUrlFor(content)
+      imageUrl <- proposedImageUrl
       bulletList: BulletList <- content.card.trailText.flatMap(extractBulletsFrom)
 
     } yield {
@@ -92,7 +93,20 @@ object TrailsToShowcase {
         updated = updated,
       )
     }
-    maybePanel.map { Right(_) }.getOrElse(Left("Something went wrong"))
+    maybePanel.map { Right(_) }.getOrElse {
+      // Possible errors
+      val titleTooLong = if (proposedTitle.length > MaxLengthForSinglePanelTitle) {
+        Some("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters")
+      } else {
+        None
+      }
+      val noImage = if (proposedImageUrl.isEmpty) {
+        Some("Single story panel had no image")
+      } else {
+        None
+      }
+      Left(Seq(titleTooLong, noImage).flatten)
+    }
   }
 
   def asRundownPanel(panelTitle: String, content: Seq[PressedContent], id: String): Option[RundownPanel] = {

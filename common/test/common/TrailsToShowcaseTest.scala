@@ -465,19 +465,6 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryPanels.size should be(0)
   }
 
-  "TrailToShowcase" should "offer an explaination when rejecting single story panels" in {
-    val bulletedContent = makePressedContent(
-      webPublicationDate = wayBackWhen,
-      lastModified = Some(lastModifiedWayBackWhen),
-      trailPicture = Some(imageMedia),
-      trailText = Some("Not properly bullet encoded"),
-    )
-
-    val panelCreationOutcome = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
-
-    panelCreationOutcome.left.toOption should be(Some("Something went wrong"))
-  }
-
   "TrailToShowcase" can "single story panels should prefer replaced images over content trail image" in {
     val curatedContent = makePressedContent(
       webPublicationDate = wayBackWhen,
@@ -723,9 +710,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(content).toOption.get
+    val outcome = TrailsToShowcase.asSingleStoryPanel(content)
 
-    singleStoryPanel.panelTitle should be(None)
+    outcome.right.get.panelTitle should be(None)
   }
 
   "TrailToShowcase validation" should "omit single panel g:overlines longer than 30 characters" in {
@@ -740,9 +727,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(content).toOption.get
+    val outcome = TrailsToShowcase.asSingleStoryPanel(content)
 
-    singleStoryPanel.overline should be(None)
+    outcome.right.get.overline should be(None)
+    // outcome.left.get.contains("Kicker was too long annd was omitted") shouldBe(true)
   }
 
   "TrailToShowcase validation" should "reject single panels with titles longer than 86 characters" in {
@@ -757,9 +745,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       headline = longerThan86,
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withLongTitle).toOption
+    val outcome = TrailsToShowcase.asSingleStoryPanel(withLongTitle)
 
-    singleStoryPanel should be(None)
+    outcome.right.toOption should be(None)
+    println(outcome.left.get)
+    outcome.left.get.contains("Headline was longer than 86 characters") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "omit single panel author fields longer than 42 characters" in {
@@ -774,9 +764,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withLongByline).toOption.get
+    val outcome = TrailsToShowcase.asSingleStoryPanel(withLongByline)
 
-    singleStoryPanel.author should be(None)
+    outcome.right.get.author should be(None)
+    // outcome.left.get.contains("Author was too long and was dropped") shouldBe(true)
   }
 
   "TrailToShowcase validation" should "reject single panels with no image" in {
@@ -785,9 +776,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       lastModified = Some(lastModifiedWayBackWhen),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withNoImage).toOption
+    val outcome = TrailsToShowcase.asSingleStoryPanel(withNoImage)
 
-    singleStoryPanel should be(None)
+    outcome.right.toOption should be(None)
+    println("SSS: " + outcome.left.get)
+    outcome.left.get.contains("Single story panel had no image") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject single panels with images smaller than 640x320" in {
@@ -797,9 +790,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailPicture = Some(smallImageMedia),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage).toOption
+    val outcome = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage)
 
-    singleStoryPanel should be(None)
+    outcome.right.toOption should be(None)
+    outcome.left.get.contains("Single story panel did not have an image bigger than 640x320") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject rundown panels with less than 3 articles" in {
