@@ -300,7 +300,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
     singleStoryPanel.title should be("My unique headline")
 
     singleStoryPanel.link should be(
@@ -330,7 +330,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       kickerText = Some("A Kicker"),
       trailText = Some("- A bullet"),
     )
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
     val entry = TrailsToShowcase.asSyndEntry(singleStoryPanel)
 
@@ -373,7 +373,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some(bulletEncodedTrailText),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).toOption.get
 
     val bulletList = singleStoryPanel.bulletList.get
     bulletList.listItems.size should be(3)
@@ -396,7 +396,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some(bulletEncodedTrailText),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).toOption.get
 
     val bulletList = singleStoryPanel.bulletList.get
     val bulletListItems = bulletList.listItems
@@ -420,7 +420,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some(bulletEncodedTrailText),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).toOption
 
     singleStoryPanel should be(None)
   }
@@ -441,7 +441,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some(bulletEncodedTrailText),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).toOption.get
 
     val bulletList = singleStoryPanel.bulletList.get
     val bulletListItems = bulletList.listItems
@@ -465,6 +465,19 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryPanels.size should be(0)
   }
 
+  "TrailToShowcase" should "offer an explaination when rejecting single story panels" in {
+    val bulletedContent = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some("Not properly bullet encoded"),
+    )
+
+    val panelCreationOutcome = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
+
+    panelCreationOutcome.left.toOption should be(Some("Something went wrong"))
+  }
+
   "TrailToShowcase" can "single story panels should prefer replaced images over content trail image" in {
     val curatedContent = makePressedContent(
       webPublicationDate = wayBackWhen,
@@ -477,7 +490,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
     singleStoryPanel.imageUrl should be("http://localhost/replaced-image.jpg")
   }
@@ -489,7 +502,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
     singleStoryPanel.updated should be(Some(wayBackWhen))
   }
@@ -710,7 +723,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(content).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(content).toOption.get
 
     singleStoryPanel.panelTitle should be(None)
   }
@@ -727,7 +740,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(content).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(content).toOption.get
 
     singleStoryPanel.overline should be(None)
   }
@@ -744,7 +757,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       headline = longerThan86,
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withLongTitle)
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withLongTitle).toOption
 
     singleStoryPanel should be(None)
   }
@@ -761,7 +774,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some("- A bullet"),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withLongByline).get
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withLongByline).toOption.get
 
     singleStoryPanel.author should be(None)
   }
@@ -772,7 +785,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       lastModified = Some(lastModifiedWayBackWhen),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withNoImage)
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withNoImage).toOption
 
     singleStoryPanel should be(None)
   }
@@ -784,7 +797,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailPicture = Some(smallImageMedia),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage)
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage).toOption
 
     singleStoryPanel should be(None)
   }

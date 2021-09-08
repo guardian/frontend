@@ -52,17 +52,24 @@ object TrailsToShowcase {
   }
 
   def makePanelsFor(
-      singleStories: Seq[PressedContent],
-      rundownStories: Seq[PressedContent],
+      singleStoryTrails: Seq[PressedContent],
+      rundownStoryTrails: Seq[PressedContent],
       rundownContainerTitle: String,
       rundownContainerId: String,
   ): Seq[Panel] = {
-    (singleStories
-      .map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)).flatten
+    val singleStoryPanelCreationOutcomes = singleStoryTrails.map(asSingleStoryPanel)
+    val singleStoryPanels = singleStoryPanelCreationOutcomes.flatMap(_.toOption)
+    asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
+      .map { rundownPanel =>
+        singleStoryPanels :+ rundownPanel
+      }
+      .getOrElse(
+        singleStoryPanels,
+      )
   }
 
-  def asSingleStoryPanel(content: PressedContent): Option[SingleStoryPanel] = {
-    for {
+  def asSingleStoryPanel(content: PressedContent): Either[String, SingleStoryPanel] = {
+    val maybePanel = for {
       // Collect all mandatory values; any missing will result in a None entry
       title <-
         Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))).filter(_.length <= MaxLengthForSinglePanelTitle)
@@ -85,6 +92,7 @@ object TrailsToShowcase {
         updated = updated,
       )
     }
+    maybePanel.map { Right(_) }.getOrElse(Left("Something went wrong"))
   }
 
   def asRundownPanel(panelTitle: String, content: Seq[PressedContent], id: String): Option[RundownPanel] = {

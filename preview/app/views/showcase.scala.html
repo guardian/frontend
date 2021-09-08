@@ -1,4 +1,4 @@
-@(singleStoryPanels: Seq[common.TrailsToShowcase.SingleStoryPanel], rundownPanel: Option[common.TrailsToShowcase.RundownPanel])
+@(singleStoryPanels: Seq[common.TrailsToShowcase.SingleStoryPanel], rundownPanel: Option[common.TrailsToShowcase.RundownPanel], problems: Seq[String])
 <!DOCTYPE html>
 <html>
     <head>
@@ -64,6 +64,17 @@
     </head>
     <body>
         <h1>Showcase</h1>
+        @if(problems.nonEmpty) {
+            <p>Problems were found with this feed:</p>
+            <ul>
+                @for(problem <- problems) {
+                    <li>@problem</li>
+                }
+            </ul>
+        } else {
+            <p>No problems found.</p>
+        }
+
         <ul>
             @for(panel <- rundownPanel) {
                 <li class="panel rundown">

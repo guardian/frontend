@@ -43,13 +43,18 @@ class FaciaDraftController(
             singleStoriesCollection <- faciaPage.collections.find(_.displayName == "Standalone")
             rundownStoriesCollection <- faciaPage.collections.find(_.displayName == "Rundown")
           } yield {
-            val singleStoryPanels = singleStoriesCollection.curated.flatMap(TrailsToShowcase.asSingleStoryPanel)
+            val singleStoryPanelCreationOutcomes =
+              singleStoriesCollection.curated.map(TrailsToShowcase.asSingleStoryPanel)
+            val singleStoryPanels = singleStoryPanelCreationOutcomes.flatMap(_.toOption)
+            val problems = singleStoryPanelCreationOutcomes.flatMap(_.left.toOption)
+
             val rundownPanel = TrailsToShowcase.asRundownPanel(
               rundownStoriesCollection.displayName,
               rundownStoriesCollection.curated,
               rundownStoriesCollection.id,
             )
-            Ok(views.html.showcase(singleStoryPanels, rundownPanel))
+
+            Ok(views.html.showcase(singleStoryPanels, rundownPanel, problems))
 
           }).getOrElse {
             // Not a Showcase front
