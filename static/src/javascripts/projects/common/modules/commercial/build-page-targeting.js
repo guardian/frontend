@@ -271,9 +271,9 @@ const rebuildPageTargeting = () => {
             cc: getCountryCode(),
             cmp_interaction: tcfv2EventStatus || 'na',
             consent_tcfv2: getTcfv2ConsentValue(adConsentState),
-            // Indicates whether the page is DCR eligible. This happens when the page
-            // was DCR eligible and was actually rendered by DCR or
-            // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
+            // dcre: DCR eligible
+            // when the page is DCR eligible and was rendered by DCR or
+            // when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             dcre:
                 config.get('isDotcomRendering', false) ||
                 config.get('page.dcrCouldRender', false)
@@ -285,17 +285,21 @@ const rebuildPageTargeting = () => {
             ms: formatTarget(page.source),
             permutive: getPermutiveSegments(),
             pv: config.get('ophan.pageViewId'),
-            // round video duration up to nearest 30 multiple
             rdp: getRdpValue(ccpaState),
             ref: getReferrer(),
+            // rp: rendering platform
             rp: config.get('isDotcomRendering', false)
                 ? 'dotcom-rendering'
-                : 'dotcom-platform', // rendering platform
-            s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+                : 'dotcom-platform',
+            // s: section
+            // for reference in a macro, so cannot be extracted from ad unit
+            s: page.section,
             sens: page.isSensitive ? 't' : 'f',
             si: isUserLoggedIn() ? 't' : 'f',
             skinsize: skinsizeTargetting(),
             urlkw: getUrlKeywords(page.pageId),
+            // vl: video length
+            // round video duration up to nearest 30 multiple
             vl: page.videoDuration
                 ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
                 : undefined,
