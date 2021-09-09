@@ -264,41 +264,41 @@ const rebuildPageTargeting = () => {
     const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
     const pageTargets = Object.assign(
         {
-            sens: page.isSensitive ? 't' : 'f',
-            permutive: getPermutiveSegments(),
-            pv: config.get('ophan.pageViewId'),
-            bp: findBreakpoint(),
-            at: getCookie('adtest') || undefined,
-            si: isUserLoggedIn() ? 't' : 'f',
-            gdncrm: getUserSegments(adConsentState),
             ab: abParam(),
-            ref: getReferrer(),
-            ms: formatTarget(page.source),
-            fr: getVisitedValue(),
-            // round video duration up to nearest 30 multiple
-            vl: page.videoDuration
-                ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-                : undefined,
+            amtgrp: storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup(),
+            at: getCookie('adtest') || undefined,
+            bp: findBreakpoint(),
             cc: getCountryCode(),
-            s: page.section, // for reference in a macro, so cannot be extracted from ad unit
-            rp: config.get('isDotcomRendering', false)
-                ? 'dotcom-rendering'
-                : 'dotcom-platform', // rendering platform
+            cmp_interaction: tcfv2EventStatus || 'na',
+            consent_tcfv2: getTcfv2ConsentValue(adConsentState),
+            // Indicates whether the page is DCR eligible. This happens when the page
+            // was DCR eligible and was actually rendered by DCR or
+            // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             dcre:
                 config.get('isDotcomRendering', false) ||
                 config.get('page.dcrCouldRender', false)
                     ? 't'
                     : 'f',
-            // Indicates whether the page is DCR eligible. This happens when the page
-            // was DCR eligible and was actually rendered by DCR or
-            // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
+            fr: getVisitedValue(),
+            gdncrm: getUserSegments(adConsentState),
             inskin: inskinTargetting(),
+            ms: formatTarget(page.source),
+            permutive: getPermutiveSegments(),
+            pv: config.get('ophan.pageViewId'),
+            // round video duration up to nearest 30 multiple
+            rdp: getRdpValue(ccpaState),
+            ref: getReferrer(),
+            rp: config.get('isDotcomRendering', false)
+                ? 'dotcom-rendering'
+                : 'dotcom-platform', // rendering platform
+            s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+            sens: page.isSensitive ? 't' : 'f',
+            si: isUserLoggedIn() ? 't' : 'f',
             skinsize: skinsizeTargetting(),
             urlkw: getUrlKeywords(page.pageId),
-            rdp: getRdpValue(ccpaState),
-            consent_tcfv2: getTcfv2ConsentValue(adConsentState),
-            cmp_interaction: tcfv2EventStatus || 'na',
-            amtgrp: storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup(),
+            vl: page.videoDuration
+                ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
+                : undefined,
         },
         page.sharedAdTargeting,
         paTargeting,
