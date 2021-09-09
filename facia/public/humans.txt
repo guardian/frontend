@@ -123,10 +123,6 @@ Twitter:@twistedsweeter
 From: Narobi, Kenya
 Location: London, UK
 
-Engineer: Oliver Lloyd
-From: London, UK
-Location: London, UK
-
 
 /* FORMER MEMBERS */
 
@@ -339,4 +335,8 @@ Location: Essex, UK
 Developer: Oliver Barnwell
 Twitter: @olliethinks
 From: Norfolk, UK
+Location: London, UK
+
+Engineer: Oliver Lloyd
+From: London, UK
 Location: London, UK
