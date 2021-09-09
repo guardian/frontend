@@ -47,8 +47,7 @@ object TrailsToShowcase {
       case rundownPanel: RundownPanel         => asSyndEntry(rundownPanel)
     }
 
-    val feed = syndFeedOf(feedTitle, url, description, entries)
-    asString(feed)
+    asString(syndFeedOf(feedTitle, url, description, entries))
   }
 
   def makePanelsFor(
@@ -69,20 +68,20 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
-    val proposedTitle = Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content)))
-      .filter(_.length <= MaxLengthForSinglePanelTitle)
+    val proposedTitle = Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))).filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelTitle)
       .map(Right(_))
       .getOrElse(Left("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters"))
+    val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left("Trail had no web url"))
     val proposedImageUrl = singleStoryImageUrlFor(content)
     val proposedBulletList =
       content.card.trailText.map(extractBulletsFrom).getOrElse(Left("No trail text available"))
 
+    // Collect all mandatory values; any missing will result in a None entry
     val maybePanel = for {
-      // Collect all mandatory values; any missing will result in a None entry
-      title <- proposedTitle.right.toOption
-      webUrl <- webUrl(content)
-      imageUrl <- proposedImageUrl.right.toOption
-      bulletList <- proposedBulletList.right.toOption
+      title <- proposedTitle.toOption
+      webUrl <- proposedWebUrl.toOption
+      imageUrl <- proposedImageUrl.toOption
+      bulletList <- proposedBulletList.toOption
 
     } yield {
       // Build a panel
@@ -101,8 +100,8 @@ object TrailsToShowcase {
     }
 
     maybePanel.map { Right(_) }.getOrElse {
-      // Round up all of the potential source of hard errors and collect their objections
-      Left(Seq(proposedTitle, proposedImageUrl, proposedBulletList).flatMap(_.left.toOption))
+      // Round up all of the potential sources of hard errors and collect their objections
+      Left(Seq(proposedTitle, proposedWebUrl, proposedImageUrl, proposedBulletList).flatMap(_.left.toOption))
     }
   }
 

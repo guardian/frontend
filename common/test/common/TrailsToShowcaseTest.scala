@@ -933,7 +933,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel.articles.forall(_.overline.isEmpty) should be(true)
   }
 
-  "TrailToShowcase validation" should "omit authors from rundown panel articles of author has not been set on all articles" in {
+  "TrailToShowcase validation" should "omit authors from rundown panel articles if author has not been set on all articles" in {
     val withAuthor = makePressedContent(
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
