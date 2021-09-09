@@ -10,7 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     InteractiveLibrarianExp,
     StandaloneCommercialBundle,
     StandaloneCommercialBundleTracking,
-    RemoveStickyNav
+    RemoveStickyNav,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
