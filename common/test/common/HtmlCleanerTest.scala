@@ -92,11 +92,11 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
     cleanedDoc.getElementsByClass("cta-bar__text").isEmpty should be(true)
   }
 
-  it should "have additional copy appended before footer" in {
+  it should "have additional styled copy appended at end of body" in {
     val doc = Jsoup.parse("""<html>
+              |<head>
+              |</head>
               |<body>
-              |<footer>
-              |</footer>
               |</body>
               |</html>""".stripMargin)
 
@@ -105,6 +105,7 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
     cleanedDoc.getElementsByTag("body").first().text() should equal(
       "This article was archived on 26 August 2021. Some elements may be out of date.",
     )
+    cleanedDoc.head().getElementsByTag("style").isEmpty() should be(false)
   }
 
   it should "have email signup removed" in {
@@ -120,66 +121,6 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
     val cleanedDoc = InteractiveImmersiveHtmlCleaner.removeEmailSignup(doc)
 
     cleanedDoc.getElementsByClass("footer__email-container").isEmpty should be(true)
-  }
-
-  it should "have expected document structure" in {
-    val doc = Jsoup.parse("""<html>
-              |<body>
-              |<div id="bannerandheader">
-              |<div class="top-banner-ad-container js-top-banner"></div>
-              |<header>
-              |<nav>
-              |<div class="new-header__cta-bar"></div>
-              |</nav>
-              |</header>
-              |</div>
-              |</body>
-              |<footer>
-              |<div class="l-footer__secondary js-footer__secondary">
-              |<div class="colophon u-cf">
-              |<div class="footer__email-container"></div>
-              |<div class="colophon__lists-container">
-              |<ul class="colophon__list"></ul>
-              |<div class="colophon__list">
-              |<div class="cta-bar__text" /></div>
-              |<a class="cta-bar__cta js-acquisition-link" data-link-name="footer : contribute-cta"></a>
-              |<a class="cta-bar__cta js-acquisition-link" data-link-name="footer : subscribe-cta"></a>
-              |</div>
-              |</div>
-              |</div>
-              |</footer>
-              |</body>
-              |</html>""".stripMargin)
-
-    val want = Jsoup.parse("""
-              |<head>
-              |<script>window.guardian.config.page.shouldHideReaderRevenue=true</script>
-              |</head>
-              |<body>
-              |<div id="bannerandheader">
-              |<header>
-              |<nav>
-              |</nav>
-              |</header>
-              |</div>
-              |</body>
-              |<p><i>This article was archived on 26 August 2021. Some elements may be out of date.</i></p>
-              |<footer>
-              |<div class="l-footer__secondary js-footer__secondary">
-              |<div class="colophon u-cf">
-              |<div class="colophon__lists-container">
-              |<ul class="colophon__list"></ul>
-              |<div class="colophon__list">
-              |</div>
-              |</div>
-              |</div>
-              |</footer>
-              |</body>
-              |</html>""".stripMargin).toString.replaceAll("\\s", "")
-
-    val cleanedDoc = InteractiveImmersiveHtmlCleaner.clean(doc, false, now)
-
-    cleanedDoc.toString.replaceAll("\\s", "") should equal(want)
   }
 
 }

@@ -11,8 +11,10 @@ import java.time.format.DateTimeFormatter
 object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
 
   override def canClean(document: Document): Boolean = {
-    !document.getElementsByClass("is-immersive-interactive").isEmpty() &&
-    document.getElementsByAttributeValue("rel", "canonical").attr("href").toLowerCase.contains("/ng-interactive/")
+    // NB: from the document I couldn't find a consistent way to check if it
+    // was an immersive interactive. For now, assume all articles requested to be
+    // cleaned via interactive librarian can be cleaned.
+    true
   }
 
   override def clean(document: Document, convertToHttps: Boolean): Document = {
@@ -63,6 +65,14 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
       .asScala
       .foreach(_.remove())
 
+    // some immersives define footer elements differently
+    val legacyFooterCallout = document.getElementById(("reader-revenue-links-footer"))
+    if (legacyFooterCallout != null) legacyFooterCallout.remove()
+
+    println(s"here ${document.getElementById("footer__email-form")}")
+    val legacyFooterSignupIframe = document.getElementById("footer__email-form")
+    if (legacyFooterSignupIframe != null) legacyFooterSignupIframe.remove()
+
     document
   }
 
@@ -77,12 +87,54 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
   }
 
   def addExtraCopyToDocument(document: Document, now: LocalDateTime): Document = {
-    val el = new Element("p")
+    val el = new Element("div")
     val date = now.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
     el.html(s"<i>This article was archived on ${date}. Some elements may be out of date.</i>")
+    el.attr("class", "pressed-immersive-copy")
 
-    val footers = document.getElementsByTag("footer")
-    if (!footers.isEmpty()) footers.first().before(el)
+    val extraCopyStyle = new Element("style")
+    val styles = """
+      .pressed-immersive-copy {
+        font-size: 0.75em;
+        font-family: "Guardian Text Sans Web";
+        padding-top: 0.5em;
+        padding-bottom: 1.5em;
+        padding-left: 1.1875rem;
+        position: relative;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      @media (min-width: 30em) {
+        .pressed-immersive-copy {
+          max-width: 46.25rem;
+        }
+      }
+
+      @media (min-width: 61.25em) {
+        .pressed-immersive-copy {
+            max-width: 61.25rem;
+        }
+      }
+
+      @media (min-width: 71.25em) {
+        .pressed-immersive-copy {
+            max-width: 71.25rem;
+        }
+      }
+
+      @media (min-width: 81.25em) {
+        .pressed-immersive-copy {
+            max-width: 81.25rem;
+        }
+      }
+    """
+    extraCopyStyle.html(styles)
+
+    document.head().appendChild(extraCopyStyle)
+
+    val body = document.getElementsByTag("body")
+    if (!body.isEmpty()) body.first().appendChild(el)
 
     document
   }
