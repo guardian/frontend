@@ -6,9 +6,8 @@ import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, U
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
-import common.TrailsToShowcase.{RundownPanel, SingleStoryPanel, asString, asSyndEntry, makePanelsFor, syndFeedOf}
-import model.{ImageAsset, PressedPage}
 import model.pressed.{PressedContent, Replace}
+import model.{ImageAsset, PressedPage}
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 
@@ -99,9 +98,12 @@ object TrailsToShowcase {
   ): (Seq[SingleStoryPanel], Option[RundownPanel], Seq[String]) = {
     val singleStoryPanelCreationOutcomes = singleStoryTrails.map(asSingleStoryPanel)
     val singleStoryPanels = singleStoryPanelCreationOutcomes.flatMap(_.toOption)
+
     val maybeRundownPanel = asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
-    val problems = singleStoryPanelCreationOutcomes.flatMap(_.left.toOption).flatten
-    (singleStoryPanels, maybeRundownPanel, problems)
+
+    val problems =
+      singleStoryPanelCreationOutcomes.flatMap(_.left.toOption).flatten ++ maybeRundownPanel.left.toSeq.flatten
+    (singleStoryPanels, maybeRundownPanel.toOption, problems)
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
@@ -144,8 +146,12 @@ object TrailsToShowcase {
     }
   }
 
-  def asRundownPanel(panelTitle: String, content: Seq[PressedContent], id: String): Option[RundownPanel] = {
-    def makeArticlesFrom(content: Seq[PressedContent]): Option[Seq[RundownArticle]] = {
+  def asRundownPanel(
+      panelTitle: String,
+      content: Seq[PressedContent],
+      id: String,
+  ): Either[Seq[String], RundownPanel] = {
+    def makeArticlesFrom(content: Seq[PressedContent]): Either[Seq[String], Seq[RundownArticle]] = {
       val validArticles = content.flatMap { contentItem =>
         // Collect the mandatory fields for the article. If any of these are missing we can skip this item
         for {
@@ -173,33 +179,33 @@ object TrailsToShowcase {
       // We require exactly 3 articles for a valid rundown panel
       val threeArticlesToUse = Some(validArticles.take(3)).filter(_.size == 3)
 
-      // Ensure author and kickers are consistent with validation rules
-      // If an author is used on any article it must be used on all of them
-      // If a kicker is used on any article it must be used on all of them
-      // You cannot mix authors and kickers
-      threeArticlesToUse.flatMap { articles =>
-        // Most of our content has bylines. Kicker is an optional override in our tools
-        // Therefore we should default to using author tags if it is available on all the articles.
-        // If kickers have been supplied for all articles we will use that in preference to authors
-        val allAuthorsPresent = articles.forall(_.author.nonEmpty)
-        val allKickersPresent = articles.forall(_.overline.nonEmpty)
-        if (allKickersPresent) {
-          // Use kickers; remove any authors
-          Some(articles.map(_.copy(author = None)))
-        } else if (allAuthorsPresent) {
-          // Use authors; remove any kickers
-          Some(articles.map(_.copy(overline = None)))
-        } else {
-          // We can't use these articles as all author or all overline is a requirement
-          None
+      threeArticlesToUse
+        .map { articles =>
+          // Most of our content has bylines. Kicker is an optional override in our tools
+          // Therefore we should default to using author tags if it is available on all the articles.
+          // If kickers have been supplied for all articles we will use that in preference to authors
+          val allAuthorsPresent = articles.forall(_.author.nonEmpty)
+          val allKickersPresent = articles.forall(_.overline.nonEmpty)
+          if (allKickersPresent) {
+            // Use kickers; remove any authors
+            Right(articles.map(_.copy(author = None)))
+          } else if (allAuthorsPresent) {
+            // Use authors; remove any kickers
+            Right(articles.map(_.copy(overline = None)))
+          } else {
+            // We can't use these articles as all author or all overline is a requirement
+            Left(Seq("Rundown trails need to all have Kickers or Bylines"))
+          }
         }
-      }
+        .getOrElse(Left(Seq("Could not make 3 valid rundown articles from rundown trails")))
     }
 
     // Collect mandatory fields. If any of these is missing we can yield None
-    for {
+    val proposedRundownArticles = makeArticlesFrom(content)
+
+    val maybeRundownPanel = for {
       panelTitle <- Some(panelTitle).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelTitle)
-      articles <- makeArticlesFrom(content)
+      articles <- proposedRundownArticles.toOption
     } yield {
       // Create a rundown panel
       // Make a questionable inference of the panels publication and update times from it's articles
@@ -213,6 +219,12 @@ object TrailsToShowcase {
         published = published,
         updated = updated,
       )
+    }
+
+    maybeRundownPanel.map(Right(_)).getOrElse {
+      // Collect everyone's objections
+      val problems = Seq(proposedRundownArticles).flatMap(_.left.toOption).flatten
+      Left(problems)
     }
   }
 
