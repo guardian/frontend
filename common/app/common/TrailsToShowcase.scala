@@ -152,13 +152,17 @@ object TrailsToShowcase {
       id: String,
   ): Either[Seq[String], RundownPanel] = {
     def makeArticlesFrom(content: Seq[PressedContent]): Either[Seq[String], Seq[RundownArticle]] = {
-      val validArticles = content.flatMap { contentItem =>
+      val articleOutcomes = content.map { contentItem =>
         // Collect the mandatory fields for the article. If any of these are missing we can skip this item
-        for {
+        val title = TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem))
+        val proposedArticleTitle = Some(title)
+          .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
+          .map(Right(_))
+          .getOrElse(Left(Seq(s"The title '$title' is too long for a rundown article")))
+
+        val maybeArticle = for {
           webPublicationDate <- contentItem.card.webPublicationDateOption
-          title <- Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem)))
-            .filter(_.nonEmpty)
-            .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
+          title <- proposedArticleTitle.toOption
           guid <- guidFor(contentItem)
           webUrl <- webUrl(contentItem)
           imageUrl <- rundownPanelArticleImageUrlFor(contentItem).right.toOption
@@ -175,9 +179,15 @@ object TrailsToShowcase {
             Some(imageUrl),
           )
         }
+
+        maybeArticle.map(Right(_)).getOrElse {
+          val problems = Seq(proposedArticleTitle).flatMap(_.left.toOption).flatten
+          Left(problems)
+        }
       }
+
       // We require exactly 3 articles for a valid rundown panel
-      val threeArticlesToUse = Some(validArticles.take(3)).filter(_.size == 3)
+      val threeArticlesToUse = Some(articleOutcomes.flatMap(_.toOption).take(3)).filter(_.size == 3)
 
       threeArticlesToUse
         .map { articles =>
@@ -197,14 +207,25 @@ object TrailsToShowcase {
             Left(Seq("Rundown trails need to all have Kickers or Bylines"))
           }
         }
-        .getOrElse(Left(Seq("Could not make 3 valid rundown articles from rundown trails")))
+        .getOrElse {
+          Left(
+            articleOutcomes
+              .flatMap(_.left.toOption)
+              .flatten :+ "Could not make 3 valid rundown articles from rundown trails",
+          )
+        }
     }
 
     // Collect mandatory fields. If any of these is missing we can yield None
+    val proposedPanelTitle = Some(panelTitle)
+      .filter(_.nonEmpty)
+      .filter(_.length <= MaxLengthForRundownPanelTitle)
+      .map(Right(_))
+      .getOrElse(Left(Seq("Rundown panel title is too long")))
     val proposedRundownArticles = makeArticlesFrom(content)
 
     val maybeRundownPanel = for {
-      panelTitle <- Some(panelTitle).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelTitle)
+      panelTitle <- proposedPanelTitle.toOption
       articles <- proposedRundownArticles.toOption
     } yield {
       // Create a rundown panel
@@ -223,7 +244,7 @@ object TrailsToShowcase {
 
     maybeRundownPanel.map(Right(_)).getOrElse {
       // Collect everyone's objections
-      val problems = Seq(proposedRundownArticles).flatMap(_.left.toOption).flatten
+      val problems = Seq(proposedPanelTitle, proposedRundownArticles).flatMap(_.left.toOption).flatten
       Left(problems)
     }
   }

@@ -759,7 +759,6 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withLongTitle)
 
     outcome.right.toOption should be(None)
-    println(outcome.left.get)
     outcome.left.get.contains("Headline was longer than 86 characters") shouldBe (true)
   }
 
@@ -790,7 +789,6 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withNoImage)
 
     outcome.right.toOption should be(None)
-    println("SSS: " + outcome.left.get)
     outcome.left.get.contains("No image available") shouldBe (true)
   }
 
@@ -804,8 +802,6 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage)
 
     outcome.right.toOption should be(None)
-    val value1: Seq[String] = outcome.left.get
-    println(value1)
     outcome.left.get.contains("No image bigger than the minimum required size: 640x320") shouldBe (true)
   }
 
@@ -857,7 +853,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val rundownPanel = TrailsToShowcase.asRundownPanel(longerThan74, Seq(trail, anotherTrail), "rundown-container-id")
 
-    rundownPanel.toOption should be(None)
+    rundownPanel.toOption shouldBe (None)
+    rundownPanel.left.get.contains("Rundown panel title is too long") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "omit rundown panel articles g:overlines longer than 30 characters" in {
@@ -899,6 +896,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
 
     rundownPanel.toOption should be(None)
+    rundownPanel.left.get.contains(s"The title '$longerThan64' is too long for a rundown article") should be(true)
   }
 
   "TrailToShowcase validation" should "reject rundown panels containing articles with images smaller than 1200x900" in {
