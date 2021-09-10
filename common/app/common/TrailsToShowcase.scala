@@ -111,11 +111,11 @@ object TrailsToShowcase {
       .filter(_.nonEmpty)
       .filter(_.length <= MaxLengthForSinglePanelTitle)
       .map(Right(_))
-      .getOrElse(Left("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters"))
-    val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left("Trail had no web url"))
+      .getOrElse(Left(Seq("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters")))
+    val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
     val proposedImageUrl = singleStoryImageUrlFor(content)
     val proposedBulletList =
-      content.card.trailText.map(extractBulletsFrom).getOrElse(Left("No trail text available"))
+      content.card.trailText.map(extractBulletsFrom).getOrElse(Left(Seq("No trail text available")))
 
     // Collect all mandatory values; any missing will result in a None entry
     val maybePanel = for {
@@ -142,7 +142,7 @@ object TrailsToShowcase {
 
     maybePanel.map { Right(_) }.getOrElse {
       // Round up all of the potential sources of hard errors and collect their objections
-      Left(Seq(proposedTitle, proposedWebUrl, proposedImageUrl, proposedBulletList).flatMap(_.left.toOption))
+      Left(Seq(proposedTitle, proposedWebUrl, proposedImageUrl, proposedBulletList).flatMap(_.left.toOption).flatten)
     }
   }
 
@@ -159,13 +159,14 @@ object TrailsToShowcase {
           .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
           .map(Right(_))
           .getOrElse(Left(Seq(s"The title '$title' is too long for a rundown article")))
+        val proposedArticleImage = rundownPanelArticleImageUrlFor(contentItem)
 
         val maybeArticle = for {
           webPublicationDate <- contentItem.card.webPublicationDateOption
           title <- proposedArticleTitle.toOption
           guid <- guidFor(contentItem)
           webUrl <- webUrl(contentItem)
-          imageUrl <- rundownPanelArticleImageUrlFor(contentItem).right.toOption
+          imageUrl <- proposedArticleImage.right.toOption
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           RundownArticle(
@@ -181,7 +182,7 @@ object TrailsToShowcase {
         }
 
         maybeArticle.map(Right(_)).getOrElse {
-          val problems = Seq(proposedArticleTitle).flatMap(_.left.toOption).flatten
+          val problems = Seq(proposedArticleTitle, proposedArticleImage).map(_.left.toOption)
           Left(problems)
         }
       }
@@ -211,6 +212,8 @@ object TrailsToShowcase {
           Left(
             articleOutcomes
               .flatMap(_.left.toOption)
+              .flatten
+              .flatten
               .flatten :+ "Could not make 3 valid rundown articles from rundown trails",
           )
         }
@@ -263,17 +266,17 @@ object TrailsToShowcase {
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
   }
 
-  private def singleStoryImageUrlFor(content: PressedContent): Either[String, String] =
+  private def singleStoryImageUrlFor(content: PressedContent): Either[Seq[String], String] =
     findBestImageFor(content, 640, 320)
 
-  private def rundownPanelArticleImageUrlFor(content: PressedContent): Either[String, String] =
+  private def rundownPanelArticleImageUrlFor(content: PressedContent): Either[Seq[String], String] =
     findBestImageFor(content, 1200, 900)
 
   private def findBestImageFor(
       content: PressedContent,
       minimumWidth: Int,
       minimumHeight: Int,
-  ): Either[String, String] = {
+  ): Either[Seq[String], String] = {
     def bigEnough(imageAsset: ImageAsset) = imageAsset.width >= minimumWidth && imageAsset.height >= minimumHeight
 
     // There will be a default trail image on the content attached to this trail.
@@ -305,9 +308,11 @@ object TrailsToShowcase {
         .flatMap(_.url)
         .headOption
         .map(Right(_))
-        .getOrElse(Left(s"No image bigger than the minimum required size: ${minimumWidth}x${minimumHeight}"))
+        .getOrElse(
+          Left(Seq(s"Could not find image bigger than the minimum required size: ${minimumWidth}x${minimumHeight}")),
+        )
     } else {
-      Left("No image available")
+      Left(Seq("No image available"))
     }
   }
 
@@ -326,7 +331,7 @@ object TrailsToShowcase {
     content.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
   }
 
-  private def extractBulletsFrom(trailText: String): Either[String, BulletList] = {
+  private def extractBulletsFrom(trailText: String): Either[Seq[String], BulletList] = {
     val bulletTrailPrefix = "-"
     val lines = new WrappedString(trailText).lines.toSeq
 
@@ -345,7 +350,7 @@ object TrailsToShowcase {
     if (bulletListItemsToUse.nonEmpty) {
       Right(BulletList(bulletListItemsToUse))
     } else {
-      Left("Trail text is not formatted as a bullet list")
+      Left(Seq("Trail text is not formatted as a bullet list"))
     }
   }
 

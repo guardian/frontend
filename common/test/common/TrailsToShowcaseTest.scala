@@ -802,7 +802,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage)
 
     outcome.right.toOption should be(None)
-    outcome.left.get.contains("No image bigger than the minimum required size: 640x320") shouldBe (true)
+    outcome.left.get.contains("Could not find image bigger than the minimum required size: 640x320") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject rundown panels with less than 3 articles" in {
@@ -899,7 +899,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel.left.get.contains(s"The title '$longerThan64' is too long for a rundown article") should be(true)
   }
 
-  "TrailToShowcase validation" should "reject rundown panels containing articles with images smaller than 1200x900" in {
+  "TrailToShowcase validation" should "reject rundown articles with images smaller than 1200x900" in {
     val withTooSmallImage = makePressedContent(
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
@@ -914,6 +914,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       )
 
     rundownPanel.toOption should be(None)
+    rundownPanel.left.get.contains("Could not find image bigger than the minimum required size: 1200x900") should be(true)
   }
 
   "TrailToShowcase validation" should "omit kickers from rundown panels if kicker is not set on all articles" in {
