@@ -37,30 +37,14 @@ class FaciaDraftController(
   override def renderFrontShowcase(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       frontJsonFapi.get(path, liteRequestType).map {
-        case Some(faciaPage: PressedPage) => {
-          (for {
-            // We are using the presence of the Showcase collections to decide if this front is a Showcase feed
-            singleStoriesCollection <- faciaPage.collections.find(_.displayName == "Standalone")
-            rundownStoriesCollection <- faciaPage.collections.find(_.displayName == "Rundown")
-          } yield {
-            val singleStoryPanelCreationOutcomes =
-              singleStoriesCollection.curated.map(TrailsToShowcase.asSingleStoryPanel)
-            val singleStoryPanels = singleStoryPanelCreationOutcomes.flatMap(_.toOption)
-            val problems = singleStoryPanelCreationOutcomes.flatMap(_.left.toOption).flatten
-
-            val rundownPanel = TrailsToShowcase.asRundownPanel(
-              rundownStoriesCollection.displayName,
-              rundownStoriesCollection.curated,
-              rundownStoriesCollection.id,
-            )
-
-            Ok(views.html.showcase(singleStoryPanels, rundownPanel, problems))
-
-          }).getOrElse {
+        case Some(faciaPage: PressedPage) =>
+          if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
+            val (singleStoryPanels, maybeRundownPanel, problems) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+            Ok(views.html.showcase(singleStoryPanels, maybeRundownPanel, problems))
+          } else {
             // Not a Showcase front
             NotFound
           }
-        }
         case _ =>
           NotFound
       }

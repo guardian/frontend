@@ -75,7 +75,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       )
 
     val rss = XML.loadString(
-      TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "Rundown panel name", "rundown-panel-id")(request),
+      TrailsToShowcase
+        .fromTrails(Option("foo"), singleStoryTrails, Seq.empty, "Rundown panel name", "rundown-panel-id")(request),
     )
 
     rss.getNamespace("g") should be("http://schemas.google.com/pcn/2020")
@@ -90,7 +91,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
 
     val rss = XML.loadString(
-      TrailsToShowcase(
+      TrailsToShowcase.fromTrails(
         Option("foo"),
         Seq.empty,
         Seq(content, content, content),
@@ -136,7 +137,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val rundownTrails = Seq(rundownArticleContent, rundownArticleContent, rundownArticleContent)
 
     val rss = XML.loadString(
-      TrailsToShowcase(
+      TrailsToShowcase.fromTrails(
         Option("foo"),
         singleStoryTrails,
         rundownTrails,
@@ -232,7 +233,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val rundownTrails = Seq(withKicker, withKicker, withKicker)
 
     val rss = XML.loadString(
-      TrailsToShowcase(
+      TrailsToShowcase.fromTrails(
         Option("foo"),
         Seq.empty,
         rundownTrails,
@@ -264,7 +265,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
 
     val rss = XML.loadString(
-      TrailsToShowcase(
+      TrailsToShowcase.fromTrails(
         Option("foo"),
         Seq(withByline),
         Seq.empty,
@@ -283,7 +284,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val singleStoryTrails =
       Seq(makePressedContent(webPublicationDate = wayBackWhen, trailPicture = Some(imageMedia)))
 
-    val rss = XML.loadString(TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
+    val rss = XML.loadString(TrailsToShowcase.fromTrails(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
 
     val rundownPanels = (rss \ "channel" \ "item").filter(ofRundownPanelType)
     rundownPanels.size should be(0)
@@ -460,7 +461,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
         ),
       )
 
-    val rss = XML.loadString(TrailsToShowcase(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
+    val rss = XML.loadString(TrailsToShowcase.fromTrails(Option("foo"), singleStoryTrails, Seq.empty, "", "")(request))
 
     val singleStoryPanels = (rss \ "channel" \ "item").filter(ofSingleStoryPanelType)
     singleStoryPanels.size should be(0)

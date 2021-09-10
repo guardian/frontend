@@ -6,7 +6,8 @@ import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, U
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
-import model.ImageAsset
+import common.TrailsToShowcase.{RundownPanel, SingleStoryPanel, asString, asSyndEntry, makePanelsFor, syndFeedOf}
+import model.{ImageAsset, PressedPage}
 import model.pressed.{PressedContent, Replace}
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
@@ -32,6 +33,22 @@ object TrailsToShowcase {
 
   def apply(
       feedTitle: Option[String],
+      url: Option[String] = None,
+      description: Option[String] = None,
+      singleStoryPanels: Seq[SingleStoryPanel],
+      maybeRundownPanel: Option[RundownPanel],
+  )(implicit request: RequestHeader): String = {
+    // Map panels to RSS items
+    val allPanels = singleStoryPanels ++ maybeRundownPanel.toSeq
+    val entries = allPanels.map {
+      case singleStoryPanel: SingleStoryPanel => asSyndEntry(singleStoryPanel)
+      case rundownPanel: RundownPanel         => asSyndEntry(rundownPanel)
+    }
+    asString(syndFeedOf(feedTitle, url, description, entries))
+  }
+
+  def fromTrails(
+      feedTitle: Option[String],
       singleStories: Seq[PressedContent],
       rundownStories: Seq[PressedContent],
       rundownContainerTitle: String,
@@ -39,15 +56,39 @@ object TrailsToShowcase {
       url: Option[String] = None,
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
-    val panels = makePanelsFor(singleStories, rundownStories, rundownContainerTitle, rundownContainerId)
+    val (singleStoryPanels, maybeRundownPanel, _) =
+      makePanelsFor(singleStories, rundownStories, rundownContainerTitle, rundownContainerId)
+    TrailsToShowcase(feedTitle, url, description, singleStoryPanels, maybeRundownPanel)
+  }
 
-    // Map panels to RSS items
-    val entries = panels.map {
-      case singleStoryPanel: SingleStoryPanel => asSyndEntry(singleStoryPanel)
-      case rundownPanel: RundownPanel         => asSyndEntry(rundownPanel)
+  // Questionable placement of controller logic
+  def isShowcaseFront(faciaPage: PressedPage): Boolean = {
+    faciaPage.frontProperties.priority.contains("showcase")
+  }
+
+  // Questionable placement of controller logic
+  def generatePanelsFrom(
+      faciaPage: PressedPage,
+  ): (Seq[TrailsToShowcase.SingleStoryPanel], Option[TrailsToShowcase.RundownPanel], Seq[String]) = {
+    // Given our pressed page locate the single story and rundown collections and convert their trails into panels
+    val maybeSingleStoriesCollection = faciaPage.collections.find(_.displayName == "Standalone")
+    val maybeRundownCollection = faciaPage.collections.find(_.displayName == "Rundown")
+
+    (for {
+      singleStoriesCollection <- maybeSingleStoriesCollection
+      rundownCollection <- maybeRundownCollection
+    } yield {
+      TrailsToShowcase.makePanelsFor(
+        singleStoryTrails = singleStoriesCollection.curated,
+        rundownStoryTrails = rundownCollection.curated,
+        rundownContainerId = rundownCollection.id,
+        rundownContainerTitle = rundownCollection.displayName,
+      )
+
+    }).getOrElse {
+      // Missing collections; raise this as a problem so the preview UI can alert the user
+      (Seq.empty, None, Seq("Could not find the required Showcase single story and rundown collections"))
     }
-
-    asString(syndFeedOf(feedTitle, url, description, entries))
   }
 
   def makePanelsFor(
@@ -55,20 +96,18 @@ object TrailsToShowcase {
       rundownStoryTrails: Seq[PressedContent],
       rundownContainerTitle: String,
       rundownContainerId: String,
-  ): Seq[Panel] = {
+  ): (Seq[SingleStoryPanel], Option[RundownPanel], Seq[String]) = {
     val singleStoryPanelCreationOutcomes = singleStoryTrails.map(asSingleStoryPanel)
     val singleStoryPanels = singleStoryPanelCreationOutcomes.flatMap(_.toOption)
-    asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
-      .map { rundownPanel =>
-        singleStoryPanels :+ rundownPanel
-      }
-      .getOrElse(
-        singleStoryPanels,
-      )
+    val maybeRundownPanel = asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
+    val problems = singleStoryPanelCreationOutcomes.flatMap(_.left.toOption).flatten
+    (singleStoryPanels, maybeRundownPanel, problems)
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
-    val proposedTitle = Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))).filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelTitle)
+    val proposedTitle = Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content)))
+      .filter(_.nonEmpty)
+      .filter(_.length <= MaxLengthForSinglePanelTitle)
       .map(Right(_))
       .getOrElse(Left("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters"))
     val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left("Trail had no web url"))
