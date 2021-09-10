@@ -726,7 +726,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     outcome.right.get.panelTitle should be(None)
   }
 
-  "TrailToShowcase validation" should "omit single panel g:overlines longer than 30 characters" in {
+  "TrailToShowcase validation" should "reject single panel g:overlines longer than 30 characters" in {
     val longerThan30 = "This sentence is way longer than 30 characters and should be omitted"
     longerThan30.size > 30 should be(true)
 
@@ -740,8 +740,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val outcome = TrailsToShowcase.asSingleStoryPanel(content)
 
-    outcome.right.get.overline should be(None)
-    // outcome.left.get.contains("Kicker was too long annd was omitted") shouldBe(true)
+    outcome.right.toOption should be(None)
+    outcome.left.get.contains(s"Kicker text '${longerThan30}' is too long") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject single panels with titles longer than 86 characters" in {
@@ -914,7 +914,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       )
 
     rundownPanel.toOption should be(None)
-    rundownPanel.left.get.contains("Could not find image bigger than the minimum required size: 1200x900") should be(true)
+    rundownPanel.left.get.contains("Could not find image bigger than the minimum required size: 1200x900") should be(
+      true,
+    )
   }
 
   "TrailToShowcase validation" should "omit kickers from rundown panels if kicker is not set on all articles" in {
