@@ -18,7 +18,7 @@ object Chronos {
     DateTime.parse(date.toString)
   }
 
-  def jodaDateTimeToJavaDateTime(date: org.joda.time.DateTime): java.time.LocalDateTime = {
+  def jodaDateTimeToJavaTimeDateTime(date: org.joda.time.DateTime): java.time.LocalDateTime = {
     LocalDateTime.ofInstant(
       Instant.ofEpochMilli(
         date

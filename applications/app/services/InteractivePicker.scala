@@ -55,7 +55,7 @@ object InteractivePicker {
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
     val switchOn = InteractivePickerFeature.isSwitchedOn
-    val publishedPostSwitch = dateIsPostTransition(Chronos.jodaDateTimeToJavaDateTime(datetime))
+    val publishedPostSwitch = dateIsPostTransition(Chronos.jodaDateTimeToJavaTimeDateTime(datetime))
     val isOptedInAmp = (requestFormat == AmpFormat) && isAmpOptedIn(tags)
     val isWeb = requestFormat == HtmlFormat
     val isOptOut = isOptedOut(tags)
