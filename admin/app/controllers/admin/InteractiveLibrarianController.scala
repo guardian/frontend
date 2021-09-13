@@ -8,6 +8,7 @@ import play.api.mvc._
 import services.dotcomrendering.InteractiveLibrarian
 
 import scala.concurrent.Future
+import java.net.URL
 
 class InteractiveLibrarianController(
     wsClient: WSClient,
@@ -25,21 +26,25 @@ class InteractiveLibrarianController(
 
   def press(): Action[AnyContent] =
     Action { implicit request =>
+      // return pressInteractiveWaiting page (prevent form resubmission)
+
+      // start async process
+      // when async process complete return to pressInteractive page
+
       val body = request.body
       val result = body.asFormUrlEncoded
         .map { form =>
           form("interactiveUrl").map { interactiveUrl =>
             interactiveUrl.trim match {
               case url if url.nonEmpty =>
-                // TODO: make next line better
-                val path = url.replace("https://www.theguardian.com", "")
+                val path = getPath(url)
                 val res = InteractiveLibrarian.pressLiveContents(wsClient, path).map { message =>
                   println(s"message ${message}")
-                  message.contains("Operation successful") match {
-                    case true =>
-                      val res = InteractiveLibrarian.readCleanWrite(path)
-                      println(s"clean message ${res}")
-                    case false => "Failed to press"
+                  if (message.contains("Operation successful")) {
+                    val res = InteractiveLibrarian.readCleanWrite(path)
+                    println(s"clean message ${res}")
+                  } else {
+                    "Failed to press"
                   }
                 }
 
@@ -52,6 +57,10 @@ class InteractiveLibrarianController(
       println(s"results ${result}")
       Ok(views.html.pressInteractive())
     }
+
+  def getPath(url: String): String = {
+    (new URL(url)).getPath()
+  }
 
   def liveContentsPress(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
