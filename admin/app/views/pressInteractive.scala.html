@@ -1,0 +1,35 @@
+@(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import conf.switches.Switches.InteractiveLibrarianAdminRoutes
+
+@admin_main("Interactive Presser (archiver)", isAuthed = true) {
+    <form action="/interactive-librarian/press" method="POST" class="form-horizontal redirect-form">
+        <fieldset>
+            <legend>Press (archive) an individual interactive</legend>
+            <div class="form-group">
+                <label for="interactiveUrl" class="control-label col-sm-1">Interactive URL:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="interactiveUrl" name="interactiveUrl" value="" placeholder="https://www.theguardian.com/xxx/ng-interactive/path" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="controls col-sm-offset-1 col-sm-11">
+                    @if(InteractiveLibrarianAdminRoutes.isSwitchedOn) {
+                        <input class="btn btn-default" type="submit" value="Press" />
+                    } else {
+                        <div class="col-sm-6">
+                            This feature is currently switched off (use the switchboard to re-enable it)
+                        </div>
+                    }
+                </div>
+            </div>
+            @if(urlMsgs.nonEmpty) {
+                <div class="form-group label-warning">
+                    <div id="server-message" class="controls col-sm-offset-1 col-sm-11">
+                        @urlMsgs.mkString
+                    </div>
+                </div>
+            }
+        </fieldset>
+    </form>
+
+}

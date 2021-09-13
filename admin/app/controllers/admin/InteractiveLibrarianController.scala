@@ -18,6 +18,41 @@ class InteractiveLibrarianController(
     with GuLogging
     with ImplicitControllerExecutionContext {
 
+  def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty): Action[AnyContent] =
+    Action { implicit request =>
+      Ok(views.html.pressInteractive(urlMsgs, fileMsgs))
+    }
+
+  def press(): Action[AnyContent] =
+    Action { implicit request =>
+      val body = request.body
+      val result = body.asFormUrlEncoded
+        .map { form =>
+          form("interactiveUrl").map { interactiveUrl =>
+            interactiveUrl.trim match {
+              case url if url.nonEmpty =>
+                // TODO: make next line better
+                val path = url.replace("https://www.theguardian.com", "")
+                val res = InteractiveLibrarian.pressLiveContents(wsClient, path).map { message =>
+                  println(s"message ${message}")
+                  message.contains("Operation successful") match {
+                    case true =>
+                      val res = InteractiveLibrarian.readCleanWrite(path)
+                      println(s"clean message ${res}")
+                    case false => "Failed to press"
+                  }
+                }
+
+              case _ => "URL not specified"
+            }
+          }
+        }
+        .map(_.toList)
+        .getOrElse(List.empty)
+      println(s"results ${result}")
+      Ok(views.html.pressInteractive())
+    }
+
   def liveContentsPress(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       if (InteractiveLibrarianAdminRoutes.isSwitchedOn) {
