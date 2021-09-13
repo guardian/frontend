@@ -36,6 +36,8 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
   }
 
   def hideReaderRevenue(document: Document): Document = {
+    // We can hide some read revenue content by setting page config
+    // The shouldHideReaderRevenue config is read by the commercial JS
     document
       .getElementsByTag("head")
       .first()
@@ -66,12 +68,11 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
       .foreach(_.remove())
 
     // some immersives define footer elements differently
-    val legacyFooterCallout = document.getElementById(("reader-revenue-links-footer"))
-    if (legacyFooterCallout != null) legacyFooterCallout.remove()
+    val legacyFooterCallout = Option(document.getElementById(("reader-revenue-links-footer")))
+    legacyFooterCallout.foreach((el => el.remove()))
 
-    println(s"here ${document.getElementById("footer__email-form")}")
-    val legacyFooterSignupIframe = document.getElementById("footer__email-form")
-    if (legacyFooterSignupIframe != null) legacyFooterSignupIframe.remove()
+    val legacyFooterSignupIframe = Option(document.getElementById("footer__email-form"))
+    legacyFooterSignupIframe.foreach(el => el.remove())
 
     document
   }

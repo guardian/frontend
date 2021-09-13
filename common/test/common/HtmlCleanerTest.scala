@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter
 
 import pagepresser.{InteractiveImmersiveHtmlCleaner}
 
-class HtmlCleanerTest extends FlatSpec with Matchers {
+class InteractiveImmersiveHtmlCleanerTest extends FlatSpec with Matchers {
   val now = LocalDateTime.parse("2021-08-26T10:15:30")
 
   "InteractiveImmersiveHtmlCleaner" should "only clean interactive immersives" in {
@@ -17,7 +17,7 @@ class HtmlCleanerTest extends FlatSpec with Matchers {
               |<link rel="canonical" href="https://www.theguardian.com/world/ng-interactive/2020/apr/08/coronavirus-100">
               |</head>
               |<body class="is-immersive is-immersive-interactive"></body>
-              |</html>""",
+              |</html>""".stripMargin,
     )
 
     InteractiveImmersiveHtmlCleaner.canClean(doc) should be(true)
