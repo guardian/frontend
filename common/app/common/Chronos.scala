@@ -2,7 +2,7 @@ package common
 
 import org.joda.time.DateTime
 
-import java.time.{Instant, LocalDateTime, ZoneId}
+import java.time.{Instant, LocalDate, LocalDateTime, ZoneId}
 import java.time.format.DateTimeFormatter
 
 // Introduced in August 2021 by Pascal to help and support the migration from joda.time to java.time
@@ -14,11 +14,17 @@ import java.time.format.DateTimeFormatter
 
 object Chronos {
 
+  // ------------------------------------------------
+  // Conversions from java.time to joda.time
+
   def javaLocalDateTimeToJodaDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
     DateTime.parse(date.toString)
   }
 
-  def jodaDateTimeToJavaDateTime(date: org.joda.time.DateTime): java.time.LocalDateTime = {
+  // ------------------------------------------------
+  // Conversions from joda.time to java.time
+
+  def jodaDateTimeToJavaTimeDateTime(date: org.joda.time.DateTime): java.time.LocalDateTime = {
     LocalDateTime.ofInstant(
       Instant.ofEpochMilli(
         date
@@ -29,13 +35,31 @@ object Chronos {
     )
   }
 
-  def javaDateToJavaLocalDate(date: java.util.Date): java.time.LocalDate = {
+  def jodaLocalDateToJavaTimeLocalDate(date: org.joda.time.LocalDate): java.time.LocalDate = {
+    LocalDate.ofInstant(
+      Instant.ofEpochMilli(
+        date
+          .toDateTime(org.joda.time.LocalTime.MIDNIGHT, org.joda.time.DateTimeZone.forID("UTC"))
+          .toInstant()
+          .getMillis,
+      ),
+      ZoneId.systemDefault,
+    )
+  }
+
+  // ------------------------------------------------
+  // Conversions away from java.util.Date
+
+  def javaUtilDateToJavaTimeLocalDate(date: java.util.Date): java.time.LocalDate = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
   }
 
-  def javaDateToJavaLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
+  def javaUtilDateToJavaTimeLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
   }
+
+  // ------------------------------------------------
+  // Java Time helpers
 
   def toMilliSeconds(date: java.time.LocalDateTime): Long = {
     date.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()

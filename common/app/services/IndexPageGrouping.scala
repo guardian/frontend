@@ -1,5 +1,6 @@
 package services
 
+import common.Chronos
 import common.JodaTime._
 import common.Maps.RichMapSeq
 import implicits.Collections
@@ -53,9 +54,9 @@ sealed trait IndexPageGrouping {
 }
 
 case class Day(day: LocalDate, items: Seq[Content]) extends IndexPageGrouping {
-  override def dateHeadline: DateHeadline = DayHeadline(day)
+  override def dateHeadline: DateHeadline = DayHeadline(Chronos.jodaLocalDateToJavaTimeLocalDate(day))
 }
 
 case class Month(day: LocalDate, items: Seq[Content]) extends IndexPageGrouping {
-  override def dateHeadline: DateHeadline = MonthHeadline(day)
+  override def dateHeadline: DateHeadline = MonthHeadline(Chronos.jodaLocalDateToJavaTimeLocalDate(day))
 }
