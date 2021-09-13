@@ -54,6 +54,9 @@ object Chronos {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
   }
 
+  // ------------------------------------------------
+  // Conversions away from java.util.Date
+
   def javaUtilDateToJavaTimeLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
   }
