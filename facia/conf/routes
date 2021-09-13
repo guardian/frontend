@@ -35,6 +35,7 @@ GET        /most-relevant-container/*path.json                                  
 GET        /*path/show-more/*id.json                                                controllers.FaciaController.renderShowMore(path, id)
 GET        /rss                                                                     controllers.FaciaController.renderRootFrontRss()
 GET        /*path/rss                                                               controllers.FaciaController.renderFrontRss(path)
+GET        /*path/showcase                                                          controllers.FaciaController.renderFrontShowcase(path)
 GET        /*path/lite.json                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET        /*path.emailjson                                                         controllers.FaciaController.renderFrontJson(path)
 GET        /*path.emailtxt                                                          controllers.FaciaController.renderFrontJson(path)

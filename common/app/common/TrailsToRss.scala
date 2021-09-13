@@ -38,7 +38,7 @@ object TrailsToRss extends implicits.Collections {
     unchanged as the end result gives valid XML, although it may exclude supplementary characters.
    */
   val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
-  private def stripInvalidXMLCharacters(s: String) = {
+  def stripInvalidXMLCharacters(s: String) = {
     pattern.matcher(s).replaceAll("")
   }
 

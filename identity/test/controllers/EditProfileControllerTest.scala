@@ -23,7 +23,9 @@ import _root_.play.api.mvc._
 import _root_.play.api.test.FakeRequest
 import _root_.play.api.test.Helpers._
 import services._
+import services.newsletters.NewsletterSignupAgent
 import test._
+
 import scala.concurrent.Future
 
 //TODO test form validation and population of form fields.
@@ -50,6 +52,7 @@ import scala.concurrent.Future
     val returnUrlVerifier = mock[ReturnUrlVerifier]
     val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
     val httpConfiguration = HttpConfiguration.createWithDefaults()
+    val newsletterSignupAgent = mock[NewsletterSignupAgent]
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
@@ -76,6 +79,7 @@ import scala.concurrent.Future
     when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
+    when(newsletterSignupAgent.getNewsletters()) thenReturn Right(Nil)
 
     when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(
       Right(Subscriber("Text", List(EmailList("37")), "subscribed")),
@@ -91,6 +95,7 @@ import scala.concurrent.Future
       returnUrlVerifier,
       newsletterService,
       signinService,
+      newsletterSignupAgent,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,

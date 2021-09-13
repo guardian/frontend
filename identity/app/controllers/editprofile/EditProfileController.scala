@@ -8,6 +8,7 @@ import model._
 import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import services.newsletters.NewsletterSignupAgent
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 
 class EditProfileController(
@@ -20,6 +21,7 @@ class EditProfileController(
     override val returnUrlVerifier: ReturnUrlVerifier,
     override val newsletterService: NewsletterService,
     override val signinService: PlaySigninService,
+    override val newsletterSignupAgent: NewsletterSignupAgent,
     override implicit val profileFormsMapping: ProfileFormsMapping,
     override implicit val context: ApplicationContext,
     val httpConfiguration: HttpConfiguration,

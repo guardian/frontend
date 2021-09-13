@@ -61,6 +61,7 @@ const sendData = () => {
 		},
 		referrerPolicy: 'no-referrer',
 		body: JSON.stringify(jsonData),
+		keepalive: true,
 	})
 		.then(() => {
 			log('dotcom', 'Successfully recorded Core Web Vitals');

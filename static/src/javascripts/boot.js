@@ -73,9 +73,13 @@ const go = () => {
         }
 
         const fakeBootCommercial = { bootCommercial: () => {} }
-        const useStandaloneBundle =
+		const useStandaloneBundle =
 			config.get('tests.standaloneCommercialBundleVariant', false) ===
-			'variant';
+				'variant' ||
+			config.get(
+				'tests.standaloneCommercialBundleTrackingVariant',
+				false,
+			) === 'variant';
 		const commercialBundle = () =>
 			useStandaloneBundle
 				? loadScript(

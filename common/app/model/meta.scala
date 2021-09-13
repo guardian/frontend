@@ -22,11 +22,11 @@ import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
 import navigation.GuardianFoundationHelper
-import services.newsletters.{NewsletterResponse}
-import org.joda.time.DateTimeZone
 
 import scala.util.matching.Regex
 import utils.ShortUrls
+
+import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
 
 object Commercial {
 
@@ -130,6 +130,8 @@ final case class Fields(
 
 object MetaData {
 
+  val StartDateForHttpsFacebookUrls: OffsetDateTime = OffsetDateTime.of(2021, 9, 6, 13, 0, 0, 0, ZoneOffset.UTC)
+
   def make(
       id: String,
       section: Option[SectionId],
@@ -196,9 +198,6 @@ object MetaData {
 
     val contentFormat: ContentFormat = ContentFormat(apiContent.design, apiContent.theme, apiContent.display)
 
-    // We have permission from Audience to test on UK Weather articles; losing counts if we need to
-    val isFacebookHttpsTest = apiContent.tags.exists(t => t.id == "uk/weather")
-
     MetaData(
       id = id,
       url = url,
@@ -223,7 +222,6 @@ object MetaData {
       sensitive = fields.sensitive.getOrElse(false),
       isFoundation = Tags.make(apiContent).isFoundation,
       firstPublicationDate = fields.firstPublicationDate,
-      isFacebookHttpsTest = isFacebookHttpsTest,
     )
   }
 }
@@ -344,7 +342,6 @@ final case class MetaData(
     sensitive: Boolean = false,
     isFoundation: Boolean = false,
     firstPublicationDate: Option[DateTime] = None,
-    isFacebookHttpsTest: Boolean = false,
 ) {
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
@@ -396,9 +393,8 @@ final case class MetaData(
       // When we migrated to https in 2016 we kept all og:urls as http to preserve engagement counts.
       // In 2021 at Facebook's request we began advertising https urls for newly published content
       // Any page which was able to supply a known first publication date with it's page meta data can benefit from this.
-
-      val startDateForArticleHttpsFacebookUrls = new DateTime(2021, 8, 9, 9, 0, 0).withZone(DateTimeZone.UTC)
-      firstPublished.isAfter(startDateForArticleHttpsFacebookUrls) && isFacebookHttpsTest
+      val firstPublishedLocalDateTime = firstPublished.date.toInstant.atZone(ZoneId.systemDefault()).toLocalDateTime
+      firstPublishedLocalDateTime.isAfter(MetaData.StartDateForHttpsFacebookUrls.toLocalDateTime)
     }
 
     val webUrlToAdvertise = if (shouldAdvertiseHttpsUrlToFacebook) {
