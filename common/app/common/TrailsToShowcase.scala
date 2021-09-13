@@ -118,24 +118,14 @@ object TrailsToShowcase {
       content.card.trailText.map(extractBulletsFrom).getOrElse(Left(Seq("No trail text available")))
 
     // Collect all mandatory values; any missing will result in a None entry
-    val proposedMaybeKicker = kickerFrom(content)
-      .map { kicker =>
-        if (kicker.length <= MaxOverlineLength) {
-          Right(Some(kicker))
-        } else {
-          Left(Seq(s"Kicker text '$kicker' is too long"))
-        }
-      }
-      .getOrElse {
-        Right(None)
-      }
+    val proposedOverline = overlineFrom(content)
 
     val maybePanel = for {
       title <- proposedTitle.toOption
       webUrl <- proposedWebUrl.toOption
       imageUrl <- proposedImageUrl.toOption
       bulletList <- proposedBulletList.toOption
-      maybeKicker <- proposedMaybeKicker.toOption
+      maybeOverline <- proposedOverline.toOption
 
     } yield {
       // Build a panel
@@ -145,7 +135,7 @@ object TrailsToShowcase {
         title = title,
         link = webUrl,
         author = bylineFrom(content),
-        overline = maybeKicker,
+        overline = maybeOverline,
         bulletList = Some(bulletList),
         imageUrl = imageUrl,
         published = published,
@@ -156,7 +146,7 @@ object TrailsToShowcase {
     maybePanel.map { Right(_) }.getOrElse {
       // Round up all of the potential sources of hard errors and collect their objections
       Left(
-        Seq(proposedTitle, proposedWebUrl, proposedImageUrl, proposedBulletList, proposedMaybeKicker)
+        Seq(proposedTitle, proposedWebUrl, proposedImageUrl, proposedBulletList, proposedOverline)
           .flatMap(_.left.toOption)
           .flatten,
       )
@@ -177,6 +167,7 @@ object TrailsToShowcase {
           .map(Right(_))
           .getOrElse(Left(Seq(s"The title '$title' is too long for a rundown article")))
         val proposedArticleImage = rundownPanelArticleImageUrlFor(contentItem)
+        val proposedOverline = overlineFrom(contentItem)
 
         val maybeArticle = for {
           webPublicationDate <- contentItem.card.webPublicationDateOption
@@ -184,6 +175,7 @@ object TrailsToShowcase {
           guid <- guidFor(contentItem)
           webUrl <- webUrl(contentItem)
           imageUrl <- proposedArticleImage.right.toOption
+          maybeOverline <- proposedOverline.toOption
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           RundownArticle(
@@ -193,13 +185,13 @@ object TrailsToShowcase {
             webPublicationDate,
             lastModified,
             bylineFrom(contentItem),
-            kickerFrom(contentItem),
+            maybeOverline,
             Some(imageUrl),
           )
         }
 
         maybeArticle.map(Right(_)).getOrElse {
-          val problems = Seq(proposedArticleTitle, proposedArticleImage).map(_.left.toOption)
+          val problems = Seq(proposedArticleTitle, proposedArticleImage, proposedOverline).map(_.left.toOption)
           Left(problems)
         }
       }
@@ -326,7 +318,7 @@ object TrailsToShowcase {
         .headOption
         .map(Right(_))
         .getOrElse(
-          Left(Seq(s"Could not find image bigger than the minimum required size: ${minimumWidth}x${minimumHeight}")),
+          Left(Seq(s"Could not find image bigger than the minimum required size: ${minimumWidth}x$minimumHeight")),
         )
     } else {
       Left(Seq("No image available"))
@@ -344,8 +336,21 @@ object TrailsToShowcase {
     content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
   }
 
-  private def kickerFrom(content: PressedContent): Option[String] = {
-    content.header.kicker.flatMap(_.properties.kickerText)
+  private def overlineFrom(contentItem: PressedContent): Either[Seq[String], Option[String]] = {
+    def kickerFrom(content: PressedContent): Option[String] = {
+      content.header.kicker.flatMap(_.properties.kickerText)
+    }
+    kickerFrom(contentItem)
+      .map { kicker =>
+        if (kicker.length <= MaxOverlineLength) {
+          Right(Some(kicker))
+        } else {
+          Left(Seq(s"Kicker text '$kicker' is too long"))
+        }
+      }
+      .getOrElse {
+        Right(None)
+      }
   }
 
   private def extractBulletsFrom(trailText: String): Either[Seq[String], BulletList] = {

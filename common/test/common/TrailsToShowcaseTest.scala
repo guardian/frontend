@@ -777,7 +777,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withLongByline)
 
     outcome.right.get.author should be(None)
-    // outcome.left.get.contains("Author was too long and was dropped") shouldBe(true)
+    //outcome.left.get.contains("Author was too long and was dropped") shouldBe(true)
   }
 
   "TrailToShowcase validation" should "reject single panels with no image" in {
@@ -857,7 +857,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel.left.get.contains("Rundown panel title is too long") shouldBe (true)
   }
 
-  "TrailToShowcase validation" should "omit rundown panel articles g:overlines longer than 30 characters" in {
+  "TrailToShowcase validation" should "reject rundown panel article kickers longer than 30 characters" in {
     val longerThan30 = "This kicker is way longer than 30 characters and should be omitted"
     longerThan30.length > 30 should be(true)
 
@@ -876,6 +876,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       )
 
     rundownPanel.toOption should be(None)
+    rundownPanel.left.get.contains(s"Kicker text '${longerThan30}' is too long") should be(true)
   }
 
   "TrailToShowcase validation" should "reject rundown panel articles with titles longer than 64 characters" in {
