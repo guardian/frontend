@@ -281,7 +281,7 @@ final case class Content(
     val rugbyMeta = if (tags.isRugbyMatch && conf.switches.Switches.RugbyScoresSwitch.isSwitchedOn) {
       val teamIds = tags.keywords.map(_.id).collect(RugbyContent.teamNameIds)
       val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
-      val date = RugbyContent.timeFormatter.withZoneUTC().print(trail.webPublicationDate)
+      val date = RugbyContent.timeFormatter.format(Chronos.jodaDateTimeToJavaDateTime(trail.webPublicationDate))
       Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
     } else None
 
