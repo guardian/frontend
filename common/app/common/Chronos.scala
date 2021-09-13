@@ -14,6 +14,12 @@ import java.time.format.DateTimeFormatter
 
 object Chronos {
 
+  // The conversion functions implement the following naming logic
+  // [Type1]To[Type2]
+  // "joda" for org.joda.time.*
+  // "javaTime" for java.time.*
+  // "javaUtil" for java.util.*
+
   // ------------------------------------------------
   // Conversions from java.time to joda.time
 
