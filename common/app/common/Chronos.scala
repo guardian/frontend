@@ -17,7 +17,7 @@ object Chronos {
   // ------------------------------------------------
   // Conversions from java.time to joda.time
 
-  def javaLocalDateTimeToJodaDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
+  def javaTimeLocalDateTimeToJodaDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
     DateTime.parse(date.toString)
   }
 

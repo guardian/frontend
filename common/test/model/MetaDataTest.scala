@@ -150,9 +150,9 @@ class MetaDataTest extends FlatSpec with Matchers {
 
   it should "show https Facebook og:url for content first published after our decision to start advertisng https canonical urls to Facebook" in {
     val content = contentApi(
-      publicationDate = Chronos.javaLocalDateTimeToJodaDateTime(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook),
+      publicationDate = Chronos.javaTimeLocalDateTimeToJodaDateTime(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook),
       firstPublicationDate =
-        Some(Chronos.javaLocalDateTimeToJodaDateTime(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook)),
+        Some(Chronos.javaTimeLocalDateTimeToJodaDateTime(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook)),
       webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals",
     )
     val fields = Fields.make(content)
@@ -183,7 +183,7 @@ class MetaDataTest extends FlatSpec with Matchers {
 
   it should "pages with no explict first published date should continue to show http og:urls" in {
     val content = contentApi(
-      publicationDate = Chronos.javaLocalDateTimeToJodaDateTime(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook),
+      publicationDate = Chronos.javaTimeLocalDateTimeToJodaDateTime(dateAfterWeStartedAdvertistingHttpsUrlsToFacebook),
       firstPublicationDate = None,
       webUrl = "https://www.theguardian.com/football/2021/nov/16/top-flight-team-conceded-most-goals",
     )
