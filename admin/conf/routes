@@ -50,6 +50,9 @@ POST        /ajax/clear                                                         
 POST        /interactive-librarian/live-presser/*path                                               controllers.admin.InteractiveLibrarianController.liveContentsPress(path: String)
 POST        /interactive-librarian/read-clean-write/*path                                           controllers.admin.InteractiveLibrarianController.readCleanWrite(path: String)
 
+GET         /press/interactive                                                                      controllers.admin.InteractiveLibrarianController.pressForm()
+POST        /interactive-librarian/press                                                            controllers.admin.InteractiveLibrarianController.press()
+
 # Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
 
