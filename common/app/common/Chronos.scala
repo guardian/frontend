@@ -29,7 +29,7 @@ object Chronos {
     )
   }
 
-  def javaDateToJavaLocalDate(date: java.util.Date): java.time.LocalDate = {
+  def javaUtilDateToJavaTimeLocalDate(date: java.util.Date): java.time.LocalDate = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
   }
 
