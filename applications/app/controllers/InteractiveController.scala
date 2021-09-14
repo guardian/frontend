@@ -114,7 +114,7 @@ class InteractiveController(
       model match {
         case Left((page, blocks)) => {
           val tags = page.interactive.tags.tags
-          val date = page.interactive.trail.webPublicationDate
+          val date = Chronos.jodaDateTimeToJavaTimeDateTime(page.interactive.trail.webPublicationDate)
           val tier = InteractivePicker.getRenderingTier(requestFormat, path, date, tags)
 
           (requestFormat, tier) match {
