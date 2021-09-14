@@ -37,8 +37,8 @@ class InteractiveLibrarianController(
   with GuLogging
   with ImplicitControllerExecutionContext {
 
-  val events = Source.queue[PressResult](bufferSize = 100)
-  val (queue, _) = events.preMaterialize()
+  val sourceQueue = Source.queue[PressResult](bufferSize = 100)
+  val (queue, source) = sourceQueue.preMaterialize()
 
   def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty): Action[AnyContent] =
     Action { implicit request =>
@@ -49,7 +49,6 @@ class InteractiveLibrarianController(
     Action { implicit request =>
       val body = request.body
 
-      println("press")
       // for now repeating the function to extract path so i don't
       // break the below, but also have a path to pass to the page
       // that displays the waiting state
@@ -83,12 +82,12 @@ class InteractiveLibrarianController(
                   }
                 }
 
-                println(s"path inside map ${path}")
                 result.onComplete({
                   case scala.util.Success(_)     => {
                     println(s"on complete, about to offer success to queue, $path")
-                    queue.offer(Success(path))
-                    println(s"${queue.size()}")
+                    val status = queue.offer(Success(path))
+
+                    println(s"status of offering ${status}")
                   }
                   case scala.util.Failure(error) => {
                     println(s"on complete, about to offer failure to queue, $path")
@@ -105,7 +104,6 @@ class InteractiveLibrarianController(
         .map(_.toList)
         .getOrElse(List.empty)
 
-        println("returning doc")
         // return page where we wait for results, or offer to press another page
         // page we display must have js included to listen to events
         Ok(views.html.pressInteractiveWaiting(path = path))
@@ -116,11 +114,11 @@ class InteractiveLibrarianController(
     Action { implicit request =>
       val formattedPath = s"/$path"
 
-      val relevantEvents = events.filter(_.path == formattedPath)
-
-      println(s"path used to get events ${formattedPath}")
-      println(s"relevent events ${relevantEvents}")
-      Ok.chunked(relevantEvents via EventSource.flow)
+      // val relevantEvents = events.filter(_.path == formattedPath)
+      // val res = queue.offer(Success(path))
+      // println(s"press status queue offer res ${res}")
+      // println(s"path used to get events ${formattedPath}")
+      Ok.chunked(source via EventSource.flow)
         .as(ContentTypes.EVENT_STREAM)
         .withHeaders("Cache-Control" -> "no-cache")
         .withHeaders("Connection" -> "keep-alive")
