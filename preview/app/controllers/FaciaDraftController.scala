@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import common.TrailsToShowcase
 import contentapi.{ContentApiClient, SectionsLookUp}
 import controllers.front.FrontJsonFapiDraft
+import model.Cached.RevalidatableResult
 import model.{ApplicationContext, PressedPage}
 import play.api.mvc._
 import services.ConfigAgent
@@ -23,7 +24,6 @@ class FaciaDraftController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Serving Path: $path")
-
     if (!ConfigAgent.getPathIds.contains(path))
       indexController.renderItem(path)
     else
@@ -34,20 +34,12 @@ class FaciaDraftController(
 
   override def canRender(item: ItemResponse): Boolean = indexController.canRender(item)
 
-  override def renderFrontShowcase(path: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      frontJsonFapi.get(path, liteRequestType).map {
-        case Some(faciaPage: PressedPage) =>
-          if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
-            val (singleStoryPanels, maybeRundownPanel, problems) = TrailsToShowcase.generatePanelsFrom(faciaPage)
-            Ok(views.html.showcase(singleStoryPanels, maybeRundownPanel, problems))
-          } else {
-            // Not a Showcase front
-            NotFound
-          }
-        case _ =>
-          NotFound
-      }
-    }
+  override protected def renderShowcaseFront(
+      faciaPage: PressedPage,
+  )(implicit request: RequestHeader): RevalidatableResult = {
+    val (singleStoryPanels, maybeRundownPanel, problems) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val html = views.html.showcase(singleStoryPanels, maybeRundownPanel, problems)
+    RevalidatableResult(Ok(html), html.body)
+  }
 
 }
