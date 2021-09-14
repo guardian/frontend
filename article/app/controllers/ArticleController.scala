@@ -44,11 +44,23 @@ class ArticleController(
     }
   }
 
+  def servePressedPage(path: String)(implicit request: RequestHeader): Result = {
+    val cacheable = WithoutRevalidationResult(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$path"))
+    Cached(CacheTime.ArchiveRedirect)(cacheable)
+  }
+
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks) { (article, blocks) =>
-        render(path, article, blocks)
+      // Some content was pressed during the DCR migration, as it contains
+      // elements that DCR doesn't (and won't) support going forward.
+      if (PressedArticles.isPressed(path)) {
+        Future.successful(servePressedPage(path))
+      } else {
+        mapModel(path, ArticleBlocks) { (article, blocks) =>
+          render(path, article, blocks)
+        }
       }
+
     }
   }
 
