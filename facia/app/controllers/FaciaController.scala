@@ -120,25 +120,18 @@ trait FaciaController
     Action.async { implicit request =>
       val futureResult = frontJsonFapi.get(path, liteRequestType).map {
         case Some(faciaPage: PressedPage) =>
-          (for {
-            // We are using the presence of the Showcase collections to decide if this front is a Showcase feed
-            singleStoriesCollection <- faciaPage.collections.find(_.displayName == "Standalone")
-            rundownStoriesCollection <- faciaPage.collections.find(_.displayName == "Rundown")
-          } yield {
-            val singleStories = singleStoriesCollection.curated
-            val rundownStories = rundownStoriesCollection.curated
+          if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
+            val (singleStoryPanels, maybeRundownPanel, _) = TrailsToShowcase.generatePanelsFrom(faciaPage)
             val showcase = TrailsToShowcase(
               feedTitle = faciaPage.metadata.title,
-              singleStories = singleStories,
-              rundownStories = rundownStories,
-              rundownContainerId = rundownStoriesCollection.id,
-              rundownContainerTitle = rundownStoriesCollection.displayName,
               url = Some(faciaPage.metadata.url),
               description = faciaPage.metadata.description,
+              singleStoryPanels = singleStoryPanels,
+              maybeRundownPanel = maybeRundownPanel,
             )
             Cached(CacheTime.Default)(RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase))
-
-          }).getOrElse {
+          } else {
+            // Not a Showcase front
             Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
           }
         case None =>

@@ -6,8 +6,8 @@ import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, U
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
-import model.ImageAsset
 import model.pressed.{PressedContent, Replace}
+import model.{ImageAsset, PressedPage}
 import org.joda.time.DateTime
 import play.api.mvc.RequestHeader
 
@@ -32,6 +32,22 @@ object TrailsToShowcase {
 
   def apply(
       feedTitle: Option[String],
+      url: Option[String] = None,
+      description: Option[String] = None,
+      singleStoryPanels: Seq[SingleStoryPanel],
+      maybeRundownPanel: Option[RundownPanel],
+  )(implicit request: RequestHeader): String = {
+    // Map panels to RSS items
+    val allPanels = singleStoryPanels ++ maybeRundownPanel.toSeq
+    val entries = allPanels.map {
+      case singleStoryPanel: SingleStoryPanel => asSyndEntry(singleStoryPanel)
+      case rundownPanel: RundownPanel         => asSyndEntry(rundownPanel)
+    }
+    asString(syndFeedOf(feedTitle, url, description, entries))
+  }
+
+  def fromTrails(
+      feedTitle: Option[String],
       singleStories: Seq[PressedContent],
       rundownStories: Seq[PressedContent],
       rundownContainerTitle: String,
@@ -39,36 +55,77 @@ object TrailsToShowcase {
       url: Option[String] = None,
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
-    val panels = makePanelsFor(singleStories, rundownStories, rundownContainerTitle, rundownContainerId)
+    val (singleStoryPanels, maybeRundownPanel, _) =
+      makePanelsFor(singleStories, rundownStories, rundownContainerTitle, rundownContainerId)
+    TrailsToShowcase(feedTitle, url, description, singleStoryPanels, maybeRundownPanel)
+  }
 
-    // Map panels to RSS items
-    val entries = panels.map {
-      case singleStoryPanel: SingleStoryPanel => asSyndEntry(singleStoryPanel)
-      case rundownPanel: RundownPanel         => asSyndEntry(rundownPanel)
+  // Questionable placement of controller logic
+  def isShowcaseFront(faciaPage: PressedPage): Boolean = {
+    faciaPage.frontProperties.priority.contains("showcase")
+  }
+
+  // Questionable placement of controller logic
+  def generatePanelsFrom(
+      faciaPage: PressedPage,
+  ): (Seq[TrailsToShowcase.SingleStoryPanel], Option[TrailsToShowcase.RundownPanel], Seq[String]) = {
+    // Given our pressed page locate the single story and rundown collections and convert their trails into panels
+    val maybeSingleStoriesCollection = faciaPage.collections.find(_.displayName == "Standalone")
+    val maybeRundownCollection = faciaPage.collections.find(_.displayName == "Rundown")
+
+    (for {
+      singleStoriesCollection <- maybeSingleStoriesCollection
+      rundownCollection <- maybeRundownCollection
+    } yield {
+      TrailsToShowcase.makePanelsFor(
+        singleStoryTrails = singleStoriesCollection.curated,
+        rundownStoryTrails = rundownCollection.curated,
+        rundownContainerId = rundownCollection.id,
+        rundownContainerTitle = rundownCollection.displayName,
+      )
+
+    }).getOrElse {
+      // Missing collections; raise this as a problem so the preview UI can alert the user
+      (Seq.empty, None, Seq("Could not find the required Showcase single story and rundown collections"))
     }
-
-    val feed = syndFeedOf(feedTitle, url, description, entries)
-    asString(feed)
   }
 
   def makePanelsFor(
-      singleStories: Seq[PressedContent],
-      rundownStories: Seq[PressedContent],
+      singleStoryTrails: Seq[PressedContent],
+      rundownStoryTrails: Seq[PressedContent],
       rundownContainerTitle: String,
       rundownContainerId: String,
-  ): Seq[Panel] = {
-    (singleStories
-      .map(asSingleStoryPanel) :+ asRundownPanel(rundownContainerTitle, rundownStories, rundownContainerId)).flatten
+  ): (Seq[SingleStoryPanel], Option[RundownPanel], Seq[String]) = {
+    val singleStoryPanelCreationOutcomes = singleStoryTrails.map(asSingleStoryPanel)
+    val singleStoryPanels = singleStoryPanelCreationOutcomes.flatMap(_.toOption)
+
+    val maybeRundownPanel = asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
+
+    val problems =
+      singleStoryPanelCreationOutcomes.flatMap(_.left.toOption).flatten ++ maybeRundownPanel.left.toSeq.flatten
+    (singleStoryPanels, maybeRundownPanel.toOption, problems)
   }
 
-  def asSingleStoryPanel(content: PressedContent): Option[SingleStoryPanel] = {
-    for {
-      // Collect all mandatory values; any missing will result in a None entry
-      title <-
-        Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))).filter(_.length <= MaxLengthForSinglePanelTitle)
-      webUrl <- webUrl(content)
-      imageUrl <- singleStoryImageUrlFor(content)
-      bulletList: BulletList <- content.card.trailText.flatMap(extractBulletsFrom)
+  def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
+    val proposedTitle = Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content)))
+      .filter(_.nonEmpty)
+      .filter(_.length <= MaxLengthForSinglePanelTitle)
+      .map(Right(_))
+      .getOrElse(Left(Seq("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters")))
+    val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
+    val proposedImageUrl = singleStoryImageUrlFor(content)
+    val proposedBulletList =
+      content.card.trailText.map(extractBulletsFrom).getOrElse(Left(Seq("No trail text available")))
+
+    // Collect all mandatory values; any missing will result in a None entry
+    val proposedOverline = overlineFrom(content)
+
+    val maybePanel = for {
+      title <- proposedTitle.toOption
+      webUrl <- proposedWebUrl.toOption
+      imageUrl <- proposedImageUrl.toOption
+      bulletList <- proposedBulletList.toOption
+      maybeOverline <- proposedOverline.toOption
 
     } yield {
       // Build a panel
@@ -78,27 +135,47 @@ object TrailsToShowcase {
         title = title,
         link = webUrl,
         author = bylineFrom(content),
-        overline = kickerFrom(content),
+        overline = maybeOverline,
         bulletList = Some(bulletList),
         imageUrl = imageUrl,
         published = published,
         updated = updated,
       )
     }
+
+    maybePanel.map { Right(_) }.getOrElse {
+      // Round up all of the potential sources of hard errors and collect their objections
+      Left(
+        Seq(proposedTitle, proposedWebUrl, proposedImageUrl, proposedBulletList, proposedOverline)
+          .flatMap(_.left.toOption)
+          .flatten,
+      )
+    }
   }
 
-  def asRundownPanel(panelTitle: String, content: Seq[PressedContent], id: String): Option[RundownPanel] = {
-    def makeArticlesFrom(content: Seq[PressedContent]): Option[Seq[RundownArticle]] = {
-      val validArticles = content.flatMap { contentItem =>
+  def asRundownPanel(
+      panelTitle: String,
+      content: Seq[PressedContent],
+      id: String,
+  ): Either[Seq[String], RundownPanel] = {
+    def makeArticlesFrom(content: Seq[PressedContent]): Either[Seq[String], Seq[RundownArticle]] = {
+      val articleOutcomes = content.map { contentItem =>
         // Collect the mandatory fields for the article. If any of these are missing we can skip this item
-        for {
+        val title = TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem))
+        val proposedArticleTitle = Some(title)
+          .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
+          .map(Right(_))
+          .getOrElse(Left(Seq(s"The title '$title' is too long for a rundown article")))
+        val proposedArticleImage = rundownPanelArticleImageUrlFor(contentItem)
+        val proposedOverline = overlineFrom(contentItem)
+
+        val maybeArticle = for {
           webPublicationDate <- contentItem.card.webPublicationDateOption
-          title <- Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem)))
-            .filter(_.nonEmpty)
-            .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
+          title <- proposedArticleTitle.toOption
           guid <- guidFor(contentItem)
           webUrl <- webUrl(contentItem)
-          imageUrl <- rundownPanelArticleImageUrlFor(contentItem)
+          imageUrl <- proposedArticleImage.right.toOption
+          maybeOverline <- proposedOverline.toOption
         } yield {
           val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
           RundownArticle(
@@ -108,41 +185,60 @@ object TrailsToShowcase {
             webPublicationDate,
             lastModified,
             bylineFrom(contentItem),
-            kickerFrom(contentItem),
+            maybeOverline,
             Some(imageUrl),
           )
         }
-      }
-      // We require exactly 3 articles for a valid rundown panel
-      val threeArticlesToUse = Some(validArticles.take(3)).filter(_.size == 3)
 
-      // Ensure author and kickers are consistent with validation rules
-      // If an author is used on any article it must be used on all of them
-      // If a kicker is used on any article it must be used on all of them
-      // You cannot mix authors and kickers
-      threeArticlesToUse.flatMap { articles =>
-        // Most of our content has bylines. Kicker is an optional override in our tools
-        // Therefore we should default to using author tags if it is available on all the articles.
-        // If kickers have been supplied for all articles we will use that in preference to authors
-        val allAuthorsPresent = articles.forall(_.author.nonEmpty)
-        val allKickersPresent = articles.forall(_.overline.nonEmpty)
-        if (allKickersPresent) {
-          // Use kickers; remove any authors
-          Some(articles.map(_.copy(author = None)))
-        } else if (allAuthorsPresent) {
-          // Use authors; remove any kickers
-          Some(articles.map(_.copy(overline = None)))
-        } else {
-          // We can't use these articles as all author or all overline is a requirement
-          None
+        maybeArticle.map(Right(_)).getOrElse {
+          val problems = Seq(proposedArticleTitle, proposedArticleImage, proposedOverline).map(_.left.toOption)
+          Left(problems)
         }
       }
+
+      // We require exactly 3 articles for a valid rundown panel
+      val threeArticlesToUse = Some(articleOutcomes.flatMap(_.toOption).take(3)).filter(_.size == 3)
+
+      threeArticlesToUse
+        .map { articles =>
+          // Most of our content has bylines. Kicker is an optional override in our tools
+          // Therefore we should default to using author tags if it is available on all the articles.
+          // If kickers have been supplied for all articles we will use that in preference to authors
+          val allAuthorsPresent = articles.forall(_.author.nonEmpty)
+          val allKickersPresent = articles.forall(_.overline.nonEmpty)
+          if (allKickersPresent) {
+            // Use kickers; remove any authors
+            Right(articles.map(_.copy(author = None)))
+          } else if (allAuthorsPresent) {
+            // Use authors; remove any kickers
+            Right(articles.map(_.copy(overline = None)))
+          } else {
+            // We can't use these articles as all author or all overline is a requirement
+            Left(Seq("Rundown trails need to all have Kickers or Bylines"))
+          }
+        }
+        .getOrElse {
+          Left(
+            articleOutcomes
+              .flatMap(_.left.toOption)
+              .flatten
+              .flatten
+              .flatten :+ "Could not make 3 valid rundown articles from rundown trails",
+          )
+        }
     }
 
     // Collect mandatory fields. If any of these is missing we can yield None
-    for {
-      panelTitle <- Some(panelTitle).filter(_.nonEmpty).filter(_.length <= MaxLengthForRundownPanelTitle)
-      articles <- makeArticlesFrom(content)
+    val proposedPanelTitle = Some(panelTitle)
+      .filter(_.nonEmpty)
+      .filter(_.length <= MaxLengthForRundownPanelTitle)
+      .map(Right(_))
+      .getOrElse(Left(Seq("Rundown panel title is too long")))
+    val proposedRundownArticles = makeArticlesFrom(content)
+
+    val maybeRundownPanel = for {
+      panelTitle <- proposedPanelTitle.toOption
+      articles <- proposedRundownArticles.toOption
     } yield {
       // Create a rundown panel
       // Make a questionable inference of the panels publication and update times from it's articles
@@ -156,6 +252,12 @@ object TrailsToShowcase {
         published = published,
         updated = updated,
       )
+    }
+
+    maybeRundownPanel.map(Right(_)).getOrElse {
+      // Collect everyone's objections
+      val problems = Seq(proposedPanelTitle, proposedRundownArticles).flatMap(_.left.toOption).flatten
+      Left(problems)
     }
   }
 
@@ -173,20 +275,19 @@ object TrailsToShowcase {
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
   }
 
-  private def singleStoryImageUrlFor(content: PressedContent): Option[String] = {
-    def bigEnoughForSingleStoryPanel(imageAsset: ImageAsset) = imageAsset.width >= 640 && imageAsset.height >= 320
-    findBestImageFor(content, bigEnoughForSingleStoryPanel)
-  }
+  private def singleStoryImageUrlFor(content: PressedContent): Either[Seq[String], String] =
+    findBestImageFor(content, 640, 320)
 
-  private def rundownPanelArticleImageUrlFor(content: PressedContent): Option[String] = {
-    def bigEnoughForRundownPanel(imageAsset: ImageAsset) = imageAsset.width >= 1200 && imageAsset.height >= 900
-    findBestImageFor(content, bigEnoughForRundownPanel)
-  }
+  private def rundownPanelArticleImageUrlFor(content: PressedContent): Either[Seq[String], String] =
+    findBestImageFor(content, 1200, 900)
 
   private def findBestImageFor(
       content: PressedContent,
-      imageSizeFilter: ImageAsset => Boolean,
-  ): Option[String] = {
+      minimumWidth: Int,
+      minimumHeight: Int,
+  ): Either[Seq[String], String] = {
+    def bigEnough(imageAsset: ImageAsset) = imageAsset.width >= minimumWidth && imageAsset.height >= minimumHeight
+
     // There will be a default trail image on the content attached to this trail.
     // There may also be a replacement image on the trail itself if the editor has replaced the image.
     val replacementImageAsset = content.properties.image
@@ -209,7 +310,19 @@ object TrailsToShowcase {
     }
 
     // Of the available image assets take the first which is large enough and has a url
-    Seq(replacementImageAsset, contentTrailImageAsset).flatten.filter(imageSizeFilter).flatMap(_.url).headOption
+    val availableImages = Seq(replacementImageAsset, contentTrailImageAsset).flatten
+    if (availableImages.nonEmpty) {
+      availableImages
+        .filter(bigEnough)
+        .flatMap(_.url)
+        .headOption
+        .map(Right(_))
+        .getOrElse(
+          Left(Seq(s"Could not find image bigger than the minimum required size: ${minimumWidth}x$minimumHeight")),
+        )
+    } else {
+      Left(Seq("No image available"))
+    }
   }
 
   private def guidFor(content: PressedContent): Option[String] = webUrl(content)
@@ -223,11 +336,24 @@ object TrailsToShowcase {
     content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
   }
 
-  private def kickerFrom(content: PressedContent): Option[String] = {
-    content.header.kicker.flatMap(_.properties.kickerText).filter(_.length <= MaxOverlineLength)
+  private def overlineFrom(contentItem: PressedContent): Either[Seq[String], Option[String]] = {
+    def kickerFrom(content: PressedContent): Option[String] = {
+      content.header.kicker.flatMap(_.properties.kickerText)
+    }
+    kickerFrom(contentItem)
+      .map { kicker =>
+        if (kicker.length <= MaxOverlineLength) {
+          Right(Some(kicker))
+        } else {
+          Left(Seq(s"Kicker text '$kicker' is too long"))
+        }
+      }
+      .getOrElse {
+        Right(None)
+      }
   }
 
-  private def extractBulletsFrom(trailText: String): Option[BulletList] = {
+  private def extractBulletsFrom(trailText: String): Either[Seq[String], BulletList] = {
     val bulletTrailPrefix = "-"
     val lines = new WrappedString(trailText).lines.toSeq
 
@@ -244,9 +370,9 @@ object TrailsToShowcase {
       validBulletTexts.map(BulletListItem).take(MaxBulletsAllowed) // 3 is the maximum permitted number of bullets
 
     if (bulletListItemsToUse.nonEmpty) {
-      Some(BulletList(bulletListItemsToUse))
+      Right(BulletList(bulletListItemsToUse))
     } else {
-      None
+      Left(Seq("Trail text is not formatted as a bullet list"))
     }
   }
 
