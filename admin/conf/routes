@@ -52,6 +52,7 @@ POST        /interactive-librarian/read-clean-write/*path                       
 
 GET         /press/interactive                                                                      controllers.admin.InteractiveLibrarianController.pressForm()
 POST        /interactive-librarian/press                                                            controllers.admin.InteractiveLibrarianController.press()
+GET         /interactive-librarian/press-status-updates/*path                                       controllers.admin.InteractiveLibrarianController.pressStatusUpdates(path: String)
 
 # Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()

@@ -1,0 +1,55 @@
+@(path: Option[Seq[String]] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import conf.switches.Switches.InteractiveLibrarianAdminRoutes
+
+@admin_main("Interactive Presser (archiver)", isAuthed = true) {
+
+    <div class="form-group">
+        <label for="interactiveUrl" class="control-label col-sm-1">Interactive URL:</label>
+
+        <div class="col-sm-6">
+            @if(path.nonEmpty) {
+                <div>
+                    <div id="server-message">
+                        @path.mkString
+                    </div>
+                </div>
+            } else {
+                <div>
+                    <div id="server-message">
+                        Please specify a URL
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div id="progress-status">
+        Please wait - pressing
+    </div>
+
+    <script>
+        // TODO: work out how to parse and reference the path
+        let path = 'politics/ng-interactive/2020/feb/01/britain-and-the-eu-a-timeline';
+
+        // the work is the thing that listens to events and changes our
+        // page content dynamically
+        worker = new Worker('/assets/admin/interactiveLibrarian/librarianPressUpdates.js');
+        worker.onmessage = function(msg) {
+            switch(msg.data) {
+                case msg.data.contains('succeeded'):
+                    worker.postMessage('END');
+                    console.log('succeeded', msg.data)
+                    break;
+                case msg.data.contains('failed'):
+                    worker.postMessage('END');
+                    console.log('failed', msg.data);
+                    break;
+                default:
+                    console.log('something else', msg.data);
+                    break;
+            }
+        }
+        // updateProgressBar(0, 'uploading...');
+        worker.postMessage(path);
+    </script>
+}
