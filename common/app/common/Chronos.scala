@@ -14,11 +14,23 @@ import java.time.format.DateTimeFormatter
 
 object Chronos {
 
-  def javaLocalDateTimeToJodaDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
+  // The conversion functions implement the following naming logic
+  // [Type1]To[Type2]
+  // "joda" for org.joda.time.*
+  // "javaTime" for java.time.*
+  // "javaUtil" for java.util.*
+
+  // ------------------------------------------------
+  // Conversions from java.time to joda.time
+
+  def javaTimeLocalDateTimeToJodaDateTime(date: java.time.LocalDateTime): org.joda.time.DateTime = {
     DateTime.parse(date.toString)
   }
 
-  def jodaDateTimeToJavaDateTime(date: org.joda.time.DateTime): java.time.LocalDateTime = {
+  // ------------------------------------------------
+  // Conversions from joda.time to java.time
+
+  def jodaDateTimeToJavaTimeDateTime(date: org.joda.time.DateTime): java.time.LocalDateTime = {
     LocalDateTime.ofInstant(
       Instant.ofEpochMilli(
         date
@@ -29,13 +41,19 @@ object Chronos {
     )
   }
 
-  def javaDateToJavaLocalDate(date: java.util.Date): java.time.LocalDate = {
+  def javaUtilDateToJavaTimeLocalDate(date: java.util.Date): java.time.LocalDate = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
   }
 
-  def javaDateToJavaLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
+  // ------------------------------------------------
+  // Conversions away from java.util.Date
+
+  def javaUtilDateToJavaTimeLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
     date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
   }
+
+  // ------------------------------------------------
+  // Java Time helpers
 
   def toMilliSeconds(date: java.time.LocalDateTime): Long = {
     date.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()

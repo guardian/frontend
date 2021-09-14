@@ -1065,7 +1065,8 @@ object PageElement {
           }
 
           case Some(interactive: InteractiveAtom) => {
-            val isLegacy = InteractiveSwitchOver.date.isAfter(Chronos.jodaDateTimeToJavaDateTime(webPublicationDate))
+            val isLegacy =
+              InteractiveSwitchOver.date.isAfter(Chronos.jodaDateTimeToJavaTimeDateTime(webPublicationDate))
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(
               InteractiveAtomBlockElement(
