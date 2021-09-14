@@ -1,9 +1,7 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { isString, log } from '@guardian/libs';
-import { captureCommercialMetrics } from 'commercial/commercial-metrics';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import config from '../../../../../lib/config';
-import { setForceSendMetrics } from '../../../../common/modules/analytics/forceSendMetrics';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { getHeaderBiddingAdSlots } from '../slot-config';
@@ -330,15 +328,6 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		 * set here when adjusting the slot size.
 		 * */
 		advert.hasPrebidSize = true;
-
-		/**
-		 * If improve skin has won auction, toggle force send metrics on.
-		 * TODO remove after improve skin release.
-		 * */
-		if (data.bidderCode === 'improvedigital') {
-			setForceSendMetrics(true);
-			captureCommercialMetrics();
-		}
 	});
 };
 
