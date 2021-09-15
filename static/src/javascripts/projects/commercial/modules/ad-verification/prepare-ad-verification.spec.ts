@@ -1,4 +1,3 @@
-import { Advert } from '../dfp/Advert';
 import { _ } from './prepare-ad-verification';
 
 jest.mock('../../../../lib/raven');
@@ -38,12 +37,7 @@ jest.mock('../dfp/load-advert', () => ({
 const mockVariantSynchronous = jest.fn<boolean, unknown[]>();
 const mockLog = jest.fn<void, unknown[]>();
 
-const {
-	init,
-	maybeRefreshBlockedSlotOnce,
-	shouldRefresh,
-	getRefreshedSlots,
-} = _;
+const { init, maybeRefreshBlockedSlotOnce, shouldRefresh } = _;
 
 let scriptLoadShouldFail = false;
 
