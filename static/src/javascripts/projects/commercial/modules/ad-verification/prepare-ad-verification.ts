@@ -98,5 +98,5 @@ export const _ = {
 	init,
 	maybeRefreshBlockedSlotOnce,
 	shouldRefresh,
-	getRefreshedSlots: (): string[] => confiantRefreshedSlots,
+	confiantRefreshedSlots,
 };
