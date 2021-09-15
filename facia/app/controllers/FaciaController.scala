@@ -116,32 +116,6 @@ trait FaciaController
         renderFrontPressResult(path)
     }
 
-  def renderFrontShowcase(path: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val futureResult = frontJsonFapi.get(path, liteRequestType).map {
-        case Some(faciaPage: PressedPage) =>
-          if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
-            val (singleStoryPanels, maybeRundownPanel, _) = TrailsToShowcase.generatePanelsFrom(faciaPage)
-            val showcase = TrailsToShowcase(
-              feedTitle = faciaPage.metadata.title,
-              url = Some(faciaPage.metadata.url),
-              description = faciaPage.metadata.description,
-              singleStoryPanels = singleStoryPanels,
-              maybeRundownPanel = maybeRundownPanel,
-            )
-            Cached(CacheTime.Default)(RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase))
-          } else {
-            // Not a Showcase front
-            Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
-          }
-        case None =>
-          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
-      }
-
-      futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
-      futureResult
-    }
-
   def rootEditionRedirect(): Action[AnyContent] = renderFront(path = "")
 
   def renderFrontHeadline(path: String): Action[AnyContent] =
@@ -224,6 +198,8 @@ trait FaciaController
               JsonFront(faciaPage)
             } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
+            } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
+              renderShowcaseFront(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
             },
@@ -266,6 +242,18 @@ trait FaciaController
     } else {
       RevalidatableResult.Ok(htmResponseInlined)
     }
+  }
+
+  protected def renderShowcaseFront(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
+    val (singleStoryPanels, maybeRundownPanel, _) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val showcase = TrailsToShowcase(
+      feedTitle = faciaPage.metadata.title,
+      url = Some(faciaPage.metadata.url),
+      description = faciaPage.metadata.description,
+      singleStoryPanels = singleStoryPanels,
+      maybeRundownPanel = maybeRundownPanel,
+    )
+    RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase)
   }
 
   def renderFrontPress(path: String): Action[AnyContent] =
