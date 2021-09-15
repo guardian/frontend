@@ -11,7 +11,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     StandaloneCommercialBundle,
     StandaloneCommercialBundleTracking,
     RemoveStickyNav,
-    HideTopAboveNavWhenAdBlockerEnabled,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -60,13 +59,4 @@ object RemoveStickyNav
       owners = Seq(Owner.withGithub("MarSavar")),
       sellByDate = LocalDate.of(2021, 10, 8),
       participationGroup = Perc1B,
-    )
-
-object HideTopAboveNavWhenAdBlockerEnabled
-    extends Experiment(
-      name = "hide-top-above-nav-when-ad-blocker-enabled",
-      description = "Hides top-above-nav ad slot when we detect that the user has an ad blocker enabled",
-      owners = Seq(Owner.withGithub("zekehuntergreen")),
-      sellByDate = LocalDate.of(2021, 11, 1),
-      participationGroup = Perc0C,
     )
