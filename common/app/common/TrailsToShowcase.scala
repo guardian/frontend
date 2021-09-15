@@ -99,7 +99,7 @@ object TrailsToShowcase {
   ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]]) = {
     val rundownPanelOutcome = asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
     val singleStoryPanelCreationOutcomes = singleStoryTrails.map(asSingleStoryPanel)
-    (rundownPanelOutcome, singleStoryPanelCreationOutcomes )
+    (rundownPanelOutcome, singleStoryPanelCreationOutcomes)
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
@@ -214,13 +214,13 @@ object TrailsToShowcase {
           }
         }
         .getOrElse {
-          Left(
-            articleOutcomes
-              .flatMap(_.left.toOption)
-              .flatten
-              .flatten
-              .flatten :+ "Could not make 3 valid rundown articles from rundown trails",
-          )
+          val articleProblems = articleOutcomes
+            .flatMap(_.left.toOption)
+            .flatten
+            .flatten
+            .flatten
+          // Couldn not make 3 valid articles is the most useful message to the editor so put it first
+          Left("Could not find 3 valid rundown article trails" +: articleProblems)
         }
     }
 
