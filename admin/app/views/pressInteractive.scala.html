@@ -1,35 +1,88 @@
-@(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader, context: model.ApplicationContext)
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
 @import conf.switches.Switches.InteractiveLibrarianAdminRoutes
 
 @admin_main("Interactive Presser (archiver)", isAuthed = true) {
-    <form action="/interactive-librarian/press" method="POST" class="form-horizontal redirect-form">
-        <fieldset>
-            <legend>Press (archive) an individual interactive</legend>
-            <div class="form-group">
-                <label for="interactiveUrl" class="control-label col-sm-1">Interactive URL:</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="interactiveUrl" name="interactiveUrl" value="" placeholder="https://www.theguardian.com/xxx/ng-interactive/path" />
-                </div>
+    <h2>Press (archive) an individual interactive</h2>
+    <br>
+    <ul>
+        <li>
+            This will <strong>only</strong> work as expected for interactive articles.
+        </li>
+        <li>
+            This tool will only press interactive articles. To serve the pressed articles to readers, please contact the dotcom team.
+        </li>
+        <li>
+            Please provide full URLs like <strong>https://www.theguardian.com/something/ng-interactive/something</strong>
+        </li>
+        <li>
+            Pressing an interactive can take ~10 seconds.
+        </li>
+    </ul>
+    <br>
+    <div class="form-horizontal redirect-form">
+        <div class="form-group">
+            <label for="interactiveUrl" class="control-label col-sm-1">URL:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="interactiveUrlInput" name="interactiveUrl" value="" placeholder="https://www.theguardian.com/xxx/ng-interactive/path" />
             </div>
-            <div class="form-group">
-                <div class="controls col-sm-offset-1 col-sm-11">
-                    @if(InteractiveLibrarianAdminRoutes.isSwitchedOn) {
-                        <input class="btn btn-default" type="submit" value="Press" />
-                    } else {
-                        <div class="col-sm-6">
-                            This feature is currently switched off (use the switchboard to re-enable it)
-                        </div>
-                    }
-                </div>
-            </div>
-            @if(urlMsgs.nonEmpty) {
-                <div class="form-group label-warning">
-                    <div id="server-message" class="controls col-sm-offset-1 col-sm-11">
-                        @urlMsgs.mkString
+        </div>
+        <div class="form-group">
+            <div class="controls col-sm-offset-1 col-sm-11">
+                @if(InteractiveLibrarianAdminRoutes.isSwitchedOn) {
+                    <input class="btn btn-default" id="interactiveUrlBtn" type="button" value="Press"/>
+                } else {
+                    <div class="col-sm-6">
+                        This feature is currently switched off (use the switchboard to re-enable it)
                     </div>
-                </div>
-            }
-        </fieldset>
-    </form>
+                }
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id="pressing-waiting">
+        <h4 id=progress-status>Progress of pressing</h4>
+        <div id="progress-url">No URL provided</div>
+        <div id="server-message">No pressing in progress</div>
+    </div>
+    <script>
+        const btn = document.getElementById('interactiveUrlBtn');
 
+        btn.addEventListener('click', function() {
+            const interactiveUrl = document.getElementById('interactiveUrlInput').value;
+
+            // don't allow a request to be sent if no url provided
+            if (interactiveUrl.length === 0) {
+                return;
+            }
+
+            const url = new URL(interactiveUrl);
+
+            // don't allow a request to be sent if no url or invalid url
+            if (!url || !url.pathname) {
+                return;
+            }
+
+            btn.style.display = 'none';
+            document.getElementById('server-message').innerText = 'Pressing an article can take up to 10 seconds, please wait';
+            document.getElementById('progress-url').innerText = `Pressing: ${url.pathname}`
+
+            fetch(`/press/interactive${url.pathname}`, {
+                method : 'POST',
+            })
+            .then(res => {
+                if (res.ok) {
+                    document.getElementById('server-message').innerText = 'Pressing successful';
+                } else {
+                    throw res;
+                }
+            })
+            .catch(e => {
+                console.log('error', e);
+                document.getElementById('server-message').innerText = 'Pressing failed - please try again';
+            })
+            .finally(() => {
+                btn.style.display = 'block';
+            });
+        });
+    </script>
 }

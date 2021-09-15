@@ -133,7 +133,8 @@ object InteractiveLibrarian extends GuLogging {
           }
         }
         case non200 =>
-          Future.failed[String](new Throwable(s"Unexpected response from ${wsRequest.uri}, status code: $non200"))      }
+          Future.failed[String](new Throwable(s"Unexpected response from ${wsRequest.uri}, status code: $non200"))
+      }
     }
   }
 

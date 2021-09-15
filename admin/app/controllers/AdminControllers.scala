@@ -11,8 +11,6 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import services.{OphanApi, ParameterStoreService, RedirectService}
 
-import akka.stream.Materializer
-
 trait AdminControllers {
   def akkaAsync: AkkaAsync
   def wsClient: WSClient
@@ -39,8 +37,6 @@ trait AdminControllers {
   def placementService: PlacementService
   def dfpApi: DfpApi
   def parameterStoreService: ParameterStoreService
-
-  implicit def materializer: Materializer
 
   lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
