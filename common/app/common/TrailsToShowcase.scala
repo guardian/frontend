@@ -55,8 +55,10 @@ object TrailsToShowcase {
       url: Option[String] = None,
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
-    val (singleStoryPanels, maybeRundownPanel, _) =
+    val (rundownPanelOutcome, singleStoryPanelOutcomes) =
       makePanelsFor(singleStories, rundownStories, rundownContainerTitle, rundownContainerId)
+    val singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption)
+    val maybeRundownPanel = rundownPanelOutcome.toOption
     TrailsToShowcase(feedTitle, url, description, singleStoryPanels, maybeRundownPanel)
   }
 
@@ -68,7 +70,7 @@ object TrailsToShowcase {
   // Questionable placement of controller logic
   def generatePanelsFrom(
       faciaPage: PressedPage,
-  ): (Seq[TrailsToShowcase.SingleStoryPanel], Option[TrailsToShowcase.RundownPanel], Seq[String]) = {
+  ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]]) = {
     // Given our pressed page locate the single story and rundown collections and convert their trails into panels
     val maybeSingleStoriesCollection = faciaPage.collections.find(_.displayName == "Standalone")
     val maybeRundownCollection = faciaPage.collections.find(_.displayName == "Rundown")
@@ -85,8 +87,7 @@ object TrailsToShowcase {
       )
 
     }).getOrElse {
-      // Missing collections; raise this as a problem so the preview UI can alert the user
-      (Seq.empty, None, Seq("Could not find the required Showcase single story and rundown collections"))
+      (Left(Seq("Could not find the required Showcase single story and rundown collections")), Seq.empty)
     }
   }
 
@@ -95,15 +96,10 @@ object TrailsToShowcase {
       rundownStoryTrails: Seq[PressedContent],
       rundownContainerTitle: String,
       rundownContainerId: String,
-  ): (Seq[SingleStoryPanel], Option[RundownPanel], Seq[String]) = {
+  ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]]) = {
+    val rundownPanelOutcome = asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
     val singleStoryPanelCreationOutcomes = singleStoryTrails.map(asSingleStoryPanel)
-    val singleStoryPanels = singleStoryPanelCreationOutcomes.flatMap(_.toOption)
-
-    val maybeRundownPanel = asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
-
-    val problems =
-      singleStoryPanelCreationOutcomes.flatMap(_.left.toOption).flatten ++ maybeRundownPanel.left.toSeq.flatten
-    (singleStoryPanels, maybeRundownPanel.toOption, problems)
+    (rundownPanelOutcome, singleStoryPanelCreationOutcomes )
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
