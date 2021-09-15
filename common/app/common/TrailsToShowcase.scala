@@ -103,14 +103,7 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
-    val trailTitle = TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))
-    val proposedTitle = Some(trailTitle)
-      .filter(_.nonEmpty)
-      .filter(_.length <= MaxLengthForSinglePanelTitle)
-      .map(Right(_))
-      .getOrElse(
-        Left(Seq(s"The headline '$trailTitle' is longer than " + MaxLengthForSinglePanelTitle + " characters")),
-      )
+    val proposedTitle = titleOfLengthFrom(MaxLengthForSinglePanelTitle, content)
     val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
     val proposedImageUrl = singleStoryImageUrlFor(content)
     val proposedBulletList =
@@ -160,13 +153,7 @@ object TrailsToShowcase {
     def makeArticlesFrom(content: Seq[PressedContent]): Either[Seq[String], Seq[RundownArticle]] = {
       val articleOutcomes = content.map { contentItem =>
         // Collect the mandatory fields for the article. If any of these are missing we can skip this item
-        val trailTitle = TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem))
-        val proposedArticleTitle = Some(trailTitle)
-          .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
-          .map(Right(_))
-          .getOrElse(
-            Left(Seq(s"The headline '$trailTitle' is longer than $MaxLengthForRundownPanelArticleTitle characters")),
-          )
+        val proposedArticleTitle = titleOfLengthFrom(MaxLengthForRundownPanelArticleTitle, contentItem)
         val proposedArticleImage = rundownPanelArticleImageUrlFor(contentItem)
         val proposedOverline = overlineFrom(contentItem)
 
@@ -331,7 +318,16 @@ object TrailsToShowcase {
   private def webUrl(content: PressedContent): Option[String] =
     content.properties.maybeContent.map(_.metadata.webUrl)
 
-  private def titleFrom(content: PressedContent): String = content.header.headline
+  def titleOfLengthFrom(length: Int, content: PressedContent): Either[Seq[String], String] = {
+    val trailTitle = TrailsToRss.stripInvalidXMLCharacters(content.header.headline)
+    Some(trailTitle)
+      .filter(_.nonEmpty)
+      .filter(_.length <= length)
+      .map(Right(_))
+      .getOrElse(
+        Left(Seq(s"The headline '$trailTitle' is longer than " + length + " characters")),
+      )
+  }
 
   private def bylineFrom(content: PressedContent): Option[String] = {
     content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
