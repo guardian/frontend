@@ -20,6 +20,7 @@ import services.{CAPILookup, USElection2020AmpPages, _}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import experiments.{ActiveExperiments, PressedInteractives}
+import services.dotcomrendering.PressedInteractives.isPressed
 import services.dotcomrendering.InteractiveLibrarian
 
 class InteractiveController(
@@ -54,6 +55,13 @@ class InteractiveController(
         }
       }
     }
+
+  def servePressedPage(path: String)(implicit request: RequestHeader): Result = {
+    val cacheable = WithoutRevalidationResult(
+      Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/www.theguardian.com/$path"),
+    )
+    Cached(CacheTime.ArchiveRedirect)(cacheable)
+  }
 
   private def getWebWorkerPath(path: String, file: String, timestamp: Option[String]): String = {
     val stage = if (context.isPreview) "preview" else "live"
@@ -130,9 +138,9 @@ class InteractiveController(
 
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
-    } else if (ActiveExperiments.isParticipating(PressedInteractives)) {
+    } else if (ActiveExperiments.isParticipating(PressedInteractives) && isPressed(path)) {
       val result = InteractiveLibrarian.getDocumentFromS3(path) match {
-        case Some(document) => Ok(document).as("text/html")
+        case Some(document) => servePressedPage(path)
         case None           => NotFound(s"Could not retrieve stored document at www.theguardian.com/${path}")
       }
       Future.successful(result)
