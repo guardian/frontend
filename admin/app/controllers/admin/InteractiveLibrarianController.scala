@@ -28,19 +28,15 @@ class InteractiveLibrarianController(
     Action.async { implicit request =>
       // This function combines both pressing and cleaning
       // Initially intended for use by the frontend admin tool
-      val result = for {
+      for {
         _ <- InteractiveLibrarian.pressLiveContents(wsClient, path)
-        (ok, errorMsg) = InteractiveLibrarian.readCleanWrite(path)
       } yield {
+        val (ok, errorMsg) = InteractiveLibrarian.readCleanWrite(path)
         if (ok) {
-          "Pressed successfully!"
+          Ok("Pressed successfully!")
         } else {
-          errorMsg
+          InternalServerError(errorMsg)
         }
-      }
-
-      result.map { res =>
-        Ok(res)
       }
     }
 
