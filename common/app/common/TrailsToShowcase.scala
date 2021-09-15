@@ -53,13 +53,12 @@ object TrailsToShowcase {
       feedTitle: Option[String],
       singleStories: Seq[PressedContent],
       rundownStories: Seq[PressedContent],
-      rundownContainerTitle: String,
       rundownContainerId: String,
       url: Option[String] = None,
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
     val (rundownPanelOutcome, singleStoryPanelOutcomes) =
-      makePanelsFor(singleStories, rundownStories, rundownContainerTitle, rundownContainerId)
+      makePanelsFor(singleStories, rundownStories, rundownContainerId)
     val singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption)
     val maybeRundownPanel = rundownPanelOutcome.toOption
     TrailsToShowcase(feedTitle, url, description, singleStoryPanels, maybeRundownPanel)
@@ -86,7 +85,6 @@ object TrailsToShowcase {
         singleStoryTrails = singleStoriesCollection.curated,
         rundownStoryTrails = rundownCollection.curated,
         rundownContainerId = rundownCollection.id,
-        rundownContainerTitle = rundownCollection.displayName,
       )
 
     }).getOrElse {
@@ -97,10 +95,9 @@ object TrailsToShowcase {
   def makePanelsFor(
       singleStoryTrails: Seq[PressedContent],
       rundownStoryTrails: Seq[PressedContent],
-      rundownContainerTitle: String,
       rundownContainerId: String,
   ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]]) = {
-    val rundownPanelOutcome = asRundownPanel(rundownContainerTitle, rundownStoryTrails, rundownContainerId)
+    val rundownPanelOutcome = asRundownPanel(rundownStoryTrails, rundownContainerId)
     val singleStoryPanelCreationOutcomes = singleStoryTrails.map(asSingleStoryPanel)
     (rundownPanelOutcome, singleStoryPanelCreationOutcomes)
   }
@@ -151,11 +148,7 @@ object TrailsToShowcase {
     }
   }
 
-  def asRundownPanel(
-      panelTitle: String,
-      content: Seq[PressedContent],
-      id: String,
-  ): Either[Seq[String], RundownPanel] = {
+  def asRundownPanel(content: Seq[PressedContent], id: String): Either[Seq[String], RundownPanel] = {
     def makeArticlesFrom(content: Seq[PressedContent]): Either[Seq[String], Seq[RundownArticle]] = {
       val articleOutcomes = content.map { contentItem =>
         // Collect the mandatory fields for the article. If any of these are missing we can skip this item
@@ -223,13 +216,17 @@ object TrailsToShowcase {
     }
 
     // Collect mandatory fields. If any of these is missing we can yield None
-    val proposedPanelTitle = Some(panelTitle)
-      .filter(_.nonEmpty)
-      .filter(_.length <= MaxLengthForPanelTitle)
-      .map(Right(_))
-      .getOrElse(Left(Seq("Rundown panel title is too long")))
-    val proposedRundownArticles = makeArticlesFrom(content)
+    val proposedPanelTitle: Either[Seq[String], String] = {
+      content.headOption
+        .map { firstTrail =>
+          mandatoryPanelTitleFrom(firstTrail)
+        }
+        .getOrElse(
+          Left(Seq("Could not find a first trail to extract panel title from")),
+        )
+    }
 
+    val proposedRundownArticles = makeArticlesFrom(content)
     val maybeRundownPanel = for {
       panelTitle <- proposedPanelTitle.toOption
       articles <- proposedRundownArticles.toOption
@@ -341,15 +338,29 @@ object TrailsToShowcase {
       .map { panelTitle =>
         maybePanelTitle
           .filter(_.length <= MaxLengthForPanelTitle)
-          .map { _ =>
-            Right(maybePanelTitle.filter(_.length <= MaxLengthForPanelTitle))
-          }
+          .map(validPanelTitle => Right(Some(validPanelTitle)))
           .getOrElse {
             Left(Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"))
           }
       }
       .getOrElse {
         Right(None)
+      }
+  }
+
+  private def mandatoryPanelTitleFrom(content: PressedContent): Either[Seq[String], String] = {
+    val (maybePanelTitle, _) = inferPanelTitleAndTitleFrom(content)
+    maybePanelTitle
+      .map { panelTitle =>
+        maybePanelTitle
+          .filter(_.length <= MaxLengthForPanelTitle)
+          .map(validPanelTitle => Right(validPanelTitle))
+          .getOrElse {
+            Left(Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"))
+          }
+      }
+      .getOrElse {
+        Left(Seq(s"Could not find a panel title in the first trail headline '${content.header.headline}'"))
       }
   }
 
