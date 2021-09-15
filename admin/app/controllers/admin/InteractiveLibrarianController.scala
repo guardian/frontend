@@ -33,7 +33,6 @@ class InteractiveLibrarianController(
         (ok, errorMsg) = InteractiveLibrarian.readCleanWrite(path)
       } yield {
         if (ok) {
-          println("press success")
           "Pressed successfully!"
         } else {
           errorMsg
