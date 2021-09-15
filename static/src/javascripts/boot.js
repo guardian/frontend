@@ -67,17 +67,8 @@ const go = () => {
 			// For the moment we'll hide the top-above-nav slot if we detect that the user has ad blockers enabled
 			// in order to avoid showing them a large blank space.
 			// TODO improve shady pie to make better use of the slot.
-			if (
-				config.get(
-					'tests.hideTopAboveNavWhenAdBlockerEnabledVariant',
-					false,
-				) === 'variant'
-			) {
-				console.log('Hiding top-above-nav slot');
-				document.querySelector(
-					'.top-banner-ad-container',
-				).style.display = 'none';
-			}
+			document.querySelector('.top-banner-ad-container').style.display =
+				'none';
 
 			if (process.env.NODE_ENV !== 'production') {
 				const needsMessage =
