@@ -103,11 +103,14 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
-    val proposedTitle = Some(TrailsToRss.stripInvalidXMLCharacters(titleFrom(content)))
+    val trailTitle = TrailsToRss.stripInvalidXMLCharacters(titleFrom(content))
+    val proposedTitle = Some(trailTitle)
       .filter(_.nonEmpty)
       .filter(_.length <= MaxLengthForSinglePanelTitle)
       .map(Right(_))
-      .getOrElse(Left(Seq("Headline was longer than " + MaxLengthForSinglePanelTitle + " characters")))
+      .getOrElse(
+        Left(Seq(s"The headline '$trailTitle' is longer than " + MaxLengthForSinglePanelTitle + " characters")),
+      )
     val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
     val proposedImageUrl = singleStoryImageUrlFor(content)
     val proposedBulletList =
@@ -157,11 +160,13 @@ object TrailsToShowcase {
     def makeArticlesFrom(content: Seq[PressedContent]): Either[Seq[String], Seq[RundownArticle]] = {
       val articleOutcomes = content.map { contentItem =>
         // Collect the mandatory fields for the article. If any of these are missing we can skip this item
-        val title = TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem))
-        val proposedArticleTitle = Some(title)
+        val trailTitle = TrailsToRss.stripInvalidXMLCharacters(titleFrom(contentItem))
+        val proposedArticleTitle = Some(trailTitle)
           .filter(_.length <= MaxLengthForRundownPanelArticleTitle)
           .map(Right(_))
-          .getOrElse(Left(Seq(s"The title '$title' is too long for a rundown article")))
+          .getOrElse(
+            Left(Seq(s"The headline '$trailTitle' is longer than $MaxLengthForRundownPanelArticleTitle characters")),
+          )
         val proposedArticleImage = rundownPanelArticleImageUrlFor(contentItem)
         val proposedOverline = overlineFrom(contentItem)
 

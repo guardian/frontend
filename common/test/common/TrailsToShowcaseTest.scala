@@ -759,7 +759,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withLongTitle)
 
     outcome.right.toOption should be(None)
-    outcome.left.get.contains("Headline was longer than 86 characters") shouldBe (true)
+    outcome.left.get.contains(s"The headline '$longerThan86' is longer than 86 characters") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "omit single panel author fields longer than 42 characters" in {
@@ -910,7 +910,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
 
     rundownPanel.toOption should be(None)
-    rundownPanel.left.get.contains(s"The title '$longerThan64' is too long for a rundown article") should be(true)
+    rundownPanel.left.get.contains(s"The headline '$longerThan64' is longer than 64 characters") should be(true)
   }
 
   "TrailToShowcase validation" should "reject rundown articles with images smaller than 1200x900" in {
