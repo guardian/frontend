@@ -69,4 +69,3 @@ object HideTopAboveNavWhenAdBlockerEnabled
       sellByDate = LocalDate.of(2021, 11, 1),
       participationGroup = Perc0C,
     )
-
