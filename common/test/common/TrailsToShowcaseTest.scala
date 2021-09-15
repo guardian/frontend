@@ -126,6 +126,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       byline = Some("Trail byline"),
       kickerText = Some("Kicker"),
       trailText = Some(bulletEncodedTrailText),
+      headline = "My panel title | My headline",
     )
     val rundownArticleContent = makePressedContent(
       webPublicationDate = wayBackWhen,
@@ -151,7 +152,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryTrails.size should be(1)
 
     val singleStoryPanel = singleStoryPanels.head
-    (singleStoryPanel \ "title").text should be("A headline")
+    (singleStoryPanel \ "panel_title").filter(_.prefix == "g").text should be("My panel title")
+    (singleStoryPanel \ "title").text should be("My headline")
     (singleStoryPanel \ "guid").text should be(
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report",
     )
@@ -326,7 +328,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
-      headline = "My unique headline",
+      headline = "My panel title | My unique headline",
       byline = Some("Trail byline"),
       kickerText = Some("A Kicker"),
       trailText = Some("- A bullet"),
@@ -334,7 +336,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
     val entry = TrailsToShowcase.asSyndEntry(singleStoryPanel)
-
+    // Showcase's use of the RSS author tag is slightly off spec; they use it to pass free text where the standard is expecting an email address
     // We use a person with an email address to get the free form byline through Rome and onto the author tag
     // See https://github.com/rometools/rome/blob/001d1cca5448817a031e3746f417519652ede4e9/rome/src/main/java/com/rometools/rome/feed/synd/impl/ConverterForRSS094.java#L139
     val authorsEmail = entry.getAuthors().asScala.headOption.flatMap {
@@ -345,7 +347,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val gModule = entry.getModule(GModule.URI).asInstanceOf[GModule]
     gModule.getPanel should be(Some("SINGLE_STORY"))
-    gModule.getPanelTitle should be(None) // Specifically omitted
+    gModule.getPanelTitle should be(Some("My panel title"))
     gModule.getOverline should be(Some("A Kicker"))
 
     val rssAtomModule = entry.getModule(RssAtomModule.URI).asInstanceOf[RssAtomModule]
@@ -712,18 +714,19 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel.articles.head.updated shouldBe (wayBackWhen)
   }
 
-  // This always passes because we are not setting this optional field
-  "TrailToShowcase validation" should "omit single panel g:panel_titles longer than 74 characters" in {
+  "TrailToShowcase validation" should "infer single story panel title from pipe delimited headline" in {
     val content = makePressedContent(
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
       trailText = Some("- A bullet"),
+      headline = "Meteoric rise | US Open winner could become Britain’s first billion-dollar sport star",
     )
 
     val outcome = TrailsToShowcase.asSingleStoryPanel(content)
 
-    outcome.right.get.panelTitle should be(None)
+    outcome.right.get.title should be("US Open winner could become Britain’s first billion-dollar sport star")
+    outcome.right.get.panelTitle should be(Some("Meteoric rise"))
   }
 
   "TrailToShowcase validation" should "reject single panel g:overlines longer than 30 characters" in {

@@ -27,8 +27,11 @@ object TrailsToShowcase {
   private val MaxBulletLength = 118
   private val MaxBulletsAllowed = 3
 
-  private val MaxLengthForRundownPanelTitle = 74
+  private val MaxLengthForPanelTitle = 74
   private val MaxLengthForRundownPanelArticleTitle = 64
+
+  // Panel titles can encoded with a pipe delimiter in the trail headline.
+  private val PanelTitleInHeadlineDelimiter = "\\|"
 
   def apply(
       feedTitle: Option[String],
@@ -104,6 +107,7 @@ object TrailsToShowcase {
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
     val proposedTitle = titleOfLengthFrom(MaxLengthForSinglePanelTitle, content)
+    val proposedPanelTitle = panelTitleFrom(content)
     val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
     val proposedImageUrl = singleStoryImageUrlFor(content)
     val proposedBulletList =
@@ -114,6 +118,7 @@ object TrailsToShowcase {
 
     val maybePanel = for {
       title <- proposedTitle.toOption
+      maybePanelTitle <- proposedPanelTitle.toOption
       webUrl <- proposedWebUrl.toOption
       imageUrl <- proposedImageUrl.toOption
       bulletList <- proposedBulletList.toOption
@@ -125,6 +130,7 @@ object TrailsToShowcase {
       val updated = Seq(content.card.lastModifiedOption, content.card.webPublicationDateOption).flatten.headOption
       SingleStoryPanel(
         title = title,
+        panelTitle = maybePanelTitle,
         link = webUrl,
         author = bylineFrom(content),
         overline = maybeOverline,
@@ -138,7 +144,7 @@ object TrailsToShowcase {
     maybePanel.map { Right(_) }.getOrElse {
       // Round up all of the potential sources of hard errors and collect their objections
       Left(
-        Seq(proposedTitle, proposedWebUrl, proposedImageUrl, proposedBulletList, proposedOverline)
+        Seq(proposedTitle, proposedPanelTitle, proposedWebUrl, proposedImageUrl, proposedBulletList, proposedOverline)
           .flatMap(_.left.toOption)
           .flatten,
       )
@@ -219,7 +225,7 @@ object TrailsToShowcase {
     // Collect mandatory fields. If any of these is missing we can yield None
     val proposedPanelTitle = Some(panelTitle)
       .filter(_.nonEmpty)
-      .filter(_.length <= MaxLengthForRundownPanelTitle)
+      .filter(_.length <= MaxLengthForPanelTitle)
       .map(Right(_))
       .getOrElse(Left(Seq("Rundown panel title is too long")))
     val proposedRundownArticles = makeArticlesFrom(content)
@@ -318,15 +324,44 @@ object TrailsToShowcase {
   private def webUrl(content: PressedContent): Option[String] =
     content.properties.maybeContent.map(_.metadata.webUrl)
 
-  def titleOfLengthFrom(length: Int, content: PressedContent): Either[Seq[String], String] = {
-    val trailTitle = TrailsToRss.stripInvalidXMLCharacters(content.header.headline)
-    Some(trailTitle)
+  private def titleOfLengthFrom(length: Int, content: PressedContent): Either[Seq[String], String] = {
+    val (_, title) = inferPanelTitleAndTitleFrom(content)
+    Some(title)
       .filter(_.nonEmpty)
       .filter(_.length <= length)
       .map(Right(_))
       .getOrElse(
-        Left(Seq(s"The headline '$trailTitle' is longer than " + length + " characters")),
+        Left(Seq(s"The headline '$title' is longer than " + length + " characters")),
       )
+  }
+
+  private def panelTitleFrom(content: PressedContent): Either[Seq[String], Option[String]] = {
+    val (maybePanelTitle, _) = inferPanelTitleAndTitleFrom(content)
+    maybePanelTitle
+      .map { panelTitle =>
+        maybePanelTitle
+          .filter(_.length <= MaxLengthForPanelTitle)
+          .map { _ =>
+            Right(maybePanelTitle.filter(_.length <= MaxLengthForPanelTitle))
+          }
+          .getOrElse {
+            Left(Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"))
+          }
+      }
+      .getOrElse {
+        Right(None)
+      }
+  }
+
+  private def inferPanelTitleAndTitleFrom(content: PressedContent): (Option[String], String) = {
+    val trailTitle = TrailsToRss.stripInvalidXMLCharacters(content.header.headline)
+    // Look for panel title delimiter
+    val pipeDelimited = trailTitle.split(PanelTitleInHeadlineDelimiter).toSeq
+    val (maybePanelTitle, title) = pipeDelimited.length match {
+      case 1 => (None, trailTitle.trim)
+      case _ => (Some(pipeDelimited.head.trim), pipeDelimited.drop(1).mkString.trim)
+    }
+    (maybePanelTitle, title)
   }
 
   private def bylineFrom(content: PressedContent): Option[String] = {
@@ -417,6 +452,7 @@ object TrailsToShowcase {
 
     val gModule = new GModuleImpl()
     gModule.setPanel(Some(singleStoryPanel.`type`))
+    gModule.setPanelTitle(singleStoryPanel.panelTitle)
     gModule.setOverline(singleStoryPanel.overline)
     gModule.setBulletList(singleStoryPanel.bulletList)
     addModuleTo(entry, gModule)
@@ -483,7 +519,7 @@ object TrailsToShowcase {
       author: Option[String],
       published: Option[DateTime],
       updated: Option[DateTime],
-      panelTitle: Option[String] = None,
+      panelTitle: Option[String],
   ) extends Panel {
     val `type`: String = SingleStory
     def guid: String = link
