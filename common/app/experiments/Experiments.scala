@@ -11,6 +11,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     StandaloneCommercialBundle,
     StandaloneCommercialBundleTracking,
     RemoveStickyNav,
+    HideTopAboveNavWhenAdBlockerEnabled,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
