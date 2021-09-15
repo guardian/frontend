@@ -9,6 +9,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
+import java.time.ZoneId
 import pages.AllIndexHtmlPage
 import play.api.mvc._
 import services.{ConfigAgent, IndexPage, IndexPageItem}
@@ -103,7 +104,7 @@ class AllIndexController(
                 val today = DateTime.now
                 val nextPage =
                   if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
-                val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
+                val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(ZoneId.of("UTC")))
 
                 Cached(300)(
                   RevalidatableResult.Ok(

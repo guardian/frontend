@@ -37,7 +37,7 @@ object Chronos {
           .toInstant()
           .getMillis,
       ),
-      ZoneId.systemDefault,
+      ZoneId.of("UTC"),
     )
   }
 
@@ -49,7 +49,7 @@ object Chronos {
           .toInstant()
           .getMillis,
       ),
-      ZoneId.systemDefault,
+      ZoneId.of("UTC"),
     )
   }
 
@@ -57,14 +57,14 @@ object Chronos {
   // Conversions away from java.util.Date
 
   def javaUtilDateToJavaTimeLocalDate(date: java.util.Date): java.time.LocalDate = {
-    date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+    date.toInstant().atZone(ZoneId.of("UTC")).toLocalDate()
   }
 
   // ------------------------------------------------
   // Conversions away from java.util.Date
 
   def javaUtilDateToJavaTimeLocalDateTime(date: java.util.Date): java.time.LocalDateTime = {
-    date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+    date.toInstant().atZone(ZoneId.of("UTC")).toLocalDateTime()
   }
 
   // ------------------------------------------------
