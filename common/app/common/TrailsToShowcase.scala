@@ -366,11 +366,10 @@ object TrailsToShowcase {
     val trailTitle = TrailsToRss.stripInvalidXMLCharacters(content.header.headline)
     // Look for panel title delimiter
     val pipeDelimited = trailTitle.split(PanelTitleInHeadlineDelimiter).toSeq
-    val (maybePanelTitle, title) = pipeDelimited.length match {
+    pipeDelimited.length match {
       case 1 => (None, stripHtml(trailTitle))
       case _ => (Some(stripHtml(pipeDelimited.head)), stripHtml(pipeDelimited.drop(1).mkString))
     }
-    (maybePanelTitle, title)
   }
 
   private def bylineFrom(content: PressedContent): Option[String] = {
