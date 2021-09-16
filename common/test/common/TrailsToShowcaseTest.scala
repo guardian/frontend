@@ -309,7 +309,6 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some(twoEncodedBulletItems),
     )
 
-    println(TrailsToShowcase.asSingleStoryPanel(curatedContent).left.get)
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
     singleStoryPanel.title should be("My unique headline")
 
@@ -329,6 +328,35 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryPanel.imageUrl should be("http://localhost/trail.jpg")
   }
 
+  "TrailToShowcase" should "strip all markup from single story text elements" in {
+    val bulletItemsWithHtml =
+      """
+        |-<p>Bullet 1</p>
+        |- <strong>Bullet 2</strong>
+        |-<b>Unclosed
+        |""".stripMargin
+
+    val curatedContent = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      headline = "My <i>unique</i> headline",
+      byline = Some("<b>Trail</b> byline"),
+      kickerText = Some("<strong>A kicker</strong>"),
+      trailText = Some(bulletItemsWithHtml),
+    )
+
+    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
+
+    singleStoryPanel.title shouldBe ("My unique headline")
+    singleStoryPanel.author shouldBe (Some("Trail byline"))
+    singleStoryPanel.overline shouldBe (Some("A kicker"))
+
+    val bulletItems = singleStoryPanel.bulletList.get.listItems
+    bulletItems.head.text should be("Bullet 1")
+    bulletItems.last.text should be("Unclosed")
+  }
+
   "TrailToShowcase" can "marshall Single Story panels to Rome RSS entries" in {
     // Asserting the specifics of how we set up the Rome entries for a single story panel
     val curatedContent = makePressedContent(
@@ -337,8 +365,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailPicture = Some(imageMedia),
       headline = "My panel title | My unique headline",
       byline = Some("Trail byline"),
-      kickerText = Some("A Kicker"),
-      trailText = Some("- A bullet"),
+      kickerText = Some("A kicker"),
+      trailText = Some(twoEncodedBulletItems),
     )
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
@@ -645,9 +673,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       .asRundownPanel(Seq(firstTrail, anotherTrail, anotherTrail), "rundown-container-id")
 
     outcome.right.toOption should be(None)
-    val value1 = outcome.left.get
-    println(value1)
-    value1.contains(
+    outcome.left.get.contains(
       "Could not find a panel title in the first trail headline 'My headline but I've forgotten the rundown panel title'",
     ) should be(true)
   }

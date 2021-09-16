@@ -9,6 +9,7 @@ import common.TrailsToRss.image
 import model.pressed.{PressedContent, Replace}
 import model.{ImageAsset, PressedPage}
 import org.joda.time.DateTime
+import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
 
 import java.io.StringWriter
@@ -36,6 +37,9 @@ object TrailsToShowcase {
 
   // Panel titles can encoded with a pipe delimiter in the trail headline.
   private val PanelTitleInHeadlineDelimiter = "\\|"
+
+  // Bullet list items are delimited with a hyphen
+  private val BulletTrailPrefix = "-"
 
   def apply(
       feedTitle: Option[String],
@@ -363,19 +367,19 @@ object TrailsToShowcase {
     // Look for panel title delimiter
     val pipeDelimited = trailTitle.split(PanelTitleInHeadlineDelimiter).toSeq
     val (maybePanelTitle, title) = pipeDelimited.length match {
-      case 1 => (None, trailTitle.trim)
-      case _ => (Some(pipeDelimited.head.trim), pipeDelimited.drop(1).mkString.trim)
+      case 1 => (None, stripHtml(trailTitle))
+      case _ => (Some(stripHtml(pipeDelimited.head)), stripHtml(pipeDelimited.drop(1).mkString))
     }
     (maybePanelTitle, title)
   }
 
   private def bylineFrom(content: PressedContent): Option[String] = {
-    content.properties.byline.filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
+    content.properties.byline.map(stripHtml).filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
   }
 
   private def overlineFrom(contentItem: PressedContent): Either[Seq[String], Option[String]] = {
     def kickerFrom(content: PressedContent): Option[String] = {
-      content.header.kicker.flatMap(_.properties.kickerText)
+      content.header.kicker.flatMap(_.properties.kickerText).map(stripHtml)
     }
     kickerFrom(contentItem)
       .map { kicker =>
@@ -391,15 +395,15 @@ object TrailsToShowcase {
   }
 
   private def extractBulletsFrom(trailText: String): Either[Seq[String], BulletList] = {
-    val bulletTrailPrefix = "-"
     val lines = new WrappedString(trailText).lines.toSeq
 
     val proposedBulletTexts = lines
       .map(_.stripLeading)
       .filter { line =>
-        line.startsWith(bulletTrailPrefix)
+        line.startsWith(BulletTrailPrefix)
       }
-      .map(_.replaceFirst(bulletTrailPrefix, "").trim)
+      .map(_.replaceFirst(BulletTrailPrefix, ""))
+      .map(stripHtml)
 
     val validBulletTexts = proposedBulletTexts.filter(_.length <= MaxBulletLength)
 
@@ -437,6 +441,11 @@ object TrailsToShowcase {
     feed.setEncoding("utf-8")
     feed.setEntries(entries.asJava)
     feed
+  }
+
+  private def stripHtml(str: String): String = {
+    // Could be attached to String as an implicit
+    Jsoup.parse(str).text().trim
   }
 
   private def asString(feed: SyndFeed) = {
