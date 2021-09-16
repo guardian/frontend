@@ -406,11 +406,9 @@ object TrailsToShowcase {
     val bulletListItemsToUse =
       validBulletTexts.map(BulletListItem).take(MaxBulletsAllowed) // 3 is the maximum permitted number of bullets
 
-    if (bulletListItemsToUse.nonEmpty) {
-      Right(BulletList(bulletListItemsToUse))
-    } else {
-      Left(Seq("Trail text is not formatted as a bullet list"))
-    }
+    Right(BulletList(bulletListItemsToUse))
+      .filterOrElse(_.listItems.nonEmpty, Seq("Trail text is not formatted as a bullet list"))
+      .filterOrElse(_.listItems.size >= 2, Seq("Need at least 2 valid bullet list items"))
   }
 
   private def syndFeedOf(

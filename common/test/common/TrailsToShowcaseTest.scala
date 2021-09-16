@@ -64,13 +64,20 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   val wayBackWhen = new DateTime(2021, 3, 2, 12, 30, 1)
   val lastModifiedWayBackWhen = wayBackWhen.plusHours(1)
 
+  val twoEncodedBulletItems =
+    """
+      | - Bullet 1
+      |
+      |-Bullet 2
+      |""".stripMargin
+
   "TrailsToShowcase" should "set module namespaces in feed header" in {
     val singleStoryTrails =
       Seq(
         makePressedContent(
           webPublicationDate = wayBackWhen,
           trailPicture = Some(imageMedia),
-          trailText = Some("- A bullet"),
+          trailText = Some(twoEncodedBulletItems),
         ),
       )
 
@@ -262,7 +269,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
-      trailText = Some(" - Bullet"),
+      trailText = Some(twoEncodedBulletItems),
       byline = Some("I showed up on the author tag right?"),
     )
 
@@ -299,9 +306,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       headline = "My unique headline",
       byline = Some("Trail byline"),
       kickerText = Some("A Kicker"),
-      trailText = Some("- A bullet"),
+      trailText = Some(twoEncodedBulletItems),
     )
 
+    println(TrailsToShowcase.asSingleStoryPanel(curatedContent).left.get)
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
     singleStoryPanel.title should be("My unique headline")
 
@@ -426,6 +434,26 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     outcome.right.toOption should be(None)
     outcome.left.get.contains("Trail text is not formatted as a bullet list") shouldBe (true)
+  }
+
+  "TrailToShowcase" should "reject bullet lists with less than 2 items" in {
+    // Showcase specifies 2 or 3 items
+    val bulletEncodedTrailText =
+      """
+          | - 1 bullet item is not going to be enough
+          |""".stripMargin
+
+    val bulletedContent = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some(bulletEncodedTrailText),
+    )
+
+    val outcome = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
+
+    outcome.right.toOption should be(None)
+    outcome.left.get.contains("Need at least 2 valid bullet list items") shouldBe (true)
   }
 
   "TrailToShowcase" should "trim single story bullets to 3 at most" in {
@@ -768,7 +796,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
-      trailText = Some("- A bullet"),
+      trailText = Some(twoEncodedBulletItems),
       headline = "Meteoric rise | US Open winner could become Britain’s first billion-dollar sport star",
     )
 
@@ -823,7 +851,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
       byline = Some(longerThan42),
-      trailText = Some("- A bullet"),
+      trailText = Some(twoEncodedBulletItems),
     )
 
     val outcome = TrailsToShowcase.asSingleStoryPanel(withLongByline)
