@@ -19,10 +19,19 @@ jest.mock('@guardian/libs', () => ({
 		};
 		return Promise.resolve();
 	},
-	log: jest.fn(() => mockLog),
+	log: jest.fn((...args) => mockLog(...args)),
 }));
 jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(() => mockVariantSynchronous()),
+}));
+jest.mock('../dfp/get-advert-by-id', () => ({
+	getAdvertById: jest.fn((id: string) => ({
+		id,
+		slot: { setTargeting: jest.fn() },
+	})),
+}));
+jest.mock('../dfp/load-advert', () => ({
+	refreshAdvert: jest.fn(),
 }));
 
 const mockVariantSynchronous = jest.fn<boolean, unknown[]>();
@@ -37,7 +46,7 @@ describe('prepare-ad-verification', () => {
 		window.guardian.config.switches.confiantAdVerification = true;
 	});
 
-	beforeEach(() => {
+	afterEach(() => {
 		scriptLoadShouldFail = false;
 		delete window.confiant;
 	});
@@ -88,14 +97,28 @@ describe('prepare-ad-verification', () => {
 			};
 		});
 
-		const refreshAdSlot = (s: string) => {
+		const maybeRefreshBlockedSlotOnceWithDefaultParams = (s: string) => {
 			maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
 				prebid: { s },
 			});
 		};
 
+		it('should log data', () => {
+			maybeRefreshBlockedSlotOnceWithDefaultParams('slot-a');
+			expect(mockLog).toHaveBeenLastCalledWith(
+				'commercial',
+				'🚫 Blocked bad ad with Confiant',
+				expect.any(Object),
+			);
+		});
+
 		it('should only refresh an ad slot once', async () => {
+			jest.resetModules();
 			mockVariantSynchronous.mockReturnValue(true);
+
+			const { confiantRefreshedSlots, maybeRefreshBlockedSlotOnce } = (
+				await import('./prepare-ad-verification')
+			)._;
 
 			[
 				'slot-a',
@@ -106,27 +129,27 @@ describe('prepare-ad-verification', () => {
 				'slot-2',
 				'not-a-slot', // should not appear as refreshed
 			].map((slot) => {
-				refreshAdSlot(slot);
+				maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
+					prebid: { s: slot },
+				});
 			});
-
-			const { confiantRefreshedSlots } = (
-				await import('./prepare-ad-verification')
-			)._;
 
 			expect(confiantRefreshedSlots).toStrictEqual(['slot-a', 'slot-2']);
 		});
 
 		it('should not refresh ad slots if not in variant', async () => {
-			jest.resetModuleRegistry();
+			jest.resetModules();
 			mockVariantSynchronous.mockReturnValue(false);
 
-			['slot-2', 'slot-a', 'slot-unused', 'not-a-slot'].map((slot) => {
-				refreshAdSlot(slot);
-			});
-
-			const { confiantRefreshedSlots } = (
+			const { confiantRefreshedSlots, maybeRefreshBlockedSlotOnce } = (
 				await import('./prepare-ad-verification')
 			)._;
+
+			['slot-2', 'slot-a', 'slot-unused', 'not-a-slot'].map((slot) => {
+				maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
+					prebid: { s: slot },
+				});
+			});
 
 			expect(confiantRefreshedSlots).toStrictEqual([]);
 		});

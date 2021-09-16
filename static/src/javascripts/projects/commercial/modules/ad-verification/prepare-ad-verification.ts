@@ -43,7 +43,6 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 
 	// check if ad is blocked and haven't refreshed the slot yet.
 	if (
-		shouldRefresh() &&
 		isBlocked &&
 		!!blockedSlotPath &&
 		!confiantRefreshedSlots.includes(blockedSlotPath)
@@ -56,12 +55,19 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 			if (blockedSlotPath === currentSlot.getSlotElementId()) {
 				// refresh the blocked slot to get new ad
 				const advert = getAdvertById(blockedSlotPath);
-				if (advert) {
-					advert.slot.setTargeting('confiant', String(blockingType));
+				if (!advert) return;
+
+				advert.slot.setTargeting('confiant', String(blockingType));
+
+				setForceSendMetrics(true);
+				captureCommercialMetrics();
+
+				if (shouldRefresh()) {
 					refreshAdvert(advert);
+
+					// mark it as refreshed so it won't refresh multiple time
+					confiantRefreshedSlots.push(blockedSlotPath);
 				}
-				// mark it as refreshed so it won't refresh multiple time
-				confiantRefreshedSlots.push(blockedSlotPath);
 			}
 		});
 	}
