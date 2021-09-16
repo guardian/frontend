@@ -210,7 +210,7 @@ object TrailsToShowcase {
             .flatten
             .flatten
             .flatten
-          // Couldn not make 3 valid articles is the most useful message to the editor so put it first
+          // Could not make 3 valid articles is the most useful message to the editor so put it first
           Left("Could not find 3 valid rundown article trails" +: articleProblems)
         }
     }
@@ -323,25 +323,21 @@ object TrailsToShowcase {
 
   private def titleOfLengthFrom(length: Int, content: PressedContent): Either[Seq[String], String] = {
     val (_, title) = inferPanelTitleAndTitleFrom(content)
-    Some(title)
-      .filter(_.nonEmpty)
-      .filter(_.length <= length)
-      .map(Right(_))
-      .getOrElse(
-        Left(Seq(s"The headline '$title' is longer than " + length + " characters")),
-      )
+    Right(title)
+      .filterOrElse(_.nonEmpty, Seq("Heading is empty"))
+      .filterOrElse(_.length <= length, Seq(s"The headline '$title' is longer than " + length + " characters"))
   }
 
   private def panelTitleFrom(content: PressedContent): Either[Seq[String], Option[String]] = {
     val (maybePanelTitle, _) = inferPanelTitleAndTitleFrom(content)
     maybePanelTitle
       .map { panelTitle =>
-        maybePanelTitle
-          .filter(_.length <= MaxLengthForPanelTitle)
-          .map(validPanelTitle => Right(Some(validPanelTitle)))
-          .getOrElse {
-            Left(Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"))
-          }
+        Right(Some(panelTitle))
+          .filterOrElse(_ => panelTitle.nonEmpty, Seq(s"Panel title in headline '${content.header.headline}' is empty"))
+          .filterOrElse(
+            _ => panelTitle.length <= MaxLengthForPanelTitle,
+            Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"),
+          )
       }
       .getOrElse {
         Right(None)
@@ -352,12 +348,12 @@ object TrailsToShowcase {
     val (maybePanelTitle, _) = inferPanelTitleAndTitleFrom(content)
     maybePanelTitle
       .map { panelTitle =>
-        maybePanelTitle
-          .filter(_.length <= MaxLengthForPanelTitle)
-          .map(validPanelTitle => Right(validPanelTitle))
-          .getOrElse {
-            Left(Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"))
-          }
+        Right(panelTitle)
+          .filterOrElse(_ => panelTitle.nonEmpty, Seq(s"Panel title in headline '${content.header.headline}' is empty"))
+          .filterOrElse(
+            _ => panelTitle.length <= MaxLengthForPanelTitle,
+            Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"),
+          )
       }
       .getOrElse {
         Left(Seq(s"Could not find a panel title in the first trail headline '${content.header.headline}'"))
