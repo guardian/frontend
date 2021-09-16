@@ -759,7 +759,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withLongTitle)
 
     outcome.right.toOption should be(None)
-    outcome.left.get.contains("Headline was longer than 86 characters") shouldBe (true)
+    outcome.left.get.contains(s"The headline '$longerThan86' is longer than 86 characters") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "omit single panel author fields longer than 42 characters" in {
@@ -805,18 +805,31 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     outcome.left.get.contains("Could not find image bigger than the minimum required size: 640x320") shouldBe (true)
   }
 
-  "TrailToShowcase validation" should "reject rundown panels with less than 3 articles" in {
-    val content = makePressedContent(
+  "TrailToShowcase validation" should "reject rundown panels with less than 3 valid articles" in {
+    val valid = makePressedContent(
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
+      kickerText = Some("A kicker"),
+    )
+    val notValid = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      kickerText = Some("A kicker"),
+      headline =
+        "Way to long Way to long Way to long Way to long Way to long Way to long Way to long Way to longWay to long Way to long",
     )
 
     val rundownPanel =
-      TrailsToShowcase.asRundownPanel("Rundown container with too few articles", Seq(content), "rundown-container-id")
+      TrailsToShowcase.asRundownPanel(
+        "Rundown container with too few articles",
+        Seq(valid, valid, notValid),
+        "rundown-container-id",
+      )
 
     rundownPanel.right.toOption should be(None)
-    rundownPanel.left.get should be(Seq("Could not make 3 valid rundown articles from rundown trails"))
+    rundownPanel.left.get.head should be("Could not find 3 valid rundown article trails")
   }
 
   "TrailToShowcase validation" should "trim rundown panels to 3 articles if too many are supplied" in {
@@ -897,7 +910,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
 
     rundownPanel.toOption should be(None)
-    rundownPanel.left.get.contains(s"The title '$longerThan64' is too long for a rundown article") should be(true)
+    rundownPanel.left.get.contains(s"The headline '$longerThan64' is longer than 64 characters") should be(true)
   }
 
   "TrailToShowcase validation" should "reject rundown articles with images smaller than 1200x900" in {

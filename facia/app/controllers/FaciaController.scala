@@ -245,13 +245,13 @@ trait FaciaController
   }
 
   protected def renderShowcaseFront(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
-    val (singleStoryPanels, maybeRundownPanel, _) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val (rundownPanelOutcome, singleStoryPanelOutcomes) = TrailsToShowcase.generatePanelsFrom(faciaPage)
     val showcase = TrailsToShowcase(
       feedTitle = faciaPage.metadata.title,
       url = Some(faciaPage.metadata.url),
       description = faciaPage.metadata.description,
-      singleStoryPanels = singleStoryPanels,
-      maybeRundownPanel = maybeRundownPanel,
+      singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption),
+      maybeRundownPanel = rundownPanelOutcome.toOption,
     )
     RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase)
   }
