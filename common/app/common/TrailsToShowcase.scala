@@ -21,6 +21,10 @@ object TrailsToShowcase {
   private val Rundown = "RUNDOWN"
   private val SingleStory = "SINGLE_STORY"
 
+  // We expect these collections to be available in Showcase fronts to source curated trails from
+  private val RundownCollectionName = "Rundown"
+  private val SingleStoriesCollectionName = "Single stories"
+
   private val MaxLengthForSinglePanelTitle = 86
   private val MaxLengthForSinglePanelAuthor = 42
   private val MaxOverlineLength = 30
@@ -57,10 +61,11 @@ object TrailsToShowcase {
       url: Option[String] = None,
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
-    val (rundownPanelOutcome, singleStoryPanelOutcomes) =
-      makePanelsFor(singleStories, rundownStories, rundownContainerId)
-    val singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption)
+    val rundownPanelOutcome = asRundownPanel(rundownStories, rundownContainerId)
+    val singleStoryPanelOutcomes = singleStories.map(asSingleStoryPanel)
+
     val maybeRundownPanel = rundownPanelOutcome.toOption
+    val singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption)
     TrailsToShowcase(feedTitle, url, description, singleStoryPanels, maybeRundownPanel)
   }
 
@@ -74,32 +79,25 @@ object TrailsToShowcase {
       faciaPage: PressedPage,
   ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]]) = {
     // Given our pressed page locate the single story and rundown collections and convert their trails into panels
-    val maybeSingleStoriesCollection = faciaPage.collections.find(_.displayName == "Standalone")
-    val maybeRundownCollection = faciaPage.collections.find(_.displayName == "Rundown")
-
-    (for {
-      singleStoriesCollection <- maybeSingleStoriesCollection
-      rundownCollection <- maybeRundownCollection
-    } yield {
-      TrailsToShowcase.makePanelsFor(
-        singleStoryTrails = singleStoriesCollection.curated,
-        rundownStoryTrails = rundownCollection.curated,
-        rundownContainerId = rundownCollection.id,
-      )
-
-    }).getOrElse {
-      (Left(Seq("Could not find the required Showcase single story and rundown collections")), Seq.empty)
+    val maybeRundownCollection = faciaPage.collections
+      .find(_.displayName == RundownCollectionName)
+      .toRight(Seq(s"Could not find the '$RundownCollectionName' collection to build the rundown panel from"))
+    val rundownPanelOutcome = maybeRundownCollection.flatMap { collection =>
+      asRundownPanel(collection.curated, collection.id)
     }
-  }
 
-  def makePanelsFor(
-      singleStoryTrails: Seq[PressedContent],
-      rundownStoryTrails: Seq[PressedContent],
-      rundownContainerId: String,
-  ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]]) = {
-    val rundownPanelOutcome = asRundownPanel(rundownStoryTrails, rundownContainerId)
-    val singleStoryPanelCreationOutcomes = singleStoryTrails.map(asSingleStoryPanel)
-    (rundownPanelOutcome, singleStoryPanelCreationOutcomes)
+    val maybeSingleStoriesCollection = faciaPage.collections.find(_.displayName == SingleStoriesCollectionName)
+    val singleStoryPanelsOutcome = maybeSingleStoriesCollection
+      .map { collection =>
+        collection.curated.map(asSingleStoryPanel)
+      }
+      .getOrElse {
+        Seq(
+          Left(Seq(s"Could not find the '$SingleStoriesCollectionName' collection to build single story panels from")),
+        )
+      }
+
+    (rundownPanelOutcome, singleStoryPanelsOutcome)
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
