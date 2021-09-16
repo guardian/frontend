@@ -60,17 +60,26 @@ const go = () => {
         cmp.init({ pubData, country: await getLocale() });
 
         // 2. once standard is done, next is commercial
-        if (process.env.NODE_ENV !== 'production') {
-            window.guardian.adBlockers.onDetect.push(isInUse => {
-                const needsMessage =
-                    isInUse && window.console && window.console.warn;
-                const message =
-                    'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
-                if (needsMessage) {
-                    window.console.warn(message);
-                }
-            });
-        }
+		// Handle ad blockers
+		window.guardian.adBlockers.onDetect.push((adblockInUse) => {
+			if (!adblockInUse) return;
+
+			// For the moment we'll hide the top-above-nav slot if we detect that the user has ad blockers enabled
+			// in order to avoid showing them a large blank space.
+			// TODO improve shady pie to make better use of the slot.
+			document.querySelector('.top-banner-ad-container').style.display =
+				'none';
+
+			if (process.env.NODE_ENV !== 'production') {
+				const needsMessage =
+					adblockInUse && window.console && window.console.warn;
+				const message =
+					'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
+				if (needsMessage) {
+					window.console.warn(message);
+				}
+			}
+		});
 
         const fakeBootCommercial = { bootCommercial: () => {} }
 		const useStandaloneBundle =

@@ -1,4 +1,4 @@
-@(singleStoryPanels: Seq[common.TrailsToShowcase.SingleStoryPanel], rundownPanel: Option[common.TrailsToShowcase.RundownPanel], problems: Seq[String])
+@(rundownPanelOutcomes: Either[Seq[String], common.TrailsToShowcase.RundownPanel], singleStoryPanelOutcomes: Seq[Either[Seq[String], common.TrailsToShowcase.SingleStoryPanel]])
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,6 +28,10 @@
                 padding: 10px;
                 width: 320px;
                 margin: 10px;
+            }
+
+            .errors {
+               color: red;
             }
 
             .panelTitle {
@@ -64,23 +68,22 @@
     </head>
     <body>
         <h1>Showcase</h1>
-        @if(problems.nonEmpty) {
-            <p>Problems were found with this feed:</p>
-            <ul>
-                @for(problem <- problems) {
-                    <li>@problem</li>
-                }
-            </ul>
-        } else {
-            <p>No problems found.</p>
-        }
 
         <ul>
-            @for(panel <- rundownPanel) {
+            @for(problems <- rundownPanelOutcomes.left.toOption) {
+                <li class="panel">
+                    <ul class="errors">
+                        @for(problem <- problems) {
+                        <li>@problem</li>
+                        }
+                    </ul>
+                </li>
+            }
+            @for(panel <- rundownPanelOutcomes.right.toOption) {
                 <li class="panel rundown">
                     <h2 class="panelTitle">@panel.panelTitle</h2>
                     @for((article, index) <- panel.articles.zipWithIndex) {
-                       <a href="@article.link" target="_blank"><img src="@article.imageUrl" width="160"/></a>
+                        <a href="@article.link" target="_blank"><img src="@article.imageUrl" width="160"/></a>
                         @for(overline <- article.overline) {
                             <p class="overline">@overline</p>
                         }
@@ -95,29 +98,38 @@
                 </li>
             }
 
-            @for(panel <- singleStoryPanels) {
-            <li class="panel singleStory">
-                    @for(panelTitle <- panel.panelTitle) {
-                        <h2 class="panelTitle">@panel.panelTitle</h2>
-                    }
-                <a href="@panel.link" target="_blank"><img src="@panel.imageUrl"/></a>
-
-                    @for(overline <- panel.overline) {
-                        <p class="overline">@overline</p>
-                    }
-                    <a href="@panel.link" target="_blank"><h4>@panel.title</h4></a>
-                    @for(author <- panel.author) {
-                        <p class="author">@author</p>
-                    }
-
-                    @for(bulletList <- panel.bulletList) {
-                        <ul class="bulletList">
-                            @for(bullet <- bulletList.listItems) {
-                                <li>@bullet.text</li>
+            @for(panelOutcome <- singleStoryPanelOutcomes) {
+                @for(problems <- panelOutcome.left.toOption) {
+                    <li class="panel">
+                        <ul class="errors">
+                            @for(problem <- problems) {
+                            <li>@problem</li>
                             }
                         </ul>
-                    }
-                </li>
+                    </li>
+                }
+                @for(panel <- panelOutcome.right.toOption) {
+                    <li class="panel singleStory">
+                        @for(panelTitle <- panel.panelTitle) {
+                            <h2 class="panelTitle">@panel.panelTitle</h2>
+                        }
+                        <a href="@panel.link" target="_blank"><img src="@panel.imageUrl"/></a>
+                        @for(overline <- panel.overline) {
+                            <p class="overline">@overline</p>
+                        }
+                        <a href="@panel.link" target="_blank"><h4>@panel.title</h4></a>
+                            @for(author <- panel.author) {
+                        <p class="author">@author</p>
+                        }
+                        @for(bulletList <- panel.bulletList) {
+                            <ul class="bulletList">
+                                @for(bullet <- bulletList.listItems) {
+                                <li>@bullet.text</li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
             }
         </ul>
     </body>
