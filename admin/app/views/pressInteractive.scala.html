@@ -42,6 +42,7 @@
     <div id="pressing-waiting">
         <h4 id=progress-status>Progress of pressing</h4>
         <div id="progress-url">No URL provided</div>
+        <br>
         <div id="server-message">No pressing in progress</div>
     </div>
     <script>
@@ -57,7 +58,7 @@
 
             const url = new URL(interactiveUrl);
 
-            // don't allow a request to be sent if no url or invalid url
+            // don't allow a request to be sent if url cannot be parsed or doesn't contain a path
             if (!url || !url.pathname) {
                 return;
             }
@@ -71,14 +72,16 @@
             })
             .then(res => {
                 if (res.ok) {
-                    document.getElementById('server-message').innerText = 'Pressing successful';
+                    const markStyle = 'background-color:#00cc00;color:#fff'
+                    document.getElementById('server-message').innerHTML = `<mark style=${markStyle}>Pressing successful</mark>`;
                 } else {
                     throw res;
                 }
             })
             .catch(e => {
                 console.log('error', e);
-                document.getElementById('server-message').innerText = 'Pressing failed - please try again';
+                const markStyle = 'background-color:#ff0000;color:#fff'
+                document.getElementById('server-message').innerHTML = `<mark style=${markStyle}>Pressing failed - please try again</mark>`;
             })
             .finally(() => {
                 btn.style.display = 'block';
