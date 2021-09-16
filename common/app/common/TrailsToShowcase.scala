@@ -218,7 +218,7 @@ object TrailsToShowcase {
     }
 
     // Collect mandatory fields. If any of these is missing we can yield None
-    val proposedPanelTitle: Either[Seq[String], String] = {
+    val proposedPanelTitle = {
       content.headOption
         .map { firstTrail =>
           mandatoryPanelTitleFrom(firstTrail)

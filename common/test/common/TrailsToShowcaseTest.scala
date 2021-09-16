@@ -329,6 +329,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
   }
 
   "TrailToShowcase" should "strip all markup from single story text elements" in {
+    // Showcase specifies no markup in text elements; out trail texts often contains strong tags and others.
+    // Strip them to provide the least friction to editors
     val bulletItemsWithHtml =
       """
         |-<p>Bullet 1</p>
@@ -340,7 +342,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
-      headline = "My <i>unique</i> headline",
+      headline = "<strong>My Panel title</strong> | My <i>unique</i> headline",
       byline = Some("<b>Trail</b> byline"),
       kickerText = Some("<strong>A kicker</strong>"),
       trailText = Some(bulletItemsWithHtml),
@@ -348,6 +350,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
+    singleStoryPanel.panelTitle shouldBe (Some("My Panel title"))
     singleStoryPanel.title shouldBe ("My unique headline")
     singleStoryPanel.author shouldBe (Some("Trail byline"))
     singleStoryPanel.overline shouldBe (Some("A kicker"))
@@ -383,7 +386,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val gModule = entry.getModule(GModule.URI).asInstanceOf[GModule]
     gModule.getPanel should be(Some("SINGLE_STORY"))
     gModule.getPanelTitle should be(Some("My panel title"))
-    gModule.getOverline should be(Some("A Kicker"))
+    gModule.getOverline should be(Some("A kicker"))
 
     val rssAtomModule = entry.getModule(RssAtomModule.URI).asInstanceOf[RssAtomModule]
     rssAtomModule.getPublished should be(Some(wayBackWhen))
@@ -533,7 +536,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       headline = "My unique headline",
       byline = Some("Trail byline"),
       kickerText = Some("A Kicker"),
-      trailText = Some("- A bullet"),
+      trailText = Some(twoEncodedBulletItems),
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
@@ -545,7 +548,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val curatedContent = makePressedContent(
       webPublicationDate = wayBackWhen,
       trailPicture = Some(imageMedia),
-      trailText = Some("- A bullet"),
+      trailText = Some(twoEncodedBulletItems),
     )
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
@@ -628,6 +631,30 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val articleGroup = gModule.getArticleGroup.get
     articleGroup.role should be(Some("RUNDOWN"))
     articleGroup.articles.size should be(3)
+  }
+
+  "TrailToShowcase" should "strip all markup from rundown text elements" in {
+    val firstTrail = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      kickerText = Some("<b>A Kicker</b>"),
+      trailPicture = Some(imageMedia),
+      headline = " <strong>My rundown panel title</strong>|My <i>headline</i>",
+    )
+    val anotherTrail =
+      makePressedContent(
+        webPublicationDate = wayBackWhen,
+        lastModified = Some(lastModifiedWayBackWhen),
+        trailPicture = Some(imageMedia),
+        kickerText = Some("Another Kicker"),
+      )
+
+    val outcome = TrailsToShowcase
+      .asRundownPanel(Seq(firstTrail, anotherTrail, anotherTrail), "rundown-container-id")
+
+    outcome.right.get.panelTitle should be("My rundown panel title")
+    outcome.right.get.articles.head.title should be("My headline")
+    outcome.right.get.articles.head.overline should be(Some("A Kicker"))
   }
 
   "TrailToShowcase" should "infer the mandatory Rundown panel title from a pipe delimit in the first trail's headline" in {
