@@ -59,14 +59,14 @@ object TrailsToShowcase {
 
   def fromTrails(
       feedTitle: Option[String],
-      singleStories: Seq[PressedContent],
-      rundownStories: Seq[PressedContent],
+      singleTrails: Seq[PressedContent],
+      rundownTrails: Seq[PressedContent],
       rundownContainerId: String,
       url: Option[String] = None,
       description: Option[String] = None,
   )(implicit request: RequestHeader): String = {
-    val rundownPanelOutcome = asRundownPanel(rundownStories, rundownContainerId)
-    val singleStoryPanelOutcomes = singleStories.map(asSingleStoryPanel)
+    val rundownPanelOutcome = asRundownPanel(rundownTrails, rundownContainerId)
+    val singleStoryPanelOutcomes = singleTrails.map(asSingleStoryPanel)
 
     val maybeRundownPanel = rundownPanelOutcome.toOption
     val singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption)
