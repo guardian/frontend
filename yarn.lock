@@ -1880,10 +1880,10 @@
     style-loader "1.0.0"
     webpack "^4.2.0"
 
-"@guardian/automat-contributions@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@guardian/automat-contributions/-/automat-contributions-0.4.0.tgz#bc710031601dd3eb90f3e6555a8fed9d69d0b93d"
-  integrity sha512-ooyeNl4lFOCTi376GipsdV6IHnxY7MGHfM7c/iFbAatElYbH4Lr2Y0kIOBg6yR5XGDMhQ8PWyDQ/YgMIL5BKRw==
+"@guardian/automat-contributions@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@guardian/automat-contributions/-/automat-contributions-0.4.1.tgz#a2e7033feccc8a20dcce83615055b3248bb6f4ac"
+  integrity sha512-rud691019bLWh9S/jXhFGnS75aiH8LUx/g4PBuM7Jd1ziC8eR/rG6Cz8BhQvP3oV2hH9QPN4zwjQK0zzvzckLQ==
 
 "@guardian/automat-modules@^0.3.8":
   version "0.3.8"
