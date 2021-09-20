@@ -366,7 +366,7 @@ object DotcomRenderingDataModel {
 
     val isLegacyInteractive =
       modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate
-        .isBefore(Chronos.javaLocalDateTimeToJodaDateTime(InteractiveSwitchOver.date))
+        .isBefore(Chronos.javaTimeLocalDateTimeToJodaDateTime(InteractiveSwitchOver.date))
 
     DotcomRenderingDataModel(
       author = author,

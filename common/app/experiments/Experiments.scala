@@ -7,9 +7,10 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
-    InteractiveLibrarianExp,
+    PressedInteractives,
     StandaloneCommercialBundle,
     StandaloneCommercialBundleTracking,
+    RemoveStickyNav,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -24,10 +25,10 @@ object LiveblogRendering
       participationGroup = Perc0A,
     )
 
-object InteractiveLibrarianExp
+object PressedInteractives
     extends Experiment(
       name = "interactive-librarian",
-      description = "The Interactive Librarian private experiment",
+      description = "The pressed interactives experiment",
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = LocalDate.of(2022, 1, 31),
       participationGroup = Perc0B,
@@ -49,4 +50,13 @@ object StandaloneCommercialBundleTracking
       owners = Seq(Owner.withGithub("mxdvl")),
       sellByDate = LocalDate.of(2021, 10, 1),
       participationGroup = Perc1A,
+    )
+
+object RemoveStickyNav
+    extends Experiment(
+      name = "remove-sticky-nav",
+      description = "Remove sticky behaviour from the nav bar",
+      owners = Seq(Owner.withGithub("MarSavar")),
+      sellByDate = LocalDate.of(2021, 10, 8),
+      participationGroup = Perc1B,
     )

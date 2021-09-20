@@ -1,7 +1,7 @@
 package layout
 
-import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 sealed trait DateHeadline {
   val dateFormatString: String
@@ -13,13 +13,13 @@ sealed trait DateHeadline {
 
   val day: LocalDate
 
-  def displayString: String = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(dateFormatString))
+  def displayString: String = day.atStartOfDay.format(DateTimeFormatter.ofPattern(dateFormatString))
 
-  def dateTimeString: String = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(dateTimeFormatString))
+  def dateTimeString: String = day.atStartOfDay.format(DateTimeFormatter.ofPattern(dateTimeFormatString))
 
   def urlFragment: Option[String] =
     urlFragmentFormatString map { format =>
-      day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(format)).toLowerCase
+      day.atStartOfDay.format(DateTimeFormatter.ofPattern(format)).toLowerCase
     }
 }
 

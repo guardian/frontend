@@ -116,39 +116,6 @@ trait FaciaController
         renderFrontPressResult(path)
     }
 
-  def renderFrontShowcase(path: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val futureResult = frontJsonFapi.get(path, liteRequestType).map {
-        case Some(faciaPage: PressedPage) =>
-          (for {
-            // We are using the presence of the Showcase collections to decide if this front is a Showcase feed
-            singleStoriesCollection <- faciaPage.collections.find(_.displayName == "Standalone")
-            rundownStoriesCollection <- faciaPage.collections.find(_.displayName == "Rundown")
-          } yield {
-            val singleStories = singleStoriesCollection.curated
-            val rundownStories = rundownStoriesCollection.curated
-            val showcase = TrailsToShowcase(
-              feedTitle = faciaPage.metadata.title,
-              singleStories = singleStories,
-              rundownStories = rundownStories,
-              rundownContainerId = rundownStoriesCollection.id,
-              rundownContainerTitle = rundownStoriesCollection.displayName,
-              url = Some(faciaPage.metadata.url),
-              description = faciaPage.metadata.description,
-            )
-            Cached(CacheTime.Default)(RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase))
-
-          }).getOrElse {
-            Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
-          }
-        case None =>
-          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
-      }
-
-      futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
-      futureResult
-    }
-
   def rootEditionRedirect(): Action[AnyContent] = renderFront(path = "")
 
   def renderFrontHeadline(path: String): Action[AnyContent] =
@@ -231,6 +198,8 @@ trait FaciaController
               JsonFront(faciaPage)
             } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
+            } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
+              renderShowcaseFront(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
             },
@@ -273,6 +242,18 @@ trait FaciaController
     } else {
       RevalidatableResult.Ok(htmResponseInlined)
     }
+  }
+
+  protected def renderShowcaseFront(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
+    val (rundownPanelOutcome, singleStoryPanelOutcomes) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val showcase = TrailsToShowcase(
+      feedTitle = faciaPage.metadata.title,
+      url = Some(faciaPage.metadata.url),
+      description = faciaPage.metadata.description,
+      singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption),
+      maybeRundownPanel = rundownPanelOutcome.toOption,
+    )
+    RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase)
   }
 
   def renderFrontPress(path: String): Action[AnyContent] =

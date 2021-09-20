@@ -175,7 +175,7 @@ const updateArticleCounts = async () => {
 
     if (page && !page.isFront && hasConsentedToArticleCounts) {
         incrementDailyArticleCount(page);
-        incrementWeeklyArticleCount(storage.local, page.pageId);
+        incrementWeeklyArticleCount(storage.local, page.pageId, page.keywordIds.split(','));
     }
 };
 

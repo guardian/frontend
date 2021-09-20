@@ -3,10 +3,13 @@ package services.dotcomrendering
 import common.GuLogging
 import conf.Configuration
 import play.api.libs.ws.WSClient
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 
 import scala.concurrent._
 import ExecutionContext.Implicits.global
-import scala.xml.Document
+
+import pagepresser.{InteractiveImmersiveHtmlCleaner}
 
 /*
 
@@ -80,8 +83,13 @@ object InteractiveLibrarian extends GuLogging {
   // Cleaning
 
   def cleanOriginalDocument(document: String): String = {
-    // For the moment this function is the identity
-    document
+    val parsedDoc = Jsoup.parse(document)
+
+    // In the clean function below we hardcode argument convertToHttps to false.
+    // Interactive immersives use http links to, for example, ensure svgs load,
+    // so we don't want to force these links to be relative.
+    val doc: Document = InteractiveImmersiveHtmlCleaner.clean(parsedDoc, false)
+    doc.toString
   }
 
   def applyCleaning(s3path: String): Boolean = {

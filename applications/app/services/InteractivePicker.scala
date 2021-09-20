@@ -6,7 +6,6 @@ import implicits.{AmpFormat, HtmlFormat, RequestFormat}
 import play.api.mvc.RequestHeader
 import implicits.Requests._
 import model.dotcomrendering.InteractiveSwitchOver
-import org.joda.time.DateTime
 import java.time.LocalDateTime
 import common.Chronos
 
@@ -49,13 +48,13 @@ object InteractivePicker {
     tags.exists(t => t.id == "tracking/platformfunctional/ampinteractive")
   }
 
-  def getRenderingTier(requestFormat: RequestFormat, path: String, datetime: DateTime, tags: List[Tag])(implicit
+  def getRenderingTier(requestFormat: RequestFormat, path: String, datetime: LocalDateTime, tags: List[Tag])(implicit
       request: RequestHeader,
   ): RenderingTier = {
     val forceDCR = request.forceDCR
     val isMigrated = migratedPaths.contains(if (path.startsWith("/")) path else "/" + path)
     val switchOn = InteractivePickerFeature.isSwitchedOn
-    val publishedPostSwitch = dateIsPostTransition(Chronos.jodaDateTimeToJavaDateTime(datetime))
+    val publishedPostSwitch = dateIsPostTransition(datetime)
     val isOptedInAmp = (requestFormat == AmpFormat) && isAmpOptedIn(tags)
     val isWeb = requestFormat == HtmlFormat
     val isOptOut = isOptedOut(tags)
