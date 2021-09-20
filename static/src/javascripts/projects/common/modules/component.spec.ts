@@ -17,7 +17,7 @@ import fetchJSON_ from 'lib/fetch-json';
 
 import { Component } from './component';
 
-const fetchJSON: JestMockFn<*, *> = (fetchJSON_: any);
+const fetchJSON: JestMockFn<unknown, unknown> = fetchJSON_ as any;
 
 const mockResponse = {
     html: '<p>html</p>',
@@ -55,10 +55,10 @@ describe('Component', () => {
         }
 
         // Apologies for the typecast, but it makes things just way easier ...
-        elem = ((document.querySelector('.component'): any): HTMLElement);
-        subElem = ((document.querySelector(
+        elem = document.querySelector('.component') as any as HTMLElement;
+        subElem = document.querySelector(
             '.component__element'
-        ): any): HTMLElement);
+        ) as any as HTMLElement;
     });
 
     describe('fetch()', () => {
