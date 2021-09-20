@@ -31,7 +31,6 @@ class InteractiveLibrarianController(
     */
   def press(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      // This function combines both pressing and cleaning
       for {
         _ <- InteractiveLibrarian.pressLiveContents(wsClient, path)
       } yield {
