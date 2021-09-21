@@ -8,43 +8,43 @@ class ComponentError {
 
 class Component {
 	useBem: boolean;
-	templateName?: string | null;
-	componentClass?: string | null;
-	endpoint?: string | (() => string) | null;
-	classes?: Record<string, unknown> | null;
-	elem?: HTMLElement | HTMLAnchorElement | HTMLInputElement | null;
-	elems?: Record<string, unknown> | null;
+	templateName?: string;
+	componentClass?: string;
+	endpoint?: string | (() => string);
+	classes?: Record<string, unknown>;
+	elem?: HTMLElement | HTMLAnchorElement | HTMLInputElement;
+	elems?: Record<string, unknown>;
 	template?: string | null;
 	rendered: boolean;
 	destroyed: boolean;
-	options: Record<string, unknown>;
-	defaultOptions: Record<string, unknown>;
+	options: Record<string, string>;
+	defaultOptions: Record<string, string>;
 	responseDataKey: string;
 	autoupdated: boolean;
 	updateEvery: number;
-	fetchData?: string | null;
-	manipulationType: string;
-	t?: number | null;
+	fetchData?: string;
+	manipulationType: 'append' | 'html';
+	t?: number;
 
 	constructor() {
 		this.useBem = false;
-		this.templateName = null;
-		this.componentClass = null;
-		this.endpoint = null;
-		this.classes = null;
-		this.elem = null;
-		this.template = null;
+		this.templateName = undefined;
+		this.componentClass = undefined;
+		this.endpoint = undefined;
+		this.classes = undefined;
+		this.elem = undefined;
+		this.elems = undefined;
+		this.template = undefined;
 		this.rendered = false;
 		this.destroyed = false;
-		this.elems = null;
 		this.options = {};
 		this.defaultOptions = {};
 		this.responseDataKey = 'html';
 		this.autoupdated = false;
 		this.updateEvery = 60;
-		this.fetchData = null;
+		this.fetchData = undefined;
 		this.manipulationType = 'append';
-		this.t = null;
+		this.t = undefined;
 	}
 
 	attachTo(elem: HTMLElement): void {
