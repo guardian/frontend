@@ -74,11 +74,6 @@ object TrailsToShowcase {
   }
 
   // Questionable placement of controller logic
-  def isShowcaseFront(faciaPage: PressedPage): Boolean = {
-    faciaPage.frontProperties.priority.contains("showcase")
-  }
-
-  // Questionable placement of controller logic
   def generatePanelsFrom(
       faciaPage: PressedPage,
   ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]]) = {

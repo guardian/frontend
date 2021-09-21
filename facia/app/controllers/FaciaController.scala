@@ -198,7 +198,7 @@ trait FaciaController
               JsonFront(faciaPage)
             } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
-            } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
+            } else if (isShowcaseFront(faciaPage)) {
               renderShowcaseFront(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
@@ -439,6 +439,10 @@ trait FaciaController
       // The private key is in the CAPI account, see the documentation at https://github.com/guardian/fastly-cache-purger
       Ok(Configuration.amp.flushPublicKey).as("text/plain")
     }
+  }
+
+  private def isShowcaseFront(faciaPage: PressedPage): Boolean = {
+    faciaPage.frontProperties.priority.contains("showcase")
   }
 }
 
