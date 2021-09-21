@@ -229,6 +229,11 @@ const getAdConsentFromState = (state) => {
     return false;
 }
 
+const getAdManagerGroup = (consented = true) => {
+	if (!consented) return null;
+	return storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup()
+}
+
 const createAdManagerGroup = () => {
     // users are assigned to groups 1-12
     const group = String(Math.floor(Math.random() * 12) + 1);
@@ -257,11 +262,11 @@ const rebuildPageTargeting = () => {
     const ccpaState = latestCMPState.ccpa ? latestCMPState.ccpa.doNotSell : null;
     const tcfv2EventStatus = latestCMPState.tcfv2 ? latestCMPState.tcfv2.eventStatus : 'na';
     const page = config.get('page');
+    const amtgrp = latestCMPState.tcfv2
+		? getAdManagerGroup(adConsentState)
+		: getAdManagerGroup(true);
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
-	const amtgrp = adConsentState
-		? storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup()
-		: null;
     // flowlint-next-line sketchy-null-bool:off
     const paTargeting = { pa: adConsentState ? 't' : 'f' };
     const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
