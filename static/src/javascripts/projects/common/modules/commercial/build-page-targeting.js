@@ -264,7 +264,7 @@ const rebuildPageTargeting = () => {
     const page = config.get('page');
     const amtgrp = latestCMPState.tcfv2
 		? getAdManagerGroup(adConsentState)
-		: getAdManagerGroup(true);
+		: getAdManagerGroup();
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
     // flowlint-next-line sketchy-null-bool:off
