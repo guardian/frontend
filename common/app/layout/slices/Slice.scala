@@ -94,6 +94,24 @@ case object QuarterQuarterQlQl extends Slice {
   )
 }
 
+// Large single column collection hold all currently live Showcase single stories; not intended to be render as HTML
+case object ShowcaseSingleStories extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "q-q-q-ql",
+    columns = Seq(
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 30,
+        ItemClasses(
+          mobile = ListItem,
+          tablet = ListItem,
+        ),
+      ),
+    ),
+  )
+}
+
 /* .________.________.________.________.
  * |########|########|########|________|
  * |########|########|########|________|
