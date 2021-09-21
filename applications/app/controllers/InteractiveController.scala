@@ -142,11 +142,7 @@ class InteractiveController(
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
     } else if (canShowPressed) {
-      val result = InteractiveLibrarian.getDocumentFromS3(path) match {
-        case Some(document) => servePressedPage(path)
-        case None           => NotFound(s"Could not retrieve stored document at www.theguardian.com/${path}")
-      }
-      Future.successful(result)
+      Future.successful(servePressedPage(path))
     } else {
       val res = for {
         resp <- lookupItemResponse(path)

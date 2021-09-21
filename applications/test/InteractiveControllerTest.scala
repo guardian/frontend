@@ -49,4 +49,11 @@ import conf.Configuration.interactive.cdnPath
     )
   }
 
+  "Interactive serve pressed page" should "return expected headers and path" in {
+    val pressedPage = interactiveController.servePressedPage(url)(TestRequest(url))
+
+    pressedPage.header.headers.getOrElse("X-Accel-Redirect", "No header") should be(
+      s"/s3-archive/www.theguardian.com/$url",
+    )
+  }
 }
