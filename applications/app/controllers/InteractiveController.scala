@@ -19,7 +19,7 @@ import services.{CAPILookup, USElection2020AmpPages, _}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import experiments.{ActiveExperiments, PressedInteractives}
+import experiments.{ActiveExperiments, ShowPressedInteractives}
 import services.dotcomrendering.PressedInteractives.isPressed
 import services.dotcomrendering.InteractiveLibrarian
 
@@ -117,6 +117,7 @@ class InteractiveController(
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
     val isUSElectionAMP = USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat
+    val canShowPressed = ShowPressedInteractives.canRun && isPressed(path)
 
     def render(model: Either[(InteractivePage, Blocks), Result]): Future[Result] = {
       model match {
@@ -136,9 +137,11 @@ class InteractiveController(
       }
     }
 
+    log.info(s"Serving interactive, path=$path, canShowPressed=${canShowPressed}")
+
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
-    } else if (ActiveExperiments.isParticipating(PressedInteractives) && isPressed(path)) {
+    } else if (canShowPressed) {
       val result = InteractiveLibrarian.getDocumentFromS3(path) match {
         case Some(document) => servePressedPage(path)
         case None           => NotFound(s"Could not retrieve stored document at www.theguardian.com/${path}")

@@ -7,7 +7,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
-    PressedInteractives,
+    ShowPressedInteractives,
     StandaloneCommercialBundle,
     StandaloneCommercialBundleTracking,
     RemoveStickyNav,
@@ -25,7 +25,7 @@ object LiveblogRendering
       participationGroup = Perc0A,
     )
 
-object PressedInteractives
+object ShowPressedInteractives
     extends Experiment(
       name = "interactive-librarian",
       description = "The pressed interactives experiment",
