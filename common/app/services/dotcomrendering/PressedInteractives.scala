@@ -8,7 +8,7 @@ object PressedInteractives {
   // - remove this file entirely
   // - update the InteractiveController to show pressed pages based on presence of the tag
   // - update the press+clean functionality to automate tagging as part of this process
-  private[this] val interactives = Set(
+  private[this] val interactives = Set[String](
   )
 
   def isPressed(path: String): Boolean = interactives.contains(path)
