@@ -259,13 +259,16 @@ const rebuildPageTargeting = () => {
     const page = config.get('page');
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
+	const amtgrp = adConsentState
+		? storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup()
+		: null;
     // flowlint-next-line sketchy-null-bool:off
     const paTargeting = { pa: adConsentState ? 't' : 'f' };
     const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
     const pageTargets = Object.assign(
         {
             ab: abParam(),
-            amtgrp: storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup(),
+            amtgrp,
             at: getCookie('adtest') || undefined,
             bp: findBreakpoint(),
             cc: getCountryCode(),
