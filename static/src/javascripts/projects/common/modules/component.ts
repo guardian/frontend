@@ -222,38 +222,40 @@ class Component {
 	 * we would lose if rendered then manipulated
 	 */
 	prerender(): void {
-		// TODO: Implement it
+		// Do nothing
 	}
 
 	/**
 	 * Once the render / decorate methods have been called
 	 * This is where you could do your event binding
+	 *
 	 * This function is made to be overridden
 	 */
-	// eslint-disable-next-line class-methods-use-this, no-unused-vars
 	ready(
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- type annotation
 		elem: HTMLElement | HTMLAnchorElement | HTMLInputElement | null,
 	): void {
-		// TODO: Implement it
+		// Meant to be overridden.
 	}
 
 	/**
 	 * Once the render / decorate methods have been called
 	 * This is where you could do your error event binding
+	 *
 	 * This function is made to be overridden
 	 */
-	// eslint-disable-next-line class-methods-use-this, no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- type annotation
 	error(type: string, message?: string): void {
-		// TODO: Implement it
+		// Meant to be overridden.
 	}
 
 	/**
 	 * This is called whenever a fetch occurs. This includes
 	 * explicit fetch calls and autoupdate.
 	 */
-	// eslint-disable-next-line class-methods-use-this, no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- type annotation
 	fetched(resp: Record<string, unknown>): void {
-		// TODO: Implement it
+		// Do nothing
 	}
 
 	autoupdate(elem: HTMLElement): void {
@@ -267,9 +269,8 @@ class Component {
 	/**
 	 * Once we're done with it, remove event bindings etc
 	 */
-	// eslint-disable-next-line class-methods-use-this, no-unused-vars
 	dispose(): void {
-		// TODO: Implement it
+		// Do nothing
 	}
 
 	on(
