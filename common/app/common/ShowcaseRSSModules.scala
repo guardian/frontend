@@ -68,21 +68,21 @@ trait GModule extends com.sun.syndication.feed.module.Module with Serializable w
 
   def setOverline(overline: Option[String])
 
-  def getArticleGroup: Option[ArticleGroup]
+  def getArticleGroup: Option[GArticleGroup]
 
-  def setArticleGroup(articleGroup: Option[ArticleGroup])
+  def setArticleGroup(articleGroup: Option[GArticleGroup])
 
-  def getBulletList: Option[BulletList]
+  def getBulletList: Option[GBulletList]
 
-  def setBulletList(bulletList: Option[BulletList])
+  def setBulletList(bulletList: Option[GBulletList])
 }
 
 class GModuleImpl() extends GModule {
   private var panel: Option[String] = None
   private var panelTitle: Option[String] = None
   private var overline: Option[String] = None
-  private var articleGroup: Option[ArticleGroup] = None
-  private var bulletList: Option[BulletList] = None
+  private var articleGroup: Option[GArticleGroup] = None
+  private var bulletList: Option[GBulletList] = None
 
   override def getPanel: Option[String] = panel
 
@@ -96,13 +96,13 @@ class GModuleImpl() extends GModule {
 
   override def setOverline(overline: Option[String]): Unit = this.overline = overline
 
-  override def getArticleGroup: Option[ArticleGroup] = articleGroup
+  override def getArticleGroup: Option[GArticleGroup] = articleGroup
 
-  override def setArticleGroup(articleGroup: Option[ArticleGroup]): Unit = this.articleGroup = articleGroup
+  override def setArticleGroup(articleGroup: Option[GArticleGroup]): Unit = this.articleGroup = articleGroup
 
-  override def getBulletList: Option[BulletList] = bulletList
+  override def getBulletList: Option[GBulletList] = bulletList
 
-  override def setBulletList(bulletList: Option[BulletList]): Unit = this.bulletList = bulletList
+  override def setBulletList(bulletList: Option[GBulletList]): Unit = this.bulletList = bulletList
 
   override def getInterface: Class[_] = classOf[GModule]
 
@@ -138,11 +138,14 @@ case class GArticle(
     mediaContent: Option[MediaContent],
 )
 
-case class ArticleGroup(role: Option[String], articles: Seq[GArticle])
+case class GArticleGroup(
+    role: String,
+    articles: Seq[GArticle],
+)
 
-case class BulletList(listItems: Seq[BulletListItem])
+case class GBulletList(listItems: Seq[GBulletListItem])
 
-case class BulletListItem(text: String)
+case class GBulletListItem(text: String)
 
 class RssAtomModuleGenerator extends ModuleGenerator {
 
@@ -202,10 +205,9 @@ class GModuleGenerator extends ModuleGenerator {
         // Article group element needs article group and role
         for {
           articleGroup <- gModule.getArticleGroup
-          role <- articleGroup.role
         } yield {
           val articleGroupElement = new org.jdom.Element("article_group", NS)
-          articleGroupElement.setAttribute("role", role)
+          articleGroupElement.setAttribute("role", articleGroup.role)
 
           articleGroup.articles.foreach { article =>
             // Slightly regrettable but limited duplication with the main rss entry generation
