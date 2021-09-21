@@ -1,3 +1,4 @@
+import { isString } from '@guardian/libs';
 import { fetchJson } from '../../../lib/fetch-json';
 
 class ComponentError {
@@ -5,6 +6,29 @@ class ComponentError {
 		return new Error(`Component: ${message}`);
 	}
 }
+
+type ManipulationType = 'append' | 'html';
+type Parent = HTMLElement | Node;
+
+const manipulate = (
+	type: ManipulationType,
+	parent: Parent,
+	elem: HTMLElement,
+): void => {
+	switch (type) {
+		case 'append':
+			parent.appendChild(elem);
+			break;
+		case 'html':
+			if ('innerHTML' in parent) parent.innerHTML = elem.innerHTML;
+			else
+				throw new Error(
+					'Could not modify the parent’s HTML: Node type = ' +
+						String(parent.nodeType),
+				);
+			break;
+	}
+};
 
 class Component {
 	useBem: boolean;
@@ -23,7 +47,7 @@ class Component {
 	autoupdated: boolean;
 	updateEvery: number;
 	fetchData?: string;
-	manipulationType: 'append' | 'html';
+	manipulationType: ManipulationType;
 	t?: number;
 
 	constructor() {
@@ -55,7 +79,7 @@ class Component {
 		this._ready();
 	}
 
-	render(parent: HTMLElement | Node | null = document.body): Component {
+	render(parent: Parent = document.body): Component {
 		this.checkAttached();
 		let template = this.template;
 
@@ -74,16 +98,8 @@ class Component {
 			elem.innerHTML = template;
 			this.elem = elem;
 			this._prerender();
-			switch (this.manipulationType) {
-				case 'append':
-					parent?.appendChild(this.elem);
-					break;
-				case 'html':
-					if (parent && 'innerHTML' in parent)
-						parent.innerHTML = this.elem.innerHTML;
-					else throw new Error('Could not modify the parent’s HTML');
-					break;
-			}
+
+			manipulate(this.manipulationType, parent, this.elem);
 		}
 
 		this._ready();
@@ -99,7 +115,7 @@ class Component {
 		}
 	}
 
-	async fetch(parent: HTMLElement | Node, key?: string): Promise<void> {
+	async fetch(parent: Parent, key?: string): Promise<void> {
 		this.checkAttached();
 
 		if (key) {
@@ -108,19 +124,28 @@ class Component {
 
 		try {
 			const resp = await this._fetch();
-			this.elem = bonzo.create(resp[this.responseDataKey])[0];
+			const maybeHtmlString = resp[this.responseDataKey];
+			if (!isString(maybeHtmlString))
+				throw new Error(
+					'response is not a valid string:' + String(maybeHtmlString),
+				);
+
+			const elem: HTMLDivElement = document.createElement('div');
+			elem.innerHTML = maybeHtmlString;
+			this.elem = elem;
 			this._prerender();
 
 			if (!this.destroyed) {
-				bonzo(parent)[this.manipulationType](this.elem);
+				manipulate(this.manipulationType, parent, this.elem);
 				this._ready(this.elem);
 			}
 		} catch (err) {
-			return this.error(err);
+			if (err instanceof Error) return this.error(err.name, err.message);
+			return this.error('unknown');
 		}
 	}
 
-	async _fetch(): Promise<unknown> {
+	async _fetch(): Promise<Record<string, unknown>> {
 		let endpoint =
 			typeof this.endpoint === 'function'
 				? this.endpoint()
