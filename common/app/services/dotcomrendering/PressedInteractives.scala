@@ -9,7 +9,6 @@ object PressedInteractives {
   // - update the InteractiveController to show pressed pages based on presence of the tag
   // - update the press+clean functionality to automate tagging as part of this process
   private[this] val interactives = Set(
-    "world/ng-interactive/2020/apr/08/coronavirus-100-days-that-changed-the-world",
   )
 
   def isPressed(path: String): Boolean = interactives.contains(path)

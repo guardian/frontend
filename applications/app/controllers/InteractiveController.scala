@@ -19,9 +19,8 @@ import services.{CAPILookup, USElection2020AmpPages, _}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import experiments.{ActiveExperiments, ShowPressedInteractives}
+import experiments.ShowPressedInteractives
 import services.dotcomrendering.PressedInteractives.isPressed
-import services.dotcomrendering.InteractiveLibrarian
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
@@ -136,8 +135,6 @@ class InteractiveController(
         case Right(result) => Future.successful(result)
       }
     }
-
-    log.info(s"Serving interactive, path=$path, canShowPressed=${canShowPressed}")
 
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
