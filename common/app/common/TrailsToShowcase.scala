@@ -15,7 +15,6 @@ import play.api.mvc.RequestHeader
 import java.io.StringWriter
 import java.util.Date
 import scala.collection.JavaConverters._
-import scala.collection.immutable
 import scala.collection.immutable.WrappedString
 
 object TrailsToShowcase {
@@ -106,6 +105,13 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
+    val proposedTitle = titleOfLengthFrom(MaxLengthForSinglePanelTitle, content)
+    val proposedPanelTitle = panelTitleFrom(content)
+    val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
+    val proposedImageUrl = singleStoryImageUrlFor(content)
+
+    // TODO Something like if supporting content is available then this is a Related Articles panel
+    // Otherwise attempt to process it as a bulllet list panel.
     // Can we access supporting content / sublinks from pressed trails?
     val supportingContent: Seq[PressedContent] = content match {
       case curatedContent: CuratedContent =>
@@ -120,10 +126,6 @@ object TrailsToShowcase {
       val image = singleStoryImageUrlFor(content)
       println("Supporting content image: " + image)
     }
-    val proposedTitle = titleOfLengthFrom(MaxLengthForSinglePanelTitle, content)
-    val proposedPanelTitle = panelTitleFrom(content)
-    val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
-    val proposedImageUrl = singleStoryImageUrlFor(content)
     val proposedBulletList =
       content.card.trailText.map(extractBulletsFrom).getOrElse(Left(Seq("No trail text available")))
 
