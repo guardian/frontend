@@ -1,3 +1,4 @@
+import { isObject } from '@guardian/libs';
 import config_ from './config';
 
 // This is really a hacky workaround ⚠️
@@ -16,7 +17,7 @@ function isPathAbsoluteURL(path: string): boolean {
 const fetchJson = async (
 	resource: string,
 	init: RequestInit = {},
-): Promise<unknown> => {
+): Promise<Record<string, unknown>> => {
 	if (typeof resource !== 'string')
 		throw new Error('First argument should be of type `string`');
 
@@ -33,7 +34,9 @@ const fetchJson = async (
 				return {};
 			default:
 				try {
-					return resp.json();
+					const obj: unknown = await resp.json();
+					if (isObject(obj)) return obj;
+					return Promise.reject();
 				} catch (ex) {
 					throw new Error(
 						`Fetch error while requesting ${path}: Invalid JSON response`,
