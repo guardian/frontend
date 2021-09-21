@@ -70,9 +70,20 @@ class Component {
 		}
 
 		if (template) {
-			this.elem = bonzo.create(template)[0];
+			const elem = document.createElement('div');
+			elem.innerHTML = template;
+			this.elem = elem;
 			this._prerender();
-			bonzo(parent)[this.manipulationType](this.elem);
+			switch (this.manipulationType) {
+				case 'append':
+					parent?.appendChild(this.elem);
+					break;
+				case 'html':
+					if (parent && 'innerHTML' in parent)
+						parent.innerHTML = this.elem.innerHTML;
+					else throw new Error('Could not modify the parent’s HTML');
+					break;
+			}
 		}
 
 		this._ready();
