@@ -6,7 +6,7 @@ import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, U
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
-import model.pressed.{PressedContent, Replace}
+import model.pressed.{CuratedContent, PressedContent, Replace}
 import model.{ImageAsset, PressedPage}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -15,6 +15,7 @@ import play.api.mvc.RequestHeader
 import java.io.StringWriter
 import java.util.Date
 import scala.collection.JavaConverters._
+import scala.collection.immutable
 import scala.collection.immutable.WrappedString
 
 object TrailsToShowcase {
@@ -105,6 +106,20 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
+    // Can we access supporting content / sublinks from pressed trails?
+    val supportingContent: Seq[PressedContent] = content match {
+      case curatedContent: CuratedContent =>
+        curatedContent.supportingContent // TODO showcase always deals in curated content so we can push this matching up
+      case _ => Seq.empty
+    }
+    println("Found supporting content on pressed content: " + supportingContent.length)
+    supportingContent.foreach { content =>
+      // Can we find a headline, webUrl and image on the supporting content?
+      println("Supporting content: " + content.header.headline + ", " + content.header.url)
+      // Needs an image Minimum 640 px wide, 320 px high.
+      val image = singleStoryImageUrlFor(content)
+      println("Supporting content image: " + image)
+    }
     val proposedTitle = titleOfLengthFrom(MaxLengthForSinglePanelTitle, content)
     val proposedPanelTitle = panelTitleFrom(content)
     val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
