@@ -1,11 +1,12 @@
 package services.dotcomponents
 
-import common.Logging
+import common.GuLogging
 import common.LoggingField._
 import model.PageWithStoryPackage
+import model.liveblog.InteractiveBlockElement
 import play.api.mvc.RequestHeader
 
-import scala.util.Random
+import scala.util.{Random, Try}
 
 case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
 
@@ -27,29 +28,53 @@ case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
 
 }
 
-case class DotcomponentsLogger(request: Option[RequestHeader]) extends Logging {
+case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging {
 
   private def customFields: List[LogField] = DotcomponentsLoggerFields(request).customFields
 
   def fieldsFromResults(results: Map[String, String]): List[LogField] =
     results.map({ case (k, v) => LogFieldString(k, v) }).toList
 
-  def elementsLogFieldFromPage(page: PageWithStoryPackage): List[LogField] =
+  def elementsLogFieldFromPage(page: PageWithStoryPackage): List[LogField] = {
+    val bodyBlocks = for {
+      blocks <- page.article.blocks.toSeq
+      body <- blocks.body
+      element <- body.elements
+    } yield element.getClass.getSimpleName
+
+    val mainBlocks = for {
+      blocks <- page.article.blocks.toSeq
+      main <- blocks.main.toSeq
+      element <- main.elements
+    } yield element.getClass.getSimpleName
+
+    val bodyInteractiveBlockScripts = for {
+      blocks <- page.article.blocks.toSeq
+      body <- blocks.body
+      element <- body.elements if element.isInstanceOf[InteractiveBlockElement]
+      interactiveElement <- Try(element.asInstanceOf[InteractiveBlockElement]).toOption
+      scriptUrl <- interactiveElement.scriptUrl
+    } yield scriptUrl
+
     List(
       LogFieldString(
         "page.elements",
-        (
-          page.article.blocks match {
-            case Some(blocks) => blocks.body.flatMap(bblock => bblock.elements) map (be => be.getClass.getSimpleName)
-            case None         => Seq()
-          }
-        ).distinct.mkString(", "),
+        bodyBlocks.distinct.mkString(", "),
+      ),
+      LogFieldString(
+        "page.mainElements",
+        mainBlocks.distinct.mkString(", "),
       ),
       LogFieldString(
         "page.tone",
         page.article.tags.tones.headOption.map(_.name).getOrElse(""),
       ),
+      LogFieldString(
+        "page.bodyInteractiveElementScripts",
+        bodyInteractiveBlockScripts.distinct.mkString(", "),
+      ),
     )
+  }
 
   def withRequestHeaders(rh: RequestHeader): DotcomponentsLogger = {
     copy(Some(rh))

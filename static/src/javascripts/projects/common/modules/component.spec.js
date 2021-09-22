@@ -1,18 +1,16 @@
-// @flow
-
 import bean from 'bean';
-import fetchJSON_ from 'lib/fetch-json';
+import { fetchJson as fetchJson_ } from 'lib/fetch-json';
 
 import { Component } from './component';
 
-const fetchJSON: JestMockFn<*, *> = (fetchJSON_: any);
+const fetchJson = (fetchJson_);
 
 const mockResponse = {
     html: '<p>html</p>',
     other: '<p>other</p>',
 };
 
-const createComponent = (props?: Object = {}): Component => {
+const createComponent = (props = {}) => {
     const component = new Component();
     const defaults = {
         endpoint: 'whatever',
@@ -23,7 +21,9 @@ const createComponent = (props?: Object = {}): Component => {
     return component;
 };
 
-jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve(mockResponse)));
+jest.mock('lib/fetch-json', () => ({
+	fetchJson: jest.fn(() => Promise.resolve(mockResponse)),
+}));
 
 jest.mock('bean', () => ({
     off: jest.fn(),
@@ -43,10 +43,10 @@ describe('Component', () => {
         }
 
         // Apologies for the typecast, but it makes things just way easier ...
-        elem = ((document.querySelector('.component'): any): HTMLElement);
+        elem = ((document.querySelector('.component')));
         subElem = ((document.querySelector(
             '.component__element'
-        ): any): HTMLElement);
+        )));
     });
 
     describe('fetch()', () => {
@@ -157,7 +157,7 @@ describe('Component', () => {
             });
             const mockError = new Error('Bad response');
 
-            fetchJSON.mockReturnValueOnce(Promise.reject(mockError));
+            fetchJson.mockReturnValueOnce(Promise.reject(mockError));
 
             return component.fetch(elem).catch(() => {
                 expect(component.ready).toHaveBeenCalled();
@@ -190,8 +190,8 @@ describe('Component', () => {
             expect(component.getClass('element', true)).toBe(
                 'my-element-class'
             );
-            expect(component.getClass('element-2')).toBeDefined();
-            expect(component.getClass('element-2', true)).not.toBe('.');
+            expect(component.getClass('element-2')).toBeUndefined();
+            expect(component.getClass('element-2', true)).toBeUndefined();
         });
     });
 

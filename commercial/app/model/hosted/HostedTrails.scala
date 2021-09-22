@@ -1,10 +1,10 @@
 package commercial.model.hosted
 
 import com.gu.contentapi.client.model.v1.Content
-import common.Logging
+import common.GuLogging
 import common.commercial.hosted.HostedPage
 
-object HostedTrails extends Logging {
+object HostedTrails extends GuLogging {
 
   private def publishedDateTime(item: Content): Long = item.webPublicationDate.map(_.dateTime).getOrElse(0L)
 

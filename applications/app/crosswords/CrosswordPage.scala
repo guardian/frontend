@@ -1,7 +1,7 @@
 package crosswords
 
 import model._
-import org.joda.time.DateTime
+import java.time.LocalDateTime
 
 import scala.xml.Elem
 
@@ -50,7 +50,7 @@ class CrosswordSearchPage extends StandalonePage {
     webTitle = "Crosswords search",
   )
 
-  val year = new DateTime().getYear
+  val year = LocalDateTime.now().getYear
   val searchYears = 1999 to year
 
   val crosswordTypes: Seq[String] = Seq(
@@ -64,6 +64,10 @@ class CrosswordSearchPage extends StandalonePage {
     "azed",
     "weekend",
   )
+
+  def queryParameter(crossType: String): String = {
+    if (crossType == "weekend") "weekend-crossword" else crossType
+  }
 
   val setters: Seq[String] = Seq(
     "Anto",
@@ -88,6 +92,7 @@ class CrosswordSearchPage extends StandalonePage {
     "Egoist",
     "Enigmatist",
     "Fawley",
+    "Fed",
     "Fidelio",
     "Fiore",
     "Gemini",

@@ -40,7 +40,7 @@ class AuthenticatedActionsTest
     val user = User(
       "",
       "test@example.com",
-      statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)),
+      statusFields = new StatusFields(userEmailValidated = Some(true)),
     )
     val newsletterService: NewsletterService = mock[NewsletterService]
     val rpCookie = mock[ScGuRp]

@@ -1,7 +1,5 @@
-// @flow
-
-import config from 'lib/config';
-import { Advert } from 'commercial/modules/dfp/Advert';
+import config from '../../../../lib/config';
+import { Advert } from '../dfp/Advert';
 
 import { getHeaderBiddingAdSlots, _ } from './slot-config';
 import {
@@ -9,13 +7,15 @@ import {
     shouldIncludeMobileSticky as shouldIncludeMobileSticky_,
 } from './utils';
 
+jest.mock('lib/raven');
+
 const { getSlots } = _;
 
-const getBreakpointKey: any = getBreakpointKey_;
-const shouldIncludeMobileSticky: any = shouldIncludeMobileSticky_;
+const getBreakpointKey = getBreakpointKey_;
+const shouldIncludeMobileSticky = shouldIncludeMobileSticky_;
 
 jest.mock('./utils', () => {
-    // $FlowFixMe property requireActual is actually not missing Flow.
+
     const original = jest.requireActual('./utils');
     return {
         ...original,
@@ -24,13 +24,13 @@ jest.mock('./utils', () => {
     };
 });
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'variant'
     ),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     hasCrossedBreakpoint: jest.fn(),
     isBreakpoint: jest.fn(),
     getBreakpoint: jest.fn(),
@@ -39,7 +39,7 @@ jest.mock('lib/detect', () => ({
     breakpoints: [],
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 

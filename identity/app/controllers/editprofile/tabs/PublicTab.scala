@@ -12,6 +12,6 @@ trait PublicTab extends EditProfileControllerComponents {
     }
 
   /** GET /public/edit */
-  def redirectToPublicSettings: Action[AnyContent] = redirectToManage("public-settings")
+  def redirectToManagePublicSettings: Action[AnyContent] = redirectToManage("public-settings")
 
 }

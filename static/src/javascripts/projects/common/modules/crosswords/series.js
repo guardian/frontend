@@ -1,9 +1,8 @@
-// @flow
 import config from 'lib/config';
 import { addProximityLoader } from 'lib/proximity-loader';
 import { OnwardContent } from 'common/modules/onward/onward-content';
 
-export const initSeries = (): void => {
+export const initSeries = () => {
     const els = document.getElementsByClassName('js-onward');
 
     if (els.length > 0) {

@@ -4,11 +4,10 @@ import common._
 import containers.Containers
 import contentapi.ContentApiClient
 import model._
-import models.OnwardCollectionResponse
+import model.dotcomrendering.{OnwardItem, OnwardCollectionResponse}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
-import models.OnwardCollection._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -17,7 +16,7 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
     implicit context: ApplicationContext,
 ) extends BaseController
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private[this] def getRelatedContent(path: String): Future[Seq[RelatedContentItem]] = {
@@ -34,10 +33,9 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
         val json = JsonComponent(
           OnwardCollectionResponse(
             heading = "More on this story",
-            trails = trailsToItems(items.map(_.faciaContent)),
+            trails = items.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(10),
           ),
         )
-
         Cached(5.minutes)(json)
       })
     }

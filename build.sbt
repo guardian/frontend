@@ -1,5 +1,4 @@
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
-import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.gu.Dependencies._
@@ -7,10 +6,10 @@ import com.gu.ProjectSettings._
 
 val common = library("common")
   .settings(
-    javaOptions in Test += "-Dconfig.file=common/conf/test.conf",
+    Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
     libraryDependencies ++= Seq(
       guBox,
-      apacheCommonsMath3,
+      apacheCommonsLang,
       awsCore,
       awsCloudwatch,
       awsDynamodb,
@@ -42,7 +41,7 @@ val common = library("common")
       jerseyClient,
       cssParser,
       w3cSac,
-      logback,
+      logback2, // logback2: to prevent "error: reference to logback is ambiguous;"
       kinesisLogbackAppender,
       targetingClient,
       scanamo,
@@ -57,11 +56,10 @@ val common = library("common")
       identityModel,
       capiAws,
       okhttp,
-      jsonSchema
-    ) ++ jackson
+    ) ++ jackson,
   )
   .settings(
-    mappings in TestAssets ~= filterAssets
+    TestAssets / mappings ~= filterAssets,
   )
 
 val commonWithTests = withTests(common)
@@ -72,7 +70,7 @@ val facia = application("facia")
   .dependsOn(commonWithTests)
   .aggregate(common)
   .settings(
-    libraryDependencies += scalaCheck
+    libraryDependencies += scalaCheck,
   )
 
 val article = application("article").dependsOn(commonWithTests).aggregate(common)
@@ -93,8 +91,7 @@ val sport = application("sport")
   .settings(
     libraryDependencies ++= Seq(
       paClient,
-      akkaContrib
-    )
+    ),
   )
 
 val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
@@ -104,8 +101,8 @@ val diagnostics = application("diagnostics")
   .aggregate(common)
   .settings(
     libraryDependencies ++= Seq(
-      redisClient
-    )
+      redisClient,
+    ),
   )
 
 val admin = application("admin")
@@ -125,18 +122,18 @@ val admin = application("admin")
       awsElasticloadbalancing,
       awsSes,
       scalaUri,
-      playIteratees
+      playIteratees,
     ),
     RoutesKeys.routesImport += "bindables._",
-    RoutesKeys.routesImport += "org.joda.time.LocalDate"
+    RoutesKeys.routesImport += "org.joda.time.LocalDate",
   )
 
 val faciaPress = application("facia-press")
   .dependsOn(commonWithTests)
   .settings(
     libraryDependencies ++= Seq(
-      awsKinesis
-    )
+      awsKinesis,
+    ),
   )
 
 val identity = application("identity")
@@ -149,8 +146,8 @@ val identity = application("identity")
       liftJson,
       slf4jExt,
       libPhoneNumber,
-      supportInternationalisation
-    )
+      supportInternationalisation,
+    ),
   )
 
 val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
@@ -159,7 +156,7 @@ val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
 val dev = application("dev-build")
   .dependsOn(
-    withTests(article)
+    withTests(article),
   )
   .dependsOn(
     facia,
@@ -171,11 +168,11 @@ val dev = application("dev-build")
     identity,
     admin,
     commercial,
-    onward
+    onward,
   )
   .settings(
     RoutesKeys.routesImport += "bindables._",
-    javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
+    Runtime / javaOptions += "-Dconfig.file=dev-build/conf/dev-build.application.conf",
   )
 
 val preview = application("preview")
@@ -186,7 +183,7 @@ val preview = application("preview")
     applications,
     sport,
     commercial,
-    onward
+    onward,
   )
   .settings(
   )
@@ -211,37 +208,33 @@ val main = root()
     onward,
     archive,
     preview,
-    rss
+    rss,
   )
   .settings(
-    riffRaffBuildIdentifier := System
-      .getenv()
-      .getOrDefault("BUILD_NUMBER", "0")
-      .replaceAll("\"", ""),
     riffRaffUploadArtifactBucket := Some(
-      System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")
+      System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity"),
     ),
     riffRaffUploadManifestBucket := Some(
-      System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")
+      System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity"),
     ),
     riffRaffManifestProjectName := s"dotcom:all",
     riffRaffArtifactResources := Seq(
-      (packageBin in Universal in admin).value -> s"${(name in admin).value}/${(packageBin in Universal in admin).value.getName}",
-      (packageBin in Universal in applications).value -> s"${(name in applications).value}/${(packageBin in Universal in applications).value.getName}",
-      (packageBin in Universal in archive).value -> s"${(name in archive).value}/${(packageBin in Universal in archive).value.getName}",
-      (packageBin in Universal in article).value -> s"${(name in article).value}/${(packageBin in Universal in article).value.getName}",
-      (packageBin in Universal in commercial).value -> s"${(name in commercial).value}/${(packageBin in Universal in commercial).value.getName}",
-      (packageBin in Universal in diagnostics).value -> s"${(name in diagnostics).value}/${(packageBin in Universal in diagnostics).value.getName}",
-      (packageBin in Universal in discussion).value -> s"${(name in discussion).value}/${(packageBin in Universal in discussion).value.getName}",
-      (packageBin in Universal in identity).value -> s"${(name in identity).value}/${(packageBin in Universal in identity).value.getName}",
-      (packageBin in Universal in facia).value -> s"${(name in facia).value}/${(packageBin in Universal in facia).value.getName}",
-      (packageBin in Universal in faciaPress).value -> s"${(name in faciaPress).value}/${(packageBin in Universal in faciaPress).value.getName}",
-      (packageBin in Universal in onward).value -> s"${(name in onward).value}/${(packageBin in Universal in onward).value.getName}",
-      (packageBin in Universal in preview).value -> s"${(name in preview).value}/${(packageBin in Universal in preview).value.getName}",
-      (packageBin in Universal in rss).value -> s"${(name in rss).value}/${(packageBin in Universal in rss).value.getName}",
-      (packageBin in Universal in sport).value -> s"${(name in sport).value}/${(packageBin in Universal in sport).value.getName}",
-      baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml"
-    )
+      (admin / Universal / packageBin).value -> s"${(admin / name).value}/${(admin / Universal / packageBin).value.getName}",
+      (applications / Universal / packageBin).value -> s"${(applications / name).value}/${(applications / Universal / packageBin).value.getName}",
+      (archive / Universal / packageBin).value -> s"${(archive / name).value}/${(archive / Universal / packageBin).value.getName}",
+      (article / Universal / packageBin).value -> s"${(article / name).value}/${(article / Universal / packageBin).value.getName}",
+      (commercial / Universal / packageBin).value -> s"${(commercial / name).value}/${(commercial / Universal / packageBin).value.getName}",
+      (diagnostics / Universal / packageBin).value -> s"${(diagnostics / name).value}/${(diagnostics / Universal / packageBin).value.getName}",
+      (discussion / Universal / packageBin).value -> s"${(discussion / name).value}/${(discussion / Universal / packageBin).value.getName}",
+      (identity / Universal / packageBin).value -> s"${(identity / name).value}/${(identity / Universal / packageBin).value.getName}",
+      (facia / Universal / packageBin).value -> s"${(facia / name).value}/${(facia / Universal / packageBin).value.getName}",
+      (faciaPress / Universal / packageBin).value -> s"${(faciaPress / name).value}/${(faciaPress / Universal / packageBin).value.getName}",
+      (onward / Universal / packageBin).value -> s"${(onward / name).value}/${(onward / Universal / packageBin).value.getName}",
+      (preview / Universal / packageBin).value -> s"${(preview / name).value}/${(preview / Universal / packageBin).value.getName}",
+      (rss / Universal / packageBin).value -> s"${(rss / name).value}/${(rss / Universal / packageBin).value.getName}",
+      (sport / Universal / packageBin).value -> s"${(sport / name).value}/${(sport / Universal / packageBin).value.getName}",
+      baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml",
+    ),
   )
 val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
 badgeHash := {

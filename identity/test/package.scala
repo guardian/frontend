@@ -19,7 +19,7 @@ import play.api.test.Helpers._
 trait FakeApp {
   def app: Application = {
     val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
-    val context = ApplicationLoader.createContext(
+    val context = ApplicationLoader.Context.create(
       environment = environment,
       initialSettings = Map(
         "application.secret" -> "this_is_not_a_real_secret_just_for_tests",

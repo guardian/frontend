@@ -1,4 +1,3 @@
-// @flow
 /* global jsdom */
 
 import {
@@ -21,7 +20,7 @@ const originalAssign = window.location.assign;
 
 describe('url', () => {
     beforeEach(() => {
-        window.location.assign = (url: string) => {
+        window.location.assign = (url) => {
             jsdom.reconfigure({
                 url,
             });
@@ -144,7 +143,7 @@ describe('url', () => {
         const state = { foo: 'bar' };
 
         window.history[historyMethod] = jest.fn();
-        window.title = title;
+        document.title = title;
 
         moduleMethod({ state, querystring, title });
         expect(window.history[historyMethod]).toHaveBeenCalledWith(

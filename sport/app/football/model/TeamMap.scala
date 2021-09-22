@@ -8,6 +8,7 @@ import implicits.Football
 import org.joda.time.{DateTime, Days}
 import pa._
 
+import java.time.format.DateTimeFormatter
 import scala.concurrent.ExecutionContext
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
@@ -16,7 +17,7 @@ case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String])
   override lazy val id = team.id
 }
 
-object TeamMap extends Logging {
+object TeamMap extends GuLogging {
 
   val teamAgent = Box(Map.empty[String, Tag])
 
@@ -149,13 +150,17 @@ object MatchUrl {
       awayTeam: String <- TeamMap(theMatch.awayTeam).tag.flatMap(_.metadata.url)
       if homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/")
     } yield {
-      s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam
+      s"/football/match/${theMatch.date.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")).toLowerCase}/${homeTeam
+        .replace("/football/", "")}-v-${awayTeam
         .replace("/football/", "")}"
     }).getOrElse(s"/football/match/${theMatch.id}")
   }
 
   def smartUrl(theMatch: FootballMatch): Option[String] = {
     if (Football.hoursTillMatch(theMatch) > 72) None
-    else Some(s"/football/match-redirect/${theMatch.id}")
+    // We are trialling using the football subdomain for smart match redirects
+    // This is because they will still work on web (with an extra redirect), but
+    // importantly they will not be intercepted by apps and so work there too (via a webview)
+    else Some(s"https://football.theguardian.com/match-redirect/${theMatch.id}")
   }
 }

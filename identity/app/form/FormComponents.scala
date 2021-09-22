@@ -9,6 +9,5 @@ trait FormComponents {
 
   lazy val profileFormsMapping = wire[ProfileFormsMapping]
 
-  lazy val accountDetailsMapping = wire[AccountDetailsMapping]
   lazy val privacyMapping = wire[PrivacyMapping]
 }

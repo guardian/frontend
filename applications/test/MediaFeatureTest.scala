@@ -1,5 +1,6 @@
 package test
 
+import scala.collection.JavaConverters._
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
 @DoNotDiscover class MediaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
@@ -32,13 +33,17 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
     scenario("Include Guardian byline") {
       goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         import browser._
-        el(".byline").text should be("Ben Child and Henry Barnes, theguardian.com")
+        el(".byline").html().toString should include("Ben Child")
+        el(".byline").html().toString should include("Henry Barnes")
+        el(".byline").html().toString should include("theguardian.com")
       }
     }
 
     scenario("Include non Guardian byline") {
       goTo("/lifeandstyle/australia-food-blog/video/2014/feb/03/chia-mango-sorbet-video-recipe") { browser =>
-        browser.$(".byline").text should be("Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd")
+        browser.$(".byline").first().text() should be(
+          "Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd",
+        )
       }
     }
 
@@ -53,7 +58,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
         media.el("[itemprop=duration]").attribute("content") should be("PT66S")
         media.el("[itemprop=width]").attribute("content") should be("480")
         media.el("[itemprop=height]").attribute("content") should be("360")
-        media.el("[itemprop=headline]").text should be(
+        media.el("[itemprop=headline]").html().toString.trim should be(
           "Qatar Airways flight escorted by RAF jet after bomb hoax - video",
         )
       }

@@ -1,13 +1,14 @@
-// @flow strict
-
-import config from 'lib/config';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
+import config from '../../../../lib/config';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
 let initialised = false;
 
-const initialise = (): void => {
+const initialise = () => {
     // Initialise Launchpad Tracker
     window.launchpad('newTracker', 'launchpad', 'lpx.qantas.com', {
         discoverRootDomain: true,
@@ -27,20 +28,21 @@ const initialise = (): void => {
     });
 };
 
-const setupRedplanet: () => Promise<void> = () => {
-    onConsentChange(state => {
-        // CCPA only runs in the US and Redplanet only runs in Australia
+const setupRedplanet = () => {
+    onConsentChange((state) => {
+        // CCPA only runs in the US and tcfv2 outside Aus
+        // Redplanet only runs in Australia
         // so this should never happen
-        if (state.ccpa) {
+        if (!state.aus) {
             throw new Error(
-                `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCFv2 mode`
+                `Error running Redplanet without AUS consent. It should only run in Australia on AUS mode`
             );
         }
-        const canRun: boolean = getConsentFor('redplanet', state);
+        const canRun = getConsentFor('redplanet', state);
 
         if (!initialised && canRun) {
             initialised = true;
-            return import('lib/launchpad.js').then(() => {
+            return import(/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js').then(() => {
                 initialise();
                 return Promise.resolve();
             });
@@ -49,7 +51,7 @@ const setupRedplanet: () => Promise<void> = () => {
     return Promise.resolve();
 };
 
-export const init = (): Promise<void> => {
+export const init = () => {
     if (commercialFeatures.launchpad && isInAuOrNz()) {
         return setupRedplanet();
     }

@@ -1,36 +1,20 @@
-// @flow
-import defaultConfig from 'lib/config';
-import { getBreakpoint } from 'lib/detect';
-import { isAdFreeUser } from 'common/modules/commercial/user-features';
-import { isUserLoggedIn } from 'common/modules/identity/api';
-import userPrefs from 'common/modules/user-prefs';
+import defaultConfig from '../../../../lib/config';
+import { getBreakpoint } from '../../../../lib/detect';
+import { isAdFreeUser } from './user-features';
+import { isUserLoggedIn } from '../identity/api';
+import userPrefs from '../user-prefs';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
-    dfpAdvertising: boolean;
-    isSecureContact: boolean;
-    stickyTopBannerAd: boolean;
-    articleBodyAdverts: boolean;
-    articleAsideAdverts: boolean;
-    carrotTrafficDriver: boolean;
-    highMerch: boolean;
-    thirdPartyTags: boolean;
-    relatedWidgetEnabled: boolean;
-    commentAdverts: boolean;
-    liveblogAdverts: boolean;
-    paidforBand: boolean;
-    asynchronous: boolean;
-    adFree: boolean;
-    comscore: boolean;
-    launchpad: boolean;
 
-    constructor(config: any = defaultConfig) {
+
+    constructor(config = defaultConfig) {
         // this is used for SpeedCurve tests
-        const noadsUrl: boolean = /[#&]noads(&.*)?$/.test(window.location.hash);
-        const forceAdFree: boolean = /[#&]noadsaf(&.*)?$/.test(
+        const noadsUrl = /[#&]noads(&.*)?$/.test(window.location.hash);
+        const forceAdFree = /[#&]noadsaf(&.*)?$/.test(
             window.location.hash
         );
-        const forceAds: boolean = /[?&]forceads(&.*)?$/.test(
+        const forceAds = /[?&]forceads(&.*)?$/.test(
             window.location.search
         );
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
@@ -97,6 +81,7 @@ class CommercialFeatures {
             !isHosted &&
             !isInteractive &&
             !config.get('page.isFront') &&
+            !config.get('isDotcomRendering', false) &&
             !newRecipeDesign;
 
         this.thirdPartyTags =

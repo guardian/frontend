@@ -20,11 +20,11 @@ list: # PRIVATE
 # Install all 3rd party dependencies.
 install: check-node-env
 	@yarn -s install
+	@./tools/sync-githooks.js
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
 	@rm -rf node_modules
-	@rm -rf tools/amp-validation/node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 # Reinstall all 3rd party dependencies from scratch.
@@ -115,13 +115,23 @@ fix: install
 fix-commits: install
 	@./tools/task-runner/runner validate-head/javascript-fix
 
-
-validate-amp: install # PRIVATE
-	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
-
 validate-a11y: install # PRIVATE
 	@./tools/task-runner/runner validate/a11y
 
 # Take screenshots for a visual check.
 screenshots: install
 	@./tools/task-runner/runner screenshot
+
+# *********************** COMMERCIAL ***********************
+# Do all the commercial things
+commercial: install
+	@./tools/task-runner/runner commercial --verbose
+
+commercial-compile: install # PRIVATE
+	@./tools/task-runner/runner commercial/compile
+
+commercial-graph: install # PRIVATE
+	@./tools/task-runner/runner commercial/graph --verbose
+
+commercial-watch: commercial-compile
+	@./dev/commercial.watch.js

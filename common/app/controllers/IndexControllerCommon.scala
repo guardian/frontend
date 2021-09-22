@@ -2,7 +2,6 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
-import common.`package`.Gone
 import model.Cached.WithoutRevalidationResult
 import model._
 import play.api.mvc._
@@ -17,7 +16,7 @@ trait IndexControllerCommon
     extends BaseController
     with Index
     with RendersItemResponse
-    with Logging
+    with GuLogging
     with Paging
     with ImplicitControllerExecutionContext {
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r

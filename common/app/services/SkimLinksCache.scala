@@ -4,13 +4,13 @@ import java.net.URL
 import java.util.concurrent.atomic.AtomicReference
 
 import app.LifecycleComponent
-import common.Logging
+import common.GuLogging
 import conf.Configuration.affiliateLinks
 
 import scala.concurrent.ExecutionContext
 import scala.util.Try
 
-object SkimLinksCache extends Logging {
+object SkimLinksCache extends GuLogging {
 
   private val skimLinkDomains = new AtomicReference(Set[String]())
 

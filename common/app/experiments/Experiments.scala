@@ -1,63 +1,62 @@
 package experiments
 
-import conf.switches.{Owner, SwitchGroup}
+import conf.switches.Owner
 import experiments.ParticipationGroups._
-import org.joda.time.LocalDate
-import conf.switches.Owner.group
-import conf.switches.SwitchGroup.Commercial
+import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
-    DotcomRendering,
-    DCRBubble,
-    NGInteractiveDCR,
-    UseAusCmp,
+    LiveblogRendering,
+    PressedInteractives,
+    StandaloneCommercialBundle,
+    StandaloneCommercialBundleTracking,
+    RemoveStickyNav,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
-object DotcomRendering
+object LiveblogRendering
     extends Experiment(
-      name = "dotcom-rendering",
-      description = "Show DCR pages to users including those with comments",
+      name = "liveblog-rendering",
+      description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2020, 12, 1),
-      participationGroup = Perc50, // Also see ArticlePicker.scala - our main filter mechanism is by page features
+      sellByDate = LocalDate.of(2021, 11, 30),
+      participationGroup = Perc0A,
     )
 
-object DCRBubble
+object PressedInteractives
     extends Experiment(
-      name = "always-dcr-rendering",
-      description = "Use DCR for all article pages (equivalent to always adding ?dcr)",
+      name = "interactive-librarian",
+      description = "The pressed interactives experiment",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 6, 1),
-      participationGroup = Perc0A, // Also see ArticlePicker.scala - our main filter mechanism is by page features
-    )
-
-object NGInteractiveDCR
-    extends Experiment(
-      name = "ng-interactive-dcr",
-      description = "Use DCR to render (ng)-interactives",
-      owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 6, 1),
+      sellByDate = LocalDate.of(2022, 1, 31),
       participationGroup = Perc0B,
     )
 
-object NewsletterEmbedDesign
+object StandaloneCommercialBundle
     extends Experiment(
-      name = "new-newsletter-embed-designs",
-      description = "New newsletter signup embeds for discoverability OKR",
-      owners = Seq(Owner.withGithub("buck06191")),
-      sellByDate = new LocalDate(2020, 11, 30),
-      participationGroup = Perc20A,
+      name = "standalone-commercial-bundle",
+      description = "Serve a standalone commercial bundle to a subset of users",
+      owners = Seq(Owner.withGithub("mxdvl")),
+      sellByDate = LocalDate.of(2021, 10, 1),
+      participationGroup = Perc5A,
     )
 
-object UseAusCmp
+object StandaloneCommercialBundleTracking
     extends Experiment(
-      name = "use-aus-cmp",
-      description = "Use AU framework in CMP in Australia",
-      owners = group(Commercial),
-      sellByDate = new LocalDate(2020, 11, 27),
-      participationGroup = Perc0D,
+      name = "standalone-commercial-bundle-tracking",
+      description = "Track performance metrics for the standalone commercial bundle",
+      owners = Seq(Owner.withGithub("mxdvl")),
+      sellByDate = LocalDate.of(2021, 10, 1),
+      participationGroup = Perc1A,
+    )
+
+object RemoveStickyNav
+    extends Experiment(
+      name = "remove-sticky-nav",
+      description = "Remove sticky behaviour from the nav bar",
+      owners = Seq(Owner.withGithub("MarSavar")),
+      sellByDate = LocalDate.of(2021, 10, 8),
+      participationGroup = Perc1B,
     )

@@ -6,15 +6,15 @@
 @import services.EmailPrefsData
 @import views.support.fragment.Switch._
 @import views.support.fragment.ConsentChannel._
+@import services.newsletters.NewsletterResponse
 
-@import com.gu.identity.model.EmailNewsletter
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
   user: com.gu.identity.model.User,
   privacyForm: Form[_root_.form.PrivacyFormData],
   emailPrefsForm: Form[EmailPrefsData],
   emailSubscriptions: List[String],
-  availableLists: List[EmailNewsletter],
+  availableLists: List[NewsletterResponse],
   consentsUpdated: Boolean = false,
   consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
@@ -47,7 +47,7 @@
                 <div class="manage-account__switches manage-account__switches--single-column">
                     <ul>
                     @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
-                        @if(!isChannel(consentField)) {
+                        @if(!isChannel(consentField) && !isProduct(consentField)) {
                             <li>
                                 @if(index == 0) {
                                     @fragments.consentSwitch(consentField, consentHint)(messages)

@@ -99,7 +99,7 @@ object LinkedData {
       case newsArticle => {
         List(
           NewsArticle(
-            `@id` = baseURL + article.metadata.id,
+            `@id` = baseURL + "/" + article.metadata.id,
             image = getImages(article, fallbackLogo),
             author = authors,
             datePublished = article.trail.webPublicationDate.toString(),

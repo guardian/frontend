@@ -1,12 +1,12 @@
 package common.commercial
 
 import com.redis.RedisClient
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
-object ClientSideLogging extends Logging {
+object ClientSideLogging extends GuLogging {
 
   val reportFormat = DateTimeFormat.forPattern("ddMMYYYY-HH:mm:ss").withZoneUTC()
 

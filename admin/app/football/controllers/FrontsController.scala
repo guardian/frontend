@@ -4,7 +4,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result => PlayResult}
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{GuLogging, ImplicitControllerExecutionContext}
 import football.services.PaFootballClient
 import football.model.PA
 import model.{ApplicationContext, Cached, NoCache}
@@ -13,11 +13,14 @@ import conf.Configuration
 import scala.concurrent.Future
 import pa._
 import concurrent.FutureOpt
-import org.joda.time.LocalDate
+
+import java.time.LocalDate
 import football.model.SnapFields
 import pa.Season
 import pa.Fixture
 import pa.LiveMatch
+
+import java.time.format.DateTimeFormatter
 
 class FrontsController(
     val wsClient: WSClient,
@@ -26,7 +29,7 @@ class FrontsController(
     extends BaseController
     with ImplicitControllerExecutionContext
     with PaFootballClient
-    with Logging {
+    with GuLogging {
 
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
@@ -215,7 +218,7 @@ class FrontsController(
         trailText = {
           matchInfo.competition.fold("")(c => s"${c.name}, ") + matchInfo.venue.fold("")(c =>
             s"${c.name}, ",
-          ) + matchInfo.date.toString("HH:mm")
+          ) + matchInfo.date.format(DateTimeFormatter.ofPattern("HH:mm"))
         }
         snapFields = SnapFields(
           SNAP_TYPE,

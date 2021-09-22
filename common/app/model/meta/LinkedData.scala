@@ -22,6 +22,7 @@ case class Guardian(
       "https://www.facebook.com/theguardian",
       "https://twitter.com/guardian",
       "https://www.youtube.com/user/TheGuardian",
+      "https://www.wikidata.org/wiki/Q11148",
     ),
 ) extends LinkedData("Organization")
 

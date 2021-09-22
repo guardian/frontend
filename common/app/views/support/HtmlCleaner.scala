@@ -2,9 +2,9 @@ package views.support
 
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
-
 import com.gu.contentatom.renderer.ArticleConfiguration
-import common.{Edition, LinkTo, Logging}
+import common.editions.Uk
+import common.{Edition, GuLogging, LinkTo}
 import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches
@@ -779,7 +779,7 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
       Option(element.nextElementSibling()).exists(_.hasClass("fc-container--thrasher"))
 
     def isMostViewedContainer(element: Element): Boolean =
-      Option(element.id()).contains("most-viewed")
+      Option(element.id()).exists(_.contains("most-viewed")) || Option(element.id()).exists(_.contains("popular-in"))
 
     val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
 
@@ -821,8 +821,9 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
   }
 }
 
-case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean)(implicit
-    val request: RequestHeader,
+case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean)(
+    implicit val edition: Edition,
+    implicit val request: RequestHeader,
 ) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
@@ -834,7 +835,13 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
     if (containers.length >= minContainers) {
 
       val containerIndex = if (containers.length >= 4) {
-        if (isNetworkFront) 3 else 2
+        if (isNetworkFront) {
+          if (MerchandisingHighSection.isSwitchedOn && edition.id.equals(Uk.id)) {
+            4
+          } else {
+            3
+          }
+        } else 2
       } else 0
 
       val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isPaidContent, hasPageSkin)
@@ -880,7 +887,7 @@ case class AffiliateLinksCleaner(
     tags: List[String],
     publishedDate: Option[DateTime],
 ) extends HtmlCleaner
-    with Logging {
+    with GuLogging {
 
   override def clean(document: Document): Document = {
     if (
@@ -944,7 +951,7 @@ object AffiliateLinksCleaner {
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
     val urlEncodedLink = URLEncode(link)
-    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
+    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 
   def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {

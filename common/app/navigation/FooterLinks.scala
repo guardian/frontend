@@ -86,6 +86,12 @@ object FooterLinks {
     FooterLink("Digital newspaper archive", "https://theguardian.newspapers.com", "digital newspaper archive")
   def facebook(edition: String): FooterLink =
     FooterLink("Facebook", "https://www.facebook.com/theguardian", s"${edition} : footer : facebook")
+  def youtube(edition: String): FooterLink =
+    FooterLink("YouTube", "https://www.youtube.com/user/TheGuardian", s"${edition} : footer : youtube")
+  def linkedin(edition: String): FooterLink =
+    FooterLink("LinkedIn", "https://www.linkedin.com/company/theguardian", s"${edition} : footer : linkedin")
+  def instagram(edition: String): FooterLink =
+    FooterLink("Instagram", "https://www.instagram.com/guardian", s"${edition} : footer : instagram")
   def twitter(edition: String): FooterLink =
     FooterLink("Twitter", "https://twitter.com/guardian", s"${edition}: footer : twitter")
   def newsletters(edition: String): FooterLink =
@@ -100,11 +106,14 @@ object FooterLinks {
     allWriters("uk"),
     FooterLink(
       "Modern Slavery Act",
-      "/info/2016/jul/27/modern-slavery-and-our-supply-chains?INTCMP=NGW_FOOTER_UK_GU_MODERN_SLAVERY_ACT",
+      "https://uploads.guim.co.uk/2021/07/27/STL_&_GMG_Modern_Slavery_Act_Statement_2021.pdf",
       "uk : footer : modern slavery act statement",
     ),
     digitalNewspaperArchive,
     facebook("uk"),
+    youtube("uk"),
+    instagram("uk"),
+    linkedin("uk"),
     twitter("uk"),
     newsletters("uk"),
   )
@@ -114,6 +123,9 @@ object FooterLinks {
     allWriters("us"),
     digitalNewspaperArchive,
     facebook("us"),
+    youtube("us"),
+    instagram("us"),
+    linkedin("us"),
     twitter("us"),
     newsletters("us"),
   )
@@ -124,6 +136,9 @@ object FooterLinks {
     FooterLink("Events", "/guardian-masterclasses/guardian-masterclasses-australia", "au : footer : masterclasses"),
     digitalNewspaperArchive,
     facebook("au"),
+    youtube("au"),
+    instagram("au"),
+    linkedin("au"),
     twitter("au"),
     newsletters("au"),
   )
@@ -133,6 +148,9 @@ object FooterLinks {
     allWriters("international"),
     digitalNewspaperArchive,
     facebook("international"),
+    youtube("international"),
+    instagram("international"),
+    linkedin("international"),
     twitter("international"),
     newsletters("international"),
   )

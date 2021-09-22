@@ -26,7 +26,7 @@ import metrics.TimingMetric
 
 class ArchiveController(redirects: RedirectService, val controllerComponents: ControllerComponents, ws: WSClient)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r

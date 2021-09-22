@@ -147,10 +147,6 @@ Secrets.
 
 The [prepareCmp JS](https://github.com/guardian/frontend/blob/main/common/app/templates/inlineJS/nonBlocking/prepareCmp.scala.js) is a stub that will be enhanced by the cmp module loaded in the Commercial bootstrap. Importantly, prepareCmp will create a command queue so that calls to the CMP can be processed once it is fully loaded. it will also define the stub postMessage handler for cross-origin iframe requests.
 
-#### prepareLotame
-
-The [prepareLotame JS](https://github.com/guardian/frontend/blob/main/common/app/templates/inlineJS/nonBlocking/prepareLotame.scala.js) is depended upon by modules within the commercial bootstrap and they are not happy when it is missing, so it needs to load and run ASAP.
-
 #### Ophan config
 
 Gets the [Ophan browserId](https://github.com/guardian/frontend/blob/main/common/app/templates/inlineJS/nonBlocking/ophanConfig.scala.js) which is used across analytics to tie data together.

@@ -1,12 +1,12 @@
 package cricket.feed
 
 import java.util.concurrent.TimeUnit
-
 import akka.NotUsed
+import akka.actor.Status.{Failure, Success}
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.pattern.{ask, pipe}
 import akka.stream.scaladsl.{Sink, Source}
-import akka.stream.{Materializer, OverflowStrategy, ThrottleMode}
+import akka.stream.{CompletionStrategy, Materializer, OverflowStrategy, ThrottleMode}
 import akka.util.Timeout
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,10 +20,18 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
 
   private case class TaskWithSender[+T](sender: ActorRef, task: () => Future[T])
 
+  val completionMatcher: PartialFunction[Any, CompletionStrategy] = { case Success => CompletionStrategy.draining }
+  val failureMatcher: PartialFunction[Any, Throwable] = { case Failure(t) => t }
+
   val throttler: ActorRef = Source
-    .actorRef[CricketThrottledTask[Nothing]](bufferSize = 1024, OverflowStrategy.dropNew)
+    .actorRef[CricketThrottledTask[Nothing]](
+      completionMatcher = completionMatcher,
+      failureMatcher = failureMatcher,
+      bufferSize = 1024,
+      overflowStrategy = OverflowStrategy.dropNew,
+    )
     .throttle(1, 500.millisecond, 1, ThrottleMode.Shaping)
-    .to(Sink.actorRef(self, NotUsed))
+    .to(Sink.actorRef(self, NotUsed, t => Failure(t)))
     .run()
 
   override def receive: PartialFunction[Any, Unit] = {

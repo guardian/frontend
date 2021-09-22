@@ -1,7 +1,7 @@
 package commercial.controllers
 
 import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle, Lookup}
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import contentapi.ContentApiClient
 import model.{Cached, ContentType}
 import play.api.mvc._
@@ -21,7 +21,7 @@ class ContentApiOffersController(
 ) extends BaseController
     with ImplicitControllerExecutionContext
     with implicits.Requests
-    with Logging {
+    with GuLogging {
 
   private val lookup = new Lookup(contentApiClient)
 

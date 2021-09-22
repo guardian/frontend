@@ -28,7 +28,8 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   val bookAgent = mock[NewspaperBookTagAgent]
   val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
   lazy val controllerComponents = play.api.test.Helpers.stubControllerComponents()
-  lazy val articleController = new ArticleController(testContentApiClient, controllerComponents, wsClient)
+  lazy val articleController =
+    new ArticleController(testContentApiClient, controllerComponents, wsClient, new DCRFake())
   lazy val publicationController =
     new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)
 

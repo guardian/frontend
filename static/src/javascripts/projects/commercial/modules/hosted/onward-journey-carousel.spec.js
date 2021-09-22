@@ -1,7 +1,11 @@
-// @flow
-import fastdom from 'lib/fastdom-promise';
-
+import fastdom from '../../../../lib/fastdom-promise';
 import { initHostedCarousel } from './onward-journey-carousel';
+
+/**
+ * An example of this feature is:
+ * https://www.theguardian.com/advertiser-content/we-are-still-in/driving-climate-action
+ * It is the carousel on the RHS
+ */
 
 describe('Hosted onward journey carousel', () => {
     beforeEach(() => {
@@ -43,17 +47,17 @@ describe('Hosted onward journey carousel', () => {
     });
 
     const clickAndExpectNthPage = (
-        clickOn: string,
-        expectedPage: number
-    ): any => {
-        (document.querySelector(`.${clickOn}`): any).click();
+        clickOn,
+        expectedPage
+    ) => {
+        (document.querySelector(`.${clickOn}`)).click();
         return fastdom.measure(() => {
             const transform = (1 - expectedPage) * 100;
 
             expect(
                 (document.querySelector(
                     '.js-carousel-pages'
-                ): any).getAttribute('style')
+                )).getAttribute('style')
             ).toEqual(
                 `transform: translate(${transform || '-000'}%, 0);`
             );
@@ -61,7 +65,7 @@ describe('Hosted onward journey carousel', () => {
             [1, 2, 3, 4].forEach(i => {
                 const cssClasses = (document.querySelector(
                     `.js-carousel-dot:nth-child(${i})`
-                ): any).classList.toString();
+                )).classList.toString();
                 if (i === expectedPage) {
                     expect(cssClasses).toEqual(
                         expect.stringContaining('highlighted')

@@ -1,4 +1,3 @@
-// @flow
 import {
     cleanUp,
     addCookie,
@@ -40,7 +39,7 @@ describe('Cookies', () => {
                 newVal.push(value);
                 cookieValue = newVal.join('|');
             },
-        }: Object)
+        })
     );
 
     beforeEach(() => {

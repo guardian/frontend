@@ -19,6 +19,7 @@ import _root_.play.api.http.HttpConfiguration
 import _root_.play.api.mvc._
 import _root_.play.api.test.Helpers._
 import services._
+import services.newsletters.NewsletterSignupAgent
 import test._
 
 import scala.concurrent.Future
@@ -46,6 +47,7 @@ import scala.concurrent.Future
     val returnUrlVerifier = mock[ReturnUrlVerifier]
     val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
     val httpConfiguration = HttpConfiguration.createWithDefaults()
+    val newsletterSignupAgent = mock[NewsletterSignupAgent]
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
@@ -64,7 +66,6 @@ import scala.concurrent.Future
 
     val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
-      new AccountDetailsMapping,
       new PrivacyMapping,
     )
 
@@ -80,6 +81,7 @@ import scala.concurrent.Future
     when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(
       Right(Subscriber("Text", List(EmailList("37")), "subscribed")),
     )
+    when(newsletterSignupAgent.getNewsletters()) thenReturn Right(Nil)
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -91,6 +93,7 @@ import scala.concurrent.Future
       returnUrlVerifier,
       newsletterService,
       signinService,
+      newsletterSignupAgent,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
@@ -102,85 +105,20 @@ import scala.concurrent.Future
 
     "using any journey" should {
 
-      "have a js fallback" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("consents : navigation : submit-force")
-        contentAsString(result) should include("noscript")
-        contentAsString(result) should include("identity-forms-loading--hide-text")
-      }
-
-      "send a csrf token and a return url" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("name=\"csrfToken\"")
-        contentAsString(result) should include("name=\"returnUrl\"")
-      }
-
-      "have a normal submit button" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("consents : navigation : submit\"")
-      }
-
-      "contain the legal age disclaimer" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("older than 13 years")
-      }
-
-      "show an alert modal for non rp'd users" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("identity-consent-journey--with-alert")
-      }
-
-      "not show an alert modal for rp'd users" in new ConsentsJourneyFixture {
-        override val user = User(
-          "test@example.com",
-          userId,
-          statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)),
-        )
-        override val testAuth = ScGuU("abc")
-        override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
-        when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
-        when(api.me(testAuth)) thenReturn Future.successful(Right(user))
-
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should not include ("identity-consent-journey--with-alert")
-      }
-
-      "set a repermission flag on submit" in new ConsentsJourneyFixture {
-        val updatedUser = user.copy(
-          statusFields = StatusFields(hasRepermissioned = Some(true)),
-        )
-
+      "update Identity user on submit" in new ConsentsJourneyFixture {
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             "returnUrl" -> returnUrlVerifier.defaultReturnUrl,
           )
 
         when(api.saveUser(any[String], any[UserUpdateDTO], any[Auth]))
-          .thenReturn(Future.successful(Right(updatedUser)))
+          .thenReturn(Future.successful(Right(user)))
 
-        val result = controller.submitRepermissionedFlag.apply(fakeRequest)
+        val result = controller.completeConsents.apply(fakeRequest)
         status(result) should be(303)
 
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
-        val userUpdate = userUpdateCapture.getValue
-        userUpdate.statusFields.get.hasRepermissioned should equal(Some(true))
-      }
-
-    }
-
-    "using displayConsentsJourney" should {
-
-      "have consent checkboxes" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include(xml.Utility.escape(Supporter.latestWording.wording))
       }
 
     }

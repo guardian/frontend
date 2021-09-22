@@ -8,7 +8,7 @@ import scala.util.{Failure, Success}
 import com.gu.Box
 
 /** Simple class for repeatedly updating a value on a schedule */
-abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration) extends Logging {
+abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration) extends GuLogging {
 
   private lazy val agent = Box[Option[A]](None)
 
@@ -24,18 +24,22 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
       a <- get
     } yield Future.successful(a)).getOrElse(refresh())
 
-  final def start()(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Unit = {
-    log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
-
-    subscription = Some(actorSystem.scheduler.schedule(initialDelay, interval) {
-      refresh() onComplete {
+  class Task(implicit executionContext: ExecutionContext) extends Runnable {
+    def run() {
+      refresh().onComplete {
         case Success(a) =>
           log.debug(s"Updated AutoRefresh: $a")
           agent.send(Some(a))
         case Failure(error) =>
           log.warn("Failed to update AutoRefresh", error)
       }
-    })
+    }
+  }
+
+  final def start()(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Unit = {
+    log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
+    val cancellable = actorSystem.scheduler.scheduleWithFixedDelay(initialDelay, interval) { new Task() }
+    subscription = Some(cancellable)
   }
 
   final def stop(): Unit = subscription foreach { _.cancel() }

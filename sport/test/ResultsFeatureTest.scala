@@ -40,9 +40,7 @@ import tools.MatchListFeatureTools
         $(".football-team__form").size() should be(0)
 
         Then("I should see match comments")
-        $(".football-match__comments").texts.asScala.exists(_.contains("Bolton win 4-2 on penalties")) should equal(
-          true,
-        )
+        $(".football-match__comments").texts.asScala.head should be("Bolton win 4-2 on penalties")
       }
     }
 

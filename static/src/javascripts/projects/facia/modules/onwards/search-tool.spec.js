@@ -1,16 +1,14 @@
-// @flow
-
 import bean from 'bean';
 import $ from 'lib/$';
-import fetchJson_ from 'lib/fetch-json';
+import { fetchJson as fetchJson_ } from 'lib/fetch-json';
 import { SearchTool } from 'facia/modules/onwards/search-tool';
 import mediator from 'lib/mediator';
 
 jest.mock('lib/raven');
 
-jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('lib/fetch-json', () => ({ fetchJson: jest.fn() }));
 
-const fetchJson: JestMockFn<*, *> = (fetchJson_: any);
+const fetchJson = (fetchJson_);
 
 describe('Search tool', () => {
     let container;

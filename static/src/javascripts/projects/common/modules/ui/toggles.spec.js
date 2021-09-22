@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import { Toggles } from './toggles';
 

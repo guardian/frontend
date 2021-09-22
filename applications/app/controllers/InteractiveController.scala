@@ -1,39 +1,36 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse}
 import common._
-import contentapi.ContentApiClient
-import conf.switches.Switches
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model._
-import play.api.libs.ws.WSClient
-import play.api.mvc._
-import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
+import conf.switches.Switches
+import contentapi.ContentApiClient
+import implicits.{AmpFormat, HtmlFormat, JsonFormat}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.{InteractivePage, _}
 import model.content.InteractiveAtom
-import model.dotcomrendering.PageType
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.apache.commons.lang.StringEscapeUtils
 import pages.InteractiveHtmlPage
+import play.api.libs.ws.WSClient
+import play.api.mvc._
 import renderers.DotcomRenderingService
-import services.ApplicationsSpecial2020Election
-import services.ApplicationsSpecial2020Election.pathToAmpAtomId
+import services.{CAPILookup, USElection2020AmpPages, _}
 
-import scala.concurrent.duration._
 import scala.concurrent.Future
-import services.{CAPILookup, _}
-
-case class InteractivePage(interactive: Interactive, related: RelatedContent) extends ContentPage {
-  override lazy val item = interactive
-}
+import scala.concurrent.duration._
+import experiments.{ActiveExperiments, PressedInteractives}
+import services.dotcomrendering.InteractiveLibrarian
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
@@ -65,143 +62,104 @@ class InteractiveController(
     s"$cdnPath/service-workers/$stage/$deployPath/$file"
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {
-    val edition = Edition(request)
-    log.info(s"Fetching interactive: $path for edition $edition")
-    val response: Future[ItemResponse] = contentApiClient.getResponse(
-      contentApiClient
-        .item(path, edition)
-        .showFields("all")
-        .showAtoms("all"),
-    )
+  private def lookupItemResponse(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
+    capiLookup.lookup(path, range = Some(ArticleBlocks))
+  }
 
-    val result = response map { response =>
-      val interactive = response.content map { Interactive.make }
-      val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
+  def toModel(response: ItemResponse)(implicit
+      request: RequestHeader,
+  ): Either[(InteractivePage, Blocks), Result] = {
+    val interactive = response.content map { Interactive.make }
+    val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
+    val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
 
-      ModelOrResult(page, response)
+    ModelOrResult(page, response) match {
+      case Left(page)       => Left((page, blocks))
+      case Right(exception) => Right(exception)
     }
-
-    result recover convertApiExceptions
-  }
-
-  private def lookupWithoutModelConvertion(path: String): Future[ItemResponse] = {
-    val edition = Edition.defaultEdition
-    val response: Future[ItemResponse] = contentApiClient.getResponse(
-      contentApiClient
-        .item(path, edition)
-        .showFields("all")
-        .showAtoms("all"),
-    )
-    response
-  }
-
-  private def render(model: InteractivePage)(implicit request: RequestHeader) = {
-    val htmlResponse = () => InteractiveHtmlPage.html(model)
-    val jsonResponse = () => views.html.fragments.interactiveBody(model)
-    renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
+  def renderNonDCR(page: InteractivePage)(implicit request: RequestHeader): Future[Result] = {
+    val htmlResponse = () => InteractiveHtmlPage.html(page)
+    val jsonResponse = () => views.html.fragments.interactiveBody(page)
+    val res = renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+    Future.successful(res)
+  }
+
+  def renderHtml(page: InteractivePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val pageType = PageType.apply(page, request, context)
+    remoteRenderer.getInteractive(wsClient, page, blocks, pageType)
+  }
+
+  def renderJson(page: InteractivePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val data =
+      DotcomRenderingDataModel.forInteractive(page, blocks, request, PageType.apply(page, request, context))
+    val dataJson = DotcomRenderingDataModel.toJson(data)
+    val res = common.renderJson(dataJson, page).as("application/json")
+    Future.successful(res)
+  }
+
+  def renderAmp(page: InteractivePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val pageType = PageType.apply(page, request, context)
+    remoteRenderer.getAMPInteractive(wsClient, page, blocks, pageType)
+  }
+
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    ApplicationsDotcomRenderingInterface.getRenderingTier(path) match {
-      case Legacy => {
-        lookup(path) map {
-          case Left(model)  => render(model)
-          case Right(other) => RenderOtherStatus(other)
-        }
-      }
-      case Election2020Hack => renderInteractivePageElection2020_v2(path)
-      case DotcomRendering => {
-        val remoteRenderer = DotcomRenderingService()
-        val range = ArticleBlocks
+    val requestFormat = request.getRequestFormat
+    val isUSElectionAMP = USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat
 
-        val path2 = "world/2013/jun/09/edward-snowden-nsa-whistleblower-surveillance"
-        capiLookup
-          .lookup(path2, Some(range))
-          .map(responseToModelOrResult)
-          .recover(convertApiExceptions) // Future[Either[(ArticlePage, Blocks), Result]]
-          .flatMap { e =>
-            e match {
-              case Left((article, blocks)) => {
-                val pageType: PageType = PageType(article, request, context)
-                remoteRenderer.getAMPArticle(wsClient, article, blocks, pageType)
-              }
-              case Right(other) => Future.successful(Ok("case: ade30b6a-de4a-469d-8ad8-701996e5be06"))
-            }
+    def render(model: Either[(InteractivePage, Blocks), Result]): Future[Result] = {
+      model match {
+        case Left((page, blocks)) => {
+          val tags = page.interactive.tags.tags
+          val date = Chronos.jodaDateTimeToJavaTimeDateTime(page.interactive.trail.webPublicationDate)
+          val tier = InteractivePicker.getRenderingTier(requestFormat, path, date, tags)
+
+          (requestFormat, tier) match {
+            case (AmpFormat, DotcomRendering)  => renderAmp(page, blocks)
+            case (JsonFormat, DotcomRendering) => renderJson(page, blocks)
+            case (HtmlFormat, DotcomRendering) => renderHtml(page, blocks)
+            case _                             => renderNonDCR(page)
           }
-
-        // val html: String = ApplicationsDotcomRenderingInterface.getHtmlFromDCR()
-        // Future.successful(Ok(html))
+        }
+        case Right(result) => Future.successful(result)
       }
+    }
+
+    if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
+      renderUSElectionAMPPage(path)
+    } else if (ActiveExperiments.isParticipating(PressedInteractives)) {
+      val result = InteractiveLibrarian.getDocumentFromS3(path) match {
+        case Some(document) => Ok(document).as("text/html")
+        case None           => NotFound(s"Could not retrieve stored document at www.theguardian.com/${path}")
+      }
+      Future.successful(result)
+    } else {
+      val res = for {
+        resp <- lookupItemResponse(path)
+        model = toModel(resp)
+        result <- render(model)
+      } yield result
+
+      res.recover(convertApiExceptionsWithoutEither)
     }
   }
 
-  // ---------------------------------------------
-  // Election2020
+  def renderUSElectionAMPPage(path: String)(implicit request: RequestHeader): Future[Result] = {
+    // We use the same AMP atom/page for various US election pages.
+    val capiPath = USElection2020AmpPages.pathToAmpAtomId(path)
+    val response = lookupItemResponse(capiPath)
 
-  def renderInteractivePageElection2020(i: InteractivePage): Future[Result] = {
-    /*
-      This version takes the interactive page, extract the atom id and then make
-      another CAPI query (using a derived id) to retrieve the AMP version
-     */
-    val atomIdOpt = i.item.content.atoms.flatMap(atoms => atoms.interactives.headOption.map(atom => atom.id))
-    atomIdOpt match {
-      case Some(atomId) => {
-        val capiLookupString = ApplicationsSpecial2020Election.defaultAtomIdToAmpAtomId(atomId)
-        val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
-        response.map { response =>
-          response.interactive match {
-            case Some(i2) => {
-              val interactive = InteractiveAtom.make(i2)
-              Ok(StringEscapeUtils.unescapeHtml(interactive.html)).withHeaders("Content-Type" -> "text/html")
-            }
-            case None => Ok("error: 6523e5f4-c4fe-48f6-b307-8f6fb2cadf96")
-          }
+    response.map { response =>
+      response.interactive match {
+        case Some(atom) => {
+          val interactive = InteractiveAtom.make(atom)
+          Ok(StringEscapeUtils.unescapeHtml(interactive.html)).as("text/html")
         }
+        case None => Ok("error: 6a0a6be4-e702-4b51-8f26-01f9921c6b74")
       }
-      case None => Future.successful(Ok("error: b62cfee4-cdc6-4e13-b965-89d4bd313039"))
-    }
-  }
-
-  def renderInteractivePageElection2020_v2(path: String): Future[Result] = {
-    /*
-      This version retrieve the AMP version directly but rely on an predefined map between paths and amp page ids
-     */
-    ApplicationsSpecial2020Election.pathToAmpAtomId(path) match {
-      case None =>
-        Future.successful(Ok("error: 5ce31f26-6dfe-4981-aad0-5d858e6dba8a (amp document not available at this path)"))
-      case Some(capiLookupString) => {
-        val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
-        response.map { response =>
-          response.interactive match {
-            case Some(i2) => {
-              val interactive = InteractiveAtom.make(i2)
-              Ok(StringEscapeUtils.unescapeHtml(interactive.html)).withHeaders("Content-Type" -> "text/html")
-            }
-            case None => Ok("error: 6a0a6be4-e702-4b51-8f26-01f9921c6b74")
-          }
-        }
-      }
-    }
-  }
-
-  // ---------------------------------------------
-  // [applications] on DCR experiment
-
-  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
-
-  private def responseToModelOrResult(
-      response: ItemResponse,
-  )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
-    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-    val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
-
-    ModelOrResult(supportedContent, response) match {
-      case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
-      case Right(r)               => Right(r)
-      case _                      => Right(NotFound)
     }
   }
 }

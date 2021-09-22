@@ -3,7 +3,7 @@ package commercial.model.merchandise.events
 import java.lang.System._
 
 import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
-import common.Logging
+import common.GuLogging
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -13,7 +13,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
-object Eventbrite extends Logging {
+object Eventbrite extends GuLogging {
 
   case class Response(pagination: Pagination, events: Seq[Event])
 

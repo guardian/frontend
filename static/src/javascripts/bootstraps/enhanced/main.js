@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import qwery from 'qwery';
 import raven from 'lib/raven';
@@ -11,9 +10,10 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
-import {fetchAndRenderEpic} from "common/modules/commercial/contributions-service";
+import { fetchAndRenderEpic, fetchAndRenderHeaderLinks } from "common/modules/commercial/contributions-service";
+import { coreVitals } from 'common/modules/analytics/coreVitals';
 
-const bootEnhanced = (): void => {
+const bootEnhanced = () => {
     const bootstrapContext = (featureName, bootstrap) => {
         raven.context(
             {
@@ -42,9 +42,7 @@ const bootEnhanced = (): void => {
 
         //
         // A/B tests
-        //
-
-        [
+                [
             'ab-tests',
             () => {
                 catchErrorsWithContext([
@@ -58,9 +56,13 @@ const bootEnhanced = (): void => {
             },
         ],
 
+        ['core-web-vitals', coreVitals],
+
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
 
-        ['remote-epics', fetchAndRenderEpic ]
+        ['remote-epics', fetchAndRenderEpic ],
+
+        ['remote-header-links', fetchAndRenderHeaderLinks]
     ]);
 
     /** common sets up many things that subsequent modules may need.
@@ -303,29 +305,6 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            // use a #force-sw hash fragment to force service worker registration for local dev
-            if (
-                (window.location.protocol === 'https:' &&
-                    config.get('page.section') !== 'identity') ||
-                window.location.hash.indexOf('force-sw') > -1
-            ) {
-                const navigator = window.navigator;
-
-                if (navigator && navigator.serviceWorker) {
-                    if (config.get('switches.serviceWorkerEnabled')) {
-                        navigator.serviceWorker.register('/service-worker.js');
-                    } else {
-                        navigator.serviceWorker
-                            .getRegistrations()
-                            .then(registrations => {
-                                [...registrations].forEach(registration => {
-                                    registration.unregister();
-                                });
-                            });
-                    }
-                }
-            }
-
             if (config.get('page.pageId') === 'help/accessibility-help') {
                 require.ensure(
                     [],
@@ -353,20 +332,6 @@ const bootEnhanced = (): void => {
                     );
                 }
             });
-
-            if (window.location.hash.includes('experiments')) {
-                require.ensure(
-                    [],
-                    require => {
-                        bootstrapContext(
-                            'experiments',
-                            require('common/modules/experiments')
-                                .showExperiments
-                        );
-                    },
-                    'experiments'
-                );
-            }
 
             if (config.get('page.contentType') === 'Audio') {
                 require.ensure(

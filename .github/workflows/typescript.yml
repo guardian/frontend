@@ -1,0 +1,23 @@
+name: typescript
+on: [push]
+
+jobs:
+    typescript:
+        name: Typescript
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: guardian/actions-setup-node@main
+
+            # Cache npm dependencies using https://github.com/bahmutov/npm-install
+            - uses: bahmutov/npm-install@v1
+
+            - name: Install
+              run: yarn
+              
+            - name: Lint files
+              run: yarn eslint static/src/javascripts --ext=ts,tsx
+
+            - name: Check typescript
+              run: yarn tsc
+

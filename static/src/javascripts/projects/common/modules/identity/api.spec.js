@@ -1,4 +1,3 @@
-// @flow
 /* global jsdom */
 
 import {
@@ -9,16 +8,27 @@ import {
     reset,
     getUserOrSignIn,
     shouldAutoSigninInUser,
-} from 'common/modules/identity/api.js';
-import config from 'lib/config';
+} from 'common/modules/identity/api';
 import { getCookie as getCookie_ } from 'lib/cookies';
-import { ajax as ajax_ } from 'lib/ajax';
+import { fetchJson as fetchJson_ } from 'lib/fetch-json';
 import { storage } from '@guardian/libs';
 
-jest.mock('lib/config');
-jest.mock('lib/ajax', () => ({
-    ajax: jest.fn(),
-}));
+const defaultConfig = {
+	page: {
+		idApiUrl: 'https://idapi.theguardian.com',
+		idUrl: 'https://profile.theguardian.com',
+	},
+};
+jest.mock('lib/config', () => {
+	return Object.assign({}, defaultConfig, {
+		get: (path = '', defaultValue) =>
+			path
+				.replace(/\[(.+?)]/g, '.$1')
+				.split('.')
+				.reduce((o, key) => o[key], defaultConfig) || defaultValue,
+	});
+});
+jest.mock('lib/fetch-json', () => ({ fetchJson: jest.fn() }));
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
@@ -30,24 +40,20 @@ jest.mock('common/modules/async-call-merger', () => ({
     },
 }));
 
-const getCookieStub: any = getCookie_;
-const ajax: any = ajax_;
+const getCookieStub = getCookie_;
+const fetchJson = fetchJson_;
 
 const originalAssign = window.location.assign;
 
 describe('Identity API', () => {
     beforeEach(() => {
-        config.page = {
-            idApiUrl: 'https://idapi.theguardian.com',
-            idUrl: 'https://profile.theguardian.com',
-        };
         getCookieStub.mockImplementation(
             () =>
                 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
                 '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
         );
 
-        window.location.assign = (url: string) => {
+        window.location.assign = (url) => {
             jsdom.reconfigure({
                 url,
             });
@@ -63,7 +69,7 @@ describe('Identity API', () => {
 
     it('gets user from cookie', () => {
         const user = getUserFromCookie();
-        const displayName = user && user.displayName;
+        const displayName = user && user.publicFields && user.publicFields.displayName;
 
         expect(displayName).toBe('Amélie Jôse');
     });
@@ -80,22 +86,23 @@ describe('Identity API', () => {
         const expectedUser = {};
         const apiCallback = user => {
             expect(user).toBe(expectedUser);
-            expect(ajax).toHaveBeenCalledWith({
-                url: 'https://idapi.theguardian.com/user/me',
-                type: 'jsonp',
-                crossOrigin: true,
-            });
+			expect(fetchJson).toHaveBeenCalledWith(
+				'https://idapi.theguardian.com/user/me',
+				{
+					mode: 'cors',
+					credentials: 'include',
+				},
+			);
             done();
         };
 
-        ajax.mockImplementationOnce(() =>
+        fetchJson.mockImplementationOnce(() =>
             Promise.resolve({
                 status: 'ok',
                 user: expectedUser,
             })
         );
 
-        init();
         getUserFromApi(apiCallback);
     });
 
@@ -104,7 +111,7 @@ describe('Identity API', () => {
 
         const apiCallback = user => {
             expect(user).toBe(null);
-            expect(ajax).not.toHaveBeenCalled();
+            expect(fetchJson).not.toHaveBeenCalled();
             done();
         };
 
@@ -121,7 +128,7 @@ describe('Identity API', () => {
         getUserOrSignIn('email_sign_in_banner');
 
         expect(window.location.href).toBe(
-            `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
+            `${defaultConfig.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
             )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );
@@ -131,7 +138,7 @@ describe('Identity API', () => {
 
     it('should not redirect to sign in when user is already signed in', () => {
         const user = getUserOrSignIn('email_sign_in_banner');
-        const displayName = user && user.displayName;
+        const displayName = user && user.publicFields && user.publicFields.displayName;
 
         expect(displayName).toBe('Amélie Jôse');
     });
@@ -144,7 +151,7 @@ describe('Identity API', () => {
         getUserOrSignIn('email_sign_in_banner', returnUrl);
 
         expect(window.location.href).toBe(
-            `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
+            `${defaultConfig.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
             )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );

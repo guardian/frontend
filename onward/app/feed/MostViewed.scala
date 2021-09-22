@@ -1,16 +1,16 @@
 package feed
 
 import com.gu.commercial.branding.BrandingFinder
-import common.{Edition, Logging}
+import common.{Edition, GuLogging}
 import contentapi.{ContentApiClient, QueryDefaults}
 import model.RelatedContentItem
-import services.MostReadItem
+import services.OphanMostReadItem
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-object MostViewed extends Logging {
+object MostViewed extends GuLogging {
 
-  def relatedContentItems(ophanMostViewed: Future[Seq[MostReadItem]], edition: Edition = Edition.defaultEdition)(
+  def relatedContentItems(ophanMostViewed: Future[Seq[OphanMostReadItem]], edition: Edition = Edition.defaultEdition)(
       contentApiClient: ContentApiClient,
   )(implicit ec: ExecutionContext): Future[Seq[Option[RelatedContentItem]]] = {
 

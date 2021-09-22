@@ -37,7 +37,7 @@ final case class Atoms(
     )
 }
 
-object Atoms extends common.Logging {
+object Atoms extends common.GuLogging {
 
   def articleConfig(isAdFree: Boolean = false, useAcast: Boolean = false): ArticleConfiguration = {
     val audioSettings = AudioSettings(externalAdvertising = !isAdFree && useAcast)

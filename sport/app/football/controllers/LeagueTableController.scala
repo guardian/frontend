@@ -21,7 +21,7 @@ class LeagueTableController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with CompetitionTableFilters
     with ImplicitControllerExecutionContext {
 
@@ -34,7 +34,6 @@ class LeagueTableController(
     "Ligue 1",
     "Women's Super League",
     "Champions League",
-    "Euro 2020 qualifying",
     "Europa League",
     "Carabao Cup",
     "International friendlies",
@@ -50,8 +49,8 @@ class LeagueTableController(
     "Community Shield",
     "Scottish Cup",
     "Scottish League Cup",
-    "Nations League",
     "Women's FA Cup",
+    "World Cup 2022 qualifying",
   )
 
   def sortedCompetitions: Seq[Competition] =

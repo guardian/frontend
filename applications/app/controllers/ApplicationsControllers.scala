@@ -18,6 +18,7 @@ trait ApplicationsControllers {
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
 
+  lazy val remoteRender = wire[renderers.DotcomRenderingService]
   lazy val siteMapController = wire[SiteMapController]
   lazy val crosswordPageController = wire[CrosswordPageController]
   lazy val crosswordSearchController = wire[CrosswordSearchController]
@@ -26,7 +27,6 @@ trait ApplicationsControllers {
   lazy val AtomPageController = wire[AtomPageController]
   lazy val preferencesController = wire[PreferencesController]
   lazy val optInController = wire[OptInController]
-  lazy val webAppController = wire[WebAppController]
   lazy val newspaperController = wire[NewspaperController]
   lazy val quizController = wire[QuizController]
   lazy val allIndexController = wire[AllIndexController]
@@ -39,10 +39,9 @@ trait ApplicationsControllers {
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]
   lazy val shareCountController = wire[ShareCountController]
-  lazy val readerRevenueAppController = wire[ReaderRevenueAppController]
   lazy val youtubeController = wire[YoutubeController]
-  lazy val fontLoaderController = wire[FontLoaderController]
+  lazy val nx1ConfigController = wire[Nx1ConfigController]
 
-  //A fake geolocation controller to test it locally
+  // A fake geolocation controller to test it locally
   lazy val geolocationController = wire[FakeGeolocationController]
 }

@@ -10,7 +10,6 @@ object AuthenticationComponentEvent {
   case object RegisterToRecommend extends ComponentEventId("register_to_recommend_comment")
   case object SigninRedirect extends ComponentEventId("signin_redirect_for_action")
   case object SigninFromFormStack extends ComponentEventId("signin_from_formstack")
-  case object SigninFromPasswordResetConfirmation extends ComponentEventId("signin_from_password_reset_confirmation")
 
   def createAuthenticationComponentEventParams(componentEventId: ComponentEventId): String =
     createAuthenticationComponentEventTuple(componentEventId) match {

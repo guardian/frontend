@@ -10,7 +10,7 @@ class DiagnosticsLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
     ec: ExecutionContext,
     actorSystem: ActorSystem,
 ) extends LifecycleComponent
-    with Logging {
+    with GuLogging {
 
   appLifecycle.addStopHook { () =>
     Future {

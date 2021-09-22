@@ -121,8 +121,7 @@ class PanicSheddingFilter(implicit val mat: Materializer, executionContext: Exec
 }
 
 object Filters {
-  // NOTE - order is important here, Gzipper AFTER JsonVaryHeaders
-  // which effectively means "JsonVaryHeaders goes around Gzipper"
+  // NOTE: filters are executed in *reverse* order, and the order is important.
   def common(implicit
       materializer: Materializer,
       applicationContext: ApplicationContext,

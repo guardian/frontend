@@ -13,10 +13,11 @@ object LiveBlogCurrentPage {
 
   def apply(pageSize: Int, blocks: Blocks, range: BlockRange): Option[LiveBlogCurrentPage] = {
     range match {
-      case Canonical                       => firstPage(pageSize, blocks)
+      case CanonicalLiveBlog               => firstPage(pageSize, blocks)
       case PageWithBlock(isRequestedBlock) => findPageWithBlock(pageSize, blocks.body, isRequestedBlock)
       case SinceBlockId(blockId)           => updates(blocks, SinceBlockId(blockId))
       case ArticleBlocks                   => None
+      case GenericFallback                 => None
     }
   }
 
@@ -32,10 +33,10 @@ object LiveBlogCurrentPage {
   def firstPage(pageSize: Int, blocks: Blocks): Option[LiveBlogCurrentPage] = {
     val remainder = blocks.totalBodyBlocks % pageSize
     val numPages = blocks.totalBodyBlocks / pageSize
-    blocks.requestedBodyBlocks.get(Canonical.firstPage).map { requestedBodyBlocks =>
+    blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage).map { requestedBodyBlocks =>
       val (firstPageBlocks, startOfSecondPageBlocks) = requestedBodyBlocks.splitAt(remainder + pageSize)
       val oldestPage = blocks.requestedBodyBlocks
-        .get(Canonical.oldestPage)
+        .get(CanonicalLiveBlog.oldestPage)
         .flatMap(_.headOption.map { block =>
           BlockPage(blocks = Nil, blockId = block.id, pageNumber = numPages)
         })
@@ -144,7 +145,7 @@ case class BlockPage(blocks: Seq[BodyBlock], blockId: String, pageNumber: Int) e
 object LatestBlock {
   def apply(maybeBlocks: Option[Blocks]): Option[String] = {
     maybeBlocks.flatMap { blocks =>
-      blocks.requestedBodyBlocks.getOrElse(Canonical.firstPage, blocks.body).headOption.map(_.id)
+      blocks.requestedBodyBlocks.getOrElse(CanonicalLiveBlog.firstPage, blocks.body).headOption.map(_.id)
     }
   }
 }

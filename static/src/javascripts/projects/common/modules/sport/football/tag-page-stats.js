@@ -1,16 +1,14 @@
-// @flow
-
 import config from 'lib/config';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 
-export const tagPageStats = (): void => {
+export const tagPageStats = () => {
     const firstContainer = document.querySelector(
         '.js-insert-team-stats-after'
     );
 
     if (firstContainer) {
-        fetchJSON(
+        fetchJson(
             `/${config.get('page.pageId')}/fixtures-and-results-container`,
             {
                 mode: 'cors',

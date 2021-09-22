@@ -12,7 +12,7 @@ object FlagshipEmailContainer extends FlagshipContainer {
 
   override val switch = FlagshipEmailContainerSwitch
 
-  val AlbumArtUrl = "https://media.guim.co.uk/26bb29790c63ac3374470d116e54a036581bbeda/0_0_2000_1200/500.png"
+  val AlbumArtUrl = "https://media.guim.co.uk/4453029979df44db060528ed5f71ef19ada114eb/0_0_5000_3000/1000.jpg"
 
   object SeriesTag {
     val title = "Today in Focus"

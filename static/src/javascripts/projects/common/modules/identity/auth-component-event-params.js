@@ -1,10 +1,8 @@
-// @flow
 import {constructQuery} from "../../../../lib/url";
 
-export type AuthenticationComponentId = 'email_sign_in_banner' | 'subscription_sign_in_banner' | 'guardian_smartlock' | 'signin_from_formstack'
 
-export const createAuthenticationComponentEvent = (componentId: AuthenticationComponentId, pageViewId?: string) => {
-    const params: Object = {
+export const createAuthenticationComponentEvent = (componentId, pageViewId) => {
+    const params = {
         componentType: 'identityauthentication',
         componentId,
     };
@@ -16,4 +14,4 @@ export const createAuthenticationComponentEvent = (componentId: AuthenticationCo
     return constructQuery(params);
 };
 
-export const createAuthenticationComponentEventParams = (componentId: AuthenticationComponentId, pageViewId?: string) => `componentEventParams=${encodeURIComponent(createAuthenticationComponentEvent(componentId, pageViewId))}`;
+export const createAuthenticationComponentEventParams = (componentId, pageViewId) => `componentEventParams=${encodeURIComponent(createAuthenticationComponentEvent(componentId, pageViewId))}`;

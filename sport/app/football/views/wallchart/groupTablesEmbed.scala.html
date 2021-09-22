@@ -1,0 +1,8 @@
+@(page: model.Page, competition: model.Competition, competitionStages: List[football.model.Groups], next: Option[pa.FootballMatch])(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@competitionStages.map { groupStage =>
+    <div data-link-name="@competition.fullName groups">
+    @football.views.html.wallchart.groups(competition, groupStage)
+    </div>
+}
+

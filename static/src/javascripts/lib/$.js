@@ -1,4 +1,3 @@
-// @flow
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 
@@ -10,13 +9,13 @@ bonzo.aug({
 });
 
 // #? Use of `Node` throughout this file may need a second look?
-const $ = (selector: ?string | ?Node, context: ?Node | ?string): bonzo =>
+const $ = (selector, context) =>
     bonzo(qwery(selector, context));
 
-$.create = (s: string | Node): bonzo => bonzo(bonzo.create(s));
+$.create = (s) => bonzo(bonzo.create(s));
 
 // #? duplicated in lib/closest.js?
-$.ancestor = (el: ?Node, className: string): ?Node => {
+$.ancestor = (el, className) => {
     if (
         el === null ||
         el === undefined ||
@@ -31,7 +30,7 @@ $.ancestor = (el: ?Node, className: string): ?Node => {
 };
 
 // #? does this offer any value?
-$.forEachElement = (selector: string, fn: Function): Array<Element> => {
+$.forEachElement = (selector, fn) => {
     const els = qwery(selector);
     els.forEach(fn);
     return els;

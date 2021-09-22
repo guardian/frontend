@@ -1,18 +1,17 @@
-// @flow
 // eslint disable:no-use-before-define
 
 import ophan from 'ophan/ng';
 
-const format = (t: number) => t.toFixed(0).padStart(2, '0');
+const format = (t) => t.toFixed(0).padStart(2, '0');
 
-const formatTime = (t: number) => {
+const formatTime = (t) => {
     const second = Math.floor(t % 60);
     const minute = Math.floor((t % 3600) / 60);
     const hour = Math.floor(t / 3600);
     return `${format(hour)}:${format(minute)}:${format(second)}`;
 };
 
-const range = (min: number, max: number) => {
+const range = (min, max) => {
     const ret = [];
     let x = min;
     while (x < max) {
@@ -22,7 +21,7 @@ const range = (min: number, max: number) => {
     return ret;
 };
 
-const sendToOphan = (id: string, eventName: string) => {
+const sendToOphan = (id, eventName) => {
     ophan.record({
         audio: {
             id,
@@ -32,9 +31,9 @@ const sendToOphan = (id: string, eventName: string) => {
 };
 
 const monitorPercentPlayed = (
-    player: HTMLMediaElement,
-    marker: number,
-    id: string
+    player,
+    marker,
+    id
 ) => {
     const eventName = marker === 99 ? 'end' : marker.toLocaleString();
 
@@ -49,7 +48,7 @@ const monitorPercentPlayed = (
     });
 };
 
-const registerOphanListeners = (el: HTMLMediaElement): void => {
+const registerOphanListeners = (el) => {
     const mediaId = el.getAttribute('data-media-id') || '';
 
     el.addEventListener(

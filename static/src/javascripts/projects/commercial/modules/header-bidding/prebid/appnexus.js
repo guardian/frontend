@@ -1,14 +1,13 @@
-// @flow strict
-
-import config from 'lib/config';
+import config from '../../../../../lib/config';
 import {
     getPageTargeting,
     buildAppNexusTargetingObject,
-} from 'common/modules/commercial/build-page-targeting';
+} from '../../../../common/modules/commercial/build-page-targeting';
 
 import {
     isInUsOrCa,
-    isInAuOrNz } from 'common/modules/commercial/geo-utils';
+    isInAuOrNz,
+} from '../../../../common/modules/commercial/geo-utils';
 
 import {
     getLargestSize,
@@ -16,26 +15,24 @@ import {
     containsLeaderboardOrBillboard,
     containsMpu,
     containsMpuOrDmpu,
-    getBreakpointKey
+    getBreakpointKey,
 } from '../utils';
 
-import type { PrebidAppNexusParams, HeaderBiddingSize } from '../types';
-
-const getAppNexusInvCode = (sizes: Array<HeaderBiddingSize>): ?string => {
-    const device: string = getBreakpointKey() === 'M' ? 'M' : 'D';
+const getAppNexusInvCode = sizes => {
+    const device = getBreakpointKey() === 'M' ? 'M' : 'D';
     // section is optional and makes it through to the config object as an empty string... OTL
     const sectionName =
         config.get('page.section', '') ||
         config.get('page.sectionName', '').replace(/ /g, '-');
 
-    const slotSize: HeaderBiddingSize | null = getLargestSize(sizes);
+    const slotSize = getLargestSize(sizes);
     if (slotSize) {
         return `${device}${sectionName.toLowerCase()}${slotSize.join('x')}`;
     }
 };
 
-export const getAppNexusPlacementId = (sizes: HeaderBiddingSize[]): string => {
-    const defaultPlacementId: string = '13915593';
+export const getAppNexusPlacementId = sizes => {
+    const defaultPlacementId = '13915593';
     if (isInUsOrCa() || isInAuOrNz()) {
         return defaultPlacementId;
     }
@@ -66,14 +63,12 @@ export const getAppNexusPlacementId = (sizes: HeaderBiddingSize[]): string => {
     }
 };
 
-export const getAppNexusDirectPlacementId = (
-    sizes: HeaderBiddingSize[]
-): string => {
+export const getAppNexusDirectPlacementId = sizes => {
     if (isInAuOrNz()) {
         return '11016434';
     }
 
-    const defaultPlacementId: string = '9251752';
+    const defaultPlacementId = '9251752';
     switch (getBreakpointKey()) {
         case 'D':
             if (containsMpuOrDmpu(sizes)) {
@@ -101,9 +96,7 @@ export const getAppNexusDirectPlacementId = (
     }
 };
 
-export const getAppNexusDirectBidParams = (
-    sizes: HeaderBiddingSize[]
-): PrebidAppNexusParams => {
+export const getAppNexusDirectBidParams = sizes => {
     if (isInAuOrNz() && config.get('switches.prebidAppnexusInvcode')) {
         const invCode = getAppNexusInvCode(sizes);
         // flowlint sketchy-null-string:warn
@@ -123,19 +116,6 @@ export const getAppNexusDirectBidParams = (
         keywords: buildAppNexusTargetingObject(getPageTargeting()),
     };
 };
-
-// TODO are we using getAppNexusServerSideBidParams anywhere?
-export const getAppNexusServerSideBidParams = (
-    sizes: HeaderBiddingSize[]
-): PrebidAppNexusParams =>
-    Object.assign(
-        {},
-        {
-            placementId: getAppNexusPlacementId(sizes),
-            keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-        },
-        window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-    );
 
 export const _ = {
     getAppNexusPlacementId,

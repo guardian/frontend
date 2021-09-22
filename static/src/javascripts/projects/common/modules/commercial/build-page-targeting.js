@@ -1,56 +1,29 @@
-// @flow strict
-import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
+import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import { log, storage } from '@guardian/libs';
+import { once, pick } from 'lodash-es';
+import config from '../../../../lib/config';
+import { getCookie } from '../../../../lib/cookies';
 import {
-    getReferrer as detectGetReferrer,
     getBreakpoint,
+    getReferrer as detectGetReferrer,
     getViewport,
-} from 'lib/detect';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { storage } from '@guardian/libs';
-import { getUrlVars } from 'lib/url';
-import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import {
-    onConsentChange,
-    getConsentFor,
-} from '@guardian/consent-management-platform';
-import {
-    getPermutiveSegments,
-    clearPermutiveSegments,
-} from 'common/modules/commercial/permutive';
-import { isUserLoggedIn } from 'common/modules/identity/api';
-import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { getSynchronousParticipations } from 'common/modules/experiments/ab';
-import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
-import flattenDeep from 'lodash/flattenDeep';
-import once from 'lodash/once';
-import pick from 'lodash/pick';
-import pickBy from 'lodash/pickBy';
+} from '../../../../lib/detect';
+import { getCountryCode } from '../../../../lib/geolocation';
+import { getPrivacyFramework } from '../../../../lib/getPrivacyFramework';
+import { getUrlVars } from '../../../../lib/url';
+import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
+import { getSynchronousParticipations } from '../experiments/ab';
+import { isUserLoggedIn } from '../identity/api';
+import { commercialFeatures } from './commercial-features';
+import { clearPermutiveSegments, getPermutiveSegments } from './permutive';
+import { getUserSegments } from './user-ad-targeting';
 
-type PageTargeting = {
-    sens: string,
-    url: string,
-    edition: string,
-    ct: string,
-    p: string,
-    k: string,
-    su: string,
-    bp: string,
-    x: string,
-    gdncrm: string,
-    pv: string,
-    co: string,
-    tn: string,
-    slot: string,
-    permutive: string,
-    urlkw: string,
-};
+let myPageTargetting = {};
+let latestCmpHasInitialised;
+let latestCMPState;
+const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
-let myPageTargetting: {} = {};
-let latestConsentCanRun;
-
-const findBreakpoint = (): string => {
+const findBreakpoint = () => {
     switch (getBreakpoint(true)) {
         case 'mobile':
         case 'mobileMedium':
@@ -68,38 +41,43 @@ const findBreakpoint = (): string => {
     }
 };
 
-const inskinTargetting = (): string => {
+const skinsizeTargetting = () => {
     const vp = getViewport();
-    if (vp && vp.width >= 1560) return 't';
-    return 'f';
+    return (vp && vp.width >= 1560) ? "l" : "s";
 };
 
-const format = (keyword: string): string =>
+const inskinTargetting = () => {
+// Don’t show inskin if we cannot tell if a privacy message will be shown
+    if (!cmp.hasInitialised()) return 'f';
+    return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
+};
+
+const format = (keyword) =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
 // flowlint sketchy-null-string:warn
-const formatTarget = (target: ?string): ?string =>
+const formatTarget = (target) =>
     target
         ? format(target)
               .replace(/&/g, 'and')
               .replace(/'/g, '')
         : null;
 
-const abParam = (): Array<string> => {
-    const abParticipations: Participations = getSynchronousParticipations();
-    const abParams: Array<string> = [];
+const abParam = () => {
+    const abParticipations = getSynchronousParticipations();
+    const abParams = [];
 
-    const pushAbParams = (testName: string, testValue: mixed): void => {
+    const pushAbParams = (testName, testValue) => {
         if (typeof testValue === 'string' && testValue !== 'notintest') {
-            const testData: string = `${testName}-${testValue}`;
+            const testData = `${testName}-${testValue}`;
             // DFP key-value pairs accept value strings up to 40 characters long
             abParams.push(testData.substring(0, 40));
         }
     };
 
     Object.keys(abParticipations).forEach(
-        (testKey: string): void => {
-            const testValue: { variant: string } = abParticipations[testKey];
+        (testKey) => {
+            const testValue = abParticipations[testKey];
             pushAbParams(testKey, testValue.variant);
         }
     );
@@ -115,8 +93,8 @@ const abParam = (): Array<string> => {
     return abParams;
 };
 
-const getVisitedValue = (): string => {
-    const visitCount: number =
+const getVisitedValue = () => {
+    const visitCount =
         parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
     if (visitCount <= 5) {
@@ -136,9 +114,8 @@ const getVisitedValue = (): string => {
     return visitCount.toString();
 };
 
-const getReferrer = (): ?string => {
-    type MatchType = { id: string, match: string };
-    const referrerTypes: Array<MatchType> = [
+const getReferrer = () => {
+    const referrerTypes = [
         {
             id: 'facebook',
             match: 'facebook.com',
@@ -157,7 +134,7 @@ const getReferrer = (): ?string => {
         },
     ];
 
-    const matchedRef: MatchType =
+    const matchedRef =
         referrerTypes.filter(
             referrerType => detectGetReferrer().indexOf(referrerType.match) > -1
         )[0] || {};
@@ -165,12 +142,12 @@ const getReferrer = (): ?string => {
     return matchedRef.id;
 };
 
-const getWhitelistedQueryParams = (): {} => {
-    const whiteList: Array<string> = ['0p19G'];
+const getWhitelistedQueryParams = () => {
+    const whiteList = ['0p19G'];
     return pick(getUrlVars(), whiteList);
 };
 
-const getUrlKeywords = (pageId: string): Array<string> => {
+const getUrlKeywords = (pageId) => {
     if (pageId) {
         const segments = pageId.split('/');
         const lastPathname = segments.pop() || segments.pop(); // This handles a trailing slash
@@ -179,20 +156,21 @@ const getUrlKeywords = (pageId: string): Array<string> => {
     return [];
 };
 
-const formatAppNexusTargeting = (obj: { [string]: string }): string =>
-    flattenDeep(
-        Object.keys(obj)
-            .filter((key: string) => obj[key] !== '' && obj[key] !== null)
-            .map((key: string) => {
-                const value: Array<string> | string = obj[key];
-                return Array.isArray(value)
-                    ? value.map(nestedValue => `${key}=${nestedValue}`)
-                    : `${key}=${value}`;
-            })
-    ).join(',');
+const formatAppNexusTargeting = (obj) => {
+    const asKeyValues = Object.keys(obj)
+        .map((key) => {
+            const value = obj[key];
+            return Array.isArray(value)
+                ? value.map(nestedValue => `${key}=${nestedValue}`)
+                : `${key}=${value}`;
+        });
+
+    const flattenDeep = Array.prototype.concat.apply([], asKeyValues);
+    return flattenDeep.join(',');
+}
 
 const buildAppNexusTargetingObject = once(
-    (pageTargeting: PageTargeting): {} =>
+    (pageTargeting) =>
         removeFalseyValues({
             sens: pageTargeting.sens,
             pt1: pageTargeting.url,
@@ -215,70 +193,124 @@ const buildAppNexusTargetingObject = once(
 );
 
 const buildAppNexusTargeting = once(
-    (pageTargeting: PageTargeting): string =>
+    (pageTargeting) =>
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
-const getRdpValue = (ccpaState: boolean | null): string => {
+const getRdpValue = (ccpaState) => {
     if (ccpaState === null) {
         return 'na';
     }
     return ccpaState ? 't' : 'f';
 };
 
-const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
+const getTcfv2ConsentValue = (tcfv2State) => {
     if (getPrivacyFramework().tcfv2 && tcfv2State !== null) {
         return tcfv2State ? 't' : 'f';
     }
     return 'na';
 };
 
-const buildPageTargetting = (
-    adConsentState: boolean | null,
-    ccpaState: boolean | null,
-    tcfv2EventStatus: string | null
-): { [key: string]: mixed } => {
+const getAdConsentFromState = (state) => {
+    if (state.ccpa) {
+        // CCPA mode
+        return !state.ccpa.doNotSell;
+    } else if (state.tcfv2) {
+        // TCFv2 mode
+        return state.tcfv2.consents
+            ? Object.keys(state.tcfv2.consents).length > 0 &&
+              Object.values(state.tcfv2.consents).every(Boolean)
+            : false;
+    } else if (state.aus) {
+        // AUS mode
+        return state.aus.personalisedAdvertising;
+    }
+    // Unknown mode
+    return false;
+}
+
+const getAdManagerGroup = (consented = true) => {
+	if (!consented) return null;
+	return storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup()
+}
+
+const createAdManagerGroup = () => {
+    // users are assigned to groups 1-12
+    const group = String(Math.floor(Math.random() * 12) + 1);
+    storage.local.setRaw(AMTGRP_STORAGE_KEY, group);
+    return group;
+}
+
+const filterEmptyValues = (pageTargets) => {
+    const filtered = {};
+    for (const key in pageTargets) {
+        const value = pageTargets[key];
+        if (!value) {
+            continue;
+        }
+        if (Array.isArray(value) && value.length === 0) {
+            continue;
+        }
+        filtered[key] = value;
+    }
+    return filtered;
+}
+
+const rebuildPageTargeting = () => {
+    latestCmpHasInitialised = cmp.hasInitialised();
+    const adConsentState = getAdConsentFromState(latestCMPState);
+    const ccpaState = latestCMPState.ccpa ? latestCMPState.ccpa.doNotSell : null;
+    const tcfv2EventStatus = latestCMPState.tcfv2 ? latestCMPState.tcfv2.eventStatus : 'na';
     const page = config.get('page');
+    const amtgrp = latestCMPState.tcfv2
+		? getAdManagerGroup(adConsentState)
+		: getAdManagerGroup();
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
     // flowlint-next-line sketchy-null-bool:off
-    const paTargeting: {} = { pa: adConsentState ? 't' : 'f' };
-    const adFreeTargeting: {} = commercialFeatures.adFree ? { af: 't' } : {};
-    const pageTargets: PageTargeting = Object.assign(
+    const paTargeting = { pa: adConsentState ? 't' : 'f' };
+    const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
+    const pageTargets = Object.assign(
         {
-            sens: page.isSensitive ? 't' : 'f',
-            permutive: getPermutiveSegments(),
-            pv: config.get('ophan.pageViewId'),
-            bp: findBreakpoint(),
-            at: getCookie('adtest') || undefined,
-            si: isUserLoggedIn() ? 't' : 'f',
-            gdncrm: getUserSegments(adConsentState),
             ab: abParam(),
-            ref: getReferrer(),
-            ms: formatTarget(page.source),
-            fr: getVisitedValue(),
-            // round video duration up to nearest 30 multiple
-            vl: page.videoDuration
-                ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-                : undefined,
-            cc: geolocationGetSync(),
-            s: page.section, // for reference in a macro, so cannot be extracted from ad unit
-            rp: config.get('isDotcomRendering', false)
-                ? 'dotcom-rendering'
-                : 'dotcom-platform', // rendering platform
+            amtgrp,
+            at: getCookie('adtest') || undefined,
+            bp: findBreakpoint(),
+            cc: getCountryCode(),
+            cmp_interaction: tcfv2EventStatus || 'na',
+            consent_tcfv2: getTcfv2ConsentValue(adConsentState),
+            // dcre: DCR eligible
+            // when the page is DCR eligible and was rendered by DCR or
+            // when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             dcre:
                 config.get('isDotcomRendering', false) ||
                 config.get('page.dcrCouldRender', false)
                     ? 't'
                     : 'f',
-            // Indicates whether the page is DCR eligible. This happens when the page
-            // was DCR eligible and was actually rendered by DCR or
-            // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
+            fr: getVisitedValue(),
+            gdncrm: getUserSegments(adConsentState),
             inskin: inskinTargetting(),
-            urlkw: getUrlKeywords(page.pageId),
+            ms: formatTarget(page.source),
+            permutive: getPermutiveSegments(),
+            pv: config.get('ophan.pageViewId'),
             rdp: getRdpValue(ccpaState),
-            consent_tcfv2: getTcfv2ConsentValue(adConsentState),
-            cmp_interaction: tcfv2EventStatus || 'na',
+            ref: getReferrer(),
+            // rp: rendering platform
+            rp: config.get('isDotcomRendering', false)
+                ? 'dotcom-rendering'
+                : 'dotcom-platform',
+            // s: section
+            // for reference in a macro, so cannot be extracted from ad unit
+            s: page.section,
+            sens: page.isSensitive ? 't' : 'f',
+            si: isUserLoggedIn() ? 't' : 'f',
+            skinsize: skinsizeTargetting(),
+            urlkw: getUrlKeywords(page.pageId),
+            // vl: video length
+            // round video duration up to nearest 30 multiple
+            vl: page.videoDuration
+                ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
+                : undefined,
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -287,12 +319,7 @@ const buildPageTargetting = (
     );
 
     // filter out empty values
-    const pageTargeting: {} = pickBy(pageTargets, target => {
-        if (Array.isArray(target)) {
-            return target.length > 0;
-        }
-        return target;
-    });
+    const pageTargeting = filterEmptyValues(pageTargets);
 
     // third-parties wish to access our page targeting, before the googletag script is loaded.
     page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);
@@ -300,46 +327,32 @@ const buildPageTargetting = (
     // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
     page.pageAdTargeting = pageTargeting;
 
+	log('commercial', 'pageTargeting object:', pageTargeting);
+
     return pageTargeting;
-};
+}
 
-const getPageTargeting = (): { [key: string]: mixed } => {
-    if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+const getPageTargeting = () => {
 
-    onConsentChange(state => {
-        let canRun: boolean | null;
-        if (state.ccpa) {
-            // CCPA mode
-            canRun = !state.ccpa.doNotSell;
-        } else if (state.tcfv2) {
-            // TCFv2 mode
-            canRun = state.tcfv2.consents
-                ? Object.keys(state.tcfv2.consents).length > 0 &&
-                  Object.values(state.tcfv2.consents).every(Boolean)
-                : false;
-        } else if (state.aus) {
-            // AUS mode
-            canRun = getConsentFor('aus-advertising', state);
-        } else canRun = false;
-
-        if (canRun !== latestConsentCanRun) {
-            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
-            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-            myPageTargetting = buildPageTargetting(
-                canRun,
-                ccpaState,
-                eventStatus
-            );
-            latestConsentCanRun = canRun;
+    if (Object.keys(myPageTargetting).length !== 0) {
+        // If CMP was initialised since the last time myPageTargetting was built - rebuild
+        if (latestCmpHasInitialised !== cmp.hasInitialised()) {
+            myPageTargetting = rebuildPageTargeting();
         }
-    });
+        return myPageTargetting;
+    }
 
+    // First call binds to onConsentChange and returns {}
+    onConsentChange((state)=>{
+    // On every consent change we rebuildPageTargeting
+        latestCMPState = state;
+        myPageTargetting = rebuildPageTargeting();
+    });
     return myPageTargetting;
 };
 
-const resetPageTargeting = (): void => {
+const resetPageTargeting = () => {
     myPageTargetting = {};
-    latestConsentCanRun = undefined;
 };
 
 export {

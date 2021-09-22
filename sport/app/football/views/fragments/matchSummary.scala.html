@@ -5,6 +5,7 @@
 @import views.support.RenderClasses
 @import conf.Configuration
 @import model.CompetitionDisplayHelpers.cleanTeamName
+@import football.model.GuTeamCodes
 
 @(theMatch: FootballMatch, competition: Option[Competition] = None, responsive: Boolean = false, link: Boolean = false)(implicit request: RequestHeader)
 
@@ -24,7 +25,7 @@
 
     <div class="match-summary__teams">
         <div class="match-summary__team match-summary__team--home">
-            <h2 class="team__name" data-abbr="@pa.TeamCodes.codeFor(homeTeam)">
+            <h2 class="team__name" data-abbr="@GuTeamCodes.codeFor(homeTeam)">
                 @cleanTeamName(homeTeam.name)
             </h2>
 
@@ -43,7 +44,7 @@
         </div>
 
         <div class="match-summary__team match-summary__team--away">
-            <h2 class="team__name" data-abbr="@pa.TeamCodes.codeFor(awayTeam)">
+            <h2 class="team__name" data-abbr="@GuTeamCodes.codeFor(awayTeam)">
                 @cleanTeamName(awayTeam.name)
             </h2>
 

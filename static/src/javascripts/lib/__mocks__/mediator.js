@@ -1,20 +1,19 @@
-// @flow
 let events = {};
 
 // eslint-disable-next-line guardian-frontend/no-default-export
 export default {
-    on(eventName: string, callback: () => void): void {
+    on(eventName, callback) {
         events[eventName] = callback;
     },
-    once(eventName: string, callback: () => void): void {
+    once(eventName, callback) {
         events[eventName] = callback;
     },
-    emit(eventName: string, params: Object): void {
+    emit(eventName, params) {
         if (events[eventName]) {
             events[eventName](params);
         }
     },
-    removeEvent(eventName: string) {
+    removeEvent(eventName) {
         delete events[eventName];
     },
     removeAllListeners() {

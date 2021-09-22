@@ -1,24 +1,23 @@
-// @flow
 import {
     getConsentFor as getConsentFor_,
-    onConsentChange as onConsentChange_
+    onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
 
-jest.mock('lib/raven');
+jest.mock('../../../lib/raven');
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
-    getConsentFor: jest.fn()
+    getConsentFor: jest.fn(),
 }));
 
-const onConsentChange: any = onConsentChange_;
-const getConsentFor: any = getConsentFor_;
+const onConsentChange = onConsentChange_;
+const getConsentFor = getConsentFor_;
 
-const tcfv2AllConsentMock = (callback): void =>
+const tcfv2AllConsentMock = callback =>
     callback({
         tcfv2: {
             consents: {
@@ -37,7 +36,7 @@ const tcfv2AllConsentMock = (callback): void =>
         },
     });
 
-const tcfv2WithConsentMock = (callback): void =>
+const tcfv2WithConsentMock = callback =>
     callback({
         tcfv2: {
             consents: {
@@ -56,7 +55,7 @@ const tcfv2WithConsentMock = (callback): void =>
         },
     });
 
-const tcfv2WithoutConsentMock = (callback): void =>
+const tcfv2WithoutConsentMock = callback =>
     callback({
         tcfv2: {
             consents: {
@@ -91,13 +90,13 @@ afterEach(() => {
 
 jest.mock('ophan/ng', () => null);
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
     },
 }));
 
-jest.mock('commercial/modules/third-party-tags/imr-worldwide', () => ({
+jest.mock('./third-party-tags/imr-worldwide', () => ({
     imrWorldwide: {
         shouldRun: true,
         url: '//fakeThirdPartyTag.js',
@@ -115,7 +114,7 @@ describe('third party tags', () => {
     it('should not run if disabled in commercial features', done => {
         commercialFeatures.thirdPartyTags = false;
         init()
-            .then((enabled: boolean) => {
+            .then(enabled => {
                 expect(enabled).toBe(false);
                 done();
             })
@@ -128,7 +127,7 @@ describe('third party tags', () => {
         commercialFeatures.thirdPartyTags = true;
         commercialFeatures.adFree = false;
         init()
-            .then((enabled: boolean) => {
+            .then(enabled => {
                 expect(enabled).toBe(true);
                 done();
             })
@@ -138,19 +137,19 @@ describe('third party tags', () => {
     });
 
     describe('insertScripts', () => {
-        const fakeThirdPartyAdvertisingTag: ThirdPartyTag = {
+        const fakeThirdPartyAdvertisingTag = {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag.js',
             onLoad: jest.fn(),
             name: 'permutive',
         };
-        const fakeThirdPartyAdvertisingTag2: ThirdPartyTag = {
+        const fakeThirdPartyAdvertisingTag2 = {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag2.js',
             onLoad: jest.fn(),
-            name: 'lotame',
+            name: 'inizio',
         };
-        const fakeThirdPartyPerformanceTag: ThirdPartyTag = {
+        const fakeThirdPartyPerformanceTag = {
             shouldRun: true,
             url: '//fakeThirdPartyPerformanceTag.js',
             onLoad: jest.fn(),

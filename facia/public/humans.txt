@@ -108,6 +108,10 @@ Location: London, UK
 Developer: Lauren Emms
 From: London, UK
 
+Associate Developer: Rhys Mills
+Website: rhysmills.com
+From: Tonbridge, UK
+
 /* CONTENT PRODUCTION */
 
 Editorial Systems: Luke Hoyland
@@ -330,3 +334,8 @@ Location: London, UK
 SETI (Tools & Infra): Matthew Walls
 GitHub: MatthewJWalls
 Location: Essex, UK
+
+Developer: Oliver Barnwell
+Twitter: @olliethinks
+From: Norfolk, UK
+Location: London, UK

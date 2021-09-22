@@ -1,16 +1,14 @@
 package controllers
 
 import java.net.URI
-
 import common._
 import containers.Containers
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
-import models.OnwardCollectionResponse
+import model.dotcomrendering.{OnwardItem, OnwardCollectionResponse}
 import play.api.mvc._
 import services._
-import models.OnwardCollection._
 
 class PopularInTag(
     val contentApiClient: ContentApiClient,
@@ -20,7 +18,7 @@ class PopularInTag(
     extends BaseController
     with Related
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   import implicits.Requests._
@@ -45,7 +43,7 @@ class PopularInTag(
         JsonComponent(
           OnwardCollectionResponse(
             heading = "Related content",
-            trails = trailsToItems(trails.items.map(_.faciaContent)),
+            trails = trails.items.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(numberOfCards),
           ),
         )
       } else {

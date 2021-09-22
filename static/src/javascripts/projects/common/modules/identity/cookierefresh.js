@@ -1,5 +1,3 @@
-// @flow
-
 import {
     isUserLoggedIn,
     getUserFromApiWithRefreshedCookie,
@@ -7,14 +5,14 @@ import {
 import { storage } from '@guardian/libs'
 
 const shouldRefreshCookie = (
-    lastRefresh: ?number,
-    currentTime: number
-): boolean => {
+    lastRefresh,
+    currentTime
+) => {
     const days30k = 1000 * 86400 * 30; // (as seconds)
     return !lastRefresh || currentTime > parseInt(lastRefresh, 10) + days30k;
 };
 
-const init = (): void => {
+const init = () => {
     const lastRefreshKey = 'identity.lastRefresh';
 
     if (storage.local.isAvailable() && isUserLoggedIn()) {

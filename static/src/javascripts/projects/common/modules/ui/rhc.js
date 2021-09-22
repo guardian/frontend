@@ -1,7 +1,6 @@
-// @flow
 import $ from 'lib/$';
 
-const addComponent = (content: Element, importance: number = 1): void => {
+const addComponent = (content, importance = 1) => {
     const container = $('.js-components-container');
     const classname = 'component--rhc';
 

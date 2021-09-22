@@ -1,6 +1,4 @@
-// @flow
 import mediator from 'lib/mediator';
-import type { CurrentABTest } from '../../types';
 import { componentName, withComponentId } from '../../component';
 import {
     addOpinionBgColour,
@@ -18,26 +16,20 @@ import {
 // signInUrl - parameter which holds the link to the sign in/register page with the tracking parameters added
 // guUrl - url of the STAGE frontend site, e.g. in DEV stage it would be https://m.thegulocal.com,
 //         and for PROD it would be https://theguardian.com
-const htmlTemplate: ({
-    signInUrl: string,
-    guUrl: string,
-}) => string = ({ signInUrl, guUrl }) => `
+const htmlTemplate = ({ signInUrl, guUrl }) => `
 <div class="signin-gate">
     <div class="signin-gate__content--var">
         <div class="signin-gate__header--var">
-            <h1 class="signin-gate__header--text--var">Register for free and <br>continue reading</h1>
+            <h1 class="signin-gate__header--text--var">You need to register to keep reading</h1>
         </div>
         <div class="signin-gate__benefits--var signin-gate__margin-top--var">
             <p class="signin-gate__benefits--text--var">
-                It’s important to say this is not a step towards a paywall
+                It’s still free to read - this is not a paywall
             </p>
         </div>
         <div class="signin-gate__paragraph--var">
             <p class="signin-gate__paragraph--text--var">
-               Registering is a free and simple way to help us sustain our independent Guardian journalism.
-            </p>
-            <p class="signin-gate__paragraph--text--var">
-               When you register with us we are able to improve our news experience for you and for others. You will always be able to control your own <a id="js-signin-gate__privacy" class="signin-gate__link--var">privacy settings</a>. Thank you.
+                We’re committed to keeping our quality reporting open. By registering and providing us with insight into your preferences, you’re helping us to engage with you more deeply, and that allows us to keep our journalism free for all. You’ll always be able to control your own <a id="js-signin-gate__privacy" class="signin-gate__link--var">privacy settings</a>.
             </p>
         </div>
         <div class="signin-gate__buttons">
@@ -70,12 +62,7 @@ const htmlTemplate: ({
 // method which runs if the canShow method from the test returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
 // in our case it returns true if the design ran successfully, and false if there were any problems encountered
-export const designShow: ({
-    abTest: CurrentABTest,
-    guUrl: string,
-    signInUrl: string,
-    ophanComponentId: string,
-}) => boolean = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
+export const designShow = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
     showGate({
         template: htmlTemplate({
             signInUrl,
@@ -99,7 +86,7 @@ export const designShow: ({
                 selector: '.signin-gate__first-paragraph-overlay',
             });
 
-            const ophanComponent: OphanComponent = withComponentId(
+            const ophanComponent = withComponentId(
                 ophanComponentId
             );
 
@@ -111,10 +98,6 @@ export const designShow: ({
                 component: ophanComponent,
                 value: 'not-now',
                 callback: () => {
-                    // reposition window to top of page without affecting browser's 'back' navigation
-                    const maincontent = document.getElementById('maincontent');
-                    if (maincontent) maincontent.scrollIntoView(true);
-
                     // show the current body. Remove the shadow one
                     articleBody.style.display = 'block';
                     shadowArticleBody.remove();

@@ -1,10 +1,8 @@
-// @flow
+import { dfpEnv } from './dfp-env';
+import { loadAdvert } from './load-advert';
+import { pageSkin } from '../creatives/page-skin';
 
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { loadAdvert } from 'commercial/modules/dfp/load-advert';
-import { pageSkin } from 'commercial/modules/creatives/page-skin';
-
-const displayAds = (): void => {
+const displayAds = () => {
     window.googletag.pubads().enableSingleRequest();
     window.googletag.pubads().collapseEmptyDivs();
     window.googletag.enableServices();

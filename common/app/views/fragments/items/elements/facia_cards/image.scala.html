@@ -12,6 +12,7 @@
     maybeImageMedia: Option[ImageMedia] = None,
     maybePath: Option[String] = None,
     maybeSrc: Option[String] = None,
+        shouldLazyLoadIndex: Boolean = false,
 )(implicit request: RequestHeader)
 
 <picture>
@@ -20,13 +21,13 @@
     @widths.breakpoints.map { breakpointWidth =>
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
         sizes="@breakpointWidth.width"
-        srcset=@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true)) />
+        srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true))" />
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
         sizes="@breakpointWidth.width"
         srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
     }
     <!--[if IE 9]></video><![endif]-->
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath.map(ImgSrc(_, ImageProfile(width = widths.desktop.map(_.get))))).map { src =>
-        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
+        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn && shouldLazyLoadIndex) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src""/>
     }
 </picture>

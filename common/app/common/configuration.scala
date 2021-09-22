@@ -20,7 +20,7 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-object Environment extends Logging {
+object Environment extends GuLogging {
 
   private[this] val installVars = {
     val source = new File("/etc/gu/install_vars") match {
@@ -58,7 +58,7 @@ object Environment extends Logging {
   *     facia.stage=CODE
   *   }
   */
-object GuardianConfiguration extends Logging {
+object GuardianConfiguration extends GuLogging {
 
   import com.typesafe.config.Config
 
@@ -134,7 +134,7 @@ object GuardianConfiguration extends Logging {
 
 }
 
-class GuardianConfiguration extends Logging {
+class GuardianConfiguration extends GuLogging {
   import GuardianConfiguration._
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
@@ -149,14 +149,8 @@ class GuardianConfiguration extends Logging {
       configuration.getMandatoryStringProperty("business_data.url") // Decommissioned, see marker: 7dde429f00b1
   }
 
-  object feedback {
-    lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
-    lazy val feedbackHelpConfig = configuration.getMandatoryStringProperty("feedback.helpconfig")
-  }
-
   object rendering {
-    lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
-    lazy val AMPArticleEndpoint = configuration.getMandatoryStringProperty("rendering.AMPArticleEndpoint")
+    lazy val baseURL = configuration.getMandatoryStringProperty("rendering.baseURL")
     lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
     lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
     lazy val timeout = 2.seconds
@@ -353,6 +347,8 @@ class GuardianConfiguration extends Logging {
     private lazy val scheme = configuration.getStringProperty("amp.scheme").getOrElse("")
     lazy val host = configuration.getStringProperty("amp.host").getOrElse("")
     lazy val baseUrl = scheme + host
+
+    lazy val flushPublicKey = configuration.getMandatoryStringProperty("google.amp.flush.key.public")
   }
 
   object id {
@@ -710,10 +706,6 @@ class GuardianConfiguration extends Logging {
     val url = configuration.getMandatoryStringProperty("email.signup.url")
   }
 
-  object NewsAlert {
-    lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
-  }
-
   object Logstash {
     lazy val enabled = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
     lazy val stream = configuration.getStringProperty("logstash.stream.name")
@@ -736,6 +728,10 @@ class GuardianConfiguration extends Logging {
     lazy val apiKey = configuration.getStringProperty("braze.apikey").getOrElse("")
   }
 
+  object newsletterApi {
+    lazy val host = configuration.getStringProperty("newsletterApi.host")
+    lazy val origin = configuration.getStringProperty("newsletterApi.origin")
+  }
 }
 
 object ManifestData {

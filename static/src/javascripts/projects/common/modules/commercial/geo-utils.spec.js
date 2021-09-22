@@ -1,5 +1,5 @@
-// @flow
-import {isInUk,
+import {
+    isInUk,
     isInUsa,
     isInCanada,
     isInAustralia,
@@ -7,11 +7,12 @@ import {isInUk,
     isInUsOrCa,
     isInAuOrNz,
     isInRow,
-    _} from "common/modules/commercial/geo-utils";
+    _,
+} from 'common/modules/commercial/geo-utils';
 
 let mockCountryCode;
-jest.mock('lib/geolocation', () => ({
-    getSync: jest.fn(() => mockCountryCode),
+jest.mock('../../../../lib/geolocation', () => ({
+    getCountryCode: jest.fn(() => mockCountryCode),
 }));
 
 describe('Geolocation Utils', () => {

@@ -41,8 +41,11 @@ object HtmlPageHelpers {
       applicationContext: ApplicationContext,
   ): Map[String, Boolean] = {
     val edition = Edition(request)
+    val showAds =
+      Commercial.shouldShowAds(page) && !model.Page.getContent(page).exists(_.tags.isTheMinuteArticle) && !Commercial
+        .isAdFree(request)
     Map(
-      ("has-page-skin", page.metadata.hasPageSkin(request)),
+      ("has-page-skin", page.metadata.hasPageSkin(request) && showAds),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
       ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
     )

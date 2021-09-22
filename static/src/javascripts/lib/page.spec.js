@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import { isMatch, isClockwatch, isLiveClockwatch, keywordExists } from './page';
 
@@ -15,7 +13,7 @@ jest.mock('lib/config', () => {
     };
 
     return Object.assign({}, defaultConfig, {
-        get: (path: string = '', defaultValue: any) =>
+        get: (path = '', defaultValue) =>
             path
                 .replace(/\[(.+?)\]/g, '.$1')
                 .split('.')

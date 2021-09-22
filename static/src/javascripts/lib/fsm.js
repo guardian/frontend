@@ -1,6 +1,4 @@
-// @flow
-
-import { noop } from 'lib/noop';
+import { noop } from './noop';
 
 /*
     simple practical and flexible "finite state machine" implementation
@@ -36,12 +34,9 @@ import { noop } from 'lib/noop';
 */
 
 class FiniteStateMachine {
-    context: Object;
-    states: Object;
-    debug: ?boolean;
-    onChangeState: (oldState: string, newState: string) => void;
 
-    constructor(options: Object) {
+
+    constructor(options) {
         this.context = options.context;
         this.states = options.states || {};
         this.context.state = options.initial || '';
@@ -50,13 +45,13 @@ class FiniteStateMachine {
             options.onChangeState.bind(this.context) || (() => {});
     }
 
-    log(...args: Array<string>): void {
+    log(...args) {
         if (this.debug && window.console && window.console.log) {
             window.console.log(...args);
         }
     }
 
-    trigger(event: string, data?: Object): void {
+    trigger(event, data) {
         this.log('fsm: (event)', event);
 
         const state = this.context.state;

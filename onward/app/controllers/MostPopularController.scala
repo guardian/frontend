@@ -1,8 +1,9 @@
 package controllers
 
+import com.github.nscala_time.time.Imports.DateTimeZone
+
 import java.time.Instant
 import java.time.temporal.ChronoUnit
-
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
@@ -10,17 +11,19 @@ import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import models.OnwardCollection._
-import models.{
+import model.pressed.PressedContent
+import model.dotcomrendering.{
   MostPopularGeoResponse,
-  OnwardCollection,
-  OnwardCollectionForDCRv2,
+  MostPopularNx2,
   OnwardCollectionResponse,
-  OnwardItemMost,
+  OnwardCollectionResponseDCR,
+  OnwardItem,
 }
+import implicits.FaciaContentFrontendHelpers._
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
+import views.support.{ImgSrc, RemoveOuterParaHtml}
 
 import scala.concurrent.Future
 
@@ -32,7 +35,7 @@ class MostPopularController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
   val page = SimplePage(
     MetaData.make(
@@ -130,16 +133,32 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = OnwardCollection.trailsToItems(section.trails),
+        trails = section.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItemMost.maybeFromContentCard(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItemMost.maybeFromContentCard(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
-    val response = OnwardCollectionForDCRv2(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
+    Cached(900)(JsonComponent(response))
+  }
+
+  def jsonResponseNx2(mostPopulars: Seq[MostPopularNx2], mostCards: Map[String, Option[ContentCard]])(implicit
+      request: RequestHeader,
+  ): Result = {
+    val tabs = mostPopulars.map { nx2 =>
+      OnwardCollectionResponse(nx2.heading, nx2.trails)
+    }
+    val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
+      OnwardItem.contentCardToOnwardItem(contentCard)
+    }
+    val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
+      OnwardItem.contentCardToOnwardItem(contentCard)
+    }
+    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
   }
 
@@ -147,9 +166,8 @@ class MostPopularController(
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = OnwardCollection.trailsToItems(mostPopular.trails),
+      trails = mostPopular.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
     )
-
     Cached(900)(JsonComponent(data))
   }
 
@@ -189,7 +207,7 @@ class MostPopularController(
 
   // Get "Most Commented" & "Most Shared" cards for Extended "Most Read" container
   private def mostCards(): Map[String, Option[ContentCard]] =
-    mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
+    mostPopularAgent.mostSingleCardsBox.get().mapValues(ContentCard.fromApiContent(_))
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
     log.info(s"Fetching most popular: $path for edition $edition")

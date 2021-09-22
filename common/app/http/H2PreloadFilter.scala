@@ -13,7 +13,7 @@ class H2PreloadFilter(implicit
     executionContext: ExecutionContext,
 ) extends Filter
     with implicits.Requests
-    with ResultWithPreload {
+    with ResultWithPreconnectPreload {
 
   def apply(nextFilter: RequestHeader => Future[Result])(request: RequestHeader): Future[Result] = {
     nextFilter(request).map { result =>

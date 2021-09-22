@@ -1,7 +1,4 @@
-// @flow
-
-export const measureTiming = (name: string) => {
-    type TimeTakenInMilliseconds = number | null;
+export const measureTiming = (name) => {
     if (window.performance && window.performance.now) {
         const perf = window.performance;
         const startKey = `${name}-start`;
@@ -11,7 +8,7 @@ export const measureTiming = (name: string) => {
             perf.mark(startKey);
         };
 
-        const end = (): TimeTakenInMilliseconds => {
+        const end = () => {
             perf.mark(endKey);
             perf.measure(name, startKey, endKey);
 
@@ -22,10 +19,15 @@ export const measureTiming = (name: string) => {
             return timeTakenInt;
         };
 
+        const clear = () => {
+            perf.clearMarks(startKey)
+        }
+
         return {
             start,
             end,
+            clear
         };
     }
-    return { start: () => null, end: (): TimeTakenInMilliseconds => null }
+    return { start: () => null, end: () => null, clear: () => null }
 };

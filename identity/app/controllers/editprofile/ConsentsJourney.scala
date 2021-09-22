@@ -13,23 +13,11 @@ import play.api.i18n.MessagesProvider
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, DiscardingCookie, Result}
 import services.PlaySigninService
+import services.newsletters.NewsletterSignupAgent
 import utils.ConsentOrder.userWithOrderedConsents
 import utils.ConsentsJourneyType.AnyConsentsJourney
 
 import scala.concurrent.Future
-
-object GuestPasswordForm {
-
-  def form()(implicit messagesProvider: MessagesProvider): Form[GuestPasswordFormData] =
-    Form(
-      mapping(
-        ("password", text.verifying(Constraints.nonEmpty)),
-        ("token", text),
-      )(GuestPasswordFormData.apply)(GuestPasswordFormData.unapply),
-    )
-
-}
-case class GuestPasswordFormData(password: String, token: String)
 
 trait ConsentsJourney extends EditProfileControllerComponents {
 
@@ -37,49 +25,18 @@ trait ConsentsJourney extends EditProfileControllerComponents {
 
   def signinService: PlaySigninService
 
-  def guestPasswordSet(): Action[AnyContent] =
-    csrfCheck {
-
-      val returnUrlWithTracking = idUrlBuilder.appendQueryParams(
-        returnUrlVerifier.defaultReturnUrl,
-        List("INTCMP" -> "upsell-account-creation"),
-      )
-
-      Action.async { implicit request =>
-        val form = GuestPasswordForm.form().bindFromRequest()
-        form.fold(
-          errorForm => {
-            displayConsentComplete(Some(errorForm))(request)
-          },
-          completedForm => {
-            val authResponse = identityApiClient.setPasswordGuest(completedForm.password, completedForm.token)
-            signinService.getCookies(authResponse, rememberMe = false).map {
-              case Right(cookies) =>
-                NoCache(
-                  Created("{}").withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET")),
-                )
-              case Left(errors) =>
-                NoCache(InternalServerError(Json.toJson(errors)))
-            }
-          },
-        )
-      }
-    }
+  def newsletterSignupAgent: NewsletterSignupAgent
 
   /** GET /consents/thank-you */
   def displayConsentsJourneyThankYou: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
 
-  /** GET /consents */
-  def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] =
-    displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)
-
   /** GET /complete-consents */
-  def displayConsentComplete(guestPasswordForm: Option[Form[GuestPasswordFormData]] = None): Action[AnyContent] =
-    displayConsentComplete(ConsentJourneyPageDefault, None, guestPasswordForm)
+  def displayConsentComplete(): Action[AnyContent] =
+    displayConsentComplete(ConsentJourneyPageDefault, None)
 
   /** POST /complete-consents */
-  def submitRepermissionedFlag: Action[AnyContent] =
+  def completeConsents: Action[AnyContent] =
     csrfCheck {
       consentAuthWithIdapiUserAction.async { implicit request =>
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
@@ -94,17 +51,16 @@ trait ConsentsJourney extends EditProfileControllerComponents {
                 request.user.id,
                 UserUpdateDTO(
                   consents = Some(newConsents),
-                  statusFields = Some(StatusFields(hasRepermissioned = Some(true))),
                 ),
                 request.user.auth,
               )
               .map {
                 case Left(idapiErrors) =>
-                  logger.error(s"Failed to set hasRepermissioned flag for user ${request.user.id}: $idapiErrors")
+                  logger.error(s"Failed to set save user consents ${request.user.id}: $idapiErrors")
                   InternalServerError(Json.toJson(idapiErrors))
 
                 case Right(updatedUser) =>
-                  logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
+                  logger.info(s"Successfully set consents for user ${request.user.id}")
                   Redirect(
                     s"${routes.EditProfileController.displayConsentComplete().url}",
                     Map("returnUrl" -> Seq(returnUrl)),
@@ -113,12 +69,6 @@ trait ConsentsJourney extends EditProfileControllerComponents {
           },
         )
       }
-    }
-
-  /** Handle redirects*/
-  def redirectToConsentsJourney: Action[AnyContent] =
-    Action { implicit request =>
-      Redirect(routes.EditProfileController.displayConsentsJourney(None), MOVED_PERMANENTLY)
     }
 
   private def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] =
@@ -138,7 +88,6 @@ trait ConsentsJourney extends EditProfileControllerComponents {
   private def displayConsentComplete(
       page: ConsentJourneyPage,
       consentHint: Option[String],
-      guestPasswordSetForm: Option[Form[GuestPasswordFormData]],
   ): Action[AnyContent] =
     csrfAddToken {
       consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
@@ -151,16 +100,25 @@ trait ConsentsJourney extends EditProfileControllerComponents {
           page,
           request.user,
           returnUrl,
-          guestPasswordSetForm,
         )
       }
     }
+
+  private def newsletters() = {
+    newsletterSignupAgent
+      .getNewsletters()
+      .left
+      .map { error =>
+        logger.error(s"ConsentsJourney newsletters not available $error")
+        Nil
+      }
+      .merge
+  }
 
   private def consentCompleteView(
       page: IdentityPage,
       user: User,
       returnUrl: String,
-      guestPasswordSetForm: Option[Form[GuestPasswordFormData]],
   )(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData).map { emailFilledForm =>
@@ -172,9 +130,8 @@ trait ConsentsJourney extends EditProfileControllerComponents {
             returnUrl,
             user.primaryEmailAddress,
             emailFilledForm,
-            guestPasswordSetForm.getOrElse(GuestPasswordForm.form()),
             newsletterService.getEmailSubscriptions(emailFilledForm),
-            EmailNewsletters.publicNewsletters,
+            newsletters(),
           ),
         )(page, request, context),
       )
@@ -202,7 +159,7 @@ trait ConsentsJourney extends EditProfileControllerComponents {
               idUrlBuilder,
               emailFilledForm,
               newsletterService.getEmailSubscriptions(emailFilledForm),
-              EmailNewsletters.publicNewsletters,
+              newsletters(),
               consentHint,
               skin = None,
             ),

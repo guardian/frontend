@@ -1,4 +1,3 @@
-// @flow
 import { storage } from '@guardian/libs';
 import { getPermutiveSegments, getPermutivePFPSegments, _ } from './permutive';
 

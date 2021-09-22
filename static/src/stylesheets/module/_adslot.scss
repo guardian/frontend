@@ -60,6 +60,21 @@
     .ad-slot--sky & {
         width: $mpu-skyscraper-width;
     }
+
+    &--toggle {
+        margin: 0 auto;
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+
+    &.visible {
+        visibility: initial;
+    }
+
+    &.hidden {
+        visibility: hidden;
+    }
 }
 
 /**
@@ -67,8 +82,22 @@
  */
 
 .top-banner-ad-container {
+
+    // Don’t show below tablet
+    // On mobile, top-above-nav is inline
+    // See also .ad-slot--top-banner-ad-desktop
+    @include mq($until: tablet) {
+        display: none !important;
+    }
+
     background-color: $brightness-100;
     border-bottom: 1px solid $brightness-86;
+
+    min-height: 250px + 24px;
+    padding-bottom: $gs-row-height / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     // Needed for compatibility with IE11/Edge.
     top: 0;
@@ -120,15 +149,14 @@
 .ad-slot--top-banner-ad-desktop {
     margin: 0 auto;
     min-height: 90px;
-    padding-bottom: $gs-row-height / 2;
-    padding-top: $gs-row-height / 2;
+    padding-bottom: 0;
 
     @include mq($until: tablet) {
         display: none;
     }
 
     text-align: left;
-    display: table;
+    display: block;
 
     &.ad-slot--fabric {
         > .ad-slot__label {
@@ -161,10 +189,6 @@
 
     &.ad-slot--fluid {
         width: 100%;
-    }
-
-    .ad-slot__label {
-        margin-top: (-1) * $gs-row-height / 2;
     }
 }
 
@@ -420,14 +444,6 @@
         width: 100%;
     }
 
-    &.ad-slot--commercial-component-high {
-
-        &,
-        & > .ad-slot__content > iframe {
-            transition: height 1s;
-        }
-    }
-
     &.ad-slot--liveblog-inline {
         @include mq(mobile, $until: mobileLandscape) {
             margin-left: $gs-gutter / -2;
@@ -440,6 +456,8 @@
     }
 }
 
+// See implementation on DCR
+// mark: dca5c7dd-dda4-4922-9317-a55a3789fe4c
 .ad-slot--carrot {
     min-height: 0px;
     padding: 0;
@@ -580,4 +598,16 @@
     stroke-linecap: round;
     stroke-width: 2;
     text-align: center;
+}
+
+.ad-slot--collapse {
+    display: none;
+}
+
+/**
+ * Hides the top-above-nav ad-slot container when a
+ * Bonzai TrueSkin (Australian 3rd Party page skin) is shown
+ */
+.bz-custom-container ~ #bannerandheader > .top-banner-ad-container {
+    display: none;
 }

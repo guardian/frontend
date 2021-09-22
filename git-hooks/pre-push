@@ -80,11 +80,22 @@ const updateTOC = changed => {
     }
     return changed;
 };
+const commercialGraph = changed => {
+    if (!changed.some(file => file.includes('/commercial/'))) return changed;
+    return execa(
+        './tools/task-runner/runner',
+        ['commercial/graph', '--verbose'],
+        {
+            stdio: 'inherit',
+        }
+    ).then(() => changed);
+}
 confirmIfMain
     .then(validate)
     .then(getChangedFiles)
     .then(checkYarnLock)
     .then(updateTOC)
+    .then(commercialGraph)
     .catch(e => {
         console.log(`\n${e}\n`);
         process.exit(1);

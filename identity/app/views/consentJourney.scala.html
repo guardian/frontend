@@ -12,7 +12,7 @@
 @import controllers.editprofile.ProfileForms
 @import _root_.utils.ConsentsJourneyType._
 
-@import com.gu.identity.model.EmailNewsletter
+@import services.newsletters.NewsletterResponse
 @(
     user: com.gu.identity.model.User,
     forms: ProfileForms,
@@ -22,7 +22,7 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
-    availableLists: List[EmailNewsletter],
+    availableLists: List[NewsletterResponse],
     consentHint: Option[String] = None,
     skin: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
@@ -87,7 +87,7 @@
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
-                @if(!isChannel(consentField)) {
+                @if(!isChannel(consentField) && !isProduct(consentField)) {
                     @if(index == 0) {
                         <li>
                             @fragments.consentSwitch(consentField, consentHint, skin = skin)(messages)
@@ -151,7 +151,6 @@
 @displayJourney = {
     <div class="
         identity-consent-journey
-        @{if (!user.statusFields.hasRepermissioned.getOrElse(false)){"identity-consent-journey--with-alert"}}
         @{skin.map(s => s"identity-consent-journey--$s" )}
         u-h
     " data-journey="@journey" data-component="identity-consent-journey-@journey">

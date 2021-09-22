@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import model.{ApplicationContext, NoCache}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
@@ -9,7 +9,7 @@ import services.ParameterStoreService
 class AppConfigController(val controllerComponents: ControllerComponents, parameterStoreService: ParameterStoreService)(
     implicit context: ApplicationContext,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderAppConfig(): Action[AnyContent] =

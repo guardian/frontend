@@ -56,5 +56,5 @@ deployments:
       cloudFormationStackName: frontend
       amiParametersToTags:
         AMI:
-          Recipe: frontend-base
+          Recipe: frontend-base-ARM-java11
           AmigoStage: PROD

@@ -5,6 +5,10 @@
 @import conf.Static
 @import html.HtmlPageHelpers.{ContentCSSFile}
 
+@if(FontSwitch.isSwitchedOn) {
+    @fragments.fontFaces()
+}
+
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style class="js-loggable">
     .svg .i,
@@ -72,6 +76,3 @@
 
 <!--<![endif]-->
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
-
-@* placeholder <style>'s for font to go in *@
-@fragments.fontDefinitions()

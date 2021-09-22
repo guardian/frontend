@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
@@ -10,7 +9,7 @@ import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
 
-const affixTimeline = (): void => {
+const affixTimeline = () => {
     const keywordIds = config.get('page.keywordIds', '');
 
     if (
@@ -34,17 +33,17 @@ const affixTimeline = (): void => {
     }
 };
 
-const createAutoUpdate = (): void => {
+const createAutoUpdate = () => {
     if (config.get('page.isLive')) {
         autoUpdate();
     }
 };
 
-const keepTimestampsCurrent = (): void => {
+const keepTimestampsCurrent = () => {
     window.setInterval(() => initRelativeDates(), 60000);
 };
 
-const init = (): void => {
+const init = () => {
     catchErrorsWithContext([
         ['lb-autoupdate', createAutoUpdate],
         ['lb-timeline', affixTimeline],

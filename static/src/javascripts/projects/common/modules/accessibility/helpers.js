@@ -1,8 +1,7 @@
-// @flow
 import fastdom from 'fastdom';
 import { isOn } from 'common/modules/accessibility/main';
 
-const shouldHideFlashingElements = (callback: ?() => {}): void => {
+const shouldHideFlashingElements = (callback) => {
     if (!isOn('flashing-elements')) {
         fastdom.mutate(() => {
             if (document.body) {

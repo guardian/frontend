@@ -20,13 +20,14 @@ import conf.switches.Switches.InlineEmailStyles
 import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
+import conf.Configuration
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 trait FaciaController
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext
     with implicits.Collections
     with implicits.Requests {
@@ -70,7 +71,7 @@ trait FaciaController
     Action.async { implicit request =>
       getPressedCollection(id).map {
         case Some(collection) =>
-          val onwardItems = OnwardCollection.fromCollection(collection)
+          val onwardItems = OnwardCollection.pressedCollectionToOnwardCollection(collection)
 
           Cached(CacheTime.Facia) {
             JsonComponent(onwardItems)
@@ -193,10 +194,12 @@ trait FaciaController
             if (request.isRss) {
               val body = TrailsToRss.fromPressedPage(faciaPage)
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-            } else if (request.isJson)
+            } else if (request.isJson) {
               JsonFront(faciaPage)
-            else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
+            } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
+            } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
+              renderShowcaseFront(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
             },
@@ -207,7 +210,9 @@ trait FaciaController
         if (targetedTerritories) {
           result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
         } else result
-      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      case None => {
+        successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      }
     }
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
@@ -237,6 +242,18 @@ trait FaciaController
     } else {
       RevalidatableResult.Ok(htmResponseInlined)
     }
+  }
+
+  protected def renderShowcaseFront(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
+    val (rundownPanelOutcome, singleStoryPanelOutcomes) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val showcase = TrailsToShowcase(
+      feedTitle = faciaPage.metadata.title,
+      url = Some(faciaPage.metadata.url),
+      description = faciaPage.metadata.description,
+      singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption),
+      maybeRundownPanel = rundownPanelOutcome.toOption,
+    )
+    RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase)
   }
 
   def renderFrontPress(path: String): Action[AnyContent] =
@@ -344,6 +361,14 @@ trait FaciaController
       )
   }
 
+  /**
+    * Note, the way this method works is a bit circuitous. Firstly, it finds a
+    * front that contains the collection (via the ConfigAgent, which is
+    * basically a cache of configuration for Guardian Fronts). It then looks up
+    * that front in Frontend's S3 and extracts the full collection from it (with
+    * curated and backfill content etc.). It would be easier if collections were
+    * stored somewhere independently of Fronts.
+    */
   private def getPressedCollection(
       collectionId: String,
   )(implicit request: RequestHeader): Future[Option[PressedCollection]] =
@@ -408,6 +433,13 @@ trait FaciaController
     if (request.isAdFree) FullAdFreeType else FullType
   def liteRequestType(implicit request: RequestHeader): PressedPageType =
     if (request.isAdFree) LiteAdFreeType else LiteType
+
+  def ampRsaPublicKey: Action[AnyContent] = {
+    Action {
+      // The private key is in the CAPI account, see the documentation at https://github.com/guardian/fastly-cache-purger
+      Ok(Configuration.amp.flushPublicKey).as("text/plain")
+    }
+  }
 }
 
 class FaciaControllerImpl(

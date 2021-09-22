@@ -7,7 +7,6 @@ import org.jsoup.nodes.Document
 import com.steadystate.css.parser.{CSSOMParser, SACParserCSS3}
 import org.w3c.css.sac.InputSource
 import org.w3c.dom.css.{CSSRuleList, CSSRule => W3CSSRule}
-import play.api.Logger
 import play.twirl.api.Html
 
 import scala.collection.JavaConverters._
@@ -61,7 +60,7 @@ object CSSRule {
     styles.map { case (k, v) => s"$k: $v" }.mkString("; ")
 }
 
-object InlineStyles {
+object InlineStyles extends GuLogging {
 
   /**
     * Attempt to inline the rules from the <style> tags in a page.
@@ -106,7 +105,7 @@ object InlineStyles {
         val source = new InputSource(new StringReader(element.html))
         val cssParser = new CSSOMParser(new SACParserCSS3())
         Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
-          Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
+          log.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
         } match {
           case Failure(_) => (inline, head :+ element.html)
           case Success(sheet) =>

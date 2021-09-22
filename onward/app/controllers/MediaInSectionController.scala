@@ -11,6 +11,7 @@ import model.pressed.CollectionConfig
 import play.api.mvc._
 import services.CollectionConfigWithId
 import layout.slices.{Fixed, FixedContainers}
+import utils.ShortUrls
 
 import scala.concurrent.Future
 
@@ -19,7 +20,7 @@ class MediaInSectionController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with Paging
     with ImplicitControllerExecutionContext
     with Requests {
@@ -40,14 +41,16 @@ class MediaInSectionController(
   private def lookup(edition: Edition, mediaType: String, sectionId: String, seriesId: Option[String])(implicit
       request: RequestHeader,
   ): Future[Option[Seq[RelatedContentItem]]] = {
-    val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
+    val currentShortUrl = request.getQueryString("shortUrl")
     log.info(s"Fetching $mediaType content in section: $sectionId")
 
     val excludeTags: Seq[String] = (request.queryString.getOrElse("exclude-tag", Nil) ++ seriesId).map(t => s"-$t")
     val tags = (s"type/$mediaType" +: excludeTags).mkString(",")
 
     def isCurrentStory(content: ApiContent) =
-      content.fields.flatMap(_.shortUrl).exists(!_.equals(currentShortUrl))
+      content.fields
+        .flatMap(fields => fields.shortUrl.map(ShortUrls.shortUrlToShortId))
+        .exists(url => currentShortUrl.exists(_.endsWith(url)))
 
     val promiseOrResponse = contentApiClient
       .getResponse(
@@ -59,7 +62,7 @@ class MediaInSectionController(
           .showFields("all"),
       )
       .map { response =>
-        response.results.toList filter { content => isCurrentStory(content) } map { result =>
+        response.results.toList filterNot { isCurrentStory } map { result =>
           RelatedContentItem(result)
         } match {
           case Nil     => None

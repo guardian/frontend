@@ -1,10 +1,8 @@
-// @flow
-import type { JestMockT } from 'jest';
 import { _ } from './resize.js';
 
 const { normalise, resize } = _;
 
-const foolFlow = (mockFn: any) => ((mockFn: any): JestMockT);
+const foolFlow = (mockFn) => ((mockFn));
 
 describe('Cross-frame messenger: resize', () => {
     beforeEach(() => {

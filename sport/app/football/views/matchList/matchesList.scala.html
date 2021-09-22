@@ -1,6 +1,8 @@
+@import java.time.format.DateTimeFormatter
+@import football.model.GuTeamCodes
 @(matchesList: List[pa.FootballMatch],
     competition: model.Competition,
-    date: org.joda.time.LocalDate,
+    date: java.time.LocalDate,
     responsiveFont: Boolean = false,
     matchType: String = "",
     linkToCompetition: Boolean = false,
@@ -37,9 +39,9 @@
                 ))">
                 <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub">
                     @if(theMatch.isFixture){
-                        <time datetime="@theMatch.date.toString("yyyy-MM-dd'T'HH:mm:ssZ")" data-timestamp="@theMatch.date.getMillis"
+                        <time datetime="@theMatch.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))" data-timestamp="@theMatch.date.toInstant.toEpochMilli"
                         class="js-locale-timestamp">
-                            @theMatch.date.toString("HH:mm")</time>
+                            @theMatch.date.format(DateTimeFormatter.ofPattern("HH:mm"))</time>
                     }else{
                         @MatchStatus(theMatch.matchStatus)
                     }
@@ -52,14 +54,14 @@
                 <td class="football-match__teams table-column--main">
                     <a @(theMatch.smartUrl.map(url => s"href=${LinkTo(url)}").getOrElse("")) class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
                         <div class="football-match__team football-match__team--home football-team">
-                            <div class="football-team__name team-name" data-abbr="@pa.TeamCodes.codeFor(theMatch.homeTeam)">
+                            <div class="football-team__name team-name" data-abbr="@GuTeamCodes.codeFor(theMatch.homeTeam)">
                                 <span class="team-name__long">@cleanTeamName(theMatch.homeTeam.name)</span>
                             </div>
                             <div class="football-team__score">@theMatch.homeTeam.score</div>
                         </div>
 
                         <div class="football-match__team football-match__team--away football-team">
-                            <div class="football-team__name team-name" data-abbr="@pa.TeamCodes.codeFor(theMatch.awayTeam)">
+                            <div class="football-team__name team-name" data-abbr="@GuTeamCodes.codeFor(theMatch.awayTeam)">
                                 <span class="team-name__long">@cleanTeamName(theMatch.awayTeam.name)</span>
                             </div>
                             <div class="football-team__score">@theMatch.awayTeam.score</div>
@@ -88,7 +90,7 @@
                 <span class="football-matches__heading">@text</span>
             }
         }
-        <span class="football-matches__date">@date.toString("E d MMMM")</span>
+        <span class="football-matches__date">@date.format(DateTimeFormatter.ofPattern("E d MMMM"))</span>
     </caption>
     @if(linkToCompetition && link == None){
         <tfoot class="table__caption table__caption--bottom" >

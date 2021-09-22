@@ -26,6 +26,7 @@ object IpsosTags {
     "uk/environment" -> "environment", /* There is no US or AU environment tag - should these map to environment? */
     "environment" -> "environment", /* Default for environment articles */
     "fashion" -> "fashion",
+    "fashion/beauty" -> "fashion",
     "uk/film" -> "film", /* There is no US or AU film tag - should these map to film? */
     "film" -> "film",
     "food" -> "food",
@@ -42,10 +43,19 @@ object IpsosTags {
     "uk/lifeandstyle" -> "lifeandstyle", /* There is no US or AU lifeandstyle tag - should these map to lifeandstyle? */
     "lifeandstyle" -> "lifeandstyle",
     "lifeandstyle/love-and-sex" -> "lifeandstyle",
+    "lifeandstyle/women" -> "lifeandstyle",
+    "lifeandstyle/men" -> "lifeandstyle",
+    "lifeandstyle/home-and-garden" -> "lifeandstyle",
     "us/lifeandstyle" -> "lifeandstyle",
+    "lifeandstyle/home-and-garden" -> "lifeandstyle",
     "uk/media" -> "media", /* There is no US or AU media tag - should these map to media? */
     "membership" -> "membership",
     "uk/money" -> "money", /* There is no US or AU money tag - should these map to money? */
+    "money" -> "money",
+    "money/debt" -> "money",
+    "money/property" -> "money",
+    "money/work-and-careers" -> "money",
+    "money/pensions" -> "money",
     "music" -> "music",
     "international" -> "international",
     "/email-newsletters" -> "emailnewsletters",
@@ -77,6 +87,8 @@ object IpsosTags {
     "theguardian" -> "theguardian",
     "theobserver" -> "theobserver",
     "uk/travel" -> "travel",
+    "travel/europe" -> "travel",
+    "travel/usa" -> "travel",
     "travel" -> "travel", /* Default for travel articles */
     "us/travel" -> "travel",
     "au/travel" -> "travel",

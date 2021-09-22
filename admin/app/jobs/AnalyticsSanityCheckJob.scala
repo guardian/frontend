@@ -1,18 +1,18 @@
 package jobs
 
 import java.util.concurrent.atomic.AtomicLong
-
 import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, StandardUnit}
-import common.Logging
+import common.GuLogging
 import metrics.GaugeMetric
 import model.diagnostics.CloudWatch
-import org.joda.time.DateTime
+
+import java.time.{LocalDateTime, ZoneId}
 import services.{CloudWatchStats, OphanApi}
 
 import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
-class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
+class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {
 
   private val rawPageViews = new AtomicLong(0L)
   private val ophanPageViews = new AtomicLong(0L)
@@ -60,11 +60,11 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
   }
 
   private def ophanViews()(implicit executionContext: ExecutionContext): Future[Long] = {
-    val now = new DateTime().minusMinutes(15).getMillis
+    val instant: Long = LocalDateTime.now().minusMinutes(15).atZone(ZoneId.of("UTC")).toInstant().toEpochMilli()
     ophanApi.getBreakdown("next-gen", hours = 1).map { json =>
       (json \\ "data").flatMap { line =>
         val recent = line.asInstanceOf[play.api.libs.json.JsArray].value.filter { entry =>
-          (entry \ "dateTime").as[Long] > now
+          (entry \ "dateTime").as[Long] > instant
         }
         recent.map(r => (r \ "count").as[Long])
       }.sum

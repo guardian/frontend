@@ -8,7 +8,7 @@ import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import controllers.{HealthCheck, OnwardControllers, TechFeedbackController}
+import controllers.{HealthCheck, OnwardControllers}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed._
 import model.{ApplicationContext, ApplicationIdentity}
@@ -20,7 +20,6 @@ import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import router.Routes
 import services.OphanApi
-import services.breakingnews.{BreakingNewsApi, S3BreakingNews}
 import weather.WeatherApi
 import _root_.commercial.targeting.TargetingLifecycle
 
@@ -50,15 +49,12 @@ trait OnwardServices {
   lazy val mostViewedAudioAgent = wire[MostViewedAudioAgent]
   lazy val mostViewedGalleryAgent = wire[MostViewedGalleryAgent]
   lazy val mostViewedVideoAgent = wire[MostViewedVideoAgent]
-  lazy val s3BreakingNews = wire[S3BreakingNews]
-  lazy val breakingNewsApi = wire[BreakingNewsApi]
 }
 
 trait AppComponents extends FrontendComponents with OnwardControllers with OnwardServices {
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-  lazy val feedbackController = wire[TechFeedbackController]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(

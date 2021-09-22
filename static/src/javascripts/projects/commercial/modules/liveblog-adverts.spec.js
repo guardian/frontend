@@ -1,24 +1,23 @@
-// @flow
 import { init, _ } from './liveblog-adverts';
 
 const { getSlotName } = _;
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../lib/detect', () => ({
     getBreakpoint: jest.fn(),
     hasPushStateSupport: jest.fn(),
 }));
 
-jest.mock('common/modules/article/space-filler', () => ({
+jest.mock('../../common/modules/article/space-filler', () => ({
     fillSpace: jest.fn(),
 }));
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         liveblogAdverts: true,
     },
 }));
 
-jest.mock('commercial/modules/dfp/add-slot', () => ({
+jest.mock('./dfp/add-slot', () => ({
     addSlot: jest.fn(),
 }));
 

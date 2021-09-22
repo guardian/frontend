@@ -1,5 +1,3 @@
-// @flow
-
 import $ from 'lib/$';
 import { Component } from 'common/modules/component';
 import config from 'lib/config';
@@ -11,14 +9,8 @@ import { ScoreBoard } from 'common/modules/sport/score-board';
 import { addComponent as addRhcComponent } from 'common/modules/ui/rhc';
 import template from 'lodash/template';
 
-declare type Extra = {
-    name: string,
-    importance: number,
-    content: HTMLElement,
-    ready: boolean,
-};
 
-const renderExtras = (extras: Array<Extra>): void => {
+const renderExtras = (extras) => {
     if (extras.filter(extra => extra && extra.ready === false).length === 0) {
         belowArticleVisible(
             () => {
@@ -41,7 +33,7 @@ const renderExtras = (extras: Array<Extra>): void => {
     }
 };
 
-const cricket = (): void => {
+const cricket = () => {
     const matchDate = config.get('page.cricketMatchDate');
     const team = config.get('page.cricketTeam');
 
@@ -57,7 +49,7 @@ const cricket = (): void => {
     }
 };
 
-const rugby = (): void => {
+const rugby = () => {
     let pageType = '';
 
     if (config.get('page.isLiveBlog')) {
@@ -78,8 +70,8 @@ const rugby = (): void => {
         });
 
         // Rugby score returns the match nav too, to optimise calls.
-        // $FlowFixMe
-        scoreBoard.fetched = (resp: Object): void => {
+        
+        scoreBoard.fetched = (resp) => {
             fastdom
                 .measure(() => document.querySelector('article'))
                 .then(liveblog => {
@@ -173,7 +165,7 @@ const rugby = (): void => {
     }
 };
 
-const initSport = (): void => {
+const initSport = () => {
     cricket();
     rugby();
 };

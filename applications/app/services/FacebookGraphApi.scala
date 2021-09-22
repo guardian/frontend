@@ -2,7 +2,7 @@ package services
 
 import java.util.concurrent.TimeoutException
 
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -18,7 +18,7 @@ object URLResponseDeserializer {
 case class Engagement(share_count: Int)
 case class URLResponse(id: String, engagement: Engagement)
 
-class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests with Logging {
+class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests with GuLogging {
   val apiRootUrl = s"https://graph.facebook.com/v${Configuration.facebook.graphApi.version}"
 
   def GET(endpoint: Option[String], timeout: Duration, queryString: (String, String)*)(implicit

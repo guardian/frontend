@@ -67,7 +67,7 @@ from scrolling */
     @include mq($until: desktop) {
         position: absolute;
         right: $gs-gutter / 4;
-        bottom: 48px;
+        bottom: 58px;
 
         @include mq(mobileMedium) {
             right: $gs-gutter / 4;
@@ -146,6 +146,20 @@ from scrolling */
     }
 }
 
+.news-header__logo-anniversary {
+    @include mq($until: mobileMedium) {
+        margin-top: 20px;
+    }
+
+    @include mq(mobileMedium) {
+        margin-top: 14px;
+    }
+
+    @include mq(tablet) {
+        margin-top: 8px;
+    }
+}
+
 .inline-the-guardian-roundel__svg {
     height: $veggie-burger;
     width: $veggie-burger;
@@ -181,6 +195,24 @@ from scrolling */
 
     path {
         fill: $brightness-100;
+    }
+}
+
+.inline-guardian-anniversary-logo__svg, .inline-guardian-anniversary-logo-uk {
+    display: block;
+    height: auto;
+    width: 146px;
+
+    @include mq(mobileMedium) {
+        width: 195px;
+    }
+
+    @include mq(tablet) {
+        width: 229px;
+    }
+
+    @include mq(desktop) {
+        width: 301px;
     }
 }
 

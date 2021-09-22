@@ -3,7 +3,6 @@ package conf.switches
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
-import org.joda.time.LocalDate
 
 trait CommercialSwitches {
 
@@ -52,16 +51,6 @@ trait CommercialSwitches {
     "surveys",
     "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts",
     owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val HostedVideoAutoplay = Switch(
-    Commercial,
-    "hosted-video-autoplay",
-    "When ON, hosted video content may be allowed to autoplay",
-    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
@@ -217,81 +206,11 @@ trait CommercialSwitches {
     exposeClientSide = false,
   )
 
-  val MembershipEngagementBanner = Switch(
-    Commercial,
-    "membership-engagement-banner",
-    "Main switch for the membership engagement banner.",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val UseConfiguredEpicTests = Switch(
-    Commercial,
-    "use-configured-epic-tests",
-    "Fetches epic tests a file created by the Epic Test tool. These take priority over hardcoded epic tests.",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val EngagementBannerTestsFromGoogleDocs = Switch(
-    Commercial,
-    "engagement-banner-tests-from-google-docs",
-    "Fetches engagement banner tests from Google Docs. These take priority over hardcoded banner tests.",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val MembershipEngagementBannerBlockUK = Switch(
-    Commercial,
-    "membership-engagement-banner-block-uk",
-    "If this switch is turned on, the engagement banner will NOT show up on UK fronts for readers in the UK",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val MembershipEngagementBannerBlockUS = Switch(
-    Commercial,
-    "membership-engagement-banner-block-us",
-    "If this switch is turned on, the engagement banner will NOT show up on US fronts for readers in the US",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val MembershipEngagementBannerBlockAU = Switch(
-    Commercial,
-    "membership-engagement-banner-block-au",
-    "If this switch is turned on, the engagement banner will NOT show up on AU fronts for readers in AU",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val AdblockAsk = Switch(
     Commercial,
     "ab-adblock-ask",
     "Places a contributions ask underneath the right-hand ad slot on articles.",
     owners = group(Membership),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val LotameSwitch: Switch = Switch(
-    group = Commercial,
-    name = "lotame",
-    description = "When this is switched on the Lotame script will be included in the commercial bootstrap",
-    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
@@ -339,14 +258,14 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val a9Switch: Switch = Switch(
+  val a9HeaderBidding: Switch = Switch(
     group = CommercialPrebid,
     name = "a9-header-bidding",
     description = "Turn on A9 header bidding",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val redplanetForAUSSwitch: Switch = Switch(
@@ -358,18 +277,38 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val MerchandisingHighSection: Switch = Switch(
+    group = Commercial,
+    name = "merchandising-high-section",
+    description = "Move merchandising high section one section lower",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
+
+  val commercialMetrics: Switch = Switch(
+    group = Commercial,
+    name = "commercial-metrics",
+    description = "Send commercial metric data to the lake via fastly",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
 
 trait PrebidSwitches {
 
-  val prebidSwitch: Switch = Switch(
+  val prebidHeaderBidding: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-header-bidding",
     description = "Turn on Prebid header bidding (takes priority over Sonobi)",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val prebidAnalytics: Switch = Switch(
@@ -396,6 +335,16 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-user-sync",
     description = "Enable bidders to sync their user data with iframe or image beacons",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val PrebidPermutiveAudience = Switch(
+    group = CommercialPrebid,
+    name = "prebid-permutive-audience",
+    description = "Enable Permutive’s Audience Connector to run with Prebid",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -512,6 +461,16 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val prebidImproveDigitalSkins: Switch = Switch(
+    group = CommercialPrebid,
+    "prebid-improve-digital-skins",
+    "Include Collective page skins via Improve Digital adapter in Prebid auctions",
+    owners = Seq(Owner.withGithub("mxdvl")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val prebidXaxis: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-xaxis",
@@ -543,7 +502,7 @@ trait PrebidSwitches {
   )
 
   val mobileStickyPrebid: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "mobile-sticky-prebid",
     description = "Include Mobile Sticky leaderboard banner in Prebid",
     owners = group(Commercial),
@@ -551,4 +510,15 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val sentinelLogger: Switch = Switch(
+    group = Commercial,
+    name = "sentinel-logger",
+    description = "Send logs to BigQuery allowing devs to discover from which pages legacy code is run",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
 }

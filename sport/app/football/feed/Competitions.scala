@@ -1,22 +1,23 @@
 package feed
 
+import com.github.nscala_time.time.Imports._
 import common._
 import conf.FootballClient
-import java.util.Comparator
-
+import football.controllers.Interval
 import model.{Competition, Table, TeamFixture, TeamNameBuilder}
-import org.joda.time.{DateTimeComparator, LocalDate}
-import com.github.nscala_time.time.Imports._
+import org.joda.time.DateTimeComparator
 import pa._
 
+import java.time.LocalDate
+import java.util.Comparator
 import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
+import scala.math.Ordering.Implicits._
+import java.time.Clock
 
 trait Competitions extends implicits.Football {
 
-  private implicit val localDateOrdering = Ordering.comparatorToOrdering(
-    DateTimeComparator.getInstance.asInstanceOf[Comparator[LocalDate]],
-  )
+  implicit val localDateOrdering: Ordering[LocalDate] = Ordering.by(_.toEpochDay)
 
   def competitions: Seq[Competition]
 
@@ -31,18 +32,18 @@ trait Competitions extends implicits.Football {
 
   lazy val competitionsWithTodaysMatchesAndFutureFixtures = Competitions(
     competitions
-      .map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(new LocalDate))))
+      .map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(LocalDate.now()))))
       .filter(_.hasMatches),
   )
 
   lazy val competitionsWithTodaysMatchesAndPastResults = Competitions(
     competitions
-      .map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(new LocalDate))))
+      .map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(LocalDate.now()))))
       .filter(_.hasMatches),
   )
 
   lazy val withTodaysMatches = Competitions(
-    competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(new LocalDate)))).filter(_.hasMatches),
+    competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(LocalDate.now())))).filter(_.hasMatches),
   )
 
   def withTeam(team: String): Competitions =
@@ -59,7 +60,7 @@ trait Competitions extends implicits.Football {
       })
       .headOption
 
-  lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted(localDateOrdering)
+  lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
   def nextMatchDates(startDate: LocalDate, numDays: Int): Seq[LocalDate] =
     matchDates.filter(_ >= startDate).take(numDays)
@@ -90,12 +91,15 @@ trait Competitions extends implicits.Football {
     matches.find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId && m.date.toLocalDate == date)
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
-  def matchFor(interval: Interval, team1: String, team2: String): Option[FootballMatch] =
+  def matchFor(interval: Interval, team1: String, team2: String): Option[FootballMatch] = {
     matches
       .filter(m => interval.contains(m.date))
       .find(m => m.hasTeam(team1) && m.hasTeam(team2))
+  }
 
-  def matches: Seq[FootballMatch] = competitions.flatMap(_.matches).sortByDate
+  def sortedMatches: Seq[FootballMatch] = matches.sortByDate
+
+  def matches: Seq[FootballMatch] = competitions.flatMap(_.matches)
 
 }
 
@@ -166,7 +170,33 @@ object CompetitionsProvider {
       "European",
       tableDividers = List(2, 6, 21),
     ),
-    Competition("751", "/football/euro-2020-qualifiers", "Euro 2020 qualifying", "Euro 2020 qual.", "Internationals"),
+    Competition(
+      "700",
+      "/football/world-cup-2018",
+      "World Cup 2018",
+      "World Cup 2018",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2018, 6, 1)),
+    ),
+    Competition(
+      "750",
+      "/football/euro-2020",
+      "Euro 2020",
+      "Euro 2020",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2019, 11, 30)),
+    ),
+    Competition(
+      "701",
+      "/football/world-cup-2022-qualifiers",
+      "World Cup 2022 qualifying",
+      "World Cup 2022 qual.",
+      "Internationals",
+    ),
     Competition(
       "510",
       "/football/uefa-europa-league",
@@ -299,7 +329,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     extends Competitions
     with LiveMatches
     with Lineups
-    with Logging
+    with GuLogging
     with implicits.Collections
     with implicits.Football {
 
@@ -312,7 +342,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     competitionDefinitions.flatMap { compDef =>
       competitions
         .filter(_.competitionId == compDef.id)
-        .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis)
+        .sortBy(_.startDate.atStartOfDay().toLocalDate)
         .reverse
         .take(2) // Take most recent 2 seasons
         .lastOption // Use the older of these for the start date
@@ -325,11 +355,11 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
 
   override def competitions: Seq[Competition] = competitionAgents.map(_.competition)
 
-  def refreshCompetitionAgent(id: String)(implicit executionContext: ExecutionContext): Unit =
+  def refreshCompetitionAgent(id: String, clock: Clock)(implicit executionContext: ExecutionContext): Unit =
     competitionAgents
       .find { _.competition.id == id }
       .foreach { c =>
-        c.refresh()
+        c.refresh(clock)
         log.info(
           s"Completed refresh of competition '${c.competition.fullName}': currently ${c.competition.matches.length} matches",
         )
@@ -342,7 +372,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
         oldestRelevantCompetitionSeasons(allComps).foreach { season =>
           competitionAgents.find(_.competition.id == season.id).foreach { agent =>
             agent.competition.startDate match {
-              case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) =>
+              case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.atStartOfDay().toLocalDate) =>
                 log.info(
                   s"updating competition: ${season.id} season: ${season.seasonId} startDate was: ${existingStartDate.toString} now: ${season.startDate.toString}",
                 )
@@ -360,9 +390,11 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       .recover(footballClient.logErrorsWithMessage("Failed refreshing competitions data"))
   }
 
-  def refreshMatchDay()(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
+  def refreshMatchDay(
+      clock: Clock,
+  )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     log.info("Refreshing match day data")
-    val result = getLiveMatches().map(_.map {
+    val result = getLiveMatches(clock).map(_.map {
       case (compId, newMatches) =>
         competitionAgents.find(_.competition.id == compId).map { agent =>
           agent.addMatches(newMatches)

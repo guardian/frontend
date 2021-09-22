@@ -112,7 +112,7 @@ class AccountDeletionController(
         boundForm.fold(
           formWithErrors =>
             Future(
-              SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url)
+              SeeOther(routes.AccountDeletionController.renderAccountDeletionForm.url)
                 .flashing(formWithErrors.toFlash),
             ),
           {
@@ -147,7 +147,7 @@ class AccountDeletionController(
       _ match {
         case Left(_) =>
           Future(
-            SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url)
+            SeeOther(routes.AccountDeletionController.renderAccountDeletionForm.url)
               .flashing(boundForm.withError("password", "Password is incorrect").toFlash),
           )
         case Right(_) => executeAccountDeletionStepFunction(boundForm)
@@ -168,7 +168,7 @@ class AccountDeletionController(
         _ match {
           case Left(error) =>
             logger.error(s"Account deletion failed for user ${request.user.user.id}: $error")
-            SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url).flashing(
+            SeeOther(routes.AccountDeletionController.renderAccountDeletionForm.url).flashing(
               boundForm
                 .withGlobalError(
                   "We are experiencing technical difficulties. Your account has not been deleted. Please try again later or contact Userhelp.",

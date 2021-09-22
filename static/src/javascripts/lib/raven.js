@@ -1,8 +1,6 @@
-// @flow
-
 import raven from 'raven-js';
-import config from 'lib/config';
-import { adblockInUse } from 'lib/detect';
+import config from './config';
+import { adblockInUse } from './detect';
 
 const { sentryPublicApiKey, sentryHost } = config.get('page', {});
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
@@ -40,7 +38,7 @@ const sentryOptions = {
         'Fetch error while requesting https://api.nextgen.guardianapps.co.uk/weatherapi/city.json:',
     ],
 
-    dataCallback(data: Object): Object {
+    dataCallback(data) {
         const { culprit = false } = data;
         const resp = data;
         const culpritMatches = /j.ophan.co.uk/.test(data.culprit);
@@ -54,17 +52,23 @@ const sentryOptions = {
         return resp;
     },
 
-    shouldSendCallback(data: Object): boolean {
+    shouldSendCallback(data) {
         const { isDev } = config.get('page');
         const isIgnored =
             typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
         const { enableSentryReporting } = config.get('switches');
-        const isInSample = Math.random() < 0.008; // 0.8%
+        const isSentinelLoggingEvent = data?.tags?.tag === 'commercial-sentinel'
+
+        // isInSample is always true if the tag is commercial-sentinel.
+        // Otherwise, sample at .08%
+        const isInSample = isSentinelLoggingEvent
+                ? true
+                : Math.random() < 0.008;
 
         if (isDev && !isIgnored) {
             // Some environments don't support or don't always expose the console Object
             if (window.console && window.console.warn) {
-                window.console.warn('Raven captured error.', data);
+                window.console.warn('Raven captured event.', data);
             }
         }
 
@@ -73,7 +77,7 @@ const sentryOptions = {
             isInSample &&
             !isIgnored &&
             !adblockBeingUsed &&
-            !isDev
+            (!isDev || isSentinelLoggingEvent)
         );
     },
 };

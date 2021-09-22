@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const mkdirp = require('mkdirp');
 const glob = require('glob');
-const SVGO = require('svgo');
+const { optimize, extendDefaultPlugins } = require('svgo')
 const pify = require('pify');
 
 const readFile = pify(fs.readFile);
@@ -12,13 +12,6 @@ const mkdirpp = pify(mkdirp);
 
 const { src, conf } = require('../../config').paths;
 
-const svgo = new SVGO({
-    plugins: [
-        {
-            removeXMLNS: true,
-        },
-    ],
-});
 const srcDir = path.resolve(src, 'inline-svgs');
 
 module.exports = {
@@ -34,8 +27,20 @@ module.exports = {
                     .then(
                         fileData =>
                             new Promise(resolve =>
-                                svgo.optimize(fileData, resolve)
+                                resolve(optimize(fileData, {
+                                    plugins: extendDefaultPlugins([
+                                        {
+                                            name: 'removeXMLNS',
+                                            active: true,
+                                        },
+                                        {
+                                            name: 'removeViewBox',
+                                            active: false,
+                                        },
+                                    ]),
+                                })
                             )
+                        )
                     )
                     .then(optimisedFileData =>
                         writeFile(dest, optimisedFileData.data)

@@ -21,13 +21,17 @@
     /* ---------------- HEADER ------------------- */
 
     section.flagship-audio {
-        background-color: #f0dbbc;
+        background: rgb(8, 43, 97);
+        background: linear-gradient(0deg, rgba(8, 43, 97, 1) 0%, rgba(36, 112, 163, 1) 100%);
         padding: 0;
 
         .flagship-audio__thrasher {
             width: 100%;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
             .flagship-audio__content {
                 padding-top: $gs-baseline/2;
             }
@@ -36,6 +40,7 @@
             .flagship-audio__logo {
                 position: absolute;
                 top: $gs-baseline/2;
+
 
                 @include mq($until: mobileLandscape) {
                     right: 0;
@@ -55,6 +60,13 @@
                         transform: scale(.8);
                     }
                 }
+                @include mq($from: desktop) {
+                    right: 10px;
+                    width: 115px;
+                }
+                @include mq($from: wide) {
+                    right: 90px;
+                }
             }
 
 
@@ -70,19 +82,21 @@
                 display: flex;
                 flex-direction: row;
 
+                margin-left: 0;
+
 
                 &::before {
                     display: none;
-                    @include mq($from: leftCol) {
-                        display: block;
-                        content: '';
-                        position: relative;
-                        width: 1px;
-                        background-color: rgba(0, 0, 0, .1);
-                        top: 0;
-                        bottom: 0;
-                        left: -10px;
-                    }
+                    // @include mq($from: leftCol) {
+                    //     display: block;
+                    //     content: '';
+                    //     position: relative;
+                    //     width: 1px;
+                    //     background-color:white;
+                    //     top: 0;
+                    //     bottom: 0;
+                    //     left: -10px;
+                    // }
                 }
 
                 @include mq($until: desktop) {
@@ -93,7 +107,8 @@
 
                 .flagship-audio__description,
                 .flagship-audio__title {
-                    max-width: 460px;
+                    color: #ffffff;
+                    max-width: 330px;
                 }
 
                 .flagship-audio__description {
@@ -101,20 +116,23 @@
                     padding-top: 6px;
                     margin-top: 2px;
                     margin-bottom: 2px;
+                    @include mq($until: mobileMedium) {
+                        font-size: 15px;
+                        line-height: 135%;
+                    }
                 }
 
                 .flagship-audio__title {
                     @include fs-headline(8, true);
                     font-weight: 700;
-                    color: #000000;
+                    color: #ffffff;
                     margin-bottom: 0;
-
-                    .red-highlight {
-                        color: #ff6a56;
-                    }
 
                     @include mq($from: mobile, $until: phablet) {
                         @include fs-headline(6, true);
+                    }
+                    @include mq($until: mobileMedium) {
+                        max-width: 60%;
                     }
                 }
 
@@ -138,6 +156,12 @@
                     bottom: 0;
                     z-index: 8;
                 }
+                @include mq($from: desktop) {
+                    right: 20px;
+                }
+                @include mq($from: wide) {
+                    right: 100px;
+                }
                 .artwork-holder {
                     width: 100%;
                     top: 0;
@@ -159,6 +183,12 @@
                         @include mq($until: phablet) {
                             width: 100%;
                         }
+                        path {
+                            fill: #ff00f0;
+                            &:nth-child(2) {
+                                fill: #0a3168;
+                            }
+                        }
                     }
 
                 }
@@ -177,7 +207,7 @@
     .flagship-audio__content-buttons {
         list-style: none;
         line-height: 1;
-        padding: $gs-baseline*2 0 5px;
+        padding: 40px 0 5px;
         background-color: transparent;
         color: $brightness-7;
         overflow: auto;
@@ -187,11 +217,21 @@
         @include mq($until: phablet) {
             display: none;
         }
+
+        .flagship-audio__link-wrapper {
+            display: flex;
+            flex-direction: row;
+        }
         .flagship-audio__subscribe-label {
+            @include fs-textSans(1);
             margin-bottom: 6px;
-            color: $brightness-20;
+            color: #ffffff;
             font-weight: 800;
             font-size: 17px;
+            @include mq($from: phablet) {
+                padding-top: 10px;
+                margin-right: 8px;
+            }
         }
     }
 
@@ -199,8 +239,8 @@
         @include fs-textSans(1);
         align-items: center;
         display: inline-flex;
-        background-color: $brightness-20;
-        color: $brightness-100;
+        border: 1px solid #ffffff;
+        color: #ffffff;
         padding: 10px 12px;
         border-radius: 20px;
         font-weight: 600;
@@ -217,7 +257,7 @@
         text-decoration: none;
 
         .flagship-audio__button {
-            background-color: $brightness-7;
+            background-color: rgba(255, 255, 255, .15);
         }
     }
 
@@ -234,7 +274,10 @@
                 display: block;
                 background-color: #121212;
                 margin: 0;
-                padding: $gs-gutter/4 $gs-gutter;
+                padding: 4px 10px;
+                @include mq($from: mobileLandscape) {
+                    padding: 4px 20px;
+                }
 
                 .flagship-audio__subscribe-label {
                     color: $brightness-100;

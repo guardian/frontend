@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
@@ -70,7 +69,12 @@ module.exports = {
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
+            lodash: 'lodash-es',
+            "react": "preact/compat",
+            "react-dom/test-utils": "preact/test-utils",
+            "react-dom": "preact/compat",
         },
+        extensions: ['.js', '.ts', '.tsx', '.jsx'],
         symlinks: false, // Inserted to enable linking @guardian/consent-management-platform
     },
     resolveLoader: {
@@ -92,7 +96,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /(\.js)|(\.mjs)$/,
+                test: /\.[jt]sx?|mjs$/,
                 exclude: [
                     {
                         test: /node_modules/,
@@ -103,7 +107,17 @@ module.exports = {
                     },
                     path.resolve(__dirname, 'static/vendor'),
                 ],
-                loader: 'babel-loader',
+                use: [
+                    {
+                        loader: 'babel-loader',
+                    },
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                        },
+                    },
+                ]
             },
             {
                 test: /\.svg$/,
@@ -111,10 +125,9 @@ module.exports = {
                 loader: 'svg-loader',
             },
             {
-                include: path.resolve(__dirname, 'node_modules/preact-x'),
-                resolve: {
-                    alias: { preact: 'preact-x' },
-                },
+                test: /\.(html|css)$/,
+                exclude: /(node_modules)/,
+                loader: 'raw-loader',
             },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This

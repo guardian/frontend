@@ -1,4 +1,3 @@
-// @flow
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 import videojs from 'videojs';
@@ -10,8 +9,8 @@ import template from 'lodash/template';
 import events from 'common/modules/video/events';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { inlineSvg } from 'common/views/svgs';
-import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
-import titlebarTmpl from 'raw-loader!common/views/media/titlebar.html';
+import loadingTmpl from 'common/views/ui/loading.html';
+import titlebarTmpl from 'common/views/media/titlebar.html';
 import debounce from 'lodash/debounce';
 import videojsOptions from 'common/modules/video/videojs-options';
 
@@ -21,14 +20,14 @@ import videojsOptions from 'common/modules/video/videojs-options';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
 
-const initLoadingSpinner = (player: any): void => {
+const initLoadingSpinner = (player) => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
 };
 
-const createVideoPlayer = (el: HTMLVideoElement, options: Object): any =>
+const createVideoPlayer = (el, options) =>
     videojs(el, options);
 
-const addTitleBar = (): void => {
+const addTitleBar = () => {
     const data = {
         webTitle: config.get('page.webTitle'),
         pageId: config.get('page.pageId'),
@@ -37,7 +36,7 @@ const addTitleBar = (): void => {
     $('.vjs-control-bar').after(template(titlebarTmpl)(data));
 };
 
-const initPlayer = (): void => {
+const initPlayer = () => {
     videojs.plugin('fullscreener', fullscreener);
 
     bonzo(qwery('.js-gu-media--enhance')).each(el => {

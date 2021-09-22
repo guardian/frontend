@@ -76,7 +76,7 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
 
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
-  lazy val initialSettings: Map[String, AnyRef] = Map(
+  lazy val settings: Map[String, AnyRef] = Map(
     ("application.secret", "this_is_not_a_real_secret_just_for_tests"),
     ("guardian.projectName", "test-project"),
     ("ws.compressionEnabled", Boolean.box(true)),
@@ -87,13 +87,13 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
 
   implicit override lazy val app: Application = {
     val environment = Environment.simple()
-    val settings = Try(this.getClass.getClassLoader.loadClass("TestAppLoader")) match {
-      case Success(_) => initialSettings + ("play.application.loader" -> "TestAppLoader")
-      case Failure(_) => initialSettings
+    val settings2 = Try(this.getClass.getClassLoader.loadClass("TestAppLoader")) match {
+      case Success(_) => settings + ("play.application.loader" -> "TestAppLoader")
+      case Failure(_) => settings
     }
-    val context = ApplicationLoader.createContext(
+    val context = ApplicationLoader.Context.create(
       environment = environment,
-      initialSettings = settings,
+      initialSettings = settings2,
     )
     ApplicationLoader.apply(context).load(context)
   }

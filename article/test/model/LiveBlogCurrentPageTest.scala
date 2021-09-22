@@ -25,7 +25,8 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
   def fakeBlocks(number: Int): List[BodyBlock] = Range(number, 0, -1).map(fakeBlock).toList
 
   "LiveBlogPageModel" should "allow 1 block on one page" in {
-    val result = LiveBlogCurrentPage.firstPage(2, Blocks(1, Nil, None, Map(Canonical.firstPage -> Seq(fakeBlock(1)))))
+    val result =
+      LiveBlogCurrentPage.firstPage(2, Blocks(1, Nil, None, Map(CanonicalLiveBlog.firstPage -> Seq(fakeBlock(1)))))
 
     result should be(Some(LiveBlogCurrentPage(currentPage = FirstPage(Seq(fakeBlock(1))), pagination = None)))
 
@@ -44,7 +45,12 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     val blocks = fakeBlocks(3)
     val result = LiveBlogCurrentPage.firstPage(
       2,
-      Blocks(3, Nil, None, Map(Canonical.firstPage -> blocks.take(4), Canonical.oldestPage -> blocks.lastOption.toSeq)),
+      Blocks(
+        3,
+        Nil,
+        None,
+        Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
+      ),
     )
 
     should(result, FirstPage(blocks), None)
@@ -55,7 +61,12 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     val blocks = fakeBlocks(4)
     val result = LiveBlogCurrentPage.firstPage(
       2,
-      Blocks(4, Nil, None, Map(Canonical.firstPage -> blocks.take(4), Canonical.oldestPage -> blocks.lastOption.toSeq)),
+      Blocks(
+        4,
+        Nil,
+        None,
+        Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
+      ),
     )
 
     val expected = blocks.take(2)
@@ -119,7 +130,12 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     val blocks = fakeBlocks(5)
     val result = LiveBlogCurrentPage.firstPage(
       2,
-      Blocks(5, Nil, None, Map(Canonical.firstPage -> blocks.take(4), Canonical.oldestPage -> blocks.lastOption.toSeq)),
+      Blocks(
+        5,
+        Nil,
+        None,
+        Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
+      ),
     )
 
     val expectedCurrentPage = FirstPage(blocks = blocks.take(3))
@@ -163,7 +179,12 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     val blocks = fakeBlocks(6)
     val result = LiveBlogCurrentPage.firstPage(
       2,
-      Blocks(6, Nil, None, Map(Canonical.firstPage -> blocks.take(4), Canonical.oldestPage -> blocks.lastOption.toSeq)),
+      Blocks(
+        6,
+        Nil,
+        None,
+        Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
+      ),
     )
 
     val expectedCurrentPage = FirstPage(blocks = blocks.take(2))

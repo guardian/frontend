@@ -1,8 +1,9 @@
 package model.pressed
 
-import com.gu.contentapi.client.model.v1.{Content}
+import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
-import common.{HTML}
+import model.ContentFormat
+import common.HTML
 import model.content.{Atoms, MediaAtom}
 import model.{Commercial, Elements, Fields, MetaData, Pillar, SectionId, Tags, Trail}
 
@@ -42,6 +43,7 @@ object PressedStory {
         Pillar(apiContent),
         sectionId,
         apiContent.designType,
+        metadata.format,
       ),
       PressedFields(
         fields.main,

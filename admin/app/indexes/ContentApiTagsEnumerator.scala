@@ -1,6 +1,6 @@
 package indexes
 
-import common.Logging
+import common.GuLogging
 import common.StringEncodings.asAscii
 import contentapi.ContentApiClient
 
@@ -11,7 +11,7 @@ import scala.concurrent.duration._
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
 
 class ContentApiTagsEnumerator(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext)
-    extends Logging {
+    extends GuLogging {
   val DelayBetweenRetries = 100.millis
   val MaxNumberRetries = 5
   val MaxPageSize = 1000

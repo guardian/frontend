@@ -33,7 +33,7 @@ trait Strings {
     lazy val encodeURIComponent = {
       // This can be used to encode parts of a URI, eg. "example-component/uk?parameter=unsafe-chars-such-as ://+ must-be-encoded#fragment"
       // The fragment part is optional.
-      // Use encodeURI below for full URI strings like "http://theguardian.com/path with spaces".
+      // Use encodeURI below for full URI strings like "http://www.theguardian.com/path with spaces".
       URLEncoder
         .encode(s, "UTF-8")
         .replaceAll("\\+", "%20")

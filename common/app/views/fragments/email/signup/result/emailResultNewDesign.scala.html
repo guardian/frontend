@@ -1,8 +1,7 @@
-@import com.gu.identity.model.EmailEmbed
-@(listName: String,
-        emailEmbedData: EmailEmbed,
-        resultHtml: Html)(implicit request: RequestHeader)
+@import services.newsletters.NewsletterResponse
+@(listName: String, emailNewsletter: NewsletterResponse, resultHtml: Html)(implicit request: RequestHeader)
 
+@emailEmbedData = @{emailNewsletter.emailEmbed}
 @wrapperClass = @{
     "newsletter-embed newsletter-embed--result"
 }
@@ -13,10 +12,11 @@
 
 
 <div class="@wrapperClass" style="background-color: @emailEmbedData.hexCode">
-    @if(emailEmbedData.imageUrl.nonEmpty) {
+    @image = @{emailNewsletter.illustration.flatMap(_.circle)}
+    @if(image.nonEmpty) {
         <aside class="newsletter-embed__image">
             <img
-            src="@emailEmbedData.imageUrl"
+            src="@image"
             alt="@imageAltText"/>
         </aside>
     }

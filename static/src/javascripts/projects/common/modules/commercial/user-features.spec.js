@@ -1,9 +1,7 @@
-// @flow
-
-import { addCookie, removeCookie, getCookie } from 'lib/cookies';
-import fetchJson from 'lib/fetch-json';
-import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
-import config from 'lib/config';
+import { addCookie, removeCookie, getCookie } from '../../../../lib/cookies';
+import { fetchJson } from '../../../../lib/fetch-json';
+import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
+import config from '../../../../lib/config';
 import {
     refresh,
     isAdFreeUser,
@@ -11,7 +9,7 @@ import {
     isRecurringContributor,
     accountDataUpdateWarning,
     isDigitalSubscriber,
-    getLastOneOffContributionDate,
+    getLastOneOffContributionTimestamp,
     getDaysSinceLastOneOffContribution,
     isRecentOneOffContributor,
     shouldNotBeShownSupportMessaging,
@@ -19,14 +17,16 @@ import {
     isPostAskPauseOneOffContributor,
 } from './user-features.js';
 
-jest.mock('lib/raven');
+jest.mock('../../../../lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
-jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
+jest.mock('../../../../lib/fetch-json', () => ({
+	fetchJson: jest.fn(() => Promise.resolve()),
+}));
 
-const fetchJsonSpy: any = fetchJson;
-const isUserLoggedIn: any = isUserLoggedIn_;
+const fetchJsonSpy = fetchJson;
+const isUserLoggedIn = isUserLoggedIn_;
 
 const PERSISTENCE_KEYS = {
     USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
@@ -433,16 +433,16 @@ describe('Storing new feature data', () => {
         }));
 });
 
-const setSupportFrontendOneOffContributionCookie = (value: any): void =>
+const setSupportFrontendOneOffContributionCookie = (value) =>
     addCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, value);
 
-const removeSupportFrontendOneOffContributionCookie = (): void =>
+const removeSupportFrontendOneOffContributionCookie = () =>
     removeCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
 
-const setAttributesOneOffContributionCookie = (value: any): void =>
+const setAttributesOneOffContributionCookie = (value) =>
     addCookie(PERSISTENCE_KEYS.ONE_OFF_CONTRIBUTION_DATE_COOKIE, value);
 
-const removeAttributesOneOffContributionCookie = (): void =>
+const removeAttributesOneOffContributionCookie = () =>
     removeCookie(PERSISTENCE_KEYS.ONE_OFF_CONTRIBUTION_DATE_COOKIE);
 
 describe('getting the last one-off contribution date of a user', () => {
@@ -455,37 +455,37 @@ describe('getting the last one-off contribution date of a user', () => {
     const contributionDateTimeEpoch = Date.parse(contributionDate);
 
     it("returns null if the user hasn't previously contributed", () => {
-        expect(getLastOneOffContributionDate()).toBe(null);
+        expect(getLastOneOffContributionTimestamp()).toBe(null);
     });
 
     it('return the correct date if the user support-frontend contribution cookie is set', () => {
         setSupportFrontendOneOffContributionCookie(
             contributionDateTimeEpoch.toString()
         );
-        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
+        expect(getLastOneOffContributionTimestamp()).toBe(contributionDateTimeEpoch);
     });
 
     it('returns null if the cookie has been set with an invalid value', () => {
         setSupportFrontendOneOffContributionCookie('invalid value');
-        expect(getLastOneOffContributionDate()).toBe(null);
+        expect(getLastOneOffContributionTimestamp()).toBe(null);
     });
 
     it('returns the correct date if cookie from attributes is set', () => {
         setAttributesOneOffContributionCookie(contributionDate.toString());
-        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
+        expect(getLastOneOffContributionTimestamp()).toBe(contributionDateTimeEpoch);
     });
 });
 
-const setMonthlyContributionCookie = (value: any): void =>
+const setMonthlyContributionCookie = (value) =>
     addCookie(PERSISTENCE_KEYS.SUPPORT_MONTHLY_CONTRIBUTION_COOKIE, value);
 
-const setAnnualContributionCookie = (value: any): void =>
+const setAnnualContributionCookie = (value) =>
     addCookie(PERSISTENCE_KEYS.SUPPORT_ANNUAL_CONTRIBUTION_COOKIE, value);
 
-const removeMonthlyContributionCookie = (): void =>
+const removeMonthlyContributionCookie = () =>
     removeCookie(PERSISTENCE_KEYS.SUPPORT_MONTHLY_CONTRIBUTION_COOKIE);
 
-const removeAnnualContributionCookie = (): void =>
+const removeAnnualContributionCookie = () =>
     removeCookie(PERSISTENCE_KEYS.SUPPORT_ANNUAL_CONTRIBUTION_COOKIE);
 
 describe('getting the last recurring contribution date of a user', () => {

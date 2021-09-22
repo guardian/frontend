@@ -9,6 +9,7 @@ import model.{FrontProperties, RelatedContent, Tag}
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
 import model.pressed.{CollectionConfig}
 import services.CollectionConfigWithId
+import model.dotcomrendering.OnwardItem
 
 case class Series(id: String, tag: Tag, trails: RelatedContent) {
   lazy val displayName = tag.id match {
@@ -26,16 +27,14 @@ case class SeriesStoriesDCR(
 )
 
 object SeriesStoriesDCR {
-  implicit val onwardItemWrites = Json.writes[OnwardItem]
   implicit val seriesStoriesDCRWrites = Json.writes[SeriesStoriesDCR]
   def fromSeries(series: Series)(implicit request: RequestHeader): SeriesStoriesDCR = {
-    val trails = OnwardCollection.trailsToItems(series.trails.faciaItems)
     SeriesStoriesDCR(
       id = series.id,
       displayname = series.displayName,
       description = series.tag.properties.description,
       url = series.tag.properties.webUrl,
-      trails = trails,
+      trails = series.trails.faciaItems.map(OnwardItem.pressedContentToOnwardItem).take(10),
     )
   }
 }

@@ -1,7 +1,6 @@
 package common
 
 import java.util.concurrent.TimeoutException
-
 import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
@@ -17,9 +16,15 @@ import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 import model.ApplicationContext
-import http.ResultWithPreload
+import http.ResultWithPreconnectPreload
+import http.HttpPreconnections
+import renderers.{DCRLocalConnectException, DCRTimeoutException}
 
-object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results with ResultWithPreload {
+object `package`
+    extends implicits.Strings
+    with implicits.Requests
+    with play.api.mvc.Results
+    with ResultWithPreconnectPreload {
 
   def isCommercialExpiry(error: ErrorResponse): Boolean = {
     error.message == "The requested resource has expired for commercial reason."
@@ -54,9 +59,18 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
           log.info(s"Got a 410 while calling content api: $message, path: ${request.path}")
           NoCache(Gone)
       }
+
+    // Custom DCR exceptions to distinguish from CAPI/other backend errors.
+    case error: DCRLocalConnectException =>
+      throw error
+    case timeout: DCRTimeoutException =>
+      log.error(s"Got a timeout while calling DCR: ${timeout.getMessage}, path: ${request.path}", timeout)
+      NoCache(GatewayTimeout(timeout.getMessage))
+
     case timeout: TimeoutException =>
       log.error(s"Got a timeout while calling content api: ${timeout.getMessage}, path: ${request.path}", timeout)
       NoCache(GatewayTimeout(timeout.getMessage))
+
     case error =>
       log.error(s"Content api exception: ${error.getMessage}", error)
       Option(error.getCause).foreach { cause =>
@@ -129,9 +143,11 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     }
 
   def renderHtml(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = {
-    Cached(page)(RevalidatableResult.Ok(html)).withPreload(
-      Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty),
-    )(context, request)
+    Cached(page)(RevalidatableResult.Ok(html))
+      .withPreload(
+        Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty),
+      )(context, request)
+      .withPreconnect(HttpPreconnections.defaultUrls)
   }
 
   def renderJson(json: List[(String, Any)], page: model.Page)(implicit

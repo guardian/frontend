@@ -3,6 +3,7 @@ package common.facia
 import model.facia.PressedCollection
 import model.{FrontProperties, PressedPage, SeoData}
 import model.pressed._
+import model.ContentFormat
 
 object FixtureBuilder {
 
@@ -91,6 +92,7 @@ object FixtureBuilder {
         id.toString,
         cardStyle = DefaultCardstyle,
         webPublicationDateOption = None,
+        lastModifiedOption = None,
         trailText = Some("trail text"),
         mediaType = None,
         starRating = None,
@@ -125,6 +127,7 @@ object FixtureBuilder {
       enriched = None,
       supportingContent = Nil,
       cardStyle = DefaultCardstyle,
+      format = Some(ContentFormat.defaultContentFormat),
     )
   }
 }

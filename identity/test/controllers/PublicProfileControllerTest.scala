@@ -36,7 +36,6 @@ class PublicProfileControllerTest
     publicFields = PublicFields(
       displayName = Some("John Smith"),
       username = Some("John Smith"),
-      vanityUrl = Some(vanityUrl),
     ),
     dates = UserDates(
       accountCreatedDate = Some(new DateTime().minusDays(7)),
@@ -50,7 +49,6 @@ class PublicProfileControllerTest
     publicFields = PublicFields(
       displayName = Some("John Smith"),
       username = Some("John Smith"),
-      vanityUrl = Some(vanityUrl),
     ),
     dates = UserDates(
       accountCreatedDate = Some(new DateTime().minusDays(7)),
@@ -111,10 +109,6 @@ class PublicProfileControllerTest
   }
 
   "Given renderProfileFromVanityUrl is called" - Fake {
-    when(api.userFromVanityUrl(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(
-      Left(Nil),
-    )
-    when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(user))
     when(discussionApi.findDiscussionUserFilterCommented(userId)) thenReturn Future.successful(Some(discussionProfile))
 
     "with valid user Id who has commented" - {
@@ -124,12 +118,8 @@ class PublicProfileControllerTest
         status(result) should be(200)
       }
 
-      val content = contentAsString(result)
-      "then rendered profile should include username" in {
-        content should include(user.publicFields.username.get)
-      }
-      "then rendered profile should include account creation date" in {
-        content should include(s"Registered on ${user.dates.accountCreatedDate.get.toString("d MMM yyyy")}")
+      "then rendered profile should display no comments found since vanity URLs are no longer supported in IDAPI" in {
+        contentAsString(result) should include("No comments found for user")
       }
     }
 

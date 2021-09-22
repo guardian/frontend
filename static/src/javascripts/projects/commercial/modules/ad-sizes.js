@@ -1,8 +1,5 @@
-// @flow
-import type { GuAdSize } from 'commercial/types';
-
-const getAdSize = (width: number, height: number): GuAdSize => {
-    const toString = (): string =>
+const getAdSize = (width, height) => {
+    const toString = () =>
         width === height && height === 0 ? 'fluid' : `${width},${height}`;
 
     return Object.freeze({
@@ -23,7 +20,7 @@ const getAdSize = (width: number, height: number): GuAdSize => {
 
  */
 
-const adSizes: Object = {
+const adSizes = {
     // standard ad sizes
     billboard: getAdSize(970, 250),
     leaderboard: getAdSize(728, 90),

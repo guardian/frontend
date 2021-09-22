@@ -1,53 +1,39 @@
-// @flow
-
-import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
-import { onConsentChange } from '@guardian/consent-management-platform'
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
-    setupOphanView,
-    emitBeginEvent,
-    setupClickHandling,
-    submitOphanInsert,
+    getEpicMeta,
+    getViewLog,
+    getWeeklyArticleHistory,
+} from '@guardian/automat-contributions';
+import { mountDynamic } from '@guardian/automat-modules';
+import { onConsentChange } from '@guardian/consent-management-platform';
+import userPrefs from 'common/modules/user-prefs';
+import { storage } from '@guardian/libs';
+import config from '../../../../lib/config';
+import { getCookie } from '../../../../lib/cookies';
+import fastdom from '../../../../lib/fastdom-promise';
+import { fetchJson } from '../../../../lib/fetch-json';
+import { getCountryCode } from '../../../../lib/geolocation';
+import reportError from '../../../../lib/report-error';
+import { trackNonClickInteraction } from '../analytics/google';
+import { getMvtValue } from '../analytics/mvt-cookie';
+import { submitComponentEvent, submitViewEvent } from './acquisitions-ophan';
+import { setupRemoteEpicInLiveblog } from './contributions-liveblog-utilities';
+import {
     getVisitCount,
-} from 'common/modules/commercial/contributions-utilities';
-import reportError from 'lib/report-error';
-import fastdom from 'lib/fastdom-promise';
-import config from 'lib/config';
-import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import fetchJson from 'lib/fetch-json';
-import { mountDynamic } from "@guardian/automat-modules";
-import { getCookie } from 'lib/cookies';
-
+    setupOphanView,
+    submitOphanInsert,
+} from './contributions-utilities';
 import {
+    ARTICLES_VIEWED_OPT_OUT_COOKIE,
+    getLastOneOffContributionTimestamp,
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
-    ARTICLES_VIEWED_OPT_OUT_COOKIE,
-} from 'common/modules/commercial/user-features';
-import userPrefs from "common/modules/user-prefs";
+} from './user-features';
 
-type ServiceModule = {
-    url: string,
-    name: string,
-    props: {}
-};
+// See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
+export const ModulesVersion = 'v2';
 
-type Meta = {
-    abTestName: string,
-    abTestVariant: string,
-    campaignCode: string,
-    componentType: OphanComponentType,
-    products?: OphanProduct[]
-}
-
-export type BannerDataResponse = {
-    data: {
-        module: ServiceModule,
-        meta: Meta
-    }
-}
+const isHosted = config.get('page.isHosted');
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -96,13 +82,13 @@ const removeArticleCountsFromLocalStorage = () => {
 const REQUIRED_CONSENTS_FOR_ARTICLE_COUNT = [1, 3, 7];
 
 /* eslint-disable guardian-frontend/exports-last */
-export const getArticleCountConsent = (): Promise<boolean> => {
+export const getArticleCountConsent = () => {
     if (hasOptedOutOfArticleCount()) {
         return Promise.resolve(false);
     }
     return new Promise((resolve) => {
-        onConsentChange(({ ccpa, tcfv2 }) => {
-            if (ccpa) {
+        onConsentChange(({ ccpa, tcfv2 , aus}) => {
+            if (ccpa || aus) {
                 resolve(true);
             } else if (tcfv2) {
                 const hasRequiredConsents = REQUIRED_CONSENTS_FOR_ARTICLE_COUNT.every(
@@ -123,8 +109,7 @@ const buildEpicPayload = async () => {
     const ophan = config.get('ophan');
     const page = config.get('page');
 
-    // note, there is a race condition so we want to fetch this as late as possible to give a change for the geo local storage value to be set
-    const countryCode = geolocationGetSync();
+    const countryCode = getCountryCode();
 
     const tracking = {
         ophanPageId: ophan.pageViewId,
@@ -145,12 +130,14 @@ const buildEpicPayload = async () => {
         showSupportMessaging: !shouldHideSupportMessaging(),
         isRecurringContributor: isRecurringContributor(),
         lastOneOffContributionDate:
-            getLastOneOffContributionDate() || undefined,
+            getLastOneOffContributionTimestamp() || undefined,
         mvtId: getMvtValue(),
         countryCode,
-        epicViewLog: getViewLog(),
-        weeklyArticleHistory: getWeeklyArticleHistory(),
-        hasOptedOutOfArticleCount: !(await getArticleCountConsent())
+        epicViewLog: getViewLog(storage.local),
+        weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
+        hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
+        modulesVersion: ModulesVersion,
+        url: window.location.origin + window.location.pathname,
     };
 
     return {
@@ -159,10 +146,32 @@ const buildEpicPayload = async () => {
     };
 };
 
+const buildHeaderLinksPayload = () => {
+    const ophan = config.get('ophan');
+    const countryCode = getCountryCode();
+    const edition = config.get('page.edition', '');
+    return {
+        tracking: {
+            ophanPageId: ophan.pageViewId,
+            platformId: 'GUARDIAN_WEB',
+            referrerUrl: window.location.origin + window.location.pathname,
+            clientName: 'frontend',
+        },
+        targeting: {
+            showSupportMessaging: !shouldHideSupportMessaging(),
+            edition,
+            countryCode,
+            modulesVersion: ModulesVersion,
+            mvtId: getMvtValue(),
+            lastOneOffContributionDate: getLastOneOffContributionDate() || undefined,
+        },
+    };
+}
+
 export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp';   // timestamp of when we were last told not to show a RR banner
 const twentyMins = 20*60000;
 
-export const withinLocalNoBannerCachePeriod = (): boolean => {
+export const withinLocalNoBannerCachePeriod = () => {
     const item = window.localStorage.getItem(NO_RR_BANNER_TIMESTAMP_KEY);
     if (item && !Number.isNaN(parseInt(item, 10))) {
         const withinCachePeriod = (parseInt(item, 10) + twentyMins) > Date.now();
@@ -175,7 +184,7 @@ export const withinLocalNoBannerCachePeriod = (): boolean => {
     return false;
 };
 
-export const setLocalNoBannerCachePeriod = (): void =>
+export const setLocalNoBannerCachePeriod = () =>
     window.localStorage.setItem(NO_RR_BANNER_TIMESTAMP_KEY, `${Date.now()}`);
 
 const buildBannerPayload = async () => {
@@ -197,9 +206,10 @@ const buildBannerPayload = async () => {
         engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt') || undefined,
         subscriptionBannerLastClosedAt: userPrefs.get('subscriptionBannerLastClosedAt') || undefined,
         mvtId: getMvtValue(),
-        countryCode: geolocationGetSync(),
-        weeklyArticleHistory: getWeeklyArticleHistory(),
-        hasOptedOutOfArticleCount: !(await getArticleCountConsent())
+        countryCode: getCountryCode(),
+        weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
+        hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
+        modulesVersion: ModulesVersion,
     };
 
     return {
@@ -218,7 +228,7 @@ const checkResponseOk = response => {
     );
 };
 
-const getForcedVariant = (type: 'epic' | 'banner'): string | null => {
+const getForcedVariant = (type) => {
     if (URLSearchParams) {
         const params = new URLSearchParams(window.location.search);
         const value = params.get(`force-${type}`);
@@ -231,29 +241,56 @@ const getForcedVariant = (type: 'epic' | 'banner'): string | null => {
 };
 
 // TODO: add this to the client library
-const getStickyBottomBanner = (payload: {}) => {
+const getStickyBottomBanner = (payload) => {
     const isProd = config.get('page.isProd');
     const URL = isProd ? 'https://contributions.guardianapis.com/banner' : 'https://contributions.code.dev-guardianapis.com/banner';
+    const json = JSON.stringify(payload);
+
+    return fetchJson(URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: json,
+    });
+};
+
+const getPuzzlesBanner = (payload) => {
+    const isProd = config.get('page.isProd');
+    const URL = isProd ? 'https://contributions.guardianapis.com/puzzles' : 'https://contributions.code.dev-guardianapis.com/puzzles?';
     const json = JSON.stringify(payload);
 
     const forcedVariant = getForcedVariant('banner');
     const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
 
     return fetchJson(`${URL}${queryString}`, {
-        method: 'post',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
-};
+}
 
-const getEpicUrl = (contentType: string): string => {
+const getHeaderLinks = (payload) => {
+    const isProd = config.get('page.isProd');
+    const url = isProd ? 'https://contributions.guardianapis.com/header' : 'https://contributions.code.dev-guardianapis.com/header';
+    const json = JSON.stringify(payload);
+
+    const forcedVariant = getForcedVariant('header');
+    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
+
+    return fetchJson(`${url}${queryString}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: json,
+    });
+}
+
+const getEpicUrl = (contentType) => {
     const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
     return config.get('page.isDev') ?
         `https://contributions.code.dev-guardianapis.com/${path}` :
         `https://contributions.guardianapis.com/${path}`
 };
 
-const renderEpic = async (module, meta): Promise<void> => {
+const renderLiveblogEpic = async (module, meta) => {
     const component = await window.guardianPolyfilledImport(module.url);
 
     const {
@@ -265,13 +302,39 @@ const renderEpic = async (module, meta): Promise<void> => {
         campaignId
     } = meta;
 
-    emitBeginEvent(campaignId);
-    setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
+    const element = setupRemoteEpicInLiveblog(component.ContributionsLiveblogEpic, module.props);
+
+    if (element) {
+        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+        setupOphanView(
+            element,
+            abTestName,
+            abTestVariant,
+            campaignCode,
+            campaignId,
+            componentType,
+            products,
+        );
+    }
+};
+
+const renderEpic = async (module, meta) => {
+    const component = await window.guardianPolyfilledImport(module.url);
+
+    const {
+        abTestName,
+        abTestVariant,
+        componentType,
+        products = [],
+        campaignCode,
+        campaignId,
+        labels,
+    } = meta;
 
     const el = epicEl();
     mountDynamic(el, component.ContributionsEpic, module.props, true);
 
-    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode, labels);
     setupOphanView(
         el,
         abTestName,
@@ -280,15 +343,35 @@ const renderEpic = async (module, meta): Promise<void> => {
         campaignId,
         componentType,
         products,
-        abTestVariant.showTicker,
-        abTestVariant.tickerSettings,
+        labels,
     );
 };
 
-export const fetchBannerData: () => Promise<?BannerDataResponse> = async () => {
+export const fetchPuzzlesData = async () => {
+    const page = config.get('page');
     const payload = await buildBannerPayload();
+    const isPuzzlesBannerSwitchOn = config.get('switches.puzzlesBanner', false);
+    const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
 
     if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+        return null;
+    }
+
+    if (isPuzzlesBannerSwitchOn && isPuzzlesPage) {
+        return getPuzzlesBanner(payload).then(json => {
+            if (!json.data) {
+                return null;
+            }
+            return (json);
+        })
+    }
+    return null;
+}
+
+export const fetchBannerData = async () => {
+    const payload = await buildBannerPayload();
+
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent || isHosted) {
         return Promise.resolve(null);
     }
 
@@ -307,28 +390,28 @@ export const fetchBannerData: () => Promise<?BannerDataResponse> = async () => {
             return null;
         }
 
-        return (json: BannerDataResponse);
+        return (json);
     });
 };
 
-export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response) => {
-    const { module, meta } : {
-        module: ServiceModule,
-        meta: Meta
-    } = response.data;
+export const renderBanner = (response) => {
+    const { module, meta } = response.data;
     if (!module) {
         return Promise.resolve(false);
     }
 
-    // $FlowFixMe
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
+            const isPuzzlesBanner = module.name === 'PuzzlesBanner';
 
             return fastdom.mutate(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
                 container.classList.add('remote-banner');
+                if (isPuzzlesBanner) {
+                    container.classList.add('remote-banner--puzzles');
+                }
 
                 if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
@@ -338,7 +421,7 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
                     container,
                     Banner,
                     { submitComponentEvent, ...module.props},
-                    true
+                    !isPuzzlesBanner // The puzzles banner has its own CacheProvider component, and needs this to be false
                 );
             }).then(() => {
                 const {
@@ -380,11 +463,10 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         });
 };
 
-export const fetchAndRenderEpic = async (): Promise<void> => {
+export const fetchAndRenderEpic = async () => {
     const page = config.get('page');
 
-    // Liveblog epics are still selected and rendered natively
-    if (page.contentType === 'Article') {
+    if ((page.contentType === 'Article' || page.contentType === 'LiveBlog') && !isHosted) {
         try {
             const payload = await buildEpicPayload();
 
@@ -395,12 +477,53 @@ export const fetchAndRenderEpic = async (): Promise<void> => {
 
             if (json && json.data) {
                 const {module, meta} = json.data;
-                await renderEpic(module, meta);
+
+                if (page.contentType === 'Article') {
+                    await renderEpic(module, meta);
+                } else if (page.contentType === 'LiveBlog') {
+                    await renderLiveblogEpic(module, meta);
+                }
             }
 
         } catch (error) {
             console.log(`Error importing remote epic: ${error}`);
             reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
         }
+    }
+};
+
+export const fetchAndRenderHeaderLinks = async () => {
+    const requestData = buildHeaderLinksPayload();
+
+    if (!config.get('switches.remoteHeader', false)) {
+        return;
+    }
+
+    if (config.get('page.contentType') === 'Gallery') {
+        return;
+    }
+
+    try {
+        const response = await getHeaderLinks(requestData);
+        if (!response.data) {
+            return null;
+        }
+        const {module} = response.data;
+        const component = await window.guardianPolyfilledImport(module.url);
+        const Header = component.Header;
+
+        const el = document.createElement('div');
+        const container = document.querySelector('.new-header__cta-bar');
+        container.appendChild(el);
+
+        mountDynamic(
+            el,
+            Header,
+            {submitComponentEvent, ...module.props},
+            true,
+        );
+    } catch (error) {
+        console.log(`Error importing remote header: ${error}`);
+        reportError(new Error(`Error importing remote header: ${error}`), {}, false);
     }
 };

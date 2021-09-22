@@ -1,5 +1,3 @@
-// @flow
-
 // es7 polyfills not provided by pollyfill.io
 import 'core-js/modules/es7.object.get-own-property-descriptors';
 
@@ -10,9 +8,8 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import { getLocale, loadScript } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
-import { isInUsa } from 'common/modules/commercial/geo-utils';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { trackPerformance } from 'common/modules/analytics/google';
 
 // Let webpack know where to get files from
@@ -29,16 +26,17 @@ if (process.env.NODE_ENV !== 'production') {
 
 // kick off the app
 const go = () => {
-    domready(() => {
+    domready(async () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
 
         // Start CMP
         // CCPA and TCFv2
-        const browserId: ?string = getCookie('bwid') || undefined;
-        const pageViewId: ?string = config.get('ophan.pageViewId');
-        const pubData: { browserId?: ?string, pageViewId?: ?string } = {
+        const browserId = getCookie('bwid') || undefined;
+        const pageViewId = config.get('ophan.pageViewId');
+        const pubData = {
+            platform: 'next-gen',
             browserId,
             pageViewId,
         };
@@ -59,35 +57,58 @@ const go = () => {
             }
         });
 
-        if (
-            config.get('switches.auConsent', false) ||
-            config.get('tests.useAusCmpVariant') === 'variant'
-        ) {
-            cmp.init({ pubData, country: geolocationGetSync() });
-        } else {
-            cmp.init({ pubData, isInUsa: isInUsa() });
-        }
+        cmp.init({ pubData, country: await getLocale() });
 
         // 2. once standard is done, next is commercial
-        if (process.env.NODE_ENV !== 'production') {
-            window.guardian.adBlockers.onDetect.push(isInUse => {
-                const needsMessage =
-                    isInUse && window.console && window.console.warn;
-                const message =
-                    'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
-                if (needsMessage) {
-                    window.console.warn(message);
-                }
-            });
-        }
+		// Handle ad blockers
+		window.guardian.adBlockers.onDetect.push((adblockInUse) => {
+			if (!adblockInUse) return;
+
+			// For the moment we'll hide the top-above-nav slot if we detect that the user has ad blockers enabled
+			// in order to avoid showing them a large blank space.
+			// TODO improve shady pie to make better use of the slot.
+			document.querySelector('.top-banner-ad-container').style.display =
+				'none';
+
+			if (process.env.NODE_ENV !== 'production') {
+				const needsMessage =
+					adblockInUse && window.console && window.console.warn;
+				const message =
+					'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
+				if (needsMessage) {
+					window.console.warn(message);
+				}
+			}
+		});
+
+        const fakeBootCommercial = { bootCommercial: () => {} }
+		const useStandaloneBundle =
+			config.get('tests.standaloneCommercialBundleVariant', false) ===
+				'variant' ||
+			config.get(
+				'tests.standaloneCommercialBundleTrackingVariant',
+				false,
+			) === 'variant';
+		const commercialBundle = () =>
+			useStandaloneBundle
+				? loadScript(
+						config.get('page.commercialBundleUrl'),
+				  ).then(() => (fakeBootCommercial))
+				: import(
+						/* webpackChunkName: "commercial" */
+						'bootstraps/commercial'
+				  );
+
 
         // Start downloading these ASAP
+
 
         // eslint-disable-next-line no-nested-ternary
         const fetchCommercial = config.get('switches.commercial')
             ? (markTime('commercial request'),
-              import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial'))
-            : Promise.resolve({ bootCommercial: () => {} });
+              commercialBundle())
+            : Promise.resolve(fakeBootCommercial);
+
 
         const fetchEnhanced = window.guardian.isEnhanced
             ? (markTime('enhanced request'),

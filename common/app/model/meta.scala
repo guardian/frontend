@@ -3,14 +3,15 @@ package model
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.DesignType
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
+import com.gu.contentapi.client.utils.format._
+import com.gu.contentapi.client.utils.CapiModelEnrichment.{RenderingFormat, RichContent}
+import com.gu.facia.api.models.{ContentFormat => fapiContentFormat}
 import implicits.Dates.CapiRichDateTime
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
-import common.{Edition, LinkTo, Localisation, ManifestData, Pagination}
+import common.{Edition, ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
-import model.content._
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
@@ -18,11 +19,14 @@ import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
 import play.api.libs.json._
 import play.api.libs.json.JodaWrites.JodaDateTimeWrites
+import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
-import play.twirl.api.Html
 import navigation.GuardianFoundationHelper
 
 import scala.util.matching.Regex
+import utils.ShortUrls
+
+import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
 
 object Commercial {
 
@@ -54,6 +58,7 @@ object Fields {
   // For content published before then, we need handle it as we did before, taking
   // the sensitive flag to mean "don't display reader revenue asks"
   private val shouldHideReaderRevenueCutoffDate = new DateTime("2017-07-10T12:00:00.000Z")
+
   def make(apiContent: contentapi.Content): Fields = {
     Fields(
       trailText = apiContent.fields.flatMap(_.trailText),
@@ -110,7 +115,8 @@ final case class Fields(
     lang: Option[String],
     showAffiliateLinks: Option[Boolean],
 ) {
-  lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+
+  lazy val shortUrlId = ShortUrls.shortUrlToShortIdWithStartingForwardSlash(shortUrl)
   lazy val isRightToLeftLang: Boolean = lang.contains("ar")
 
   def javascriptConfig: Map[String, JsValue] = {
@@ -124,6 +130,8 @@ final case class Fields(
 
 object MetaData {
 
+  val StartDateForHttpsFacebookUrls: OffsetDateTime = OffsetDateTime.of(2021, 9, 6, 13, 0, 0, 0, ZoneOffset.UTC)
+
   def make(
       id: String,
       section: Option[SectionId],
@@ -131,6 +139,7 @@ object MetaData {
       url: Option[String] = None,
       canonicalUrl: Option[String] = None,
       pillar: Option[Pillar] = None,
+      format: Option[ContentFormat] = None,
       designType: Option[DesignType] = None,
       shouldGoogleIndex: Boolean = true,
       pagination: Option[Pagination] = None,
@@ -148,6 +157,7 @@ object MetaData {
       twitterPropertiesOverrides: Map[String, String] = Map(),
       commercial: Option[CommercialProperties] = None,
       isFoundation: Boolean = false,
+      firstPublicationDate: Option[DateTime] = None,
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -158,6 +168,7 @@ object MetaData {
       webTitle = webTitle,
       section = section,
       pillar = pillar,
+      format = format,
       designType = designType,
       adUnitSuffix = adUnitSuffix getOrElse section.map(_.value).getOrElse(""),
       canonicalUrl = canonicalUrl,
@@ -175,6 +186,8 @@ object MetaData {
       isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides,
       commercial = commercial,
+      isFoundation = isFoundation,
+      firstPublicationDate = firstPublicationDate,
     )
   }
 
@@ -183,12 +196,15 @@ object MetaData {
     val url = s"/$id"
     val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
+    val contentFormat: ContentFormat = ContentFormat(apiContent.design, apiContent.theme, apiContent.display)
+
     MetaData(
       id = id,
       url = url,
       webUrl = apiContent.webUrl,
       maybeSectionId,
       Pillar(apiContent),
+      Some(contentFormat),
       Some(apiContent.designType),
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
@@ -205,8 +221,88 @@ object MetaData {
       commercial = Some(CommercialProperties.fromContent(apiContent)),
       sensitive = fields.sensitive.getOrElse(false),
       isFoundation = Tags.make(apiContent).isFoundation,
+      firstPublicationDate = fields.firstPublicationDate,
     )
   }
+}
+
+final case class ContentFormat(
+    design: Design,
+    theme: Theme,
+    display: Display,
+)
+
+object ContentFormat {
+  lazy val defaultContentFormat: ContentFormat = {
+    ContentFormat(ArticleDesign, NewsPillar, StandardDisplay)
+  }
+
+  def fromFapiContentFormat(fapiContentFormat: fapiContentFormat): ContentFormat =
+    ContentFormat(fapiContentFormat.design, fapiContentFormat.theme, fapiContentFormat.display)
+
+  implicit val contentFormatWrites = new Writes[ContentFormat] {
+    def writes(format: ContentFormat) =
+      Json.obj(
+        "design" -> format.design.toString,
+        "theme" -> format.theme.toString,
+        "display" -> format.display.toString,
+      )
+  }
+
+  // TODO I am sure these should be in shared code, but not aware of any at time
+  //  of writing. Let's move it somewhere common in the future.
+
+  def parseDesign(s: String): Design =
+    s match {
+      case "ArticleDesign"     => ArticleDesign
+      case "MediaDesign"       => MediaDesign
+      case "ReviewDesign"      => ReviewDesign
+      case "AnalysisDesign"    => AnalysisDesign
+      case "CommentDesign"     => CommentDesign
+      case "LetterDesign"      => LetterDesign
+      case "FeatureDesign"     => FeatureDesign
+      case "LiveBlogDesign"    => LiveBlogDesign
+      case "DeadBlogDesign"    => DeadBlogDesign
+      case "RecipeDesign"      => RecipeDesign
+      case "MatchReportDesign" => MatchReportDesign
+      case "InterviewDesign"   => InterviewDesign
+      case "EditorialDesign"   => EditorialDesign
+      case "QuizDesign"        => QuizDesign
+      case "InteractiveDesign" => InteractiveDesign
+      case "PhotoEssayDesign"  => PhotoEssayDesign
+      case "PrintShopDesign"   => PrintShopDesign
+      case "ObituaryDesign"    => ObituaryDesign
+      case _                   => ArticleDesign
+    }
+
+  def parseTheme(s: String): Theme =
+    s match {
+      case "NewsPillar"         => NewsPillar
+      case "OpinionPillar"      => OpinionPillar
+      case "SportPillar"        => SportPillar
+      case "CulturePillar"      => CulturePillar
+      case "LifestylePillar"    => LifestylePillar
+      case "SpecialReportTheme" => SpecialReportTheme
+      case "Labs"               => Labs
+      case _                    => NewsPillar
+    }
+
+  def parseDisplay(s: String): Display =
+    s match {
+      case "StandardDisplay"     => StandardDisplay
+      case "ImmersiveDisplay"    => ImmersiveDisplay
+      case "ShowcaseDisplay"     => ShowcaseDisplay
+      case "NumberedListDisplay" => NumberedListDisplay
+      case "ColumnDisplay"       => ColumnDisplay
+      case _                     => StandardDisplay
+    }
+
+  val contentFormatBuilder =
+    (JsPath \ "design").read[String].map(parseDesign) and
+      (JsPath \ "theme").read[String].map(parseTheme) and
+      (JsPath \ "display").readNullable[String].map(_.map(parseDisplay).getOrElse(StandardDisplay))
+
+  implicit val contentFormatReads = contentFormatBuilder.apply(ContentFormat.apply _)
 }
 
 final case class MetaData(
@@ -215,6 +311,7 @@ final case class MetaData(
     webUrl: String,
     section: Option[SectionId],
     pillar: Option[Pillar],
+    format: Option[ContentFormat],
     designType: Option[DesignType],
     webTitle: String,
     adUnitSuffix: String,
@@ -244,6 +341,7 @@ final case class MetaData(
     isNewRecipeDesign: Boolean = false,
     sensitive: Boolean = false,
     isFoundation: Boolean = false,
+    firstPublicationDate: Option[DateTime] = None,
 ) {
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
@@ -274,6 +372,7 @@ final case class MetaData(
   // Basically it helps us understand the impact of changes and needs
   // to be an integral part of each page
   def buildNumber: String = ManifestData.build
+
   def revision: String = ManifestData.revision
 
   def javascriptConfig: Map[String, JsValue] =
@@ -290,8 +389,22 @@ final case class MetaData(
     )
 
   def opengraphProperties: Map[String, String] = {
-    // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
-    def ogUrl = webUrl.replaceFirst("^https:", "http:")
+    val shouldAdvertiseHttpsUrlToFacebook = firstPublicationDate.exists { firstPublished =>
+      // When we migrated to https in 2016 we kept all og:urls as http to preserve engagement counts.
+      // In 2021 at Facebook's request we began advertising https urls for newly published content
+      // Any page which was able to supply a known first publication date with it's page meta data can benefit from this.
+      val firstPublishedLocalDateTime = firstPublished.date.toInstant.atZone(ZoneId.systemDefault()).toLocalDateTime
+      firstPublishedLocalDateTime.isAfter(MetaData.StartDateForHttpsFacebookUrls.toLocalDateTime)
+    }
+
+    val webUrlToAdvertise = if (shouldAdvertiseHttpsUrlToFacebook) {
+      webUrl
+    } else {
+      // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
+      webUrl.replaceFirst("^https:", "http:")
+    }
+
+    def ogUrl = webUrlToAdvertise
 
     Map(
       "og:site_name" -> "the Guardian",
@@ -369,6 +482,7 @@ trait Page {
 // ContentPage objects use data from a ContentApi item to populate metadata.
 trait ContentPage extends Page {
   def item: ContentType
+
   final override val metadata = item.metadata
 
   // The order of construction is important, overrides must come last.
@@ -476,7 +590,7 @@ object IsRatio {
 /**
   * ways to access/filter the elements that make up an entity on a facia page
   *
- * designed to add some structure to the data that comes from CAPI
+  * designed to add some structure to the data that comes from CAPI
   */
 object Elements {
   def make(apiContent: contentapi.Content): Elements = {
@@ -487,6 +601,7 @@ object Elements {
     )
   }
 }
+
 final case class Elements(elements: Seq[Element]) {
   /*
   Now I know you might THINK that you want to change how we get the main picture.
@@ -524,12 +639,15 @@ final case class Elements(elements: Seq[Element]) {
   }
 
   def mainVideo: Option[VideoElement] = videos.find(_.properties.isMain)
+
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videos.videoAssets.headOption).isDefined
 
   def mainAudio: Option[AudioElement] = audios.find(_.properties.isMain)
+
   lazy val hasMainAudio: Boolean = mainAudio.flatMap(_.audio.audioAssets.headOption).isDefined
 
   def mainEmbed: Option[EmbedElement] = embeds.find(_.properties.isMain)
+
   lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embeds.embedAssets.headOption).isDefined
 
   lazy val hasMainMedia: Boolean = hasMainPicture || hasMainVideo || hasMainEmbed || hasMainAudio
@@ -602,11 +720,14 @@ object SubMetaLinks {
       tags: Tags,
       blogOrSeriesTag: Option[Tag],
       isFromTheObserver: Boolean,
-      sectionLabelLink: String,
-      sectionLabelName: String,
+      sectionLabelLink: Option[String],
+      sectionLabelName: Option[String],
   ): SubMetaLinks = {
-    val sectionLink = if (!(isImmersive && tags.isArticle)) {
-      Some(SubMetaLink(s"/$sectionLabelLink", sectionLabelName, Some("article section")))
+    val sectionLink: Option[SubMetaLink] = if (!(isImmersive && tags.isArticle)) {
+      for {
+        link <- sectionLabelLink
+        name <- sectionLabelName
+      } yield SubMetaLink(s"/$link", name, Some("article section"))
     } else None
 
     val secondaryLink = if (blogOrSeriesTag.isDefined) {
@@ -620,8 +741,8 @@ object SubMetaLinks {
     val sectionLabels = List(sectionLink, secondaryLink).flatten
     val keywordSubMetaLinks = tags.keywords
       .filterNot(_.isSectionTag)
-      .filterNot(_.name == sectionLabelName)
-      .filterNot(t => blogOrSeriesTag.exists(s => s.id == t.id))
+      .filterNot(k => sectionLabelName.contains(k.name))
+      .filterNot(t => blogOrSeriesTag.map(_.id).contains(t.id))
       .take(6)
       .map(tag => SubMetaLink(tag.metadata.url, makeKeywordName(tag, tags.keywords), Some(s"keyword: ${tag.id}")))
 
@@ -692,16 +813,28 @@ final case class Tags(tags: List[Tag]) {
   lazy val isQuiz: Boolean = tones.exists(_.id == Tags.quizzes)
   lazy val isFoundation: Boolean = tags.exists(t => GuardianFoundationHelper.tagIdIsGuardianFoundation(t.id))
 
-  lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
+  lazy val isArticle: Boolean = tags.exists {
+    _.id == Tags.Article
+  }
   lazy val isSudoku: Boolean =
-    tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
-  lazy val isGallery: Boolean = tags.exists { _.id == Tags.Gallery }
-  lazy val isVideo: Boolean = tags.exists { _.id == Tags.Video }
-  lazy val isPoll: Boolean = tags.exists { _.id == Tags.Poll }
+    tags.exists {
+      _.id == Tags.Sudoku
+    } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
+  lazy val isGallery: Boolean = tags.exists {
+    _.id == Tags.Gallery
+  }
+  lazy val isVideo: Boolean = tags.exists {
+    _.id == Tags.Video
+  }
+  lazy val isPoll: Boolean = tags.exists {
+    _.id == Tags.Poll
+  }
   lazy val isImageContent: Boolean = tags.exists { tag =>
     List("type/cartoon", "type/picture", "type/graphic").contains(tag.id)
   }
-  lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
+  lazy val isInteractive: Boolean = tags.exists {
+    _.id == Tags.Interactive
+  }
 
   lazy val hasLargeContributorImage: Boolean =
     tagsOfType("Contributor").exists(_.properties.contributorLargeImagePath.nonEmpty)
@@ -721,7 +854,9 @@ final case class Tags(tags: List[Tag]) {
 
   lazy val isPolitics: Boolean = tags.exists(t => t.id == "politics/politics")
 
-  lazy val keywordIds: List[String] = keywords.map { _.id }
+  lazy val keywordIds: List[String] = keywords.map {
+    _.id
+  }
 
   lazy val commissioningDesks: List[String] = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
   lazy val blogOrSeriesTag: Option[Tag] = {
@@ -730,15 +865,42 @@ final case class Tags(tags: List[Tag]) {
 
   def javascriptConfig: Map[String, JsValue] =
     Map(
-      ("keywords", JsString(keywords.map { _.name }.mkString(","))),
+      (
+        "keywords",
+        JsString(
+          keywords
+            .map {
+              _.name
+            }
+            .mkString(","),
+        ),
+      ),
       ("keywordIds", JsString(keywordIds.mkString(","))),
-      ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
+      (
+        "nonKeywordTagIds",
+        JsString(
+          nonKeywordTags
+            .map {
+              _.id
+            }
+            .mkString(","),
+        ),
+      ),
       ("richLink", JsString(richLink.getOrElse(""))),
       ("author", JsString(contributors.map(_.name).mkString(","))),
       ("authorIds", JsString(contributors.map(_.id).mkString(","))),
       ("tones", JsString(tones.map(_.name).mkString(","))),
       ("toneIds", JsString(tones.map(_.id).mkString(","))),
-      ("blogs", JsString(blogs.map { _.name }.mkString(","))),
+      (
+        "blogs",
+        JsString(
+          blogs
+            .map {
+              _.name
+            }
+            .mkString(","),
+        ),
+      ),
       ("blogIds", JsString(blogs.map(_.id).mkString(","))),
       ("commissioningDesks", JsString(commissioningDesks.mkString(","))),
     )
@@ -798,7 +960,10 @@ object Tags {
   val CommissioningDesk: Regex = """tracking/commissioningdesk/(.*)""".r
 
   def make(apiContent: contentapi.Content): Tags = {
-    Tags(apiContent.tags.toList map { Tag.make(_) })
+    Tags(apiContent.tags.toList map {
+      Tag.make(_)
+    })
   }
+
   implicit val tagsWrites: Writes[Tags] = Json.writes[Tags]
 }

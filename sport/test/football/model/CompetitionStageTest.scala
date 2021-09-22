@@ -3,7 +3,7 @@ package football.model
 import org.scalatest._
 import pa.{Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
-import org.joda.time.DateTime
+import java.time.ZonedDateTime
 import implicits.Collections
 import test._
 
@@ -204,7 +204,7 @@ import test._
       }
 
       "will create a spider if a suitable ordering is available" in {
-        val matchDates = List(DateTime.now, DateTime.now.plusDays(1))
+        val matchDates = List(ZonedDateTime.now, ZonedDateTime.now.plusDays(1))
         val orderings = Map("1" -> matchDates)
         val stages = competitionStage.stagesFromCompetition(tournament, orderings)
         stages(0) should be(instanceOf[KnockoutSpider])

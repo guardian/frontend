@@ -321,6 +321,34 @@
         display: none;
     }
 }
+.football-groups {
+    .football-group-embed {
+        @include mq($from: tablet) {
+            width: 100%;
+        }
+
+        .football-group__matches {
+            @include mq($from: tablet) {
+                border-top: 0; // style, colour, width
+            }
+        }
+    }
+}
+
+.football-group__container-embed {
+    @include mq($from: tablet) {
+        display: flex;
+        margin-bottom: 0;
+        .football-group__matches {
+            flex: 2 1 auto;
+        }
+
+        .football-group__table {
+            flex: 1 1 auto;
+        }
+    }
+}
+
 
 /* ==========================================================================
    Knockout chart (Desktop only)

@@ -1,5 +1,3 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 import { fixSecondaryColumn, _ } from './fix-secondary-column';
 
@@ -34,8 +32,8 @@ describe('fixSecondaryColumn when there is no showcase element', () => {
 
     it('should do nothing if a showcase element does not exist', () => {
         fixSecondaryColumn();
-        // $FlowFixMe: This is a test and it will not be null.
-        const col: HTMLElement = document.querySelector('.js-secondary-column');
+        
+        const col = document.querySelector('.js-secondary-column');
         expect(col.style.paddingTop).toBe('');
     });
 });
@@ -66,8 +64,8 @@ describe('fixSecondaryColumn when showcase element is present', () => {
                 fixSecondaryColumn();
             })
             .then(() => {
-                // $FlowFixMe: This is a test and it will not be null.
-                const secondaryCol: HTMLElement = document.querySelector(
+                
+                const secondaryCol = document.querySelector(
                     '.js-secondary-column'
                 );
                 expect(secondaryCol.style.paddingTop).toEqual('880px');

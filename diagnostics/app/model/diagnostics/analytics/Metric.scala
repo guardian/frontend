@@ -1,9 +1,9 @@
 package model.diagnostics.analytics
 
-import common.Logging
+import common.GuLogging
 import metrics.CountMetric
 
-object Metric extends Logging {
+object Metric extends GuLogging {
 
   val namespace = "Diagnostics"
 

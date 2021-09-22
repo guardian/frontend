@@ -3,7 +3,8 @@ package cricket.conf
 import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
 import jobs.CricketStatsJob
-import org.joda.time.LocalDate
+
+import java.time.LocalDate
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.duration._

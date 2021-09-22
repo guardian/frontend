@@ -1,12 +1,11 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 
-const timeouts: Array<TimeoutID> = [];
+const timeouts = [];
 
 const checkboxShouldUpdate = (
-    checkedValue: boolean,
-    originallyCheckedValue: string
-): boolean => {
+    checkedValue,
+    originallyCheckedValue
+) => {
     if (
         (originallyCheckedValue === 'false' && checkedValue === true) ||
         (originallyCheckedValue === 'true' && checkedValue === false)
@@ -16,7 +15,7 @@ const checkboxShouldUpdate = (
     return false;
 };
 
-const updateDataLink = (labelEl: HTMLElement, checked): Promise<any> =>
+const updateDataLink = (labelEl, checked) =>
     fastdom.mutate(() => {
         labelEl.dataset.linkName = labelEl.dataset.linkNameTemplate.replace(
             '[action]',
@@ -24,10 +23,10 @@ const updateDataLink = (labelEl: HTMLElement, checked): Promise<any> =>
         );
     });
 
-export const bindAnalyticsEventsOnce = (labelEl: HTMLElement): Promise<any> =>
+export const bindAnalyticsEventsOnce = (labelEl) =>
     fastdom
-        .measure((): ?HTMLElement => labelEl.querySelector('input'))
-        .then((checkboxEl: HTMLInputElement) => {
+        .measure(() => labelEl.querySelector('input'))
+        .then((checkboxEl) => {
             if (!labelEl.dataset.updateDataLinkBound) {
                 labelEl.addEventListener('change', () => {
                     updateDataLink(labelEl, checkboxEl.checked);
@@ -37,12 +36,12 @@ export const bindAnalyticsEventsOnce = (labelEl: HTMLElement): Promise<any> =>
             }
         });
 
-export const getInfo = (labelEl: HTMLElement): Promise<any> =>
+export const getInfo = (labelEl) =>
     bindAnalyticsEventsOnce(labelEl)
         .then(() =>
-            fastdom.measure((): ?HTMLElement => labelEl.querySelector('input'))
+            fastdom.measure(() => labelEl.querySelector('input'))
         )
-        .then((checkboxEl: HTMLInputElement) => {
+        .then((checkboxEl) => {
             if (!labelEl.dataset.updateDataLinkBound) {
                 labelEl.addEventListener('change', () => {
                     updateDataLink(labelEl, checkboxEl.checked);
@@ -52,7 +51,7 @@ export const getInfo = (labelEl: HTMLElement): Promise<any> =>
             }
             return checkboxEl;
         })
-        .then((checkboxEl: HTMLInputElement) => ({
+        .then((checkboxEl) => ({
             checked: checkboxEl.checked,
             name: checkboxEl.name,
             shouldUpdate: checkboxShouldUpdate(
@@ -61,19 +60,19 @@ export const getInfo = (labelEl: HTMLElement): Promise<any> =>
             ),
         }));
 
-export const flip = (labelEl: HTMLElement): Promise<any> =>
+export const flip = (labelEl) =>
     fastdom
-        .measure((): ?HTMLElement => labelEl.querySelector('input'))
-        .then((checkboxEl: HTMLInputElement) => {
+        .measure(() => labelEl.querySelector('input'))
+        .then((checkboxEl) => {
             fastdom.mutate(() => {
                 checkboxEl.checked = !checkboxEl.checked;
             });
         });
 
 export const addSpinner = (
-    labelEl: HTMLElement,
-    latencyTimeout: number = 500
-): Promise<any> =>
+    labelEl,
+    latencyTimeout = 500
+) =>
     fastdom
         .mutate(() => {
             labelEl.classList.add('is-updating');
@@ -96,7 +95,7 @@ export const addSpinner = (
                 .toString();
         });
 
-export const removeSpinner = (labelEl: HTMLElement): Promise<any> =>
+export const removeSpinner = (labelEl) =>
     fastdom.mutate(() => {
         if (document.body) document.body.classList.remove('is-updating-cursor');
         if (document.body) document.body.classList.remove('is-updating-js');

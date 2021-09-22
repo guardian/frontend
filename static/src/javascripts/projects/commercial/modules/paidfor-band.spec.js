@@ -1,15 +1,13 @@
-// @flow
-
-import { Sticky } from 'common/modules/ui/sticky';
+import { Sticky } from '../../common/modules/ui/sticky';
 import { init } from './paidfor-band';
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         paidforBand: true,
     },
 }));
 
-jest.mock('common/modules/ui/sticky', () => ({
+jest.mock('../../common/modules/ui/sticky', () => ({
     Sticky: class {},
 }));
 
@@ -22,7 +20,7 @@ describe('Paid for band', () => {
         if (document.body) {
             document.body.innerHTML = '<div class="paidfor-band"></div>';
         }
-        (Sticky.prototype: any).init = jest.fn();
+        (Sticky.prototype).init = jest.fn();
 
         return init().then(() => {
             expect(Sticky.prototype.init).toHaveBeenCalled();

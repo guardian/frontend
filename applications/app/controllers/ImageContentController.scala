@@ -29,7 +29,7 @@ class ImageContentController(
     extends BaseController
     with RendersItemResponse
     with ImageQuery
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderJson(path: String): Action[AnyContent] = render(path)

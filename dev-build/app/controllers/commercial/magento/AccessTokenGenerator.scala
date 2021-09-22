@@ -6,9 +6,9 @@ import play.api.libs.oauth._
 import play.api.mvc._
 
 /**
- * For one-off generation of Magento access tokens.
- * The bookshop is a Magento service.
- */
+  * For one-off generation of Magento access tokens.
+  * The bookshop is a Magento service.
+  */
 class AccessTokenGenerator(val controllerComponents: ControllerComponents) extends BaseController {
 
   private lazy val authService = for {
@@ -17,52 +17,55 @@ class AccessTokenGenerator(val controllerComponents: ControllerComponents) exten
     consumerSecret <- Configuration.commercial.magento.consumerSecret
     authorizationPath <- Configuration.commercial.magento.authorizationPath
   } yield {
-    OAuth(ServiceInfo(
-      requestTokenURL = s"https://$domain/oauth/initiate",
-      accessTokenURL = s"https://$domain/oauth/token",
-      authorizationURL = s"https://$domain/$authorizationPath",
-      key = ConsumerKey(consumerKey, consumerSecret)),
-      use10a = true)
+    OAuth(
+      ServiceInfo(
+        requestTokenURL = s"https://$domain/oauth/initiate",
+        accessTokenURL = s"https://$domain/oauth/token",
+        authorizationURL = s"https://$domain/$authorizationPath",
+        key = ConsumerKey(consumerKey, consumerSecret),
+      ),
+      use10a = true,
+    )
   }
 
   private val unavailable: Result = ServiceUnavailable("Missing properties.")
 
-  def generate: Action[AnyContent] = Action { implicit request =>
-
-    def genRequestToken(): Result = {
-      authService.fold(unavailable) { auth =>
-        val callbackUrl = routes.AccessTokenGenerator.generate().absoluteURL()
-        auth.retrieveRequestToken(callbackUrl) match {
-          case Right(t) =>
-            Redirect(auth.redirectUrl(t.token)).withSession("token" -> t.token, "secret" -> t.secret)
-          case Left(e) => throw e
+  def generate: Action[AnyContent] =
+    Action { implicit request =>
+      def genRequestToken(): Result = {
+        authService.fold(unavailable) { auth =>
+          val callbackUrl = routes.AccessTokenGenerator.generate.absoluteURL()
+          auth.retrieveRequestToken(callbackUrl) match {
+            case Right(t) =>
+              Redirect(auth.redirectUrl(t.token)).withSession("token" -> t.token, "secret" -> t.secret)
+            case Left(e) => throw e
+          }
         }
       }
-    }
 
-    def requestTokenFromSession: RequestToken = {
-      (for {
-        token <- request.session.get("token")
-        secret <- request.session.get("secret")
-      } yield {
-        RequestToken(token, secret)
-      }).get
-    }
+      def requestTokenFromSession: RequestToken = {
+        (for {
+          token <- request.session.get("token")
+          secret <- request.session.get("secret")
+        } yield {
+          RequestToken(token, secret)
+        }).get
+      }
 
-    def genAccessToken(tokenPair: RequestToken, verifier: String): Result = {
-      authService.fold(unavailable) { auth =>
-        auth.retrieveAccessToken(tokenPair, verifier) match {
-          case Left(e) => throw e
-          case Right(accessToken) =>
-            Ok(s"Token: ${accessToken.token}\nSecret: ${accessToken.secret}").withSession()
+      def genAccessToken(tokenPair: RequestToken, verifier: String): Result = {
+        authService.fold(unavailable) { auth =>
+          auth.retrieveAccessToken(tokenPair, verifier) match {
+            case Left(e) => throw e
+            case Right(accessToken) =>
+              Ok(s"Token: ${accessToken.token}\nSecret: ${accessToken.secret}").withSession()
+          }
         }
       }
+
+      val result = request.getQueryString("oauth_verifier") map { verifier =>
+        genAccessToken(requestTokenFromSession, verifier)
+      } getOrElse genRequestToken()
+
+      NoCache(result)
     }
-
-    val result = request.getQueryString("oauth_verifier") map { verifier =>
-      genAccessToken(requestTokenFromSession, verifier)
-    } getOrElse genRequestToken()
-
-    NoCache(result)
-  }
 }

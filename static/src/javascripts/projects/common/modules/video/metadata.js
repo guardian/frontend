@@ -1,15 +1,8 @@
-// @flow
-
 import config from 'lib/config';
-import fetch from 'lib/fetch';
-import fetchJSON from 'lib/fetch-json';
+import { fetchJson } from 'lib/fetch-json';
 
-declare type VideoInfo = {
-    expired: boolean,
-    shouldHideAdverts: boolean,
-};
 
-const isGeoBlocked = (el: HTMLMediaElement): Promise<boolean> => {
+const isGeoBlocked = (el) => {
     const source = el.currentSrc;
 
     // we currently only block to the uk
@@ -28,11 +21,11 @@ const isGeoBlocked = (el: HTMLMediaElement): Promise<boolean> => {
     });
 };
 
-const getVideoInfo = (el: HTMLMediaElement): Promise<VideoInfo> => {
+const getVideoInfo = (el) => {
     const dataset = el.dataset;
     const embedPath = dataset.embedPath;
     const canonicalUrl = dataset.canonicalUrl || (embedPath || null);
-    const defaultVideoInfo: VideoInfo = {
+    const defaultVideoInfo = {
         expired: false,
         shouldHideAdverts: dataset.blockVideoAds !== 'false',
     };
@@ -46,7 +39,7 @@ const getVideoInfo = (el: HTMLMediaElement): Promise<VideoInfo> => {
     const url = `${config.get('page.ajaxUrl')}/${canonicalUrl}/info.json`;
 
     return new Promise(resolve => {
-        fetchJSON(url, {
+        fetchJson(url, {
             mode: 'cors',
         })
             .then(resolve)

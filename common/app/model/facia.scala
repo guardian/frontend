@@ -2,7 +2,7 @@ package model
 
 import com.gu.commercial.branding.Branding
 import common.commercial.{CommercialProperties, EditionBranding}
-import common.{Edition, Logging}
+import common.{Edition, GuLogging}
 import play.api.libs.json.Json
 
 case class SeoDataJson(
@@ -15,7 +15,7 @@ case class SeoDataJson(
 
 case class SeoData(id: String, navSection: String, webTitle: String, title: Option[String], description: Option[String])
 
-object SeoData extends Logging {
+object SeoData extends GuLogging {
   implicit val seoFormatter = Json.format[SeoData]
 
   val editions = Edition.all.map(_.id.toLowerCase)
@@ -54,6 +54,7 @@ case class FrontProperties(
     isImageDisplayed: Boolean,
     editorialType: Option[String],
     commercial: Option[CommercialProperties],
+    priority: Option[String],
 ) {
   val isPaidContent: Boolean = commercial.exists(_.isPaidContent)
 }
@@ -69,6 +70,7 @@ object FrontProperties {
     isImageDisplayed = false,
     editorialType = None,
     commercial = None,
+    priority = None,
   )
 
   def fromBranding(edition: Edition, branding: Branding): FrontProperties =

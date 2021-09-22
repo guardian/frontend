@@ -6,14 +6,18 @@ import play.api.mvc.{Handler, RequestHeader}
 import common.CanonicalLink
 import model.ApplicationContext
 import play.api.Mode.Prod
+import play.api.OptionalDevContext
+import play.core.WebCommands
 
 class DevParametersHttpRequestHandler(
+    optionalDevContext: OptionalDevContext,
+    webCommands: WebCommands,
     router: Router,
     errorHandler: HttpErrorHandler,
     configuration: HttpConfiguration,
     filters: HttpFilters,
     context: ApplicationContext,
-) extends DefaultHttpRequestHandler(router, errorHandler, configuration, filters)
+) extends DefaultHttpRequestHandler(webCommands, optionalDevContext, router, errorHandler, configuration, filters)
     with implicits.Requests {
 
   /*
@@ -49,6 +53,7 @@ class DevParametersHttpRequestHandler(
     "pbjs_debug", // set to `true` to enable prebid debugging,
     "amzn_debug_mode", // set to `1` to enable A9 debugging
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
+    "dcr",
   )
 
   val commercialParams = Seq(
@@ -86,7 +91,6 @@ class DevParametersHttpRequestHandler(
       !request.isLazyLoad &&
       !request.uri.startsWith("/oauth2callback") &&
       !request.uri.startsWith("/px.gif") && // diagnostics box
-      !request.uri.startsWith("/tech-feedback") &&
       !request.uri.startsWith("/crosswords/search") &&
       !request.uri.startsWith("/crosswords/lookup") &&
       !request.uri.startsWith(

@@ -207,23 +207,18 @@ final case class Content(
     isChildrensBookBlog || isPaidContent
   }
 
-  lazy val sectionLabelLink: String = {
+  lazy val sectionLabelLink: Option[String] = {
     if (showSectionNotTag) {
-      metadata.sectionId
+      Some(metadata.sectionId)
     } else
-      tags.tags.find(_.isKeyword) match {
-        case Some(tag) => tag.id
-        case _         => ""
-      }
+      tags.tags.find(_.isKeyword).map(_.id)
   }
 
-  lazy val sectionLabelName: String = {
-    if (this.showSectionNotTag) trail.sectionName
-    else
-      tags.tags.find(_.isKeyword) match {
-        case Some(tag) => tag.metadata.webTitle
-        case _         => ""
-      }
+  lazy val sectionLabelName: Option[String] = {
+    if (this.showSectionNotTag) {
+      Some(trail.sectionName)
+    } else
+      tags.tags.find(_.isKeyword).map(_.metadata.webTitle)
   }
 
   lazy val blogOrSeriesTag: Option[Tag] = tags.blogOrSeriesTag
@@ -286,7 +281,7 @@ final case class Content(
     val rugbyMeta = if (tags.isRugbyMatch && conf.switches.Switches.RugbyScoresSwitch.isSwitchedOn) {
       val teamIds = tags.keywords.map(_.id).collect(RugbyContent.teamNameIds)
       val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
-      val date = RugbyContent.timeFormatter.withZoneUTC().print(trail.webPublicationDate)
+      val date = RugbyContent.timeFormatter.format(Chronos.jodaDateTimeToJavaTimeDateTime(trail.webPublicationDate))
       Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
     } else None
 

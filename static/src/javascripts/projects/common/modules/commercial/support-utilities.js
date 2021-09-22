@@ -1,13 +1,10 @@
-// @flow
 import {
     countryCodeToSupportInternationalisationId,
-    getFromStorage,
-} from 'lib/geolocation';
+    getCountryCode,
+} from '../../../../lib/geolocation';
 
-// Will not change the link if there's no country code in localStorage
-// (i.e. it bypasses the edition fallback of getSync from lib/geolocation)
-const addCountryGroupToSupportLink = (rawUrl: string): string => {
-    const countryCode = getFromStorage();
+const addCountryGroupToSupportLink = (rawUrl) => {
+    const countryCode = getCountryCode();
     if (countryCode) {
         const countryGroup = countryCodeToSupportInternationalisationId(
             countryCode
@@ -26,11 +23,11 @@ const supportContributeGeoRedirectURL =
     'https://support.theguardian.com/contribute';
 const supportSubscribeGeoRedirectURL =
     'https://support.theguardian.com/subscribe';
-const supportContributeURL = (): string =>
+const supportContributeURL = () =>
     addCountryGroupToSupportLink(supportContributeGeoRedirectURL);
-const supportSubscribeURL = (): string =>
+const supportSubscribeURL = () =>
     addCountryGroupToSupportLink(supportSubscribeGeoRedirectURL);
-const supportSubscribeDigitalURL = (): string =>
+const supportSubscribeDigitalURL = () =>
     `${supportSubscribeURL()}/digital`;
 
 export {
