@@ -43,31 +43,28 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 		},
 	);
 
-	// check if ad is blocked
-	if (isBlocked && !!blockedSlotPath) {
-		// check if the slot hasn’t already been refreshed
-		if (confiantRefreshedSlots.includes(blockedSlotPath)) return;
+	// don’t run the logic if the ad is only screened
+	if (!isBlocked || !blockedSlotPath) return;
 
-		// refresh the blocked slot to get new ad
-		const advert = getAdvertById(blockedSlotPath);
+	// refresh the blocked slot to get new ad
+	const advert = getAdvertById(blockedSlotPath);
 
-		// check if the slot exists
-		if (!advert) throw new Error(`No slot found for ${blockedSlotPath}`);
+	// check if the slot exists
+	if (!advert) throw new Error(`No slot found for ${blockedSlotPath}`);
 
-		const eventTimer = new EventTimer();
-		eventTimer.mark(`${stripDfpAdPrefixFrom(advert.id)}-blockedByConfiant`);
+	const eventTimer = new EventTimer();
+	eventTimer.mark(`${stripDfpAdPrefixFrom(advert.id)}-blockedByConfiant`);
 
-		setForceSendMetrics(true);
-		captureCommercialMetrics();
+	setForceSendMetrics(true);
+	captureCommercialMetrics();
 
-		advert.slot.setTargeting('confiant', String(blockingType));
+	advert.slot.setTargeting('confiant', String(blockingType));
 
-		if (shouldRefresh()) {
-			refreshAdvert(advert);
+	if (shouldRefresh() && !confiantRefreshedSlots.includes(blockedSlotPath)) {
+		refreshAdvert(advert);
 
-			// mark it as refreshed so it won’t refresh multiple time
-			confiantRefreshedSlots.push(blockedSlotPath);
-		}
+		// mark it as refreshed so it won’t refresh multiple time
+		confiantRefreshedSlots.push(blockedSlotPath);
 	}
 };
 
