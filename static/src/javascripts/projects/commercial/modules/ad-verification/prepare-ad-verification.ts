@@ -1,3 +1,4 @@
+import { EventTimer } from '@guardian/commercial-core';
 import { loadScript, log } from '@guardian/libs';
 import { setForceSendMetrics } from '../../../common/modules/analytics/forceSendMetrics';
 import { isInVariantSynchronous } from '../../../common/modules/experiments/ab';
@@ -5,6 +6,7 @@ import { refreshConfiantBlockedAds } from '../../../common/modules/experiments/t
 import { captureCommercialMetrics } from '../../commercial-metrics';
 import { getAdvertById } from '../dfp/get-advert-by-id';
 import { refreshAdvert } from '../dfp/load-advert';
+import { stripDfpAdPrefixFrom } from '../header-bidding/utils';
 
 const errorHandler = (error: Error) => {
 	// Looks like some plugins block ad-verification
@@ -41,32 +43,31 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 		},
 	);
 
-	// check if ad is blocked and haven't refreshed the slot yet.
-	if (
-		isBlocked &&
-		!!blockedSlotPath &&
-		!confiantRefreshedSlots.includes(blockedSlotPath)
-	) {
+	// check if ad is blocked
+	if (isBlocked && !!blockedSlotPath) {
+		// check if the slot hasn’t already been refreshed
+		if (confiantRefreshedSlots.includes(blockedSlotPath)) return;
+
+		// refresh the blocked slot to get new ad
+		const advert = getAdvertById(blockedSlotPath);
+
+		// check if the slot exists
+		if (!advert) throw new Error(`No slot found for ${blockedSlotPath}`);
+
+		const eventTimer = new EventTimer();
+		eventTimer.mark(`${stripDfpAdPrefixFrom(advert.id)}-blockedByConfiant`);
+
 		setForceSendMetrics(true);
 		captureCommercialMetrics();
 
-		const slots = window.googletag?.pubads().getSlots() ?? [];
-		slots.forEach((currentSlot) => {
-			if (blockedSlotPath === currentSlot.getSlotElementId()) {
-				// refresh the blocked slot to get new ad
-				const advert = getAdvertById(blockedSlotPath);
-				if (!advert) return;
+		advert.slot.setTargeting('confiant', String(blockingType));
 
-				advert.slot.setTargeting('confiant', String(blockingType));
+		if (shouldRefresh()) {
+			refreshAdvert(advert);
 
-				if (shouldRefresh()) {
-					refreshAdvert(advert);
-
-					// mark it as refreshed so it won't refresh multiple time
-					confiantRefreshedSlots.push(blockedSlotPath);
-				}
-			}
-		});
+			// mark it as refreshed so it won’t refresh multiple time
+			confiantRefreshedSlots.push(blockedSlotPath);
+		}
 	}
 };
 
