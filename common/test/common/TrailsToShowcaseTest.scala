@@ -422,17 +422,20 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
-      trailText = Some(twoEncodedBulletItems),
+      trailText = Some("On a related article panel the trail text should become the panel description"),
       supportingContent = Seq(subLink, subLink),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(withSupportingContent)
+    val outcome = TrailsToShowcase.asSingleStoryPanel(withSupportingContent)
 
-    singleStoryPanel.left.toOption.isEmpty should be(true)
-    singleStoryPanel.right.get.articleGroup.nonEmpty shouldBe (true)
-    singleStoryPanel.right.get.articleGroup.get.role shouldBe ("RELATED_CONTENT")
-    singleStoryPanel.right.get.articleGroup.get.articles.size shouldBe (2)
-    singleStoryPanel.right.get.articleGroup.get.articles.head.title shouldBe ("A sublink")
+    outcome.left.toOption.isEmpty should be(true)
+    val singleStoryRelatedArticlesPanel = outcome.right.get
+    singleStoryRelatedArticlesPanel.articleGroup.nonEmpty shouldBe (true)
+    singleStoryRelatedArticlesPanel.articleGroup.get.role shouldBe ("RELATED_CONTENT")
+    singleStoryRelatedArticlesPanel.articleGroup.get.articles.size shouldBe (2)
+    singleStoryRelatedArticlesPanel.articleGroup.get.articles.head.title shouldBe ("A sublink")
+
+    singleStoryRelatedArticlesPanel.summary shouldBe(Some("On a related article panel the trail text should become the panel description"))
   }
 
   "TrailToShowcase" can "encode single story panel bullet lists from trailtext lines" in {

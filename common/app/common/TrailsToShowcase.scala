@@ -573,6 +573,7 @@ object TrailsToShowcase {
       published: Option[DateTime],
       updated: Option[DateTime],
       panelTitle: Option[String],
+      summary: Option[String] = None,
   ) extends Panel {
     val `type`: String = SingleStory
     def guid: String = link
