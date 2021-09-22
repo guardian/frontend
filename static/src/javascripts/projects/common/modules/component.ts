@@ -48,7 +48,7 @@ class Component {
 	updateEvery: number;
 	fetchData?: string;
 	manipulationType: ManipulationType;
-	t?: number;
+	t?: ReturnType<typeof setTimeout>;
 
 	constructor() {
 		this.useBem = false;
