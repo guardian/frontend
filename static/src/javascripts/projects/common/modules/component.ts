@@ -173,9 +173,7 @@ class Component {
 		return resp;
 	}
 
-	_ready(
-		elem?: HTMLElement | HTMLAnchorElement | HTMLInputElement | null,
-	): void {
+	_ready(elem?: HTMLElement | HTMLAnchorElement | HTMLInputElement): void {
 		if (!this.destroyed) {
 			this.rendered = true;
 			this._autoupdate();
