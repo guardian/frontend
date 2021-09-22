@@ -8,7 +8,14 @@ const { browserId } = window.guardian.config.ophan;
 let logged = false;
 const sendMetrics = (): void => {
 	if (logged) return;
-	logged = sendCommercialMetrics(pageViewId, browserId, isDev);
+	window.guardian.adBlockers.onDetect.push((adBlockInUse: boolean) => {
+		logged = sendCommercialMetrics(
+			pageViewId,
+			browserId,
+			isDev,
+			adBlockInUse,
+		);
+	});
 };
 
 const init = (): Promise<void> => {
