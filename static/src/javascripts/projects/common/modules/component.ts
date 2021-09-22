@@ -329,7 +329,7 @@ class Component {
 		return (sansDot ? '' : '.') + className;
 	}
 
-	setState(state: string, elemName: string | null): void {
+	setState(state: string, elemName?: string): void {
 		const elem = elemName ? this.getElem(elemName) : this.elem;
 
 		if (!elem || !this.componentClass) return;
@@ -341,7 +341,7 @@ class Component {
 		);
 	}
 
-	removeState(state: string, elemName: string | null): void {
+	removeState(state: string, elemName?: string): void {
 		const elem = elemName ? this.getElem(elemName) : this.elem;
 
 		if (!elem || !this.componentClass) return;
@@ -353,7 +353,7 @@ class Component {
 		);
 	}
 
-	toggleState(state: string, elemName: string | null): void {
+	toggleState(state: string, elemName?: string): void {
 		const elem = elemName ? this.getElem(elemName) : this.elem;
 
 		if (!elem || !this.componentClass) return;
@@ -365,7 +365,7 @@ class Component {
 		);
 	}
 
-	hasState(state: string, elemName: string | null): boolean {
+	hasState(state: string, elemName?: string): boolean {
 		const elem = elemName ? this.getElem(elemName) : this.elem;
 		if (!elem || !this.componentClass) return false;
 
