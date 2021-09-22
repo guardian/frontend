@@ -18,6 +18,7 @@
   "../../../../node_modules/fastdom/fastdom.js"
  ],
  "../lib/fetch-json.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.js"
  ],
  "../lib/fsm.js": [
