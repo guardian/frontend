@@ -1,0 +1,18 @@
+@(articleGroup: common.TrailsToShowcase.ArticleGroup)
+@defining(articleGroup.articles) { articles =>
+    <div class="articleGroup">
+        @for((article, index) <- articles.zipWithIndex) {
+            <a href="@article.link" target="_blank"><img src="@article.imageUrl" width="160"/></a>
+            @for(overline <- article.overline) {
+                <p class="overline">@overline</p>
+            }
+            <a href="@article.link" target="_blank"><h4>@article.title</h4></a>
+            @for(author <- article.author) {
+                <p class="author">@author</p>
+            }
+            @if(index + 1 < articles.size) {
+                <hr/>
+            }
+        }
+    </div>
+}
