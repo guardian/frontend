@@ -377,12 +377,16 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       headline = "My panel title | My unique headline",
       byline = Some("Trail byline"),
       kickerText = Some("A kicker"),
-      trailText = Some(twoEncodedBulletItems),
+      trailText = Some("Trailtext"),
       supportingContent = Seq(sublink, sublink),
     )
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
     val entry = TrailsToShowcase.asSyndEntry(singleStoryPanel)
+
+    entry.getTitle should be("My unique headline")
+    entry.getDescription.getValue should be("Trailtext")
+
     // Showcase's use of the RSS author tag is slightly off spec; they use it to pass free text where the standard is expecting an email address
     // We use a person with an email address to get the free form byline through Rome and onto the author tag
     // See https://github.com/rometools/rome/blob/001d1cca5448817a031e3746f417519652ede4e9/rome/src/main/java/com/rometools/rome/feed/synd/impl/ConverterForRSS094.java#L139
@@ -435,7 +439,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryRelatedArticlesPanel.articleGroup.get.articles.size shouldBe (2)
     singleStoryRelatedArticlesPanel.articleGroup.get.articles.head.title shouldBe ("A sublink")
 
-    singleStoryRelatedArticlesPanel.summary shouldBe(Some("On a related article panel the trail text should become the panel description"))
+    singleStoryRelatedArticlesPanel.summary shouldBe (Some(
+      "On a related article panel the trail text should become the panel description",
+    ))
   }
 
   "TrailToShowcase" can "encode single story panel bullet lists from trailtext lines" in {
@@ -476,8 +482,9 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailText = Some(bulletEncodedTrailText),
     )
 
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(bulletedContent).toOption.get
+    val outcome = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
 
+    val singleStoryPanel = outcome.toOption.get
     val bulletList = singleStoryPanel.bulletList.get
     val bulletListItems = bulletList.listItems
     bulletListItems.size should be(2)

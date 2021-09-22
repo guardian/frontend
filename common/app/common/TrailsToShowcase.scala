@@ -34,6 +34,7 @@ object TrailsToShowcase {
 
   private val MaxLengthForPanelTitle = 74
   private val MaxLengthForRundownPanelArticleTitle = 64
+  private val MaxLengthForRelatedArticlesPanelSummary = 82
 
   // Panel titles can encoded with a pipe delimiter in the trail headline.
   private val PanelTitleInHeadlineDelimiter = "\\|"
@@ -110,23 +111,46 @@ object TrailsToShowcase {
     val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
     val proposedImageUrl = singleStoryImageUrlFor(content)
 
-    val proposedBulletList =
-      content.card.trailText.map(extractBulletsFrom).getOrElse(Left(Seq("No trail text available")))
-
-    // If supporting content is present try to map into into a related articles article group
+    // Decide which type of panel to produce
+    // If supporting content is present try to map into into a related articles article group for a Related Articles panel
+    // If then try to produce a bullet item list for a Bullets panel
+    // This might get more interesting if we implement Key Moments but the principal is the same.
     val supportingContent = content match {
       case curatedContent: CuratedContent =>
         curatedContent.supportingContent // TODO showcase always deals in curated content so we can push this matching up
       case _ => Seq.empty
     }
+
+    val isRelatedArticlePanel = supportingContent.nonEmpty
     val proposedArticleGroup = {
-      if (supportingContent.nonEmpty) {
-        makeArticlesFrom(supportingContent, 2, "Related Article").fold(
-          { l =>
-            Left(l)
-          },
-          { articles: Seq[Article] =>
-            Right(Some(ArticleGroup(role = "RELATED_CONTENT", articles = articles)))
+      if (isRelatedArticlePanel) {
+        if (supportingContent.nonEmpty) {
+          makeArticlesFrom(supportingContent, 2, "Related Article").fold(
+            { l =>
+              Left(l)
+            },
+            { articles: Seq[Article] =>
+              Right(Some(ArticleGroup(role = "RELATED_CONTENT", articles = articles)))
+            },
+          )
+        } else {
+          Right(None)
+        }
+      } else {
+        // Not a related article panel so we will gracefully opt out
+        Right(None)
+      }
+    }
+
+    val proposedBulletList = {
+      if (!isRelatedArticlePanel) {
+        val value = content.card.trailText
+          .map(extractBulletsFrom)
+          .getOrElse(Left(Seq("No trail text available to create a bullet list from")))
+        value.fold(
+          { l => Left(l) },
+          { bulletList =>
+            Right(Some(bulletList))
           },
         )
       } else {
@@ -134,9 +158,32 @@ object TrailsToShowcase {
       }
     }
 
-    // Collect all mandatory values; any missing will result in a None entry
     val proposedOverline = overlineFrom(content)
 
+    val proposedSummary = {
+      if (isRelatedArticlePanel) {
+        val maybeTrailText = content.card.trailText.map(stripHtml)
+        maybeTrailText
+          .map { trailText =>
+            Right(Some(trailText))
+              .filterOrElse(_.nonEmpty, Seq("Trail text is empty"))
+              .filterOrElse(
+                _ => trailText.length <= MaxLengthForRelatedArticlesPanelSummary,
+                Seq(
+                  s"The trail text '$trailText' is longer than the " + MaxLengthForPanelTitle +
+                    " characters allowed for a summary",
+                ),
+              )
+          }
+          .getOrElse {
+            Right(None)
+          }
+      } else {
+        Right(None)
+      }
+    }
+
+    // Collect all mandatory values; any missing will result in a None entry
     val maybePanel = for {
       title <- proposedTitle.toOption
       maybePanelTitle <- proposedPanelTitle.toOption
@@ -145,6 +192,7 @@ object TrailsToShowcase {
       maybeOverline <- proposedOverline.toOption
       bulletList <- proposedBulletList.toOption
       articleGroup <- proposedArticleGroup.toOption
+      summary <- proposedSummary.toOption
     } yield {
       // Build a panel
       val published = content.card.webPublicationDateOption
@@ -155,11 +203,12 @@ object TrailsToShowcase {
         link = webUrl,
         author = bylineFrom(content),
         overline = maybeOverline,
-        bulletList = Some(bulletList),
         imageUrl = imageUrl,
         published = published,
         updated = updated,
         articleGroup = articleGroup,
+        bulletList = bulletList,
+        summary = summary,
       )
     }
 
@@ -171,9 +220,10 @@ object TrailsToShowcase {
           proposedPanelTitle,
           proposedWebUrl,
           proposedImageUrl,
-          proposedBulletList,
           proposedOverline,
           proposedArticleGroup,
+          proposedBulletList,
+          proposedSummary,
         ).flatMap(_.left.toOption).flatten,
       )
     }
@@ -498,7 +548,11 @@ object TrailsToShowcase {
     entry.setTitle(singleStoryPanel.title)
     entry.setLink(singleStoryPanel.link)
     entry.setUri(singleStoryPanel.guid)
-
+    singleStoryPanel.summary.foreach { summary =>
+      val description = new SyndContentImpl
+      description.setValue(summary)
+      entry.setDescription(description)
+    }
     val gModule = new GModuleImpl()
     gModule.setPanel(Some(singleStoryPanel.`type`))
     gModule.setPanelTitle(singleStoryPanel.panelTitle)
