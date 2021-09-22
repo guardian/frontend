@@ -18,6 +18,31 @@ class InteractiveLibrarianController(
     with GuLogging
     with ImplicitControllerExecutionContext {
 
+  def pressForm(): Action[AnyContent] =
+    Action { implicit request =>
+      Ok(views.html.pressInteractive())
+    }
+
+  /**
+    * This function combines both pressing and cleaning
+    *
+    * @param path
+    * @return success or failure, including message
+    */
+  def press(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      for {
+        _ <- InteractiveLibrarian.pressLiveContents(wsClient, path)
+      } yield {
+        val (ok, errorMsg) = InteractiveLibrarian.readCleanWrite(path)
+        if (ok) {
+          Ok("Pressed successfully!")
+        } else {
+          InternalServerError(errorMsg)
+        }
+      }
+    }
+
   def liveContentsPress(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       if (InteractiveLibrarianAdminRoutes.isSwitchedOn) {

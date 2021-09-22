@@ -441,6 +441,11 @@ case object Documentaries extends FrontEmailMetadata {
   override val banner = Some("documentaries-2.png")
 }
 
+case object TheRuralNetwork extends FrontEmailMetadata {
+  val name = "The rural network"
+  override val banner = Some("rural-network.png")
+}
+
 case object AustraliasModernOutback extends FrontEmailMetadata {
   val name = "Australia Modern Outback"
   override val banner = Some("aus-modern-outback.png")
@@ -528,6 +533,7 @@ object EmailAddons {
     WordOfMouth,
     SavedForLater,
     TheGuideStayingIn,
+    TheRuralNetwork,
     DesignReview,
     Documentaries,
     AustraliasModernOutback,

@@ -85,6 +85,12 @@ const ccpaWithConsentMock = (callback) =>
 const ccpaWithoutConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: true } });
 
+// AUS
+const ausWithConsentMock = (callback) =>
+callback({ aus: { personalisedAdvertising: true } });
+const ausWithoutConsentMock = (callback) =>
+callback({ aus: { personalisedAdvertising: false } });
+
 // TCFv2
 const tcfv2WithConsentMock = (callback) =>
     callback({
@@ -333,7 +339,6 @@ describe('Build Page Targeting', () => {
             rdp: 'na',
             consent_tcfv2: 'na',
             cmp_interaction: 'na',
-            amtgrp: '7',
         });
     });
 
@@ -529,11 +534,38 @@ describe('Build Page Targeting', () => {
     describe('ad manager group value', () => {
         const STORAGE_KEY = 'gu.adManagerGroup';
         it('if present in localstorage, use value from storage', () => {
+            onConsentChange.mockImplementation(tcfv2WithConsentMock);
+
             storage.local.setRaw(STORAGE_KEY, '10');
             expect(getPageTargeting().amtgrp).toEqual('10');
             storage.local.remove(STORAGE_KEY);
         });
+
+        it.each(
+            [
+                [ccpaWithConsentMock, '9'],
+                [ccpaWithoutConsentMock, '9'],
+
+                [ausWithConsentMock, '9'],
+                [ausWithoutConsentMock, '9'],
+
+                [tcfv2WithConsentMock, '9'],
+                [tcfv2WithoutConsentMock, undefined],
+                [tcfv2MixedConsentMock, undefined],
+                [tcfv2MixedConsentMock, undefined],
+            ]
+        )('Framework %p => amtgrp is %s', (framewok, value) => {
+                onConsentChange.mockImplementation(framewok);
+
+                storage.local.setRaw(STORAGE_KEY, '9');
+                expect(getPageTargeting().amtgrp).toEqual(value);
+                storage.local.remove(STORAGE_KEY);
+
+        })
+
         it('if not present in localstorage, generate a random group 1-12, store in localstorage', () => {
+            onConsentChange.mockImplementation(tcfv2WithConsentMock);
+
             // restore Math.random for this test so we can assert the group value range is 1-12
             jest.spyOn(global.Math, 'random').mockRestore();
             const valueGenerated = getPageTargeting().amtgrp;

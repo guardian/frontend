@@ -117,18 +117,23 @@ object InteractiveLibrarian extends GuLogging {
     val liveUrl = s"https://www.theguardian.com/${path}"
     val s3path = s"www.theguardian.com/${path}"
     val wsRequest = wsClient.url(liveUrl)
-    wsRequest.get().map { response =>
+    wsRequest.get().flatMap { response =>
       response.status match {
         case 200 => {
           val liveDocument = response.body
-          val status = commitOriginalDocumentToS3(s3path, liveDocument)
-          if (status._1) {
-            s"Live Contents S3 Pressing. Operation successful. Path: ${path}. Length: ${liveDocument.length}"
+          val (ok, errorMsg) = commitOriginalDocumentToS3(s3path, liveDocument)
+          if (ok) {
+            Future.successful(
+              s"Live Contents S3 Pressing. Operation successful. Path: ${path}. Length: ${liveDocument.length}",
+            )
           } else {
-            s"Live Contents S3 Pressing. Operation not successful. Path: ${path}. Error: ${status._2}"
+            Future.failed[String](
+              new Throwable(s"Live Contents S3 Pressing. Operation not successful. Path: ${path}. Error: ${errorMsg}"),
+            )
           }
         }
-        case non200 => s"Unexpected response from ${wsRequest.uri}, status code: $non200"
+        case non200 =>
+          Future.failed[String](new Throwable(s"Unexpected response from ${wsRequest.uri}, status code: $non200"))
       }
     }
   }
