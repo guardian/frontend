@@ -1184,11 +1184,12 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel.articleGroup.articles.forall(_.overline.isEmpty) should be(true)
   }
 
-  "TrailToShowcase validation" should "omit authors from rundown panel articles if author has not been set on all articles" in {
+  "TrailToShowcase validation" should "reject rundown panel articles if author been set on some but not all articles" in {
     val withAuthor = makePressedContent(
       webPublicationDate = wayBackWhen,
       lastModified = Some(lastModifiedWayBackWhen),
       trailPicture = Some(imageMedia),
+      headline = "Panel title | headline",
       byline = Some("An author"),
     )
     val withoutAuthor = makePressedContent(
@@ -1197,10 +1198,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       trailPicture = Some(imageMedia),
     )
 
-    val rundownPanel = TrailsToShowcase
+    val outcome = TrailsToShowcase
       .asRundownPanel(Seq(withAuthor, withAuthor, withoutAuthor), "rundown-container-id")
 
-    rundownPanel.toOption should be(None)
+    outcome.right.toOption should be(None)
+    outcome.left.get.contains("Rundown trails need to have all Kickers or all Bylines") should be(true)
   }
 
   "TrailToShowcase validation" should "choose kickers over authors" in {
