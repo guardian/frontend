@@ -136,6 +136,11 @@ interface Confiant extends Record<string, unknown> {
 	};
 }
 
+type AdBlockers = {
+	active: boolean | undefined;
+	onDetect: function[];
+};
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -144,6 +149,7 @@ interface Window {
 		queue: Array<() => Promise<void>>;
 		mustardCut?: boolean;
 		polyfilled?: boolean;
+		adBlockers: AdBlockers;
 	};
 
 	confiant?: Confiant;
