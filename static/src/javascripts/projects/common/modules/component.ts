@@ -60,7 +60,7 @@ class Component {
 	updateEvery: number;
 	fetchData?: string;
 	manipulationType: ManipulationType;
-	t?: ReturnType<typeof setTimeout>;
+	t?: number;
 
 	constructor() {
 		this.useBem = false;
@@ -196,7 +196,7 @@ class Component {
 	 */
 	_autoupdate(): void {
 		const setAutoUpdate = () => {
-			this.t = setTimeout(() => update(), this.updateEvery * 1000);
+			this.t = window.setTimeout(() => update(), this.updateEvery * 1000);
 		};
 		const update = (): void => {
 			this._fetch()
@@ -390,7 +390,7 @@ class Component {
 	 */
 	destroy(): void {
 		if (this.elem) {
-			bonzo(this.elem).remove();
+			this.elem.remove();
 			delete this.elem;
 		}
 
@@ -400,8 +400,6 @@ class Component {
 
 		this.t = undefined;
 		this.autoupdated = false;
-
-		bean.off(this.elem);
 
 		this.destroyed = true;
 		this.rendered = false;
