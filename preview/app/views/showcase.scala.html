@@ -109,6 +109,9 @@
                             @for(author <- panel.author) {
                         <p class="author">@author</p>
                         }
+                        @for(summary <- panel.summary) {
+                            <p>@summary</p>
+                        }
                         @for(bulletList <- panel.bulletList) {
                             <ul class="bulletList">
                                 @for(bullet <- bulletList.listItems) {
