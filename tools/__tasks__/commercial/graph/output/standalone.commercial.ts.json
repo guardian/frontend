@@ -320,10 +320,11 @@
   "../projects/common/modules/onward/geo-most-popular.js"
  ],
  "../projects/commercial/modules/dfp/track-ad-render.js": [
-  "../projects/commercial/modules/dfp/wait-for-advert.js"
+  "../projects/commercial/modules/dfp/wait-for-advert.ts"
  ],
- "../projects/commercial/modules/dfp/wait-for-advert.js": [
-  "../../../../node_modules/lodash-es/lodash.js",
+ "../projects/commercial/modules/dfp/wait-for-advert.ts": [
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
+  "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts"
  ],
  "../projects/commercial/modules/header-bidding/a9/a9.js": [
