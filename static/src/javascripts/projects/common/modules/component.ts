@@ -178,7 +178,7 @@ class Component {
 		return resp;
 	}
 
-	_ready(elem?: HTMLElement | HTMLAnchorElement | HTMLInputElement): void {
+	_ready(elem?: HTMLElement): void {
 		if (!this.destroyed) {
 			this.rendered = true;
 			this._autoupdate();
@@ -235,7 +235,7 @@ class Component {
 	 */
 	ready(
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- type annotation
-		elem?: HTMLElement | HTMLAnchorElement | HTMLInputElement,
+		elem?: HTMLElement,
 	): void {
 		// Meant to be overridden.
 	}
@@ -277,36 +277,44 @@ class Component {
 
 	on(
 		eventType: string,
-		elem: string | ((arg: any) => void),
-		handler?: (arg: any) => void,
+		elem: string | EventListener,
+		handler?: EventListener,
 	): Component {
 		if (typeof elem === 'function') {
 			const eventHandler = elem;
-			bean.on(this.elem, eventType, eventHandler.bind(this));
+			this.elem?.addEventListener(eventType, eventHandler.bind(this));
 		} else if (typeof handler === 'function') {
-			const selector = !elem.length ? [elem] : elem;
-			bean.on(this.elem, eventType, selector, handler.bind(this));
+			const target = this.elem?.querySelectorAll(elem);
+			target?.forEach((e) =>
+				e.addEventListener(eventType, handler.bind(this)),
+			);
 		}
 
 		return this;
 	}
 
 	emit(eventName: string, args?: unknown): void {
-		bean.fire(this.elem, eventName, args);
+		const event = args
+			? // TODO: look if this custom event is ever used / called
+			  new CustomEvent(eventName, { detail: args })
+			: new Event(eventName);
+		this.elem?.dispatchEvent(event);
 	}
 
-	getElem(elemName: string): HTMLElement | HTMLInputElement | null {
-		if (this.elems && this.elems[elemName]) {
+	getElem(elemName: string): HTMLElement | null {
+		if (this.elems?.[elemName]) {
 			return this.elems[elemName];
 		}
 
-		const elem = qwery(this.getClass(elemName), this.elem)[0];
+		const elem = this.elem?.querySelector<HTMLElement>(
+			this.getClass(elemName),
+		);
 
 		if (elem && this.elems) {
 			this.elems[elemName] = elem;
 		}
 
-		return elem;
+		return elem ?? null;
 	}
 
 	getClass(elemName: string, sansDot = false): string {
