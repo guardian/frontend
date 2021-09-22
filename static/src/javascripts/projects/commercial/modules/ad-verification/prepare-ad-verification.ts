@@ -59,9 +59,6 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 
 				advert.slot.setTargeting('confiant', String(blockingType));
 
-				setForceSendMetrics(true);
-				captureCommercialMetrics();
-
 				if (shouldRefresh()) {
 					refreshAdvert(advert);
 
