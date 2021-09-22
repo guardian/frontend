@@ -331,56 +331,49 @@ class Component {
 
 	setState(state: string, elemName: string | null): void {
 		const elem = elemName ? this.getElem(elemName) : this.elem;
-		const $elem = bonzo(elem);
 
-		if (this.componentClass) {
-			$elem.addClass(
-				`${
-					this.componentClass + (elemName ? `__${elemName}` : '')
-				}--${state}`,
-			);
-		}
+		if (!elem || !this.componentClass) return;
+
+		elem.classList.add(
+			`${
+				this.componentClass + (elemName ? `__${elemName}` : '')
+			}--${state}`,
+		);
 	}
 
 	removeState(state: string, elemName: string | null): void {
 		const elem = elemName ? this.getElem(elemName) : this.elem;
-		const $elem = bonzo(elem);
 
-		if (this.componentClass) {
-			$elem.removeClass(
-				`${
-					this.componentClass + (elemName ? `__${elemName}` : '')
-				}--${state}`,
-			);
-		}
+		if (!elem || !this.componentClass) return;
+
+		elem.classList.remove(
+			`${
+				this.componentClass + (elemName ? `__${elemName}` : '')
+			}--${state}`,
+		);
 	}
 
 	toggleState(state: string, elemName: string | null): void {
 		const elem = elemName ? this.getElem(elemName) : this.elem;
-		const $elem = bonzo(elem);
 
-		if (this.componentClass) {
-			$elem.toggleClass(
-				`${
-					this.componentClass + (elemName ? `__${elemName}` : '')
-				}--${state}`,
-			);
-		}
+		if (!elem || !this.componentClass) return;
+
+		elem.classList.toggle(
+			`${
+				this.componentClass + (elemName ? `__${elemName}` : '')
+			}--${state}`,
+		);
 	}
 
 	hasState(state: string, elemName: string | null): boolean {
 		const elem = elemName ? this.getElem(elemName) : this.elem;
-		const $elem = bonzo(elem);
+		if (!elem || !this.componentClass) return false;
 
-		if (this.componentClass) {
-			return $elem.hasClass(
-				`${
-					this.componentClass + (elemName ? `__${elemName}` : '')
-				}--${state}`,
-			);
-		}
-
-		return false;
+		return elem.classList.contains(
+			`${
+				this.componentClass + (elemName ? `__${elemName}` : '')
+			}--${state}`,
+		);
 	}
 
 	setOptions(options: Record<string, unknown>): void {
