@@ -261,7 +261,7 @@ class Component {
 		this.elem = elem;
 
 		this._prerender();
-		bonzo(oldElem).replaceWith(this.elem);
+		oldElem?.replaceWith(this.elem);
 	}
 
 	/**
