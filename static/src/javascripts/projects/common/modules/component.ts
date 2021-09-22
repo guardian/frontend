@@ -35,9 +35,9 @@ class Component {
 	templateName?: string;
 	componentClass?: string;
 	endpoint?: string | (() => string);
-	classes?: Record<string, unknown>;
-	elem?: HTMLElement | HTMLAnchorElement | HTMLInputElement;
-	elems?: Record<string, unknown>;
+	classes?: Record<string, string>;
+	elem?: HTMLElement;
+	elems?: Record<string, HTMLElement>;
 	template?: string | null;
 	rendered: boolean;
 	destroyed: boolean;
@@ -231,7 +231,7 @@ class Component {
 	 */
 	ready(
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- type annotation
-		elem: HTMLElement | HTMLAnchorElement | HTMLInputElement | null,
+		elem?: HTMLElement | HTMLAnchorElement | HTMLInputElement,
 	): void {
 		// Meant to be overridden.
 	}
@@ -305,13 +305,13 @@ class Component {
 		return elem;
 	}
 
-	getClass(elemName: string, sansDot: boolean = false): string {
-		let className;
+	getClass(elemName: string, sansDot = false): string {
+		let className: string;
 
 		if (this.useBem && this.componentClass) {
 			className = `${this.componentClass}__${elemName}`;
 		} else {
-			className = (this.classes && this.classes[elemName]) || '';
+			className = this.classes?.[elemName] ?? '';
 		}
 
 		return (sansDot ? '' : '.') + className;
@@ -393,7 +393,7 @@ class Component {
 			window.clearTimeout(this.t);
 		}
 
-		this.t = null;
+		this.t = undefined;
 		this.autoupdated = false;
 
 		bean.off(this.elem);
