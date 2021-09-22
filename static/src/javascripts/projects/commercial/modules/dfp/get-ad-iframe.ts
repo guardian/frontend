@@ -40,6 +40,8 @@ const getAdvertIframe = (adSlot: HTMLElement) =>
 	});
 
 const getAdIframe = (adSlot: HTMLElement): Promise<boolean> =>
-	getAdvertIframe(adSlot).then(() => Promise.resolve(true));
+	getAdvertIframe(adSlot)
+		.then(() => true)
+		.catch(() => false);
 
 export { getAdIframe };
