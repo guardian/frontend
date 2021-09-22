@@ -189,7 +189,7 @@
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/common/modules/commercial/commercial-features.js"
  ],
- "../projects/commercial/modules/dfp/get-ad-iframe.js": [],
+ "../projects/commercial/modules/dfp/get-ad-iframe.ts": [],
  "../projects/commercial/modules/dfp/get-advert-by-id.ts": [
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts"
@@ -314,7 +314,7 @@
   "../lib/report-error.js",
   "../projects/commercial/modules/ad-sizes.js",
   "../projects/commercial/modules/dfp/Advert.ts",
-  "../projects/commercial/modules/dfp/get-ad-iframe.js",
+  "../projects/commercial/modules/dfp/get-ad-iframe.ts",
   "../projects/commercial/modules/dfp/render-advert-label.ts",
   "../projects/commercial/modules/sticky-mpu.js",
   "../projects/common/modules/onward/geo-most-popular.js"

@@ -13,8 +13,7 @@ const getAdvertIframe = (adSlot: HTMLElement) =>
 		if (!contentFrame) {
 			reject();
 		} else if (
-			// According to Flow, readyState exists on the Document, not the HTMLIFrameElement
-			// Is this different for old IE?
+			// Special handling for IE which has HTMLIFrameElement.readyState
 			(contentFrame as HTMLIFrameElementIE).readyState &&
 			(contentFrame as HTMLIFrameElementIE).readyState !== 'complete'
 		) {
