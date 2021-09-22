@@ -26,15 +26,18 @@ object TrailsToShowcase {
   private val RundownCollectionName = "Rundown"
   private val SingleStoriesCollectionName = "Single stories"
 
-  private val MaxLengthForSinglePanelTitle = 86
-  private val MaxLengthForSinglePanelAuthor = 42
+  private val MaxSinglePanelTitleLength = 86
+  private val MaxSinglePanelAuthorLength = 42
   private val MaxOverlineLength = 30
   private val MaxBulletLength = 118
   private val MaxBulletsAllowed = 3
 
-  private val MaxLengthForPanelTitle = 74
-  private val MaxLengthForRundownPanelArticleTitle = 64
-  private val MaxLengthForRelatedArticlesPanelSummary = 82
+  private val MaxPanelTitleLength = 74
+  private val MaxRundownArticleTitleLength = 64
+
+  private val MaxRelatedArticleTitleLength = 54
+  private val MaxRelatedArticleOverlineLength = 42
+  private val MaxRelatedArticlesPanelSummaryLength = 82
 
   // Panel titles can encoded with a pipe delimiter in the trail headline.
   private val PanelTitleInHeadlineDelimiter = "\\|"
@@ -106,7 +109,7 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
-    val proposedTitle = titleOfLengthFrom(MaxLengthForSinglePanelTitle, content)
+    val proposedTitle = titleOfLengthFrom(MaxSinglePanelTitleLength, content)
     val proposedPanelTitle = panelTitleFrom(content)
     val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
     val proposedImageUrl = singleStoryImageUrlFor(content)
@@ -117,7 +120,7 @@ object TrailsToShowcase {
     // This might get more interesting if we implement Key Moments but the principal is the same.
     val supportingContent = content match {
       case curatedContent: CuratedContent =>
-        curatedContent.supportingContent // TODO showcase always deals in curated content so we can push this matching up
+        curatedContent.supportingContent
       case _ => Seq.empty
     }
 
@@ -125,7 +128,13 @@ object TrailsToShowcase {
     val proposedArticleGroup = {
       if (isRelatedArticlePanel) {
         if (supportingContent.nonEmpty) {
-          makeArticlesFrom(supportingContent, 2, "Related Article").fold(
+          makeArticlesFrom(
+            supportingContent,
+            2,
+            "Related Article",
+            MaxRelatedArticleTitleLength,
+            MaxRelatedArticleOverlineLength,
+          ).fold(
             { l =>
               Left(l)
             },
@@ -144,40 +153,25 @@ object TrailsToShowcase {
 
     val proposedBulletList = {
       if (!isRelatedArticlePanel) {
-        val value = content.card.trailText
+        content.card.trailText
           .map(extractBulletsFrom)
           .getOrElse(Left(Seq("No trail text available to create a bullet list from")))
-        value.fold(
-          { l => Left(l) },
-          { bulletList =>
-            Right(Some(bulletList))
-          },
-        )
+          .fold(
+            { l => Left(l) },
+            { bulletList =>
+              Right(Some(bulletList))
+            },
+          )
       } else {
         Right(None)
       }
     }
 
-    val proposedOverline = overlineFrom(content)
+    val proposedOverline = overlineFrom(content, MaxOverlineLength)
 
     val proposedSummary = {
       if (isRelatedArticlePanel) {
-        val maybeTrailText = content.card.trailText.map(stripHtml)
-        maybeTrailText
-          .map { trailText =>
-            Right(Some(trailText))
-              .filterOrElse(_.nonEmpty, Seq("Trail text is empty"))
-              .filterOrElse(
-                _ => trailText.length <= MaxLengthForRelatedArticlesPanelSummary,
-                Seq(
-                  s"The trail text '$trailText' is longer than the " + MaxLengthForPanelTitle +
-                    " characters allowed for a summary",
-                ),
-              )
-          }
-          .getOrElse {
-            Right(None)
-          }
+        extractRelatedArticlePanelSummaryFrom(content)
       } else {
         Right(None)
       }
@@ -241,7 +235,8 @@ object TrailsToShowcase {
         )
     }
 
-    val proposedRundownArticles = makeArticlesFrom(content, 3, "Rundown")
+    val proposedRundownArticles =
+      makeArticlesFrom(content, 3, "Rundown", MaxRundownArticleTitleLength, MaxOverlineLength)
     val maybeRundownPanel = for {
       panelTitle <- proposedPanelTitle.toOption
       articles <- proposedRundownArticles.toOption
@@ -271,12 +266,14 @@ object TrailsToShowcase {
       content: Seq[PressedContent],
       required: Int,
       articleType: String,
+      maxTitleLength: Int,
+      maxOverlineLength: Int,
   ): Either[Seq[String], Seq[Article]] = {
     val articleOutcomes = content.map { contentItem =>
       // Collect the mandatory fields for the article. If any of these are missing we can skip this item
-      val proposedArticleTitle = titleOfLengthFrom(MaxLengthForRundownPanelArticleTitle, contentItem)
+      val proposedArticleTitle = titleOfLengthFrom(maxTitleLength, contentItem)
       val proposedArticleImage = rundownPanelArticleImageUrlFor(contentItem)
-      val proposedOverline = overlineFrom(contentItem)
+      val proposedOverline = overlineFrom(contentItem, maxOverlineLength)
 
       val maybeArticle = for {
         webPublicationDate <- contentItem.card.webPublicationDateOption
@@ -334,7 +331,7 @@ object TrailsToShowcase {
           .flatten
           .flatten
         // Could not make required number of valid articles is the most useful message to the editor so put it first
-        Left(s"Could not find $required valid ${articleType.toLowerCase} article trails" +: articleProblems)
+        Left(s"Could not find $required valid ${articleType.toLowerCase} trails" +: articleProblems)
       }
   }
 
@@ -421,8 +418,8 @@ object TrailsToShowcase {
         Right(Some(panelTitle))
           .filterOrElse(_ => panelTitle.nonEmpty, Seq(s"Panel title in headline '${content.header.headline}' is empty"))
           .filterOrElse(
-            _ => panelTitle.length <= MaxLengthForPanelTitle,
-            Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"),
+            _ => panelTitle.length <= MaxPanelTitleLength,
+            Seq(s"The panel title '$panelTitle' is longer than " + MaxPanelTitleLength + " characters"),
           )
       }
       .getOrElse {
@@ -437,8 +434,8 @@ object TrailsToShowcase {
         Right(panelTitle)
           .filterOrElse(_ => panelTitle.nonEmpty, Seq(s"Panel title in headline '${content.header.headline}' is empty"))
           .filterOrElse(
-            _ => panelTitle.length <= MaxLengthForPanelTitle,
-            Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"),
+            _ => panelTitle.length <= MaxPanelTitleLength,
+            Seq(s"The panel title '$panelTitle' is longer than " + MaxPanelTitleLength + " characters"),
           )
       }
       .getOrElse {
@@ -457,19 +454,19 @@ object TrailsToShowcase {
   }
 
   private def bylineFrom(content: PressedContent): Option[String] = {
-    content.properties.byline.map(stripHtml).filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
+    content.properties.byline.map(stripHtml).filter(_.nonEmpty).filter(_.length <= MaxSinglePanelAuthorLength)
   }
 
-  private def overlineFrom(contentItem: PressedContent): Either[Seq[String], Option[String]] = {
+  private def overlineFrom(contentItem: PressedContent, maxLength: Int): Either[Seq[String], Option[String]] = {
     def kickerFrom(content: PressedContent): Option[String] = {
       content.header.kicker.flatMap(_.properties.kickerText).map(stripHtml)
     }
     kickerFrom(contentItem)
       .map { kicker =>
-        if (kicker.length <= MaxOverlineLength) {
+        if (kicker.length <= maxLength) {
           Right(Some(kicker))
         } else {
-          Left(Seq(s"Kicker text '$kicker' is too long"))
+          Left(Seq(s"Kicker text '$kicker' is longer than $maxLength characters"))
         }
       }
       .getOrElse {
@@ -524,6 +521,25 @@ object TrailsToShowcase {
     feed.setEncoding("utf-8")
     feed.setEntries(entries.asJava)
     feed
+  }
+
+  private def extractRelatedArticlePanelSummaryFrom(content: PressedContent): Either[Seq[String], Option[String]] = {
+    val maybeTrailText = content.card.trailText.map(stripHtml)
+    maybeTrailText
+      .map { trailText =>
+        Right(Some(trailText))
+          .filterOrElse(_.nonEmpty, Seq("Trail text is empty"))
+          .filterOrElse(
+            _ => trailText.length <= MaxRelatedArticlesPanelSummaryLength,
+            Seq(
+              s"The trail text '$trailText' is longer than the " + MaxPanelTitleLength +
+                " characters allowed for a summary",
+            ),
+          )
+      }
+      .getOrElse {
+        Right(None)
+      }
   }
 
   private def stripHtml(str: String): String = {

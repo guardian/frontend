@@ -444,6 +444,66 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     ))
   }
 
+  "TrailToShowcase" should "validate single story trails with sublinks as related article panels" in {
+    val longerThan54 = "A sublink with a title which is way to long " +
+      "A sublink with a title which is way to long " +
+      "A sublink with a title which is way to long"
+    longerThan54.length > 54 should be(true)
+
+    val subLink = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      headline = "A sublink",
+      kickerText = Some("A kicker"),
+    )
+
+    val sublinkWithTooLongTitle = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      headline = longerThan54,
+      kickerText = Some(longerThan54),
+    )
+
+    val withInvalidSupportingContent = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some("On a related article panel the trail text should become the panel description"),
+      supportingContent = Seq(subLink, sublinkWithTooLongTitle),
+    )
+
+    val outcome = TrailsToShowcase.asSingleStoryPanel(withInvalidSupportingContent)
+
+    outcome.left.toOption.nonEmpty should be(true)
+    outcome.left.get.contains(s"The headline '$longerThan54' is longer than 54 characters") should be(true)
+    outcome.left.get.contains(s"Kicker text '$longerThan54' is longer than 42 characters") should be(true)
+  }
+
+  "TrailToShowcase" should "reject related articles panels with incorrect number of articles" in {
+    val subLink = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      headline = "This is fine",
+      kickerText = Some("A kicker"),
+    )
+
+    val withoutEnoughSupportingContent = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some("On a related article panel the trail text should become the panel description"),
+      supportingContent = Seq(subLink),
+    )
+
+    val outcome = TrailsToShowcase.asSingleStoryPanel(withoutEnoughSupportingContent)
+
+    outcome.left.toOption.nonEmpty should be(true)
+    outcome.left.get.contains("Could not find 2 valid related article trails") should be(true)
+  }
+
   "TrailToShowcase" can "encode single story panel bullet lists from trailtext lines" in {
     val bulletEncodedTrailText =
       """
@@ -921,7 +981,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(content)
 
     outcome.right.toOption should be(None)
-    outcome.left.get.contains(s"Kicker text '${longerThan30}' is too long") shouldBe (true)
+    outcome.left.get.contains(s"Kicker text '${longerThan30}' is longer than 30 characters") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject single panels with titles longer than 86 characters" in {
@@ -1006,7 +1066,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       TrailsToShowcase.asRundownPanel(Seq(valid, valid, notValid), "rundown-container-id")
 
     rundownPanel.right.toOption should be(None)
-    rundownPanel.left.get.head should be("Could not find 3 valid rundown article trails")
+    rundownPanel.left.get.head should be("Could not find 3 valid rundown trails")
   }
 
   "TrailToShowcase validation" should "trim rundown panels to 3 articles if too many are supplied" in {
@@ -1056,11 +1116,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       kickerText = Some(longerThan30),
     )
 
-    val rundownPanel = TrailsToShowcase
+    val outcome = TrailsToShowcase
       .asRundownPanel(Seq(withTooLongKicker, withTooLongKicker, withTooLongKicker), "rundown-container-id")
 
-    rundownPanel.toOption should be(None)
-    rundownPanel.left.get.contains(s"Kicker text '${longerThan30}' is too long") should be(true)
+    outcome.toOption should be(None)
+    outcome.left.get.contains(s"Kicker text '${longerThan30}' is longer than 30 characters") should be(true)
   }
 
   "TrailToShowcase validation" should "reject rundown panel articles with titles longer than 64 characters" in {
