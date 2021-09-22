@@ -427,6 +427,11 @@ case object Documentaries extends FrontEmailMetadata {
   override val banner = Some("documentaries-2.png")
 }
 
+case object TheRuralNetwork extends FrontEmailMetadata {
+  val name = "The rural network"
+  override val banner = Some("rural-network.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -507,6 +512,7 @@ object EmailAddons {
     WordOfMouth,
     SavedForLater,
     TheGuideStayingIn,
+    TheRuralNetwork,
     DesignReview,
     Documentaries,
   )
