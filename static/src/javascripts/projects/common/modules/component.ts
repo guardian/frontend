@@ -30,6 +30,18 @@ const manipulate = (
 	}
 };
 
+const create = (maybeHtmlString: unknown): HTMLDivElement => {
+	if (!isString(maybeHtmlString))
+		throw new Error(
+			'response is not a valid string:' + String(maybeHtmlString),
+		);
+
+	const elem: HTMLDivElement = document.createElement('div');
+	elem.innerHTML = maybeHtmlString;
+
+	return elem;
+};
+
 class Component {
 	useBem: boolean;
 	templateName?: string;
@@ -125,14 +137,7 @@ class Component {
 		try {
 			const resp = await this._fetch();
 			const maybeHtmlString = resp[this.responseDataKey];
-			if (!isString(maybeHtmlString))
-				throw new Error(
-					'response is not a valid string:' + String(maybeHtmlString),
-				);
-
-			const elem: HTMLDivElement = document.createElement('div');
-			elem.innerHTML = maybeHtmlString;
-			this.elem = elem;
+			this.elem = create(maybeHtmlString);
 			this._prerender();
 
 			if (!this.destroyed) {
@@ -196,9 +201,8 @@ class Component {
 		const update = (): void => {
 			this._fetch()
 				.then((resp) => {
-					this.autoupdate(
-						bonzo.create(resp[this.responseDataKey])[0],
-					);
+					const elem = create(resp[this.responseDataKey]);
+					this.autoupdate(elem);
 
 					if (this.autoupdated) {
 						setAutoUpdate();
