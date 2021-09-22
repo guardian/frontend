@@ -93,7 +93,7 @@
   "../lib/mediator.js",
   "../projects/commercial/modules/ad-sizes.js",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
-  "../projects/commercial/modules/dfp/add-slot.js",
+  "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.js",
   "../projects/commercial/modules/dfp/track-ad-render.js",
   "../projects/common/modules/article/space-filler.js",
@@ -103,7 +103,7 @@
   "../lib/config.js",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/add-slot.js",
+  "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.js",
   "../projects/common/modules/article/space-filler.js",
   "../projects/common/modules/commercial/commercial-features.js"
@@ -115,7 +115,7 @@
   "../lib/mediator.js",
   "../projects/commercial/modules/ad-sizes.js",
   "../projects/commercial/modules/dfp/Advert.ts",
-  "../projects/commercial/modules/dfp/add-slot.js",
+  "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.js",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.js",
@@ -140,7 +140,7 @@
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
   "../projects/commercial/modules/dfp/define-slot.js"
  ],
- "../projects/commercial/modules/dfp/add-slot.js": [
+ "../projects/commercial/modules/dfp/add-slot.ts": [
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/lazy-load.js",
@@ -420,7 +420,7 @@
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js",
-  "../projects/commercial/modules/dfp/add-slot.js",
+  "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.js",
   "../projects/common/modules/article/space-filler.js",
   "../projects/common/modules/commercial/commercial-features.js"
@@ -468,7 +468,7 @@
  "../projects/commercial/modules/mobile-sticky.js": [
   "../lib/config.js",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/add-slot.js",
+  "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.js",
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
