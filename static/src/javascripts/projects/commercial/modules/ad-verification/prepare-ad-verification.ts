@@ -46,10 +46,7 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 	// don’t run the logic if the ad is only screened
 	if (!isBlocked || !blockedSlotPath) return;
 
-	// refresh the blocked slot to get new ad
 	const advert = getAdvertById(blockedSlotPath);
-
-	// check if the slot exists
 	if (!advert) throw new Error(`No slot found for ${blockedSlotPath}`);
 
 	const eventTimer = new EventTimer();
@@ -60,6 +57,7 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 
 	advert.slot.setTargeting('confiant', String(blockingType));
 
+	// refresh the blocked slot to get new ad, if it hasn’t been refreshed yet
 	if (shouldRefresh() && !confiantRefreshedSlots.includes(blockedSlotPath)) {
 		refreshAdvert(advert);
 
