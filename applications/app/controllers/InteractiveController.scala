@@ -19,8 +19,6 @@ import services.{CAPILookup, USElection2020AmpPages, _}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import experiments.ShowPressedInteractives
-import services.dotcomrendering.PressedInteractives.isPressed
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
@@ -55,11 +53,11 @@ class InteractiveController(
       }
     }
 
-  def servePressedPage(path: String)(implicit request: RequestHeader): Result = {
+  def servePressedPage(path: String)(implicit request: RequestHeader): Future[Result] = {
     val cacheable = WithoutRevalidationResult(
       Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/www.theguardian.com/$path"),
     )
-    Cached(CacheTime.ArchiveRedirect)(cacheable)
+    Future.successful(Cached(CacheTime.ArchiveRedirect)(cacheable))
   }
 
   private def getWebWorkerPath(path: String, file: String, timestamp: Option[String]): String = {
@@ -116,7 +114,6 @@ class InteractiveController(
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
     val isUSElectionAMP = USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat
-    val canShowPressed = ShowPressedInteractives.canRun && isPressed(path)
 
     def render(model: Either[(InteractivePage, Blocks), Result]): Future[Result] = {
       model match {
@@ -126,10 +123,11 @@ class InteractiveController(
           val tier = InteractivePicker.getRenderingTier(requestFormat, path, date, tags)
 
           (requestFormat, tier) match {
-            case (AmpFormat, DotcomRendering)  => renderAmp(page, blocks)
-            case (JsonFormat, DotcomRendering) => renderJson(page, blocks)
-            case (HtmlFormat, DotcomRendering) => renderHtml(page, blocks)
-            case _                             => renderNonDCR(page)
+            case (AmpFormat, DotcomRendering)    => renderAmp(page, blocks)
+            case (JsonFormat, DotcomRendering)   => renderJson(page, blocks)
+            case (HtmlFormat, InteractiveLegacy) => servePressedPage(path)
+            case (HtmlFormat, DotcomRendering)   => renderHtml(page, blocks)
+            case _                               => renderNonDCR(page)
           }
         }
         case Right(result) => Future.successful(result)
@@ -138,8 +136,6 @@ class InteractiveController(
 
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
-    } else if (canShowPressed) {
-      Future.successful(servePressedPage(path))
     } else {
       val res = for {
         resp <- lookupItemResponse(path)
