@@ -1,5 +1,5 @@
-import { Component } from './component';
 import { fetchJson as mockFetchJson } from '../../../lib/fetch-json';
+import { Component } from './component';
 
 const mockResponse = {
 	html: '<p>html</p>',
@@ -37,6 +37,7 @@ describe('Component', () => {
 
 	describe('fetch()', () => {
 		test('call fetched() with an endpoint', async () => {
+			expect.assertions(1)
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
@@ -48,6 +49,7 @@ describe('Component', () => {
 		});
 
 		test('not call fetched() without an endpoint', async () => {
+			expect.assertions(1)
 			const component = createComponent({
 				endpoint: false,
 				fetched: jest.fn(),
@@ -60,6 +62,7 @@ describe('Component', () => {
 		});
 
 		test('extract the content of `html` in response by default', async () => {
+			expect.assertions(3)
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
@@ -68,8 +71,7 @@ describe('Component', () => {
 
 			await component.fetch(elem);
 			if (!component.elem) {
-				return Promise.reject(
-					new Error('.elem property should exist'));
+				return Promise.reject(new Error('.elem property should exist'));
 			}
 			expect(component.elem.tagName).toBe('P');
 			expect(component.elem.innerHTML).toBe('html');
@@ -77,6 +79,7 @@ describe('Component', () => {
 		});
 
 		test('properly extract data from response, if key was passed', async () => {
+			expect.assertions(2)
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
@@ -85,14 +88,14 @@ describe('Component', () => {
 
 			await component.fetch(elem, 'other');
 			if (!component.elem) {
-				return Promise.reject(
-					new Error('.elem property should exist'));
+				return Promise.reject(new Error('.elem property should exist'));
 			}
 			expect(component.fetched).toHaveBeenCalledWith(mockResponse);
 			expect(component.elem.innerHTML).toBe('other');
 		});
 
 		test('calls all required callbacks, but not error(), if everything works', async () => {
+			expect.assertions(4)
 			const component = createComponent({
 				checkAttached: jest.fn(),
 				fetched: jest.fn(),
@@ -111,6 +114,7 @@ describe('Component', () => {
 		});
 
 		test('does not call ready() if destroyed is set to true', async () => {
+			expect.assertions(4)
 			const component = createComponent({
 				checkAttached: jest.fn(),
 				destroyed: true,
@@ -130,6 +134,7 @@ describe('Component', () => {
 		});
 
 		test('calls error() if something went wrong', async () => {
+			expect.assertions(2)
 			const component = createComponent({
 				ready: jest.fn(),
 				error: jest.fn(),
@@ -246,79 +251,75 @@ describe('Component', () => {
 		test('setState() should add class name to elem (without elementName)', () => {
 			component.setState('state');
 
-			if (component.elem) {
-				expect(
-					component.elem.classList.contains('component--state'),
-				).toBe(true);
-			}
+			if (!component.elem) fail('component.elem is null');
+
+			expect(component.elem.classList.contains('component--state')).toBe(
+				true,
+			);
 		});
 
 		test('setState() should add class name to elem (with elementName)', () => {
 			component.setState('state', 'element');
 
-			if (subElem) {
-				expect(
-					subElem.classList.contains('component__element--state'),
-				).toBe(true);
-			} else fail()
+			if (!subElem) fail();
+
+			expect(
+				subElem.classList.contains('component__element--state'),
+			).toBe(true);
 		});
 
 		test('removeState() should remove class name to elem (without elementName)', () => {
 			component.setState('state');
 			component.removeState('state');
 
-			if (component.elem) {
-				expect(
-					component.elem.classList.contains('component--state'),
-				).toBe(false);
-			} else fail()
+			if (!component.elem) fail();
+
+			expect(component.elem.classList.contains('component--state')).toBe(
+				false,
+			);
 		});
 
 		test('removeState() should remove class name to elem (with elementName)', () => {
 			component.setState('state', 'element');
 			component.removeState('state', 'element');
 
-			if (subElem) {
-				expect(
-					subElem.classList.contains('component__element--state'),
-				).toBe(false);
-			} else fail()
+			if (!subElem) fail();
+
+			expect(
+				subElem.classList.contains('component__element--state'),
+			).toBe(false);
 		});
 
 		test('toggleState() should toggle class name to elem (without elementName)', () => {
 			component.toggleState('state');
 
-			if (component.elem) {
-				expect(
-					component.elem.classList.contains('component--state'),
-				).toBe(true);
-			} else fail()
+			if (!component.elem) fail();
+
+			expect(component.elem.classList.contains('component--state')).toBe(
+				true,
+			);
 
 			component.toggleState('state');
 
-			if (component.elem) {
-				expect(
-					component.elem.classList.contains('component--state'),
-				).toBe(false);
-			} else fail()
+			expect(component.elem.classList.contains('component--state')).toBe(
+				false,
+			);
 		});
 
 		test('toggleState() should toggle class name to elem (with elementName)', () => {
 			component.toggleState('state', 'element');
 
-			if (subElem) {
-				expect(
-					subElem.classList.contains('component__element--state'),
-				).toBe(true);
-			} else fail()
+			if (!subElem) fail();
+
+			expect(
+				subElem.classList.contains('component__element--state'),
+			).toBe(true);
 
 			component.toggleState('state', 'element');
 
-			if (subElem) {
-				expect(
-					subElem.classList.contains('component__element--state'),
-				).toBe(false);
-			} else fail()
+			expect(
+				subElem.classList.contains('component__element--state'),
+			).toBe(false);
 		});
 
 		test('hasState() should return the proper state (without elementName)', () => {
@@ -348,10 +349,10 @@ describe('Component', () => {
 				ready: jest.fn(),
 			});
 
-			if (elem) {
-				component.attachTo(elem);
-				expect(component.ready).toHaveBeenCalled();
-			}
+			if (!elem) fail();
+
+			component.attachTo(elem);
+			expect(component.ready).toHaveBeenCalled();
 		});
 
 		test('calls prerender() callback', () => {
@@ -359,10 +360,10 @@ describe('Component', () => {
 				prerender: jest.fn(),
 			});
 
-			if (elem) {
-				component.attachTo(elem);
-				expect(component.prerender).toHaveBeenCalled();
-			}
+			if (!elem) fail();
+
+			component.attachTo(elem);
+			expect(component.prerender).toHaveBeenCalled();
 		});
 
 		test('calls checkAttached() callback', () => {
@@ -370,10 +371,10 @@ describe('Component', () => {
 				checkAttached: jest.fn(),
 			});
 
-			if (elem) {
-				component.attachTo(elem);
-				expect(component.checkAttached).toHaveBeenCalled();
-			}
+			if (!elem) fail();
+
+			component.attachTo(elem);
+			expect(component.checkAttached).toHaveBeenCalled();
 		});
 	});
 
