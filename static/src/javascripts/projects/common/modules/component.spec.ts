@@ -1,5 +1,5 @@
-// import { fetchJson } from 'lib/fetch-json';
 import { Component } from './component';
+import { fetchJson as mockFetchJson } from '../../../lib/fetch-json';
 
 const mockResponse = {
 	html: '<p>html</p>',
@@ -17,9 +17,8 @@ const createComponent = (props: Record<string, unknown> = {}): Component => {
 	return component;
 };
 
-jest.mock('../../../lib/fetch-json', () => mockFetchJson);
-
-const mockFetchJson = jest.fn(() => Promise.resolve(mockResponse));
+jest.mock('../../../lib/fetch-json');
+(mockFetchJson as jest.Mock).mockResolvedValue(mockResponse);
 
 describe('Component', () => {
 	let elem: HTMLElement | null;
@@ -28,7 +27,7 @@ describe('Component', () => {
 	beforeEach(() => {
 		document.body.innerHTML = `
                 <div class="component">
-                    <div class="component__element"></div>
+                    <div class="component__element"></div>hois
                 </div>
             `;
 
@@ -150,7 +149,7 @@ describe('Component', () => {
 			});
 			const mockError = new Error('Bad response');
 
-			mockFetchJson.mockReturnValueOnce(Promise.reject(mockError));
+			(mockFetchJson as jest.Mock).mockRejectedValueOnce(mockError);
 
 			if (!elem) fail('elem is null');
 
