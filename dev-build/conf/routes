@@ -16,9 +16,6 @@ GET            /assets/admin/*file                                              
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
-# Diagnostics
-GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
-
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)

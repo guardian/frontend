@@ -90,7 +90,6 @@ class DevParametersHttpRequestHandler(
       !request.forceDCR &&
       !request.isLazyLoad &&
       !request.uri.startsWith("/oauth2callback") &&
-      !request.uri.startsWith("/px.gif") && // diagnostics box
       !request.uri.startsWith("/crosswords/search") &&
       !request.uri.startsWith("/crosswords/lookup") &&
       !request.uri.startsWith(
