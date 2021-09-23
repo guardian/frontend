@@ -52,6 +52,7 @@ import play.api.test.Helpers._
       todayMonthEx.findFirstIn(browser.pageSource()).nonEmpty should be(true)
       todayYearEx.findFirstIn(browser.pageSource()).nonEmpty should be(true)
     }
+
   }
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)

@@ -5,6 +5,7 @@ import common.editions.Uk
 import model.{Section, Tags}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import java.time.LocalDateTime
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import layout.slices.Fixed
@@ -35,7 +36,7 @@ import scala.concurrent.Future
             page = Section.make(section),
             contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
             tags = Tags(Nil),
-            date = DateTime.now,
+            date = LocalDateTime.now(),
             tzOverride = None,
           ),
         )
@@ -51,14 +52,12 @@ import scala.concurrent.Future
       case Some(page) =>
         val front = IndexPage.makeFront(page, edition)
         front.containers should not be empty
-
         val firstContainer = front.containers.head
         val formatter = DateTimeFormat.forPattern("d MMMM yyyy")
         val parsedDate = formatter.parseDateTime(firstContainer.displayName.get)
         parsedDate shouldBe a[DateTime]
         firstContainer.container.isInstanceOf[Fixed] should be(true)
         firstContainer.index should be(0)
-
         firstContainer.items should not be empty
     }
   }

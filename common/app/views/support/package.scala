@@ -2,13 +2,12 @@ package views.support
 
 import java.text.DecimalFormat
 import java.util.Locale
-
 import common._
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.PressedContent
 import org.apache.commons.lang.StringEscapeUtils
-import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
+import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -19,6 +18,8 @@ import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 import layout.slices.ContainerDefinition
 
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import scala.collection.JavaConverters._
 
 /**
@@ -174,18 +175,19 @@ object `package` {
 
 object GuDateFormatLegacy {
 
-  def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit
+  def apply(date: DateTime, pattern: String, tzOverride: Option[ZoneId] = None)(implicit
       request: RequestHeader,
   ): String = {
     apply(date, Edition(request), pattern, tzOverride)
   }
 
-  def apply(date: DateTime, edition: Edition, pattern: String, tzOverride: Option[DateTimeZone]): String = {
+  def apply(date: DateTime, edition: Edition, pattern: String, tzOverride: Option[ZoneId]): String = {
     val timeZone = tzOverride match {
       case Some(tz) => tz
-      case _        => edition.timezone
+      case _        => ZoneId.of(edition.timezone.toString) // Converting a (joda) DateTimeZone into a (java.time) ZoneId
     }
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(timeZone))
+    val formatter = Chronos.dateFormatter(pattern, timeZone)
+    Chronos.jodaDateTimeToJavaTimeDateTime(date).format(formatter)
   }
 
   def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String =
