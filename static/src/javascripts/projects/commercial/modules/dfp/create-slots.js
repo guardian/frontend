@@ -1,5 +1,5 @@
 import config from '../../../../lib/config';
-import { adSizes } from '../ad-sizes';
+import { adSizes } from '@guardian/commercial-core';
 
 const inlineDefinition = {
     sizeMappings: {

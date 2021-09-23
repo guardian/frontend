@@ -1,10 +1,10 @@
+import { adSizes } from '@guardian/commercial-core';
 import config_ from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import mediator from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { isUserLoggedIn } from '../../common/modules/identity/api';
-import { adSizes } from './ad-sizes';
 import { addSlot } from './dfp/add-slot';
 import type { Advert } from './dfp/Advert';
 import { createSlots } from './dfp/create-slots';

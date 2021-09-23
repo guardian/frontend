@@ -6,7 +6,7 @@ import { renderAdvert } from './render-advert';
 import { emptyAdvert } from './empty-advert';
 import { getAdvertById } from './get-advert-by-id';
 import config from '../../../../lib/config';
-import { adSizes } from '../ad-sizes';
+import { adSizes } from '@guardian/commercial-core';
 import { markTime } from '../../../../lib/user-timing';
 
 const recordFirstAdRendered = once(() => {
