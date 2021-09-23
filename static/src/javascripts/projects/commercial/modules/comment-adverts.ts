@@ -16,7 +16,7 @@ const config = config_ as {
 	get: (s: string, d?: string) => string;
 };
 
-const createCommentSlots = (canBeDmpu: boolean): Element[] => {
+const createCommentSlots = (canBeDmpu: boolean): HTMLElement[] => {
 	const sizes = canBeDmpu
 		? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
 		: {};
