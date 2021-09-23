@@ -163,7 +163,7 @@
   "../lib/url.ts",
   "../projects/commercial/modules/dfp/Advert.ts"
  ],
- "../projects/commercial/modules/dfp/display-ads.js": [
+ "../projects/commercial/modules/dfp/display-ads.ts": [
   "../projects/commercial/modules/creatives/page-skin.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/load-advert.js"
@@ -183,7 +183,7 @@
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/commercial/modules/dfp/display-ads.js",
+  "../projects/commercial/modules/dfp/display-ads.ts",
   "../projects/commercial/modules/dfp/display-lazy-ads.js",
   "../projects/commercial/modules/dfp/prepare-prebid.js",
   "../projects/commercial/modules/dfp/queue-advert.js",
