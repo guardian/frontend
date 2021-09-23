@@ -146,10 +146,10 @@ describe('Component', () => {
 			if (!elem) fail('elem is null');
 
 			try {
-				return component.fetch(elem);
-			} catch (e) {
-				expect(component.ready).toHaveBeenCalled();
-				expect(component.error).toHaveBeenCalledWith(mockError);
+				await component.fetch(elem);
+			} finally {
+				expect(component.ready).not.toHaveBeenCalled();
+				expect(component.error).toHaveBeenCalledWith(mockError.name, mockError.message);
 			}
 		});
 	});
