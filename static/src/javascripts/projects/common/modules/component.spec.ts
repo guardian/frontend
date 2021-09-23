@@ -37,7 +37,7 @@ describe('Component', () => {
 
 	describe('fetch()', () => {
 		test('call fetched() with an endpoint', async () => {
-			expect.assertions(1)
+			expect.assertions(1);
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
@@ -49,7 +49,7 @@ describe('Component', () => {
 		});
 
 		test('not call fetched() without an endpoint', async () => {
-			expect.assertions(1)
+			expect.assertions(1);
 			const component = createComponent({
 				endpoint: false,
 				fetched: jest.fn(),
@@ -62,7 +62,7 @@ describe('Component', () => {
 		});
 
 		test('extract the content of `html` in response by default', async () => {
-			expect.assertions(3)
+			expect.assertions(3);
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
@@ -79,7 +79,7 @@ describe('Component', () => {
 		});
 
 		test('properly extract data from response, if key was passed', async () => {
-			expect.assertions(2)
+			expect.assertions(2);
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
@@ -95,7 +95,7 @@ describe('Component', () => {
 		});
 
 		test('calls all required callbacks, but not error(), if everything works', async () => {
-			expect.assertions(4)
+			expect.assertions(4);
 			const component = createComponent({
 				checkAttached: jest.fn(),
 				fetched: jest.fn(),
@@ -114,7 +114,7 @@ describe('Component', () => {
 		});
 
 		test('does not call ready() if destroyed is set to true', async () => {
-			expect.assertions(4)
+			expect.assertions(4);
 			const component = createComponent({
 				checkAttached: jest.fn(),
 				destroyed: true,
@@ -134,7 +134,7 @@ describe('Component', () => {
 		});
 
 		test('calls error() if something went wrong', async () => {
-			expect.assertions(2)
+			expect.assertions(2);
 			const component = createComponent({
 				ready: jest.fn(),
 				error: jest.fn(),
@@ -149,7 +149,10 @@ describe('Component', () => {
 				await component.fetch(elem);
 			} finally {
 				expect(component.ready).not.toHaveBeenCalled();
-				expect(component.error).toHaveBeenCalledWith(mockError.name, mockError.message);
+				expect(component.error).toHaveBeenCalledWith(
+					mockError.name,
+					mockError.message,
+				);
 			}
 		});
 	});
