@@ -149,10 +149,7 @@ describe('Component', () => {
 				await component.fetch(elem);
 			} finally {
 				expect(component.ready).not.toHaveBeenCalled();
-				expect(component.error).toHaveBeenCalledWith(
-					mockError.name,
-					mockError.message,
-				);
+				expect(component.error).toHaveBeenCalledWith(mockError);
 			}
 		});
 	});

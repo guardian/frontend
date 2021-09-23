@@ -112,8 +112,7 @@ class Component {
 		}
 
 		if (template) {
-			const elem = document.createElement('div');
-			elem.innerHTML = template;
+			const elem = create(template);
 			this.elem = elem;
 			this._prerender();
 
@@ -151,7 +150,7 @@ class Component {
 				this._ready(this.elem);
 			}
 		} catch (err) {
-			if (err instanceof Error) return this.error(err.name, err.message);
+			if (err instanceof Error) return this.error(err);
 			return this.error('unknown');
 		}
 	}
@@ -253,7 +252,7 @@ class Component {
 	 * This function is made to be overridden
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- type annotation
-	error(type: string, message?: string): void {
+	error(type: string | Error, message?: string): void {
 		// Meant to be overridden.
 	}
 
