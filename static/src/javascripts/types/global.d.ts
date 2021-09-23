@@ -153,4 +153,6 @@ interface Window {
 	};
 
 	confiant?: Confiant;
+
+	googletag?: googletag.Googletag;
 }
