@@ -1,30 +1,43 @@
+import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { enableLazyLoad } from './lazy-load';
 import { loadAdvert } from './load-advert';
 
-const advertsToInstantlyLoad = ['dfp-ad--im'];
+const instantLoadAdvertIds = ['dfp-ad--im'];
 
-const instantLoad = () => {
-	const instantLoadAdverts = dfpEnv.advertsToLoad.filter((advert) =>
-		advertsToInstantlyLoad.includes(advert.id),
-	);
+interface PartitionedAdverts {
+	instantLoadAdverts: Advert[];
+	lazyLoadAdverts: Advert[];
+}
 
-	dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter(
-		(advert) => !advertsToInstantlyLoad.includes(advert.id),
-	);
-
-	instantLoadAdverts.forEach(loadAdvert);
+const partitionAdverts = (): PartitionedAdverts => {
+	const instantLoadAdverts = [];
+	const lazyLoadAdverts = [];
+	for (let i = 0; i < dfpEnv.advertsToLoad.length; i++) {
+		const currentAdvert = dfpEnv.advertsToLoad[i];
+		if (instantLoadAdvertIds.includes(currentAdvert.id)) {
+			instantLoadAdverts.push(currentAdvert);
+		} else {
+			lazyLoadAdverts.push(currentAdvert);
+		}
+	}
+	return {
+		instantLoadAdverts,
+		lazyLoadAdverts,
+	};
 };
 
 const displayLazyAds = (): void => {
 	window.googletag?.pubads().collapseEmptyDivs();
 	window.googletag?.enableServices();
 
-	instantLoad();
+	const { instantLoadAdverts, lazyLoadAdverts } = partitionAdverts();
 
-	dfpEnv.advertsToLoad.forEach((advert) => {
-		enableLazyLoad(advert);
-	});
+	// TODO: why do we need this side effect? Can we remove?
+	dfpEnv.advertsToLoad = lazyLoadAdverts;
+
+	instantLoadAdverts.forEach(loadAdvert);
+	lazyLoadAdverts.forEach(enableLazyLoad);
 };
 
 export { displayLazyAds };
