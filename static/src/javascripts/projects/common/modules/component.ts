@@ -13,8 +13,10 @@ type Parent = HTMLElement | Node;
 const manipulate = (
 	type: ManipulationType,
 	parent: Parent,
-	elem: HTMLElement,
+	elem: HTMLElement | null,
 ): void => {
+	if (!elem) throw new Error('Element is null ');
+
 	switch (type) {
 		case 'append':
 			parent.appendChild(elem);
@@ -30,14 +32,18 @@ const manipulate = (
 	}
 };
 
-const create = (maybeHtmlString: unknown): HTMLDivElement => {
+const create = (maybeHtmlString: unknown): HTMLElement | null => {
 	if (!isString(maybeHtmlString))
 		throw new Error(
 			'response is not a valid string:' + String(maybeHtmlString),
 		);
 
-	const elem: HTMLDivElement = document.createElement('div');
-	elem.innerHTML = maybeHtmlString;
+	const fragment = document.createElement('template');
+	fragment.innerHTML = maybeHtmlString;
+	const elem = fragment.content.firstElementChild?.cloneNode(true);
+
+	if (!(elem instanceof HTMLElement))
+		throw new Error('Not valid HTMLElement: ' + maybeHtmlString);
 
 	return elem;
 };
@@ -178,7 +184,7 @@ class Component {
 		return resp;
 	}
 
-	_ready(elem?: HTMLElement): void {
+	_ready(elem?: HTMLElement | null): void {
 		if (!this.destroyed) {
 			this.rendered = true;
 			this._autoupdate();
@@ -235,7 +241,7 @@ class Component {
 	 */
 	ready(
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- type annotation
-		elem?: HTMLElement,
+		elem?: HTMLElement | null,
 	): void {
 		// Meant to be overridden.
 	}
@@ -260,12 +266,13 @@ class Component {
 		// Do nothing
 	}
 
-	autoupdate(elem: HTMLElement): void {
+	autoupdate(elem: HTMLElement | null): void {
 		const oldElem = this.elem;
 		this.elem = elem;
 
 		this._prerender();
-		oldElem?.replaceWith(this.elem);
+		const newElem = this.elem ? [this.elem] : [];
+		oldElem?.replaceWith(...newElem);
 	}
 
 	/**
@@ -411,7 +418,7 @@ class Component {
 			window.clearTimeout(this.t);
 		}
 
-		this.t = undefined;
+		this.t = null;
 		this.autoupdated = false;
 
 		this.destroyed = true;

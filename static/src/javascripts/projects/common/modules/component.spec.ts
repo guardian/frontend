@@ -260,7 +260,7 @@ describe('Component', () => {
 				expect(
 					subElem.classList.contains('component__element--state'),
 				).toBe(true);
-			}
+			} else fail()
 		});
 
 		test('removeState() should remove class name to elem (without elementName)', () => {
@@ -271,7 +271,7 @@ describe('Component', () => {
 				expect(
 					component.elem.classList.contains('component--state'),
 				).toBe(false);
-			}
+			} else fail()
 		});
 
 		test('removeState() should remove class name to elem (with elementName)', () => {
@@ -282,7 +282,7 @@ describe('Component', () => {
 				expect(
 					subElem.classList.contains('component__element--state'),
 				).toBe(false);
-			}
+			} else fail()
 		});
 
 		test('toggleState() should toggle class name to elem (without elementName)', () => {
@@ -292,7 +292,7 @@ describe('Component', () => {
 				expect(
 					component.elem.classList.contains('component--state'),
 				).toBe(true);
-			}
+			} else fail()
 
 			component.toggleState('state');
 
@@ -300,7 +300,7 @@ describe('Component', () => {
 				expect(
 					component.elem.classList.contains('component--state'),
 				).toBe(false);
-			}
+			} else fail()
 		});
 
 		test('toggleState() should toggle class name to elem (with elementName)', () => {
@@ -310,7 +310,7 @@ describe('Component', () => {
 				expect(
 					subElem.classList.contains('component__element--state'),
 				).toBe(true);
-			}
+			} else fail()
 
 			component.toggleState('state', 'element');
 
@@ -318,7 +318,7 @@ describe('Component', () => {
 				expect(
 					subElem.classList.contains('component__element--state'),
 				).toBe(false);
-			}
+			} else fail()
 		});
 
 		test('hasState() should return the proper state (without elementName)', () => {
