@@ -1,9 +1,0 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
-GET        /_healthcheck                    controllers.HealthCheck.healthCheck()
-
-GET        /count/$path<.+>.gif             controllers.DiagnosticsController.analytics(path)
-
-GET        /robots.txt                      controllers.Assets.at(path="/public", file="robots.txt")
