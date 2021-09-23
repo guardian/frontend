@@ -36,19 +36,18 @@ describe('Component', () => {
 	});
 
 	describe('fetch()', () => {
-		test('call fetched() with an endpoint', () => {
+		test('call fetched() with an endpoint', async () => {
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
 
 			if (!elem) fail('elem is null');
 
-			return component.fetch(elem).then(() => {
-				expect(component.fetched).toHaveBeenCalledWith(mockResponse);
-			});
+			await component.fetch(elem);
+			expect(component.fetched).toHaveBeenCalledWith(mockResponse);
 		});
 
-		test('not call fetched() without an endpoint', () => {
+		test('not call fetched() without an endpoint', async () => {
 			const component = createComponent({
 				endpoint: false,
 				fetched: jest.fn(),
@@ -56,54 +55,44 @@ describe('Component', () => {
 
 			if (!elem) fail('elem is null');
 
-			return component.fetch(elem).then(() => {
-				expect(component.fetched).not.toHaveBeenCalled();
-			});
+			await component.fetch(elem);
+			expect(component.fetched).not.toHaveBeenCalled();
 		});
 
-		test('extract the content of `html` in response by default', () => {
+		test('extract the content of `html` in response by default', async () => {
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
 
 			if (!elem) fail('elem is null');
 
-			return component.fetch(elem).then(() => {
-				if (!component.elem) {
-					return Promise.reject(
-						new Error('.elem property should exist'),
-					);
-				}
-
-				expect(component.elem.tagName).toBe('P');
-
-				expect(component.elem.innerHTML).toBe('html');
-
-				expect(component.fetched).toHaveBeenCalledWith(mockResponse);
-			});
+			await component.fetch(elem);
+			if (!component.elem) {
+				return Promise.reject(
+					new Error('.elem property should exist'));
+			}
+			expect(component.elem.tagName).toBe('P');
+			expect(component.elem.innerHTML).toBe('html');
+			expect(component.fetched).toHaveBeenCalledWith(mockResponse);
 		});
 
-		test('properly extract data from response, if key was passed', () => {
+		test('properly extract data from response, if key was passed', async () => {
 			const component = createComponent({
 				fetched: jest.fn(),
 			});
 
 			if (!elem) fail('elem is null');
 
-			return component.fetch(elem, 'other').then(() => {
-				if (!component.elem) {
-					return Promise.reject(
-						new Error('.elem property should exist'),
-					);
-				}
-
-				expect(component.fetched).toHaveBeenCalledWith(mockResponse);
-
-				expect(component.elem.innerHTML).toBe('other');
-			});
+			await component.fetch(elem, 'other');
+			if (!component.elem) {
+				return Promise.reject(
+					new Error('.elem property should exist'));
+			}
+			expect(component.fetched).toHaveBeenCalledWith(mockResponse);
+			expect(component.elem.innerHTML).toBe('other');
 		});
 
-		test('calls all required callbacks, but not error(), if everything works', () => {
+		test('calls all required callbacks, but not error(), if everything works', async () => {
 			const component = createComponent({
 				checkAttached: jest.fn(),
 				fetched: jest.fn(),
@@ -114,15 +103,14 @@ describe('Component', () => {
 
 			if (!elem) fail('elem is null');
 
-			return component.fetch(elem).then(() => {
-				expect(component.ready).toHaveBeenCalledWith(component.elem);
-				expect(component.checkAttached).toHaveBeenCalled();
-				expect(component.prerender).toHaveBeenCalled();
-				expect(component.error).not.toHaveBeenCalled();
-			});
+			await component.fetch(elem);
+			expect(component.ready).toHaveBeenCalledWith(component.elem);
+			expect(component.checkAttached).toHaveBeenCalled();
+			expect(component.prerender).toHaveBeenCalled();
+			expect(component.error).not.toHaveBeenCalled();
 		});
 
-		test('does not call ready() if destroyed is set to true', () => {
+		test('does not call ready() if destroyed is set to true', async () => {
 			const component = createComponent({
 				checkAttached: jest.fn(),
 				destroyed: true,
@@ -134,15 +122,14 @@ describe('Component', () => {
 
 			if (!elem) fail('elem is null');
 
-			return component.fetch(elem).then(() => {
-				expect(component.ready).not.toHaveBeenCalled();
-				expect(component.checkAttached).toHaveBeenCalled();
-				expect(component.prerender).toHaveBeenCalled();
-				expect(component.error).not.toHaveBeenCalled();
-			});
+			await component.fetch(elem);
+			expect(component.ready).not.toHaveBeenCalled();
+			expect(component.checkAttached).toHaveBeenCalled();
+			expect(component.prerender).toHaveBeenCalled();
+			expect(component.error).not.toHaveBeenCalled();
 		});
 
-		test('calls error() if something went wrong', () => {
+		test('calls error() if something went wrong', async () => {
 			const component = createComponent({
 				ready: jest.fn(),
 				error: jest.fn(),
@@ -153,10 +140,12 @@ describe('Component', () => {
 
 			if (!elem) fail('elem is null');
 
-			return component.fetch(elem).catch(() => {
+			try {
+				return component.fetch(elem);
+			} catch (e) {
 				expect(component.ready).toHaveBeenCalled();
 				expect(component.error).toHaveBeenCalledWith(mockError);
-			});
+			}
 		});
 	});
 
