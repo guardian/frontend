@@ -10,7 +10,7 @@ import layout._
 import model._
 import model.meta.{ItemList, ListItem}
 import model.pressed._
-import org.joda.time.{DateTime}
+import java.time.LocalDateTime
 import java.time.ZoneId
 import play.api.mvc.RequestHeader
 import slices.{Container, ContainerDefinition, Fixed, FixedContainers}
@@ -31,7 +31,7 @@ object IndexPage {
       page: Page,
       contents: Seq[IndexPageItem],
       tags: Tags,
-      date: DateTime,
+      date: LocalDateTime,
       tzOverride: Option[ZoneId],
   ): IndexPage = {
     IndexPage(page, contents, tags, date, tzOverride, commercial = Commercial.empty)
@@ -215,7 +215,7 @@ case class IndexPage(
     page: Page,
     contents: Seq[IndexPageItem],
     tags: Tags,
-    date: DateTime,
+    date: LocalDateTime,
     tzOverride: Option[ZoneId],
     commercial: Commercial,
     previousAndNext: Option[PreviousAndNext] = None,
