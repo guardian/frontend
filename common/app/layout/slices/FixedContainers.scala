@@ -52,7 +52,7 @@ object FixedContainers {
     ("fixed/medium/fast-XII", fixedMediumFastXII),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/thrasher", thrasher),
-    ("fixed/showcase-single-stories", showcaseSingleStories),
+    ("fixed/showcase", showcaseSingleStories),
   ) ++ (if (Configuration.faciatool.showTestContainers)
           Map(
             (
