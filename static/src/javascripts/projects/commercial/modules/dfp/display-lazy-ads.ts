@@ -1,37 +1,34 @@
-import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { enableLazyLoad } from './lazy-load';
 import { loadAdvert } from './load-advert';
 
 const instantLoadAdvertIds = ['dfp-ad--im'];
 
-interface PartitionedAdverts {
-	instantLoadAdverts: Advert[];
-	lazyLoadAdverts: Advert[];
-}
+const partition = <T>(
+	array: T[],
+	callback: (e: T, i: number, array: T[]) => boolean,
+): [T[], T[]] =>
+	array.reduce(
+		(result: [T[], T[]], element, i) => {
+			callback(element, i, array)
+				? result[0].push(element)
+				: result[1].push(element);
 
-const partitionAdverts = (): PartitionedAdverts => {
-	const instantLoadAdverts = [];
-	const lazyLoadAdverts = [];
-	for (let i = 0; i < dfpEnv.advertsToLoad.length; i++) {
-		const currentAdvert = dfpEnv.advertsToLoad[i];
-		if (instantLoadAdvertIds.includes(currentAdvert.id)) {
-			instantLoadAdverts.push(currentAdvert);
-		} else {
-			lazyLoadAdverts.push(currentAdvert);
-		}
-	}
-	return {
-		instantLoadAdverts,
-		lazyLoadAdverts,
-	};
-};
+			return result;
+		},
+		[[], []],
+	);
 
 const displayLazyAds = (): void => {
 	window.googletag?.pubads().collapseEmptyDivs();
 	window.googletag?.enableServices();
 
-	const { instantLoadAdverts, lazyLoadAdverts } = partitionAdverts();
+	const [
+		instantLoadAdverts,
+		lazyLoadAdverts,
+	] = partition(dfpEnv.advertsToLoad, (e) =>
+		instantLoadAdvertIds.includes(e.id),
+	);
 
 	// TODO: why do we need this side effect? Can we remove?
 	dfpEnv.advertsToLoad = lazyLoadAdverts;
