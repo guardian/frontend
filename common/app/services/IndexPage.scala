@@ -10,7 +10,7 @@ import layout._
 import model._
 import model.meta.{ItemList, ListItem}
 import model.pressed._
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.{DateTime}
 import java.time.ZoneId
 import play.api.mvc.RequestHeader
 import slices.{Container, ContainerDefinition, Fixed, FixedContainers}
