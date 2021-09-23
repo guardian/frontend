@@ -33,7 +33,7 @@ try {
                 var displayProp = adStyles && adStyles.getPropertyValue('display');
                 var mozBindingProp = adStyles && adStyles.getPropertyValue('-moz-binding');
 
-                adBlockers.active = displayProp === 'none' || (mozBindingProp && mozBindingProp.indexOf('about:') !== -1);
+                adBlockers.active = displayProp === 'none' || !!(mozBindingProp && mozBindingProp.includes('about:'));
 
                 // Run each listener
                 runEachListener(adBlockers.onDetect);
