@@ -1,31 +1,29 @@
 package model.structuredData
 
-import common.{Chronos, LinkTo}
+import common.LinkTo
 import model.Article
 import model.liveblog.BodyBlock
-
-import java.time.LocalDateTime
+import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.GuDateFormatLegacy
 
 object BlogPosting {
 
-  def zulu(date: LocalDateTime)(implicit request: RequestHeader): String =
-    GuDateFormatLegacy(Chronos.javaTimeLocalDateTimeToJodaDateTime(date), "yyyy-MM-dd'T'HH:mm:ssZ")
+  def zulu(date: DateTime)(implicit request: RequestHeader): String = GuDateFormatLegacy(date, "yyyy-MM-dd'T'HH:mm:ssZ")
 
   def apply(blog: Article, block: BodyBlock)(implicit request: RequestHeader): JsValue = {
 
     def blockFirstPublishedDate(block: BodyBlock) =
       block.firstPublishedDate match {
-        case Some(date) => zulu(Chronos.jodaDateTimeToJavaTimeDateTime(date))
-        case None       => zulu(Chronos.jodaDateTimeToJavaTimeDateTime(blog.trail.webPublicationDate))
+        case Some(date) => zulu(date)
+        case None       => zulu(blog.trail.webPublicationDate)
       }
 
     def blockLastModifiedDate(block: BodyBlock) =
       block.lastModifiedDate match {
-        case Some(date) => zulu(Chronos.jodaDateTimeToJavaTimeDateTime(date))
-        case None       => zulu(Chronos.jodaDateTimeToJavaTimeDateTime(blog.content.fields.lastModified))
+        case Some(date) => zulu(date)
+        case None       => zulu(blog.content.fields.lastModified)
       }
 
     def blockBody(block: BodyBlock): String = {

@@ -6,9 +6,8 @@
 @import views.html.fragments.containers.facia_cards.{date, slice}
 @import views.support.{GetClasses, PreviousAndNext}
 @import implicits.Requests._
-@import java.time.ZoneId
 
-@(trails: Seq[PressedContent], containerLayout: ContainerLayout, containerIndex: Int, actualDate: DateTime, page: MetaData, nav: Option[PreviousAndNext], tzOverride: Option[ZoneId] = None)(implicit request: RequestHeader, config: CollectionConfig)
+@(trails: Seq[PressedContent], containerLayout: ContainerLayout, containerIndex: Int, actualDate: DateTime, page: MetaData, nav: Option[PreviousAndNext], tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader, config: CollectionConfig)
 
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 

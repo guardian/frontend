@@ -2,15 +2,13 @@ package controllers
 
 import com.gu.contentapi.client.model.ContentApiError
 import common.Edition.defaultEdition
-import common.{Chronos, Edition, GuLogging, ImplicitControllerExecutionContext}
+import common.{Edition, ImplicitControllerExecutionContext, GuLogging}
 import contentapi.{ContentApiClient, SectionsLookUp}
 import implicits.{Dates, ItemResponses}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
-
-import java.time.ZoneId
 import pages.AllIndexHtmlPage
 import play.api.mvc._
 import services.{ConfigAgent, IndexPage, IndexPageItem}
@@ -105,7 +103,7 @@ class AllIndexController(
                 val today = DateTime.now
                 val nextPage =
                   if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
-                val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(ZoneId.of("UTC")))
+                val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
 
                 Cached(300)(
                   RevalidatableResult.Ok(
@@ -152,7 +150,7 @@ class AllIndexController(
               page = Section.make(section),
               contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
               Tags(Nil),
-              Chronos.jodaDateTimeToJavaTimeDateTime(date),
+              date,
               tzOverride = None,
             ),
           )
@@ -163,7 +161,7 @@ class AllIndexController(
                 page = tag,
                 contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
                 Tags(List(tag)),
-                Chronos.jodaDateTimeToJavaTimeDateTime(date),
+                date,
                 tzOverride = None,
               )
             }
