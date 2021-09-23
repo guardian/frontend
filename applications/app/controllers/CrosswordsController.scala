@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
+import common.{Edition, ImplicitControllerExecutionContext, GuLogging}
 import conf.Static
 import contentapi.ContentApiClient
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
@@ -15,14 +15,13 @@ import crosswords.{
 }
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import org.joda.time.LocalDate
+import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, RequestHeader, Result, _}
 import services.{IndexPage, IndexPageItem}
 import html.HtmlPageHelpers.ContentCSSFile
 
-import java.time.LocalDateTime
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
@@ -206,7 +205,7 @@ class CrosswordSearchController(
                     page = section,
                     contents = results.map(IndexPageItem(_)),
                     tags = Tags(Nil),
-                    date = LocalDateTime.now(),
+                    date = DateTime.now,
                     tzOverride = None,
                   )
 

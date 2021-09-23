@@ -8,7 +8,6 @@ import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLo
 import implicits.Collections
 import model._
 import org.joda.time.DateTime
-import java.time.LocalDateTime
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
@@ -83,7 +82,7 @@ trait Index extends ConciergeRepository with Collections {
             val tag2 = findTag(head.item, secondTag)
             if (tag1.isDefined && tag2.isDefined) {
               val page = TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
-              Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = LocalDateTime.now(), tzOverride = None))
+              Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
             } else {
               Right(NotFound)
             }
@@ -196,7 +195,7 @@ trait Index extends ConciergeRepository with Collections {
       page = section,
       contents = trails,
       tags = Tags(Nil),
-      date = LocalDateTime.now(),
+      date = DateTime.now,
       tzOverride = None,
       commercial = commercial,
     )
@@ -222,7 +221,7 @@ trait Index extends ConciergeRepository with Collections {
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
 
     tag map { tag =>
-      IndexPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = LocalDateTime.now(), tzOverride = None)
+      IndexPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = DateTime.now, tzOverride = None)
     }
   }
 

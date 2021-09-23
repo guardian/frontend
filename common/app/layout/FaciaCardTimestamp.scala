@@ -19,5 +19,5 @@ case object DateTimestamp extends FaciaCardTimestamp {
 
 case object TimeTimestamp extends FaciaCardTimestamp {
   override val javaScriptUpdate: Boolean = false
-  override val formatString: String = "h:mm a"
+  override val formatString: String = "h:mm aa"
 }

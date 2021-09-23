@@ -5,10 +5,10 @@ import contentapi.ContentApiClient
 import contentapi.Paths
 import model.Cached.WithoutRevalidationResult
 import model._
+import org.joda.time.DateTime
 import play.api.mvc._
 import services.{IndexPage, IndexPageItem}
 
-import java.time.LocalDateTime
 import scala.concurrent.Future
 
 class LatestIndexController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)
@@ -82,7 +82,7 @@ class LatestIndexController(contentApiClient: ContentApiClient, val controllerCo
               page = Section.make(section),
               contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
               tags = Tags(Nil),
-              date = LocalDateTime.now(),
+              date = DateTime.now,
               tzOverride = None,
             ),
           )
@@ -92,7 +92,7 @@ class LatestIndexController(contentApiClient: ContentApiClient, val controllerCo
                 page = Tag.make(tag),
                 contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
                 tags = Tags(Nil),
-                date = LocalDateTime.now(),
+                date = DateTime.now,
                 tzOverride = None,
               ),
             ),

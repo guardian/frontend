@@ -1,7 +1,6 @@
 @import layout.{ContainerDisplayConfig, ContainerLayout}
 @import model.pressed.CollectionConfig
 @import services.IndexPage
-@import common.Chronos.javaTimeLocalDateTimeToJodaDateTime
 
 @(index: IndexPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -15,7 +14,7 @@
                 index.faciaTrails
             ),
             0,
-            javaTimeLocalDateTimeToJodaDateTime(index.date),
+            index.date,
             index.page.metadata,
             index.previousAndNext,
             index.tzOverride
