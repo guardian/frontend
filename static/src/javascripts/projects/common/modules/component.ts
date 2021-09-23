@@ -306,18 +306,30 @@ class Component {
 			return this.elems[elemName];
 		}
 
-		const elem = this.elem?.querySelector<HTMLElement>(
-			this.getClass(elemName),
-		);
+		const selector = this.getClass(elemName);
+		// Previously we used the qwery library to select elements from the DOM
+		// The method signature of qwery is: `qwery(selector, context)`
+		// qwery defaults context to document
+		const context = this.elem ?? document;
+		// The previous code was: `const elem = qwery(selector, this.elem)[0];`
+		// qwery has a quirk in the case of an invalid selector it returns
+		// the children of the context node (i.e. this.elem)
+		// querySelectorAll will however throw an exception
+		// We kept the qwery behaviour to maintain backwards compatibility
+		const elem = selector
+			? context.querySelector<HTMLElement>(selector)
+			: context.firstElementChild;
 
-		if (elem && this.elems) {
+		if (!(elem instanceof HTMLElement)) return null;
+
+		if (this.elems) {
 			this.elems[elemName] = elem;
 		}
 
-		return elem ?? null;
+		return elem;
 	}
 
-	getClass(elemName: string, sansDot = false): string {
+	getClass(elemName: string, sansDot = false): string | undefined {
 		let className: string;
 
 		if (this.useBem && this.componentClass) {
@@ -326,7 +338,8 @@ class Component {
 			className = this.classes?.[elemName] ?? '';
 		}
 
-		return (sansDot ? '' : '.') + className;
+		const selector = (sansDot ? '' : '.') + className;
+		return selector === '' || selector === '.' ? undefined : selector;
 	}
 
 	setState(state: string, elemName?: string): void {

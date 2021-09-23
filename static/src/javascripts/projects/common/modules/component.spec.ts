@@ -173,8 +173,8 @@ describe('Component', () => {
 			expect(component.getClass('element', true)).toBe(
 				'my-element-class',
 			);
-			expect(component.getClass('element-2')).toBeDefined();
-			expect(component.getClass('element-2', true)).not.toBe('.');
+			expect(component.getClass('element-2')).toBeUndefined();
+			expect(component.getClass('element-2', true)).toBeUndefined();
 		});
 	});
 
