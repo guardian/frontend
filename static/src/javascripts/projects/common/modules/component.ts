@@ -44,12 +44,12 @@ const create = (maybeHtmlString: unknown): HTMLDivElement => {
 
 class Component {
 	useBem: boolean;
-	templateName?: string;
-	componentClass?: string;
-	endpoint?: string | (() => string);
-	classes?: Record<string, string>;
-	elem?: HTMLElement;
-	elems?: Record<string, HTMLElement>;
+	templateName?: string | null;
+	componentClass?: string | null;
+	endpoint?: string | (() => string) | null;
+	classes?: Record<string, string> | null;
+	elem?: HTMLElement | null;
+	elems?: Record<string, HTMLElement> | null;
 	template?: string | null;
 	rendered: boolean;
 	destroyed: boolean;
@@ -58,19 +58,19 @@ class Component {
 	responseDataKey: string;
 	autoupdated: boolean;
 	updateEvery: number;
-	fetchData?: string;
+	fetchData?: string | null;
 	manipulationType: ManipulationType;
-	t?: number;
+	t?: number | null;
 
 	constructor() {
 		this.useBem = false;
-		this.templateName = undefined;
-		this.componentClass = undefined;
-		this.endpoint = undefined;
-		this.classes = undefined;
-		this.elem = undefined;
-		this.elems = undefined;
-		this.template = undefined;
+		this.templateName = null;
+		this.componentClass = null;
+		this.endpoint = null;
+		this.classes = null;
+		this.elem = null;
+		this.elems = null;
+		this.template = null;
 		this.rendered = false;
 		this.destroyed = false;
 		this.options = {};
@@ -78,9 +78,9 @@ class Component {
 		this.responseDataKey = 'html';
 		this.autoupdated = false;
 		this.updateEvery = 60;
-		this.fetchData = undefined;
+		this.fetchData = null;
 		this.manipulationType = 'append';
-		this.t = undefined;
+		this.t = null;
 	}
 
 	attachTo(elem: HTMLElement): void {
