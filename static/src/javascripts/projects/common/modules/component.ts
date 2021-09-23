@@ -308,7 +308,7 @@ class Component {
 		this.elem?.dispatchEvent(event);
 	}
 
-	getElem(elemName: string): HTMLElement | null {
+	getElem(elemName: string): HTMLElement | undefined {
 		if (this.elems?.[elemName]) {
 			return this.elems[elemName];
 		}
@@ -327,7 +327,7 @@ class Component {
 			? context.querySelector<HTMLElement>(selector)
 			: context.firstElementChild;
 
-		if (!(elem instanceof HTMLElement)) return null;
+		if (!(elem instanceof HTMLElement)) return undefined;
 
 		if (this.elems) {
 			this.elems[elemName] = elem;
