@@ -1984,10 +1984,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-icons/-/src-icons-3.3.0.tgz#795933179be040feba0a58b995d76701cc954dcf"
   integrity sha512-sUFGSm0emuE8MM+/fqcCBPOgo+nOlcCmGxt9Za4SI34ujzmr78ossPfpLjaW+2+hAVeTA9+/DOEFdVvA11vaFg==
 
-"@guardian/types@^6":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/types/-/types-6.1.0.tgz#5189c34c5cc4da1e549f70706c78276fa69ef7d3"
-  integrity sha512-CP1bmqOutfG/hLQrAzBaqj9EitCNPJQ1qTyHfiCAElFsWKofYuEzMgHYM2ut5nSrkSC+n0AhXUt3qItl+2A3eQ==
+"@guardian/types@^9":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/types/-/types-9.0.1.tgz#a03682d9c2942560714f9c724a1cd7068f772a93"
+  integrity sha512-JTQe4giki1QYqE5bRkCbYWvelF2DtaQVlGmIbVwO8XWNc62TOQcBOUmqFb2EWpszWqkzBLEBB4rKKArgBZHTeA==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
