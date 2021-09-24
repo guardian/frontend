@@ -91,5 +91,4 @@ class FiniteStateMachine {
 	}
 }
 
-// eslint-disable-next-line import/no-default-export -- keep it working
-export default FiniteStateMachine;
+export { FiniteStateMachine };

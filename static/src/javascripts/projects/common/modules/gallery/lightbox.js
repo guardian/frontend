@@ -4,7 +4,7 @@ import qwery from 'qwery';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { getBreakpoint, hasTouchScreen, isBreakpoint } from 'lib/detect';
-import FiniteStateMachine from 'lib/fsm';
+import { FiniteStateMachine } from 'lib/fsm';
 import mediator from 'lib/mediator';
 import template from 'lodash/template';
 import throttle from 'lodash/throttle';
