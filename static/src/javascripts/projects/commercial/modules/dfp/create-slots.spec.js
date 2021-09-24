@@ -1,5 +1,5 @@
 import bonzo from 'bonzo';
-import { adSizes } from '../ad-sizes';
+import { adSizes } from '@guardian/commercial-core';
 import { createSlots } from './create-slots';
 
 const imHtml = `

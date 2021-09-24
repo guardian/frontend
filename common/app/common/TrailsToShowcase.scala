@@ -6,7 +6,7 @@ import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, U
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
-import model.pressed.{PressedContent, Replace}
+import model.pressed.{CuratedContent, PressedContent, Replace}
 import model.{ImageAsset, PressedPage}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -26,14 +26,18 @@ object TrailsToShowcase {
   private val RundownCollectionName = "Rundown"
   private val SingleStoriesCollectionName = "Single stories"
 
-  private val MaxLengthForSinglePanelTitle = 86
-  private val MaxLengthForSinglePanelAuthor = 42
+  private val MaxSinglePanelTitleLength = 86
+  private val MaxSinglePanelAuthorLength = 42
   private val MaxOverlineLength = 30
   private val MaxBulletLength = 118
   private val MaxBulletsAllowed = 3
 
-  private val MaxLengthForPanelTitle = 74
-  private val MaxLengthForRundownPanelArticleTitle = 64
+  private val MaxPanelTitleLength = 74
+  private val MaxRundownArticleTitleLength = 64
+
+  private val MaxRelatedArticleTitleLength = 54
+  private val MaxRelatedArticleOverlineLength = 42
+  private val MaxRelatedArticlesPanelSummaryLength = 82
 
   // Panel titles can encoded with a pipe delimiter in the trail headline.
   private val PanelTitleInHeadlineDelimiter = "\\|"
@@ -105,24 +109,84 @@ object TrailsToShowcase {
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {
-    val proposedTitle = titleOfLengthFrom(MaxLengthForSinglePanelTitle, content)
+    val proposedTitle = titleOfLengthFrom(MaxSinglePanelTitleLength, content)
     val proposedPanelTitle = panelTitleFrom(content)
     val proposedWebUrl = webUrl(content).map(Right(_)).getOrElse(Left(Seq("Trail had no web url")))
     val proposedImageUrl = singleStoryImageUrlFor(content)
-    val proposedBulletList =
-      content.card.trailText.map(extractBulletsFrom).getOrElse(Left(Seq("No trail text available")))
+
+    // Decide which type of panel to produce
+    // If supporting content is present try to map into into a related articles article group for a Related Articles panel
+    // If then try to produce a bullet item list for a Bullets panel
+    // This might get more interesting if we implement Key Moments but the principal is the same.
+    val supportingContent = content match {
+      case curatedContent: CuratedContent =>
+        curatedContent.supportingContent
+      case _ => Seq.empty
+    }
+
+    val isRelatedArticlePanel = supportingContent.nonEmpty
+    val proposedArticleGroup = {
+      if (isRelatedArticlePanel) {
+        if (supportingContent.nonEmpty) {
+          makeArticlesFrom(
+            supportingContent,
+            2,
+            "Related Article",
+            MaxRelatedArticleTitleLength,
+            MaxRelatedArticleOverlineLength,
+          ).fold(
+            { l =>
+              Left(l)
+            },
+            { articles: Seq[Article] =>
+              Right(Some(ArticleGroup(role = "RELATED_CONTENT", articles = articles)))
+            },
+          )
+        } else {
+          Right(None)
+        }
+      } else {
+        // Not a related article panel so we will gracefully opt out
+        Right(None)
+      }
+    }
+
+    val proposedBulletList = {
+      if (!isRelatedArticlePanel) {
+        content.card.trailText
+          .map(extractBulletsFrom)
+          .getOrElse(Left(Seq("No trail text available to create a bullet list from")))
+          .fold(
+            { l => Left(l) },
+            { bulletList =>
+              Right(Some(bulletList))
+            },
+          )
+      } else {
+        Right(None)
+      }
+    }
+
+    val proposedOverline = overlineFrom(content, MaxOverlineLength)
+
+    val proposedSummary = {
+      if (isRelatedArticlePanel) {
+        extractRelatedArticlePanelSummaryFrom(content)
+      } else {
+        Right(None)
+      }
+    }
 
     // Collect all mandatory values; any missing will result in a None entry
-    val proposedOverline = overlineFrom(content)
-
     val maybePanel = for {
       title <- proposedTitle.toOption
       maybePanelTitle <- proposedPanelTitle.toOption
       webUrl <- proposedWebUrl.toOption
       imageUrl <- proposedImageUrl.toOption
-      bulletList <- proposedBulletList.toOption
       maybeOverline <- proposedOverline.toOption
-
+      bulletList <- proposedBulletList.toOption
+      articleGroup <- proposedArticleGroup.toOption
+      summary <- proposedSummary.toOption
     } yield {
       // Build a panel
       val published = content.card.webPublicationDateOption
@@ -133,90 +197,33 @@ object TrailsToShowcase {
         link = webUrl,
         author = bylineFrom(content),
         overline = maybeOverline,
-        bulletList = Some(bulletList),
         imageUrl = imageUrl,
         published = published,
         updated = updated,
+        articleGroup = articleGroup,
+        bulletList = bulletList,
+        summary = summary,
       )
     }
 
     maybePanel.map { Right(_) }.getOrElse {
       // Round up all of the potential sources of hard errors and collect their objections
       Left(
-        Seq(proposedTitle, proposedPanelTitle, proposedWebUrl, proposedImageUrl, proposedBulletList, proposedOverline)
-          .flatMap(_.left.toOption)
-          .flatten,
+        Seq(
+          proposedTitle,
+          proposedPanelTitle,
+          proposedWebUrl,
+          proposedImageUrl,
+          proposedOverline,
+          proposedArticleGroup,
+          proposedBulletList,
+          proposedSummary,
+        ).flatMap(_.left.toOption).flatten,
       )
     }
   }
 
   def asRundownPanel(content: Seq[PressedContent], id: String): Either[Seq[String], RundownPanel] = {
-    def makeArticlesFrom(content: Seq[PressedContent]): Either[Seq[String], Seq[RundownArticle]] = {
-      val articleOutcomes = content.map { contentItem =>
-        // Collect the mandatory fields for the article. If any of these are missing we can skip this item
-        val proposedArticleTitle = titleOfLengthFrom(MaxLengthForRundownPanelArticleTitle, contentItem)
-        val proposedArticleImage = rundownPanelArticleImageUrlFor(contentItem)
-        val proposedOverline = overlineFrom(contentItem)
-
-        val maybeArticle = for {
-          webPublicationDate <- contentItem.card.webPublicationDateOption
-          title <- proposedArticleTitle.toOption
-          guid <- guidFor(contentItem)
-          webUrl <- webUrl(contentItem)
-          imageUrl <- proposedArticleImage.right.toOption
-          maybeOverline <- proposedOverline.toOption
-        } yield {
-          val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
-          RundownArticle(
-            guid,
-            title,
-            webUrl,
-            webPublicationDate,
-            lastModified,
-            bylineFrom(contentItem),
-            maybeOverline,
-            Some(imageUrl),
-          )
-        }
-
-        maybeArticle.map(Right(_)).getOrElse {
-          val problems = Seq(proposedArticleTitle, proposedArticleImage, proposedOverline).map(_.left.toOption)
-          Left(problems)
-        }
-      }
-
-      // We require exactly 3 articles for a valid rundown panel
-      val threeArticlesToUse = Some(articleOutcomes.flatMap(_.toOption).take(3)).filter(_.size == 3)
-
-      threeArticlesToUse
-        .map { articles =>
-          // Most of our content has bylines. Kicker is an optional override in our tools
-          // Therefore we should default to using author tags if it is available on all the articles.
-          // If kickers have been supplied for all articles we will use that in preference to authors
-          val allAuthorsPresent = articles.forall(_.author.nonEmpty)
-          val allKickersPresent = articles.forall(_.overline.nonEmpty)
-          if (allKickersPresent) {
-            // Use kickers; remove any authors
-            Right(articles.map(_.copy(author = None)))
-          } else if (allAuthorsPresent) {
-            // Use authors; remove any kickers
-            Right(articles.map(_.copy(overline = None)))
-          } else {
-            // We can't use these articles as all author or all overline is a requirement
-            Left(Seq("Rundown trails need to all have Kickers or Bylines"))
-          }
-        }
-        .getOrElse {
-          val articleProblems = articleOutcomes
-            .flatMap(_.left.toOption)
-            .flatten
-            .flatten
-            .flatten
-          // Could not make 3 valid articles is the most useful message to the editor so put it first
-          Left("Could not find 3 valid rundown article trails" +: articleProblems)
-        }
-    }
-
     // Collect mandatory fields. If any of these is missing we can yield None
     val proposedPanelTitle = {
       content.headOption
@@ -228,7 +235,8 @@ object TrailsToShowcase {
         )
     }
 
-    val proposedRundownArticles = makeArticlesFrom(content)
+    val proposedRundownArticles =
+      makeArticlesFrom(content, 3, "Rundown", MaxRundownArticleTitleLength, MaxOverlineLength)
     val maybeRundownPanel = for {
       panelTitle <- proposedPanelTitle.toOption
       articles <- proposedRundownArticles.toOption
@@ -241,7 +249,7 @@ object TrailsToShowcase {
       RundownPanel(
         guid = id,
         panelTitle = panelTitle,
-        articles = articles,
+        articleGroup = ArticleGroup(role = Rundown, articles = articles),
         published = published,
         updated = updated,
       )
@@ -252,6 +260,79 @@ object TrailsToShowcase {
       val problems = Seq(proposedPanelTitle, proposedRundownArticles).flatMap(_.left.toOption).flatten
       Left(problems)
     }
+  }
+
+  private def makeArticlesFrom(
+      content: Seq[PressedContent],
+      required: Int,
+      articleType: String,
+      maxTitleLength: Int,
+      maxOverlineLength: Int,
+  ): Either[Seq[String], Seq[Article]] = {
+    val articleOutcomes = content.map { contentItem =>
+      // Collect the mandatory fields for the article. If any of these are missing we can skip this item
+      val proposedArticleTitle = titleOfLengthFrom(maxTitleLength, contentItem)
+      val proposedArticleImage = rundownPanelArticleImageUrlFor(contentItem)
+      val proposedOverline = overlineFrom(contentItem, maxOverlineLength)
+
+      val maybeArticle = for {
+        webPublicationDate <- contentItem.card.webPublicationDateOption
+        title <- proposedArticleTitle.toOption
+        guid <- guidFor(contentItem)
+        webUrl <- webUrl(contentItem)
+        imageUrl <- proposedArticleImage.right.toOption
+        maybeOverline <- proposedOverline.toOption
+      } yield {
+        val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
+        Article(
+          guid,
+          title,
+          webUrl,
+          webPublicationDate,
+          lastModified,
+          bylineFrom(contentItem),
+          maybeOverline,
+          Some(imageUrl),
+        )
+      }
+
+      maybeArticle.map(Right(_)).getOrElse {
+        val problems = Seq(proposedArticleTitle, proposedArticleImage, proposedOverline).map(_.left.toOption)
+        Left(problems)
+      }
+    }
+
+    // We require exactly 3 articles for a valid rundown panel; 2 for a related articles single story panel
+    val correctNumberOfArticlesToUse =
+      Some(articleOutcomes.flatMap(_.toOption).take(required)).filter(_.size == required)
+
+    correctNumberOfArticlesToUse
+      .map { articles =>
+        // Most of our content has bylines. Kicker is an optional override in our tools
+        // Therefore we should default to using author tags if it is available on all the articles.
+        // If kickers have been supplied for all articles we will use that in preference to authors
+        val allAuthorsPresent = articles.forall(_.author.nonEmpty)
+        val allKickersPresent = articles.forall(_.overline.nonEmpty)
+        if (allKickersPresent) {
+          // Use kickers; remove any authors
+          Right(articles.map(_.copy(author = None)))
+        } else if (allAuthorsPresent) {
+          // Use authors; remove any kickers
+          Right(articles.map(_.copy(overline = None)))
+        } else {
+          // We can't use these articles as all author or all overline is a requirement
+          Left(Seq(s"$articleType trails need to have all Kickers or all Bylines"))
+        }
+      }
+      .getOrElse {
+        val articleProblems = articleOutcomes
+          .flatMap(_.left.toOption)
+          .flatten
+          .flatten
+          .flatten
+        // Could not make required number of valid articles is the most useful message to the editor so put it first
+        Left(s"Could not find $required valid ${articleType.toLowerCase} trails" +: articleProblems)
+      }
   }
 
   private def atomDatesModuleFor(published: Option[DateTime], updated: Option[DateTime]): RssAtomModuleImpl = {
@@ -337,8 +418,8 @@ object TrailsToShowcase {
         Right(Some(panelTitle))
           .filterOrElse(_ => panelTitle.nonEmpty, Seq(s"Panel title in headline '${content.header.headline}' is empty"))
           .filterOrElse(
-            _ => panelTitle.length <= MaxLengthForPanelTitle,
-            Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"),
+            _ => panelTitle.length <= MaxPanelTitleLength,
+            Seq(s"The panel title '$panelTitle' is longer than " + MaxPanelTitleLength + " characters"),
           )
       }
       .getOrElse {
@@ -353,8 +434,8 @@ object TrailsToShowcase {
         Right(panelTitle)
           .filterOrElse(_ => panelTitle.nonEmpty, Seq(s"Panel title in headline '${content.header.headline}' is empty"))
           .filterOrElse(
-            _ => panelTitle.length <= MaxLengthForPanelTitle,
-            Seq(s"The panel title '$panelTitle' is longer than " + MaxLengthForPanelTitle + " characters"),
+            _ => panelTitle.length <= MaxPanelTitleLength,
+            Seq(s"The panel title '$panelTitle' is longer than " + MaxPanelTitleLength + " characters"),
           )
       }
       .getOrElse {
@@ -373,19 +454,19 @@ object TrailsToShowcase {
   }
 
   private def bylineFrom(content: PressedContent): Option[String] = {
-    content.properties.byline.map(stripHtml).filter(_.nonEmpty).filter(_.length <= MaxLengthForSinglePanelAuthor)
+    content.properties.byline.map(stripHtml).filter(_.nonEmpty).filter(_.length <= MaxSinglePanelAuthorLength)
   }
 
-  private def overlineFrom(contentItem: PressedContent): Either[Seq[String], Option[String]] = {
+  private def overlineFrom(contentItem: PressedContent, maxLength: Int): Either[Seq[String], Option[String]] = {
     def kickerFrom(content: PressedContent): Option[String] = {
       content.header.kicker.flatMap(_.properties.kickerText).map(stripHtml)
     }
     kickerFrom(contentItem)
       .map { kicker =>
-        if (kicker.length <= MaxOverlineLength) {
+        if (kicker.length <= maxLength) {
           Right(Some(kicker))
         } else {
-          Left(Seq(s"Kicker text '$kicker' is too long"))
+          Left(Seq(s"Kicker text '$kicker' is longer than $maxLength characters"))
         }
       }
       .getOrElse {
@@ -442,6 +523,25 @@ object TrailsToShowcase {
     feed
   }
 
+  private def extractRelatedArticlePanelSummaryFrom(content: PressedContent): Either[Seq[String], Option[String]] = {
+    val maybeTrailText = content.card.trailText.map(stripHtml)
+    maybeTrailText
+      .map { trailText =>
+        Right(Some(trailText))
+          .filterOrElse(_.nonEmpty, Seq("Trail text is empty"))
+          .filterOrElse(
+            _ => trailText.length <= MaxRelatedArticlesPanelSummaryLength,
+            Seq(
+              s"The trail text '$trailText' is longer than the " + MaxPanelTitleLength +
+                " characters allowed for a summary",
+            ),
+          )
+      }
+      .getOrElse {
+        Right(None)
+      }
+  }
+
   private def stripHtml(str: String): String = {
     // Could be attached to String as an implicit
     Jsoup.parse(str).text().trim
@@ -456,16 +556,25 @@ object TrailsToShowcase {
   }
 
   def asSyndEntry(singleStoryPanel: SingleStoryPanel): SyndEntry = {
+    def asGBulletList(bulletList: BulletList) = {
+      GBulletList(listItems = bulletList.listItems.map(bullet => GBulletListItem(text = bullet.text)))
+    }
+
     val entry = new SyndEntryImpl()
     entry.setTitle(singleStoryPanel.title)
     entry.setLink(singleStoryPanel.link)
     entry.setUri(singleStoryPanel.guid)
-
+    singleStoryPanel.summary.foreach { summary =>
+      val description = new SyndContentImpl
+      description.setValue(summary)
+      entry.setDescription(description)
+    }
     val gModule = new GModuleImpl()
     gModule.setPanel(Some(singleStoryPanel.`type`))
     gModule.setPanelTitle(singleStoryPanel.panelTitle)
     gModule.setOverline(singleStoryPanel.overline)
-    gModule.setBulletList(singleStoryPanel.bulletList)
+    gModule.setBulletList(singleStoryPanel.bulletList.map(asGBulletList))
+    gModule.setArticleGroup(singleStoryPanel.articleGroup.map(asGArticleGroup))
     addModuleTo(entry, gModule)
 
     // and add the showcase formatted asset
@@ -487,31 +596,33 @@ object TrailsToShowcase {
   }
 
   def asSyndEntry(rundownPanel: RundownPanel): SyndEntry = {
-
-    def asGArticle(rundownArticle: RundownArticle): GArticle = {
-      GArticle(
-        rundownArticle.guid,
-        rundownArticle.title,
-        rundownArticle.link,
-        rundownArticle.published,
-        rundownArticle.updated,
-        rundownArticle.author,
-        rundownArticle.overline,
-        rundownArticle.imageUrl.map(i => new MediaContent(new UrlReference(i))),
-      )
-    }
-
     val entry = new SyndEntryImpl
     entry.setUri(rundownPanel.guid)
 
     val gModule = new GModuleImpl()
     gModule.setPanel(Some(rundownPanel.`type`))
     gModule.setPanelTitle(Some(rundownPanel.panelTitle))
-    gModule.setArticleGroup(Some(ArticleGroup(role = Some(Rundown), rundownPanel.articles.map(asGArticle))))
+    gModule.setArticleGroup(Some(asGArticleGroup(rundownPanel.articleGroup)))
     addModuleTo(entry, gModule)
 
     addModuleTo(entry, atomDatesModuleFor(rundownPanel.published, rundownPanel.updated))
     entry
+  }
+
+  def asGArticleGroup(articleGroup: ArticleGroup) = {
+    def asGArticle(article: Article): GArticle = {
+      GArticle(
+        article.guid,
+        article.title,
+        article.link,
+        article.published,
+        article.updated,
+        article.author,
+        article.overline,
+        article.imageUrl.map(i => new MediaContent(new UrlReference(i))),
+      )
+    }
+    GArticleGroup(role = articleGroup.role, articles = articleGroup.articles.map(asGArticle))
   }
 
   trait Panel {
@@ -526,11 +637,13 @@ object TrailsToShowcase {
       link: String,
       overline: Option[String],
       bulletList: Option[BulletList],
+      articleGroup: Option[ArticleGroup],
       imageUrl: String,
       author: Option[String],
       published: Option[DateTime],
       updated: Option[DateTime],
       panelTitle: Option[String],
+      summary: Option[String] = None,
   ) extends Panel {
     val `type`: String = SingleStory
     def guid: String = link
@@ -539,14 +652,14 @@ object TrailsToShowcase {
   case class RundownPanel(
       guid: String,
       panelTitle: String,
-      articles: Seq[RundownArticle],
+      articleGroup: ArticleGroup,
       published: Option[DateTime],
       updated: Option[DateTime],
   ) extends Panel {
     val `type`: String = Rundown
   }
 
-  case class RundownArticle(
+  case class Article(
       guid: String,
       title: String,
       link: String,
@@ -556,5 +669,11 @@ object TrailsToShowcase {
       overline: Option[String],
       imageUrl: Option[String],
   )
+
+  case class ArticleGroup(role: String, articles: Seq[Article])
+
+  case class BulletList(listItems: Seq[BulletListItem])
+
+  case class BulletListItem(text: String)
 
 }

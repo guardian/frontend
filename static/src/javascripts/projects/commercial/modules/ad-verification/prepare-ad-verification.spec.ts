@@ -25,14 +25,19 @@ jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(() => mockVariantSynchronous()),
 }));
 jest.mock('../dfp/get-advert-by-id', () => ({
-	getAdvertById: jest.fn((id: string) => ({
-		id,
-		slot: { setTargeting: jest.fn() },
-	})),
+	getAdvertById: jest.fn((id: string) => {
+		if (!validIds.includes(id)) return null;
+		return {
+			id,
+			slot: { setTargeting: jest.fn() },
+		};
+	}),
 }));
 jest.mock('../dfp/load-advert', () => ({
 	refreshAdvert: jest.fn(),
 }));
+
+const validIds = ['slot-a', 'slot-2'];
 
 const mockVariantSynchronous = jest.fn<boolean, unknown[]>();
 const mockLog = jest.fn<void, unknown[]>();
@@ -76,35 +81,10 @@ describe('prepare-ad-verification', () => {
 	});
 
 	describe('maybeRefreshBlockedSlotOnce', () => {
-		beforeAll(() => {
-			const fakeSlot = (id: string) => {
-				return {
-					getSlotElementId: () => id,
-				};
-			};
-
-			window.googletag = {
-				// @ts-expect-error - this is a mock so type not totally compatible with Googletag
-				pubads() {
-					return {
-						getSlots: () => [
-							fakeSlot('slot-a'),
-							fakeSlot('slot-2'),
-							fakeSlot('slot-untouched'),
-						],
-					};
-				},
-			};
-		});
-
-		const maybeRefreshBlockedSlotOnceWithDefaultParams = (s: string) => {
-			maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
-				prebid: { s },
-			});
-		};
-
 		it('should log data', () => {
-			maybeRefreshBlockedSlotOnceWithDefaultParams('slot-a');
+			maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
+				prebid: { s: 'slot-a' },
+			});
 			expect(mockLog).toHaveBeenLastCalledWith(
 				'commercial',
 				'🚫 Blocked bad ad with Confiant',
@@ -127,7 +107,7 @@ describe('prepare-ad-verification', () => {
 				'slot-a',
 				'slot-2',
 				'slot-2',
-				'not-a-slot', // should not appear as refreshed
+				'slot-2',
 			].map((slot) => {
 				maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
 					prebid: { s: slot },
@@ -135,6 +115,20 @@ describe('prepare-ad-verification', () => {
 			});
 
 			expect(confiantRefreshedSlots).toStrictEqual(['slot-a', 'slot-2']);
+		});
+
+		it('should ignore non-existing ad slots', async () => {
+			jest.resetModules();
+
+			const { maybeRefreshBlockedSlotOnce } = (
+				await import('./prepare-ad-verification')
+			)._;
+
+			expect(() => {
+				maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
+					prebid: { s: 'not-a-slot' },
+				});
+			}).toThrow('No slot found for ');
 		});
 
 		it('should not refresh ad slots if not in variant', async () => {
@@ -145,7 +139,7 @@ describe('prepare-ad-verification', () => {
 				await import('./prepare-ad-verification')
 			)._;
 
-			['slot-2', 'slot-a', 'slot-unused', 'not-a-slot'].map((slot) => {
+			['slot-2', 'slot-a'].map((slot) => {
 				maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
 					prebid: { s: slot },
 				});

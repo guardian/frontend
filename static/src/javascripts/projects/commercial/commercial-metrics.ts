@@ -4,11 +4,17 @@ import { shouldCaptureMetrics } from '../common/modules/analytics/shouldCaptureM
 const { isDev } = window.guardian.config.page;
 const { pageViewId } = window.guardian.ophan;
 const { browserId } = window.guardian.config.ophan;
+const { adBlockers } = window.guardian;
 
 let logged = false;
 const sendMetrics = (): void => {
 	if (logged) return;
-	logged = sendCommercialMetrics(pageViewId, browserId, isDev);
+	const args: [string, string | undefined, boolean, boolean?] =
+		adBlockers.active === undefined
+			? [pageViewId, browserId, isDev]
+			: [pageViewId, browserId, isDev, adBlockers.active];
+
+	logged = sendCommercialMetrics(...args);
 };
 
 const init = (): Promise<void> => {

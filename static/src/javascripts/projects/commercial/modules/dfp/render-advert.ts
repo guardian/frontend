@@ -1,8 +1,8 @@
+import { adSizes } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
 import { geoMostPopular } from '../../../common/modules/onward/geo-most-popular';
-import { adSizes } from '../ad-sizes';
 import { stickyCommentsMpu, stickyMpu } from '../sticky-mpu';
 import type { Advert } from './Advert';
 import { getAdIframe } from './get-ad-iframe';

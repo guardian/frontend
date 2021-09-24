@@ -1,15 +1,18 @@
+import _root_.commercial.CommercialLifecycle
+import _root_.commercial.controllers.CommercialControllers
+import _root_.commercial.targeting.TargetingLifecycle
+import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
-import common.DiagnosticsLifecycle
+import common.Assets.DiscussionExternalAssetsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
+import concurrent.BlockingOperations
 import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
-import _root_.commercial.controllers.CommercialControllers
-import _root_.commercial.CommercialLifecycle
 import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
@@ -19,7 +22,6 @@ import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
 import model.{AdminLifecycle, ApplicationIdentity}
-import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.routing.Router
@@ -27,12 +29,8 @@ import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
-import _root_.commercial.targeting.TargetingLifecycle
-import akka.actor.ActorSystem
-import common.Assets.DiscussionExternalAssetsLifecycle
-import concurrent.BlockingOperations
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
-import play.api.OptionalDevContext
+import services.ophan.SurgingContentAgentLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -44,7 +42,6 @@ trait Controllers
     with ApplicationsControllers
     with ArticleControllers
     with CommercialControllers
-    with DiagnosticsControllers
     with DiscussionControllers
     with FaciaControllers
     with OnwardControllers
@@ -96,7 +93,6 @@ trait AppComponents
     List(
       wire[LogstashLifecycle],
       wire[AdminLifecycle],
-      wire[DiagnosticsLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[CommercialLifecycle],
       wire[DfpDataCacheLifecycle],

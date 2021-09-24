@@ -45,7 +45,7 @@
                 object-fit: cover;
              }
 
-            .rundown img {
+            .articleGroup img {
                 margin-left: auto;
                 border-radius: 5px;
                 object-fit: cover;
@@ -82,19 +82,7 @@
             @for(panel <- rundownPanelOutcomes.right.toOption) {
                 <li class="panel rundown">
                     <h2 class="panelTitle">@panel.panelTitle</h2>
-                    @for((article, index) <- panel.articles.zipWithIndex) {
-                        <a href="@article.link" target="_blank"><img src="@article.imageUrl" width="160"/></a>
-                        @for(overline <- article.overline) {
-                            <p class="overline">@overline</p>
-                        }
-                        <a href="@article.link" target="_blank"><h4>@article.title</h4></a>
-                        @for(author <- article.author) {
-                            <p class="author">@author</p>
-                        }
-                        @if(index + 1 < panel.articles.size) {
-                            <hr/>
-                        }
-                    }
+                    @showcase_articlegroup(panel.articleGroup)
                 </li>
             }
 
@@ -121,12 +109,18 @@
                             @for(author <- panel.author) {
                         <p class="author">@author</p>
                         }
+                        @for(summary <- panel.summary) {
+                            <p>@summary</p>
+                        }
                         @for(bulletList <- panel.bulletList) {
                             <ul class="bulletList">
                                 @for(bullet <- bulletList.listItems) {
                                 <li>@bullet.text</li>
                                 }
                             </ul>
+                        }
+                        @for(relatedArticles <- panel.articleGroup) {
+                            @showcase_articlegroup(relatedArticles)
                         }
                     </li>
                 }

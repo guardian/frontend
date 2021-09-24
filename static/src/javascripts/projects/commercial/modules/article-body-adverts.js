@@ -3,7 +3,7 @@ import { isBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import mediator from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
-import { adSizes } from './ad-sizes';
+import { adSizes } from '@guardian/commercial-core';
 import { addSlot } from './dfp/add-slot';
 import { trackAdRender } from './dfp/track-ad-render';
 import { createSlots } from './dfp/create-slots';
