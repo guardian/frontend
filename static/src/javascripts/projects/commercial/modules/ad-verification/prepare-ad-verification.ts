@@ -49,7 +49,7 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 	const advert = getAdvertById(blockedSlotPath);
 	if (!advert) throw new Error(`No slot found for ${blockedSlotPath}`);
 
-	const eventTimer = new EventTimer();
+	const eventTimer = EventTimer.get();
 	eventTimer.mark(`${stripDfpAdPrefixFrom(advert.id)}-blockedByConfiant`);
 
 	setForceSendMetrics(true);
