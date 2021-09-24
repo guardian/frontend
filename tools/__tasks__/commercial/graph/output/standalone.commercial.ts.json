@@ -607,9 +607,8 @@
   "../lib/time-utils.js",
   "../projects/common/modules/identity/api.ts"
  ],
- "../projects/common/modules/component.js": [
-  "../../../../node_modules/bean/bean.js",
-  "../../../../node_modules/bonzo/bonzo.js",
+ "../projects/common/modules/component.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/fetch-json.ts"
  ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
@@ -688,7 +687,7 @@
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js",
-  "../projects/common/modules/component.js"
+  "../projects/common/modules/component.ts"
  ],
  "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/bean/bean.js",
