@@ -5,10 +5,18 @@ const madge = require('madge');
 const filename = "standalone.commercial.ts";
 const entry = process.cwd() + "/static/src/javascripts/bootstraps/" + filename;
 const config = {
-    webpackConfig: 'webpack.config.commercial.prod.js',
-    tsConfig: 'tsconfig.json',
-    includeNpm: true,
-}
+	webpackConfig: 'webpack.config.commercial.prod.js',
+	tsConfig: 'tsconfig.json',
+	includeNpm: true,
+	detectiveOptions: {
+		es6: {
+			mixedImports: true,
+		},
+		ts: {
+			mixedImports: true,
+		},
+	},
+};
 
 module.exports = {
     description: 'Create JSON bundle representation',
