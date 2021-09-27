@@ -50,6 +50,7 @@ object Badges {
   val euElection = Badge("politics/2019-european-parliamentary-elections", Static("images/badges/eu_election.svg"))
   val paradisePapers = Badge("news/series/paradise-papers", Static("images/badges/pp_web.svg"))
   val cambridgeAnalytica = Badge("news/series/cambridge-analytica-files", Static("images/badges/calock.svg"))
+  val pegasusProject = Badge("news/series/pegasus-project", Static("images/badges/SpecialReportJul21.svg"))
   val specialReport = SpecialBadge(
     "06966783c5b5413394df723f2ca58030953",
     "feb78187bd4de427603a164d0a69f19f",
@@ -57,8 +58,8 @@ object Badges {
   )
   val specialReport2 = SpecialBadge(
     "a-public-salt3W#ywHav!p+?r+W2$E6=",
-    "a22340dd6b783a7fa481fa812f8f845e",
-    Static("images/badges/SpecialReportJul21.svg"),
+    "b95f43cd3bfe5f1d04b354dcae3442ac",
+    Static("images/badges/SpecialReportSep21.svg"),
   )
   val nhs70 = Badge("society/series/nhs-at-70", Static("images/badges/nhs-70.svg"))
   val cricketWorldCup = Badge("sport/cricket-world-cup-2019", Static("images/badges/cricket-world-cup.svg"))
@@ -116,6 +117,7 @@ object Badges {
     euElection,
     paradisePapers,
     cambridgeAnalytica,
+    pegasusProject,
     specialReport,
     specialReport2,
     nhs70,
