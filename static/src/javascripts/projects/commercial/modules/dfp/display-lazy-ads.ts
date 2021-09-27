@@ -1,23 +1,9 @@
+import { partition } from '../../../../lib/partition';
 import { dfpEnv } from './dfp-env';
 import { enableLazyLoad } from './lazy-load';
 import { loadAdvert } from './load-advert';
 
 const instantLoadAdvertIds = ['dfp-ad--im'];
-
-const partition = <T>(
-	array: T[],
-	callback: (e: T, i: number, array: T[]) => boolean,
-): [T[], T[]] =>
-	array.reduce(
-		(result: [T[], T[]], element, i) => {
-			callback(element, i, array)
-				? result[0].push(element)
-				: result[1].push(element);
-
-			return result;
-		},
-		[[], []],
-	);
 
 const displayLazyAds = (): void => {
 	window.googletag?.pubads().collapseEmptyDivs();
