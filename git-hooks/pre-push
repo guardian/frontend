@@ -91,8 +91,17 @@ const commercialGraph = (changed) => {
 		},
 	)
 		.then(() => execa.sync('git', ['add', graphFile]))
-		.then(() => execa.sync('git', ['commit', '-m', "rebuild commercial bundle graph"]))
-		.then(() => changed);
+		.then(() =>
+			execa.sync('git', [
+				'commit',
+				'-m',
+				'rebuild commercial bundle graph',
+			]),
+		)
+		.catch(() => {
+			/* nothing to commit */
+		})
+		.finally(() => changed);
 };
 confirmIfMain
     .then(validate)
