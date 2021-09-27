@@ -26,8 +26,8 @@ const displayLazyAds = (): void => {
 	const [
 		instantLoadAdverts,
 		lazyLoadAdverts,
-	] = partition(dfpEnv.advertsToLoad, (e) =>
-		instantLoadAdvertIds.includes(e.id),
+	] = partition(dfpEnv.advertsToLoad, (advert) =>
+		instantLoadAdvertIds.includes(advert.id),
 	);
 
 	// TODO: why do we need this side effect? Can we remove?
