@@ -1,4 +1,3 @@
-import config from '../../../../lib/config';
 import { getBreakpoint } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { removeDisabledSlots } from '../remove-slots';
@@ -27,7 +26,7 @@ const fillAdvertSlots = async (): Promise<void> => {
 		return Promise.resolve();
 	}
 	const isDCRMobile =
-		(config.get('isDotcomRendering', false) as boolean) &&
+		window.guardian.config.isDotcomRendering &&
 		getBreakpoint() === 'mobile';
 	// Get all ad slots
 	const adverts = [
