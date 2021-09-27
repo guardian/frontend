@@ -155,7 +155,7 @@ export const shouldIncludeMobileSticky = once(
 			}) &&
 			(isInUsOrCa() || isInAuOrNz()) &&
 			config.get('page.contentType') === 'Article' &&
-			!config.get('page.isHosted')),
+			!window.guardian.config.page.isHosted),
 );
 
 export const stripMobileSuffix = (s: string): string =>

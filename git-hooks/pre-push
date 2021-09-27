@@ -83,6 +83,7 @@ const updateTOC = changed => {
 const commercialGraph = (changed) => {
 	if (!changed.some((file) => file.includes('/commercial/'))) return changed;
 	const { graphFile } = require('../tools/__tasks__/commercial/graph/index');
+    console.log(graphFile)
 	return execa(
 		'./tools/task-runner/runner',
 		['commercial/graph', '--verbose'],
