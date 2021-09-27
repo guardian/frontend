@@ -39,6 +39,7 @@
   "../../../../node_modules/wolfy87-eventemitter/EventEmitter.js"
  ],
  "../lib/noop.ts": [],
+ "../lib/partition.ts": [],
  "../lib/raven.js": [
   "../../../../node_modules/raven-js/src/singleton.js",
   "../lib/config.js",
@@ -170,6 +171,7 @@
   "../projects/commercial/modules/dfp/load-advert.js"
  ],
  "../projects/commercial/modules/dfp/display-lazy-ads.ts": [
+  "../lib/partition.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/lazy-load.js",
   "../projects/commercial/modules/dfp/load-advert.js"
