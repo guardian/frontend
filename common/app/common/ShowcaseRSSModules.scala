@@ -5,6 +5,7 @@ import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl
 import com.sun.syndication.feed.module.mediarss.io.MediaModuleGenerator
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata}
 import com.sun.syndication.io.ModuleGenerator
+import com.sun.syndication.io.impl.DateParser
 import org.jdom.{Attribute, Element, Namespace}
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
@@ -14,21 +15,12 @@ import scala.collection.JavaConverters._
 
 trait RssAtomModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
   override def getUri: String = RssAtomModule.URI
-
-  def getPublished: Option[DateTime]
-  def setPublished(published: Option[DateTime])
-
   def getUpdated: Option[DateTime]
   def setUpdated(updated: Option[DateTime])
 }
 
 class RssAtomModuleImpl extends RssAtomModule {
-  private var published: Option[DateTime] = None
   private var updated: Option[DateTime] = None
-
-  override def getPublished: Option[DateTime] = published
-
-  override def setPublished(published: Option[DateTime]): Unit = this.published = published
 
   override def getUpdated: Option[DateTime] = updated
 
@@ -44,7 +36,6 @@ class RssAtomModuleImpl extends RssAtomModule {
 
   override def copyFrom(obj: Any): Unit = {
     val source = obj.asInstanceOf[RssAtomModule]
-    setPublished(source.getPublished)
     setUpdated(source.getUpdated)
   }
 }
@@ -156,11 +147,6 @@ class RssAtomModuleGenerator extends ModuleGenerator {
   override def generate(module: Module, element: Element): Unit = {
     module match {
       case rssAtomModule: RssAtomModule =>
-        rssAtomModule.getPublished.foreach { published =>
-          val publishedElement = new org.jdom.Element("published", RssAtomModuleGenerator.NS)
-          publishedElement.addContent(ISODateTimeFormat.dateTimeNoMillis().print(published))
-          element.addContent(publishedElement)
-        }
         rssAtomModule.getUpdated.foreach { updated =>
           val publishedElement = new org.jdom.Element("updated", RssAtomModuleGenerator.NS)
           publishedElement.addContent(ISODateTimeFormat.dateTimeNoMillis().print(updated))
@@ -243,8 +229,12 @@ class GModuleGenerator extends ModuleGenerator {
               mediaModuleGenerator.generate(mediaModule, articleElement)
             }
 
+            // Published and updated dates
+            val pubDateElement = new Element("pubDate")
+            pubDateElement.addContent(DateParser.formatRFC822(article.published.toDate))
+            articleElement.addContent(pubDateElement)
+
             val rssAtomModule = new RssAtomModuleImpl()
-            rssAtomModule.setPublished(Some(article.published))
             rssAtomModule.setUpdated(Some(article.updated))
             rssAtomModuleGenerator.generate(rssAtomModule, articleElement)
 

@@ -335,15 +335,6 @@ object TrailsToShowcase {
       }
   }
 
-  private def atomDatesModuleFor(published: Option[DateTime], updated: Option[DateTime]): RssAtomModuleImpl = {
-    val atomModule = new RssAtomModuleImpl
-    atomModule.setPublished(published)
-    atomModule.setUpdated(
-      updated,
-    )
-    atomModule
-  }
-
   private def addModuleTo(entry: SyndEntry, module: Module): Unit = {
     val modules = entry.getModules
     entry.setModules((modules.asScala ++ Seq(module)).asJava)
@@ -572,6 +563,9 @@ object TrailsToShowcase {
       description.setValue(summary)
       entry.setDescription(description)
     }
+
+    setEntryDates(singleStoryPanel, entry)
+
     val gModule = new GModuleImpl()
     gModule.setPanel(Some(singleStoryPanel.`type`))
     gModule.setPanelTitle(singleStoryPanel.panelTitle)
@@ -586,9 +580,6 @@ object TrailsToShowcase {
     mediaModule.setMetadata(new Metadata())
     addModuleTo(entry, mediaModule)
 
-    val atomModule = atomDatesModuleFor(singleStoryPanel.published, singleStoryPanel.updated)
-    addModuleTo(entry, atomModule)
-
     singleStoryPanel.author.foreach { byline =>
       // Sidestep Rome's attempt to follow the RSS spec and only populate the author tag with email addresses
       val bylinePretendingToBePerson = new SyndPersonImpl()
@@ -602,13 +593,13 @@ object TrailsToShowcase {
     val entry = new SyndEntryImpl
     entry.setUri(rundownPanel.guid)
 
+    setEntryDates(rundownPanel, entry)
+
     val gModule = new GModuleImpl()
     gModule.setPanel(Some(rundownPanel.`type`))
     gModule.setPanelTitle(Some(rundownPanel.panelTitle))
     gModule.setArticleGroup(Some(asGArticleGroup(rundownPanel.articleGroup)))
     addModuleTo(entry, gModule)
-
-    addModuleTo(entry, atomDatesModuleFor(rundownPanel.published, rundownPanel.updated))
     entry
   }
 
@@ -626,6 +617,20 @@ object TrailsToShowcase {
       )
     }
     GArticleGroup(role = articleGroup.role, articles = articleGroup.articles.map(asGArticle))
+  }
+
+  private def setEntryDates(panel: Panel, entry: SyndEntryImpl) = {
+    def atomDatesModuleFor(updated: Option[DateTime]): RssAtomModuleImpl = {
+      val atomModule = new RssAtomModuleImpl
+      atomModule.setUpdated(updated)
+      atomModule
+    }
+    // Treatment of publication date differs from the docs;
+    // publication date should be placed on the RSS pubDate field; not the atom:published field stated in the docs
+    panel.published.foreach { published =>
+      entry.setPublishedDate(published.toDate)
+    }
+    addModuleTo(entry, atomDatesModuleFor(panel.updated))
   }
 
   trait Panel {
