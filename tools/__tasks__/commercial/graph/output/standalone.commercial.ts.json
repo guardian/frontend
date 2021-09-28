@@ -442,7 +442,7 @@
   "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
  "../projects/commercial/modules/messenger/click.js": [
-  "../projects/common/modules/analytics/google.js"
+  "../projects/common/modules/analytics/google.ts"
  ],
  "../projects/commercial/modules/messenger/disable-refresh.js": [
   "../projects/commercial/modules/dfp/dfp-env.ts"
@@ -529,16 +529,17 @@
   "../projects/common/modules/commercial/geo-utils.js"
  ],
  "../projects/common/modules/analytics/forceSendMetrics.ts": [],
- "../projects/common/modules/analytics/google.js": [
-  "../../../../node_modules/web-vitals/dist/web-vitals.umd.js",
-  "../lib/config.js",
+ "../projects/common/modules/analytics/google.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
+  "../lib/config.d.ts",
   "../lib/mediator.js"
  ],
  "../projects/common/modules/analytics/interaction-tracking.js": [
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
   "../lib/mediator.js",
   "../lib/robust.js",
-  "../projects/common/modules/analytics/google.js"
+  "../projects/common/modules/analytics/google.ts"
  ],
  "../projects/common/modules/analytics/mvt-cookie.js": [
   "../lib/cookies.js"
