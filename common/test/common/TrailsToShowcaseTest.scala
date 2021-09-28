@@ -793,7 +793,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       lastModified = Some(lastModifiedWayBackWhen),
       kickerText = Some("A Kicker"),
       trailPicture = Some(imageMedia),
-      headline = "Evening briefing | Tuesday 28 September | PM meets with Liberal MPs worried Coalition will appease Nats ",
+      headline =
+        "Evening briefing | Tuesday 28 September | PM meets with Liberal MPs worried Coalition will appease Nats ",
     )
     val anotherTrail =
       makePressedContent(
@@ -807,9 +808,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       .asRundownPanel(Seq(firstTrail, anotherTrail, anotherTrail), "rundown-container-id")
 
     outcome.right.get.panelTitle should be("Evening briefing | Tuesday 28 September")
-    outcome.right.get.articleGroup.articles.head.title should be("PM meets with Liberal MPs worried Coalition will appease Nats")
+    outcome.right.get.articleGroup.articles.head.title should be(
+      "PM meets with Liberal MPs worried Coalition will appease Nats",
+    )
   }
-
 
   "TrailToShowcase" should "reject rundown panels with missing panel title" in {
     val firstTrail = makePressedContent(
