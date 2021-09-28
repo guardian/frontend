@@ -32,9 +32,9 @@ export const amIUsed = (
 	>,
 ): void => {
 	// The function will return early if the sentinelLogger switch is disabled.
-	if (!config.get('switches.sentinelLogger', false)) return;
+	if (!config.get<boolean>('switches.sentinelLogger', false)) return;
 
-	const endpoint = config.get('page.isDev', false)
+	const endpoint = config.get<boolean>('page.isDev', false)
 		? '//logs.code.dev-guardianapis.com/log'
 		: '//logs.guardianapis.com/log';
 
