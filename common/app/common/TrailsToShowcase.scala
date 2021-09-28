@@ -40,7 +40,7 @@ object TrailsToShowcase {
   private val MaxRelatedArticlesPanelSummaryLength = 82
 
   // Panel titles can encoded with a pipe delimiter in the trail headline.
-  private val PanelTitleInHeadlineDelimiter = "\\|"
+  private val PanelTitleInHeadlineDelimiter = '|'
 
   // Bullet list items are delimited with a hyphen
   private val BulletTrailPrefix = "-"
@@ -449,7 +449,10 @@ object TrailsToShowcase {
     val pipeDelimited = trailTitle.split(PanelTitleInHeadlineDelimiter).toSeq
     pipeDelimited.length match {
       case 1 => (None, stripHtml(trailTitle))
-      case _ => (Some(stripHtml(pipeDelimited.head)), stripHtml(pipeDelimited.drop(1).mkString))
+      case _ =>
+        val right = pipeDelimited.last
+        val left = pipeDelimited.dropRight(1)
+        (Some(stripHtml(left.mkString(PanelTitleInHeadlineDelimiter.toString))), stripHtml(right))
     }
   }
 
@@ -609,7 +612,7 @@ object TrailsToShowcase {
     entry
   }
 
-  def asGArticleGroup(articleGroup: ArticleGroup) = {
+  private def asGArticleGroup(articleGroup: ArticleGroup): GArticleGroup = {
     def asGArticle(article: Article): GArticle = {
       GArticle(
         article.guid,

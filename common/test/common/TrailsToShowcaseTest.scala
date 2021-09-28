@@ -787,6 +787,30 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     outcome.right.get.articleGroup.articles.head.title should be("My headline")
   }
 
+  "TrailToShowcase" should "allow panel titles with pipes in them" in {
+    val firstTrail = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      kickerText = Some("A Kicker"),
+      trailPicture = Some(imageMedia),
+      headline = "Evening briefing | Tuesday 28 September | PM meets with Liberal MPs worried Coalition will appease Nats ",
+    )
+    val anotherTrail =
+      makePressedContent(
+        webPublicationDate = wayBackWhen,
+        lastModified = Some(lastModifiedWayBackWhen),
+        trailPicture = Some(imageMedia),
+        kickerText = Some("Another Kicker"),
+      )
+
+    val outcome = TrailsToShowcase
+      .asRundownPanel(Seq(firstTrail, anotherTrail, anotherTrail), "rundown-container-id")
+
+    outcome.right.get.panelTitle should be("Evening briefing | Tuesday 28 September")
+    outcome.right.get.articleGroup.articles.head.title should be("PM meets with Liberal MPs worried Coalition will appease Nats")
+  }
+
+
   "TrailToShowcase" should "reject rundown panels with missing panel title" in {
     val firstTrail = makePressedContent(
       webPublicationDate = wayBackWhen,
