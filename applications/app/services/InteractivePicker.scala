@@ -8,11 +8,14 @@ import implicits.Requests._
 import model.dotcomrendering.InteractiveSwitchOver
 import java.time.LocalDateTime
 import common.Chronos
+import experiments.{ActiveExperiments, ShowPressedInteractives}
+import services.dotcomrendering.PressedInteractives
 
 sealed trait RenderingTier
 object DotcomRendering extends RenderingTier
 object FrontendLegacy extends RenderingTier
 object USElectionTracker2020AmpPage extends RenderingTier
+object InteractiveLegacy extends RenderingTier
 
 object InteractivePicker {
 
@@ -48,7 +51,13 @@ object InteractivePicker {
     tags.exists(t => t.id == "tracking/platformfunctional/ampinteractive")
   }
 
-  def getRenderingTier(requestFormat: RequestFormat, path: String, datetime: LocalDateTime, tags: List[Tag])(implicit
+  def getRenderingTier(
+      requestFormat: RequestFormat,
+      path: String,
+      datetime: LocalDateTime,
+      tags: List[Tag],
+      isPressed: (String => Boolean) = PressedInteractives.isPressed,
+  )(implicit
       request: RequestHeader,
   ): RenderingTier = {
     val forceDCR = request.forceDCR
@@ -59,10 +68,16 @@ object InteractivePicker {
     val isWeb = requestFormat == HtmlFormat
     val isOptOut = isOptedOut(tags)
 
+    // Temporarily retain this experiment
+    // The experiment will allow us to opt-in Visuals team after go-live
+    // After Visuals team are happy, suggest changing this experiment to a switch
+    val isParticipating = ActiveExperiments.isParticipating(ShowPressedInteractives)
+
     // Temporarily force documentaries into DCR while Composer doesn't allow easy removal of opt-out tag.
     val isDocumentary = tags.exists(tag => tag.id == "tone/documentaries")
 
-    if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
+    if (isPressed(path) && isParticipating && !isOptedInAmp) InteractiveLegacy
+    else if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
     else if (switchOn && publishedPostSwitch && isWeb && !isOptOut) DotcomRendering
     else if (switchOn && isSupported(tags) && isWeb && (!isOptOut || isDocumentary)) DotcomRendering
     else FrontendLegacy
