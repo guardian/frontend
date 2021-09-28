@@ -1,6 +1,5 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
-import config from '../lib/config';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-remove';
@@ -107,7 +106,7 @@ const loadDcrBundle = async (): Promise<void> => {
  * Load commercial modules that are used in hosted pages
  */
 const loadHostedBundle = async (): Promise<void> => {
-	if (!config.get('page.isHosted')) return void 0;
+	if (!window.guardian.config.page.isHosted) return void 0;
 
 	const hostedAbout = await import(
 		/* webpackChunkName: "hosted" */
