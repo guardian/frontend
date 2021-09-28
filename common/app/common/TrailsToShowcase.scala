@@ -447,12 +447,12 @@ object TrailsToShowcase {
     val trailTitle = TrailsToRss.stripInvalidXMLCharacters(content.header.headline)
     // Look for panel title delimiter
     val pipeDelimited = trailTitle.split(PanelTitleInHeadlineDelimiter).toSeq
-    pipeDelimited.length match {
-      case 1 => (None, stripHtml(trailTitle))
-      case _ =>
-        val right = pipeDelimited.last
-        val left = pipeDelimited.dropRight(1)
-        (Some(stripHtml(left.mkString(PanelTitleInHeadlineDelimiter.toString))), stripHtml(right))
+    if (pipeDelimited.length == 1) {
+      (None, stripHtml(trailTitle))
+    } else {
+      val right = pipeDelimited.last
+      val left = pipeDelimited.dropRight(1)
+      (Some(stripHtml(left.mkString(PanelTitleInHeadlineDelimiter.toString))), stripHtml(right))
     }
   }
 
