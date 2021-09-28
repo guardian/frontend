@@ -1,8 +1,8 @@
 package common
 
-import com.sun.syndication.feed.module.Module
 import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
+import com.sun.syndication.feed.module.{DCModule, Module}
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
@@ -495,11 +495,10 @@ object TrailsToShowcase {
       description: Option[String],
       entries: Seq[SyndEntry],
   ): SyndFeed = {
-    val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
-
-    // Feed
+    // Create a Rome feed of our entries
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
+    val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
     feed.setTitle(feedTitle)
     feed.setDescription(
       description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"),
@@ -586,6 +585,8 @@ object TrailsToShowcase {
       bylinePretendingToBePerson.setEmail(byline)
       entry.setAuthors(Seq(bylinePretendingToBePerson).asJava)
     }
+
+    removeDCModule(entry)
     entry
   }
 
@@ -600,6 +601,8 @@ object TrailsToShowcase {
     gModule.setPanelTitle(Some(rundownPanel.panelTitle))
     gModule.setArticleGroup(Some(asGArticleGroup(rundownPanel.articleGroup)))
     addModuleTo(entry, gModule)
+
+    removeDCModule(entry)
     entry
   }
 
@@ -619,7 +622,7 @@ object TrailsToShowcase {
     GArticleGroup(role = articleGroup.role, articles = articleGroup.articles.map(asGArticle))
   }
 
-  private def setEntryDates(panel: Panel, entry: SyndEntryImpl) = {
+  private def setEntryDates(panel: Panel, entry: SyndEntryImpl): Unit = {
     def atomDatesModuleFor(updated: Option[DateTime]): RssAtomModuleImpl = {
       val atomModule = new RssAtomModuleImpl
       atomModule.setUpdated(updated)
@@ -631,6 +634,16 @@ object TrailsToShowcase {
       entry.setPublishedDate(published.toDate)
     }
     addModuleTo(entry, atomDatesModuleFor(panel.updated))
+  }
+
+  private def removeDCModule(entry: SyndEntryImpl): Unit = {
+    // Showcase does not expect the dc entries for publication date included by Rome.
+    // We should remove this module from out entries to avoid validation warning
+    val modules = entry.getModules.asScala.filter {
+      case _: DCModule => false
+      case _           => true
+    }
+    entry.setModules(modules.asJava)
   }
 
   trait Panel {
