@@ -1,4 +1,5 @@
-declare const get: <T>(path: string, defaultValue?: T) => T;
+declare function get<T>(path: string): T | undefined;
+declare function get<T>(path: string, defaultValue: T): T;
 declare const set: (path: string, defaultValue?: unknown) => void;
 declare const hasTone: (s: string) => boolean;
 declare const hasSeries: (s: string) => boolean;
