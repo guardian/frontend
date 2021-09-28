@@ -148,6 +148,15 @@ const outOfPageCallback = (advert: Advert, event?: SlotRenderEndedEvent) => {
 		const parent = advert.node.parentNode as HTMLElement;
 		return fastdom.mutate(() => {
 			advert.node.classList.add('ad-slot--collapse');
+			// Special case for top-above-nav which has a container with its own height
+			if (advert.id.includes('top-above-nav')) {
+				const adContainer = advert.node.closest<HTMLElement>(
+					'.top-banner-ad-container',
+				);
+				if (adContainer) {
+					adContainer.style.display = 'none';
+				}
+			}
 			// if in a slice, add the 'no mpu' class
 			if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
 				parent.classList.add('fc-slice__item--no-mpu');
