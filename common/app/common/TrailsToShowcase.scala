@@ -450,8 +450,8 @@ object TrailsToShowcase {
     if (pipeDelimited.length == 1) {
       (None, stripHtml(trailTitle))
     } else {
-      val right = pipeDelimited.last
       val left = pipeDelimited.dropRight(1)
+      val right = pipeDelimited.last
       (Some(stripHtml(left.mkString(PanelTitleInHeadlineDelimiter.toString))), stripHtml(right))
     }
   }
