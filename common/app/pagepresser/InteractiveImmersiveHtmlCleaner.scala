@@ -22,8 +22,7 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
   }
 
   def clean(document: Document, convertToHttps: Boolean, now: LocalDateTime): Document = {
-    universalClean(document)
-    removeTopBannerAds(document)
+    partialUniversalClean(document)
     removeReaderRevenueCallouts(document)
     removeEmailSignup(document)
     removeByTagName(document, "noscript")
@@ -31,8 +30,16 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
     addExtraCopyToDocument(document, now)
   }
 
-  def removeTopBannerAds(document: Document): Document = {
-    removeByClass(document, "top-banner-ad-container js-top-banner")
+  def partialUniversalClean(document: Document): Document = {
+    removeByClass(document, "top-search-box")
+    removeByClass(document, "share-links")
+    removeByClass(document, "user-details")
+    removeByClass(document, "initially-off")
+    removeByClass(document, "comment-count")
+    replaceLinks(document)
+    repairStaticLinks(document)
+    repairStaticSources(document)
+    deComboLinks(document)
   }
 
   def hideReaderRevenue(document: Document): Document = {
