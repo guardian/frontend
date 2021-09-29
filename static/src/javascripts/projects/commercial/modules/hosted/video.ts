@@ -1,6 +1,6 @@
 import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 
-export const initHostedVideo = (): Promise<void> => {
+export const initHostedVideo = async (): Promise<void> => {
 	const playerContainers = document.querySelectorAll<HTMLElement>(
 		'.js-hosted-youtube-video',
 	);
@@ -10,7 +10,9 @@ export const initHostedVideo = (): Promise<void> => {
 		return Promise.resolve();
 	}
 
-	return Promise.all(
+	await Promise.all(
 		Array.from(playerContainers).map((el) => initHostedYoutube(el)),
-	).then(() => void 0);
+	);
+
+	return;
 };

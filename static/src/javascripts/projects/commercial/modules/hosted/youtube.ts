@@ -37,8 +37,8 @@ const sendPercentageCompleteEvents = (
 };
 
 export const initHostedYoutube = async (el: HTMLElement): Promise<void> => {
-	const atomId = el.getAttribute('data-media-id');
-	const duration = Number(el.getAttribute('data-duration')) || null;
+	const atomId = el.dataset.mediaId;
+	const duration = Number(el.dataset.duration) || null;
 
 	if (!atomId || !duration) {
 		return;
@@ -89,6 +89,6 @@ export const initHostedYoutube = async (el: HTMLElement): Promise<void> => {
 				}
 			},
 		},
-		el.dataset.assetId as string,
+		String(el.dataset.assetId),
 	).then(() => void 0);
 };
