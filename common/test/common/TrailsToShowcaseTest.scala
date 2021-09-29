@@ -662,19 +662,6 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryPanel.updated should be(wayBackWhen)
   }
 
-  "TrailToShowcase" can "should consider collection last updated when deciding single story panel updated time" in {
-    val curatedContent = makePressedContent(
-      webPublicationDate = wayBackWhen,
-      trailPicture = Some(imageMedia),
-      trailText = Some(twoEncodedBulletItems),
-    )
-    val collectionLastUpdated = Some(DateTime.now)
-
-    val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent, collectionLastUpdated).toOption.get
-
-    singleStoryPanel.updated should be(collectionLastUpdated)
-  }
-
   "TrailToShowcase" can "should consider collection last updated when deciding panel updated time" in {
     val unchangingContent = makePressedContent(
       webPublicationDate = wayBackWhen,

@@ -68,9 +68,9 @@ object TrailsToShowcase {
       rundownContainerId: String,
       url: Option[String] = None,
       description: Option[String] = None,
-      collectionLastUpdate: Option[DateTime] = None,
+      collectionLastUpdated: Option[DateTime] = None,
   )(implicit request: RequestHeader): String = {
-    val rundownPanelOutcome = asRundownPanel(rundownTrails, rundownContainerId, collectionLastUpdate)
+    val rundownPanelOutcome = asRundownPanel(rundownTrails, rundownContainerId, collectionLastUpdated)
     val singleStoryPanelOutcomes = singleTrails.map(asSingleStoryPanel)
 
     val maybeRundownPanel = rundownPanelOutcome.toOption
