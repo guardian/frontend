@@ -68,8 +68,9 @@ object TrailsToShowcase {
       rundownContainerId: String,
       url: Option[String] = None,
       description: Option[String] = None,
+      collectionLastUpdate: Option[DateTime] = None,
   )(implicit request: RequestHeader): String = {
-    val rundownPanelOutcome = asRundownPanel(rundownTrails, rundownContainerId)
+    val rundownPanelOutcome = asRundownPanel(rundownTrails, rundownContainerId, collectionLastUpdate)
     val singleStoryPanelOutcomes = singleTrails.map(asSingleStoryPanel)
 
     val maybeRundownPanel = rundownPanelOutcome.toOption
@@ -91,7 +92,7 @@ object TrailsToShowcase {
       .find(_.displayName == RundownCollectionName)
       .toRight(Seq(s"Could not find the '$RundownCollectionName' collection to build the rundown panel from"))
     val rundownPanelOutcome = maybeRundownCollection.flatMap { collection =>
-      asRundownPanel(collection.curated, collection.id)
+      asRundownPanel(collection.curated, collection.id, collection.lastUpdated)
     }
 
     val maybeSingleStoriesCollection = faciaPage.collections.find(_.displayName == SingleStoriesCollectionName)
@@ -226,7 +227,11 @@ object TrailsToShowcase {
     }
   }
 
-  def asRundownPanel(content: Seq[PressedContent], id: String): Either[Seq[String], RundownPanel] = {
+  def asRundownPanel(
+      content: Seq[PressedContent],
+      id: String,
+      collectionLastUpdated: Option[DateTime] = None,
+  ): Either[Seq[String], RundownPanel] = {
     // Collect mandatory fields. If any of these is missing we can yield None
     val proposedPanelTitle = {
       content.headOption
@@ -255,6 +260,10 @@ object TrailsToShowcase {
       updated = content.flatMap(_.card.lastModifiedOption).sortBy(_.getMillis).lastOption.getOrElse(published)
     } yield {
       // Create a rundown panel
+      // Make a questionable inference of the panels publication and update times from it's articles and collection update time
+      val updateTimes = articles.map(article => Some(article.updated)) :+ collectionLastUpdated
+      val updated = updateTimes.flatten.sortBy(_.getMillis).lastOption.getOrElse(published)
+
       RundownPanel(
         guid = id,
         panelTitle = panelTitle,
