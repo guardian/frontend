@@ -173,7 +173,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       "Kicker",
     )
 
-    (singleStoryPanel \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
+    // Check date fields
+    (singleStoryPanel \ "pubDate").text should be("Tue, 02 Mar 2021 12:30:01 GMT")
     (singleStoryPanel \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
 
     val singleStoryPanelMedia = (singleStoryPanel \ "content").filter(_.prefix == "media")
@@ -198,7 +199,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     (rundownPanel \ "panel_title").filter(_.prefix == "g").head.text should be("My rundown panel title")
 
-    (rundownPanel \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
+    (rundownPanel \ "pubDate").text should be("Tue, 02 Mar 2021 12:30:01 GMT")
     (rundownPanel \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
 
     val rundownPanelMedia = (rundownPanel \ "content").filter(_.prefix == "media")
@@ -224,8 +225,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     )
     (rundownArticle \ "author").text should be("Trail byline")
 
-    (rundownArticle \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
-    (rundownArticle \ "published").filter(_.prefix == "atom").text should be("2021-03-02T12:30:01Z")
+    (rundownArticle \ "pubDate").text should be("Tue, 02 Mar 2021 12:30:01 GMT")
     (rundownArticle \ "updated").filter(_.prefix == "atom").text should be("2021-03-02T13:30:01Z")
     (rundownArticle \ "content").filter(_.prefix == "media").head.attribute("url").get.head.text should be(
       "http://localhost/trail.jpg",
@@ -402,8 +402,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     gModule.getOverline should be(Some("A kicker"))
     gModule.getArticleGroup.nonEmpty should be(true)
 
+    entry.getPublishedDate should be(wayBackWhen.toDate)
     val rssAtomModule = entry.getModule(RssAtomModule.URI).asInstanceOf[RssAtomModule]
-    rssAtomModule.getPublished should be(Some(wayBackWhen))
     rssAtomModule.getUpdated should be(Some(lastModifiedWayBackWhen))
 
     val mediaModule = entry.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
@@ -728,6 +728,10 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val entry = TrailsToShowcase.asSyndEntry(rundownPanel)
 
+    entry.getPublishedDate should be(wayBackWhen.toDate)
+    val rssAtomModule = entry.getModule(RssAtomModule.URI).asInstanceOf[RssAtomModule]
+    rssAtomModule.getUpdated should be(Some(lastModifiedWayBackWhen))
+
     // Rundown panels have no image of their own
     val mediaModule = entry.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
     mediaModule should be(null)
@@ -738,6 +742,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val articleGroup = gModule.getArticleGroup.get
     articleGroup.role should be("RUNDOWN")
     articleGroup.articles.size should be(3)
+
+    val article = articleGroup.articles.head
+    article.title should be("My headline")
+    article.published should be(wayBackWhen)
+    article.updated should be(lastModifiedWayBackWhen)
   }
 
   "TrailToShowcase" should "strip all markup from rundown text elements" in {
