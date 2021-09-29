@@ -650,7 +650,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryPanel.imageUrl should be("http://localhost/replaced-image.jpg")
   }
 
-  "TrailToShowcase" can "should default single panel last updated to content web publication date if no contet last updated value is available" in {
+  "TrailToShowcase" can "should default single panel last updated to content web publication date if no content last updated value is available" in {
     val curatedContent = makePressedContent(
       webPublicationDate = wayBackWhen,
       trailPicture = Some(imageMedia),
