@@ -673,7 +673,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val collectionLastUpdated = Some(DateTime.now)
 
     val recentlyEditedRundownPanelMadeWithUnchangingContent = TrailsToShowcase
-      .asRundownPanel(Seq(unchangingContent, unchangingContent, unchangingContent), "rundown-container-id", collectionLastUpdated)
+      .asRundownPanel(
+        Seq(unchangingContent, unchangingContent, unchangingContent),
+        "rundown-container-id",
+        collectionLastUpdated,
+      )
       .right
       .get
 
