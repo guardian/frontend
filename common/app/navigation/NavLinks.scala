@@ -175,9 +175,7 @@ private object NavLinks {
       NavLink("Obituaries", "/tone/obituaries"),
       NavLink("G2", "/theguardian/g2"),
       NavLink("Journal", "/theguardian/journal"),
-      NavLink("Weekend", "/theguardian/weekend"),
-      NavLink("The Guide", "/theguardian/theguide"),
-      NavLink("Saturday review", "/theguardian/guardianreview"),
+      NavLink("Saturday", "/theguardian/saturday"),
     ),
   )
   val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/membership")
