@@ -53,7 +53,7 @@
 ## [Commercial](05-commercial/)
 - [⚠️ Moved to https://github.com/guardian/commercial-core/blob/3a8c75e619c2e4ac2d731d251f5bf186f7af89dd/docs/GAM-Advertising.md ⚠️](05-commercial/01-DFP-Advertising.md)
 - [Integration of commercial components](05-commercial/02-commercial-components.md)
-- [Commercial javascript](05-commercial/03-commercial-javascript.md)
+- [Standalone Commercial Bundle](05-commercial/03-commercial-javascript.md)
 
 ## [Features and components](06-features-and-components/)
 - [SteadyPage JS utility](06-features-and-components/01-steadypage-js-utility.md)
