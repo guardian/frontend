@@ -37,8 +37,11 @@ const sendPercentageCompleteEvents = (
 };
 
 export const initHostedYoutube = async (el: HTMLElement): Promise<void> => {
-	const atomId = el.dataset.mediaId;
-	const duration = Number(el.dataset.duration) || null;
+	// dataset is slower for a single attribute
+	// https://jsbench.me/5wku5obaj4/1
+	// @MarSavar (2021-09-29)
+	const atomId = el.getAttribute('data-media-id');
+	const duration = Number(el.getAttribute('data-duration')) || null;
 
 	if (!atomId || !duration) {
 		return;
@@ -89,6 +92,6 @@ export const initHostedYoutube = async (el: HTMLElement): Promise<void> => {
 				}
 			},
 		},
-		String(el.dataset.assetId),
+		String(el.getAttribute('data-asset-id')),
 	).then(() => void 0);
 };
