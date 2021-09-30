@@ -17,10 +17,24 @@ interface WindowLocal extends Window {
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise<void>((resolve) => {
-	if ((window as WindowLocal).YT?.Player) {
+	const localWindow = window as WindowLocal;
+
+	if (localWindow.YT?.Player) {
 		resolve();
+	} else if (localWindow.onYouTubeIframeAPIReady) {
+		// If there’s already a callback registered.
+		// This happens with the standalone commercial bundle
+
+		const previousApiLoadCallback = localWindow.onYouTubeIframeAPIReady;
+
+		localWindow.onYouTubeIframeAPIReady = () => {
+			previousApiLoadCallback();
+			resolve();
+		};
 	} else {
-		(window as WindowLocal).onYouTubeIframeAPIReady = resolve;
+		localWindow.onYouTubeIframeAPIReady = () => {
+			resolve();
+		};
 	}
 });
 
