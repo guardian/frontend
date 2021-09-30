@@ -226,6 +226,7 @@ private object NavLinks {
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
   val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
   val guardianPuzzlesApp = NavLink("Guardian Puzzles app", s"https://puzzles.theguardian.com/download")
+  val guardianLicensing = NavLink("Guardian content licensing site", s"https://licensing.theguardian.com/")
   val jobsRecruiter = NavLink(
     "Hire with Guardian Jobs",
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
@@ -582,23 +583,27 @@ private object NavLinks {
     printShop,
     ukPatrons,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
   val auBrandExtensions = List(
     auEvents,
     digitalNewspaperArchive,
     guardianPuzzlesApp,
     auWeekend,
+    guardianLicensing,
   )
   val usBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader_dropdown"),
     digitalNewspaperArchive,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader_dropdown"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
 
   // Tertiary Navigation
