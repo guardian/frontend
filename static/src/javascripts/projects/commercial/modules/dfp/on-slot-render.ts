@@ -84,10 +84,9 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
 		const isOutstream = outstreamSizes.includes(sizeString as AdSizeString);
 		const isNonRefreshableLineItem =
 			event.lineItemId &&
-			(config.get(
-				'page.dfpNonRefreshableLineItemIds',
-				[],
-			) as string[]).includes(String(event.lineItemId));
+			(
+				window.guardian.config.page.dfpNonRefreshableLineItemIds ?? []
+			).includes(String(event.lineItemId));
 
 		advert.shouldRefresh =
 			isNotFluid &&
