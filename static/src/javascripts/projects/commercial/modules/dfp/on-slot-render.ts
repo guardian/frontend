@@ -18,7 +18,7 @@ const reportEmptyResponse = (adSlotId: string, event: SlotRenderEndedEvent) => {
 	// This empty slot could be caused by a targeting problem,
 	// let's report these and diagnose the problem in sentry.
 	// Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
-	if (Math.random() < 0.0001) {
+	if (Math.random() < 1 / 10_000) {
 		const adUnitPath = event.slot.getAdUnitPath();
 		const adTargetingKeys = event.slot.getTargetingKeys();
 		const adTargetingKValues = adTargetingKeys.includes('k')
