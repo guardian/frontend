@@ -28,6 +28,11 @@ const createSizeMapping = (attr: string): AdSize[] =>
 			size === 'fluid' ? 'fluid' : size.split(',').map(Number),
 		);
 
+/** Extract the ad sizes from the breakpoint data attributes of an ad slot
+ *
+ * @param advertNode The ad slot HTML element that contains the breakpoint attributes
+ * @returns A mapping from the breakpoints supported by the slot to an array of ad sizes
+ */
 const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
 	breakpoints.reduce<Record<string, AdSize[]>>((sizes, breakpoint) => {
 		const data = advertNode.getAttribute(
