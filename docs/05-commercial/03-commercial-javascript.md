@@ -1,4 +1,4 @@
-# Commercial javascript (standalone)
+# Standalone Commercial Bundle
 The standalone commercial bundle is a new webpack JavaScript bundle
 that contains all of The Guardian’s commercial business logic.
 
@@ -23,6 +23,11 @@ rendering contexts.
 [frontend]: https://github.com/guardian/frontend/blob/ad8f6734/static/src/javascripts/boot.js#L94
 [dotcom-rendering]: https://github.com/guardian/dotcom-rendering/blob/c114bc93/dotcom-rendering/src/web/server/document.tsx#L255
 [`webpack.config.commercial.js`]: /webpack.config.commercial.js
+
+The next step is for this bundle to move entirely out of frontend and into
+[@guardian/commercial-core](https://github.com/guardian/commercial-core).
+
+The team responsible for the commercial logic is @guardian/commercial-dev.
 
 # Commercial javascript (legacy)
 * Commercial scripts run under their own bundle, with the root script /bootstraps/commercial.js
