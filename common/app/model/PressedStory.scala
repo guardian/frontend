@@ -2,8 +2,7 @@ package model.pressed
 
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
-import model.ContentFormat
-import common.HTML
+import common.TrailsToRss
 import model.content.{Atoms, MediaAtom}
 import model.{Commercial, Elements, Fields, MetaData, Pillar, SectionId, Tags, Trail}
 
@@ -47,7 +46,7 @@ object PressedStory {
       ),
       PressedFields(
         fields.main,
-        HTML.takeFirstNElements(fields.body, 2),
+        TrailsToRss.introFromContent(model.Content.make(apiContent)),
         fields.standfirst,
       ),
       PressedElements(

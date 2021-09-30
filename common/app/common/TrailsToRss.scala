@@ -29,6 +29,9 @@ object RssDates {
 
 object TrailsToRss extends implicits.Collections {
 
+  // The CAPI blocks we would like consumers to request to build our item intro text from
+  val BlocksToGenerateRssIntro = "body:oldest:10"
+
   /*
     This regex pattern matches all invalid XML characters (see https://www.w3.org/TR/xml/#charsets)
     by specifying individual and ranges of valid ones in a negated set.  The final range \\u10000-\\u10FFFF
@@ -207,8 +210,7 @@ object TrailsToRss extends implicits.Collections {
 
       // Entry: description
       val standfirst = faciaContent.fields.standfirst.getOrElse("")
-      val intro =
-        Jsoup.parseBodyFragment(faciaContent.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
+      val intro = faciaContent.fields.body
       val webUrl = faciaContent.metadata.webUrl
       val description = makeEntryDescriptionUsing(standfirst, intro, webUrl)
 
@@ -263,7 +265,7 @@ object TrailsToRss extends implicits.Collections {
     writer.toString
   }
 
-  private def introFromContent(content: Content): String = {
+  def introFromContent(content: Content): String = {
     content.fields.blocks
       .map { blocks: Blocks =>
         // Collect html from the body block text elements who have an html snippet to offer
