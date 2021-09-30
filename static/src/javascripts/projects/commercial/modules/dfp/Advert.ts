@@ -142,4 +142,6 @@ export { Advert };
 
 export const _ = {
 	filterClasses: Advert.filterClasses,
+	createSizeMapping,
+	getAdBreakpointSizes,
 };

@@ -1,6 +1,6 @@
 import { _, Advert } from './Advert';
 
-const { filterClasses } = _;
+const { filterClasses, createSizeMapping, getAdBreakpointSizes } = _;
 
 jest.mock('../../../../lib/raven');
 jest.mock('ophan/ng', () => null);
@@ -93,5 +93,65 @@ describe('Advert', () => {
 		const ad = new Advert(slot);
 		expect(ad).toBeDefined();
 		expect(googleSlot.setSafeFrameConfig).not.toBeCalled();
+	});
+});
+
+describe('createSizeMapping', () => {
+	it('one size', () => {
+		expect(createSizeMapping('300,50')).toEqual([[300, 50]]);
+	});
+	it('multiple sizes', () => {
+		expect(createSizeMapping('300,50|320,50')).toEqual([
+			[300, 50],
+			[320, 50],
+		]);
+		expect(createSizeMapping('300,50|320,50|fluid')).toEqual([
+			[300, 50],
+			[320, 50],
+			'fluid',
+		]);
+	});
+});
+
+describe('getAdBreakpointSizes', () => {
+	it('none', () => {
+		const advertNode = document.createElement('div', {});
+		advertNode.setAttribute('data-name', 'name');
+		advertNode.setAttribute('data-something', 'something-else');
+		expect(getAdBreakpointSizes(advertNode)).toEqual({});
+	});
+
+	it('one breakpoint, one size', () => {
+		const advertNode = document.createElement('div', {});
+		advertNode.setAttribute('data-mobile', '300,50');
+		expect(getAdBreakpointSizes(advertNode)).toEqual({
+			mobile: [[300, 50]],
+		});
+	});
+
+	it('one breakpoint, multi-size', () => {
+		const advertNode = document.createElement('div', {});
+		advertNode.setAttribute('data-mobile', '300,50|320,50');
+		expect(getAdBreakpointSizes(advertNode)).toEqual({
+			mobile: [
+				[300, 50],
+				[320, 50],
+			],
+		});
+	});
+
+	it('multiple breakpoints, multi-size', () => {
+		const advertNode = document.createElement('div', {});
+		advertNode.setAttribute('data-mobile', '300,50|320,50');
+		advertNode.setAttribute('data-phablet', '200,200');
+		advertNode.setAttribute('data-desktop', '250,250|fluid');
+		expect(getAdBreakpointSizes(advertNode)).toEqual({
+			mobile: [
+				[300, 50],
+				[320, 50],
+			],
+			phablet: [[200, 200]],
+			desktop: [[250, 250], 'fluid'],
+		});
 	});
 });
