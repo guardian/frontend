@@ -95,16 +95,15 @@ object TrailsToShowcase {
       asRundownPanel(collection.curated, collection.id, collection.lastUpdated)
     }
 
-    val maybeSingleStoriesCollection = faciaPage.collections.find(_.displayName == SingleStoriesCollectionName)
-    val singleStoryPanelsOutcome = maybeSingleStoriesCollection
-      .map { collection =>
-        collection.curated.map(asSingleStoryPanel)
-      }
-      .getOrElse {
-        Seq(
-          Left(Seq(s"Could not find the '$SingleStoriesCollectionName' collection to build single story panels from")),
-        )
-      }
+    val singleStoryCollections = faciaPage.collections.filter(_.displayName.trim.startsWith(SingleStoriesCollectionName))
+    val singleStoryPanelsOutcome = if (singleStoryCollections.nonEmpty) {
+      // Attempt to map all trails from all single story collections to panels
+      singleStoryCollections.flatMap(_.curated).map(asSingleStoryPanel)
+    } else {
+      Seq(
+        Left(Seq(s"Could not find the '$SingleStoriesCollectionName' collection to build single story panels from")),
+      )
+    }
 
     (rundownPanelOutcome, singleStoryPanelsOutcome)
   }
