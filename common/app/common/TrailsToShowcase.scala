@@ -177,6 +177,9 @@ object TrailsToShowcase {
       }
     }
 
+    val proposedPublicationDate =
+      content.card.webPublicationDateOption.toRight(Seq("Could not find web publication date for panel"))
+
     // Collect all mandatory values; any missing will result in a None entry
     val maybePanel = for {
       title <- proposedTitle.toOption
@@ -187,8 +190,7 @@ object TrailsToShowcase {
       bulletList <- proposedBulletList.toOption
       articleGroup <- proposedArticleGroup.toOption
       summary <- proposedSummary.toOption
-      published <- content.card.webPublicationDateOption
-      updated = content.card.lastModifiedOption.getOrElse(published)
+      published <- proposedPublicationDate.toOption
     } yield {
       // Build a panel
       SingleStoryPanel(
@@ -199,7 +201,7 @@ object TrailsToShowcase {
         overline = maybeOverline,
         imageUrl = imageUrl,
         published = published,
-        updated = updated,
+        updated = content.card.lastModifiedOption.getOrElse(published),
         articleGroup = articleGroup,
         bulletList = bulletList,
         summary = summary,
@@ -218,6 +220,7 @@ object TrailsToShowcase {
           proposedArticleGroup,
           proposedBulletList,
           proposedSummary,
+          proposedPublicationDate,
         ).flatMap(_.left.toOption).flatten,
       )
     }
@@ -237,11 +240,18 @@ object TrailsToShowcase {
 
     val proposedRundownArticles =
       makeArticlesFrom(content, 3, "Rundown", MaxRundownArticleTitleLength, MaxOverlineLength)
+
+    val proposedPublicationDate = content
+      .flatMap(_.card.webPublicationDateOption)
+      .sortBy(_.getMillis)
+      .lastOption
+      .toRight(Seq("Could not find web publication date for panel"))
+
     val maybeRundownPanel = for {
       panelTitle <- proposedPanelTitle.toOption
       articles <- proposedRundownArticles.toOption
       // Make a questionable inference of the panels publication and update times from it's trails
-      published <- content.flatMap(_.card.webPublicationDateOption).sortBy(_.getMillis).lastOption
+      published <- proposedPublicationDate.toOption
       updated = content.flatMap(_.card.lastModifiedOption).sortBy(_.getMillis).lastOption.getOrElse(published)
     } yield {
       // Create a rundown panel
@@ -256,7 +266,8 @@ object TrailsToShowcase {
 
     maybeRundownPanel.map(Right(_)).getOrElse {
       // Collect everyone's objections
-      val problems = Seq(proposedPanelTitle, proposedRundownArticles).flatMap(_.left.toOption).flatten
+      val problems =
+        Seq(proposedPanelTitle, proposedRundownArticles, proposedPublicationDate).flatMap(_.left.toOption).flatten
       Left(problems)
     }
   }
