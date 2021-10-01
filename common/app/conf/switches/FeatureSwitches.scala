@@ -460,7 +460,7 @@ trait FeatureSwitches {
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
     owners = Seq(Owner.withName("Pascal")),
     safeState = Off,
-    sellByDate = LocalDate.of(2021, 9, 30),
+    sellByDate = LocalDate.of(2021, 11, 30),
     exposeClientSide = false,
   )
 }
