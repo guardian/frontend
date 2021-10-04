@@ -67,9 +67,15 @@ const submitForm = (
     const csrfToken = encodeURIComponent(
         $('input[name="csrfToken"]', form).val()
     );
+    const ref = encodeURIComponent(
+        window.location.href
+    );
+    const refViewId = encodeURIComponent(
+        config.get('ophan.pageViewId')
+    );
     const formQueryString = `${
         inputs.email
-    }=${email}&csrfToken=${csrfToken}&listName=${listName}&${
+    }=${email}&csrfToken=${csrfToken}&listName=${listName}&ref=${ref}&refViewId=${refViewId}${
         inputs.dummy
     }=${dummyEmail}`;
 
