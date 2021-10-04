@@ -75,13 +75,15 @@ To view a pressed page there are a couple of options:
 
 Yes! In the short term, if we want to opt-out of serving pressed content then we omit or remove the interactive path in the relevant frontend config. In the long term, if we want to opt-out of serving the pressed content we will remove, or we will not apply, the chosen tracking tag (tracking/dcroptout).
 
-Note that, after some agreed period of time, I believe our intention would be to remove the rendering code from the frontend codebase, after which point articles could only be rendered via DCR.
+Note that, after some agreed period of time, the plan is to remove the rendering code from the frontend codebase, after which point articles could only be rendered via DCR.
 
 **What about interactives via AMP?**
 
 Interactives have to opt-in to rendering via AMP using a specific tag. Interactives rendering via AMP are out of scope for this migration.
 
-About rendering interactives for apps, I believe it’s a separate flow. Given we’re not changing the article content then legacy interactives for mobile will be unaffected. We need to be aware that if there is a request to update the content of a legacy interactive this would need to be done via Composer for the mobile version (so the CAPI response is updated), as well as updating the pressed version for web.
+**What about interactives on Apps?**
+
+Rendering interactives on Apps is a separate flow. Given we’re not changing the article content then legacy interactives for mobile will be unaffected. We need to be aware that if there is a request to update the content of a legacy interactive this would need to be done via Composer for the mobile version (so the CAPI response is updated), as well as updating the pressed version for web.
 
 **If we’ve pressed an article, how do we unpress?**
 
