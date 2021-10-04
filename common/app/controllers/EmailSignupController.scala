@@ -29,6 +29,8 @@ case class EmailForm(
     email: String,
     listName: Option[String],
     referrer: Option[String],
+    ref: Option[String],
+    refViewId: Option[String],
     campaignCode: Option[String],
     name: String,
 ) {
@@ -81,6 +83,8 @@ class EmailSignupController(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
+      "ref" -> optional[String](of[String]),
+      "refViewId" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
       "name" -> text,
     )(EmailForm.apply)(EmailForm.unapply),
@@ -249,6 +253,8 @@ class EmailSignupController(
           log.info(
             s"Post request received to /email/ - " +
               s"email: ${form.email}, " +
+              s"ref: ${form.ref}, " +
+              s"pageViewId: ${form.pageViewId}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
@@ -312,6 +318,8 @@ class EmailSignupController(
           log.info(
             s"Post request received to /email/ - " +
               s"email: ${form.email}, " +
+              s"ref: ${form.ref}, " +
+              s"pageViewId: ${form.pageViewId}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
