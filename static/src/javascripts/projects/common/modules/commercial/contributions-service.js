@@ -44,6 +44,11 @@ const buildKeywordTags = page => {
         title: keywords[idx],
     }));
 };
+const buildSeriesTag = page => ({
+    id: page.seriesId,
+    type: 'Series',
+    title: page.series,
+});
 
 const epicEl = () => {
     const target = document.querySelector(
@@ -126,7 +131,7 @@ const buildEpicPayload = async () => {
         isMinuteArticle: config.hasTone('Minute'),
         isPaidContent: page.isPaidContent,
         isSensitive: page.isSensitive,
-        tags: buildKeywordTags(page),
+        tags: buildKeywordTags(page).concat([buildSeriesTag(page)]),
         showSupportMessaging: !shouldHideSupportMessaging(),
         isRecurringContributor: isRecurringContributor(),
         lastOneOffContributionDate:
