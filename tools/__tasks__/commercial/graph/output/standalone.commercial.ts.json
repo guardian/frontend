@@ -552,7 +552,7 @@
   "../lib/raven.js",
   "../projects/common/modules/spacefinder.js"
  ],
- "../projects/common/modules/async-call-merger.js": [],
+ "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/atoms/youtube-player.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts",
@@ -683,7 +683,7 @@
   "../lib/fetch-json.ts",
   "../lib/mediator.js",
   "../lib/url.ts",
-  "../projects/common/modules/async-call-merger.js",
+  "../projects/common/modules/async-call-merger.ts",
   "../projects/common/modules/identity/auth-component-event-params.js"
  ],
  "../projects/common/modules/identity/auth-component-event-params.js": [
