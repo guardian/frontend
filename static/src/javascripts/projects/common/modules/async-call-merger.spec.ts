@@ -7,8 +7,8 @@ const chance = new Chance();
 const RESULT = chance.string();
 
 describe('AsyncCallMerger', () => {
-	let targetFn: TargetCallback;
-	let targetFnWithMerging: TargetCallback;
+	let targetFn: TargetCallback<[string]>;
+	let targetFnWithMerging: TargetCallback<[string]>;
 
 	beforeEach(() => {
 		targetFn = jest.fn((callback) => callback(RESULT));

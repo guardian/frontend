@@ -5,27 +5,31 @@
 
 type Status = 'init' | 'waiting' | 'complete';
 
-type Callback = (...args: unknown[]) => void;
-type TargetCallback = (f: Callback) => void;
-type TargetCallbackWithReset = TargetCallback & {
+type Callback<T extends unknown[]> = (...args: T) => void;
+type TargetCallback<T extends unknown[]> = (f: Callback<T>) => void;
+type TargetCallbackWithReset<T extends unknown[]> = TargetCallback<T> & {
 	reset: () => void;
 };
 
 /**
  * Creates a function that will merge calls to the supplied target function
  */
-const mergeCalls = (
-	targetFunction: TargetCallback,
-): TargetCallbackWithReset => {
-	let callbacks: Callback[];
-	let callbackArguments: unknown[];
+const mergeCalls = <T extends unknown[]>(
+	targetFunction: TargetCallback<T>,
+): TargetCallbackWithReset<T> => {
+	let callbacks: Array<Callback<T>>;
+	let callbackArguments: T;
 	let status: Status;
 
 	const reset = (): void => {
-		[callbacks, status, callbackArguments] = [[], 'init', []];
+		[callbacks, status, callbackArguments] = [
+			[],
+			'init',
+			([] as unknown) as T, // Asserting the type is necessary
+		];
 	};
 
-	const targetCallbackHandler: Callback = (...args) => {
+	const targetCallbackHandler: Callback<T> = (...args) => {
 		callbackArguments = args;
 		status = 'complete';
 		callbacks.forEach((callback) => {
@@ -33,7 +37,7 @@ const mergeCalls = (
 		});
 	};
 
-	const callMergingFunction: TargetCallbackWithReset = (callback) => {
+	const callMergingFunction: TargetCallbackWithReset<T> = (callback) => {
 		if (status === 'init') {
 			status = 'waiting';
 			callbacks.push(callback);
