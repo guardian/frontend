@@ -321,8 +321,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryPanel.panelTitle should be(None) // Specifically omitted
     singleStoryPanel.overline should be(Some("A Kicker"))
 
-    singleStoryPanel.published should be(Some(wayBackWhen))
-    singleStoryPanel.updated should be(Some(lastModifiedWayBackWhen))
+    singleStoryPanel.published should be(wayBackWhen)
+    singleStoryPanel.updated should be(lastModifiedWayBackWhen)
 
     // Single panel stories require a media element which we take from the mayBeContent trail
     singleStoryPanel.imageUrl should be("http://localhost/trail.jpg")
@@ -659,7 +659,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
-    singleStoryPanel.updated should be(Some(wayBackWhen))
+    singleStoryPanel.updated should be(wayBackWhen)
   }
 
   "TrailToShowcase" can "create Rundown panels from a group of trails" in {
