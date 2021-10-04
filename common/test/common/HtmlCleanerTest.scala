@@ -23,20 +23,7 @@ class InteractiveImmersiveHtmlCleanerTest extends FlatSpec with Matchers {
     InteractiveImmersiveHtmlCleaner.canClean(doc) should be(true)
   }
 
-  "Cleaned interactive immersives" should "have top banner ads removed" in {
-    val doc = Jsoup.parse("""<html>
-              |<body>
-              |<div id="bannerandheader">
-              |<div class="top-banner-ad-container js-top-banner"></div>
-              |</div>
-              |</body>
-              |</html>""".stripMargin)
-
-    val cleanedDoc = InteractiveImmersiveHtmlCleaner.removeTopBannerAds(doc)
-    cleanedDoc.getElementsByClass("top-banner-ad-container").isEmpty should be(true)
-  }
-
-  it should "set page config to hide reader revenue" in {
+  "Cleaned interactive immersives" should "set page config to hide reader revenue" in {
     val doc = Jsoup.parse("""<html>
               |<head>
               |</head>

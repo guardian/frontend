@@ -22,17 +22,20 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
   }
 
   def clean(document: Document, convertToHttps: Boolean, now: LocalDateTime): Document = {
-    universalClean(document)
-    removeTopBannerAds(document)
+    removeByClass(document, "top-search-box")
+    removeByClass(document, "share-links")
+    removeByClass(document, "user-details")
+    removeByClass(document, "initially-off")
+    removeByClass(document, "comment-count")
+    replaceLinks(document)
+    repairStaticLinks(document)
+    repairStaticSources(document)
+    deComboLinks(document)
     removeReaderRevenueCallouts(document)
     removeEmailSignup(document)
     removeByTagName(document, "noscript")
     if (convertToHttps) secureDocument(document)
     addExtraCopyToDocument(document, now)
-  }
-
-  def removeTopBannerAds(document: Document): Document = {
-    removeByClass(document, "top-banner-ad-container js-top-banner")
   }
 
   def hideReaderRevenue(document: Document): Document = {
