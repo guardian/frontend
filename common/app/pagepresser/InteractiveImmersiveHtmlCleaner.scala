@@ -22,15 +22,6 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
   }
 
   def clean(document: Document, convertToHttps: Boolean, now: LocalDateTime): Document = {
-    partialUniversalClean(document)
-    removeReaderRevenueCallouts(document)
-    removeEmailSignup(document)
-    removeByTagName(document, "noscript")
-    if (convertToHttps) secureDocument(document)
-    addExtraCopyToDocument(document, now)
-  }
-
-  def partialUniversalClean(document: Document): Document = {
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
     removeByClass(document, "user-details")
@@ -40,6 +31,11 @@ object InteractiveImmersiveHtmlCleaner extends HtmlCleaner {
     repairStaticLinks(document)
     repairStaticSources(document)
     deComboLinks(document)
+    removeReaderRevenueCallouts(document)
+    removeEmailSignup(document)
+    removeByTagName(document, "noscript")
+    if (convertToHttps) secureDocument(document)
+    addExtraCopyToDocument(document, now)
   }
 
   def hideReaderRevenue(document: Document): Document = {
