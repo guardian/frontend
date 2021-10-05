@@ -321,8 +321,7 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-ad-iframe.ts",
   "../projects/commercial/modules/dfp/render-advert-label.ts",
-  "../projects/commercial/modules/sticky-mpu.js",
-  "../projects/common/modules/onward/geo-most-popular.js"
+  "../projects/commercial/modules/sticky-mpu.js"
  ],
  "../projects/commercial/modules/dfp/track-ad-render.js": [
   "../projects/commercial/modules/dfp/wait-for-advert.ts"
@@ -612,11 +611,6 @@
   "../lib/time-utils.js",
   "../projects/common/modules/identity/api.ts"
  ],
- "../projects/common/modules/component.js": [
-  "../../../../node_modules/bean/bean.js",
-  "../../../../node_modules/bonzo/bonzo.js",
-  "../lib/fetch-json.ts"
- ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
  "../projects/common/modules/experiments/ab-core.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -688,12 +682,6 @@
  ],
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
- ],
- "../projects/common/modules/onward/geo-most-popular.js": [
-  "../../../../node_modules/lodash-es/lodash.js",
-  "../lib/fastdom-promise.js",
-  "../lib/mediator.js",
-  "../projects/common/modules/component.js"
  ],
  "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/bean/bean.js",
