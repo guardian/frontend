@@ -3,6 +3,7 @@
   "../../../../node_modules/csstype/index.d.ts"
  ],
  "../lib/a9-apstag.js": [],
+ "../lib/config.d.ts": [],
  "../lib/config.js": [],
  "../lib/cookies.js": [
   "../lib/config.js",
@@ -18,7 +19,7 @@
   "../../../../node_modules/fastdom/fastdom.js"
  ],
  "../lib/fetch-json.ts": [
-  "../lib/config.js"
+  "../lib/config.d.ts"
  ],
  "../lib/fsm.ts": [
   "../lib/noop.ts"
@@ -26,7 +27,7 @@
  "../lib/geolocation.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/cookies.js",
   "../lib/report-error.js"
  ],
@@ -84,7 +85,7 @@
  ],
  "../projects/commercial/modules/article-aside-adverts.ts": [
   "../lib/$$.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js"
  ],
@@ -102,7 +103,7 @@
   "../projects/common/modules/commercial/commercial-features.js"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
@@ -112,7 +113,7 @@
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js",
@@ -161,7 +162,7 @@
   "../lib/url.ts"
  ],
  "../projects/commercial/modules/dfp/dfp-env.ts": [
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/url.ts",
   "../projects/commercial/modules/dfp/Advert.ts"
  ],
@@ -218,7 +219,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/mediator.js",
   "../lib/report-error.js",
   "../lib/user-timing.js",
@@ -250,7 +251,7 @@
  "../projects/commercial/modules/dfp/prepare-googletag.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/raven.js",
   "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
@@ -345,7 +346,7 @@
  ],
  "../projects/commercial/modules/header-bidding/prebid/bid-config.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/url.ts",
   "../projects/commercial/modules/header-bidding/prebid/appnexus.js",
   "../projects/commercial/modules/header-bidding/utils.ts",
@@ -355,7 +356,7 @@
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
@@ -368,13 +369,13 @@
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
  "../projects/commercial/modules/header-bidding/slot-config.ts": [
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/header-bidding/utils.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/url.ts",
   "../projects/common/modules/commercial/geo-utils.js"
@@ -558,7 +559,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/fastdom/fastdom.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/url.ts",
   "../projects/common/modules/commercial/build-page-targeting.js",
   "../projects/common/modules/commercial/commercial-features.js",
@@ -620,7 +621,7 @@
  "../projects/common/modules/experiments/ab-constants.ts": [],
  "../projects/common/modules/experiments/ab-core.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/time-utils.js",
   "../projects/common/modules/analytics/mvt-cookie.js",
   "../projects/common/modules/experiments/ab-constants.ts",
@@ -637,7 +638,7 @@
  ],
  "../projects/common/modules/experiments/ab-ophan.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/noop.ts",
   "../lib/report-error.js"
  ],
@@ -655,7 +656,7 @@
  "../projects/common/modules/experiments/ab-utils.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../projects/common/modules/experiments/ab-constants.ts"
  ],
  "../projects/common/modules/experiments/ab.ts": [
@@ -678,7 +679,7 @@
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
  "../projects/common/modules/identity/api.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/cookies.js",
   "../lib/fetch-json.ts",
   "../lib/mediator.js",
