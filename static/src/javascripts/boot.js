@@ -84,19 +84,12 @@ const go = () => {
 			}
 		});
 
-        const fakeBootCommercial = { bootCommercial: () => {} }
-		const useStandaloneBundle =
-			config.get('tests.standaloneCommercialBundleVariant', false) ===
-				'variant' ||
-			config.get(
-				'tests.standaloneCommercialBundleTrackingVariant',
-				false,
-			) === 'variant';
+		const fakeBootCommercial = { bootCommercial: () => {} };
 		const commercialBundle = () =>
-			useStandaloneBundle
-				? loadScript(
-						config.get('page.commercialBundleUrl'),
-				  ).then(() => (fakeBootCommercial))
+			!config.get('page.isHosted', false)
+				? loadScript(config.get('page.commercialBundleUrl')).then(
+						() => fakeBootCommercial,
+				  )
 				: import(
 						/* webpackChunkName: "commercial" */
 						'bootstraps/commercial'
