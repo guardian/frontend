@@ -64,4 +64,4 @@ const mergeCalls = <T extends unknown[]>(
 };
 
 export { mergeCalls };
-export type { Callback, TargetCallback };
+export type { Callback };
