@@ -38,14 +38,21 @@ const mergeCalls = <T extends unknown[]>(
 	};
 
 	const callMergingFunction: TargetCallbackWithReset<T> = (callback) => {
-		if (status === 'init') {
-			status = 'waiting';
-			callbacks.push(callback);
-			targetFunction(targetCallbackHandler);
-		} else if (status === 'waiting') {
-			callbacks.push(callback);
-		} else {
-			callback(...callbackArguments);
+		switch (status) {
+			case 'init': {
+				status = 'waiting';
+				callbacks.push(callback);
+				targetFunction(targetCallbackHandler);
+				break;
+			}
+			case 'waiting': {
+				callbacks.push(callback);
+				break;
+			}
+			case 'complete': {
+				callback(...callbackArguments);
+				break;
+			}
 		}
 	};
 
