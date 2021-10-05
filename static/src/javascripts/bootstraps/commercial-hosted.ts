@@ -30,8 +30,12 @@ import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags'
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import reportError from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
-import { getHostedBundle } from './hosted';
 import type { Modules } from './types';
+
+const tags = {
+	feature: 'commercial',
+	bundle: 'hosted',
+};
 
 const commercialModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
@@ -65,11 +69,38 @@ if (!commercialFeatures.adFree) {
 	);
 }
 
-const loadHostedBundle = async (): Promise<void> => {
-	if (!window.guardian.config.page.isHosted) return;
+const loadHostedModules = async () => {
+	if (!window.guardian.config.page.isHosted) return; // should never happen
 
-	const hostedModules = await getHostedBundle();
-	commercialModules.push(...hostedModules);
+	const hostedAbout = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/about'
+	);
+	const initHostedVideo = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/video'
+	);
+	const hostedGallery = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/gallery'
+	);
+	const initHostedCarousel = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/onward-journey-carousel'
+	);
+	const loadOnwardComponent = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/onward'
+	);
+
+	commercialModules.push(
+		['cm-hostedAbout', hostedAbout.init],
+		['cm-hostedVideo', initHostedVideo.initHostedVideo],
+		['cm-hostedGallery', hostedGallery.init],
+		['cm-hostedOnward', loadOnwardComponent.loadOnwardComponent],
+		['cm-hostedOJCarousel', initHostedCarousel.initHostedCarousel],
+	);
+
 	return;
 };
 
@@ -89,9 +120,7 @@ const loadModules = () => {
 					},
 				],
 			],
-			{
-				feature: 'commercial',
-			},
+			tags,
 		);
 	});
 
@@ -111,9 +140,7 @@ export const bootCommercial = (): Promise<void> => {
 				},
 			],
 		],
-		{
-			feature: 'commercial',
-		},
+		tags,
 	);
 
 	// Stub the command queue
@@ -122,7 +149,7 @@ export const bootCommercial = (): Promise<void> => {
 		cmd: [],
 	};
 
-	return loadHostedBundle()
+	return loadHostedModules()
 		.then(loadModules)
 		.then(() => {
 			catchErrorsWithContext(
@@ -134,19 +161,11 @@ export const bootCommercial = (): Promise<void> => {
 						},
 					],
 				],
-				{
-					feature: 'commercial',
-				},
+				tags,
 			);
 		})
 		.catch((err) => {
 			// report async errors in bootCommercial to Sentry with the commercial feature tag
-			reportError(
-				err,
-				{
-					feature: 'commercial',
-				},
-				false,
-			);
+			reportError(err, tags, false);
 		});
 };

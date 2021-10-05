@@ -92,7 +92,7 @@ const go = () => {
 				  )
 				: import(
 						/* webpackChunkName: "commercial" */
-						'bootstraps/commercial'
+						'bootstraps/commercial-hosted'
 				  );
 
 
