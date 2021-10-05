@@ -6,6 +6,9 @@ import com.gu.facia.client.models.{
   TargetedTerritory,
   USEastCoastTerritory,
   USWestCoastTerritory,
+  AUVictoria,
+  AUQueensland,
+  AUNewSouthWales
 }
 import model.PressedPage
 import model.facia.PressedCollection
@@ -24,6 +27,9 @@ object TargetedCollections {
     EU27Territory -> "EU-27 Countries",
     USEastCoastTerritory -> "US East Coast",
     USWestCoastTerritory -> "US West Coast",
+    AUVictoria -> "Australia - Victoria",
+    AUQueensland -> "Australia - Queensland",
+    AUNewSouthWales -> "Australia - New South Wales"
   )
 
   def markDisplayName(collection: PressedCollection): PressedCollection = {
