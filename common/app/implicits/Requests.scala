@@ -8,7 +8,7 @@ import com.gu.facia.client.models.{
   USWestCoastTerritory,
   AUVictoriaTerritory,
   AUQueenslandTerritory,
-  AUNewSouthWalesTerritory
+  AUNewSouthWalesTerritory,
 }
 import conf.Configuration
 import play.api.mvc.RequestHeader
@@ -37,7 +37,7 @@ trait Requests {
     TerritoryHeader(USWestCoastTerritory, USWestCoastTerritory.id),
     TerritoryHeader(AUVictoriaTerritory, AUVictoriaTerritory.id),
     TerritoryHeader(AUQueenslandTerritory, AUQueenslandTerritory.id),
-    TerritoryHeader(AUNewSouthWalesTerritory, AUNewSouthWalesTerritory.id)
+    TerritoryHeader(AUNewSouthWalesTerritory, AUNewSouthWalesTerritory.id),
   )
 
   implicit class RichRequestHeader(r: RequestHeader) {
