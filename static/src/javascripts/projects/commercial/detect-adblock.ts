@@ -25,9 +25,7 @@ export const init = (): void => {
 			};
 
 			function runEachListener(listeners: Listener[]) {
-				listeners.forEach(function (listener: {
-					(active: boolean): void;
-				}) {
+				listeners.forEach(function (listener: Listener) {
 					try {
 						listener(blockerDetected);
 					} catch (e) {
