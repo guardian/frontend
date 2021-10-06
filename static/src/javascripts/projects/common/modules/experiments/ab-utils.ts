@@ -5,13 +5,8 @@ import type {
 	Variant,
 } from '@guardian/ab-core';
 import { fromPairs, toPairs } from 'lodash-es';
-import config_ from '../../../../lib/config';
+import config from '../../../../lib/config';
 import { NOT_IN_TEST, notInTestVariant } from './ab-constants';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: <T>(s: string, d?: T) => T;
-};
 
 export const testSwitchExists = (testId: string): boolean =>
 	config.get<boolean | string>(`switches.ab${testId}`, 'NOT_FOUND') !==

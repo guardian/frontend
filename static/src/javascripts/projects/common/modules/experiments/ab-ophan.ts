@@ -1,13 +1,8 @@
 import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
 import ophan from 'ophan/ng';
-import config_ from '../../../../lib/config';
+import config from '../../../../lib/config';
 import { noop } from '../../../../lib/noop';
 import reportError from '../../../../lib/report-error';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string, d?: string) => string;
-};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- generics don’t play nice
 type BooleanFunction = (...args: any[]) => boolean;
@@ -88,7 +83,7 @@ export const buildOphanPayload = (
 ): OphanABPayload => {
 	try {
 		const log: OphanABPayload = {};
-		const serverSideTests = Object.keys(config.get('tests')).filter(
+		const serverSideTests = Object.keys(config.get('tests', {})).filter(
 			(test) => !!config.get(`tests.${test}`),
 		);
 

@@ -1,5 +1,5 @@
 import { adSizes } from '@guardian/commercial-core';
-import config_ from '../../../lib/config';
+import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import mediator from '../../../lib/mediator';
@@ -10,11 +10,6 @@ import type { Advert } from './dfp/Advert';
 import { createSlots } from './dfp/create-slots';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string, d?: string) => string;
-};
 
 const createCommentSlots = (canBeDmpu: boolean): HTMLElement[] => {
 	const sizes = canBeDmpu

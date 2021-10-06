@@ -1,16 +1,11 @@
 import { storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
-import config_ from '../../../../lib/config';
+import config from '../../../../lib/config';
 import { getCookie as getCookieByName } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';
 import mediator from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
 import { createAuthenticationComponentEventParams } from './auth-component-event-params';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string) => string;
-};
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
 
@@ -92,8 +87,14 @@ const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 
-const idApiRoot = config.get('page.idApiUrl');
-const profileRoot = config.get('page.idUrl');
+const idApiRoot = config.get<string>(
+	'page.idApiUrl',
+	'/ID_API_ROOT_URL_NOT_FOUND',
+);
+const profileRoot = config.get<string>(
+	'page.idUrl',
+	'/PROFILE_ROOT_ID_URL_NOT_FOUND',
+);
 mediator.emit('module:identity:api:loaded');
 
 export const decodeBase64 = (str: string): string =>
@@ -198,7 +199,6 @@ export const getUrl = (): string => profileRoot;
 
 export const getUserFromApiWithRefreshedCookie = (): Promise<unknown> => {
 	const endpoint = `${idApiRoot}/user/me?refreshCookie=true`;
-
 	return fetch(endpoint, {
 		mode: 'cors',
 		credentials: 'include',
