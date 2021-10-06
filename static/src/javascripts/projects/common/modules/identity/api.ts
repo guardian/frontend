@@ -87,8 +87,14 @@ const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 
-const idApiRoot = config.get<string>('page.idApiUrl', '/ID_API_ROOT_URL_NOT_FOUND');
-const profileRoot = config.get<string>('page.idUrl', '/PROFILE_ROOT_ID_URL_NOT_FOUND');
+const idApiRoot = config.get<string>(
+	'page.idApiUrl',
+	'/ID_API_ROOT_URL_NOT_FOUND',
+);
+const profileRoot = config.get<string>(
+	'page.idUrl',
+	'/PROFILE_ROOT_ID_URL_NOT_FOUND',
+);
 mediator.emit('module:identity:api:loaded');
 
 export const decodeBase64 = (str: string): string =>
@@ -338,13 +344,13 @@ export const getSubscribedNewsletters = (): Promise<string[]> => {
 
 	type NewslettersResponse =
 		| {
-			result?: {
-				globalSubscriptionStatus?: string;
-				htmlPreference?: string;
-				subscriptions?: Subscriptions[];
-				status?: 'ok' | string;
-			};
-		}
+				result?: {
+					globalSubscriptionStatus?: string;
+					htmlPreference?: string;
+					subscriptions?: Subscriptions[];
+					status?: 'ok' | string;
+				};
+		  }
 		| undefined;
 
 	return (fetchJson(url, {
