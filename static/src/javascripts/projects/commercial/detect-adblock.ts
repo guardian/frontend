@@ -12,11 +12,16 @@ export const init = (): void => {
 			// Run each listener
 			runEachListener(adBlockers.onDetect);
 
-			// Run subsequent listeners immediately
-			adBlockers.onDetect.push = function () {
-				const toRun = Array.prototype.slice.call(arguments, 0);
-				runEachListener(toRun);
-				return toRun.length;
+			// If subsequent listeners are added to the queue, they should be run immediately
+			adBlockers.onDetect.push = function (...args) {
+				// push the function or functions onto the queue
+				const arrayLen = Array.prototype.push.call(
+					adBlockers.onDetect,
+					...args,
+				);
+				// then execute them
+				runEachListener(args);
+				return arrayLen;
 			};
 
 			function runEachListener(listeners: Listener[]) {
@@ -24,7 +29,7 @@ export const init = (): void => {
 					(active: boolean): void;
 				}) {
 					try {
-						listener(!!adBlockers.active);
+						listener(blockerDetected);
 					} catch (e) {
 						console.log(e);
 					}
