@@ -254,7 +254,7 @@ class EmailSignupController(
             s"Post request received to /email/ - " +
               s"email: ${form.email}, " +
               s"ref: ${form.ref}, " +
-              s"pageViewId: ${form.pageViewId}, " +
+              s"refViewId: ${form.refViewId}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
@@ -319,7 +319,7 @@ class EmailSignupController(
             s"Post request received to /email/ - " +
               s"email: ${form.email}, " +
               s"ref: ${form.ref}, " +
-              s"pageViewId: ${form.pageViewId}, " +
+              s"refViewId: ${form.refViewId}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
