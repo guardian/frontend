@@ -7,7 +7,6 @@ import model.R2PressMessage
 trait R2PressNotification {
   implicit val pressMessageFormatter: Format[R2PressMessage] = (
     (__ \ "url").format[String] and
-      (__ \ "fromPreservedSrc").format[Boolean] and
       (__ \ "convertToHttps").format[Boolean]
   )(R2PressMessage.apply, unlift(R2PressMessage.unapply))
 }

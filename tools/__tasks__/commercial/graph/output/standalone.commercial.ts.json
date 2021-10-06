@@ -321,8 +321,7 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-ad-iframe.ts",
   "../projects/commercial/modules/dfp/render-advert-label.ts",
-  "../projects/commercial/modules/sticky-mpu.js",
-  "../projects/common/modules/onward/geo-most-popular.js"
+  "../projects/commercial/modules/sticky-mpu.js"
  ],
  "../projects/commercial/modules/dfp/track-ad-render.js": [
   "../projects/commercial/modules/dfp/wait-for-advert.ts"
@@ -552,7 +551,7 @@
   "../lib/raven.js",
   "../projects/common/modules/spacefinder.js"
  ],
- "../projects/common/modules/async-call-merger.js": [],
+ "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/atoms/youtube-player.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts",
@@ -611,11 +610,6 @@
   "../lib/fetch-json.ts",
   "../lib/time-utils.js",
   "../projects/common/modules/identity/api.ts"
- ],
- "../projects/common/modules/component.js": [
-  "../../../../node_modules/bean/bean.js",
-  "../../../../node_modules/bonzo/bonzo.js",
-  "../lib/fetch-json.ts"
  ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
  "../projects/common/modules/experiments/ab-core.ts": [
@@ -683,17 +677,11 @@
   "../lib/fetch-json.ts",
   "../lib/mediator.js",
   "../lib/url.ts",
-  "../projects/common/modules/async-call-merger.js",
+  "../projects/common/modules/async-call-merger.ts",
   "../projects/common/modules/identity/auth-component-event-params.js"
  ],
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
- ],
- "../projects/common/modules/onward/geo-most-popular.js": [
-  "../../../../node_modules/lodash-es/lodash.js",
-  "../lib/fastdom-promise.js",
-  "../lib/mediator.js",
-  "../projects/common/modules/component.js"
  ],
  "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/bean/bean.js",

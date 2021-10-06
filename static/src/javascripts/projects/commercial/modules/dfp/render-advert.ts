@@ -2,7 +2,6 @@ import { adSizes } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
-import { geoMostPopular } from '../../../common/modules/onward/geo-most-popular';
 import { stickyCommentsMpu, stickyMpu } from '../sticky-mpu';
 import type { Advert } from './Advert';
 import { getAdIframe } from './get-ad-iframe';
@@ -167,27 +166,6 @@ const outOfPageCallback = (advert: Advert, event?: SlotRenderEndedEvent) => {
 };
 sizeCallbacks[adSizes.outOfPage.toString()] = outOfPageCallback;
 sizeCallbacks[adSizes.empty.toString()] = outOfPageCallback;
-
-/**
- * Portrait adverts exclude the locally-most-popular widget
- */
-// Temporary definition until 'geo-most-popular' is converted to TypeScript
-
-type WrappedElem = {
-	elem: HTMLElement | null;
-	remove: () => void;
-};
-sizeCallbacks[adSizes.portrait.toString()] = () =>
-	// remove geo most popular
-	geoMostPopular.whenRendered.then(
-		(popular: WrappedElem | undefined | null) =>
-			fastdom.mutate(() => {
-				if (popular?.elem) {
-					popular.elem.remove();
-					popular.elem = null;
-				}
-			}),
-	);
 
 /**
  * Commercial components with merch sizing get fluid-250 styling

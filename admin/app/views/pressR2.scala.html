@@ -5,6 +5,7 @@
     <form action="/press/r2" method="POST" class="form-horizontal redirect-form">
         <fieldset>
             <legend>Press (archive) an individual page</legend>
+            <p>Note, as the code for R2 is not running anymore, re-pressing is only possible for pages that we already have a static copy of - i.e. pages that have already been pressed.</p>
             <div class="form-group">
                 <label for="r2url" class="control-label col-sm-1">R2 URL:</label>
                 <div class="col-sm-6">
@@ -15,12 +16,6 @@
                 <label for="is-takedown" class="control-label col-sm-1">Takedown:</label>
                 <div class="col-sm-6">
                     <input type="checkbox" class="form-control" id="is-takedown" name="is-takedown"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="is-from-preserved-source" class="control-label col-sm-1">From preserved src:</label>
-                <div class="col-sm-6">
-                    <input type="checkbox" class="form-control" id="is-from-preserved-source" name="is-from-preserved-source" checked/>
                 </div>
             </div>
             <div class="form-group">
@@ -53,6 +48,7 @@
     <form action="/press/r2/batchupload" method="POST" class="form-horizontal redirect-form" enctype="multipart/form-data">
         <fieldset>
             <legend>Press a batch of pages from a file of urls</legend>
+            <p>Note, as the code for R2 is not running anymore, re-pressing is only possible for pages that we already have a static copy of - i.e. pages that have already been pressed.</p>
             <div class="form-group">
                 <label for="r2urlfile" class="control-label col-sm-1">File:</label>
                 <div class="col-sm-6">
@@ -63,12 +59,6 @@
                 <label for="is-takedown" class="control-label col-sm-1">Takedown:</label>
                 <div class="col-sm-6">
                     <input id="is-takedown" name="is-takedown" type="checkbox"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="is-from-preserved-source" class="control-label col-sm-1">From preserved src:</label>
-                <div class="col-sm-6">
-                    <input type="checkbox" class="form-control" id="is-from-preserved-source" name="is-from-preserved-source" checked/>
                 </div>
             </div>
             <div class="form-group">
