@@ -1,3 +1,4 @@
+import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
@@ -33,15 +34,17 @@ const contains = (
 	size: HeaderBiddingSize,
 ): boolean => Boolean(sizes.find((s) => s[0] === size[0] && s[1] === size[1]));
 
-export const removeFalseyValues = (
-	o: Record<string, string>,
-): Record<string, string> =>
-	Object.keys(o).reduce((m: Record<string, string>, k: string) => {
-		if (o[k]) {
-			m[k] = o[k];
+export const removeFalseyValues = <O extends Record<string, unknown>>(
+	o: O,
+): Record<keyof O, string> =>
+	Object.keys(o).reduce((m, k: keyof O) => {
+		const v = o[k];
+		if (v && isString(v)) {
+			m[k] = v;
 		}
 		return m;
-	}, {});
+		// eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter -- All values may be falsey
+	}, {} as Record<keyof O, string>);
 
 export const stripDfpAdPrefixFrom = (s: string): string =>
 	stripPrefix(s, 'dfp-ad--');

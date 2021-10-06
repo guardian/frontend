@@ -84,41 +84,34 @@ jest.mock('@guardian/consent-management-platform', () => ({
 }));
 
 // TCFv1
-const tcfWithConsentMock = (callback): void =>
-    callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
-const tcfMixedConsentMock = (callback): void =>
-    callback({
-        '1': false,
-        '2': true,
-        '3': true,
-        '4': false,
-        '5': true,
-    });
+const tcfWithConsentMock = (callback): void => callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
+const tcfMixedConsentMock = (callback): void => callback({
+    '1': false,
+    '2': true,
+    '3': true,
+    '4': false,
+    '5': true,
+});
 
 // CCPA
-const ccpaWithConsentMock = (callback): void =>
-    callback({ ccpa: { doNotSell: false } });
-const ccpaWithoutConsentMock = (callback): void =>
-    callback({ ccpa: { doNotSell: true } });
+const ccpaWithConsentMock = (callback): void => callback({ ccpa: { doNotSell: false } });
+const ccpaWithoutConsentMock = (callback): void => callback({ ccpa: { doNotSell: true } });
 
 // TCFv2
-const tcfv2WithConsentMock = (callback): void =>
-    callback({
-        tcfv2: {
-            consents: { '1': true, '2': true },
-            eventStatus: 'useractioncomplete',
-        },
-    });
-const tcfv2WithoutConsentMock = (callback): void =>
-    callback({ tcfv2: { consents: {}, eventStatus: 'cmpuishown' } });
+const tcfv2WithConsentMock = (callback): void => callback({
+    tcfv2: {
+        consents: { '1': true, '2': true },
+        eventStatus: 'useractioncomplete',
+    },
+});
+const tcfv2WithoutConsentMock = (callback): void => callback({ tcfv2: { consents: {}, eventStatus: 'cmpuishown' } });
 const tcfv2NullConsentMock = (callback): void => callback({ tcfv2: {} });
-const tcfv2MixedConsentMock = (callback): void =>
-    callback({
-        tcfv2: {
-            consents: { '1': false, '2': true },
-            eventStatus: 'useractioncomplete',
-        },
-    });
+const tcfv2MixedConsentMock = (callback): void => callback({
+    tcfv2: {
+        consents: { '1': false, '2': true },
+        eventStatus: 'useractioncomplete',
+    },
+});
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
