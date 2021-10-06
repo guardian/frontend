@@ -22,21 +22,3 @@ object LiveblogRendering
       sellByDate = LocalDate.of(2021, 11, 30),
       participationGroup = Perc0A,
     )
-
-object StandaloneCommercialBundle
-    extends Experiment(
-      name = "standalone-commercial-bundle",
-      description = "Serve a standalone commercial bundle to a subset of users",
-      owners = Seq(Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2021, 11, 1),
-      participationGroup = Perc50,
-    )
-
-object StandaloneCommercialBundleTracking
-    extends Experiment(
-      name = "standalone-commercial-bundle-tracking",
-      description = "Track performance metrics for the standalone commercial bundle",
-      owners = Seq(Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2021, 11, 1),
-      participationGroup = Perc1A,
-    )

@@ -3,12 +3,11 @@ import { getSynchronousTestsToRun } from '../experiments/ab';
 import { prebidTimeout } from '../experiments/tests/prebid-timeout';
 
 const defaultClientSideTests: ABTest[] = [prebidTimeout];
-const serverSideTests: ServerSideABTest[] = [
-	'standaloneCommercialBundleTrackingVariant',
-];
+
+const serverSideTests: ServerSideABTest[] = [];
 
 /**
- * Function to check wether metrics should be captured for the current page
+ * Function to check whether metrics should be captured for the current page
  * @param tests - optional array of ABTest to check against.
  * @returns {boolean} whether the user is in a one of a set of client or server-side tests
  * for which we want to always capture metrics.
