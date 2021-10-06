@@ -46,8 +46,7 @@ export const send = (
 	data?: Comment | AbuseReport,
 ): Promise<CommentResponse> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
-		const apiUrl = config.get<string>('page.discussionApiUrl');
-		if (!apiUrl) return Promise.reject();
+		const apiUrl = config.get<string>('page.discussionApiUrl', '/DISCUSSION_API_URL_NOT_FOUND');
 		const url = apiUrl + endpoint;
 
 		// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140

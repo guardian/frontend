@@ -87,8 +87,8 @@ const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 
-const idApiRoot = config.get<string>('page.idApiUrl');
-const profileRoot = config.get<string>('page.idUrl');
+const idApiRoot = config.get<string>('page.idApiUrl', '/ID_API_ROOT_URL_NOT_FOUND');
+const profileRoot = config.get<string>('page.idUrl', '/PROFILE_ROOT_ID_URL_NOT_FOUND');
 mediator.emit('module:identity:api:loaded');
 
 export const decodeBase64 = (str: string): string =>
@@ -131,7 +131,6 @@ export const getUserFromCookie = (): IdentityUserFromCache => {
 };
 
 export const updateNewsletter = (newsletter: Newsletter): Promise<void> => {
-	if (!idApiRoot) return Promise.reject();
 	const url = `${idApiRoot}/users/me/newsletters`;
 	return fetch(url, {
 		method: 'PATCH',
@@ -163,7 +162,7 @@ export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 
 export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
-		if (isUserLoggedIn() && idApiRoot) {
+		if (isUserLoggedIn()) {
 			const url = `${idApiRoot}/user/me`;
 			void (fetchJson(url, {
 				mode: 'cors',
@@ -190,10 +189,9 @@ export const reset = (): void => {
 export const getCookie = (): string | null =>
 	getCookieByName(cookieName) as string | null;
 
-export const getUrl = (): string => profileRoot ?? ''; // TODO: is there a default value?
+export const getUrl = (): string => profileRoot;
 
 export const getUserFromApiWithRefreshedCookie = (): Promise<unknown> => {
-	if (!idApiRoot) return Promise.reject();
 	const endpoint = `${idApiRoot}/user/me?refreshCookie=true`;
 	return fetch(endpoint, {
 		mode: 'cors',
@@ -255,7 +253,6 @@ export const shouldAutoSigninInUser = (): boolean => {
 };
 
 export const getUserEmailSignUps = (): Promise<unknown> => {
-	if (!idApiRoot) return Promise.reject();
 	const user = getUserFromCookie();
 
 	if (user) {
@@ -272,7 +269,6 @@ export const getUserEmailSignUps = (): Promise<unknown> => {
 };
 
 export const sendValidationEmail = (): unknown => {
-	if (!(idApiRoot && profileRoot)) return Promise.reject();
 	const defaultReturnEndpoint = '/email-prefs';
 	const endpoint = `${idApiRoot}/user/send-validation-email`;
 
@@ -295,7 +291,6 @@ export const sendValidationEmail = (): unknown => {
 };
 
 export const updateUsername = (username: string): unknown => {
-	if (!idApiRoot) return Promise.reject();
 	const endpoint = `${idApiRoot}/user/me`;
 	const data = {
 		publicFields: {
@@ -314,7 +309,6 @@ export const updateUsername = (username: string): unknown => {
 };
 
 export const getAllConsents = (): Promise<unknown> => {
-	if (!idApiRoot) return Promise.reject();
 	const endpoint = '/consents';
 	const url = idApiRoot + endpoint;
 	return fetchJson(url, {
@@ -325,7 +319,6 @@ export const getAllConsents = (): Promise<unknown> => {
 };
 
 export const getAllNewsletters = (): Promise<unknown> => {
-	if (!idApiRoot) return Promise.reject();
 	const endpoint = '/newsletters';
 	const url = idApiRoot + endpoint;
 	return fetchJson(url, {
@@ -336,7 +329,6 @@ export const getAllNewsletters = (): Promise<unknown> => {
 };
 
 export const getSubscribedNewsletters = (): Promise<string[]> => {
-	if (!idApiRoot) return Promise.resolve([]);
 	const endpoint = '/users/me/newsletters';
 	const url = idApiRoot + endpoint;
 
@@ -346,13 +338,13 @@ export const getSubscribedNewsletters = (): Promise<string[]> => {
 
 	type NewslettersResponse =
 		| {
-				result?: {
-					globalSubscriptionStatus?: string;
-					htmlPreference?: string;
-					subscriptions?: Subscriptions[];
-					status?: 'ok' | string;
-				};
-		  }
+			result?: {
+				globalSubscriptionStatus?: string;
+				htmlPreference?: string;
+				subscriptions?: Subscriptions[];
+				status?: 'ok' | string;
+			};
+		}
 		| undefined;
 
 	return (fetchJson(url, {
@@ -370,9 +362,8 @@ export const getSubscribedNewsletters = (): Promise<string[]> => {
 		.catch(() => []);
 };
 
-export const setConsent = (consents: SettableConsent): Promise<void> => {
-	if (!idApiRoot) return Promise.reject();
-	return fetch(`${idApiRoot}/users/me/consents`, {
+export const setConsent = (consents: SettableConsent): Promise<void> =>
+	fetch(`${idApiRoot}/users/me/consents`, {
 		method: 'PATCH',
 		credentials: 'include',
 		mode: 'cors',
@@ -381,13 +372,10 @@ export const setConsent = (consents: SettableConsent): Promise<void> => {
 		if (resp.ok) return Promise.resolve();
 		return Promise.reject();
 	});
-};
 
-export const getUserData = (): Promise<unknown> => {
-	if (!idApiRoot) return Promise.reject();
-	return fetchJson(`${idApiRoot}/user/me`, {
+export const getUserData = (): Promise<unknown> =>
+	fetchJson(`${idApiRoot}/user/me`, {
 		method: 'GET',
 		mode: 'cors',
 		credentials: 'include',
 	});
-};

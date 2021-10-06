@@ -1,7 +1,7 @@
 import config from 'lib/config';
 
-const apiUrl = `${config.get<string>('page.avatarApiUrl', '')}/v1`;
-const staticUrl = `${config.get<string>('page.avatarImagesUrl', '')}/user`;
+const apiUrl = `${config.get<string>('page.avatarApiUrl', '/AVATAR_API_URL_NOT_FOUND')}/v1`;
+const staticUrl = `${config.get<string>('page.avatarImagesUrl', '/AVATAR_IMAGES_URL_NOT_FOUND')}/user`;
 
 const request = (
 	method: string,
