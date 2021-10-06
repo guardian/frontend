@@ -131,7 +131,11 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     appboy.changeUser(brazeUuid);
     appboy.openSession();
 
-    const canShowPromise = brazeMessages.getMessageForBanner().then((m) => {
+    const brazeArticleContext = {
+        section: config.get('page.section')
+    };
+
+    const canShowPromise = brazeMessages.getMessageForBanner(brazeArticleContext).then((m) => {
         message = m;
         return true;
     });
@@ -187,7 +191,7 @@ const canShow = async () => {
         return false;
     }
     const brazeArticleContext = {
-        section: config.get('page.sectionName')
+        section: config.get('page.section')
     };
 
     const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
