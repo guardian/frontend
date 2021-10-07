@@ -12,7 +12,7 @@ object TrailCssClasses {
   def toneClass(faciaContent: PressedContent): String = toneClassFromStyle(faciaContent.card.cardStyle)
 
   def toneClassForLiveblog(item: model.ContentType): String = {
-    // EXPLAIN WHY
+    // Special report styling was overriding deadblog styling. This makes it explicit
     val overridden =
       if (item.content.tags.isLiveBlog && !item.content.fields.isLive) DeadBlog
       else item.content.cardStyle
