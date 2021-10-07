@@ -1,12 +1,12 @@
 import { storage } from '@guardian/libs';
-import { getPermutiveSegments, getPermutivePFPSegments, _ } from './permutive';
+import { _, getPermutivePFPSegments, getPermutiveSegments } from './permutive';
 
 jest.mock('@guardian/libs', () => ({
-	storage: {
-		local: {
-			getRaw: jest.fn(),
-		},
-	},
+    storage: {
+        local: {
+            getRaw: jest.fn(),
+        },
+    }
 }));
 
 afterEach(() => {
@@ -16,19 +16,21 @@ afterEach(() => {
 describe('getSegments', () => {
 	const DUMMY_KEY = `_dummyKey`;
 	test('parses Permutive segments correctly', () => {
-		storage.local.getRaw.mockReturnValue(['[42,84,63]']);
+		(storage.local.getRaw as jest.Mock).mockReturnValue(['[42,84,63]']);
 		expect(_.getSegments(DUMMY_KEY)).toEqual(['42', '84', '63']);
-		storage.local.getRaw.mockReturnValue([]);
+		(storage.local.getRaw as jest.Mock).mockReturnValue([]);
 		expect(_.getSegments(DUMMY_KEY)).toEqual([]);
 	});
 	test('returns an empty array for bad inputs', () => {
-		storage.local.getRaw.mockReturnValue('-1');
+		(storage.local.getRaw as jest.Mock).mockReturnValue('-1');
 		expect(_.getSegments(DUMMY_KEY)).toEqual([]);
-		storage.local.getRaw.mockReturnValue('bad-string');
+		(storage.local.getRaw as jest.Mock).mockReturnValue('bad-string');
 		expect(_.getSegments(DUMMY_KEY)).toEqual([]);
-		storage.local.getRaw.mockReturnValue('{}');
+		(storage.local.getRaw as jest.Mock).mockReturnValue('{}');
 		expect(_.getSegments(DUMMY_KEY)).toEqual([]);
-		storage.local.getRaw.mockReturnValue('["not-a-number-segment"]');
+		(storage.local.getRaw as jest.Mock).mockReturnValue(
+			'["not-a-number-segment"]',
+		);
 		expect(_.getSegments(DUMMY_KEY)).toEqual([]);
 	});
 });
