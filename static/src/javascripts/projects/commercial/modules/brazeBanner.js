@@ -190,9 +190,6 @@ const canShow = async () => {
     if (!isBrazeConfigured) {
         return false;
     }
-    const brazeArticleContext = {
-        section: config.get('page.section')
-    };
 
     const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
 
@@ -208,7 +205,7 @@ const canShow = async () => {
     }
 
     try {
-        const result = await getMessageFromBraze(apiKey, brazeUuid, brazeArticleContext);
+        const result = await getMessageFromBraze(apiKey, brazeUuid);
         const timeTaken = bannerTiming.end();
 
         if (timeTaken) {
