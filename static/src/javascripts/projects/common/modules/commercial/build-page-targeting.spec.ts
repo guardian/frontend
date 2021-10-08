@@ -295,9 +295,6 @@ describe('Build Page Targeting', () => {
 
 		expect(getPageTargeting().consent_tcfv2).toBe('f');
 		expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
-
-		expect(getPageTargeting().consent_tcfv2).toBe('na');
-		expect(getPageTargeting().cmp_interaction).toBe('na');
 	});
 
 	it('should set correct edition param', () => {
