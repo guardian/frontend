@@ -1,10 +1,7 @@
 import type { Participations } from '@guardian/ab-core';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import type {
-	ConsentState,
-	Framework,
-} from '@guardian/consent-management-platform/dist/types';
-import { isObject, log, storage } from '@guardian/libs';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
 import { once, pick } from 'lodash-es';
 import config from '../../../../lib/config';
 import {
@@ -21,27 +18,58 @@ import { commercialFeatures } from './commercial-features';
 import { clearPermutiveSegments, getPermutiveSegments } from './permutive';
 import { getUserSegments } from './user-ad-targeting';
 
-type PageTargeting = {
-	sens: string;
-	url: string;
-	edition: string;
-	ct: string;
-	p: string;
-	k: string;
-	su: string;
-	bp: string;
-	x: string;
-	gdncrm: string;
-	pv: string;
-	co: string;
-	tn: string;
-	slot: string;
-	permutive: string;
-	urlkw: string;
-	skinsize: 'l' | 's';
-};
+// https://admanager.google.com/59666047#inventory/custom_targeting/list
 
-let myPageTargeting: Partial<PageTargeting> = {};
+type TrueOrFalse = 't' | 'f';
+
+type PartialWithNulls<T> = { [P in keyof T]?: T[P] | null };
+
+type PageTargeting = PartialWithNulls<{
+	ab: string[];
+	at: string; // Ad Test
+	bl: string[]; // BLog tags
+	bp: string; // BreakPoint
+	cc: string; // Country Code
+	co: string; // COntributor
+	ct: string; // Content Type
+	dcre: TrueOrFalse; // DotCom-Rendering Eligible
+	edition: string;
+	gdncrm: string | string[]; // GuarDiaN CRM
+	k: string; // Keywords
+	ms: string; // Media Source
+	p: string; // Platform (web)
+	pa: string; // Personalised Ads consent
+	permutive: string[];
+	pv: string; // ophan Page View id
+	rp: string; // Rendering Platform
+	sens: string; // SenSitive
+	si: TrueOrFalse; // Signed In
+	skinsize: 'l' | 's';
+	slot: string; // (predefined list)
+	su: string; // SUrging article
+	tn: string; // ToNe
+	url: string;
+	urlkw: string[]; // URL KeyWords
+	vl: string; // Video Length
+	x: string; // kruX user segments (deprecated?)
+	rdp: string;
+	consent_tcfv2: string;
+	cmp_interaction: string;
+	se: string;
+	ob: string;
+	br: string;
+	af: string;
+	fr: string;
+	ref: string;
+	inskin: string;
+	amtgrp: string; // Ad manager group
+	s: string; // Section
+
+	// And more
+	[_: string]: string | string[];
+}>;
+
+let myPageTargeting: PageTargeting = {};
 let latestCmpHasInitialised: boolean;
 let latestCMPState: ConsentState | null = null;
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
@@ -69,7 +97,7 @@ const skinsizeTargeting = () => {
 	return vp.width >= 1560 ? 'l' : 's';
 };
 
-const inskinTargeting = () => {
+const inskinTargeting = (): TrueOrFalse => {
 	// Don’t show inskin if we cannot tell if a privacy message will be shown
 	if (!cmp.hasInitialised()) return 'f';
 	return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
@@ -196,7 +224,7 @@ const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
 };
 
 const buildAppNexusTargetingObject = once(
-	(pageTargeting: Partial<PageTargeting>): Record<string, string> =>
+	(pageTargeting: PageTargeting): Record<string, string> =>
 		removeFalseyValues({
 			sens: pageTargeting.sens,
 			pt1: pageTargeting.url,
@@ -218,9 +246,8 @@ const buildAppNexusTargetingObject = once(
 		}),
 );
 
-const buildAppNexusTargeting = once(
-	(pageTargeting: Partial<PageTargeting>): string =>
-		formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting)),
+const buildAppNexusTargeting = once((pageTargeting: PageTargeting): string =>
+	formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting)),
 );
 
 const getRdpValue = (ccpaState: boolean | null): string => {
@@ -272,19 +299,19 @@ const createAdManagerGroup = () => {
 	return group;
 };
 
-const filterEmptyValues = <T extends Record<string, unknown>>(
-	pageTargets: T,
-) => {
-	const filtered: Partial<T> = {};
+const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
+	const filtered: Record<string, string | string[]> = {};
 	for (const key in pageTargets) {
 		const value = pageTargets[key];
-		if (!value) {
-			continue;
+		if (isString(value)) {
+			filtered[key] = value;
+		} else if (
+			Array.isArray(value) &&
+			value.length > 0 &&
+			value.every(isString)
+		) {
+			filtered[key] = value;
 		}
-		if (Array.isArray(value) && value.length === 0) {
-			continue;
-		}
-		filtered[key] = value;
 	}
 	return filtered;
 };
@@ -305,7 +332,7 @@ const rebuildPageTargeting = () => {
 		videoDuration?: number;
 		appNexusPageTargeting?: string;
 		sharedAdTargeting?: Record<string, unknown>;
-		pageAdTargeting?: Partial<PageTargeting>;
+		pageAdTargeting?: PageTargeting;
 		source?: string;
 		pageId?: string;
 	}>;
@@ -319,14 +346,15 @@ const rebuildPageTargeting = () => {
 	// flowlint-next-line sketchy-null-bool:off
 	const paTargeting = { pa: adConsentState ? 't' : 'f' };
 	const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
-	const pageTargets: PageTargeting = Object.assign(
-		{
+
+	const pageTargets: PageTargeting = {
+		...{
 			ab: abParam(),
 			amtgrp,
-			at: getCookie({ name: 'adtest' }),
+			at: getCookie({ name: 'adtest', shouldMemoize: true }),
 			bp: findBreakpoint(),
 			cc: getCountryCode(), // if turned async, we could use getLocale()
-			cmp_interaction: tcfv2EventStatus || 'na',
+			cmp_interaction: tcfv2EventStatus,
 			consent_tcfv2: getTcfv2ConsentValue(latestCMPState),
 			// dcre: DCR eligible
 			// when the page is DCR eligible and was rendered by DCR or
@@ -341,7 +369,7 @@ const rebuildPageTargeting = () => {
 			inskin: inskinTargeting(),
 			ms: formatTarget(page.source),
 			permutive: getPermutiveSegments(),
-			pv: config.get<string>('ophan.pageViewId'),
+			pv: config.get<string | null>('ophan.pageViewId', null),
 			rdp: getRdpValue(ccpaState),
 			ref: getReferrer(),
 			// rp: rendering platform
@@ -350,7 +378,7 @@ const rebuildPageTargeting = () => {
 				: 'dotcom-platform',
 			// s: section
 			// for reference in a macro, so cannot be extracted from ad unit
-			s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+			s: page.section ?? null,
 			sens: page.isSensitive ? 't' : 'f',
 			si: isUserLoggedIn() ? 't' : 'f',
 			skinsize: skinsizeTargeting(),
@@ -362,16 +390,16 @@ const rebuildPageTargeting = () => {
 			// round video duration up to nearest 30 multiple
 			vl: page.videoDuration
 				? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-				: undefined,
+				: null,
 		},
-		page.sharedAdTargeting,
-		paTargeting,
-		adFreeTargeting,
-		getWhitelistedQueryParams(),
-	);
+		...page.sharedAdTargeting,
+		...paTargeting,
+		...adFreeTargeting,
+		...getWhitelistedQueryParams(),
+	};
 
 	// filter out empty values
-	const pageTargeting: Partial<PageTargeting> = filterEmptyValues(
+	const pageTargeting: Record<string, string | string[]> = filterEmptyValues(
 		pageTargets,
 	);
 
@@ -386,8 +414,7 @@ const rebuildPageTargeting = () => {
 	return pageTargeting;
 };
 
-const getPageTargeting = (): Partial<PageTargeting> => {
-
+const getPageTargeting = (): PageTargeting => {
 	if (Object.keys(myPageTargeting).length !== 0) {
 		// If CMP was initialised since the last time myPageTargeting was built - rebuild
 		if (latestCmpHasInitialised !== cmp.hasInitialised()) {
