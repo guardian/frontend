@@ -36,7 +36,7 @@ type PageTargeting = PartialWithNulls<{
 	dcre: TrueOrFalse; // DotCom-Rendering Eligible
 	edition: string;
 	gdncrm: string | string[]; // GuarDiaN CRM
-	k: string; // Keywords
+	k: string[]; // Keywords
 	ms: string; // Media Source
 	p: string; // Platform (web)
 	pa: string; // Personalised Ads consent
@@ -213,8 +213,8 @@ const getUrlKeywords = (pageId?: string): string[] => {
 };
 
 const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
-	const asKeyValues = Object.keys(obj).map((key) => {
-		const value = obj[key];
+	const asKeyValues = Object.entries(obj).map((entry) => {
+		const [key, value] = entry;
 		return Array.isArray(value)
 			? value.map((nestedValue) => `${key}=${nestedValue}`)
 			: `${key}=${value}`;
@@ -225,7 +225,7 @@ const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
 };
 
 const buildAppNexusTargetingObject = once(
-	(pageTargeting: PageTargeting): Record<string, string> =>
+	(pageTargeting: PageTargeting): Record<string, string | string[]> =>
 		removeFalseyValues({
 			sens: pageTargeting.sens,
 			pt1: pageTargeting.url,

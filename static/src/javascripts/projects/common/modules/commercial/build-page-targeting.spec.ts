@@ -165,6 +165,15 @@ describe('Build Page Targeting', () => {
 				url: '/football/series/footballweekly',
 			},
 			isSensitive: false,
+			// isHosted: true,
+			// isDev: true,
+			// isFront: false,
+			// ajaxUrl: '/dummy/',
+			// hasPageSkin: false,
+			// assetsPath: '/dummy/',
+			// section: 'unknown',
+			// pbIndexSites: [],
+			// adUnit: 'none',
 		} as unknown) as PageConfig;
 		window.guardian.config.ophan = { pageViewId: 'presetOphanPageViewId' };
 
@@ -398,10 +407,7 @@ describe('Build Page Targeting', () => {
 		it('should set appNexusPageTargeting as flatten string', () => {
 			getBreakpoint.mockReturnValue('desktop');
 			getPageTargeting();
-			expect(
-				(config.get('page') as Record<string, string>)
-					.appNexusPageTargeting,
-			).toEqual(
+			expect(window.guardian.config.page.appNexusPageTargeting).toEqual(
 				'sens=f,pt1=/football/series/footballweekly,pt2=us,pt3=video,pt4=ng,pt5=prince-charles-letters,pt5=uk/uk,pt5=prince-charles,pt6=5,pt7=desktop,pt9=seg1,seg2|presetOphanPageViewId|gabrielle-chan|news|',
 			);
 		});
@@ -543,8 +549,7 @@ describe('Build Page Targeting', () => {
 		});
 
 		it("should return 's' if vp does not have a width", () => {
-			// @ts-expect-error -- we’re failing the api
-			getViewport.mockReturnValue(undefined);
+			getViewport.mockReturnValue({ width: 0, height: 0 });
 			expect(getPageTargeting().skinsize).toBe('s');
 		});
 	});
