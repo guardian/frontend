@@ -1,6 +1,7 @@
 import type { Participations } from '@guardian/ab-core';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
 import { once, pick } from 'lodash-es';
 import config from '../../../../lib/config';
@@ -257,14 +258,17 @@ const getRdpValue = (ccpaState: boolean | null): string => {
 	return ccpaState ? 't' : 'f';
 };
 
+const consentedToAllPurposes = (consents: TCFv2ConsentList): boolean => {
+	return (
+		Object.keys(consents).length > 0 &&
+		Object.values(consents).every(Boolean)
+	);
+};
+
 const getTcfv2ConsentValue = (state: ConsentState | null): string => {
 	if (!state || !state.tcfv2) return 'na';
 
-	const consentedToAllPurposes =
-		Object.keys(state.tcfv2.consents).length > 0 &&
-		Object.values(state.tcfv2.consents).every(Boolean);
-
-	return consentedToAllPurposes ? 't' : 'f';
+	return consentedToAllPurposes(state.tcfv2.consents) ? 't' : 'f';
 };
 
 const getAdConsentFromState = (state: ConsentState | null): boolean => {
@@ -275,10 +279,7 @@ const getAdConsentFromState = (state: ConsentState | null): boolean => {
 		return !state.ccpa.doNotSell;
 	} else if (state.tcfv2) {
 		// TCFv2 mode
-		return (
-			Object.keys(state.tcfv2.consents).length > 0 &&
-			Object.values(state.tcfv2.consents).every(Boolean)
-		);
+		return consentedToAllPurposes(state.tcfv2.consents);
 	} else if (state.aus) {
 		// AUS mode
 		return state.aus.personalisedAdvertising;
