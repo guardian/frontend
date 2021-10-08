@@ -359,7 +359,7 @@ const rebuildPageTargeting = () => {
 			inskin: inskinTargeting(),
 			ms: formatTarget(page.source),
 			permutive: getPermutiveSegments(),
-			pv: config.get<string | null>('ophan.pageViewId', null),
+			pv: window.guardian.config.ophan.pageViewId,
 			rdp: getRdpValue(ccpaState),
 			ref: getReferrer(),
 			// rp: rendering platform

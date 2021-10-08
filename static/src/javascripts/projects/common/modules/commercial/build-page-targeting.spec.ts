@@ -166,8 +166,7 @@ describe('Build Page Targeting', () => {
 			},
 			isSensitive: false,
 		} as unknown) as PageConfig;
-		// @ts-expect-error -- we’re modifing the config
-		config.ophan = { pageViewId: 'presetOphanPageViewId' };
+		window.guardian.config.ophan = { pageViewId: 'presetOphanPageViewId' };
 
 		commercialFeatures.adFree = false;
 
