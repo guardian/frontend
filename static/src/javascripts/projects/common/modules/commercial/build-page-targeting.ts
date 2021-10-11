@@ -208,8 +208,12 @@ const getUrlKeywords = (pageId?: string): string[] => {
 	if (!pageId) return [];
 
 	const segments = pageId.split('/');
-	const lastPathname = segments.pop() ?? segments.pop(); // This handles a trailing slash
-	return lastPathname?.split('-') ?? [];
+	const noEmptyStrings = segments.filter(Boolean); // This handles a trailing slash
+	const keywords =
+		noEmptyStrings.length > 0
+			? noEmptyStrings[noEmptyStrings.length - 1].split('-')
+			: [];
+	return keywords;
 };
 
 const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
