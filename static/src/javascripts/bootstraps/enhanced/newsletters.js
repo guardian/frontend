@@ -75,7 +75,7 @@ const submitForm = (
     );
     const formQueryString = `${
         inputs.email
-    }=${email}&csrfToken=${csrfToken}&listName=${listName}&ref=${ref}&refViewId=${refViewId}${
+    }=${email}&csrfToken=${csrfToken}&listName=${listName}&ref=${ref}&refViewId=${refViewId}&${
         inputs.dummy
     }=${dummyEmail}`;
 
