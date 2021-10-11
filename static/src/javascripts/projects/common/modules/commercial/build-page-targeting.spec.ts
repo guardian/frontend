@@ -58,30 +58,33 @@ jest.mock('../../../../lib/config');
 jest.mock('../../../../lib/cookies', () => ({
 	getCookie: jest.fn(),
 }));
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
 	getViewport: jest.fn(),
 	getBreakpoint: jest.fn(),
 	getReferrer: jest.fn(),
 	hasPushStateSupport: jest.fn(),
 }));
-jest.mock('lib/geolocation', () => ({
-	getSync: jest.fn(),
+jest.mock('../../../../lib/geolocation', () => ({
+	getCountryCode: jest.fn(),
 }));
-jest.mock('lib/getPrivacyFramework', () => ({
+jest.mock('../../../../lib/getPrivacyFramework', () => ({
 	getPrivacyFramework: jest.fn(),
 }));
-jest.mock('common/modules/identity/api', () => ({
+jest.mock('../identity/api', () => ({
 	isUserLoggedIn: jest.fn(),
 }));
-jest.mock('common/modules/commercial/user-ad-targeting', () => ({
+jest.mock('./user-ad-targeting', () => ({
 	getUserSegments: jest.fn(),
 }));
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../experiments/ab', () => ({
 	getSynchronousParticipations: jest.fn(),
 }));
-jest.mock('lodash/once', () => fn => fn);
-jest.mock('common/modules/commercial/commercial-features', () => ({
-	commercialFeatures() { },
+jest.mock('lodash-es/once', () => (fn: UnknownFunc) => fn);
+jest.mock('lodash-es/memoize', () => (fn: UnknownFunc) => fn);
+jest.mock('./commercial-features', () => ({
+	commercialFeatures() {
+		// do nothing;
+	},
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
 	onConsentChange: jest.fn(),
@@ -91,19 +94,11 @@ jest.mock('@guardian/consent-management-platform', () => ({
 	},
 }));
 
-// TCFv1
-const tcfWithConsentMock = (callback): void => callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
-const tcfMixedConsentMock = (callback): void => callback({
-	'1': false,
-	'2': true,
-	'3': true,
-	'4': false,
-	'5': true,
-});
-
 // CCPA
-const ccpaWithConsentMock = (callback): void => callback({ ccpa: { doNotSell: false } });
-const ccpaWithoutConsentMock = (callback): void => callback({ ccpa: { doNotSell: true } });
+const ccpaWithConsentMock = (callback: Callback): void =>
+	callback({ ccpa: { doNotSell: false } });
+const ccpaWithoutConsentMock = (callback: Callback): void =>
+	callback({ ccpa: { doNotSell: true } });
 
 // AUS
 const ausWithConsentMock = (callback: Callback) =>
@@ -135,7 +130,6 @@ const tcfv2MixedConsentMock = (callback: Callback): void =>
 
 describe('Build Page Targeting', () => {
 	beforeEach(() => {
-		// @ts-expect-error -- we’re modifing the config
 		config.page = {
 			authorIds: 'profile/gabrielle-chan',
 			blogIds: 'a/blog',
@@ -166,7 +160,6 @@ describe('Build Page Targeting', () => {
 			},
 			isSensitive: false,
 		};
-		// @ts-expect-error -- we’re modifing the config
 		config.ophan = { pageViewId: 'presetOphanPageViewId' };
 
 		commercialFeatures.adFree = false;
@@ -332,9 +325,7 @@ describe('Build Page Targeting', () => {
 	});
 
 	it('should remove empty values', () => {
-		// @ts-expect-error -- we’re modifing the config
 		config.page = {};
-		// @ts-expect-error -- we’re modifing the config
 		config.ophan = { pageViewId: '123456' };
 		getUserSegments.mockReturnValue([]);
 
@@ -481,8 +472,6 @@ describe('Build Page Targeting', () => {
 		});
 
 		it('should extract multiple url keywords correctly', () => {
-			// @ts-expect-error -- we’re modifing the config
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- manually setting the page id
 			config.page.pageId =
 				'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london';
 			expect(getPageTargeting().urlkw).toEqual([
@@ -498,8 +487,6 @@ describe('Build Page Targeting', () => {
 		});
 
 		it('should get correct keywords when trailing slash is present', () => {
-			// @ts-expect-error -- we’re modifing the config
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- manually setting the page id
 			config.page.pageId =
 				'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/';
 			expect(getPageTargeting().urlkw).toEqual([
@@ -517,12 +504,9 @@ describe('Build Page Targeting', () => {
 
 	describe('inskin targeting', () => {
 		it('should not allow inskin if cmp has not initialised', () => {
-			(cmp.hasInitialised as jest.Mock).mockReturnValue(false);
+			cmp.hasInitialised.mockReturnValue(false);
 			cmp.willShowPrivacyMessageSync.mockReturnValue(false);
-			getViewport.mockReturnValue({
-				width: 1920,
-				height: 1080,
-			});
+			getViewport.mockReturnValue({ width: 1920, height: 1080 });
 			expect(getPageTargeting().inskin).toBe('f');
 		});
 
