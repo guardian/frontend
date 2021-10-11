@@ -4,7 +4,8 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: jest.fn(() => ({ key: 'value' })),
 }));
 
-jest.mock('common/modules/commercial/permutive', () => ({
+jest.mock('@guardian/commercial-core', () => ({
+    ...jest.requireActual('@guardian/commercial-core'),
     getPermutivePFPSegments: jest.fn(() => [42]),
 }));
 
@@ -24,7 +25,7 @@ jest.mock('lib/config', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(callback =>
-        callback({ tcfv2: { consents: { '1': true }, gdprApplies: true, tcString:"testTcString", addtlConsent: "testaddtlConsent" } })
+        callback({ tcfv2: { consents: { '1': true }, gdprApplies: true, tcString: "testTcString", addtlConsent: "testaddtlConsent" } })
     ),
 }));
 
@@ -99,7 +100,7 @@ describe('create ads config', () => {
 
     it('in non ad-free includes url-escaped and tcfv2 targeting params', () => {
         const result = youtubePlayer.createAdsConfig(false, { framework: 'tcfv2', canTarget: true });
-        const expectedAdTargetingParams =  {
+        const expectedAdTargetingParams = {
             "cmpGdpr": 1,
             "cmpGvcd": "testaddtlConsent",
             "cmpVcd": "testTcString",
