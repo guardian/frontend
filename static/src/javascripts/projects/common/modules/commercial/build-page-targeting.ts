@@ -1,15 +1,10 @@
 import type { Participations } from '@guardian/ab-core';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-<<<<<<< HEAD
-import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
-import { isObject, getCookie, storage, log } from '@guardian/libs';
-=======
-import {
+import type {
 	ConsentState,
 	Framework,
 } from '@guardian/consent-management-platform/dist/types';
 import { isObject, log, storage } from '@guardian/libs';
->>>>>>> ef6743ac50 (fix appNexus targeting object)
 import { once, pick } from 'lodash-es';
 import config from '../../../../lib/config';
 import {
@@ -313,7 +308,7 @@ const rebuildPageTargeting = () => {
 		pageAdTargeting?: Partial<PageTargeting>;
 		source?: string;
 		pageId?: string;
-	}>
+	}>;
 
 	const page = config.get<PageConfig>('config.page', { section: 'unknown' });
 	const amtgrp = latestCMPState?.tcfv2
@@ -328,8 +323,8 @@ const rebuildPageTargeting = () => {
 		{
 			ab: abParam(),
 			amtgrp,
-			at: getCookie('adtest') || undefined,
-			si: isUserLoggedIn() ? 't' : 'f',
+			at: getCookie({ name: 'adtest' }),
+			bp: findBreakpoint(),
 			cc: getCountryCode(), // if turned async, we could use getLocale()
 			cmp_interaction: tcfv2EventStatus || 'na',
 			consent_tcfv2: getTcfv2ConsentValue(latestCMPState),
@@ -338,7 +333,7 @@ const rebuildPageTargeting = () => {
 			// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
 			dcre:
 				window.guardian.config.isDotcomRendering ||
-				config.get<boolean>('page.dcrCouldRender', false)
+					config.get<boolean>('page.dcrCouldRender', false)
 					? 't'
 					: 'f',
 			fr: getVisitedValue(),
@@ -350,6 +345,7 @@ const rebuildPageTargeting = () => {
 				? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
 				: undefined,
 			s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+			si: isUserLoggedIn() ? 't' : 'f',
 			rp: config.get('isDotcomRendering', false)
 				? 'dotcom-rendering'
 				: 'dotcom-platform', // rendering platform
@@ -382,7 +378,6 @@ const rebuildPageTargeting = () => {
 };
 
 const getPageTargeting = (): Partial<PageTargeting> => {
-
 	if (Object.keys(myPageTargetting).length !== 0) {
 		// If CMP was initialised since the last time myPageTargetting was built - rebuild
 		if (latestCmpHasInitialised !== cmp.hasInitialised()) {
