@@ -50,7 +50,12 @@ export const removeFalseyValues = <O extends Record<string, unknown>>(
 			if (isString(val)) {
 				prev[key] = val;
 			}
-			if (Array.isArray(val) && val.every(isString)) {
+			if (
+				Array.isArray(val) &&
+				val.length > 0 &&
+				val.some(Boolean) &&
+				val.every(isString)
+			) {
 				prev[key] = val.filter(Boolean);
 			}
 

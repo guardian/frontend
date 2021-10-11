@@ -306,6 +306,9 @@ describe('Utils', () => {
 		const result = removeFalseyValues({
 			testString: 'non empty string',
 			testArraysWithEmptyStrings: ['a', '', 'b', '', 'c'],
+			testEmptyArray: [],
+			testArrayOfEmptyStrings: ['', '', ''],
+			testArrayOfNonStrings: ['a', null, 0],
 		});
 
 		expect(result).toEqual({
