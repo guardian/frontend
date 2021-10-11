@@ -351,7 +351,7 @@ const rebuildPageTargeting = () => {
 			// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
 			dcre:
 				window.guardian.config.isDotcomRendering ||
-					config.get<boolean>('page.dcrCouldRender', false)
+				config.get<boolean>('page.dcrCouldRender', false)
 					? 't'
 					: 'f',
 			fr: getVisitedValue(),
@@ -372,9 +372,6 @@ const rebuildPageTargeting = () => {
 			sens: page.isSensitive ? 't' : 'f',
 			si: isUserLoggedIn() ? 't' : 'f',
 			skinsize: skinsizeTargeting(),
-			// Indicates whether the page is DCR eligible. This happens when the page
-			// was DCR eligible and was actually rendered by DCR or
-			// was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
 			urlkw: getUrlKeywords(page.pageId),
 			// vl: video length
 			// round video duration up to nearest 30 multiple
