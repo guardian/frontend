@@ -3,15 +3,15 @@ const KEY = 'gu.brazeUserSet';
 const hasCurrentBrazeUser = () => localStorage.getItem(KEY) === 'true';
 
 const setHasCurrentBrazeUser = () => {
-    localStorage.setItem(KEY, 'true');
-}
+	localStorage.setItem(KEY, 'true');
+};
 
 const clearHasCurrentBrazeUser = () => {
-    localStorage.removeItem(KEY);
-}
+	localStorage.removeItem(KEY);
+};
 
 export {
-    hasCurrentBrazeUser,
-    setHasCurrentBrazeUser,
-    clearHasCurrentBrazeUser,
-}
+	hasCurrentBrazeUser,
+	setHasCurrentBrazeUser,
+	clearHasCurrentBrazeUser,
+};

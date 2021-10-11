@@ -12,21 +12,21 @@ const host = `${window.location.protocol}//${window.location.host}`;
      we resort to sending it as a token of welcome :)
 */
 export const onSlotLoad = (event) => {
-    const advert = getAdvertById(event.slot.getSlotElementId());
-    if (!advert) {
-        return;
-    }
+	const advert = getAdvertById(event.slot.getSlotElementId());
+	if (!advert) {
+		return;
+	}
 
-    const iframe = advert.node.getElementsByTagName('iframe')[0];
-    if (!iframe) {
-        console.log("No iFrame found for slot", advert.id,  advert.slot)
-        return;
-    }
-    postMessage(
-        {
-            id: iframe.id,
-            host,
-        },
-        iframe.contentWindow,
-    );
+	const iframe = advert.node.getElementsByTagName('iframe')[0];
+	if (!iframe) {
+		console.log('No iFrame found for slot', advert.id, advert.slot);
+		return;
+	}
+	postMessage(
+		{
+			id: iframe.id,
+			host,
+		},
+		iframe.contentWindow,
+	);
 };
