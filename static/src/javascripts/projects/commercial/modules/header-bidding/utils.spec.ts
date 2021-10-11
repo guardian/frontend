@@ -1,11 +1,11 @@
 import { _ } from 'common/modules/commercial/geo-utils';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+import { getCountryCode as getCountryCode_ } from 'lib/geolocation';
 import config from '../../../../lib/config';
 import {
 	getBreakpoint as getBreakpoint_,
 	isBreakpoint as isBreakpoint_,
 } from '../../../../lib/detect';
-import { getCountryCode as getCountryCode_ } from 'lib/geolocation';
-
 import {
 	getBreakpointKey,
 	getLargestSize,
@@ -22,20 +22,25 @@ import {
 	stripMobileSuffix,
 	stripTrailingNumbersAbove1,
 } from './utils';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 
-const getCountryCode = getCountryCode_;
-const getBreakpoint = getBreakpoint_;
-const isBreakpoint = isBreakpoint_;
-const isInVariantSynchronous = isInVariantSynchronous_;
+const getCountryCode = getCountryCode_ as jest.MockedFunction<
+	typeof getCountryCode_
+>;
+const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
+	typeof getBreakpoint_
+>;
+const isBreakpoint = isBreakpoint_ as jest.MockedFunction<typeof isBreakpoint_>;
+const isInVariantSynchronous = isInVariantSynchronous_ as jest.MockedFunction<
+	typeof isInVariantSynchronous_
+>;
 
-jest.mock('lodash-es/once', () => (fn) => fn);
+jest.mock('lodash-es/once', () => (fn: (...args: unknown[]) => unknown) => fn);
 
 jest.mock('../../../../lib/geolocation', () => ({
 	getCountryCode: jest.fn(() => 'GB'),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(),
 }));
 
@@ -47,7 +52,6 @@ jest.mock('../../../../lib/detect', () => ({
 
 jest.mock('../../../common/modules/experiments/ab-tests');
 
-/* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
 	config.set('switches.prebidAppnexus', true);
 	config.set('switches.prebidAppnexusInvcode', false);
@@ -72,7 +76,7 @@ describe('Utils', () => {
 	});
 
 	test('stripPrefix correctly strips valid cases', () => {
-		const validStrips = [
+		const validStrips: string[][] = [
 			['dfp-ad--slot', 'slot'],
 			['slot', 'slot'],
 			['dfp-ad--', ''],
@@ -141,7 +145,8 @@ describe('Utils', () => {
 	])(
 		`In %s, if switch is %s, shouldIncludeAppNexus should return %s`,
 		(region, switchState, expected) => {
-			config.switches.prebidAppnexusUkRow = switchState === 'on';
+			window.guardian.config.switches.prebidAppnexusUkRow =
+				switchState === 'on';
 			getCountryCode.mockReturnValue(region);
 			expect(shouldIncludeAppNexus()).toBe(expected);
 		},
