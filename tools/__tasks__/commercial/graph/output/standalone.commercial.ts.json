@@ -373,6 +373,7 @@
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/header-bidding/utils.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
