@@ -73,11 +73,12 @@ const submitForm = (
     const refViewId = encodeURIComponent(
         config.get('ophan.pageViewId')
     );
-    const formQueryString = `${
-        inputs.email
-    }=${email}&csrfToken=${csrfToken}&listName=${listName}&ref=${ref}&refViewId=${refViewId}&${
-        inputs.dummy
-    }=${dummyEmail}`;
+    let formQueryString = `${inputs.email}=${email}`;
+    formQueryString += `&csrfToken=${csrfToken}`;
+    formQueryString += `&listName=${listName}`;
+    formQueryString += `&ref=${ref}`;
+    formQueryString += `&refViewId=${refViewId}`;
+    formQueryString += `&${inputs.dummy}=${dummyEmail}`;
 
     return fetch(`${config.get('page.ajaxUrl')}/email`, {
         method: 'POST',
