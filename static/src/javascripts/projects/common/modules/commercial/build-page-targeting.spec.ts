@@ -343,22 +343,23 @@ describe('Build Page Targeting', () => {
 		getUserSegments.mockReturnValue([]);
 
 		expect(getPageTargeting()).toEqual({
-			sens: 'f',
-			bp: 'mobile',
-			at: 'ng101',
-			si: 't',
-			skinsize: 's',
 			ab: ['MtMaster-variantName'],
-			pv: '123456',
+			amtgrp: '7', // Because Math.random() is fixed to 0.5
+			at: 'ng101',
+			bp: 'mobile',
+			cc: 'US',
+			cmp_interaction: 'na',
+			consent_tcfv2: 'na',
+			dcre: 'f',
 			fr: '0',
 			inskin: 'f',
 			pa: 'f',
-			cc: 'US',
-			rp: 'dotcom-platform',
-			dcre: 'f',
+			pv: '123456',
 			rdp: 'na',
-			consent_tcfv2: 'na',
-			cmp_interaction: 'na',
+			rp: 'dotcom-platform',
+			sens: 'f',
+			si: 't',
+			skinsize: 's',
 		});
 	});
 
