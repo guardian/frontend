@@ -136,14 +136,6 @@ const trackPerformance = (
 ): void => {
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- extra safety if undefined
 	if (window.performance?.now) {
-		const timingEvents = config.get<TimingEvent[]>(
-			'googleAnalytics.timingEvents',
-			[],
-		);
-		const sendDeferredEventQueue = (): void => {
-			timingEvents.map(sendPerformanceEvent);
-			mediator.off('modules:ga:ready', sendDeferredEventQueue);
-		};
 		const timeSincePageLoad = Math.round(window.performance.now());
 		const event: TimingEvent = {
 			timingCategory,
@@ -156,6 +148,15 @@ const trackPerformance = (
 		if (window.ga ?? false) {
 			sendPerformanceEvent(event);
 		} else {
+			const timingEvents = config.get<TimingEvent[]>(
+				'googleAnalytics.timingEvents',
+				[],
+			);
+			const sendDeferredEventQueue = (): void => {
+				timingEvents.map(sendPerformanceEvent);
+				mediator.off('modules:ga:ready', sendDeferredEventQueue);
+			};
+
 			mediator.on('modules:ga:ready', sendDeferredEventQueue);
 			timingEvents.push(event);
 		}
