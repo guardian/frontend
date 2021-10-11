@@ -327,18 +327,7 @@ const rebuildPageTargeting = () => {
 		? latestCMPState.tcfv2.eventStatus
 		: 'na';
 
-	type PageConfig = Partial<{
-		section: string;
-		isSensitive?: boolean;
-		videoDuration?: number;
-		appNexusPageTargeting?: string;
-		sharedAdTargeting?: Record<string, unknown>;
-		pageAdTargeting?: PageTargeting;
-		source?: string;
-		pageId?: string;
-	}>;
-
-	const page = config.get<PageConfig>('config.page', { section: 'unknown' });
+	const { page } = window.guardian.config;
 	const amtgrp = latestCMPState?.tcfv2
 		? getAdManagerGroup(adConsentState)
 		: getAdManagerGroup();
@@ -379,7 +368,7 @@ const rebuildPageTargeting = () => {
 				: 'dotcom-platform',
 			// s: section
 			// for reference in a macro, so cannot be extracted from ad unit
-			s: page.section ?? null,
+			s: page.section,
 			sens: page.isSensitive ? 't' : 'f',
 			si: isUserLoggedIn() ? 't' : 'f',
 			skinsize: skinsizeTargeting(),

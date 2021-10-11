@@ -56,6 +56,9 @@ type AdUnit = string;
 interface CommercialPageConfig {
 	pbIndexSites: PrebidIndexSite[];
 	adUnit: AdUnit;
+	appNexusPageTargeting: string;
+	sharedAdTargeting: Record<string, unknown>;
+	pageAdTargeting: PageTargeting;
 }
 
 interface Config {
@@ -83,6 +86,11 @@ interface PageConfig extends CommercialPageConfig {
 	assetsPath: string;
 	frontendAssetsFullURL?: string; // only in DCR
 	dfpNonRefreshableLineItemIds?: string[];
+	section: string;
+	isSensitive: boolean;
+	videoDuration: number;
+	source: string;
+	pageId: string;
 }
 
 interface Ophan {
