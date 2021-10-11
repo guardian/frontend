@@ -1,3 +1,4 @@
+import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
@@ -33,15 +34,30 @@ const contains = (
 	size: HeaderBiddingSize,
 ): boolean => Boolean(sizes.find((s) => s[0] === size[0] && s[1] === size[1]));
 
-export const removeFalseyValues = (
-	o: Record<string, string>,
-): Record<string, string> =>
-	Object.keys(o).reduce((m: Record<string, string>, k: string) => {
-		if (o[k]) {
-			m[k] = o[k];
-		}
-		return m;
-	}, {});
+/**
+ * Cleans an object for targetting. Removes empty strings and other falsey values.
+ * @param o object with falsey values
+ * @returns {Record<string, string | string[]>} object with only non-empty strings, or arrays of non-empty strings.
+ */
+export const removeFalseyValues = <O extends Record<string, unknown>>(
+	o: O,
+): Record<string, string | string[]> =>
+	Object.entries(o).reduce<Record<string, string | string[]>>(
+		(prev, curr) => {
+			const [key, val] = curr;
+			if (!val) return prev;
+
+			if (isString(val)) {
+				prev[key] = val;
+			}
+			if (Array.isArray(val) && val.every(isString)) {
+				prev[key] = val.filter(Boolean);
+			}
+
+			return prev;
+		},
+		{},
+	);
 
 export const stripDfpAdPrefixFrom = (s: string): string =>
 	stripPrefix(s, 'dfp-ad--');

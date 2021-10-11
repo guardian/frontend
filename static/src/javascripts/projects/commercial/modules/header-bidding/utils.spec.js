@@ -285,10 +285,27 @@ describe('Utils', () => {
 		const result = removeFalseyValues({
 			testString: 'non empty string',
 			testEmptyString: '',
+			testNull: null,
+			testUndefined: undefined,
+			testFalse: false,
+			test0: 0,
+			testNan: NaN,
 		});
 
 		expect(result).toEqual({
 			testString: 'non empty string',
+		});
+	});
+
+	test('removeFalseyValues correctly keeps arrays of strings', () => {
+		const result = removeFalseyValues({
+			testString: 'non empty string',
+			testArraysWithEmptyStrings: ['a', '', 'b', '', 'c'],
+		});
+
+		expect(result).toEqual({
+			testString: 'non empty string',
+			testArraysWithEmptyStrings: ['a', 'b', 'c'],
 		});
 	});
 
