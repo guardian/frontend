@@ -57,6 +57,6 @@ object RemoveStickyNav
       name = "remove-sticky-nav",
       description = "Remove sticky behaviour from the nav bar",
       owners = Seq(Owner.withGithub("MarSavar")),
-      sellByDate = LocalDate.of(2021, 10, 8),
+      sellByDate = LocalDate.of(2021, 10, 12),
       participationGroup = Perc1B,
     )
