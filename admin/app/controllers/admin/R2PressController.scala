@@ -37,7 +37,7 @@ class R2PressController(
       val msgs = if (uploadedFile.nonEmpty) {
         val results = uploadedFile.map(file => {
           try {
-            pressFile(file, isBatchTakedown(body), isBatchFromPreservedSource(body), isBatchConvertToHttps(body))
+            pressFile(file, isBatchTakedown(body), isBatchConvertToHttps(body))
           } catch {
             case e: Exception => List(s"Error processing ${file.getName} - ${e.getMessage}")
           }
@@ -53,7 +53,6 @@ class R2PressController(
   private def pressFile(
       file: File,
       isTakedown: Boolean,
-      isFromPreservedSource: Boolean,
       isConvertToHttps: Boolean,
   ): List[String] = {
     val source = scala.io.Source.fromFile(file)
@@ -66,7 +65,7 @@ class R2PressController(
             if (isTakedown) {
               normaliseAndEnqueueTakedown(line)
             } else {
-              normaliseAndEnqueuePress(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
+              normaliseAndEnqueuePress(R2PressMessage(line, isConvertToHttps))
             }
           } else {
             "* empty line *"
@@ -116,7 +115,7 @@ class R2PressController(
                 if (isTakedown(body)) {
                   normaliseAndEnqueueTakedown(url)
                 } else {
-                  normaliseAndEnqueuePress(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
+                  normaliseAndEnqueuePress(R2PressMessage(url, isConvertToHttps(body)))
                 }
               case _ => "URL was not specified"
             }
@@ -135,14 +134,6 @@ class R2PressController(
       .getOrElse(false)
   }
 
-  private def isFromPreservedSource(body: AnyContent) = {
-    body.asFormUrlEncoded
-      .flatMap { form =>
-        Some(form.get("is-from-preserved-source").isDefined)
-      }
-      .getOrElse(false)
-  }
-
   private def isConvertToHttps(body: AnyContent) = {
     body.asFormUrlEncoded
       .flatMap { form =>
@@ -155,14 +146,6 @@ class R2PressController(
     body.asMultipartFormData
       .flatMap { form =>
         Some(form.asFormUrlEncoded.get("is-takedown").isDefined)
-      }
-      .getOrElse(false)
-  }
-
-  private def isBatchFromPreservedSource(body: AnyContent) = {
-    body.asMultipartFormData
-      .flatMap { form =>
-        Some(form.asFormUrlEncoded.get("is-from-preserved-source").isDefined)
       }
       .getOrElse(false)
   }

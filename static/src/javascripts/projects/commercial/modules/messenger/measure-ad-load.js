@@ -1,4 +1,4 @@
-import { EventTimer } from "@guardian/commercial-core";
+import { EventTimer } from '@guardian/commercial-core';
 
 // This message is intended to be used with a GAM creative wrapper.
 // For reference, the wrapper will post a message, like so:
@@ -23,9 +23,9 @@ top.window.postMessage(JSON.stringify(
 const eventTimer = EventTimer.get();
 
 const init = (register) => {
-    register('measure-ad-load', (specs) => {
-        eventTimer.trigger('adOnPage',specs.slotId);
-    });
-}
+	register('measure-ad-load', (specs) => {
+		eventTimer.trigger('adOnPage', specs.slotId);
+	});
+};
 
 export { init };

@@ -130,6 +130,9 @@ commercial: install
 commercial-compile: install # PRIVATE
 	@./tools/task-runner/runner commercial/compile
 
+commercial-validate: install # PRIVATE
+	@./tools/task-runner/runner commercial/validate
+
 commercial-graph: install # PRIVATE
 	@./tools/task-runner/runner commercial/graph --verbose
 

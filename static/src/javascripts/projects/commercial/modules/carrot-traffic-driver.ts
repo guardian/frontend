@@ -1,16 +1,10 @@
-import config_ from '../../../lib/config';
+import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { addSlot } from './dfp/add-slot';
 import { createSlots } from './dfp/create-slots';
-
-// This is really a hacky workaround ⚠️
-// TODO convert config.js to TypeScript
-const config = config_ as {
-	get: (s: string, d?: unknown) => unknown;
-};
 
 // TODO Typescript Spacefinder
 type RuleSpacing = {

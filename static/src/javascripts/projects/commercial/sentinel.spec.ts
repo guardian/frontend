@@ -1,13 +1,11 @@
-import config_ from '../../lib/config';
+import config from '../../lib/config';
 import type { amIUsed as amIUsed_, SentinelLoggingEvent } from './sentinel';
 
 const { amIUsed }: { amIUsed: typeof amIUsed_ } = jest.requireActual(
 	'./sentinel',
 );
 
-const config = (config_ as unknown) as {
-	get: jest.MockedFunction<(s: string, d: boolean) => boolean>;
-};
+jest.mock('../../lib/config');
 
 const CODE_ENDPOINT = '//logs.code.dev-guardianapis.com/log';
 const PROD_ENDPOINT = '//logs.guardianapis.com/log';
@@ -30,19 +28,21 @@ afterEach(() => {
 
 describe('sentinel', () => {
 	test('should not send an event when switches.sentinelLogger is false', () => {
-		config.get.mockReturnValue(false);
+		(config.get as jest.Mock).mockReturnValue(false);
 		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon).not.toHaveBeenCalled();
 	});
 
 	test('should send an event when switches.sentinelLogger is true', () => {
-		config.get.mockReturnValue(true);
+		(config.get as jest.Mock).mockReturnValue(true);
 		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon).toHaveBeenCalledTimes(1);
 	});
 
 	test('should use the correct logging CODE endpoint', () => {
-		config.get.mockReturnValueOnce(true).mockReturnValueOnce(true); // first get checks switches.sentinelLogger, the second page.isDev
+		(config.get as jest.Mock)
+			.mockReturnValueOnce(true) // for `switches.sentinelLogger`
+			.mockReturnValueOnce(true); // for `page.isDev`
 		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon).toHaveBeenCalledWith(
 			CODE_ENDPOINT,
@@ -51,7 +51,9 @@ describe('sentinel', () => {
 	});
 
 	test('should use the correct logging DEV endpoint', () => {
-		config.get.mockReturnValueOnce(true).mockReturnValueOnce(false); // first get checks switches.sentinelLogger, the second page.isDev
+		(config.get as jest.Mock)
+			.mockReturnValueOnce(true) // for `switches.sentinelLogger`
+			.mockReturnValueOnce(false); // for `page.isDev`
 		amIUsed('moduleName', 'functionName');
 		expect(navigator.sendBeacon).toHaveBeenCalledWith(
 			PROD_ENDPOINT,
@@ -60,7 +62,7 @@ describe('sentinel', () => {
 	});
 
 	test('should not attach any extra properties if the property parameter is not passed', () => {
-		config.get.mockReturnValue(true);
+		(config.get as jest.Mock).mockReturnValue(true);
 		amIUsed('moduleName', 'functionName');
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
 			[
@@ -78,7 +80,7 @@ describe('sentinel', () => {
 	});
 
 	test('should attach extra properties if they are passed as a parameter', () => {
-		config.get.mockReturnValue(true);
+		(config.get as jest.Mock).mockReturnValue(true);
 		amIUsed('moduleName', 'functionName', { comment: 'test' });
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
 			[
@@ -97,7 +99,7 @@ describe('sentinel', () => {
 	});
 
 	test('should chain optional parameters to the properties array', () => {
-		config.get.mockReturnValue(true);
+		(config.get as jest.Mock).mockReturnValue(true);
 		amIUsed('moduleName', 'functionName', {
 			conditionA: 'true',
 			conditionB: 'false',
@@ -120,7 +122,7 @@ describe('sentinel', () => {
 	});
 
 	test('should correctly assign commercial.sentinel as a label', () => {
-		config.get.mockReturnValue(true);
+		(config.get as jest.Mock).mockReturnValue(true);
 		amIUsed('moduleName', 'functionName');
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
 			[

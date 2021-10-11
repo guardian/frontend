@@ -650,7 +650,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     singleStoryPanel.imageUrl should be("http://localhost/replaced-image.jpg")
   }
 
-  "TrailToShowcase" can "should default single panel last updated to web publication date if no last updated value is available" in {
+  "TrailToShowcase" can "should default single panel last updated to content web publication date if no content last updated value is available" in {
     val curatedContent = makePressedContent(
       webPublicationDate = wayBackWhen,
       trailPicture = Some(imageMedia),
@@ -660,6 +660,28 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val singleStoryPanel = TrailsToShowcase.asSingleStoryPanel(curatedContent).toOption.get
 
     singleStoryPanel.updated should be(wayBackWhen)
+  }
+
+  "TrailToShowcase" can "should consider collection last updated when deciding panel updated time" in {
+    val unchangingContent = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      trailPicture = Some(imageMedia),
+      trailText = Some(twoEncodedBulletItems),
+      headline = "Panel title | Headline",
+      kickerText = Some("A kicker"),
+    )
+    val collectionLastUpdated = DateTime.now
+
+    val recentlyEditedRundownPanelMadeWithUnchangingContent = TrailsToShowcase
+      .asRundownPanel(
+        Seq(unchangingContent, unchangingContent, unchangingContent),
+        "rundown-container-id",
+        Some(collectionLastUpdated),
+      )
+      .right
+      .get
+
+    recentlyEditedRundownPanelMadeWithUnchangingContent.updated should be(collectionLastUpdated)
   }
 
   "TrailToShowcase" can "create Rundown panels from a group of trails" in {
@@ -970,7 +992,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     rundownPanel.articleGroup.articles.head.imageUrl shouldBe Some("http://localhost/replaced-image.jpg")
   }
 
-  "TrailToShowcase" can "should default rundown items updated publication date if no last updated value is available" in {
+  "TrailToShowcase" can "should default rundown articles updated to content publication date if no last updated value is available" in {
     val content = makePressedContent(
       webPublicationDate = wayBackWhen,
       trailPicture = Some(imageMedia),

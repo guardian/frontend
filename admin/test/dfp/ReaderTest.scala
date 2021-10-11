@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
+import com.google.api.ads.admanager.axis.utils.v202108.StatementBuilder
 import dfp.Reader.read
 import org.scalatest.{FlatSpec, Matchers}
 

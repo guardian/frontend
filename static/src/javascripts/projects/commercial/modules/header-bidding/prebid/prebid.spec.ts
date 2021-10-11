@@ -102,7 +102,6 @@ describe('initialise', () => {
 			s2sConfig: {
 				adapter: 'prebidServer',
 				adapterOptions: {},
-				enabled: false,
 				maxBids: 1,
 				syncUrlModifier: {},
 				timeout: 1000,
