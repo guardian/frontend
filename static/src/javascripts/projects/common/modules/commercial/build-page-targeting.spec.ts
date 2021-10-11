@@ -5,7 +5,6 @@ import {
 import type { Callback } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { setCookie, storage } from '@guardian/libs';
-import config from '../../../../lib/config';
 import {
 	getBreakpoint as getBreakpoint_,
 	getReferrer as getReferrer_,
@@ -339,8 +338,8 @@ describe('Build Page Targeting', () => {
 	});
 
 	it('should remove empty values', () => {
-		config.page = {};
-		config.ophan = { pageViewId: '123456' };
+		window.guardian.config.page = {} as PageConfig;
+		window.guardian.config.ophan = { pageViewId: '123456' };
 		getUserSegments.mockReturnValue([]);
 
 		expect(getPageTargeting()).toEqual({
@@ -483,7 +482,7 @@ describe('Build Page Targeting', () => {
 		});
 
 		it('should extract multiple url keywords correctly', () => {
-			config.page.pageId =
+			window.guardian.config.page.pageId =
 				'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london';
 			expect(getPageTargeting().urlkw).toEqual([
 				'harry',
@@ -498,7 +497,7 @@ describe('Build Page Targeting', () => {
 		});
 
 		it('should get correct keywords when trailing slash is present', () => {
-			config.page.pageId =
+			window.guardian.config.page.pageId =
 				'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/';
 			expect(getPageTargeting().urlkw).toEqual([
 				'harry',
