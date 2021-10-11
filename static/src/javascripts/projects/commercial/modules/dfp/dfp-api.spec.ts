@@ -149,13 +149,10 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	},
 }));
 jest.mock('@guardian/libs', () => {
-	/* */
 	return {
+		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
+		...jest.requireActual('@guardian/libs') as typeof import('@guardian/libs'),
 		loadScript: jest.fn(() => Promise.resolve()),
-		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
-		log: jest.requireActual('@guardian/libs').log,
-		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
-		storage: jest.requireActual('@guardian/libs').storage,
 	};
 });
 jest.mock('lodash-es/once', () => <T>(fn: (...args: unknown[]) => T) => fn);
