@@ -41,7 +41,7 @@ type PageTargeting = {
 	skinsize: 'l' | 's';
 };
 
-let myPageTargetting: Partial<PageTargeting> = {};
+let myPageTargeting: Partial<PageTargeting> = {};
 let latestCmpHasInitialised: boolean;
 let latestCMPState: ConsentState | null = null;
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
@@ -64,12 +64,12 @@ const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
 	}
 };
 
-const skinsizeTargetting = () => {
+const skinsizeTargeting = () => {
 	const vp = getViewport();
 	return vp.width >= 1560 ? 'l' : 's';
 };
 
-const inskinTargetting = () => {
+const inskinTargeting = () => {
 	// Don’t show inskin if we cannot tell if a privacy message will be shown
 	if (!cmp.hasInitialised()) return 'f';
 	return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
@@ -338,22 +338,31 @@ const rebuildPageTargeting = () => {
 					: 'f',
 			fr: getVisitedValue(),
 			gdncrm: getUserSegments(adConsentState),
-			inskin: inskinTargetting(),
+			inskin: inskinTargeting(),
 			ms: formatTarget(page.source),
-			// round video duration up to nearest 30 multiple
-			vl: page.videoDuration
-				? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-				: undefined,
-			s: page.section, // for reference in a macro, so cannot be extracted from ad unit
-			si: isUserLoggedIn() ? 't' : 'f',
-			rp: config.get('isDotcomRendering', false)
+			permutive: getPermutiveSegments(),
+			pv: config.get<string>('ophan.pageViewId'),
+			rdp: getRdpValue(ccpaState),
+			ref: getReferrer(),
+			// rp: rendering platform
+			rp: config.get<boolean>('isDotcomRendering', false)
 				? 'dotcom-rendering'
-				: 'dotcom-platform', // rendering platform
+				: 'dotcom-platform',
+			// s: section
+			// for reference in a macro, so cannot be extracted from ad unit
+			s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+			sens: page.isSensitive ? 't' : 'f',
+			si: isUserLoggedIn() ? 't' : 'f',
+			skinsize: skinsizeTargeting(),
 			// Indicates whether the page is DCR eligible. This happens when the page
 			// was DCR eligible and was actually rendered by DCR or
 			// was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
 			urlkw: getUrlKeywords(page.pageId),
-			rdp: getRdpValue(ccpaState),
+			// vl: video length
+			// round video duration up to nearest 30 multiple
+			vl: page.videoDuration
+				? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
+				: undefined,
 		},
 		page.sharedAdTargeting,
 		paTargeting,
@@ -378,25 +387,26 @@ const rebuildPageTargeting = () => {
 };
 
 const getPageTargeting = (): Partial<PageTargeting> => {
-	if (Object.keys(myPageTargetting).length !== 0) {
-		// If CMP was initialised since the last time myPageTargetting was built - rebuild
+
+	if (Object.keys(myPageTargeting).length !== 0) {
+		// If CMP was initialised since the last time myPageTargeting was built - rebuild
 		if (latestCmpHasInitialised !== cmp.hasInitialised()) {
-			myPageTargetting = rebuildPageTargeting();
+			myPageTargeting = rebuildPageTargeting();
 		}
-		return myPageTargetting;
+		return myPageTargeting;
 	}
 
 	// First call binds to onConsentChange and returns {}
 	onConsentChange((state) => {
 		// On every consent change we rebuildPageTargeting
 		latestCMPState = state;
-		myPageTargetting = rebuildPageTargeting();
+		myPageTargeting = rebuildPageTargeting();
 	});
-	return myPageTargetting;
+	return myPageTargeting;
 };
 
 const resetPageTargeting = (): void => {
-	myPageTargetting = {};
+	myPageTargeting = {};
 };
 
 export {

@@ -95,14 +95,14 @@ type XaxisBidResponse = {
 	[x: string]: unknown;
 };
 
-type BuyerTargetting<T> = {
+type BuyerTargeting<T> = {
 	key: string;
 	val: (bidResponse: DeepPartial<T>) => string | null | undefined;
 };
 
 // https://docs.prebid.org/dev-docs/publisher-api-reference/bidderSettings.html
 type BidderSetting<T = Record<string, unknown>> = {
-	adserverTargeting: Array<BuyerTargetting<T>>;
+	adserverTargeting: Array<BuyerTargeting<T>>;
 	bidCpmAdjustment: (n: number) => number;
 	suppressEmptyKeys: boolean;
 	sendStandardTargeting: boolean;

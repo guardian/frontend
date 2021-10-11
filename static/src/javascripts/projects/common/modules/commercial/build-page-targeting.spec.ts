@@ -483,7 +483,7 @@ describe('Build Page Targeting', () => {
         });
     });
 
-    describe('inskin targetting', () => {
+    describe('inskin targeting', () => {
         it('should not allow inskin if cmp has not initialised', () => {
             cmp.hasInitialised.mockReturnValue(false);
             cmp.willShowPrivacyMessageSync.mockReturnValue(false);
