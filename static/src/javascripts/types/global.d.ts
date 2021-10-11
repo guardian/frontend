@@ -57,7 +57,7 @@ interface CommercialPageConfig {
 	pbIndexSites: PrebidIndexSite[];
 	adUnit: AdUnit;
 	appNexusPageTargeting?: string;
-	sharedAdTargeting?: Record<string, unknown>;
+	sharedAdTargeting?: Record<string, string, string[]>;
 	pageAdTargeting?: Record<string, string | string[]>;
 }
 

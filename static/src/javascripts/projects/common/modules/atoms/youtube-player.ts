@@ -181,7 +181,7 @@ const createAdsConfig = (
 	}
 
 	const custParams = getPageTargeting() as Record<string, string | string[]>;
-	custParams.permutive = getPermutivePFPSegments() as string[];
+	custParams.permutive = getPermutivePFPSegments();
 
 	const adsConfig: AdsConfig = {
 		adTagParameters: {

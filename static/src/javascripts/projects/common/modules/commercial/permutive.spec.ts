@@ -2,11 +2,11 @@ import { storage } from '@guardian/libs';
 import { _, getPermutivePFPSegments, getPermutiveSegments } from './permutive';
 
 jest.mock('@guardian/libs', () => ({
-    storage: {
-        local: {
-            getRaw: jest.fn(),
-        },
-    }
+	storage: {
+		local: {
+			getRaw: jest.fn(),
+		},
+	},
 }));
 
 afterEach(() => {
