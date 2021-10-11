@@ -363,7 +363,7 @@ const rebuildPageTargeting = () => {
 			rdp: getRdpValue(ccpaState),
 			ref: getReferrer(),
 			// rp: rendering platform
-			rp: config.get<boolean>('isDotcomRendering', false)
+			rp: window.guardian.config.isDotcomRendering
 				? 'dotcom-rendering'
 				: 'dotcom-platform',
 			// s: section
