@@ -1,4 +1,4 @@
-@()(implicit request: RequestHeader, context: model.ApplicationContext)
+@(bucket: String = "aws-frontend-archive")(implicit request: RequestHeader, context: model.ApplicationContext)
 @import conf.switches.Switches.InteractiveLibrarianAdminRoutes
 
 @admin_main("Interactive Presser (archiver)", isAuthed = true) {
@@ -81,8 +81,10 @@
             })
             .then(res => {
                 if (res.ok) {
-                    const markStyle = 'background-color:#00cc00;color:#fff'
-                    document.getElementById('server-message').innerHTML = `<mark style=${markStyle}>Pressing successful</mark>`;
+                    const mark = `<mark style="background-color:#00cc00;color:#fff">Pressing successful</mark>`;
+                    const linkHref = `https://${"@bucket"}.s3.eu-west-1.amazonaws.com/${url.host}${url.pathname}`;
+                    const link = `<a id="preview-link" type="button" target="_blank" href="${linkHref}">Preview</a>`;
+                    document.getElementById('server-message').innerHTML = `${mark}<span> - </span>${link}`;
                 } else {
                     throw res;
                 }
