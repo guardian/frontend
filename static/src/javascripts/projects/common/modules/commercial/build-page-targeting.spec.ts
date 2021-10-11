@@ -4,7 +4,7 @@ import {
 } from '@guardian/consent-management-platform';
 import type { Callback } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
-import { getCookie as getCookie_, storage } from '@guardian/libs';
+import { setCookie, storage } from '@guardian/libs';
 import config from '../../../../lib/config';
 import {
 	getBreakpoint as getBreakpoint_,
@@ -19,7 +19,6 @@ import { _, getPageTargeting } from './build-page-targeting';
 import { commercialFeatures } from './commercial-features';
 import { getUserSegments as getUserSegments_ } from './user-ad-targeting';
 
-const getCookie = getCookie_ as jest.MockedFunction<typeof getCookie_>;
 const getUserSegments = getUserSegments_ as jest.MockedFunction<
 	typeof getUserSegments_
 >;
@@ -55,9 +54,6 @@ const onConsentChange = onConsentChange_ as jest.MockedFunction<
 type UnknownFunc = (...args: unknown[]) => unknown;
 
 jest.mock('../../../../lib/config');
-jest.mock('../../../../lib/cookies', () => ({
-	getCookie: jest.fn(),
-}));
 jest.mock('../../../../lib/detect', () => ({
 	getViewport: jest.fn(),
 	getBreakpoint: jest.fn(),
@@ -107,30 +103,40 @@ const ausWithoutConsentMock = (callback: Callback) =>
 	callback({ aus: { personalisedAdvertising: false } });
 
 // TCFv2
+const defaultState: TCFv2ConsentState = {
+	consents: { 1: false },
+	eventStatus: 'tcloaded',
+	vendorConsents: { abc: false },
+	addtlConsent: 'xyz',
+	gdprApplies: true,
+	tcString: 'YAAA',
+};
 const tcfv2WithConsentMock = (callback: Callback): void =>
 	callback({
-		tcfv2: ({
+		tcfv2: {
+			...defaultState,
 			consents: { '1': true, '2': true },
 			eventStatus: 'useractioncomplete',
-		} as unknown) as TCFv2ConsentState,
+		},
 	});
 const tcfv2WithoutConsentMock = (callback: Callback): void =>
 	callback({
-		tcfv2: { consents: {}, eventStatus: 'cmpuishown' } as TCFv2ConsentState,
+		tcfv2: { ...defaultState, consents: {}, eventStatus: 'cmpuishown' },
 	});
 const tcfv2NullConsentMock = (callback: Callback): void =>
-	callback({ tcfv2: {} as TCFv2ConsentState });
+	callback({ tcfv2: undefined });
 const tcfv2MixedConsentMock = (callback: Callback): void =>
 	callback({
-		tcfv2: ({
+		tcfv2: {
+			...defaultState,
 			consents: { '1': false, '2': true },
 			eventStatus: 'useractioncomplete',
-		} as unknown) as TCFv2ConsentState,
+		},
 	});
 
 describe('Build Page Targeting', () => {
 	beforeEach(() => {
-		config.page = {
+		window.guardian.config.page = ({
 			authorIds: 'profile/gabrielle-chan',
 			blogIds: 'a/blog',
 			contentType: 'Video',
@@ -159,18 +165,21 @@ describe('Build Page Targeting', () => {
 				url: '/football/series/footballweekly',
 			},
 			isSensitive: false,
-		};
+		} as unknown) as PageConfig;
+		// @ts-expect-error -- we’re modifing the config
 		config.ophan = { pageViewId: 'presetOphanPageViewId' };
 
 		commercialFeatures.adFree = false;
 
+		setCookie({ name: 'adtest', value: 'ng101' });
+
 		// Reset mocking to default values.
-		getCookie.mockReturnValue('ng101');
 		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
 		getBreakpoint.mockReturnValue('mobile');
 		getReferrer.mockReturnValue('');
+		getViewport.mockReturnValue({ width: 0, height: 0 });
 
 		isUserLoggedIn.mockReturnValue(true);
 
