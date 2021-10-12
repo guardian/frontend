@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Check whether refreshing blocked ads lead to revenue uplift",
     owners = Seq(Owner.withGithub("mxdvl")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 10, 15)),
+    sellByDate = Some(LocalDate.of(2021, 10, 20)),
     exposeClientSide = true,
   )
 }
