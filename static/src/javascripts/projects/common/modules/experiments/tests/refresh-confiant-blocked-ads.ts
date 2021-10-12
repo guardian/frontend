@@ -5,7 +5,7 @@ export const refreshConfiantBlockedAds: ABTest = {
 	id: 'RefreshConfiantBlockedAds',
 	author: 'Max Duval (@mxdvl)',
 	start: '2021-09-07',
-	expiry: '2021-10-08',
+	expiry: '2021-10-20',
 	audience: 1,
 	audienceOffset: 0,
 	audienceCriteria: 'All users',

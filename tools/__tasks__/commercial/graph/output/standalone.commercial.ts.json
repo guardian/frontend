@@ -585,7 +585,7 @@
   "../lib/url.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/commercial-features.js",
-  "../projects/common/modules/commercial/user-ad-targeting.js",
+  "../projects/common/modules/commercial/user-ad-targeting.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/identity/api.ts"
  ],
@@ -599,8 +599,8 @@
  "../projects/common/modules/commercial/geo-utils.js": [
   "../lib/geolocation.ts"
  ],
- "../projects/common/modules/commercial/user-ad-targeting.js": [
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
+ "../projects/common/modules/commercial/user-ad-targeting.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/common/modules/commercial/user-features.js": [
