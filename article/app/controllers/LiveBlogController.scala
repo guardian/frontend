@@ -28,7 +28,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
-)(implicit context: ApplicationContext)
+  )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
@@ -97,16 +97,17 @@ class LiveBlogController(
       lastUpdate: Option[String],
       rendered: Option[Boolean],
       isLivePage: Option[Boolean],
-  ): Action[AnyContent] = {
-    Action.async { implicit request =>
+      filterByKeyEvents: Option[Boolean],
+    ): Action[AnyContent] = {
+    Action.async { implicit request: Request[AnyContent] =>
       val range = getRange(lastUpdate, rendered)
       mapModel(path, range) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
-        case (blog: LiveBlogPage, blocks) if request.forceDCR         => Future.successful(renderGuuiJson(path, blog, blocks))
-        case (blog: LiveBlogPage, blocks)                             => getJson(path, blog, range, isLivePage, blocks)
+        case (blog: LiveBlogPage, blocks) if request.forceDCR => Future.successful(renderGuuiJson(path, blog, blocks))
+        case (blog: LiveBlogPage, blocks) => getJson(path, blog, range, isLivePage, blocks, filterByKeyEvents)
         case (minute: MinutePage, blocks) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
-        case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound)) }
+        case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound))}
       }
     }
   }
@@ -127,24 +128,27 @@ class LiveBlogController(
   }
 
   private[this] def getJson(
-      path: String,
-      liveblog: LiveBlogPage,
-      range: BlockRange,
-      isLivePage: Option[Boolean],
-      blocks: Blocks,
-  )(implicit request: RequestHeader): Future[Result] = {
+     path: String,
+     liveblog: LiveBlogPage,
+     range: BlockRange,
+     isLivePage: Option[Boolean],
+     blocks: Blocks,
+     filterByKeyEvents: Option[Boolean]
+   )(implicit request: RequestHeader): Future[Result] = {
 
     range match {
-      case SinceBlockId(lastBlockId) => renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage)
-      case _                         => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog), liveblog))
+      case SinceBlockId(lastBlockId) =>
+        renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
+      case _ => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog), liveblog))
     }
   }
 
   private[this] def renderNewerUpdatesJson(
-      page: PageWithStoryPackage,
-      lastUpdateBlockId: SinceBlockId,
-      isLivePage: Option[Boolean],
-  )(implicit request: RequestHeader): Future[Result] = {
+                                            page: PageWithStoryPackage,
+                                            lastUpdateBlockId: SinceBlockId,
+                                            isLivePage: Option[Boolean],
+                                            filterByKeyEvents: Option[Boolean]
+                                          )(implicit request: RequestHeader): Future[Result] = {
     val newBlocks = page.article.fields.blocks.toSeq
       .flatMap {
         _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
@@ -172,32 +176,37 @@ class LiveBlogController(
   }
 
   private[this] def renderGuuiJson(
-      path: String,
-      blog: LiveBlogPage,
-      blocks: Blocks,
-  )(implicit request: RequestHeader): Result = {
+                                    path: String,
+                                    blog: LiveBlogPage,
+                                    blocks: Blocks,
+                                  )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
     val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }
 
-  private[this] def mapModel(path: String, range: BlockRange)(
-      render: (PageWithStoryPackage, Blocks) => Future[Result],
+  private[this] def mapModel(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean] = Option(true))(
+    render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, Some(range))
-      .map(responseToModelOrResult(range))
+      .lookup(path, Some(range), filterByKeyEvents)
+      .map { res =>
+        val blocks: Blocks = res.content.flatMap(_.blocks).getOrElse(Blocks())
+        responseToModelOrResult(range)(res)
+      }
       .recover(convertApiExceptions)
       .flatMap {
-        case Left((model, blocks)) => render(model, blocks)
-        case Right(other)          => Future.successful(RenderOtherStatus(other))
+        case Left((model, blocks)) =>
+          render(model, blocks)
+        case Right(other) =>
+          Future.successful(RenderOtherStatus(other))
       }
   }
 
   private[this] def responseToModelOrResult(
-      range: BlockRange,
-  )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
+                                             range: BlockRange,
+                                           )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())

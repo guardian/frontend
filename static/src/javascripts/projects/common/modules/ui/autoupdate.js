@@ -118,9 +118,8 @@ const autoUpdate = (opts) => {
             isLivePage ? 'true' : 'false'
         }`;
         const latestBlockIdToUse = latestBlockId || 'block-0';
-        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}`;
+        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}&filterByKeyEvents=true`;
         const endpoint = `${window.location.pathname}.json${params}`;
-
         // #? One day this should be in Promise.finally()
         const setUpdateDelay = () => {
             if (count === 0 || currentUpdateDelay > 0) {
