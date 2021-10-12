@@ -111,7 +111,7 @@ jest.mock('../../../../lib/detect', () => ({
 	hasCrossedBreakpoint: jest.fn(),
 	isBreakpoint: jest.fn(),
 	getBreakpoint: jest.fn(),
-	getViewport: jest.fn(),
+	getViewport: jest.fn(() => ({ width: 0, height: 0 })),
 	hasPushStateSupport: jest.fn(),
 	getReferrer: jest.fn(() => ''),
 	breakpoints: [
@@ -151,7 +151,9 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 jest.mock('@guardian/libs', () => {
 	return {
 		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
-		...jest.requireActual('@guardian/libs') as typeof import('@guardian/libs'),
+		...jest.requireActual<typeof import('@guardian/libs')>(
+			'@guardian/libs',
+		),
 		loadScript: jest.fn(() => Promise.resolve()),
 	};
 });
