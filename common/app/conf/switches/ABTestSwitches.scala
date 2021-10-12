@@ -24,6 +24,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  // experiments/tests/refresh-confiant-blocked-ads.ts
   Switch(
     ABTests,
     "ab-refresh-confiant-blocked-ads",
