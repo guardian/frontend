@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
@@ -20,6 +20,7 @@ import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
 import model.dotcomrendering.PageType
+import model.liveblog.BodyBlock
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
@@ -101,6 +102,7 @@ class LiveBlogController(
     ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
       val range = getRange(lastUpdate, rendered)
+
       mapModel(path, range) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR => Future.successful(renderGuuiJson(path, blog, blocks))
@@ -136,10 +138,23 @@ class LiveBlogController(
      filterByKeyEvents: Option[Boolean]
    )(implicit request: RequestHeader): Future[Result] = {
 
+    val filteredBlocks = liveblog.article.blocks.get.requestedBodyBlocks.head._2.filter(_.attributes.keyEvent)
+    val filteredRequestedBodyBlocks = Map(liveblog.article.blocks.get.requestedBodyBlocks.head._1 -> filteredBlocks)
+    val newBlocks = liveblog.article.blocks.get.copy(requestedBodyBlocks = filteredRequestedBodyBlocks)
+    val newFields = liveblog.article.content.fields.copy(blocks = Some(newBlocks))
+    val newContent = liveblog.article.content.copy(fields = newFields )
+    val newArticle = liveblog.article.copy(content = newContent);
+    val newLiveblog = liveblog.copy(article = newArticle)
+    println("filtered blocks", liveblog.article.blocks.get.requestedBodyBlocks.head._2)
+//      println("liveblog.article.blocks.body", liveblog.article.blocks.get.body)
+//      println("liveblog.article.blocks.requestedBodyBlocks", liveblog.article.blocks.get.requestedBodyBlocks)
+//    println("liveblog.article.fields.blocks.size", liveblog.article.fields.blocks.get.body.size)
+//    println("liveblog.article.blocks.head", liveblog.article.blocks.get.body.head)
+
     range match {
       case SinceBlockId(lastBlockId) =>
-        renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
-      case _ => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog), liveblog))
+        renderNewerUpdatesJson(newLiveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
+      case _ => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(newLiveblog),newLiveblog))
     }
   }
 
@@ -151,11 +166,15 @@ class LiveBlogController(
                                           )(implicit request: RequestHeader): Future[Result] = {
     val newBlocks = page.article.fields.blocks.toSeq
       .flatMap {
-        _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
+        blocks => blocks.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
       }
       .takeWhile { block =>
         block.id != lastUpdateBlockId.lastUpdate
       }
+      .filter(_.attributes.keyEvent)
+
+    println("NEW BLOCKS", newBlocks)
+
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone))
 
@@ -186,11 +205,11 @@ class LiveBlogController(
     common.renderJson(json, blog).as("application/json")
   }
 
-  private[this] def mapModel(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean] = Option(true))(
+  private[this] def mapModel(path: String, range: BlockRange)(
     render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, Some(range), filterByKeyEvents)
+      .lookup(path, Some(range))
       .map { res =>
         val blocks: Blocks = res.content.flatMap(_.blocks).getOrElse(Blocks())
         responseToModelOrResult(range)(res)
