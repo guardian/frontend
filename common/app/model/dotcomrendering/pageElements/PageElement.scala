@@ -383,6 +383,18 @@ object ProfileAtomBlockElementItem {
     Json.writes[ProfileAtomBlockElementItem]
 }
 
+case class PaginationBlockElement(
+    currentPage: Int,
+    totalPages: Int,
+    newest: Option[String],
+    newer: Option[String],
+    oldest: Option[String],
+    older: Option[String],
+) extends PageElement
+object PaginationBlockElement {
+  implicit val PaginationBlockElementWrites: Writes[PaginationBlockElement] = Json.writes[PaginationBlockElement]
+}
+
 case class ProfileAtomBlockElement(
     id: String,
     label: String,
@@ -760,6 +772,7 @@ object PageElement {
       case _: MapBlockElement             => true
       case _: MediaAtomBlockElement       => true
       case _: ProfileAtomBlockElement     => true
+      case _: PaginationBlockElement      => true
       case _: PullquoteBlockElement       => true
       case _: QABlockElement              => true
       case _: QuizAtomBlockElement        => true
@@ -1040,6 +1053,21 @@ object PageElement {
                 html = chart.html, // This is atom.defaultHtml
                 css = None, // hardcoded to None during experimental period
                 js = None, // hardcoded to None during experimental period
+              ),
+            )
+          }
+
+          case Some(chart: PaginationBlockElement) => {
+            val encodedId = URLEncoder.encode(chart.id, "UTF-8")
+            // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
+            Some(
+              PaginationBlockElement(
+                currentPage = chart.currentPage,
+                totalPages = chart.totalPages,
+                newer = chart.newer,
+                newest = chart.newest,
+                older = chart.older,
+                oldest = chart.oldest,
               ),
             )
           }
