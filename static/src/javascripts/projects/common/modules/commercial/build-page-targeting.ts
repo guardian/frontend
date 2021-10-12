@@ -1,4 +1,8 @@
 import type { Participations } from '@guardian/ab-core';
+import {
+	clearPermutiveSegments,
+	getPermutiveSegments,
+} from '@guardian/commercial-core';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
@@ -16,7 +20,6 @@ import { removeFalseyValues } from '../../../commercial/modules/header-bidding/u
 import { getSynchronousParticipations } from '../experiments/ab';
 import { isUserLoggedIn } from '../identity/api';
 import { commercialFeatures } from './commercial-features';
-import { clearPermutiveSegments, getPermutiveSegments } from './permutive';
 import { getUserSegments } from './user-ad-targeting';
 
 // https://admanager.google.com/59666047#inventory/custom_targeting/list

@@ -553,6 +553,7 @@
  ],
  "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/atoms/youtube-player.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -561,7 +562,6 @@
   "../lib/url.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/commercial-features.js",
-  "../projects/common/modules/commercial/permutive.ts",
   "../projects/common/modules/video/ga-helper.js"
  ],
  "../projects/common/modules/atoms/youtube-tracking.js": [
@@ -572,6 +572,7 @@
  ],
  "../projects/common/modules/commercial/build-page-targeting.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts",
@@ -583,7 +584,6 @@
   "../lib/url.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/commercial-features.js",
-  "../projects/common/modules/commercial/permutive.ts",
   "../projects/common/modules/commercial/user-ad-targeting.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/identity/api.ts"
@@ -597,9 +597,6 @@
  ],
  "../projects/common/modules/commercial/geo-utils.js": [
   "../lib/geolocation.ts"
- ],
- "../projects/common/modules/commercial/permutive.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/common/modules/commercial/user-ad-targeting.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",

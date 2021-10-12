@@ -58,10 +58,12 @@ const requestUserSegmentsFromId = (): void => {
 					userHash: user.id % 9999,
 				};
 
+				const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
 				storage.local.set(
 					userSegmentsKey,
 					segmentsData,
-					new Date().getTime() + 24 * 60 * 60 * 1000,
+					new Date().getTime() + ONE_DAY_MS,
 				);
 			}
 		});
