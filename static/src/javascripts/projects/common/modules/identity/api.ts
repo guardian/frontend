@@ -58,8 +58,9 @@ export type IdentityUser = {
 		legacyProducts: string;
 	};
 	primaryEmailAddress: string;
-	id: string;
+	id: number;
 	hasPassword: boolean;
+	adData: Record<string, unknown>;
 };
 
 type IdentityUserFromCache = {
@@ -71,7 +72,7 @@ type IdentityUserFromCache = {
 		userEmailValidated: boolean;
 	};
 	primaryEmailAddress: string;
-	id: string;
+	id: number;
 	rawResponse: string;
 } | null;
 
@@ -119,7 +120,7 @@ export const getUserFromCookie = (): IdentityUserFromCache => {
 		if (userData) {
 			const displayName = decodeURIComponent(userData[2]);
 			userFromCookieCache = {
-				id: userData[0],
+				id: parseInt(userData[0], 10),
 				primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
 				publicFields: {
 					displayName,
