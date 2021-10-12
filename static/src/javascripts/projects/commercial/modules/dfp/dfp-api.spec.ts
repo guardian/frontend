@@ -149,7 +149,6 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	},
 }));
 jest.mock('@guardian/libs', () => {
-	/* */
 	return {
 		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 		...jest.requireActual<typeof import('@guardian/libs')>(
