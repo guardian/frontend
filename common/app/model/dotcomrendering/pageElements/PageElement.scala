@@ -1057,17 +1057,15 @@ object PageElement {
             )
           }
 
-          case Some(chart: PaginationBlockElement) => {
-            val encodedId = URLEncoder.encode(chart.id, "UTF-8")
-            // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
+          case Some(page: PaginationBlockElement) => {
             Some(
               PaginationBlockElement(
-                currentPage = chart.currentPage,
-                totalPages = chart.totalPages,
-                newer = chart.newer,
-                newest = chart.newest,
-                older = chart.older,
-                oldest = chart.oldest,
+                currentPage = page.currentPage,
+                totalPages = page.totalPages,
+                newer = page.newer,
+                newest = page.newest,
+                older = page.older,
+                oldest = page.oldest,
               ),
             )
           }
