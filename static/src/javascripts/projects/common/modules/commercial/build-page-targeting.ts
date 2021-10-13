@@ -74,7 +74,7 @@ type PageTargeting = PartialWithNulls<{
 	k: string[]; // Keywords
 	ms: string; // Media Source
 	p: string; // Platform (web)
-	pa: string; // Personalised Ads consent
+	pa: TrueOrFalse; // Personalised Ads consent
 	permutive: string[];
 	pv: string; // ophan Page View id
 	rp: string; // Rendering Platform
@@ -92,7 +92,13 @@ type PageTargeting = PartialWithNulls<{
 	consent_tcfv2: string;
 	cmp_interaction: string;
 	se: string;
+	ob: 't'; // OBserver content
+	br: 's' | 'p' | 'f'; // BRanding
+	af: 't'; // Ad Free
 	fr: Frequency; // FRequency
+	ref: string; // REFerrer
+	inskin: TrueOrFalse; // InSkin
+	amtgrp: AdManagerGroup;
 	s: string; // Section
 
 	// And more
@@ -321,14 +327,21 @@ const getAdConsentFromState = (state: ConsentState | null): boolean => {
 	return false;
 };
 
-const getAdManagerGroup = (consented = true) => {
+const isAdManagerGroup = (s: string | null): s is AdManagerGroup =>
+	adManagerGroups.some((g) => g === s);
+
+const getAdManagerGroup = (consented = true): AdManagerGroup | null => {
 	if (!consented) return null;
-	return storage.local.getRaw(AMTGRP_STORAGE_KEY) ?? createAdManagerGroup();
+	const existingGroup = storage.local.getRaw(AMTGRP_STORAGE_KEY);
+
+	return isAdManagerGroup(existingGroup)
+		? existingGroup
+		: createAdManagerGroup();
 };
 
-const createAdManagerGroup = () => {
-	// users are assigned to groups 1-12
-	const group = String(Math.floor(Math.random() * 12) + 1);
+const createAdManagerGroup = (): AdManagerGroup => {
+	const group =
+		adManagerGroups[Math.floor(Math.random() * adManagerGroups.length)];
 	storage.local.setRaw(AMTGRP_STORAGE_KEY, group);
 	return group;
 };
@@ -367,8 +380,10 @@ const rebuildPageTargeting = () => {
 	// personalised ads targeting
 	if (!adConsentState) clearPermutiveSegments();
 	// flowlint-next-line sketchy-null-bool:off
-	const paTargeting = { pa: adConsentState ? 't' : 'f' };
-	const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
+	const paTargeting: PageTargeting = { pa: adConsentState ? 't' : 'f' };
+	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
+		? { af: 't' }
+		: {};
 
 	const pageTargets: PageTargeting = {
 		...{
