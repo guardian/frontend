@@ -95,14 +95,14 @@ type XaxisBidResponse = {
 	[x: string]: unknown;
 };
 
-type BuyerTargetting<T> = {
+type BuyerTargeting<T> = {
 	key: string;
 	val: (bidResponse: DeepPartial<T>) => string | null | undefined;
 };
 
 // https://docs.prebid.org/dev-docs/publisher-api-reference/bidderSettings.html
 type BidderSetting<T = Record<string, unknown>> = {
-	adserverTargeting: Array<BuyerTargetting<T>>;
+	adserverTargeting: Array<BuyerTargeting<T>>;
 	bidCpmAdjustment: (n: number) => number;
 	suppressEmptyKeys: boolean;
 	sendStandardTargeting: boolean;
@@ -254,7 +254,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 
 	window.pbjs.setConfig(pbjsConfig);
 
-	if (config.get('switches.prebidAnalytics', false)) {
+	if (config.get<boolean>('switches.prebidAnalytics', false)) {
 		window.pbjs.enableAnalytics([
 			{
 				provider: 'gu',
@@ -270,7 +270,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 	// allows dynamic assignment.
 	window.pbjs.bidderSettings = {};
 
-	if (config.get('switches.prebidXaxis', false)) {
+	if (config.get<boolean>('switches.prebidXaxis', false)) {
 		window.pbjs.bidderSettings.xhb = {
 			adserverTargeting: [
 				{
@@ -287,7 +287,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		};
 	}
 
-	if (config.get('switches.prebidImproveDigital', false)) {
+	if (config.get<boolean>('switches.prebidImproveDigital', false)) {
 		// Add placement ID for Improve Digital, reading from the bid response
 		const REGEX_PID = new RegExp(/placement_id=\\?"(\d+)\\?"/);
 		window.pbjs.bidderSettings.improvedigital = {

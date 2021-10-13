@@ -2,10 +2,10 @@ import { getCountryCode } from '../../../../lib/geolocation';
 
 // cache the users location so we only have to look it up once
 let geo;
-const currentGeoLocation = (() => {
-    geo = geo || getCountryCode();
-    return geo;
-});
+const currentGeoLocation = () => {
+	geo = geo || getCountryCode();
+	return geo;
+};
 
 export const isInUk = () => currentGeoLocation() === 'GB';
 
@@ -23,4 +23,8 @@ export const isInAuOrNz = () => isInAustralia() || isInNewZealand();
 
 export const isInRow = () => !isInUk() && !isInUsOrCa() && !isInAuOrNz();
 
-export const _ = { resetModule: () => { geo = undefined } };
+export const _ = {
+	resetModule: () => {
+		geo = undefined;
+	},
+};

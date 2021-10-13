@@ -11,6 +11,7 @@ import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { getLocale, loadScript } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { trackPerformance } from 'common/modules/analytics/google';
+import { init as detectAdBlockers } from 'commercial/detect-adblock';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -58,6 +59,8 @@ const go = () => {
         });
 
         cmp.init({ pubData, country: await getLocale() });
+
+        detectAdBlockers()
 
         // 2. once standard is done, next is commercial
 		// Handle ad blockers

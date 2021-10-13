@@ -10,7 +10,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     ShowPressedInteractives,
     StandaloneCommercialBundle,
     StandaloneCommercialBundleTracking,
-    RemoveStickyNav,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -50,13 +49,4 @@ object StandaloneCommercialBundleTracking
       owners = Seq(Owner.withGithub("mxdvl")),
       sellByDate = LocalDate.of(2021, 10, 15),
       participationGroup = Perc1A,
-    )
-
-object RemoveStickyNav
-    extends Experiment(
-      name = "remove-sticky-nav",
-      description = "Remove sticky behaviour from the nav bar",
-      owners = Seq(Owner.withGithub("MarSavar")),
-      sellByDate = LocalDate.of(2021, 10, 8),
-      participationGroup = Perc1B,
     )

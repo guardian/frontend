@@ -3,9 +3,9 @@ import config from '../../../lib/config';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import {
-    getViewport as getViewport_,
-    getBreakpoint as getBreakpoint_,
-    isBreakpoint as isBreakpoint_,
+	getViewport as getViewport_,
+	getBreakpoint as getBreakpoint_,
+	isBreakpoint as isBreakpoint_,
 } from '../../../lib/detect';
 
 const getViewport = getViewport_;
@@ -13,59 +13,59 @@ const getBreakpoint = getBreakpoint_;
 const isBreakpoint = isBreakpoint_;
 
 jest.mock('./dfp/track-ad-render', () => (id) => {
-    const ads = {
-        'dfp-ad--im': true,
-    };
-    return Promise.resolve(ads[id]);
+	const ads = {
+		'dfp-ad--im': true,
+	};
+	return Promise.resolve(ads[id]);
 });
 jest.mock('./dfp/add-slot', () => ({
-    addSlot: jest.fn(),
+	addSlot: jest.fn(),
 }));
 jest.mock('../../common/modules/commercial/commercial-features', () => ({
-    commercialFeatures: {},
+	commercialFeatures: {},
 }));
 jest.mock('../../common/modules/article/space-filler', () => ({
-    spaceFiller: {
-        fillSpace: jest.fn(),
-    },
+	spaceFiller: {
+		fillSpace: jest.fn(),
+	},
 }));
 jest.mock('../../../lib/detect', () => ({
-    isBreakpoint: jest.fn(),
-    getBreakpoint: jest.fn(),
-    getViewport: jest.fn(),
+	isBreakpoint: jest.fn(),
+	getBreakpoint: jest.fn(),
+	getViewport: jest.fn(),
 }));
 jest.mock('../../../lib/config', () => ({ page: {}, get: () => false }));
 jest.mock('../../common/modules/experiments/ab', () => ({
-    isInVariantSynchronous: () => false,
+	isInVariantSynchronous: () => false,
 }));
 
-const spaceFillerStub = (spaceFiller.fillSpace);
+const spaceFillerStub = spaceFiller.fillSpace;
 
 describe('Article Body Adverts', () => {
-    beforeEach(() => {
-        jest.resetAllMocks();
-        commercialFeatures.articleBodyAdverts = true;
-        spaceFillerStub.mockImplementation(() => Promise.resolve(2));
-        getViewport.mockReturnValue({ height: 1300 });
-        expect.hasAssertions();
-    });
+	beforeEach(() => {
+		jest.resetAllMocks();
+		commercialFeatures.articleBodyAdverts = true;
+		spaceFillerStub.mockImplementation(() => Promise.resolve(2));
+		getViewport.mockReturnValue({ height: 1300 });
+		expect.hasAssertions();
+	});
 
-    it('should exist', () => {
-        expect(init).toBeDefined();
-    });
+	it('should exist', () => {
+		expect(init).toBeDefined();
+	});
 
-    it('should exit if commercial feature disabled', () => {
-        commercialFeatures.articleBodyAdverts = false;
-        return init().then(() => {
-            expect(spaceFillerStub).not.toHaveBeenCalled();
-        });
-    });
+	it('should exit if commercial feature disabled', () => {
+		commercialFeatures.articleBodyAdverts = false;
+		return init().then(() => {
+			expect(spaceFillerStub).not.toHaveBeenCalled();
+		});
+	});
 
-    describe('When merchandising components enabled', () => {
-        beforeEach(() => {
-            getBreakpoint.mockReturnValue('mobile');
-            isBreakpoint.mockReturnValue(true);
-            config.page.hasInlineMerchandise = true;
-        });
-    });
+	describe('When merchandising components enabled', () => {
+		beforeEach(() => {
+			getBreakpoint.mockReturnValue('mobile');
+			isBreakpoint.mockReturnValue(true);
+			config.page.hasInlineMerchandise = true;
+		});
+	});
 });
