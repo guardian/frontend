@@ -12,9 +12,9 @@ case class LiveBlogCurrentPage(
 
 object LiveBlogCurrentPage {
 
-  def apply(pageSize: Int, blocks: Blocks, range: BlockRange): Option[LiveBlogCurrentPage] = {
+  def apply(pageSize: Int, blocks: Blocks, range: BlockRange, filterByKeyEvents: Option[Boolean] = None): Option[LiveBlogCurrentPage] = {
     range match {
-      case CanonicalLiveBlog               => firstPage(pageSize, blocks)
+      case CanonicalLiveBlog               => firstPage(pageSize, blocks, filterByKeyEvents)
       case PageWithBlock(isRequestedBlock) => findPageWithBlock(pageSize, blocks.body, isRequestedBlock)
       case SinceBlockId(blockId)           => updates(blocks, SinceBlockId(blockId))
       case ArticleBlocks                   => None
@@ -31,7 +31,7 @@ object LiveBlogCurrentPage {
   }
 
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
-  def firstPage(pageSize: Int, blocks: Blocks): Option[LiveBlogCurrentPage] = {
+  def firstPage(pageSize: Int, blocks: Blocks, filterByKeyEvents: Option[Boolean] = None): Option[LiveBlogCurrentPage] = {
     val remainder = blocks.totalBodyBlocks % pageSize
     val numPages = blocks.totalBodyBlocks / pageSize
     blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage).map { requestedBodyBlocks =>
@@ -45,7 +45,7 @@ object LiveBlogCurrentPage {
       val olderPage = startOfSecondPageBlocks.headOption.map { block =>
         BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2)
       }
-      val pagination =
+      val pagination = {
         if (blocks.totalBodyBlocks > firstPageBlocks.size)
           Some(
             N1Pagination(
@@ -57,7 +57,10 @@ object LiveBlogCurrentPage {
             ),
           )
         else None
-      LiveBlogCurrentPage(FirstPage(keyEventBlocks), pagination)
+
+      }
+      val blocksToRender = if (filterByKeyEvents.nonEmpty && filterByKeyEvents.get) keyEventBlocks else firstPageBlocks
+      LiveBlogCurrentPage(FirstPage(blocksToRender), pagination)
     }
   }
 

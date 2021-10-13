@@ -103,7 +103,7 @@ class LiveBlogController(
     Action.async { implicit request: Request[AnyContent] =>
       val range = getRange(lastUpdate, rendered)
 
-      mapModel(path, range) {
+      mapModel(path, range, filterByKeyEvents) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR => Future.successful(renderGuuiJson(path, blog, blocks))
         case (blog: LiveBlogPage, blocks) => getJson(path, blog, range, isLivePage, blocks, filterByKeyEvents)
@@ -208,14 +208,14 @@ class LiveBlogController(
     common.renderJson(json, blog).as("application/json")
   }
 
-  private[this] def mapModel(path: String, range: BlockRange)(
+  private[this] def mapModel(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean] = None)(
     render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
       .map { res =>
         val blocks: Blocks = res.content.flatMap(_.blocks).getOrElse(Blocks())
-        responseToModelOrResult(range)(res)
+        responseToModelOrResult(range, filterByKeyEvents)(res)
       }
       .recover(convertApiExceptions)
       .flatMap {
@@ -228,6 +228,7 @@ class LiveBlogController(
 
   private[this] def responseToModelOrResult(
                                              range: BlockRange,
+                                             filterByKeyEvents: Option[Boolean]
                                            )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
@@ -239,7 +240,7 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        createLiveBlogModel(liveBlog, response, range).left.map(_ -> blocks)
+        createLiveBlogModel(liveBlog, response, range, filterByKeyEvents).left.map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
         Right(InternalServerError)
