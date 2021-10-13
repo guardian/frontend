@@ -43,7 +43,7 @@ class LiveBlogController(
 
   def renderEmail(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks) {
+      mapModel(path, ArticleBlocks, None) {
         case (minute: MinutePage, blocks) =>
           Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
         case (blog: LiveBlogPage, blocks) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
@@ -52,43 +52,15 @@ class LiveBlogController(
     }
   }
 
-  def renderWithRange(path: String, range: BlockRange)(implicit request: RequestHeader): Future[Result] = {
-    mapModel(path, range) { (page, blocks) =>
-      {
-        val isAmpSupported = page.article.content.shouldAmplify
-        val pageType: PageType = PageType(page, request, context)
-        (page, request.getRequestFormat) match {
-          case (minute: MinutePage, HtmlFormat) =>
-            Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
-          case (blog: LiveBlogPage, HtmlFormat) => {
-            val remoteRendering = request.forceDCR && ActiveExperiments.isParticipating(LiveblogRendering)
-            remoteRendering match {
-              case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-              case true => {
-                val pageType: PageType = PageType(blog, request, context)
-                remoteRenderer.getArticle(ws, blog, blocks, pageType)
-              }
-            }
-          }
-          case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
-          case (blog: LiveBlogPage, AmpFormat) =>
-            Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-          case _ => Future.successful(NotFound)
-        }
-      }
-    }
-  }
-
-  def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
+  def renderArticle(path: String, page: Option[String] = None, filterByKeyEvents: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
       page.map(ParseBlockId.fromPageParam) match {
-        case Some(ParsedBlockId(id)) => renderWithRange(path, PageWithBlock(id)) // we know the id of a block
+        case Some(ParsedBlockId(id)) => renderWithRange(path, PageWithBlock(id), filterByKeyEvents) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog) // no page param
+        case None => renderWithRange(path, CanonicalLiveBlog, filterByKeyEvents) // no page param
       }
     }
   }
@@ -106,15 +78,42 @@ class LiveBlogController(
       mapModel(path, range, filterByKeyEvents) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR => Future.successful(renderGuuiJson(path, blog, blocks))
-        case (blog: LiveBlogPage, blocks) => getJson(path, blog, range, isLivePage, blocks, filterByKeyEvents)
-        case (minute: MinutePage, blocks) =>
-          Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
+        case (blog: LiveBlogPage, blocks) => getJson(blog, range, isLivePage, filterByKeyEvents)
+        case (minute: MinutePage, blocks) => Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound))}
       }
     }
   }
 
   // Helper methods
+
+  private def renderWithRange(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
+    mapModel(path, range, filterByKeyEvents) { (page, blocks) =>
+    {
+      val isAmpSupported = page.article.content.shouldAmplify
+      val pageType: PageType = PageType(page, request, context)
+      (page, request.getRequestFormat) match {
+        case (minute: MinutePage, HtmlFormat) =>
+          Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
+        case (blog: LiveBlogPage, HtmlFormat) => {
+          val remoteRendering = request.forceDCR && ActiveExperiments.isParticipating(LiveblogRendering)
+          remoteRendering match {
+            case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+            case true => {
+              val pageType: PageType = PageType(blog, request, context)
+              remoteRenderer.getArticle(ws, blog, blocks, pageType)
+            }
+          }
+        }
+        case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
+          remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
+        case (blog: LiveBlogPage, AmpFormat) =>
+          Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+        case _ => Future.successful(NotFound)
+      }
+    }
+    }
+  }
 
   private[this] def getRange(lastUpdate: Option[String], rendered: Option[Boolean]): BlockRange = {
     lastUpdate.map(ParseBlockId.fromBlockId) match {
@@ -130,21 +129,20 @@ class LiveBlogController(
   }
 
   private[this] def getJson(
-     path: String,
      liveblog: LiveBlogPage,
      range: BlockRange,
      isLivePage: Option[Boolean],
-     blocks: Blocks,
      filterByKeyEvents: Option[Boolean]
    )(implicit request: RequestHeader): Future[Result] = {
 
-    val filteredBlocks = liveblog.article.blocks.get.requestedBodyBlocks.head._2.filter(_.attributes.keyEvent)
-    val filteredRequestedBodyBlocks = Map(liveblog.article.blocks.get.requestedBodyBlocks.head._1 -> filteredBlocks)
-    val newBlocks = liveblog.article.blocks.get.copy(requestedBodyBlocks = filteredRequestedBodyBlocks)
-    val newFields = liveblog.article.content.fields.copy(blocks = Some(newBlocks))
-    val newContent = liveblog.article.content.copy(fields = newFields )
-    val newArticle = liveblog.article.copy(content = newContent);
-    val newLiveblog = liveblog.copy(article = newArticle)
+    // TODO handle updates?
+//    val filteredBlocks = liveblog.article.blocks.get.requestedBodyBlocks.head._2.filter(_.attributes.keyEvent)
+//    val filteredRequestedBodyBlocks = Map(liveblog.article.blocks.get.requestedBodyBlocks.head._1 -> filteredBlocks)
+//    val newBlocks = liveblog.article.blocks.get.copy(requestedBodyBlocks = filteredRequestedBodyBlocks)
+//    val newFields = liveblog.article.content.fields.copy(blocks = Some(newBlocks))
+//    val newContent = liveblog.article.content.copy(fields = newFields )
+//    val newArticle = liveblog.article.copy(content = newContent);
+//    val newLiveblog = liveblog.copy(article = newArticle)
 
 //    println("requested blocks", liveblog.article.blocks.get.requestedBodyBlocks)
 //      println("liveblog.article.blocks.body", liveblog.article.blocks.get.body)
@@ -208,13 +206,12 @@ class LiveBlogController(
     common.renderJson(json, blog).as("application/json")
   }
 
-  private[this] def mapModel(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean] = None)(
+  private[this] def mapModel(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean])(
     render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
       .map { res =>
-        val blocks: Blocks = res.content.flatMap(_.blocks).getOrElse(Blocks())
         responseToModelOrResult(range, filterByKeyEvents)(res)
       }
       .recover(convertApiExceptions)

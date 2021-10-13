@@ -114,11 +114,12 @@ const autoUpdate = (opts) => {
         }
 
         let count = 0;
+        const filterByKeyEvents = ''; //todo handle updates?
         const shouldFetchBlocks = `&isLivePage=${
             isLivePage ? 'true' : 'false'
         }`;
         const latestBlockIdToUse = latestBlockId || 'block-0';
-        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}&filterByKeyEvents=true`;
+        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}`;
         const endpoint = `${window.location.pathname}.json${params}`;
         // #? One day this should be in Promise.finally()
         const setUpdateDelay = () => {

@@ -31,7 +31,7 @@ object LiveBlogCurrentPage {
   }
 
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
-  def firstPage(pageSize: Int, blocks: Blocks, filterByKeyEvents: Option[Boolean] = None): Option[LiveBlogCurrentPage] = {
+  def firstPage(pageSize: Int, blocks: Blocks, filterByKeyEvents: Option[Boolean]): Option[LiveBlogCurrentPage] = {
     val remainder = blocks.totalBodyBlocks % pageSize
     val numPages = blocks.totalBodyBlocks / pageSize
     blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage).map { requestedBodyBlocks =>

@@ -12,10 +12,10 @@ object LiveBlogHelpers {
 
   // Get a Seq[BodyBlock] given an article and the "page" request parameter on live-blog pages.
 
-  def blocksForLiveBlogRequest(article: Article, param: Option[String]): Seq[BodyBlock] = {
+  def blocksForLiveBlogRequest(article: Article, param: Option[String], filterByKeyEvents: Option[Boolean]): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
-      LiveBlogHelpers.createLiveBlogModel(article, range, Some(true))
+      LiveBlogHelpers.createLiveBlogModel(article, range, filterByKeyEvents)
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
