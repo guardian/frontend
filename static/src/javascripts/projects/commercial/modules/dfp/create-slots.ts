@@ -1,5 +1,22 @@
-import config from '../../../../lib/config';
 import { adSizes } from '@guardian/commercial-core';
+import type { AdSize } from '@guardian/commercial-core';
+
+type SizeMappings = Record<string, AdSize[]>;
+
+type AdSlotDefinition = {
+	sizeMappings: SizeMappings;
+	label?: boolean;
+	refresh?: boolean;
+	name?: string;
+};
+
+type AdSlotDefinitions = Record<string, AdSlotDefinition>;
+
+type CreateSlotOptions = {
+	classes?: string;
+	name?: string;
+	sizes?: Record<string, AdSize[] | undefined>; // allow an empty object
+};
 
 const inlineDefinition = {
 	sizeMappings: {
@@ -45,7 +62,7 @@ const inlineDefinition = {
 
  */
 
-const adSlotDefinitions = {
+const adSlotDefinitions: AdSlotDefinitions = {
 	im: {
 		label: false,
 		refresh: false,
@@ -144,18 +161,22 @@ const adSlotDefinitions = {
   use addSlot from add-slot.js
 */
 
-const createAdSlotElements = (name, attrs, classes) => {
+const createAdSlotElements = (
+	name: string,
+	attrs: Record<string, string>,
+	classes: string[],
+): HTMLElement[] => {
 	const adSlots = [];
 
 	const id = `dfp-ad--${name}`;
 
 	// 3562dc07-78e9-4507-b922-78b979d4c5cb
-	if (config.get('isDotcomRendering', false) && name === 'top-above-nav') {
+	if (window.guardian.config.isDotcomRendering && name === 'top-above-nav') {
 		// This is to prevent a problem that appeared with DCR.
 		// We are simply making sure that if we are about to
 		// introduce dfp-ad--top-above-nav then there isn't already one.
 		const node = document.getElementById(id);
-		if (node && node.parentNode) {
+		if (node?.parentNode) {
 			const pnode = node.parentNode;
 			console.log(`warning: cleaning up dom node id: dfp-ad--${name}`);
 			pnode.removeChild(node);
@@ -178,31 +199,38 @@ const createAdSlotElements = (name, attrs, classes) => {
 	return adSlots;
 };
 
-export const createSlots = (type, options = {}) => {
-	const attributes = {};
-	const definition = adSlotDefinitions[type];
-	const slotName = options.name || definition.name || type;
-	const classes = options.classes
-		? options.classes.split(' ').map((cn) => `ad-slot--${cn}`)
-		: [];
+export const createSlots = (
+	type: string,
+	options: CreateSlotOptions = {},
+): HTMLElement[] => {
+	const attributes: Record<string, string> = {};
+	const definition: AdSlotDefinition = adSlotDefinitions[type];
+	const slotName: string = options.name ?? definition.name ?? type;
+	const classes: string[] =
+		options.classes?.split(' ').map((cn) => `ad-slot--${cn}`) ?? [];
 
-	const sizes = Object.assign({}, definition.sizeMappings);
+	const sizes: SizeMappings = { ...definition.sizeMappings };
+	const sizeStrings: Record<string, string> = {};
 
-	if (options.sizes) {
-		Object.keys(options.sizes).forEach((size) => {
-			if (sizes[size]) {
-				sizes[size] = sizes[size].concat(options.sizes[size]);
-			} else {
-				sizes[size] = options.sizes[size];
+	const optionSizes = options.sizes;
+
+	if (optionSizes) {
+		Object.keys(optionSizes).forEach((optionSize: string) => {
+			const optionSizesArray = optionSizes[optionSize];
+			if (optionSizesArray) {
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
+				sizes[optionSize] = sizes[optionSize]
+					? sizes[optionSize].concat(optionSizesArray)
+					: optionSizesArray;
 			}
 		});
 	}
 
 	Object.keys(sizes).forEach((size) => {
-		sizes[size] = sizes[size].join('|');
+		sizeStrings[size] = sizes[size].join('|');
 	});
 
-	Object.assign(attributes, sizes);
+	Object.assign(attributes, sizeStrings);
 
 	if (definition.label === false) {
 		attributes.label = 'false';
