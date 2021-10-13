@@ -18,7 +18,7 @@ type CreateSlotOptions = {
 	sizes?: Record<string, AdSize[] | undefined>; // allow an empty object
 };
 
-const inlineDefinition = {
+const inlineDefinition: AdSlotDefinition = {
 	sizeMappings: {
 		mobile: [
 			adSizes.outOfPage,
