@@ -59,26 +59,37 @@ const adManagerGroups = [
 
 type Frequency = typeof frequency[number];
 type AdManagerGroup = typeof adManagerGroups[number];
+type ContentType =
+	| 'video'
+	| 'tag'
+	| 'section'
+	| 'network-front'
+	| 'liveblog'
+	| 'interactive'
+	| 'gallery'
+	| 'crossword'
+	| 'audio'
+	| 'article';
 
 type PageTargeting = PartialWithNulls<{
 	ab: string[];
 	at: string; // Ad Test
 	bl: string[]; // BLog tags
-	bp: string; // BreakPoint
+	bp: 'mobile' | 'tablet' | 'desktop'; // BreakPoint
 	cc: string; // Country Code
 	co: string; // COntributor
-	ct: string; // Content Type
+	ct: ContentType;
 	dcre: TrueOrFalse; // DotCom-Rendering Eligible
 	edition: 'uk' | 'us' | 'au' | 'int';
 	gdncrm: string | string[]; // GuarDiaN CRM
 	k: string[]; // Keywords
 	ms: string; // Media Source
-	p: string; // Platform (web)
+	p: 'r2' | 'ng' | 'app' | 'amp'; // Platform (web)
 	pa: TrueOrFalse; // Personalised Ads consent
-	permutive: string[];
+	permutive: string[]; // predefined segment values
 	pv: string; // ophan Page View id
-	rp: string; // Rendering Platform
-	sens: string; // SenSitive
+	rp: 'dotcom-rendering' | 'dotcom-platform'; // Rendering Platform
+	sens: TrueOrFalse; // SenSitive
 	si: TrueOrFalse; // Signed In
 	skinsize: 'l' | 's';
 	slot: string; // (predefined list)
@@ -91,7 +102,7 @@ type PageTargeting = PartialWithNulls<{
 	rdp: string;
 	consent_tcfv2: string;
 	cmp_interaction: string;
-	se: string;
+	se: string; // SEries
 	ob: 't'; // OBserver content
 	br: 's' | 'p' | 'f'; // BRanding
 	af: 't'; // Ad Free
@@ -99,7 +110,7 @@ type PageTargeting = PartialWithNulls<{
 	ref: string; // REFerrer
 	inskin: TrueOrFalse; // InSkin
 	amtgrp: AdManagerGroup;
-	s: string; // Section
+	s: string; // site Section
 
 	// And more
 	[_: string]: string | string[];
