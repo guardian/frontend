@@ -109,51 +109,63 @@ const SDK_OPTIONS = {
 };
 
 const getMessageFromBraze = async (apiKey, brazeUuid) => {
-    const sdkLoadTiming = measureTiming('braze-sdk-load');
-    sdkLoadTiming.start();
+	const sdkLoadTiming = measureTiming('braze-sdk-load');
+	sdkLoadTiming.start();
 
-    const appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+	const appboy = await import(
+		/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
+	);
 
-    const sdkLoadTimeTaken = sdkLoadTiming.end();
-    ophan.record({
-        component: 'braze-sdk-load-timing',
-        value: sdkLoadTimeTaken,
-    });
+	const sdkLoadTimeTaken = sdkLoadTiming.end();
+	ophan.record({
+		component: 'braze-sdk-load-timing',
+		value: sdkLoadTimeTaken,
+	});
 
-    const appboyTiming = measureTiming('braze-appboy');
-    appboyTiming.start();
+	const appboyTiming = measureTiming('braze-appboy');
+	appboyTiming.start();
 
-    appboy.initialize(apiKey, SDK_OPTIONS);
+	appboy.initialize(apiKey, SDK_OPTIONS);
 
-    const errorHandler = (error) => { reportError(error, {}, false) };
-    const brazeMessages = new BrazeMessages(appboy, LocalMessageCache, errorHandler);
+	const errorHandler = (error) => {
+		reportError(error, {}, false);
+	};
+	const brazeMessages = new BrazeMessages(
+		appboy,
+		LocalMessageCache,
+		errorHandler,
+	);
 
-    setHasCurrentBrazeUser();
-    appboy.changeUser(brazeUuid);
-    appboy.openSession();
+	setHasCurrentBrazeUser();
+	appboy.changeUser(brazeUuid);
+	appboy.openSession();
 
-    const brazeArticleContext = {
-        section: config.get('page.section')
-    };
+	const brazeArticleContext = {
+		section: config.get('page.section'),
+	};
 
-    const canShowPromise = brazeMessages.getMessageForBanner(brazeArticleContext).then((m) => {
-        message = m;
-        return true;
-    });
+	const canShowPromise = brazeMessages
+		.getMessageForBanner(brazeArticleContext)
+		.then((m) => {
+			message = m;
+			return true;
+		});
 
-    canShowPromise.then(() => {
-        const appboyTimeTaken = appboyTiming.end();
+	canShowPromise
+		.then(() => {
+			const appboyTimeTaken = appboyTiming.end();
 
-        ophan.record({
-            component: 'braze-appboy-timing',
-            value: appboyTimeTaken,
-        });
-    }).catch(() => {
-        appboyTiming.clear()
-        console.log("Appboy Timing failed.");
-    });
+			ophan.record({
+				component: 'braze-appboy-timing',
+				value: appboyTimeTaken,
+			});
+		})
+		.catch(() => {
+			appboyTiming.clear();
+			console.log('Appboy Timing failed.');
+		});
 
-    return canShowPromise;
+	return canShowPromise;
 };
 
 const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
@@ -178,51 +190,54 @@ const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
 };
 
 const canShow = async () => {
-    const bannerTiming = measureTiming('braze-banner');
-    bannerTiming.start();
+	const bannerTiming = measureTiming('braze-banner');
+	bannerTiming.start();
 
-    const forcedBrazeMessage = getMessageFromUrlFragment();
-    if (forcedBrazeMessage) {
-        message = forcedBrazeMessage;
-        return true;
-    }
+	const forcedBrazeMessage = getMessageFromUrlFragment();
+	if (forcedBrazeMessage) {
+		message = forcedBrazeMessage;
+		return true;
+	}
 
-    const brazeSwitch = config.get('switches.brazeSwitch');
-    const apiKey = config.get('page.brazeApiKey');
-    const isBrazeConfigured = brazeSwitch && apiKey;
-    if (!isBrazeConfigured) {
-        return false;
-    }
+	const brazeSwitch = config.get('switches.brazeSwitch');
+	const apiKey = config.get('page.brazeApiKey');
+	const isBrazeConfigured = brazeSwitch && apiKey;
+	if (!isBrazeConfigured) {
+		return false;
+	}
 
-    const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
+	const [brazeUuid, hasGivenConsent] = await Promise.all([
+		getBrazeUuid(),
+		hasRequiredConsents(),
+	]);
 
-    await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
+	await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
 
-    if (!(brazeUuid && hasGivenConsent)) {
-        return false;
-    }
+	if (!(brazeUuid && hasGivenConsent)) {
+		return false;
+	}
 
-    // Don't load Braze SDK for paid content
-    if (config.get('page').isPaidContent) {
-        return false;
-    }
+	// Don't load Braze SDK for paid content
+	if (config.get('page').isPaidContent) {
+		return false;
+	}
 
-    try {
-        const result = await getMessageFromBraze(apiKey, brazeUuid);
-        const timeTaken = bannerTiming.end();
+	try {
+		const result = await getMessageFromBraze(apiKey, brazeUuid);
+		const timeTaken = bannerTiming.end();
 
-        if (timeTaken) {
-            ophan.record({
-                component: 'braze-banner-timing',
-                value: timeTaken,
-            });
-        }
+		if (timeTaken) {
+			ophan.record({
+				component: 'braze-banner-timing',
+				value: timeTaken,
+			});
+		}
 
-        return result;
-    } catch (e) {
-        bannerTiming.clear()
-        return false;
-    }
+		return result;
+	} catch (e) {
+		bannerTiming.clear();
+		return false;
+	}
 };
 
 const show = () =>
