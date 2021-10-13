@@ -35,13 +35,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
       Some(lastUpdateBlock),
       None,
       Some(true),
+      filterByKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)
 
     // newer blocks
-    content should include("block-56d03894e4b0bd5a0524cbab")
+    content should include("block-56d03894e4b0bd5a0524cbaba")
     content should include("block-56d039fce4b0d38537b1f61e")
     content should not include "56d04877e4b0bd5a0524cbe2" // at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
 
@@ -50,6 +51,29 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     //older block
     content should not include "block-56d02bd2e4b0d38537b1f5fa"
+
+  }
+
+  it should "return only the key event blocks of a live blog" in {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
+      filterByKeyEvents = Some(true),
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+
+    // newer blocks
+
+    content should not include "56d084d0e4b0bd5a0524ccbe" // at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
 
   }
 
