@@ -6,6 +6,7 @@ import {
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
+import type { CountryCode } from '@guardian/libs';
 import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
 import { once, pick } from 'lodash-es';
 import config from '../../../../lib/config';
@@ -76,7 +77,7 @@ type PageTargeting = PartialWithNulls<{
 	at: string; // Ad Test
 	bl: string[]; // BLog tags
 	bp: 'mobile' | 'tablet' | 'desktop'; // BreakPoint
-	cc: string; // Country Code
+	cc: CountryCode; // Country Code
 	co: string; // COntributor
 	ct: ContentType;
 	dcre: TrueOrFalse; // DotCom-Rendering Eligible
