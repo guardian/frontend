@@ -52,6 +52,7 @@ type UserSync =
 
 type PbjsConfig = {
 	bidderTimeout: number;
+	timeoutBuffer?: number;
 	priceGranularity: typeof priceGranularity;
 	userSync: UserSync;
 	consentManagement?: ConsentManagement;
@@ -173,6 +174,16 @@ const getBidderTimeoutFromABTest = (): number => {
 	return bidderTimeout ?? defaultBidderTimeout;
 };
 
+/**
+ * Prebid supports an additional timeout buffer to account for noisiness in
+ * timing JavaScript on the page. This value is passed to the Prebid config
+ * and is adjustable via this constant
+ */
+const timeoutBuffer = 400;
+
+/**
+ * The amount of time reserved for the auction
+ */
 const bidderTimeout = getBidderTimeoutFromABTest();
 
 log('commercial', `Using a prebid timeout of ${bidderTimeout}ms`);
@@ -244,6 +255,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		{},
 		{
 			bidderTimeout,
+			timeoutBuffer,
 			priceGranularity,
 			userSync,
 		},
