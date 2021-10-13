@@ -28,6 +28,38 @@ type TrueOrFalse = 't' | 'f';
 
 type PartialWithNulls<T> = { [P in keyof T]?: T[P] | null };
 
+const frequency = [
+	'0',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6-9',
+	'10-15',
+	'16-19',
+	'20-29',
+	'30plus',
+] as const;
+
+const adManagerGroups = [
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'10',
+	'11',
+	'12',
+] as const;
+
+type Frequency = typeof frequency[number];
+type AdManagerGroup = typeof adManagerGroups[number];
+
 type PageTargeting = PartialWithNulls<{
 	ab: string[];
 	at: string; // Ad Test
@@ -37,7 +69,7 @@ type PageTargeting = PartialWithNulls<{
 	co: string; // COntributor
 	ct: string; // Content Type
 	dcre: TrueOrFalse; // DotCom-Rendering Eligible
-	edition: string;
+	edition: 'uk' | 'us' | 'au' | 'int';
 	gdncrm: string | string[]; // GuarDiaN CRM
 	k: string[]; // Keywords
 	ms: string; // Media Source
@@ -60,13 +92,7 @@ type PageTargeting = PartialWithNulls<{
 	consent_tcfv2: string;
 	cmp_interaction: string;
 	se: string;
-	ob: string;
-	br: string;
-	af: string;
-	fr: string;
-	ref: string;
-	inskin: string;
-	amtgrp: string; // Ad manager group
+	fr: Frequency; // FRequency
 	s: string; // Section
 
 	// And more
@@ -146,14 +172,14 @@ const abParam = (): string[] => {
 	return abParams;
 };
 
-const getVisitedValue = (): string => {
+const getFrequencyValue = (): Frequency => {
 	const visitCount: number = parseInt(
 		storage.local.getRaw('gu.alreadyVisited') ?? '0',
 		10,
 	);
 
 	if (visitCount <= 5) {
-		return visitCount.toString();
+		return frequency[visitCount];
 	} else if (visitCount >= 6 && visitCount <= 9) {
 		return '6-9';
 	} else if (visitCount >= 10 && visitCount <= 15) {
@@ -166,7 +192,7 @@ const getVisitedValue = (): string => {
 		return '30plus';
 	}
 
-	return visitCount.toString();
+	return '0';
 };
 
 const getReferrer = (): string | null => {
@@ -361,7 +387,7 @@ const rebuildPageTargeting = () => {
 				config.get<boolean>('page.dcrCouldRender', false)
 					? 't'
 					: 'f',
-			fr: getVisitedValue(),
+			fr: getFrequencyValue(),
 			gdncrm: getUserSegments(adConsentState),
 			inskin: inskinTargeting(),
 			ms: formatTarget(page.source),

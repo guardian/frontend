@@ -440,6 +440,11 @@ describe('Build Page Targeting', () => {
 			storage.local.remove('gu.alreadyVisited');
 			expect(getPageTargeting().fr).toEqual('0');
 		});
+
+		it('passes a value of 0 if the number is invalid', () => {
+			storage.local.setRaw('gu.alreadyVisited', 'not-a-number');
+			expect(getPageTargeting().fr).toEqual('0');
+		});
 	});
 
 	describe('Referrer', () => {
