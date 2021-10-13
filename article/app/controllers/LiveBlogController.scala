@@ -145,7 +145,8 @@ class LiveBlogController(
     val newContent = liveblog.article.content.copy(fields = newFields )
     val newArticle = liveblog.article.copy(content = newContent);
     val newLiveblog = liveblog.copy(article = newArticle)
-    println("filtered blocks", liveblog.article.blocks.get.requestedBodyBlocks.head._2)
+
+//    println("requested blocks", liveblog.article.blocks.get.requestedBodyBlocks)
 //      println("liveblog.article.blocks.body", liveblog.article.blocks.get.body)
 //      println("liveblog.article.blocks.requestedBodyBlocks", liveblog.article.blocks.get.requestedBodyBlocks)
 //    println("liveblog.article.fields.blocks.size", liveblog.article.fields.blocks.get.body.size)
@@ -153,8 +154,9 @@ class LiveBlogController(
 
     range match {
       case SinceBlockId(lastBlockId) =>
-        renderNewerUpdatesJson(newLiveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
-      case _ => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(newLiveblog),newLiveblog))
+        renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
+      case _ =>
+        Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog),liveblog))
     }
   }
 
@@ -164,16 +166,17 @@ class LiveBlogController(
                                             isLivePage: Option[Boolean],
                                             filterByKeyEvents: Option[Boolean]
                                           )(implicit request: RequestHeader): Future[Result] = {
-    val newBlocks = page.article.fields.blocks.toSeq
+
+
+    val newBlocks: Seq[BodyBlock] = page.article.fields.blocks.toSeq
       .flatMap {
         blocks => blocks.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
       }
       .takeWhile { block =>
         block.id != lastUpdateBlockId.lastUpdate
       }
-      .filter(_.attributes.keyEvent)
 
-    println("NEW BLOCKS", newBlocks)
+
 
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone))

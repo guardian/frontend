@@ -1,5 +1,6 @@
 package model
 
+import model.liveblog.BodyBlock.KeyEvent
 import model.liveblog.{Blocks, BodyBlock}
 
 case class LiveBlogCurrentPage(
@@ -34,6 +35,7 @@ object LiveBlogCurrentPage {
     val remainder = blocks.totalBodyBlocks % pageSize
     val numPages = blocks.totalBodyBlocks / pageSize
     blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage).map { requestedBodyBlocks =>
+      val keyEventBlocks = requestedBodyBlocks.filter(_.eventType == KeyEvent)
       val (firstPageBlocks, startOfSecondPageBlocks) = requestedBodyBlocks.splitAt(remainder + pageSize)
       val oldestPage = blocks.requestedBodyBlocks
         .get(CanonicalLiveBlog.oldestPage)
@@ -55,7 +57,7 @@ object LiveBlogCurrentPage {
             ),
           )
         else None
-      LiveBlogCurrentPage(FirstPage(firstPageBlocks), pagination)
+      LiveBlogCurrentPage(FirstPage(keyEventBlocks), pagination)
     }
   }
 
