@@ -31,9 +31,6 @@
   "../lib/cookies.js",
   "../lib/report-error.js"
  ],
- "../lib/getPrivacyFramework.js": [
-  "../projects/common/modules/commercial/geo-utils.js"
- ],
  "../lib/launchpad.js": [],
  "../lib/load-css-promise.js": [],
  "../lib/mediator.js": [
@@ -273,7 +270,7 @@
   "../projects/commercial/modules/messenger/type.js",
   "../projects/commercial/modules/messenger/viewport.js",
   "../projects/commercial/modules/remove-slots.ts",
-  "../projects/common/modules/commercial/build-page-targeting.js",
+  "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/commercial-features.js",
   "../projects/common/modules/identity/api.ts"
  ],
@@ -290,7 +287,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/build-page-targeting.js",
+  "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/commercial-features.js"
  ],
  "../projects/commercial/modules/dfp/queue-advert.ts": [
@@ -340,7 +337,7 @@
  "../projects/commercial/modules/header-bidding/prebid/appnexus.js": [
   "../lib/config.js",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/build-page-targeting.js",
+  "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
  "../projects/commercial/modules/header-bidding/prebid/bid-config.ts": [
@@ -349,7 +346,7 @@
   "../lib/url.ts",
   "../projects/commercial/modules/header-bidding/prebid/appnexus.js",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/build-page-targeting.js",
+  "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
@@ -563,7 +560,7 @@
   "../../../../node_modules/fastdom/fastdom.d.ts",
   "../lib/config.d.ts",
   "../lib/url.ts",
-  "../projects/common/modules/commercial/build-page-targeting.js",
+  "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/commercial-features.js",
   "../projects/common/modules/video/ga-helper.js"
  ],
@@ -573,16 +570,17 @@
   "../lib/mediator.js",
   "../projects/common/modules/video/ga-helper.js"
  ],
- "../projects/common/modules/commercial/build-page-targeting.js": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js",
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../../../../node_modules/lodash-es/lodash.js",
-  "../lib/config.js",
-  "../lib/cookies.js",
+ "../projects/common/modules/commercial/build-page-targeting.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
+  "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/geolocation.ts",
-  "../lib/getPrivacyFramework.js",
   "../lib/url.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/commercial-features.js",

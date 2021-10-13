@@ -111,7 +111,7 @@ jest.mock('../../../../lib/detect', () => ({
 	hasCrossedBreakpoint: jest.fn(),
 	isBreakpoint: jest.fn(),
 	getBreakpoint: jest.fn(),
-	getViewport: jest.fn(),
+	getViewport: jest.fn(() => ({ width: 0, height: 0 })),
 	hasPushStateSupport: jest.fn(),
 	getReferrer: jest.fn(() => ''),
 	breakpoints: [
