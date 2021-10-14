@@ -87,6 +87,7 @@ interface PageConfig extends CommercialPageConfig {
 	frontendAssetsFullURL?: string; // only in DCR
 	dfpNonRefreshableLineItemIds?: string[];
 	section: string;
+	isPaidContent: boolean;
 	isSensitive: boolean;
 	videoDuration: number;
 	source: string;
