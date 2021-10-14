@@ -1,3 +1,4 @@
+import type { CountryCode } from '@guardian/libs';
 import { _ } from 'common/modules/commercial/geo-utils';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { getCountryCode as getCountryCode_ } from 'lib/geolocation';
@@ -121,7 +122,7 @@ describe('Utils', () => {
 		expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
 	});
 
-	test.each([
+	test.each<[CountryCode, 'on' | 'off', boolean]>([
 		['AU', 'on', true],
 		['AU', 'off', true],
 		['NZ', 'on', true],
@@ -158,7 +159,15 @@ describe('Utils', () => {
 	});
 
 	test('shouldIncludeOpenx should return true if within ROW region', () => {
-		const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'IE'];
+		const testGeos: CountryCode[] = [
+			'FK',
+			'GI',
+			'GG',
+			'IM',
+			'JE',
+			'SH',
+			'IE',
+		];
 		for (let i = 0; i < testGeos.length; i += 1) {
 			getCountryCode.mockReturnValueOnce(testGeos[i]);
 			expect(shouldIncludeOpenx()).toBe(true);
@@ -166,7 +175,7 @@ describe('Utils', () => {
 	});
 
 	test('shouldIncludeOpenx should return false if within US region', () => {
-		const testGeos = ['CA', 'US'];
+		const testGeos: CountryCode[] = ['CA', 'US'];
 		for (let i = 0; i < testGeos.length; i += 1) {
 			getCountryCode.mockReturnValue(testGeos[i]);
 			expect(shouldIncludeOpenx()).toBe(false);
@@ -174,7 +183,7 @@ describe('Utils', () => {
 	});
 
 	test('shouldIncludeOpenx should return true if within AU region', () => {
-		const testGeos = ['NZ', 'AU'];
+		const testGeos: CountryCode[] = ['NZ', 'AU'];
 		for (let i = 0; i < testGeos.length; i += 1) {
 			getCountryCode.mockReturnValue(testGeos[i]);
 			expect(shouldIncludeOpenx()).toBe(true);
@@ -187,7 +196,15 @@ describe('Utils', () => {
 	});
 
 	test('shouldIncludeTrustX should otherwise return false', () => {
-		const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
+		const testGeos: CountryCode[] = [
+			'FK',
+			'GI',
+			'GG',
+			'IM',
+			'JE',
+			'SH',
+			'AU',
+		];
 		for (let i = 0; i < testGeos.length; i += 1) {
 			getCountryCode.mockReturnValueOnce(testGeos[i]);
 			expect(shouldIncludeTrustX()).toBe(false);
@@ -225,7 +242,7 @@ describe('Utils', () => {
 
 	test('shouldIncludeXaxis should be false if geolocation is not GB', () => {
 		config.set('page.isDev', true);
-		const testGeos = [
+		const testGeos: CountryCode[] = [
 			'FK',
 			'GI',
 			'GG',
@@ -244,7 +261,7 @@ describe('Utils', () => {
 	});
 
 	test('shouldIncludeSonobi should return true if geolocation is US', () => {
-		const testGeos = ['US', 'CA'];
+		const testGeos: CountryCode[] = ['US', 'CA'];
 		for (let i = 0; i < testGeos.length; i += 1) {
 			getCountryCode.mockReturnValueOnce(testGeos[i]);
 			expect(shouldIncludeSonobi()).toBe(true);
@@ -252,7 +269,15 @@ describe('Utils', () => {
 	});
 
 	test('shouldIncludeSonobi should otherwise return false', () => {
-		const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
+		const testGeos: CountryCode[] = [
+			'FK',
+			'GI',
+			'GG',
+			'IM',
+			'JE',
+			'SH',
+			'AU',
+		];
 		for (let i = 0; i < testGeos.length; i += 1) {
 			getCountryCode.mockReturnValueOnce(testGeos[i]);
 			expect(shouldIncludeSonobi()).toBe(false);
@@ -317,7 +342,9 @@ describe('Utils', () => {
 		});
 	});
 
-	['US', 'CA', 'AU', 'NZ'].forEach((region) => {
+	const regions: CountryCode[] = ['US', 'CA', 'AU', 'NZ'];
+
+	regions.forEach((region) => {
 		test(`should include mobile sticky if geolocation is ${region}, switch is ON and content is Article on mobiles`, () => {
 			config.set('page.contentType', 'Article');
 			config.set('switches.mobileStickyLeaderboard', true);
