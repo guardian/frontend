@@ -1,3 +1,4 @@
+import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { getAdvertById as getAdvertById_ } from './get-advert-by-id';
 import { enableLazyLoad } from './lazy-load';
@@ -53,7 +54,7 @@ describe('enableLazyLoad', () => {
 
 	it('should create an observer if lazyLoadObserve is true', () => {
 		dfpEnv.lazyLoadObserve = true;
-		enableLazyLoad(testAdvert);
+		enableLazyLoad((testAdvert as unknown) as Advert);
 		expect(loadAdvert).not.toHaveBeenCalled();
 		expect(
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- valid array access
@@ -66,7 +67,7 @@ describe('enableLazyLoad', () => {
 	it('should still display the adverts if lazyLoadObserve is false', () => {
 		dfpEnv.lazyLoadObserve = false;
 		(getAdvertById as jest.Mock).mockReturnValue(testAdvert);
-		enableLazyLoad(testAdvert);
+		enableLazyLoad((testAdvert as unknown) as Advert);
 		expect((getAdvertById as jest.Mock).mock.calls).toEqual([
 			['test-advert'],
 		]);
