@@ -140,10 +140,16 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
 	appboy.changeUser(brazeUuid);
 	appboy.openSession();
 
-	const canShowPromise = brazeMessages.getMessageForBanner().then((m) => {
-		message = m;
-		return true;
-	});
+	const brazeArticleContext = {
+		section: config.get('page.section'),
+	};
+
+	const canShowPromise = brazeMessages
+		.getMessageForBanner(brazeArticleContext)
+		.then((m) => {
+			message = m;
+			return true;
+		});
 
 	canShowPromise
 		.then(() => {
