@@ -1,7 +1,7 @@
-import { enableLazyLoad } from './lazy-load';
-import { getAdvertById as getAdvertById_ } from './get-advert-by-id';
-import { loadAdvert } from './load-advert';
 import { dfpEnv } from './dfp-env';
+import { getAdvertById as getAdvertById_ } from './get-advert-by-id';
+import { enableLazyLoad } from './lazy-load';
+import { loadAdvert } from './load-advert';
 
 jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(),
@@ -35,7 +35,7 @@ describe('enableLazyLoad', () => {
 
 	beforeEach(() => {
 		jest.resetAllMocks();
-		window.IntersectionObserver = jest.fn(() => ({
+		(window.IntersectionObserver as jest.Mock) = jest.fn(() => ({
 			observe: jest.fn(),
 		}));
 
@@ -55,16 +55,21 @@ describe('enableLazyLoad', () => {
 		dfpEnv.lazyLoadObserve = true;
 		enableLazyLoad(testAdvert);
 		expect(loadAdvert).not.toHaveBeenCalled();
-		expect(window.IntersectionObserver.mock.calls[0][1]).toEqual({
+		expect(
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- valid array access
+			(window.IntersectionObserver as jest.Mock).mock.calls[0][1],
+		).toEqual({
 			rootMargin: '200px 0px',
 		});
 	});
 
 	it('should still display the adverts if lazyLoadObserve is false', () => {
 		dfpEnv.lazyLoadObserve = false;
-		getAdvertById.mockReturnValue(testAdvert);
+		(getAdvertById as jest.Mock).mockReturnValue(testAdvert);
 		enableLazyLoad(testAdvert);
-		expect(getAdvertById.mock.calls).toEqual([['test-advert']]);
+		expect((getAdvertById as jest.Mock).mock.calls).toEqual([
+			['test-advert'],
+		]);
 		expect(loadAdvert).toHaveBeenCalledWith(testAdvert);
 	});
 });
