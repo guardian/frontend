@@ -143,7 +143,7 @@
  "../projects/commercial/modules/dfp/add-slot.ts": [
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/commercial/modules/dfp/lazy-load.js",
+  "../projects/commercial/modules/dfp/lazy-load.ts",
   "../projects/commercial/modules/dfp/load-advert.js",
   "../projects/commercial/modules/dfp/queue-advert.ts"
  ],
@@ -171,7 +171,7 @@
  "../projects/commercial/modules/dfp/display-lazy-ads.ts": [
   "../lib/partition.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/commercial/modules/dfp/lazy-load.js",
+  "../projects/commercial/modules/dfp/lazy-load.ts",
   "../projects/commercial/modules/dfp/load-advert.js"
  ],
  "../projects/commercial/modules/dfp/empty-advert.ts": [
@@ -195,8 +195,9 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
- "../projects/commercial/modules/dfp/lazy-load.js": [
-  "../../../../node_modules/lodash-es/lodash.js",
+ "../projects/commercial/modules/dfp/lazy-load.ts": [
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
+  "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.js"
@@ -228,7 +229,7 @@
  "../projects/commercial/modules/dfp/on-slot-viewable.js": [
   "../lib/url.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/lazy-load.js"
+  "../projects/commercial/modules/dfp/lazy-load.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-visibility-changed.js": [
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",

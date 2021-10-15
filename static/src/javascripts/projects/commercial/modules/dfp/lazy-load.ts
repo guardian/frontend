@@ -1,9 +1,10 @@
 import { once } from 'lodash-es';
+import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert, refreshAdvert } from './load-advert';
 
-const displayAd = (advertId) => {
+const displayAd = (advertId: string) => {
 	const advert = getAdvertById(advertId);
 	if (advert) {
 		if (advert.isRendered) {
@@ -14,8 +15,11 @@ const displayAd = (advertId) => {
 	}
 };
 
-const onIntersect = (entries, observer) => {
-	const advertIds = [];
+const onIntersect = (
+	entries: IntersectionObserverEntry[],
+	observer: IntersectionObserver,
+) => {
+	const advertIds: string[] = [];
 
 	entries
 		.filter((entry) => !('isIntersecting' in entry) || entry.isIntersecting)
@@ -26,7 +30,7 @@ const onIntersect = (entries, observer) => {
 		});
 
 	dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter(
-		(advert) => advertIds.indexOf(advert.id) < 0,
+		(advert) => !advertIds.includes(advert.id),
 	);
 };
 
@@ -38,9 +42,9 @@ const getObserver = once(() =>
 	),
 );
 
-export const enableLazyLoad = (advert) => {
+export const enableLazyLoad = (advert: Advert): void => {
 	if (dfpEnv.lazyLoadObserve) {
-		getObserver().then((observer) => observer.observe(advert.node));
+		void getObserver().then((observer) => observer.observe(advert.node));
 	} else {
 		displayAd(advert.id);
 	}
