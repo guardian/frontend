@@ -57,9 +57,8 @@ describe('enableLazyLoad', () => {
 		enableLazyLoad((testAdvert as unknown) as Advert);
 		expect(loadAdvert).not.toHaveBeenCalled();
 		expect(
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- valid array access
-			(window.IntersectionObserver as jest.Mock).mock.calls[0][1],
-		).toEqual({
+			window.IntersectionObserver as jest.Mock,
+		).toHaveBeenNthCalledWith(1, expect.anything(), {
 			rootMargin: '200px 0px',
 		});
 	});
