@@ -35,6 +35,8 @@ const autoUpdate = (opts) => {
     let latestBlockId = $liveblogBody.data('most-recent-block');
     let unreadBlocksNo = 0;
     let updateTimeoutId;
+    let filterStatus = false;
+
 
     const updateDelay = (delay) => {
         let newDelay;
@@ -114,13 +116,14 @@ const autoUpdate = (opts) => {
         }
 
         let count = 0;
-        const filterByKeyEvents = ''; //todo handle updates?
+        const filterByKeyEvents = `&filterByKeyEvents=${filterStatus ? 'true' : 'false'}`;
         const shouldFetchBlocks = `&isLivePage=${
             isLivePage ? 'true' : 'false'
         }`;
         const latestBlockIdToUse = latestBlockId || 'block-0';
-        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}`;
+        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterByKeyEvents}`;
         const endpoint = `${window.location.pathname}.json${params}`;
+        console.log(endpoint)
         // #? One day this should be in Promise.finally()
         const setUpdateDelay = () => {
             if (count === 0 || currentUpdateDelay > 0) {
@@ -141,7 +144,7 @@ const autoUpdate = (opts) => {
         })
             .then(resp => {
                 count = resp.numNewBlocks;
-
+                 
                 if (count > 0) {
                     unreadBlocksNo += count;
 
@@ -171,6 +174,11 @@ const autoUpdate = (opts) => {
     };
 
     const setUpListeners = () => {
+        bean.on(document.body, 'click', '.filter__button', () => {
+             filterStatus = !filterStatus;
+             checkForUpdates();
+        })
+
         bean.on(document.body, 'click', '.toast__button', () => {
             if (isLivePage) {
                 fastdom.measure(() => {

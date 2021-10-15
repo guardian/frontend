@@ -21,6 +21,8 @@ import renderers.DotcomRenderingService
 import scala.concurrent.Future
 import model.dotcomrendering.PageType
 import model.liveblog.BodyBlock
+import model.liveblog.BodyBlock.{KeyEvent}
+
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
@@ -135,26 +137,34 @@ class LiveBlogController(
      filterByKeyEvents: Option[Boolean]
    )(implicit request: RequestHeader): Future[Result] = {
 
-    // TODO handle updates?
-//    val filteredBlocks = liveblog.article.blocks.get.requestedBodyBlocks.head._2.filter(_.attributes.keyEvent)
-//    val filteredRequestedBodyBlocks = Map(liveblog.article.blocks.get.requestedBodyBlocks.head._1 -> filteredBlocks)
-//    val newBlocks = liveblog.article.blocks.get.copy(requestedBodyBlocks = filteredRequestedBodyBlocks)
-//    val newFields = liveblog.article.content.fields.copy(blocks = Some(newBlocks))
-//    val newContent = liveblog.article.content.copy(fields = newFields )
-//    val newArticle = liveblog.article.copy(content = newContent);
-//    val newLiveblog = liveblog.copy(article = newArticle)
-
-//    println("requested blocks", liveblog.article.blocks.get.requestedBodyBlocks)
-//      println("liveblog.article.blocks.body", liveblog.article.blocks.get.body)
-//      println("liveblog.article.blocks.requestedBodyBlocks", liveblog.article.blocks.get.requestedBodyBlocks)
-//    println("liveblog.article.fields.blocks.size", liveblog.article.fields.blocks.get.body.size)
-//    println("liveblog.article.blocks.head", liveblog.article.blocks.get.body.head)
-
     range match {
-      case SinceBlockId(lastBlockId) =>
-        renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
+        case SinceBlockId(lastBlockId) =>
+          renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
+        case _ =>
+          Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog),liveblog))
+    }
+  }
+
+  private[this] def flatMapBlocks(page:PageWithStoryPackage, lastUpdateBlockId: SinceBlockId, filterByKeyEvents: Option[Boolean]): Seq[BodyBlock] = {
+    filterByKeyEvents match {
+      case Some(true) =>
+        page.article.fields.blocks.toSeq
+          .flatMap {
+            blocks => blocks.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
+          }
+          .filter(_.eventType == KeyEvent)
+          .takeWhile { block =>
+            block.id != lastUpdateBlockId.lastUpdate
+          }
+
       case _ =>
-        Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog),liveblog))
+        page.article.fields.blocks.toSeq
+          .flatMap {
+            blocks => blocks.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
+          }
+          .takeWhile { block =>
+            block.id != lastUpdateBlockId.lastUpdate
+          }
     }
   }
 
@@ -164,17 +174,7 @@ class LiveBlogController(
                                             isLivePage: Option[Boolean],
                                             filterByKeyEvents: Option[Boolean]
                                           )(implicit request: RequestHeader): Future[Result] = {
-
-
-    val newBlocks: Seq[BodyBlock] = page.article.fields.blocks.toSeq
-      .flatMap {
-        blocks => blocks.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
-      }
-      .takeWhile { block =>
-        block.id != lastUpdateBlockId.lastUpdate
-      }
-
-
+    val newBlocks = flatMapBlocks(page, lastUpdateBlockId, filterByKeyEvents);
 
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone))
