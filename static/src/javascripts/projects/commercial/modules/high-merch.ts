@@ -1,9 +1,9 @@
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
-import { createSlots } from './dfp/create-slots';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+import { createSlots } from './dfp/create-slots';
 
-export const init = () => {
+export const init = (): Promise<void> => {
 	if (commercialFeatures.highMerch) {
 		const anchorSelector = config.get('page.commentable')
 			? '#comments + *'
@@ -13,7 +13,9 @@ export const init = () => {
 
 		container.className = 'fc-container fc-container--commercial';
 		const slots = createSlots(
-			config.get('page.isPaidContent') ? 'high-merch-paid' : 'high-merch',
+			window.guardian.config.page.isPaidContent
+				? 'high-merch-paid'
+				: 'high-merch',
 		);
 
 		slots.forEach((slot) => {
@@ -21,7 +23,7 @@ export const init = () => {
 		});
 
 		return fastdom.mutate(() => {
-			if (anchor && anchor.parentNode) {
+			if (anchor?.parentNode) {
 				anchor.parentNode.insertBefore(container, anchor);
 			}
 		});
