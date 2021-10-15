@@ -1,7 +1,8 @@
 import type { ABTest } from '@guardian/ab-core';
 import { getSynchronousTestsToRun } from '../experiments/ab';
+import { prebidTimeout } from '../experiments/tests/prebid-timeout';
 
-const defaultClientSideTests: ABTest[] = [];
+const defaultClientSideTests: ABTest[] = [prebidTimeout];
 const serverSideTests: ServerSideABTest[] = [
 	'standaloneCommercialBundleTrackingVariant',
 ];

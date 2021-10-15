@@ -1,7 +1,9 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
+import { prebidTimeout } from 'common/modules/experiments/tests/prebid-timeout';
 import config from '../../../../../lib/config';
+import { isInVariantSynchronous } from '../../../../common/modules/experiments/ab';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { getHeaderBiddingAdSlots } from '../slot-config';
@@ -50,6 +52,7 @@ type UserSync =
 
 type PbjsConfig = {
 	bidderTimeout: number;
+	timeoutBuffer?: number;
 	priceGranularity: typeof priceGranularity;
 	userSync: UserSync;
 	consentManagement?: ConsentManagement;
@@ -155,7 +158,35 @@ declare global {
 	}
 }
 
-const bidderTimeout = 1500;
+/**
+ * Retrieve the bidder timeout from AB test variant
+ */
+const getBidderTimeoutFromABTest = (): number => {
+	// The default bidder timeout to use if not part of an AB test
+	const defaultBidderTimeout = 1500;
+
+	// Find the possible bidder timeout from variants of AB test
+	// Note these timeout values HAVE to match those in defined in the test variants
+	const bidderTimeout = [500, 1500, 4000].find((timeout) =>
+		isInVariantSynchronous(prebidTimeout, `variant${timeout}`),
+	);
+
+	return bidderTimeout ?? defaultBidderTimeout;
+};
+
+/**
+ * Prebid supports an additional timeout buffer to account for noisiness in
+ * timing JavaScript on the page. This value is passed to the Prebid config
+ * and is adjustable via this constant
+ */
+const timeoutBuffer = 400;
+
+/**
+ * The amount of time reserved for the auction
+ */
+const bidderTimeout = getBidderTimeoutFromABTest();
+
+log('commercial', `Using a prebid timeout of ${bidderTimeout}ms`);
 
 class PrebidAdUnit {
 	code: string | null | undefined;
@@ -224,6 +255,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		{},
 		{
 			bidderTimeout,
+			timeoutBuffer,
 			priceGranularity,
 			userSync,
 		},
