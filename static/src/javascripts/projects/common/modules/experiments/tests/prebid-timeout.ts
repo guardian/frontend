@@ -6,7 +6,7 @@ export const prebidTimeout: ABTest = {
 	author: 'Chris Jones (@chrislomaxjones)',
 	start: '2021-10-6',
 	expiry: '2021-10-22',
-	audience: 0.03,
+	audience: 3 / 100,
 	audienceOffset: 0,
 	audienceCriteria: 'All users',
 	description:
