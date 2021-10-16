@@ -144,7 +144,6 @@ const autoUpdate = (opts) => {
         })
             .then(resp => {
                 count = resp.numNewBlocks;
-                 
                 if (count > 0) {
                     unreadBlocksNo += count;
 
@@ -175,8 +174,8 @@ const autoUpdate = (opts) => {
 
     const setUpListeners = () => {
         bean.on(document.body, 'click', '.filter__button', () => {
-             filterStatus = !filterStatus;
-             checkForUpdates();
+                filterStatus = !filterStatus;
+                checkForUpdates();
         })
 
         bean.on(document.body, 'click', '.toast__button', () => {

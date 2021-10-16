@@ -150,7 +150,7 @@ class LiveBlogController(
       case Some(true) =>
         page.article.fields.blocks.toSeq
           .flatMap {
-            blocks => blocks.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
+            _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
           }
           .filter(_.eventType == KeyEvent)
           .takeWhile { block =>
@@ -160,7 +160,7 @@ class LiveBlogController(
       case _ =>
         page.article.fields.blocks.toSeq
           .flatMap {
-            blocks => blocks.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
+            _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
           }
           .takeWhile { block =>
             block.id != lastUpdateBlockId.lastUpdate
