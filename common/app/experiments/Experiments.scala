@@ -38,7 +38,7 @@ object StandaloneCommercialBundle
       name = "standalone-commercial-bundle",
       description = "Serve a standalone commercial bundle to a subset of users",
       owners = Seq(Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2021, 10, 15),
+      sellByDate = LocalDate.of(2021, 11, 1),
       participationGroup = Perc50,
     )
 
@@ -47,6 +47,6 @@ object StandaloneCommercialBundleTracking
       name = "standalone-commercial-bundle-tracking",
       description = "Track performance metrics for the standalone commercial bundle",
       owners = Seq(Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2021, 10, 15),
+      sellByDate = LocalDate.of(2021, 11, 1),
       participationGroup = Perc1A,
     )
