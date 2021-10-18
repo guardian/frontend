@@ -116,12 +116,13 @@ const autoUpdate = (opts) => {
         }
 
         let count = 0;
-        const filterByKeyEvents = `&filterByKeyEvents=${filterStatus && !auto ? 'true' : 'false'}`;
+        const filterByKeyEvents = `&filterByKeyEvents=${filterStatus ? 'true' : 'false'}`;
+        const userInteraction = `&userInteraction=${!auto}`
         const shouldFetchBlocks = `&isLivePage=${
             isLivePage ? 'true' : 'false'
         }`;
         const latestBlockIdToUse = latestBlockId || 'block-0';
-        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterByKeyEvents}`;
+        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterByKeyEvents}${userInteraction}`;
         const endpoint = `${window.location.pathname}.json${params}`;
         console.log(endpoint)
         // #? One day this should be in Promise.finally()
@@ -143,6 +144,7 @@ const autoUpdate = (opts) => {
             mode: 'cors',
         })
             .then(resp => {
+                console.log("fetchJson response => ",resp)
                 count = resp.numNewBlocks;
                 if (count > 0) {
                     unreadBlocksNo += count;
