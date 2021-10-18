@@ -110,13 +110,13 @@ const autoUpdate = (opts) => {
         toastButtonRefresh();
     };
 
-    const checkForUpdates = () => {
+    const checkForUpdates = (auto = true) => {
         if (updateTimeoutId !== undefined) {
             clearTimeout(updateTimeoutId);
         }
 
         let count = 0;
-        const filterByKeyEvents = `&filterByKeyEvents=${filterStatus ? 'true' : 'false'}`;
+        const filterByKeyEvents = `&filterByKeyEvents=${filterStatus && !auto ? 'true' : 'false'}`;
         const shouldFetchBlocks = `&isLivePage=${
             isLivePage ? 'true' : 'false'
         }`;
@@ -175,7 +175,7 @@ const autoUpdate = (opts) => {
     const setUpListeners = () => {
         bean.on(document.body, 'click', '.filter__button', () => {
                 filterStatus = !filterStatus;
-                checkForUpdates();
+                checkForUpdates(false);
         })
 
         bean.on(document.body, 'click', '.toast__button', () => {
@@ -214,7 +214,7 @@ const autoUpdate = (opts) => {
             }
 
             currentUpdateDelay = 0; // means please get us fully up to date
-            checkForUpdates();
+            checkForUpdates(true);
         });
     };
 
@@ -227,7 +227,7 @@ const autoUpdate = (opts) => {
         containInParent: false,
     }).init();
 
-    checkForUpdates();
+    checkForUpdates(true);
     initPageVisibility();
     setUpListeners();
 

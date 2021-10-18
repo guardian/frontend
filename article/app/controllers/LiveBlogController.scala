@@ -21,7 +21,8 @@ import renderers.DotcomRenderingService
 import scala.concurrent.Future
 import model.dotcomrendering.PageType
 import model.liveblog.BodyBlock
-import model.liveblog.BodyBlock.{KeyEvent}
+import model.liveblog.BodyBlock.KeyEvent
+import play.twirl.api.HtmlFormat
 
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -153,9 +154,6 @@ class LiveBlogController(
             _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
           }
           .filter(_.eventType == KeyEvent)
-          .takeWhile { block =>
-            block.id != lastUpdateBlockId.lastUpdate
-          }
 
       case _ =>
         page.article.fields.blocks.toSeq
@@ -167,6 +165,7 @@ class LiveBlogController(
           }
     }
   }
+
 
   private[this] def renderNewerUpdatesJson(
                                             page: PageWithStoryPackage,
@@ -190,8 +189,13 @@ class LiveBlogController(
       "mostRecentBlockId" -> s"block-${block.id}"
     }
 
+    val standard: Seq[(String, Any)] = allPagesJson ++ livePageJson ++ mostRecent: _*
+    val filtered =  ???
+
+    val pages = if(filterByKeyEvents.get) filtered else standard
+
     Future {
-      Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
+      Cached(page)(JsonComponent(pages))
     }
   }
 
