@@ -22,7 +22,6 @@ import scala.concurrent.Future
 import model.dotcomrendering.PageType
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.KeyEvent
-import play.twirl.api.HtmlFormat
 
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -74,11 +73,13 @@ class LiveBlogController(
       rendered: Option[Boolean],
       isLivePage: Option[Boolean],
       filterByKeyEvents: Option[Boolean],
+      userInteraction: Option[Boolean]
     ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
+      println("renderjson", userInteraction.getOrElse(false))
       val range = getRange(lastUpdate, rendered)
-
       mapModel(path, range, filterByKeyEvents) {
+        case (blog: LiveBlogPage, blocks) if userInteraction.getOrElse(false) => renderKeyEvents(path, FilteredLiveBlog, filterByKeyEvents)
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR => Future.successful(renderGuuiJson(path, blog, blocks))
         case (blog: LiveBlogPage, blocks) => getJson(blog, range, isLivePage, filterByKeyEvents)
@@ -89,6 +90,13 @@ class LiveBlogController(
   }
 
   // Helper methods
+
+  private def renderKeyEvents(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
+    println("renderKeyEvents")
+    mapModel(path, CanonicalLiveBlog, filterByKeyEvents) { (page, blocks) =>
+      renderKeyEventsJson(page, Some(true))
+    }
+  }
 
   private def renderWithRange(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
     mapModel(path, range, filterByKeyEvents) { (page, blocks) =>
@@ -189,15 +197,40 @@ class LiveBlogController(
       "mostRecentBlockId" -> s"block-${block.id}"
     }
 
-    val standard: Seq[(String, Any)] = allPagesJson ++ livePageJson ++ mostRecent: _*
-    val filtered =  ???
-
-    val pages = if(filterByKeyEvents.get) filtered else standard
-
     Future {
-      Cached(page)(JsonComponent(pages))
+      Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
     }
   }
+
+    private[this] def renderKeyEventsJson(
+                                              page: PageWithStoryPackage,
+                                              isLivePage: Option[Boolean],
+                                            )(implicit request: RequestHeader): Future[Result] = {
+      println("renderKeyEventsJson")
+
+      val newBlocks =  page.article.fields.blocks.toSeq
+       .flatMap {
+         _.requestedBodyBlocks.getOrElse(CanonicalLiveBlog.timeline, Seq())
+       }
+      println("key events => ", newBlocks)
+      val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
+      val timelineHtml = views.html.liveblog.keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone))
+
+      val allPagesJson = Seq(
+        "timeline" -> timelineHtml,
+        "numNewBlocks" -> newBlocks.size,
+      )
+      val livePageJson = isLivePage.filter(_ == true).map { _ =>
+        "html" -> blocksHtml
+      }
+      val mostRecent = newBlocks.headOption.map { block =>
+        "mostRecentBlockId" -> s"block-${block.id}"
+      }
+
+      Future {
+        Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
+      }
+    }
 
   private[this] def renderGuuiJson(
                                     path: String,

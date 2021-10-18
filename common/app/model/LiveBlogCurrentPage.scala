@@ -19,6 +19,7 @@ object LiveBlogCurrentPage {
       case SinceBlockId(blockId)           => updates(blocks, SinceBlockId(blockId))
       case ArticleBlocks                   => None
       case GenericFallback                 => None
+      case _ => None
     }
   }
 
