@@ -123,7 +123,6 @@ const autoUpdate = (opts) => {
         const latestBlockIdToUse = latestBlockId || 'block-0';
         const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterByKeyEvents}${userInteraction}`;
         const endpoint = `${window.location.pathname}.json${params}`;
-        console.log(endpoint)
         // #? One day this should be in Promise.finally()
         const setUpdateDelay = () => {
             if (count === 0 || currentUpdateDelay > 0) {
@@ -143,7 +142,6 @@ const autoUpdate = (opts) => {
             mode: 'cors',
         })
             .then(resp => {
-                console.log("fetchJson response => ",resp)
                 count = resp.numNewBlocks;
                 if (count > 0) {
                     unreadBlocksNo += count;
