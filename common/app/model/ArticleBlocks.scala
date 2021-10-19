@@ -31,6 +31,7 @@ case object GenericFallback extends BlockRange {
 
 object FilteredLiveBlog extends BlockRange {
   val mainBlock = "main"
+  val firstPage = "body:latest:60"
   val keyEvents = "body:key-events"
   val query = Some(Seq(mainBlock, keyEvents))
 }
