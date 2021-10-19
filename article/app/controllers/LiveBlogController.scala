@@ -162,6 +162,9 @@ class LiveBlogController(
             _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
           }
           .filter(_.eventType == KeyEvent)
+          .takeWhile { block =>
+            block.id != lastUpdateBlockId.lastUpdate
+          }
 
       case _ =>
         page.article.fields.blocks.toSeq
