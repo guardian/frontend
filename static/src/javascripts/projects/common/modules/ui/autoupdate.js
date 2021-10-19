@@ -81,7 +81,7 @@ const autoUpdate = (opts) => {
         });
     };
 
-    const injectNewBlocks = (newBlocks) => {
+    const injectNewBlocks = (newBlocks, userInteraction) => {
         // Clean up blocks before insertion
         const resultHtml = $.create(`<div>${newBlocks}</div>`)[0];
         let elementsToAdd;
@@ -90,11 +90,11 @@ const autoUpdate = (opts) => {
             bonzo(resultHtml.children).addClass('autoupdate--hidden');
             elementsToAdd = Array.from(resultHtml.children);
 
+            userInteraction && $liveblogBody.empty()
+
             // Insert new blocks
-            $liveblogBody.prepend(elementsToAdd);
-
+            $liveblogBody.prepend(elementsToAdd)
             mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
-
             initRelativeDates();
             enhanceTweets();
             checkElemsForVideos(elementsToAdd);
@@ -155,7 +155,7 @@ const autoUpdate = (opts) => {
                     latestBlockId = resp.mostRecentBlockId;
 
                     if (isLivePage) {
-                        injectNewBlocks(resp.html);
+                        injectNewBlocks(resp.html, userInteraction);
 
                         if (scrolledPastTopBlock()) {
                             toastButtonRefresh();
