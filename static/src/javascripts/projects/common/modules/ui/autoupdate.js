@@ -16,7 +16,6 @@ import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 
 
 const updateBlocks = (opts, pollUpdates) => {
-    console.log(pollUpdates)
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -30,6 +29,7 @@ const updateBlocks = (opts, pollUpdates) => {
     // Cache selectors
     const $liveblogBody = $('.js-liveblog-body');
     const $toastButton = $('.toast__button');
+    const $filterButton = $('.filter__button');
     const $toastText = $('.toast__text', $toastButton);
     const toastContainer = qwery('.toast__container')[0];
     let currentUpdateDelay = options.minUpdateDelay;
@@ -90,7 +90,10 @@ const updateBlocks = (opts, pollUpdates) => {
         fastdom.mutate(() => {
             bonzo(resultHtml.children).addClass('autoupdate--hidden');
             elementsToAdd = Array.from(resultHtml.children);
-            if (userInteraction) $liveblogBody.empty()
+            if (userInteraction) {
+                $liveblogBody.empty()
+                mediator.emit('modules:autoupdate:user-interaction');
+            }
 
             // Insert new blocks
             $liveblogBody.prepend(elementsToAdd)
@@ -156,7 +159,7 @@ const updateBlocks = (opts, pollUpdates) => {
                     if (isLivePage) {
                         injectNewBlocks(resp.html, userInteraction);
 
-                        if (scrolledPastTopBlock()) {
+                        if (scrolledPastTopBlock() && !userInteraction) {
                             toastButtonRefresh();
                         } else {
                             displayNewBlocks();
@@ -176,8 +179,7 @@ const updateBlocks = (opts, pollUpdates) => {
     const setUpListeners = () => {
         bean.on(document.body, 'click', '.filter__button', () => {
                 filterStatus = !filterStatus;
-                checkForUpdates(false);
-                console.log('here')
+                checkForUpdates(false)
         })
 
         bean.on(document.body, 'click', '.toast__button', () => {
@@ -218,6 +220,24 @@ const updateBlocks = (opts, pollUpdates) => {
             currentUpdateDelay = 0; // means please get us fully up to date
             checkForUpdates(true);
         });
+
+        mediator.on('modules:autoupdate:user-interaction', () =>{
+            fastdom.measure(() => {
+                scrollToElement(qwery('.content__meta-container'), 300, 'easeOutQuad');
+
+                fastdom
+                    .mutate(() => {
+                        revealInjectedElements();
+                    })
+                    .then(() => {
+                        displayNewBlocks();
+                    }).then(() => {
+                         bonzo($filterButton).html(filterStatus ? "Show all events" : "Filter by key events")
+                    });
+
+            });
+        });
+
     };
 
     // init
