@@ -6,6 +6,7 @@ import {
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
+import type { CountryCode } from '@guardian/libs';
 import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
 import { once, pick } from 'lodash-es';
 import config from '../../../../lib/config';
@@ -28,25 +29,68 @@ type TrueOrFalse = 't' | 'f';
 
 type PartialWithNulls<T> = { [P in keyof T]?: T[P] | null };
 
+const frequency = [
+	'0',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6-9',
+	'10-15',
+	'16-19',
+	'20-29',
+	'30plus',
+] as const;
+
+const adManagerGroups = [
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'10',
+	'11',
+	'12',
+] as const;
+
+type Frequency = typeof frequency[number];
+type AdManagerGroup = typeof adManagerGroups[number];
+type ContentType =
+	| 'video'
+	| 'tag'
+	| 'section'
+	| 'network-front'
+	| 'liveblog'
+	| 'interactive'
+	| 'gallery'
+	| 'crossword'
+	| 'audio'
+	| 'article';
+
 type PageTargeting = PartialWithNulls<{
 	ab: string[];
 	at: string; // Ad Test
 	bl: string[]; // BLog tags
-	bp: string; // BreakPoint
-	cc: string; // Country Code
+	bp: 'mobile' | 'tablet' | 'desktop'; // BreakPoint
+	cc: CountryCode; // Country Code
 	co: string; // COntributor
-	ct: string; // Content Type
+	ct: ContentType;
 	dcre: TrueOrFalse; // DotCom-Rendering Eligible
-	edition: string;
+	edition: 'uk' | 'us' | 'au' | 'int';
 	gdncrm: string | string[]; // GuarDiaN CRM
 	k: string[]; // Keywords
 	ms: string; // Media Source
-	p: string; // Platform (web)
-	pa: string; // Personalised Ads consent
-	permutive: string[];
+	p: 'r2' | 'ng' | 'app' | 'amp'; // Platform (web)
+	pa: TrueOrFalse; // Personalised Ads consent
+	permutive: string[]; // predefined segment values
 	pv: string; // ophan Page View id
-	rp: string; // Rendering Platform
-	sens: string; // SenSitive
+	rp: 'dotcom-rendering' | 'dotcom-platform'; // Rendering Platform
+	sens: TrueOrFalse; // SenSitive
 	si: TrueOrFalse; // Signed In
 	skinsize: 'l' | 's';
 	slot: string; // (predefined list)
@@ -59,15 +103,15 @@ type PageTargeting = PartialWithNulls<{
 	rdp: string;
 	consent_tcfv2: string;
 	cmp_interaction: string;
-	se: string;
-	ob: string;
-	br: string;
-	af: string;
-	fr: string;
-	ref: string;
-	inskin: string;
-	amtgrp: string; // Ad manager group
-	s: string; // Section
+	se: string; // SEries
+	ob: 't'; // OBserver content
+	br: 's' | 'p' | 'f'; // BRanding
+	af: 't'; // Ad Free
+	fr: Frequency; // FRequency
+	ref: string; // REFerrer
+	inskin: TrueOrFalse; // InSkin
+	amtgrp: AdManagerGroup;
+	s: string; // site Section
 
 	// And more
 	[_: string]: string | string[];
@@ -146,14 +190,14 @@ const abParam = (): string[] => {
 	return abParams;
 };
 
-const getVisitedValue = (): string => {
+const getFrequencyValue = (): Frequency => {
 	const visitCount: number = parseInt(
 		storage.local.getRaw('gu.alreadyVisited') ?? '0',
 		10,
 	);
 
 	if (visitCount <= 5) {
-		return visitCount.toString();
+		return frequency[visitCount];
 	} else if (visitCount >= 6 && visitCount <= 9) {
 		return '6-9';
 	} else if (visitCount >= 10 && visitCount <= 15) {
@@ -166,7 +210,7 @@ const getVisitedValue = (): string => {
 		return '30plus';
 	}
 
-	return visitCount.toString();
+	return '0';
 };
 
 const getReferrer = (): string | null => {
@@ -295,14 +339,21 @@ const getAdConsentFromState = (state: ConsentState | null): boolean => {
 	return false;
 };
 
-const getAdManagerGroup = (consented = true) => {
+const isAdManagerGroup = (s: string | null): s is AdManagerGroup =>
+	adManagerGroups.some((g) => g === s);
+
+const getAdManagerGroup = (consented = true): AdManagerGroup | null => {
 	if (!consented) return null;
-	return storage.local.getRaw(AMTGRP_STORAGE_KEY) ?? createAdManagerGroup();
+	const existingGroup = storage.local.getRaw(AMTGRP_STORAGE_KEY);
+
+	return isAdManagerGroup(existingGroup)
+		? existingGroup
+		: createAdManagerGroup();
 };
 
-const createAdManagerGroup = () => {
-	// users are assigned to groups 1-12
-	const group = String(Math.floor(Math.random() * 12) + 1);
+const createAdManagerGroup = (): AdManagerGroup => {
+	const group =
+		adManagerGroups[Math.floor(Math.random() * adManagerGroups.length)];
 	storage.local.setRaw(AMTGRP_STORAGE_KEY, group);
 	return group;
 };
@@ -341,8 +392,10 @@ const rebuildPageTargeting = () => {
 	// personalised ads targeting
 	if (!adConsentState) clearPermutiveSegments();
 	// flowlint-next-line sketchy-null-bool:off
-	const paTargeting = { pa: adConsentState ? 't' : 'f' };
-	const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
+	const paTargeting: PageTargeting = { pa: adConsentState ? 't' : 'f' };
+	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
+		? { af: 't' }
+		: {};
 
 	const pageTargets: PageTargeting = {
 		...{
@@ -361,7 +414,7 @@ const rebuildPageTargeting = () => {
 				config.get<boolean>('page.dcrCouldRender', false)
 					? 't'
 					: 'f',
-			fr: getVisitedValue(),
+			fr: getFrequencyValue(),
 			gdncrm: getUserSegments(adConsentState),
 			inskin: inskinTargeting(),
 			ms: formatTarget(page.source),
