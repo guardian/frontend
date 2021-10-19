@@ -81,7 +81,7 @@ const autoUpdate = (opts) => {
         });
     };
 
-    const injectNewBlocks = (newBlocks) => {
+    const injectNewBlocks = (newBlocks, userInteraction) => {
         // Clean up blocks before insertion
         const resultHtml = $.create(`<div>${newBlocks}</div>`)[0];
         let elementsToAdd;
@@ -89,12 +89,11 @@ const autoUpdate = (opts) => {
         fastdom.mutate(() => {
             bonzo(resultHtml.children).addClass('autoupdate--hidden');
             elementsToAdd = Array.from(resultHtml.children);
+            if (userInteraction) $liveblogBody.empty()
 
             // Insert new blocks
-            $liveblogBody.prepend(elementsToAdd);
-
+            $liveblogBody.prepend(elementsToAdd)
             mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
-
             initRelativeDates();
             enhanceTweets();
             checkElemsForVideos(elementsToAdd);
@@ -124,7 +123,6 @@ const autoUpdate = (opts) => {
         const latestBlockIdToUse = latestBlockId || 'block-0';
         const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterByKeyEvents}${userInteraction}`;
         const endpoint = `${window.location.pathname}.json${params}`;
-        console.log(endpoint)
         // #? One day this should be in Promise.finally()
         const setUpdateDelay = () => {
             if (count === 0 || currentUpdateDelay > 0) {
@@ -144,7 +142,6 @@ const autoUpdate = (opts) => {
             mode: 'cors',
         })
             .then(resp => {
-                console.log("fetchJson response => ",resp)
                 count = resp.numNewBlocks;
                 if (count > 0) {
                     unreadBlocksNo += count;
@@ -155,7 +152,7 @@ const autoUpdate = (opts) => {
                     latestBlockId = resp.mostRecentBlockId;
 
                     if (isLivePage) {
-                        injectNewBlocks(resp.html);
+                        injectNewBlocks(resp.html, userInteraction);
 
                         if (scrolledPastTopBlock()) {
                             toastButtonRefresh();
