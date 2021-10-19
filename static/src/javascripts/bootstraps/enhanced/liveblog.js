@@ -3,7 +3,7 @@ import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { upgradeRichLinks } from 'common/modules/article/rich-links';
 import { Affix } from 'common/modules/experiments/affix';
-import { autoUpdate } from 'common/modules/ui/autoupdate';
+import { updateBlocks } from 'common/modules/ui/autoupdate';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
@@ -34,9 +34,8 @@ const affixTimeline = () => {
 };
 
 const createAutoUpdate = () => {
-    if (config.get('page.isLive')) {
-        autoUpdate();
-    }
+    const pollUpdates = config.get('page.isLive')
+    updateBlocks(_, pollUpdates);
 };
 
 const keepTimestampsCurrent = () => {

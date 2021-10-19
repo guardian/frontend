@@ -15,7 +15,7 @@ import { initNotificationCounter } from 'common/modules/ui/notification-counter'
 import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 
 
-const autoUpdate = (opts) => {
+const updateBlocks = (opts, pollUpdates) => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -123,6 +123,7 @@ const autoUpdate = (opts) => {
         const latestBlockIdToUse = latestBlockId || 'block-0';
         const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterByKeyEvents}${userInteraction}`;
         const endpoint = `${window.location.pathname}.json${params}`;
+
         // #? One day this should be in Promise.finally()
         const setUpdateDelay = () => {
             if (count === 0 || currentUpdateDelay > 0) {
@@ -164,10 +165,10 @@ const autoUpdate = (opts) => {
                     }
                 }
 
-                setUpdateDelay();
+                pollUpdates && setUpdateDelay();
             })
             .catch(() => {
-                setUpdateDelay();
+                pollUpdates && setUpdateDelay();
             });
     };
 
@@ -236,4 +237,4 @@ const autoUpdate = (opts) => {
     });
 };
 
-export { autoUpdate };
+export { updateBlocks };
