@@ -246,8 +246,7 @@ $pillars: (
         }
     }
 
-    &.fc-item--type-media,
-    .fc-sublink__kicker {
+    &.fc-item--type-media .fc-sublink__kicker {
         color: map-get($palette, invertedKicker);
     }
 
