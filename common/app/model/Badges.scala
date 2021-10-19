@@ -56,11 +56,7 @@ object Badges {
     "feb78187bd4de427603a164d0a69f19f",
     Static("images/badges/56738_Badge.svg"),
   )
-  val specialReport2 = SpecialBadge(
-    "a-public-salt3W#ywHav!p+?r+W2$E6=",
-    "b95f43cd3bfe5f1d04b354dcae3442ac",
-    Static("images/badges/SpecialReportSep21.svg"),
-  )
+  val pandoraPapers = Badge("news/series/pandora-papers", Static("images/badges/SpecialReportSep21.svg"))
   val nhs70 = Badge("society/series/nhs-at-70", Static("images/badges/nhs-70.svg"))
   val cricketWorldCup = Badge("sport/cricket-world-cup-2019", Static("images/badges/cricket-world-cup.svg"))
   val womensWorldCup = Badge("football/womens-world-cup-2019", Static("images/badges/womens-world-cup.svg"))
@@ -104,6 +100,8 @@ object Badges {
     Badge("sport/paralympic-games-2020", Static("images/badges/tokyo-2020.svg"))
   val tokyoparalympics2020 =
     Badge("sport/tokyo-paralympic-games-2020", Static("images/badges/tokyo-2020.svg"))
+  val cop26 =
+    Badge("environment/cop26-glasgow-climate-change-conference-2021", Static("images/badges/cop26-badge.svg"))
 
   val allBadges = Seq(
     newArrivals,
@@ -119,7 +117,7 @@ object Badges {
     cambridgeAnalytica,
     pegasusProject,
     specialReport,
-    specialReport2,
+    pandoraPapers,
     nhs70,
     cricketWorldCup,
     womensWorldCup,
@@ -154,6 +152,7 @@ object Badges {
     tokyo2020,
     paralympics2020,
     tokyoparalympics2020,
+    cop26,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {

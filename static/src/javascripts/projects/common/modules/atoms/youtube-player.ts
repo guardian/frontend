@@ -1,3 +1,4 @@
+import { getPermutivePFPSegments } from '@guardian/commercial-core';
 import { onConsentChange } from '@guardian/consent-management-platform';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { loadScript } from '@guardian/libs';
@@ -7,7 +8,6 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
 import config from 'lib/config';
 import { constructQuery } from 'lib/url';
-import { getPermutivePFPSegments } from '../commercial/permutive';
 
 interface WindowLocal extends Window {
 	ga: UniversalAnalytics.ga;
@@ -181,7 +181,7 @@ const createAdsConfig = (
 	}
 
 	const custParams = getPageTargeting() as Record<string, string | string[]>;
-	custParams.permutive = getPermutivePFPSegments() as string[];
+	custParams.permutive = getPermutivePFPSegments();
 
 	const adsConfig: AdsConfig = {
 		adTagParameters: {

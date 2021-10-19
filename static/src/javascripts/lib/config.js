@@ -19,7 +19,7 @@ const get = (path = '', defaultValue) => {
 };
 
 // let S = { l1, l2, ..., ln } be a non-empty ordered set of labels
-// let s = l1.l2.....ln be the string reprentation of S
+// let s = l1.l2.....ln be the string representation of S
 // set(s, x) is the function that takes any value x into the config
 // object following the path described by S, making sure that path
 // actually leads somewhere.
