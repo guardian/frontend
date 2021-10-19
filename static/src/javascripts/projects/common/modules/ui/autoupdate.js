@@ -16,6 +16,7 @@ import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 
 
 const updateBlocks = (opts, pollUpdates) => {
+    console.log(pollUpdates)
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -176,6 +177,7 @@ const updateBlocks = (opts, pollUpdates) => {
         bean.on(document.body, 'click', '.filter__button', () => {
                 filterStatus = !filterStatus;
                 checkForUpdates(false);
+                console.log('here')
         })
 
         bean.on(document.body, 'click', '.toast__button', () => {

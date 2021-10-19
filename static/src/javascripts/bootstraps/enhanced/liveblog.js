@@ -35,7 +35,8 @@ const affixTimeline = () => {
 
 const createAutoUpdate = () => {
     const pollUpdates = config.get('page.isLive')
-    updateBlocks(_, pollUpdates);
+    console.log('here')
+    updateBlocks({}, pollUpdates);
 };
 
 const keepTimestampsCurrent = () => {
