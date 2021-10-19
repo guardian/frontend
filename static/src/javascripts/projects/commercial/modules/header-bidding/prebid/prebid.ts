@@ -1,4 +1,5 @@
 import { EventTimer } from '@guardian/commercial-core';
+import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import { prebidTimeout } from 'common/modules/experiments/tests/prebid-timeout';
@@ -162,16 +163,13 @@ declare global {
  * Retrieve the bidder timeout from AB test variant
  */
 const getBidderTimeoutFromABTest = (): number => {
-	// The default bidder timeout to use if not part of an AB test
-	const defaultBidderTimeout = 1500;
-
 	// Find the possible bidder timeout from variants of AB test
 	// Note these timeout values HAVE to match those in defined in the test variants
 	const bidderTimeout = [500, 1500, 4000].find((timeout) =>
 		isInVariantSynchronous(prebidTimeout, `variant${timeout}`),
 	);
 
-	return bidderTimeout ?? defaultBidderTimeout;
+	return bidderTimeout ?? PREBID_TIMEOUT;
 };
 
 /**

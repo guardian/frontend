@@ -95,7 +95,7 @@
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.ts",
-  "../projects/commercial/modules/dfp/track-ad-render.js",
+  "../projects/commercial/modules/dfp/track-ad-render.ts",
   "../projects/common/modules/article/space-filler.js",
   "../projects/common/modules/commercial/commercial-features.js"
  ],
@@ -322,7 +322,7 @@
   "../projects/commercial/modules/dfp/render-advert-label.ts",
   "../projects/commercial/modules/sticky-mpu.js"
  ],
- "../projects/commercial/modules/dfp/track-ad-render.js": [
+ "../projects/commercial/modules/dfp/track-ad-render.ts": [
   "../projects/commercial/modules/dfp/wait-for-advert.ts"
  ],
  "../projects/commercial/modules/dfp/wait-for-advert.ts": [
@@ -352,6 +352,7 @@
  ],
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/esm/constants/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
@@ -508,7 +509,7 @@
   "../lib/events.js",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/track-ad-render.js",
+  "../projects/commercial/modules/dfp/track-ad-render.ts",
   "../projects/commercial/modules/messenger.js",
   "../projects/common/modules/commercial/commercial-features.js"
  ],
