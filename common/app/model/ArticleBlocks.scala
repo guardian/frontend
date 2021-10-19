@@ -29,13 +29,6 @@ case object GenericFallback extends BlockRange {
   val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, body))
 }
 
-object FilteredLiveBlog extends BlockRange {
-  val mainBlock = "main"
-  val firstPage = "body:latest:60"
-  val keyEvents = "body:key-events"
-  val query = Some(Seq(mainBlock, keyEvents))
-}
-
 case class PageWithBlock(page: String) extends BlockRange {
   // just get them all, the caching should prevent too many requests, could use "around"
   val query = None

@@ -91,10 +91,10 @@ class LiveBlogController(
 
   // Helper methods
 
-  private def renderKeyEvents( path: String, isLivePage: Option[Boolean], filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
-      mapModel(path, CanonicalLiveBlog, filterByKeyEvents) { (page, blocks) =>
-        renderKeyEventsJson(page, isLivePage, filterByKeyEvents)
-      }
+  private def renderKeyEvents(path: String, isLivePage: Option[Boolean], filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
+    mapModel(path, CanonicalLiveBlog, filterByKeyEvents) { (page, blocks) =>
+      renderKeyEventsJson(page, isLivePage, filterByKeyEvents)
+    }
   }
 
   private def renderWithRange(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
@@ -153,7 +153,7 @@ class LiveBlogController(
     }
   }
 
-  private[this] def flatMapBlocks(page:PageWithStoryPackage, lastUpdateBlockId: SinceBlockId, filterByKeyEvents: Option[Boolean]): Seq[BodyBlock] = {
+  private[this] def flatMapBlocks(page: PageWithStoryPackage, lastUpdateBlockId: SinceBlockId, filterByKeyEvents: Option[Boolean]): Seq[BodyBlock] = {
     filterByKeyEvents match {
       case Some(true) =>
         page.article.fields.blocks.toSeq
@@ -175,7 +175,6 @@ class LiveBlogController(
           }
     }
   }
-
 
   private[this] def renderNewerUpdatesJson(
                                             page: PageWithStoryPackage,
@@ -204,10 +203,10 @@ class LiveBlogController(
     }
   }
 
-  private[this] def flatMapKeyEventsBlocks (
-                              page: PageWithStoryPackage,
-                              filterByKeyEvents: Option[Boolean]
-                          ): Seq[BodyBlock] = {
+  private[this] def flatMapKeyEventsBlocks(
+                                            page: PageWithStoryPackage,
+                                            filterByKeyEvents: Option[Boolean]
+                                          ): Seq[BodyBlock] = {
     filterByKeyEvents match {
       case Some(true) =>
         page.article.fields.blocks.toSeq
@@ -223,10 +222,10 @@ class LiveBlogController(
   }
 
   private[this] def renderKeyEventsJson(
-                                              page: PageWithStoryPackage,
-                                              isLivePage: Option[Boolean],
-                                              filterByKeyEvents: Option[Boolean]
-                                            )(implicit request: RequestHeader): Future[Result] = {
+                                         page: PageWithStoryPackage,
+                                         isLivePage: Option[Boolean],
+                                         filterByKeyEvents: Option[Boolean]
+                                       )(implicit request: RequestHeader): Future[Result] = {
     val newBlocks = flatMapKeyEventsBlocks(page, filterByKeyEvents)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone))
