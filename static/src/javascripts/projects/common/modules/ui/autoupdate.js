@@ -81,7 +81,7 @@ const updateBlocks = (opts, pollUpdates) => {
         });
     };
 
-    const injectNewBlocks = (newBlocks) => {
+    const injectNewBlocks = (newBlocks, userInteraction) => {
         // Clean up blocks before insertion
         const resultHtml = $.create(`<div>${newBlocks}</div>`)[0];
         let elementsToAdd;
@@ -89,12 +89,11 @@ const updateBlocks = (opts, pollUpdates) => {
         fastdom.mutate(() => {
             bonzo(resultHtml.children).addClass('autoupdate--hidden');
             elementsToAdd = Array.from(resultHtml.children);
+            if (userInteraction) $liveblogBody.empty()
 
             // Insert new blocks
-            $liveblogBody.prepend(elementsToAdd);
-
+            $liveblogBody.prepend(elementsToAdd)
             mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
-
             initRelativeDates();
             enhanceTweets();
             checkElemsForVideos(elementsToAdd);
@@ -154,7 +153,7 @@ const updateBlocks = (opts, pollUpdates) => {
                     latestBlockId = resp.mostRecentBlockId;
 
                     if (isLivePage) {
-                        injectNewBlocks(resp.html);
+                        injectNewBlocks(resp.html, userInteraction);
 
                         if (scrolledPastTopBlock()) {
                             toastButtonRefresh();
