@@ -60,7 +60,7 @@ private object NavLinks {
   val borrowing = NavLink("Borrowing", "/money/debt")
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/tone/obituaries")
-  val greenLight = NavLink("Green light", "/environment/series/green-light")
+  val downToEarth = NavLink("Down to Earth", "/environment/series/green-light")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -78,7 +78,7 @@ private object NavLinks {
   val auEnvironment = ukEnvironment.copy(children =
     List(climateCrisis, energy, wildlife, biodiversity, oceans, pollution, greatBarrierReef),
   )
-  val usEnvironment = ukEnvironment.copy(children = List(climateCrisis, wildlife, energy, pollution, greenLight))
+  val usEnvironment = ukEnvironment.copy(children = List(climateCrisis, wildlife, energy, pollution, downToEarth))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
     "Business",
@@ -295,7 +295,7 @@ private object NavLinks {
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}?INTCMP=DOTCOM_NAV_NEWSLETTER_US"),
-      greenLight,
+      downToEarth,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
