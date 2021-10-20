@@ -95,7 +95,8 @@ object TrailsToShowcase {
       asRundownPanel(collection.curated, collection.id, collection.lastUpdated)
     }
 
-    val singleStoryCollections = faciaPage.collections.filter(_.displayName.trim.startsWith(SingleStoriesCollectionName))
+    val singleStoryCollections =
+      faciaPage.collections.filter(_.displayName.trim.startsWith(SingleStoriesCollectionName))
     val singleStoryPanelsOutcome = if (singleStoryCollections.nonEmpty) {
       // Attempt to map all trails from all single story collections to panels
       singleStoryCollections.flatMap(_.curated).map(asSingleStoryPanel)
