@@ -14,23 +14,24 @@ import { dfpEnv } from './dfp-env';
 
 const loadPrebid = async (framework: Framework): Promise<void> => {
 	if (
-		dfpEnv.hbImpl.prebid &&
-		commercialFeatures.dfpAdvertising &&
-		!commercialFeatures.adFree &&
-		!config.get('page.hasPageSkin') &&
-		!isGoogleProxy() &&
-		!shouldIncludeOnlyA9
-	) {
-		await import(
-			// @ts-expect-error -- there’s no types for Prebid.js
-			/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid'
-		);
-
-		getPageTargeting();
-		prebid.initialise(window, framework);
-
+		!dfpEnv.hbImpl.prebid ||
+		!commercialFeatures.dfpAdvertising ||
+		commercialFeatures.adFree ||
+		config.get('page.hasPageSkin') ||
+		isGoogleProxy() ||
+		shouldIncludeOnlyA9
+	)
 		return;
-	}
+
+	await import(
+		// @ts-expect-error -- there’s no types for Prebid.js
+		/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid'
+	);
+
+	getPageTargeting();
+	prebid.initialise(window, framework);
+
+	return;
 };
 
 const setupPrebid = async (): Promise<void> => {
