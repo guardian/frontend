@@ -411,9 +411,9 @@ case object FirstDogOnTheMoon extends FrontEmailMetadata {
   override val banner = Some("first-dog-on-the-moon.png")
 }
 
-case object GreenLight extends FrontEmailMetadata {
-  val name = "Green Light"
-  override val banner = Some("green-light.png")
+case object DownToEarth extends FrontEmailMetadata {
+  val name = "Down to Earth"
+  override val banner = Some("down-to-earth.png")
 }
 
 case object WordOfMouth extends FrontEmailMetadata {
@@ -532,7 +532,7 @@ object EmailAddons {
     PoliticsAu,
     SportAu,
     FirstDogOnTheMoon,
-    GreenLight,
+    DownToEarth,
     WordOfMouth,
     SavedForLater,
     TheRuralNetwork,
