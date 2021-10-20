@@ -2,7 +2,9 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import type { AUSConsentState } from '@guardian/consent-management-platform/dist/types/aus';
 import type { CCPAConsentState } from '@guardian/consent-management-platform/dist/types/ccpa';
+import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import _config from '../../../../lib/config';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -12,16 +14,6 @@ import { fillAdvertSlots as fillAdvertSlots_ } from './fill-advert-slots';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
-
-// Note: this does not appear to be typed in @guardian/consent-management-platform
-type AUSRejectedMockType = {
-	rejectedCategories:
-		| Array<{
-				_id: string;
-				name: string;
-		  }>
-		| never[];
-};
 
 const config = _config as {
 	get: (k: string) => string;
@@ -71,14 +63,7 @@ const getAdverts = (withEmpty: boolean) =>
 const getCreativeIDs = () => dfpEnv.creativeIDs;
 
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
-	(
-		fn: (
-			arg0:
-				| { tcfv2: TCFv2ConsentStateMockType }
-				| { ccpa: CCPAConsentState }
-				| { aus: AUSRejectedMockType },
-		) => void,
-	) => void
+	typeof onConsentChange_
 >;
 const getConsentFor = getConsentFor_ as jest.MockedFunction<
 	(vendor: string) => boolean
@@ -202,7 +187,7 @@ const reset = () => {
 	fillAdvertSlots.mockReset();
 };
 
-const tcfv2WithConsent = {
+const tcfv2WithConsent: { tcfv2: TCFv2ConsentState } = {
 	tcfv2: {
 		consents: {
 			'1': true,
@@ -214,33 +199,28 @@ const tcfv2WithConsent = {
 		vendorConsents: {
 			'5f1aada6b8e05c306c0597d7': true, // Googletag
 		},
+		eventStatus: 'tcloaded',
+		addtlConsent: 'unknown',
+		gdprApplies: true,
+		tcString: 'BOGUS.YAA',
 	},
 };
 
-const ausNotRejected = {
-	aus: {
-		rejectedCategories: [],
-	},
+const ausNotRejected: { aus: AUSConsentState } = {
+	aus: { personalisedAdvertising: true },
 };
 
-const ausRejected = {
-	aus: {
-		rejectedCategories: [
-			{
-				_id: '5f859c3420e4ec3e476c7006',
-				name: 'Advertising',
-			},
-		],
-	},
+const ausRejected: { aus: AUSConsentState } = {
+	aus: { personalisedAdvertising: false },
 };
 
-const ccpaWithConsent = { ccpa: { doNotSell: false } } as {
+const ccpaWithConsent: {
 	ccpa: CCPAConsentState;
-};
+} = { ccpa: { doNotSell: false } };
 
-const ccpaWithoutConsent = { ccpa: { doNotSell: true } } as {
+const ccpaWithoutConsent: {
 	ccpa: CCPAConsentState;
-};
+} = { ccpa: { doNotSell: true } };
 
 describe('DFP', () => {
 	const domSnippet = `
@@ -386,9 +366,7 @@ describe('DFP', () => {
 		}));
 
 	it('should not get hidden ad slots', async () => {
-		const adSlot: HTMLElement | null = document.querySelector(
-			'.js-ad-slot',
-		);
+		const adSlot = document.querySelector<HTMLElement>('.js-ad-slot');
 		if (adSlot) {
 			adSlot.style.display = 'none';
 		}
@@ -594,12 +572,8 @@ describe('DFP', () => {
 
 	describe('keyword targeting', () => {
 		it('should send page level keywords', async () => {
-			onConsentChange.mockImplementation(
-				(
-					callback: (val: {
-						tcfv2: TCFv2ConsentStateMockType;
-					}) => void,
-				) => callback(tcfv2WithConsent),
+			onConsentChange.mockImplementation((callback) =>
+				callback(tcfv2WithConsent),
 			);
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
@@ -612,18 +586,16 @@ describe('DFP', () => {
 
 	describe('NPA flag in AUS', () => {
 		it('when AUS has not retracted advertising consent', async () => {
-			onConsentChange.mockImplementation(
-				(callback: (val: { aus: AUSRejectedMockType }) => void) =>
-					callback(ausNotRejected),
+			onConsentChange.mockImplementation((callback) =>
+				callback(ausNotRejected),
 			);
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
 			expect(pubAds.setRequestNonPersonalizedAds).toHaveBeenCalledWith(0);
 		});
 		it('when AUS has retracted advertising consent', async () => {
-			onConsentChange.mockImplementation(
-				(callback: (val: { aus: AUSRejectedMockType }) => void) =>
-					callback(ausRejected),
+			onConsentChange.mockImplementation((callback) =>
+				callback(ausRejected),
 			);
 			getConsentFor.mockReturnValue(false);
 			await prepareGoogletag();
@@ -632,11 +604,9 @@ describe('DFP', () => {
 	});
 	describe('restrictDataProcessing flag is set correctly', () => {
 		it('when CCPA consent was given', async () => {
-			onConsentChange.mockImplementation(
-				(callback: (val: { ccpa: CCPAConsentState }) => void) => {
-					return callback(ccpaWithConsent);
-				},
-			);
+			onConsentChange.mockImplementation((callback) => {
+				return callback(ccpaWithConsent);
+			});
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
 			expect(pubAds.setPrivacySettings).toHaveBeenCalledWith({
@@ -644,9 +614,8 @@ describe('DFP', () => {
 			});
 		});
 		it('when CCPA consent was denied', async () => {
-			onConsentChange.mockImplementation(
-				(callback: (val: { ccpa: CCPAConsentState }) => void) =>
-					callback(ccpaWithoutConsent),
+			onConsentChange.mockImplementation((callback) =>
+				callback(ccpaWithoutConsent),
 			);
 			getConsentFor.mockReturnValue(false);
 			await prepareGoogletag();
