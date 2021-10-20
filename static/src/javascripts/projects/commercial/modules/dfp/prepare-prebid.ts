@@ -34,27 +34,30 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 };
 
 const setupPrebid = async (): Promise<boolean> => {
-	let prebidLoaded: (value: boolean | PromiseLike<boolean>) => void;
+	let resolvePrebidLoaded: (value: boolean | PromiseLike<boolean>) => void;
 	const promise = new Promise<boolean>((resolve) => {
-		prebidLoaded = resolve;
+		resolvePrebidLoaded = resolve;
 	});
 
 	onConsentChange((state) => {
-		const canRun = getConsentFor('prebid', state);
-		if (canRun) {
-			let framework: Framework | null = null;
-			if (state.tcfv2) framework = 'tcfv2';
-			if (state.ccpa) framework = 'ccpa';
-			if (state.aus) framework = 'aus';
-
-			if (!framework) return;
-
-			void loadPrebid(framework).then(() => {
-				prebidLoaded(true);
-			});
-		} else {
-			prebidLoaded(false);
+		if (!getConsentFor('prebid', state)) {
+			resolvePrebidLoaded(false);
+			return;
 		}
+
+		let framework: Framework | null = null;
+		if (state.tcfv2) framework = 'tcfv2';
+		if (state.ccpa) framework = 'ccpa';
+		if (state.aus) framework = 'aus';
+
+		if (!framework) {
+			resolvePrebidLoaded(false);
+			return;
+		}
+
+		void loadPrebid(framework).then(() => {
+			resolvePrebidLoaded(true);
+		});
 	});
 
 	return promise;
