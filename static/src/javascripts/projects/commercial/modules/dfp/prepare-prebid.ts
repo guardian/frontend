@@ -2,6 +2,7 @@ import {
 	getConsentFor,
 	onConsentChange,
 } from '@guardian/consent-management-platform';
+import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
@@ -11,7 +12,7 @@ import { prebid } from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
-const loadPrebid = (framework) => {
+const loadPrebid = (framework: Framework): void => {
 	if (
 		dfpEnv.hbImpl.prebid &&
 		commercialFeatures.dfpAdvertising &&
@@ -20,7 +21,7 @@ const loadPrebid = (framework) => {
 		!isGoogleProxy() &&
 		!shouldIncludeOnlyA9
 	) {
-		import(
+		void import(
 			/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid'
 		).then(() => {
 			getPageTargeting();
@@ -29,14 +30,17 @@ const loadPrebid = (framework) => {
 	}
 };
 
-const setupPrebid = () => {
+const setupPrebid = (): Promise<void> => {
 	onConsentChange((state) => {
 		const canRun = getConsentFor('prebid', state);
 		if (canRun) {
-			let framework;
+			let framework: Framework | null = null;
 			if (state.tcfv2) framework = 'tcfv2';
 			if (state.ccpa) framework = 'ccpa';
 			if (state.aus) framework = 'aus';
+
+			if (!framework) return;
+
 			loadPrebid(framework);
 		}
 	});
@@ -44,10 +48,10 @@ const setupPrebid = () => {
 	return Promise.resolve();
 };
 
-export const setupPrebidOnce = once(setupPrebid);
+export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
-export const init = () => {
-	setupPrebidOnce();
+export const init = (): Promise<void> => {
+	void setupPrebidOnce();
 	return Promise.resolve();
 };
 
