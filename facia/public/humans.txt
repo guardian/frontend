@@ -26,6 +26,11 @@ Location: London, UK (snaps.digit.nails)
 Twitter: @gtrufitt
 Website: trufitt.com
 
+Client-side Developer: Max Duval
+Twitter: @mxdvl
+From: Montréal, CA
+Location: London, UK
+
 Developer: Régis Kuckaertz
 Twitter: @regiskuckaertz
 From: Luxembourg, Luxembourg
