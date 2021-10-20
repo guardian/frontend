@@ -93,8 +93,9 @@ const updateBlocks = (opts, pollUpdates) => {
             if (userInteraction) $liveblogBody.empty()
 
             // Insert new blocks
-            $liveblogBody.prepend(elementsToAdd)
+            $liveblogBody.prepend(elementsToAdd);
             mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
+
             initRelativeDates();
             enhanceTweets();
             checkElemsForVideos(elementsToAdd);
@@ -145,6 +146,7 @@ const updateBlocks = (opts, pollUpdates) => {
         })
             .then(resp => {
                 count = resp.numNewBlocks;
+
                 if (count > 0) {
                     unreadBlocksNo += count;
 

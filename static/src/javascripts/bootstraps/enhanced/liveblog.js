@@ -35,7 +35,6 @@ const affixTimeline = () => {
 
 const createAutoUpdate = () => {
     const pollUpdates = config.get('page.isLive')
-    console.log('here')
     updateBlocks({}, pollUpdates);
 };
 

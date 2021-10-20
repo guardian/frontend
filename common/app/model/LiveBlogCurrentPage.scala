@@ -58,7 +58,6 @@ object LiveBlogCurrentPage {
             ),
           )
         else None
-
       }
       val blocksToRender = if (filterByKeyEvents.nonEmpty && filterByKeyEvents.get) keyEventBlocks else firstPageBlocks
       LiveBlogCurrentPage(FirstPage(blocksToRender), pagination)

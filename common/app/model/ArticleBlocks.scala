@@ -40,4 +40,3 @@ case class SinceBlockId(lastUpdate: String) extends BlockRange {
   // more than 5 could come in (in one go), but unlikely and won't matter as it'll just fetch again soon
   val query = Some(Seq(mainBlock, around))
 }
-

@@ -31,7 +31,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
-  )(implicit context: ApplicationContext)
+ )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
@@ -50,6 +50,34 @@ class LiveBlogController(
           Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
         case (blog: LiveBlogPage, blocks) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
         case _                            => Future.successful(NotFound)
+      }
+    }
+  }
+
+  def renderWithRange(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
+    mapModel(path, range, filterByKeyEvents) { (page, blocks) =>
+      {
+        val isAmpSupported = page.article.content.shouldAmplify
+        val pageType: PageType = PageType(page, request, context)
+        (page, request.getRequestFormat) match {
+          case (minute: MinutePage, HtmlFormat) =>
+            Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
+          case (blog: LiveBlogPage, HtmlFormat) => {
+            val remoteRendering = request.forceDCR && ActiveExperiments.isParticipating(LiveblogRendering)
+            remoteRendering match {
+              case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+              case true => {
+                val pageType: PageType = PageType(blog, request, context)
+                remoteRenderer.getArticle(ws, blog, blocks, pageType)
+              }
+            }
+          }
+          case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
+          case (blog: LiveBlogPage, AmpFormat) =>
+            Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+          case _ => Future.successful(NotFound)
+        }
       }
     }
   }
@@ -81,10 +109,11 @@ class LiveBlogController(
         case (blog: LiveBlogPage, blocks) if userInteraction.getOrElse(false) =>
           renderKeyEvents(path, isLivePage, filterByKeyEvents)
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
-        case (blog: LiveBlogPage, blocks) if request.forceDCR => Future.successful(renderGuuiJson(path, blog, blocks))
-        case (blog: LiveBlogPage, blocks) => getJson(blog, range, isLivePage, filterByKeyEvents)
-        case (minute: MinutePage, blocks) => Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
-        case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound))}
+        case (blog: LiveBlogPage, blocks) if request.forceDCR         => Future.successful(renderGuuiJson(path, blog, blocks))
+        case (blog: LiveBlogPage, blocks)                             => getJson(blog, range, isLivePage, filterByKeyEvents)
+        case (minute: MinutePage, blocks) =>
+          Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
+        case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound)) }
       }
     }
   }
@@ -94,34 +123,6 @@ class LiveBlogController(
   private def renderKeyEvents(path: String, isLivePage: Option[Boolean], filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
     mapModel(path, CanonicalLiveBlog, filterByKeyEvents) { (page, blocks) =>
       renderKeyEventsJson(page, isLivePage, filterByKeyEvents)
-    }
-  }
-
-  private def renderWithRange(path: String, range: BlockRange, filterByKeyEvents: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
-    mapModel(path, range, filterByKeyEvents) { (page, blocks) =>
-    {
-      val isAmpSupported = page.article.content.shouldAmplify
-      val pageType: PageType = PageType(page, request, context)
-      (page, request.getRequestFormat) match {
-        case (minute: MinutePage, HtmlFormat) =>
-          Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
-        case (blog: LiveBlogPage, HtmlFormat) => {
-          val remoteRendering = request.forceDCR && ActiveExperiments.isParticipating(LiveblogRendering)
-          remoteRendering match {
-            case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-            case true => {
-              val pageType: PageType = PageType(blog, request, context)
-              remoteRenderer.getArticle(ws, blog, blocks, pageType)
-            }
-          }
-        }
-        case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-          remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
-        case (blog: LiveBlogPage, AmpFormat) =>
-          Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-        case _ => Future.successful(NotFound)
-      }
-    }
     }
   }
 
@@ -146,10 +147,8 @@ class LiveBlogController(
    )(implicit request: RequestHeader): Future[Result] = {
 
     range match {
-        case SinceBlockId(lastBlockId) =>
-          renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
-        case _ =>
-          Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog),liveblog))
+      case SinceBlockId(lastBlockId) => renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterByKeyEvents)
+      case _                         => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog),liveblog))
     }
   }
 
@@ -262,15 +261,11 @@ class LiveBlogController(
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
-      .map { res =>
-        responseToModelOrResult(range, filterByKeyEvents)(res)
-      }
+      .map(responseToModelOrResult(range, filterByKeyEvents))
       .recover(convertApiExceptions)
       .flatMap {
-        case Left((model, blocks)) =>
-          render(model, blocks)
-        case Right(other) =>
-          Future.successful(RenderOtherStatus(other))
+        case Left((model, blocks)) => render(model, blocks)
+        case Right(other)          => Future.successful(RenderOtherStatus(other))
       }
   }
 
