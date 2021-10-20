@@ -10,7 +10,7 @@ import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
-import { fillAdvertSlots as fillAdvertSlots_ } from './fill-advert-slots';
+import { fillAdvertSlots } from './fill-advert-slots';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
@@ -69,10 +69,6 @@ const getConsentFor = getConsentFor_ as jest.MockedFunction<
 	(vendor: string) => boolean
 >;
 
-// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
-const actualFillAdvertSlots = jest.requireActual('./fill-advert-slots')
-	.fillAdvertSlots as () => Promise<void | undefined>;
-
 const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
 	(includeTweakpoint: boolean) => string
 >;
@@ -80,9 +76,6 @@ const fillAdvertSlots = fillAdvertSlots_ as jest.MockedFunction<
 	() => Promise<void | undefined>
 >;
 
-jest.mock('./fill-advert-slots', () => ({
-	fillAdvertSlots: jest.fn(),
-}));
 jest.mock('../../../../lib/raven');
 jest.mock('../../../common/modules/identity/api', () => ({
 	isUserLoggedIn: () => true,
@@ -184,7 +177,6 @@ const reset = () => {
 	dfpEnv.advertsToRefresh = [];
 	dfpEnv.advertsToLoad = [];
 	dfpEnv.hbImpl = { prebid: false, a9: false };
-	fillAdvertSlots.mockReset();
 };
 
 const tcfv2WithConsent: { tcfv2: TCFv2ConsentState } = {
@@ -354,16 +346,14 @@ describe('DFP', () => {
 		expect(remainingAdSlots.length).toBe(0);
 	});
 
-	it('should get the slots', () =>
-		new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+	it('should get the slots', async () => {
+		expect.hasAssertions();
 
-			void prepareGoogletag();
-		}).then(() => {
+		await fillAdvertSlots();
+		await prepareGoogletag();
+
 			expect(Object.keys(getAdverts(true)).length).toBe(4);
-		}));
+	});
 
 	it('should not get hidden ad slots', async () => {
 		const adSlot = document.querySelector<HTMLElement>('.js-ad-slot');
@@ -371,13 +361,9 @@ describe('DFP', () => {
 			adSlot.style.display = 'none';
 		}
 
-		await new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+		await fillAdvertSlots();
+		await prepareGoogletag();
 
-			void prepareGoogletag();
-		});
 		const slots = getAdverts(true);
 		expect(Object.keys(slots).length).toBe(3);
 		Object.keys(slots).forEach((slotId) => {
@@ -394,14 +380,12 @@ describe('DFP', () => {
 			);
 		}));
 
-	it('should define slots', async () =>
-		new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+	it('should define slots', async () => {
+		expect.hasAssertions();
 
-			void prepareGoogletag();
-		}).then(() => {
+		await fillAdvertSlots();
+		await prepareGoogletag();
+
 			[
 				[
 					'dfp-ad-html-slot',
@@ -491,27 +475,21 @@ describe('DFP', () => {
 						},
 					);
 				}
-				expect(googleSlot.defineSizeMapping).toHaveBeenCalledWith(
-					data[2],
-				);
+			expect(googleSlot.defineSizeMapping).toHaveBeenCalledWith(data[2]);
 				expect(googleSlot.setTargeting).toHaveBeenCalledWith(
 					'slot',
 					data[3],
 				);
 			});
-		}));
+	});
 
 	it('should display ads', async () => {
 		config.set('page.hasPageSkin', true);
 		getBreakpoint.mockReturnValue('wide');
 
-		await new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+		await fillAdvertSlots();
+		await prepareGoogletag();
 
-			void prepareGoogletag();
-		});
 		expect(pubAds.enableSingleRequest).toHaveBeenCalled();
 		expect(pubAds.collapseEmptyDivs).toHaveBeenCalled();
 		expect(window.googletag?.enableServices).toHaveBeenCalled();
@@ -523,13 +501,9 @@ describe('DFP', () => {
 			.querySelector('.js-ad-slot')
 			?.setAttribute('data-out-of-page', 'true');
 
-		await new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+		await fillAdvertSlots();
+		await prepareGoogletag();
 
-			void prepareGoogletag();
-		});
 		expect(window.googletag?.defineOutOfPageSlot).toHaveBeenCalled();
 	});
 
@@ -543,13 +517,9 @@ describe('DFP', () => {
 			'dfp-ad-script-slot',
 		) as unknown) as googletag.events.SlotRenderEndedEvent;
 
-		await new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+		await fillAdvertSlots();
+		await prepareGoogletag();
 
-			void prepareGoogletag();
-		});
 		listeners.slotRenderEnded(fakeEventOne);
 		listeners.slotRenderEnded(fakeEventTwo);
 		const result_4 = getCreativeIDs();
