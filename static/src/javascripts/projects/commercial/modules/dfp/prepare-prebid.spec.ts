@@ -191,14 +191,16 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid if TCFv2 consent with correct Sourcepoint Id is false', async () => {
-		expect.hasAssertions();
+		expect.assertions(2);
 
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
-		await setupPrebid();
+
+		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+
 		expect(prebid.initialise).not.toBeCalled();
 	});
 
@@ -215,14 +217,16 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid in CCPA if doNotSell is true', async () => {
-		expect.hasAssertions();
+		expect.assertions(2);
 
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		onConsentChange.mockImplementation(ccpaWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
-		await setupPrebid();
+
+		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+
 		expect(prebid.initialise).not.toBeCalled();
 	});
 
@@ -239,14 +243,16 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid in AUS if Advertising is rejected', async () => {
-		expect.hasAssertions();
+		expect.assertions(2);
 
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		onConsentChange.mockImplementation(ausWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
-		await setupPrebid();
+
+		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+
 		expect(prebid.initialise).not.toBeCalled();
 	});
 

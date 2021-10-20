@@ -33,15 +33,19 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 	}
 };
 
-const setupPrebid = async (): Promise<boolean> => {
-	let resolvePrebidLoaded: (value: boolean | PromiseLike<boolean>) => void;
-	const promise = new Promise<boolean>((resolve) => {
+const setupPrebid = async (): Promise<void> => {
+	let resolvePrebidLoaded: (value: void | PromiseLike<void>) => void;
+	let rejectPrebidLoaded: (
+		reason: 'no consent for prebid' | 'unknown framework',
+	) => void;
+	const promise = new Promise<void>((resolve, reject) => {
 		resolvePrebidLoaded = resolve;
+		rejectPrebidLoaded = reject;
 	});
 
 	onConsentChange((state) => {
 		if (!getConsentFor('prebid', state)) {
-			resolvePrebidLoaded(false);
+			rejectPrebidLoaded('no consent for prebid');
 			return;
 		}
 
@@ -51,19 +55,19 @@ const setupPrebid = async (): Promise<boolean> => {
 		if (state.aus) framework = 'aus';
 
 		if (!framework) {
-			resolvePrebidLoaded(false);
+			rejectPrebidLoaded('unknown framework');
 			return;
 		}
 
 		void loadPrebid(framework).then(() => {
-			resolvePrebidLoaded(true);
+			resolvePrebidLoaded();
 		});
 	});
 
 	return promise;
 };
 
-export const setupPrebidOnce: () => Promise<boolean> = once(setupPrebid);
+export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
 export const init = (): Promise<void> => {
 	void setupPrebidOnce();
