@@ -52,7 +52,7 @@
                 </summary>
                 <div class="dumathoin__row dumathoin__row--wrap dumathoin__3cols">
                     @containerModel.content.showMoreCards.map(card => views.html.fragments.commercial.cards.itemSmallCard(
-                                            card,
+                                            item = card,
                                             optAdvertClassNames = Some(Seq("paidfor")),
                                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
                                             useCardBranding = !containerModel.isSingleSponsorContainer))
