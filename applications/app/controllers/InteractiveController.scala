@@ -120,14 +120,14 @@ class InteractiveController(
         case Left((page, blocks)) => {
           val tags = page.interactive.tags.tags
           val date = Chronos.jodaDateTimeToJavaTimeDateTime(page.interactive.trail.webPublicationDate)
-          val tier = InteractivePicker.getRenderingTier(requestFormat, path, date, tags)
+          val tier = InteractivePicker.getRenderingTier(path)
 
           (requestFormat, tier) match {
-            case (AmpFormat, DotcomRendering)    => renderAmp(page, blocks)
-            case (JsonFormat, DotcomRendering)   => renderJson(page, blocks)
-            case (HtmlFormat, InteractiveLegacy) => servePressedPage(path)
-            case (HtmlFormat, DotcomRendering)   => renderHtml(page, blocks)
-            case _                               => renderNonDCR(page)
+            case (AmpFormat, DotcomRendering)     => renderAmp(page, blocks)
+            case (JsonFormat, DotcomRendering)    => renderJson(page, blocks)
+            case (HtmlFormat, PressedInteractive) => servePressedPage(path)
+            case (HtmlFormat, DotcomRendering)    => renderHtml(page, blocks)
+            case _                                => renderNonDCR(page)
           }
         }
         case Right(result) => Future.successful(result)
