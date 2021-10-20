@@ -22,6 +22,7 @@ const loadPrebid = (framework: Framework): void => {
 		!shouldIncludeOnlyA9
 	) {
 		void import(
+			// @ts-expect-error -- there’s no types for Prebid.js
 			/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid'
 		).then(() => {
 			getPageTargeting();
