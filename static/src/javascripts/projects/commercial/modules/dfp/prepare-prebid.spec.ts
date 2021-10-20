@@ -107,6 +107,8 @@ describe('init', () => {
 	});
 
 	it('should initialise Prebid when Prebid switch is ON and advertising is on and ad-free is off', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -117,6 +119,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when useragent is Google Web Preview', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -126,6 +130,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when no header bidding switches are on', async () => {
+		expect.hasAssertions();
+
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		dfpEnv.hbImpl = { prebid: false, a9: false };
@@ -134,6 +140,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when advertising is switched off', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = false;
 		commercialFeatures.adFree = false;
@@ -142,6 +150,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when ad-free is on', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = true;
@@ -150,6 +160,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when the page has a pageskin', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -167,6 +179,8 @@ describe('init', () => {
 		expect(prebid.initialise).toBeCalled();
 	});
 	it('should initialise Prebid if TCFv2 consent with correct Sourcepoint Id is true ', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -177,6 +191,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid if TCFv2 consent with correct Sourcepoint Id is false', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -187,6 +203,8 @@ describe('init', () => {
 	});
 
 	it('should initialise Prebid in CCPA if doNotSell is false', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -197,6 +215,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid in CCPA if doNotSell is true', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -207,6 +227,8 @@ describe('init', () => {
 	});
 
 	it('should initialise Prebid in AUS if Advertising is not rejected', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -217,6 +239,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid in AUS if Advertising is rejected', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
