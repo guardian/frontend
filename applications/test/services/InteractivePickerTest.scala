@@ -9,7 +9,7 @@ import experiments.ShowPressedInteractives
 import java.time.LocalDateTime
 
 @DoNotDiscover class InteractivePickerTest extends FlatSpec with Matchers {
-  val path = "lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
+  val path = "/lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
   object MockPressedInteractives {
     private[this] val interactives = Set[String](path)
     def isPressed(path: String): Boolean = interactives.contains(path)

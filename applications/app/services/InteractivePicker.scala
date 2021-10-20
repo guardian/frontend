@@ -76,7 +76,7 @@ object InteractivePicker {
     // Temporarily force documentaries into DCR while Composer doesn't allow easy removal of opt-out tag.
     val isDocumentary = tags.exists(tag => tag.id == "tone/documentaries")
 
-    if (isPressed(path) && isParticipating && !isOptedInAmp) InteractiveLegacy
+    if (isPressed(ensureStartingForwardSlash(path)) && isParticipating && !isOptedInAmp) InteractiveLegacy
     else if (forceDCR || isMigrated || isOptedInAmp) DotcomRendering
     else if (switchOn && publishedPostSwitch && isWeb && !isOptOut) DotcomRendering
     else if (switchOn && isSupported(tags) && isWeb && (!isOptOut || isDocumentary)) DotcomRendering
