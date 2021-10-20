@@ -42,11 +42,6 @@ const config = _config as {
 	) => void;
 };
 
-interface TCFv2ConsentStateMockType {
-	consents: Record<string, boolean | null>;
-	vendorConsents: Record<string, boolean | null>;
-}
-
 const getAdverts = (withEmpty: boolean) =>
 	Object.keys(dfpEnv.advertIds).reduce(
 		(advertsById: Record<string, Advert | null>, id) => {
@@ -66,14 +61,11 @@ const onConsentChange = onConsentChange_ as jest.MockedFunction<
 	typeof onConsentChange_
 >;
 const getConsentFor = getConsentFor_ as jest.MockedFunction<
-	(vendor: string) => boolean
+	typeof getConsentFor_
 >;
 
 const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
-	(includeTweakpoint: boolean) => string
->;
-const fillAdvertSlots = fillAdvertSlots_ as jest.MockedFunction<
-	() => Promise<void | undefined>
+	typeof getBreakpoint_
 >;
 
 jest.mock('../../../../lib/raven');
@@ -187,6 +179,27 @@ const tcfv2WithConsent: { tcfv2: TCFv2ConsentState } = {
 			'3': true,
 			'4': true,
 			'5': true,
+			'6': true,
+			'7': true,
+			'8': true,
+			'9': true,
+			'10': true,
+		},
+		vendorConsents: {
+			'5f1aada6b8e05c306c0597d7': true, // Googletag
+		},
+		eventStatus: 'tcloaded',
+		addtlConsent: 'unknown',
+		gdprApplies: true,
+		tcString: 'BOGUS.YAA',
+	},
+};
+
+const tcfv2WithoutConsent: { tcfv2: TCFv2ConsentState } = {
+	tcfv2: {
+		consents: {
+			'1': false,
+			'2': false,
 		},
 		vendorConsents: {
 			'5f1aada6b8e05c306c0597d7': true, // Googletag
@@ -231,6 +244,12 @@ describe('DFP', () => {
 		string,
 		(event: googletag.events.SlotRenderEndedEvent) => void
 	> = {};
+
+	beforeAll(() => {
+		onConsentChange.mockImplementation((callback) =>
+			callback(tcfv2WithoutConsent),
+		);
+	});
 
 	beforeEach(() => {
 		config.set('switches.commercial', true);
@@ -352,7 +371,7 @@ describe('DFP', () => {
 		await fillAdvertSlots();
 		await prepareGoogletag();
 
-			expect(Object.keys(getAdverts(true)).length).toBe(4);
+		expect(Object.keys(getAdverts(true)).length).toBe(4);
 	});
 
 	it('should not get hidden ad slots', async () => {
@@ -386,101 +405,101 @@ describe('DFP', () => {
 		await fillAdvertSlots();
 		await prepareGoogletag();
 
+		[
 			[
+				'dfp-ad-html-slot',
+				[[300, 50]],
+				[[[0, 0], [[300, 50]]]],
+				'html-slot',
+			],
+			[
+				'dfp-ad-script-slot',
 				[
-					'dfp-ad-html-slot',
-					[[300, 50]],
-					[[[0, 0], [[300, 50]]]],
-					'html-slot',
+					[300, 50],
+					[320, 50],
 				],
 				[
-					'dfp-ad-script-slot',
 					[
-						[300, 50],
-						[320, 50],
-					],
-					[
+						[0, 0],
 						[
-							[0, 0],
-							[
-								[300, 50],
-								[320, 50],
-							],
+							[300, 50],
+							[320, 50],
 						],
 					],
-					'script-slot',
+				],
+				'script-slot',
+			],
+			[
+				'dfp-ad-already-labelled',
+				[
+					[728, 90],
+					[300, 50],
+					[320, 50],
 				],
 				[
-					'dfp-ad-already-labelled',
+					[[740, 0], [[728, 90]]],
 					[
-						[728, 90],
-						[300, 50],
-						[320, 50],
-					],
-					[
-						[[740, 0], [[728, 90]]],
+						[0, 0],
 						[
-							[0, 0],
-							[
-								[300, 50],
-								[320, 50],
-							],
+							[300, 50],
+							[320, 50],
 						],
 					],
-					'already-labelled',
+				],
+				'already-labelled',
+			],
+			[
+				'dfp-ad-dont-label',
+				[
+					[728, 90],
+					[900, 250],
+					[970, 250],
+					[300, 50],
+					[320, 50],
 				],
 				[
-					'dfp-ad-dont-label',
 					[
-						[728, 90],
-						[900, 250],
-						[970, 250],
-						[300, 50],
-						[320, 50],
-					],
-					[
+						[980, 0],
 						[
-							[980, 0],
-							[
-								[728, 90],
-								[900, 250],
-								[970, 250],
-							],
-						],
-						[[740, 0], [[728, 90]]],
-						[
-							[0, 0],
-							[
-								[300, 50],
-								[320, 50],
-							],
+							[728, 90],
+							[900, 250],
+							[970, 250],
 						],
 					],
-					'dont-label',
+					[[740, 0], [[728, 90]]],
+					[
+						[0, 0],
+						[
+							[300, 50],
+							[320, 50],
+						],
+					],
 				],
-			].forEach((data) => {
-				expect(window.googletag?.defineSlot).toHaveBeenCalledWith(
-					'/123456/theguardian.com/front',
-					data[1],
-					data[0],
+				'dont-label',
+			],
+		].forEach((data) => {
+			expect(window.googletag?.defineSlot).toHaveBeenCalledWith(
+				'/123456/theguardian.com/front',
+				data[1],
+				data[0],
+			);
+			expect(googleSlot.addService).toHaveBeenCalledWith(pubAds);
+			if (Array.isArray(data[2])) {
+				data[2].forEach(
+					(size: number[] | Array<number[] | number[][]>) => {
+						expect(sizeMapping.addSize).toHaveBeenCalledWith(
+							size[0],
+							size[1],
+						);
+					},
 				);
-				expect(googleSlot.addService).toHaveBeenCalledWith(pubAds);
-				if (Array.isArray(data[2])) {
-					data[2].forEach(
-						(size: number[] | Array<number[] | number[][]>) => {
-							expect(sizeMapping.addSize).toHaveBeenCalledWith(
-								size[0],
-								size[1],
-							);
-						},
-					);
-				}
+			}
 			expect(googleSlot.defineSizeMapping).toHaveBeenCalledWith(data[2]);
-				expect(googleSlot.setTargeting).toHaveBeenCalledWith(
-					'slot',
-					data[3],
-				);
-			});
+			expect(googleSlot.setTargeting).toHaveBeenCalledWith(
+				'slot',
+				data[3],
+			);
+		});
 	});
 
 	it('should display ads', async () => {
