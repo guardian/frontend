@@ -12,7 +12,7 @@ import { prebid } from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
-const loadPrebid = (framework: Framework): void => {
+const loadPrebid = async (framework: Framework): Promise<void> => {
 	if (
 		dfpEnv.hbImpl.prebid &&
 		commercialFeatures.dfpAdvertising &&
@@ -21,17 +21,24 @@ const loadPrebid = (framework: Framework): void => {
 		!isGoogleProxy() &&
 		!shouldIncludeOnlyA9
 	) {
-		void import(
+		await import(
 			// @ts-expect-error -- there’s no types for Prebid.js
 			/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid'
-		).then(() => {
-			getPageTargeting();
-			prebid.initialise(window, framework);
-		});
+		);
+
+		getPageTargeting();
+		prebid.initialise(window, framework);
+
+		return;
 	}
 };
 
-const setupPrebid = (): Promise<void> => {
+const setupPrebid = async (): Promise<boolean> => {
+	let prebidLoaded: (value: boolean | PromiseLike<boolean>) => void;
+	const promise = new Promise<boolean>((resolve) => {
+		prebidLoaded = resolve;
+	});
+
 	onConsentChange((state) => {
 		const canRun = getConsentFor('prebid', state);
 		if (canRun) {
@@ -42,14 +49,18 @@ const setupPrebid = (): Promise<void> => {
 
 			if (!framework) return;
 
-			loadPrebid(framework);
+			void loadPrebid(framework).then(() => {
+				prebidLoaded(true);
+			});
+		} else {
+			prebidLoaded(false);
 		}
 	});
 
-	return Promise.resolve();
+	return promise;
 };
 
-export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
+export const setupPrebidOnce: () => Promise<boolean> = once(setupPrebid);
 
 export const init = (): Promise<void> => {
 	void setupPrebidOnce();
