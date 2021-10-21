@@ -1,11 +1,8 @@
 package services
 
-import model.Tag
 import conf.switches.Switches.InteractivePickerFeature
-import implicits.{AmpFormat, HtmlFormat, RequestFormat}
 import play.api.mvc.RequestHeader
 import implicits.Requests._
-import java.time.LocalDateTime
 import services.dotcomrendering.PressedInteractives
 
 sealed trait RenderingTier
@@ -29,7 +26,7 @@ object InteractivePicker {
     val forceDCROff = request.forceDCROff
     val fullPath = ensureStartingForwardSlash(path)
 
-    // Allow us to quickly revert to rendering via frontend, if necessary
+    // Allow us to quickly revert to rendering content (instead of serving pressed content)
     val switchOn = InteractivePickerFeature.isSwitchedOn
 
     if (isPressed(fullPath) && switchOn) PressedInteractive

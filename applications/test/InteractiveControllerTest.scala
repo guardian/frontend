@@ -4,6 +4,12 @@ import controllers.InteractiveController
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, PrivateMethodTester}
 import conf.Configuration.interactive.cdnPath
+import play.api.libs.ws.WSClient
+import com.gu.contentapi.client.model.v1.Blocks
+import model.dotcomrendering.PageType
+import play.twirl.api.Html
+import play.api.mvc.{RequestHeader, Result}
+import scala.concurrent.{ExecutionContext, Future}
 
 class DCRFake() extends renderers.DotcomRenderingService {
   override def getInteractive(

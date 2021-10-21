@@ -118,8 +118,6 @@ class InteractiveController(
     def render(model: Either[(InteractivePage, Blocks), Result]): Future[Result] = {
       model match {
         case Left((page, blocks)) => {
-          val tags = page.interactive.tags.tags
-          val date = Chronos.jodaDateTimeToJavaTimeDateTime(page.interactive.trail.webPublicationDate)
           val tier = InteractivePicker.getRenderingTier(path)
 
           (requestFormat, tier) match {
