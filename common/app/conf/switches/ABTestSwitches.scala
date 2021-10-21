@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Vary length of prebid timeout",
     owners = Seq(Owner.withGithub("chrislomaxjones")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 10, 22)),
+    sellByDate = Some(LocalDate.of(2021, 10, 29)),
     exposeClientSide = true,
   )
 }
