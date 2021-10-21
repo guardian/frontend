@@ -119,22 +119,5 @@ describe('prepare-ad-verification', () => {
 				});
 			}).toThrow('No slot found for ');
 		});
-
-		it('should not refresh ad slots if not in variant', async () => {
-			jest.resetModules();
-			mockVariantSynchronous.mockReturnValue(false);
-
-			const { confiantRefreshedSlots, maybeRefreshBlockedSlotOnce } = (
-				await import('./prepare-ad-verification')
-			)._;
-
-			['slot-2', 'slot-a'].map((slot) => {
-				maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
-					prebid: { s: slot },
-				});
-			});
-
-			expect(confiantRefreshedSlots).toStrictEqual([]);
-		});
 	});
 });
