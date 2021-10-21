@@ -42,7 +42,7 @@ const validIds = ['slot-a', 'slot-2'];
 const mockVariantSynchronous = jest.fn<boolean, unknown[]>();
 const mockLog = jest.fn<void, unknown[]>();
 
-const { init, maybeRefreshBlockedSlotOnce, shouldRefresh } = _;
+const { init, maybeRefreshBlockedSlotOnce } = _;
 
 let scriptLoadShouldFail = false;
 
@@ -67,17 +67,6 @@ describe('prepare-ad-verification', () => {
 		scriptLoadShouldFail = true;
 		await init();
 		expect(window.confiant?.settings.callback).toBe(undefined);
-	});
-
-	describe('shouldRefresh', () => {
-		it.each([true, false])(
-			'return the value of isInVariantSynchronous: %s',
-			(value) => {
-				mockVariantSynchronous.mockReturnValue(value);
-
-				expect(shouldRefresh()).toBe(value);
-			},
-		);
 	});
 
 	describe('maybeRefreshBlockedSlotOnce', () => {

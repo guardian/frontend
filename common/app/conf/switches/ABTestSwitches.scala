@@ -24,17 +24,6 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-  // experiments/tests/refresh-confiant-blocked-ads.ts
-  Switch(
-    ABTests,
-    "ab-refresh-confiant-blocked-ads",
-    "Check whether refreshing blocked ads lead to revenue uplift",
-    owners = Seq(Owner.withGithub("mxdvl")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 10, 20)),
-    exposeClientSide = true,
-  )
-
   Switch(
     ABTests,
     "ab-prebid-timeout",
