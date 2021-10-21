@@ -7,8 +7,9 @@ import conf.Configuration.interactive.cdnPath
 import play.api.libs.ws.WSClient
 import com.gu.contentapi.client.model.v1.Blocks
 import model.dotcomrendering.PageType
+import model.{InteractivePage}
 import play.twirl.api.Html
-import play.api.mvc.{RequestHeader, Result}
+import play.api.mvc.{RequestHeader, Result, Results}
 import scala.concurrent.{ExecutionContext, Future}
 
 class DCRFake() extends renderers.DotcomRenderingService {
@@ -18,7 +19,7 @@ class DCRFake() extends renderers.DotcomRenderingService {
       blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    Future.successful(Html("DCR Fake Interactive"))
+    Future.successful(Results.Ok("test"))
   }
 }
 
