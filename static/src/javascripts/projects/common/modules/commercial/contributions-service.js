@@ -31,7 +31,7 @@ import {
 } from './user-features';
 
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
-export const ModulesVersion = 'v2';
+export const ModulesVersion = 'v3';
 
 const isHosted = config.get('page.isHosted');
 
