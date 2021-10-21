@@ -349,7 +349,6 @@
  ],
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/esm/constants/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
