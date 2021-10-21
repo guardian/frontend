@@ -5,6 +5,17 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, PrivateMethodTester}
 import conf.Configuration.interactive.cdnPath
 
+class DCRFake() extends renderers.DotcomRenderingService {
+  override def getInteractive(
+      ws: WSClient,
+      page: InteractivePage,
+      blocks: Blocks,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    Future.successful(Html("DCR Fake Interactive"))
+  }
+}
+
 @DoNotDiscover class InteractiveControllerTest
     extends FlatSpec
     with Matchers
@@ -21,6 +32,7 @@ import conf.Configuration.interactive.cdnPath
     testContentApiClient,
     wsClient,
     play.api.test.Helpers.stubControllerComponents(),
+    new DCRFake(),
   )
   val getWebWorkerPath = PrivateMethod[String]('getWebWorkerPath)
 
