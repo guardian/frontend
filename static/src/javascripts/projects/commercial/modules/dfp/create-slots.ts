@@ -1,7 +1,6 @@
 import { adSizes } from '@guardian/commercial-core';
-import type { AdSize } from '@guardian/commercial-core';
-
-type SizeMappings = Record<string, AdSize[]>;
+import type { SizeMappings } from './size-mapping';
+import { mergeSizeMappings, sizeMappingsToString } from './size-mapping';
 
 type AdSlotDefinition = {
 	sizeMappings: SizeMappings;
@@ -15,7 +14,7 @@ type AdSlotDefinitions = Record<string, AdSlotDefinition>;
 type CreateSlotOptions = {
 	classes?: string;
 	name?: string;
-	sizes?: Record<string, AdSize[] | undefined>; // allow an empty object
+	sizes?: SizeMappings;
 };
 
 const inlineDefinition: AdSlotDefinition = {
@@ -209,26 +208,9 @@ export const createSlots = (
 	const classes: string[] =
 		options.classes?.split(' ').map((cn) => `ad-slot--${cn}`) ?? [];
 
-	const sizes: SizeMappings = { ...definition.sizeMappings };
-	const sizeStrings: Record<string, string> = {};
+	const sizes = mergeSizeMappings(definition.sizeMappings, options.sizes);
 
-	const optionSizes = options.sizes;
-
-	if (optionSizes) {
-		Object.keys(optionSizes).forEach((optionSize: string) => {
-			const optionSizesArray = optionSizes[optionSize];
-			if (optionSizesArray) {
-				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
-				sizes[optionSize] = sizes[optionSize]
-					? sizes[optionSize].concat(optionSizesArray)
-					: optionSizesArray;
-			}
-		});
-	}
-
-	Object.keys(sizes).forEach((size) => {
-		sizeStrings[size] = sizes[size].join('|');
-	});
+	const sizeStrings = sizeMappingsToString(sizes);
 
 	Object.assign(attributes, sizeStrings);
 
