@@ -1,5 +1,5 @@
-import { getAdvertById } from './get-advert-by-id';
 import { postMessage } from '../messenger/post-message';
+import { getAdvertById } from './get-advert-by-id';
 
 const host = `${window.location.protocol}//${window.location.host}`;
 
@@ -11,13 +11,14 @@ const host = `${window.location.protocol}//${window.location.host}`;
      But, this information is necessary in the window.postMessage call, and so
      we resort to sending it as a token of welcome :)
 */
-export const onSlotLoad = (event) => {
+export const onSlotLoad = (event: SlotOnloadEvent): void => {
 	const advert = getAdvertById(event.slot.getSlotElementId());
 	if (!advert) {
 		return;
 	}
 
 	const iframe = advert.node.getElementsByTagName('iframe')[0];
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
 	if (!iframe) {
 		console.log('No iFrame found for slot', advert.id, advert.slot);
 		return;
