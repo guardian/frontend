@@ -31,24 +31,29 @@ object LiveBlogCurrentPage {
 
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
   def firstPage(pageSize: Int, blocks: Blocks, filterByKeyEvents: Option[Boolean]): Option[LiveBlogCurrentPage] = {
-    val blockCount = if (filterByKeyEvents.isDefined && filterByKeyEvents.get) {
-      blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline) map (_.size) getOrElse (0)
-    } else blocks.totalBodyBlocks
+    val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = filterByKeyEvents match {
+      case Some(true) =>
+        val keyEvents = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
+        val keyEventsCount = keyEvents.getOrElse(Seq.empty).size
+        (keyEvents, keyEventsCount, keyEvents.map(_.last.id))
+      case _ =>
+        val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
+        val oldestPageBlockId = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.oldestPage) flatMap (_.headOption.map(_.id))
+        (firstPageBlocks, blocks.totalBodyBlocks, oldestPageBlockId)
+    }
+
     val remainder = blockCount % pageSize
-    val numPages = blockCount / pageSize + 1
+    val numPages = blockCount / pageSize
 
-    blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage).map { requestedBodyBlocks =>
-      val requestedFilteredBodyBlocks = applyFilters(requestedBodyBlocks, filterByKeyEvents)
-      val (firstPageBlocks, startOfSecondPageBlocks) = requestedFilteredBodyBlocks.splitAt(remainder + pageSize)
-
-      val oldestPage = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.oldestPage) flatMap { oldestPage =>
-        applyFilters(oldestPage, filterByKeyEvents).headOption.map { block =>
-          BlockPage(blocks = Nil, blockId = block.id, pageNumber = numPages)
-        }
-      }
+    maybeRequestedBodyBlocks.map { requestedBodyBlocks =>
+      val (firstPageBlocks, startOfSecondPageBlocks) = requestedBodyBlocks.splitAt(remainder + pageSize)
 
       val olderPage = startOfSecondPageBlocks.headOption.map { block =>
         BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2)
+      }
+
+      val oldestPage = oldestPageBlockId map { blockId =>
+        BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages)
       }
 
       val pagination = {
