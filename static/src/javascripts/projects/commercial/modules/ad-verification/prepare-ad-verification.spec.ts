@@ -42,7 +42,7 @@ const validIds = ['slot-a', 'slot-2'];
 const mockVariantSynchronous = jest.fn<boolean, unknown[]>();
 const mockLog = jest.fn<void, unknown[]>();
 
-const { init, maybeRefreshBlockedSlotOnce, shouldRefresh } = _;
+const { init, maybeRefreshBlockedSlotOnce } = _;
 
 let scriptLoadShouldFail = false;
 
@@ -67,17 +67,6 @@ describe('prepare-ad-verification', () => {
 		scriptLoadShouldFail = true;
 		await init();
 		expect(window.confiant?.settings.callback).toBe(undefined);
-	});
-
-	describe('shouldRefresh', () => {
-		it.each([true, false])(
-			'return the value of isInVariantSynchronous: %s',
-			(value) => {
-				mockVariantSynchronous.mockReturnValue(value);
-
-				expect(shouldRefresh()).toBe(value);
-			},
-		);
 	});
 
 	describe('maybeRefreshBlockedSlotOnce', () => {
@@ -129,23 +118,6 @@ describe('prepare-ad-verification', () => {
 					prebid: { s: 'not-a-slot' },
 				});
 			}).toThrow('No slot found for ');
-		});
-
-		it('should not refresh ad slots if not in variant', async () => {
-			jest.resetModules();
-			mockVariantSynchronous.mockReturnValue(false);
-
-			const { confiantRefreshedSlots, maybeRefreshBlockedSlotOnce } = (
-				await import('./prepare-ad-verification')
-			)._;
-
-			['slot-2', 'slot-a'].map((slot) => {
-				maybeRefreshBlockedSlotOnce(1, 'abc', true, 'def', 'ghi', {
-					prebid: { s: slot },
-				});
-			});
-
-			expect(confiantRefreshedSlots).toStrictEqual([]);
 		});
 	});
 });

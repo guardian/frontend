@@ -1,8 +1,6 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { loadScript, log } from '@guardian/libs';
 import { setForceSendMetrics } from '../../../common/modules/analytics/forceSendMetrics';
-import { isInVariantSynchronous } from '../../../common/modules/experiments/ab';
-import { refreshConfiantBlockedAds } from '../../../common/modules/experiments/tests/refresh-confiant-blocked-ads';
 import { captureCommercialMetrics } from '../../commercial-metrics';
 import { getAdvertById } from '../dfp/get-advert-by-id';
 import { refreshAdvert } from '../dfp/load-advert';
@@ -15,9 +13,6 @@ const errorHandler = (error: Error) => {
 };
 
 const confiantRefreshedSlots: string[] = [];
-
-const shouldRefresh = (): boolean =>
-	isInVariantSynchronous(refreshConfiantBlockedAds, 'variant');
 
 const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 	blockingType,
@@ -57,13 +52,13 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 
 	advert.slot.setTargeting('confiant', String(blockingType));
 
-	// refresh the blocked slot to get new ad, if it hasn’t been refreshed yet
-	if (shouldRefresh() && !confiantRefreshedSlots.includes(blockedSlotPath)) {
-		refreshAdvert(advert);
+	// if the slot has already been refreshed, don’t do anything
+	if (confiantRefreshedSlots.includes(blockedSlotPath)) return;
 
-		// mark it as refreshed so it won’t refresh multiple time
-		confiantRefreshedSlots.push(blockedSlotPath);
-	}
+	// refresh the blocked slot to get new ad
+	refreshAdvert(advert);
+	// mark it as refreshed so it won’t refresh multiple time
+	confiantRefreshedSlots.push(blockedSlotPath);
 };
 
 export const init = async (): Promise<void> => {
@@ -90,6 +85,5 @@ export const init = async (): Promise<void> => {
 export const _ = {
 	init,
 	maybeRefreshBlockedSlotOnce,
-	shouldRefresh,
 	confiantRefreshedSlots,
 };
