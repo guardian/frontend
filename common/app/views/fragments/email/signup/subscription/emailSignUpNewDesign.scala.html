@@ -39,6 +39,8 @@
             id="@dummyInputId"
             placeholder="Name" />
             <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
+            <input class="email-sub__ref-input" type="hidden" name="ref" id="email-sub__ref-input" value="" />
+            <input class="email-sub__refviewid-input" type="hidden" name="refViewId" id="email-sub__refviewid-input" value="" />
 
 
             <button
@@ -85,5 +87,7 @@
 
 <script>
     trackClickEvent(document.getElementById("email-embed-signup-button"))
+    document.getElementById("email-sub__ref-input").value = window.parent.location.href
+    document.getElementById("email-sub__refviewid-input").value = window.parent.guardian.ophan.pageViewId
 </script>
 
