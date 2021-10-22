@@ -97,7 +97,7 @@ class CanonicalLink {
   val significantParams: Seq[String] = Seq(
     "index",
     "page",
-    "filterByKeyEvents",
+    "filterKeyEvents",
   )
 
   def apply(implicit request: RequestHeader, webUrl: String): String = {

@@ -35,7 +35,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
       Some(lastUpdateBlock),
       None,
       Some(true),
-      filterByKeyEvents = None,
+      filterKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -65,7 +65,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
       lastUpdate = None,
       rendered = None,
       isLivePage = Some(true),
-      filterByKeyEvents = Some(true),
+      filterKeyEvents = Some(true),
     )(fakeRequest)
     status(result) should be(200)
 

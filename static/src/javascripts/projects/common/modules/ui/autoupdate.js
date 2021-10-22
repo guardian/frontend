@@ -36,8 +36,6 @@ const updateBlocks = (opts, pollUpdates) => {
     let latestBlockId = $liveblogBody.data('most-recent-block');
     let unreadBlocksNo = 0;
     let updateTimeoutId;
-    let filterStatus = false;
-
 
     const updateDelay = (delay) => {
         let newDelay;
@@ -54,7 +52,8 @@ const updateBlocks = (opts, pollUpdates) => {
     const scrolledPastTopBlock = () =>
         $liveblogBody.offset().top < window.pageYOffset;
 
-    const isLivePage = !window.location.search.includes('?page=');
+    const isLivePage = !window.location.search.includes('page=');
+    const filterKeyEvents = window.location.search.includes('?filterKeyEvents=true');
 
     const revealInjectedElements = () => {
         fastdom.mutate(() => {
@@ -117,13 +116,10 @@ const updateBlocks = (opts, pollUpdates) => {
         }
 
         let count = 0;
-        const filterByKeyEvents = `&filterByKeyEvents=${filterStatus ? 'true' : 'false'}`;
-        const userInteraction = `&userInteraction=${!auto}`
-        const shouldFetchBlocks = `&isLivePage=${
-            isLivePage ? 'true' : 'false'
-        }`;
+        const filterKeyEventsParam = `&filterKeyEvents=${filterKeyEvents ? 'true' : 'false'}`;
+        const shouldFetchBlocks = `&isLivePage=${isLivePage ? 'true' : 'false'}`;
         const latestBlockIdToUse = latestBlockId || 'block-0';
-        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterByKeyEvents}${userInteraction}`;
+        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterKeyEventsParam}`;
         const endpoint = `${window.location.pathname}.json${params}`;
 
         // #? One day this should be in Promise.finally()
@@ -176,12 +172,6 @@ const updateBlocks = (opts, pollUpdates) => {
     };
 
     const setUpListeners = () => {
-        bean.on(document.body, 'click', '.filter__button', () => {
-                filterStatus = !filterStatus;
-                checkForUpdates(false);
-                console.log('here')
-        })
-
         bean.on(document.body, 'click', '.toast__button', () => {
             if (isLivePage) {
                 fastdom.measure(() => {
@@ -241,4 +231,4 @@ const updateBlocks = (opts, pollUpdates) => {
     });
 };
 
-export { updateBlocks };
+export {updateBlocks};

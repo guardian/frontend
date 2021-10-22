@@ -76,15 +76,20 @@
                             <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
                                 @if(article.hasKeyEvents) {
                                     @defining(KeyEventData(article.content.fields.blocks, timezone)) { case keyEventData =>
-                                        <button class="filter__button">Filter by key events</button>
+                                        @if(model.filterKeyEvents) {
+                                            <a href="?filterKeyEvents=@(!model.filterKeyEvents)">Show All</a>
+                                        } else {
+                                            <a href="?filterKeyEvents=@(!model.filterKeyEvents)">Filter</a>
+                                        }
+
                                         <div class="modern-visible js-updates-desktop">
                                             <div data-component="timeline">
                                             @fragments.dropdown("Key events", Some("key-events"), true) {
                                                 <ul class="timeline js-live-blog__timeline u-unstyled">
-                                                @views.html.liveblog.keyEvents("/" + article.metadata.id, keyEventData)
+                                                @views.html.liveblog.keyEvents("/" + article.metadata.id, keyEventData, model.filterKeyEvents)
                                                 </ul>
                                             }
-                                        </div>
+                                            </div>
                                         </div>
                                     }
                                 }

@@ -12,10 +12,10 @@ object LiveBlogHelpers {
 
   // Get a Seq[BodyBlock] given an article and the "page" request parameter on live-blog pages.
 
-  def blocksForLiveBlogRequest(article: Article, param: Option[String], filterByKeyEvents: Option[Boolean]): Seq[BodyBlock] = {
+  def blocksForLiveBlogRequest(article: Article, param: Option[String], filterKeyEvents: Option[Boolean]): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
-      LiveBlogHelpers.createLiveBlogModel(article, range, filterByKeyEvents)
+      LiveBlogHelpers.createLiveBlogModel(article, range, filterKeyEvents)
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
@@ -31,7 +31,7 @@ object LiveBlogHelpers {
 
   // Given a BlockRange and an article, return a combined LiveBlogCurrentPage instance
 
-  def createLiveBlogModel(liveBlog: Article, range: BlockRange, filterByKeyEvents: Option[Boolean]): Option[LiveBlogCurrentPage] = {
+  def createLiveBlogModel(liveBlog: Article, range: BlockRange, filterKeyEvents: Option[Boolean]): Option[LiveBlogCurrentPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
@@ -40,7 +40,7 @@ object LiveBlogHelpers {
         pageSize = pageSize,
         _,
         range,
-        filterByKeyEvents,
+        filterKeyEvents,
       ),
     )
 
@@ -52,7 +52,7 @@ object LiveBlogHelpers {
       liveBlog: Article,
       response: ItemResponse,
       range: BlockRange,
-      filterByKeyEvents: Option[Boolean]
+      filterKeyEvents: Option[Boolean]
   ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -63,7 +63,7 @@ object LiveBlogHelpers {
           pageSize = pageSize,
           blocks,
           range,
-          filterByKeyEvents
+          filterKeyEvents
         )
       } getOrElse None
 
@@ -85,8 +85,8 @@ object LiveBlogHelpers {
         val liveBlogCache = liveBlog.copy(
           content = liveBlog.content.copy(metadata = liveBlog.content.metadata.copy(cacheTime = cacheTime)),
         )
-        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog.metadata.id, response)))
 
+        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog.metadata.id, response), filterKeyEvents.getOrElse(false)))
       }
       .getOrElse(Right(NotFound))
 
