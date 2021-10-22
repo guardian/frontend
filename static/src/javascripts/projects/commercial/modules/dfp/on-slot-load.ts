@@ -17,8 +17,7 @@ export const onSlotLoad = (event: SlotOnloadEvent): void => {
 		return;
 	}
 
-	const iframe = advert.node.getElementsByTagName('iframe')[0];
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
+	const iframe = advert.node.getElementsByTagName('iframe').item(0);
 	if (!iframe) {
 		console.log('No iFrame found for slot', advert.id, advert.slot);
 		return;
