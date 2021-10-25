@@ -1,5 +1,6 @@
 import { getPermutivePFPSegments } from '@guardian/commercial-core';
 import { onConsentChange } from '@guardian/consent-management-platform';
+import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { loadScript } from '@guardian/libs';
 import fastdom from 'fastdom';
@@ -16,7 +17,7 @@ interface WindowLocal extends Window {
 }
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
-const promise = new Promise<void>((resolve) => {
+const youtubeReady = new Promise<void>((resolve) => {
 	const localWindow = window as WindowLocal;
 
 	if (localWindow.YT?.Player) {
@@ -47,7 +48,7 @@ const addVideoStartedClass = (el: HTMLElement | null) => {
 let tcfData: TCFv2ConsentState | undefined = undefined;
 
 interface ConsentState {
-	framework: null | string;
+	framework: null | Framework;
 	canTarget: boolean;
 }
 
@@ -56,17 +57,23 @@ let consentState: ConsentState = {
 	canTarget: false,
 };
 
+let resolveInitialConsent: (f: Framework) => void;
+const initialConsent = new Promise((resolve) => {
+	resolveInitialConsent = resolve;
+});
 onConsentChange((cmpConsent) => {
 	if (cmpConsent.ccpa) {
 		consentState = {
 			framework: 'ccpa',
 			canTarget: !cmpConsent.ccpa.doNotSell,
 		};
+		resolveInitialConsent('ccpa');
 	} else if (cmpConsent.aus) {
 		consentState = {
 			framework: 'aus',
 			canTarget: cmpConsent.aus.personalisedAdvertising,
 		};
+		resolveInitialConsent('aus');
 	} else {
 		tcfData = cmpConsent.tcfv2;
 		consentState = {
@@ -75,6 +82,7 @@ onConsentChange((cmpConsent) => {
 				? Object.values(tcfData.consents).every(Boolean)
 				: false,
 		};
+		resolveInitialConsent('tcfv2');
 	}
 });
 
@@ -253,7 +261,8 @@ export const initYoutubePlayer = async (
 	videoId: string,
 ): Promise<YT.Player> => {
 	await loadScript(scriptSrc, {});
-	await promise;
+	await youtubeReady;
+	await initialConsent;
 
 	const onPlayerStateChange = (event: YTPlayerEvent) => {
 		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
