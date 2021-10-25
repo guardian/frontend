@@ -79,7 +79,7 @@ onConsentChange((cmpConsent) => {
 });
 
 interface YTPlayerEvent extends Omit<Event, 'target'> {
-	data: string;
+	data: number;
 	target: YT.Player;
 }
 
@@ -94,11 +94,7 @@ const onPlayerStateChangeEvent = (
 	el?: HTMLElement | null,
 ) => {
 	if (el && config.get('page.isDev')) {
-		const states = (window.YT.PlayerState as unknown) as string[];
-		const state = Object.keys(states).find(
-			(key: string) =>
-				states[(key as unknown) as YT.PlayerState] === event.data,
-		);
+		const state = window.YT.PlayerState[event.data];
 		if (state) {
 			console.log(`Player ${el.id} is ${state}`);
 		}
@@ -107,30 +103,29 @@ const onPlayerStateChangeEvent = (
 	// change class according to the current state
 	// TODO: Fix this so we can add poster image.
 	fastdom.mutate(() => {
-		['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(
-			(status: string) => {
-				if (el) {
-					el.classList.toggle(
-						`youtube__video-${status.toLocaleLowerCase()}`,
-						event.data ===
-							window.YT.PlayerState[
-								(status as unknown) as YT.PlayerState
-							],
+		const playerStates: Array<keyof typeof YT.PlayerState> = [
+			'ENDED',
+			'PLAYING',
+			'PAUSED',
+			'BUFFERING',
+			'CUED',
+		];
+		playerStates.forEach((status: keyof typeof YT.PlayerState) => {
+			if (el) {
+				el.classList.toggle(
+					`youtube__video-${status.toLocaleLowerCase()}`,
+					event.data === window.YT.PlayerState[status],
+				);
+				const fcItem = el.closest('fc-item');
+				if (fcItem) {
+					fcItem.classList.toggle(
+						`fc-item--has-video-main-media__${status.toLocaleLowerCase()}`,
+						event.data === window.YT.PlayerState[status],
 					);
-					const fcItem = el.closest('fc-item');
-					if (fcItem) {
-						fcItem.classList.toggle(
-							`fc-item--has-video-main-media__${status.toLocaleLowerCase()}`,
-							event.data ===
-								window.YT.PlayerState[
-									(status as unknown) as YT.PlayerState
-								],
-						);
-					}
-					addVideoStartedClass(el);
 				}
-			},
-		);
+				addVideoStartedClass(el);
+			}
+		});
 	});
 
 	if (handlers && typeof handlers.onPlayerStateChange === 'function') {
