@@ -78,18 +78,18 @@ onConsentChange((cmpConsent) => {
 	}
 });
 
-interface LocalEvent extends Omit<Event, 'target'> {
+interface YTPlayerEvent extends Omit<Event, 'target'> {
 	data: string;
 	target: YT.Player;
 }
 
 interface Handlers {
-	onPlayerReady: (event: LocalEvent) => void;
-	onPlayerStateChange: (event: LocalEvent) => void;
+	onPlayerReady: (event: YTPlayerEvent) => void;
+	onPlayerStateChange: (event: YTPlayerEvent) => void;
 }
 
 const onPlayerStateChangeEvent = (
-	event: LocalEvent,
+	event: YTPlayerEvent,
 	handlers?: Handlers,
 	el?: HTMLElement | null,
 ) => {
@@ -139,7 +139,7 @@ const onPlayerStateChangeEvent = (
 };
 
 const onPlayerReadyEvent = (
-	event: LocalEvent,
+	event: YTPlayerEvent,
 	handlers?: Handlers,
 	el?: HTMLElement | null,
 ) => {
@@ -205,9 +205,9 @@ const createAdsConfig = (
 const setupPlayer = (
 	el: HTMLElement,
 	videoId: string,
-	onReady: (event: LocalEvent) => void,
-	onStateChange: (event: LocalEvent) => void,
-	onError: (event: LocalEvent) => void,
+	onReady: (event: YTPlayerEvent) => void,
+	onStateChange: (event: YTPlayerEvent) => void,
+	onError: (event: YTPlayerEvent) => void,
 	onAdStart: () => void,
 	onAdEnd: () => void,
 ): YT.Player => {
@@ -246,7 +246,7 @@ const setupPlayer = (
 	});
 };
 
-const hasPlayerStarted = (event: LocalEvent) =>
+const hasPlayerStarted = (event: YTPlayerEvent) =>
 	event.target.getCurrentTime() > 0;
 
 const getPlayerIframe = (videoId: string) =>
@@ -260,11 +260,11 @@ export const initYoutubePlayer = async (
 	await loadScript(scriptSrc, {});
 	await promise;
 
-	const onPlayerStateChange = (event: LocalEvent) => {
+	const onPlayerStateChange = (event: YTPlayerEvent) => {
 		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
 	};
 
-	const onPlayerReady = (event: LocalEvent) => {
+	const onPlayerReady = (event: YTPlayerEvent) => {
 		const iframe = getPlayerIframe(videoId);
 		if (hasPlayerStarted(event)) {
 			addVideoStartedClass(iframe);
@@ -272,7 +272,7 @@ export const initYoutubePlayer = async (
 		onPlayerReadyEvent(event, handlers, iframe);
 	};
 
-	const onPlayerError = (event: LocalEvent) => {
+	const onPlayerError = (event: YTPlayerEvent) => {
 		console.error(`YOUTUBE: ${event.data}`);
 		console.dir(event);
 	};
