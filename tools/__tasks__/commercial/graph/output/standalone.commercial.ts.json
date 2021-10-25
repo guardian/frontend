@@ -223,7 +223,7 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/render-advert.ts"
  ],
- "../projects/commercial/modules/dfp/on-slot-viewable.js": [
+ "../projects/commercial/modules/dfp/on-slot-viewable.ts": [
   "../lib/url.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts"
@@ -252,7 +252,7 @@
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
   "../projects/commercial/modules/dfp/on-slot-load.js",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
-  "../projects/commercial/modules/dfp/on-slot-viewable.js",
+  "../projects/commercial/modules/dfp/on-slot-viewable.ts",
   "../projects/commercial/modules/dfp/on-slot-visibility-changed.js",
   "../projects/commercial/modules/dfp/refresh-on-resize.js",
   "../projects/commercial/modules/messenger.js",
