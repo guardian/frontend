@@ -7,7 +7,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
-    ShowPressedInteractives,
     StandaloneCommercialBundle,
     StandaloneCommercialBundleTracking,
   )
@@ -22,15 +21,6 @@ object LiveblogRendering
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = LocalDate.of(2021, 11, 30),
       participationGroup = Perc0A,
-    )
-
-object ShowPressedInteractives
-    extends Experiment(
-      name = "interactive-librarian",
-      description = "The pressed interactives experiment",
-      owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = LocalDate.of(2022, 1, 31),
-      participationGroup = Perc0B,
     )
 
 object StandaloneCommercialBundle

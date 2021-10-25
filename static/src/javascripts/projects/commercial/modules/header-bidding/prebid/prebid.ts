@@ -1,5 +1,6 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
+import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import { prebidTimeout } from 'common/modules/experiments/tests/prebid-timeout';
@@ -206,7 +207,7 @@ class PrebidAdUnit {
 let requestQueue: Promise<void> = Promise.resolve();
 let initialised = false;
 
-const initialise = (window: Window, framework = 'tcfv2'): void => {
+const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 	if (!window.pbjs) {
 		console.warn('window.pbjs not found on window');
 		return void 0; // We couldn’t initialise

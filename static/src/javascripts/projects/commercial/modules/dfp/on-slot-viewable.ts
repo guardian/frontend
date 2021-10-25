@@ -2,11 +2,11 @@ import { getUrlVars } from '../../../../lib/url';
 import { getAdvertById } from './get-advert-by-id';
 import { enableLazyLoad } from './lazy-load';
 
-const setSlotAdRefresh = (event) => {
+const setSlotAdRefresh = (event: googletag.events.Event): void => {
 	const advert = getAdvertById(event.slot.getSlotElementId());
 	const viewabilityThresholdMs = 30000; // 30 seconds refresh
 
-	if (advert && advert.shouldRefresh) {
+	if (advert?.shouldRefresh) {
 		const onDocumentVisible = () => {
 			if (!document.hidden) {
 				document.removeEventListener(
@@ -42,7 +42,9 @@ const setSlotAdRefresh = (event) => {
   Uses URL parameters.
 
  */
-export const onSlotViewableFunction = () => {
+export const onSlotViewableFunction = (): ((
+	event: googletag.events.Event,
+) => void) => {
 	const queryParams = getUrlVars();
 
 	if (queryParams.adrefresh !== 'false') {
@@ -50,5 +52,5 @@ export const onSlotViewableFunction = () => {
 	}
 
 	// Nothing to do. Return an empty callback
-	return () => {};
+	return () => void 0;
 };
