@@ -93,25 +93,25 @@ const onPlayerStateChangeEvent = (
 	handlers?: Handlers,
 	el?: HTMLElement | null,
 ) => {
-	if (el && config.get('page.isDev')) {
-		const state = window.YT.PlayerState[event.data];
-		if (state) {
-			console.log(`Player ${el.id} is ${state}`);
+	if (el) {
+		if (config.get('page.isDev')) {
+			const state = window.YT.PlayerState[event.data];
+			if (state) {
+				console.log(`Player ${el.id} is ${state}`);
+			}
 		}
-	}
 
-	// change class according to the current state
-	// TODO: Fix this so we can add poster image.
-	fastdom.mutate(() => {
-		const playerStates: Array<keyof typeof YT.PlayerState> = [
-			'ENDED',
-			'PLAYING',
-			'PAUSED',
-			'BUFFERING',
-			'CUED',
-		];
-		playerStates.forEach((status: keyof typeof YT.PlayerState) => {
-			if (el) {
+		// change class according to the current state
+		// TODO: Fix this so we can add poster image.
+		fastdom.mutate(() => {
+			const playerStates: Array<keyof typeof YT.PlayerState> = [
+				'ENDED',
+				'PLAYING',
+				'PAUSED',
+				'BUFFERING',
+				'CUED',
+			];
+			playerStates.forEach((status: keyof typeof YT.PlayerState) => {
 				el.classList.toggle(
 					`youtube__video-${status.toLocaleLowerCase()}`,
 					event.data === window.YT.PlayerState[status],
@@ -124,9 +124,9 @@ const onPlayerStateChangeEvent = (
 					);
 				}
 				addVideoStartedClass(el);
-			}
+			});
 		});
-	});
+	}
 
 	if (handlers && typeof handlers.onPlayerStateChange === 'function') {
 		handlers.onPlayerStateChange(event);
