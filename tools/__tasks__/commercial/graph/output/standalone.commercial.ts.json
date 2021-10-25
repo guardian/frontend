@@ -73,7 +73,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/commercial/commercial-metrics.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/load-advert.js",
+  "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/analytics/forceSendMetrics.ts"
  ],
@@ -115,7 +115,7 @@
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/load-advert.js",
+  "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/commercial/commercial-features.js",
   "../projects/common/modules/identity/api.ts"
  ],
@@ -141,7 +141,7 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts",
-  "../projects/commercial/modules/dfp/load-advert.js",
+  "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/commercial/modules/dfp/queue-advert.ts"
  ],
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
@@ -163,13 +163,13 @@
  "../projects/commercial/modules/dfp/display-ads.ts": [
   "../projects/commercial/modules/creatives/page-skin.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/commercial/modules/dfp/load-advert.js"
+  "../projects/commercial/modules/dfp/load-advert.ts"
  ],
  "../projects/commercial/modules/dfp/display-lazy-ads.ts": [
   "../lib/partition.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts",
-  "../projects/commercial/modules/dfp/load-advert.js"
+  "../projects/commercial/modules/dfp/load-advert.ts"
  ],
  "../projects/commercial/modules/dfp/empty-advert.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
@@ -177,12 +177,13 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/fill-advert-slots.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/display-ads.ts",
   "../projects/commercial/modules/dfp/display-lazy-ads.ts",
-  "../projects/commercial/modules/dfp/prepare-prebid.js",
+  "../projects/commercial/modules/dfp/prepare-prebid.ts",
   "../projects/commercial/modules/dfp/queue-advert.ts",
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/common/modules/commercial/commercial-features.js"
@@ -197,16 +198,17 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/load-advert.js"
+  "../projects/commercial/modules/dfp/load-advert.ts"
  ],
- "../projects/commercial/modules/dfp/load-advert.js": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js",
+ "../projects/commercial/modules/dfp/load-advert.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/user-timing.js",
+  "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/header-bidding/a9/a9.js",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
- "../projects/commercial/modules/dfp/on-slot-load.js": [
+ "../projects/commercial/modules/dfp/on-slot-load.ts": [
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/messenger/post-message.js"
  ],
@@ -223,7 +225,7 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/render-advert.ts"
  ],
- "../projects/commercial/modules/dfp/on-slot-viewable.js": [
+ "../projects/commercial/modules/dfp/on-slot-viewable.ts": [
   "../lib/url.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts"
@@ -250,9 +252,9 @@
   "../lib/raven.js",
   "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
-  "../projects/commercial/modules/dfp/on-slot-load.js",
+  "../projects/commercial/modules/dfp/on-slot-load.ts",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
-  "../projects/commercial/modules/dfp/on-slot-viewable.js",
+  "../projects/commercial/modules/dfp/on-slot-viewable.ts",
   "../projects/commercial/modules/dfp/on-slot-visibility-changed.js",
   "../projects/commercial/modules/dfp/refresh-on-resize.js",
   "../projects/commercial/modules/messenger.js",
@@ -276,11 +278,12 @@
   "../lib/config.js",
   "../lib/report-error.js"
  ],
- "../projects/commercial/modules/dfp/prepare-prebid.js": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/lodash-es/lodash.js",
+ "../projects/commercial/modules/dfp/prepare-prebid.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../../../../node_modules/prebid.js/build/dist/prebid.js",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
@@ -304,7 +307,7 @@
   "../lib/mediator.js",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/commercial/modules/dfp/load-advert.js"
+  "../projects/commercial/modules/dfp/load-advert.ts"
  ],
  "../projects/commercial/modules/dfp/render-advert-label.ts": [
   "../lib/fastdom-promise.js"
@@ -350,6 +353,7 @@
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/esm/constants/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
@@ -713,7 +717,7 @@
   "../projects/commercial/modules/dfp/prepare-a9.js",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
   "../projects/commercial/modules/dfp/prepare-permutive.js",
-  "../projects/commercial/modules/dfp/prepare-prebid.js",
+  "../projects/commercial/modules/dfp/prepare-prebid.ts",
   "../projects/commercial/modules/dfp/redplanet.js",
   "../projects/commercial/modules/high-merch.ts",
   "../projects/commercial/modules/hosted/about.ts",

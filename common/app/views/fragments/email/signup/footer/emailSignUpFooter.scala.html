@@ -22,6 +22,8 @@
                 <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Email address</label>
                 <input class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" />
                 <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
+                <input class="email-sub__ref-input" type="hidden" name="ref" id="email-sub__ref-input" value="" />
+                <input class="email-sub__refviewid-input" type="hidden" name="refViewId" id="email-sub__refviewid-input" value="" />
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button" data-component="email-signup-button footer-@listName" data-link-name="footer | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
@@ -40,5 +42,7 @@
 
 <script>
     trackClickEvent(document.getElementById("email-embed-signup-button"))
+    document.getElementById("email-sub__ref-input").value = window.parent.location.href
+    document.getElementById("email-sub__refviewid-input").value = window.parent.guardian.config.ophan.pageViewId
 </script>
 

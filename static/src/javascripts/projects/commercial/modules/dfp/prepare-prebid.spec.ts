@@ -2,6 +2,8 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import type { Callback } from '@guardian/consent-management-platform/dist/types';
+import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -10,8 +12,12 @@ import { dfpEnv } from './dfp-env';
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;
-const onConsentChange = onConsentChange_;
-const getConsentFor = getConsentFor_;
+const onConsentChange = onConsentChange_ as jest.MockedFunction<
+	typeof onConsentChange_
+>;
+const getConsentFor = getConsentFor_ as jest.MockedFunction<
+	typeof getConsentFor_
+>;
 
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
@@ -44,38 +50,47 @@ jest.mock('@guardian/consent-management-platform', () => ({
 	getConsentFor: jest.fn(),
 }));
 
-const tcfv2WithConsentMock = (callback) =>
+const defaultTCFv2State: TCFv2ConsentState = {
+	consents: { 1: false },
+	eventStatus: 'tcloaded',
+	vendorConsents: { abc: false },
+	addtlConsent: 'xyz',
+	gdprApplies: true,
+	tcString: 'YAAA',
+};
+const tcfv2WithConsentMock = (callback: Callback) =>
 	callback({
-		tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': true } },
-	});
-
-const tcfv2WithoutConsentMock = (callback) =>
-	callback({
-		tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': false } },
-	});
-
-const ccpaWithConsentMock = (callback) =>
-	callback({ ccpa: { doNotSell: false } });
-
-const ccpaWithoutConsentMock = (callback) =>
-	callback({ ccpa: { doNotSell: true } });
-
-const ausWithConsentMock = (callback) =>
-	callback({ aus: { rejectedCategories: [] } });
-
-const ausWithoutConsentMock = (callback) =>
-	callback({
-		aus: {
-			rejectedCategories: [
-				{ _id: '5f859c3420e4ec3e476c7006', name: 'Advertising' },
-			],
+		tcfv2: {
+			...defaultTCFv2State,
+			vendorConsents: { '5f22bfd82a6b6c1afd1181a9': true },
 		},
 	});
 
-const fakeUserAgent = (userAgent) => {
-	const userAgentObject = {};
-	userAgentObject.get = () => userAgent;
-	userAgentObject.configurable = true;
+const tcfv2WithoutConsentMock = (callback: Callback) =>
+	callback({
+		tcfv2: {
+			...defaultTCFv2State,
+			vendorConsents: { '5f22bfd82a6b6c1afd1181a9': false },
+		},
+	});
+
+const ccpaWithConsentMock = (callback: Callback) =>
+	callback({ ccpa: { doNotSell: false } });
+
+const ccpaWithoutConsentMock = (callback: Callback) =>
+	callback({ ccpa: { doNotSell: true } });
+
+const ausWithConsentMock = (callback: Callback) =>
+	callback({ aus: { personalisedAdvertising: true } });
+
+const ausWithoutConsentMock = (callback: Callback) =>
+	callback({ aus: { personalisedAdvertising: false } });
+
+const fakeUserAgent = (userAgent: string) => {
+	const userAgentObject = {
+		get: () => userAgent,
+		configurable: true,
+	};
 	Object.defineProperty(navigator, 'userAgent', userAgentObject);
 };
 
@@ -92,6 +107,8 @@ describe('init', () => {
 	});
 
 	it('should initialise Prebid when Prebid switch is ON and advertising is on and ad-free is off', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -102,6 +119,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when useragent is Google Web Preview', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -111,6 +130,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when no header bidding switches are on', async () => {
+		expect.hasAssertions();
+
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		dfpEnv.hbImpl = { prebid: false, a9: false };
@@ -119,6 +140,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when advertising is switched off', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = false;
 		commercialFeatures.adFree = false;
@@ -127,6 +150,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when ad-free is on', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = true;
@@ -135,6 +160,8 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid when the page has a pageskin', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -152,6 +179,8 @@ describe('init', () => {
 		expect(prebid.initialise).toBeCalled();
 	});
 	it('should initialise Prebid if TCFv2 consent with correct Sourcepoint Id is true ', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -162,16 +191,22 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid if TCFv2 consent with correct Sourcepoint Id is false', async () => {
+		expect.assertions(2);
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
-		await setupPrebid();
+
+		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+
 		expect(prebid.initialise).not.toBeCalled();
 	});
 
 	it('should initialise Prebid in CCPA if doNotSell is false', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -182,16 +217,22 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid in CCPA if doNotSell is true', async () => {
+		expect.assertions(2);
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		onConsentChange.mockImplementation(ccpaWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
-		await setupPrebid();
+
+		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+
 		expect(prebid.initialise).not.toBeCalled();
 	});
 
 	it('should initialise Prebid in AUS if Advertising is not rejected', async () => {
+		expect.hasAssertions();
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
@@ -202,12 +243,16 @@ describe('init', () => {
 	});
 
 	it('should not initialise Prebid in AUS if Advertising is rejected', async () => {
+		expect.assertions(2);
+
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		onConsentChange.mockImplementation(ausWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
-		await setupPrebid();
+
+		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+
 		expect(prebid.initialise).not.toBeCalled();
 	});
 
