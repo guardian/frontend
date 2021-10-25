@@ -1,10 +1,11 @@
-import { prebid } from '../header-bidding/prebid/prebid';
+import { EventTimer } from '@guardian/commercial-core';
 import { markTime } from '../../../../lib/user-timing';
 import a9 from '../header-bidding/a9/a9';
+import { prebid } from '../header-bidding/prebid/prebid';
 import { stripDfpAdPrefixFrom } from '../header-bidding/utils';
-import { EventTimer } from '@guardian/commercial-core';
+import type { Advert } from './Advert';
 
-const forcedSlotSize = (advert, hbSlot) => {
+const forcedSlotSize = (advert: Advert, hbSlot: HeaderBiddingSlot) => {
 	// We only fiddle with top-above-nav hbSlot(s)
 	if (hbSlot.key !== 'top-above-nav') {
 		return [hbSlot];
@@ -30,9 +31,9 @@ const forcedSlotSize = (advert, hbSlot) => {
 
 const eventTimer = EventTimer.get();
 
-export const loadAdvert = (advert) => {
+export const loadAdvert = (advert: Advert): void => {
 	const adName = stripDfpAdPrefixFrom(advert.id);
-	advert.whenSlotReady
+	void advert.whenSlotReady
 		.catch(() => {
 			// The display needs to be called, even in the event of an error.
 		})
@@ -47,20 +48,23 @@ export const loadAdvert = (advert) => {
 		})
 		.then(() => {
 			eventTimer.trigger('slotInitialised', adName);
-			window.googletag.display(advert.id);
+			window.googletag?.display(advert.id);
 		});
 };
 
-export const refreshAdvert = (advert) => {
+export const refreshAdvert = (advert: Advert): void => {
 	// advert.size contains the effective size being displayed prior to refreshing
-	advert.whenSlotReady
+	void advert.whenSlotReady
 		.then(() => {
-			const prebidPromise = prebid.requestBids(advert, (prebidSlot) =>
-				forcedSlotSize(advert, prebidSlot),
+			const prebidPromise = prebid.requestBids(
+				advert,
+				(prebidSlot: HeaderBiddingSlot) =>
+					forcedSlotSize(advert, prebidSlot),
 			);
 
-			const a9Promise = a9.requestBids(advert, (a9Slot) =>
-				forcedSlotSize(advert, a9Slot),
+			const a9Promise = a9.requestBids(
+				advert,
+				(a9Slot: HeaderBiddingSlot) => forcedSlotSize(advert, a9Slot),
 			);
 			return Promise.all([prebidPromise, a9Promise]);
 		})
@@ -73,6 +77,6 @@ export const refreshAdvert = (advert) => {
 					advert.slot.defineSizeMapping([[[0, 0], [advert.size]]]);
 				}
 			}
-			window.googletag.pubads().refresh([advert.slot]);
+			window.googletag?.pubads().refresh([advert.slot]);
 		});
 };
