@@ -148,9 +148,7 @@ export const init = (): Promise<void> => {
 			// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
 			if (canRun) {
 				void loadScript(
-					(config as {
-						get: (arg: string, defaultValue: string) => string;
-					}).get(
+					config.get<string>(
 						'libs.googletag',
 						'//www.googletagservices.com/tag/js/gpt.js',
 					),

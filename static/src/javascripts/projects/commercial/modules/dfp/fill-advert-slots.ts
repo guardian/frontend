@@ -1,3 +1,4 @@
+import { log } from '@guardian/libs';
 import { getBreakpoint } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { removeDisabledSlots } from '../remove-slots';
@@ -18,9 +19,16 @@ const fillAdvertSlots = async (): Promise<void> => {
 	// This module has the following strict dependencies. These dependencies must be
 	// fulfilled before fillAdvertSlots can execute reliably. The bootstrap (commercial.js)
 	// initiates these dependencies, to speed up the init process. Bootstrap also captures the module performance.
-	const dependencies = [setupPrebidOnce(), removeDisabledSlots()];
+	const dependencies: Array<Promise<void>> = [removeDisabledSlots()];
 
 	await Promise.all(dependencies);
+
+	// Prebid might not load if it does not have consent
+	// TODO: use Promise.allSettled, once we have Node 12
+	await setupPrebidOnce().catch((reason) =>
+		log('commercial', 'could not load Prebid.js', reason),
+	);
+
 	// Quit if ad-free
 	if (commercialFeatures.adFree) {
 		return Promise.resolve();
