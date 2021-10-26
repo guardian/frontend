@@ -147,7 +147,7 @@
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
  "../projects/commercial/modules/dfp/create-slots.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
+  "../projects/commercial/modules/dfp/size-mapping.ts"
  ],
  "../projects/commercial/modules/dfp/define-slot.js": [
   "../../../../node_modules/lodash-es/lodash.js",
@@ -318,6 +318,10 @@
   "../projects/commercial/modules/dfp/get-ad-iframe.ts",
   "../projects/commercial/modules/dfp/render-advert-label.ts",
   "../projects/commercial/modules/sticky-mpu.js"
+ ],
+ "../projects/commercial/modules/dfp/size-mapping.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/src-foundations/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/dfp/track-ad-render.ts": [
   "../projects/commercial/modules/dfp/wait-for-advert.ts"
