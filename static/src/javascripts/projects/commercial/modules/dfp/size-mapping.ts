@@ -12,35 +12,32 @@ type SizeMappingsString = {
 export const concatSizeMappings = (
 	sizeMappings1: SizeMappings,
 	sizeMappings2: SizeMappings,
-): SizeMappings => {
-	const mergedMappings: SizeMappings = { ...sizeMappings1 };
-
-	(Object.keys(sizeMappings2) as Breakpoint[]).forEach((optionSize) => {
-		const optionSizesArray = sizeMappings2[optionSize];
-		const mergedSize = mergedMappings[optionSize];
-		if (optionSizesArray !== undefined) {
-			mergedMappings[optionSize] =
-				mergedSize !== undefined
-					? mergedSize.concat(optionSizesArray)
-					: optionSizesArray;
-		}
-	});
-
-	return mergedMappings;
-};
+): SizeMappings =>
+	(Object.keys(sizeMappings2) as Breakpoint[]).reduce<SizeMappings>(
+		(concatMappings, size) => {
+			concatMappings[size] = (concatMappings[size] ?? []).concat(
+				sizeMappings2[size] ?? [],
+			);
+			return concatMappings;
+		},
+		{ ...sizeMappings1 },
+	);
 
 const sizeMappingToString = (sizeMapping: AdSize[]): string =>
 	sizeMapping.map((adSize) => adSize.toString()).join('|');
 
 export const sizeMappingsToString = (
 	sizeMappings: SizeMappings,
-): SizeMappingsString => {
-	const sizeMappingsString: SizeMappingsString = {};
-	(Object.keys(sizeMappings) as Breakpoint[]).forEach((breakpoint) => {
-		const sizeMapping = sizeMappings[breakpoint];
-		if (sizeMapping !== undefined) {
-			sizeMappingsString[breakpoint] = sizeMappingToString(sizeMapping);
-		}
-	});
-	return sizeMappingsString;
-};
+): SizeMappingsString =>
+	(Object.keys(sizeMappings) as Breakpoint[]).reduce<SizeMappingsString>(
+		(sizeMappingsString, breakpoint) => {
+			const sizeMapping = sizeMappings[breakpoint];
+			if (sizeMapping !== undefined) {
+				sizeMappingsString[breakpoint] = sizeMappingToString(
+					sizeMapping,
+				);
+			}
+			return sizeMappingsString;
+		},
+		{},
+	);
