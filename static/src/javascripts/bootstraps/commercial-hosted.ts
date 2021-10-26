@@ -1,5 +1,5 @@
 /**
- * This file is deprecated, an only used for hosted pages
+ * This file is deprecated. Only used for “Hosted” pages
  * All other pages use the standalone bundle.
  */
 
