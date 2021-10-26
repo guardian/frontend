@@ -1,6 +1,6 @@
 import { adSizes } from '@guardian/commercial-core';
 import type { SizeMappings } from './size-mapping';
-import { mergeSizeMappings, sizeMappingsToString } from './size-mapping';
+import { concatSizeMappings, sizeMappingsToString } from './size-mapping';
 
 type AdSlotDefinition = {
 	sizeMappings: SizeMappings;
@@ -210,7 +210,7 @@ export const createSlots = (
 
 	const sizes =
 		options.sizes !== undefined
-			? mergeSizeMappings(definition.sizeMappings, options.sizes)
+			? concatSizeMappings(definition.sizeMappings, options.sizes)
 			: definition.sizeMappings;
 
 	const sizeStrings = sizeMappingsToString(sizes);

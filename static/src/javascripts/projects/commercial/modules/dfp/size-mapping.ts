@@ -9,7 +9,7 @@ type SizeMappingsString = {
 	[B in Breakpoint]?: string;
 };
 
-export const mergeSizeMappings = (
+export const concatSizeMappings = (
 	sizeMappings1: SizeMappings,
 	sizeMappings2: SizeMappings,
 ): SizeMappings => {
