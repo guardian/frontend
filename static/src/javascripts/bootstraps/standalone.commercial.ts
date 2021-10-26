@@ -102,42 +102,6 @@ const loadDcrBundle = async (): Promise<void> => {
 	return void 0;
 };
 
-/**
- * Load commercial modules that are used in hosted pages
- */
-const loadHostedBundle = async (): Promise<void> => {
-	if (!window.guardian.config.page.isHosted) return void 0;
-
-	const hostedAbout = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/about'
-	);
-	const initHostedVideo = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/video'
-	);
-	const hostedGallery = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/gallery'
-	);
-	const initHostedCarousel = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/onward-journey-carousel'
-	);
-	const loadOnwardComponent = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/onward'
-	);
-
-	commercialModules.push(
-		['cm-hostedAbout', hostedAbout.init],
-		['cm-hostedVideo', initHostedVideo.initHostedVideo],
-		['cm-hostedGallery', hostedGallery.init],
-		['cm-hostedOnward', loadOnwardComponent.loadOnwardComponent],
-		['cm-hostedOJCarousel', initHostedCarousel.initHostedCarousel],
-	);
-};
-
 const loadModules = () => {
 	const modulePromises: Array<Promise<unknown>> = [];
 
@@ -188,7 +152,6 @@ const bootCommercial = async (): Promise<void> => {
 	try {
 		await loadFrontendBundle();
 		await loadDcrBundle();
-		await loadHostedBundle();
 		await loadModules();
 
 		return catchErrorsWithContext(
