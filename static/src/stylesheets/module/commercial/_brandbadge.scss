@@ -48,6 +48,7 @@
         max-height: 6 * $gs-baseline;
         @include mq(tablet) {
             max-height: none;
+            height: auto;
         }
         max-width: 100%;
         margin: 0 0 5px;
