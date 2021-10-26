@@ -42,7 +42,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     val content = contentAsString(result)
 
     // newer blocks
-    content should include("block-56d03894e4b0bd5a0524cbaba")
+    content should include("block-56d03968e4b0bd5a0524cbae")
     content should include("block-56d039fce4b0d38537b1f61e")
     content should not include "56d04877e4b0bd5a0524cbe2" // at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
 
