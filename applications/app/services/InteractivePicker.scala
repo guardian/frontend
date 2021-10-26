@@ -23,6 +23,7 @@ object InteractivePicker {
   )(implicit
       request: RequestHeader,
   ): RenderingTier = {
+    // Allows us to press via InterativeLibrarian and also debug interactives rendering via dcr
     val forceDCROff = request.forceDCROff
     val fullPath = ensureStartingForwardSlash(path)
 
