@@ -208,7 +208,10 @@ export const createSlots = (
 	const classes: string[] =
 		options.classes?.split(' ').map((cn) => `ad-slot--${cn}`) ?? [];
 
-	const sizes = mergeSizeMappings(definition.sizeMappings, options.sizes);
+	const sizes =
+		options.sizes !== undefined
+			? mergeSizeMappings(definition.sizeMappings, options.sizes)
+			: definition.sizeMappings;
 
 	const sizeStrings = sizeMappingsToString(sizes);
 

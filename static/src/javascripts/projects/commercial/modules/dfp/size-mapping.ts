@@ -11,21 +11,21 @@ type SizeMappingsString = {
 
 export const mergeSizeMappings = (
 	sizeMappings1: SizeMappings,
-	sizeMappings2?: SizeMappings,
+	sizeMappings2: SizeMappings,
 ): SizeMappings => {
 	const mergedMappings: SizeMappings = { ...sizeMappings1 };
-	if (sizeMappings2) {
-		(Object.keys(sizeMappings2) as Breakpoint[]).forEach((optionSize) => {
-			const optionSizesArray = sizeMappings2[optionSize];
-			const mergedSize = mergedMappings[optionSize];
-			if (optionSizesArray !== undefined) {
-				mergedMappings[optionSize] =
-					mergedSize !== undefined
-						? mergedSize.concat(optionSizesArray)
-						: optionSizesArray;
-			}
-		});
-	}
+
+	(Object.keys(sizeMappings2) as Breakpoint[]).forEach((optionSize) => {
+		const optionSizesArray = sizeMappings2[optionSize];
+		const mergedSize = mergedMappings[optionSize];
+		if (optionSizesArray !== undefined) {
+			mergedMappings[optionSize] =
+				mergedSize !== undefined
+					? mergedSize.concat(optionSizesArray)
+					: optionSizesArray;
+		}
+	});
+
 	return mergedMappings;
 };
 
