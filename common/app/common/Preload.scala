@@ -3,16 +3,10 @@ package common
 import model.ApplicationIdentity
 import html.HtmlPageHelpers.ContentCSSFile
 import play.api.mvc.RequestHeader
-import experiments.{ActiveExperiments, StandaloneCommercialBundle}
 
 object Preload {
 
-  def commercialBundleName(implicit request: RequestHeader): String =
-    if (ActiveExperiments.isParticipating(StandaloneCommercialBundle)) {
-      "commercial/graun.standalone.commercial.js"
-    } else {
-      "graun.commercial.js"
-    }
+  def commercialBundleName(implicit request: RequestHeader): String = "graun.commercial.js"
 
   def isPolyFillIOFallbackMin: Seq[PreloadAsset] =
     if (conf.switches.Switches.PolyfillIOFallbackMin.isSwitchedOn)
