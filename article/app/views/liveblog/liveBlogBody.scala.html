@@ -75,7 +75,7 @@
                         <div class="js-live-blog__sticky-components">
                             <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
                                 @if(article.hasKeyEvents) {
-                                    @defining(KeyEventData(article.content.fields.blocks, timezone)) { case keyEventData =>
+                                    @defining(KeyEventData(article.content.fields.blocks, timezone, model.filterKeyEvents)) { case keyEventData =>
                                         @if(model.filterKeyEvents) {
                                             <a href="?filterKeyEvents=@(!model.filterKeyEvents)">Show All</a>
                                         } else {
