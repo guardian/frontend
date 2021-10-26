@@ -28,7 +28,11 @@ object LiveBlogHtmlPage extends HtmlPage[LiveBlogPage] {
       posting = Html(
         LiveBlogPosting(
           page.article,
-          LiveBlogHelpers.blocksForLiveBlogRequest(page.article, request.getQueryString("page"), request.getQueryString("filterKeyEvents").map(_.toBoolean)),
+          LiveBlogHelpers.blocksForLiveBlogRequest(
+            page.article,
+            request.getQueryString("page"),
+            request.getQueryString("filterKeyEvents").map(_.toBoolean),
+          ),
         ).toString(),
       ),
     )
