@@ -22,13 +22,13 @@ import {
 	BrazeMessages,
 	LocalMessageCache,
 } from '@guardian/braze-components/logic';
-import {getUserIdentifiersFromApi} from "common/modules/identity/api";
+import { getUserIdentifiersFromApi } from 'common/modules/identity/api';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
 const getBrazeUuid = () =>
 	new Promise((resolve) => {
-        getUserIdentifiersFromApi((userIdentifiers) => {
+		getUserIdentifiersFromApi((userIdentifiers) => {
 			if (userIdentifiers && userIdentifiers.brazeUuid) {
 				resolve(userIdentifiers.brazeUuid);
 			} else {
