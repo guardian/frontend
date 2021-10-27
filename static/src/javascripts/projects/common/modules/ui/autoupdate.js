@@ -4,22 +4,22 @@ import qwery from 'qwery';
 
 import $ from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
-import { fetchJson } from 'lib/fetch-json';
-import { isBreakpoint, pageVisible, initPageVisibility } from 'lib/detect';
+import {fetchJson} from 'lib/fetch-json';
+import {initPageVisibility, isBreakpoint, pageVisible} from 'lib/detect';
 import mediator from 'lib/mediator';
-import { enhanceTweets } from 'common/modules/article/twitter';
-import { Sticky } from 'common/modules/ui/sticky';
-import { scrollToElement } from 'lib/scroller';
-import { init as initRelativeDates } from 'common/modules/ui/relativedates';
-import { initNotificationCounter } from 'common/modules/ui/notification-counter';
-import { checkElemsForVideos } from 'common/modules/atoms/youtube';
+import {enhanceTweets} from 'common/modules/article/twitter';
+import {Sticky} from 'common/modules/ui/sticky';
+import {scrollToElement} from 'lib/scroller';
+import {init as initRelativeDates} from 'common/modules/ui/relativedates';
+import {initNotificationCounter} from 'common/modules/ui/notification-counter';
+import {checkElemsForVideos} from 'common/modules/atoms/youtube';
 
 
 const updateBlocks = (opts, pollUpdates) => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
-            minUpdateDelay: (isBreakpoint({ min: 'desktop' }) ? 10 : 30) * 1000,
+            minUpdateDelay: (isBreakpoint({min: 'desktop'}) ? 10 : 30) * 1000,
             maxUpdateDelay: 20 * 60 * 1000, // 20 mins
             backoffMultiplier: 0.75, // increase or decrease the back off rate by modifying this
         },
@@ -170,6 +170,16 @@ const updateBlocks = (opts, pollUpdates) => {
             });
     };
 
+    const getBooleanParam = (key) => {
+        const hasParam = window.location.search.includes(`${key}=true`);
+        return `?${key}=${hasParam ? 'true' : 'false'}`;
+    }
+
+    const refreshWindow = () => {
+        const param = getBooleanParam("filterKeyEvents")
+        window.location.assign(`${window.location.pathname}${param}`);
+    }
+
     const setUpListeners = () => {
         bean.on(document.body, 'click', '.toast__button', () => {
             if (isLivePage) {
@@ -185,7 +195,7 @@ const updateBlocks = (opts, pollUpdates) => {
                         });
                 });
             } else {
-                window.location.assign(window.location.pathname);
+                refreshWindow()
             }
         });
 
