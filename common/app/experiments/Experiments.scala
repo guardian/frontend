@@ -15,28 +15,37 @@ object ActiveExperiments extends ExperimentsDefinition {
 }
 
 object LiveblogRendering
-    extends Experiment(
-      name = "liveblog-rendering",
-      description = "Use DCR for liveblogs",
-      owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = LocalDate.of(2021, 11, 30),
-      participationGroup = Perc0A,
-    )
+  extends Experiment(
+    name = "liveblog-rendering",
+    description = "Use DCR for liveblogs",
+    owners = Seq(Owner.withGithub("shtukas")),
+    sellByDate = LocalDate.of(2021, 11, 30),
+    participationGroup = Perc0A,
+  )
 
 object StandaloneCommercialBundle
-    extends Experiment(
-      name = "standalone-commercial-bundle",
-      description = "Serve a standalone commercial bundle to a subset of users",
-      owners = Seq(Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2021, 11, 1),
-      participationGroup = Perc50,
-    )
+  extends Experiment(
+    name = "standalone-commercial-bundle",
+    description = "Serve a standalone commercial bundle to a subset of users",
+    owners = Seq(Owner.withGithub("mxdvl")),
+    sellByDate = LocalDate.of(2021, 11, 1),
+    participationGroup = Perc50,
+  )
 
 object StandaloneCommercialBundleTracking
-    extends Experiment(
-      name = "standalone-commercial-bundle-tracking",
-      description = "Track performance metrics for the standalone commercial bundle",
-      owners = Seq(Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2021, 11, 1),
-      participationGroup = Perc1A,
-    )
+  extends Experiment(
+    name = "standalone-commercial-bundle-tracking",
+    description = "Track performance metrics for the standalone commercial bundle",
+    owners = Seq(Owner.withGithub("mxdvl")),
+    sellByDate = LocalDate.of(2021, 11, 1),
+    participationGroup = Perc1A,
+  )
+
+object LiveblogFiltering
+  extends Experiment(
+    name = "liveblog-filtering",
+    description = "Filter liveblogs by key events",
+    owners = Seq(Owner.withGithub("alinaboghiu")),
+    sellByDate = LocalDate.of(2021, 12, 1),
+    participationGroup = Perc2A,
+  )
