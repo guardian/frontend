@@ -10,12 +10,22 @@ import {
 	isAdFreeUser as isAdFreeUser_,
 } from './user-features';
 
-const isPayingMember = isPayingMember_;
-const isRecentOneOffContributor = isRecentOneOffContributor_;
-const shouldHideSupportMessaging = shouldHideSupportMessaging_;
-const isAdFreeUser = isAdFreeUser_;
-const getBreakpoint = getBreakpoint_;
-const isUserLoggedIn = isUserLoggedIn_;
+const isPayingMember = isPayingMember_ as jest.MockedFunction<
+	typeof isPayingMember_
+>;
+const isRecentOneOffContributor = isRecentOneOffContributor_ as jest.MockedFunction<
+	typeof isRecentOneOffContributor_
+>;
+const shouldHideSupportMessaging = shouldHideSupportMessaging_ as jest.MockedFunction<
+	typeof shouldHideSupportMessaging_
+>;
+const isAdFreeUser = isAdFreeUser_ as jest.MockedFunction<typeof isAdFreeUser_>;
+const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
+	typeof getBreakpoint_
+>;
+const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
+	typeof isUserLoggedIn_
+>;
 
 const CommercialFeatures = commercialFeatures.constructor;
 
