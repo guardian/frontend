@@ -1,14 +1,14 @@
-import type { CommercialFeaturesConstructor } from './commercial-features';
-import { commercialFeatures } from './commercial-features';
 import config from '../../../../lib/config';
-import userPrefs from '../user-prefs';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
+import userPrefs from '../user-prefs';
+import { commercialFeatures } from './commercial-features';
+import type { CommercialFeaturesConstructor } from './commercial-features';
 import {
+	isAdFreeUser as isAdFreeUser_,
 	isPayingMember as isPayingMember_,
 	isRecentOneOffContributor as isRecentOneOffContributor_,
 	shouldHideSupportMessaging as shouldHideSupportMessaging_,
-	isAdFreeUser as isAdFreeUser_,
 } from './user-features';
 
 const isPayingMember = isPayingMember_ as jest.MockedFunction<
