@@ -71,7 +71,7 @@ if (!commercialFeatures.adFree) {
  * Load modules that are specific to `frontend`.
  */
 const loadFrontendBundle = async (): Promise<void> => {
-	if (isDotcomRendering) return void 0;
+	if (isDotcomRendering) return;
 
 	const commercialMetrics = await import(
 		/* webpackChunkName: "frontend" */
@@ -82,7 +82,7 @@ const loadFrontendBundle = async (): Promise<void> => {
 		['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
 	);
 
-	return void 0;
+	return;
 };
 
 /**
@@ -91,7 +91,7 @@ const loadFrontendBundle = async (): Promise<void> => {
  * Introduced by @tomrf1
  */
 const loadDcrBundle = async (): Promise<void> => {
-	if (!isDotcomRendering) return void 0;
+	if (!isDotcomRendering) return;
 
 	const userFeatures = await import(
 		/* webpackChunkName: "dcr" */
@@ -99,7 +99,7 @@ const loadDcrBundle = async (): Promise<void> => {
 	);
 
 	commercialModules.push(['c-user-features', userFeatures.refresh]);
-	return void 0;
+	return;
 };
 
 const loadModules = () => {
