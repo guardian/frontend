@@ -199,6 +199,18 @@ const updateBlocks = (opts, pollUpdates) => {
             }
         });
 
+        const reverseQueryParam = (paramName) => {
+            let params = new URLSearchParams(window.location.search);
+            const result = params.get(paramName) === "true"
+            params.set(paramName, `${!result}`);
+            return params;
+        }
+
+        bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
+            const params = reverseQueryParam("filterKeyEvents")
+            window.location =  window.location.pathname + '?' + params.toString();
+        })
+
         mediator.on('modules:toast__tofix:unfixed', () => {
             if (isLivePage && unreadBlocksNo > 0) {
                 fastdom
