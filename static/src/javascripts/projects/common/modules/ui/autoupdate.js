@@ -16,7 +16,6 @@ import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 
 
 const updateBlocks = (opts, pollUpdates) => {
-    console.log(pollUpdates)
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -143,7 +142,7 @@ const updateBlocks = (opts, pollUpdates) => {
             .then(resp => {
                 count = resp.numNewBlocks;
 
-                if (count > 0) {
+                if (pollUpdates && count > 0) {
                     unreadBlocksNo += count;
 
                     // updates notification bar with number of unread blocks
