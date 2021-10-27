@@ -180,8 +180,11 @@ class LiveBlogController(
     val newBlocks = flatMapBlocks(page, lastUpdateBlockId, filterKeyEvents);
 
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
-    val timelineHtml = views.html.liveblog
-      .keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone), filterKeyEvents.getOrElse(false))
+    val timelineHtml = views.html.liveblog.keyEvents(
+      "",
+      model.KeyEventData(newBlocks, Edition(request).timezone, filterKeyEvents),
+      filterKeyEvents.getOrElse(false),
+    )
 
     val allPagesJson = Seq(
       "timeline" -> timelineHtml,
