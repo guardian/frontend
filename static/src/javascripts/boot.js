@@ -63,37 +63,37 @@ const go = () => {
         detectAdBlockers()
 
         // 2. once standard is done, next is commercial
-		// Handle ad blockers
-		window.guardian.adBlockers.onDetect.push((adblockInUse) => {
-			if (!adblockInUse) return;
+        // Handle ad blockers
+        window.guardian.adBlockers.onDetect.push((adblockInUse) => {
+            if (!adblockInUse) return;
 
-			// For the moment we'll hide the top-above-nav slot if we detect that the user has ad blockers enabled
-			// in order to avoid showing them a large blank space.
-			// TODO improve shady pie to make better use of the slot.
-			document.querySelector('.top-banner-ad-container').style.display =
-				'none';
+            // For the moment we'll hide the top-above-nav slot if we detect that the user has ad blockers enabled
+            // in order to avoid showing them a large blank space.
+            // TODO improve shady pie to make better use of the slot.
+            document.querySelector('.top-banner-ad-container').style.display =
+                'none';
 
-			if (process.env.NODE_ENV !== 'production') {
-				const needsMessage =
-					adblockInUse && window.console && window.console.warn;
-				const message =
-					'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
-				if (needsMessage) {
-					window.console.warn(message);
-				}
-			}
-		});
+            if (process.env.NODE_ENV !== 'production') {
+                const needsMessage =
+                    adblockInUse && window.console && window.console.warn;
+                const message =
+                    'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
+                if (needsMessage) {
+                    window.console.warn(message);
+                }
+            }
+        });
 
-		const fakeBootCommercial = { bootCommercial: () => {} };
-		const commercialBundle = () =>
-			!config.get('page.isHosted', false)
-				? loadScript(config.get('page.commercialBundleUrl')).then(
-						() => fakeBootCommercial,
-				  )
-				: import(
-						/* webpackChunkName: "commercial" */
-						'bootstraps/commercial-hosted'
-				  );
+        const fakeBootCommercial = { bootCommercial: () => { } };
+        const commercialBundle = () =>
+            config.get('switches.standaloneCommercialBundle') && !config.get('page.isHosted', false)
+                ? loadScript(config.get('page.commercialBundleUrl')).then(
+                    () => fakeBootCommercial,
+                )
+                : import(
+                    /* webpackChunkName: "commercial" */
+                    'bootstraps/commercial-hosted'
+                );
 
 
         // Start downloading these ASAP
@@ -102,14 +102,14 @@ const go = () => {
         // eslint-disable-next-line no-nested-ternary
         const fetchCommercial = config.get('switches.commercial')
             ? (markTime('commercial request'),
-              commercialBundle())
+                commercialBundle())
             : Promise.resolve(fakeBootCommercial);
 
 
         const fetchEnhanced = window.guardian.isEnhanced
             ? (markTime('enhanced request'),
-              import(/* webpackChunkName: "enhanced" */ 'bootstraps/enhanced/main'))
-            : Promise.resolve({ bootEnhanced: () => {} });
+                import(/* webpackChunkName: "enhanced" */ 'bootstraps/enhanced/main'))
+            : Promise.resolve({ bootEnhanced: () => { } });
 
         Promise.all([
             fetchCommercial.then(({ bootCommercial }) => {
