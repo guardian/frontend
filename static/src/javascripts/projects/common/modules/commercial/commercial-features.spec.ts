@@ -1,3 +1,4 @@
+import type { CommercialFeaturesConstructor } from './commercial-features';
 import { commercialFeatures } from './commercial-features';
 import config from '../../../../lib/config';
 import userPrefs from '../user-prefs';
@@ -27,7 +28,7 @@ const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
 	typeof isUserLoggedIn_
 >;
 
-const CommercialFeatures = commercialFeatures.constructor;
+const CommercialFeatures = commercialFeatures.constructor as CommercialFeaturesConstructor;
 
 jest.mock('./user-features', () => ({
 	isPayingMember: jest.fn(),

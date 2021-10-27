@@ -143,3 +143,4 @@ class CommercialFeatures {
 }
 
 export const commercialFeatures = new CommercialFeatures();
+export type CommercialFeaturesConstructor = typeof CommercialFeatures;
