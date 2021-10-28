@@ -3,6 +3,7 @@ import {
 	getCookie,
 	initCoreWebVitals,
 } from '@guardian/libs';
+import { shouldCaptureMetrics } from './shouldCaptureMetrics';
 
 const coreVitals = (): void => {
 	const browserId = getCookie({ name: 'bwid', shouldMemoize: true });
@@ -10,13 +11,15 @@ const coreVitals = (): void => {
 	const { isDev } = window.guardian.config.page;
 	const sampling = 1 / 100;
 
-	return initCoreWebVitals({
+	initCoreWebVitals({
 		browserId,
 		pageViewId,
 		isDev,
 		sampling,
 		team: 'dotcom',
 	});
+
+	if (shouldCaptureMetrics()) bypassCoreWebVitalsSampling('commercial');
 };
 
-export { bypassCoreWebVitalsSampling, coreVitals };
+export { coreVitals };
