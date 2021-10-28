@@ -183,10 +183,11 @@ export const setLocalNoBannerCachePeriod = () =>
 	window.localStorage.setItem(NO_RR_BANNER_TIMESTAMP_KEY, `${Date.now()}`);
 
 const buildTagIds = (page) => {
-    const { keywordIds, toneIds } = page;
+    const { keywordIds, toneIds, seriesId } = page;
     const keywords = keywordIds ? keywordIds.split(',') : [];
     const tones = toneIds ? toneIds.split(',') : [];
-    return keywords.concat(tones);
+    const series = seriesId ? [seriesId] : [];
+    return keywords.concat(tones).concat(series);
 }
 
 const buildBannerPayload = async () => {
