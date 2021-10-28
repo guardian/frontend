@@ -190,3 +190,15 @@ object LatestBlock {
     }
   }
 }
+
+object LatestKeyBlock {
+  def apply(maybeBlocks: Option[Blocks]): Option[String] = {
+    maybeBlocks.flatMap { blocks =>
+      blocks.requestedBodyBlocks
+        .getOrElse(CanonicalLiveBlog.firstPage, blocks.body)
+        .filter(_.eventType == KeyEvent)
+        .headOption
+        .map(_.id)
+    }
+  }
+}
