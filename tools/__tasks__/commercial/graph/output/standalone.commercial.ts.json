@@ -438,8 +438,7 @@
   "../lib/detect.js",
   "../lib/fastdom-promise.js"
  ],
- "../projects/commercial/modules/mobile-sticky.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/mobile-sticky.ts": [
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.ts",
@@ -661,7 +660,7 @@
   "../projects/commercial/modules/high-merch.ts",
   "../projects/commercial/modules/ipsos-mori.js",
   "../projects/commercial/modules/liveblog-adverts.js",
-  "../projects/commercial/modules/mobile-sticky.js",
+  "../projects/commercial/modules/mobile-sticky.ts",
   "../projects/commercial/modules/paid-containers.ts",
   "../projects/commercial/modules/paidfor-band.js",
   "../projects/commercial/modules/remove-slots.ts",

@@ -1,5 +1,5 @@
 import type { ABTest } from '@guardian/ab-core';
-import { getSynchronousTestsToRun } from '../experiments/ab';
+import { isInABTestSynchronous } from '../experiments/ab';
 import { prebidTimeout } from '../experiments/tests/prebid-timeout';
 
 const defaultClientSideTests: ABTest[] = [prebidTimeout];
@@ -13,14 +13,14 @@ const serverSideTests: ServerSideABTest[] = [];
  * for which we want to always capture metrics.
  */
 const shouldCaptureMetrics = (tests = defaultClientSideTests): boolean => {
-	const userInClientSideTest = getSynchronousTestsToRun().some((test) =>
-		tests.map((t) => t.id).includes(test.id),
+	const userInClientSideTest = tests.some((test) =>
+		isInABTestSynchronous(test),
 	);
 
 	const userInServerSideTest =
 		window.guardian.config.tests !== undefined &&
 		Object.keys(window.guardian.config.tests).some((test) =>
-			serverSideTests.includes(test as ServerSideABTest),
+			String(serverSideTests).includes(test),
 		);
 	return userInClientSideTest || userInServerSideTest;
 };
