@@ -1,3 +1,4 @@
+import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import fastdom from '../../../lib/fastdom-promise';
 import { dfpEnv } from './dfp/dfp-env';
@@ -25,8 +26,10 @@ const removeNodes = (nodes: Element[]): Promise<void> =>
 
 const removeSlots = (): Promise<void> => removeNodes(selectNodes());
 
-const removeDisabledSlots = once(() =>
-	removeNodes(filterDisabledNodes(selectNodes())),
-);
+const removeDisabledSlots = once(() => {
+	const disabledNodes = filterDisabledNodes(selectNodes());
+	log('commercial', { disabledNodes });
+	return removeNodes(disabledNodes);
+});
 
 export { removeSlots, removeDisabledSlots };
