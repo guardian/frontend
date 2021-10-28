@@ -302,22 +302,6 @@ export const shouldAutoSigninInUser = (): boolean => {
 	);
 };
 
-export const getUserEmailSignUps = (): Promise<unknown> => {
-	const user = getUserFromCookie();
-
-	if (user) {
-		const endpoint = `${idApiRoot}/useremails/${user.id}`;
-		const request = fetch(endpoint, {
-			mode: 'cors',
-			credentials: 'include',
-		}).then((resp) => resp.json());
-
-		return request;
-	}
-
-	return Promise.resolve(null);
-};
-
 export const sendValidationEmail = (): unknown => {
 	const defaultReturnEndpoint = '/email-prefs';
 	const endpoint = `${idApiRoot}/user/send-validation-email`;
@@ -358,60 +342,6 @@ export const updateUsername = (username: string): unknown => {
 	return request;
 };
 
-export const getAllConsents = (): Promise<unknown> => {
-	const endpoint = '/consents';
-	const url = idApiRoot + endpoint;
-	return fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-	});
-};
-
-export const getAllNewsletters = (): Promise<unknown> => {
-	const endpoint = '/newsletters';
-	const url = idApiRoot + endpoint;
-	return fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-	});
-};
-
-export const getSubscribedNewsletters = (): Promise<string[]> => {
-	const endpoint = '/users/me/newsletters';
-	const url = idApiRoot + endpoint;
-
-	type Subscriptions = {
-		listId: string;
-	};
-
-	type NewslettersResponse =
-		| {
-				result?: {
-					globalSubscriptionStatus?: string;
-					htmlPreference?: string;
-					subscriptions?: Subscriptions[];
-					status?: 'ok' | string;
-				};
-		  }
-		| undefined;
-
-	return (fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-		credentials: 'include',
-	}) as Promise<NewslettersResponse>) // assert unknown -> NewslettersResponse
-		.then((json: NewslettersResponse) => {
-			if (json?.result?.subscriptions) {
-				return json.result.subscriptions.map((sub) => sub.listId);
-			}
-			return [];
-		})
-		.catch(() => []);
-};
-
 export const setConsent = (consents: SettableConsent): Promise<void> =>
 	fetch(`${idApiRoot}/users/me/consents`, {
 		method: 'PATCH',
@@ -421,11 +351,4 @@ export const setConsent = (consents: SettableConsent): Promise<void> =>
 	}).then((resp) => {
 		if (resp.ok) return Promise.resolve();
 		return Promise.reject();
-	});
-
-export const getUserData = (): Promise<unknown> =>
-	fetchJson(`${idApiRoot}/user/me`, {
-		method: 'GET',
-		mode: 'cors',
-		credentials: 'include',
 	});
