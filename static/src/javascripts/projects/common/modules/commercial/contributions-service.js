@@ -182,6 +182,13 @@ export const withinLocalNoBannerCachePeriod = () => {
 export const setLocalNoBannerCachePeriod = () =>
 	window.localStorage.setItem(NO_RR_BANNER_TIMESTAMP_KEY, `${Date.now()}`);
 
+const buildTagIds = (page) => {
+    const { keywordIds, toneIds } = page;
+    const keywords = keywordIds ? keywordIds.split(',') : [];
+    const tones = toneIds ? toneIds.split(',') : [];
+    return keywords.concat(tones);
+}
+
 const buildBannerPayload = async () => {
 	const page = config.get('page');
 
@@ -207,6 +214,8 @@ const buildBannerPayload = async () => {
 		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
 		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
 		modulesVersion: ModulesVersion,
+        sectionId: page.section,
+        tagIds: buildTagIds(page),
 	};
 
 	return {
