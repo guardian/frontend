@@ -14,22 +14,22 @@ object LiveBlogHelpers {
   // Get a Seq[BodyBlock] given an article and the "page" request parameter on live-blog pages.
 
   def blocksForLiveBlogRequest(
-                                article: Article,
-                                param: Option[String],
-                                filterKeyEvents: Option[Boolean],
-                              ): Seq[BodyBlock] = {
+      article: Article,
+      param: Option[String],
+      filterKeyEvents: Option[Boolean],
+  ): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
       LiveBlogHelpers.createLiveBlogModel(article, range, filterKeyEvents)
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
-      case _ => modelWithRange(CanonicalLiveBlog)
+      case _                       => modelWithRange(CanonicalLiveBlog)
     }
 
     lbcp match {
       case Some(blog) => blog.currentPage.blocks
-      case None => Seq()
+      case None       => Seq()
     }
 
   }
@@ -37,10 +37,10 @@ object LiveBlogHelpers {
   // Given a BlockRange and an article, return a combined LiveBlogCurrentPage instance
 
   def createLiveBlogModel(
-                           liveBlog: Article,
-                           range: BlockRange,
-                           filterKeyEvents: Option[Boolean],
-                         ): Option[LiveBlogCurrentPage] = {
+      liveBlog: Article,
+      range: BlockRange,
+      filterKeyEvents: Option[Boolean],
+  ): Option[LiveBlogCurrentPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
@@ -58,12 +58,12 @@ object LiveBlogHelpers {
   }
 
   def createLiveBlogModel(
-                           liveBlog: Article,
-                           response: ItemResponse,
-                           range: BlockRange,
-                           shouldFilter: Boolean,
-                           filterKeyEvents: Option[Boolean]
-                         ): Either[LiveBlogPage, Status] = {
+      liveBlog: Article,
+      response: ItemResponse,
+      range: BlockRange,
+      shouldFilter: Boolean,
+      filterKeyEvents: Option[Boolean],
+  ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
@@ -73,7 +73,7 @@ object LiveBlogHelpers {
           pageSize = pageSize,
           blocks,
           range,
-          filterKeyEvents
+          filterKeyEvents,
         )
       } getOrElse None
 
@@ -96,13 +96,15 @@ object LiveBlogHelpers {
           content = liveBlog.content.copy(metadata = liveBlog.content.metadata.copy(cacheTime = cacheTime)),
         )
 
-        Left(LiveBlogPage(
-          article = liveBlogCache,
-          currentPage = pageModel,
-          related = StoryPackages(liveBlog.metadata.id, response),
-          shouldFilter = shouldFilter,
-          filterKeyEvents = filterKeyEvents.getOrElse(false),
-        ))
+        Left(
+          LiveBlogPage(
+            article = liveBlogCache,
+            currentPage = pageModel,
+            related = StoryPackages(liveBlog.metadata.id, response),
+            shouldFilter = shouldFilter,
+            filterKeyEvents = filterKeyEvents.getOrElse(false),
+          ),
+        )
       }
       .getOrElse(Right(NotFound))
 
@@ -111,12 +113,12 @@ object LiveBlogHelpers {
   def blockTextJson(page: LiveBlogPage, number: Int): JsValue = {
 
     case class TextBlock(
-                          id: String,
-                          title: Option[String],
-                          publishedDateTime: Option[DateTime],
-                          lastUpdatedDateTime: Option[DateTime],
-                          body: String,
-                        )
+        id: String,
+        title: Option[String],
+        publishedDateTime: Option[DateTime],
+        lastUpdatedDateTime: Option[DateTime],
+        body: String,
+    )
 
     implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
 
@@ -126,7 +128,7 @@ object LiveBlogHelpers {
         (__ \ "publishedDateTime").write[Option[DateTime]] ~
         (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
         (__ \ "body").write[String]
-      ) (unlift(TextBlock.unapply))
+    )(unlift(TextBlock.unapply))
 
     val firstPageBlocks = for {
       blocks <- page.article.blocks.toSeq
