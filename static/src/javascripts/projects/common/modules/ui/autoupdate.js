@@ -175,6 +175,11 @@ const updateBlocks = (opts, pollUpdates) => {
         return `?${key}=${hasParam ? 'true' : 'false'}`;
     }
 
+    const getReverseBooleanParam = (key) => {
+        const hasParam = window.location.search.includes(`${key}=true`);
+        return `?${key}=${hasParam ? 'false' : 'true'}`;
+    }
+
     const refreshWindow = () => {
         const param = getBooleanParam("filterKeyEvents")
         window.location.assign(`${window.location.pathname}${param}`);
@@ -199,16 +204,9 @@ const updateBlocks = (opts, pollUpdates) => {
             }
         });
 
-        const reverseQueryParam = (paramName) => {
-            let params = new URLSearchParams(window.location.search);
-            const result = params.get(paramName) === "true"
-            params.set(paramName, `${!result}`);
-            return params;
-        }
-
         bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
-            const params = reverseQueryParam("filterKeyEvents")
-            window.location =  window.location.pathname + '?' + params.toString();
+            const param = getReverseBooleanParam("filterKeyEvents")
+            window.location.assign(`${window.location.pathname}${param}`);
         })
 
         mediator.on('modules:toast__tofix:unfixed', () => {
