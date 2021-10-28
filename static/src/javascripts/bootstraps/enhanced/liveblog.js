@@ -34,7 +34,7 @@ const affixTimeline = () => {
 };
 
 const initFilterCheckbox = () => {
-    const filterKeyEvents = window.location.search.includes('?filterKeyEvents=true');
+    const filterKeyEvents = window.location.search.includes('filterKeyEvents=true');
     document.getElementById("filter-switch").checked = filterKeyEvents;
 }
 
