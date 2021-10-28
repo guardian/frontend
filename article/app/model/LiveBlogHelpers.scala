@@ -2,6 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.`package`._
+import experiments.{ActiveExperiments, LiveblogRendering}
 import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
 import org.joda.time.DateTime
@@ -60,6 +61,7 @@ object LiveBlogHelpers {
       liveBlog: Article,
       response: ItemResponse,
       range: BlockRange,
+      shouldFilter: Boolean,
       filterKeyEvents: Option[Boolean],
   ): Either[LiveBlogPage, Status] = {
 
@@ -96,10 +98,11 @@ object LiveBlogHelpers {
 
         Left(
           LiveBlogPage(
-            liveBlogCache,
-            pageModel,
-            StoryPackages(liveBlog.metadata.id, response),
-            filterKeyEvents.getOrElse(false),
+            article = liveBlogCache,
+            currentPage = pageModel,
+            related = StoryPackages(liveBlog.metadata.id, response),
+            shouldFilter = shouldFilter,
+            filterKeyEvents = filterKeyEvents.getOrElse(false),
           ),
         )
       }

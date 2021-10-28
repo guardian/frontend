@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content =
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, LiveblogRendering}
+import experiments.{ActiveExperiments, LiveblogRendering, LiveblogFiltering}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
@@ -53,7 +53,7 @@ class LiveBlogController(
     }
   }
 
-  def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Option[Boolean])(implicit
+  private def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Option[Boolean])(implicit
       request: RequestHeader,
   ): Future[Result] = {
     mapModel(path, range, filterKeyEvents) { (page, blocks) =>
@@ -112,7 +112,10 @@ class LiveBlogController(
         case (blog: LiveBlogPage, blocks)                             => getJson(blog, range, isLivePage, filterKeyEvents)
         case (minute: MinutePage, blocks) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
-        case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound)) }
+        case _ =>
+          Future {
+            Cached(600)(WithoutRevalidationResult(NotFound))
+          }
       }
     }
   }
@@ -240,7 +243,8 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        createLiveBlogModel(liveBlog, response, range, filterKeyEvents).left.map(_ -> blocks)
+        val shouldFilter = ActiveExperiments.isParticipating(LiveblogFiltering)
+        createLiveBlogModel(liveBlog, response, range, shouldFilter, filterKeyEvents).left.map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
         Right(InternalServerError)
