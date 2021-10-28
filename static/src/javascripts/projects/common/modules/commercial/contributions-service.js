@@ -15,13 +15,9 @@ import { getCountryCode } from '../../../../lib/geolocation';
 import reportError from '../../../../lib/report-error';
 import { trackNonClickInteraction } from '../analytics/google';
 import { getMvtValue } from '../analytics/mvt-cookie';
-import { submitComponentEvent, submitViewEvent } from './acquisitions-ophan';
+import { submitComponentEvent } from './acquisitions-ophan';
 import { setupRemoteEpicInLiveblog } from './contributions-liveblog-utilities';
-import {
-	getVisitCount,
-	setupOphanView,
-	submitOphanInsert,
-} from './contributions-utilities';
+import { getVisitCount } from './contributions-utilities';
 import {
 	ARTICLES_VIEWED_OPT_OUT_COOKIE,
 	getLastOneOffContributionTimestamp,
@@ -31,7 +27,7 @@ import {
 } from './user-features';
 
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
-export const ModulesVersion = 'v2';
+export const ModulesVersion = 'v3';
 
 const isHosted = config.get('page.isHosted');
 
@@ -311,63 +307,15 @@ const renderLiveblogEpic = async (module, meta) => {
 
 	const element = setupRemoteEpicInLiveblog(
 		component.ContributionsLiveblogEpic,
-		module.props,
+        { submitComponentEvent, ...module.props }
 	);
-
-	if (element) {
-		submitOphanInsert(
-			abTestName,
-			abTestVariant,
-			componentType,
-			products,
-			campaignCode,
-		);
-		setupOphanView(
-			element,
-			abTestName,
-			abTestVariant,
-			campaignCode,
-			campaignId,
-			componentType,
-			products,
-		);
-	}
 };
 
 const renderEpic = async (module, meta) => {
 	const component = await window.guardianPolyfilledImport(module.url);
 
-	const {
-		abTestName,
-		abTestVariant,
-		componentType,
-		products = [],
-		campaignCode,
-		campaignId,
-		labels,
-	} = meta;
-
 	const el = epicEl();
-	mountDynamic(el, component.ContributionsEpic, module.props, true);
-
-	submitOphanInsert(
-		abTestName,
-		abTestVariant,
-		componentType,
-		products,
-		campaignCode,
-		labels,
-	);
-	setupOphanView(
-		el,
-		abTestName,
-		abTestVariant,
-		campaignCode,
-		campaignId,
-		componentType,
-		products,
-		labels,
-	);
+	mountDynamic(el, component.ContributionsEpic, { submitComponentEvent, ...module.props }, true);
 };
 
 export const fetchPuzzlesData = async () => {
@@ -472,28 +420,6 @@ export const renderBanner = (response) => {
 						products = [],
 						campaignCode,
 					} = meta;
-
-					submitOphanInsert(
-						abTestName,
-						abTestVariant,
-						componentType,
-						products,
-						campaignCode,
-					);
-
-					// Submit view event now, as the standard view tracking is unreliable if the component is instantly in view
-					submitViewEvent({
-						component: {
-							componentType,
-							products,
-							campaignCode,
-							id: campaignCode,
-						},
-						abTest: {
-							name: abTestName,
-							variant: abTestVariant,
-						},
-					});
 
 					// track banner view event in Google Analytics for subscriptions banner
 					if (componentType === 'ACQUISITIONS_SUBSCRIPTIONS_BANNER') {
