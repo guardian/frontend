@@ -29,7 +29,7 @@ const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 const getBrazeUuid = () =>
 	new Promise((resolve) => {
 		getUserIdentifiersFromApi((userIdentifiers) => {
-			if (userIdentifiers && userIdentifiers.brazeUuid) {
+			if (userIdentifiers?.brazeUuid) {
 				resolve(userIdentifiers.brazeUuid);
 			} else {
 				resolve();
