@@ -82,6 +82,13 @@ type IdentityResponse = {
 	errors?: UserNameError[];
 };
 
+export type IdentityUserIdentifiers = {
+	id: string;
+	brazeUuid: string;
+	puzzleId: string;
+	googleTagId: string;
+};
+
 let userFromCookieCache: IdentityUserFromCache = null;
 
 const cookieName = 'GU_U';
@@ -188,8 +195,44 @@ export const getUserFromApi = mergeCalls(
 	},
 );
 
+const fetchUserIdentifiers = () => {
+	const url = `${idApiRoot}/user/me/identifiers`;
+	return fetch(url, {
+		mode: 'cors',
+		credentials: 'include',
+	})
+		.then((resp) => {
+			if (resp.status === 200) {
+				return resp.json();
+			} else {
+				console.log(
+					'failed to get Identity user identifiers',
+					resp.status,
+				);
+				return null;
+			}
+		})
+		.catch((e) => {
+			console.log('failed to get Identity user identifiers', e);
+			return null;
+		});
+};
+
+export const getUserIdentifiersFromApi = mergeCalls(
+	(mergingCallback: (u: IdentityUserIdentifiers | null) => void) => {
+		if (isUserLoggedIn()) {
+			void fetchUserIdentifiers().then((result) =>
+				mergingCallback(result),
+			);
+		} else {
+			mergingCallback(null);
+		}
+	},
+);
+
 export const reset = (): void => {
 	getUserFromApi.reset();
+	getUserIdentifiersFromApi.reset();
 	userFromCookieCache = null;
 };
 
