@@ -175,6 +175,11 @@ const updateBlocks = (opts, pollUpdates) => {
         return `?${key}=${hasParam ? 'true' : 'false'}`;
     }
 
+    const getReverseBooleanParam = (key) => {
+        const hasParam = window.location.search.includes(`${key}=true`);
+        return `?${key}=${hasParam ? 'false' : 'true'}`;
+    }
+
     const refreshWindow = () => {
         const param = getBooleanParam("filterKeyEvents")
         window.location.assign(`${window.location.pathname}${param}`);
@@ -198,6 +203,11 @@ const updateBlocks = (opts, pollUpdates) => {
                 refreshWindow()
             }
         });
+
+        bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
+            const param = getReverseBooleanParam("filterKeyEvents")
+            window.location.assign(`${window.location.pathname}${param}`);
+        })
 
         mediator.on('modules:toast__tofix:unfixed', () => {
             if (isLivePage && unreadBlocksNo > 0) {

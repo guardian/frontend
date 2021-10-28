@@ -33,6 +33,11 @@ const affixTimeline = () => {
     }
 };
 
+const initFilterCheckbox = () => {
+    const filterKeyEvents = window.location.search.includes('filterKeyEvents=true');
+    document.getElementById("filter-switch").checked = filterKeyEvents;
+}
+
 const createAutoUpdate = () => {
     const pollUpdates = config.get('page.isLive')
     updateBlocks({}, pollUpdates);
@@ -50,6 +55,7 @@ const init = () => {
         ['lb-richlinks', upgradeRichLinks],
     ]);
 
+    initFilterCheckbox();
     initTrails();
     initLiveblogCommon();
 

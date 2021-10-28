@@ -76,14 +76,6 @@
                             <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
                                 @if(article.hasKeyEvents) {
                                     @defining(KeyEventData(article.content.fields.blocks, timezone, model.filterKeyEvents)) { case keyEventData =>
-                                        @if(model.shouldFilter) {
-                                            @if(model.filterKeyEvents) {
-                                                <a href="?filterKeyEvents=@(!model.filterKeyEvents)">Show All</a>
-                                            } else {
-                                                <a href="?filterKeyEvents=@(!model.filterKeyEvents)">Filter</a>
-                                            }
-                                        }
-
                                         <div class="modern-visible js-updates-desktop">
                                             <div data-component="timeline">
                                             @fragments.dropdown("Key events", Some("key-events"), true) {

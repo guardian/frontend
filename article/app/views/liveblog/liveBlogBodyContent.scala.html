@@ -16,6 +16,10 @@
             </div>
         </div>
 
+        @if(model.shouldFilter) {
+            @views.html.liveblog.filterButton(model.filterKeyEvents)
+        }
+
         @if(model.currentPage.currentPage.isArchivePage) {
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage, model.filterKeyEvents)
         }
