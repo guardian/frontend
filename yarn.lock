@@ -1908,12 +1908,12 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.24.0.tgz#6ba387bd80bbed14561d073de5e7573b2fb5f663"
   integrity sha512-dBtJX+6mzjYJcy6hXMJ5w5oKDZu+Ob18z+vXZtkN+j3Bp2ex+jQik6IuQTwfn+KkN6VEMoIzYK1ZN3fqPHMwYw==
 
-"@guardian/consent-management-platform@6.11.5":
-  version "6.11.5"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.11.5.tgz#93681cbf61de0fadb4b65d835d7fc445cb847b31"
-  integrity sha512-ap7b09qk8I/EfoWB3NR8kT63hBpm4ATFGpRicCQ61DLMw2PgCWunMvizdbSmo5wNCQKPFgmX9cfRT5IGfPneKw==
+"@guardian/consent-management-platform@9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-9.0.0.tgz#2684ddaa16b01a4727b4e620aa80ff515d590fdf"
+  integrity sha512-/ZYMwoEl0RZECpX41W5gwq3O4WrptC8Pg6zMDuveBLZHNjKXHSs61uozTE+LXBxA3DnQxz1fopGUtvzHhTjgqA==
   dependencies:
-    "@guardian/libs" "^1"
+    "@guardian/libs" "1.6.1 - 3.3.0"
 
 "@guardian/eslint-config-typescript@^0.7.0":
   version "0.7.0"
@@ -1934,17 +1934,12 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/libs@^1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.8.1.tgz#22bccd66be7c5bf70cd5bbb1bf7700d94610ccb7"
-  integrity sha512-Q/JPLhNeYa5XhDPJhw/1+fbZmszopvovWW8I7dGEuFPGWeNUmXAbW8J3kzuonDu7l9/tuFZg8jljbKHZlrFx0A==
+"@guardian/libs@1.6.1 - 3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-3.3.0.tgz#fa98c7b8216ab35b8cf3087cd9ba336958fac99a"
+  integrity sha512-XB9o8qtDOg+KlPh1sjEr4u+Ai3RFTRr2riZ/HJpdlh8Cu4ZpYjCSGUZXSGkxp1CwFWT9sduANnsWSqZ97iBloQ==
 
-"@guardian/libs@^3.1.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-3.4.0.tgz#37e387a3aa8c15ba2e8793fe39b4253a12c0920e"
-  integrity sha512-xk9afJbeTq5OWOm9NcdJTxrmPzDRIVGaFNZpzGDMicGtqhd7+IfH6apxNSot9RLfkMibO9NUEao9GrIr/FgtNQ==
-
-"@guardian/libs@^3.4.1":
+"@guardian/libs@^3.1.0", "@guardian/libs@^3.4.1":
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-3.4.1.tgz#f6444b6e232d2d72da4601e5021c2f58a0eaa25f"
   integrity sha512-Cm+rCLTvR2AP9m0wjvcw5U9f5VAcUJgDbCebEsLN7LD2UScl2NUZ7AIGxpOIM+hoe6J9N3+GZP90LgIbHCj5Qg==
