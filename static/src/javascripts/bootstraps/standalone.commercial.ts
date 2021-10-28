@@ -2,6 +2,7 @@ import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
+import { initAdblockAsk } from '../projects/commercial/adblock-ask';
 import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from '../projects/commercial/modules/ad-verification/prepare-ad-verification';
 import { init as initArticleAsideAdverts } from '../projects/commercial/modules/article-aside-adverts';
@@ -64,6 +65,7 @@ if (!commercialFeatures.adFree) {
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],
 		['cm-commentAdverts', initCommentAdverts],
+		['rr-adblock-ask', initAdblockAsk],
 	);
 }
 
