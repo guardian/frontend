@@ -1,0 +1,15 @@
+@import model.KeyEventData
+
+@(filterKeyEvents: Boolean)
+
+@*
+* This template is used for filtering liveblogs
+*@
+
+<div class="live-blog__filter-switch">
+    <label class="live-blog__filter-switch-label" for="filter-switch">
+        <input type="checkbox" id="filter-switch" value="@(filterKeyEvents)">
+        <span class="live-blog__filter-switch-slider round"></span>
+    </label>
+   <span class="live-blog__filter-switch-text">Show key events only</span>
+</div>

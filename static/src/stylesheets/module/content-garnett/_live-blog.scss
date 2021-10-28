@@ -266,7 +266,7 @@
 }
 
 .live-blog__filter-switch-text {
-    margin-left: 0.5rem;
+    margin-left: .5rem;
     font-family: 'Guardian Text Sans', sans-serif !important;
     font-size: 15px;
     line-height: 20px;
@@ -297,11 +297,11 @@
 
 .live-blog__filter-switch-slider:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 1.125rem;
     width: 1.125rem;
     left: 4px;
-    bottom: 0.2rem;;
+    bottom: .2rem;;
     background-color: $brightness-100;
     -webkit-transition: .2s;
     transition: .2s;
