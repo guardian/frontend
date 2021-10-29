@@ -16,7 +16,7 @@ object LiveBlogHelpers {
   def blocksForLiveBlogRequest(
       article: Article,
       param: Option[String],
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   ): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
@@ -39,7 +39,7 @@ object LiveBlogHelpers {
   def createLiveBlogModel(
       liveBlog: Article,
       range: BlockRange,
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   ): Option[LiveBlogCurrentPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -62,7 +62,7 @@ object LiveBlogHelpers {
       response: ItemResponse,
       range: BlockRange,
       shouldFilter: Boolean,
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -102,7 +102,7 @@ object LiveBlogHelpers {
             currentPage = pageModel,
             related = StoryPackages(liveBlog.metadata.id, response),
             shouldFilter = shouldFilter,
-            filterKeyEvents = filterKeyEvents.getOrElse(false),
+            filterKeyEvents = filterKeyEvents,
           ),
         )
       }

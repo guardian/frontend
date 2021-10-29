@@ -47,5 +47,5 @@ object LiveblogFiltering
       description = "Filter liveblogs by key events",
       owners = Seq(Owner.withGithub("alinaboghiu")),
       sellByDate = LocalDate.of(2021, 12, 1),
-      participationGroup = Perc2A,
+      participationGroup = Perc0B,
     )
