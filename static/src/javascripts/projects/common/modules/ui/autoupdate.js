@@ -28,6 +28,7 @@ const updateBlocks = (opts, pollUpdates) => {
 
     // Cache selectors
     const $liveblogBody = $('.js-liveblog-body');
+    const $timeline = $('.js-live-blog__timeline')
     const $toastButton = $('.toast__button');
     const $toastText = $('.toast__text', $toastButton);
     const toastContainer = qwery('.toast__container')[0];
@@ -115,9 +116,12 @@ const updateBlocks = (opts, pollUpdates) => {
         }
 
         let count = 0;
+        const filterEventState = filterKeyEvents ? true : false
         const filterKeyEventsParam = `&filterKeyEvents=${filterKeyEvents ? 'true' : 'false'}`;
         const shouldFetchBlocks = `&isLivePage=${isLivePage ? 'true' : 'false'}`;
-        const latestBlockIdToUse = latestBlockId || 'block-0';
+        const latestKeyBlockId = $timeline.data('latest-key-block');
+        const latestId = latestBlockId || 'block-0';
+        const latestBlockIdToUse = filterEventState ? latestKeyBlockId : latestId;
         const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterKeyEventsParam}`;
         const endpoint = `${window.location.pathname}.json${params}`;
 
