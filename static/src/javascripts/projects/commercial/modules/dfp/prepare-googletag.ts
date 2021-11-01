@@ -9,8 +9,8 @@ import raven from '../../../../lib/raven';
 import { removeSlots } from '../../../commercial/modules/remove-slots';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import type { IdentityUser } from '../../../common/modules/identity/api';
-import { getUserFromApi } from '../../../common/modules/identity/api';
+import type { IdentityUserIdentifiers } from '../../../common/modules/identity/api';
+import { getUserIdentifiersFromApi } from '../../../common/modules/identity/api';
 import { adFreeSlotRemove } from '../ad-free-slot-remove';
 import { init as initMessenger } from '../messenger';
 import { init as background } from '../messenger/background';
@@ -82,13 +82,15 @@ const setPageTargeting = (): void => {
 
 const setPublisherProvidedId = (): void => {
 	// Also known as PPID
-	getUserFromApi((user: IdentityUser | null) => {
-		if (user?.privateFields.googleTagId) {
-			window.googletag
-				?.pubads()
-				.setPublisherProvidedId(user.privateFields.googleTagId);
-		}
-	});
+	getUserIdentifiersFromApi(
+		(userIdentifiers: IdentityUserIdentifiers | null) => {
+			if (userIdentifiers?.googleTagId) {
+				window.googletag
+					?.pubads()
+					.setPublisherProvidedId(userIdentifiers.googleTagId);
+			}
+		},
+	);
 };
 
 export const init = (): Promise<void> => {

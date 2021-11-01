@@ -1,5 +1,5 @@
 import { isObject, isString, storage } from '@guardian/libs';
-import { getUserFromApi, getUserFromCookie } from '../identity/api';
+import { getUserFromCookie } from '../identity/api';
 
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
@@ -41,33 +41,4 @@ const getUserSegments = (adConsentState: boolean | null): string | string[] => {
 	return [];
 };
 
-const requestUserSegmentsFromId = (): void => {
-	if (
-		storage.local.isAvailable() &&
-		storage.local.get(userSegmentsKey) === null &&
-		getUserFromCookie()
-	) {
-		getUserFromApi((user) => {
-			if (user?.adData) {
-				const userSegments: string[] = [];
-				Object.keys(user.adData).forEach((key) => {
-					userSegments.push(key + String(user.adData[key]));
-				});
-				const segmentsData: SegmentsData = {
-					segments: userSegments,
-					userHash: user.id % 9999,
-				};
-
-				const ONE_DAY_MS = 24 * 60 * 60 * 1000;
-
-				storage.local.set(
-					userSegmentsKey,
-					segmentsData,
-					new Date().getTime() + ONE_DAY_MS,
-				);
-			}
-		});
-	}
-};
-
-export { getUserSegments, requestUserSegmentsFromId };
+export { getUserSegments };

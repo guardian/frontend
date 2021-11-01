@@ -40,14 +40,8 @@ class Loader extends Component {
         if (getUserFromCookie()) {
             getUser().then(resp => {
                 this.user = resp.userProfile;
-
-                getUserFromApi(user => {
-                    if (user && user.publicFields.username) {
-                        this.username = user.publicFields.username;
-                    }
-
-                    this.emit('user:loaded');
-                });
+                this.username = this.user?.displayName;
+                this.emit('user:loaded');
             });
         } else {
             this.emit('user:loaded');
