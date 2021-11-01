@@ -130,7 +130,7 @@ describe('init', () => {
 		isInAuOrNz.mockReturnValue(true);
 		onConsentChange.mockImplementation(AusWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
-		await init();
+		await expect(init()).rejects.toEqual('no consent for redplanet');
 		expect(window.launchpad).not.toBeCalled();
 	});
 
@@ -139,9 +139,7 @@ describe('init', () => {
 		isInAuOrNz.mockReturnValue(true);
 		onConsentChange.mockImplementation(CcpaWithConsentMock);
 		getConsentFor.mockReturnValue(true);
-		expect(await init).toThrow(
-			`Error running Redplanet without AUS consent. It should only run in Australia on AUS mode`,
-		);
+		await expect(init()).rejects.toEqual('unknown framework');
 	});
 
 	it('should not initialise redplanet when launchpad conditions are false', async () => {

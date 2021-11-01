@@ -28,29 +28,37 @@ const initialise = () => {
 	});
 };
 
-const setupRedplanet = () => {
-	onConsentChange((state) => {
-		// CCPA only runs in the US and tcfv2 outside Aus
-		// Redplanet only runs in Australia
-		// so this should never happen
-		if (!state.aus) {
-			throw new Error(
-				`Error running Redplanet without AUS consent. It should only run in Australia on AUS mode`,
-			);
-		}
-		const canRun = getConsentFor('redplanet', state);
-
-		if (!initialised && canRun) {
-			initialised = true;
-			return import(
-				/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js'
-			).then(() => {
-				initialise();
-				return Promise.resolve();
-			});
-		}
+const setupRedplanet = async () => {
+	let resolveRedPlanetLoaded;
+	let rejectRedPlanetLoaded;
+	const promise = new Promise((resolve, reject) => {
+		resolveRedPlanetLoaded = resolve;
+		rejectRedPlanetLoaded = reject;
 	});
-	return Promise.resolve();
+
+	onConsentChange((state) => {
+		if (!getConsentFor('redplanet', state)) {
+			rejectRedPlanetLoaded('no consent for redplanet');
+			return;
+		}
+
+        // CCPA only runs in the US and tcfv2 outside Aus
+		// Redplanet only runs in Australia so this should never happen
+		if (!state.aus) {
+			rejectRedPlanetLoaded('unknown framework');
+			return;
+		}
+
+        if (!initialised) {
+            initialised = true;
+            import(/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js').then(() => {
+                initialise();
+                resolveRedPlanetLoaded();
+            });
+        }
+	});
+
+	return promise;
 };
 
 export const init = () => {
