@@ -4,9 +4,7 @@ import { prebidTimeout } from '../experiments/tests/prebid-timeout';
 
 const defaultClientSideTests: ABTest[] = [prebidTimeout];
 
-const serverSideTests: ServerSideABTest[] = [
-	'standaloneCommercialBundleTrackingVariant',
-];
+const serverSideTests: ServerSideABTest[] = [];
 
 /**
  * Function to check whether metrics should be captured for the current page
