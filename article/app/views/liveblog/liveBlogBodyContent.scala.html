@@ -21,7 +21,7 @@
         }
 
         @if(model.currentPage.currentPage.isArchivePage) {
-            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage, model.filterKeyEvents)
+            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
         }
 
         <div
@@ -34,7 +34,7 @@
 
         </div>
 
-        @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage, model.filterKeyEvents)
+        @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
 
     </div>
 }

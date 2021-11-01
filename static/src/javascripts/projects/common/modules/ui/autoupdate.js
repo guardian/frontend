@@ -81,7 +81,7 @@ const updateBlocks = (opts, pollUpdates) => {
         });
     };
 
-    const injectNewBlocks = (newBlocks, userInteraction) => {
+    const injectNewBlocks = (newBlocks) => {
         // Clean up blocks before insertion
         const resultHtml = $.create(`<div>${newBlocks}</div>`)[0];
         let elementsToAdd;
@@ -89,7 +89,6 @@ const updateBlocks = (opts, pollUpdates) => {
         fastdom.mutate(() => {
             bonzo(resultHtml.children).addClass('autoupdate--hidden');
             elementsToAdd = Array.from(resultHtml.children);
-            if (userInteraction) $liveblogBody.empty()
 
             // Insert new blocks
             $liveblogBody.prepend(elementsToAdd);
@@ -110,7 +109,7 @@ const updateBlocks = (opts, pollUpdates) => {
         toastButtonRefresh();
     };
 
-    const checkForUpdates = (auto = true) => {
+    const checkForUpdates = () => {
         if (updateTimeoutId !== undefined) {
             clearTimeout(updateTimeoutId);
         }
@@ -146,7 +145,7 @@ const updateBlocks = (opts, pollUpdates) => {
             .then(resp => {
                 count = resp.numNewBlocks;
 
-                if (pollUpdates && count > 0) {
+                if (count > 0) {
                     unreadBlocksNo += count;
 
                     // updates notification bar with number of unread blocks
@@ -155,7 +154,7 @@ const updateBlocks = (opts, pollUpdates) => {
                     latestBlockId = resp.mostRecentBlockId;
 
                     if (isLivePage) {
-                        injectNewBlocks(resp.html, userInteraction);
+                        injectNewBlocks(resp.html);
 
                         if (scrolledPastTopBlock()) {
                             toastButtonRefresh();
@@ -231,7 +230,7 @@ const updateBlocks = (opts, pollUpdates) => {
             }
 
             currentUpdateDelay = 0; // means please get us fully up to date
-            checkForUpdates(true);
+            checkForUpdates();
         });
     };
 
