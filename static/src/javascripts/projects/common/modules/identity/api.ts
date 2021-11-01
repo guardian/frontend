@@ -82,6 +82,13 @@ type IdentityResponse = {
 	errors?: UserNameError[];
 };
 
+export type IdentityUserIdentifiers = {
+	id: string;
+	brazeUuid: string;
+	puzzleId: string;
+	googleTagId: string;
+};
+
 let userFromCookieCache: IdentityUserFromCache = null;
 
 const cookieName = 'GU_U';
@@ -188,8 +195,44 @@ export const getUserFromApi = mergeCalls(
 	},
 );
 
+const fetchUserIdentifiers = () => {
+	const url = `${idApiRoot}/user/me/identifiers`;
+	return fetch(url, {
+		mode: 'cors',
+		credentials: 'include',
+	})
+		.then((resp) => {
+			if (resp.status === 200) {
+				return resp.json();
+			} else {
+				console.log(
+					'failed to get Identity user identifiers',
+					resp.status,
+				);
+				return null;
+			}
+		})
+		.catch((e) => {
+			console.log('failed to get Identity user identifiers', e);
+			return null;
+		});
+};
+
+export const getUserIdentifiersFromApi = mergeCalls(
+	(mergingCallback: (u: IdentityUserIdentifiers | null) => void) => {
+		if (isUserLoggedIn()) {
+			void fetchUserIdentifiers().then((result) =>
+				mergingCallback(result),
+			);
+		} else {
+			mergingCallback(null);
+		}
+	},
+);
+
 export const reset = (): void => {
 	getUserFromApi.reset();
+	getUserIdentifiersFromApi.reset();
 	userFromCookieCache = null;
 };
 
@@ -259,22 +302,6 @@ export const shouldAutoSigninInUser = (): boolean => {
 	);
 };
 
-export const getUserEmailSignUps = (): Promise<unknown> => {
-	const user = getUserFromCookie();
-
-	if (user) {
-		const endpoint = `${idApiRoot}/useremails/${user.id}`;
-		const request = fetch(endpoint, {
-			mode: 'cors',
-			credentials: 'include',
-		}).then((resp) => resp.json());
-
-		return request;
-	}
-
-	return Promise.resolve(null);
-};
-
 export const sendValidationEmail = (): unknown => {
 	const defaultReturnEndpoint = '/email-prefs';
 	const endpoint = `${idApiRoot}/user/send-validation-email`;
@@ -315,60 +342,6 @@ export const updateUsername = (username: string): unknown => {
 	return request;
 };
 
-export const getAllConsents = (): Promise<unknown> => {
-	const endpoint = '/consents';
-	const url = idApiRoot + endpoint;
-	return fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-	});
-};
-
-export const getAllNewsletters = (): Promise<unknown> => {
-	const endpoint = '/newsletters';
-	const url = idApiRoot + endpoint;
-	return fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-	});
-};
-
-export const getSubscribedNewsletters = (): Promise<string[]> => {
-	const endpoint = '/users/me/newsletters';
-	const url = idApiRoot + endpoint;
-
-	type Subscriptions = {
-		listId: string;
-	};
-
-	type NewslettersResponse =
-		| {
-				result?: {
-					globalSubscriptionStatus?: string;
-					htmlPreference?: string;
-					subscriptions?: Subscriptions[];
-					status?: 'ok' | string;
-				};
-		  }
-		| undefined;
-
-	return (fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-		credentials: 'include',
-	}) as Promise<NewslettersResponse>) // assert unknown -> NewslettersResponse
-		.then((json: NewslettersResponse) => {
-			if (json?.result?.subscriptions) {
-				return json.result.subscriptions.map((sub) => sub.listId);
-			}
-			return [];
-		})
-		.catch(() => []);
-};
-
 export const setConsent = (consents: SettableConsent): Promise<void> =>
 	fetch(`${idApiRoot}/users/me/consents`, {
 		method: 'PATCH',
@@ -378,11 +351,4 @@ export const setConsent = (consents: SettableConsent): Promise<void> =>
 	}).then((resp) => {
 		if (resp.ok) return Promise.resolve();
 		return Promise.reject();
-	});
-
-export const getUserData = (): Promise<unknown> =>
-	fetchJson(`${idApiRoot}/user/me`, {
-		method: 'GET',
-		mode: 'cors',
-		credentials: 'include',
 	});

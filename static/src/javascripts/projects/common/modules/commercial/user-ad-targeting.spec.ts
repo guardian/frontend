@@ -1,17 +1,7 @@
 import { storage } from '@guardian/libs';
-import type { IdentityUser } from '../identity/api';
-import {
-	getUserFromApi as getUserFromApi_,
-	getUserFromCookie as getUserFromCookie_,
-} from '../identity/api';
-import {
-	getUserSegments,
-	requestUserSegmentsFromId,
-} from './user-ad-targeting';
+import { getUserFromCookie as getUserFromCookie_ } from '../identity/api';
+import { getUserSegments } from './user-ad-targeting';
 
-const getUserFromApi = getUserFromApi_ as jest.MockedFunction<
-	typeof getUserFromApi_
->;
 const getUserFromCookie = getUserFromCookie_ as jest.Mock;
 
 jest.mock('../identity/api', () => ({
@@ -29,7 +19,6 @@ describe('User Ad Targeting', () => {
 
 	it('should exist', () => {
 		expect(getUserSegments).toBeDefined();
-		expect(requestUserSegmentsFromId).toBeDefined();
 	});
 
 	it('should only return segments when consent is true or null', () => {
@@ -57,22 +46,5 @@ describe('User Ad Targeting', () => {
 		});
 		expect(getUserSegments(true).length).toBe(0);
 		expect(storage.local.get(userSegmentsKey)).toBeFalsy();
-	});
-
-	it('should request user data from API and populate local storage', () => {
-		getUserFromApi.mockImplementation((fn) =>
-			fn(({
-				id: 999900789,
-				adData: {
-					a: 'b',
-					c: 'd',
-				},
-			} as unknown) as IdentityUser),
-		);
-		requestUserSegmentsFromId();
-		expect(storage.local.get(userSegmentsKey)).toMatchObject({
-			segments: ['ab', 'cd'],
-			userHash: 789,
-		});
 	});
 });
