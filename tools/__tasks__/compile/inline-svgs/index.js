@@ -28,16 +28,15 @@ module.exports = {
                         fileData =>
                             new Promise(resolve =>
                                 resolve(optimize(fileData, {
-                                    plugins: extendDefaultPlugins([
-                                        {
-                                            name: 'removeXMLNS',
-                                            active: true,
-                                        },
-                                        {
-                                            name: 'removeViewBox',
-                                            active: false,
-                                        },
-                                    ]),
+                                    plugins: [{
+                                        name: 'preset-default',
+                                        params: {
+                                            overrides: {
+                                                removeXMLNS: true,
+                                                removeViewBox: true,
+                                            }
+                                        }
+                                    }],
                                 })
                             )
                         )
