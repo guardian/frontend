@@ -45,9 +45,6 @@ abstract case class Experiment(
   def canRun(implicit request: RequestHeader): Boolean = isSwitchedOn && priorCondition
 
   def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = {
-    println(">>> canRun >>>", canRun)
-    println(">>> matchesExtraHeader >>>", matchesExtraHeader)
-    println(">>> inVariant >>>", inVariant)
     canRun && matchesExtraHeader && inVariant
   }
 
