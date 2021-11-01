@@ -165,16 +165,10 @@ export const init = (): Promise<void> => {
 		// A promise error here, from a failed module load,
 		// could be a network problem or an intercepted request.
 		// Abandon the init sequence.
-		setupAdvertising()
-			.then(adFreeSlotRemove)
-			.catch((e) => {
-				console.log('will remove slots', e);
-				void removeSlots();
-			});
+		setupAdvertising().then(adFreeSlotRemove).catch(removeSlots);
 
 		return Promise.resolve();
 	}
 
-	console.log('will remove slots', 'no DFP Advertising');
 	return removeSlots();
 };
