@@ -20,7 +20,7 @@
     "@guardian/automat-modules": "^0.3.8",
     "@guardian/braze-components": "^4.1.0",
     "@guardian/commercial-core": "0.24.x",
-    "@guardian/consent-management-platform": "6.11.5",
+    "@guardian/consent-management-platform": "9.x.x",
     "@guardian/libs": "^3.4.1",
     "@guardian/shimport": "^1.0.2",
     "@guardian/src-button": "3.3.0",
