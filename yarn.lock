@@ -1908,7 +1908,7 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.24.0.tgz#6ba387bd80bbed14561d073de5e7573b2fb5f663"
   integrity sha512-dBtJX+6mzjYJcy6hXMJ5w5oKDZu+Ob18z+vXZtkN+j3Bp2ex+jQik6IuQTwfn+KkN6VEMoIzYK1ZN3fqPHMwYw==
 
-"@guardian/consent-management-platform@9.x.x":
+"@guardian/consent-management-platform@^9.0.1":
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-9.0.1.tgz#bfcfca3eb32a65faa0f60ff723a294ba840d9953"
   integrity sha512-ZN4tf7VpGxQu1CcqRsHNzWK61Q3KlaLGf8HKEX2oGotKzWZdoCx22tEA/v5Stdlv1ZkcMSqnfmtF1fJ5STgWGg==
