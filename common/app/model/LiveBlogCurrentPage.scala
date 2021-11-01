@@ -13,7 +13,7 @@ object LiveBlogCurrentPage {
       pageSize: Int,
       blocks: Blocks,
       range: BlockRange,
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   ): Option[LiveBlogCurrentPage] = {
     range match {
       case CanonicalLiveBlog => firstPage(pageSize, blocks, filterKeyEvents)
@@ -30,28 +30,29 @@ object LiveBlogCurrentPage {
   def updates(
       blocks: Blocks,
       sinceBlockId: SinceBlockId,
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   ): Option[LiveBlogCurrentPage] = {
     val bodyBlocks = blocks.requestedBodyBlocks.get(sinceBlockId.around).toSeq.flatMap { bodyBlocks =>
       applyFilters(bodyBlocks, filterKeyEvents).takeWhile(_.id != sinceBlockId.lastUpdate)
     }
     Some(
-      LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents.getOrElse(false)), None),
+      LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None),
     ) // just pretend to be the first page, it'll be ignored
   }
 
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
-  def firstPage(pageSize: Int, blocks: Blocks, filterKeyEvents: Option[Boolean]): Option[LiveBlogCurrentPage] = {
-    val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = filterKeyEvents match {
-      case Some(true) =>
-        val keyEvents = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
-        val keyEventsCount = keyEvents.getOrElse(Seq.empty).size
-        (keyEvents, keyEventsCount, keyEvents.map(_.last.id))
-      case _ =>
-        val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
-        val oldestPageBlockId =
-          blocks.requestedBodyBlocks.get(CanonicalLiveBlog.oldestPage) flatMap (_.headOption.map(_.id))
-        (firstPageBlocks, blocks.totalBodyBlocks, oldestPageBlockId)
+  def firstPage(pageSize: Int, blocks: Blocks, filterKeyEvents: Boolean): Option[LiveBlogCurrentPage] = {
+    val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = if (filterKeyEvents) {
+      val keyEvents = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
+      val keyEventsCount = keyEvents.getOrElse(Seq.empty).size
+
+      (keyEvents, keyEventsCount, keyEvents.map(_.last.id))
+    } else {
+      val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
+      val oldestPageBlockId =
+        blocks.requestedBodyBlocks.get(CanonicalLiveBlog.oldestPage) flatMap (_.headOption.map(_.id))
+
+      (firstPageBlocks, blocks.totalBodyBlocks, oldestPageBlockId)
     }
 
     val remainder = blockCount % pageSize
@@ -61,11 +62,11 @@ object LiveBlogCurrentPage {
       val (firstPageBlocks, startOfSecondPageBlocks) = requestedBodyBlocks.splitAt(remainder + pageSize)
 
       val olderPage = startOfSecondPageBlocks.headOption.map { block =>
-        BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2, filterKeyEvents.getOrElse(false))
+        BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2, filterKeyEvents)
       }
 
       val oldestPage = oldestPageBlockId map { blockId =>
-        BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents.getOrElse(false))
+        BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents)
       }
 
       val pagination = {
@@ -82,7 +83,7 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(firstPageBlocks, filterKeyEvents.getOrElse(false)), pagination)
+      LiveBlogCurrentPage(FirstPage(firstPageBlocks, filterKeyEvents), pagination)
     }
   }
 
@@ -91,16 +92,16 @@ object LiveBlogCurrentPage {
       pageSize: Int,
       blocks: Seq[BodyBlock],
       isRequestedBlock: String,
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   ): Option[LiveBlogCurrentPage] = {
     val filteredBlocks = applyFilters(blocks, filterKeyEvents)
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, filteredBlocks)
-    val newestPage = FirstPage(mainPageBlocks, filterKeyEvents.getOrElse(false))
+    val newestPage = FirstPage(mainPageBlocks, filterKeyEvents)
     val pages = newestPage :: restPagesBlocks.zipWithIndex
       .map {
         case (page, index) =>
           // page number is index + 2 to account for first page and 0 based index
-          BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents.getOrElse(false))
+          BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents)
       }
     val oldestPage = pages.lastOption.getOrElse(newestPage)
 
@@ -136,10 +137,11 @@ object LiveBlogCurrentPage {
       .find(hasRequestedBlock)
   }
 
-  private def applyFilters(blocks: Seq[BodyBlock], filterKeyEvents: Option[Boolean]) = {
-    filterKeyEvents match {
-      case Some(true) => blocks.filter(_.eventType == KeyEvent)
-      case _          => blocks
+  private def applyFilters(blocks: Seq[BodyBlock], filterKeyEvents: Boolean) = {
+    if (filterKeyEvents) {
+      blocks.filter(_.eventType == KeyEvent)
+    } else {
+      blocks
     }
   }
 

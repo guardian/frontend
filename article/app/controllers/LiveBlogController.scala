@@ -44,7 +44,7 @@ class LiveBlogController(
 
   def renderEmail(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks, None) {
+      mapModel(path, ArticleBlocks) {
         case (minute: MinutePage, blocks) =>
           Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
         case (blog: LiveBlogPage, blocks) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
@@ -53,7 +53,7 @@ class LiveBlogController(
     }
   }
 
-  private def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Option[Boolean])(implicit
+  private def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
       request: RequestHeader,
   ): Future[Result] = {
     mapModel(path, range, filterKeyEvents) { (page, blocks) =>
@@ -85,14 +85,16 @@ class LiveBlogController(
 
   def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
+      val shouldFilter = ActiveExperiments.isParticipating(LiveblogFiltering)
+      val filter = filterKeyEvents.getOrElse(false) && shouldFilter
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filterKeyEvents) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog, filterKeyEvents) // no page param
+        case None => renderWithRange(path, CanonicalLiveBlog, filter) // no page param
       }
     }
   }
@@ -105,11 +107,13 @@ class LiveBlogController(
       filterKeyEvents: Option[Boolean],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
+      val shouldFilter = ActiveExperiments.isParticipating(LiveblogFiltering)
+      val filter = filterKeyEvents.getOrElse(false) && shouldFilter
       val range = getRange(lastUpdate)
-      mapModel(path, range, filterKeyEvents) {
+      mapModel(path, range, filter) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR         => Future.successful(renderGuuiJson(path, blog, blocks))
-        case (blog: LiveBlogPage, blocks)                             => getJson(blog, range, isLivePage, filterKeyEvents)
+        case (blog: LiveBlogPage, blocks)                             => getJson(blog, range, isLivePage, filter)
         case (minute: MinutePage, blocks) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
@@ -138,7 +142,7 @@ class LiveBlogController(
       liveblog: LiveBlogPage,
       range: BlockRange,
       isLivePage: Option[Boolean],
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
     range match {
       case SinceBlockId(lastBlockId) =>
@@ -150,27 +154,17 @@ class LiveBlogController(
   private[this] def flatMapBlocks(
       page: PageWithStoryPackage,
       lastUpdateBlockId: SinceBlockId,
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   ): Seq[BodyBlock] = {
-    filterKeyEvents match {
-      case Some(true) =>
-        page.article.fields.blocks.toSeq
-          .flatMap {
-            _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
-          }
-          .filter(_.eventType == KeyEvent)
-          .takeWhile { block =>
-            block.id != lastUpdateBlockId.lastUpdate
-          }
+    val requestedBlocks = page.article.fields.blocks.toSeq.flatMap {
+      _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
+    }
+    val filteredBlocks = if (filterKeyEvents) {
+      requestedBlocks.filter(_.eventType == KeyEvent)
+    } else requestedBlocks
 
-      case _ =>
-        page.article.fields.blocks.toSeq
-          .flatMap {
-            _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
-          }
-          .takeWhile { block =>
-            block.id != lastUpdateBlockId.lastUpdate
-          }
+    filteredBlocks.takeWhile { block =>
+      block.id != lastUpdateBlockId.lastUpdate
     }
   }
 
@@ -178,7 +172,7 @@ class LiveBlogController(
       page: PageWithStoryPackage,
       lastUpdateBlockId: SinceBlockId,
       isLivePage: Option[Boolean],
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
     val newBlocks = flatMapBlocks(page, lastUpdateBlockId, filterKeyEvents);
 
@@ -186,7 +180,7 @@ class LiveBlogController(
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
       model.KeyEventData(newBlocks, Edition(request).timezone, filterKeyEvents),
-      filterKeyEvents.getOrElse(false),
+      filterKeyEvents,
     )
 
     val allPagesJson = Seq(
@@ -216,7 +210,7 @@ class LiveBlogController(
     common.renderJson(json, blog).as("application/json")
   }
 
-  private[this] def mapModel(path: String, range: BlockRange, filterKeyEvents: Option[Boolean])(
+  private[this] def mapModel(path: String, range: BlockRange, filterKeyEvents: Boolean = false)(
       render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
@@ -231,7 +225,7 @@ class LiveBlogController(
 
   private[this] def responseToModelOrResult(
       range: BlockRange,
-      filterKeyEvents: Option[Boolean],
+      filterKeyEvents: Boolean,
   )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
