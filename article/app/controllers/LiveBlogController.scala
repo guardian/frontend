@@ -85,7 +85,6 @@ class LiveBlogController(
 
   def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
-      val shouldFilter = ActiveExperiments.isParticipating(LiveblogFiltering)
       val filter = filterKeyEvents.getOrElse(false) && shouldFilter
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -107,7 +106,6 @@ class LiveBlogController(
       filterKeyEvents: Option[Boolean],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
-      val shouldFilter = ActiveExperiments.isParticipating(LiveblogFiltering)
       val filter = filterKeyEvents.getOrElse(false) && shouldFilter
       val range = getRange(lastUpdate)
       mapModel(path, range, filter) {
@@ -237,7 +235,6 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        val shouldFilter = ActiveExperiments.isParticipating(LiveblogFiltering)
         createLiveBlogModel(liveBlog, response, range, shouldFilter, filterKeyEvents).left.map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
@@ -248,4 +245,7 @@ class LiveBlogController(
     content
   }
 
+  private def shouldFilter(implicit request: RequestHeader) = {
+    ActiveExperiments.isParticipating(LiveblogFiltering)
+  }
 }
