@@ -6,8 +6,8 @@ import { loadAdvert } from './load-advert';
 const instantLoadAdvertIds = ['dfp-ad--im'];
 
 const displayLazyAds = (): void => {
-	window.googletag?.pubads().collapseEmptyDivs();
-	window.googletag?.enableServices();
+	window.googletag.pubads().collapseEmptyDivs();
+	window.googletag.enableServices();
 
 	const [
 		instantLoadAdverts,
