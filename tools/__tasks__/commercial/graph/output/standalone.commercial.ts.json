@@ -110,6 +110,7 @@
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
