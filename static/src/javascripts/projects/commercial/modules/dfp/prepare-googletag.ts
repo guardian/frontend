@@ -96,7 +96,6 @@ export const init = (): Promise<void> => {
 		// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
 		window.googletag?.cmd.push(
 			setDfpListeners,
-			// @ts-expect-error - googletag.CommandArray.push() !== Array.push, it accepts multiple fn arguments
 			setPageTargeting,
 			refreshOnResize,
 			() => {
