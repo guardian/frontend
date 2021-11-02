@@ -15,7 +15,7 @@ import {initNotificationCounter} from 'common/modules/ui/notification-counter';
 import {checkElemsForVideos} from 'common/modules/atoms/youtube';
 
 
-const updateBlocks = (opts, pollUpdates) => {
+const updateBlocks = (opts, isLiveblog) => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -166,10 +166,10 @@ const updateBlocks = (opts, pollUpdates) => {
                     }
                 }
 
-                pollUpdates && setUpdateDelay();
+                isLiveblog && setUpdateDelay();
             })
             .catch(() => {
-                pollUpdates && setUpdateDelay();
+                isLiveblog && setUpdateDelay();
             });
     };
 
