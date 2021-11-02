@@ -51,7 +51,8 @@ jest.mock('../utils');
 const containsBillboard = containsBillboard_ as jest.Mock;
 const containsDmpu = containsDmpu_ as jest.Mock;
 const containsLeaderboard = containsLeaderboard_ as jest.Mock;
-const containsLeaderboardOrBillboard = containsLeaderboardOrBillboard_ as jest.Mock;
+const containsLeaderboardOrBillboard =
+	containsLeaderboardOrBillboard_ as jest.Mock;
 const containsMobileSticky = containsMobileSticky_ as jest.Mock;
 const containsMpu = containsMpu_ as jest.Mock;
 const containsMpuOrDmpu = containsMpuOrDmpu_ as jest.Mock;
@@ -143,11 +144,7 @@ describe('getImprovePlacementId', () => {
 		containsLeaderboardOrBillboard.mockReturnValueOnce(true);
 		containsLeaderboardOrBillboard.mockReturnValue(false);
 		expect(generateTestIds()).toEqual([
-			1116396,
-			1116396,
-			1116397,
-			1116397,
-			-1,
+			1116396, 1116396, 1116397, 1116397, -1,
 		]);
 	});
 
@@ -161,11 +158,7 @@ describe('getImprovePlacementId', () => {
 		containsLeaderboardOrBillboard.mockReturnValueOnce(true);
 		containsLeaderboardOrBillboard.mockReturnValue(false);
 		expect(generateTestIds()).toEqual([
-			1116398,
-			1116398,
-			1116399,
-			1116399,
-			-1,
+			1116398, 1116398, 1116399, 1116399, -1,
 		]);
 	});
 
@@ -191,11 +184,7 @@ describe('getImprovePlacementId', () => {
 		containsLeaderboardOrBillboard.mockReturnValueOnce(true);
 		containsLeaderboardOrBillboard.mockReturnValue(false);
 		expect(generateTestIds()).toEqual([
-			1116420,
-			1116420,
-			1116421,
-			1116421,
-			-1,
+			1116420, 1116420, 1116421, 1116421, -1,
 		]);
 	});
 
@@ -209,11 +198,7 @@ describe('getImprovePlacementId', () => {
 		containsLeaderboardOrBillboard.mockReturnValueOnce(true);
 		containsLeaderboardOrBillboard.mockReturnValue(false);
 		expect(generateTestIds()).toEqual([
-			1116422,
-			1116422,
-			1116423,
-			1116423,
-			-1,
+			1116422, 1116422, 1116423, 1116423, -1,
 		]);
 	});
 
@@ -645,33 +630,21 @@ describe('getXaxisPlacementId', () => {
 		getBreakpointKey.mockReturnValue('D');
 
 		expect(generateTestIds()).toEqual([
-			20943665,
-			20943665,
-			20943666,
-			20943666,
-			20943668,
+			20943665, 20943665, 20943666, 20943666, 20943668,
 		]);
 	});
 
 	test('should return the expected values for tablet device', () => {
 		getBreakpointKey.mockReturnValue('T');
 		expect(generateTestIds()).toEqual([
-			20943671,
-			20943671,
-			20943672,
-			20943672,
-			20943674,
+			20943671, 20943671, 20943672, 20943672, 20943674,
 		]);
 	});
 
 	test('should return the expected values for mobile device', () => {
 		getBreakpointKey.mockReturnValue('M');
 		expect(generateTestIds()).toEqual([
-			20943669,
-			20943669,
-			20943670,
-			20943670,
-			20943670,
+			20943669, 20943669, 20943670, 20943670, 20943670,
 		]);
 	});
 });

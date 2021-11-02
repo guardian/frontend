@@ -64,7 +64,7 @@ const refreshAdvert = refreshAdvert_;
 const mockHeight = (height: number) => {
 	// this is an issue with fastdom's typing of measure: () => Promise<void>
 	jest.spyOn(fastdom, 'measure').mockReturnValue(
-		(Promise.resolve(height) as unknown) as Promise<void>,
+		Promise.resolve(height) as unknown as Promise<void>,
 	);
 };
 

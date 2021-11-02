@@ -59,9 +59,11 @@ export const dfpEnv: DfpEnv = {
 		// We do not want lazy loading on pageskins because it messes up the roadblock
 		// Also, if the special dll parameter is passed with a value of 1, we don't lazy load
 		return (
-			!(config as {
-				get: (arg: string) => boolean;
-			}).get('page.hasPageSkin') && getUrlVars().dll !== '1'
+			!(
+				config as {
+					get: (arg: string) => boolean;
+				}
+			).get('page.hasPageSkin') && getUrlVars().dll !== '1'
 		);
 	},
 };
