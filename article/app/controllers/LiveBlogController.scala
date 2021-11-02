@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiCo
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, LiveblogRendering}
+import experiments.{ActiveExperiments}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
