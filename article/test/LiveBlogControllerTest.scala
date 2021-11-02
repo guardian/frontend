@@ -6,7 +6,7 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class LiveBlogControllerTest
-  extends FlatSpec
+    extends FlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
@@ -53,14 +53,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
   }
 
-
   it should "use DCR if the parameter dcr=true is passed" in {
     val forceDCROff = false
     val forceDCR = true
     val participatingInTest = false
     val dcrCanRender = true
 
-    val shouldRemoteRender = liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
     shouldRemoteRender should be(true)
   }
 
@@ -70,7 +70,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     val participatingInTest = false
     val dcrCanRender = true
 
-    val shouldRemoteRender = liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
     shouldRemoteRender should be(false)
 
   }
@@ -81,7 +82,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     val participatingInTest = true
     val dcrCanRender = true
 
-    val shouldRemoteRender = liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
     shouldRemoteRender should be(true)
   }
 
@@ -91,7 +93,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     val participatingInTest = false
     val dcrCanRender = true
 
-    val shouldRemoteRender = liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
     shouldRemoteRender should be(false)
   }
 
@@ -101,7 +104,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     val participatingInTest = true
     val dcrCanRender = false
 
-    val shouldRemoteRender = liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
     shouldRemoteRender should be(true)
   }
 
@@ -111,7 +115,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     val participatingInTest = true
     val dcrCanRender = false
 
-    val shouldRemoteRender = liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
     shouldRemoteRender should be(false)
   }
 }
