@@ -153,14 +153,17 @@ jest.mock('@guardian/consent-management-platform', () => ({
 }));
 
 let $style: HTMLElement;
-const makeFakeEvent = (creativeId: string, id: string) => ({
+const makeFakeEvent = (
+	creativeId: number,
+	id: string,
+): DeepPartial<googletag.events.SlotRenderEndedEvent> => ({
 	creativeId,
 	slot: {
 		getSlotElementId() {
 			return id;
 		},
 	},
-	size: ['300', '250'],
+	size: [300, 250],
 });
 
 const reset = () => {
@@ -540,14 +543,14 @@ describe('DFP', () => {
 	});
 
 	it('should expose ads IDs', async () => {
-		const fakeEventOne = (makeFakeEvent(
-			'1',
+		const fakeEventOne = makeFakeEvent(
+			1,
 			'dfp-ad-html-slot',
-		) as unknown) as googletag.events.SlotRenderEndedEvent;
-		const fakeEventTwo = (makeFakeEvent(
-			'2',
+		) as googletag.events.SlotRenderEndedEvent;
+		const fakeEventTwo = makeFakeEvent(
+			2,
 			'dfp-ad-script-slot',
-		) as unknown) as googletag.events.SlotRenderEndedEvent;
+		) as googletag.events.SlotRenderEndedEvent;
 
 		await fillAdvertSlots();
 		await prepareGoogletag();
