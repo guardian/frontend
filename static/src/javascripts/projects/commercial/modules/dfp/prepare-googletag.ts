@@ -55,10 +55,9 @@ const setDfpListeners = (): void => {
 		'slotOnload',
 		raven.wrap<typeof onSlotLoad>(onSlotLoad),
 	);
-
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());
-
 	pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
+
 	if (storage.session.isAvailable()) {
 		const pageViews =
 			(storage.session.get('gu.commercial.pageViews') as number) || 0;
