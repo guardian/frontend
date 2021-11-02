@@ -1,4 +1,7 @@
 type AdSizes = Record<string, AdSize[]>;
+/**
+ * Subtype of googletag.SizeMappingArray
+ */
 type AdSize = AdSizeTuple | 'fluid';
 type AdSizeTuple = [width: number, height: number];
 
