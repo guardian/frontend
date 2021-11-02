@@ -38,14 +38,12 @@ const setupRedplanet = async () => {
 
 	onConsentChange((state) => {
 		if (!getConsentFor('redplanet', state)) {
-			rejectRedPlanetLoaded('no consent for redplanet');
+			rejectRedPlanetLoaded('No consent for redplanet');
 			return;
 		}
 
-        // CCPA only runs in the US and tcfv2 outside Aus
-		// Redplanet only runs in Australia so this should never happen
 		if (!state.aus) {
-			rejectRedPlanetLoaded('unknown framework');
+			rejectRedPlanetLoaded('Redplanet should only run in Australia on AUS mode');
 			return;
 		}
 

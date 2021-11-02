@@ -130,16 +130,17 @@ describe('init', () => {
 		isInAuOrNz.mockReturnValue(true);
 		onConsentChange.mockImplementation(AusWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
-		await expect(init()).rejects.toEqual('no consent for redplanet');
+		await expect(init()).rejects.toEqual('No consent for redplanet');
 		expect(window.launchpad).not.toBeCalled();
 	});
+
 
 	it('should throw an error when on CCPA mode', async () => {
 		commercialFeatures.launchpad = true;
 		isInAuOrNz.mockReturnValue(true);
 		onConsentChange.mockImplementation(CcpaWithConsentMock);
 		getConsentFor.mockReturnValue(true);
-		await expect(init()).rejects.toEqual('unknown framework');
+		await expect(init()).rejects.toEqual('Redplanet should only run in Australia on AUS mode');
 	});
 
 	it('should not initialise redplanet when launchpad conditions are false', async () => {
