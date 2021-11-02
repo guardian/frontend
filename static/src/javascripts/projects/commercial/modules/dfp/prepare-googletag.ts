@@ -45,8 +45,8 @@ initMessenger(
 );
 
 const setDfpListeners = (): void => {
-	const pubads = window.googletag?.pubads();
-	if (!pubads) return;
+	const pubads = window.googletag.pubads();
+
 	pubads.addEventListener(
 		'slotRenderEnded',
 		raven.wrap<typeof onSlotRender>(onSlotRender),
@@ -67,8 +67,7 @@ const setDfpListeners = (): void => {
 };
 
 const setPageTargeting = (): void => {
-	const pubads = window.googletag?.pubads();
-	if (!pubads) return;
+	const pubads = window.googletag.pubads();
 	// because commercialFeatures may export itself as {} in the event of an exception during construction
 	const targeting = getPageTargeting() as Record<string, string | string[]>;
 	Object.keys(targeting).forEach((key) => {
@@ -82,7 +81,7 @@ const setPublisherProvidedId = (): void => {
 		(userIdentifiers: IdentityUserIdentifiers | null) => {
 			if (userIdentifiers?.googleTagId) {
 				window.googletag
-					?.pubads()
+					.pubads()
 					.setPublisherProvidedId(userIdentifiers.googleTagId);
 			}
 		},
@@ -94,8 +93,9 @@ export const init = (): Promise<void> => {
 		// note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
 		// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
 		// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
-		window.googletag?.cmd.push(
+		window.googletag.cmd.push(
 			setDfpListeners,
+			//@ts-expect-error -- oversight in type definition https://git.io/JPM1I
 			setPageTargeting,
 			refreshOnResize,
 			() => {
@@ -108,13 +108,13 @@ export const init = (): Promise<void> => {
 			if (state.ccpa) {
 				const doNotSell = state.ccpa.doNotSell;
 				// CCPA mode
-				window.googletag?.cmd.push(() => {
-					window.googletag?.pubads().setPrivacySettings({
+				window.googletag.cmd.push(() => {
+					window.googletag.pubads().setPrivacySettings({
 						restrictDataProcessing: doNotSell,
 					});
 				});
 				if (!state.ccpa.doNotSell) {
-					window.googletag?.cmd.push(setPublisherProvidedId);
+					window.googletag.cmd.push(setPublisherProvidedId);
 				}
 			} else {
 				if (state.tcfv2) {
@@ -123,7 +123,7 @@ export const init = (): Promise<void> => {
 						Boolean,
 					);
 					if (canTarget) {
-						window.googletag?.cmd.push(setPublisherProvidedId);
+						window.googletag.cmd.push(setPublisherProvidedId);
 					}
 
 					canRun = getConsentFor('googletag', state);
@@ -131,13 +131,13 @@ export const init = (): Promise<void> => {
 					// AUS mode
 					// canRun stays true, set NPA flag if consent is retracted
 					const npaFlag = !getConsentFor('googletag', state);
-					window.googletag?.cmd.push(() => {
+					window.googletag.cmd.push(() => {
 						window.googletag
-							?.pubads()
+							.pubads()
 							.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
 					});
 					if (!npaFlag) {
-						window.googletag?.cmd.push(setPublisherProvidedId);
+						window.googletag.cmd.push(setPublisherProvidedId);
 					}
 				}
 			}
