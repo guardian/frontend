@@ -49,9 +49,7 @@ const setDfpListeners = (): void => {
 	if (!pubads) return;
 	pubads.addEventListener(
 		'slotRenderEnded',
-		raven.wrap(onSlotRender) as (
-			event: googletag.events.SlotRenderEndedEvent,
-		) => void,
+		raven.wrap<typeof onSlotRender>(onSlotRender),
 	);
 	pubads.addEventListener(
 		'slotOnload',

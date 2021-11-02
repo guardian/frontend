@@ -1,6 +1,6 @@
 import { adSizes } from '@guardian/commercial-core';
 import type { AdSizeString } from '@guardian/commercial-core';
-import { once } from 'lodash-es';
+import { isString, once } from 'lodash-es';
 import config from '../../../../lib/config';
 import mediator from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
@@ -14,7 +14,10 @@ const recordFirstAdRendered = once(() => {
 	markTime('Commercial: First Ad Rendered');
 });
 
-const reportEmptyResponse = (adSlotId: string, event: SlotRenderEndedEvent) => {
+const reportEmptyResponse = (
+	adSlotId: string,
+	event: googletag.events.SlotRenderEndedEvent,
+) => {
 	// This empty slot could be caused by a targeting problem,
 	// let's report these and diagnose the problem in sentry.
 	// Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
@@ -45,7 +48,14 @@ const outstreamSizes = [
 	adSizes.outstreamGoogleDesktop.toString(),
 ];
 
-export const onSlotRender = (event: SlotRenderEndedEvent): void => {
+const sizeEventToAdSize = (size: string | number[]): AdSize => {
+	if (isString(size)) return 'fluid';
+	return [size[0], size[1]];
+};
+
+export const onSlotRender = (
+	event: googletag.events.SlotRenderEndedEvent,
+): void => {
 	recordFirstAdRendered();
 
 	const advert = getAdvertById(event.slot.getSlotElementId());
@@ -72,7 +82,7 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
 		 * from the GAM event when adjusting the slot size.
 		 * */
 		if (!advert.hasPrebidSize) {
-			advert.size = event.size;
+			advert.size = sizeEventToAdSize(event.size);
 		}
 
 		if (event.creativeId !== undefined) {
@@ -81,7 +91,8 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
 		// Set refresh field based on the outcome of the slot render.
 		const sizeString = advert.size?.toString();
 		const isNotFluid = sizeString !== '0,0';
-		const isOutstream = outstreamSizes.includes(sizeString as AdSizeString);
+		const isOutstream =
+			sizeString && outstreamSizes.includes(sizeString as AdSizeString);
 		const isNonRefreshableLineItem =
 			event.lineItemId &&
 			(

@@ -1,8 +1,6 @@
 type AdSizes = Record<string, AdSize[]>;
-type AdSize = SingleSizeArray | NamedSize;
+type AdSize = [width: number, height: number] | 'fluid';
 
-type SingleSizeArray = number[];
-type NamedSize = 'fluid';
 type MultiSize = AdSize[];
 type GeneralSize = AdSize | MultiSize;
 type SizeMapping = GeneralSize[];
@@ -63,19 +61,6 @@ type Slot = {
 type SlotOnloadEvent = {
 	serviceName: string;
 	slot: Slot;
-};
-
-type SlotRenderEndedEvent = {
-	advertiserId?: number;
-	campaignId?: number;
-	creativeId?: number;
-	isEmpty: boolean;
-	lineItemId?: number;
-	serviceName: string;
-	size: AdSize;
-	slot: Slot;
-	sourceAgnosticCreativeId?: number;
-	sourceAgnosticLineItemId?: number;
 };
 
 type ImpressionViewableEvent = {

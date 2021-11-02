@@ -1,3 +1,4 @@
+import { isString } from '@guardian/libs';
 import { breakpoints } from '../../../../lib/detect';
 import { getCurrentTime } from '../../../../lib/user-timing';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
@@ -15,6 +16,12 @@ type Timings = {
 	lazyWaitComplete: number | null;
 };
 
+const stringToTuple = (size: string): [width: number, height: number] => {
+	const dimensions = size.split(',', 2).map(Number);
+
+	return [dimensions[0], dimensions[1]];
+};
+
 /** A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
  *
@@ -24,9 +31,7 @@ type Timings = {
 const createSizeMapping = (attr: string): AdSize[] =>
 	attr
 		.split('|')
-		.map((size) =>
-			size === 'fluid' ? 'fluid' : size.split(',').map(Number),
-		);
+		.map((size) => (size === 'fluid' ? 'fluid' : stringToTuple(size)));
 
 /** Extract the ad sizes from the breakpoint data attributes of an ad slot
  *
