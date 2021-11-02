@@ -85,7 +85,7 @@ export const onSlotRender = (
 			advert.size = sizeEventToAdSize(event.size);
 		}
 
-		if (event.creativeId !== undefined) {
+		if (typeof event.creativeId === 'number') {
 			dfpEnv.creativeIDs.push(String(event.creativeId));
 		}
 		// Set refresh field based on the outcome of the slot render.
