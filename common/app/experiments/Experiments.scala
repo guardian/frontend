@@ -7,6 +7,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
+    LiveblogFiltering,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
