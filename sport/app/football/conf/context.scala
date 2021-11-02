@@ -35,7 +35,7 @@ class FootballLifecycle(
         //stagger fixtures and results refreshes to avoid timeouts
         val seconds = index * 5 % 60
         val minutes = index * 5 / 60 % 5
-        val cron = s"$seconds * * * * ?"
+        val cron = s"$seconds $minutes/5 * * * ?"
 
         jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
           competitionsService.refreshCompetitionAgent(id, defaultClock)
