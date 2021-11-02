@@ -1,4 +1,3 @@
-import { isString } from '@guardian/libs';
 import { breakpoints } from '../../../../lib/detect';
 import { getCurrentTime } from '../../../../lib/user-timing';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
