@@ -30,6 +30,11 @@ private case class RealClient(wsClient: WSClient)(implicit context: ExecutionCon
 
   override def GET(urlString: String): Future[pa.Response] = {
     wsClient.url(urlString).get().map { response =>
+      //if (response.status != 200) {
+      println(urlString)
+      println(response.status)
+      // println(response.body)
+      //}
       pa.Response(response.status, response.body, response.statusText)
     }
   }

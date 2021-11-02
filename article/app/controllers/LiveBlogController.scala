@@ -60,7 +60,7 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) => {
-            val remoteRendering = request.forceDCR && ActiveExperiments.isParticipating(LiveblogRendering)
+            val remoteRendering = request.forceDCR
             remoteRendering match {
               case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               case true => {
