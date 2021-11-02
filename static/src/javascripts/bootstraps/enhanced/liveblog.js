@@ -39,8 +39,8 @@ const initFilterCheckbox = () => {
 }
 
 const createAutoUpdate = () => {
-    const pollUpdates = config.get('page.isLive')
-    updateBlocks({}, pollUpdates);
+    const isLiveblog = config.get('page.isLive')
+    updateBlocks({}, isLiveblog);
 };
 
 const keepTimestampsCurrent = () => {
