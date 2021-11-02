@@ -53,9 +53,7 @@ const setDfpListeners = (): void => {
 	);
 	pubads.addEventListener(
 		'slotOnload',
-		raven.wrap(onSlotLoad) as (
-			event: googletag.events.SlotOnloadEvent,
-		) => void,
+		raven.wrap<typeof onSlotLoad>(onSlotLoad),
 	);
 
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());

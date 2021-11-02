@@ -58,11 +58,6 @@ type Slot = {
 	setTargeting: SetTargeting;
 };
 
-type SlotOnloadEvent = {
-	serviceName: string;
-	slot: Slot;
-};
-
 type ImpressionViewableEvent = {
 	serviceName: string;
 	slot: Slot;
