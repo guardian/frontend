@@ -56,6 +56,7 @@ class LiveBlogController(
   private def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
       request: RequestHeader,
   ): Future[Result] = {
+    log.logger.info("render-with-range filter status", filterKeyEvents)
     mapModel(path, range, filterKeyEvents) { (page, blocks) =>
       {
         val isAmpSupported = page.article.content.shouldAmplify
@@ -84,6 +85,7 @@ class LiveBlogController(
   }
 
   def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
+    log.logger.info("render-article filter status", filterKeyEvents)
     Action.async { implicit request =>
       val filter = filterKeyEvents.getOrElse(false) && filterSwitch
       page.map(ParseBlockId.fromPageParam) match {
@@ -107,6 +109,7 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
       val filter = filterKeyEvents.getOrElse(false) && filterSwitch
+      log.logger.info("render-json filter status", filterKeyEvents)
       val range = getRange(lastUpdate)
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
@@ -211,6 +214,7 @@ class LiveBlogController(
   private[this] def mapModel(path: String, range: BlockRange, filterKeyEvents: Boolean = false)(
       render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
+    log.logger.info("map-model", filterKeyEvents)
     capiLookup
       .lookup(path, Some(range))
       .map(responseToModelOrResult(range, filterKeyEvents))
