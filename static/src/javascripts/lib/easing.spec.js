@@ -20,8 +20,6 @@ const TESTS = {
     easeInOutQuint: [[0.3, 0.03888], [0.5, 0.5], [2, -15], [3, -511]],
 };
 
-const to5dp = (num) => Number(num).toFixed(5)
-
 describe('easing', () => {
     // test easing methods
     Object.keys(TESTS).forEach(name => {
@@ -29,7 +27,7 @@ describe('easing', () => {
 
         test(`easingFunctions.${name}()`, () => {
             values.forEach(([actual, expected]) => {
-                expect(to5dp(easingFunctions[name](actual))).toBe(to5dp(expected));
+                expect(easingFunctions[name](actual)).toBeCloseTo(expected);
             });
         });
     });
@@ -46,7 +44,7 @@ describe('easing', () => {
         global.Date = jest.fn(
             () => new OriginalDate((1970, 1, 1, 0, 0, 0, ELAPSED))
         );
-        expect(to5dp(ease())).toBe(to5dp(ELAPSED / DURATION));
+        expect(ease()).toBeCloseTo(ELAPSED / DURATION);
 
         global.Date = OriginalDate;
     });
