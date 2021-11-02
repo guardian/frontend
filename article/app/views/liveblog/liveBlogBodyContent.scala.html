@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        @if(model.shouldFilter) {
+        @if(model.filterSwitch) {
             @views.html.liveblog.filterButton(model.filterKeyEvents)
         }
 

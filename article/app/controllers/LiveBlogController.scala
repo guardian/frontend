@@ -85,7 +85,7 @@ class LiveBlogController(
 
   def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
-      val filter = filterKeyEvents.getOrElse(false) && shouldFilter
+      val filter = filterKeyEvents.getOrElse(false) && filterSwitch
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
           renderWithRange(path, PageWithBlock(id), filter) // we know the id of a block
@@ -106,7 +106,7 @@ class LiveBlogController(
       filterKeyEvents: Option[Boolean],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
-      val filter = filterKeyEvents.getOrElse(false) && shouldFilter
+      val filter = filterKeyEvents.getOrElse(false) && filterSwitch
       val range = getRange(lastUpdate)
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
@@ -235,7 +235,7 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        createLiveBlogModel(liveBlog, response, range, shouldFilter, filterKeyEvents).left.map(_ -> blocks)
+        createLiveBlogModel(liveBlog, response, range, filterSwitch, filterKeyEvents).left.map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
         Right(InternalServerError)
@@ -245,7 +245,7 @@ class LiveBlogController(
     content
   }
 
-  private def shouldFilter(implicit request: RequestHeader) = {
+  private def filterSwitch(implicit request: RequestHeader) = {
     ActiveExperiments.isParticipating(LiveblogFiltering)
   }
 }
