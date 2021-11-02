@@ -1,5 +1,6 @@
 type AdSizes = Record<string, AdSize[]>;
-type AdSize = [width: number, height: number] | 'fluid';
+type AdSize = AdSizeTuple | 'fluid';
+type AdSizeTuple = [width: number, height: number];
 
 type ResponseInformation = {
 	advertiserId: string;
