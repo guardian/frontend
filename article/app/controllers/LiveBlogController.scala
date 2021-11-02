@@ -65,11 +65,8 @@ class LiveBlogController(
             // but we included this variable as an indication of what is going to be possible in the future
             val dcrCanRender = false
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
-            val remoteRendering = shouldRemoteRender(
-                                      request.forceDCROff,
-                                      request.forceDCR,
-                                      participatingInTest,
-                                      dcrCanRender)
+            val remoteRendering =
+              shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCanRender)
 
             remoteRendering match {
               case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
@@ -90,17 +87,19 @@ class LiveBlogController(
     }
   }
 
-  def shouldRemoteRender(forceDCROff: Boolean,
-                         forceDCR: Boolean,
-                         participatingInTest: Boolean,
-                         dcrCanRender: Boolean): Boolean = {
-      // ?dcr=false, so never render DCR
-      if (forceDCROff) false
-      // ?dcr=true, so always render DCR
-      else if (forceDCR) true
-      // User is in the test and dcr supports this blog . No param passed
-      else if (participatingInTest && dcrCanRender) true
-      else false
+  def shouldRemoteRender(
+      forceDCROff: Boolean,
+      forceDCR: Boolean,
+      participatingInTest: Boolean,
+      dcrCanRender: Boolean,
+  ): Boolean = {
+    // ?dcr=false, so never render DCR
+    if (forceDCROff) false
+    // ?dcr=true, so always render DCR
+    else if (forceDCR) true
+    // User is in the test and dcr supports this blog . No param passed
+    else if (participatingInTest && dcrCanRender) true
+    else false
   }
 
   def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
