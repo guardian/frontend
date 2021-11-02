@@ -61,7 +61,7 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) => {
-            // dcrCanRender is always false because right now blogs are supported by DCR
+            // dcrCanRender is always false because right now blogs are not supported by DCR
             // but we included this variable as an indication of what is going to be possible in the future
             val dcrCanRender = false
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
