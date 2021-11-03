@@ -41,10 +41,10 @@ class LiveBlogController(
 
   private[this] val logger = DotcomponentsLogger()
 
-  private[this] def logRequest(msg: String, results: Map[String, String])(implicit
+  private[this] def logRequest(msg: String, results: Map[String, String], page: PageWithStoryPackage)(implicit
       request: RequestHeader,
   ): Unit = {
-    logger.withRequestHeaders(request).results(msg, results)
+    logger.withRequestHeaders(request).results(msg, results, page)
   }
 
   // Main entry points
@@ -80,11 +80,11 @@ class LiveBlogController(
 
             remoteRendering match {
               case false => {
-                logRequest(s"liveblog executing in web", properties)
+                logRequest(s"liveblog executing in web", properties, page)
                 Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               }
               case true => {
-                logRequest(s"liveblog executing in dotcomponents", properties)
+                logRequest(s"liveblog executing in dotcomponents", properties, page)
                 val pageType: PageType = PageType(blog, request, context)
                 remoteRenderer.getArticle(ws, blog, blocks, pageType)
               }
