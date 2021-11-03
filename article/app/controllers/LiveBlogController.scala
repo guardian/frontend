@@ -77,6 +77,7 @@ class LiveBlogController(
               Map(
                 "participatingInTest" -> participatingInTest.toString(),
                 "dcrCouldRender" -> dcrCouldRender.toString(),
+                "isLiveBlog" -> "true",
               )
             val remoteRendering =
               shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
