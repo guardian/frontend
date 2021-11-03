@@ -41,12 +41,6 @@ class LiveBlogController(
 
   private[this] val logger = DotcomponentsLogger()
 
-  private[this] def logRequest(msg: String, results: Map[String, String], page: PageWithStoryPackage)(implicit
-      request: RequestHeader,
-  ): Unit = {
-    logger.withRequestHeaders(request).results(msg, results, page)
-  }
-
   // Main entry points
 
   def renderEmail(path: String): Action[AnyContent] = {
@@ -82,12 +76,12 @@ class LiveBlogController(
             val remoteRendering =
               shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
 
-            if(remoteRendering) {
-              logRequest(s"liveblog executing in dotcomponents", properties, page)
+            if (remoteRendering) {
+              logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
               remoteRenderer.getArticle(ws, blog, blocks, pageType)
             } else {
-              logRequest(s"liveblog executing in web", properties, page)
+              logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           }
