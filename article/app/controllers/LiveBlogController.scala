@@ -81,16 +81,13 @@ class LiveBlogController(
             val remoteRendering =
               shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
 
-            remoteRendering match {
-              case false => {
-                logRequest(s"liveblog executing in web", properties, page)
-                Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-              }
-              case true => {
-                logRequest(s"liveblog executing in dotcomponents", properties, page)
-                val pageType: PageType = PageType(blog, request, context)
-                remoteRenderer.getArticle(ws, blog, blocks, pageType)
-              }
+            if(remoteRendering) {
+              logRequest(s"liveblog executing in dotcomponents", properties, page)
+              val pageType: PageType = PageType(blog, request, context)
+              remoteRenderer.getArticle(ws, blog, blocks, pageType)
+            } else {
+              logRequest(s"liveblog executing in web", properties, page)
+              Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
