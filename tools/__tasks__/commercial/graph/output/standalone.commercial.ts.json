@@ -21,9 +21,6 @@
  "../lib/fetch-json.ts": [
   "../lib/config.d.ts"
  ],
- "../lib/fsm.ts": [
-  "../lib/noop.ts"
- ],
  "../lib/geolocation.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -31,7 +28,6 @@
   "../lib/report-error.js"
  ],
  "../lib/launchpad.js": [],
- "../lib/load-css-promise.js": [],
  "../lib/mediator.js": [
   "../../../../node_modules/wolfy87-eventemitter/EventEmitter.js"
  ],
@@ -57,6 +53,13 @@
   "../lib/window-performance.js"
  ],
  "../lib/window-performance.js": [],
+ "../projects/commercial/adblock-ask.ts": [
+  "../lib/config.d.ts",
+  "../lib/fastdom-promise.js",
+  "../projects/common/modules/commercial/contributions-utilities.js",
+  "../projects/common/modules/commercial/support-utilities.js",
+  "../projects/common/modules/commercial/user-features.js"
+ ],
  "../projects/commercial/commercial-metrics.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
@@ -388,38 +391,6 @@
   "../projects/commercial/modules/dfp/create-slots.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/hosted/about.ts": [
-  "../lib/fastdom-promise.js"
- ],
- "../projects/commercial/modules/hosted/gallery.js": [
-  "../../../../node_modules/fastdom/fastdom.js",
-  "../../../../node_modules/lodash-es/lodash.js",
-  "../lib/config.js",
-  "../lib/detect.js",
-  "../lib/fsm.ts",
-  "../lib/load-css-promise.js",
-  "../lib/mediator.js",
-  "../lib/url.ts",
-  "../projects/common/modules/analytics/interaction-tracking.js"
- ],
- "../projects/commercial/modules/hosted/onward-journey-carousel.ts": [
-  "../../../../node_modules/fastdom/fastdom.d.ts",
-  "../lib/$$.ts"
- ],
- "../projects/commercial/modules/hosted/onward.js": [
-  "../lib/config.js",
-  "../lib/fastdom-promise.js",
-  "../lib/fetch-json.ts",
-  "../projects/commercial/modules/hosted/onward-journey-carousel.ts"
- ],
- "../projects/commercial/modules/hosted/video.ts": [
-  "../projects/commercial/modules/hosted/youtube.ts"
- ],
- "../projects/commercial/modules/hosted/youtube.ts": [
-  "../lib/mediator.js",
-  "../projects/common/modules/atoms/youtube-player.ts",
-  "../projects/common/modules/atoms/youtube-tracking.js"
- ],
  "../projects/commercial/modules/ipsos-mori.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
@@ -537,12 +508,6 @@
   "../lib/config.d.ts",
   "../lib/mediator.js"
  ],
- "../projects/common/modules/analytics/interaction-tracking.js": [
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../lib/mediator.js",
-  "../lib/robust.js",
-  "../projects/common/modules/analytics/google.ts"
- ],
  "../projects/common/modules/analytics/mvt-cookie.js": [
   "../lib/cookies.js"
  ],
@@ -557,24 +522,6 @@
   "../projects/common/modules/spacefinder.js"
  ],
  "../projects/common/modules/async-call-merger.ts": [],
- "../projects/common/modules/atoms/youtube-player.ts": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
-  "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts",
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../../../../node_modules/fastdom/fastdom.d.ts",
-  "../lib/config.d.ts",
-  "../lib/url.ts",
-  "../projects/common/modules/commercial/build-page-targeting.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/video/ga-helper.js"
- ],
- "../projects/common/modules/atoms/youtube-tracking.js": [
-  "../../../../node_modules/ophan-tracker-js/build/ophan.ng.js",
-  "../lib/config.js",
-  "../lib/mediator.js",
-  "../projects/common/modules/video/ga-helper.js"
- ],
  "../projects/common/modules/commercial/build-page-targeting.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -601,7 +548,14 @@
   "../projects/common/modules/identity/api.ts",
   "../projects/common/modules/user-prefs.js"
  ],
+ "../projects/common/modules/commercial/contributions-utilities.js": [
+  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
+  "../lib/config.js"
+ ],
  "../projects/common/modules/commercial/geo-utils.js": [
+  "../lib/geolocation.ts"
+ ],
+ "../projects/common/modules/commercial/support-utilities.js": [
   "../lib/geolocation.ts"
  ],
  "../projects/common/modules/commercial/user-ad-targeting.ts": [
@@ -700,12 +654,12 @@
  "../projects/common/modules/user-prefs.js": [
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js"
  ],
- "../projects/common/modules/video/ga-helper.js": [],
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/report-error.js",
   "../lib/robust.js",
+  "../projects/commercial/adblock-ask.ts",
   "../projects/commercial/commercial-metrics.ts",
   "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
@@ -719,11 +673,6 @@
   "../projects/commercial/modules/dfp/prepare-prebid.ts",
   "../projects/commercial/modules/dfp/redplanet.js",
   "../projects/commercial/modules/high-merch.ts",
-  "../projects/commercial/modules/hosted/about.ts",
-  "../projects/commercial/modules/hosted/gallery.js",
-  "../projects/commercial/modules/hosted/onward-journey-carousel.ts",
-  "../projects/commercial/modules/hosted/onward.js",
-  "../projects/commercial/modules/hosted/video.ts",
   "../projects/commercial/modules/ipsos-mori.js",
   "../projects/commercial/modules/liveblog-adverts.js",
   "../projects/commercial/modules/mobile-sticky.ts",

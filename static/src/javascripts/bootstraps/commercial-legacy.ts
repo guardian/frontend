@@ -1,3 +1,8 @@
+/**
+ * This file is deprecated. Only used for “Hosted” pages
+ * All other pages use the standalone bundle.
+ */
+
 import { EventTimer } from '@guardian/commercial-core';
 import { initAdblockAsk } from 'commercial/adblock-ask';
 import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
@@ -26,6 +31,11 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import reportError from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
 import type { Modules } from './types';
+
+const tags = {
+	feature: 'commercial',
+	bundle: 'hosted',
+};
 
 const commercialModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
@@ -59,47 +69,39 @@ if (!commercialFeatures.adFree) {
 	);
 }
 
-const loadHostedBundle = (): Promise<void> => {
-	if (window.guardian.config.page.isHosted) {
-		return new Promise((resolve) => {
-			require.ensure(
-				[],
-				(require) => {
-					/* eslint-disable
-					 	@typescript-eslint/no-var-requires,
-						@typescript-eslint/consistent-type-imports,
-						--
-						these are chunked by webpack */
-					const hostedAbout = require('commercial/modules/hosted/about') as typeof import('commercial/modules/hosted/about');
-					const initHostedVideo = require('commercial/modules/hosted/video') as typeof import('commercial/modules/hosted/video');
-					const hostedGallery = require('commercial/modules/hosted/gallery') as typeof import('commercial/modules/hosted/gallery');
-					const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel') as typeof import('commercial/modules/hosted/onward-journey-carousel');
-					const loadOnwardComponent = require('commercial/modules/hosted/onward') as typeof import('commercial/modules/hosted/onward');
-					/* eslint-enable
-						@typescript-eslint/no-var-requires,
-						@typescript-eslint/consistent-type-imports,
-						*/
+const loadHostedModules = async () => {
+	if (!window.guardian.config.page.isHosted) return; // should never happen
 
-					commercialModules.push(
-						['cm-hostedAbout', hostedAbout.init],
-						['cm-hostedVideo', initHostedVideo.initHostedVideo],
-						['cm-hostedGallery', hostedGallery.init],
-						[
-							'cm-hostedOnward',
-							loadOnwardComponent.loadOnwardComponent,
-						],
-						[
-							'cm-hostedOJCarousel',
-							initHostedCarousel.initHostedCarousel,
-						],
-					);
-					resolve();
-				},
-				'commercial-hosted',
-			);
-		});
-	}
-	return Promise.resolve();
+	const hostedAbout = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/about'
+	);
+	const initHostedVideo = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/video'
+	);
+	const hostedGallery = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/gallery'
+	);
+	const initHostedCarousel = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/onward-journey-carousel'
+	);
+	const loadOnwardComponent = await import(
+		/* webpackChunkName: "hosted" */
+		'commercial/modules/hosted/onward'
+	);
+
+	commercialModules.push(
+		['cm-hostedAbout', hostedAbout.init],
+		['cm-hostedVideo', initHostedVideo.initHostedVideo],
+		['cm-hostedGallery', hostedGallery.init],
+		['cm-hostedOnward', loadOnwardComponent.loadOnwardComponent],
+		['cm-hostedOJCarousel', initHostedCarousel.initHostedCarousel],
+	);
+
+	return;
 };
 
 const loadModules = () => {
@@ -118,9 +120,7 @@ const loadModules = () => {
 					},
 				],
 			],
-			{
-				feature: 'commercial',
-			},
+			tags,
 		);
 	});
 
@@ -140,9 +140,7 @@ export const bootCommercial = (): Promise<void> => {
 				},
 			],
 		],
-		{
-			feature: 'commercial',
-		},
+		tags,
 	);
 
 	// Stub the command queue
@@ -151,7 +149,7 @@ export const bootCommercial = (): Promise<void> => {
 		cmd: [],
 	};
 
-	return loadHostedBundle()
+	return loadHostedModules()
 		.then(loadModules)
 		.then(() => {
 			catchErrorsWithContext(
@@ -163,19 +161,11 @@ export const bootCommercial = (): Promise<void> => {
 						},
 					],
 				],
-				{
-					feature: 'commercial',
-				},
+				tags,
 			);
 		})
 		.catch((err) => {
 			// report async errors in bootCommercial to Sentry with the commercial feature tag
-			reportError(
-				err,
-				{
-					feature: 'commercial',
-				},
-				false,
-			);
+			reportError(err, tags, false);
 		});
 };

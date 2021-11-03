@@ -13,9 +13,9 @@ object PressedInteractives {
     "/world/ng-interactive/2020/nov/12/beirut-blast-a-night-of-horror-captured-by-its-victims",
     "/environment/ng-interactive/2021/feb/23/beneath-the-blue-dive-into-a-dazzling-ocean-under-threat-interactive",
     "/global-development/ng-interactive/2021/jul/28/countdown-to-demolition-the-story-of-al-jalaa-tower-gaza-israel-palestine",
-    "/environment/ng-interactive/2021/feb/19/how-fires-have-spread-to-previously-untouched-parts-of-the-world?dcr=true",
-    "/us-news/ng-interactive/2020/nov/07/how-did-joe-biden-win-presidency-visual-guide?dcr=true",
-    "/world/ng-interactive/2021/apr/21/how-vaccines-are-affecting-covid-19-outbreaks-globally?dcr=true",
+    "/environment/ng-interactive/2021/feb/19/how-fires-have-spread-to-previously-untouched-parts-of-the-world",
+    "/us-news/ng-interactive/2020/nov/07/how-did-joe-biden-win-presidency-visual-guide",
+    "/world/ng-interactive/2021/apr/21/how-vaccines-are-affecting-covid-19-outbreaks-globally",
     "/world/ng-interactive/2020/jun/25/revealed-data-shows-10-countries-risking-coronavirus-second-wave-as-lockdown-relaxed",
     "/world/ng-interactive/2021/mar/19/revealed-the-data-that-shows-how-covid-bounced-back-after-the-uks-lockdowns",
     "/world/ng-interactive/2021/jun/28/vaccine-inequality-how-rich-countries-cut-covid-deaths-as-poorer-fall-behind",
@@ -110,6 +110,7 @@ object PressedInteractives {
     "/us-news/ng-interactive/2020/dec/22/why-were-counting-every-us-healthcare-worker-who-dies-from-coronavirus",
     "/media/ng-interactive/2021/may/05/guardian-200-timelines",
     "/world/ng-interactive/2021/jun/02/so-many-revolutions-to-lead-europe-generation-z-on-their-post-covid-future",
+    "/tv-and-radio/ng-interactive/2021/jul/01/whats-on-netflix-and-amazon-this-month-july",
   )
 
   def isPressed(path: String): Boolean = interactives.contains(path)
