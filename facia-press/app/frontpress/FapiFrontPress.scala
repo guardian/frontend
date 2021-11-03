@@ -231,6 +231,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       .showBlocks(showBlocks)
 
   def pressByPathId(path: String, messageId: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+    log.info(s"FapiFrontPress: pressByPathId for path $path")
     def pressDependentPaths(paths: Seq[String]): Future[Unit] = {
       Future
         .traverse(paths)(p => pressPath(p, messageId))
@@ -247,12 +248,14 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   }
 
   private def pressPath(path: String, messageId: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+    log.info(s"FapiFrontPress: pressPath $path")
     val stopWatch: StopWatch = new StopWatch
 
     val pressFuture = getPressedFrontForPath(path)
       .map { pressedFronts: PressedPageVersions =>
         // temporary logging to investigate fronts weirdness on code - log entire front out
-        if (Configuration.environment.stage == "CODE") {
+        // temporarily log for suspicious fronts on PROD
+        if (path == "us-news" || path == "us/technology") {
           logInfoWithCustomFields(
             s"Pressed data for front $path : ${Json.stringify(Json.toJson(pressedFronts.full))} ",
             customFields = List(
@@ -434,10 +437,12 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   def getPressedFrontForPath(
       path: String,
   )(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    log.info(s"Get pressed front for path $path")
     EmailFrontPath.fromPath(path).fold(pressFront(path))(pressEmailFront)
   }
 
   def pressFront(path: String)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    log.info(s"Press front $path")
     for {
       config <- Response.Async.Right(fapiClient.config)
       collectionIds = collectionsIdsFromConfigForPath(path, config)
@@ -452,7 +457,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   def getFrontSeoAndProperties(
       path: String,
   )(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] = {
-
+    log.info(s"Get front seo and properties for path $path")
     for {
       itemResp <- getCapiItemResponseForPath(path)
     } yield {
@@ -513,6 +518,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   private def getCapiItemResponseForPath(
       id: String,
   )(implicit executionContext: ExecutionContext): Future[Option[ItemResponse]] = {
+    log.info(s"Getting capi response for id $id")
     val contentApiResponse: Future[ItemResponse] = capiClientForFrontsSeo.getResponse(
       capiClientForFrontsSeo
         .item(id, Edition.defaultEdition)
