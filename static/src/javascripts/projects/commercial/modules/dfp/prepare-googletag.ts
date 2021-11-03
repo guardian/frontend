@@ -94,7 +94,6 @@ export const init = (): Promise<void> => {
 		// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
 		window.googletag.cmd.push(
 			setDfpListeners,
-			//@ts-expect-error -- oversight in type definition https://git.io/JPM1I
 			setPageTargeting,
 			refreshOnResize,
 			() => {
