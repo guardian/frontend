@@ -10,7 +10,6 @@ class CommercialFeatures {
 	isSecureContact: boolean;
 	stickyTopBannerAd: boolean;
 	articleBodyAdverts: boolean;
-	// articleAsideAdverts: boolean;
 	carrotTrafficDriver: boolean;
 	highMerch: boolean;
 	thirdPartyTags: boolean;
@@ -18,7 +17,6 @@ class CommercialFeatures {
 	commentAdverts: boolean;
 	liveblogAdverts: boolean;
 	paidforBand: boolean;
-	// asynchronous: boolean;
 	adFree: boolean;
 	comscore: boolean;
 	launchpad: boolean;
