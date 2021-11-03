@@ -15,11 +15,12 @@ import play.api.mvc._
 import services.CAPILookup
 import views.support.RenderOtherStatus
 import implicits.{AmpFormat, HtmlFormat}
-import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils}
+import model.dotcomrendering.{DotcomRenderingDataModel}
 import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
 import model.dotcomrendering.PageType
+import services.dotcomponents.{LocalRenderArticle, RemoteRender}
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
@@ -60,7 +61,13 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) => {
-            val remoteRendering = request.forceDCR && ActiveExperiments.isParticipating(LiveblogRendering)
+            // dcrCanRender is always false because right now blogs are not supported by DCR
+            // but we included this variable as an indication of what is going to be possible in the future
+            val dcrCanRender = false
+            val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
+            val remoteRendering =
+              shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCanRender)
+
             remoteRendering match {
               case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               case true => {
@@ -76,7 +83,23 @@ class LiveBlogController(
           case _ => Future.successful(NotFound)
         }
       }
+
     }
+  }
+
+  def shouldRemoteRender(
+      forceDCROff: Boolean,
+      forceDCR: Boolean,
+      participatingInTest: Boolean,
+      dcrCanRender: Boolean,
+  ): Boolean = {
+    // ?dcr=false, so never render DCR
+    if (forceDCROff) false
+    // ?dcr=true, so always render DCR
+    else if (forceDCR) true
+    // User is in the test and dcr supports this blog . No param passed
+    else if (participatingInTest && dcrCanRender) true
+    else false
   }
 
   def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
