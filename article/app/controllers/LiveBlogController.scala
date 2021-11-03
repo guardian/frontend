@@ -20,7 +20,7 @@ import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
 import model.dotcomrendering.PageType
-import services.dotcomponents.{LocalRenderArticle, RemoteRender}
+import services.dotcomponents.{DotcomponentsLogger, LocalRenderArticle, RemoteRender}
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
