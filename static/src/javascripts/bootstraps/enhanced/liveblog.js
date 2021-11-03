@@ -8,6 +8,7 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
+import bean from "bean";
 
 const affixTimeline = () => {
     const keywordIds = config.get('page.keywordIds', '');
@@ -39,8 +40,15 @@ const initFilterCheckbox = () => {
 }
 
 const createAutoUpdate = () => {
-    const isLiveblog = config.get('page.isLive')
-    updateBlocks({}, isLiveblog);
+    if (config.get('page.isLive')) {
+        updateBlocks();
+    }
+
+    bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
+        const hasParam = window.location.search.includes(`filterKeyEvents=true`);
+        const param = `?filterKeyEvents=${hasParam ? 'false' : 'true'}`;
+        window.location.assign(`${window.location.pathname}${param}`);
+    })
 };
 
 const keepTimestampsCurrent = () => {

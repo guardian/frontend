@@ -15,7 +15,7 @@ import {initNotificationCounter} from 'common/modules/ui/notification-counter';
 import {checkElemsForVideos} from 'common/modules/atoms/youtube';
 
 
-const updateBlocks = (opts, isLiveblog) => {
+const updateBlocks = (opts) => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -53,7 +53,7 @@ const updateBlocks = (opts, isLiveblog) => {
         $liveblogBody.offset().top < window.pageYOffset;
 
     const isLivePage = !window.location.search.includes('page=');
-    const filterKeyEvents = window.location.search.includes('?filterKeyEvents=true');
+    const filterKeyEvents = window.location.search.includes('filterKeyEvents=true');
 
     const revealInjectedElements = () => {
         fastdom.mutate(() => {
@@ -115,12 +115,12 @@ const updateBlocks = (opts, isLiveblog) => {
         }
 
         let count = 0;
-        const filterEventState = filterKeyEvents ? true : false
         const filterKeyEventsParam = `&filterKeyEvents=${filterKeyEvents ? 'true' : 'false'}`;
         const shouldFetchBlocks = `&isLivePage=${isLivePage ? 'true' : 'false'}`;
         const latestKeyBlockId = $timeline.data('latest-key-block');
         const latestId = latestBlockId || 'block-0';
-        const latestBlockIdToUse = filterEventState ? latestKeyBlockId : latestId;
+        const latestBlockIdToUse = filterKeyEvents ? latestKeyBlockId : latestId;
+
         const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterKeyEventsParam}`;
         const endpoint = `${window.location.pathname}.json${params}`;
 
@@ -166,21 +166,16 @@ const updateBlocks = (opts, isLiveblog) => {
                     }
                 }
 
-                isLiveblog && setUpdateDelay();
+                setUpdateDelay();
             })
             .catch(() => {
-                isLiveblog && setUpdateDelay();
+                setUpdateDelay();
             });
     };
 
     const getBooleanParam = (key) => {
         const hasParam = window.location.search.includes(`${key}=true`);
         return `?${key}=${hasParam ? 'true' : 'false'}`;
-    }
-
-    const getReverseBooleanParam = (key) => {
-        const hasParam = window.location.search.includes(`${key}=true`);
-        return `?${key}=${hasParam ? 'false' : 'true'}`;
     }
 
     const refreshWindow = () => {
@@ -206,11 +201,6 @@ const updateBlocks = (opts, isLiveblog) => {
                 refreshWindow()
             }
         });
-
-        bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
-            const param = getReverseBooleanParam("filterKeyEvents")
-            window.location.assign(`${window.location.pathname}${param}`);
-        })
 
         mediator.on('modules:toast__tofix:unfixed', () => {
             if (isLivePage && unreadBlocksNo > 0) {
@@ -243,7 +233,7 @@ const updateBlocks = (opts, isLiveblog) => {
         containInParent: false,
     }).init();
 
-    checkForUpdates(true);
+    checkForUpdates();
     initPageVisibility();
     setUpListeners();
 
