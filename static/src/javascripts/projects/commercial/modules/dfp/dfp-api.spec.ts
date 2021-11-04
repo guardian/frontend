@@ -72,7 +72,7 @@ jest.mock('../../../../lib/raven');
 jest.mock('../../../common/modules/identity/api', () => ({
 	isUserLoggedIn: () => true,
 	getUserFromCookie: jest.fn(),
-	getUserFromApi: jest.fn(),
+	getUserIdentifiersFromApi: jest.fn(),
 	getUrl: jest.fn(),
 }));
 jest.mock('ophan/ng', () => null);
@@ -153,14 +153,17 @@ jest.mock('@guardian/consent-management-platform', () => ({
 }));
 
 let $style: HTMLElement;
-const makeFakeEvent = (creativeId: string, id: string) => ({
+const makeFakeEvent = (
+	creativeId: number,
+	id: string,
+): DeepPartial<googletag.events.SlotRenderEndedEvent> => ({
 	creativeId,
 	slot: {
 		getSlotElementId() {
 			return id;
 		},
 	},
-	size: ['300', '250'],
+	size: [300, 250],
 });
 
 const reset = () => {
@@ -235,15 +238,27 @@ describe('DFP', () => {
         <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>
     `;
 
-	let googleTag: googletag.Googletag;
+	let googleTag: typeof googletag;
 	let googleSlot: googletag.Slot;
 	let pubAds: googletag.PubAdsService;
 	let sizeMapping: googletag.SizeMappingBuilder;
 
-	const listeners: Record<
-		string,
-		(event: googletag.events.SlotRenderEndedEvent) => void
-	> = {};
+	const listeners: {
+		impressionViewable?: (
+			event: googletag.events.ImpressionViewableEvent,
+		) => void;
+		slotOnload?: (event: googletag.events.SlotOnloadEvent) => void;
+		slotRenderEnded?: (
+			event: googletag.events.SlotRenderEndedEvent,
+		) => void;
+		slotRequested?: (event: googletag.events.SlotRequestedEvent) => void;
+		slotResponseReceived?: (
+			event: googletag.events.SlotResponseReceived,
+		) => void;
+		slotVisibilityChanged?: (
+			event: googletag.events.SlotVisibilityChangedEvent,
+		) => void;
+	} = {} as const;
 
 	beforeAll(() => {
 		onConsentChange.mockImplementation((callback) =>
@@ -334,7 +349,7 @@ describe('DFP', () => {
 			defineOutOfPageSlot: jest.fn(() => googleSlot),
 			enableServices: jest.fn(),
 			display: jest.fn(),
-		} as unknown) as googletag.Googletag;
+		} as unknown) as typeof googletag;
 
 		window.googletag = googleTag;
 		((window as unknown) as {
@@ -348,6 +363,7 @@ describe('DFP', () => {
 		reset();
 		document.body.innerHTML = '';
 		$style.remove();
+		// @ts-expect-error -- we’re removing it
 		window.googletag = undefined;
 	});
 
@@ -478,7 +494,7 @@ describe('DFP', () => {
 				'dont-label',
 			],
 		].forEach((data) => {
-			expect(window.googletag?.defineSlot).toHaveBeenCalledWith(
+			expect(window.googletag.defineSlot).toHaveBeenCalledWith(
 				'/123456/theguardian.com/front',
 				data[1],
 				data[0],
@@ -511,7 +527,7 @@ describe('DFP', () => {
 
 		expect(pubAds.enableSingleRequest).toHaveBeenCalled();
 		expect(pubAds.collapseEmptyDivs).toHaveBeenCalled();
-		expect(window.googletag?.enableServices).toHaveBeenCalled();
+		expect(window.googletag.enableServices).toHaveBeenCalled();
 		expect(loadAdvert).toHaveBeenCalled();
 	});
 
@@ -523,24 +539,24 @@ describe('DFP', () => {
 		await fillAdvertSlots();
 		await prepareGoogletag();
 
-		expect(window.googletag?.defineOutOfPageSlot).toHaveBeenCalled();
+		expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
 	});
 
 	it('should expose ads IDs', async () => {
-		const fakeEventOne = (makeFakeEvent(
-			'1',
+		const fakeEventOne = makeFakeEvent(
+			1,
 			'dfp-ad-html-slot',
-		) as unknown) as googletag.events.SlotRenderEndedEvent;
-		const fakeEventTwo = (makeFakeEvent(
-			'2',
+		) as googletag.events.SlotRenderEndedEvent;
+		const fakeEventTwo = makeFakeEvent(
+			2,
 			'dfp-ad-script-slot',
-		) as unknown) as googletag.events.SlotRenderEndedEvent;
+		) as googletag.events.SlotRenderEndedEvent;
 
 		await fillAdvertSlots();
 		await prepareGoogletag();
 
-		listeners.slotRenderEnded(fakeEventOne);
-		listeners.slotRenderEnded(fakeEventTwo);
+		listeners.slotRenderEnded?.(fakeEventOne);
+		listeners.slotRenderEnded?.(fakeEventTwo);
 		const result_4 = getCreativeIDs();
 		expect(result_4.length).toBe(2);
 		expect(result_4[0]).toEqual('1');

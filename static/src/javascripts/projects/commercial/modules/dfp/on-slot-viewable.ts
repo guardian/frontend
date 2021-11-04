@@ -43,7 +43,7 @@ const setSlotAdRefresh = (event: googletag.events.Event): void => {
 
  */
 export const onSlotViewableFunction = (): ((
-	event: googletag.events.Event,
+	event: googletag.events.ImpressionViewableEvent,
 ) => void) => {
 	const queryParams = getUrlVars();
 

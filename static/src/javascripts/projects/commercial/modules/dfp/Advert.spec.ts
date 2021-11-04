@@ -34,33 +34,35 @@ describe('Filter classes', () => {
 });
 
 describe('Advert', () => {
-	let googleSlot: Partial<googletag.Slot>;
+	let googleSlot: googletag.Slot;
 
 	beforeEach(() => {
-		const sizeMapping = {
-			sizes: [],
+		const sizeMapping: Partial<googletag.SizeMappingBuilder> = {
 			build: jest.fn(() => []),
-		} as Partial<googletag.SizeMappingBuilder>;
+		};
 
+		//@ts-expect-error - it is a partial mock
 		googleSlot = {
 			defineSizeMapping: jest.fn(() => googleSlot),
 			setSafeFrameConfig: jest.fn(() => googleSlot),
 			setTargeting: jest.fn(() => googleSlot),
 			addService: jest.fn(() => googleSlot),
-		} as Partial<googletag.Slot>;
+		};
 
-		// @ts-expect-error - this is a mock so type not totally compatible with Googletag
-		window.googletag = {
+		const partialGoogletag: Partial<typeof googletag> = {
 			pubads() {
-				return ({} as unknown) as googletag.PubAdsService;
+				return {} as googletag.PubAdsService;
 			},
 			sizeMapping() {
-				return sizeMapping;
+				return sizeMapping as googletag.SizeMappingBuilder;
 			},
 			defineSlot() {
 				return googleSlot;
 			},
-		} as Partial<googletag.Googletag>;
+		};
+
+		// @ts-expect-error -- we’re making it a partial
+		window.googletag = partialGoogletag;
 	});
 
 	it('should enable safeframe to expand in the top-above-nav slot', () => {

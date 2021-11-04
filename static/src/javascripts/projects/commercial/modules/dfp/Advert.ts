@@ -15,6 +15,16 @@ type Timings = {
 	lazyWaitComplete: number | null;
 };
 
+const stringToTuple = (size: string): AdSizeTuple => {
+	const dimensions = size.split(',', 2).map(Number);
+
+	// Return an outOfPage tuple if the string is not `{number},{number}`
+	if (dimensions.length !== 2 || dimensions.some((n) => isNaN(n)))
+		return [0, 0]; // adSizes.outOfPage
+
+	return [dimensions[0], dimensions[1]];
+};
+
 /** A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
  *
@@ -24,9 +34,7 @@ type Timings = {
 const createSizeMapping = (attr: string): AdSize[] =>
 	attr
 		.split('|')
-		.map((size) =>
-			size === 'fluid' ? 'fluid' : size.split(',').map(Number),
-		);
+		.map((size) => (size === 'fluid' ? 'fluid' : stringToTuple(size)));
 
 /** Extract the ad sizes from the breakpoint data attributes of an ad slot
  *

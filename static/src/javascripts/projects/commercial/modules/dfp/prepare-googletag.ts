@@ -9,8 +9,8 @@ import raven from '../../../../lib/raven';
 import { removeSlots } from '../../../commercial/modules/remove-slots';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import type { IdentityUser } from '../../../common/modules/identity/api';
-import { getUserFromApi } from '../../../common/modules/identity/api';
+import type { IdentityUserIdentifiers } from '../../../common/modules/identity/api';
+import { getUserIdentifiersFromApi } from '../../../common/modules/identity/api';
 import { adFreeSlotRemove } from '../ad-free-slot-remove';
 import { init as initMessenger } from '../messenger';
 import { init as background } from '../messenger/background';
@@ -45,24 +45,19 @@ initMessenger(
 );
 
 const setDfpListeners = (): void => {
-	const pubads = window.googletag?.pubads();
-	if (!pubads) return;
+	const pubads = window.googletag.pubads();
+
 	pubads.addEventListener(
 		'slotRenderEnded',
-		raven.wrap(onSlotRender) as (
-			event: googletag.events.SlotRenderEndedEvent,
-		) => void,
+		raven.wrap<typeof onSlotRender>(onSlotRender),
 	);
 	pubads.addEventListener(
 		'slotOnload',
-		raven.wrap(onSlotLoad) as (
-			event: googletag.events.SlotOnloadEvent,
-		) => void,
+		raven.wrap<typeof onSlotLoad>(onSlotLoad),
 	);
-
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());
-
 	pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
+
 	if (storage.session.isAvailable()) {
 		const pageViews =
 			(storage.session.get('gu.commercial.pageViews') as number) || 0;
@@ -71,8 +66,7 @@ const setDfpListeners = (): void => {
 };
 
 const setPageTargeting = (): void => {
-	const pubads = window.googletag?.pubads();
-	if (!pubads) return;
+	const pubads = window.googletag.pubads();
 	// because commercialFeatures may export itself as {} in the event of an exception during construction
 	const targeting = getPageTargeting() as Record<string, string | string[]>;
 	Object.keys(targeting).forEach((key) => {
@@ -82,13 +76,15 @@ const setPageTargeting = (): void => {
 
 const setPublisherProvidedId = (): void => {
 	// Also known as PPID
-	getUserFromApi((user: IdentityUser | null) => {
-		if (user?.privateFields.googleTagId) {
-			window.googletag
-				?.pubads()
-				.setPublisherProvidedId(user.privateFields.googleTagId);
-		}
-	});
+	getUserIdentifiersFromApi(
+		(userIdentifiers: IdentityUserIdentifiers | null) => {
+			if (userIdentifiers?.googleTagId) {
+				window.googletag
+					.pubads()
+					.setPublisherProvidedId(userIdentifiers.googleTagId);
+			}
+		},
+	);
 };
 
 export const init = (): Promise<void> => {
@@ -96,9 +92,8 @@ export const init = (): Promise<void> => {
 		// note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
 		// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
 		// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
-		window.googletag?.cmd.push(
+		window.googletag.cmd.push(
 			setDfpListeners,
-			// @ts-expect-error - googletag.CommandArray.push() !== Array.push, it accepts multiple fn arguments
 			setPageTargeting,
 			refreshOnResize,
 			() => {
@@ -111,13 +106,13 @@ export const init = (): Promise<void> => {
 			if (state.ccpa) {
 				const doNotSell = state.ccpa.doNotSell;
 				// CCPA mode
-				window.googletag?.cmd.push(() => {
-					window.googletag?.pubads().setPrivacySettings({
+				window.googletag.cmd.push(() => {
+					window.googletag.pubads().setPrivacySettings({
 						restrictDataProcessing: doNotSell,
 					});
 				});
 				if (!state.ccpa.doNotSell) {
-					window.googletag?.cmd.push(setPublisherProvidedId);
+					window.googletag.cmd.push(setPublisherProvidedId);
 				}
 			} else {
 				if (state.tcfv2) {
@@ -126,7 +121,7 @@ export const init = (): Promise<void> => {
 						Boolean,
 					);
 					if (canTarget) {
-						window.googletag?.cmd.push(setPublisherProvidedId);
+						window.googletag.cmd.push(setPublisherProvidedId);
 					}
 
 					canRun = getConsentFor('googletag', state);
@@ -134,13 +129,13 @@ export const init = (): Promise<void> => {
 					// AUS mode
 					// canRun stays true, set NPA flag if consent is retracted
 					const npaFlag = !getConsentFor('googletag', state);
-					window.googletag?.cmd.push(() => {
+					window.googletag.cmd.push(() => {
 						window.googletag
-							?.pubads()
+							.pubads()
 							.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
 					});
 					if (!npaFlag) {
-						window.googletag?.cmd.push(setPublisherProvidedId);
+						window.googletag.cmd.push(setPublisherProvidedId);
 					}
 				}
 			}
