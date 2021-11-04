@@ -31,13 +31,19 @@
         >
 
         @if(model.currentPage.currentPage.blocks.isEmpty) {
-            <div> There is nothing to see here </div>
+            <div class="live-blog__no-blocks-container">
+                <span class="live-blog__no-blocks-text">
+                    There have not been any key events yet. Please wait for updates
+                </span>
+            </div>
         } else {
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
         }
         </div>
 
-        @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+        @if(model.currentPage.currentPage.blocks.nonEmpty) {
+            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+        }
 
     </div>
 }

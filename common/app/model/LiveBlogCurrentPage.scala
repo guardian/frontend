@@ -49,8 +49,7 @@ object LiveBlogCurrentPage {
 
       (keyEvents, keyEventsCount, oldestPageBlockId)
     } else {
-      // val noBlocks: Seq[BodyBlock] = Seq.empty
-      val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage) // Some(noBlocks)
+      val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
       val oldestPageBlockId =
         blocks.requestedBodyBlocks.get(CanonicalLiveBlog.oldestPage) flatMap (_.headOption.map(_.id))
 

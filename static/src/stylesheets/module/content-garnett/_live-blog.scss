@@ -252,6 +252,9 @@
     }
 }
 
+/* Filter switch
+   ========================================================================== */
+
 /* The switch - the box around the slider */
 .live-blog__filter-switch {
     display: flex;
@@ -323,3 +326,16 @@ input:checked + .live-blog__filter-switch-slider:before {
     transform: translateX(1.15rem);
 }
 
+/* No blocks
+   ========================================================================== */
+
+.live-blog__no-blocks-container {
+    padding: .625rem .5rem;
+    border: 1px solid $brightness-86;
+}
+
+.live-blog__no-blocks-text {
+    font-family: 'Guardian Text Sans', sans-serif;
+    color: $brightness-46;
+    font-size: 15px;
+}
