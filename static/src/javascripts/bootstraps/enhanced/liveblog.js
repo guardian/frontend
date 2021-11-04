@@ -53,7 +53,7 @@ const setupListeners = () => {
     bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
         const hasParam = window.location.search.includes(`filterKeyEvents=true`);
         const param = `?filterKeyEvents=${hasParam ? 'false' : 'true'}`;
-        window.location.assign(`${window.location.pathname}${param}`);
+        window.location.assign(`${window.location.pathname}${param}#scroll-here`);
     })
 }
 
