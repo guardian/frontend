@@ -4,11 +4,14 @@ import metrics.SamplerMetric
 import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
 import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
+import com.gu.facia.api.contentapi.ContentApi
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.{Collection, Front}
+import com.gu.facia.api.utils.BackfillResolver.backfill
+import com.gu.facia.api.utils.{BackfillResolver, CapiBackfill, CollectionBackfill, EmptyBackfill}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
-import com.gu.facia.client.models.{Breaking, Canonical, ConfigJson, Metadata, Special}
+import com.gu.facia.client.models.{Backfill, Breaking, Canonical, ConfigJson, Metadata, Special}
 import common.LoggingField.LogFieldString
 import common.{LoggingField, _}
 import common.commercial.CommercialProperties
@@ -121,7 +124,7 @@ trait EmailFrontPress extends GuLogging {
       frontProperties: FrontProperties,
   ): PressedPageVersions
   def collectionsIdsFromConfigForPath(path: String, config: ConfigJson): List[String]
-  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit
+  def generateCollectionJsonFromFapiClient(collectionId: String, path: String, messageId: String)(implicit
       executionContext: ExecutionContext,
   ): Response[PressedCollectionVisibility]
   def getFrontSeoAndProperties(path: String)(implicit
@@ -130,12 +133,17 @@ trait EmailFrontPress extends GuLogging {
 
   def pressEmailFront(
       emailFrontPath: EmailFrontPath,
+      messageId: String,
   )(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
     for {
       config <- Response.Async.Right(fapiClient.config)
       collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
-      pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
-      extraEmailCollections <- buildExtraEmailCollections(emailFrontPath, config, pressedCollections)
+      pressedCollections <- Response.traverse(
+        collectionIds.map(collectionId =>
+          generateCollectionJsonFromFapiClient(collectionId, emailFrontPath.path, messageId),
+        ),
+      )
+      extraEmailCollections <- buildExtraEmailCollections(emailFrontPath, config, pressedCollections, messageId)
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
     } yield seoWithProperties match {
       case (seoData, frontProperties) =>
@@ -156,6 +164,7 @@ trait EmailFrontPress extends GuLogging {
       frontPath: EmailFrontPath,
       config: ConfigJson,
       pressedCollections: List[PressedCollectionVisibility],
+      messageId: String,
   )(implicit ec: ExecutionContext): Response[EmailExtraCollections] = {
     def findCollectionIds(metadata: Metadata): List[String] = {
       for {
@@ -166,15 +175,23 @@ trait EmailFrontPress extends GuLogging {
       } yield collectionId
     }
 
-    def findMetaContainersWithLimit(metadata: Metadata, limit: Int): Response[List[PressedCollectionVisibility]] = {
+    def findMetaContainersWithLimit(
+        metadata: Metadata,
+        limit: Int,
+        path: String,
+        messageId: String,
+    ): Response[List[PressedCollectionVisibility]] = {
       Response
-        .traverse(findCollectionIds(metadata).map(generateCollectionJsonFromFapiClient))
+        .traverse(
+          findCollectionIds(metadata)
+            .map(collectionId => generateCollectionJsonFromFapiClient(collectionId, path, messageId)),
+        )
         .map(_.map(_.withVisible(limit)))
     }
 
-    val canonicalPressedF = findMetaContainersWithLimit(Canonical, 6)
-    val breakingPressedF = findMetaContainersWithLimit(Breaking, 5)
-    val specialPressedF = findMetaContainersWithLimit(Special, 1)
+    val canonicalPressedF = findMetaContainersWithLimit(Canonical, 6, frontPath.path, messageId)
+    val breakingPressedF = findMetaContainersWithLimit(Breaking, 5, frontPath.path, messageId)
+    val specialPressedF = findMetaContainersWithLimit(Special, 1, frontPath.path, messageId)
 
     for {
       canonicalPressed <- canonicalPressedF
@@ -231,7 +248,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       .showBlocks(showBlocks)
 
   def pressByPathId(path: String, messageId: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
-    log.info(s"FapiFrontPress: pressByPathId for path $path")
+    log.info(s"FapiFrontPress: pressByPathId for path $path messageId $messageId")
     def pressDependentPaths(paths: Seq[String]): Future[Unit] = {
       Future
         .traverse(paths)(p => pressPath(p, messageId))
@@ -251,7 +268,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     log.info(s"FapiFrontPress: pressPath $path")
     val stopWatch: StopWatch = new StopWatch
 
-    val pressFuture = getPressedFrontForPath(path)
+    val pressFuture = getPressedFrontForPath(path, messageId)
       .map { pressedFronts: PressedPageVersions =>
         // temporary logging to investigate fronts weirdness on code - log entire front out
         // temporarily log for suspicious fronts on PROD
@@ -317,11 +334,13 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
 
   def generateCollectionJsonFromFapiClient(
       collectionId: String,
+      path: String,
+      messageId: String,
   )(implicit executionContext: ExecutionContext): Response[PressedCollectionVisibility] = {
     for {
       collection <- FAPI.getCollection(collectionId)
       curated <- getCurated(collection)
-      backfill <- getBackfill(collection)
+      backfill <- getBackfill(collection, path, messageId)
       treats <- getTreats(collection)
     } yield {
       val doNotTrimContainerOfTypes = Seq("nav/list")
@@ -403,7 +422,25 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
 
   private def getBackfill(
       collection: Collection,
+      path: String,
+      messageId: String,
   )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
+    log.info(s"Collection config for path '$path', messageId $messageId: ${collection.collectionConfig}")
+
+    if (path == "us-news" || path == "us/technology") {
+      log.info(s"Get backfill for path '$path''")
+      val backfillQuery = BackfillResolver.resolveFromConfig(collection.collectionConfig)
+      backfillQuery match {
+        case CapiBackfill(query, collectionConfig) =>
+          val q = ContentApi.buildBackfillQuery(query) match {
+            case Right(value) => value.getUrl("")
+            case Left(value)  => value.getUrl("")
+          }
+          log.info(s"CAPI backfill query for path '$path', messageId $messageId: $q")
+        case _ => log.info(s"Backfill query not capi for path '$path', messageId $messageId")
+      }
+    }
+
     FAPI
       .backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
       .map(_.map(PressedContent.make))
@@ -436,17 +473,22 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
 
   def getPressedFrontForPath(
       path: String,
+      messageId: String = "unknown",
   )(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
-    log.info(s"Get pressed front for path $path")
-    EmailFrontPath.fromPath(path).fold(pressFront(path))(pressEmailFront)
+    log.info(s"Get pressed front for path $path, messageId $messageId")
+    EmailFrontPath.fromPath(path).fold(pressFront(path, messageId))(pressEmailFront(_, messageId))
   }
 
-  def pressFront(path: String)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
-    log.info(s"Press front $path")
+  def pressFront(path: String, messageId: String)(implicit
+      executionContext: ExecutionContext,
+  ): Response[PressedPageVersions] = {
+    log.info(s"Press front $path, messageId $messageId")
     for {
       config <- Response.Async.Right(fapiClient.config)
       collectionIds = collectionsIdsFromConfigForPath(path, config)
-      pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
+      pressedCollections <- Response.traverse(
+        collectionIds.map(collectionId => generateCollectionJsonFromFapiClient(collectionId, path, messageId)),
+      )
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
       case (seoData, frontProperties) =>
