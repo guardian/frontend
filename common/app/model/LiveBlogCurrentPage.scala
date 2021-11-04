@@ -196,14 +196,12 @@ object LatestBlock {
 
 object LatestKeyBlock {
   def apply(maybeBlocks: Option[Blocks]): Option[String] = {
-    val latestKey = maybeBlocks.flatMap { blocks =>
+    maybeBlocks.flatMap { blocks =>
       blocks.requestedBodyBlocks
         .getOrElse(CanonicalLiveBlog.firstPage, blocks.body)
         .find(_.eventType == KeyEvent)
         .map(_.id)
     }
-    println(">>>> latest key event>>>", latestKey)
-    latestKey
   }
 
 }
