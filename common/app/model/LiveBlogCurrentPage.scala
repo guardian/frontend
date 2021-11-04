@@ -199,9 +199,9 @@ object LatestKeyBlock {
     maybeBlocks.flatMap { blocks =>
       blocks.requestedBodyBlocks
         .getOrElse(CanonicalLiveBlog.firstPage, blocks.body)
-        .filter(_.eventType == KeyEvent)
-        .headOption
+        .find(_.eventType == KeyEvent)
         .map(_.id)
     }
   }
+
 }

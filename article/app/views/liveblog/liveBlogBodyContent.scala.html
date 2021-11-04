@@ -1,5 +1,5 @@
 
-@import model.{LiveBlogPage, LatestBlock}
+@import model.{LiveBlogPage, LatestBlock, LatestKeyBlock}
 
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
@@ -27,6 +27,7 @@
         <div
             class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}"
             data-most-recent-block="block-@{LatestBlock(article.blocks)}"
+            data-most-recent-key-block="block-@{LatestKeyBlock(article.blocks)}"
             data-test-id="live-blog-blocks"
         >
 
