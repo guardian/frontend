@@ -15,7 +15,7 @@ import {initNotificationCounter} from 'common/modules/ui/notification-counter';
 import {checkElemsForVideos} from 'common/modules/atoms/youtube';
 
 
-const updateBlocks = (opts) => {
+const autoUpdate = (opts) => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -243,4 +243,4 @@ const updateBlocks = (opts) => {
     });
 };
 
-export {updateBlocks};
+export {autoUpdate};
