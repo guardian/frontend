@@ -33,7 +33,8 @@ const autoUpdate = (opts) => {
     const $toastText = $('.toast__text', $toastButton);
     const toastContainer = qwery('.toast__container')[0];
     let currentUpdateDelay = options.minUpdateDelay;
-    let latestBlockId = $liveblogBody.data('most-recent-block');
+    let latestBlockId = $liveblogBody.data('most-recent-block') || 'block-0';
+    let latestKeyBlockId = $liveblogBody.data('most-recent-key-block') || 'block-0';
     let unreadBlocksNo = 0;
     let updateTimeoutId;
 
@@ -117,9 +118,7 @@ const autoUpdate = (opts) => {
         let count = 0;
         const filterKeyEventsParam = `&filterKeyEvents=${filterKeyEvents ? 'true' : 'false'}`;
         const shouldFetchBlocks = `&isLivePage=${isLivePage ? 'true' : 'false'}`;
-        const latestKeyBlockId = $timeline.data('latest-key-block');
-        const latestId = latestBlockId || 'block-0';
-        const latestBlockIdToUse = filterKeyEvents ? latestKeyBlockId : latestId;
+        const latestBlockIdToUse = filterKeyEvents ? latestKeyBlockId : latestBlockId;
 
         const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterKeyEventsParam}`;
         const endpoint = `${window.location.pathname}.json${params}`;
