@@ -105,5 +105,7 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
 }
 
 object DotcomponentsLogger {
+  val logger = DotcomponentsLogger()
+
   def apply(): DotcomponentsLogger = DotcomponentsLogger(None)
 }

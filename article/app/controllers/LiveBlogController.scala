@@ -39,8 +39,6 @@ class LiveBlogController(
   // we support liveblogs and also articles, so that minutes work
   private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle
 
-  private[this] val logger = DotcomponentsLogger()
-
   // Main entry points
 
   def renderEmail(path: String): Action[AnyContent] = {
@@ -77,11 +75,11 @@ class LiveBlogController(
               shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
 
             if (remoteRendering) {
-              logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
+              DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
               remoteRenderer.getArticle(ws, blog, blocks, pageType)
             } else {
-              logger.logRequest(s"liveblog executing in web", properties, page)
+              DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           }
