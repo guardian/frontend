@@ -45,10 +45,12 @@ object LiveBlogCurrentPage {
     val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = if (filterKeyEvents) {
       val keyEvents = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
       val keyEventsCount = keyEvents.getOrElse(Seq.empty).size
+      val oldestPageBlockId = keyEvents.flatMap(_.lastOption map (_.id))
 
-      (keyEvents, keyEventsCount, keyEvents.map(_.last.id))
+      (keyEvents, keyEventsCount, oldestPageBlockId)
     } else {
-      val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
+      // val noBlocks: Seq[BodyBlock] = Seq.empty
+      val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage) // Some(noBlocks)
       val oldestPageBlockId =
         blocks.requestedBodyBlocks.get(CanonicalLiveBlog.oldestPage) flatMap (_.headOption.map(_.id))
 

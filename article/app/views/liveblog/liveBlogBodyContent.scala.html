@@ -30,8 +30,11 @@
             data-test-id="live-blog-blocks"
         >
 
+        @if(model.currentPage.currentPage.blocks.isEmpty) {
+            <div> There is nothing to see here </div>
+        } else {
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
-
+        }
         </div>
 
         @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
