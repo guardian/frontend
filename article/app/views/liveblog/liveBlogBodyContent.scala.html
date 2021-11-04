@@ -38,12 +38,10 @@
             </div>
         } else {
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
+            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+
         }
         </div>
-
-        @if(model.currentPage.currentPage.blocks.nonEmpty) {
-            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
-        }
 
     </div>
 }
