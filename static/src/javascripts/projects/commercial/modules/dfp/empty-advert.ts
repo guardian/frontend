@@ -17,7 +17,7 @@ const removeFromDfpEnv = (advert: Advert) => {
 
 const emptyAdvert = (advert: Advert): void => {
 	fastdom.mutate(() => {
-		window.googletag?.destroySlots([advert.slot]);
+		window.googletag.destroySlots([advert.slot]);
 		advert.node.remove();
 		removeFromDfpEnv(advert);
 	});

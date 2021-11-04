@@ -13,7 +13,9 @@ import { refreshAdvert as refreshAdvert_ } from './dfp/load-advert';
 // Mock advert type by overwriting slot property with only one function for defining size mapping
 // This avoids having to set the rest of the slot properties that are unnecessary for the tests
 type MockAdvert = Omit<Advert, 'slot'> & {
-	slot: { defineSizeMapping: (asm: SizeMapping[]) => googletag.Slot };
+	slot: {
+		defineSizeMapping: (asm: googletag.SizeMappingArray) => googletag.Slot;
+	};
 };
 
 // Workaround to fix issue where dataset is missing from jsdom, and solve the

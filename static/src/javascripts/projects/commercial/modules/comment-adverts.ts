@@ -1,3 +1,4 @@
+import type { SizeKeys } from '@guardian/commercial-core';
 import { adSizes } from '@guardian/commercial-core';
 import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
@@ -65,7 +66,15 @@ const containsDMPU = (ad: Advert): boolean =>
 
 const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
 	if (!containsDMPU(ad)) {
-		ad.sizes.desktop.push([300, 600], [160, 600]);
+		const extraSizes: SizeKeys[] = ['halfPage', 'skyscraper'];
+		ad.sizes.desktop.push(
+			// TODO: add getTuple method to commercial-core
+			...extraSizes.map((size) => {
+				const { width, height } = adSizes[size];
+				const tuple: AdSizeTuple = [width, height];
+				return tuple;
+			}),
+		);
 		ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
 		void fastdom.mutate(() => {
 			adSlot.setAttribute(

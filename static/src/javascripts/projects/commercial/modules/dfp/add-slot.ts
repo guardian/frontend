@@ -17,7 +17,7 @@ const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
 };
 
 const addSlot = (adSlot: HTMLElement, forceDisplay: boolean): void => {
-	window.googletag?.cmd.push(() => {
+	window.googletag.cmd.push(() => {
 		if (!(adSlot.id in dfpEnv.advertIds)) {
 			// dynamically add ad slot
 			displayAd(adSlot, forceDisplay);
