@@ -48,7 +48,7 @@ export const loadAdvert = (advert: Advert): void => {
 		})
 		.then(() => {
 			eventTimer.trigger('slotInitialised', adName);
-			window.googletag?.display(advert.id);
+			window.googletag.display(advert.id);
 		});
 };
 
@@ -77,6 +77,6 @@ export const refreshAdvert = (advert: Advert): void => {
 					advert.slot.defineSizeMapping([[[0, 0], [advert.size]]]);
 				}
 			}
-			window.googletag?.pubads().refresh([advert.slot]);
+			window.googletag.pubads().refresh([advert.slot]);
 		});
 };
