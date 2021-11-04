@@ -91,6 +91,14 @@ interface YTPlayerEvent extends Omit<Event, 'target'> {
 	target: YT.Player;
 }
 
+const playerStates: Array<keyof typeof YT.PlayerState> = [
+	'ENDED',
+	'PLAYING',
+	'PAUSED',
+	'BUFFERING',
+	'CUED',
+];
+
 interface Handlers {
 	onPlayerReady: (event: YTPlayerEvent) => void;
 	onPlayerStateChange: (event: YTPlayerEvent) => void;
@@ -112,13 +120,6 @@ const onPlayerStateChangeEvent = (
 		// change class according to the current state
 		// TODO: Fix this so we can add poster image.
 		fastdom.mutate(() => {
-			const playerStates: Array<keyof typeof YT.PlayerState> = [
-				'ENDED',
-				'PLAYING',
-				'PAUSED',
-				'BUFFERING',
-				'CUED',
-			];
 			playerStates.forEach((status: keyof typeof YT.PlayerState) => {
 				el.classList.toggle(
 					`youtube__video-${status.toLocaleLowerCase()}`,
