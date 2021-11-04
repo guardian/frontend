@@ -18,14 +18,16 @@ const getSVG = iconPath =>
                 resolve({
                     name: path.parse(iconPath).name,
                     data: optimize(data, {
-                        plugins: [{
-                            name: 'preset-default',
-                            params: {
-                                overrides: {
-                                    removeViewBox: false,
+                        plugins: [
+                            {
+                                name: 'preset-default',
+                                params: {
+                                    overrides: {
+                                        removeViewBox: false,
+                                    }
                                 }
                             }
-                        }],
+                        ],
                     })
                 })
             } catch (e) {
