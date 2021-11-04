@@ -151,6 +151,7 @@ const autoUpdate = (opts) => {
                     mediator.emit('modules:autoupdate:unread', unreadBlocksNo);
 
                     latestBlockId = resp.mostRecentBlockId;
+                    latestKeyBlockId = resp.mostRecentBlockId;
 
                     if (isLivePage) {
                         injectNewBlocks(resp.html);

@@ -9,7 +9,7 @@
 
 @blocks.map { block =>
     <div
-        id="my-anchor"
+        id="block-@block.id"
         data-sort-time="@block.publishedCreatedTimestamp()"
         class="block block--content@block.eventClass@block.attributes.membershipPlaceholder.map { _ => js-insert-epic-after}"
         itemprop="liveBlogUpdate"

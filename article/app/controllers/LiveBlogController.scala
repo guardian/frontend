@@ -179,7 +179,7 @@ class LiveBlogController(
     }
   }
 
-  private[this] def flatMapBlocks(
+  private[this] def getNewBlocks(
       page: PageWithStoryPackage,
       lastUpdateBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
@@ -202,8 +202,8 @@ class LiveBlogController(
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
-    val newBlocks = flatMapBlocks(page, lastUpdateBlockId, filterKeyEvents);
-
+    val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents);
+    println(">>>> newBlocks >>>>", newBlocks)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
