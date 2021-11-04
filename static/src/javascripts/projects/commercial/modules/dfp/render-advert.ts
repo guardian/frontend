@@ -55,10 +55,11 @@ const removeStyleFromAdIframe = (
 	});
 };
 
-const sizeCallbacks: Record<
-	string,
-	undefined | ((arg0: Advert, arg1?: SlotRenderEndedEvent) => Promise<void>)
-> = {};
+type SizeCallback = (
+	arg0: Advert,
+	arg1?: googletag.events.SlotRenderEndedEvent,
+) => Promise<void>;
+const sizeCallbacks: Record<string, undefined | SizeCallback> = {};
 
 /**
  * DFP fluid ads should use existing fluid-250 styles in the top banner position
@@ -142,27 +143,24 @@ sizeCallbacks[adSizes.googleCard.toString()] = (advert: Advert) =>
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
  * and their containers closed up.
  */
-const outOfPageCallback = (advert: Advert, event?: SlotRenderEndedEvent) => {
-	if (!event?.slot.getOutOfPage()) {
-		const parent = advert.node.parentNode as HTMLElement;
-		return fastdom.mutate(() => {
-			advert.node.classList.add('ad-slot--collapse');
-			// Special case for top-above-nav which has a container with its own height
-			if (advert.id.includes('top-above-nav')) {
-				const adContainer = advert.node.closest<HTMLElement>(
-					'.top-banner-ad-container',
-				);
-				if (adContainer) {
-					adContainer.style.display = 'none';
-				}
+const outOfPageCallback = (advert: Advert) => {
+	const parent = advert.node.parentNode as HTMLElement;
+	return fastdom.mutate(() => {
+		advert.node.classList.add('ad-slot--collapse');
+		// Special case for top-above-nav which has a container with its own height
+		if (advert.id.includes('top-above-nav')) {
+			const adContainer = advert.node.closest<HTMLElement>(
+				'.top-banner-ad-container',
+			);
+			if (adContainer) {
+				adContainer.style.display = 'none';
 			}
-			// if in a slice, add the 'no mpu' class
-			if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
-				parent.classList.add('fc-slice__item--no-mpu');
-			}
-		});
-	}
-	return Promise.resolve();
+		}
+		// if in a slice, add the 'no mpu' class
+		if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
+			parent.classList.add('fc-slice__item--no-mpu');
+		}
+	});
 };
 sizeCallbacks[adSizes.outOfPage.toString()] = outOfPageCallback;
 sizeCallbacks[adSizes.empty.toString()] = outOfPageCallback;
@@ -194,7 +192,7 @@ const addContentClass = (adSlotNode: HTMLElement) => {
  */
 export const renderAdvert = (
 	advert: Advert,
-	slotRenderEndedEvent: SlotRenderEndedEvent,
+	slotRenderEndedEvent: googletag.events.SlotRenderEndedEvent,
 ): Promise<boolean> => {
 	addContentClass(advert.node);
 

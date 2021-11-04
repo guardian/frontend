@@ -1,23 +1,34 @@
-import { commercialFeatures } from './commercial-features';
 import config from '../../../../lib/config';
-import userPrefs from '../user-prefs';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
+import userPrefs from '../user-prefs';
+import { commercialFeatures } from './commercial-features';
+import type { CommercialFeaturesConstructor } from './commercial-features';
 import {
+	isAdFreeUser as isAdFreeUser_,
 	isPayingMember as isPayingMember_,
 	isRecentOneOffContributor as isRecentOneOffContributor_,
 	shouldHideSupportMessaging as shouldHideSupportMessaging_,
-	isAdFreeUser as isAdFreeUser_,
 } from './user-features';
 
-const isPayingMember = isPayingMember_;
-const isRecentOneOffContributor = isRecentOneOffContributor_;
-const shouldHideSupportMessaging = shouldHideSupportMessaging_;
-const isAdFreeUser = isAdFreeUser_;
-const getBreakpoint = getBreakpoint_;
-const isUserLoggedIn = isUserLoggedIn_;
+const isPayingMember = isPayingMember_ as jest.MockedFunction<
+	typeof isPayingMember_
+>;
+const isRecentOneOffContributor = isRecentOneOffContributor_ as jest.MockedFunction<
+	typeof isRecentOneOffContributor_
+>;
+const shouldHideSupportMessaging = shouldHideSupportMessaging_ as jest.MockedFunction<
+	typeof shouldHideSupportMessaging_
+>;
+const isAdFreeUser = isAdFreeUser_ as jest.MockedFunction<typeof isAdFreeUser_>;
+const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
+	typeof getBreakpoint_
+>;
+const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
+	typeof isUserLoggedIn_
+>;
 
-const CommercialFeatures = commercialFeatures.constructor;
+const CommercialFeatures = commercialFeatures.constructor as CommercialFeaturesConstructor;
 
 jest.mock('./user-features', () => ({
 	isPayingMember: jest.fn(),

@@ -80,4 +80,70 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
   }
 
+  it should "use DCR if the parameter dcr=true is passed" in {
+    val forceDCROff = false
+    val forceDCR = true
+    val participatingInTest = false
+    val dcrCanRender = true
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(true)
+  }
+
+  it should "use frontend if the parameter dcr=false is passed" in {
+    val forceDCROff = true
+    val forceDCR = false
+    val participatingInTest = false
+    val dcrCanRender = true
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(false)
+
+  }
+
+  it should "use dcr if the user is in the test and no dcr param is included" in {
+    val forceDCROff = false
+    val forceDCR = false
+    val participatingInTest = true
+    val dcrCanRender = true
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(true)
+  }
+
+  it should " use frontend if it can render but not in test" in {
+    val forceDCROff = false
+    val forceDCR = false
+    val participatingInTest = false
+    val dcrCanRender = true
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(false)
+  }
+
+  it should "use DCR if dcrCanRender is false and dcr=true" in {
+    val forceDCROff = false
+    val forceDCR = true
+    val participatingInTest = true
+    val dcrCanRender = false
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(true)
+  }
+
+  it should "use frontend if dcrCanRender is false no param is passed" in {
+    val forceDCROff = false
+    val forceDCR = false
+    val participatingInTest = true
+    val dcrCanRender = false
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(false)
+  }
 }

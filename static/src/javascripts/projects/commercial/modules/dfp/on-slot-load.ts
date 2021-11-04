@@ -11,7 +11,7 @@ const host = `${window.location.protocol}//${window.location.host}`;
      But, this information is necessary in the window.postMessage call, and so
      we resort to sending it as a token of welcome :)
 */
-export const onSlotLoad = (event: SlotOnloadEvent): void => {
+export const onSlotLoad = (event: googletag.events.SlotOnloadEvent): void => {
 	const advert = getAdvertById(event.slot.getSlotElementId());
 	if (!advert) {
 		return;

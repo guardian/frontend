@@ -3,9 +3,9 @@ import { dfpEnv } from './dfp-env';
 import { loadAdvert } from './load-advert';
 
 const displayAds = (): void => {
-	window.googletag?.pubads().enableSingleRequest();
-	window.googletag?.pubads().collapseEmptyDivs();
-	window.googletag?.enableServices();
+	window.googletag.pubads().enableSingleRequest();
+	window.googletag.pubads().collapseEmptyDivs();
+	window.googletag.enableServices();
 
 	/*
 	 *as this is an single request call, only need to make a single display call (to the first ad

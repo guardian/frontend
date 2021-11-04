@@ -346,7 +346,7 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			return;
 		}
 
-		const size = [width, height]; // eg. [300, 250]
+		const size: AdSizeTuple = [width, height]; // eg. [300, 250]
 		const advert = getAdvertById(adUnitCode);
 
 		if (!advert) {
