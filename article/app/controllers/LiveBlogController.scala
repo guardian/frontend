@@ -203,7 +203,6 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
     val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents);
-    println(">>>> newBlocks >>>>", newBlocks)
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
