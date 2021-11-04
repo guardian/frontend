@@ -183,11 +183,11 @@ export const setLocalNoBannerCachePeriod = () =>
 	window.localStorage.setItem(NO_RR_BANNER_TIMESTAMP_KEY, `${Date.now()}`);
 
 const buildTagIds = (page) => {
-    const { keywordIds, toneIds, seriesId } = page;
-    const keywords = keywordIds ? keywordIds.split(',') : [];
-    const tones = toneIds ? toneIds.split(',') : [];
-    const series = seriesId ? [seriesId] : [];
-    return keywords.concat(tones).concat(series);
+	const { keywordIds, toneIds, seriesId } = page;
+	const keywords = keywordIds ? keywordIds.split(',') : [];
+	const tones = toneIds ? toneIds.split(',') : [];
+	const series = seriesId ? [seriesId] : [];
+	return keywords.concat(tones).concat(series);
 }
 
 const buildBannerPayload = async () => {
@@ -215,8 +215,8 @@ const buildBannerPayload = async () => {
 		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
 		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
 		modulesVersion: ModulesVersion,
-        sectionId: page.section,
-        tagIds: buildTagIds(page),
+		sectionId: page.section,
+		tagIds: buildTagIds(page),
 	};
 
 	return {
@@ -317,7 +317,7 @@ const renderLiveblogEpic = async (module, meta) => {
 
 	const element = setupRemoteEpicInLiveblog(
 		component.ContributionsLiveblogEpic,
-        { submitComponentEvent, ...module.props }
+		{ submitComponentEvent, ...module.props }
 	);
 };
 
