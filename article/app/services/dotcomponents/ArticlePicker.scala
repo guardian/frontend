@@ -48,14 +48,6 @@ object ArticlePageChecks {
 
 object ArticlePicker {
 
-  private[this] val logger = DotcomponentsLogger()
-
-  private[this] def logRequest(msg: String, results: Map[String, String], page: PageWithStoryPackage)(implicit
-      request: RequestHeader,
-  ): Unit = {
-    logger.withRequestHeaders(request).results(msg, results, page)
-  }
-
   def dcrChecks(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
@@ -99,9 +91,9 @@ object ArticlePicker {
       ("pageTones" -> pageTones)
 
     if (tier == RemoteRender) {
-      logRequest(s"path executing in dotcomponents", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page)
     } else {
-      logRequest(s"path executing in web", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page)
     }
 
     tier
