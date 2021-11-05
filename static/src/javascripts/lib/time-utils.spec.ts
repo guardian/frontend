@@ -1,5 +1,5 @@
-import { dateDiffDays, isExpired } from 'lib/time-utils';
 import MockDate from 'mockdate';
+import { dateDiffDays, isExpired } from 'lib/time-utils';
 
 describe('calculating the difference between 2 dates', () => {
 	it('should return the correct duration', () => {
