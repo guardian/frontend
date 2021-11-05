@@ -1,5 +1,6 @@
 import { getPermutivePFPSegments } from '@guardian/commercial-core';
 import { onConsentChange } from '@guardian/consent-management-platform';
+import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { loadScript } from '@guardian/libs';
 import fastdom from 'fastdom';
@@ -16,7 +17,7 @@ interface WindowLocal extends Window {
 }
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
-const promise = new Promise<void>((resolve) => {
+const youtubeReady = new Promise<void>((resolve) => {
 	const localWindow = window as WindowLocal;
 
 	if (localWindow.YT?.Player) {
@@ -47,7 +48,7 @@ const addVideoStartedClass = (el: HTMLElement | null) => {
 let tcfData: TCFv2ConsentState | undefined = undefined;
 
 interface ConsentState {
-	framework: null | string;
+	framework: null | Framework;
 	canTarget: boolean;
 }
 
@@ -56,17 +57,23 @@ let consentState: ConsentState = {
 	canTarget: false,
 };
 
+let resolveInitialConsent: (f: Framework) => void;
+const initialConsent = new Promise((resolve) => {
+	resolveInitialConsent = resolve;
+});
 onConsentChange((cmpConsent) => {
 	if (cmpConsent.ccpa) {
 		consentState = {
 			framework: 'ccpa',
 			canTarget: !cmpConsent.ccpa.doNotSell,
 		};
+		resolveInitialConsent('ccpa');
 	} else if (cmpConsent.aus) {
 		consentState = {
 			framework: 'aus',
 			canTarget: cmpConsent.aus.personalisedAdvertising,
 		};
+		resolveInitialConsent('aus');
 	} else {
 		tcfData = cmpConsent.tcfv2;
 		consentState = {
@@ -75,63 +82,60 @@ onConsentChange((cmpConsent) => {
 				? Object.values(tcfData.consents).every(Boolean)
 				: false,
 		};
+		resolveInitialConsent('tcfv2');
 	}
 });
 
-interface LocalEvent extends Omit<Event, 'target'> {
-	data: string;
+interface YTPlayerEvent extends Omit<Event, 'target'> {
+	data: number;
 	target: YT.Player;
 }
 
+const playerStates: Array<keyof typeof YT.PlayerState> = [
+	'ENDED',
+	'PLAYING',
+	'PAUSED',
+	'BUFFERING',
+	'CUED',
+];
+
 interface Handlers {
-	onPlayerReady: (event: LocalEvent) => void;
-	onPlayerStateChange: (event: LocalEvent) => void;
+	onPlayerReady: (event: YTPlayerEvent) => void;
+	onPlayerStateChange: (event: YTPlayerEvent) => void;
 }
 
 const onPlayerStateChangeEvent = (
-	event: LocalEvent,
+	event: YTPlayerEvent,
 	handlers?: Handlers,
 	el?: HTMLElement | null,
 ) => {
-	if (el && config.get('page.isDev')) {
-		const states = (window.YT.PlayerState as unknown) as string[];
-		const state = Object.keys(states).find(
-			(key: string) =>
-				states[(key as unknown) as YT.PlayerState] === event.data,
-		);
-		if (state) {
-			console.log(`Player ${el.id} is ${state}`);
+	if (el) {
+		if (config.get('page.isDev')) {
+			const state = window.YT.PlayerState[event.data];
+			if (state) {
+				console.log(`Player ${el.id} is ${state}`);
+			}
 		}
-	}
 
-	// change class according to the current state
-	// TODO: Fix this so we can add poster image.
-	fastdom.mutate(() => {
-		['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(
-			(status: string) => {
-				if (el) {
-					el.classList.toggle(
-						`youtube__video-${status.toLocaleLowerCase()}`,
-						event.data ===
-							window.YT.PlayerState[
-								(status as unknown) as YT.PlayerState
-							],
+		// change class according to the current state
+		// TODO: Fix this so we can add poster image.
+		fastdom.mutate(() => {
+			playerStates.forEach((status: keyof typeof YT.PlayerState) => {
+				el.classList.toggle(
+					`youtube__video-${status.toLocaleLowerCase()}`,
+					event.data === window.YT.PlayerState[status],
+				);
+				const fcItem = el.closest('fc-item');
+				if (fcItem) {
+					fcItem.classList.toggle(
+						`fc-item--has-video-main-media__${status.toLocaleLowerCase()}`,
+						event.data === window.YT.PlayerState[status],
 					);
-					const fcItem = el.closest('fc-item');
-					if (fcItem) {
-						fcItem.classList.toggle(
-							`fc-item--has-video-main-media__${status.toLocaleLowerCase()}`,
-							event.data ===
-								window.YT.PlayerState[
-									(status as unknown) as YT.PlayerState
-								],
-						);
-					}
-					addVideoStartedClass(el);
 				}
-			},
-		);
-	});
+				addVideoStartedClass(el);
+			});
+		});
+	}
 
 	if (handlers && typeof handlers.onPlayerStateChange === 'function') {
 		handlers.onPlayerStateChange(event);
@@ -139,7 +143,7 @@ const onPlayerStateChangeEvent = (
 };
 
 const onPlayerReadyEvent = (
-	event: LocalEvent,
+	event: YTPlayerEvent,
 	handlers?: Handlers,
 	el?: HTMLElement | null,
 ) => {
@@ -205,9 +209,9 @@ const createAdsConfig = (
 const setupPlayer = (
 	el: HTMLElement,
 	videoId: string,
-	onReady: (event: LocalEvent) => void,
-	onStateChange: (event: LocalEvent) => void,
-	onError: (event: LocalEvent) => void,
+	onReady: (event: YTPlayerEvent) => void,
+	onStateChange: (event: YTPlayerEvent) => void,
+	onError: (event: YTPlayerEvent) => void,
 	onAdStart: () => void,
 	onAdEnd: () => void,
 ): YT.Player => {
@@ -246,7 +250,7 @@ const setupPlayer = (
 	});
 };
 
-const hasPlayerStarted = (event: LocalEvent) =>
+const hasPlayerStarted = (event: YTPlayerEvent) =>
 	event.target.getCurrentTime() > 0;
 
 const getPlayerIframe = (videoId: string) =>
@@ -258,13 +262,14 @@ export const initYoutubePlayer = async (
 	videoId: string,
 ): Promise<YT.Player> => {
 	await loadScript(scriptSrc, {});
-	await promise;
+	await youtubeReady;
+	await initialConsent;
 
-	const onPlayerStateChange = (event: LocalEvent) => {
+	const onPlayerStateChange = (event: YTPlayerEvent) => {
 		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
 	};
 
-	const onPlayerReady = (event: LocalEvent) => {
+	const onPlayerReady = (event: YTPlayerEvent) => {
 		const iframe = getPlayerIframe(videoId);
 		if (hasPlayerStarted(event)) {
 			addVideoStartedClass(iframe);
@@ -272,7 +277,7 @@ export const initYoutubePlayer = async (
 		onPlayerReadyEvent(event, handlers, iframe);
 	};
 
-	const onPlayerError = (event: LocalEvent) => {
+	const onPlayerError = (event: YTPlayerEvent) => {
 		console.error(`YOUTUBE: ${event.data}`);
 		console.dir(event);
 	};
