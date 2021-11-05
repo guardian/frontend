@@ -73,7 +73,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val content = contentAsString(result)
 
-    val featureIsEnabled = liveblogFiltering.isSwitchedOn && ActiveExperiments.isParticipating(LiveblogFiltering)(fakeRequest)
+    val featureIsEnabled = liveblogFiltering.isSwitchedOn &&
+      ActiveExperiments.isParticipating(LiveblogFiltering)(fakeRequest)
     if (featureIsEnabled) {
       content should not include "56d084d0e4b0bd5a0524ccbe"
     }
