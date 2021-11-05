@@ -79,6 +79,12 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
           NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
             .withHeaders("X-GU-Dotcomponents" -> "true")
+        case 415 =>
+          // if DCR returns a 415 it's because we can't render a specific component, so page is not available
+          NoCache(
+            play.api.mvc.Results.NotFound
+              .withHeaders("X-GU-Dotcomponents" -> "true"),
+          )
         case _ =>
           log.error(s"Request to DCR failed: status ${response.status}, body: ${response.body}")
           NoCache(
