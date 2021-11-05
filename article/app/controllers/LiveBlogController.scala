@@ -265,7 +265,8 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        createLiveBlogModel(liveBlog, response, range, experimentSwitch(LiveblogFiltering), filterKeyEvents).left.map(_ -> blocks)
+        createLiveBlogModel(liveBlog, response, range, experimentSwitch(LiveblogFiltering), filterKeyEvents).left
+          .map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
         Right(InternalServerError)
