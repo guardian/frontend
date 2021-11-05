@@ -1,4 +1,5 @@
 import { dateDiffDays, isExpired } from 'lib/time-utils';
+import MockDate from 'mockdate';
 
 describe('calculating the difference between 2 dates', () => {
 	it('should return the correct duration', () => {
@@ -14,19 +15,26 @@ describe('calculating the difference between 2 dates', () => {
 	});
 });
 
-// TODO freeze time
 describe('Determining whether or not an AB test is expired', () => {
+	beforeAll(() => {
+		MockDate.set('Thu Jan 01 2021 12:00:00 GMT+0000 (Greenwich Mean Time)');
+	});
+
+	afterAll(() => {
+		MockDate.reset();
+	});
+
 	it('should return the correct result', () => {
 		const expiredYesterdayJustBeforeMidnight =
-			'Thu Nov 04 2021 23:59:59 GMT+0000 (Greenwich Mean Time)';
+			'Wed Dec 31 2020 23:59:59 GMT+0000 (Greenwich Mean Time)';
 		expect(isExpired(expiredYesterdayJustBeforeMidnight)).toBe(true);
 
 		const expiringTodayJustAfterMidnight =
-			'Fri Nov 05 2021 00:00:01 GMT+0000 (Greenwich Mean Time)';
+			'Thu Jan 01 2021 00:00:01 GMT+0000 (Greenwich Mean Time)';
 		expect(isExpired(expiringTodayJustAfterMidnight)).toBe(false);
 
 		const expiringTomorrow =
-			'Sat Nov 06 2021 12:00:00 GMT+0000 (Greenwich Mean Time)';
+			'Fri Jan 02 2021 12:00:00 GMT+0000 (Greenwich Mean Time)';
 		expect(isExpired(expiringTomorrow)).toBe(false);
 	});
 });
