@@ -8,7 +8,7 @@ import type { ConsentState } from '@guardian/consent-management-platform/dist/ty
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import type { CountryCode } from '@guardian/libs';
 import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
-import { once, pick } from 'lodash-es';
+import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import {
 	getReferrer as detectGetReferrer,
@@ -16,7 +16,6 @@ import {
 	getViewport,
 } from '../../../../lib/detect';
 import { getCountryCode } from '../../../../lib/geolocation';
-import { getUrlVars } from '../../../../lib/url';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
 import { getSynchronousParticipations } from '../experiments/ab';
 import { isUserLoggedIn } from '../identity/api';
@@ -246,11 +245,6 @@ const getReferrer = (): string | null => {
 	return matchedRef.id;
 };
 
-const getWhitelistedQueryParams = (): Record<string, unknown> => {
-	const whiteList: string[] = ['0p19G'];
-	return pick(getUrlVars(), whiteList);
-};
-
 const getUrlKeywords = (pageId?: string): string[] => {
 	if (!pageId) return [];
 
@@ -442,7 +436,6 @@ const rebuildPageTargeting = () => {
 		...page.sharedAdTargeting,
 		...paTargeting,
 		...adFreeTargeting,
-		...getWhitelistedQueryParams(),
 	};
 
 	// filter out empty values
