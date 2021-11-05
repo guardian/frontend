@@ -52,7 +52,7 @@ const keepTimestampsCurrent = () => {
 const setupListeners = () => {
     bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
         const hasParam = window.location.search.includes(`filterKeyEvents=true`);
-        const param = `?filterKeyEvents=${hasParam ? 'false' : 'true'}#live-blog-content`;
+        const param = `?filterKeyEvents=${hasParam ? 'false' : 'true'}#liveblog-content`;
         window.location.assign(`${window.location.pathname}${param}`);
     })
 }

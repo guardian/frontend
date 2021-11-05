@@ -92,7 +92,7 @@
                         <div class="js-components-container"></div>
                     </div>
 
-                    <div class="js-liveblog-body-content">
+                    <div class="js-liveblog-body-content" id="liveblog-content">
                         @fragments.dropdown("Live feed", Some("live-feed"), true) {
                             @views.html.liveblog.liveBlogBodyContent(model)
                             @fragments.submeta(article)
