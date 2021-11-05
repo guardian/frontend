@@ -1,28 +1,27 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, LiveblogRendering, LiveblogFiltering}
+import experiments.{ActiveExperiments, LiveblogFiltering, LiveblogRendering}
+import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import model.liveblog.BodyBlock
+import model.liveblog.BodyBlock.KeyEvent
 import model.{ApplicationContext, CanonicalLiveBlog, _}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import services.CAPILookup
-import views.support.RenderOtherStatus
-import implicits.{AmpFormat, HtmlFormat}
-import model.dotcomrendering.{DotcomRenderingDataModel}
 import renderers.DotcomRenderingService
+import services.CAPILookup
+import services.dotcomponents.DotcomponentsLogger
+import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
-import model.dotcomrendering.PageType
-import model.liveblog.BodyBlock
-import model.liveblog.BodyBlock.KeyEvent
-import services.dotcomponents.{DotcomponentsLogger, LocalRenderArticle, RemoteRender}
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
@@ -54,7 +53,48 @@ class LiveBlogController(
     }
   }
 
-  private def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
+  def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
+    Action.async { implicit request =>
+      val filter = shouldFilter(filterKeyEvents, filterSwitch)
+      page.map(ParseBlockId.fromPageParam) match {
+        case Some(ParsedBlockId(id)) =>
+          renderWithRange(path, PageWithBlock(id), filter) // we know the id of a block
+        case Some(InvalidFormat) =>
+          Future.successful(
+            Cached(10)(WithoutRevalidationResult(NotFound)),
+          ) // page param there but couldn't extract a block id
+        case None => renderWithRange(path, CanonicalLiveBlog, filter) // no page param
+      }
+    }
+  }
+
+  def renderJson(
+      path: String,
+      lastUpdate: Option[String],
+      rendered: Option[Boolean],
+      isLivePage: Option[Boolean],
+      filterKeyEvents: Option[Boolean],
+  ): Action[AnyContent] = {
+    Action.async { implicit request: Request[AnyContent] =>
+      val filter = shouldFilter(filterKeyEvents, filterSwitch)
+      val range = getRange(lastUpdate)
+      mapModel(path, range, filter) {
+        case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
+        case (blog: LiveBlogPage, blocks) if request.forceDCR         => Future.successful(renderGuuiJson(path, blog, blocks))
+        case (blog: LiveBlogPage, blocks)                             => getJson(blog, range, isLivePage, filter)
+        case (minute: MinutePage, blocks) =>
+          Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
+        case _ =>
+          Future {
+            Cached(600)(WithoutRevalidationResult(NotFound))
+          }
+      }
+    }
+  }
+
+  // Helper methods
+
+  private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
       request: RequestHeader,
   ): Future[Result] = {
     mapModel(path, range, filterKeyEvents) { (page, blocks) =>
@@ -113,46 +153,6 @@ class LiveBlogController(
     else false
   }
 
-  def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
-    Action.async { implicit request =>
-      val filter = filterKeyEvents.getOrElse(false) && filterSwitch
-      page.map(ParseBlockId.fromPageParam) match {
-        case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter) // we know the id of a block
-        case Some(InvalidFormat) =>
-          Future.successful(
-            Cached(10)(WithoutRevalidationResult(NotFound)),
-          ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog, filter) // no page param
-      }
-    }
-  }
-
-  def renderJson(
-      path: String,
-      lastUpdate: Option[String],
-      rendered: Option[Boolean],
-      isLivePage: Option[Boolean],
-      filterKeyEvents: Option[Boolean],
-  ): Action[AnyContent] = {
-    Action.async { implicit request: Request[AnyContent] =>
-      val filter = filterKeyEvents.getOrElse(false) && filterSwitch
-      val range = getRange(lastUpdate)
-      mapModel(path, range, filter) {
-        case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
-        case (blog: LiveBlogPage, blocks) if request.forceDCR         => Future.successful(renderGuuiJson(path, blog, blocks))
-        case (blog: LiveBlogPage, blocks)                             => getJson(blog, range, isLivePage, filter)
-        case (minute: MinutePage, blocks) =>
-          Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
-        case _ =>
-          Future {
-            Cached(600)(WithoutRevalidationResult(NotFound))
-          }
-      }
-    }
-  }
-
-  // Helper methods
   private[this] def getRange(lastUpdate: Option[String]): BlockRange = {
     lastUpdate.map(ParseBlockId.fromBlockId) match {
       case Some(ParsedBlockId(id)) => SinceBlockId(id)
@@ -274,7 +274,11 @@ class LiveBlogController(
     content
   }
 
-  private def filterSwitch(implicit request: RequestHeader) = {
+  def shouldFilter(filterKeyEvents: Option[Boolean], filterSwitch: Boolean): Boolean = {
+    filterKeyEvents.getOrElse(false) && filterSwitch
+  }
+
+  private def filterSwitch(implicit request: RequestHeader): Boolean = {
     ActiveExperiments.isParticipating(LiveblogFiltering)
   }
 }

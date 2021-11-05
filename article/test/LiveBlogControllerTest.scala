@@ -75,9 +75,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     // newer blocks
 
     if (ActiveExperiments.isParticipating(LiveblogFiltering)(fakeRequest)) {
-      content should not include "56d084d0e4b0bd5a0524ccbe" // at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
+      content should not include "56d084d0e4b0bd5a0524ccbe"
     }
-
   }
 
   it should "use DCR if the parameter dcr=true is passed" in {
@@ -145,5 +144,21 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     val shouldRemoteRender =
       liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
     shouldRemoteRender should be(false)
+  }
+
+  it should "filter when the filter parameter is true and switch is on" in {
+    liveBlogController.shouldFilter(Some(true), true) should be(true)
+  }
+
+  it should "not filter when the filter parameter is true but the switch is off" in {
+    liveBlogController.shouldFilter(Some(true), false) should be(false)
+  }
+
+  it should "not filter when the filter parameter is false even if the switch is on" in {
+    liveBlogController.shouldFilter(Some(false), true) should be(false)
+  }
+
+  it should "not filter when the filter parameter is not provided even if the switch is on" in {
+    liveBlogController.shouldFilter(None, true) should be(false)
   }
 }

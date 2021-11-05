@@ -6,7 +6,7 @@
 @import common.Edition
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
-    <div class="js-article__container" data-component="body">
+    <div class="js-article__container" data-component="body" id="live-blog-content">
         <div class="toast__space-reserver">
             <div id="toast__tofix" class="toast__container">
                 <button class="toast__button toast__button--closed button button--large">

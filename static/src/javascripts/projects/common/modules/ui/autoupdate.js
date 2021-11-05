@@ -173,16 +173,6 @@ const autoUpdate = (opts) => {
             });
     };
 
-    const getBooleanParam = (key) => {
-        const hasParam = window.location.search.includes(`${key}=true`);
-        return `?${key}=${hasParam ? 'true' : 'false'}`;
-    }
-
-    const refreshWindow = () => {
-        const param = getBooleanParam("filterKeyEvents")
-        window.location.assign(`${window.location.pathname}${param}`);
-    }
-
     const setUpListeners = () => {
         bean.on(document.body, 'click', '.toast__button', () => {
             if (isLivePage) {
@@ -198,7 +188,10 @@ const autoUpdate = (opts) => {
                         });
                 });
             } else {
-                refreshWindow()
+                const param = window.location.search.includes('filterKeyEvents=true') ? `?filterKeyEvents=true` : '';
+                const url = window.location.pathname + param;
+                
+                window.location.assign(url);
             }
         });
 
