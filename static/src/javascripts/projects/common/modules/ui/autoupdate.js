@@ -190,7 +190,7 @@ const autoUpdate = (opts) => {
             } else {
                 const param = window.location.search.includes('filterKeyEvents=true') ? `?filterKeyEvents=true` : '';
                 const url = window.location.pathname + param;
-                
+
                 window.location.assign(url);
             }
         });
