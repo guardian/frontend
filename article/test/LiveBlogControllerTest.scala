@@ -1,5 +1,6 @@
 package test
 
+import conf.switches.Switches.liveblogFiltering
 import controllers.LiveBlogController
 import experiments.{ActiveExperiments, LiveblogFiltering}
 import play.api.test._
@@ -72,9 +73,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val content = contentAsString(result)
 
-    // newer blocks
-
-    if (ActiveExperiments.isParticipating(LiveblogFiltering)(fakeRequest)) {
+    val featureIsEnabled = liveblogFiltering.isSwitchedOn && ActiveExperiments.isParticipating(LiveblogFiltering)(fakeRequest)
+    if (featureIsEnabled) {
       content should not include "56d084d0e4b0bd5a0524ccbe"
     }
   }
