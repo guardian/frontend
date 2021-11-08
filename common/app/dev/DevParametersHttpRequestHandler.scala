@@ -68,7 +68,6 @@ class DevParametersHttpRequestHandler(
     "s", // section in commercial component requests
     "seg", // user segments in commercial component requests
     "t", // specific item targetting
-    "0p19G", // Google AMP AB test parameter
     "dll", // Disable lazy loading of ads
     "iasdebug", // IAS troubleshooting
     "cmpdebug", // CMP troubleshooting
