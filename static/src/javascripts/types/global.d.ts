@@ -168,6 +168,8 @@ interface Window {
 		mustardCut?: boolean;
 		polyfilled?: boolean;
 		adBlockers: AdBlockers;
+		// /frontend/common/app/templates/inlineJS/blocking/enableStylesheets.scala.js
+		css: { onLoad: () => void; loaded: boolean };
 	};
 
 	confiant?: Confiant;
