@@ -52,6 +52,25 @@ class LiveBlogController(
     }
   }
 
+  private def isSupportedTheme(blog: LiveBlogPage): Boolean = false
+
+  private def allElementsAreSupported(blog: LiveBlogPage): Boolean = {
+    def unsupportedElement(blockElement: BlockElement) =
+      blockElement match {
+        case _: CodeBlockElement                     => true
+        case _: RichLinkBlockElement                     => true
+        case _ => false
+      }
+
+    !blog.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
+  }
+
+  private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.fields.isLive
+
+  private def checkIfSupported(blog: LiveBlogPage: LiveBlogPage): Boolean = {
+    isDeadBlog(blog) && isSupportedTheme(blog) && allElementsAreSupported(blog)
+  }
+
   def renderWithRange(path: String, range: BlockRange)(implicit request: RequestHeader): Future[Result] = {
     mapModel(path, range) { (page, blocks) =>
       {
@@ -61,9 +80,7 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) => {
-            // dcrCouldRender is always false because right now blogs are not supported by DCR
-            // but we included this variable as an indication of what is going to be possible in the future
-            val dcrCouldRender = false
+            val dcrCouldRender = checkIfSupported(blog)
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
             val properties =
               Map(
