@@ -463,14 +463,4 @@ trait FeatureSwitches {
     sellByDate = LocalDate.of(2022, 6, 30),
     exposeClientSide = false,
   )
-
-  val liveblogFiltering = Switch(
-    SwitchGroup.Feature,
-    "liveblog-filtering",
-    "Filter liveblogs by key events",
-    owners = Seq(Owner.withGithub("alinaboghiu")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2021, 12, 1),
-    exposeClientSide = false,
-  )
 }
