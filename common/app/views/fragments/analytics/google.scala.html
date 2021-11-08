@@ -132,6 +132,9 @@ window.guardian.googleAnalytics.initialiseGa = function() {
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker(context).trackerName) { trackerName =>
+
+        ga('@{trackerName}.send', 'pageview');
+
         @*
         If there is internal link click data in session storage, send a click event.?:
 
