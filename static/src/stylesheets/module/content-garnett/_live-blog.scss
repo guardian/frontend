@@ -323,9 +323,9 @@
     height: .5rem;
     width: .25rem;
     opacity: 0;
-    border-bottom: 2px solid #78b13f;
-    border-right: 2px solid #78b13f;
-    -webkit-transition: opacity 0.4s;
+    border-bottom: 2px solid #22874d;
+    border-right: 2px solid #22874d;
+    -webkit-transition: opacity .4s;
     transition: opacity .4s;
 }
 
@@ -337,11 +337,11 @@ input:checked + .live-blog__filter-switch-slider:after {
 }
 
 input:checked + .live-blog__filter-switch-slider {
-    background-color: $green-light;
+    background-color: #58d08b;
 }
 
 input:focus + .live-blog__filter-switch-slider {
-    box-shadow: 0 0 1px $green-light;
+    box-shadow: 0 0 1px #58d08b;
 }
 
 input:checked + .live-blog__filter-switch-slider:before {
