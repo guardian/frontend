@@ -42,9 +42,13 @@ module.exports = {
                             )
                         )
                     )
-                    .then(optimisedFileData =>
-                        writeFile(dest, optimisedFileData.data)
-                    );
+                    .then(optimisedFileData => {
+                        if (!optimisedFileData?.data) {
+                            console.error('error inlining:', srcDir, svgPath);
+                            return Promise.resolve();
+                        }
+                        return writeFile(dest, optimisedFileData.data);
+                    });
             })
         ),
 };
