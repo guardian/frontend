@@ -6,7 +6,10 @@ import reportError from '../../../../lib/report-error';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- generics don’t play nice
 type BooleanFunction = (...args: any[]) => boolean;
-const not = (f: BooleanFunction): BooleanFunction => (...args) => !f(...args);
+const not =
+	(f: BooleanFunction): BooleanFunction =>
+	(...args) =>
+		!f(...args);
 
 const submit = (payload: OphanABPayload): void =>
 	void ophan.record({
@@ -61,16 +64,19 @@ const buildOphanSubmitter = (
  *
  * @see {@link defersImpression}
  */
-const registerCompleteEvent = (complete: boolean) => (test: Runnable): void => {
-	const variant = test.variantToRun;
-	const listener = (complete ? variant.success : variant.impression) ?? noop;
+const registerCompleteEvent =
+	(complete: boolean) =>
+	(test: Runnable): void => {
+		const variant = test.variantToRun;
+		const listener =
+			(complete ? variant.success : variant.impression) ?? noop;
 
-	try {
-		listener(buildOphanSubmitter(test, variant, complete));
-	} catch (err) {
-		reportError(err, {}, false);
-	}
-};
+		try {
+			listener(buildOphanSubmitter(test, variant, complete));
+		} catch (err) {
+			reportError(err, {}, false);
+		}
+	};
 
 export const registerCompleteEvents = (tests: readonly Runnable[]): void =>
 	tests.forEach(registerCompleteEvent(true));

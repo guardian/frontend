@@ -43,9 +43,8 @@ class CommercialFeatures {
 			config.get('page.section') === 'identity'; // needed for pages under profile.* subdomain
 		const switches = config.get<Record<string, boolean>>('switches', {});
 		const isWidePage = getBreakpoint() === 'wide';
-		const supportsSticky = document.documentElement.classList.contains(
-			'has-sticky',
-		);
+		const supportsSticky =
+			document.documentElement.classList.contains('has-sticky');
 		const newRecipeDesign =
 			config.get('page.showNewRecipeDesign') &&
 			config.get('tests.abNewRecipeDesign');

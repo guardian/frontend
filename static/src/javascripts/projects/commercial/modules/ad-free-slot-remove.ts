@@ -11,9 +11,8 @@ const shouldRemoveMpuWhenAdFree = (mpuCandidate: HTMLElement) =>
 	mpuCandidate.className.toLowerCase().includes(mpuCandidateClass);
 
 const shouldRemoveFaciaContainerWhenAdFree = (faciaContainer: HTMLElement) => {
-	const dataComponentAttribute = faciaContainer.getAttribute(
-		'data-component',
-	);
+	const dataComponentAttribute =
+		faciaContainer.getAttribute('data-component');
 	return dataComponentAttribute?.includes('commercial-container');
 };
 

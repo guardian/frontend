@@ -178,10 +178,12 @@ export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
 		if (isUserLoggedIn()) {
 			const url = `${idApiRoot}/user/me`;
-			void (fetchJson(url, {
-				mode: 'cors',
-				credentials: 'include',
-			}) as Promise<IdentityResponse>) // assert unknown -> IdentityResponse
+			void (
+				fetchJson(url, {
+					mode: 'cors',
+					credentials: 'include',
+				}) as Promise<IdentityResponse>
+			) // assert unknown -> IdentityResponse
 				.then((data: IdentityResponse) => {
 					if (data.status === 'ok') {
 						mergingCallback(data.user);

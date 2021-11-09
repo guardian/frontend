@@ -44,7 +44,7 @@
  "../lib/robust.js": [
   "../lib/report-error.js"
  ],
- "../lib/time-utils.js": [],
+ "../lib/time-utils.ts": [],
  "../lib/url.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/detect.js"
@@ -535,7 +535,6 @@
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/geolocation.ts",
-  "../lib/url.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-ad-targeting.ts",
@@ -567,14 +566,14 @@
   "../lib/config.js",
   "../lib/cookies.js",
   "../lib/fetch-json.ts",
-  "../lib/time-utils.js",
+  "../lib/time-utils.ts",
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
  "../projects/common/modules/experiments/ab-core.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/time-utils.js",
+  "../lib/time-utils.ts",
   "../projects/common/modules/analytics/mvt-cookie.js",
   "../projects/common/modules/experiments/ab-constants.ts",
   "../projects/common/modules/experiments/ab-local-storage.ts",

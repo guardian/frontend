@@ -127,7 +127,12 @@ jest.mock('@guardian/libs', () => {
 		loadScript: jest.fn(() => Promise.resolve()),
 	};
 });
-jest.mock('lodash-es/once', () => <T>(fn: (...args: unknown[]) => T) => fn);
+jest.mock(
+	'lodash-es/once',
+	() =>
+		<T>(fn: (...args: unknown[]) => T) =>
+			fn,
+);
 jest.mock('./refresh-on-resize', () => ({
 	refreshOnResize: jest.fn(),
 }));
@@ -311,7 +316,7 @@ describe('DFP', () => {
 
 		let sizesArray: googletag.SizeMappingArray = [];
 
-		sizeMapping = ({
+		sizeMapping = {
 			sizes: sizesArray,
 			addSize: jest.fn((width, sizes) => {
 				sizesArray.unshift([width, sizes]);
@@ -321,16 +326,16 @@ describe('DFP', () => {
 				sizesArray = [];
 				return tmp;
 			}),
-		} as unknown) as googletag.SizeMappingBuilder;
+		} as unknown as googletag.SizeMappingBuilder;
 
-		googleSlot = ({
+		googleSlot = {
 			defineSizeMapping: jest.fn(() => googleSlot),
 			setSafeFrameConfig: jest.fn(() => googleSlot),
 			setTargeting: jest.fn(() => googleSlot),
 			addService: jest.fn(() => googleSlot),
-		} as unknown) as googletag.Slot;
+		} as unknown as googletag.Slot;
 
-		googleTag = ({
+		googleTag = {
 			cmd: {
 				push(...args: Array<() => void>) {
 					args.forEach((command) => {
@@ -349,12 +354,14 @@ describe('DFP', () => {
 			defineOutOfPageSlot: jest.fn(() => googleSlot),
 			enableServices: jest.fn(),
 			display: jest.fn(),
-		} as unknown) as typeof googletag;
+		} as unknown as typeof googletag;
 
 		window.googletag = googleTag;
-		((window as unknown) as {
-			__switch_zero: boolean;
-		}).__switch_zero = false;
+		(
+			window as unknown as {
+				__switch_zero: boolean;
+			}
+		).__switch_zero = false;
 
 		commercialFeatures.dfpAdvertising = true;
 	});
