@@ -75,7 +75,7 @@
     "@typescript-eslint/parser": "^4.12.0",
     "amphtml-validator": "^1.0.21",
     "any-observable": "^0.2.0",
-    "autoprefixer": "^9.1.5",
+    "autoprefixer": "^10.3.7",
     "aws-sdk": "^2.411.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
