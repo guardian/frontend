@@ -325,8 +325,9 @@
     opacity: 0;
     border-bottom: 2px solid #22874d;
     border-right: 2px solid #22874d;
-    -webkit-transition: opacity .4s;
-    transition: opacity .4s;
+    -webkit-transition: opacity .1s ease-in;
+    transition: opacity .1s ease-in;
+    z-index: -1;
 }
 
 input:checked + .live-blog__filter-switch-slider:after {
@@ -334,6 +335,7 @@ input:checked + .live-blog__filter-switch-slider:after {
     -webkit-transform: translateX(1.8rem) rotate(45deg);
     -ms-transform: translateX(1.8rem) rotate(45deg);
     transform: translateX(1.8rem) rotate(45deg);
+    z-index: 999;
 }
 
 input:checked + .live-blog__filter-switch-slider {
