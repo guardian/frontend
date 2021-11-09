@@ -251,3 +251,91 @@
         border-color: $brightness-93;
     }
 }
+
+/* Filter switch
+   ========================================================================== */
+
+/* The switch - the box around the slider */
+.live-blog__filter-switch {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.live-blog__filter-switch-label {
+    position: relative;
+    display: inline-block;
+    width: 2.75rem;
+    height: 1.5rem;
+}
+
+.live-blog__filter-switch-text {
+    margin-left: .5rem;
+    font-family: 'Guardian Text Sans', sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+    color: inherit;
+}
+
+/* Hide default HTML checkbox */
+.live-blog__filter-switch-label input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.live-blog__filter-switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $brightness-60;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.live-blog__filter-switch-slider:before {
+    position: absolute;
+    content: '';
+    height: 1.125rem;
+    width: 1.125rem;
+    left: 4px;
+    bottom: .2rem;;
+    background-color: $brightness-100;
+    -webkit-transition: .2s;
+    transition: .2s;
+    border-radius: 50%;
+}
+
+input:checked + .live-blog__filter-switch-slider {
+    background-color: $green-light;
+}
+
+input:focus + .live-blog__filter-switch-slider {
+    box-shadow: 0 0 1px $green-light;
+}
+
+input:checked + .live-blog__filter-switch-slider:before {
+    -webkit-transform: translateX(1.15rem);
+    -ms-transform: translateX(1.15rem);
+    transform: translateX(1.15rem);
+}
+
+/* No blocks
+   ========================================================================== */
+
+.live-blog__no-blocks-container {
+    padding: .625rem .5rem;
+    border: 1px solid $brightness-86;
+}
+
+.live-blog__no-blocks-text {
+    font-family: 'Guardian Text Sans', sans-serif;
+    color: $brightness-46;
+    font-size: 15px;
+}

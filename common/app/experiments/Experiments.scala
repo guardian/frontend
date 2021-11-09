@@ -7,6 +7,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
+    LiveblogFiltering,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -19,4 +20,13 @@ object LiveblogRendering
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = LocalDate.of(2021, 11, 30),
       participationGroup = Perc0A,
+    )
+
+object LiveblogFiltering
+    extends Experiment(
+      name = "liveblog-filtering",
+      description = "Filter liveblogs by key events",
+      owners = Seq(Owner.withGithub("alinaboghiu")),
+      sellByDate = LocalDate.of(2021, 12, 1),
+      participationGroup = Perc0B,
     )
