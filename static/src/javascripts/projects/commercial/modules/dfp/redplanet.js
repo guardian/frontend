@@ -2,6 +2,7 @@ import {
 	getConsentFor,
 	onConsentChange,
 } from '@guardian/consent-management-platform';
+import { log } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
@@ -34,6 +35,8 @@ const setupRedplanet = async () => {
 	const promise = new Promise((resolve, reject) => {
 		resolveRedPlanetLoaded = resolve;
 		rejectRedPlanetLoaded = reject;
+	}).catch((e) => {
+		log('commercial', '⚠️ Failed to execute redplanet', e);
 	});
 
 	onConsentChange((state) => {
