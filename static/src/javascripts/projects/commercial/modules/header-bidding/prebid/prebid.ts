@@ -139,9 +139,7 @@ declare global {
 				auctionId?: string;
 			}): void;
 			setConfig: (config: PbjsConfig) => void;
-			getConfig: (
-				item?: string,
-			) => PbjsConfig & {
+			getConfig: (item?: string) => PbjsConfig & {
 				dataProviders: Array<{
 					name: string;
 					params: {

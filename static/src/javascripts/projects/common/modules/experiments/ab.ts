@@ -50,7 +50,7 @@ export const runAndTrackAbTests = (): Promise<void> => {
 	const testsToRun = getSynchronousTestsToRun();
 
 	testsToRun.forEach((test) =>
-		test.variantToRun.test((test as unknown) as Record<string, unknown>),
+		test.variantToRun.test(test as unknown as Record<string, unknown>),
 	);
 
 	registerImpressionEvents(testsToRun);
@@ -75,9 +75,7 @@ export const runAndTrackAbTests = (): Promise<void> => {
 
 	return getAsyncTestsToRun().then((tests) => {
 		tests.forEach((test) =>
-			test.variantToRun.test(
-				(test as unknown) as Record<string, unknown>,
-			),
+			test.variantToRun.test(test as unknown as Record<string, unknown>),
 		);
 
 		registerImpressionEvents(tests);

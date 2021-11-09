@@ -54,7 +54,7 @@ describe('enableLazyLoad', () => {
 
 	it('should create an observer if lazyLoadObserve is true', () => {
 		dfpEnv.lazyLoadObserve = true;
-		enableLazyLoad((testAdvert as unknown) as Advert);
+		enableLazyLoad(testAdvert as unknown as Advert);
 		expect(loadAdvert).not.toHaveBeenCalled();
 		expect(
 			window.IntersectionObserver as jest.Mock,
@@ -66,7 +66,7 @@ describe('enableLazyLoad', () => {
 	it('should still display the adverts if lazyLoadObserve is false', () => {
 		dfpEnv.lazyLoadObserve = false;
 		(getAdvertById as jest.Mock).mockReturnValue(testAdvert);
-		enableLazyLoad((testAdvert as unknown) as Advert);
+		enableLazyLoad(testAdvert as unknown as Advert);
 		expect((getAdvertById as jest.Mock).mock.calls).toEqual([
 			['test-advert'],
 		]);

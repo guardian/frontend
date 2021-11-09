@@ -9,7 +9,7 @@
 - [Development tips](01-start-here/05-development-tips.md)
 - [Testing tips](01-start-here/06-testing-tips.md)
 - [FAQs](01-start-here/07-faqs.md)
-- [Incident Response & Triage](01-start-here/08-incidents.md)
+- [Incident handling](01-start-here/08-incidents.md)
 
 ## [Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)

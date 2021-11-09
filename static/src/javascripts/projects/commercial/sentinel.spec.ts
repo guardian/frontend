@@ -1,9 +1,8 @@
 import config from '../../lib/config';
 import type { amIUsed as amIUsed_, SentinelLoggingEvent } from './sentinel';
 
-const { amIUsed }: { amIUsed: typeof amIUsed_ } = jest.requireActual(
-	'./sentinel',
-);
+const { amIUsed }: { amIUsed: typeof amIUsed_ } =
+	jest.requireActual('./sentinel');
 
 jest.mock('../../lib/config');
 
