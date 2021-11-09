@@ -60,6 +60,7 @@ object PressedInteractives {
     "/technology/ng-interactive/2018/apr/24/bezoss-empire-how-amazon-became-the-worlds-biggest-retailer",
     "/technology/2016/apr/12/the-dark-side-of-guardian-comments",
     "/environment/ng-interactive/2020/may/20/relax-to-the-sounds-of-british-wildlife",
+    "/world/ng-interactive/2014/jul/23/a-global-guide-to-the-first-world-war-interactive-documentary",
     // Specified by Newsletters UK
     "/info/ng-interactive/2017/may/05/sign-up-for-the-long-read-email",
     "/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email",
