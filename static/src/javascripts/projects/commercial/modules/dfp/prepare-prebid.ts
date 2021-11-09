@@ -3,6 +3,7 @@ import {
 	onConsentChange,
 } from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
+import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
@@ -37,16 +38,18 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 const setupPrebid = async (): Promise<void> => {
 	let resolvePrebidLoaded: (value: void | PromiseLike<void>) => void;
 	let rejectPrebidLoaded: (
-		reason: 'no consent for prebid' | 'unknown framework',
+		reason: 'No consent for prebid' | 'Unknown framework',
 	) => void;
 	const promise = new Promise<void>((resolve, reject) => {
 		resolvePrebidLoaded = resolve;
 		rejectPrebidLoaded = reject;
+	}).catch((e) => {
+		log('commercial', '⚠️ Failed to execute prebid', e);
 	});
 
 	onConsentChange((state) => {
 		if (!getConsentFor('prebid', state)) {
-			rejectPrebidLoaded('no consent for prebid');
+			rejectPrebidLoaded('No consent for prebid');
 			return;
 		}
 
@@ -56,7 +59,7 @@ const setupPrebid = async (): Promise<void> => {
 		if (state.aus) framework = 'aus';
 
 		if (!framework) {
-			rejectPrebidLoaded('unknown framework');
+			rejectPrebidLoaded('Unknown framework');
 			return;
 		}
 
