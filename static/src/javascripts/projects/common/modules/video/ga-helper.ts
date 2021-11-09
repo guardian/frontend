@@ -9,13 +9,15 @@ type EventType =
 	| 'watched75'
 	| 'end';
 
-type Metrics =
+type Metric =
 	| 'metric1'
 	| 'metric2'
 	| 'metric3'
 	| 'metric4'
 	| 'metric5'
-	| 'metric6';
+	| 'metric6'
+	| 'metric24'
+	| 'metric25';
 
 type EventMetrics = {
 	play?: 'metric1';
