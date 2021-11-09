@@ -45,9 +45,7 @@ type InitialFieldsObject = {
 	dimension19: string;
 	dimension20: string;
 };
-type MetricFieldsObject = {
-	[key in Metrics]?: 1;
-};
+type MetricFieldsObject = Partial<Record<Metric, 1>>;
 type FinalFieldsObject = InitialFieldsObject & MetricFieldsObject;
 
 type EventAction = (me: MediaEvent) => string;
