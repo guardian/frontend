@@ -310,10 +310,6 @@
     -webkit-transition: .2s;
     transition: .2s;
     border-radius: 50%;
-
-    @include mq($from: desktop) {
-        top: .2rem;
-    }
 }
 
 .live-blog__filter-switch-slider:after {
