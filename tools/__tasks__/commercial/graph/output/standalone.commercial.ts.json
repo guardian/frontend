@@ -266,7 +266,7 @@
   "../projects/commercial/modules/messenger/click.js",
   "../projects/commercial/modules/messenger/disable-refresh.js",
   "../projects/commercial/modules/messenger/get-page-targeting.js",
-  "../projects/commercial/modules/messenger/get-page-url.js",
+  "../projects/commercial/modules/messenger/get-page-url.ts",
   "../projects/commercial/modules/messenger/get-stylesheet.js",
   "../projects/commercial/modules/messenger/measure-ad-load.js",
   "../projects/commercial/modules/messenger/resize.js",
@@ -425,7 +425,7 @@
  "../projects/commercial/modules/messenger/get-page-targeting.js": [
   "../lib/config.js"
  ],
- "../projects/commercial/modules/messenger/get-page-url.js": [],
+ "../projects/commercial/modules/messenger/get-page-url.ts": [],
  "../projects/commercial/modules/messenger/get-stylesheet.js": [],
  "../projects/commercial/modules/messenger/measure-ad-load.js": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js"

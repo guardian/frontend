@@ -51,7 +51,6 @@ object PressedInteractives {
     "/politics/ng-interactive/2019/dec/13/boris-johnson-achieves-landslide-victory-visual-guide",
     "/us-news/ng-interactive/2018/nov/07/blue-wave-or-blue-ripple-a-visual-guide-to-the-democrats-gains",
     "/cities/ng-interactive/2017/nov/03/three-degree-world-cities-drowned-global-warming",
-    "/environment/ng-interactive/2019/may/25/the-power-switch-tracking-britains-record-coal-free-run",
     "/society/ng-interactive/2015/feb/05/-sp-watch-how-measles-outbreak-spreads-when-kids-get-vaccinated",
     "/world/ng-interactive/2018/jul/03/thailand-cave-rescue-where-were-the-boys-found-and-how-can-they-be-rescued",
     "/world/ng-interactive/2019/mar/06/revealed-the-rise-and-rise-of-populist-rhetoric",
