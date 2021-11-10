@@ -38,9 +38,17 @@
                 </span>
             </div>
         } else {
+
+            @model.currentPage.pinnedPost.map { post =>
+              <div style="padding: 20px; border: 2px solid black; margin: 10px 0">
+                <div>PLACEHOLDER PINNED POST</div>
+                <div>@post.title</div>
+                <div>@post.id</div>
+                <div>@post.publishedDate</div>
+              </div>
+            }
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
-
         }
         </div>
 
