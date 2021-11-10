@@ -111,7 +111,7 @@
     "gzip-size": "^3.0.0",
     "hasha": "^3.0.0",
     "jest": "^26.6.3",
-    "jest-environment-jsdom": "^24.9.0",
+    "jest-environment-jsdom": "^26.6.2",
     "jest-environment-jsdom-global": "^2.0.4",
     "jest-teamcity-reporter": "^0.6.2",
     "listr": "^0.14.3",
