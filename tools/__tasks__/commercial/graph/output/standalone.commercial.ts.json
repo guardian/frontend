@@ -44,7 +44,7 @@
  "../lib/robust.js": [
   "../lib/report-error.js"
  ],
- "../lib/time-utils.js": [],
+ "../lib/time-utils.ts": [],
  "../lib/url.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/detect.js"
@@ -214,7 +214,7 @@
  ],
  "../projects/commercial/modules/dfp/on-slot-load.ts": [
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/messenger/post-message.js"
+  "../projects/commercial/modules/messenger/post-message.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-render.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -285,6 +285,7 @@
  "../projects/commercial/modules/dfp/prepare-prebid.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../../../../node_modules/prebid.js/build/dist/prebid.js",
   "../lib/config.d.ts",
@@ -301,6 +302,7 @@
  ],
  "../projects/commercial/modules/dfp/redplanet.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
+  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
   "../lib/config.js",
   "../lib/launchpad.js",
   "../projects/common/modules/commercial/commercial-features.ts",
@@ -408,7 +410,7 @@
  ],
  "../projects/commercial/modules/messenger.js": [
   "../lib/report-error.js",
-  "../projects/commercial/modules/messenger/post-message.js"
+  "../projects/commercial/modules/messenger/post-message.ts"
  ],
  "../projects/commercial/modules/messenger/background.js": [
   "../lib/config.js",
@@ -430,7 +432,7 @@
  "../projects/commercial/modules/messenger/measure-ad-load.js": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js"
  ],
- "../projects/commercial/modules/messenger/post-message.js": [],
+ "../projects/commercial/modules/messenger/post-message.ts": [],
  "../projects/commercial/modules/messenger/resize.js": [
   "../lib/fastdom-promise.js"
  ],
@@ -535,7 +537,6 @@
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/geolocation.ts",
-  "../lib/url.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-ad-targeting.ts",
@@ -567,14 +568,14 @@
   "../lib/config.js",
   "../lib/cookies.js",
   "../lib/fetch-json.ts",
-  "../lib/time-utils.js",
+  "../lib/time-utils.ts",
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
  "../projects/common/modules/experiments/ab-core.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/time-utils.js",
+  "../lib/time-utils.ts",
   "../projects/common/modules/analytics/mvt-cookie.js",
   "../projects/common/modules/experiments/ab-constants.ts",
   "../projects/common/modules/experiments/ab-local-storage.ts",

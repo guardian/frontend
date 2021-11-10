@@ -9,11 +9,9 @@ const displayLazyAds = (): void => {
 	window.googletag.pubads().collapseEmptyDivs();
 	window.googletag.enableServices();
 
-	const [
-		instantLoadAdverts,
-		lazyLoadAdverts,
-	] = partition(dfpEnv.advertsToLoad, (advert) =>
-		instantLoadAdvertIds.includes(advert.id),
+	const [instantLoadAdverts, lazyLoadAdverts] = partition(
+		dfpEnv.advertsToLoad,
+		(advert) => instantLoadAdvertIds.includes(advert.id),
 	);
 
 	// TODO: why do we need this side effect? Can we remove?

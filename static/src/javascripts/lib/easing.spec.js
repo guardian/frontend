@@ -27,7 +27,7 @@ describe('easing', () => {
 
         test(`easingFunctions.${name}()`, () => {
             values.forEach(([actual, expected]) => {
-                expect(easingFunctions[name](actual)).toBe(expected);
+                expect(easingFunctions[name](actual)).toBeCloseTo(expected);
             });
         });
     });
@@ -44,7 +44,7 @@ describe('easing', () => {
         global.Date = jest.fn(
             () => new OriginalDate((1970, 1, 1, 0, 0, 0, ELAPSED))
         );
-        expect(ease()).toBe(ELAPSED / DURATION);
+        expect(ease()).toBeCloseTo(ELAPSED / DURATION);
 
         global.Date = OriginalDate;
     });

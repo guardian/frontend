@@ -439,9 +439,8 @@ const rebuildPageTargeting = () => {
 	};
 
 	// filter out empty values
-	const pageTargeting: Record<string, string | string[]> = filterEmptyValues(
-		pageTargets,
-	);
+	const pageTargeting: Record<string, string | string[]> =
+		filterEmptyValues(pageTargets);
 
 	// third-parties wish to access our page targeting, before the googletag script is loaded.
 	page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);

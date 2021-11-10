@@ -25,7 +25,7 @@ const mergeCalls = <T extends unknown[]>(
 		[callbacks, status, callbackArguments] = [
 			[],
 			'init',
-			([] as unknown) as T, // Asserting the type is necessary
+			[] as unknown as T, // Asserting the type is necessary
 		];
 	};
 

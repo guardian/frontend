@@ -4,6 +4,7 @@ import {
 } from '@guardian/consent-management-platform';
 import type { Callback } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
+import { log } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -50,6 +51,10 @@ jest.mock('@guardian/consent-management-platform', () => ({
 	getConsentFor: jest.fn(),
 }));
 
+jest.mock('@guardian/libs', () => ({
+	log: jest.fn(),
+}));
+
 const defaultTCFv2State: TCFv2ConsentState = {
 	consents: { 1: false },
 	eventStatus: 'tcloaded',
@@ -85,6 +90,8 @@ const ausWithConsentMock = (callback: Callback) =>
 
 const ausWithoutConsentMock = (callback: Callback) =>
 	callback({ aus: { personalisedAdvertising: false } });
+
+const invalidWithoutConsentMock = (callback: Callback) => callback({});
 
 const fakeUserAgent = (userAgent: string) => {
 	const userAgentObject = {
@@ -199,7 +206,12 @@ describe('init', () => {
 		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
 
-		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+		await setupPrebid();
+		expect(log).toHaveBeenCalledWith(
+			'commercial',
+			expect.stringContaining('Failed to execute prebid'),
+			expect.stringContaining('No consent for prebid'),
+		);
 
 		expect(prebid.initialise).not.toBeCalled();
 	});
@@ -225,7 +237,12 @@ describe('init', () => {
 		onConsentChange.mockImplementation(ccpaWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
 
-		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+		await setupPrebid();
+		expect(log).toHaveBeenCalledWith(
+			'commercial',
+			expect.stringContaining('Failed to execute prebid'),
+			expect.stringContaining('No consent for prebid'),
+		);
 
 		expect(prebid.initialise).not.toBeCalled();
 	});
@@ -251,7 +268,31 @@ describe('init', () => {
 		onConsentChange.mockImplementation(ausWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
 
-		await expect(setupPrebid()).rejects.toEqual('no consent for prebid');
+		await setupPrebid();
+		expect(log).toHaveBeenCalledWith(
+			'commercial',
+			expect.stringContaining('Failed to execute prebid'),
+			expect.stringContaining('No consent for prebid'),
+		);
+
+		expect(prebid.initialise).not.toBeCalled();
+	});
+
+	it('should not initialise Prebid if the framework is invalid', async () => {
+		expect.assertions(2);
+
+		dfpEnv.hbImpl = { prebid: true, a9: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		onConsentChange.mockImplementation(invalidWithoutConsentMock);
+		getConsentFor.mockReturnValue(true);
+
+		await setupPrebid();
+		expect(log).toHaveBeenCalledWith(
+			'commercial',
+			expect.stringContaining('Failed to execute prebid'),
+			expect.stringContaining('Unknown framework'),
+		);
 
 		expect(prebid.initialise).not.toBeCalled();
 	});
