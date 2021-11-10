@@ -22,11 +22,13 @@ export const onSlotLoad = (event: googletag.events.SlotOnloadEvent): void => {
 		console.log('No iFrame found for slot', advert.id, advert.slot);
 		return;
 	}
-	postMessage(
-		{
-			id: iframe.id,
-			host,
-		},
-		iframe.contentWindow,
-	);
+	if (iframe.contentWindow) {
+		postMessage(
+			{
+				id: iframe.id,
+				host,
+			},
+			iframe.contentWindow,
+		);
+	}
 };
