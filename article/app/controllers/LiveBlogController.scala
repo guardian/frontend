@@ -15,11 +15,13 @@ import play.api.mvc._
 import services.CAPILookup
 import views.support.RenderOtherStatus
 import implicits.{AmpFormat, HtmlFormat}
-import model.dotcomrendering.{DotcomRenderingDataModel}
+import model.liveblog.{BlockElement, BodyBlock, CodeBlockElement, RichLinkBlockElement}
 import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
-import model.dotcomrendering.PageType
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import model.dotcomrendering.pageElements.{CodeBlockElement, RichLinkBlockElement}
+import org.joda.time.{DateTime, DateTimeZone}
 import services.dotcomponents.{DotcomponentsLogger, LocalRenderArticle, RemoteRender}
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -62,13 +64,20 @@ class LiveBlogController(
         case _ => false
       }
 
-    !blog.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
+    def isUnsupportedBlock(block: BodyBlock) = block.elements.exists(unsupportedElement)
+
+    !blog.article.blocks.exists(_.body.exists(isUnsupportedBlock))
   }
 
-  private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.fields.isLive
+  private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
 
-  private def checkIfSupported(blog: LiveBlogPage: LiveBlogPage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog) && allElementsAreSupported(blog)
+  private def isNotRecent(blog: LiveBlogPage) = {
+    val threeDaysAgo = new DateTime(DateTimeZone. UTC).minusDays(3)
+    blog.article.fields.lastModified.isBefore(threeDaysAgo)
+  }
+
+  private def checkIfSupported(blog: LiveBlogPage): Boolean = {
+    isDeadBlog(blog) && isSupportedTheme(blog) && allElementsAreSupported(blog) && isNotRecent
   }
 
   def renderWithRange(path: String, range: BlockRange)(implicit request: RequestHeader): Future[Result] = {
