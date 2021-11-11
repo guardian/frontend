@@ -1,4 +1,3 @@
-import { isObject, isString } from '@guardian/libs';
 import { getCLS, getFID, getLCP } from 'web-vitals';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
