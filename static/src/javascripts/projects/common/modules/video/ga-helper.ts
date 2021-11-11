@@ -1,35 +1,19 @@
-type EventType =
-	| 'play'
-	| 'skip'
-	| '25'
-	| '50'
-	| '75'
-	| 'watched25'
-	| 'watched50'
-	| 'watched75'
-	| 'end';
+const eventMetrics = {
+	play: 'metric1',
+	skip: 'metric2',
+	'25': 'metric3',
+	'50': 'metric4',
+	'75': 'metric5',
+	watched25: 'metric3',
+	watched50: 'metric4',
+	watched75: 'metric5',
+	end: 'metric6',
+} as const;
 
-type Metric =
-	| 'metric1'
-	| 'metric2'
-	| 'metric3'
-	| 'metric4'
-	| 'metric5'
-	| 'metric6'
-	| 'metric24'
-	| 'metric25';
+type EventType = keyof typeof eventMetrics;
+type Metric = typeof eventMetrics[EventType] | 'metric24' | 'metric25';
 
-type EventMetrics = {
-	play?: 'metric1';
-	skip?: 'metric2';
-	'25'?: 'metric3';
-	'50'?: 'metric4';
-	'75'?: 'metric5';
-	watched25?: 'metric3';
-	watched50?: 'metric4';
-	watched75?: 'metric5';
-	end?: 'metric6';
-};
+type EventMetrics = Partial<typeof eventMetrics>;
 
 type MediaEvent = {
 	mediaId: string;
