@@ -43,11 +43,8 @@ const trackExternalLinkClick = (target: HTMLElement, tag: string): void => {
 	window.ga(send, 'event', 'click', 'external', tag, data);
 };
 
-const trackSponsorLogoLinkClick = (target: Record<string, unknown>): void => {
-	const sponsorName =
-		isObject(target.dataset) && isString(target.dataset.sponsor)
-			? target.dataset.sponsor
-			: null;
+const trackSponsorLogoLinkClick = (target: HTMLElement): void => {
+	const sponsorName = target.dataset.sponsor;
 
 	window.ga(send, 'event', 'click', 'sponsor logo', sponsorName, {
 		nonInteraction: true,
