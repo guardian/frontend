@@ -14,13 +14,16 @@ jest.mock('@guardian/commercial-core', () => ({
 }));
 
 jest.mock('lib/config', () => ({
-	get: jest.fn((key: string) => {
+	get: jest.fn((key: string, fallback?: unknown) => {
 		if (key === 'page.adUnit') {
 			return 'adunit';
 		}
 		if (key === 'isDotcomRendering') {
 			return false;
 		}
+
+		if (fallback) return fallback;
+
 		throw new Error(
 			`Unexpected config lookup '${key}', check the mock is still correct`,
 		);

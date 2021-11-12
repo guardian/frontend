@@ -6,11 +6,11 @@ import type {
 } from '@guardian/consent-management-platform/dist/types';
 import { loadScript, log } from '@guardian/libs';
 import fastdom from 'fastdom';
-import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
 import config from 'lib/config';
+import type { MaybeArray } from 'lib/url';
 import { constructQuery } from 'lib/url';
 
 interface WindowLocal extends Window {
@@ -180,7 +180,7 @@ const createAdsConfig = (
 		return { disableAds: true };
 	}
 
-	const custParams = removeFalseyValues(getPageTargeting());
+	const custParams = getPageTargeting() as Record<string, MaybeArray<string>>;
 	custParams.permutive = getPermutivePFPSegments();
 
 	const adsConfig: AdsConfig = {
