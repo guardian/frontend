@@ -219,9 +219,11 @@ const getHost = ({
 		canTarget(state) &&
 		!adFree &&
 		classes.includes('youtube-media-atom__iframe')
-	)
+	) {
 		return 'https://www.youtube.com';
-	return 'https://www.youtube-nocookie.com';
+	} else {
+		return 'https://www.youtube-nocookie.com';
+	}
 };
 
 const setupPlayer = (
