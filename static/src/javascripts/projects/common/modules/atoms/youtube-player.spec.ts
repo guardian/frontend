@@ -50,7 +50,7 @@ jest.mock('common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(),
 }));
 
-const stateTcfv2 = (canTarget: boolean): ConsentState => ({
+const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
 	tcfv2: {
 		consents: { 1: canTarget, 2: canTarget, 3: canTarget },
 		gdprApplies: true,
@@ -61,13 +61,13 @@ const stateTcfv2 = (canTarget: boolean): ConsentState => ({
 	},
 });
 
-const stateCcpa = (canTarget: boolean): ConsentState => ({
+const canTargetCCPA = (canTarget: boolean): ConsentState => ({
 	ccpa: {
 		doNotSell: !canTarget,
 	},
 });
 
-const stateAus = (canTarget: boolean): ConsentState => ({
+const canTargetAUS = (canTarget: boolean): ConsentState => ({
 	aus: {
 		personalisedAdvertising: canTarget,
 	},
@@ -84,48 +84,69 @@ describe('create ads config', () => {
 	});
 
 	it('does not disable ads when we are not in ad-free', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateTcfv2(true));
+		const result = youtubePlayer.createAdsConfig(
+			false,
+			canTargetTCFv2(true),
+		);
 		expect(result.disableAds).toBeUndefined();
 	});
 
 	it('in non ad-free, returns adsConfig without consent in TCF', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateTcfv2(false));
+		const result = youtubePlayer.createAdsConfig(
+			false,
+			canTargetTCFv2(false),
+		);
 		expect(result.restrictedDataProcessor).toBeUndefined();
 		expect(result.nonPersonalizedAd).toBeTruthy();
 	});
 
 	it('in non ad-free, returns adsConfig with consent in TCF', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateTcfv2(true));
+		const result = youtubePlayer.createAdsConfig(
+			false,
+			canTargetTCFv2(true),
+		);
 		expect(result.restrictedDataProcessor).toBeUndefined();
 		expect(result.nonPersonalizedAd).toBeFalsy();
 	});
 
 	it('in non ad-free, returns adsConfig without consent in CCPA', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateCcpa(false));
+		const result = youtubePlayer.createAdsConfig(
+			false,
+			canTargetCCPA(false),
+		);
 		expect(result.restrictedDataProcessor).toBeTruthy();
 		expect(result.nonPersonalizedAd).toBeUndefined();
 	});
 
 	it('in non ad-free, returns adsConfig with consent in CCPA', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateCcpa(true));
+		const result = youtubePlayer.createAdsConfig(
+			false,
+			canTargetCCPA(true),
+		);
 		expect(result.restrictedDataProcessor).toBeFalsy();
 		expect(result.nonPersonalizedAd).toBeUndefined();
 	});
 
 	it('in non ad-free, returns adsConfig without consent in aus', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateAus(false));
+		const result = youtubePlayer.createAdsConfig(
+			false,
+			canTargetAUS(false),
+		);
 		expect(result.restrictedDataProcessor).toBeTruthy();
 		expect(result.nonPersonalizedAd).toBeUndefined();
 	});
 
 	it('in non ad-free, returns adsConfig with consent in aus', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateAus(true));
+		const result = youtubePlayer.createAdsConfig(false, canTargetAUS(true));
 		expect(result.restrictedDataProcessor).toBeFalsy();
 		expect(result.nonPersonalizedAd).toBeUndefined();
 	});
 
 	it('in non ad-free includes adUnit', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateCcpa(true));
+		const result = youtubePlayer.createAdsConfig(
+			false,
+			canTargetCCPA(true),
+		);
 
 		expect(result.adTagParameters).toBeDefined();
 		if (result.adTagParameters) {
@@ -134,7 +155,10 @@ describe('create ads config', () => {
 	});
 
 	it('in non ad-free includes url-escaped and tcfv2 targeting params', () => {
-		const result = youtubePlayer.createAdsConfig(false, stateTcfv2(true));
+		const result = youtubePlayer.createAdsConfig(
+			false,
+			canTargetTCFv2(true),
+		);
 		const expectedAdTargetingParams = {
 			cmpGdpr: 1,
 			cmpGvcd: 'testaddtlConsent',
