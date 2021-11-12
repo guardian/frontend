@@ -115,7 +115,7 @@ const buildEpicPayload = async () => {
 
 	const targeting = {
 		contentType: page.contentType,
-		sectionName: page.section,
+		sectionId: page.section,
 		shouldHideReaderRevenue: page.shouldHideReaderRevenue,
 		isMinuteArticle: config.hasTone('Minute'),
 		isPaidContent: page.isPaidContent,
