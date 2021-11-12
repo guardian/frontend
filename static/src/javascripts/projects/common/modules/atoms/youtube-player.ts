@@ -72,14 +72,12 @@ const getFramework = (state: ConsentState): Framework | null => {
 	return null;
 };
 
-let latestConsentState: ConsentState;
-let resolveInitialConsent: (f: Framework | null) => void;
-const initialConsent = new Promise((resolve) => {
+let resolveInitialConsent: (state: ConsentState) => void;
+const initialConsent = new Promise<ConsentState>((resolve) => {
 	resolveInitialConsent = resolve;
 });
 onConsentChange((state) => {
-	latestConsentState = state;
-	resolveInitialConsent(getFramework(state));
+	resolveInitialConsent(state);
 });
 
 interface YTPlayerEvent extends Omit<Event, 'target'> {
@@ -215,6 +213,7 @@ const setupPlayer = (
 	onError: (event: YTPlayerEvent) => void,
 	onAdStart: () => void,
 	onAdEnd: () => void,
+	consentState: ConsentState,
 ): YT.Player => {
 	// relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
 	const relatedChannels: string[] = [];
@@ -225,10 +224,7 @@ const setupPlayer = (
 	 * empty array.
 	 */
 
-	const adsConfig = createAdsConfig(
-		commercialFeatures.adFree,
-		latestConsentState,
-	);
+	const adsConfig = createAdsConfig(commercialFeatures.adFree, consentState);
 
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
@@ -267,7 +263,7 @@ export const initYoutubePlayer = async (
 ): Promise<YT.Player> => {
 	await loadScript(scriptSrc, {});
 	await youtubeReady;
-	await initialConsent;
+	const consentState = await initialConsent;
 
 	const onPlayerStateChange = (event: YTPlayerEvent) => {
 		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
@@ -314,6 +310,7 @@ export const initYoutubePlayer = async (
 		onPlayerError,
 		onAdStart,
 		onAdEnd,
+		consentState,
 	);
 };
 
