@@ -205,6 +205,25 @@ const createAdsConfig = (
 	return adsConfig;
 };
 
+type YTHost = 'https://www.youtube.com' | 'https://www.youtube-nocookie.com';
+const getHost = ({
+	state,
+	containsClass,
+	adFree,
+}: {
+	state: ConsentState;
+	containsClass: (token: string) => boolean;
+	adFree: boolean;
+}): YTHost => {
+	if (
+		canTarget(state) &&
+		!adFree &&
+		containsClass('youtube-media-atom__iframe')
+	)
+		return 'https://www.youtube.com';
+	return 'https://www.youtube-nocookie.com';
+};
+
 const setupPlayer = (
 	el: HTMLElement,
 	videoId: string,
@@ -228,11 +247,11 @@ const setupPlayer = (
 
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
-		host:
-			commercialFeatures.adFree ||
-			!el.classList.contains('youtube-media-atom__iframe')
-				? 'https://www.youtube-nocookie.com'
-				: 'https://www.youtube.com',
+		host: getHost({
+			state: consentState,
+			containsClass: el.classList.contains.bind(this),
+			adFree: commercialFeatures.adFree,
+		}),
 		videoId,
 		width: '100%',
 		height: '100%',
@@ -314,4 +333,4 @@ export const initYoutubePlayer = async (
 	);
 };
 
-export const _ = { createAdsConfig };
+export const _ = { createAdsConfig, getHost };

@@ -175,3 +175,45 @@ describe('create ads config', () => {
 		}
 	});
 });
+
+describe('Get Host (no-cookie)', () => {
+	test('`youtube-nocookie.com` with an empty state', () => {
+		const host = youtubePlayer.getHost({
+			state: {},
+			adFree: false,
+			containsClass: () => true,
+		});
+
+		expect(host).toEqual('https://www.youtube-nocookie.com');
+	});
+
+	test('`youtube-nocookie.com` with an ad-free', () => {
+		const host = youtubePlayer.getHost({
+			state: { aus: { personalisedAdvertising: true } },
+			adFree: true,
+			containsClass: () => true,
+		});
+
+		expect(host).toEqual('https://www.youtube-nocookie.com');
+	});
+
+	test('`youtube-nocookie.com` with for other than youtube-media-atom__iframe', () => {
+		const host = youtubePlayer.getHost({
+			state: { aus: { personalisedAdvertising: true } },
+			adFree: false,
+			containsClass: () => false,
+		});
+
+		expect(host).toEqual('https://www.youtube-nocookie.com');
+	});
+
+	test('`youtube.com` when all three conditions met', () => {
+		const host = youtubePlayer.getHost({
+			state: { aus: { personalisedAdvertising: true } },
+			adFree: false,
+			containsClass: () => true,
+		});
+
+		expect(host).toEqual('https://www.youtube.com');
+	});
+});
