@@ -155,31 +155,27 @@ const onPlayerReadyEvent = (
 	handlers?.onPlayerReady(event);
 };
 
+interface AdFreeConfig {
+	disableAds: true;
+}
+const createAdFreeConfig = (): AdFreeConfig => {
+	const adFreeConfig: AdFreeConfig = { disableAds: true };
+	log('commercial', 'YouTube Ad-Free Config', adFreeConfig);
+	return adFreeConfig;
+};
+
 interface AdsConfig {
-	adTagParameters?: {
+	adTagParameters: {
 		iu: string;
 		cust_params: string;
 		cmpGdpr: number;
-		cmpVcd: string | undefined;
-		cmpGvcd: string | undefined;
+		cmpVcd?: string;
+		cmpGvcd?: string;
 	};
 	nonPersonalizedAd?: boolean;
 	restrictedDataProcessor?: boolean;
 }
-interface AdFreeConfig {
-	disableAds: true;
-}
-
-const createAdsConfig = (
-	adFree: boolean,
-	consentState: ConsentState,
-): AdsConfig | AdFreeConfig => {
-	if (adFree) {
-		const adFreeConfig: AdFreeConfig = { disableAds: true };
-		log('commercial', 'YouTube Ad-Free Config', adFreeConfig);
-		return adFreeConfig;
-	}
-
+const createAdsConfig = (consentState: ConsentState): AdsConfig => {
 	const custParams = getPageTargeting() as Record<string, MaybeArray<string>>;
 	custParams.permutive = getPermutivePFPSegments();
 
@@ -249,7 +245,9 @@ const setupPlayer = (
 	 * empty array.
 	 */
 
-	const adsConfig = createAdsConfig(commercialFeatures.adFree, consentState);
+	const adsConfig = commercialFeatures.adFree
+		? createAdFreeConfig()
+		: createAdsConfig(consentState);
 
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
@@ -339,4 +337,4 @@ export const initYoutubePlayer = async (
 	);
 };
 
-export const _ = { createAdsConfig, getHost };
+export const _ = { createAdsConfig, createAdFreeConfig, getHost };
