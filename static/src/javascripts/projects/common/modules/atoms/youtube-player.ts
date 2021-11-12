@@ -134,9 +134,7 @@ const onPlayerStateChangeEvent = (
 		});
 	}
 
-	if (handlers && typeof handlers.onPlayerStateChange === 'function') {
-		handlers.onPlayerStateChange(event);
-	}
+	handlers?.onPlayerStateChange(event);
 };
 
 const onPlayerReadyEvent = (
@@ -154,10 +152,7 @@ const onPlayerReadyEvent = (
 		}
 	});
 
-	// we should be able to remove this check once everything is using flow/ES^
-	if (handlers && typeof handlers.onPlayerReady === 'function') {
-		handlers.onPlayerReady(event);
-	}
+	handlers?.onPlayerReady(event);
 };
 
 interface AdsConfig {
