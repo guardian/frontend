@@ -74,15 +74,14 @@ const getFramework = (state: ConsentState): Framework | null => {
 
 let resolveInitialConsent: (state: ConsentState) => void;
 const initialConsent = new Promise<ConsentState>((resolve) => {
+	// We don’t need to wait for consent if Ad-Free
+	if (commercialFeatures.adFree) resolve({});
+
 	resolveInitialConsent = resolve;
 });
 onConsentChange((state) => {
 	resolveInitialConsent(state);
 });
-if (commercialFeatures.adFree) {
-	// We don’t need a valid state if Ad Free!
-	resolveInitialConsent({});
-}
 
 interface YTPlayerEvent extends Omit<Event, 'target'> {
 	data: number;
@@ -169,17 +168,21 @@ interface AdsConfig {
 		cmpVcd: string | undefined;
 		cmpGvcd: string | undefined;
 	};
-	disableAds?: boolean;
 	nonPersonalizedAd?: boolean;
 	restrictedDataProcessor?: boolean;
+}
+interface AdFreeConfig {
+	disableAds: true;
 }
 
 const createAdsConfig = (
 	adFree: boolean,
 	consentState: ConsentState,
-): AdsConfig => {
+): AdsConfig | AdFreeConfig => {
 	if (adFree) {
-		return { disableAds: true };
+		const adFreeConfig: AdFreeConfig = { disableAds: true };
+		log('commercial', 'YouTube Ad-Free Config', adFreeConfig);
+		return adFreeConfig;
 	}
 
 	const custParams = getPageTargeting() as Record<string, MaybeArray<string>>;
