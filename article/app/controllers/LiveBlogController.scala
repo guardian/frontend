@@ -3,9 +3,8 @@ package controllers
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
-import conf.switches.Switches.liveblogFiltering
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, Experiment, LiveblogFiltering, LiveblogRendering}
+import experiments.{ActiveExperiments, Experiment, LiveblogRendering}
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
@@ -56,7 +55,7 @@ class LiveBlogController(
 
   def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
-      val filter = shouldFilter(filterKeyEvents, liveblogFiltering.isSwitchedOn)
+      val filter = shouldFilter(filterKeyEvents)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
           renderWithRange(path, PageWithBlock(id), filter) // we know the id of a block
@@ -77,7 +76,7 @@ class LiveBlogController(
       filterKeyEvents: Option[Boolean],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
-      val filter = shouldFilter(filterKeyEvents, liveblogFiltering.isSwitchedOn)
+      val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate)
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
@@ -265,7 +264,7 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        createLiveBlogModel(liveBlog, response, range, experimentSwitch(LiveblogFiltering), filterKeyEvents).left
+        createLiveBlogModel(liveBlog, response, range, filterKeyEvents).left
           .map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
@@ -276,11 +275,7 @@ class LiveBlogController(
     content
   }
 
-  def shouldFilter(filterKeyEvents: Option[Boolean], featureSwitch: Boolean): Boolean = {
-    filterKeyEvents.getOrElse(false) && featureSwitch
-  }
-
-  private def experimentSwitch(experiment: Experiment)(implicit request: RequestHeader): Boolean = {
-    liveblogFiltering.isSwitchedOn && ActiveExperiments.isParticipating(experiment)
+  def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
+    filterKeyEvents.getOrElse(false)
   }
 }
