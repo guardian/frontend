@@ -1,7 +1,9 @@
 import { getPermutivePFPSegments } from '@guardian/commercial-core';
 import { onConsentChange } from '@guardian/consent-management-platform';
-import type { Framework } from '@guardian/consent-management-platform/dist/types';
-import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
+import type {
+	ConsentState,
+	Framework,
+} from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
 import fastdom from 'fastdom';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
@@ -45,45 +47,38 @@ const addVideoStartedClass = (el: HTMLElement | null) => {
 	}
 };
 
-let tcfData: TCFv2ConsentState | undefined = undefined;
-
-interface ConsentState {
-	framework: null | Framework;
-	canTarget: boolean;
-}
-
-let consentState: ConsentState = {
-	framework: null,
-	canTarget: false,
+const canTarget = (state: ConsentState): boolean => {
+	if (state.ccpa) {
+		return !state.ccpa.doNotSell;
+	}
+	if (state.aus) {
+		return state.aus.personalisedAdvertising;
+	}
+	if (state.tcfv2) {
+		return (
+			Object.values(state.tcfv2.consents).length > 0 &&
+			Object.values(state.tcfv2.consents).every(Boolean)
+		);
+	}
+	return false;
 };
 
-let resolveInitialConsent: (f: Framework) => void;
+const getFramework = (state: ConsentState): Framework | null => {
+	if (state.ccpa) return 'ccpa';
+	if (state.aus) return 'aus';
+	if (state.tcfv2) return 'tcfv2';
+
+	return null;
+};
+
+let latestConsentState: ConsentState;
+let resolveInitialConsent: (f: Framework | null) => void;
 const initialConsent = new Promise((resolve) => {
 	resolveInitialConsent = resolve;
 });
-onConsentChange((cmpConsent) => {
-	if (cmpConsent.ccpa) {
-		consentState = {
-			framework: 'ccpa',
-			canTarget: !cmpConsent.ccpa.doNotSell,
-		};
-		resolveInitialConsent('ccpa');
-	} else if (cmpConsent.aus) {
-		consentState = {
-			framework: 'aus',
-			canTarget: cmpConsent.aus.personalisedAdvertising,
-		};
-		resolveInitialConsent('aus');
-	} else {
-		tcfData = cmpConsent.tcfv2;
-		consentState = {
-			framework: 'tcfv2',
-			canTarget: tcfData
-				? Object.values(tcfData.consents).every(Boolean)
-				: false,
-		};
-		resolveInitialConsent('tcfv2');
-	}
+onConsentChange((state) => {
+	latestConsentState = state;
+	resolveInitialConsent(getFramework(state));
 });
 
 interface YTPlayerEvent extends Omit<Event, 'target'> {
@@ -191,16 +186,19 @@ const createAdsConfig = (
 		adTagParameters: {
 			iu: config.get('page.adUnit') as string,
 			cust_params: encodeURIComponent(constructQuery(custParams)),
-			cmpGdpr: tcfData?.gdprApplies ? 1 : 0,
-			cmpVcd: tcfData?.tcString,
-			cmpGvcd: tcfData?.addtlConsent,
+			cmpGdpr: consentState.tcfv2?.gdprApplies ? 1 : 0,
+			cmpVcd: consentState.tcfv2?.tcString,
+			cmpGvcd: consentState.tcfv2?.addtlConsent,
 		},
 	};
 
-	if (consentState.framework === 'ccpa' || consentState.framework === 'aus') {
-		adsConfig.restrictedDataProcessor = !consentState.canTarget;
+	if (
+		getFramework(consentState) === 'ccpa' ||
+		getFramework(consentState) === 'aus'
+	) {
+		adsConfig.restrictedDataProcessor = !canTarget(consentState);
 	} else {
-		adsConfig.nonPersonalizedAd = !consentState.canTarget;
+		adsConfig.nonPersonalizedAd = !canTarget(consentState);
 	}
 
 	return adsConfig;
@@ -224,7 +222,10 @@ const setupPlayer = (
 	 * empty array.
 	 */
 
-	const adsConfig = createAdsConfig(commercialFeatures.adFree, consentState);
+	const adsConfig = createAdsConfig(
+		commercialFeatures.adFree,
+		latestConsentState,
+	);
 
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
