@@ -79,6 +79,10 @@ const initialConsent = new Promise<ConsentState>((resolve) => {
 onConsentChange((state) => {
 	resolveInitialConsent(state);
 });
+if (commercialFeatures.adFree) {
+	// We don’t need a valid state if Ad Free!
+	resolveInitialConsent({});
+}
 
 interface YTPlayerEvent extends Omit<Event, 'target'> {
 	data: number;
