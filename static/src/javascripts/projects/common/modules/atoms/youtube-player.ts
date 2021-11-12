@@ -208,17 +208,17 @@ const createAdsConfig = (
 type YTHost = 'https://www.youtube.com' | 'https://www.youtube-nocookie.com';
 const getHost = ({
 	state,
-	containsClass,
+	classes,
 	adFree,
 }: {
 	state: ConsentState;
-	containsClass: (token: string) => boolean;
+	classes: string[];
 	adFree: boolean;
 }): YTHost => {
 	if (
 		canTarget(state) &&
 		!adFree &&
-		containsClass('youtube-media-atom__iframe')
+		classes.includes('youtube-media-atom__iframe')
 	)
 		return 'https://www.youtube.com';
 	return 'https://www.youtube-nocookie.com';
@@ -249,7 +249,7 @@ const setupPlayer = (
 	return new window.YT.Player(el.id, {
 		host: getHost({
 			state: consentState,
-			containsClass: el.classList.contains.bind(this),
+			classes: [...el.classList.values()],
 			adFree: commercialFeatures.adFree,
 		}),
 		videoId,

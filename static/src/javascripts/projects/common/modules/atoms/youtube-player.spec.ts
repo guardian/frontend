@@ -181,7 +181,7 @@ describe('Get Host (no-cookie)', () => {
 		const host = youtubePlayer.getHost({
 			state: {},
 			adFree: false,
-			containsClass: () => true,
+			classes: ['youtube-media-atom__iframe'],
 		});
 
 		expect(host).toEqual('https://www.youtube-nocookie.com');
@@ -191,7 +191,7 @@ describe('Get Host (no-cookie)', () => {
 		const host = youtubePlayer.getHost({
 			state: { aus: { personalisedAdvertising: true } },
 			adFree: true,
-			containsClass: () => true,
+			classes: ['youtube-media-atom__iframe'],
 		});
 
 		expect(host).toEqual('https://www.youtube-nocookie.com');
@@ -201,7 +201,7 @@ describe('Get Host (no-cookie)', () => {
 		const host = youtubePlayer.getHost({
 			state: { aus: { personalisedAdvertising: true } },
 			adFree: false,
-			containsClass: () => false,
+			classes: ['not sure'],
 		});
 
 		expect(host).toEqual('https://www.youtube-nocookie.com');
@@ -211,7 +211,7 @@ describe('Get Host (no-cookie)', () => {
 		const host = youtubePlayer.getHost({
 			state: { aus: { personalisedAdvertising: true } },
 			adFree: false,
-			containsClass: () => true,
+			classes: ['youtube-media-atom__iframe'],
 		});
 
 		expect(host).toEqual('https://www.youtube.com');
