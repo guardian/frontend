@@ -205,6 +205,7 @@ const createAdsConfig = (
 	return adsConfig;
 };
 
+/*eslint curly: ["error", "multi-line"] -- it’s safer to update */
 type YTHost = 'https://www.youtube.com' | 'https://www.youtube-nocookie.com';
 const getHost = ({
 	state,
@@ -221,9 +222,10 @@ const getHost = ({
 		classes.includes('youtube-media-atom__iframe')
 	) {
 		return 'https://www.youtube.com';
-	} else {
-		return 'https://www.youtube-nocookie.com';
 	}
+
+	// Default to no-cookie
+	return 'https://www.youtube-nocookie.com';
 };
 
 const setupPlayer = (
