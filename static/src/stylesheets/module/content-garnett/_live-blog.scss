@@ -378,7 +378,7 @@ input:checked + .live-blog__filter-switch-slider:before {
     max-height: 30vh;
     overflow: hidden;
     transition: max-height .25s ease-in-out;
-    background-color: white;
+    background-color: #ffffff;
 
 }
 
@@ -389,7 +389,7 @@ input:checked + .live-blog__filter-switch-slider:before {
     padding: $gs-baseline/4 0 0 $gs-gutter/2;
     margin-bottom: $gs-baseline;
     position: relative;
-    display:flex;
+    display: flex;
     align-items: center;
 }
 
@@ -403,7 +403,7 @@ $block-padding-left: gs-span(1) + 4;
 .live-blog__pinned-block-timestamp {
     @include fs-textSans(2);
     font-weight: bold;
-    color:white;
+    color: #ffffff;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
     @include mq(tablet) {
@@ -415,10 +415,10 @@ $block-padding-left: gs-span(1) + 4;
 
 
 .live-blog__pinned-block-button {
+    @include fs-textSans(2);
     all: unset;
     position: absolute;
     cursor: pointer;
-    @include fs-textSans(2);
     font-weight: bold;
     color: #ffffff;
     margin-left: $gs-gutter/2;
@@ -426,7 +426,7 @@ $block-padding-left: gs-span(1) + 4;
     width: 6.5rem;
     background-color: $news-main;
     bottom: -$gs-gutter + 5;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 1rem;
@@ -444,16 +444,16 @@ $block-padding-left: gs-span(1) + 4;
 }
 
 .live-blog__overlay {
-    background-image: linear-gradient(0deg, white, white 40%, transparent);
+    background-image: linear-gradient(0deg, #ffffff, #ffffff 40%, transparent);
     height: 80px;
     z-index: 1;
-    position:absolute;
-    bottom:0;
-    width:100%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .wrap-collapsible {
-    position:relative;
+    position: relative;
     margin-bottom: 1.2rem;
 
 }
@@ -463,7 +463,7 @@ input[type='checkbox'] {
 }
 
 .lbl-toggle {
-    transition: all 0.25s ease-out;
+    transition: all .25s ease-out;
 }
 
 
