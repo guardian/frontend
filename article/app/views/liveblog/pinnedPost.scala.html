@@ -5,28 +5,25 @@
 
 @(block: BodyBlock, article: Article, timezone: DateTimeZone)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-
 @*
 * This template is to wrap pinned posts
 *@
 
-<div class="wrap-collapsible">
+
+
+<div class="pinned-block__collapsible-container">
     <input id="collapsible" class="toggle" type="checkbox">
-    <label for="collapsible" class="live-blog__pinned-block-button lbl-toggle"> + Show more</label>
+    <label for="collapsible" class="pinned-block__btn pinned-block--toggle"></label>
 
-
-    <section class="collapsible-content live-blog__pinned-block-wrapper">
-        <div class="live-blog__pinned-block-header">
-            <p class="live-blog__pinned-block-icon">@icon("twitter-bird")</p>
-            <p class="live-blog__pinned-block-timestamp">From@views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), true)</p>
+    <section class="pinned-block__collapsible-content">
+        <div class="pinned-block__header">
+            <p class="pinned-block__icon">@icon("twitter-bird")</p>
+            <p class="pinned-block__timestamp">From@views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), true)</p>
         </div>
-        <div class="content-inner">
-         @views.html.liveblog.liveBlogBlock(block, article, timezone, true)
-            <div class="live-blog__overlay" />
+        <div class="pinned-block__body">
+            @views.html.liveblog.liveBlogBlock(block, article, timezone, true)
+            <div class="pinned-block__overlay" />
         </div>
-
     </section>
 
 </div>
-
-
