@@ -185,6 +185,7 @@ const createAdsConfigEnabled = (
 			},
 			nonPersonalizedAd: !canTarget(consentState),
 		};
+		log('commercial', 'YouTube Ads Config TCFv2', adsConfigTCFv2);
 		return adsConfigTCFv2;
 	}
 
