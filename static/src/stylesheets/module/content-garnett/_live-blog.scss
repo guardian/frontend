@@ -257,6 +257,8 @@
 
 /* The switch - the box around the slider */
 .live-blog__filter-switch {
+    display: flex;
+    align-items: center;
     margin-bottom: 12px;
 }
 
