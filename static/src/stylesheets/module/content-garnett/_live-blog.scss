@@ -257,8 +257,6 @@
 
 /* The switch - the box around the slider */
 .live-blog__filter-switch {
-    display: flex;
-    align-items: center;
     margin-bottom: 12px;
 }
 
@@ -287,6 +285,8 @@
 
 /* The slider */
 .live-blog__filter-switch-slider {
+    display: flex;
+    align-items: center;
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -305,7 +305,6 @@
     height: 1.125rem;
     width: 1.125rem;
     left: .25rem;
-    bottom: .2rem;
     background-color: $brightness-100;
     -webkit-transition: .2s;
     transition: .2s;
