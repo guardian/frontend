@@ -24,10 +24,10 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     )
 
   private def fakeBlocks(number: Int, ofWhichKeyEvents: Int = 0, ofWhichPinnedPosts: Int = 0): List[BodyBlock] = {
-    number should be > ofWhichKeyEvents
+    number should be > ofWhichKeyEvents + ofWhichPinnedPosts
     val regular = Range(number, ofWhichKeyEvents, -1).map(p => fakeBlock(p)).toList
     val keyEvents = Range(ofWhichKeyEvents, 0, -1).map(p => fakeBlock(p, true, false)).toList
-    val pinnedPosts = Range(ofWhichPinnedPosts, 0, -1).map(p => fakeBlock(p, false, true)).toList
+    val pinnedPosts = Range(ofWhichPinnedPosts + 100, 100, -1).map(p => fakeBlock(p, false, true)).toList
     pinnedPosts ++ regular ++ keyEvents
   }
 
@@ -60,62 +60,75 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     result.get.pagination should be(pagination)
   }
 
-  it should "add a pinned post when 3 posts in total" in {
-    val blocks = fakeBlocks(3, 0, 1)
-    val expectedPinnedPost = fakeBlock(1, false, true)
+  it should "add the most recent pinned post to the first page" in {
+    val blocks = fakeBlocks(5, 0, 2)
+    val latestPinnedPost = fakeBlock(102, false, true)
+    val olderPinnedPost = fakeBlock(101, false, true)
+    val evenOlderPinnedPost = fakeBlock(100, false, true)
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
         3,
         Nil,
         None,
-        Map(CanonicalLiveBlog.firstPage -> blocks.take(3), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.take(3),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
       ),
       false,
     )
-
-    result.get.pinnedPost should be(Some(expectedPinnedPost))
-
+    result.get.pinnedPost should be(Some(latestPinnedPost))
+    result.get.pinnedPost should not be (Some(olderPinnedPost))
+    result.get.pinnedPost should not be (Some(evenOlderPinnedPost))
   }
 
-  it should "give pinned post attribute prioity over keyEvent" in {
-
+  it should "not add a pinned post into other blocks" in {
+    val blocks = fakeBlocks(5, 0, 3)
+    val expectedPinnedPost = fakeBlock(103, false, true)
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
         3,
         Nil,
         None,
-        Map(CanonicalLiveBlog.firstPage -> blocks.take(3), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.take(3),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
       ),
       false,
     )
-
     result.get.pinnedPost should be(Some(expectedPinnedPost))
-
+    result.get.currentPage.blocks should not contain (expectedPinnedPost)
   }
 
-  it should "add a pinned post when 15 posts in total" in {
-    val blocks = fakeBlocks(15, 0, 1)
-    val expectedPinnedPost = fakeBlock(1, false, true)
-
+  it should "still include pinned post when filtering for key events" in {
+    val blocks = fakeBlocks(10, 3, 4)
+    val expectedPinnedPost = fakeBlock(104, false, true)
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
         3,
         Nil,
         None,
-        Map(CanonicalLiveBlog.firstPage -> blocks.take(10), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.take(4),
+          CanonicalLiveBlog.timeline -> blocks.take(3),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
       ),
-      false,
+      true,
     )
-
     result.get.pinnedPost should be(Some(expectedPinnedPost))
-
   }
 
   it should "allow 3 blocks on one page" in {
     val blocks = fakeBlocks(3)
+
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(

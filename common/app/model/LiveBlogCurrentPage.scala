@@ -46,7 +46,6 @@ object LiveBlogCurrentPage {
 
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
   def firstPage(pageSize: Int, blocks: Blocks, filterKeyEvents: Boolean): Option[LiveBlogCurrentPage] = {
-
     val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = if (filterKeyEvents) {
       val keyEvents = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
       val keyEventsCount = keyEvents.getOrElse(Seq.empty).size
@@ -75,13 +74,11 @@ object LiveBlogCurrentPage {
         BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents)
       }
 
+      // returns latest pinned post and blocks minus the pinned post
       val (pinnedPost, filteredFirstPageBlocks) = {
         val pinnedPosts = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
-
         val pinnedPost = pinnedPosts.flatMap(_.headOption)
-
-        val pinnedPostId = pinnedPost.map(_.id).getOrElse(None)
-
+        val pinnedPostId = pinnedPost.map(_.id).getOrElse("")
         val filteredFirstPageBlocks = firstPageBlocks.filter(_.id != pinnedPostId)
 
         (pinnedPost, filteredFirstPageBlocks)
