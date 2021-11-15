@@ -17,7 +17,7 @@
 
     <section class="pinned-block__collapsible-content">
         <div class="pinned-block__header">
-            <p class="pinned-block__icon">@icon("twitter-bird")</p>
+            @fragments.inlineSvg("pin", "icon", List("inline-icon"))
             <p class="pinned-block__timestamp">From@views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), true)</p>
         </div>
         <div class="pinned-block__body">
