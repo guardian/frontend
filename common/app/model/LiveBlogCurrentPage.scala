@@ -61,7 +61,6 @@ object LiveBlogCurrentPage {
       (firstPageBlocks, blocks.totalBodyBlocks, oldestPageBlockId)
     }
 
-    val pinnedPost = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage) flatMap (_.find(_.attributes.pinned))
     val remainder = blockCount % pageSize
     val numPages = blockCount / pageSize
 
@@ -74,6 +73,18 @@ object LiveBlogCurrentPage {
 
       val oldestPage = oldestPageBlockId map { blockId =>
         BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents)
+      }
+
+      val (pinnedPost, filteredFirstPageBlocks) = {
+        val pinnedPosts = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
+
+        val pinnedPost = pinnedPosts.flatMap(_.headOption)
+
+        val pinnedPostId = pinnedPost.map(_.id).getOrElse(None)
+
+        val filteredFirstPageBlocks = firstPageBlocks.filter(_.id != pinnedPostId)
+
+        (pinnedPost, filteredFirstPageBlocks)
       }
 
       val pagination = {
@@ -90,7 +101,7 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(firstPageBlocks, filterKeyEvents), pagination, pinnedPost)
+      LiveBlogCurrentPage(FirstPage(filteredFirstPageBlocks, filterKeyEvents), pagination, pinnedPost)
     }
   }
 
@@ -210,5 +221,4 @@ object LatestKeyBlock {
         .map(_.id)
     }
   }
-
 }
