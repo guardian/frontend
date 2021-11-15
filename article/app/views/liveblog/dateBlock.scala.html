@@ -1,11 +1,12 @@
 @import model.liveblog.LiveBlogDate
 
-@(date: Option[LiveBlogDate],pinnedPost: Boolean = false)
-
-@date.map { date =>
-    <time datetime="@date.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@date.ampm <span class="timezone">@date.gmt</span></time>
-    @if(!pinnedPost) {
-        <span class="block-time__absolute">@date.hhmm</span>
+@(date: Option[LiveBlogDate], showFullDate: Boolean = true, showTimestamp: Boolean = true)
+    @date.map { date =>
+        @if(showFullDate) {
+            <time datetime="@date.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@date.ampm <span class="timezone">@date.gmt</span></time>
+        }
+        @if(showTimestamp) {
+            <span class="block-time__absolute">@date.hhmm</span>
+        }
     }
-}
 

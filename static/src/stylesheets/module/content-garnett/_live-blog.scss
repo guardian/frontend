@@ -212,6 +212,7 @@
     svg {
         left: $gs-gutter / 2;
     }
+
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter / 2;
     }
@@ -224,6 +225,7 @@
     svg {
         right: $gs-gutter / 2;
     }
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
     }
@@ -410,8 +412,8 @@ $block-padding-left: gs-span(1) + 4;
 }
 
 .pinned-block__collapsible-container input[type="checkbox"]:checked + label::before {
-     content: '- Show less';
- }
+    content: '- Show less';
+}
 
 .toggle:checked + .pinned-block--toggle + .pinned-block__collapsible-content {
     max-height: fit-content;
@@ -445,11 +447,6 @@ $block-padding-left: gs-span(1) + 4;
     display: flex;
     align-items: center;
 }
-
-.pinned-block__icon {
-    @include fs-textSans(2);
-}
-
 
 .pinned-block__timestamp {
     @include fs-textSans(2);
