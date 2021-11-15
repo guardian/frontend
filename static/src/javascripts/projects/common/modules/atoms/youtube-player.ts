@@ -1,9 +1,13 @@
+import type { AdsConfigDisabled } from '@guardian/commercial-core';
 import { getPermutivePFPSegments } from '@guardian/commercial-core';
-import { onConsentChange } from '@guardian/consent-management-platform';
 import type {
-	ConsentState,
-	Framework,
-} from '@guardian/consent-management-platform/dist/types';
+	AdsConfigBasic,
+	AdsConfigCCPAorAus,
+	AdsConfigEnabled,
+	AdsConfigTCFV2,
+} from '@guardian/commercial-core/dist/cjs/types';
+import { onConsentChange } from '@guardian/consent-management-platform';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript, log } from '@guardian/libs';
 import fastdom from 'fastdom';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
@@ -62,14 +66,6 @@ const canTarget = (state: ConsentState): boolean => {
 		);
 	}
 	return false;
-};
-
-const getFramework = (state: ConsentState): Framework | null => {
-	if (state.ccpa) return 'ccpa';
-	if (state.aus) return 'aus';
-	if (state.tcfv2) return 'tcfv2';
-
-	return null;
 };
 
 let resolveInitialConsent: (state: ConsentState) => void;
@@ -155,52 +151,53 @@ const onPlayerReadyEvent = (
 	handlers?.onPlayerReady(event);
 };
 
-interface AdFreeConfig {
-	disableAds: true;
-}
-const createAdFreeConfig = (): AdFreeConfig => {
-	const adFreeConfig: AdFreeConfig = { disableAds: true };
+const createAdsConfigDisabled = (): AdsConfigDisabled => {
+	const adFreeConfig: AdsConfigDisabled = { disableAds: true };
 	log('commercial', 'YouTube Ad-Free Config', adFreeConfig);
 	return adFreeConfig;
 };
 
-interface AdsConfig {
-	adTagParameters: {
-		iu: string;
-		cust_params: string;
-		cmpGdpr: number;
-		cmpVcd?: string;
-		cmpGvcd?: string;
-	};
-	nonPersonalizedAd?: boolean;
-	restrictedDataProcessor?: boolean;
-}
-const createAdsConfig = (consentState: ConsentState): AdsConfig => {
+/**
+ * TODO: Use buildAdsConfig from `@guardian/commercial-core`
+ * @param consentState
+ * @returns A valid YouTube ads config
+ */
+const createAdsConfigEnabled = (
+	consentState: ConsentState,
+): AdsConfigEnabled => {
 	const custParams = getPageTargeting() as Record<string, MaybeArray<string>>;
 	custParams.permutive = getPermutivePFPSegments();
 
-	const adsConfig: AdsConfig = {
+	const adsConfigBasic: AdsConfigBasic = {
 		adTagParameters: {
 			iu: config.get<string>('page.adUnit', ''),
 			cust_params: encodeURIComponent(constructQuery(custParams)),
-			cmpGdpr: consentState.tcfv2?.gdprApplies ? 1 : 0,
-			cmpVcd: consentState.tcfv2?.tcString,
-			cmpGvcd: consentState.tcfv2?.addtlConsent,
 		},
 	};
 
-	log('commercial', 'YouTube Ads Config', adsConfig);
-
-	if (
-		getFramework(consentState) === 'ccpa' ||
-		getFramework(consentState) === 'aus'
-	) {
-		adsConfig.restrictedDataProcessor = !canTarget(consentState);
-	} else {
-		adsConfig.nonPersonalizedAd = !canTarget(consentState);
+	if (consentState.tcfv2) {
+		const adsConfigTCFv2: AdsConfigTCFV2 = {
+			adTagParameters: {
+				...adsConfigBasic.adTagParameters,
+				cmpGdpr: consentState.tcfv2.gdprApplies ? 1 : 0,
+				cmpVcd: consentState.tcfv2.tcString,
+				cmpGvcd: consentState.tcfv2.addtlConsent,
+			},
+			nonPersonalizedAd: !canTarget(consentState),
+		};
+		return adsConfigTCFv2;
 	}
 
-	return adsConfig;
+	if (consentState.ccpa || consentState.aus) {
+		const adsConfigCCPA: AdsConfigCCPAorAus = {
+			...adsConfigBasic,
+			restrictedDataProcessor: !canTarget(consentState),
+		};
+		log('commercial', 'YouTube Ads Config CCPA/AUS', adsConfigCCPA);
+		return adsConfigCCPA;
+	}
+
+	return adsConfigBasic;
 };
 
 /*eslint curly: ["error", "multi-line"] -- it’s safer to update */
@@ -246,8 +243,8 @@ const setupPlayer = (
 	 */
 
 	const adsConfig = commercialFeatures.adFree
-		? createAdFreeConfig()
-		: createAdsConfig(consentState);
+		? createAdsConfigDisabled()
+		: createAdsConfigEnabled(consentState);
 
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
@@ -337,4 +334,8 @@ export const initYoutubePlayer = async (
 	);
 };
 
-export const _ = { createAdsConfig, createAdFreeConfig, getHost };
+export const _ = {
+	createAdsConfig: createAdsConfigEnabled,
+	createAdFreeConfig: createAdsConfigDisabled,
+	getHost,
+};
