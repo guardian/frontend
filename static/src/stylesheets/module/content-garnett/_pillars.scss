@@ -28,6 +28,13 @@
         border: 2px solid $pillarColor;
     }
 
+    .pinned-block__btn {
+        &:focus,
+        &:hover {
+            background-color: $kickerColor;
+        }
+    }
+
     .byline,
     .content--media .content__headline,
     .content__label__link,
