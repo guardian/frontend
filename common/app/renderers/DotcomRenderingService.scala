@@ -6,11 +6,13 @@ import common.{GuLogging, LinkTo}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.CacheTime
 import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils}
 import model.{ArticlePage, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{RequestHeader, Result}
+import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.twirl.api.Html
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -77,13 +79,16 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
             .withPreconnect(HttpPreconnections.defaultUrls)
         case 400 =>
           // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
-          NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
+          NoCache(InternalServerError("Remote renderer validation error (400)"))
+            .withHeaders("X-GU-Dotcomponents" -> "true")
+        case 415 =>
+          // if DCR returns a 415 it's because we can't render a specific component, so page is not available
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
             .withHeaders("X-GU-Dotcomponents" -> "true")
         case _ =>
           log.error(s"Request to DCR failed: status ${response.status}, body: ${response.body}")
           NoCache(
-            play.api.mvc.Results
-              .InternalServerError("Remote renderer error (500)")
+            InternalServerError("Remote renderer error (500)")
               .withHeaders("X-GU-Dotcomponents" -> "true"),
           )
       }
