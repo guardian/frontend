@@ -2,6 +2,7 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import { log } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz as isInAuOrNz_ } from '../../../common/modules/commercial/geo-utils';
@@ -46,10 +47,6 @@ jest.mock('../../../common/modules/commercial/build-page-targeting', () => ({
 	buildPageTargeting: jest.fn(),
 }));
 
-jest.mock('@guardian/libs', () => ({
-	loadScript: () => Promise.resolve(),
-}));
-
 jest.mock('@guardian/consent-management-platform', () => ({
 	onConsentChange: jest.fn(),
 	getConsentFor: jest.fn(),
@@ -57,6 +54,10 @@ jest.mock('@guardian/consent-management-platform', () => ({
 
 jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(),
+}));
+
+jest.mock('@guardian/libs', () => ({
+	log: jest.fn(),
 }));
 
 const CcpaWithConsentMock = (callback) =>
@@ -131,17 +132,27 @@ describe('init', () => {
 		onConsentChange.mockImplementation(AusWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
 		await init();
+        expect(log).toHaveBeenCalledWith(
+            'commercial',
+            expect.stringContaining("Failed to execute redplanet"),
+            expect.stringContaining("No consent for redplanet"),
+        );
 		expect(window.launchpad).not.toBeCalled();
 	});
+
 
 	it('should throw an error when on CCPA mode', async () => {
 		commercialFeatures.launchpad = true;
 		isInAuOrNz.mockReturnValue(true);
 		onConsentChange.mockImplementation(CcpaWithConsentMock);
 		getConsentFor.mockReturnValue(true);
-		expect(await init).toThrow(
-			`Error running Redplanet without AUS consent. It should only run in Australia on AUS mode`,
-		);
+        await init();
+        expect(log).toHaveBeenCalledWith(
+            'commercial',
+            expect.stringContaining("Failed to execute redplanet"),
+            expect.stringContaining("Redplanet should only run in Australia on AUS mode"),
+        );
+        expect(window.launchpad).not.toBeCalled();
 	});
 
 	it('should not initialise redplanet when launchpad conditions are false', async () => {

@@ -8,6 +8,7 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
+import bean from "bean";
 
 const affixTimeline = () => {
     const keywordIds = config.get('page.keywordIds', '');
@@ -33,6 +34,15 @@ const affixTimeline = () => {
     }
 };
 
+const initFilterCheckbox = () => {
+    const filterKeyEvents = window.location.search.includes('filterKeyEvents=true');
+    const filterSwitch = document.getElementById("filter-switch");
+
+    if (filterSwitch) {
+        filterSwitch.checked = filterKeyEvents;
+    }
+}
+
 const createAutoUpdate = () => {
     if (config.get('page.isLive')) {
         autoUpdate();
@@ -43,6 +53,14 @@ const keepTimestampsCurrent = () => {
     window.setInterval(() => initRelativeDates(), 60000);
 };
 
+const setupListeners = () => {
+    bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
+        const hasParam = window.location.search.includes(`filterKeyEvents=true`);
+        const param = `?filterKeyEvents=${hasParam ? 'false' : 'true'}#liveblog-content`;
+        window.location.assign(`${window.location.pathname}${param}`);
+    })
+}
+
 const init = () => {
     catchErrorsWithContext([
         ['lb-autoupdate', createAutoUpdate],
@@ -51,8 +69,10 @@ const init = () => {
         ['lb-richlinks', upgradeRichLinks],
     ]);
 
+    initFilterCheckbox();
     initTrails();
     initLiveblogCommon();
+    setupListeners();
 
     catchErrorsWithContext([
         [

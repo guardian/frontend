@@ -39,9 +39,8 @@ const pageSkin = (): void => {
 
 	const initTopPositionOnce = (): void => {
 		if (topPosition === 0) {
-			const navHeader = document.querySelector<HTMLElement>(
-				'.new-header',
-			);
+			const navHeader =
+				document.querySelector<HTMLElement>('.new-header');
 			if (navHeader) {
 				topPosition = truskinRendered
 					? navHeader.offsetTop + adLabelHeight

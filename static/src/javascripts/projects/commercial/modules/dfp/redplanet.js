@@ -2,6 +2,7 @@ import {
 	getConsentFor,
 	onConsentChange,
 } from '@guardian/consent-management-platform';
+import { log } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
@@ -28,29 +29,37 @@ const initialise = () => {
 	});
 };
 
-const setupRedplanet = () => {
-	onConsentChange((state) => {
-		// CCPA only runs in the US and tcfv2 outside Aus
-		// Redplanet only runs in Australia
-		// so this should never happen
-		if (!state.aus) {
-			throw new Error(
-				`Error running Redplanet without AUS consent. It should only run in Australia on AUS mode`,
-			);
-		}
-		const canRun = getConsentFor('redplanet', state);
-
-		if (!initialised && canRun) {
-			initialised = true;
-			return import(
-				/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js'
-			).then(() => {
-				initialise();
-				return Promise.resolve();
-			});
-		}
+const setupRedplanet = async () => {
+	let resolveRedPlanetLoaded;
+	let rejectRedPlanetLoaded;
+	const promise = new Promise((resolve, reject) => {
+		resolveRedPlanetLoaded = resolve;
+		rejectRedPlanetLoaded = reject;
+	}).catch((e) => {
+		log('commercial', '⚠️ Failed to execute redplanet', e);
 	});
-	return Promise.resolve();
+
+	onConsentChange((state) => {
+		if (!getConsentFor('redplanet', state)) {
+			rejectRedPlanetLoaded('No consent for redplanet');
+			return;
+		}
+
+		if (!state.aus) {
+			rejectRedPlanetLoaded('Redplanet should only run in Australia on AUS mode');
+			return;
+		}
+
+        if (!initialised) {
+            initialised = true;
+            import(/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js').then(() => {
+                initialise();
+                resolveRedPlanetLoaded();
+            });
+        }
+	});
+
+	return promise;
 };
 
 export const init = () => {

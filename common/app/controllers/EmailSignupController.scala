@@ -58,7 +58,9 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
         .map(ip => List("X-Forwarded-For" -> ip))
         .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
 
-      val queryStringParameters = form.ref.map("ref" -> _).toList ++ form.refViewId.map("refViewId" -> _).toList
+      val queryStringParameters = form.ref.map("ref" -> _).toList ++
+        form.refViewId.map("refViewId" -> _).toList ++
+        form.listName.map("listName" -> _).toList
 
       //FIXME: this should go via the identity api client / app
       wsClient

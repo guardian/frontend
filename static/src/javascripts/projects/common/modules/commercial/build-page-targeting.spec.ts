@@ -21,9 +21,10 @@ import { getUserSegments as getUserSegments_ } from './user-ad-targeting';
 const getUserSegments = getUserSegments_ as jest.MockedFunction<
 	typeof getUserSegments_
 >;
-const getSynchronousParticipations = getSynchronousParticipations_ as jest.MockedFunction<
-	typeof getSynchronousParticipations_
->;
+const getSynchronousParticipations =
+	getSynchronousParticipations_ as jest.MockedFunction<
+		typeof getSynchronousParticipations_
+	>;
 const getReferrer = getReferrer_ as jest.MockedFunction<typeof getReferrer_>;
 const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
 	typeof getBreakpoint_
@@ -42,9 +43,10 @@ const cmp = {
 	hasInitialised: cmp_.hasInitialised as jest.MockedFunction<
 		typeof cmp_.hasInitialised
 	>,
-	willShowPrivacyMessageSync: cmp_.willShowPrivacyMessageSync as jest.MockedFunction<
-		typeof cmp_.willShowPrivacyMessageSync
-	>,
+	willShowPrivacyMessageSync:
+		cmp_.willShowPrivacyMessageSync as jest.MockedFunction<
+			typeof cmp_.willShowPrivacyMessageSync
+		>,
 };
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
 	typeof onConsentChange_
@@ -135,7 +137,7 @@ const tcfv2MixedConsentMock = (callback: Callback): void =>
 
 describe('Build Page Targeting', () => {
 	beforeEach(() => {
-		window.guardian.config.page = ({
+		window.guardian.config.page = {
 			authorIds: 'profile/gabrielle-chan',
 			blogIds: 'a/blog',
 			contentType: 'Video',
@@ -173,7 +175,7 @@ describe('Build Page Targeting', () => {
 			// section: 'unknown',
 			// pbIndexSites: [],
 			// adUnit: 'none',
-		} as unknown) as PageConfig;
+		} as unknown as PageConfig;
 		window.guardian.config.ophan = { pageViewId: 'presetOphanPageViewId' };
 
 		commercialFeatures.adFree = false;

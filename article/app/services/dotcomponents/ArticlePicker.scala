@@ -23,6 +23,9 @@ object ArticlePageChecks {
       "https://interactive.guim.co.uk/2017/07/booklisted/boot.js", // not supported but fallback ok
       "https://interactive.guim.co.uk/page-enhancers/super-lists/boot.js", // broken on frontend anyway
       "https://gdn-cdn.s3.amazonaws.com/quiz-builder/", // old quiz builder quizzes work fine
+      "https://uploads.guim.co.uk/2019/03/20/boot.js", //creates a contents section component
+      "https://uploads.guim.co.uk/2019/12/11/boot.js", //another variant of the contents block
+      "https://interactive.guim.co.uk/page-enhancers/nav/boot.js", //another variant of the contents block
     )
 
     def unsupportedElement(blockElement: BlockElement) =

@@ -2,6 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.`package`._
+import experiments.{ActiveExperiments, LiveblogRendering}
 import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
 import org.joda.time.DateTime
@@ -12,10 +13,14 @@ object LiveBlogHelpers {
 
   // Get a Seq[BodyBlock] given an article and the "page" request parameter on live-blog pages.
 
-  def blocksForLiveBlogRequest(article: Article, param: Option[String]): Seq[BodyBlock] = {
+  def blocksForLiveBlogRequest(
+      article: Article,
+      param: Option[String],
+      filterKeyEvents: Boolean,
+  ): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
-      LiveBlogHelpers.createLiveBlogModel(article, range)
+      LiveBlogHelpers.createLiveBlogModel(article, range, filterKeyEvents)
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
@@ -31,7 +36,11 @@ object LiveBlogHelpers {
 
   // Given a BlockRange and an article, return a combined LiveBlogCurrentPage instance
 
-  def createLiveBlogModel(liveBlog: Article, range: BlockRange): Option[LiveBlogCurrentPage] = {
+  def createLiveBlogModel(
+      liveBlog: Article,
+      range: BlockRange,
+      filterKeyEvents: Boolean,
+  ): Option[LiveBlogCurrentPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
@@ -40,6 +49,7 @@ object LiveBlogHelpers {
         pageSize = pageSize,
         _,
         range,
+        filterKeyEvents,
       ),
     )
 
@@ -51,6 +61,8 @@ object LiveBlogHelpers {
       liveBlog: Article,
       response: ItemResponse,
       range: BlockRange,
+      filterSwitch: Boolean,
+      filterKeyEvents: Boolean,
   ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -61,6 +73,7 @@ object LiveBlogHelpers {
           pageSize = pageSize,
           blocks,
           range,
+          filterKeyEvents,
         )
       } getOrElse None
 
@@ -82,8 +95,16 @@ object LiveBlogHelpers {
         val liveBlogCache = liveBlog.copy(
           content = liveBlog.content.copy(metadata = liveBlog.content.metadata.copy(cacheTime = cacheTime)),
         )
-        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog.metadata.id, response)))
 
+        Left(
+          LiveBlogPage(
+            article = liveBlogCache,
+            currentPage = pageModel,
+            related = StoryPackages(liveBlog.metadata.id, response),
+            filterSwitch = filterSwitch,
+            filterKeyEvents = filterKeyEvents,
+          ),
+        )
       }
       .getOrElse(Right(NotFound))
 
