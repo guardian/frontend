@@ -25,7 +25,7 @@ const pbTestNameMap: () => Record<string, true | undefined> = memoize(
 
 const STARTING_QUESTION_MARK = /^\?/;
 /**
- * @returns `"foo=bar&fizz=buzz"` (eg. no ? symbol)
+ * @returns `"foo=bar&fizz=buzz"` (i.e. no `?` symbol)
  */
 const getCurrentQueryString = (): string =>
 	window.location.search.replace(STARTING_QUESTION_MARK, '');
