@@ -133,7 +133,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val RemarketingSwitch = Switch(
