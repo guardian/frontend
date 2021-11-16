@@ -40,4 +40,3 @@ object LiveblogPinnedPost
       sellByDate = LocalDate.of(2022, 1, 3),
       participationGroup = Perc0C,
     )
-

@@ -266,7 +266,14 @@ class LiveBlogController(
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
         val pinnedPostSwitch = ActiveExperiments.isParticipating(LiveblogPinnedPost)
-        createLiveBlogModel(liveBlog, response, range, experimentSwitch(LiveblogFiltering), filterKeyEvents, pinnedPostSwitch).left
+        createLiveBlogModel(
+          liveBlog,
+          response,
+          range,
+          experimentSwitch(LiveblogFiltering),
+          filterKeyEvents,
+          pinnedPostSwitch,
+        ).left
           .map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")

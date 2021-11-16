@@ -104,7 +104,7 @@ object LiveBlogHelpers {
             related = StoryPackages(liveBlog.metadata.id, response),
             filterSwitch = filterSwitch,
             filterKeyEvents = filterKeyEvents,
-            pinnedPostSwitch = pinnedPostSwitch
+            pinnedPostSwitch = pinnedPostSwitch,
           ),
         )
       }
