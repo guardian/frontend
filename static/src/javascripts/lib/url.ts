@@ -76,7 +76,7 @@ const pushQueryString = (params: Params): void =>
 const replaceQueryString = (params: Params): void =>
 	updateQueryString(params, window.history.replaceState.bind(window.history));
 
-type MaybeArray<T> = T | T[];
+export type MaybeArray<T> = T | T[];
 // take an Object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
 // Note that Array value parameters will turn into param=value1,value2 as opposed to param=value1&param=value2
 const constructQuery = (

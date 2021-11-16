@@ -58,7 +58,7 @@
     }
 
     &.toast__button--closed {
-        height: 0px;
+        height: 0;
     }
 
     .toast__text {
@@ -212,6 +212,7 @@
     svg {
         left: $gs-gutter / 2;
     }
+
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter / 2;
     }
@@ -224,6 +225,7 @@
     svg {
         right: $gs-gutter / 2;
     }
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
     }
@@ -287,6 +289,8 @@
 
 /* The slider */
 .live-blog__filter-switch-slider {
+    display: flex;
+    align-items: center;
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -305,7 +309,6 @@
     height: 1.125rem;
     width: 1.125rem;
     left: .25rem;
-    bottom: .2rem;
     background-color: $brightness-100;
     -webkit-transition: .2s;
     transition: .2s;
@@ -362,3 +365,98 @@ input:checked + .live-blog__filter-switch-slider:before {
     color: $brightness-46;
     font-size: 15px;
 }
+
+/*  Pinned Block
+   ========================================================================== */
+
+.pinned-block__collapsible-container {
+    position: relative;
+}
+
+input[type='checkbox'] {
+    display: none;
+}
+
+$block-padding-left: gs-span(1) + 4;
+
+.pinned-block__btn {
+    @include fs-textSans(2);
+    font-weight: bold;
+    color: #ffffff;
+    position: absolute;
+    cursor: pointer;
+    margin-left: $gs-gutter/2;
+    height: 2rem;
+    width: 6.5rem;
+    bottom: -$gs-gutter + 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    z-index: 2;
+
+    @include mq(tablet) {
+        margin-left: $block-padding-left;
+    }
+}
+
+.pinned-block__collapsible-container input[type='checkbox'] + label::before {
+    content: '+ Show more';
+}
+
+.pinned-block__collapsible-container input[type='checkbox']:checked + label::before {
+    content: '- Show less';
+}
+
+.toggle:checked + .pinned-block--toggle + .pinned-block__collapsible-content {
+    max-height: fit-content;
+}
+
+.toggle:checked + .pinned-block--toggle + .pinned-block__collapsible-content > .pinned-block__body > .pinned-block__overlay {
+    display: none;
+}
+
+
+.pinned-block__collapsible-content {
+    position: relative;
+    padding-bottom: 1.75rem;
+    margin-bottom: 1.75rem;
+    border-top-width: 0;
+    max-height: 30vh;
+    overflow: hidden;
+    transition: max-height .25s ease-in-out;
+    background-color: #ffffff;
+}
+
+.pinned-block__header {
+    height: 2rem;
+    padding: $gs-baseline/4 0 0 $gs-gutter/2;
+    margin-bottom: $gs-baseline;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pinned-block__timestamp {
+    @include fs-textSans(2);
+    font-weight: bold;
+    color: #ffffff;
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
+    @include mq(tablet) {
+        margin-right: $gs-gutter;
+        margin-left: $block-padding-left;
+    }
+
+}
+
+.pinned-block__overlay {
+    background-image: linear-gradient(0deg, #ffffff, #ffffff 40%, transparent);
+    height: 80px;
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+

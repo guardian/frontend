@@ -1,0 +1,25 @@
+@import org.joda.time.DateTimeZone
+@import model.Article
+@import model.liveblog.{BodyBlock, LiveBlogDate}
+
+@(block: BodyBlock, article: Article, timezone: DateTimeZone)(implicit request: RequestHeader, context: model.ApplicationContext)
+@*
+* This template is to wrap pinned posts
+*@
+<div class="pinned-block__collapsible-container">
+    <input id="collapsible" class="toggle" type="checkbox">
+    <label for="collapsible" class="pinned-block__btn pinned-block--toggle"></label>
+
+    <section class="pinned-block__collapsible-content">
+        <div class="pinned-block__header">
+            @fragments.inlineSvg("pin", "icon", List("inline-icon"))
+        <p class="pinned-block__timestamp">
+            From@views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), true, false)</p>
+        </div>
+        <div class="pinned-block__body">
+            @views.html.liveblog.liveBlogBlock(block, article, timezone, true)
+            <div class="pinned-block__overlay" />
+        </div>
+    </section>
+
+</div>

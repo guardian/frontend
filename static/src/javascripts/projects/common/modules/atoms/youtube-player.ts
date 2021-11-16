@@ -1,13 +1,20 @@
+import type { AdsConfigDisabled } from '@guardian/commercial-core';
 import { getPermutivePFPSegments } from '@guardian/commercial-core';
+import type {
+	AdsConfigBasic,
+	AdsConfigCCPAorAus,
+	AdsConfigEnabled,
+	AdsConfigTCFV2,
+} from '@guardian/commercial-core/dist/cjs/types';
 import { onConsentChange } from '@guardian/consent-management-platform';
-import type { Framework } from '@guardian/consent-management-platform/dist/types';
-import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
-import { loadScript } from '@guardian/libs';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import { loadScript, log } from '@guardian/libs';
 import fastdom from 'fastdom';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
 import config from 'lib/config';
+import type { MaybeArray } from 'lib/url';
 import { constructQuery } from 'lib/url';
 
 interface WindowLocal extends Window {
@@ -45,45 +52,31 @@ const addVideoStartedClass = (el: HTMLElement | null) => {
 	}
 };
 
-let tcfData: TCFv2ConsentState | undefined = undefined;
-
-interface ConsentState {
-	framework: null | Framework;
-	canTarget: boolean;
-}
-
-let consentState: ConsentState = {
-	framework: null,
-	canTarget: false,
+const canTarget = (state: ConsentState): boolean => {
+	if (state.ccpa) {
+		return !state.ccpa.doNotSell;
+	}
+	if (state.aus) {
+		return state.aus.personalisedAdvertising;
+	}
+	if (state.tcfv2) {
+		return (
+			Object.values(state.tcfv2.consents).length > 0 &&
+			Object.values(state.tcfv2.consents).every(Boolean)
+		);
+	}
+	return false;
 };
 
-let resolveInitialConsent: (f: Framework) => void;
-const initialConsent = new Promise((resolve) => {
+let resolveInitialConsent: (state: ConsentState) => void;
+const initialConsent = new Promise<ConsentState>((resolve) => {
+	// We don’t need to wait for consent if Ad-Free
+	if (commercialFeatures.adFree) resolve({});
+
 	resolveInitialConsent = resolve;
 });
-onConsentChange((cmpConsent) => {
-	if (cmpConsent.ccpa) {
-		consentState = {
-			framework: 'ccpa',
-			canTarget: !cmpConsent.ccpa.doNotSell,
-		};
-		resolveInitialConsent('ccpa');
-	} else if (cmpConsent.aus) {
-		consentState = {
-			framework: 'aus',
-			canTarget: cmpConsent.aus.personalisedAdvertising,
-		};
-		resolveInitialConsent('aus');
-	} else {
-		tcfData = cmpConsent.tcfv2;
-		consentState = {
-			framework: 'tcfv2',
-			canTarget: tcfData
-				? Object.values(tcfData.consents).every(Boolean)
-				: false,
-		};
-		resolveInitialConsent('tcfv2');
-	}
+onConsentChange((state) => {
+	resolveInitialConsent(state);
 });
 
 interface YTPlayerEvent extends Omit<Event, 'target'> {
@@ -137,9 +130,7 @@ const onPlayerStateChangeEvent = (
 		});
 	}
 
-	if (handlers && typeof handlers.onPlayerStateChange === 'function') {
-		handlers.onPlayerStateChange(event);
-	}
+	handlers?.onPlayerStateChange(event);
 };
 
 const onPlayerReadyEvent = (
@@ -157,53 +148,80 @@ const onPlayerReadyEvent = (
 		}
 	});
 
-	// we should be able to remove this check once everything is using flow/ES^
-	if (handlers && typeof handlers.onPlayerReady === 'function') {
-		handlers.onPlayerReady(event);
-	}
+	handlers?.onPlayerReady(event);
 };
 
-interface AdsConfig {
-	adTagParameters?: {
-		iu: string;
-		cust_params: string;
-		cmpGdpr: number;
-		cmpVcd: string | undefined;
-		cmpGvcd: string | undefined;
-	};
-	disableAds?: boolean;
-	nonPersonalizedAd?: boolean;
-	restrictedDataProcessor?: boolean;
-}
+const createAdsConfigDisabled = (): AdsConfigDisabled => {
+	const adFreeConfig: AdsConfigDisabled = { disableAds: true };
+	log('commercial', 'YouTube Ad-Free Config', adFreeConfig);
+	return adFreeConfig;
+};
 
-const createAdsConfig = (
-	adFree: boolean,
+/**
+ * TODO: Use buildAdsConfig from `@guardian/commercial-core`
+ * @param consentState
+ * @returns A valid YouTube ads config
+ */
+const createAdsConfigEnabled = (
 	consentState: ConsentState,
-): AdsConfig => {
-	if (adFree) {
-		return { disableAds: true };
-	}
-
-	const custParams = getPageTargeting() as Record<string, string | string[]>;
+): AdsConfigEnabled => {
+	const custParams = getPageTargeting() as Record<string, MaybeArray<string>>;
 	custParams.permutive = getPermutivePFPSegments();
 
-	const adsConfig: AdsConfig = {
+	const adsConfigBasic: AdsConfigBasic = {
 		adTagParameters: {
-			iu: config.get('page.adUnit') as string,
+			iu: config.get<string>('page.adUnit', ''),
 			cust_params: encodeURIComponent(constructQuery(custParams)),
-			cmpGdpr: tcfData?.gdprApplies ? 1 : 0,
-			cmpVcd: tcfData?.tcString,
-			cmpGvcd: tcfData?.addtlConsent,
 		},
 	};
 
-	if (consentState.framework === 'ccpa' || consentState.framework === 'aus') {
-		adsConfig.restrictedDataProcessor = !consentState.canTarget;
-	} else {
-		adsConfig.nonPersonalizedAd = !consentState.canTarget;
+	if (consentState.tcfv2) {
+		const adsConfigTCFv2: AdsConfigTCFV2 = {
+			adTagParameters: {
+				...adsConfigBasic.adTagParameters,
+				cmpGdpr: consentState.tcfv2.gdprApplies ? 1 : 0,
+				cmpVcd: consentState.tcfv2.tcString,
+				cmpGvcd: consentState.tcfv2.addtlConsent,
+			},
+			nonPersonalizedAd: !canTarget(consentState),
+		};
+		log('commercial', 'YouTube Ads Config TCFv2', adsConfigTCFv2);
+		return adsConfigTCFv2;
 	}
 
-	return adsConfig;
+	if (consentState.ccpa || consentState.aus) {
+		const adsConfigCCPA: AdsConfigCCPAorAus = {
+			...adsConfigBasic,
+			restrictedDataProcessor: !canTarget(consentState),
+		};
+		log('commercial', 'YouTube Ads Config CCPA/AUS', adsConfigCCPA);
+		return adsConfigCCPA;
+	}
+
+	return adsConfigBasic;
+};
+
+/*eslint curly: ["error", "multi-line"] -- it’s safer to update */
+type YTHost = 'https://www.youtube.com' | 'https://www.youtube-nocookie.com';
+const getHost = ({
+	state,
+	classes,
+	adFree,
+}: {
+	state: ConsentState;
+	classes: string[];
+	adFree: boolean;
+}): YTHost => {
+	if (
+		canTarget(state) &&
+		!adFree &&
+		classes.includes('youtube-media-atom__iframe')
+	) {
+		return 'https://www.youtube.com';
+	}
+
+	// Default to no-cookie
+	return 'https://www.youtube-nocookie.com';
 };
 
 const setupPlayer = (
@@ -214,6 +232,7 @@ const setupPlayer = (
 	onError: (event: YTPlayerEvent) => void,
 	onAdStart: () => void,
 	onAdEnd: () => void,
+	consentState: ConsentState,
 ): YT.Player => {
 	// relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
 	const relatedChannels: string[] = [];
@@ -224,15 +243,17 @@ const setupPlayer = (
 	 * empty array.
 	 */
 
-	const adsConfig = createAdsConfig(commercialFeatures.adFree, consentState);
+	const adsConfig = commercialFeatures.adFree
+		? createAdsConfigDisabled()
+		: createAdsConfigEnabled(consentState);
 
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
-		host:
-			commercialFeatures.adFree ||
-			!el.classList.contains('youtube-media-atom__iframe')
-				? 'https://www.youtube-nocookie.com'
-				: 'https://www.youtube.com',
+		host: getHost({
+			state: consentState,
+			classes: [...el.classList.values()],
+			adFree: commercialFeatures.adFree,
+		}),
 		videoId,
 		width: '100%',
 		height: '100%',
@@ -263,7 +284,7 @@ export const initYoutubePlayer = async (
 ): Promise<YT.Player> => {
 	await loadScript(scriptSrc, {});
 	await youtubeReady;
-	await initialConsent;
+	const consentState = await initialConsent;
 
 	const onPlayerStateChange = (event: YTPlayerEvent) => {
 		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
@@ -310,7 +331,12 @@ export const initYoutubePlayer = async (
 		onPlayerError,
 		onAdStart,
 		onAdEnd,
+		consentState,
 	);
 };
 
-export const _ = { createAdsConfig };
+export const _ = {
+	createAdsConfig: createAdsConfigEnabled,
+	createAdFreeConfig: createAdsConfigDisabled,
+	getHost,
+};
