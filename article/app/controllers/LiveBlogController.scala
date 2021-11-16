@@ -56,19 +56,6 @@ class LiveBlogController(
 
   private def isSupportedTheme(blog: LiveBlogPage): Boolean = false
 
-  private def allElementsAreSupported(blog: LiveBlogPage): Boolean = {
-    def unsupportedElement(blockElement: BlockElement) =
-      blockElement match {
-        case _: CodeBlockElement                     => true
-        case _: RichLinkBlockElement                     => true
-        case _ => false
-      }
-
-    def isUnsupportedBlock(block: BodyBlock) = block.elements.exists(unsupportedElement)
-
-    !blog.article.blocks.exists(_.body.exists(isUnsupportedBlock))
-  }
-
   private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
 
   private def isNotRecent(blog: LiveBlogPage) = {
@@ -77,7 +64,7 @@ class LiveBlogController(
   }
 
   private def checkIfSupported(blog: LiveBlogPage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog) && allElementsAreSupported(blog) && isNotRecent
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent
   }
 
   def renderWithRange(path: String, range: BlockRange)(implicit request: RequestHeader): Future[Result] = {
