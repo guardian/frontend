@@ -1,6 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.utils.format.NewsPillar
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
@@ -54,7 +55,12 @@ class LiveBlogController(
     }
   }
 
-  private def isSupportedTheme(blog: LiveBlogPage): Boolean = false
+  private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
+    blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
+      case NewsPillar => true
+      case _ => false
+    }
+  }
 
   private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
 
