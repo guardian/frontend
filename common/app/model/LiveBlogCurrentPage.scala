@@ -79,7 +79,9 @@ object LiveBlogCurrentPage {
         val pinnedPosts = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
         val pinnedPost = pinnedPosts.flatMap(_.headOption)
         val pinnedPostId = pinnedPost.map(_.id).getOrElse("")
-        val filteredFirstPageBlocks = firstPageBlocks.filter(_.id != pinnedPostId)
+        val firstBlockId = firstPageBlocks.headOption.map(_.id).getOrElse("")
+        val filteredFirstPageBlocks =
+          firstPageBlocks.filter(block => block.id != pinnedPostId && block.id != firstBlockId)
 
         (pinnedPost, filteredFirstPageBlocks)
       }
