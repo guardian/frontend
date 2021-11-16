@@ -5,7 +5,7 @@ import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import conf.switches.Switches.liveblogFiltering
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, Experiment, LiveblogFiltering, LiveblogRendering}
+import experiments.{ActiveExperiments, Experiment, LiveblogFiltering, LiveblogPinnedPost, LiveblogRendering}
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
@@ -265,7 +265,8 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        createLiveBlogModel(liveBlog, response, range, experimentSwitch(LiveblogFiltering), filterKeyEvents).left
+        val pinnedPostSwitch = ActiveExperiments.isParticipating(LiveblogPinnedPost)
+        createLiveBlogModel(liveBlog, response, range, experimentSwitch(LiveblogFiltering), filterKeyEvents, pinnedPostSwitch).left
           .map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")

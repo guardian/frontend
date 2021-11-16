@@ -6,4 +6,5 @@ case class LiveBlogPage(
     related: RelatedContent,
     filterSwitch: Boolean,
     filterKeyEvents: Boolean,
+    pinnedPostSwitch: Boolean,
 ) extends PageWithStoryPackage

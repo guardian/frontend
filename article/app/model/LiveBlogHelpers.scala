@@ -63,6 +63,7 @@ object LiveBlogHelpers {
       range: BlockRange,
       filterSwitch: Boolean,
       filterKeyEvents: Boolean,
+      pinnedPostSwitch: Boolean,
   ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -103,6 +104,7 @@ object LiveBlogHelpers {
             related = StoryPackages(liveBlog.metadata.id, response),
             filterSwitch = filterSwitch,
             filterKeyEvents = filterKeyEvents,
+            pinnedPostSwitch = pinnedPostSwitch
           ),
         )
       }
