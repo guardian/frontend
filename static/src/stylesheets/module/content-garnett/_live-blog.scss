@@ -389,7 +389,6 @@ $block-padding-left: gs-span(1) + 4;
     margin-left: $gs-gutter/2;
     height: 2rem;
     width: 6.5rem;
-    background-color: $news-main;
     bottom: -$gs-gutter + 5;
     display: flex;
     align-items: center;
@@ -426,7 +425,6 @@ $block-padding-left: gs-span(1) + 4;
 
 .pinned-block__collapsible-content {
     position: relative;
-    border: 2px solid $news-main;
     padding-bottom: 1.75rem;
     margin-bottom: 1.75rem;
     border-top-width: 0;
@@ -439,7 +437,6 @@ $block-padding-left: gs-span(1) + 4;
 
 .pinned-block__header {
     height: 2rem;
-    background-color: $news-main;
     line-height: 15px;
     padding: $gs-baseline/4 0 0 $gs-gutter/2;
     margin-bottom: $gs-baseline;
