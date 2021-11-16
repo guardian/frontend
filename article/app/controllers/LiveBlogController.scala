@@ -120,7 +120,7 @@ class LiveBlogController(
   }
 
   private def checkIfSupported(blog: LiveBlogPage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
   }
 
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
