@@ -2,6 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import com.gu.contentapi.client.utils.format.NewsPillar
+import com.gu.contentapi.client.utils.format.SportPillar
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import conf.switches.Switches.liveblogFiltering
