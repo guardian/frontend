@@ -371,7 +371,6 @@ input:checked + .live-blog__filter-switch-slider:before {
 
 .pinned-block__collapsible-container {
     position: relative;
-    margin-bottom: 1.2rem;
 }
 
 input[type='checkbox'] {
@@ -381,11 +380,11 @@ input[type='checkbox'] {
 $block-padding-left: gs-span(1) + 4;
 
 .pinned-block__btn {
-    all: unset;
-    position: absolute;
-    cursor: pointer;
+    @include fs-textSans(2);
     font-weight: bold;
     color: #ffffff;
+    position: absolute;
+    cursor: pointer;
     margin-left: $gs-gutter/2;
     height: 2rem;
     width: 6.5rem;
@@ -396,21 +395,16 @@ $block-padding-left: gs-span(1) + 4;
     border-radius: 1rem;
     z-index: 2;
 
-    @include fs-textSans(2);
-
     @include mq(tablet) {
         margin-left: $block-padding-left;
     }
 }
 
-.pinned-block__collapsible-container input[type="checkbox"] + label::before {
-    position: absolute;
+.pinned-block__collapsible-container input[type='checkbox'] + label::before {
     content: '+ Show more';
-    text-align: center;
-    line-height: 25px;
 }
 
-.pinned-block__collapsible-container input[type="checkbox"]:checked + label::before {
+.pinned-block__collapsible-container input[type='checkbox']:checked + label::before {
     content: '- Show less';
 }
 
@@ -432,12 +426,10 @@ $block-padding-left: gs-span(1) + 4;
     overflow: hidden;
     transition: max-height .25s ease-in-out;
     background-color: #ffffff;
-
 }
 
 .pinned-block__header {
     height: 2rem;
-    line-height: 15px;
     padding: $gs-baseline/4 0 0 $gs-gutter/2;
     margin-bottom: $gs-baseline;
     position: relative;
