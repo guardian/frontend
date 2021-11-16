@@ -37,7 +37,7 @@ object LiveblogPinnedPost
       name = "liveblog-pinned-post",
       description = "Pin a post at the top of a liveblog",
       owners = Seq(Owner.withGithub("alinaboghiu")),
-      sellByDate = LocalDate.of(2021, 1, 1),
+      sellByDate = LocalDate.of(2022, 1, 3),
       participationGroup = Perc0C,
     )
 
