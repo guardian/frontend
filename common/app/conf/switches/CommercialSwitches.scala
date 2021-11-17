@@ -126,6 +126,16 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
+  val ampAmazon = Switch(
+    Commercial,
+    "amp-amazon",
+    "Amp inventory is being auctioned through Amazon",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val RemarketingSwitch = Switch(
     Commercial,
     "remarketing",
