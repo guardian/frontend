@@ -20,4 +20,3 @@ object LiveblogRendering
       sellByDate = LocalDate.of(2021, 11, 30),
       participationGroup = Perc0A,
     )
-
