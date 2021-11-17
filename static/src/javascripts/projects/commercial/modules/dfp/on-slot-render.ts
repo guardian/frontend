@@ -1,6 +1,6 @@
-import { adSizes, EventTimer } from '@guardian/commercial-core';
+import { adSizes } from '@guardian/commercial-core';
 import type { AdSizeString } from '@guardian/commercial-core';
-import { isString, once } from 'lodash-es';
+import { isString } from '@guardian/libs';
 import config from '../../../../lib/config';
 import mediator from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
@@ -8,10 +8,6 @@ import { dfpEnv } from './dfp-env';
 import { emptyAdvert } from './empty-advert';
 import { getAdvertById } from './get-advert-by-id';
 import { renderAdvert } from './render-advert';
-
-const recordFirstAdRendered = once(() => {
-	EventTimer.get().mark('Commercial: First Ad Rendered');
-});
 
 const reportEmptyResponse = (
 	adSlotId: string,
@@ -55,8 +51,6 @@ const sizeEventToAdSize = (size: string | number[]): AdSize => {
 export const onSlotRender = (
 	event: googletag.events.SlotRenderEndedEvent,
 ): void => {
-	recordFirstAdRendered();
-
 	const advert = getAdvertById(event.slot.getSlotElementId());
 	if (!advert) {
 		return;
