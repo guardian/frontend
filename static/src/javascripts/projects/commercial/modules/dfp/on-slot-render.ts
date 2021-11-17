@@ -1,17 +1,16 @@
-import { adSizes } from '@guardian/commercial-core';
+import { adSizes, EventTimer } from '@guardian/commercial-core';
 import type { AdSizeString } from '@guardian/commercial-core';
 import { isString, once } from 'lodash-es';
 import config from '../../../../lib/config';
 import mediator from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
-import { markTime } from '../../../../lib/user-timing';
 import { dfpEnv } from './dfp-env';
 import { emptyAdvert } from './empty-advert';
 import { getAdvertById } from './get-advert-by-id';
 import { renderAdvert } from './render-advert';
 
 const recordFirstAdRendered = once(() => {
-	markTime('Commercial: First Ad Rendered');
+	EventTimer.get().mark('Commercial: First Ad Rendered');
 });
 
 const reportEmptyResponse = (
