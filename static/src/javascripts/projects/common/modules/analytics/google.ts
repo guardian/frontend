@@ -130,32 +130,29 @@ const trackPerformance = (
 	timingVar: keyof BoostGaUserTimingFidelityMetrics,
 	timingLabel: string,
 ): void => {
+	const timeSincePageLoad = Math.round(window.performance.now());
+	const event: TimingEvent = {
+		timingCategory,
+		timingVar,
+		timeSincePageLoad,
+		timingLabel,
+	};
+
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- extra safety if undefined
-	if (window.performance?.now) {
-		const timeSincePageLoad = Math.round(window.performance.now());
-		const event: TimingEvent = {
-			timingCategory,
-			timingVar,
-			timeSincePageLoad,
-			timingLabel,
+	if (window.ga ?? false) {
+		sendPerformanceEvent(event);
+	} else {
+		const timingEvents = config.get<TimingEvent[]>(
+			'googleAnalytics.timingEvents',
+			[],
+		);
+		const sendDeferredEventQueue = (): void => {
+			timingEvents.map(sendPerformanceEvent);
+			mediator.off('modules:ga:ready', sendDeferredEventQueue);
 		};
 
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- extra safety if undefined
-		if (window.ga ?? false) {
-			sendPerformanceEvent(event);
-		} else {
-			const timingEvents = config.get<TimingEvent[]>(
-				'googleAnalytics.timingEvents',
-				[],
-			);
-			const sendDeferredEventQueue = (): void => {
-				timingEvents.map(sendPerformanceEvent);
-				mediator.off('modules:ga:ready', sendDeferredEventQueue);
-			};
-
-			mediator.on('modules:ga:ready', sendDeferredEventQueue);
-			timingEvents.push(event);
-		}
+		mediator.on('modules:ga:ready', sendDeferredEventQueue);
+		timingEvents.push(event);
 	}
 };
 
