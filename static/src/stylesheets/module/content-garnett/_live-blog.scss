@@ -373,8 +373,16 @@ input:checked + .live-blog__filter-switch-slider:before {
     position: relative;
 }
 
-input[type='checkbox'] {
+.pinned-block__toggle {
     display: none;
+}
+
+.pinned-block__toggle + label::before {
+    content: '+ Show more';
+}
+
+.pinned-block__toggle:checked + label::before {
+    content: '- Show less';
 }
 
 $block-padding-left: gs-span(1) + 4;
@@ -400,19 +408,12 @@ $block-padding-left: gs-span(1) + 4;
     }
 }
 
-.pinned-block__collapsible-container input[type='checkbox'] + label::before {
-    content: '+ Show more';
-}
 
-.pinned-block__collapsible-container input[type='checkbox']:checked + label::before {
-    content: '- Show less';
-}
-
-.pinned-block__toggle:checked + .pinned-block--toggle + .pinned-block__collapsible-content {
+.pinned-block__toggle:checked ~ .pinned-block__collapsible-content {
     max-height: fit-content;
 }
 
-.pinned-block__toggle:checked + .pinned-block--toggle + .pinned-block__collapsible-content > .pinned-block__body > .pinned-block__overlay {
+.pinned-block__toggle:checked ~ .pinned-block__collapsible-content .pinned-block__overlay {
     display: none;
 }
 
