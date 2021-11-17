@@ -74,16 +74,12 @@ object LiveBlogCurrentPage {
         BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents)
       }
 
-      // returns latest pinned post and blocks minus the pinned post
-      val (pinnedPost, filteredFirstPageBlocks) = {
-        val pinnedPosts = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
-        val pinnedPost = pinnedPosts.flatMap(_.headOption)
-        val pinnedPostId = pinnedPost.map(_.id).getOrElse("")
-        val firstBlockId = firstPageBlocks.headOption.map(_.id).getOrElse("")
-        val filteredFirstPageBlocks =
-          firstPageBlocks.filter(block => !(block.id == pinnedPostId && block.id == firstBlockId))
+      val pinnedPosts = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
+      val pinnedPost = pinnedPosts.flatMap(_.headOption)
 
-        (pinnedPost, filteredFirstPageBlocks)
+      val filteredFirstPageBlocks = firstPageBlocks match {
+        case firstBlock +: blocksWithoutPinnedPost if pinnedPost.contains(firstBlock) => blocksWithoutPinnedPost
+        case _                                                                        => firstPageBlocks
       }
 
       val pagination = {
