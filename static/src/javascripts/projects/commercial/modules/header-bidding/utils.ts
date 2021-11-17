@@ -1,5 +1,7 @@
 import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { integrateCriteo } from 'common/modules/experiments/tests/integrate-criteo';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
@@ -165,6 +167,16 @@ export const shouldIncludeImproveDigitalSkin = (): boolean =>
 	window.guardian.config.page.isFront &&
 	(isInUk() || isInRow()) &&
 	getBreakpointKey() === 'D'; // Desktop only
+
+/**
+ * 	Include Criteo if not in the control group of the AB test
+ *
+ *  Equivalent to those in the variant group and those not participating
+ *
+ * TODO check they're not participating in the Smart AB test either!
+ */
+export const shouldIncludeCriteo = (): boolean =>
+	!isInVariantSynchronous(integrateCriteo, 'control');
 
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>
