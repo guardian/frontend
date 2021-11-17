@@ -78,6 +78,10 @@ type PrebidAdYouLikeParams = {
 	placement: string;
 };
 
+type PrebidCriteoParams = {
+	networkId: number;
+};
+
 type BidderCode =
 	| 'adyoulike'
 	| 'and'
@@ -90,7 +94,8 @@ type BidderCode =
 	| 'sonobi'
 	| 'triplelift'
 	| 'trustx'
-	| 'xhb';
+	| 'xhb'
+	| 'criteo';
 
 type PrebidParams =
 	| PrebidSonobiParams
@@ -103,7 +108,8 @@ type PrebidParams =
 	| PrebidOpenXParams
 	| PrebidOzoneParams
 	| PrebidAdYouLikeParams
-	| PrebidPubmaticParams;
+	| PrebidPubmaticParams
+	| PrebidCriteoParams;
 
 type PrebidBidder = {
 	name: BidderCode;
