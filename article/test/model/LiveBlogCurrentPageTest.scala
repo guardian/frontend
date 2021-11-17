@@ -69,7 +69,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
-        3,
+        6,
         Nil,
         None,
         Map(
@@ -85,9 +85,12 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     result.get.pinnedPost should not be (Some(evenOlderPinnedPost))
   }
 
-  it should "not add a pinned post as the first other block" in {
-    val blocks = fakeBlocks(5, 0, 3)
-    val expectedPinnedPost = fakeBlock(3, false, true)
+  it should "not add a pinned post as the first standard block" in {
+    val firstBlock = fakeBlock(2, false, true)
+    val secondBlock = fakeBlock(3, false, false)
+    val thirdBlock = fakeBlock(1, false, false)
+    val blocks = List(firstBlock, secondBlock, thirdBlock)
+    val expectedPinnedPost = fakeBlock(2, false, true)
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
@@ -95,9 +98,8 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
         Nil,
         None,
         Map(
-          CanonicalLiveBlog.firstPage -> blocks.take(1),
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
           CanonicalLiveBlog.pinned -> blocks.take(3),
-          CanonicalLiveBlog.firstPage -> blocks.take(4),
           CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
         ),
       ),
