@@ -26,7 +26,7 @@ try {
 const addEventListener = (
 	node: EventTarget,
 	name: string,
-	handler: (e: Event) => unknown,
+	handler: (e: Event) => void,
 	{
 		passive = false,
 		capture = false,
