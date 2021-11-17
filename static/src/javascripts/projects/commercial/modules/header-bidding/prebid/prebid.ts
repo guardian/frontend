@@ -59,6 +59,9 @@ type PbjsConfig = {
 	userSync: UserSync;
 	consentManagement?: ConsentManagement;
 	realTimeData?: unknown;
+	criteo?: {
+		fastBidVersion: 'latest' | 'none' | `${number}`;
+	};
 };
 
 type PbjsEvent = 'bidWon';
@@ -278,6 +281,12 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 					},
 				},
 			],
+		};
+	}
+
+	if (window.guardian.config.switches.prebidCriteo) {
+		pbjsConfig.criteo = {
+			fastBidVersion: 'latest',
 		};
 	}
 
