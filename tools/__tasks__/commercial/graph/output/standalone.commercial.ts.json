@@ -506,7 +506,6 @@
  ],
  "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
   "../lib/config.d.ts",
   "../lib/mediator.js"
