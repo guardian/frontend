@@ -1,6 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
@@ -13,6 +14,7 @@ import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.KeyEvent
 import model.{ApplicationContext, CanonicalLiveBlog, _}
+import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -94,6 +96,25 @@ class LiveBlogController(
 
   // Helper methods
 
+  private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
+    blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
+      case NewsPillar  => true
+      case SportPillar => false
+      case _           => false
+    }
+  }
+
+  private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
+
+  private def isNotRecent(blog: LiveBlogPage) = {
+    val threeDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(3)
+    blog.article.fields.lastModified.isBefore(threeDaysAgo)
+  }
+
+  private def checkIfSupported(blog: LiveBlogPage): Boolean = {
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
+  }
+
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -105,9 +126,7 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) => {
-            // dcrCouldRender is always false because right now blogs are not supported by DCR
-            // but we included this variable as an indication of what is going to be possible in the future
-            val dcrCouldRender = false
+            val dcrCouldRender = checkIfSupported(blog)
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
             val properties =
               Map(
