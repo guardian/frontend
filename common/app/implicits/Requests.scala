@@ -6,6 +6,9 @@ import com.gu.facia.client.models.{
   TargetedTerritory,
   USEastCoastTerritory,
   USWestCoastTerritory,
+  AUVictoriaTerritory,
+  AUQueenslandTerritory,
+  AUNewSouthWalesTerritory,
 }
 import conf.Configuration
 import play.api.mvc.RequestHeader
@@ -28,10 +31,13 @@ trait Requests {
   val EMAIL_JSON_SUFFIX = ".emailjson"
   val EMAIL_TXT_SUFFIX = ".emailtxt"
   val territoryHeaders: List[TerritoryHeader] = List(
-    TerritoryHeader(EU27Territory, "EU-27"),
-    TerritoryHeader(NZTerritory, "NZ"),
-    TerritoryHeader(USEastCoastTerritory, "US-East-Coast"),
-    TerritoryHeader(USWestCoastTerritory, "US-West-Coast"),
+    TerritoryHeader(EU27Territory, EU27Territory.id),
+    TerritoryHeader(NZTerritory, NZTerritory.id),
+    TerritoryHeader(USEastCoastTerritory, USEastCoastTerritory.id),
+    TerritoryHeader(USWestCoastTerritory, USWestCoastTerritory.id),
+    TerritoryHeader(AUVictoriaTerritory, AUVictoriaTerritory.id),
+    TerritoryHeader(AUQueenslandTerritory, AUQueenslandTerritory.id),
+    TerritoryHeader(AUNewSouthWalesTerritory, AUNewSouthWalesTerritory.id),
   )
 
   implicit class RichRequestHeader(r: RequestHeader) {
