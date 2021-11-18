@@ -1,5 +1,5 @@
 // es7 polyfills not provided by pollyfill.io
-import 'core-js/modules/es7.object.get-own-property-descriptors';
+import 'core-js/modules/es.object.get-own-property-descriptors';
 
 import domready from 'domready';
 import { bootStandard } from 'bootstraps/standard/main';
