@@ -1,6 +1,9 @@
 import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import {
+	isInABTestSynchronous,
+	isInVariantSynchronous,
+} from 'common/modules/experiments/ab';
 import { integrateCriteo } from 'common/modules/experiments/tests/integrate-criteo';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
@@ -169,14 +172,20 @@ export const shouldIncludeImproveDigitalSkin = (): boolean =>
 	getBreakpointKey() === 'D'; // Desktop only
 
 /**
- * 	Include Criteo if not in the control group of the AB test
+ * Determine if a visitor is participating in a test for integrating an SSP
  *
- *  Equivalent to those in the variant group and those not participating
+ * Add additional tests here when integrating a new SSP
+ */
+const inSSPTest = (): boolean => isInABTestSynchronous(integrateCriteo);
+
+/**
+ * Determine whether to include Criteo as a bidder
  *
- * TODO check they're not participating in the Smart AB test either!
+ * Include Criteo if visitor is not a participant in an AB test for integrating an SSP
+ * or that they are in the variant of the Criteo test
  */
 export const shouldIncludeCriteo = (): boolean =>
-	!isInVariantSynchronous(integrateCriteo, 'control');
+	!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant');
 
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>
