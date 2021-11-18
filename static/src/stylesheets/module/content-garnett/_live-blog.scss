@@ -350,13 +350,6 @@ input:focus-visible + .live-blog__filter-switch-slider {
     outline: 1px auto -webkit-focus-ring-color;
 }
 
-
-//.live-blog__filter-switch-slider:focus {
-//    outline: 1px dotted #212121; /* 1 */
-//    outline: 1px auto -webkit-focus-ring-color; /* 1 */
-//}
-
-
 input:checked + .live-blog__filter-switch-slider:before {
     -webkit-transform: translateX(1.15rem);
     -ms-transform: translateX(1.15rem);
