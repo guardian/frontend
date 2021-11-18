@@ -143,7 +143,7 @@ object NxAnswer {
     minByMin.map(x => LinkTo(x.url))
   }
 
-  def makeMatchReportUrl(
+  def makeMatchReportUrl(implicit
       request: RequestHeader,
       theMatch: FootballMatch,
       related: Seq[ContentType],
