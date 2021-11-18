@@ -87,6 +87,7 @@ case class NxMatchData(
     venue: String,
     comments: String,
     minByMinUrl: Option[String],
+    reportUrl: Option[String],
 ) extends NxAnswer
 
 object NxAnswer {
@@ -142,6 +143,15 @@ object NxAnswer {
     minByMin.map(x => LinkTo(x.url))
   }
 
+  def makeMatchReportUrl(implicit
+      request: RequestHeader,
+      theMatch: FootballMatch,
+      related: Seq[ContentType],
+  ): Option[String] = {
+    val (matchReport, _, _, _) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
+    matchReport.map(x => LinkTo(x.url))
+  }
+
   def makeFromFootballMatch(
       request: RequestHeader,
       theMatch: FootballMatch,
@@ -162,6 +172,7 @@ object NxAnswer {
       venue = theMatch.venue.map(_.name).getOrElse(""),
       comments = theMatch.comments.getOrElse(""),
       minByMinUrl = makeMinByMinUrl(request, theMatch, related),
+      reportUrl = makeMatchReportUrl(request, theMatch, related),
     )
   }
 
