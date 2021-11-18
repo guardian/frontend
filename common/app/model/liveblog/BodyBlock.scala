@@ -68,7 +68,6 @@ object BodyBlock {
     )
 
   sealed trait EventType
-  case object PinnedEvent extends EventType
   case object KeyEvent extends EventType
   case object SummaryEvent extends EventType
   case object UnclassifiedEvent extends EventType
@@ -93,14 +92,12 @@ case class BodyBlock(
     elements: Seq[BlockElement],
 ) {
   lazy val eventType: EventType = {
-    if (attributes.pinned) PinnedEvent
-    else if (attributes.keyEvent) KeyEvent
+    if (attributes.keyEvent) KeyEvent
     else if (attributes.summary) SummaryEvent
     else UnclassifiedEvent
   }
 
   lazy val eventClass = eventType match {
-    case PinnedEvent       => " is-pinned"
     case SummaryEvent      => " is-summary"
     case KeyEvent          => " is-key-event"
     case UnclassifiedEvent => ""
