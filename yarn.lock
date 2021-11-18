@@ -1252,10 +1252,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-4.2.0.tgz#dea9f6fc81cf0235dd3d6f7255b5b199cef013e3"
   integrity sha512-IO/1bYCSI3rKowlA6T/VEnbTW+/6ZjOmRad3T3h1S6YguEUmkEJG1hOxZEYS6driiD6fO12PcKIZuWIlPoJJnA==
 
-"@guardian/commercial-core@0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.26.1.tgz#e93d900dc31b80678c5d12af3d2811c4563de02f"
-  integrity sha512-VpwN7I/2uZ5TsxJWMQHZ5buT/dkHdCA7RtwGnaoPy6YyjlipR1SjNAUxEeBbZ4+Sz8YPBDmAFAL8+3m/9gnokw==
+"@guardian/commercial-core@0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.30.0.tgz#a7e2eaa779ad51fa560fd3e493d83e7dced7769a"
+  integrity sha512-6wnD6Pyyh9pOxBhIXdubF0LAR1CbV7bGBtKxg2R5qBitGJMOFwXr1F+3zZmBjg9ec41kcsMy5JraHAGBY9Kz0Q==
 
 "@guardian/consent-management-platform@6.11.5":
   version "6.11.5"
