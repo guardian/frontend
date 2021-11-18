@@ -68,7 +68,6 @@ object BodyBlock {
     )
 
   sealed trait EventType
-  case object PinnedEvent extends EventType
   case object KeyEvent extends EventType
   case object SummaryEvent extends EventType
   case object UnclassifiedEvent extends EventType
