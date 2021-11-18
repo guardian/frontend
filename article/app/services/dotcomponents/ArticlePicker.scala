@@ -26,6 +26,7 @@ object ArticlePageChecks {
       "https://uploads.guim.co.uk/2019/03/20/boot.js", //creates a contents section component
       "https://uploads.guim.co.uk/2019/12/11/boot.js", //another variant of the contents block
       "https://interactive.guim.co.uk/page-enhancers/nav/boot.js", //another variant of the contents block
+      "https://interactive.guim.co.uk/testing/2020/11/voterSlideshow/boot.js", //why on earth are there so many contents blocks?
     )
 
     def unsupportedElement(blockElement: BlockElement) =
