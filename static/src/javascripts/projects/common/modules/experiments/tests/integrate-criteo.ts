@@ -7,7 +7,7 @@ export const integrateCriteo: ABTest = {
 	start: '2021-11-22',
 	expiry: '2022-01-10',
 	audience: 2 / 100,
-	audienceOffset: 0,
+	audienceOffset: 96 / 100,
 	audienceCriteria: 'All users',
 	description:
 		'Integrate new Prebid bidder and measure revenue uplift / impact of commercial performance metrics',
