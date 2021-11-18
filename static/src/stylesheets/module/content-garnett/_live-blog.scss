@@ -377,12 +377,12 @@ input:checked + .live-blog__filter-switch-slider:before {
     display: none;
 }
 
-.pinned-block__toggle + label::before {
-    content: '+ Show more';
+.pinned-block__toggle + label::after {
+    content: 'Show more';
 }
 
-.pinned-block__toggle:checked + label::before {
-    content: '- Show less';
+.pinned-block__toggle:checked + label::after {
+    content: 'Show less';
 }
 
 $block-padding-left: gs-span(1) + 4;
@@ -395,11 +395,10 @@ $block-padding-left: gs-span(1) + 4;
     cursor: pointer;
     margin-left: $gs-gutter/2;
     height: 2rem;
-    width: 6.5rem;
+    width: 8.5rem;
     bottom: -$gs-gutter + 5;
     display: flex;
     align-items: center;
-    justify-content: center;
     border-radius: 1rem;
     z-index: 2;
 
@@ -417,6 +416,23 @@ $block-padding-left: gs-span(1) + 4;
     display: none;
 }
 
+.pinned-block__btn-icon--expand {
+    display: block;
+    margin: .25rem .625rem 0 .9375rem;
+}
+
+.pinned-block__toggle:checked + .pinned-block--toggle > .pinned-block__btn-icon--expand {
+    display: none;
+}
+
+.pinned-block__btn-icon--collapse {
+    margin: .25rem .25rem 0 .5rem;
+    display: none;
+}
+
+.pinned-block__toggle:checked + .pinned-block__btn > .pinned-block__btn-icon--collapse {
+    display: block;
+}
 
 .pinned-block__collapsible-content {
     position: relative;
