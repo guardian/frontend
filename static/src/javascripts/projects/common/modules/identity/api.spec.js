@@ -43,28 +43,32 @@ jest.mock('common/modules/async-call-merger', () => ({
 const getCookieStub = getCookie_;
 const fetchJson = fetchJson_;
 
-const originalAssign = window.location.assign;
+const originalLocation = window.location;
 
 describe('Identity API', () => {
+
     beforeEach(() => {
         getCookieStub.mockImplementation(
             () =>
                 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
                 '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
         );
-
-        window.location.assign = (url) => {
-            jsdom.reconfigure({
-                url,
-            });
-        };
+        delete window.location;
+        window.location = Object.defineProperties(
+            {},
+            {
+                ...Object.getOwnPropertyDescriptors(originalLocation),
+                assign: {
+                    configurable: true,
+                    value: (url) => jsdom.reconfigure({ url }),
+                },
+            },
+        );
     });
 
     afterEach(() => {
         reset();
         jest.resetAllMocks();
-
-        window.location.assign = originalAssign;
     });
 
     it('gets user from cookie', () => {

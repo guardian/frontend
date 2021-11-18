@@ -99,8 +99,8 @@ module.exports = (
                 )
                 .then(result =>
                     Promise.all([
-                        writeFileP(dest, result.css),
-                        writeFileP(`${dest}.map`, result.map),
+                        writeFileP(dest, result.css.toString()),
+                        writeFileP(`${dest}.map`, result.map.toString()),
                     ])
                 );
         })
