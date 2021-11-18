@@ -126,6 +126,16 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
+  val ampAmazon = Switch(
+    Commercial,
+    "amp-amazon",
+    "Amp inventory is being auctioned through Amazon",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val RemarketingSwitch = Switch(
     Commercial,
     "remarketing",
@@ -495,6 +505,16 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-ad-you-like",
     description = "Include AdYouLike adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val prebidCriteo: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-criteo",
+    description = "Include Criteo adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

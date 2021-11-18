@@ -1,8 +1,7 @@
 package test
 
-import conf.switches.Switches.liveblogFiltering
 import controllers.LiveBlogController
-import experiments.{ActiveExperiments, LiveblogFiltering}
+import experiments.{ActiveExperiments}
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
@@ -73,11 +72,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val content = contentAsString(result)
 
-    val featureIsEnabled = liveblogFiltering.isSwitchedOn &&
-      ActiveExperiments.isParticipating(LiveblogFiltering)(fakeRequest)
-    if (featureIsEnabled) {
-      content should not include "56d084d0e4b0bd5a0524ccbe"
-    }
+    content should not include "56d084d0e4b0bd5a0524ccbe"
   }
 
   it should "use DCR if the parameter dcr=true is passed" in {
@@ -147,19 +142,15 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     shouldRemoteRender should be(false)
   }
 
-  it should "filter when the filter parameter is true and switch is on" in {
-    liveBlogController.shouldFilter(Some(true), true) should be(true)
+  it should "filter when the filter parameter is true" in {
+    liveBlogController.shouldFilter(Some(true)) should be(true)
   }
 
-  it should "not filter when the filter parameter is true but the switch is off" in {
-    liveBlogController.shouldFilter(Some(true), false) should be(false)
+  it should "not filter when the filter parameter is false" in {
+    liveBlogController.shouldFilter(Some(false)) should be(false)
   }
 
-  it should "not filter when the filter parameter is false even if the switch is on" in {
-    liveBlogController.shouldFilter(Some(false), true) should be(false)
-  }
-
-  it should "not filter when the filter parameter is not provided even if the switch is on" in {
-    liveBlogController.shouldFilter(None, true) should be(false)
+  it should "not filter when the filter parameter is not provided" in {
+    liveBlogController.shouldFilter(None) should be(false)
   }
 }

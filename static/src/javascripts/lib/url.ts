@@ -4,10 +4,12 @@ import { hasPushStateSupport } from './detect';
 // TODO: typescript detect.js
 const supportsPushState = hasPushStateSupport() as boolean;
 
-/* commercial testing instrument */
-// Returns a map { <bidderName>: true } of bidders
-// according to the pbtest URL parameter
-
+/**
+ * Commercial Testing Instrument
+ *
+ * Returns a map { <bidderName>: true } of bidders
+ * according to the pbtest URL parameter
+ */
 const pbTestNameMap: () => Record<string, true | undefined> = memoize(
 	(): Record<string, undefined | true> =>
 		new URLSearchParams(window.location.search)
@@ -21,8 +23,10 @@ const pbTestNameMap: () => Record<string, true | undefined> = memoize(
 		window.location.search,
 );
 
-// returns "foo=bar&fizz=buzz" (eg. no ? symbol)
 const STARTING_QUESTION_MARK = /^\?/;
+/**
+ * @returns `"foo=bar&fizz=buzz"` (i.e. no `?` symbol)
+ */
 const getCurrentQueryString = (): string =>
 	window.location.search.replace(STARTING_QUESTION_MARK, '');
 
@@ -40,10 +44,12 @@ const queryStringToUrlVars = memoize(
 			}, {}),
 );
 
-// returns a map of querystrings
-// eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
-// ?foo=bar&foo=baz returns {foo: 'baz'}
-// ?foo returns { foo: true }
+/**
+ * returns a map of querystrings
+ * eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
+ * ?foo=bar&foo=baz returns {foo: 'baz'}
+ * ?foo returns { foo: true }
+ */
 const getUrlVars = (query?: string): QueryStringMap =>
 	queryStringToUrlVars(query ?? window.location.search);
 
@@ -64,21 +70,32 @@ const updateQueryString = (params: Params, historyFn: History['pushState']) => {
 	}
 };
 
-// this will replace anything after the root/domain of the URL
-// and add an item to the browser history.
-// params Object requires a "querystring" property
-// and optionally takes a "state" and "title" property too
+/**
+ * this will replace anything after the root/domain of the URL
+ * and add an item to the browser history.
+ * params Object requires a "querystring" property
+ * and optionally takes a "state" and "title" property too
+ */
 const pushQueryString = (params: Params): void =>
 	updateQueryString(params, window.history.pushState.bind(window.history));
-
-// equivalent to pushQueryString but uses history.replaceState to
-// overwrite history rather than history.pushState
+/**
+ * equivalent to pushQueryString but uses history.replaceState to
+ * overwrite history rather than history.pushState
+ */
 const replaceQueryString = (params: Params): void =>
 	updateQueryString(params, window.history.replaceState.bind(window.history));
 
 export type MaybeArray<T> = T | T[];
-// take an Object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
-// Note that Array value parameters will turn into param=value1,value2 as opposed to param=value1&param=value2
+/**
+ * Turn an object into a query parameter string
+ *
+ * e.g. `{page: 1, pageSize: 10}` => `"page=1&pageSize=10"`
+ *
+ * Note that `Array` value parameters will turn into
+ * `param=value1,value2`
+ * as opposed to
+ * `param=value1&param=value2`
+ */
 const constructQuery = (
 	query: Record<string, MaybeArray<string | number | boolean>>,
 ): string =>

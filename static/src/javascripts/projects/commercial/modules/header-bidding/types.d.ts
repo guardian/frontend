@@ -78,10 +78,15 @@ type PrebidAdYouLikeParams = {
 	placement: string;
 };
 
+type PrebidCriteoParams = {
+	networkId: number;
+};
+
 type BidderCode =
 	| 'adyoulike'
 	| 'and'
 	| 'appnexus'
+	| 'criteo'
 	| 'improvedigital'
 	| 'ix'
 	| 'oxd'
@@ -93,17 +98,18 @@ type BidderCode =
 	| 'xhb';
 
 type PrebidParams =
-	| PrebidSonobiParams
-	| PrebidIndexExchangeParams
-	| PrebidTrustXParams
-	| PrebidTripleLiftParams
-	| PrebidImproveParams
-	| PrebidXaxisParams
+	| PrebidAdYouLikeParams
 	| PrebidAppNexusParams
+	| PrebidCriteoParams
+	| PrebidImproveParams
+	| PrebidIndexExchangeParams
 	| PrebidOpenXParams
 	| PrebidOzoneParams
-	| PrebidAdYouLikeParams
-	| PrebidPubmaticParams;
+	| PrebidPubmaticParams
+	| PrebidSonobiParams
+	| PrebidTripleLiftParams
+	| PrebidTrustXParams
+	| PrebidXaxisParams;
 
 type PrebidBidder = {
 	name: BidderCode;
