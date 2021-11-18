@@ -1,11 +1,11 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
-import conf.switches.Switches.liveblogFiltering
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, Experiment, LiveblogFiltering, LiveblogRendering}
+import experiments.{ActiveExperiments, Experiment, LiveblogRendering}
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
@@ -14,6 +14,7 @@ import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.KeyEvent
 import model.{ApplicationContext, CanonicalLiveBlog, _}
+import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -56,7 +57,7 @@ class LiveBlogController(
 
   def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
-      val filter = shouldFilter(filterKeyEvents, liveblogFiltering.isSwitchedOn)
+      val filter = shouldFilter(filterKeyEvents)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
           renderWithRange(path, PageWithBlock(id), filter) // we know the id of a block
@@ -77,7 +78,7 @@ class LiveBlogController(
       filterKeyEvents: Option[Boolean],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
-      val filter = shouldFilter(filterKeyEvents, liveblogFiltering.isSwitchedOn)
+      val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate)
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
@@ -95,6 +96,25 @@ class LiveBlogController(
 
   // Helper methods
 
+  private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
+    blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
+      case NewsPillar  => true
+      case SportPillar => false
+      case _           => false
+    }
+  }
+
+  private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
+
+  private def isNotRecent(blog: LiveBlogPage) = {
+    val threeDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(3)
+    blog.article.fields.lastModified.isBefore(threeDaysAgo)
+  }
+
+  private def checkIfSupported(blog: LiveBlogPage): Boolean = {
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
+  }
+
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -106,9 +126,7 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) => {
-            // dcrCouldRender is always false because right now blogs are not supported by DCR
-            // but we included this variable as an indication of what is going to be possible in the future
-            val dcrCouldRender = false
+            val dcrCouldRender = checkIfSupported(blog)
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
             val properties =
               Map(
@@ -265,7 +283,7 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        createLiveBlogModel(liveBlog, response, range, experimentSwitch(LiveblogFiltering), filterKeyEvents).left
+        createLiveBlogModel(liveBlog, response, range, filterKeyEvents).left
           .map(_ -> blocks)
       case unknown => {
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
@@ -276,11 +294,7 @@ class LiveBlogController(
     content
   }
 
-  def shouldFilter(filterKeyEvents: Option[Boolean], featureSwitch: Boolean): Boolean = {
-    filterKeyEvents.getOrElse(false) && featureSwitch
-  }
-
-  private def experimentSwitch(experiment: Experiment)(implicit request: RequestHeader): Boolean = {
-    liveblogFiltering.isSwitchedOn && ActiveExperiments.isParticipating(experiment)
+  def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
+    filterKeyEvents.getOrElse(false)
   }
 }

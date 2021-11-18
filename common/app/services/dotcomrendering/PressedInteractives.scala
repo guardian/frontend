@@ -61,6 +61,7 @@ object PressedInteractives {
     "/technology/2016/apr/12/the-dark-side-of-guardian-comments",
     "/environment/ng-interactive/2020/may/20/relax-to-the-sounds-of-british-wildlife",
     "/world/ng-interactive/2014/jul/23/a-global-guide-to-the-first-world-war-interactive-documentary",
+    "/commentisfree/ng-interactive/2014/aug/29/-sp-mike-brown-stories-racial-profiling-police",
     // Specified by Newsletters UK
     "/info/ng-interactive/2017/may/05/sign-up-for-the-long-read-email",
     "/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email",
