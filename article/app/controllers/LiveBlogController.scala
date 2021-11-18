@@ -1,8 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
-import com.gu.contentapi.client.utils.format.NewsPillar
-import com.gu.contentapi.client.utils.format.SportPillar
+import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import conf.switches.Switches.liveblogFiltering
@@ -16,6 +15,7 @@ import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.KeyEvent
 import model.{ApplicationContext, CanonicalLiveBlog, _}
+import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -23,15 +23,8 @@ import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
 import views.support.RenderOtherStatus
-import implicits.{AmpFormat, HtmlFormat}
-import model.liveblog.{BlockElement, BodyBlock, CodeBlockElement, RichLinkBlockElement}
-import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
-import model.dotcomrendering.pageElements.{CodeBlockElement, RichLinkBlockElement}
-import org.joda.time.{DateTime, DateTimeZone}
-import services.dotcomponents.{DotcomponentsLogger, LocalRenderArticle, RemoteRender}
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
@@ -106,16 +99,16 @@ class LiveBlogController(
 
   private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
     blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
-      case NewsPillar => true
+      case NewsPillar  => true
       case SportPillar => false
-      case _ => false
+      case _           => false
     }
   }
 
   private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
 
   private def isNotRecent(blog: LiveBlogPage) = {
-    val threeDaysAgo = new DateTime(DateTimeZone. UTC).minusDays(3)
+    val threeDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(3)
     blog.article.fields.lastModified.isBefore(threeDaysAgo)
   }
 
