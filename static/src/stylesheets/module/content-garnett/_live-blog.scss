@@ -260,7 +260,7 @@
     display: flex;
     align-items: center;
     height: $gs-baseline;
-    margin: $gs-gutter 0;
+    margin: 18px 0;
 }
 
 .live-blog__filter-switch-label {
@@ -276,7 +276,7 @@
     position: absolute;
     margin-left: 3.25rem;
     font-size: 15px;
-    line-height: 1.4rem;
+    line-height: 1.5rem;
     font-weight: 400;
     color: inherit;
     -webkit-user-select: none; /* Safari */
