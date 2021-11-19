@@ -259,11 +259,12 @@
 .live-blog__filter-switch {
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
+    height: $gs-baseline;
+    margin: 18px 0;
 }
 
 .live-blog__filter-switch-label {
-    position: relative;
+    position: absolute;
     display: inline-block;
     width: 2.75rem;
     height: 1.5rem;
@@ -271,11 +272,17 @@
 
 .live-blog__filter-switch-text {
     @include f-textSans;
-    margin-left: .5rem;
+    width: 9.75rem;
+    position: absolute;
+    margin-left: 3.25rem;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 1.5rem;
     font-weight: 400;
     color: inherit;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 /* Hide default HTML checkbox */
@@ -339,10 +346,9 @@ input:checked + .live-blog__filter-switch-slider {
     background-color: #58d08b;
 }
 
-input:focus + .live-blog__filter-switch-slider {
-    box-shadow: 0 0 1px #58d08b;
+input:focus-visible + .live-blog__filter-switch-slider {
+    outline: 1px auto -webkit-focus-ring-color;
 }
-
 
 input:checked + .live-blog__filter-switch-slider:before {
     -webkit-transform: translateX(1.15rem);

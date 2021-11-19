@@ -548,7 +548,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
         @include mq($until: desktop) {
             background-color: $brightness-97;
-            padding: $gs-baseline $content-gutter;
+            padding: 0 $content-gutter;
         }
 
         @include mq(desktop) {
