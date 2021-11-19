@@ -78,7 +78,7 @@ object LiveBlogCurrentPage {
       val pinnedPost = pinnedPosts.flatMap(_.headOption)
 
       val filteredFirstPageBlocks = firstPageBlocks match {
-        case firstBlock +: blocksWithoutPinnedPost if pinnedPost.contains(firstBlock) => blocksWithoutPinnedPost
+        case firstBlock :: blocksWithoutPinnedPost if pinnedPost.contains(firstBlock) => blocksWithoutPinnedPost
         case _                                                                        => firstPageBlocks
       }
 
