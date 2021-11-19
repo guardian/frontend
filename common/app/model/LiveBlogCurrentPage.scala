@@ -3,7 +3,11 @@ package model
 import model.liveblog.BodyBlock.KeyEvent
 import model.liveblog.{Blocks, BodyBlock}
 
-case class LiveBlogCurrentPage(currentPage: PageReference, pagination: Option[N1Pagination])
+case class LiveBlogCurrentPage(
+    currentPage: PageReference,
+    pagination: Option[N1Pagination],
+    pinnedPost: Option[BodyBlock],
+)
 
 // Extends normal Pages due to the need for pagination and since-last-seen logic on
 
@@ -36,7 +40,7 @@ object LiveBlogCurrentPage {
       applyFilters(bodyBlocks, filterKeyEvents).takeWhile(_.id != sinceBlockId.lastUpdate)
     }
     Some(
-      LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None),
+      LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None, None),
     ) // just pretend to be the first page, it'll be ignored
   }
 
@@ -70,6 +74,14 @@ object LiveBlogCurrentPage {
         BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents)
       }
 
+      val pinnedPosts = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
+      val pinnedPost = pinnedPosts.flatMap(_.headOption)
+
+      val filteredFirstPageBlocks = firstPageBlocks match {
+        case firstBlock +: blocksWithoutPinnedPost if pinnedPost.contains(firstBlock) => blocksWithoutPinnedPost
+        case _                                                                        => firstPageBlocks
+      }
+
       val pagination = {
         if (blockCount > firstPageBlocks.size)
           Some(
@@ -84,7 +96,7 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(firstPageBlocks, filterKeyEvents), pagination)
+      LiveBlogCurrentPage(FirstPage(filteredFirstPageBlocks, filterKeyEvents), pagination, pinnedPost)
     }
   }
 
@@ -133,7 +145,8 @@ object LiveBlogCurrentPage {
                   ),
                 )
               else None,
-          )
+            None,
+          ),
       }
       .find(hasRequestedBlock)
   }
@@ -203,5 +216,4 @@ object LatestKeyBlock {
         .map(_.id)
     }
   }
-
 }

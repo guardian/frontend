@@ -36,10 +36,11 @@
                 </span>
             </div>
         } else {
-            @views.html.liveblog.pinnedPost(model.currentPage.currentPage.blocks.head, article, timezone)
+            @if(model.currentPage.pinnedPost){
+                @views.html.liveblog.pinnedPost(model.currentPage.pinnedPost.get, article, timezone)
+            }
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
-
         }
         </div>
     </div>
