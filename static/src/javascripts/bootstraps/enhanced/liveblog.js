@@ -9,6 +9,7 @@ import {init as initLiveblogCommon} from 'bootstraps/enhanced/article-liveblog-c
 import {initTrails} from 'bootstraps/enhanced/trail';
 import {catchErrorsWithContext} from 'lib/robust';
 import bean from "bean";
+import {scrollToElement} from "lib/scroller";
 
 const affixTimeline = () => {
     const keywordIds = config.get('page.keywordIds', '');
@@ -73,6 +74,12 @@ const setupListeners = () => {
         const hasParam = window.location.search.includes(`filterKeyEvents=true`);
         const param = `?filterKeyEvents=${hasParam ? 'false' : 'true'}#liveblog-content`;
         window.location.assign(`${window.location.pathname}${param}`);
+    })
+
+    bean.on(document.body, 'click', '.pinned-block__btn', () => {
+        const pinnedBlockTop = document.querySelector('.pinned-block__header')
+        const pinnedBlockToggle = document.querySelector('.pinned-block__toggle')
+        pinnedBlockToggle.checked && scrollToElement(pinnedBlockTop)
     })
 }
 
