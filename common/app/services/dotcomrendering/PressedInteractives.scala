@@ -126,6 +126,7 @@ object PressedInteractives {
     "/media/ng-interactive/2021/may/05/guardian-200-timelines",
     "/world/ng-interactive/2021/jun/02/so-many-revolutions-to-lead-europe-generation-z-on-their-post-covid-future",
     "/tv-and-radio/ng-interactive/2021/jul/01/whats-on-netflix-and-amazon-this-month-july",
+    "/world/ng-interactive/2020/oct/15/justice-on-trial-three-years-after-murder-daphne-caruana-galizia",
   )
 
   def isPressed(path: String): Boolean = interactives.contains(path)
