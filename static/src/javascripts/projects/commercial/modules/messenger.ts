@@ -1,28 +1,52 @@
 import reportError from '../../../lib/report-error';
 import { postMessage } from './messenger/post-message';
 
-const LISTENERS = {};
+const LISTENERS: Partial<Record<keyof WindowEventMap, () => void>> = {};
 let REGISTERED_LISTENERS = 0;
 
 const error405 = {
 	code: 405,
 	message: 'Service %% not implemented',
-};
+} as const;
 const error500 = {
 	code: 500,
 	message: 'Internal server error\n\n%%',
+} as const;
+
+type StandardMessage = {
+	id: string;
+	type: keyof typeof LISTENERS;
+	iframeId?: string;
+	slotId?: string;
+	value: {
+		height: number;
+		width: number;
+	};
 };
 
-// A legacy from programmatic ads running in friendly iframes. They can
-// on occasion be larger than the size returned by DFP. And so they
-// have been setup to send a message of the form:
+/**
+ * A legacy from programmatic ads running in friendly iframes. They can
+ * on occasion be larger than the size returned by DFP. And so they
+ * have been setup to send a message of the form:
+ */
+type ProgrammaticMessage = {
+	type: keyof typeof LISTENERS;
+	value: {
+		id?: string;
+		slotId?: string;
+		height: number;
+		width: number;
+	};
+};
 
-const isProgrammaticMessage = (payload) =>
+const isProgrammaticMessage = (
+	payload: StandardMessage | ProgrammaticMessage,
+): payload is ProgrammaticMessage =>
 	payload.type === 'set-ad-height' &&
 	('id' in payload.value || 'slotId' in payload.value) &&
 	'height' in payload.value;
 
-const toStandardMessage = (payload) => ({
+const toStandardMessage = (payload: ProgrammaticMessage): StandardMessage => ({
 	id: 'aaaa0000-bb11-cc22-dd33-eeeeee444444',
 	type: 'resize',
 	iframeId: payload.value.id,
@@ -33,17 +57,21 @@ const toStandardMessage = (payload) => ({
 	},
 });
 
-// Incoming messages contain the ID of the iframe into which the
-// source window is embedded.
-const getIframe = (data) => {
+/**
+ * Incoming messages contain the ID of the iframe into which the
+ * source window is embedded.
+ */
+const getIframe = (data: StandardMessage): HTMLElement | null => {
 	if (data.slotId) {
 		const container = document.getElementById(`dfp-ad--${data.slotId}`);
 		const iframes = container
 			? container.getElementsByTagName('iframe')
 			: null;
-		return iframes && iframes.length ? iframes[0] : null;
+		return iframes?.length ? iframes[0] : null;
 	} else if (data.iframeId) {
 		return document.getElementById(data.iframeId);
+	} else {
+		return null;
 	}
 };
 
@@ -51,35 +79,42 @@ const getIframe = (data) => {
 // in-house creatives, we are left with doing some basic tests
 // such as validating the anatomy of the payload and whitelisting
 // event type
-const isValidPayload = (payload) =>
+const isValidPayload = (payload: StandardMessage): payload is StandardMessage =>
 	typeof payload === 'object' &&
-	!!payload && // Needed because typeof null==='object'
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Needed because typeof null==='object'
+	!!payload &&
 	'type' in payload &&
 	'value' in payload &&
 	'id' in payload &&
 	payload.type in LISTENERS &&
 	/^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(payload.id);
 
-// Cheap string formatting function. It accepts as its first argument
-// an object `{ code, message }`. `message` is a string where successive
-// occurences of %% will be replaced by the following arguments. e.g.
-// `formatError({ message: "%%, you are so %%" }, "Regis", "lovely")`
-// returns `{ message: "Regis, you are so lovely" }`. Oh, thank you!
-const formatError = (error, ...args) =>
+/**
+ * Cheap string formatting function. It accepts as its first argument
+ * an object `{ code, message }`. `message` is a string where successive
+ * occurrences of %% will be replaced by the following arguments.
+ *
+ * e.g. `formatError({ message: "%%, you are so %%" }, "Regis", "lovely")`
+ * returns `{ message: "Regis, you are so lovely" }`. Oh, thank you!
+ */
+const formatError = (
+	error: { code: number; message: string },
+	...args: string[]
+) =>
 	args.reduce((e, arg) => {
 		e.message = e.message.replace('%%', arg);
 		return e;
 	}, error);
 
-const onMessage = (event) => {
-	let data;
+const onMessage = (event: CustomEvent<>): void => {
+	let data: StandardMessage | ProgrammaticMessage;
 
-	// #? This try-catch is a good target for splitting out into a seperate function
+	// #? This try-catch is a good target for splitting out into a separate function
 	try {
 		// Even though the postMessage API allows passing objects as-is, the
 		// serialisation/deserialisation is slower than using JSON
 		// Source: https://bugs.chromium.org/p/chromium/issues/detail?id=536620#c11
-		data = JSON.parse(event.data);
+		data = JSON.parse(event.data) as ProgrammaticMessage | StandardMessage;
 	} catch (ex) {
 		return;
 	}
@@ -93,7 +128,7 @@ const onMessage = (event) => {
 		return;
 	}
 
-	const respond = (error, result) => {
+	const respond = (error, result): void => {
 		postMessage(
 			{
 				id: data.id,
@@ -154,21 +189,27 @@ const onMessage = (event) => {
 	}
 };
 
-const on = (window) => {
+const on = (window: WindowProxy): void => {
 	window.addEventListener('message', onMessage);
 };
 
-const off = (window) => {
+const off = (window: WindowProxy): void => {
 	window.removeEventListener('message', onMessage);
 };
 
+export type RegisterListeners = (
+	type: EventT,
+	callback: () => ?(Promise<any> | ?any[]),
+	options: ?Object,
+) => void;
+
 export const register = (type, callback, options) => {
 	if (REGISTERED_LISTENERS === 0) {
-		on((options && options.window) || window);
+		on(options?.window || window);
 	}
 
 	/* Persistent LISTENERS are exclusive */
-	if (options && options.persist) {
+	if (options?.persist) {
 		LISTENERS[type] = callback;
 		REGISTERED_LISTENERS += 1;
 	} else {
