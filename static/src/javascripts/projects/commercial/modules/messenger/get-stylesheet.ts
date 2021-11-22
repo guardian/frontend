@@ -1,8 +1,8 @@
-const getStyles = (specs, styleSheets) => {
-	if (!specs || typeof specs.selector !== 'string') {
-		return null;
-	}
+type Specs = {
+	selector: string;
+};
 
+const getStyles = (specs: Specs, styleSheets: StyleSheetList): string[] => {
 	const result = [];
 	for (let i = 0; i < styleSheets.length; i += 1) {
 		const sheet = styleSheets[i];
