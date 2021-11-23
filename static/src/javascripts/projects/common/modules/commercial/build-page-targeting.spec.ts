@@ -66,9 +66,6 @@ jest.mock('../../../../lib/getPrivacyFramework', () => ({
 jest.mock('../identity/api', () => ({
 	isUserLoggedIn: jest.fn(),
 }));
-jest.mock('./user-ad-targeting', () => ({
-	getUserSegments: jest.fn(),
-}));
 jest.mock('../experiments/ab', () => ({
 	getSynchronousParticipations: jest.fn(),
 }));
