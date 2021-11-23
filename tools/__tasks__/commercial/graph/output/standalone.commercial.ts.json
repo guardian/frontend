@@ -13,7 +13,7 @@
   "../lib/config.js",
   "../lib/mediator.js"
  ],
- "../lib/events.js": [],
+ "../lib/events.ts": [],
  "../lib/fastdom-promise.js": [
   "../../../../node_modules/fastdom/extensions/fastdom-promised.js",
   "../../../../node_modules/fastdom/fastdom.js"
@@ -409,7 +409,7 @@
  ],
  "../projects/commercial/modules/messenger/background.js": [
   "../lib/config.js",
-  "../lib/events.js",
+  "../lib/events.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
@@ -433,7 +433,7 @@
  ],
  "../projects/commercial/modules/messenger/scroll.js": [
   "../lib/detect.js",
-  "../lib/events.js",
+  "../lib/events.ts",
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/type.js": [
@@ -475,7 +475,7 @@
  ],
  "../projects/commercial/modules/sticky-top-banner.js": [
   "../lib/detect.js",
-  "../lib/events.js",
+  "../lib/events.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
