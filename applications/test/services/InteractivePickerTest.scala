@@ -11,10 +11,9 @@ import play.api.test.Helpers._
     private[this] val interactives = Set[String](path)
     def isPressed(path: String): Boolean = interactives.contains(path)
   }
+  conf.switches.Switches.InteractivePickerFeature.switchOn
 
   "Interactive Picker get rendering tier" should "return PressedInteractive if pressed and switched on" in {
-    conf.switches.Switches.InteractivePickerFeature.switchOn
-
     val testRequest = TestRequest(path)
     val tier = InteractivePicker.getRenderingTier(path, MockPressedInteractives.isPressed)(
       testRequest,
@@ -23,11 +22,10 @@ import play.api.test.Helpers._
     tier should be(PressedInteractive)
   }
 
-  it should "return FrontendLegacy only if the request forces DCR off" in {
-    val legacyPath = "/world/live/2021/oct/13/covid-news-live?dcr=false"
-    val testRequest = TestRequest(legacyPath)
+  it should "return FrontendLegacy if the request forces DCR off" in {
+    val testRequest = TestRequest(s"$path?dcr=false")
     val tier =
-      InteractivePicker.getRenderingTier(legacyPath, MockPressedInteractives.isPressed)(
+      InteractivePicker.getRenderingTier(path, MockPressedInteractives.isPressed)(
         testRequest,
       )
 

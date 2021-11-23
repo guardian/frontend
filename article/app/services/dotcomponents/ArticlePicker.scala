@@ -26,6 +26,9 @@ object ArticlePageChecks {
       "https://uploads.guim.co.uk/2019/03/20/boot.js", //creates a contents section component
       "https://uploads.guim.co.uk/2019/12/11/boot.js", //another variant of the contents block
       "https://interactive.guim.co.uk/page-enhancers/nav/boot.js", //another variant of the contents block
+      "https://interactive.guim.co.uk/testing/2020/11/voterSlideshow/boot.js", //why on earth are there so many contents blocks?
+      "https://uploads.guim.co.uk/2021/10/15/boot.js", //somehow there are even more
+      "https://interactive.guim.co.uk/embed/2018/02/divider/index.html", //A simple divider that renders fine in DCR
     )
 
     def unsupportedElement(blockElement: BlockElement) =
