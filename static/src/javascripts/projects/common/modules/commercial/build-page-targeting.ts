@@ -20,7 +20,6 @@ import { removeFalseyValues } from '../../../commercial/modules/header-bidding/u
 import { getSynchronousParticipations } from '../experiments/ab';
 import { isUserLoggedIn } from '../identity/api';
 import { commercialFeatures } from './commercial-features';
-import { getUserSegments } from './user-ad-targeting';
 
 // https://admanager.google.com/59666047#inventory/custom_targeting/list
 
@@ -81,7 +80,6 @@ type PageTargeting = PartialWithNulls<{
 	ct: ContentType;
 	dcre: TrueOrFalse; // DotCom-Rendering Eligible
 	edition: 'uk' | 'us' | 'au' | 'int';
-	gdncrm: string | string[]; // GuarDiaN CRM
 	k: string[]; // Keywords
 	ms: string; // Media Source
 	p: 'r2' | 'ng' | 'app' | 'amp'; // Platform (web)
@@ -282,7 +280,6 @@ const buildAppNexusTargetingObject = once(
 			pt7: pageTargeting.bp,
 			pt8: pageTargeting.x, // OpenX cannot handle this being undefined
 			pt9: [
-				pageTargeting.gdncrm,
 				pageTargeting.pv,
 				pageTargeting.co,
 				pageTargeting.tn,
@@ -409,7 +406,6 @@ const rebuildPageTargeting = () => {
 					? 't'
 					: 'f',
 			fr: getFrequencyValue(),
-			gdncrm: getUserSegments(adConsentState),
 			inskin: inskinTargeting(),
 			ms: formatTarget(page.source),
 			permutive: getPermutiveSegments(),

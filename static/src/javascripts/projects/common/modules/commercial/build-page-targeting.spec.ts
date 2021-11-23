@@ -16,11 +16,7 @@ import { getSynchronousParticipations as getSynchronousParticipations_ } from '.
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
 import { _, getPageTargeting } from './build-page-targeting';
 import { commercialFeatures } from './commercial-features';
-import { getUserSegments as getUserSegments_ } from './user-ad-targeting';
 
-const getUserSegments = getUserSegments_ as jest.MockedFunction<
-	typeof getUserSegments_
->;
 const getSynchronousParticipations =
 	getSynchronousParticipations_ as jest.MockedFunction<
 		typeof getSynchronousParticipations_
@@ -69,9 +65,6 @@ jest.mock('../../../../lib/getPrivacyFramework', () => ({
 }));
 jest.mock('../identity/api', () => ({
 	isUserLoggedIn: jest.fn(),
-}));
-jest.mock('./user-ad-targeting', () => ({
-	getUserSegments: jest.fn(),
 }));
 jest.mock('../experiments/ab', () => ({
 	getSynchronousParticipations: jest.fn(),
@@ -192,8 +185,6 @@ describe('Build Page Targeting', () => {
 
 		isUserLoggedIn.mockReturnValue(true);
 
-		getUserSegments.mockReturnValue(['seg1', 'seg2']);
-
 		getSynchronousParticipations.mockReturnValue({
 			MtMaster: {
 				variant: 'variantName',
@@ -230,7 +221,6 @@ describe('Build Page Targeting', () => {
 		expect(pageTargeting.bp).toBe('mobile');
 		expect(pageTargeting.at).toBe('ng101');
 		expect(pageTargeting.si).toEqual('t');
-		expect(pageTargeting.gdncrm).toEqual(['seg1', 'seg2']);
 		expect(pageTargeting.co).toEqual(['gabrielle-chan']);
 		expect(pageTargeting.bl).toEqual(['blog']);
 		expect(pageTargeting.ms).toBe('itn');
@@ -342,7 +332,6 @@ describe('Build Page Targeting', () => {
 	it('should remove empty values', () => {
 		window.guardian.config.page = {} as PageConfig;
 		window.guardian.config.ophan = { pageViewId: '123456' };
-		getUserSegments.mockReturnValue([]);
 
 		expect(getPageTargeting()).toEqual({
 			ab: ['MtMaster-variantName'],
@@ -410,7 +399,7 @@ describe('Build Page Targeting', () => {
 			getBreakpoint.mockReturnValue('desktop');
 			getPageTargeting();
 			expect(window.guardian.config.page.appNexusPageTargeting).toEqual(
-				'sens=f,pt1=/football/series/footballweekly,pt2=us,pt3=video,pt4=ng,pt5=prince-charles-letters,pt5=uk/uk,pt5=prince-charles,pt6=5,pt7=desktop,pt9=seg1,seg2|presetOphanPageViewId|gabrielle-chan|news|',
+				'sens=f,pt1=/football/series/footballweekly,pt2=us,pt3=video,pt4=ng,pt5=prince-charles-letters,pt5=uk/uk,pt5=prince-charles,pt6=5,pt7=desktop,pt9=presetOphanPageViewId|gabrielle-chan|news|',
 			);
 		});
 	});
