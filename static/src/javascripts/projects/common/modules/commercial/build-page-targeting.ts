@@ -83,7 +83,6 @@ type PageTargeting = PartialWithNulls<{
 	edition: 'uk' | 'us' | 'au' | 'int';
 	gdncrm: string | string[]; // GuarDiaN CRM
 	k: string[]; // Keywords
-	ms: string; // Media Source
 	p: 'r2' | 'ng' | 'app' | 'amp'; // Platform (web)
 	pa: TrueOrFalse; // Personalised Ads consent
 	permutive: string[]; // predefined segment values
@@ -149,15 +148,6 @@ const inskinTargeting = (): TrueOrFalse => {
 	if (!cmp.hasInitialised()) return 'f';
 	return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
 };
-
-const WHITESPACE_CHARACTERS = /[+\s]+/g;
-const format = (keyword: string): string =>
-	keyword.replace(WHITESPACE_CHARACTERS, '-').toLowerCase();
-
-const AND = /&/g;
-const APOSTROPHE = /'/g;
-const formatTarget = (target?: string | null): string | null =>
-	target ? format(target).replace(AND, 'and').replace(APOSTROPHE, '') : null;
 
 const abParam = (): string[] => {
 	const abParticipations: Participations = getSynchronousParticipations();
@@ -411,7 +401,6 @@ const rebuildPageTargeting = () => {
 			fr: getFrequencyValue(),
 			gdncrm: getUserSegments(adConsentState),
 			inskin: inskinTargeting(),
-			ms: formatTarget(page.source),
 			permutive: getPermutiveSegments(),
 			pv: window.guardian.config.ophan.pageViewId,
 			rdp: getRdpValue(ccpaState),
