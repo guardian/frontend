@@ -16,11 +16,7 @@ import { getSynchronousParticipations as getSynchronousParticipations_ } from '.
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
 import { _, getPageTargeting } from './build-page-targeting';
 import { commercialFeatures } from './commercial-features';
-import { getUserSegments as getUserSegments_ } from './user-ad-targeting';
 
-const getUserSegments = getUserSegments_ as jest.MockedFunction<
-	typeof getUserSegments_
->;
 const getSynchronousParticipations =
 	getSynchronousParticipations_ as jest.MockedFunction<
 		typeof getSynchronousParticipations_
@@ -192,8 +188,6 @@ describe('Build Page Targeting', () => {
 
 		isUserLoggedIn.mockReturnValue(true);
 
-		getUserSegments.mockReturnValue(['seg1', 'seg2']);
-
 		getSynchronousParticipations.mockReturnValue({
 			MtMaster: {
 				variant: 'variantName',
@@ -230,7 +224,6 @@ describe('Build Page Targeting', () => {
 		expect(pageTargeting.bp).toBe('mobile');
 		expect(pageTargeting.at).toBe('ng101');
 		expect(pageTargeting.si).toEqual('t');
-		expect(pageTargeting.gdncrm).toEqual(['seg1', 'seg2']);
 		expect(pageTargeting.co).toEqual(['gabrielle-chan']);
 		expect(pageTargeting.bl).toEqual(['blog']);
 		expect(pageTargeting.ms).toBe('itn');
@@ -342,7 +335,6 @@ describe('Build Page Targeting', () => {
 	it('should remove empty values', () => {
 		window.guardian.config.page = {} as PageConfig;
 		window.guardian.config.ophan = { pageViewId: '123456' };
-		getUserSegments.mockReturnValue([]);
 
 		expect(getPageTargeting()).toEqual({
 			ab: ['MtMaster-variantName'],
