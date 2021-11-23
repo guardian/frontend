@@ -51,6 +51,16 @@ type ProgrammaticMessage = {
 	};
 };
 
+const isSomeKindOfMessage = (
+	message: unknown,
+): message is StandardMessage | ProgrammaticMessage =>
+	isObject(message) &&
+	'type' in message &&
+	typeof message.type === 'string' &&
+	isObject(message.value) &&
+	'height' in message.value &&
+	'width' in message.value;
+
 const isProgrammaticMessage = (
 	payload: StandardMessage | ProgrammaticMessage,
 ): payload is ProgrammaticMessage =>
