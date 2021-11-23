@@ -1,7 +1,19 @@
 import reportError from '../../../lib/report-error';
 import { postMessage } from './messenger/post-message';
 
-const LISTENERS: Partial<Record<keyof WindowEventMap, () => void>> = {};
+const LISTENERS: Record<
+	MessageType,
+	Array<(...args: unknown[]) => unknown> | undefined
+> = {
+	'get-page-url': undefined,
+	'get-styles': undefined,
+	'measure-ad-load': undefined,
+	'set-ad-height': undefined,
+	background: undefined,
+	click: undefined,
+	resize: undefined,
+	type: undefined,
+};
 let REGISTERED_LISTENERS = 0;
 
 const error405 = {
@@ -197,57 +209,78 @@ const off = (window: WindowProxy): void => {
 	window.removeEventListener('message', onMessage);
 };
 
+const types = [
+	'background',
+	'click',
+	'get-page-url',
+	'get-styles',
+	'measure-ad-load',
+	'resize',
+	'set-ad-height',
+	'type',
+] as const;
+type MessageType = typeof types[number];
+
+type ListenerOptions = {
+	window?: WindowProxy;
+	persist?: boolean;
+	[x: string]: unknown;
+};
+
 export type RegisterListeners = (
-	type: EventT,
-	callback: () => ?(Promise<any> | ?any[]),
-	options: ?Object,
+	type: MessageType,
+	callback: (...args: unknown[]) => Promise<unknown> | unknown,
+	options?: ListenerOptions,
 ) => void;
 
-export const register = (type, callback, options) => {
+export const register: RegisterListeners = (type, callback, options) => {
 	if (REGISTERED_LISTENERS === 0) {
-		on(options?.window || window);
+		on(options?.window ?? window);
 	}
 
 	/* Persistent LISTENERS are exclusive */
 	if (options?.persist) {
-		LISTENERS[type] = callback;
+		LISTENERS[type] = [callback];
 		REGISTERED_LISTENERS += 1;
 	} else {
 		// set LISTENERS[type] to an empty array, if it is currently undefined or null
-		LISTENERS[type] = LISTENERS[type] || [];
+		LISTENERS[type] = LISTENERS[type] ?? [];
 
-		if (LISTENERS[type].indexOf(callback) === -1) {
-			LISTENERS[type].push(callback);
+		if (!(LISTENERS[type] ?? []).includes(callback)) {
+			LISTENERS[type]?.push(callback);
 			REGISTERED_LISTENERS += 1;
 		}
 	}
 };
 
-export const unregister = (type, callback, options = {}) => {
+export const unregister = (
+	type: MessageType,
+	callback?: () => Promise<unknown> | void,
+	options: ListenerOptions = {},
+): void => {
 	if (LISTENERS[type] === undefined) {
-		throw new Error(formatError(error405, type));
+		throw new Error(formatError(error405, type).message);
 	}
 
 	if (callback === undefined) {
-		REGISTERED_LISTENERS -= LISTENERS[type].length;
-		LISTENERS[type].length = 0;
-	} else if (LISTENERS[type] === callback) {
-		LISTENERS[type] = null;
-		REGISTERED_LISTENERS -= 1;
+		REGISTERED_LISTENERS -= (LISTENERS[type] ?? []).length;
+		LISTENERS[type] = undefined;
 	} else {
-		const idx = LISTENERS[type].indexOf(callback);
+		const idx = LISTENERS[type]?.indexOf(callback) ?? -1;
 		if (idx > -1) {
 			REGISTERED_LISTENERS -= 1;
-			LISTENERS[type].splice(idx, 1);
+			LISTENERS[type]?.splice(idx, 1);
 		}
 	}
 
 	if (REGISTERED_LISTENERS === 0) {
-		off(options.window || window);
+		off(options.window ?? window);
 	}
 };
 
-export const init = (...modules) => {
+export const init = (
+	...modules: Array<(r: RegisterListeners) => void>
+): void => {
 	modules.forEach((moduleInit) => moduleInit(register));
 };
 
