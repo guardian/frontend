@@ -147,7 +147,6 @@ describe('Build Page Targeting', () => {
 			pageId: 'football/series/footballweekly',
 			publication: 'The Observer',
 			seriesId: 'film/series/filmweekly',
-			source: 'ITN',
 			sponsorshipType: 'advertisement-features',
 			tones: 'News',
 			videoDuration: 63,
@@ -233,7 +232,6 @@ describe('Build Page Targeting', () => {
 		expect(pageTargeting.gdncrm).toEqual(['seg1', 'seg2']);
 		expect(pageTargeting.co).toEqual(['gabrielle-chan']);
 		expect(pageTargeting.bl).toEqual(['blog']);
-		expect(pageTargeting.ms).toBe('itn');
 		expect(pageTargeting.tn).toEqual(['news']);
 		expect(pageTargeting.vl).toEqual('90');
 		expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
