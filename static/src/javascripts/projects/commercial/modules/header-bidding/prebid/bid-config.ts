@@ -21,6 +21,7 @@ import {
 	getBreakpointKey,
 	shouldIncludeAdYouLike,
 	shouldIncludeAppNexus,
+	shouldIncludeCriteo,
 	shouldIncludeImproveDigital,
 	shouldIncludeImproveDigitalSkin,
 	shouldIncludeOpenx,
@@ -457,8 +458,7 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 
 const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 	const otherBidders: PrebidBidder[] = [
-		// Currently only include Criteo if explicitly using pbtest query parameter
-		...(inPbTestOr(false) ? [criteoBidder] : []),
+		...(inPbTestOr(shouldIncludeCriteo()) ? [criteoBidder] : []),
 		...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
 		...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
 		...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),

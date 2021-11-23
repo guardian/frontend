@@ -30,8 +30,8 @@ object InteractivePicker {
     // Allow us to quickly revert to rendering content (instead of serving pressed content)
     val switchOn = InteractivePickerFeature.isSwitchedOn
 
-    if (isPressed(fullPath) && switchOn) PressedInteractive
-    else if (forceDCROff) FrontendLegacy
+    if (forceDCROff) FrontendLegacy
+    else if (isPressed(fullPath) && switchOn) PressedInteractive
     else DotcomRendering
   }
 }
