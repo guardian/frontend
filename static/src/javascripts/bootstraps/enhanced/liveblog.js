@@ -69,6 +69,11 @@ const keepTimestampsCurrent = () => {
     window.setInterval(() => initRelativeDates(), 60000);
 };
 
+const isVisible = (element) => {
+    const position = element.getBoundingClientRect();
+    return position.top >= 0 && position.bottom <= window.innerHeight
+}
+
 const setupListeners = () => {
     bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
         const hasParam = window.location.search.includes(`filterKeyEvents=true`);
@@ -77,9 +82,12 @@ const setupListeners = () => {
     })
 
     bean.on(document.body, 'click', '.pinned-block__btn', () => {
-        const pinnedBlockTop = document.querySelector('.pinned-block__header')
+        const pinnedBlockHeader = document.querySelector('.pinned-block__header')
         const pinnedBlockToggle = document.querySelector('.pinned-block__toggle')
-        pinnedBlockToggle.checked && scrollToElement(pinnedBlockTop)
+
+        if(!isVisible(pinnedBlockHeader) && pinnedBlockToggle.checked) {
+            scrollToElement(pinnedBlockHeader)
+        }
     })
 }
 
