@@ -14,7 +14,7 @@ const markTime = (label: string): void => {
 };
 
 // Returns the ms time when the mark was made.
-const getMarkTime = (label: string) => {
+const getMarkTime = (label: string): number | null => {
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- we’re checking out-of-spec browsers
 	if (performanceAPI && 'getEntriesByName' in performanceAPI) {
 		const perfMark = performanceAPI.getEntriesByName(label, 'mark');
@@ -25,6 +25,8 @@ const getMarkTime = (label: string) => {
 	} else if (label in timings) {
 		return timings[label];
 	}
+
+	return null;
 };
 
 export { markTime, getMarkTime, getCurrentTime };
