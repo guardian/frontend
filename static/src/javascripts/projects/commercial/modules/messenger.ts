@@ -1,3 +1,4 @@
+import { isObject, isString } from '@guardian/libs';
 import reportError from '../../../lib/report-error';
 import { postMessage } from './messenger/post-message';
 
@@ -102,15 +103,8 @@ const ID_REGEX = /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/;
 // in-house creatives, we are left with doing some basic tests
 // such as validating the anatomy of the payload and whitelisting
 // event type
-const isValidPayload = (payload: StandardMessage): payload is StandardMessage =>
-	typeof payload === 'object' &&
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Needed because typeof null==='object'
-	!!payload &&
-	'type' in payload &&
-	'value' in payload &&
-	'id' in payload &&
-	payload.type in LISTENERS &&
-	ID_REGEX.test(payload.id);
+const isValidPayload = (payload: StandardMessage): boolean =>
+	types.includes(payload.type) && ID_REGEX.test(payload.id);
 
 /**
  * Cheap string formatting function. It accepts as its first argument
@@ -129,29 +123,39 @@ const formatError = (
 		return e;
 	}, error);
 
-const onMessage = (event: CustomEvent<>): void => {
-	let data: StandardMessage | ProgrammaticMessage;
-
-	// #? This try-catch is a good target for splitting out into a separate function
+const getValidPayload = (data: unknown): StandardMessage | null => {
 	try {
+		if (!isString(data))
+			throw new Error(`Type of data is not \`string\`: ${typeof data}`);
+
 		// Even though the postMessage API allows passing objects as-is, the
 		// serialisation/deserialisation is slower than using JSON
 		// Source: https://bugs.chromium.org/p/chromium/issues/detail?id=536620#c11
-		data = JSON.parse(event.data) as ProgrammaticMessage | StandardMessage;
-	} catch (ex) {
-		return;
-	}
+		const unknownData: unknown = JSON.parse(data);
 
-	// These legacy messages are converted into bona fide resize messages
-	if (isProgrammaticMessage(data)) {
-		data = toStandardMessage(data);
-	}
+		if (!isSomeKindOfMessage(unknownData))
+			throw new Error('Invalid message type');
 
-	if (!isValidPayload(data)) {
-		return;
-	}
+		const payload: StandardMessage = isProgrammaticMessage(unknownData)
+			? toStandardMessage(unknownData)
+			: unknownData;
 
-	const respond = (error, result): void => {
+		if (!isValidPayload(payload)) throw new Error('Invalid payload');
+
+		return payload;
+	} catch (error) {
+		return null;
+	}
+};
+
+const onMessage = (event: MessageEvent<string>): void => {
+	const data = getValidPayload(event.data);
+	if (!data) return;
+
+	const respond = (
+		error: { code: number; message: string } | null,
+		result: null,
+	): void => {
 		postMessage(
 			{
 				id: data.id,
@@ -162,12 +166,12 @@ const onMessage = (event: CustomEvent<>): void => {
 		);
 	};
 
-	if (Array.isArray(LISTENERS[data.type]) && LISTENERS[data.type].length) {
+	if (Array.isArray(LISTENERS[data.type]) && LISTENERS[data.type]?.length) {
 		// Because any listener can have side-effects (by unregistering itself),
 		// we run the promise chain on a copy of the `LISTENERS` array.
 		// Hat tip @piuccio
 		const promise = LISTENERS[data.type]
-			.slice()
+			?.slice()
 			// We offer, but don't impose, the possibility that a listener returns
 			// a value that must be sent back to the calling frame. To do this,
 			// we pass the cumulated returned value as a second argument to each
@@ -179,8 +183,22 @@ const onMessage = (event: CustomEvent<>): void => {
 			// And so we wrap each call in a promise chain, in case one drops the
 			// occasional fastdom bomb in the middle.
 			.reduce(
-				(func, listener) =>
-					func.then((ret) => {
+				(
+					func: Promise<boolean>,
+					listener: (
+						arg0:
+							| {
+									id?: string | undefined;
+									slotId?: string | undefined;
+									height: number;
+									width: number;
+							  }
+							| { height: number; width: number },
+						arg1: any,
+						arg2: HTMLElement | null,
+					) => any,
+				) =>
+					func.then((ret: any) => {
 						const thisRet = listener(
 							data.value,
 							ret,
@@ -192,10 +210,10 @@ const onMessage = (event: CustomEvent<>): void => {
 			);
 
 		return promise
-			.then((response) => {
+			?.then((response) => {
 				respond(null, response);
 			})
-			.catch((ex) => {
+			.catch((ex: string) => {
 				reportError(ex, {
 					feature: 'native-ads',
 				});

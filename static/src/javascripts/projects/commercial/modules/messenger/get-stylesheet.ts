@@ -1,3 +1,5 @@
+import type { RegisterListeners } from '../messenger';
+
 type Specs = {
 	selector: string;
 };
@@ -29,11 +31,10 @@ const getStyles = (specs: Specs, styleSheets: StyleSheetList): string[] => {
 	return result;
 };
 
-const init = (register) => {
+const init = (register: RegisterListeners): void => {
 	register('get-styles', (specs) => {
-		if (specs) {
-			return getStyles(specs, document.styleSheets);
-		}
+		if (!specs) return [];
+		return getStyles(specs, document.styleSheets);
 	});
 };
 
