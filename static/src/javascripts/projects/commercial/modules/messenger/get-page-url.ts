@@ -1,9 +1,4 @@
-// Should be declared in messenger.ts
-export type RegisterListeners = (
-	type: string,
-	callback?: () => unknown,
-	options?: Record<string, unknown>,
-) => void;
+import type { RegisterListeners } from '../messenger';
 
 const init = (register: RegisterListeners): void => {
 	register(
