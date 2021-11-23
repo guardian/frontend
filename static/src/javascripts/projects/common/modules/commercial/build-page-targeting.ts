@@ -95,7 +95,6 @@ type PageTargeting = PartialWithNulls<{
 	url: string;
 	urlkw: string[]; // URL KeyWords
 	vl: string; // Video Length
-	x: string; // kruX user segments (deprecated?)
 	rdp: string;
 	consent_tcfv2: string;
 	cmp_interaction: string;
@@ -268,7 +267,6 @@ const buildAppNexusTargetingObject = once(
 			pt5: pageTargeting.k,
 			pt6: pageTargeting.su,
 			pt7: pageTargeting.bp,
-			pt8: pageTargeting.x, // OpenX cannot handle this being undefined
 			pt9: [
 				pageTargeting.pv,
 				pageTargeting.co,
