@@ -85,17 +85,17 @@ const setupListeners = () => {
 
 const init = () => {
     catchErrorsWithContext([
+        ['lb-listeners', setupListeners],
+        ['lb-filter', initFilterCheckbox],
+        ['lb-pinned', initPinnedPost],
         ['lb-autoupdate', createAutoUpdate],
         ['lb-timeline', affixTimeline],
         ['lb-timestamp', keepTimestampsCurrent],
         ['lb-richlinks', upgradeRichLinks],
     ]);
 
-    initFilterCheckbox();
-    initPinnedPost();
     initTrails();
     initLiveblogCommon();
-    setupListeners();
     catchErrorsWithContext([
         [
             'lb-ready',
