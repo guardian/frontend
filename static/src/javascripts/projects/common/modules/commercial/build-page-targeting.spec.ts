@@ -399,7 +399,7 @@ describe('Build Page Targeting', () => {
 			getBreakpoint.mockReturnValue('desktop');
 			getPageTargeting();
 			expect(window.guardian.config.page.appNexusPageTargeting).toEqual(
-				'sens=f,pt1=/football/series/footballweekly,pt2=us,pt3=video,pt4=ng,pt5=prince-charles-letters,pt5=uk/uk,pt5=prince-charles,pt6=5,pt7=desktop,pt9=seg1,seg2|presetOphanPageViewId|gabrielle-chan|news|',
+				'sens=f,pt1=/football/series/footballweekly,pt2=us,pt3=video,pt4=ng,pt5=prince-charles-letters,pt5=uk/uk,pt5=prince-charles,pt6=5,pt7=desktop,pt9=presetOphanPageViewId|gabrielle-chan|news|',
 			);
 		});
 	});
