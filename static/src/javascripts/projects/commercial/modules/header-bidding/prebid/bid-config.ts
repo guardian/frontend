@@ -432,7 +432,7 @@ const criteoBidder: PrebidBidder = {
 };
 
 const smartBidder: PrebidBidder = {
-	name: 'smart',
+	name: 'smartadserver',
 	switchName: 'prebidSmart',
 	bidParams: () => ({
 		siteID: 465656,

@@ -98,7 +98,7 @@ type BidderCode =
 	| 'oxd'
 	| 'ozone'
 	| 'pubmatic'
-	| 'smart'
+	| 'smartadserver'
 	| 'sonobi'
 	| 'triplelift'
 	| 'trustx'
