@@ -1,7 +1,7 @@
 import type { ABTest } from '@guardian/ab-core';
 import { noop } from '../../../../../lib/noop';
 
-export const integrateCriteo: ABTest = {
+export const integrateSmart: ABTest = {
 	id: 'IntegrateSmart',
 	author: 'Fred OBrien (@frederickobrien)',
 	start: '2021-11-23',

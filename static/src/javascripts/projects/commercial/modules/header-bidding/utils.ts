@@ -5,6 +5,7 @@ import {
 	isInVariantSynchronous,
 } from 'common/modules/experiments/ab';
 import { integrateCriteo } from 'common/modules/experiments/tests/integrate-criteo';
+import { integrateSmart } from 'common/modules/experiments/tests/integrate-smart';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
@@ -176,7 +177,9 @@ export const shouldIncludeImproveDigitalSkin = (): boolean =>
  *
  * Add additional tests here when integrating a new SSP
  */
-const inSSPTest = (): boolean => isInABTestSynchronous(integrateCriteo);
+const inSSPTest = (): boolean =>
+	isInABTestSynchronous(integrateCriteo) ||
+	isInABTestSynchronous(integrateSmart);
 
 /**
  * Determine whether to include Criteo as a bidder
@@ -186,6 +189,10 @@ const inSSPTest = (): boolean => isInABTestSynchronous(integrateCriteo);
  */
 export const shouldIncludeCriteo = (): boolean =>
 	!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant');
+
+// TODO is this correct
+export const shouldIncludeSmart = (): boolean =>
+	!inSSPTest() || isInVariantSynchronous(integrateSmart, 'variant');
 
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>
