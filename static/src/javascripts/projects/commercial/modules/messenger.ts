@@ -87,6 +87,7 @@ const getIframe = (data: StandardMessage): HTMLElement | null => {
 	}
 };
 
+const ID_REGEX = /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/;
 // Until DFP provides a way for us to identify with 100% certainty our
 // in-house creatives, we are left with doing some basic tests
 // such as validating the anatomy of the payload and whitelisting
@@ -99,7 +100,7 @@ const isValidPayload = (payload: StandardMessage): payload is StandardMessage =>
 	'value' in payload &&
 	'id' in payload &&
 	payload.type in LISTENERS &&
-	/^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(payload.id);
+	ID_REGEX.test(payload.id);
 
 /**
  * Cheap string formatting function. It accepts as its first argument
