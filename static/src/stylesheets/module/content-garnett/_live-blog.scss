@@ -270,13 +270,14 @@
     display: inline-block;
     width: 2.75rem;
     height: 1.5rem;
+    cursor: pointer;
 }
 
 .live-blog__filter-switch-text {
     @include f-textSans;
     width: 9.75rem;
     position: absolute;
-    margin-left: 3.25rem;
+    padding-left: 3.25rem;
     font-size: 15px;
     line-height: 1.5rem;
     font-weight: 400;
@@ -475,7 +476,7 @@ $block-padding-left: gs-span(1) + 4;
 
 .pinned-block__overlay {
     background-image: linear-gradient(0deg, #ffffff, #ffffff 40%, transparent);
-    height: 80px;
+    height: 5rem;
     z-index: 1;
     position: absolute;
     bottom: 0;
