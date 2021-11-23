@@ -1,14 +1,15 @@
 import config from 'lib/config';
-import { isBreakpoint } from 'lib/detect';
+import {isBreakpoint} from 'lib/detect';
 import mediator from 'lib/mediator';
-import { upgradeRichLinks } from 'common/modules/article/rich-links';
-import { Affix } from 'common/modules/experiments/affix';
-import { autoUpdate } from 'common/modules/ui/autoupdate';
-import { init as initRelativeDates } from 'common/modules/ui/relativedates';
-import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
-import { initTrails } from 'bootstraps/enhanced/trail';
-import { catchErrorsWithContext } from 'lib/robust';
+import {upgradeRichLinks} from 'common/modules/article/rich-links';
+import {Affix} from 'common/modules/experiments/affix';
+import {autoUpdate} from 'common/modules/ui/autoupdate';
+import {init as initRelativeDates} from 'common/modules/ui/relativedates';
+import {init as initLiveblogCommon} from 'bootstraps/enhanced/article-liveblog-common';
+import {initTrails} from 'bootstraps/enhanced/trail';
+import {catchErrorsWithContext} from 'lib/robust';
 import bean from "bean";
+import {scrollToElement} from "lib/scroller";
 
 const affixTimeline = () => {
     const keywordIds = config.get('page.keywordIds', '');
@@ -43,6 +44,21 @@ const initFilterCheckbox = () => {
     }
 }
 
+
+const initPinnedPost = () => {
+    const pinnedBlock = document.querySelector('.pinned-block__body')
+    const pinnedBlockBtn = document.querySelector('.pinned-block__btn')
+    const overlay = document.querySelector('.pinned-block__overlay')
+
+    const pinnedBlockHeight = pinnedBlock.offsetHeight;
+    const minCollapsedHeight = document.documentElement.clientHeight * .30
+
+    if (pinnedBlockHeight <= minCollapsedHeight) {
+        overlay.style.display = "none"
+        pinnedBlockBtn.style.display = "none"
+    }
+}
+
 const createAutoUpdate = () => {
     if (config.get('page.isLive')) {
         autoUpdate();
@@ -59,6 +75,12 @@ const setupListeners = () => {
         const param = `?filterKeyEvents=${hasParam ? 'false' : 'true'}#liveblog-content`;
         window.location.assign(`${window.location.pathname}${param}`);
     })
+
+    bean.on(document.body, 'click', '.pinned-block__btn', () => {
+        const pinnedBlockTop = document.querySelector('.pinned-block__header')
+        const pinnedBlockToggle = document.querySelector('.pinned-block__toggle')
+        pinnedBlockToggle.checked && scrollToElement(pinnedBlockTop)
+    })
 }
 
 const init = () => {
@@ -70,10 +92,10 @@ const init = () => {
     ]);
 
     initFilterCheckbox();
+    initPinnedPost();
     initTrails();
     initLiveblogCommon();
     setupListeners();
-
     catchErrorsWithContext([
         [
             'lb-ready',
@@ -84,4 +106,4 @@ const init = () => {
     ]);
 };
 
-export { init };
+export {init};

@@ -61,7 +61,6 @@ object LiveBlogHelpers {
       liveBlog: Article,
       response: ItemResponse,
       range: BlockRange,
-      filterSwitch: Boolean,
       filterKeyEvents: Boolean,
       pinnedPostSwitch: Boolean,
   ): Either[LiveBlogPage, Status] = {
@@ -102,7 +101,6 @@ object LiveBlogHelpers {
             article = liveBlogCache,
             currentPage = pageModel,
             related = StoryPackages(liveBlog.metadata.id, response),
-            filterSwitch = filterSwitch,
             filterKeyEvents = filterKeyEvents,
             pinnedPostSwitch = pinnedPostSwitch,
           ),

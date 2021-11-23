@@ -228,10 +228,18 @@ object DotcomRenderingDataModel {
     })
 
     val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
-    val keyEvents =
+
+    val allKeyEvents =
       blocks.requestedBodyBlocks
-        .flatMap(blocks => blocks.get("body:key-events"))
-        .getOrElse(Seq.empty[APIBlock])
+        .flatMap(bodyBlocks => bodyBlocks.get("body:key-events"))
+        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.keyEvent.contains(true))))
+
+    val latestSummary = blocks.body.flatMap(_.find(_.attributes.summary.contains(true)))
+
+    val keyEvents =
+      (latestSummary.toSeq ++ allKeyEvents)
+        .sortBy(block => block.publishedDate.orElse(block.createdDate).map(_.dateTime))
+        .reverse
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,

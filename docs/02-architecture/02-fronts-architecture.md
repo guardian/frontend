@@ -1,6 +1,6 @@
 # Fronts architecture
 
-![Fronts architecture](images/fronts-archirecture.png)
+![Fronts architecture](images/fronts-archirecture.jpg)
 
 Rendering a front requires fetching a lot of information from multiple sources (CAPI, Fronts config, Fronts collections). In order to avoid doing this gruelling work inline when a user request is received, all data necessary to render a front is prefetched and aggregated in a single location (S3).
 

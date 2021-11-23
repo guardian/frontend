@@ -21,6 +21,7 @@ import {
 	getBreakpointKey,
 	shouldIncludeAdYouLike,
 	shouldIncludeAppNexus,
+	shouldIncludeCriteo,
 	shouldIncludeImproveDigital,
 	shouldIncludeImproveDigitalSkin,
 	shouldIncludeOpenx,
@@ -422,6 +423,14 @@ const adYouLikeBidder: PrebidBidder = {
 	},
 };
 
+const criteoBidder: PrebidBidder = {
+	name: 'criteo',
+	switchName: 'prebidCriteo',
+	bidParams: () => ({
+		networkId: 337,
+	}),
+};
+
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders = (
 	slotSizes: HeaderBiddingSize[],
@@ -449,6 +458,7 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 
 const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 	const otherBidders: PrebidBidder[] = [
+		...(inPbTestOr(shouldIncludeCriteo()) ? [criteoBidder] : []),
 		...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
 		...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
 		...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),

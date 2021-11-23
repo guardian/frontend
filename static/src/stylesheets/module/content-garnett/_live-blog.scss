@@ -261,23 +261,31 @@
 .live-blog__filter-switch {
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
+    height: $gs-baseline;
+    margin: 18px 0;
 }
 
 .live-blog__filter-switch-label {
-    position: relative;
+    position: absolute;
     display: inline-block;
     width: 2.75rem;
     height: 1.5rem;
+    cursor: pointer;
 }
 
 .live-blog__filter-switch-text {
     @include f-textSans;
-    margin-left: .5rem;
+    width: 9.75rem;
+    position: absolute;
+    padding-left: 3.25rem;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 1.5rem;
     font-weight: 400;
     color: inherit;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 /* Hide default HTML checkbox */
@@ -341,10 +349,9 @@ input:checked + .live-blog__filter-switch-slider {
     background-color: #58d08b;
 }
 
-input:focus + .live-blog__filter-switch-slider {
-    box-shadow: 0 0 1px #58d08b;
+input:focus-visible + .live-blog__filter-switch-slider {
+    outline: 1px auto -webkit-focus-ring-color;
 }
-
 
 input:checked + .live-blog__filter-switch-slider:before {
     -webkit-transform: translateX(1.15rem);
@@ -373,8 +380,16 @@ input:checked + .live-blog__filter-switch-slider:before {
     position: relative;
 }
 
-input[type='checkbox'] {
+.pinned-block__toggle {
     display: none;
+}
+
+.pinned-block__toggle + label::after {
+    content: 'Show more';
+}
+
+.pinned-block__toggle:checked + label::after {
+    content: 'Show less';
 }
 
 $block-padding-left: gs-span(1) + 4;
@@ -387,11 +402,10 @@ $block-padding-left: gs-span(1) + 4;
     cursor: pointer;
     margin-left: $gs-gutter/2;
     height: 2rem;
-    width: 6.5rem;
+    width: 8.5rem;
     bottom: -$gs-gutter + 5;
     display: flex;
     align-items: center;
-    justify-content: center;
     border-radius: 1rem;
     z-index: 2;
 
@@ -400,22 +414,32 @@ $block-padding-left: gs-span(1) + 4;
     }
 }
 
-.pinned-block__collapsible-container input[type='checkbox'] + label::before {
-    content: '+ Show more';
-}
 
-.pinned-block__collapsible-container input[type='checkbox']:checked + label::before {
-    content: '- Show less';
-}
-
-.toggle:checked + .pinned-block--toggle + .pinned-block__collapsible-content {
+.pinned-block__toggle:checked ~ .pinned-block__collapsible-content {
     max-height: fit-content;
 }
 
-.toggle:checked + .pinned-block--toggle + .pinned-block__collapsible-content > .pinned-block__body > .pinned-block__overlay {
+.pinned-block__toggle:checked ~ .pinned-block__collapsible-content .pinned-block__overlay {
     display: none;
 }
 
+.pinned-block__btn-icon--expand {
+    display: block;
+    margin: .25rem .625rem 0 .9375rem;
+}
+
+.pinned-block__toggle:checked + .pinned-block--toggle > .pinned-block__btn-icon--expand {
+    display: none;
+}
+
+.pinned-block__btn-icon--collapse {
+    margin: .25rem .25rem 0 .5rem;
+    display: none;
+}
+
+.pinned-block__toggle:checked + .pinned-block__btn > .pinned-block__btn-icon--collapse {
+    display: block;
+}
 
 .pinned-block__collapsible-content {
     position: relative;
@@ -452,7 +476,7 @@ $block-padding-left: gs-span(1) + 4;
 
 .pinned-block__overlay {
     background-image: linear-gradient(0deg, #ffffff, #ffffff 40%, transparent);
-    height: 80px;
+    height: 5rem;
     z-index: 1;
     position: absolute;
     bottom: 0;
