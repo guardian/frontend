@@ -44,6 +44,16 @@ const initFilterCheckbox = () => {
     }
 }
 
+const initAccessibleClickListener = (label) => {
+    const spacebar = 32
+    const enter = 13
+    label.addEventListener('keydown', e => {
+        if (e.which === spacebar || e.which === enter) {
+            e.preventDefault();
+            label.click();
+        };
+    });
+}
 
 const initPinnedPost = () => {
     const pinnedBlock = document.querySelector('.pinned-block__body')
@@ -57,6 +67,7 @@ const initPinnedPost = () => {
         overlay.style.display = "none"
         pinnedBlockBtn.style.display = "none"
     }
+    initAccessibleClickListener(pinnedBlockBtn)
 }
 
 const createAutoUpdate = () => {
