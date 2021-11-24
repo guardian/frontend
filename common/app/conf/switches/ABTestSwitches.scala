@@ -1,6 +1,7 @@
 package conf.switches
 
 import conf.switches.SwitchGroup.ABTests
+import conf.switches.Owner.group
 import java.time.LocalDate
 
 trait ABTestSwitches {
