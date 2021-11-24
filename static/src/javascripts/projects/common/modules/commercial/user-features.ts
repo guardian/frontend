@@ -1,7 +1,8 @@
-import { getCookie, isObject } from '@guardian/libs';
+import { getCookie, isObject, setCookie } from '@guardian/libs';
 import { noop } from 'lib/noop';
 import type { LocalDate } from 'types/dates';
 import { days, months } from 'types/dates';
+import type { UserFeaturesResponse } from 'types/identity';
 import config from '../../../../lib/config';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';
@@ -68,34 +69,6 @@ const timeInDaysFromNow = (daysFromNow: number): string => {
 	const tmpDate = new Date();
 	tmpDate.setDate(tmpDate.getDate() + daysFromNow);
 	return tmpDate.getTime().toString();
-};
-
-/**
- * This type is manually kept in sync with the Membership API:
- * https://github.com/guardian/members-data-api/blob/a48acdebed6a334ceb4336ece275b9cf9b3d6bb7/membership-attribute-service/app/models/Attributes.scala#L134-L151
- */
-type UserFeaturesResponse = {
-	userId: string;
-	tier?: string;
-	recurringContributionPaymentPlan?: string;
-	oneOffContributionDate?: LocalDate;
-	membershipJoinDate?: LocalDate;
-	digitalSubscriptionExpiryDate?: LocalDate;
-	paperSubscriptionExpiryDate?: LocalDate;
-	guardianWeeklyExpiryDate?: LocalDate;
-	liveAppSubscriptionExpiryDate?: LocalDate;
-	alertAvailableFor?: string;
-
-	showSupportMessaging: boolean;
-
-	contentAccess: {
-		member: boolean;
-		paidMember: boolean;
-		recurringContributor: boolean;
-		digitalPack: boolean;
-		paperSubscriber: boolean;
-		guardianWeeklySubscriber: boolean;
-	};
 };
 
 /**

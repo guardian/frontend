@@ -1,4 +1,5 @@
 import { getCookie } from '@guardian/libs';
+import type { UserFeaturesResponse } from 'types/identity';
 import config from '../../../../lib/config';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';
@@ -16,7 +17,7 @@ import {
 	isRecurringContributor,
 	refresh,
 	shouldNotBeShownSupportMessaging,
-} from './user-features.js';
+} from './user-features';
 
 jest.mock('../../../../lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({
@@ -362,8 +363,21 @@ describe('The shouldNotBeShownSupportMessaging getter', () => {
 
 describe('Storing new feature data', () => {
 	beforeEach(() => {
+		const mockResponse: UserFeaturesResponse = {
+			userId: 'abc',
+			showSupportMessaging: false,
+			contentAccess: {
+				member: false,
+				paidMember: false,
+				recurringContributor: false,
+				digitalPack: false,
+				paperSubscriber: false,
+				guardianWeeklySubscriber: false,
+			},
+		};
+
 		jest.resetAllMocks();
-		fetchJsonSpy.mockReturnValue(Promise.resolve());
+		fetchJsonSpy.mockReturnValue(Promise.resolve(mockResponse));
 		deleteAllFeaturesData();
 		isUserLoggedIn.mockReturnValue(true);
 	});
