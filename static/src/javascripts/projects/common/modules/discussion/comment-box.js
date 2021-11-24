@@ -505,7 +505,7 @@ class CommentBox extends Component {
 			this.setState('onboarding-visible');
 			this.previewComment('onboardingPreviewSuccess');
 
-			if (onboardingUsername && this.options.hasUsername) {
+			if (onboardingUsername && this.options.hasUsername && this.getUserData().displayName) {
 				console.log(this.options);
 
 				onboardingUsername.classList.add('is-hidden');
