@@ -54,4 +54,3 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 }
-
