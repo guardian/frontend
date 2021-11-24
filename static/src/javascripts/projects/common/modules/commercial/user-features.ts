@@ -186,7 +186,7 @@ const adFreeDataIsOld = (): boolean => {
 	const { switches } = window.guardian.config;
 	return (
 		Boolean(switches.adFreeStrictExpiryEnforcement) &&
-		datedCookieIsOldOrMissing(AD_FREE_USER_COOKIE)
+		cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE)
 	);
 };
 
