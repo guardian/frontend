@@ -1,5 +1,4 @@
 import { EventTimer } from '@guardian/commercial-core';
-import { markTime } from '../../../../lib/user-timing';
 import a9 from '../header-bidding/a9/a9';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { stripDfpAdPrefixFrom } from '../header-bidding/utils';
@@ -38,7 +37,6 @@ export const loadAdvert = (advert: Advert): void => {
 			// The display needs to be called, even in the event of an error.
 		})
 		.then(() => {
-			markTime(`Commercial: Slot Ready: ${advert.id}`);
 			eventTimer.trigger('slotReady', adName);
 			advert.startLoading();
 			return Promise.all([
