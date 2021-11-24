@@ -469,7 +469,7 @@ $block-padding-left: gs-span(1) + 4;
     margin-right: $gs-gutter/2;
     @include mq(tablet) {
         margin-right: $gs-gutter;
-        margin-left: $block-padding-left;
+        margin-left: 3rem;
     }
 
 }
