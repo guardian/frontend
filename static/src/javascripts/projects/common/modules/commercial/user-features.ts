@@ -1,10 +1,9 @@
-import { getCookie, isObject, setCookie } from '@guardian/libs';
+import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
 import { noop } from 'lib/noop';
 import type { LocalDate } from 'types/dates';
 import { days, months } from 'types/dates';
 import type { UserFeaturesResponse } from 'types/identity';
 import config from '../../../../lib/config';
-import { addCookie, removeCookie } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { dateDiffDays } from '../../../../lib/time-utils';
 import { isUserLoggedIn } from '../identity/api';
@@ -93,30 +92,39 @@ const validateResponse = (
 };
 
 const persistResponse = (JsonResponse: UserFeaturesResponse) => {
-	addCookie('USER_FEATURES_EXPIRY_COOKIE', timeInDaysFromNow(1));
-	addCookie(PAYING_MEMBER_COOKIE, JsonResponse.contentAccess.paidMember);
-	addCookie(
-		RECURRING_CONTRIBUTOR_COOKIE,
-		JsonResponse.contentAccess.recurringContributor,
-	);
-	addCookie(
-		DIGITAL_SUBSCRIBER_COOKIE,
-		JsonResponse.contentAccess.digitalPack,
-	);
-	addCookie(
-		HIDE_SUPPORT_MESSAGING_COOKIE,
-		!JsonResponse.showSupportMessaging,
-	);
+	setCookie({
+		name: USER_FEATURES_EXPIRY_COOKIE,
+		value: timeInDaysFromNow(1),
+	});
+	setCookie({
+		name: PAYING_MEMBER_COOKIE,
+		value: String(JsonResponse.contentAccess.paidMember),
+	});
+	setCookie({
+		name: RECURRING_CONTRIBUTOR_COOKIE,
+		value: String(JsonResponse.contentAccess.recurringContributor),
+	});
+	setCookie({
+		name: DIGITAL_SUBSCRIBER_COOKIE,
+		value: String(JsonResponse.contentAccess.digitalPack),
+	});
+	setCookie({
+		name: HIDE_SUPPORT_MESSAGING_COOKIE,
+		value: String(!JsonResponse.showSupportMessaging),
+	});
 	if (JsonResponse.oneOffContributionDate) {
-		addCookie(
-			ONE_OFF_CONTRIBUTION_DATE_COOKIE,
-			JsonResponse.oneOffContributionDate,
-		);
+		setCookie({
+			name: ONE_OFF_CONTRIBUTION_DATE_COOKIE,
+			value: JsonResponse.oneOffContributionDate,
+		});
 	}
 
-	removeCookie(ACTION_REQUIRED_FOR_COOKIE);
+	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
 	if (JsonResponse.alertAvailableFor) {
-		addCookie(ACTION_REQUIRED_FOR_COOKIE, JsonResponse.alertAvailableFor);
+		setCookie({
+			name: ACTION_REQUIRED_FOR_COOKIE,
+			value: JsonResponse.alertAvailableFor,
+		});
 	}
 
 	if (
@@ -124,24 +132,24 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 		!forcedAdFreeMode &&
 		!JsonResponse.contentAccess.digitalPack
 	) {
-		removeCookie(AD_FREE_USER_COOKIE);
+		removeCookie({ name: AD_FREE_USER_COOKIE });
 	}
 
 	if (JsonResponse.contentAccess.digitalPack) {
-		addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
+		setCookie({ name: AD_FREE_USER_COOKIE, value: timeInDaysFromNow(2) });
 	}
 };
 
 const deleteOldData = (): void => {
 	// We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
-	removeCookie(USER_FEATURES_EXPIRY_COOKIE);
-	removeCookie(PAYING_MEMBER_COOKIE);
-	removeCookie(RECURRING_CONTRIBUTOR_COOKIE);
-	removeCookie(AD_FREE_USER_COOKIE);
-	removeCookie(ACTION_REQUIRED_FOR_COOKIE);
-	removeCookie(DIGITAL_SUBSCRIBER_COOKIE);
-	removeCookie(HIDE_SUPPORT_MESSAGING_COOKIE);
-	removeCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE);
+	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
+	removeCookie({ name: PAYING_MEMBER_COOKIE });
+	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });
+	removeCookie({ name: AD_FREE_USER_COOKIE });
+	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
+	removeCookie({ name: DIGITAL_SUBSCRIBER_COOKIE });
+	removeCookie({ name: HIDE_SUPPORT_MESSAGING_COOKIE });
+	removeCookie({ name: ONE_OFF_CONTRIBUTION_DATE_COOKIE });
 };
 
 const requestNewData = () =>
@@ -350,7 +358,10 @@ const readerRevenueRelevantCookies = [
 
 // For debug/test purposes
 const fakeOneOffContributor = (): void => {
-	addCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, Date.now().toString());
+	setCookie({
+		name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
+		value: Date.now().toString(),
+	});
 };
 
 const isAdFreeUser = (): boolean =>
@@ -363,11 +374,11 @@ const extendContribsCookieExpiry = (): void => {
 		const contributionDate = parseInt(cookie, 10);
 		if (Number.isInteger(contributionDate)) {
 			const daysToLive = 365 - dateDiffDays(contributionDate, Date.now());
-			addCookie(
-				SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
-				contributionDate.toString(),
+			setCookie({
+				name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
+				value: contributionDate.toString(),
 				daysToLive,
-			);
+			});
 		}
 	}
 };
