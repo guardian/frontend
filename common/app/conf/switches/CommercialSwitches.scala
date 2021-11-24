@@ -521,6 +521,16 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val prebidSmart: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-smart",
+    description = "Include the Smart AdServer adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val mobileStickyLeaderboard: Switch = Switch(
     group = Commercial,
     name = "mobile-sticky-leaderboard",

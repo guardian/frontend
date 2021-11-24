@@ -82,6 +82,12 @@ type PrebidCriteoParams = {
 	networkId: number;
 };
 
+type PrebidSmartParams = {
+	siteID: number;
+	pageID: number;
+	formatID: number;
+};
+
 type BidderCode =
 	| 'adyoulike'
 	| 'and'
@@ -92,6 +98,7 @@ type BidderCode =
 	| 'oxd'
 	| 'ozone'
 	| 'pubmatic'
+	| 'smartadserver'
 	| 'sonobi'
 	| 'triplelift'
 	| 'trustx'
@@ -106,6 +113,7 @@ type PrebidParams =
 	| PrebidOpenXParams
 	| PrebidOzoneParams
 	| PrebidPubmaticParams
+	| PrebidSmartParams
 	| PrebidSonobiParams
 	| PrebidTripleLiftParams
 	| PrebidTrustXParams
