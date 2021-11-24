@@ -191,7 +191,8 @@ export const shouldIncludeCriteo = (): boolean =>
 	!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant');
 
 export const shouldIncludeSmart = (): boolean =>
-	!inSSPTest() || isInVariantSynchronous(integrateSmart, 'variant');
+	(!inSSPTest() || isInVariantSynchronous(integrateSmart, 'variant')) &&
+	(isInUk() || isInRow());
 
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>
