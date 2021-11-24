@@ -171,8 +171,8 @@ const requestNewData = () =>
 		.then(persistResponse)
 		.catch(noop);
 
-const datedCookieIsOldOrMissing = (datedCookieName: string): boolean => {
-	const expiryDateFromCookie = getCookie({ name: datedCookieName });
+const cookieIsExpiredOrMissing = (cookieName: string): boolean => {
+	const expiryDateFromCookie = getCookie({ name: cookieName });
 	if (!expiryDateFromCookie) return true;
 	const expiryTime = parseInt(expiryDateFromCookie, 10);
 	const timeNow = new Date().getTime();
