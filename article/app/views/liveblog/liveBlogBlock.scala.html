@@ -3,14 +3,14 @@
 @import model.liveblog.{LiveBlogDate, BodyBlock}
 @import views.BodyProcessor
 @import model.DotcomContentType
-@(block: BodyBlock, article: Article, timezone: DateTimeZone, isPinnedPost: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(block: BodyBlock, article: Article, timezone: DateTimeZone, isPinnedBlock: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 @*
 * This template is for individual blocks
 *@
 <div
 id="block-@block.id"
 data-sort-time="@block.publishedCreatedTimestamp()"
-class=" @if(!isPinnedPost) {block block--content@block.eventClass@block.attributes.membershipPlaceholder.map { _ => js-insert-epic-after }}"
+class=" @if(!isPinnedBlock) {block block--content@block.eventClass@block.attributes.membershipPlaceholder.map { _ => js-insert-epic-after }}"
 itemprop="liveBlogUpdate"
 itemscope
 itemtype="http://schema.org/BlogPosting"
@@ -33,7 +33,7 @@ itemtype="http://schema.org/BlogPosting"
 
     <p class="block-time published-time">
         <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
-        @views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), !isPinnedPost, true)
+        @views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), !isPinnedBlock, true)
         </a>
     </p>
 

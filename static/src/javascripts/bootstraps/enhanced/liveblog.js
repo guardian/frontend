@@ -55,7 +55,7 @@ const initAccessibleClickListener = (label) => {
     });
 }
 
-const initPinnedPost = () => {
+const initPinnedBlock = () => {
     const pinnedBlock = document.querySelector('.pinned-block__body')
     const pinnedBlockBtn = document.querySelector('.pinned-block__btn')
     const overlay = document.querySelector('.pinned-block__overlay')
@@ -99,7 +99,7 @@ const init = () => {
     catchErrorsWithContext([
         ['lb-listeners', setupListeners],
         ['lb-filter', initFilterCheckbox],
-        ['lb-pinned', initPinnedPost],
+        ['lb-pinned', initPinnedBlock],
         ['lb-autoupdate', createAutoUpdate],
         ['lb-timeline', affixTimeline],
         ['lb-timestamp', keepTimestampsCurrent],

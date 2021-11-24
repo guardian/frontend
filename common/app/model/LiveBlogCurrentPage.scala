@@ -6,7 +6,7 @@ import model.liveblog.{Blocks, BodyBlock}
 case class LiveBlogCurrentPage(
     currentPage: PageReference,
     pagination: Option[N1Pagination],
-    pinnedPost: Option[BodyBlock],
+    pinnedBlock: Option[BodyBlock],
 )
 
 // Extends normal Pages due to the need for pagination and since-last-seen logic on
@@ -74,12 +74,12 @@ object LiveBlogCurrentPage {
         BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents)
       }
 
-      val pinnedPosts = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
-      val pinnedPost = pinnedPosts.flatMap(_.headOption)
+      val pinnedBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
+      val pinnedBlock = pinnedBlocks.flatMap(_.headOption)
 
       val filteredFirstPageBlocks = firstPageBlocks match {
-        case firstBlock :: blocksWithoutPinnedPost if pinnedPost.contains(firstBlock) => blocksWithoutPinnedPost
-        case _                                                                        => firstPageBlocks
+        case firstBlock :: blocksWithoutPinnedBlock if pinnedBlock.contains(firstBlock) => blocksWithoutPinnedBlock
+        case _                                                                          => firstPageBlocks
       }
 
       val pagination = {
@@ -96,7 +96,7 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(filteredFirstPageBlocks, filterKeyEvents), pagination, pinnedPost)
+      LiveBlogCurrentPage(FirstPage(filteredFirstPageBlocks, filterKeyEvents), pagination, pinnedBlock)
     }
   }
 
@@ -146,7 +146,7 @@ object LiveBlogCurrentPage {
                 )
               else None,
             None,
-          ),
+          )
       }
       .find(hasRequestedBlock)
   }
