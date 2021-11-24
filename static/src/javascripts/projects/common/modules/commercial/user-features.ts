@@ -180,7 +180,7 @@ const cookieIsExpiredOrMissing = (cookieName: string): boolean => {
 };
 
 const featuresDataIsOld = () =>
-	datedCookieIsOldOrMissing(USER_FEATURES_EXPIRY_COOKIE);
+	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
 
 const adFreeDataIsOld = (): boolean => {
 	const { switches } = window.guardian.config;
