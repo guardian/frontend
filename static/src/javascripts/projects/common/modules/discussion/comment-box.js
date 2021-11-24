@@ -481,19 +481,22 @@ class CommentBox extends Component {
 
 			if (onboardingAuthor) {
 				onboardingAuthor.innerHTML = this.getUserData().displayName;
+
 				console.log(
 					'This.getUserData().displayName',
 					this.getUserData().displayName,
 				);
+
+                console.log(
+					'This.getUserData().displayName type',
+					typeof this.getUserData().displayName,
+				);
 			}
-			//   } else {
-			//     this.error('USERNAME_MISSING')
-			// }
 
 			this.setState('onboarding-visible');
 			this.previewComment('onboardingPreviewSuccess');
 
-			if (onboardingUsername && this.options.hasUsername) {
+			if (onboardingUsername && this.options.hasUsername && this.getUserData().displayName) {
 				console.log(this.options);
 
 				onboardingUsername.classList.add('is-hidden');
