@@ -1,5 +1,7 @@
 import { getCookie, isObject } from '@guardian/libs';
 import { noop } from 'lib/noop';
+import type { LocalDate } from 'types/dates';
+import { days, months } from 'types/dates';
 import config from '../../../../lib/config';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';
@@ -68,8 +70,6 @@ const timeInDaysFromNow = (daysFromNow: number): string => {
 	return tmpDate.getTime().toString();
 };
 
-type LocalDate = `${number}-${string}-${string}`;
-
 /**
  * This type is manually kept in sync with the Membership API:
  * https://github.com/guardian/members-data-api/blob/a48acdebed6a334ceb4336ece275b9cf9b3d6bb7/membership-attribute-service/app/models/Attributes.scala#L134-L151
@@ -120,7 +120,7 @@ const validateResponse = (
 };
 
 const persistResponse = (JsonResponse: UserFeaturesResponse) => {
-	addCookie(USER_FEATURES_EXPIRY_COOKIE, timeInDaysFromNow(1));
+	addCookie('USER_FEATURES_EXPIRY_COOKIE', timeInDaysFromNow(1));
 	addCookie(PAYING_MEMBER_COOKIE, JsonResponse.contentAccess.paidMember);
 	addCookie(
 		RECURRING_CONTRIBUTOR_COOKIE,
@@ -282,8 +282,8 @@ const getLastOneOffContributionDate = (): LocalDate | null => {
 
 	const date = new Date(timestamp);
 	const year = date.getFullYear();
-	const month = (date.getMonth() + 1).toString().padStart(2, '0');
-	const day = date.getDate().toString().padStart(2, '0');
+	const month = months[date.getMonth() + 1];
+	const day = days[date.getDate()];
 
 	return `${year}-${month}-${day}`;
 };

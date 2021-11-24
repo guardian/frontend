@@ -1,20 +1,21 @@
-import { addCookie, removeCookie, getCookie } from '../../../../lib/cookies';
+import { getCookie } from '@guardian/libs';
+import config from '../../../../lib/config';
+import { addCookie, removeCookie } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
-import config from '../../../../lib/config';
 import {
-	refresh,
-	isAdFreeUser,
-	isPayingMember,
-	isRecurringContributor,
 	accountDataUpdateWarning,
-	isDigitalSubscriber,
-	getLastOneOffContributionTimestamp,
 	getDaysSinceLastOneOffContribution,
-	isRecentOneOffContributor,
-	shouldNotBeShownSupportMessaging,
+	getLastOneOffContributionTimestamp,
 	getLastRecurringContributionDate,
+	isAdFreeUser,
+	isDigitalSubscriber,
+	isPayingMember,
 	isPostAskPauseOneOffContributor,
+	isRecentOneOffContributor,
+	isRecurringContributor,
+	refresh,
+	shouldNotBeShownSupportMessaging,
 } from './user-features.js';
 
 jest.mock('../../../../lib/raven');
@@ -25,8 +26,10 @@ jest.mock('../../../../lib/fetch-json', () => ({
 	fetchJson: jest.fn(() => Promise.resolve()),
 }));
 
-const fetchJsonSpy = fetchJson;
-const isUserLoggedIn = isUserLoggedIn_;
+const fetchJsonSpy = fetchJson as jest.MockedFunction<typeof fetchJson>;
+const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
+	typeof isUserLoggedIn_
+>;
 
 const PERSISTENCE_KEYS = {
 	USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
@@ -44,7 +47,7 @@ const PERSISTENCE_KEYS = {
 		'gu.contributions.recurring.contrib-timestamp.Annual',
 };
 
-const setAllFeaturesData = (opts) => {
+const setAllFeaturesData = (opts: { isExpired: boolean }) => {
 	const currentTime = new Date().getTime();
 	const msInOneDay = 24 * 60 * 60 * 1000;
 	const expiryDate = opts.isExpired
@@ -101,51 +104,55 @@ describe('Refreshing the features data', () => {
 			fetchJsonSpy.mockReturnValue(Promise.resolve());
 		});
 
-		it('Performs an update if the user has missing data', () => {
+		it('Performs an update if the user has missing data', async () => {
 			deleteAllFeaturesData();
-			refresh();
+			await refresh();
 			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
 		});
 
-		it('Performs an update if the user has expired data', () => {
+		it('Performs an update if the user has expired data', async () => {
 			setAllFeaturesData({ isExpired: true });
-			refresh();
+			await refresh();
 			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
 		});
 
-		it('Does not delete the data just because it has expired', () => {
+		it('Does not delete the data just because it has expired', async () => {
 			setAllFeaturesData({ isExpired: true });
-			refresh();
-			expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
-				'true',
-			);
+			await refresh();
 			expect(
-				getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE),
+				getCookie({ name: PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE }),
 			).toBe('true');
 			expect(
-				getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE),
+				getCookie({
+					name: PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE,
+				}),
+			).toBe('true');
+			expect(
+				getCookie({
+					name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+				}),
 			).toEqual(expect.stringMatching(/\d{13}/));
-			expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toEqual(
-				expect.stringMatching(/\d{13}/),
-			);
+			expect(
+				getCookie({ name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE }),
+			).toEqual(expect.stringMatching(/\d{13}/));
 		});
 
-		it('Does not perform update if user has fresh feature data', () => {
+		it('Does not perform update if user has fresh feature data', async () => {
 			setAllFeaturesData({ isExpired: false });
-			refresh();
+			await refresh();
 			expect(fetchJsonSpy).not.toHaveBeenCalled();
 		});
 
-		it('Performs an update if membership-frontend wipes just the paying-member cookie', () => {
+		it('Performs an update if membership-frontend wipes just the paying-member cookie', async () => {
 			// Set everything except paying-member cookie
 			setAllFeaturesData({ isExpired: true });
 			removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 
-			refresh();
+			await refresh();
 			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
 		});
 
-		it('Performs an update if the ad-free state is stale and strict expiry enforcement is enabled', () => {
+		it('Performs an update if the ad-free state is stale and strict expiry enforcement is enabled', async () => {
 			// This is a slightly synthetic setup - the ad-free cookie is rewritten with every
 			// refresh that happens as a result of expired features data, but we want to check
 			// that a refresh could be triggered based on ad-free state alone if the strict
@@ -154,7 +161,7 @@ describe('Refreshing the features data', () => {
 			setAllFeaturesData({ isExpired: false });
 			setExpiredAdFreeData();
 
-			refresh();
+			await refresh();
 			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
 		});
 	});
@@ -166,25 +173,33 @@ describe('Refreshing the features data', () => {
 			fetchJsonSpy.mockReturnValue(Promise.resolve());
 		});
 
-		it('Does not perform update, even if feature data missing', () => {
+		it('Does not perform update, even if feature data missing', async () => {
 			deleteAllFeaturesData();
-			refresh();
+			await refresh();
 			expect(fetchJsonSpy).not.toHaveBeenCalled();
 		});
 
-		it('Deletes leftover feature data', () => {
+		it('Deletes leftover feature data', async () => {
 			setAllFeaturesData({ isExpired: false });
-			refresh();
-			expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
-			expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBeNull();
+			await refresh();
 			expect(
-				getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE),
+				getCookie({ name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE }),
 			).toBeNull();
 			expect(
-				getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE),
+				getCookie({ name: PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE }),
 			).toBeNull();
 			expect(
-				getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE),
+				getCookie({
+					name: PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE,
+				}),
+			).toBeNull();
+			expect(
+				getCookie({ name: PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE }),
+			).toBeNull();
+			expect(
+				getCookie({
+					name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+				}),
 			).toBeNull();
 		});
 	});
@@ -365,16 +380,20 @@ describe('Storing new feature data', () => {
 			}),
 		);
 		return refresh().then(() => {
-			expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
-				'false',
-			);
 			expect(
-				getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE),
+				getCookie({ name: PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE }),
 			).toBe('false');
-			expect(getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE)).toBe(
-				'false',
-			);
-			expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
+			expect(
+				getCookie({
+					name: PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE,
+				}),
+			).toBe('false');
+			expect(
+				getCookie({ name: PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE }),
+			).toBe('false');
+			expect(
+				getCookie({ name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE }),
+			).toBeNull();
 		});
 	});
 
@@ -390,22 +409,27 @@ describe('Storing new feature data', () => {
 			}),
 		);
 		return refresh().then(() => {
-			expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
-				'true',
-			);
 			expect(
-				getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE),
+				getCookie({ name: PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE }),
 			).toBe('true');
-			expect(getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE)).toBe(
-				'true',
-			);
 			expect(
-				getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE),
+				getCookie({
+					name: PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE,
+				}),
+			).toBe('true');
+			expect(
+				getCookie({ name: PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE }),
+			).toBe('true');
+			expect(
+				getCookie({ name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE }),
 			).toBeTruthy();
 			expect(
 				Number.isNaN(
 					parseInt(
-						getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE),
+						// @ts-expect-error -- we’re testing it
+						getCookie({
+							name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
+						}),
 						10,
 					),
 				),
@@ -415,31 +439,33 @@ describe('Storing new feature data', () => {
 
 	it('Puts an expiry date in an accompanying cookie', () =>
 		refresh().then(() => {
-			const expiryDate = getCookie(
-				PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
-			);
+			const expiryDate = getCookie({
+				name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+			});
 			expect(expiryDate).toBeTruthy();
+			// @ts-expect-error -- we’re testing it
 			expect(Number.isNaN(parseInt(expiryDate, 10))).toBe(false);
 		}));
 
 	it('The expiry date is in the future', () =>
 		refresh().then(() => {
-			const expiryDateString = getCookie(
-				PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
-			);
+			const expiryDateString = getCookie({
+				name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+			});
+			// @ts-expect-error -- we’re testing it
 			const expiryDateEpoch = parseInt(expiryDateString, 10);
 			const currentTimeEpoch = new Date().getTime();
 			expect(currentTimeEpoch < expiryDateEpoch).toBe(true);
 		}));
 });
 
-const setSupportFrontendOneOffContributionCookie = (value) =>
+const setSupportFrontendOneOffContributionCookie = (value: string) =>
 	addCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, value);
 
 const removeSupportFrontendOneOffContributionCookie = () =>
 	removeCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
 
-const setAttributesOneOffContributionCookie = (value) =>
+const setAttributesOneOffContributionCookie = (value: string) =>
 	addCookie(PERSISTENCE_KEYS.ONE_OFF_CONTRIBUTION_DATE_COOKIE, value);
 
 const removeAttributesOneOffContributionCookie = () =>
@@ -480,10 +506,10 @@ describe('getting the last one-off contribution date of a user', () => {
 	});
 });
 
-const setMonthlyContributionCookie = (value) =>
+const setMonthlyContributionCookie = (value: string) =>
 	addCookie(PERSISTENCE_KEYS.SUPPORT_MONTHLY_CONTRIBUTION_COOKIE, value);
 
-const setAnnualContributionCookie = (value) =>
+const setAnnualContributionCookie = (value: string) =>
 	addCookie(PERSISTENCE_KEYS.SUPPORT_ANNUAL_CONTRIBUTION_COOKIE, value);
 
 const removeMonthlyContributionCookie = () =>
@@ -540,7 +566,9 @@ describe('getting the days since last contribution', () => {
 		removeAttributesOneOffContributionCookie();
 	});
 
-	const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
+	const contributionDateTimeEpoch = String(
+		Date.parse('2018-08-01T12:00:30Z'),
+	);
 
 	it('returns null if the last one-off contribution date is null', () => {
 		expect(getDaysSinceLastOneOffContribution()).toBe(null);
@@ -559,7 +587,9 @@ describe('isRecentOneOffContributor', () => {
 		removeAttributesOneOffContributionCookie();
 	});
 
-	const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
+	const contributionDateTimeEpoch = String(
+		Date.parse('2018-08-01T12:00:30Z'),
+	);
 
 	it('returns false if there is no one-off contribution cookie', () => {
 		expect(isRecentOneOffContributor()).toBe(false);
@@ -590,7 +620,9 @@ describe('isPostAskPauseOneOffContributor', () => {
 		removeAttributesOneOffContributionCookie();
 	});
 
-	const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
+	const contributionDateTimeEpoch = String(
+		Date.parse('2018-08-01T12:00:30Z'),
+	);
 
 	it('returns false if there is no one-off contribution cookie', () => {
 		expect(isPostAskPauseOneOffContributor()).toBe(false);
