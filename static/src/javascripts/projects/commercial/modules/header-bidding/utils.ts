@@ -182,15 +182,14 @@ const inSSPTest = (): boolean =>
 	isInABTestSynchronous(integrateSmart);
 
 /**
- * Determine whether to include Criteo as a bidder
+ * Determine whether to include Criteo and Smart as bidders
  *
- * Include Criteo if visitor is not a participant in an AB test for integrating an SSP
- * or that they are in the variant of the Criteo test
+ * Include if visitor is not a participant in an AB test for integrating an SSP
+ * or if they are in the variant of their respective AB test
  */
 export const shouldIncludeCriteo = (): boolean =>
 	!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant');
 
-// TODO is this correct
 export const shouldIncludeSmart = (): boolean =>
 	!inSSPTest() || isInVariantSynchronous(integrateSmart, 'variant');
 
