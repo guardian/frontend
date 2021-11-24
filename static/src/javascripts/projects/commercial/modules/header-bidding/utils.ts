@@ -190,7 +190,13 @@ const inSSPTest = (): boolean =>
 export const shouldIncludeCriteo = (): boolean =>
 	!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant');
 
-// TODO is this correct
+/**
+ * Determine whether to include Smart as a bidder
+ *
+ * First and foremost visitors need to be in the UK or rest of world regions.
+ * Include Smart if that check passes and visitor is not a participant in an AB test for integrating an SSP
+ * or that they are in the variant of the Smart test.
+ */
 export const shouldIncludeSmart = (): boolean =>
 	(!inSSPTest() || isInVariantSynchronous(integrateSmart, 'variant')) &&
 	(isInUk() || isInRow());

@@ -48,7 +48,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-integrate-smart",
     "Integrate Smart AdServer as a Prebid SSP",
-    owners = Seq(Owner.withGithub("frederickobrien")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2022, 1, 10)),
     exposeClientSide = true,

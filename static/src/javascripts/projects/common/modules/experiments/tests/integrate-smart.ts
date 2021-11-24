@@ -3,7 +3,7 @@ import { noop } from '../../../../../lib/noop';
 
 export const integrateSmart: ABTest = {
 	id: 'IntegrateSmart',
-	author: 'Fred OBrien (@frederickobrien)',
+	author: 'Commercial Dev (@guardian/commercial-dev)',
 	start: '2021-11-23',
 	expiry: '2022-01-10',
 	audience: 2 / 100,
