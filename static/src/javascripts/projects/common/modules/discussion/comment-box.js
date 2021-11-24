@@ -473,19 +473,31 @@ class CommentBox extends Component {
 
             this.postComment();
         } else {
-            const onboardingAuthor = this.getElem('onboarding-author');
-            const onboardingUsername = this.getElem('onboarding-username');
+			const onboardingAuthor = this.getElem('onboarding-author');
+			const onboardingUsername = this.getElem('onboarding-username');
 
-            if (onboardingAuthor) {
-                onboardingAuthor.innerHTML = this.getUserData().displayName;
-            }
+			console.log('Onboarding author: ', onboardingAuthor);
+			console.log('Onboarding username: ', onboardingUsername);
 
-            this.setState('onboarding-visible');
-            this.previewComment('onboardingPreviewSuccess');
+			if (onboardingAuthor) {
+				onboardingAuthor.innerHTML = this.getUserData().displayName;
+				console.log(
+					'This.getUserData().displayName',
+					this.getUserData().displayName,
+				);
+			}
+			//   } else {
+			//     this.error('USERNAME_MISSING')
+			// }
 
-            if (onboardingUsername && this.options.hasUsername) {
-                onboardingUsername.classList.add('is-hidden');
-            }
+			this.setState('onboarding-visible');
+			this.previewComment('onboardingPreviewSuccess');
+
+			if (onboardingUsername && this.options.hasUsername) {
+				console.log(this.options);
+
+				onboardingUsername.classList.add('is-hidden');
+			}
         }
     }
 
