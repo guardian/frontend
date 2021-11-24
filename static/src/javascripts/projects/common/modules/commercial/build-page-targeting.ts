@@ -89,7 +89,6 @@ type PageTargeting = PartialWithNulls<{
 	sens: TrueOrFalse; // SenSitive
 	si: TrueOrFalse; // Signed In
 	skinsize: 'l' | 's';
-	slot: string; // (predefined list)
 	su: string; // SUrging article
 	tn: string; // ToNe
 	url: string;
@@ -269,12 +268,9 @@ const buildAppNexusTargetingObject = once(
 			pt6: pageTargeting.su,
 			pt7: pageTargeting.bp,
 			pt8: pageTargeting.x, // OpenX cannot handle this being undefined
-			pt9: [
-				pageTargeting.pv,
-				pageTargeting.co,
-				pageTargeting.tn,
-				pageTargeting.slot,
-			].join('|'),
+			pt9: [pageTargeting.pv, pageTargeting.co, pageTargeting.tn].join(
+				'|',
+			),
 			permutive: pageTargeting.permutive,
 		}),
 );
