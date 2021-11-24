@@ -478,8 +478,17 @@ class CommentBox extends Component {
 
 			console.log('Onboarding author: ', onboardingAuthor);
 			console.log('Onboarding username: ', onboardingUsername);
+            console.log(
+                'This.getUserData().displayName',
+                this.getUserData().displayName,
+            );
 
-			if (onboardingAuthor) {
+            console.log(
+                'This.getUserData().displayName type',
+                typeof this.getUserData().displayName,
+            );
+
+			if (onboardingAuthor & this.getUserData().displayName) {
 				onboardingAuthor.innerHTML = this.getUserData().displayName;
 
 				console.log(
@@ -496,7 +505,7 @@ class CommentBox extends Component {
 			this.setState('onboarding-visible');
 			this.previewComment('onboardingPreviewSuccess');
 
-			if (onboardingUsername && this.options.hasUsername && this.getUserData().displayName) {
+			if (onboardingUsername && this.options.hasUsername) {
 				console.log(this.options);
 
 				onboardingUsername.classList.add('is-hidden');
