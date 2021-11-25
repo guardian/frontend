@@ -569,7 +569,7 @@
   "../lib/time-utils.ts",
   "../projects/common/modules/identity/api.ts",
   "../types/dates.ts",
-  "../types/identity.ts"
+  "../types/membership.ts"
  ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
  "../projects/common/modules/experiments/ab-core.ts": [
@@ -662,7 +662,7 @@
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js"
  ],
  "../types/dates.ts": [],
- "../types/identity.ts": [
+ "../types/membership.ts": [
   "../types/dates.ts"
  ],
  "standalone.commercial.ts": [
