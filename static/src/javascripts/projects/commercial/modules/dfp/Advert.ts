@@ -1,5 +1,4 @@
 import { breakpoints } from '../../../../lib/detect';
-import { getCurrentTime } from '../../../../lib/user-timing';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { defineSlot } from './define-slot';
 
@@ -116,7 +115,7 @@ class Advert {
 
 	startLoading(): void {
 		this.isLoading = true;
-		this.timings.startLoading = getCurrentTime();
+		this.timings.startLoading = window.performance.now();
 	}
 
 	stopLoading(isLoaded: boolean): void {
@@ -124,12 +123,12 @@ class Advert {
 		if (this.whenLoadedResolver) {
 			this.whenLoadedResolver(isLoaded);
 		}
-		this.timings.stopLoading = getCurrentTime();
+		this.timings.stopLoading = window.performance.now();
 	}
 
 	startRendering(): void {
 		this.isRendering = true;
-		this.timings.startRendering = getCurrentTime();
+		this.timings.startRendering = window.performance.now();
 	}
 
 	stopRendering(isRendered: boolean): void {

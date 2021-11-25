@@ -185,7 +185,8 @@ const inSSPTest = (): boolean => isInABTestSynchronous(integrateCriteo);
  * or that they are in the variant of the Criteo test
  */
 export const shouldIncludeCriteo = (): boolean =>
-	!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant');
+	!isInAuOrNz() &&
+	(!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant'));
 
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>
