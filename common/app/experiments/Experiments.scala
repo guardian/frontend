@@ -24,8 +24,8 @@ object LiveblogRendering
 
 object LiveblogPinnedBlock
     extends Experiment(
-      name = "liveblog-pinned-block",
-      description = "Pin a block at the top of a liveblog",
+      name = "liveblog-pinned-post",
+      description = "Pin a post at the top of a liveblog",
       owners = Seq(Owner.withGithub("alinaboghiu")),
       sellByDate = LocalDate.of(2022, 1, 3),
       participationGroup = Perc0C,

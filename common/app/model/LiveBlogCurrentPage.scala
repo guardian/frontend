@@ -76,11 +76,7 @@ object LiveBlogCurrentPage {
 
       val pinnedBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
       val pinnedBlock = pinnedBlocks.flatMap(_.headOption)
-
-      val filteredFirstPageBlocks = firstPageBlocks match {
-        case firstBlock :: blocksWithoutPinnedBlock if pinnedBlock.contains(firstBlock) => blocksWithoutPinnedBlock
-        case _                                                                          => firstPageBlocks
-      }
+      val blocksToDisplay = removeFirstBlockIfPinned(firstPageBlocks, pinnedBlock)
 
       val pagination = {
         if (blockCount > firstPageBlocks.size)
@@ -96,7 +92,14 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(filteredFirstPageBlocks, filterKeyEvents), pagination, pinnedBlock)
+      LiveBlogCurrentPage(FirstPage(blocksToDisplay, filterKeyEvents), pagination, pinnedBlock)
+    }
+  }
+
+  private def removeFirstBlockIfPinned(firstPageBlocks: Seq[BodyBlock], pinnedBlock: Option[BodyBlock]) = {
+    firstPageBlocks match {
+      case firstBlock :: otherBlocks if pinnedBlock.contains(firstBlock) => otherBlocks
+      case _ => firstPageBlocks
     }
   }
 
