@@ -54,7 +54,7 @@
   "../lib/fastdom-promise.js",
   "../projects/common/modules/commercial/contributions-utilities.js",
   "../projects/common/modules/commercial/support-utilities.js",
-  "../projects/common/modules/commercial/user-features.js"
+  "../projects/common/modules/commercial/user-features.ts"
  ],
  "../projects/commercial/commercial-metrics.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -540,7 +540,7 @@
  "../projects/common/modules/commercial/commercial-features.ts": [
   "../lib/config.d.ts",
   "../lib/detect.js",
-  "../projects/common/modules/commercial/user-features.js",
+  "../projects/common/modules/commercial/user-features.ts",
   "../projects/common/modules/identity/api.ts",
   "../projects/common/modules/user-prefs.js"
  ],
@@ -554,12 +554,15 @@
  "../projects/common/modules/commercial/support-utilities.js": [
   "../lib/geolocation.ts"
  ],
- "../projects/common/modules/commercial/user-features.js": [
-  "../lib/config.js",
-  "../lib/cookies.js",
+ "../projects/common/modules/commercial/user-features.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/config.d.ts",
   "../lib/fetch-json.ts",
+  "../lib/noop.ts",
   "../lib/time-utils.ts",
-  "../projects/common/modules/identity/api.ts"
+  "../projects/common/modules/identity/api.ts",
+  "../types/dates.ts",
+  "../types/membership.ts"
  ],
  "../projects/common/modules/experiments/ab-constants.ts": [],
  "../projects/common/modules/experiments/ab-core.ts": [
@@ -651,6 +654,10 @@
  "../projects/common/modules/user-prefs.js": [
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js"
  ],
+ "../types/dates.ts": [],
+ "../types/membership.ts": [
+  "../types/dates.ts"
+ ],
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -680,7 +687,7 @@
   "../projects/commercial/modules/sticky-top-banner.js",
   "../projects/commercial/modules/third-party-tags.js",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/commercial/user-features.js",
+  "../projects/common/modules/commercial/user-features.ts",
   "types.ts"
  ],
  "types.ts": []
