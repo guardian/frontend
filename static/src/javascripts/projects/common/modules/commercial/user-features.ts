@@ -1,11 +1,10 @@
 import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
 import { noop } from 'lib/noop';
-import type { LocalDate } from 'types/dates';
-import { days, months } from 'types/dates';
-import type { UserFeaturesResponse } from 'types/identity';
 import config from '../../../../lib/config';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { dateDiffDays } from '../../../../lib/time-utils';
+import { getLocalDate } from '../../../../types/dates';
+import type { LocalDate } from '../../../../types/dates';
 import { isUserLoggedIn } from '../identity/api';
 
 // Persistence keys
@@ -262,11 +261,11 @@ const getLastOneOffContributionDate = (): LocalDate | null => {
 	}
 
 	const date = new Date(timestamp);
-	const year = date.getFullYear();
-	const month = months[date.getMonth() + 1];
-	const day = days[date.getDate()];
+	const year = date.getUTCFullYear();
+	const month = date.getUTCMonth() + 1;
+	const day = date.getUTCDate();
 
-	return `${year}-${month}-${day}`;
+	return getLocalDate(year, month, day);
 };
 
 const getLastRecurringContributionDate = (): number | null => {
