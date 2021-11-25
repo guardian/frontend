@@ -36,8 +36,8 @@
                 </span>
             </div>
         } else {
-            @if(model.pinnedPostSwitch && model.currentPage.pinnedPost){
-                @views.html.liveblog.pinnedPost(model.currentPage.pinnedPost.get, article, timezone)
+            @if(model.pinnedBlockSwitch && model.currentPage.pinnedBlock){
+                @views.html.liveblog.pinnedBlock(model.currentPage.pinnedBlock.get, article, timezone)
             }
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
