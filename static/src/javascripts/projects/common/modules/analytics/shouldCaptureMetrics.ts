@@ -5,6 +5,7 @@ import { integrateSmart } from '../experiments/tests/integrate-smart';
 import { prebidTimeout } from '../experiments/tests/prebid-timeout';
 
 const defaultClientSideTests: ABTest[] = [
+	/* linter, please keep this array multi-line */
 	prebidTimeout,
 	integrateCriteo,
 	integrateSmart,
