@@ -384,7 +384,7 @@ input:checked + .live-blog__filter-switch-slider:before {
     opacity: 0;
     width: 0;
     height: 0;
-    position:absolute;
+    position: absolute;
     bottom: -$gs-gutter + 5;
     margin-left: $gs-gutter/2;
 }
