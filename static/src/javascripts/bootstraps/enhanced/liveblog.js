@@ -44,33 +44,6 @@ const initFilterCheckbox = () => {
     }
 }
 
-const initAccessibleClickListener = (label) => {
-    const spacebar = 32
-    const enter = 13
-    label.addEventListener('keydown', e => {
-        if (e.which === spacebar || e.which === enter) {
-            e.preventDefault();
-            label.click();
-        };
-    });
-}
-
-const initPinnedBlock = () => {
-    const pinnedBlock = document.querySelector('.pinned-block__body')
-    const pinnedBlockBtn = document.querySelector('.pinned-block__btn')
-    const overlay = document.querySelector('.pinned-block__overlay')
-
-    const pinnedBlockHeight = pinnedBlock.offsetHeight;
-    const minCollapsedHeight = document.documentElement.clientHeight * .30
-
-    if (pinnedBlockHeight <= minCollapsedHeight) {
-        overlay.style.display = "none"
-        pinnedBlockBtn.style.display = "none"
-    }
-    initAccessibleClickListener(pinnedBlockBtn)
-
-}
-
 const createAutoUpdate = () => {
     if (config.get('page.isLive')) {
         autoUpdate();
@@ -82,8 +55,8 @@ const keepTimestampsCurrent = () => {
 };
 
 const isVisible = (element) => {
-    const position = element.getBoundingClientRect();
-    return position.top >= 0 && position.bottom <= window.innerHeight
+    const position = element && element.getBoundingClientRect();
+    return position && position.top >= 0 && position.bottom <= window.innerHeight
 }
 
 const setupListeners = () => {
@@ -93,10 +66,10 @@ const setupListeners = () => {
         window.location.assign(`${window.location.pathname}${param}`);
     })
 
-    bean.on(document.body, 'click', '.pinned-block__btn', () => {
+    bean.on(document.body, 'click', '.pinned-block__label', () => {
         const pinnedBlockHeader = document.querySelector('.pinned-block__header')
-        const pinnedBlockToggle = document.querySelector('.pinned-block__toggle')
-        if (!isVisible(pinnedBlockHeader) && pinnedBlockToggle.checked) {
+        const pinnedBlockButton = document.querySelector('.pinned-block__button')
+        if (!isVisible(pinnedBlockHeader) && pinnedBlockButton.checked) {
             scrollToElement(pinnedBlockHeader)
         }
     })
@@ -106,7 +79,6 @@ const init = () => {
     catchErrorsWithContext([
         ['lb-listeners', setupListeners],
         ['lb-filter', initFilterCheckbox],
-        ['lb-pinned', initPinnedBlock],
         ['lb-autoupdate', createAutoUpdate],
         ['lb-timeline', affixTimeline],
         ['lb-timestamp', keepTimestampsCurrent],

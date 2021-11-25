@@ -19,7 +19,7 @@
     }
 
     .pinned-block__header,
-    .pinned-block__btn,
+    .pinned-block__label,
     .button--primary,
     .content__labels--splash:hover {
         background: $pillarColor;
@@ -28,8 +28,7 @@
         border: 2px solid $pillarColor;
     }
 
-    .pinned-block__btn {
-        &:focus,
+    .pinned-block__label {
         &:hover {
             background-color: $kickerColor;
         }

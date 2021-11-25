@@ -6,13 +6,12 @@
 @*
 * This template is to wrap pinned posts
 *@
-<div class="pinned-block__collapsible-container">
-    <input id="collapsible" class="pinned-block__toggle" type="checkbox" tabindex="-1" aria-controls="pinned-block" />
-    <label for="collapsible" class="pinned-block__btn pinned-block--toggle" tabindex="0">
-        @fragments.inlineSvg("plus", "icon", List("pinned-block__btn-icon--expand"))
-        @fragments.inlineSvg("minus", "icon", List("pinned-block__btn-icon--collapse"))
+<div class="pinned-block">
+    <input id="pinned-block-button" class="pinned-block__button" type="checkbox" aria-controls="pinned-block" />
+    <label for="pinned-block-button" class="pinned-block__label pinned-block__label--collapsed pinned-block__label--expanded">
+        @fragments.inlineSvg("plus", "icon", List("pinned-block__label-icon--expand"))
+        @fragments.inlineSvg("minus", "icon", List("pinned-block__label-icon--collapse"))
     </label>
-
     <section class="pinned-block__collapsible-content">
         <div class="pinned-block__header">
             @fragments.inlineSvg("pin", "icon", List("inline-icon"))
@@ -24,5 +23,4 @@
             <div class="pinned-block__overlay" />
         </div>
     </section>
-
 </div>
