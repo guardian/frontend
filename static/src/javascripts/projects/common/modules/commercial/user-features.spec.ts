@@ -1,5 +1,5 @@
 import { getCookie } from '@guardian/libs';
-import type { UserFeaturesResponse } from 'types/identity';
+import type { UserFeaturesResponse } from 'types/membership';
 import config from '../../../../lib/config';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';

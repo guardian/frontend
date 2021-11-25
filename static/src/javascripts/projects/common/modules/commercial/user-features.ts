@@ -5,6 +5,7 @@ import { fetchJson } from '../../../../lib/fetch-json';
 import { dateDiffDays } from '../../../../lib/time-utils';
 import { getLocalDate } from '../../../../types/dates';
 import type { LocalDate } from '../../../../types/dates';
+import type { UserFeaturesResponse } from '../../../../types/membership';
 import { isUserLoggedIn } from '../identity/api';
 
 // Persistence keys
