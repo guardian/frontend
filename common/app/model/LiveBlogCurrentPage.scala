@@ -98,7 +98,7 @@ object LiveBlogCurrentPage {
 
   private def removeFirstBlockIfPinned(firstPageBlocks: Seq[BodyBlock], pinnedBlock: Option[BodyBlock]) = {
     firstPageBlocks match {
-      case firstBlock :: otherBlocks if pinnedBlock.contains(firstBlock) => otherBlocks
+      case firstBlock +: otherBlocks if pinnedBlock.contains(firstBlock) => otherBlocks
       case _ => firstPageBlocks
     }
   }
