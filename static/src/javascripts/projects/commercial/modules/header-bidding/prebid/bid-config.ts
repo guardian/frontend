@@ -431,6 +431,16 @@ const criteoBidder: PrebidBidder = {
 	}),
 };
 
+const smartBidder: PrebidBidder = {
+	name: 'smartadserver',
+	switchName: 'prebidSmart',
+	bidParams: () => ({
+		siteID: 465656,
+		pageID: 1472549,
+		formatID: 105870,
+	}),
+};
+
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders = (
 	slotSizes: HeaderBiddingSize[],
@@ -459,6 +469,7 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 	const otherBidders: PrebidBidder[] = [
 		...(inPbTestOr(shouldIncludeCriteo()) ? [criteoBidder] : []),
+		...(inPbTestOr(false) ? [smartBidder] : []),
 		...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
 		...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
 		...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),

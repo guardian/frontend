@@ -7,8 +7,8 @@
 * This template is to wrap pinned posts
 *@
 <div class="pinned-block__collapsible-container">
-    <input id="collapsible" class="pinned-block__toggle" type="checkbox">
-    <label for="collapsible" class="pinned-block__btn pinned-block--toggle">
+    <input id="collapsible" class="pinned-block__toggle" type="checkbox" tabindex="-1" aria-controls="pinned-block" />
+    <label for="collapsible" class="pinned-block__btn pinned-block--toggle" tabindex="0">
         @fragments.inlineSvg("plus", "icon", List("pinned-block__btn-icon--expand"))
         @fragments.inlineSvg("minus", "icon", List("pinned-block__btn-icon--collapse"))
     </label>
@@ -19,7 +19,7 @@
             <p class="pinned-block__timestamp">
                 From@views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), true, false)</p>
         </div>
-        <div class="pinned-block__body">
+        <div class="pinned-block__body" id="pinned-block">
             @views.html.liveblog.liveBlogBlock(block, article, timezone, true)
             <div class="pinned-block__overlay" />
         </div>
