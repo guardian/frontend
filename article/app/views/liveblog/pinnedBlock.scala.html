@@ -6,13 +6,13 @@
 @*
 * This template is to wrap pinned posts
 *@
-<div class="pinned-block">
+<div id="pinned-block" class="pinned-block">
     <input id="pinned-block-button" class="pinned-block__button" type="checkbox" aria-controls="pinned-block" />
     <label for="pinned-block-button" class="pinned-block__label pinned-block__label--collapsed pinned-block__label--expanded">
         @fragments.inlineSvg("plus", "icon", List("pinned-block__label-icon--expand"))
         @fragments.inlineSvg("minus", "icon", List("pinned-block__label-icon--collapse"))
     </label>
-    <section class="pinned-block__collapsible-content">
+    <section class="pinned-block__collapsible-content u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}">
         <div class="pinned-block__header">
             @fragments.inlineSvg("pin", "icon", List("inline-icon"))
             <p class="pinned-block__timestamp">
