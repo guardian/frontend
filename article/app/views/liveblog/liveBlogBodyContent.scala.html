@@ -18,7 +18,7 @@
 
         @views.html.liveblog.filterButton(model.filterKeyEvents)
 
-        @if(model.pinnedBlockSwitch && model.currentPage.pinnedBlock){
+        @if(model.currentPage.pinnedBlock){
             @views.html.liveblog.pinnedBlock(model.currentPage.pinnedBlock.get, article, timezone)
         }
 

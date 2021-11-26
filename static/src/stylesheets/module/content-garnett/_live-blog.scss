@@ -375,9 +375,17 @@ input:checked + .live-blog__filter-switch-slider:before {
 
 /*  Pinned Block
    ========================================================================== */
+$pinned-post-bottom-offset: -$gs-gutter + 5;
+$pinned-post-left-margin: $gs-gutter/2;
+$block-padding-left: gs-span(1) + 4;
 
 .pinned-block {
     position: relative;
+}
+
+.pinned-icon {
+    line-height: 1;
+    padding: 3px 0 1px 5px;
 }
 
 .pinned-block__button {
@@ -385,8 +393,8 @@ input:checked + .live-blog__filter-switch-slider:before {
     width: 0;
     height: 0;
     position: absolute;
-    bottom: -$gs-gutter + 5;
-    margin-left: $gs-gutter/2;
+    bottom: $pinned-post-bottom-offset;
+    margin-left: $pinned-post-left-margin;
 }
 
 input:focus-visible + .pinned-block__label {
@@ -401,18 +409,17 @@ input:focus-visible + .pinned-block__label {
     content: 'Show less';
 }
 
-$block-padding-left: gs-span(1) + 4;
-
 .pinned-block__label {
     @include fs-textSans(2);
     font-weight: bold;
+    font-size: 15px;
     color: #ffffff;
     position: absolute;
     cursor: pointer;
-    margin-left: $gs-gutter/2;
+    margin-left: $pinned-post-left-margin;
     height: 2rem;
     padding-right: 16px;
-    bottom: -$gs-gutter + 5;
+    bottom: $pinned-post-bottom-offset;
     display: flex;
     align-items: center;
     border-radius: 1rem;
@@ -462,8 +469,6 @@ $block-padding-left: gs-span(1) + 4;
 }
 
 .pinned-block__header {
-    height: 2rem;
-    padding: $gs-baseline/4 0 0 $gs-gutter/3;
     margin-bottom: $gs-baseline;
     position: relative;
     display: flex;
@@ -472,9 +477,12 @@ $block-padding-left: gs-span(1) + 4;
 
 .pinned-block__timestamp {
     @include fs-textSans(2);
+    //position: absolute;
     font-weight: bold;
+    font-size: 15px;
     color: #ffffff;
-    margin-left: $gs-gutter/3;
+    margin-left: 8px;
+    margin-bottom: 0;
 }
 
 .pinned-block__overlay {

@@ -14,7 +14,7 @@
     </label>
     <section class="pinned-block__collapsible-content u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}">
         <div class="pinned-block__header">
-            @fragments.inlineSvg("pin", "icon", List("inline-icon"))
+            <span class="pinned-icon">@fragments.inlineSvg("pin", "icon", List("inline-icon"))</span>
             <p class="pinned-block__timestamp">
                 From@views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), true, false)</p>
         </div>
