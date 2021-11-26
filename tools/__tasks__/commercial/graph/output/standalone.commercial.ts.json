@@ -111,7 +111,6 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js",
   "../projects/commercial/modules/dfp/Advert.ts",
