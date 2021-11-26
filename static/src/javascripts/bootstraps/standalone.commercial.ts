@@ -6,7 +6,6 @@ import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
 import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from '../projects/commercial/modules/ad-verification/prepare-ad-verification';
-import { init as initArticleAsideAdverts } from '../projects/commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
 import { init as initComscore } from '../projects/commercial/modules/comscore';
 import { init as prepareA9 } from '../projects/commercial/modules/dfp/prepare-a9';
@@ -58,7 +57,6 @@ if (!commercialFeatures.adFree) {
 		['cm-prepare-adverification', prepareAdVerification],
 		['cm-mobileSticky', initMobileSticky],
 		['cm-highMerch', initHighMerch],
-		['cm-articleAsideAdverts', initArticleAsideAdverts],
 		['cm-articleBodyAdverts', initArticleBodyAdverts],
 		['cm-liveblogAdverts', initLiveblogAdverts],
 		['cm-stickyTopBanner', initStickyTopBanner],
@@ -114,13 +112,37 @@ const loadCommentAdverts = async (): Promise<void> => {
 	]);
 };
 
+/**
+ * Article aside rely on the existence of a `.js-secondary-column`, which
+ * is a class always applied to elements which have `.content__secondary-column`
+ * meaning we can prevent execution on widths below Desktop (`980`).
+ *
+ * We can also safely ignore this in DCR, as this class is never added there.
+ *
+ * See: https://github.com/guardian/frontend/blob/23429b39b982879c4aff25f59d7a445f01dfa302/static/src/stylesheets/module/content/_content.scss#L104-L106
+ */
+const loadArticleAsideAdverts = async (): Promise<void> => {
+	if (isDotcomRendering) return;
+
+	const articleAsideAdverts = await import(
+		/* webpackChunkName: "article-aside-adverts" */
+		'../projects/commercial/modules/article-aside-adverts'
+	);
+	commercialModules.push([
+		'cm-articleAsideAdverts',
+		articleAsideAdverts.init,
+	]);
+};
+
 const loadBreakpointSpecificBundle = async (width: number): Promise<void> => {
 	switch (getBreakpoint(width)) {
 		case 'wide':
 		case 'desktop':
+			await loadArticleAsideAdverts();
+		// falls through
 		case 'tablet':
 			await loadCommentAdverts();
-			return;
+		// falls through
 		case 'mobile':
 			return;
 	}
@@ -180,7 +202,10 @@ const bootCommercial = async (): Promise<void> => {
 			await loadFrontendBundle();
 		}
 
-		await loadBreakpointSpecificBundle(window.innerWidth);
+		await loadBreakpointSpecificBundle(
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- window.innerWidth isn’t supported everywhere
+			window.innerWidth ?? document.body.clientWidth ?? 0,
+		);
 
 		await loadModules();
 
