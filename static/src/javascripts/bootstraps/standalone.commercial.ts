@@ -1,5 +1,6 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { isGoogleProxy } from 'lib/detect-google-proxy';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
@@ -152,6 +153,9 @@ const bootCommercial = async (): Promise<void> => {
 	};
 
 	try {
+		if (isGoogleProxy())
+			throw new Error('Bots shall remain free of commercial temptation');
+
 		await loadFrontendBundle();
 		await loadDcrBundle();
 		await loadModules();
