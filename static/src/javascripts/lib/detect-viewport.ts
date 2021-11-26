@@ -12,30 +12,12 @@ const isBreakpoint = (point: Breakpoint | Tweakpoint): point is Breakpoint =>
 	point in breakpoints;
 
 const tweakpoints = {
-	// mobile: breakpoints['mobile'],
 	mobileMedium: sourceBreakpoints['mobileMedium'],
 	mobileLandscape: sourceBreakpoints['mobileLandscape'],
 	phablet: sourceBreakpoints['phablet'],
-	// tablet: breakpoints['tablet'],
-	// desktop: breakpoints['desktop'],
 	leftCol: sourceBreakpoints['leftCol'],
-	// wide: breakpoints['wide'],
 };
 type Tweakpoint = keyof typeof tweakpoints;
-
-// let currentBreakpoint: Breakpoint;
-// let currentTweakpoint: Tweakpoint | Breakpoint;
-
-// const getBreakpointFromTweakpoint = (point: Tweakpoint): Breakpoint => {
-// 	switch (point) {
-// 		case 'mobileMedium':
-// 			return 'mobile';
-// 		case 'phablet':
-// 			return 'tablet';
-// 		case 'leftCol':
-// 			return 'desktop';
-// 	}
-// };
 
 type Point<IncludeTweakpoints extends boolean> =
 	IncludeTweakpoints extends false ? Breakpoint : Breakpoint | Tweakpoint;
