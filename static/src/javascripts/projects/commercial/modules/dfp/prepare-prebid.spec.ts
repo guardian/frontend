@@ -6,7 +6,6 @@ import type { Callback } from '@guardian/consent-management-platform/dist/types'
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { log } from '@guardian/libs';
 import config from '../../../../lib/config';
-import { isGoogleProxy } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { dfpEnv } from './dfp-env';
@@ -93,23 +92,8 @@ const ausWithoutConsentMock = (callback: Callback) =>
 
 const invalidWithoutConsentMock = (callback: Callback) => callback({});
 
-const fakeUserAgent = (userAgent: string) => {
-	const userAgentObject = {
-		get: () => userAgent,
-		configurable: true,
-	};
-	Object.defineProperty(navigator, 'userAgent', userAgentObject);
-};
-
 describe('init', () => {
-	const originalUA = navigator.userAgent;
-
 	beforeEach(() => {
-		jest.clearAllMocks();
-		fakeUserAgent(originalUA);
-	});
-
-	afterAll(() => {
 		jest.clearAllMocks();
 	});
 
@@ -123,17 +107,6 @@ describe('init', () => {
 		getConsentFor.mockReturnValue(true);
 		await setupPrebid();
 		expect(prebid.initialise).toBeCalled();
-	});
-
-	it('should not initialise Prebid when useragent is Google Web Preview', async () => {
-		expect.hasAssertions();
-
-		dfpEnv.hbImpl = { prebid: true, a9: false };
-		commercialFeatures.dfpAdvertising = true;
-		commercialFeatures.adFree = false;
-		fakeUserAgent('Google Web Preview');
-		await setupPrebid();
-		expect(prebid.initialise).not.toBeCalled();
 	});
 
 	it('should not initialise Prebid when no header bidding switches are on', async () => {
@@ -295,24 +268,5 @@ describe('init', () => {
 		);
 
 		expect(prebid.initialise).not.toBeCalled();
-	});
-
-	it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-		expect(isGoogleProxy()).toBe(false);
-	});
-
-	it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-		fakeUserAgent('Firefox');
-		expect(isGoogleProxy()).toBe(false);
-	});
-
-	it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
-		fakeUserAgent('Google Web Preview');
-		expect(isGoogleProxy()).toBe(true);
-	});
-
-	it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
-		fakeUserAgent('googleweblight');
-		expect(isGoogleProxy()).toBe(true);
 	});
 });

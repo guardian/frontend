@@ -1,5 +1,4 @@
 import config from '../../../../lib/config';
-import { isGoogleProxy } from '../../../../lib/detect';
 import a9 from '../header-bidding/a9/a9';
 import { dfpEnv } from './dfp-env';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -44,19 +43,10 @@ jest.mock('@guardian/libs', () => ({
 	loadScript: () => Promise.resolve(),
 }));
 
-const fakeUserAgent = (userAgent) => {
-	const userAgentObject = {};
-	userAgentObject.get = () => userAgent;
-	userAgentObject.configurable = true;
-	Object.defineProperty(navigator, 'userAgent', userAgentObject);
-};
-
 describe('init', () => {
-	const originalUA = navigator.userAgent;
-
 	beforeEach(() => {
 		jest.clearAllMocks();
-		fakeUserAgent(originalUA);
+
 	});
 
 	afterAll(() => {
@@ -77,12 +67,6 @@ describe('init', () => {
 		commercialFeatures.adFree = false;
 		await setupA9();
 		expect(a9.initialise).toBeCalled();
-	});
-
-	it('should not initialise A9 when useragent is Google Web Preview', async () => {
-		fakeUserAgent('Google Web Preview');
-		await setupA9();
-		expect(a9.initialise).not.toBeCalled();
 	});
 
 	it('should not initialise A9 when no external demand', async () => {
@@ -132,24 +116,5 @@ describe('init', () => {
 		commercialFeatures.isSecureContact = true;
 		await setupA9();
 		expect(a9.initialise).not.toBeCalled();
-	});
-
-	it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-		expect(isGoogleProxy()).toBe(false);
-	});
-
-	it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-		fakeUserAgent('Firefox');
-		expect(isGoogleProxy()).toBe(false);
-	});
-
-	it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
-		fakeUserAgent('Google Web Preview');
-		expect(isGoogleProxy()).toBe(true);
-	});
-
-	it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
-		fakeUserAgent('googleweblight');
-		expect(isGoogleProxy()).toBe(true);
 	});
 });
