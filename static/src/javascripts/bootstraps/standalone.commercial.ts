@@ -103,56 +103,25 @@ const loadDcrBundle = async (): Promise<void> => {
 	return;
 };
 
-const loadWideBundle = async (): Promise<void> => {
+const loadCommentAdverts = async (): Promise<void> => {
 	const commentAdverts = await import(
-		/* webpackChunkName: "wide" */
+		/* webpackChunkName: "comment-adverts" */
 		'../projects/commercial/modules/comment-adverts'
 	);
 	commercialModules.push([
 		'cm-commentAdverts',
 		commentAdverts.initCommentAdverts,
 	]);
-};
-
-const loadDesktopBundle = async (): Promise<void> => {
-	const commentAdverts = await import(
-		/* webpackChunkName: "desktop" */
-		'../projects/commercial/modules/comment-adverts'
-	);
-	commercialModules.push([
-		'cm-commentAdverts',
-		commentAdverts.initCommentAdverts,
-	]);
-};
-
-const loadTabletBundle = async (): Promise<void> => {
-	const commentAdverts = await import(
-		/* webpackChunkName: "tablet" */
-		'../projects/commercial/modules/comment-adverts'
-	);
-	commercialModules.push([
-		'cm-commentAdverts',
-		commentAdverts.initCommentAdverts,
-	]);
-};
-
-const loadMobileBundle = (): Promise<void> => {
-	return Promise.resolve();
 };
 
 const loadBreakpointSpecificBundle = async (width: number): Promise<void> => {
 	switch (getBreakpoint(width)) {
 		case 'wide':
-			await loadWideBundle();
-			return;
 		case 'desktop':
-			await loadDesktopBundle();
-			return;
 		case 'tablet':
-			await loadTabletBundle();
+			await loadCommentAdverts();
 			return;
 		case 'mobile':
-			await loadMobileBundle();
 			return;
 	}
 };
