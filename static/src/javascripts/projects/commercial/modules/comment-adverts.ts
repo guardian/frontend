@@ -1,7 +1,6 @@
 import type { SizeKeys } from '@guardian/commercial-core';
 import { adSizes } from '@guardian/commercial-core';
 import config from '../../../lib/config';
-import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import mediator from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
