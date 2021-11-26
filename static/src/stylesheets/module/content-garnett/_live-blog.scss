@@ -477,12 +477,15 @@ input:focus-visible + .pinned-block__label {
 
 .pinned-block__timestamp {
     @include fs-textSans(2);
-    //position: absolute;
     font-weight: bold;
     font-size: 15px;
     color: #ffffff;
-    margin-left: 8px;
     margin-bottom: 0;
+    margin-left: 8px;
+    @include mq(tablet) {
+        position: absolute;
+        margin-left: 5rem;
+    }
 }
 
 .pinned-block__overlay {
