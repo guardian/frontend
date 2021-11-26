@@ -9,6 +9,9 @@
   "../lib/config.js",
   "../lib/report-error.js"
  ],
+ "../lib/detect-viewport.ts": [
+  "../../../../node_modules/@guardian/source-foundations/dist/index.d.ts"
+ ],
  "../lib/detect.js": [
   "../lib/config.js",
   "../lib/mediator.js"
@@ -661,6 +664,7 @@
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/detect-viewport.ts",
   "../lib/report-error.js",
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
