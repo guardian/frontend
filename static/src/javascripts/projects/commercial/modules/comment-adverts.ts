@@ -104,10 +104,13 @@ const runSecondStage = (
 	}
 };
 
+/**
+ * This should only load if it isn’t mobile
+ * @returns whether it will render comments adverts
+ */
 export const initCommentAdverts = (): Promise<boolean> => {
 	const adSlotContainer = document.querySelector('.js-discussion__ad-slot');
-	const isMobile = getBreakpoint() === 'mobile';
-	if (!commercialFeatures.commentAdverts || !adSlotContainer || isMobile) {
+	if (!commercialFeatures.commentAdverts || !adSlotContainer) {
 		return Promise.resolve(false);
 	}
 

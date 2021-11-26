@@ -1,5 +1,6 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { getBreakpoint } from '../lib/detect-viewport';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
@@ -7,7 +8,6 @@ import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-re
 import { init as prepareAdVerification } from '../projects/commercial/modules/ad-verification/prepare-ad-verification';
 import { init as initArticleAsideAdverts } from '../projects/commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
-import { initCommentAdverts } from '../projects/commercial/modules/comment-adverts';
 import { init as initComscore } from '../projects/commercial/modules/comscore';
 import { init as prepareA9 } from '../projects/commercial/modules/dfp/prepare-a9';
 import { init as prepareGoogletag } from '../projects/commercial/modules/dfp/prepare-googletag';
@@ -64,7 +64,6 @@ if (!commercialFeatures.adFree) {
 		['cm-stickyTopBanner', initStickyTopBanner],
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],
-		['cm-commentAdverts', initCommentAdverts],
 		['rr-adblock-ask', initAdblockAsk],
 	);
 }
@@ -77,7 +76,7 @@ const loadFrontendBundle = async (): Promise<void> => {
 
 	const commercialMetrics = await import(
 		/* webpackChunkName: "frontend" */
-		'commercial/commercial-metrics'
+		'../projects/commercial/commercial-metrics'
 	);
 
 	commercialModules.push(
@@ -97,11 +96,65 @@ const loadDcrBundle = async (): Promise<void> => {
 
 	const userFeatures = await import(
 		/* webpackChunkName: "dcr" */
-		'common/modules/commercial/user-features'
+		'../projects/common/modules/commercial/user-features'
 	);
 
 	commercialModules.push(['c-user-features', userFeatures.refresh]);
 	return;
+};
+
+const loadWideBundle = async (): Promise<void> => {
+	const commentAdverts = await import(
+		/* webpackChunkName: "wide" */
+		'../projects/commercial/modules/comment-adverts'
+	);
+	commercialModules.push([
+		'cm-commentAdverts',
+		commentAdverts.initCommentAdverts,
+	]);
+};
+
+const loadDesktopBundle = async (): Promise<void> => {
+	const commentAdverts = await import(
+		/* webpackChunkName: "desktop" */
+		'../projects/commercial/modules/comment-adverts'
+	);
+	commercialModules.push([
+		'cm-commentAdverts',
+		commentAdverts.initCommentAdverts,
+	]);
+};
+
+const loadTabletBundle = async (): Promise<void> => {
+	const commentAdverts = await import(
+		/* webpackChunkName: "tablet" */
+		'../projects/commercial/modules/comment-adverts'
+	);
+	commercialModules.push([
+		'cm-commentAdverts',
+		commentAdverts.initCommentAdverts,
+	]);
+};
+
+const loadMobileBundle = (): Promise<void> => {
+	return Promise.resolve();
+};
+
+const loadBreakpointSpecificBundle = async (width: number): Promise<void> => {
+	switch (getBreakpoint(width)) {
+		case 'wide':
+			await loadWideBundle();
+			return;
+		case 'desktop':
+			await loadDesktopBundle();
+			return;
+		case 'tablet':
+			await loadTabletBundle();
+			return;
+		case 'mobile':
+			await loadMobileBundle();
+			return;
+	}
 };
 
 const loadModules = () => {
@@ -152,8 +205,14 @@ const bootCommercial = async (): Promise<void> => {
 	};
 
 	try {
-		await loadFrontendBundle();
-		await loadDcrBundle();
+		if (isDotcomRendering) {
+			await loadDcrBundle();
+		} else {
+			await loadFrontendBundle();
+		}
+
+		await loadBreakpointSpecificBundle(window.innerWidth);
+
 		await loadModules();
 
 		return catchErrorsWithContext(
