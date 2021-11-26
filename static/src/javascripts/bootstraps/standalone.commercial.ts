@@ -153,9 +153,6 @@ const bootCommercial = async (): Promise<void> => {
 	};
 
 	try {
-		if (isGoogleProxy())
-			throw new Error('Bots shall remain free of commercial temptation');
-
 		await loadFrontendBundle();
 		await loadDcrBundle();
 		await loadModules();

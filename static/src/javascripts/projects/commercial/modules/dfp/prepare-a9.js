@@ -4,7 +4,7 @@ import {
 } from '@guardian/consent-management-platform';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
-import { isGoogleProxy } from '../../../../lib/detect';
+import { isGoogleProxy } from '../../../../lib/detect-google-proxy';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import a9 from '../header-bidding/a9/a9';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
@@ -22,8 +22,7 @@ const setupA9 = () => {
 		(dfpEnv.hbImpl.a9 &&
 			commercialFeatures.dfpAdvertising &&
 			!commercialFeatures.adFree &&
-			!config.get('page.hasPageSkin') &&
-			!isGoogleProxy())
+			!config.get('page.hasPageSkin'))
 	) {
 		moduleLoadResult = import(
 			/* webpackChunkName: "a9" */ '../../../../lib/a9-apstag.js'
@@ -40,6 +39,8 @@ const setupA9 = () => {
 const setupA9Once = once(setupA9);
 
 export const init = () => {
+	if (isGoogleProxy()) return Promise.resolve(false);
+
 	onConsentChange((state) => {
 		if (getConsentFor('a9', state)) {
 			setupA9Once();

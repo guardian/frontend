@@ -8,10 +8,6 @@ const fakeUserAgent = (userAgent: string) => {
 };
 
 describe('Detect Google Proxy', () => {
-	it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-		expect(isGoogleProxy()).toBe(false);
-	});
-
 	it('isGoogleWebPreview should return false with a valid User Agent', () => {
 		fakeUserAgent('Firefox');
 		expect(isGoogleProxy()).toBe(false);

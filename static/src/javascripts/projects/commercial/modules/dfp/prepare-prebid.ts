@@ -5,6 +5,7 @@ import {
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
+import { isGoogleProxy } from 'lib/detect-google-proxy';
 import config from '../../../../lib/config';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -71,9 +72,11 @@ const setupPrebid = async (): Promise<void> => {
 
 export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
-export const init = (): Promise<void> => {
+export const init = (): Promise<boolean> => {
+	if (isGoogleProxy()) return Promise.resolve(false);
+
 	void setupPrebidOnce();
-	return Promise.resolve();
+	return Promise.resolve(true);
 };
 
 export const _ = {
