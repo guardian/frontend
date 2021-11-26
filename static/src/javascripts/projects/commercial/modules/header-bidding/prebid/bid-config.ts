@@ -435,9 +435,9 @@ const smartBidder: PrebidBidder = {
 	name: 'smartadserver',
 	switchName: 'prebidSmart',
 	bidParams: () => ({
-		siteID: 465656,
-		pageID: 1472549,
-		formatID: 105870,
+		siteId: 465656,
+		pageId: 1472549,
+		formatId: 105870,
 	}),
 };
 
