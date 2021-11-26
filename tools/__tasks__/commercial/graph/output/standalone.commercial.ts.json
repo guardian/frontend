@@ -9,6 +9,7 @@
   "../lib/config.js",
   "../lib/report-error.js"
  ],
+ "../lib/detect-google-proxy.ts": [],
  "../lib/detect.js": [
   "../lib/config.js",
   "../lib/mediator.js"
@@ -236,7 +237,7 @@
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/a9-apstag.js",
   "../lib/config.js",
-  "../lib/detect.js",
+  "../lib/detect-google-proxy.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/a9/a9.js",
   "../projects/commercial/modules/header-bidding/utils.ts",
@@ -282,7 +283,7 @@
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../../../../node_modules/prebid.js/build/dist/prebid.js",
   "../lib/config.d.ts",
-  "../lib/detect.js",
+  "../lib/detect-google-proxy.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
@@ -661,6 +662,7 @@
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/detect-google-proxy.ts",
   "../lib/report-error.js",
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
