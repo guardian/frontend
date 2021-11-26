@@ -64,7 +64,6 @@ object PressedInteractives {
     "/commentisfree/ng-interactive/2014/aug/29/-sp-mike-brown-stories-racial-profiling-police",
     "/world/ng-interactive/2021/sep/26/german-election-results-exit-poll-and-possible-coalitions",
     "/us-news/ng-interactive/2020/nov/07/how-did-joe-biden-win-presidency-visual-guide",
-    "/world/ng-interactive/2021/may/24/england-covid-travel-which-countries-are-on-the-green-amber-and-red-lists",
     "/us-news/ng-interactive/2020/nov/09/senate-and-house-elections-2020-full-results-for-congress",
     "/politics/ng-interactive/2021/jun/22/stormont-where-northern-irish-politics-splits-and-where-it-holds-together",
     "/politics/ng-interactive/2019/dec/12/uk-general-election-2019-full-results-live-labour-conservatives-tories",
