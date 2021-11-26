@@ -92,9 +92,18 @@ const ausWithoutConsentMock = (callback: Callback) =>
 
 const invalidWithoutConsentMock = (callback: Callback) => callback({});
 
+const originalUA = navigator.userAgent;
+const fakeUserAgent = (userAgent?: string) => {
+	Object.defineProperty(navigator, 'userAgent', {
+		get: () => userAgent ?? originalUA,
+		configurable: true,
+	});
+};
+
 describe('init', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
+		fakeUserAgent();
 	});
 
 	it('should initialise Prebid when Prebid switch is ON and advertising is on and ad-free is off', async () => {
@@ -107,6 +116,17 @@ describe('init', () => {
 		getConsentFor.mockReturnValue(true);
 		await setupPrebid();
 		expect(prebid.initialise).toBeCalled();
+	});
+
+	it('should not initialise Prebid when useragent is Google Web Preview', async () => {
+		expect.hasAssertions();
+
+		dfpEnv.hbImpl = { prebid: true, a9: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		fakeUserAgent('Google Web Preview');
+		await setupPrebid();
+		expect(prebid.initialise).not.toBeCalled();
 	});
 
 	it('should not initialise Prebid when no header bidding switches are on', async () => {

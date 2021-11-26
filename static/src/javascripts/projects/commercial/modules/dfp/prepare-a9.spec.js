@@ -43,10 +43,18 @@ jest.mock('@guardian/libs', () => ({
 	loadScript: () => Promise.resolve(),
 }));
 
+const originalUA = navigator.userAgent;
+const fakeUserAgent = (userAgent) => {
+	Object.defineProperty(navigator, 'userAgent', {
+        get: () => userAgent ?? originalUA,
+        configurable: true
+    });
+};
+
 describe('init', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
-
+		fakeUserAgent();
 	});
 
 	afterAll(() => {
@@ -67,6 +75,12 @@ describe('init', () => {
 		commercialFeatures.adFree = false;
 		await setupA9();
 		expect(a9.initialise).toBeCalled();
+	});
+
+    it('should not initialise A9 when useragent is Google Web Preview', async () => {
+		fakeUserAgent('Google Web Preview');
+		await setupA9();
+		expect(a9.initialise).not.toBeCalled();
 	});
 
 	it('should not initialise A9 when no external demand', async () => {
