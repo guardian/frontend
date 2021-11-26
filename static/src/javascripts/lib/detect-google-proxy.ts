@@ -1,7 +1,7 @@
 /**
  * https://developers.google.com/search/docs/advanced/mobile/web-light
  */
-const GOOGLE_WEB_LIGTH = 'googleweblight';
+const GOOGLE_WEB_LIGHT = 'googleweblight';
 
 /**
  * This one is undocumented, not sure it actually exists.
@@ -15,5 +15,5 @@ const GOOGLE_WEB_PREVIEW = 'Google Web Preview';
 export const isGoogleProxy = (): boolean =>
 	Boolean(
 		navigator.userAgent.includes(GOOGLE_WEB_PREVIEW) ||
-			navigator.userAgent.includes(GOOGLE_WEB_LIGTH),
+			navigator.userAgent.includes(GOOGLE_WEB_LIGHT),
 	);
