@@ -28,16 +28,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-prebid-timeout",
-    "Vary length of prebid timeout",
-    owners = Seq(Owner.withGithub("chrislomaxjones")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2021, 11, 29)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-integrate-criteo",
     "Integrate Criteo as a Prebid SSP",
     owners = Seq(Owner.withGithub("chrislomaxjones")),
