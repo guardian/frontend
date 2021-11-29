@@ -96,6 +96,10 @@ class LiveBlogController(
 
   // Helper methods
 
+  private def inDenyList(blog: LiveBlogPage): Boolean = {
+    return blog.path = "/australia-news/live/2021/nov/17/australia-news-live-nt-covid-corona-katherine-victoria-nsw-pandemic-legislation-protesters-flooding-forbes"
+  }
+
   private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
     blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
       case NewsPillar  => true
@@ -112,7 +116,7 @@ class LiveBlogController(
   }
 
   private def checkIfSupported(blog: LiveBlogPage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog) && !inDenyList(blog)
   }
 
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
