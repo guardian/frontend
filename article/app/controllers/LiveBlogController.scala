@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, Experiment, LiveblogRendering}
+import experiments.{ActiveExperiments, LiveblogRendering}
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
@@ -97,7 +97,7 @@ class LiveBlogController(
   // Helper methods
 
   private def inDenyList(blog: LiveBlogPage): Boolean = {
-    return blog.path = "/australia-news/live/2021/nov/17/australia-news-live-nt-covid-corona-katherine-victoria-nsw-pandemic-legislation-protesters-flooding-forbes"
+    blog.article.content.metadata.id == "australia-news/live/2021/nov/17/australia-news-live-nt-covid-corona-katherine-victoria-nsw-pandemic-legislation-protesters-flooding-forbes"
   }
 
   private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
