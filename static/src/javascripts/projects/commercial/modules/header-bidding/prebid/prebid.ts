@@ -3,9 +3,7 @@ import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
-import { prebidTimeout } from 'common/modules/experiments/tests/prebid-timeout';
 import config from '../../../../../lib/config';
-import { isInVariantSynchronous } from '../../../../common/modules/experiments/ab';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { getHeaderBiddingAdSlots } from '../slot-config';
@@ -162,19 +160,6 @@ declare global {
 }
 
 /**
- * Retrieve the bidder timeout from AB test variant
- */
-const getBidderTimeoutFromABTest = (): number => {
-	// Find the possible bidder timeout from variants of AB test
-	// Note these timeout values HAVE to match those in defined in the test variants
-	const bidderTimeout = [500, 1500, 4000].find((timeout) =>
-		isInVariantSynchronous(prebidTimeout, `variant${timeout}`),
-	);
-
-	return bidderTimeout ?? PREBID_TIMEOUT;
-};
-
-/**
  * Prebid supports an additional timeout buffer to account for noisiness in
  * timing JavaScript on the page. This value is passed to the Prebid config
  * and is adjustable via this constant
@@ -184,9 +169,7 @@ const timeoutBuffer = 400;
 /**
  * The amount of time reserved for the auction
  */
-const bidderTimeout = getBidderTimeoutFromABTest();
-
-log('commercial', `Using a prebid timeout of ${bidderTimeout}ms`);
+const bidderTimeout = PREBID_TIMEOUT;
 
 class PrebidAdUnit {
 	code: string | null | undefined;
