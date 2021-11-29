@@ -97,7 +97,7 @@ class LiveBlogController(
   // Helper methods
 
   private def inDenyList(blog: LiveBlogPage): Boolean = {
-    blog.article.content.metadata.id == "australia-news/live/2021/nov/17/australia-news-live-nt-covid-corona-katherine-victoria-nsw-pandemic-legislation-protesters-flooding-forbes"
+    blog.article.content.metadata.url == "/australia-news/live/2021/nov/17/australia-news-live-nt-covid-corona-katherine-victoria-nsw-pandemic-legislation-protesters-flooding-forbes"
   }
 
   private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
