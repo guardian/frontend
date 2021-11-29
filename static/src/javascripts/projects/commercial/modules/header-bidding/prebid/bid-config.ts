@@ -25,6 +25,7 @@ import {
 	shouldIncludeImproveDigital,
 	shouldIncludeImproveDigitalSkin,
 	shouldIncludeOpenx,
+	shouldIncludeSmart,
 	shouldIncludeSonobi,
 	shouldIncludeTripleLift,
 	shouldIncludeTrustX,
@@ -469,7 +470,7 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 	const otherBidders: PrebidBidder[] = [
 		...(inPbTestOr(shouldIncludeCriteo()) ? [criteoBidder] : []),
-		...(inPbTestOr(false) ? [smartBidder] : []),
+		...(inPbTestOr(shouldIncludeSmart()) ? [smartBidder] : []),
 		...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
 		...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
 		...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
