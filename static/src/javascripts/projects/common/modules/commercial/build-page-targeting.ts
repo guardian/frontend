@@ -10,11 +10,8 @@ import type { CountryCode } from '@guardian/libs';
 import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
-import {
-	getReferrer as detectGetReferrer,
-	getViewport,
-} from '../../../../lib/detect';
-import { getTweakpoint } from '../../../../lib/detect-viewport';
+import { getReferrer as detectGetReferrer } from '../../../../lib/detect';
+import { getTweakpoint, getViewport } from '../../../../lib/detect-viewport';
 import { getCountryCode } from '../../../../lib/geolocation';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
 import { getSynchronousParticipations } from '../experiments/ab';
