@@ -14,7 +14,7 @@ import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
 const loadPrebid = async (framework: Framework): Promise<void> => {
-	// TODO: Understand why we want to skip A9 for Google Proxy
+	// TODO: Understand why we want to skip Prebid for Google Proxy
 	if (isGoogleProxy()) return;
 
 	if (
