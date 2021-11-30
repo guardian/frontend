@@ -28,7 +28,6 @@ const autoUpdate = (opts) => {
 
     // Cache selectors
     const $liveblogBody = $('.js-liveblog-body');
-    const $timeline = $('.js-live-blog__timeline')
     const $toastButton = $('.toast__button');
     const $toastText = $('.toast__text', $toastButton);
     const toastContainer = qwery('.toast__container')[0];

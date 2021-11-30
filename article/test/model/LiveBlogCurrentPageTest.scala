@@ -7,13 +7,13 @@ import org.scalatest.{Assertion, FlatSpec, Matchers}
 
 class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
 
-  def fakeBlock(publicationOrder: Int, isKeyEvent: Boolean = false): BodyBlock =
+  def fakeBlock(publicationOrder: Int, isKeyEvent: Boolean = false, isPinnedBlock: Boolean = false): BodyBlock =
     BodyBlock(
       s"$publicationOrder",
       "",
       "",
       None,
-      BlockAttributes(isKeyEvent, false, None),
+      BlockAttributes(isPinnedBlock, isKeyEvent, false, None),
       false,
       None,
       firstPublishedDate = Some(new DateTime(publicationOrder)),
@@ -23,23 +23,31 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
       Nil,
     )
 
-  private def fakeBlocks(number: Int, ofWhichKeyEvents: Int = 0): List[BodyBlock] = {
-    number should be > ofWhichKeyEvents
+  private def fakeBlocks(number: Int, ofWhichKeyEvents: Int = 0, ofWhichPinnedBlocks: Int = 0): List[BodyBlock] = {
+    number should be > ofWhichKeyEvents + ofWhichPinnedBlocks
     val regular = Range(number, ofWhichKeyEvents, -1).map(p => fakeBlock(p)).toList
-    val keyEvents = Range(ofWhichKeyEvents, 0, -1).map(p => fakeBlock(p, true)).toList
-    regular ++ keyEvents
+    val keyEvents = Range(ofWhichKeyEvents, ofWhichPinnedBlocks, -1).map(p => fakeBlock(p, true, false)).toList
+    val pinnedBlocks = Range(ofWhichPinnedBlocks, 0, -1).map(p => fakeBlock(p, false, true)).toList
+    pinnedBlocks ++ regular ++ keyEvents
   }
 
   "firstPage" should "allow 1 block on one page" in {
-    val result =
+    val result = {
       LiveBlogCurrentPage.firstPage(
         2,
         Blocks(1, Nil, None, Map(CanonicalLiveBlog.firstPage -> Seq(fakeBlock(1)))),
         false,
       )
+    }
 
     result should be(
-      Some(LiveBlogCurrentPage(currentPage = FirstPage(Seq(fakeBlock(1)), filterKeyEvents = false), pagination = None)),
+      Some(
+        LiveBlogCurrentPage(
+          currentPage = FirstPage(Seq(fakeBlock(1)), filterKeyEvents = false),
+          pagination = None,
+          pinnedBlock = None,
+        ),
+      ),
     )
 
   }
@@ -53,8 +61,80 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     result.get.pagination should be(pagination)
   }
 
+  it should "add the most recent pinned post to the first page" in {
+    val blocks = fakeBlocks(5, 0, 2)
+    val latestPinnedBlock = fakeBlock(2, false, true)
+    val olderPinnedBlock = fakeBlock(1, false, true)
+    val evenOlderPinnedBlock = fakeBlock(0, false, true)
+    val result = LiveBlogCurrentPage.firstPage(
+      2,
+      Blocks(
+        6,
+        Nil,
+        None,
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.take(3),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
+      ),
+      false,
+    )
+    result.get.pinnedBlock should be(Some(latestPinnedBlock))
+    result.get.pinnedBlock should not be (Some(olderPinnedBlock))
+    result.get.pinnedBlock should not be (Some(evenOlderPinnedBlock))
+  }
+
+  it should "not add a pinned post as the first standard block" in {
+    val firstBlock = fakeBlock(2, false, true)
+    val secondBlock = fakeBlock(3, false, false)
+    val thirdBlock = fakeBlock(1, false, false)
+    val blocks = List(firstBlock, secondBlock, thirdBlock)
+    val expectedPinnedBlock = fakeBlock(2, false, true)
+    val result = LiveBlogCurrentPage.firstPage(
+      2,
+      Blocks(
+        6,
+        Nil,
+        None,
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.take(3),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
+      ),
+      false,
+    )
+
+    result.get.pinnedBlock should be(Some(expectedPinnedBlock))
+    result.get.currentPage.blocks.headOption.get.id should not be (expectedPinnedBlock.id)
+  }
+
+  it should "still include pinned post when filtering for key events" in {
+    val blocks = fakeBlocks(10, 3, 4)
+    val expectedPinnedBlock = fakeBlock(4, false, true)
+    val result = LiveBlogCurrentPage.firstPage(
+      2,
+      Blocks(
+        3,
+        Nil,
+        None,
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.take(4),
+          CanonicalLiveBlog.timeline -> blocks.take(3),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
+      ),
+      true,
+    )
+
+    result.get.pinnedBlock should be(Some(expectedPinnedBlock))
+  }
+
   it should "allow 3 blocks on one page" in {
     val blocks = fakeBlocks(3)
+
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
