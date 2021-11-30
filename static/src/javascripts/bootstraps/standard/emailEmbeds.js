@@ -1,8 +1,7 @@
 const initEmbedResize = () => {
     const allIframes = [].slice.call(
-        document.querySelectorAll('.element-embed > .email-sub__iframe')
+        document.querySelectorAll('.element-embed > .email-sub__iframe, #footer__email-form'),
     );
-
     window.addEventListener('message', event => {
         const iframes = allIframes.filter(i => {
             try {
