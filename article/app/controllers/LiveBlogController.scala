@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, Experiment, LiveblogRendering}
+import experiments.{ActiveExperiments, LiveblogRendering}
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
@@ -96,6 +96,10 @@ class LiveBlogController(
 
   // Helper methods
 
+  private def inDenyList(blog: LiveBlogPage): Boolean = {
+    blog.article.content.metadata.url == "/australia-news/live/2021/nov/17/australia-news-live-nt-covid-corona-katherine-victoria-nsw-pandemic-legislation-protesters-flooding-forbes"
+  }
+
   private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
     blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
       case NewsPillar  => true
@@ -107,12 +111,12 @@ class LiveBlogController(
   private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
 
   private def isNotRecent(blog: LiveBlogPage) = {
-    val threeDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(3)
-    blog.article.fields.lastModified.isBefore(threeDaysAgo)
+    val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
+    blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }
 
   private def checkIfSupported(blog: LiveBlogPage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog) && !inDenyList(blog)
   }
 
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit

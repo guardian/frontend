@@ -1,9 +1,13 @@
 import type { ABTest } from '@guardian/ab-core';
 import { isInABTestSynchronous } from '../experiments/ab';
 import { integrateCriteo } from '../experiments/tests/integrate-criteo';
-import { prebidTimeout } from '../experiments/tests/prebid-timeout';
+import { integrateSmart } from '../experiments/tests/integrate-smart';
 
-const defaultClientSideTests: ABTest[] = [prebidTimeout, integrateCriteo];
+const defaultClientSideTests: ABTest[] = [
+	/* linter, please keep this array multi-line */
+	integrateCriteo,
+	integrateSmart,
+];
 
 const serverSideTests: ServerSideABTest[] = [];
 
