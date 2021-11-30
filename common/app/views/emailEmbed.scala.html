@@ -39,6 +39,7 @@
     @if(EmailSignupRecaptcha.isSwitchedOn) {
         <script>
             const submitButton = document.querySelector('.email-sub__submit-button')
+            submitButton.setAttribute("disabled", true)
 
             const resizeToOriginalHeight = (() => {
                 const originalHeight = document.body.clientHeight
@@ -60,7 +61,8 @@
             }
 
             function onRecaptchaScriptLoaded() {
-                submitButton.removeAttribute('disabled')
+                submitButton.setAttribute("type", "button")
+                submitButton.setAttribute("disabled", false)
                 setupSubmitListener()
                 grecaptcha.render('grecaptcha_container', {
                     sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
