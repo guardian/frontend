@@ -1,4 +1,4 @@
-@(metaData: model.Page)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches._
 @import common.InlineJs
@@ -24,6 +24,7 @@
     }
 
     <script>
+        @Html(config(page).body)
         @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
     </script>
 
@@ -34,5 +35,54 @@
     <script src="https://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js"></script>
     <script>
         iframeMessenger.enableAutoResize();
+        const submitButton = document.querySelector('.email-sub__submit-button')
+
+        const resizeToOriginalHeight = (() => {
+            const originalHeight = document.body.clientHeight
+            return () => iframeMessenger.resize(`${originalHeight}px`)
+        })()
+
+        function resizeToFitCaptcha() {
+            iframeMessenger.resize('500px')
+        }
+
+        function setupSubmitListener() {
+            submitButton.addEventListener('click', (e) => onSubmit(e))
+        }
+
+        function onSubmit(e) {
+            console.log(`Click`)
+            e.preventDefault()
+            resizeToFitCaptcha()
+            grecaptcha.execute()
+        }
+
+        function onRecaptchaScriptLoaded() {
+            console.log(`Loaded`)
+            submitButton.removeAttribute('disabled')
+            setupSubmitListener()
+            grecaptcha.render('grecaptcha_container', {
+                sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
+                callback: onCaptchaCompleted,
+                'error-callback': onCaptchaError,
+                'expired-callback': onCaptchaExpired,
+                size: 'invisible'
+            })
+        }
+
+        function onCaptchaCompleted(token) {
+            console.log(token)
+            resizeToOriginalHeight()
+        }
+
+        function onCaptchaError() {
+            resizeToOriginalHeight()
+        }
+
+        function onCaptchaExpired() {
+            resizeToOriginalHeight()
+        }
     </script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit"
+    async defer></script>
 </html>
