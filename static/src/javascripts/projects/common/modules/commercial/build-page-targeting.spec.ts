@@ -6,7 +6,6 @@ import type { Callback } from '@guardian/consent-management-platform/dist/types'
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { setCookie, storage } from '@guardian/libs';
 import {
-	getBreakpoint as getBreakpoint_,
 	getReferrer as getReferrer_,
 	getViewport as getViewport_,
 } from '../../../../lib/detect';
@@ -22,9 +21,6 @@ const getSynchronousParticipations =
 		typeof getSynchronousParticipations_
 	>;
 const getReferrer = getReferrer_ as jest.MockedFunction<typeof getReferrer_>;
-const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
-	typeof getBreakpoint_
->;
 const getViewport = getViewport_ as jest.MockedFunction<typeof getViewport_>;
 const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
 	typeof isUserLoggedIn_
@@ -178,7 +174,6 @@ describe('Build Page Targeting', () => {
 		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
-		getBreakpoint.mockReturnValue('mobile');
 		getReferrer.mockReturnValue('');
 		getViewport.mockReturnValue({ width: 0, height: 0 });
 
@@ -354,47 +349,47 @@ describe('Build Page Targeting', () => {
 
 	describe('Breakpoint targeting', () => {
 		it('should set correct breakpoint targeting for a mobile device', () => {
-			getBreakpoint.mockReturnValue('mobile');
+			getViewport.mockReturnValue({ width: 320, height: 0 });
 			expect(getPageTargeting().bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a medium mobile device', () => {
-			getBreakpoint.mockReturnValue('mobileMedium');
+			getViewport.mockReturnValue({ width: 375, height: 0 });
 			expect(getPageTargeting().bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a mobile device in landscape mode', () => {
-			getBreakpoint.mockReturnValue('mobileLandscape');
+			getViewport.mockReturnValue({ width: 480, height: 0 });
 			expect(getPageTargeting().bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a phablet device', () => {
-			getBreakpoint.mockReturnValue('phablet');
+			getViewport.mockReturnValue({ width: 660, height: 0 });
 			expect(getPageTargeting().bp).toEqual('tablet');
 		});
 
 		it('should set correct breakpoint targeting for a tablet device', () => {
-			getBreakpoint.mockReturnValue('tablet');
+			getViewport.mockReturnValue({ width: 740, height: 0 });
 			expect(getPageTargeting().bp).toEqual('tablet');
 		});
 
 		it('should set correct breakpoint targeting for a desktop device', () => {
-			getBreakpoint.mockReturnValue('desktop');
+			getViewport.mockReturnValue({ width: 980, height: 0 });
 			expect(getPageTargeting().bp).toEqual('desktop');
 		});
 
 		it('should set correct breakpoint targeting for a leftCol device', () => {
-			getBreakpoint.mockReturnValue('leftCol');
+			getViewport.mockReturnValue({ width: 1140, height: 0 });
 			expect(getPageTargeting().bp).toEqual('desktop');
 		});
 
 		it('should set correct breakpoint targeting for a wide device', () => {
-			getBreakpoint.mockReturnValue('wide');
+			getViewport.mockReturnValue({ width: 1300, height: 0 });
 			expect(getPageTargeting().bp).toEqual('desktop');
 		});
 
 		it('should set appNexusPageTargeting as flatten string', () => {
-			getBreakpoint.mockReturnValue('desktop');
+			getViewport.mockReturnValue({ width: 1024, height: 0 });
 			getPageTargeting();
 			expect(window.guardian.config.page.appNexusPageTargeting).toEqual(
 				'sens=f,pt1=/football/series/footballweekly,pt2=us,pt3=video,pt4=ng,pt5=prince-charles-letters,pt5=uk/uk,pt5=prince-charles,pt6=5,pt7=desktop,pt9=presetOphanPageViewId|gabrielle-chan|news',
