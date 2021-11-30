@@ -111,8 +111,12 @@ class LiveBlogController(
     blog.article.fields.lastModified.isBefore(threeDaysAgo)
   }
 
+  private def isNotAustraliaNewsBlog(blog: LiveBlogPage) = {
+    !blog.article.tags.tags.exists(_.id == "australia-news/australia-news")
+  }
+
   private def checkIfSupported(blog: LiveBlogPage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog) && isNotAustraliaNewsBlog(blog)
   }
 
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
