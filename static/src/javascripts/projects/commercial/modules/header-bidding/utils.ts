@@ -5,6 +5,7 @@ import {
 	isInVariantSynchronous,
 } from 'common/modules/experiments/ab';
 import { integrateCriteo } from 'common/modules/experiments/tests/integrate-criteo';
+import { integrateSmart } from 'common/modules/experiments/tests/integrate-smart';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
@@ -176,7 +177,9 @@ export const shouldIncludeImproveDigitalSkin = (): boolean =>
  *
  * Add additional tests here when integrating a new SSP
  */
-const inSSPTest = (): boolean => isInABTestSynchronous(integrateCriteo);
+const inSSPTest = (): boolean =>
+	isInABTestSynchronous(integrateCriteo) ||
+	isInABTestSynchronous(integrateSmart);
 
 /**
  * Determine whether to include Criteo as a bidder
@@ -187,6 +190,17 @@ const inSSPTest = (): boolean => isInABTestSynchronous(integrateCriteo);
 export const shouldIncludeCriteo = (): boolean =>
 	!isInAuOrNz() &&
 	(!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant'));
+
+/**
+ * Determine whether to include Smart as a bidder
+ *
+ * First and foremost visitors need to be in the UK or rest of world regions.
+ * Include Smart if that check passes and visitor is not a participant in an AB test for integrating an SSP
+ * or that they are in the variant of the Smart test.
+ */
+export const shouldIncludeSmart = (): boolean =>
+	(!inSSPTest() || isInVariantSynchronous(integrateSmart, 'variant')) &&
+	(isInUk() || isInRow());
 
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>

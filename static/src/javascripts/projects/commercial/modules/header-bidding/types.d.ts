@@ -83,9 +83,9 @@ type PrebidCriteoParams = {
 };
 
 type PrebidSmartParams = {
-	siteID: number;
-	pageID: number;
-	formatID: number;
+	siteId: number;
+	pageId: number;
+	formatId: number;
 };
 
 type BidderCode =

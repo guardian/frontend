@@ -25,6 +25,7 @@ import {
 	shouldIncludeImproveDigital,
 	shouldIncludeImproveDigitalSkin,
 	shouldIncludeOpenx,
+	shouldIncludeSmart,
 	shouldIncludeSonobi,
 	shouldIncludeTripleLift,
 	shouldIncludeTrustX,
@@ -435,9 +436,9 @@ const smartBidder: PrebidBidder = {
 	name: 'smartadserver',
 	switchName: 'prebidSmart',
 	bidParams: () => ({
-		siteID: 465656,
-		pageID: 1472549,
-		formatID: 105870,
+		siteId: 465656,
+		pageId: 1472549,
+		formatId: 105870,
 	}),
 };
 
@@ -469,7 +470,7 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 	const otherBidders: PrebidBidder[] = [
 		...(inPbTestOr(shouldIncludeCriteo()) ? [criteoBidder] : []),
-		...(inPbTestOr(false) ? [smartBidder] : []),
+		...(inPbTestOr(shouldIncludeSmart()) ? [smartBidder] : []),
 		...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
 		...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
 		...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
