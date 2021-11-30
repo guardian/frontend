@@ -1312,10 +1312,35 @@
   dependencies:
     mini-svg-data-uri "^1.3.3"
 
-"@guardian/src-foundations@^3.5.0":
+"@guardian/src-button@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-button/-/src-button-3.3.0.tgz#eccbb3232089a3729254187cea391759c24a477d"
+  integrity sha512-piSU+o5JCjLG8DOC3mWBvZJHio93Xhn3Zzxo9KKZb5/mI9G0YcV8OAqh6I93uhKMz5xrnPXMyKYyBKCdN3tL9A==
+  dependencies:
+    "@guardian/src-helpers" "^3.3.0"
+
+"@guardian/src-foundations@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.3.0.tgz#729eb05649c68f295ea174a3f1ae2056ffeb6772"
+  integrity sha512-ephhrEZ2aDQYkc4FM5g1OQju5C2oMS/QCRaSUw58SHNsU1br0Sh3q/KUaTsxO/aJrtk2w9oRMqX2EceRsDdz5Q==
+
+"@guardian/src-foundations@^3.12.0", "@guardian/src-foundations@^3.5.0":
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.12.0.tgz#52d11d2fff649e04934033473b3ed7c7bf4a1639"
   integrity sha512-JIFBybaCd69tf+zJZZ7KNLdqaVePOAc36wGFor0I60vc9Ib0jMuzYVffMjMhF6LHSXMdoOcqGwiPdFucObVYAA==
+
+"@guardian/src-helpers@^3.3.0":
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/@guardian/src-helpers/-/src-helpers-3.12.1.tgz#fb5cfb23c8b9ed40bb52102b85fec5f4e9381352"
+  integrity sha512-nJiaSWOADojTWhvbXiZYH1NMrx883E9iMNUV1fsrsxQJ+g6OV82GuHHMLjSRikWzUpfBI6AdlCdswrV9Fof0+w==
+  dependencies:
+    "@guardian/src-foundations" "^3.12.0"
+    mini-svg-data-uri "^1.3.3"
+
+"@guardian/src-icons@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-icons/-/src-icons-3.3.0.tgz#795933179be040feba0a58b995d76701cc954dcf"
+  integrity sha512-sUFGSm0emuE8MM+/fqcCBPOgo+nOlcCmGxt9Za4SI34ujzmr78ossPfpLjaW+2+hAVeTA9+/DOEFdVvA11vaFg==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
