@@ -1,9 +1,12 @@
 @import model.liveblog.LiveBlogDate
 
-@(date: Option[LiveBlogDate])
-
-@date.map { date =>
-    <time datetime="@date.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@date.ampm <span class="timezone">@date.gmt</span></time>
-    <span class="block-time__absolute">@date.hhmm</span>
-}
+@(date: Option[LiveBlogDate], showDate: Boolean = true, showTimestamp: Boolean = true)
+    @date.map { date =>
+        @if(showDate) {
+            <time datetime="@date.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@date.ampm <span class="timezone">@date.gmt</span></time>
+        }
+        @if(showTimestamp) {
+            <span class="block-time__absolute">@date.hhmm</span>
+        }
+    }
 

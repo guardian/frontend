@@ -3,7 +3,11 @@ package model
 import model.liveblog.BodyBlock.KeyEvent
 import model.liveblog.{Blocks, BodyBlock}
 
-case class LiveBlogCurrentPage(currentPage: PageReference, pagination: Option[N1Pagination])
+case class LiveBlogCurrentPage(
+    currentPage: PageReference,
+    pagination: Option[N1Pagination],
+    pinnedBlock: Option[BodyBlock],
+)
 
 // Extends normal Pages due to the need for pagination and since-last-seen logic on
 
@@ -36,7 +40,7 @@ object LiveBlogCurrentPage {
       applyFilters(bodyBlocks, filterKeyEvents).takeWhile(_.id != sinceBlockId.lastUpdate)
     }
     Some(
-      LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None),
+      LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None, None),
     ) // just pretend to be the first page, it'll be ignored
   }
 
@@ -70,6 +74,10 @@ object LiveBlogCurrentPage {
         BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents)
       }
 
+      val pinnedBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
+      val pinnedBlock = pinnedBlocks.flatMap(_.headOption)
+      val blocksToDisplay = removeFirstBlockIfPinned(firstPageBlocks, pinnedBlock)
+
       val pagination = {
         if (blockCount > firstPageBlocks.size)
           Some(
@@ -84,7 +92,14 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(firstPageBlocks, filterKeyEvents), pagination)
+      LiveBlogCurrentPage(FirstPage(blocksToDisplay, filterKeyEvents), pagination, pinnedBlock)
+    }
+  }
+
+  private def removeFirstBlockIfPinned(firstPageBlocks: Seq[BodyBlock], pinnedBlock: Option[BodyBlock]) = {
+    firstPageBlocks match {
+      case firstBlock +: otherBlocks if pinnedBlock.contains(firstBlock) => otherBlocks
+      case _                                                             => firstPageBlocks
     }
   }
 
@@ -133,6 +148,7 @@ object LiveBlogCurrentPage {
                   ),
                 )
               else None,
+            None,
           )
       }
       .find(hasRequestedBlock)
@@ -203,5 +219,4 @@ object LatestKeyBlock {
         .map(_.id)
     }
   }
-
 }
