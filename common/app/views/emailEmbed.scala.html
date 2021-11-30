@@ -35,52 +35,56 @@
     <script src="https://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js"></script>
     <script>
         iframeMessenger.enableAutoResize();
-        const submitButton = document.querySelector('.email-sub__submit-button')
-
-        const resizeToOriginalHeight = (() => {
-            const originalHeight = document.body.clientHeight
-            return () => iframeMessenger.resize(`${originalHeight}px`)
-        })()
-
-        function resizeToFitCaptcha() {
-            iframeMessenger.resize('500px')
-        }
-
-        function setupSubmitListener() {
-            submitButton.addEventListener('click', (e) => onSubmit(e))
-        }
-
-        function onSubmit(e) {
-            e.preventDefault()
-            resizeToFitCaptcha()
-            grecaptcha.execute()
-        }
-
-        function onRecaptchaScriptLoaded() {
-            submitButton.removeAttribute('disabled')
-            setupSubmitListener()
-            grecaptcha.render('grecaptcha_container', {
-                sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
-                callback: onCaptchaCompleted,
-                'error-callback': onCaptchaError,
-                'expired-callback': onCaptchaExpired,
-                size: 'invisible'
-            })
-        }
-
-        function onCaptchaCompleted(token) {
-            resizeToOriginalHeight()
-            document.querySelector('.email-sub__form').submit()
-        }
-
-        function onCaptchaError() {
-            resizeToOriginalHeight()
-        }
-
-        function onCaptchaExpired() {
-            resizeToOriginalHeight()
-        }
     </script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit"
-    async defer></script>
+    @if(EmailSignupRecaptcha.isSwitchedOn) {
+        <script>
+            const submitButton = document.querySelector('.email-sub__submit-button')
+
+            const resizeToOriginalHeight = (() => {
+                const originalHeight = document.body.clientHeight
+                return () => iframeMessenger.resize(`${originalHeight}px`)
+            })()
+
+            function resizeToFitCaptcha() {
+                iframeMessenger.resize('500px')
+            }
+
+            function setupSubmitListener() {
+                submitButton.addEventListener('click', (e) => onSubmit(e))
+            }
+
+            function onSubmit(e) {
+                e.preventDefault()
+                resizeToFitCaptcha()
+                grecaptcha.execute()
+            }
+
+            function onRecaptchaScriptLoaded() {
+                submitButton.removeAttribute('disabled')
+                setupSubmitListener()
+                grecaptcha.render('grecaptcha_container', {
+                    sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
+                    callback: onCaptchaCompleted,
+                    'error-callback': onCaptchaError,
+                    'expired-callback': onCaptchaExpired,
+                    size: 'invisible'
+                })
+            }
+
+            function onCaptchaCompleted(token) {
+                resizeToOriginalHeight()
+                document.querySelector('.email-sub__form').submit()
+            }
+
+            function onCaptchaError() {
+                resizeToOriginalHeight()
+            }
+
+            function onCaptchaExpired() {
+                resizeToOriginalHeight()
+            }
+        </script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit"
+        async defer></script>
+    }
 </html>
