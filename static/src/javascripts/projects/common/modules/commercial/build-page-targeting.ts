@@ -12,9 +12,9 @@ import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import {
 	getReferrer as detectGetReferrer,
-	getBreakpoint,
 	getViewport,
 } from '../../../../lib/detect';
+import { getBreakpoint } from '../../../../lib/detect-viewport';
 import { getCountryCode } from '../../../../lib/geolocation';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
 import { getSynchronousParticipations } from '../experiments/ab';
@@ -117,20 +117,15 @@ let latestCMPState: ConsentState | null = null;
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
 const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
-	switch (getBreakpoint(true)) {
+	const width = getViewport().width;
+	switch (getBreakpoint(width)) {
 		case 'mobile':
-		case 'mobileMedium':
-		case 'mobileLandscape':
 			return 'mobile';
-		case 'phablet':
 		case 'tablet':
 			return 'tablet';
 		case 'desktop':
-		case 'leftCol':
 		case 'wide':
 			return 'desktop';
-		default:
-			return 'mobile';
 	}
 };
 
