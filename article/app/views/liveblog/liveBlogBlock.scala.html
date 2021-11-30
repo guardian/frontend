@@ -56,8 +56,8 @@ itemtype="http://schema.org/BlogPosting"
         </p>
     }
     @views.html.fragments.share.blockLevelSharing(
-        s"block-${block.id}",
-        article.sharelinks.elementShares(s"block-${block.id}", None),
+        s"block-${block.id.stripSuffix("-pinned")}",
+        article.sharelinks.elementShares(s"block-${block.id.stripSuffix("-pinned")}", None),
         article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
         false
     )
