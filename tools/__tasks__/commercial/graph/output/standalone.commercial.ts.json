@@ -10,6 +10,9 @@
   "../lib/report-error.js"
  ],
  "../lib/detect-google-proxy.ts": [],
+ "../lib/detect-viewport.ts": [
+  "../../../../node_modules/@guardian/source-foundations/dist/index.d.ts"
+ ],
  "../lib/detect.js": [
   "../lib/config.js",
   "../lib/mediator.js"
@@ -530,6 +533,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.d.ts",
+  "../lib/detect-viewport.ts",
   "../lib/detect.js",
   "../lib/geolocation.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
