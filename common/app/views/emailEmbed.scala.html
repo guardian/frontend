@@ -51,14 +51,12 @@
         }
 
         function onSubmit(e) {
-            console.log(`Click`)
             e.preventDefault()
             resizeToFitCaptcha()
             grecaptcha.execute()
         }
 
         function onRecaptchaScriptLoaded() {
-            console.log(`Loaded`)
             submitButton.removeAttribute('disabled')
             setupSubmitListener()
             grecaptcha.render('grecaptcha_container', {
