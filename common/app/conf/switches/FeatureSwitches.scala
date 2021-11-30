@@ -464,4 +464,14 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
+  val emailSignupRecaptcha = Switch(
+    SwitchGroup.Feature,
+    "email-signup-recaptcha",
+    "Enables showing reCAPTCHA when signing up to email newsletters",
+    owners = Seq(Owner.withGithub("georgeblahblah")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
 }
