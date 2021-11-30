@@ -269,6 +269,7 @@ class GuardianConfiguration extends GuLogging {
   object google {
     lazy val subscribeWithGoogleApiUrl =
       configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
+    lazy val googleRecaptchaSiteKey = configuration.getMandatoryStringProperty("guardian.page.googleRecaptchaSiteKey")
   }
 
   object affiliateLinks {
