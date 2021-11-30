@@ -71,8 +71,8 @@
         }
 
         function onCaptchaCompleted(token) {
-            console.log(token)
             resizeToOriginalHeight()
+            document.querySelector('.email-sub__form').submit()
         }
 
         function onCaptchaError() {
