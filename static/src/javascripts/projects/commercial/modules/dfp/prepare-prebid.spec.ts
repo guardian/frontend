@@ -6,7 +6,6 @@ import type { Callback } from '@guardian/consent-management-platform/dist/types'
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { log } from '@guardian/libs';
 import config from '../../../../lib/config';
-import { isGoogleProxy } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { dfpEnv } from './dfp-env';
@@ -93,24 +92,18 @@ const ausWithoutConsentMock = (callback: Callback) =>
 
 const invalidWithoutConsentMock = (callback: Callback) => callback({});
 
-const fakeUserAgent = (userAgent: string) => {
-	const userAgentObject = {
-		get: () => userAgent,
+const originalUA = navigator.userAgent;
+const fakeUserAgent = (userAgent?: string) => {
+	Object.defineProperty(navigator, 'userAgent', {
+		get: () => userAgent ?? originalUA,
 		configurable: true,
-	};
-	Object.defineProperty(navigator, 'userAgent', userAgentObject);
+	});
 };
 
 describe('init', () => {
-	const originalUA = navigator.userAgent;
-
 	beforeEach(() => {
 		jest.clearAllMocks();
-		fakeUserAgent(originalUA);
-	});
-
-	afterAll(() => {
-		jest.clearAllMocks();
+		fakeUserAgent();
 	});
 
 	it('should initialise Prebid when Prebid switch is ON and advertising is on and ad-free is off', async () => {
@@ -295,24 +288,5 @@ describe('init', () => {
 		);
 
 		expect(prebid.initialise).not.toBeCalled();
-	});
-
-	it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-		expect(isGoogleProxy()).toBe(false);
-	});
-
-	it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-		fakeUserAgent('Firefox');
-		expect(isGoogleProxy()).toBe(false);
-	});
-
-	it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
-		fakeUserAgent('Google Web Preview');
-		expect(isGoogleProxy()).toBe(true);
-	});
-
-	it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
-		fakeUserAgent('googleweblight');
-		expect(isGoogleProxy()).toBe(true);
 	});
 });

@@ -5,8 +5,8 @@ import {
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
+import { isGoogleProxy } from 'lib/detect-google-proxy';
 import config from '../../../../lib/config';
-import { isGoogleProxy } from '../../../../lib/detect';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
@@ -14,12 +14,14 @@ import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
 const loadPrebid = async (framework: Framework): Promise<void> => {
+	// TODO: Understand why we want to skip Prebid for Google Proxy
+	if (isGoogleProxy()) return;
+
 	if (
 		!dfpEnv.hbImpl.prebid ||
 		!commercialFeatures.dfpAdvertising ||
 		commercialFeatures.adFree ||
 		config.get('page.hasPageSkin') ||
-		isGoogleProxy() ||
 		shouldIncludeOnlyA9
 	)
 		return;
