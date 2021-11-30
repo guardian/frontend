@@ -363,9 +363,7 @@
   "../projects/commercial/modules/header-bidding/prebid/price-config.ts",
   "../projects/commercial/modules/header-bidding/prebid/pubmatic.js",
   "../projects/commercial/modules/header-bidding/slot-config.ts",
-  "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/prebid-timeout.ts"
+  "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
@@ -514,8 +512,7 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/integrate-criteo.ts",
-  "../projects/common/modules/experiments/tests/integrate-smart.ts",
-  "../projects/common/modules/experiments/tests/prebid-timeout.ts"
+  "../projects/common/modules/experiments/tests/integrate-smart.ts"
  ],
  "../projects/common/modules/article/space-filler.js": [
   "../lib/fastdom-promise.js",
@@ -595,7 +592,6 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/integrate-criteo.ts",
   "../projects/common/modules/experiments/tests/integrate-smart.ts",
-  "../projects/common/modules/experiments/tests/prebid-timeout.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -626,10 +622,6 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/integrate-smart.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
- "../projects/common/modules/experiments/tests/prebid-timeout.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
