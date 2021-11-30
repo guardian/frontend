@@ -5,10 +5,7 @@ import {
 import type { Callback } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { setCookie, storage } from '@guardian/libs';
-import {
-	getReferrer as getReferrer_,
-	getViewport as getViewport_,
-} from '../../../../lib/detect';
+import { getReferrer as getReferrer_ } from '../../../../lib/detect';
 import { getCountryCode as getCountryCode_ } from '../../../../lib/geolocation';
 import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from '../experiments/ab';
@@ -21,7 +18,6 @@ const getSynchronousParticipations =
 		typeof getSynchronousParticipations_
 	>;
 const getReferrer = getReferrer_ as jest.MockedFunction<typeof getReferrer_>;
-const getViewport = getViewport_ as jest.MockedFunction<typeof getViewport_>;
 const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
 	typeof isUserLoggedIn_
 >;
@@ -79,6 +75,17 @@ jest.mock('@guardian/consent-management-platform', () => ({
 		willShowPrivacyMessageSync: jest.fn(),
 	},
 }));
+
+const mockViewport = (width: number, height: number): void => {
+	Object.defineProperties(window, {
+		innerWidth: {
+			value: width,
+		},
+		innerHeight: {
+			value: height,
+		},
+	});
+};
 
 // CCPA
 const ccpaWithConsentMock = (callback: Callback): void =>
@@ -175,7 +182,7 @@ describe('Build Page Targeting', () => {
 		onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
 		getReferrer.mockReturnValue('');
-		getViewport.mockReturnValue({ width: 0, height: 0 });
+		mockViewport(0, 0);
 
 		isUserLoggedIn.mockReturnValue(true);
 
@@ -349,47 +356,47 @@ describe('Build Page Targeting', () => {
 
 	describe('Breakpoint targeting', () => {
 		it('should set correct breakpoint targeting for a mobile device', () => {
-			getViewport.mockReturnValue({ width: 320, height: 0 });
+			mockViewport(320, 0);
 			expect(getPageTargeting().bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a medium mobile device', () => {
-			getViewport.mockReturnValue({ width: 375, height: 0 });
+			mockViewport(375, 0);
 			expect(getPageTargeting().bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a mobile device in landscape mode', () => {
-			getViewport.mockReturnValue({ width: 480, height: 0 });
+			mockViewport(480, 0);
 			expect(getPageTargeting().bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a phablet device', () => {
-			getViewport.mockReturnValue({ width: 660, height: 0 });
+			mockViewport(660, 0);
 			expect(getPageTargeting().bp).toEqual('tablet');
 		});
 
 		it('should set correct breakpoint targeting for a tablet device', () => {
-			getViewport.mockReturnValue({ width: 740, height: 0 });
+			mockViewport(740, 0);
 			expect(getPageTargeting().bp).toEqual('tablet');
 		});
 
 		it('should set correct breakpoint targeting for a desktop device', () => {
-			getViewport.mockReturnValue({ width: 980, height: 0 });
+			mockViewport(980, 0);
 			expect(getPageTargeting().bp).toEqual('desktop');
 		});
 
 		it('should set correct breakpoint targeting for a leftCol device', () => {
-			getViewport.mockReturnValue({ width: 1140, height: 0 });
+			mockViewport(1140, 0);
 			expect(getPageTargeting().bp).toEqual('desktop');
 		});
 
 		it('should set correct breakpoint targeting for a wide device', () => {
-			getViewport.mockReturnValue({ width: 1300, height: 0 });
+			mockViewport(1300, 0);
 			expect(getPageTargeting().bp).toEqual('desktop');
 		});
 
 		it('should set appNexusPageTargeting as flatten string', () => {
-			getViewport.mockReturnValue({ width: 1024, height: 0 });
+			mockViewport(1024, 0);
 			getPageTargeting();
 			expect(window.guardian.config.page.appNexusPageTargeting).toEqual(
 				'sens=f,pt1=/football/series/footballweekly,pt2=us,pt3=video,pt4=ng,pt5=prince-charles-letters,pt5=uk/uk,pt5=prince-charles,pt6=5,pt7=desktop,pt9=presetOphanPageViewId|gabrielle-chan|news',
@@ -506,17 +513,14 @@ describe('Build Page Targeting', () => {
 		it('should not allow inskin if cmp has not initialised', () => {
 			cmp.hasInitialised.mockReturnValue(false);
 			cmp.willShowPrivacyMessageSync.mockReturnValue(false);
-			getViewport.mockReturnValue({ width: 1920, height: 1080 });
+			mockViewport(1920, 1080);
 			expect(getPageTargeting().inskin).toBe('f');
 		});
 
 		it('should not allow inskin if cmp will show a banner', () => {
 			cmp.hasInitialised.mockReturnValue(true);
 			cmp.willShowPrivacyMessageSync.mockReturnValue(true);
-			getViewport.mockReturnValue({
-				width: 1920,
-				height: 1080,
-			});
+			mockViewport(1920, 1080);
 			expect(getPageTargeting().inskin).toBe('f');
 		});
 	});
@@ -533,12 +537,12 @@ describe('Build Page Targeting', () => {
 		])("should return '%s' if viewport width is %s", (expected, width) => {
 			cmp.hasInitialised.mockReturnValue(true);
 			cmp.willShowPrivacyMessageSync.mockReturnValue(false);
-			getViewport.mockReturnValue({ width, height: 800 });
+			mockViewport(width, 800);
 			expect(getPageTargeting().skinsize).toBe(expected);
 		});
 
 		it("should return 's' if vp does not have a width", () => {
-			getViewport.mockReturnValue({ width: 0, height: 0 });
+			mockViewport(0, 0);
 			expect(getPageTargeting().skinsize).toBe('s');
 		});
 	});
