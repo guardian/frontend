@@ -39,7 +39,7 @@
     @if(EmailSignupRecaptcha.isSwitchedOn) {
         <script>
             const submitButton = document.querySelector('.email-sub__submit-button')
-            submitButton.setAttribute("disabled", true)
+            setupSubmitListener()
 
             const resizeToOriginalHeight = (() => {
                 const originalHeight = document.body.clientHeight
@@ -56,14 +56,18 @@
 
             function onSubmit(e) {
                 e.preventDefault()
-                resizeToFitCaptcha()
-                grecaptcha.execute()
+                (function(d, script) {
+                    script = d.createElement('script');
+                    script.type = 'text/javascript';
+                    script.async = true;
+                    script.defer = true
+                    script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit';
+                    d.getElementsByTagName('head')[0].appendChild(script);
+                }(document));
             }
 
             function onRecaptchaScriptLoaded() {
-                submitButton.setAttribute("type", "button")
-                submitButton.setAttribute("disabled", false)
-                setupSubmitListener()
+                resizeToFitCaptcha()
                 grecaptcha.render('grecaptcha_container', {
                     sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
                     callback: onCaptchaCompleted,
@@ -71,6 +75,7 @@
                     'expired-callback': onCaptchaExpired,
                     size: 'invisible'
                 })
+                grecaptcha.execute()
             }
 
             function onCaptchaCompleted(token) {
@@ -86,7 +91,5 @@
                 resizeToOriginalHeight()
             }
         </script>
-        <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit"
-        async defer></script>
     }
 </html>
