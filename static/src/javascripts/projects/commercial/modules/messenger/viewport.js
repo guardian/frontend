@@ -1,4 +1,4 @@
-import { getViewport } from '../../../../lib/detect';
+import { getViewport } from '../../../../lib/detect-viewport';
 import fastdom from '../../../../lib/fastdom-promise';
 
 let w = window;

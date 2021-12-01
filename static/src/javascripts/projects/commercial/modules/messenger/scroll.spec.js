@@ -1,5 +1,5 @@
 import { _ as testExports } from './scroll';
-import { getViewport as getViewport_ } from '../../../../lib/detect';
+import { getViewport as getViewport_ } from '../../../../lib/detect-viewport';
 
 const getViewport = getViewport_;
 const addScrollListener = testExports.addScrollListener;
