@@ -107,8 +107,8 @@ class LiveBlogController(
   private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
 
   private def isNotRecent(blog: LiveBlogPage) = {
-    val threeDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(3)
-    blog.article.fields.lastModified.isBefore(threeDaysAgo)
+    val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
+    blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }
 
   private def isNotAustraliaNewsBlog(blog: LiveBlogPage) = {
