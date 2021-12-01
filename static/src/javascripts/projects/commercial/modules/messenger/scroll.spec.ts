@@ -1,7 +1,5 @@
 import { _ as testExports } from './scroll';
-import { getViewport as getViewport_ } from '../../../../lib/detect-viewport';
 
-const getViewport = getViewport_;
 const addScrollListener = testExports.addScrollListener;
 const removeScrollListener = testExports.removeScrollListener;
 const reset = testExports.reset;
@@ -10,9 +8,16 @@ jest.mock('../messenger', () => ({
 	register: jest.fn(),
 }));
 
-jest.mock('../../../../lib/detect', () => ({
-	getViewport: jest.fn(),
-}));
+const mockViewport = (width: number, height: number): void => {
+	Object.defineProperties(window, {
+		innerWidth: {
+			value: width,
+		},
+		innerHeight: {
+			value: height,
+		},
+	});
+};
 
 // TODO either remove or resolve flakiness of these tests.
 describe.skip('Cross-frame messenger: scroll', () => {
@@ -28,7 +33,7 @@ describe.skip('Cross-frame messenger: scroll', () => {
          <div id="ad-slot-2" class="js-ad-slot"><div id="iframe2" style="height: 200px"></div></div>
      `;
 
-	const mockIframePosition = (iframe, top) => {
+	const mockIframePosition = (iframe: HTMLIFrameElement, top: number) => {
 		jest.spyOn(iframe, 'getBoundingClientRect').mockImplementationOnce(
 			() => ({
 				left: 8,
@@ -37,6 +42,9 @@ describe.skip('Cross-frame messenger: scroll', () => {
 				width: 384,
 				top,
 				bottom: top + 200,
+				x: 0,
+				y: 0,
+				toJSON: () => null,
 			}),
 		);
 	};
@@ -56,7 +64,7 @@ describe.skip('Cross-frame messenger: scroll', () => {
 		iframe1 = document.getElementById('iframe1');
 		iframe2 = document.getElementById('iframe2');
 
-		getViewport.mockReturnValue({ width: 400, height: 300 });
+		mockViewport(400, 300);
 
 		expect.hasAssertions();
 	});
@@ -68,9 +76,7 @@ describe.skip('Cross-frame messenger: scroll', () => {
 		iframe2 = {};
 		jest.resetModules();
 		jest.resetAllMocks();
-		if (document.body) {
-			document.body.innerHTML = '';
-		}
+		document.body.innerHTML = '';
 	});
 
 	describe('With IntersectionObserver', () => {
