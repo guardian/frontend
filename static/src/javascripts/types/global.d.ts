@@ -100,6 +100,7 @@ interface PageConfig extends CommercialPageConfig {
 	seriesId: string;
 	sponsorshipType: string;
 	tones: string;
+	hasInlineMerchandise: boolean;
 }
 
 interface Ophan {
