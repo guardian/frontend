@@ -59,9 +59,14 @@ const setDfpListeners = (): void => {
 	pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
 
 	if (storage.session.isAvailable()) {
-		const pageViews =
-			(storage.session.get('gu.commercial.pageViews') as number) || 0;
-		storage.session.set('gu.commercial.pageViews', pageViews + 1);
+		const pageViews: unknown = storage.session.get(
+			'gu.commercial.pageViews',
+		);
+
+		// Increment only if positive number and not NaN, otherwise set to 0
+		typeof pageViews === 'number' && pageViews >= 0
+			? storage.session.set('gu.commercial.pageViews', pageViews + 1)
+			: storage.session.set('gu.commercial.pageViews', 0);
 	}
 };
 
