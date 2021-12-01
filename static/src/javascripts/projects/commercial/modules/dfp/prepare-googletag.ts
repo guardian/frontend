@@ -68,9 +68,10 @@ const setDfpListeners = (): void => {
 const setPageTargeting = (): void => {
 	const pubads = window.googletag.pubads();
 	// because commercialFeatures may export itself as {} in the event of an exception during construction
-	const targeting = getPageTargeting() as Record<string, string | string[]>;
-	Object.keys(targeting).forEach((key) => {
-		pubads.setTargeting(key, targeting[key]);
+	const targeting = getPageTargeting();
+	Object.entries(targeting).forEach(([key, value]) => {
+		if (!value) return;
+		pubads.setTargeting(key, value);
 	});
 };
 
