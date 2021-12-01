@@ -10,20 +10,18 @@ import { bindCallback, combineLatest, from, of } from 'rxjs';
 import { distinctUntilChanged, last, map } from 'rxjs/operators';
 import { viewport } from 'commercial/observables/viewport';
 
-const viewportTargeting: Observable<ViewportTargeting> = combineLatest([
-	viewport,
-	from(cmp.willShowPrivacyMessage()),
-]).pipe(
-	map(([viewportSize, cmpBannerWillShow]) =>
-		getViewportTargeting(viewportSize.width, cmpBannerWillShow),
-	),
-);
+const { sharedAdTargeting } = window.guardian.config.page;
+
+const contributors =
+	sharedAdTargeting?.co && Array.isArray(sharedAdTargeting.co)
+		? sharedAdTargeting.co
+		: [];
 
 const contentTargeting: Observable<ContentTargeting> = of(
 	getContentTargeting(
 		{
 			contentType: 'article',
-			contributors: ['Comm-Dev'],
+			contributors,
 			tones: [],
 			surging: 0,
 			platform: 'NextGen',
@@ -47,17 +45,26 @@ const consentState = bindCallback(onConsentChange)().pipe(last());
 const personalisedTargeting: Observable<PersonalisedTargeting> =
 	consentState.pipe(map((state) => getPersonalisedTargeting(state)));
 
+const viewportTargeting: Observable<ViewportTargeting> = combineLatest([
+	viewport,
+	from(cmp.willShowPrivacyMessage()),
+]).pipe(
+	map(([viewportSize, cmpBannerWillShow]) =>
+		getViewportTargeting(viewportSize.width, cmpBannerWillShow),
+	),
+);
+
 const adTargeting: Observable<
 	ViewportTargeting & PersonalisedTargeting & ContentTargeting
 > = combineLatest([
-	viewportTargeting,
-	personalisedTargeting,
 	contentTargeting,
+	personalisedTargeting,
+	viewportTargeting,
 ]).pipe(
-	map(([viewport, personalised, content]) => ({
-		...viewport,
-		...personalised,
+	map(([content, personalised, viewport]) => ({
 		...content,
+		...personalised,
+		...viewport,
 	})),
 	distinctUntilChanged(
 		(prev, curr) => JSON.stringify(prev) === JSON.stringify(curr),
