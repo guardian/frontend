@@ -432,7 +432,7 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/scroll.js": [
-  "../lib/detect.js",
+  "../lib/detect-viewport.ts",
   "../lib/events.ts",
   "../lib/fastdom-promise.js"
  ],
@@ -440,7 +440,7 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/viewport.js": [
-  "../lib/detect.js",
+  "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/mobile-sticky.ts": [
