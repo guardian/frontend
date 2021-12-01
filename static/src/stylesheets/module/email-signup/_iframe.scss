@@ -11,8 +11,22 @@ body {
 /**
 * Google reCAPTCHA styles
 */
-.grecaptcha-badge {
+.email-sub .grecaptcha-badge {
     visibility: hidden;
+}
+
+.email-sub .captcha-terms {
+    clear: both;
+    font-family: $f-sans-serif-text;
+    font-size: 12px;
+}
+
+.email-sub--footer .captcha-terms {
+    color: #ffffff;
+
+    a {
+        color: #ffffff;
+    }
 }
 
 /**
