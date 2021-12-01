@@ -44,9 +44,9 @@ const getPoint = <IncludeTweakpoints extends boolean>(
 			return width >= tweakpoints[point];
 		}
 		return false;
-		// This is captured in tests
 	});
 
+	// This assertion is captured in tests
 	return (point ?? 'mobile') as Point<IncludeTweakpoints>;
 };
 
