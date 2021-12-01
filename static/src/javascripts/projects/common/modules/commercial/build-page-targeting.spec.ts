@@ -44,8 +44,6 @@ type UnknownFunc = (...args: unknown[]) => unknown;
 
 jest.mock('../../../../lib/config');
 jest.mock('../../../../lib/detect', () => ({
-	getViewport: jest.fn(),
-	getBreakpoint: jest.fn(),
 	getReferrer: jest.fn(),
 	hasPushStateSupport: jest.fn(),
 }));

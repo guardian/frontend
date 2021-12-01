@@ -3,10 +3,6 @@ import { _ as testExports } from './viewport';
 const addResizeListener = testExports.addResizeListener;
 const reset = testExports.reset;
 
-jest.mock('../../../../lib/detect', () => ({
-	getViewport: jest.fn(),
-}));
-
 jest.mock('../messenger', () => ({
 	register: jest.fn(),
 }));
