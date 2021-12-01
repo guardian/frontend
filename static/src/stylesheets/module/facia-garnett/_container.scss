@@ -132,9 +132,12 @@ $header-image-size-desktop: 100px;
     padding-bottom: $gs-baseline/3;
     color: $brightness-7;
 
+    section.[data-component="radian-changemakers"] {
     h2 {
         font-size: 1.37rem; //Quick fix for a Glabs title issue, check out PR #24458 for the details
     }
+    }
+
 
     .has-page-skin & {
         @include mq(wide) {
