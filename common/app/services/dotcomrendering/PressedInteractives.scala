@@ -127,6 +127,9 @@ object PressedInteractives {
     "/tv-and-radio/ng-interactive/2021/jul/01/whats-on-netflix-and-amazon-this-month-july",
     "/world/ng-interactive/2020/oct/15/justice-on-trial-three-years-after-murder-daphne-caruana-galizia",
     "/music/ng-interactive/2020/oct/07/the-months-best-album-reviews",
+    "/fashion/ng-interactive/2020/jan/12/gran-designs-maximal-80s-style-in-dressing-and-decor",
+    "/artanddesign/ng-interactive/2020/jan/12/art-into-nature-nature-into-art-cesar-manrique-the-architect-of-lanzarote",
+    "/environment/ng-interactive/2019/oct/16/the-guardians-climate-pledge-2019",
   )
 
   def isPressed(path: String): Boolean = interactives.contains(path)
