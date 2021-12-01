@@ -18,7 +18,7 @@ object LiveblogRendering
       name = "liveblog-rendering",
       description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = LocalDate.of(2021, 11, 30),
+      sellByDate = LocalDate.of(2022, 6, 2),
       participationGroup = Perc10A,
     )
 
