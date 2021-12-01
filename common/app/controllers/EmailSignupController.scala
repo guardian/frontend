@@ -32,6 +32,7 @@ case class EmailForm(
     ref: Option[String],
     refViewId: Option[String],
     campaignCode: Option[String],
+    googleRecaptchaResponse: Option[String],
     name: String,
 ) {
 
@@ -91,6 +92,7 @@ class EmailSignupController(
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
+      "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> text,
     )(EmailForm.apply)(EmailForm.unapply),
   )
@@ -260,6 +262,7 @@ class EmailSignupController(
               s"email: ${form.email}, " +
               s"ref: ${form.ref}, " +
               s"refViewId: ${form.refViewId}, " +
+              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
@@ -325,6 +328,7 @@ class EmailSignupController(
               s"email: ${form.email}, " +
               s"ref: ${form.ref}, " +
               s"refViewId: ${form.refViewId}, " +
+              s"g-recaptcha-response: ${form.googleRecaptchaResponse}," +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
