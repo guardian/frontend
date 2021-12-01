@@ -90,7 +90,7 @@ export const onSlotRender = (
 			event.lineItemId &&
 			(
 				window.guardian.config.page.dfpNonRefreshableLineItemIds ?? []
-			).includes(String(event.lineItemId));
+			).includes(event.lineItemId);
 
 		advert.shouldRefresh =
 			isNotFluid &&
