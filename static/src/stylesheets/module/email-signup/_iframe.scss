@@ -9,6 +9,13 @@ body {
 }
 
 /**
+* Google reCAPTCHA styles
+*/
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+/**
 * IFRAME MODS
 */
 .email-sub__text-input,
