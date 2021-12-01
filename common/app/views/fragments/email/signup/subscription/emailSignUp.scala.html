@@ -5,6 +5,7 @@
     emailEmbedData: EmailEmbed)(implicit request: RequestHeader)
 
 @import common.LinkTo
+@import conf.switches.Switches.EmailSignupRecaptcha
 
 @listNamesTones = @{  List(
     bestOfOpinionUK.identityName -> "comment",
@@ -50,7 +51,9 @@
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
-            <div id="grecaptcha_container"></div>
+            @if(EmailSignupRecaptcha.isSwitchedOn) {
+                @fragments.email.signup.recaptcha()
+            }
         </div>
     </form>
 }
