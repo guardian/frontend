@@ -4,18 +4,19 @@ import type { PersonalisedTargeting } from '@guardian/commercial-core/dist/esm/t
 import { getPersonalisedTargeting } from '@guardian/commercial-core/dist/esm/targeting/personalised';
 import type { ViewportTargeting } from '@guardian/commercial-core/dist/esm/targeting/viewport';
 import { getViewportTargeting } from '@guardian/commercial-core/dist/esm/targeting/viewport';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import type { Observable } from 'rxjs';
-import { bindCallback, combineLatest, fromEvent, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, last, map } from 'rxjs/operators';
-import { getViewport } from 'lib/detect-viewport';
+import { bindCallback, combineLatest, from, of } from 'rxjs';
+import { distinctUntilChanged, last, map } from 'rxjs/operators';
+import { viewport } from 'commercial/observables/viewport';
 
-const viewportTargeting: Observable<ViewportTargeting> = fromEvent(
-	window,
-	'resize',
-).pipe(
-	debounceTime(42),
-	map(() => getViewportTargeting(getViewport().width, false)),
+const viewportTargeting: Observable<ViewportTargeting> = combineLatest([
+	viewport,
+	from(cmp.willShowPrivacyMessage()),
+]).pipe(
+	map(([viewportSize, cmpBannerWillShow]) =>
+		getViewportTargeting(viewportSize.width, cmpBannerWillShow),
+	),
 );
 
 const contentTargeting: Observable<ContentTargeting> = of(
@@ -42,14 +43,11 @@ const contentTargeting: Observable<ContentTargeting> = of(
 	),
 );
 
-const consentState = bindCallback(onConsentChange)();
+const consentState = bindCallback(onConsentChange)().pipe(last());
 const personalisedTargeting: Observable<PersonalisedTargeting> =
-	consentState.pipe(
-		last(),
-		map((state) => getPersonalisedTargeting(state)),
-	);
+	consentState.pipe(map((state) => getPersonalisedTargeting(state)));
 
-const targeting: Observable<
+const adTargeting: Observable<
 	ViewportTargeting & PersonalisedTargeting & ContentTargeting
 > = combineLatest([
 	viewportTargeting,
@@ -64,8 +62,7 @@ const targeting: Observable<
 	distinctUntilChanged(
 		(prev, curr) => JSON.stringify(prev) === JSON.stringify(curr),
 	),
+	last(),
 );
 
-// https://prod.liveshare.vsengsaas.visualstudio.com/join?B25D15D34D4AB5995AE5C926845B51CBE3F9
-
-export { targeting };
+export { adTargeting };
