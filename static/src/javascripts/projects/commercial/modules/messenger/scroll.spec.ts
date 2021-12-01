@@ -1,3 +1,4 @@
+import { noop } from 'lib/noop';
 import { _ as testExports } from './scroll';
 
 const addScrollListener = testExports.addScrollListener;
@@ -21,8 +22,8 @@ const mockViewport = (width: number, height: number): void => {
 
 // TODO either remove or resolve flakiness of these tests.
 describe.skip('Cross-frame messenger: scroll', () => {
-	let iframe1 = {};
-	let iframe2 = {};
+	let iframe1: HTMLElement | null;
+	let iframe2: HTMLElement | null;
 	let onScroll = () => Promise.resolve();
 
 	const respond1 = jest.fn();
@@ -33,7 +34,8 @@ describe.skip('Cross-frame messenger: scroll', () => {
          <div id="ad-slot-2" class="js-ad-slot"><div id="iframe2" style="height: 200px"></div></div>
      `;
 
-	const mockIframePosition = (iframe: HTMLIFrameElement, top: number) => {
+	const mockIframePosition = (iframe: HTMLElement | null, top: number) => {
+		if (!iframe) return;
 		jest.spyOn(iframe, 'getBoundingClientRect').mockImplementationOnce(
 			() => ({
 				left: 8,
@@ -52,15 +54,14 @@ describe.skip('Cross-frame messenger: scroll', () => {
 	beforeEach(() => {
 		jest.spyOn(global, 'addEventListener').mockImplementation(
 			(_, callback) => {
+				// @ts-expect-error -- it used to work in JS
 				onScroll = callback;
 			},
 		);
 		jest.spyOn(global, 'removeEventListener').mockImplementation(() => {
 			onScroll = () => Promise.resolve();
 		});
-		if (document.body) {
-			document.body.innerHTML = domSnippet;
-		}
+		document.body.innerHTML = domSnippet;
 		iframe1 = document.getElementById('iframe1');
 		iframe2 = document.getElementById('iframe2');
 
@@ -72,21 +73,27 @@ describe.skip('Cross-frame messenger: scroll', () => {
 	afterEach(() => {
 		removeScrollListener(iframe1);
 		removeScrollListener(iframe2);
-		iframe1 = {};
-		iframe2 = {};
+		iframe1 = null;
+		iframe2 = null;
 		jest.resetModules();
 		jest.resetAllMocks();
 		document.body.innerHTML = '';
 	});
 
+	type ObsCallback = (
+		entries: Array<
+			Pick<IntersectionObserverEntryInit, 'intersectionRatio' | 'target'>
+		>,
+	) => void;
+
 	describe('With IntersectionObserver', () => {
-		let onIntersect = null;
+		let onIntersect: ObsCallback | null = null;
 		class IntersectionObserver {
-			constructor(callback) {
+			constructor(callback: ObsCallback) {
 				onIntersect = callback;
 				return Object.freeze({
-					observe: () => {},
-					unobserve: () => {},
+					observe: noop,
+					unobserve: noop,
 					disconnect: () => {
 						onIntersect = null;
 					},
@@ -112,6 +119,8 @@ describe.skip('Cross-frame messenger: scroll', () => {
 		});
 
 		it('should call respond1 but not respond2 at the top of the page', () => {
+			if (!iframe1 || !iframe2) return false;
+
 			mockIframePosition(iframe1, 8);
 			mockIframePosition(iframe2, 6320);
 			if (onIntersect) {
@@ -127,6 +136,8 @@ describe.skip('Cross-frame messenger: scroll', () => {
 		});
 
 		it('should call respond2 but not respond1 at the bottom of the page', () => {
+			if (!iframe1 || !iframe2) return false;
+
 			mockIframePosition(iframe1, -6304);
 			mockIframePosition(iframe2, 8);
 			if (onIntersect) {
