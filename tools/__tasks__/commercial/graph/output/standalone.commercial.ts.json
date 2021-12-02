@@ -5,10 +5,6 @@
  "../lib/a9-apstag.js": [],
  "../lib/config.d.ts": [],
  "../lib/config.js": [],
- "../lib/cookies.js": [
-  "../lib/config.js",
-  "../lib/report-error.js"
- ],
  "../lib/detect-google-proxy.ts": [],
  "../lib/detect-viewport.ts": [
   "../../../../node_modules/@guardian/source-foundations/dist/index.d.ts"
@@ -508,8 +504,8 @@
   "../lib/config.d.ts",
   "../lib/mediator.js"
  ],
- "../projects/common/modules/analytics/mvt-cookie.js": [
-  "../lib/cookies.js"
+ "../projects/common/modules/analytics/mvt-cookie.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -573,7 +569,7 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/config.d.ts",
   "../lib/time-utils.ts",
-  "../projects/common/modules/analytics/mvt-cookie.js",
+  "../projects/common/modules/analytics/mvt-cookie.ts",
   "../projects/common/modules/experiments/ab-constants.ts",
   "../projects/common/modules/experiments/ab-local-storage.ts",
   "../projects/common/modules/experiments/ab-url.ts",
