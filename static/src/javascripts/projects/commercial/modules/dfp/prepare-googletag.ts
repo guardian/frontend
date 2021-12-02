@@ -70,12 +70,11 @@ const setDfpListeners = (): void => {
 	}
 };
 
-const setPageTargeting = (): void => {
+const setPageTargeting = (): void =>
 	Object.entries(getPageTargeting()).forEach(([key, value]) => {
 		if (!value) return;
 		window.googletag.pubads().setTargeting(key, value);
 	});
-};
 
 const setPublisherProvidedId = (): void => {
 	// Also known as PPID
