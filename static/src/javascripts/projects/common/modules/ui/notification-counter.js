@@ -1,4 +1,4 @@
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 
 const setCount = (count, title) => {
     document.title = count > 0 ? `(${count}) ${title}` : title;

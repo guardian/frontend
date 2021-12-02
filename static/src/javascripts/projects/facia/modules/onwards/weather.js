@@ -17,7 +17,7 @@ import reportError from 'lib/report-error';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 import { SearchTool } from 'facia/modules/onwards/search-tool';
 

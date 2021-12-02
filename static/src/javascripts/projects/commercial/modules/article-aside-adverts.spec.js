@@ -1,5 +1,5 @@
 import fakeConfig from '../../../lib/config';
-import fakeMediator from '../../../lib/mediator';
+import { mediator as fakeMediator } from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
 import { init } from './article-aside-adverts';
 

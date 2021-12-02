@@ -3,7 +3,7 @@ import {
     trackExternalLinkClick,
     trackSponsorLogoLinkClick,
 } from 'common/modules/analytics/google';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { storage } from '@guardian/libs';
 
 import interactionTracking from './interaction-tracking';

@@ -3,7 +3,7 @@ import {
 	initYoutubeEvents,
 	trackYoutubeEvent,
 } from 'common/modules/atoms/youtube-tracking';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 
 type PlaybackEvents = { '25': number; '50': number; '75': number };
 

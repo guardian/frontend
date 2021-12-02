@@ -1,7 +1,7 @@
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 
 

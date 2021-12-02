@@ -1,7 +1,7 @@
 import { mocked } from 'ts-jest/utils';
 import { getBreakpoint as getBreakpoint_ } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
-import fakeMediator from '../../../lib/mediator';
+import { mediator as fakeMediator} from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../../common/modules/identity/api';
 import { _, initCommentAdverts } from './comment-adverts';
@@ -25,7 +25,6 @@ Object.defineProperty(HTMLElement.prototype, 'dataset', {
 	value: {},
 });
 
-jest.mock('../../../lib/mediator');
 jest.mock('../../../lib/config', () => ({ page: {}, get: () => false }));
 
 jest.mock('./dfp/add-slot', () => ({

@@ -18,7 +18,7 @@ import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import { storage } from '@guardian/libs';
 import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { addEventListener } from 'lib/events';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { addCookie } from 'lib/cookies';

@@ -1,4 +1,4 @@
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import debounce from 'lodash/debounce';
 
 const timeSince = (time) => new Date().getTime() - time;

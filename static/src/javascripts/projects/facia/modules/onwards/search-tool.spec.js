@@ -2,7 +2,7 @@ import bean from 'bean';
 import $ from 'lib/$';
 import { fetchJson as fetchJson_ } from 'lib/fetch-json';
 import { SearchTool } from 'facia/modules/onwards/search-tool';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 
 jest.mock('lib/raven');
 

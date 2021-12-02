@@ -1,5 +1,5 @@
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import {
     isUserLoggedIn,
     sendValidationEmail,

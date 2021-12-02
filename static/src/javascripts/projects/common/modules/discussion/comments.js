@@ -4,7 +4,7 @@ import bonzo from 'bonzo';
 import qwery from 'qwery';
 import config from 'lib/config';
 import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { constructQuery } from 'lib/url';
 import { Component } from 'common/modules/component';

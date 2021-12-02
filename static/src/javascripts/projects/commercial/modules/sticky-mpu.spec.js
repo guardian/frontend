@@ -1,4 +1,4 @@
-import mediator from '../../../lib/mediator';
+import { mediator } from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
 import { stickyMpu, stickyCommentsMpu } from './sticky-mpu';
 

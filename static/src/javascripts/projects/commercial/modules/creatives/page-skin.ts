@@ -1,7 +1,7 @@
 import fastdom from 'fastdom';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { hasCrossedBreakpoint, isBreakpoint } from '../../../../lib/detect';
-import mediator from '../../../../lib/mediator';
+import { mediator } from '../../../../lib/mediator';
 
 const pageSkin = (): void => {
 	const bodyEl = document.body;
