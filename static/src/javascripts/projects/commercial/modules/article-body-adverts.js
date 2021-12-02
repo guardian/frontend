@@ -1,5 +1,4 @@
 import config from '../../../lib/config';
-import { isBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import mediator from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
@@ -10,6 +9,7 @@ import { createSlots } from './dfp/create-slots';
 
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { initCarrot } from './carrot-traffic-driver';
+import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 
 const isPaidContent = config.get('page.isPaidContent', false);
 
@@ -182,9 +182,7 @@ const addMobileInlineAds = () => {
 };
 
 const addInlineAds = () => {
-	const isMobile = isBreakpoint({
-		max: 'mobileLandscape',
-	});
+	const isMobile = getBreakpoint(getViewport().width) === 'mobile';
 
 	if (isMobile) {
 		return addMobileInlineAds();
@@ -196,6 +194,9 @@ const addInlineAds = () => {
 };
 
 const attemptToAddInlineMerchAd = () => {
+	const breakpoint = getBreakpoint(getViewport().width);
+	const isMobileOrTablet = breakpoint === 'mobile' || breakpoint === 'tablet';
+
 	const rules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
@@ -207,11 +208,7 @@ const attemptToAddInlineMerchAd = () => {
 				minBelow: 0,
 			},
 			' > header': {
-				minAbove: isBreakpoint({
-					max: 'tablet',
-				})
-					? 300
-					: 700,
+				minAbove: isMobileOrTablet ? 300 : 700,
 				minBelow: 0,
 			},
 			' > h2': {

@@ -85,7 +85,7 @@ interface PageConfig extends CommercialPageConfig {
 	hasPageSkin: boolean; //https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L48
 	assetsPath: string;
 	frontendAssetsFullURL?: string; // only in DCR
-	dfpNonRefreshableLineItemIds?: string[];
+	dfpNonRefreshableLineItemIds?: number[];
 	section: string;
 	isPaidContent: boolean;
 	isSensitive: boolean;
@@ -100,6 +100,7 @@ interface PageConfig extends CommercialPageConfig {
 	seriesId: string;
 	sponsorshipType: string;
 	tones: string;
+	hasInlineMerchandise: boolean;
 }
 
 interface Ophan {

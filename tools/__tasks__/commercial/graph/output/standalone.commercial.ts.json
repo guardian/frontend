@@ -10,6 +10,9 @@
   "../lib/report-error.js"
  ],
  "../lib/detect-google-proxy.ts": [],
+ "../lib/detect-viewport.ts": [
+  "../../../../node_modules/@guardian/source-foundations/dist/index.d.ts"
+ ],
  "../lib/detect.js": [
   "../lib/config.js",
   "../lib/mediator.js"
@@ -86,7 +89,7 @@
  "../projects/commercial/modules/article-body-adverts.js": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js",
   "../lib/config.js",
-  "../lib/detect.js",
+  "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.js",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
@@ -432,7 +435,7 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/scroll.js": [
-  "../lib/detect.js",
+  "../lib/detect-viewport.ts",
   "../lib/events.ts",
   "../lib/fastdom-promise.js"
  ],
@@ -440,7 +443,7 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/viewport.js": [
-  "../lib/detect.js",
+  "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/mobile-sticky.ts": [
@@ -462,8 +465,8 @@
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
- "../projects/commercial/modules/set-adtest-cookie.js": [
-  "../lib/cookies.js",
+ "../projects/commercial/modules/set-adtest-cookie.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/url.ts"
  ],
  "../projects/commercial/modules/sticky-mpu.js": [
@@ -530,6 +533,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.d.ts",
+  "../lib/detect-viewport.ts",
   "../lib/detect.js",
   "../lib/geolocation.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
@@ -683,7 +687,7 @@
   "../projects/commercial/modules/paid-containers.ts",
   "../projects/commercial/modules/paidfor-band.js",
   "../projects/commercial/modules/remove-slots.ts",
-  "../projects/commercial/modules/set-adtest-cookie.js",
+  "../projects/commercial/modules/set-adtest-cookie.ts",
   "../projects/commercial/modules/sticky-top-banner.js",
   "../projects/commercial/modules/third-party-tags.js",
   "../projects/common/modules/commercial/commercial-features.ts",

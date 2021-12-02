@@ -107,16 +107,12 @@ class LiveBlogController(
   private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
 
   private def isNotRecent(blog: LiveBlogPage) = {
-    val threeDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(3)
-    blog.article.fields.lastModified.isBefore(threeDaysAgo)
-  }
-
-  private def isNotAustraliaNewsBlog(blog: LiveBlogPage) = {
-    !blog.article.tags.tags.exists(_.id == "australia-news/australia-news")
+    val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
+    blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }
 
   private def checkIfSupported(blog: LiveBlogPage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog) && isNotAustraliaNewsBlog(blog)
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
   }
 
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit

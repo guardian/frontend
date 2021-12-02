@@ -1,21 +1,11 @@
-import { init } from './article-body-adverts';
-import config from '../../../lib/config';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import {
-	getViewport as getViewport_,
-	getBreakpoint as getBreakpoint_,
-	isBreakpoint as isBreakpoint_,
-} from '../../../lib/detect';
+import { init } from './article-body-adverts';
 
-const getViewport = getViewport_;
-const getBreakpoint = getBreakpoint_;
-const isBreakpoint = isBreakpoint_;
-
-jest.mock('./dfp/track-ad-render', () => (id) => {
-	const ads = {
-		'dfp-ad--im': true,
-	};
+const ads = {
+	'dfp-ad--im': true,
+} as const;
+jest.mock('./dfp/track-ad-render', () => (id: keyof typeof ads) => {
 	return Promise.resolve(ads[id]);
 });
 jest.mock('./dfp/add-slot', () => ({
@@ -29,24 +19,33 @@ jest.mock('../../common/modules/article/space-filler', () => ({
 		fillSpace: jest.fn(),
 	},
 }));
-jest.mock('../../../lib/detect', () => ({
-	isBreakpoint: jest.fn(),
-	getBreakpoint: jest.fn(),
-	getViewport: jest.fn(),
-}));
 jest.mock('../../../lib/config', () => ({ page: {}, get: () => false }));
 jest.mock('../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: () => false,
 }));
 
-const spaceFillerStub = spaceFiller.fillSpace;
+const spaceFillerStub = spaceFiller.fillSpace as jest.MockedFunction<
+	typeof spaceFiller.fillSpace
+>;
+
+const mockViewport = (width: number, height: number): void => {
+	Object.defineProperties(window, {
+		innerWidth: {
+			value: width,
+		},
+		innerHeight: {
+			value: height,
+		},
+	});
+};
 
 describe('Article Body Adverts', () => {
 	beforeEach(() => {
 		jest.resetAllMocks();
 		commercialFeatures.articleBodyAdverts = true;
+		// @ts-expect-error -- we need to TS space-filler’s queue
 		spaceFillerStub.mockImplementation(() => Promise.resolve(2));
-		getViewport.mockReturnValue({ height: 1300 });
+		mockViewport(0, 1300);
 		expect.hasAssertions();
 	});
 
@@ -63,9 +62,8 @@ describe('Article Body Adverts', () => {
 
 	describe('When merchandising components enabled', () => {
 		beforeEach(() => {
-			getBreakpoint.mockReturnValue('mobile');
-			isBreakpoint.mockReturnValue(true);
-			config.page.hasInlineMerchandise = true;
+			mockViewport(375, 600);
+			window.guardian.config.page.hasInlineMerchandise = true;
 		});
 	});
 });
