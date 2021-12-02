@@ -68,7 +68,7 @@ const setDfpListeners = (): void => {
 
 		isValidPageViewCount(pageViews)
 			? storage.session.set('gu.commercial.pageViews', pageViews + 1)
-			: storage.session.set('gu.commercial.pageViews', 0);
+			: storage.session.set('gu.commercial.pageViews', 1);
 	}
 };
 
