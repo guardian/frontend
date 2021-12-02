@@ -77,6 +77,7 @@ object LiveBlogCurrentPage {
       val pinnedBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
       val pinnedBlock = pinnedBlocks.flatMap(_.headOption)
       val blocksToDisplay = removeFirstBlockIfPinned(firstPageBlocks, pinnedBlock)
+      val pinnedBlockRenamed = pinnedBlock.map(renamePinnedBlock)
 
       val pagination = {
         if (blockCount > firstPageBlocks.size)
@@ -92,7 +93,7 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(blocksToDisplay, filterKeyEvents), pagination, pinnedBlock)
+      LiveBlogCurrentPage(FirstPage(blocksToDisplay, filterKeyEvents), pagination, pinnedBlockRenamed)
     }
   }
 
@@ -110,6 +111,7 @@ object LiveBlogCurrentPage {
       isRequestedBlock: String,
       filterKeyEvents: Boolean,
   ): Option[LiveBlogCurrentPage] = {
+    val pinnedBlock = blocks.find(_.attributes.pinned).map(renamePinnedBlock)
     val filteredBlocks = applyFilters(blocks, filterKeyEvents)
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, filteredBlocks)
     val newestPage = FirstPage(mainPageBlocks, filterKeyEvents)
@@ -130,9 +132,8 @@ object LiveBlogCurrentPage {
     endedPages
       .sliding(3)
       .toList
-      .zipWithIndex
       .map {
-        case (List(newerPage, Some(currentPage), olderPage), index) =>
+        case List(newerPage, Some(currentPage), olderPage) =>
           val isNewestPage = newestPage.equals(currentPage)
           LiveBlogCurrentPage(
             currentPage = currentPage,
@@ -148,10 +149,14 @@ object LiveBlogCurrentPage {
                   ),
                 )
               else None,
-            None,
+            if (isNewestPage) pinnedBlock else None,
           )
       }
       .find(hasRequestedBlock)
+  }
+
+  private def renamePinnedBlock(pinnedBlock: BodyBlock): BodyBlock = {
+    pinnedBlock.copy(id = s"${pinnedBlock.id}-pinned")
   }
 
   private def applyFilters(blocks: Seq[BodyBlock], filterKeyEvents: Boolean) = {
