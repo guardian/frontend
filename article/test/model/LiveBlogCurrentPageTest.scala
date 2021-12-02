@@ -63,7 +63,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
 
   it should "add the most recent pinned post to the first page" in {
     val blocks = fakeBlocks(5, 0, 2)
-    val latestPinnedBlock = fakeBlock(2, false, true)
+    val latestPinnedBlock = fakeBlock(2, false, true).copy(id = "2-pinned")
     val olderPinnedBlock = fakeBlock(1, false, true)
     val evenOlderPinnedBlock = fakeBlock(0, false, true)
     val result = LiveBlogCurrentPage.firstPage(
@@ -90,7 +90,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     val secondBlock = fakeBlock(3, false, false)
     val thirdBlock = fakeBlock(1, false, false)
     val blocks = List(firstBlock, secondBlock, thirdBlock)
-    val expectedPinnedBlock = fakeBlock(2, false, true)
+    val expectedPinnedBlock = fakeBlock(2, false, true).copy(id = "2-pinned")
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
@@ -112,7 +112,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
 
   it should "still include pinned post when filtering for key events" in {
     val blocks = fakeBlocks(10, 3, 4)
-    val expectedPinnedBlock = fakeBlock(4, false, true)
+    val expectedPinnedBlock = fakeBlock(4, false, true).copy(id = "4-pinned")
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
