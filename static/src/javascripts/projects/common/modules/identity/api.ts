@@ -237,8 +237,7 @@ export const reset = (): void => {
 	userFromCookieCache = null;
 };
 
-const getUserCookie = (): string | null =>
-	getCookie({ name: cookieName, shouldMemoize: true });
+const getUserCookie = (): string | null => getCookie({ name: cookieName });
 
 export const getUrl = (): string => profileRoot;
 
@@ -286,7 +285,6 @@ export const getUserOrSignIn = (
 export const hasUserSignedOutInTheLast24Hours = (): boolean => {
 	const cookieData = getCookie({
 		name: signOutCookieName,
-		shouldMemoize: true,
 	});
 
 	if (cookieData) {
@@ -299,7 +297,7 @@ export const hasUserSignedOutInTheLast24Hours = (): boolean => {
 };
 
 export const shouldAutoSigninInUser = (): boolean => {
-	const signedInUser = Boolean(getUserCookie());
+	const signedInUser = !!getUserCookie();
 	const checkFacebook = !!storage.local.get(fbCheckKey);
 	return (
 		!signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
