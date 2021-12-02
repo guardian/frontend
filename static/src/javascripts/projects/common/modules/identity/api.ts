@@ -115,7 +115,7 @@ export const decodeBase64 = (str: string): string =>
 
 export const getUserFromCookie = (): IdentityUserFromCache => {
 	if (userFromCookieCache === null) {
-		const cookieData = getCookie({ name: cookieName, shouldMemoize: true });
+		const cookieData = getUserCookie();
 		let userData: string[] | null = null;
 
 		if (cookieData) {
@@ -237,7 +237,7 @@ export const reset = (): void => {
 	userFromCookieCache = null;
 };
 
-const getApiCookie = (): string | null =>
+const getUserCookie = (): string | null =>
 	getCookie({ name: cookieName, shouldMemoize: true });
 
 export const getUrl = (): string => profileRoot;
@@ -299,9 +299,7 @@ export const hasUserSignedOutInTheLast24Hours = (): boolean => {
 };
 
 export const shouldAutoSigninInUser = (): boolean => {
-	const signedInUser = Boolean(
-		getCookie({ name: cookieName, shouldMemoize: true }),
-	);
+	const signedInUser = Boolean(getUserCookie());
 	const checkFacebook = !!storage.local.get(fbCheckKey);
 	return (
 		!signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
@@ -359,4 +357,4 @@ export const setConsent = (consents: SettableConsent): Promise<void> =>
 		return Promise.reject();
 	});
 
-export { getApiCookie as getCookie };
+export { getUserCookie as getCookie };
