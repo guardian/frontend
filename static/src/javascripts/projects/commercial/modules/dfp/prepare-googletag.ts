@@ -44,6 +44,9 @@ initMessenger(
 	disableRefresh,
 );
 
+const isValidPageViewCount = (count: unknown): count is number =>
+	typeof count === 'number' && Number.isInteger(count) && count >= 0;
+
 const setDfpListeners = (): void => {
 	const pubads = window.googletag.pubads();
 
@@ -63,8 +66,7 @@ const setDfpListeners = (): void => {
 			'gu.commercial.pageViews',
 		);
 
-		// Increment only if positive number and not NaN, otherwise set to 0
-		typeof pageViews === 'number' && pageViews >= 0
+		isValidPageViewCount(pageViews)
 			? storage.session.set('gu.commercial.pageViews', pageViews + 1)
 			: storage.session.set('gu.commercial.pageViews', 0);
 	}
