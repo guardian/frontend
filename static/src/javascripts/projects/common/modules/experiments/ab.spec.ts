@@ -1,5 +1,4 @@
 import type { Runnable } from '@guardian/ab-core';
-import { _ } from '../analytics/mvt-cookie';
 import {
 	getAsyncTestsToRun,
 	getSynchronousTestsToRun,
@@ -13,8 +12,9 @@ import {
 } from 'common/modules/experiments/ab-local-storage';
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
+import { _ } from '../analytics/mvt-cookie';
 
-const { overwriteMvtCookie } = _
+const { overwriteMvtCookie } = _;
 
 // This is required as loading these seems to cause an error locally (and in CI)
 // because of some implicit dependency evil that I haven't been able to figure out.
