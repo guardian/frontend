@@ -81,22 +81,33 @@ export const onSlotRender = (
 		if (event.creativeId) {
 			dfpEnv.creativeIDs.push(String(event.creativeId));
 		}
-		// Set refresh field based on the outcome of the slot render.
-		const sizeString = advert.size?.toString();
-		const isNotFluid = sizeString !== '0,0';
-		const isOutstream =
-			sizeString && outstreamSizes.includes(sizeString as AdSizeString);
-		const isNonRefreshableLineItem =
-			event.lineItemId &&
-			(
-				window.guardian.config.page.dfpNonRefreshableLineItemIds ?? []
-			).includes(event.lineItemId);
 
-		advert.shouldRefresh =
-			isNotFluid &&
-			!isOutstream &&
-			!config.get('page.hasPageSkin') &&
-			!isNonRefreshableLineItem;
+		// Check if the dfp non-refreshable line items are attached to the page config
+		// If they are then use these values to determine slot refresh at this point
+		// Otherwise wait until slot is viewable to fetch line item ids from endpoint
+		if (window.guardian.config.page.dfpNonRefreshableLineItemIds) {
+			// Set refresh field based on the outcome of the slot render.
+			const sizeString = advert.size?.toString();
+			const isNotFluid = sizeString !== '0,0';
+			const isOutstream =
+				sizeString &&
+				outstreamSizes.includes(sizeString as AdSizeString);
+			const isNonRefreshableLineItem =
+				event.lineItemId &&
+				window.guardian.config.page.dfpNonRefreshableLineItemIds.includes(
+					event.lineItemId,
+				);
+
+			advert.shouldRefresh =
+				isNotFluid &&
+				!isOutstream &&
+				!config.get('page.hasPageSkin') &&
+				!isNonRefreshableLineItem;
+		} else {
+			// Otherwise associate the line item id with the advert
+			// so it can be used at the point the slot becomes viewable
+			advert.lineItemId = event.lineItemId;
+		}
 
 		void renderAdvert(advert, event).then(emitRenderEvents);
 	}
