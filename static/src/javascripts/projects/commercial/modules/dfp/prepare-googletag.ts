@@ -2,7 +2,7 @@ import {
 	getConsentFor,
 	onConsentChange,
 } from '@guardian/consent-management-platform';
-import { loadScript, storage } from '@guardian/libs';
+import { loadScript } from '@guardian/libs';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
@@ -57,25 +57,18 @@ const setDfpListeners = (): void => {
 	);
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());
 	pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
-
-	if (storage.session.isAvailable()) {
-		const pageViews =
-			(storage.session.get('gu.commercial.pageViews') as number) || 0;
-		storage.session.set('gu.commercial.pageViews', pageViews + 1);
-	}
 };
 
-const setPageTargeting = (): void => {
-	const pubads = window.googletag.pubads();
-	// because commercialFeatures may export itself as {} in the event of an exception during construction
-	const targeting = getPageTargeting() as Record<string, string | string[]>;
-	Object.keys(targeting).forEach((key) => {
-		pubads.setTargeting(key, targeting[key]);
+const setPageTargeting = (): void =>
+	Object.entries(getPageTargeting()).forEach(([key, value]) => {
+		if (!value) return;
+		window.googletag.pubads().setTargeting(key, value);
 	});
-};
 
-const setPublisherProvidedId = (): void => {
-	// Also known as PPID
+/**
+ * Also known as PPID
+ */
+const setPublisherProvidedId = (): void =>
 	getUserIdentifiersFromApi(
 		(userIdentifiers: IdentityUserIdentifiers | null) => {
 			if (userIdentifiers?.googleTagId) {
@@ -85,7 +78,6 @@ const setPublisherProvidedId = (): void => {
 			}
 		},
 	);
-};
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
