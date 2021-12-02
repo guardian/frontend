@@ -7,10 +7,11 @@ import {
     clearParticipations,
     setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
-import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
+import { _, getMvtValue } from '../analytics/mvt-cookie';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 
-jest.mock('common/modules/analytics/mvt-cookie');
+const { overwriteMvtCookie } = _
+
 jest.mock('common/modules/experiments/ab-tests');
 
 jest.mock('common/modules/experiments/ab', () => ({

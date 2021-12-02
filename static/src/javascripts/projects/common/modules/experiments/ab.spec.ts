@@ -1,5 +1,5 @@
 import type { Runnable } from '@guardian/ab-core';
-import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
+import { _ } from '../analytics/mvt-cookie';
 import {
 	getAsyncTestsToRun,
 	getSynchronousTestsToRun,
@@ -14,6 +14,8 @@ import {
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 
+const { overwriteMvtCookie } = _
+
 // This is required as loading these seems to cause an error locally (and in CI)
 // because of some implicit dependency evil that I haven't been able to figure out.
 jest.mock('common/modules/commercial/user-features', () => ({
@@ -26,7 +28,6 @@ function emptyFunction() {
 	// do nothing
 }
 
-jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('common/modules/experiments/ab-tests'); // __mocks__/ab-tests
 jest.mock('common/modules/experiments/ab-ophan', () => ({
 	registerImpressionEvents: emptyFunction,
