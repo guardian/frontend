@@ -50,10 +50,10 @@ const testCanBeRun = (test: ABTest): boolean => {
 // begin from a specific value. Overlapping test ranges are permitted.
 const computeVariantFromMvtCookie = (
 	test: ABTest,
-): Variant | null | undefined => {
+): Variant | null => {
 	const smallestTestId = getMvtNumValues() * test.audienceOffset;
 	const largestTestId = smallestTestId + getMvtNumValues() * test.audience;
-	const mvtCookieId = Number(getMvtValue());
+	const mvtCookieId = getMvtValue();
 
 	if (
 		mvtCookieId &&
