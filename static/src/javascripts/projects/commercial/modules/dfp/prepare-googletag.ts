@@ -2,7 +2,7 @@ import {
 	getConsentFor,
 	onConsentChange,
 } from '@guardian/consent-management-platform';
-import { loadScript, storage } from '@guardian/libs';
+import { loadScript } from '@guardian/libs';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
@@ -44,9 +44,6 @@ initMessenger(
 	disableRefresh,
 );
 
-const isValidPageViewCount = (count: unknown): count is number =>
-	typeof count === 'number' && Number.isInteger(count) && count >= 0;
-
 const setDfpListeners = (): void => {
 	const pubads = window.googletag.pubads();
 
@@ -60,16 +57,6 @@ const setDfpListeners = (): void => {
 	);
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());
 	pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
-
-	if (storage.session.isAvailable()) {
-		const pageViews: unknown = storage.session.get(
-			'gu.commercial.pageViews',
-		);
-
-		isValidPageViewCount(pageViews)
-			? storage.session.set('gu.commercial.pageViews', pageViews + 1)
-			: storage.session.set('gu.commercial.pageViews', 1);
-	}
 };
 
 const setPageTargeting = (): void =>
