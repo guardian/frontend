@@ -76,8 +76,10 @@ const setPageTargeting = (): void =>
 		window.googletag.pubads().setTargeting(key, value);
 	});
 
-const setPublisherProvidedId = (): void => {
-	// Also known as PPID
+/**
+ * Also known as PPID
+ */
+const setPublisherProvidedId = (): void =>
 	getUserIdentifiersFromApi(
 		(userIdentifiers: IdentityUserIdentifiers | null) => {
 			if (userIdentifiers?.googleTagId) {
@@ -87,7 +89,6 @@ const setPublisherProvidedId = (): void => {
 			}
 		},
 	);
-};
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
