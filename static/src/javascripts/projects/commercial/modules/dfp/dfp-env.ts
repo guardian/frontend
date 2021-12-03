@@ -66,6 +66,8 @@ class DfpEnv implements IDfpEnv {
 		hbImpl: HbImpl,
 		lazyLoadObserve: boolean,
 	) {
+		this.queueAdvert = this.queueAdvert.bind(this);
+
 		this.adSlotSelector = adSlotSelector;
 		this.hbImpl = hbImpl;
 		this.lazyLoadObserve = lazyLoadObserve;
@@ -83,6 +85,19 @@ class DfpEnv implements IDfpEnv {
 		// We do not want lazy loading on pageskins because it messes up the roadblock
 		// Also, if the special dll parameter is passed with a value of 1, we don't lazy load
 		return !config.get('page.hasPageSkin') && getUrlVars().dll !== '1';
+	}
+
+	/**
+	 * Add advert to the array of adverts to load
+	 * Also add to the array of ads to refresh on resize if necessary
+	 */
+	queueAdvert(advert: Advert): void {
+		this.advertsToLoad.push(advert);
+		// Add to the array of ads to be refreshed (when the breakpoint changes)
+		// only if its `data-refresh` attribute isn't set to false.
+		if (advert.node.dataset.refresh !== 'false') {
+			this.advertsToRefresh.push(advert);
+		}
 	}
 }
 

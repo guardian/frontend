@@ -7,7 +7,6 @@ import { dfpEnv } from './dfp-env';
 import { displayAds } from './display-ads';
 import { displayLazyAds } from './display-lazy-ads';
 import { setupPrebidOnce } from './prepare-prebid';
-import { queueAdvert } from './queue-advert';
 
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:
@@ -54,7 +53,7 @@ const fillAdvertSlots = async (): Promise<void> => {
 	adverts.forEach((advert, index) => {
 		dfpEnv.advertIds[advert.id] = currentLength + index;
 	});
-	adverts.forEach(queueAdvert);
+	adverts.forEach(dfpEnv.queueAdvert);
 	if (dfpEnv.shouldLazyLoad()) {
 		displayLazyAds();
 	} else {
