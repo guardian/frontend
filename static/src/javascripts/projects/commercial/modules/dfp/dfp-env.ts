@@ -2,10 +2,14 @@ import config from '../../../../lib/config';
 import { getUrlVars } from '../../../../lib/url';
 import type { Advert } from './Advert';
 
+interface HbImpl {
+	prebid: boolean;
+	a9: boolean;
+}
 interface IDfpEnv {
 	renderStartTime: number;
 	readonly adSlotSelector: string;
-	hbImpl: Record<string, boolean>;
+	hbImpl: HbImpl;
 	lazyLoadEnabled: boolean;
 	lazyLoadObserve: boolean;
 	creativeIDs: string[];
@@ -26,10 +30,7 @@ class DfpEnv implements IDfpEnv {
 	readonly adSlotSelector: string;
 
 	/* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
-	hbImpl: {
-		prebid: boolean;
-		a9: boolean;
-	};
+	hbImpl: HbImpl;
 
 	/* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
 	lazyLoadEnabled: boolean;
@@ -52,16 +53,17 @@ class DfpEnv implements IDfpEnv {
 	/* adverts: array<Advert>. Keeps track of adverts and their state */
 	adverts: Advert[];
 
-	constructor() {
+	constructor(
+		adSlotSelector: string,
+		hbImpl: HbImpl,
+		lazyLoadEnabled: boolean,
+		lazyLoadObserve: boolean,
+	) {
 		this.renderStartTime = -1;
-		this.adSlotSelector = '.js-ad-slot';
-		this.hbImpl = {
-			// TODO: fix the Switch type upstream
-			prebid: switches.prebidHeaderBidding ?? false,
-			a9: switches.a9HeaderBidding ?? false,
-		};
-		this.lazyLoadEnabled = false;
-		this.lazyLoadObserve = 'IntersectionObserver' in window;
+		this.adSlotSelector = adSlotSelector;
+		this.hbImpl = hbImpl;
+		this.lazyLoadEnabled = lazyLoadEnabled;
+		this.lazyLoadObserve = lazyLoadObserve;
 		this.creativeIDs = [];
 		this.advertIds = {};
 		this.advertsToLoad = [];
@@ -77,4 +79,13 @@ class DfpEnv implements IDfpEnv {
 	}
 }
 
-export const dfpEnv = new DfpEnv();
+export const dfpEnv = new DfpEnv(
+	'.js-ad-slot',
+	{
+		// TODO: fix the Switch type upstream
+		prebid: switches.prebidHeaderBidding ?? false,
+		a9: switches.a9HeaderBidding ?? false,
+	},
+	false,
+	'IntersectionObserver' in window,
+);
