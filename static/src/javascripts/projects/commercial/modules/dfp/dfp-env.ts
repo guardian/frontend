@@ -7,10 +7,8 @@ interface HbImpl {
 	a9: boolean;
 }
 interface IDfpEnv {
-	renderStartTime: number;
 	readonly adSlotSelector: string;
 	hbImpl: HbImpl;
-	lazyLoadEnabled: boolean;
 	lazyLoadObserve: boolean;
 	creativeIDs: string[];
 	advertIds: Record<string, number>;
@@ -24,11 +22,6 @@ const { switches } = window.guardian.config;
 
 class DfpEnv implements IDfpEnv {
 	/**
-	 * Point in time when DFP kicks in
-	 */
-	renderStartTime: number;
-
-	/**
 	 * A CSS selector to query ad slots in the DOM
 	 */
 	readonly adSlotSelector: string;
@@ -37,11 +30,6 @@ class DfpEnv implements IDfpEnv {
 	 * Indicates which header bidding implementations are switched on
 	 */
 	hbImpl: HbImpl;
-
-	/**
-	 * lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded
-	 */
-	lazyLoadEnabled: boolean;
 
 	/**
 	 * Use IntersectionObserver in supporting browsers
@@ -76,13 +64,10 @@ class DfpEnv implements IDfpEnv {
 	constructor(
 		adSlotSelector: string,
 		hbImpl: HbImpl,
-		lazyLoadEnabled: boolean,
 		lazyLoadObserve: boolean,
 	) {
-		this.renderStartTime = -1;
 		this.adSlotSelector = adSlotSelector;
 		this.hbImpl = hbImpl;
-		this.lazyLoadEnabled = lazyLoadEnabled;
 		this.lazyLoadObserve = lazyLoadObserve;
 		this.creativeIDs = [];
 		this.advertIds = {};
@@ -108,6 +93,5 @@ export const dfpEnv = new DfpEnv(
 		prebid: switches.prebidHeaderBidding ?? false,
 		a9: switches.a9HeaderBidding ?? false,
 	},
-	false,
 	'IntersectionObserver' in window,
 );
