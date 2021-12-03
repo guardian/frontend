@@ -4,6 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
+import conf.switches.Switches.EmailSignupRecaptcha
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
@@ -115,8 +116,13 @@ class EmailSignupController(
       Action { implicit request =>
         val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
         identityNewsletter match {
-          case Right(Some(_)) =>
-            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
+          case Right(Some(newsletter)) =>
+            println(newsletter, EmailSignupRecaptcha.isSwitchedOn)
+            if (EmailSignupRecaptcha.isSwitchedOn && newsletter.signupPage.isDefined) {
+              Cached(1.day)(RevalidatableResult.Ok(views.html.linkToEmailSignupPage(emailLandingPage, newsletter.signupPage.get, newsletter.name)))
+            } else {
+              Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
+            }
           case Right(None) =>
             logNewsletterNotFoundError(listName)
             Cached(15.minute)(WithoutRevalidationResult(NoContent))

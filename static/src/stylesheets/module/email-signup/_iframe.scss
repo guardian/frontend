@@ -233,6 +233,39 @@ body {
     }
 }
 
+/**
+* Styles for temporary footer link to sign up page
+*/
+.email-sub__link--footer {
+    margin: 5px 0;
+
+    .email-sub__description {
+        border: none;
+        @include fs-textSans(3);
+    }
+
+    .email-sub__link-button {
+        display: inline-flex;
+        -moz-box-pack: justify;
+        justify-content: space-between;
+        -moz-box-align: center;
+        align-items: center;
+        box-sizing: border-box;
+        background: white;
+        cursor: pointer;
+        text-decoration: none;
+        font-family: $f-sans-serif-text;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        font-weight: 700;
+        height: 44px;
+        min-height: 44px;
+        padding: 0px 20px 2px;
+        border-radius: 44px;
+        color: rgb(5, 41, 98);
+    }
+}
+
 .email-sub__form--article {
     @include right-padding-to-match-article-content;
 
