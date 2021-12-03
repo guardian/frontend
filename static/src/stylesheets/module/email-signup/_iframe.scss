@@ -22,7 +22,7 @@ body {
     font-size: 12px;
 
     a {
-        color: #007ABC;
+        color: #007abc;
     }
 }
 
@@ -240,8 +240,8 @@ body {
     margin: 5px 0;
 
     .email-sub__description {
-        border: none;
         @include fs-textSans(3);
+        border: 0;
     }
 
     .email-sub__link-button {
@@ -251,11 +251,11 @@ body {
         -moz-box-align: center;
         align-items: center;
         box-sizing: border-box;
-        background: white;
+        background: #ffffff;
         cursor: pointer;
         text-decoration: none;
         font-family: $f-sans-serif-text;
-        font-size: 0.9rem;
+        font-size: .9rem;
         line-height: 1.5;
         font-weight: 700;
         height: 44px;
