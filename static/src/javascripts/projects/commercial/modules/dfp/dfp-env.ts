@@ -6,21 +6,10 @@ interface HbImpl {
 	prebid: boolean;
 	a9: boolean;
 }
-interface IDfpEnv {
-	readonly adSlotSelector: string;
-	hbImpl: HbImpl;
-	lazyLoadObserve: boolean;
-	creativeIDs: string[];
-	advertIds: Record<string, number>;
-	advertsToLoad: Advert[];
-	advertsToRefresh: Advert[];
-	adverts: Advert[];
-	shouldLazyLoad: () => boolean;
-}
 
 const { switches } = window.guardian.config;
 
-class DfpEnv implements IDfpEnv {
+class DfpEnv {
 	/**
 	 * A CSS selector to query ad slots in the DOM
 	 */
