@@ -117,7 +117,6 @@ class EmailSignupController(
         val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
         identityNewsletter match {
           case Right(Some(newsletter)) =>
-            println(newsletter, EmailSignupRecaptcha.isSwitchedOn)
             if (EmailSignupRecaptcha.isSwitchedOn && newsletter.signupPage.isDefined) {
               Cached(1.day)(RevalidatableResult.Ok(views.html.linkToEmailSignupPage(emailLandingPage, newsletter.signupPage.get, newsletter.name)))
             } else {
