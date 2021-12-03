@@ -1,8 +1,6 @@
 import config from '../../../../lib/config';
-import { getUrlVars as _getUrlVars } from '../../../../lib/url';
+import { getUrlVars } from '../../../../lib/url';
 import type { Advert } from './Advert';
-
-const getUrlVars = _getUrlVars as (arg?: string) => Record<string, string>;
 
 interface DfpEnv {
 	renderStartTime: number;
@@ -58,12 +56,6 @@ export const dfpEnv: DfpEnv = {
 	shouldLazyLoad(): boolean {
 		// We do not want lazy loading on pageskins because it messes up the roadblock
 		// Also, if the special dll parameter is passed with a value of 1, we don't lazy load
-		return (
-			!(
-				config as {
-					get: (arg: string) => boolean;
-				}
-			).get('page.hasPageSkin') && getUrlVars().dll !== '1'
-		);
+		return !config.get('page.hasPageSkin') && getUrlVars().dll !== '1';
 	},
 };
