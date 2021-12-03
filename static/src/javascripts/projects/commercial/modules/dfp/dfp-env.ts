@@ -23,34 +23,54 @@ interface IDfpEnv {
 const { switches } = window.guardian.config;
 
 class DfpEnv implements IDfpEnv {
-	/* renderStartTime: integer. Point in time when DFP kicks in */
+	/**
+	 * Point in time when DFP kicks in
+	 */
 	renderStartTime: number;
 
-	/* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
+	/**
+	 * A CSS selector to query ad slots in the DOM
+	 */
 	readonly adSlotSelector: string;
 
-	/* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
+	/**
+	 * Indicates which header bidding implementations are switched on
+	 */
 	hbImpl: HbImpl;
 
-	/* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
+	/**
+	 * lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded
+	 */
 	lazyLoadEnabled: boolean;
 
-	/* lazyLoadObserve: boolean. Use IntersectionObserver in supporting browsers */
+	/**
+	 * Use IntersectionObserver in supporting browsers
+	 */
 	lazyLoadObserve: boolean;
 
-	/* creativeIDs: array<string>. List of loaded creative IDs */
+	/**
+	 * List of loaded creative IDs
+	 */
 	creativeIDs: string[];
 
-	/* advertIds: map<string -> int>. Keeps track of slot IDs and their position in the array of adverts */
+	/**
+	 * Keeps track of slot IDs and their position in the array of adverts
+	 */
 	advertIds: Record<string, number>;
 
-	/* advertsToLoad: array<Advert>. Lists adverts waiting to be loaded */
+	/**
+	 * Lists adverts waiting to be loaded
+	 */
 	advertsToLoad: Advert[];
 
-	/* advertsToRefresh: array<Advert>. Lists adverts refreshed when a breakpoint has been crossed */
+	/**
+	 * Lists adverts refreshed when a breakpoint has been crossed
+	 */
 	advertsToRefresh: Advert[];
 
-	/* adverts: array<Advert>. Keeps track of adverts and their state */
+	/**
+	 * Keeps track of adverts and their state
+	 */
 	adverts: Advert[];
 
 	constructor(
@@ -71,7 +91,9 @@ class DfpEnv implements IDfpEnv {
 		this.adverts = [];
 	}
 
-	/* shouldLazyLoad: () -> boolean. Determines whether ads should be lazy loaded */
+	/**
+	 * Determines whether ads should be lazy loaded
+	 */
 	shouldLazyLoad(): boolean {
 		// We do not want lazy loading on pageskins because it messes up the roadblock
 		// Also, if the special dll parameter is passed with a value of 1, we don't lazy load
