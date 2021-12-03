@@ -6,9 +6,8 @@ import {
 const addCountryGroupToSupportLink = (rawUrl) => {
 	const countryCode = getCountryCode();
 	if (countryCode) {
-		const countryGroup = countryCodeToSupportInternationalisationId(
-			countryCode,
-		);
+		const countryGroup =
+			countryCodeToSupportInternationalisationId(countryCode);
 		return rawUrl.replace(
 			/(support.theguardian.com)\/(contribute|subscribe)/,
 			(_, domain, path) =>
