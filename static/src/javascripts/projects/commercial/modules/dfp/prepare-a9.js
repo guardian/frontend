@@ -11,8 +11,8 @@ import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
 const setupA9 = () => {
-    // TODO: Understand why we want to skip A9 for Google Proxy
-    if (isGoogleProxy()) return Promise.resolve(false);
+	// TODO: Understand why we want to skip A9 for Google Proxy
+	if (isGoogleProxy()) return Promise.resolve(false);
 
 	// There are two articles that InfoSec would like to avoid loading scripts on
 	if (commercialFeatures.isSecureContact) {

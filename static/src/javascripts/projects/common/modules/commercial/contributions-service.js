@@ -86,9 +86,10 @@ export const getArticleCountConsent = () => {
 			if (ccpa || aus) {
 				resolve(true);
 			} else if (tcfv2) {
-				const hasRequiredConsents = REQUIRED_CONSENTS_FOR_ARTICLE_COUNT.every(
-					(consent) => tcfv2.consents[consent],
-				);
+				const hasRequiredConsents =
+					REQUIRED_CONSENTS_FOR_ARTICLE_COUNT.every(
+						(consent) => tcfv2.consents[consent],
+					);
 
 				if (!hasRequiredConsents) {
 					removeArticleCountsFromLocalStorage();
@@ -188,7 +189,7 @@ const buildTagIds = (page) => {
 	const tones = toneIds ? toneIds.split(',') : [];
 	const series = seriesId ? [seriesId] : [];
 	return keywords.concat(tones).concat(series);
-}
+};
 
 const buildBannerPayload = async () => {
 	const page = config.get('page');
@@ -317,7 +318,7 @@ const renderLiveblogEpic = async (module, meta) => {
 
 	const element = setupRemoteEpicInLiveblog(
 		component.ContributionsLiveblogEpic,
-		{ submitComponentEvent, ...module.props }
+		{ submitComponentEvent, ...module.props },
 	);
 };
 
@@ -325,7 +326,12 @@ const renderEpic = async (module, meta) => {
 	const component = await window.guardianPolyfilledImport(module.url);
 
 	const el = epicEl();
-	mountDynamic(el, component.ContributionsEpic, { submitComponentEvent, ...module.props }, true);
+	mountDynamic(
+		el,
+		component.ContributionsEpic,
+		{ submitComponentEvent, ...module.props },
+		true,
+	);
 };
 
 export const fetchPuzzlesData = async () => {
