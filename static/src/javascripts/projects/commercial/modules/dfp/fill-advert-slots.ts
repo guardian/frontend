@@ -53,7 +53,7 @@ const fillAdvertSlots = async (): Promise<void> => {
 	adverts.forEach((advert, index) => {
 		dfpEnv.advertIds[advert.id] = currentLength + index;
 	});
-	adverts.forEach(dfpEnv.queueAdvert);
+	adverts.forEach((advert) => dfpEnv.queueAdvert(advert));
 	if (dfpEnv.shouldLazyLoad()) {
 		displayLazyAds();
 	} else {
