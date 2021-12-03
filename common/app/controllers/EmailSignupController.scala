@@ -118,7 +118,10 @@ class EmailSignupController(
         identityNewsletter match {
           case Right(Some(newsletter)) =>
             if (EmailSignupRecaptcha.isSwitchedOn && newsletter.signupPage.isDefined) {
-              Cached(1.day)(RevalidatableResult.Ok(views.html.linkToEmailSignupPage(emailLandingPage, newsletter.signupPage.get, newsletter.name)))
+              Cached(1.day)(
+                RevalidatableResult
+                  .Ok(views.html.linkToEmailSignupPage(emailLandingPage, newsletter.signupPage.get, newsletter.name)),
+              )
             } else {
               Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
             }
