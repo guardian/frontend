@@ -219,8 +219,6 @@
   "../projects/commercial/modules/messenger/post-message.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-render.ts": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/mediator.ts",
@@ -228,17 +226,15 @@
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/empty-advert.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/render-advert.ts"
+  "../projects/commercial/modules/dfp/render-advert.ts",
+  "../projects/commercial/modules/dfp/should-refresh.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-viewable.ts": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../lib/config.d.ts",
   "../lib/url.ts",
-  "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts",
-  "../projects/commercial/modules/dfp/non-refreshable-line-items.ts"
+  "../projects/commercial/modules/dfp/non-refreshable-line-items.ts",
+  "../projects/commercial/modules/dfp/should-refresh.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-visibility-changed.js": [
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
@@ -333,6 +329,12 @@
   "../projects/commercial/modules/dfp/get-ad-iframe.ts",
   "../projects/commercial/modules/dfp/render-advert-label.ts",
   "../projects/commercial/modules/sticky-mpu.js"
+ ],
+ "../projects/commercial/modules/dfp/should-refresh.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/config.d.ts",
+  "../projects/commercial/modules/dfp/Advert.ts"
  ],
  "../projects/commercial/modules/dfp/track-ad-render.ts": [
   "../projects/commercial/modules/dfp/wait-for-advert.ts"
