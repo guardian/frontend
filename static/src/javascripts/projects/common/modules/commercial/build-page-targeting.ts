@@ -10,8 +10,11 @@ import type { CountryCode } from '@guardian/libs';
 import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
-import { getReferrer as detectGetReferrer } from '../../../../lib/detect';
-import { getTweakpoint, getViewport } from '../../../../lib/detect-viewport';
+import {
+	getReferrer as detectGetReferrer,
+	getBreakpoint,
+	getViewport,
+} from '../../../../lib/detect';
 import { getCountryCode } from '../../../../lib/geolocation';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
 import { getSynchronousParticipations } from '../experiments/ab';
@@ -114,8 +117,7 @@ let latestCMPState: ConsentState | null = null;
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
 const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
-	const width = getViewport().width;
-	switch (getTweakpoint(width)) {
+	switch (getBreakpoint(true)) {
 		case 'mobile':
 		case 'mobileMedium':
 		case 'mobileLandscape':
@@ -127,6 +129,8 @@ const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
 		case 'leftCol':
 		case 'wide':
 			return 'desktop';
+		default:
+			return 'mobile';
 	}
 };
 

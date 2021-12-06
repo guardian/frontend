@@ -1305,13 +1305,6 @@
   dependencies:
     tslib "^2.0.0"
 
-"@guardian/source-foundations@^4.0.0-rc.4":
-  version "4.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-4.0.0-rc.4.tgz#3029c958497e181f85caee1c662dd7aefb906838"
-  integrity sha512-4nyvLDOQRXdzpfuxfUDIgpr0xeb1cCjLqsb9XhRHRX6Xh3Vhp/oMsAKxPbj3GcLMfehM1ZEGn4RYmEy6An/e4w==
-  dependencies:
-    mini-svg-data-uri "^1.3.3"
-
 "@guardian/src-button@3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@guardian/src-button/-/src-button-3.3.0.tgz#eccbb3232089a3729254187cea391759c24a477d"
@@ -1330,9 +1323,9 @@
   integrity sha512-JIFBybaCd69tf+zJZZ7KNLdqaVePOAc36wGFor0I60vc9Ib0jMuzYVffMjMhF6LHSXMdoOcqGwiPdFucObVYAA==
 
 "@guardian/src-helpers@^3.3.0":
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/@guardian/src-helpers/-/src-helpers-3.12.1.tgz#fb5cfb23c8b9ed40bb52102b85fec5f4e9381352"
-  integrity sha512-nJiaSWOADojTWhvbXiZYH1NMrx883E9iMNUV1fsrsxQJ+g6OV82GuHHMLjSRikWzUpfBI6AdlCdswrV9Fof0+w==
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-helpers/-/src-helpers-3.12.0.tgz#298ce656b95a2546a88590ad2903502026e460a6"
+  integrity sha512-C8V8qWzjmVLfSH1AdQm6yEtckag0Lp08fw9cLda4+g6VDRw5gSWY0H3SYK9HbGvxTUGadKNCde7Y5FzNhgWDRw==
   dependencies:
     "@guardian/src-foundations" "^3.12.0"
     mini-svg-data-uri "^1.3.3"

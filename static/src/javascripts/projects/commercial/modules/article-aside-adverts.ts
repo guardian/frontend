@@ -31,7 +31,7 @@ const getTopOffset = (element: HTMLElement | undefined): number => {
 	if (!element) return 0;
 	const docEl = element.ownerDocument.documentElement;
 	const clientRectTop = element.getBoundingClientRect().top;
-	const yScroll = window.scrollY || document.documentElement.scrollTop;
+	const yScroll = window.pageYOffset || document.documentElement.scrollTop;
 	return (
 		clientRectTop +
 		yScroll -

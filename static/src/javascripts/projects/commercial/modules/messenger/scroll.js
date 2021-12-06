@@ -1,5 +1,5 @@
 import { addEventListener } from '../../../../lib/events';
-import { getViewport } from '../../../../lib/detect-viewport';
+import { getViewport } from '../../../../lib/detect';
 import fastdom from '../../../../lib/fastdom-promise';
 
 // An intersection observer will allow us to efficiently send slot

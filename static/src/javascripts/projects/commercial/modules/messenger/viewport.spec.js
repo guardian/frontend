@@ -1,7 +1,14 @@
 import { _ as testExports } from './viewport';
+import { getViewport as getViewport_ } from '../../../../lib/detect';
+
+const getViewport = getViewport_;
 
 const addResizeListener = testExports.addResizeListener;
 const reset = testExports.reset;
+
+jest.mock('../../../../lib/detect', () => ({
+	getViewport: jest.fn(),
+}));
 
 jest.mock('../messenger', () => ({
 	register: jest.fn(),
@@ -11,24 +18,13 @@ const domSnippet = `
     <div id="ad-slot-1" class="js-ad-slot"><div id="iframe1" style="height: 200px"></div></div>
 `;
 
-const mockViewport = (width: number, height: number): void => {
-	Object.defineProperties(window, {
-		innerWidth: {
-			value: width,
-		},
-		innerHeight: {
-			value: height,
-		},
-	});
-};
-
 describe('Cross-frame messenger: viewport', () => {
 	const respond = jest.fn();
-	let iframe: HTMLElement | null;
-	let onResize: (() => void) | null;
+	let iframe;
+	let onResize;
 
 	const mockWindow = {
-		addEventListener(_: string, callback: () => void) {
+		addEventListener(_, callback) {
 			onResize = callback;
 		},
 		removeEventListener() {
@@ -37,7 +33,9 @@ describe('Cross-frame messenger: viewport', () => {
 	};
 
 	beforeEach(() => {
-		document.body.innerHTML = domSnippet;
+		if (document.body) {
+			document.body.innerHTML = domSnippet;
+		}
 		iframe = document.getElementById('iframe1');
 		reset(mockWindow);
 		expect.hasAssertions();
@@ -46,7 +44,9 @@ describe('Cross-frame messenger: viewport', () => {
 	afterEach(() => {
 		iframe = null;
 		reset();
-		document.body.innerHTML = '';
+		if (document.body) {
+			document.body.innerHTML = '';
+		}
 	});
 
 	it('should send viewport dimensions as soon as the iframe starts listening', () => {
@@ -54,7 +54,7 @@ describe('Cross-frame messenger: viewport', () => {
 			width: 800,
 			height: 600,
 		};
-		mockViewport(size.width, size.height);
+		getViewport.mockReturnValue(size);
 		return addResizeListener(iframe, respond).then(() => {
 			expect(respond).toHaveBeenCalledWith(null, size);
 		});
@@ -65,9 +65,9 @@ describe('Cross-frame messenger: viewport', () => {
 			width: 1024,
 			height: 768,
 		};
-		mockViewport(size.width, size.height);
+		getViewport.mockReturnValue(size);
 		return addResizeListener(iframe, respond)
-			.then(() => onResize?.())
+			.then(() => onResize && onResize())
 			.then(() => {
 				expect(respond).toHaveBeenCalledWith(null, size);
 			});
