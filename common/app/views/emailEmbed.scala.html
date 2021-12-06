@@ -38,16 +38,31 @@
     </script>
     @if(EmailSignupRecaptcha.isSwitchedOn) {
         <script>
+            (() => {
+                var height = parseInt(document.body.offsetHeight, 10);
+                var styles = document.defaultView.getComputedStyle(document.body);
+                height += parseInt(styles.getPropertyValue('margin-bottom'), 10);
+                height += parseInt(styles.getPropertyValue('margin-top'), 10);
+                sendResizeMessage(height)
+            })()
             const submitButton = document.querySelector('.email-sub__submit-button')
             setupSubmitListener()
 
             const resizeToOriginalHeight = (() => {
                 const originalHeight = document.body.clientHeight
-                return () => iframeMessenger.resize(`${originalHeight}px`)
+                return () => sendResizeMessage(`${originalHeight}px`)
             })()
 
+            function sendResizeMessage(height) {
+                window.parent.postMessage(JSON.stringify({
+                    type: 'set-height',
+                    value: height,
+                    src: window.location.href
+                }), '*')
+            }
+
             function resizeToFitCaptcha() {
-                iframeMessenger.resize('500px')
+                sendResizeMessage('500px')
             }
 
             function setupSubmitListener() {
