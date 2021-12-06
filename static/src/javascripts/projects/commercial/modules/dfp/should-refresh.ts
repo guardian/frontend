@@ -28,19 +28,29 @@ const outstreamSizes = [
 export const shouldRefresh = (
 	advert: Advert,
 	nonRefreshableLineItemIds: number[] = [],
+	// This parameter can be removed when we only check refreshing at the  slot-viewable point
+	eventLineItemId?: number,
 ): boolean => {
 	const sizeString = advert.size?.toString();
-	const isNotFluid = sizeString !== '0,0';
-	const isOutstream =
-		sizeString && outstreamSizes.includes(sizeString as AdSizeString);
-	const isNonRefreshableLineItem =
-		advert.lineItemId &&
-		nonRefreshableLineItemIds.includes(advert.lineItemId);
 
-	return (
-		isNotFluid &&
-		!isOutstream &&
-		!config.get('page.hasPageSkin') &&
-		!isNonRefreshableLineItem
-	);
+	// Fluid adverts should not refresh
+	const isFluid = sizeString === '0,0';
+	if (isFluid) return false;
+
+	// Outstream adverts should not refresh
+	const isOutstream = outstreamSizes.includes(sizeString as AdSizeString);
+	if (isOutstream) return false;
+
+	// If the advert has a line item id included in the array of non refreshable
+	// line item ids then it should not refresh
+	const lineItemId = advert.lineItemId ?? eventLineItemId;
+	const isNonRefreshableLineItem =
+		lineItemId && nonRefreshableLineItemIds.includes(lineItemId);
+	if (isNonRefreshableLineItem) return false;
+
+	// If we have a pageskin then don't refresh
+	if (config.get('page.hasPageSkin')) return false;
+
+	// If none of the other conditions are met then the advert should refresh
+	return true;
 };

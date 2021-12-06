@@ -82,6 +82,7 @@ export const onSlotRender = (
 			advert.shouldRefresh = shouldRefresh(
 				advert,
 				window.guardian.config.page.dfpNonRefreshableLineItemIds,
+				event.lineItemId ?? undefined,
 			);
 		} else {
 			// Otherwise associate the line item id with the advert
