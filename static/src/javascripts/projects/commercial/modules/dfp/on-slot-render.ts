@@ -1,13 +1,11 @@
-import { adSizes } from '@guardian/commercial-core';
-import type { AdSizeString } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
-import config from '../../../../lib/config';
 import { mediator } from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
 import { dfpEnv } from './dfp-env';
 import { emptyAdvert } from './empty-advert';
 import { getAdvertById } from './get-advert-by-id';
 import { renderAdvert } from './render-advert';
+import { shouldRefresh } from './should-refresh';
 
 const reportEmptyResponse = (
 	adSlotId: string,
@@ -36,12 +34,6 @@ const reportEmptyResponse = (
 		);
 	}
 };
-
-const outstreamSizes = [
-	adSizes.outstreamDesktop.toString(),
-	adSizes.outstreamMobile.toString(),
-	adSizes.outstreamGoogleDesktop.toString(),
-];
 
 const sizeEventToAdSize = (size: string | number[]): AdSize => {
 	if (isString(size)) return 'fluid';
@@ -87,22 +79,10 @@ export const onSlotRender = (
 		// Otherwise wait until slot is viewable to fetch line item ids from endpoint
 		if (window.guardian.config.page.dfpNonRefreshableLineItemIds) {
 			// Set refresh field based on the outcome of the slot render.
-			const sizeString = advert.size?.toString();
-			const isNotFluid = sizeString !== '0,0';
-			const isOutstream =
-				sizeString &&
-				outstreamSizes.includes(sizeString as AdSizeString);
-			const isNonRefreshableLineItem =
-				event.lineItemId &&
-				window.guardian.config.page.dfpNonRefreshableLineItemIds.includes(
-					event.lineItemId,
-				);
-
-			advert.shouldRefresh =
-				isNotFluid &&
-				!isOutstream &&
-				!config.get('page.hasPageSkin') &&
-				!isNonRefreshableLineItem;
+			advert.shouldRefresh = shouldRefresh(
+				advert,
+				window.guardian.config.page.dfpNonRefreshableLineItemIds,
+			);
 		} else {
 			// Otherwise associate the line item id with the advert
 			// so it can be used at the point the slot becomes viewable
