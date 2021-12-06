@@ -237,11 +237,12 @@ body {
 * Styles for temporary footer link to sign up page
 */
 .email-sub__link--footer {
-    margin: 5px 0;
 
     .email-sub__description {
         @include fs-textSans(3);
         border: 0;
+        margin-top: 12px;
+        margin-bottom: 8px;
     }
 
     .email-sub__link-button {
