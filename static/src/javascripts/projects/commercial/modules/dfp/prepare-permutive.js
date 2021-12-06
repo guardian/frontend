@@ -36,21 +36,18 @@ const generatePayload = (permutiveConfig = { page: {}, user: {} }) => {
 		toneIds,
 	} = page;
 
-	const safeAuthors = (author && typeof author === 'string'
-		? author.split(',')
-		: []
+	const safeAuthors = (
+		author && typeof author === 'string' ? author.split(',') : []
 	).map((str) => str.trim());
-	const safeKeywords = (keywords && typeof keywords === 'string'
-		? keywords.split(',')
-		: []
+	const safeKeywords = (
+		keywords && typeof keywords === 'string' ? keywords.split(',') : []
 	).map((str) => str.trim());
 	const safePublishedAt =
 		webPublicationDate && typeof webPublicationDate === 'number'
 			? new Date(webPublicationDate).toISOString()
 			: '';
-	const safeToneIds = (toneIds && typeof toneIds === 'string'
-		? toneIds.split(',')
-		: []
+	const safeToneIds = (
+		toneIds && typeof toneIds === 'string' ? toneIds.split(',') : []
 	).map((str) => str.trim());
 	const cleanPayload = removeEmpty({
 		content: {

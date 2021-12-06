@@ -132,27 +132,28 @@ describe('init', () => {
 		onConsentChange.mockImplementation(AusWithoutConsentMock);
 		getConsentFor.mockReturnValue(false);
 		await init();
-        expect(log).toHaveBeenCalledWith(
-            'commercial',
-            expect.stringContaining("Failed to execute redplanet"),
-            expect.stringContaining("No consent for redplanet"),
-        );
+		expect(log).toHaveBeenCalledWith(
+			'commercial',
+			expect.stringContaining('Failed to execute redplanet'),
+			expect.stringContaining('No consent for redplanet'),
+		);
 		expect(window.launchpad).not.toBeCalled();
 	});
-
 
 	it('should throw an error when on CCPA mode', async () => {
 		commercialFeatures.launchpad = true;
 		isInAuOrNz.mockReturnValue(true);
 		onConsentChange.mockImplementation(CcpaWithConsentMock);
 		getConsentFor.mockReturnValue(true);
-        await init();
-        expect(log).toHaveBeenCalledWith(
-            'commercial',
-            expect.stringContaining("Failed to execute redplanet"),
-            expect.stringContaining("Redplanet should only run in Australia on AUS mode"),
-        );
-        expect(window.launchpad).not.toBeCalled();
+		await init();
+		expect(log).toHaveBeenCalledWith(
+			'commercial',
+			expect.stringContaining('Failed to execute redplanet'),
+			expect.stringContaining(
+				'Redplanet should only run in Australia on AUS mode',
+			),
+		);
+		expect(window.launchpad).not.toBeCalled();
 	});
 
 	it('should not initialise redplanet when launchpad conditions are false', async () => {

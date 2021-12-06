@@ -287,12 +287,12 @@ class HostedGallery {
 		const imageSize = getFrame(imgRatio);
 
 		fastdom.mutate(() => {
-            if ($sizer) {
-                $sizer.style.setProperty('width', imageSize.width);
-                $sizer.style.setProperty('height', imageSize.height);
-                $sizer.style.setProperty('top', imageSize.topBottom);
-                $sizer.style.setProperty('left', imageSize.leftRight);
-            }
+			if ($sizer) {
+				$sizer.style.setProperty('width', imageSize.width);
+				$sizer.style.setProperty('height', imageSize.height);
+				$sizer.style.setProperty('top', imageSize.topBottom);
+				$sizer.style.setProperty('left', imageSize.leftRight);
+			}
 			if (imgIndex === ctaIndex) {
 				$ctaFloat.style.setProperty('bottom', ctaSize.topBottom);
 			}
