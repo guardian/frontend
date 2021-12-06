@@ -23,7 +23,7 @@ import {
 	getLastOneOffContributionTimestamp,
 	getLastOneOffContributionDate,
 	isRecurringContributor,
-	shouldHideSupƒportMessaging,
+	shouldHideSupportMessaging,
 } from './user-features';
 
 // See https://github.com/guardian/support-dotcom-components/blob/main/module-versions.md
