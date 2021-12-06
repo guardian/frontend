@@ -43,6 +43,24 @@ describe('nonRefreshableLineItems', () => {
 		expect(ids).toBeUndefined();
 	});
 
+	it('returns undefined when the API returns string array', async () => {
+		const response = {
+			ok: true,
+			json: () => Promise.resolve(['1', '2', '3']),
+		};
+
+		Object.defineProperty(window, 'fetch', {
+			value: jest.fn().mockReturnValue(Promise.resolve(response)),
+			writable: true,
+		});
+
+		const ids = await fetchNonRefreshableLineItemIds();
+
+		expect(reportErrorMock).not.toHaveBeenCalled();
+
+		expect(ids).toBeUndefined();
+	});
+
 	it('returns undefined and reports error when the API call fails', async () => {
 		const response = {
 			ok: false,

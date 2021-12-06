@@ -1,3 +1,4 @@
+//import { isUndefined } from '@guardian/libs';
 import { memoize } from 'lodash-es';
 import reportError from 'lib/report-error';
 
@@ -10,7 +11,14 @@ export const fetchNonRefreshableLineItemIds = async (): Promise<
 	if (response.ok) {
 		const json: unknown = await response.json();
 		if (Array.isArray(json)) {
-			return json.map((x) => Number(x));
+			// Return undefined if any of the elements in the array are not numbers
+			return json.reduce<number[] | undefined>(
+				(accum, lineItemId) =>
+					accum !== undefined && typeof lineItemId === 'number'
+						? [...accum, lineItemId]
+						: undefined,
+				[],
+			);
 		}
 	} else {
 		// Report an error to Sentry if we don't get an ok response
