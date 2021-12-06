@@ -9,9 +9,8 @@ import {
     getUserOrSignIn,
     shouldAutoSigninInUser,
 } from 'common/modules/identity/api';
-import { getCookie as getCookie_ } from 'lib/cookies';
 import { fetchJson as fetchJson_ } from 'lib/fetch-json';
-import { storage } from '@guardian/libs';
+import { removeCookie, setCookie, storage } from '@guardian/libs';
 
 const defaultConfig = {
 	page: {
@@ -29,9 +28,6 @@ jest.mock('lib/config', () => {
 	});
 });
 jest.mock('lib/fetch-json', () => ({ fetchJson: jest.fn() }));
-jest.mock('lib/cookies', () => ({
-    getCookie: jest.fn(),
-}));
 jest.mock('common/modules/async-call-merger', () => ({
     mergeCalls(callback) {
         callback.reset = jest.fn();
@@ -40,7 +36,6 @@ jest.mock('common/modules/async-call-merger', () => ({
     },
 }));
 
-const getCookieStub = getCookie_;
 const fetchJson = fetchJson_;
 
 const originalLocation = window.location;
@@ -48,11 +43,15 @@ const originalLocation = window.location;
 describe('Identity API', () => {
 
     beforeEach(() => {
-        getCookieStub.mockImplementation(
-            () =>
-                'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
-                '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
-        );
+        setCookie({
+			name: 'GU_U',
+			value:
+				'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
+				'.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY',
+		});
+		removeCookie({
+			name: 'GU_SO',
+		});
         delete window.location;
         window.location = Object.defineProperties(
             {},
@@ -111,7 +110,7 @@ describe('Identity API', () => {
     });
 
     it('should not call api if the cookie does not exist', done => {
-        getCookieStub.mockImplementationOnce(() => null);
+        removeCookie({ name: 'GU_U' });
 
         const apiCallback = user => {
             expect(user).toBe(null);
@@ -128,7 +127,7 @@ describe('Identity API', () => {
         const returnUrl = 'https://theguardian.com/uk';
         window.location.assign(returnUrl);
 
-        getCookieStub.mockImplementationOnce(() => null);
+        removeCookie({ name: 'GU_U' });
         getUserOrSignIn('email_sign_in_banner');
 
         expect(window.location.href).toBe(
@@ -151,7 +150,7 @@ describe('Identity API', () => {
         const origHref = window.location.href;
         const returnUrl = 'http://www.theguardian.com/foo';
 
-        getCookieStub.mockImplementationOnce(() => null);
+        removeCookie({ name: 'GU_U' });
         getUserOrSignIn('email_sign_in_banner', returnUrl);
 
         expect(window.location.href).toBe(
@@ -164,9 +163,8 @@ describe('Identity API', () => {
     });
 
     it('should attempt to autosigin an user who is not currently signed in and has not previously signed out', () => {
-        getCookieStub
-            .mockImplementationOnce(() => null) // GU_U
-            .mockImplementationOnce(() => null); // GU_SO
+        removeCookie({ name: 'GU_U' });
+		removeCookie({ name: 'GU_SO' });
             storage.local.set('gu.id.nextFbCheck', 'blah|blah');
 
         expect(shouldAutoSigninInUser()).toBe(false);
@@ -175,9 +173,8 @@ describe('Identity API', () => {
     });
 
     it('should not attempt to autosigin a user who is not currently signed in, has not previously signed out, before the facebook check overlaps', () => {
-        getCookieStub
-            .mockImplementationOnce(() => null) // GU_U
-            .mockImplementationOnce(() => null); // GU_SO
+        removeCookie({ name: 'GU_U' });
+		removeCookie({ name: 'GU_SO' });
 
         expect(shouldAutoSigninInUser()).toBe(true);
     });
@@ -194,9 +191,8 @@ describe('Identity API', () => {
 
         const timeStampInSeconds = theDayBeforeYesterday.getTime() / 1000;
 
-        getCookieStub
-            .mockImplementationOnce(() => null) // GU_U
-            .mockImplementationOnce(() => timeStampInSeconds.toString()); // GU_SO
+        removeCookie({ name: 'GU_U' });
+		setCookie({ name: 'GU_SO', value: timeStampInSeconds.toString() });
 
         expect(shouldAutoSigninInUser()).toBe(true);
     });
@@ -208,9 +204,8 @@ describe('Identity API', () => {
 
         const timeStampInSeconds = theDayBeforeYesterday.getTime() / 1000;
 
-        getCookieStub
-            .mockImplementationOnce(() => null) // GU_U
-            .mockImplementationOnce(() => timeStampInSeconds.toString()); // GU_SO
+        removeCookie({ name: 'GU_U' });
+		setCookie({ name: 'GU_SO', value: timeStampInSeconds.toString() });
             storage.local.set('gu.id.nextFbCheck', 'blah|blah');
 
         expect(shouldAutoSigninInUser()).toBe(false);
@@ -225,9 +220,8 @@ describe('Identity API', () => {
 
         const timeStampInSeconds = fourHoursAgo.getTime() / 1000;
 
-        getCookieStub
-            .mockImplementationOnce(() => null) // GU_U
-            .mockImplementationOnce(() => timeStampInSeconds.toString()); // GU_SO
+        removeCookie({ name: 'GU_U' });
+		setCookie({ name: 'GU_SO', value: timeStampInSeconds.toString() });
 
         expect(shouldAutoSigninInUser()).toBe(false);
     });

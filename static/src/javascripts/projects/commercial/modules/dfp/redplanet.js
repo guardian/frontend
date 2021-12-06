@@ -46,17 +46,21 @@ const setupRedplanet = async () => {
 		}
 
 		if (!state.aus) {
-			rejectRedPlanetLoaded('Redplanet should only run in Australia on AUS mode');
+			rejectRedPlanetLoaded(
+				'Redplanet should only run in Australia on AUS mode',
+			);
 			return;
 		}
 
-        if (!initialised) {
-            initialised = true;
-            import(/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js').then(() => {
-                initialise();
-                resolveRedPlanetLoaded();
-            });
-        }
+		if (!initialised) {
+			initialised = true;
+			import(
+				/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js'
+			).then(() => {
+				initialise();
+				resolveRedPlanetLoaded();
+			});
+		}
 	});
 
 	return promise;
