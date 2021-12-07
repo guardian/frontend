@@ -267,7 +267,7 @@ GET            /commercial/anx/anxresize.js                                     
 GET            /commercial/cmp/vendorlist.json                                            commercial.controllers.CmpDataController.renderVendorlist()
 GET            /commercial/cmp/shortvendorlist.json                                      commercial.controllers.CmpDataController.renderShortVendorlist()
 GET            /commercial/amp-iframe.html                                                                                       commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
-GET            /commercial/dfp-non-refreshable-line-items.json                                                                   commercial.controllers.DfpNonRefreshableLineItemsController.getIds
+GET            /commercial/non-refreshable-line-items.json                                                                       commercial.controllers.nonRefreshableLineItemsController.getIds
 
 
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()

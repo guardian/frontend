@@ -74,14 +74,14 @@ export const onSlotRender = (
 			dfpEnv.creativeIDs.push(String(event.creativeId));
 		}
 
-		// Check if the dfp non-refreshable line items are attached to the page config
+		// Check if the non-refreshable line items are attached to the page config
 		// If they are then use these values to determine slot refresh at this point
 		// Otherwise wait until slot is viewable to fetch line item ids from endpoint
-		if (window.guardian.config.page.dfpNonRefreshableLineItemIds) {
+		if (window.guardian.config.page.nonRefreshableLineItemIds) {
 			// Set refresh field based on the outcome of the slot render.
 			advert.shouldRefresh = shouldRefresh(
 				advert,
-				window.guardian.config.page.dfpNonRefreshableLineItemIds,
+				window.guardian.config.page.nonRefreshableLineItemIds,
 				event.lineItemId ?? undefined,
 			);
 		} else {

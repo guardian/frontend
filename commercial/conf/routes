@@ -58,4 +58,4 @@ GET         /commercial/ias-passback/:size                                  comm
 GET         /commercial/amp-iframe.html                                     commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
 
 # DFP Non refreshable line items
-GET         /commercial/dfp-non-refreshable-line-items.json                 commercial.controllers.DfpNonRefreshableLineItemsController.getIds
+GET         /commercial/non-refreshable-line-items.json                     commercial.controllers.nonRefreshableLineItemsController.getIds

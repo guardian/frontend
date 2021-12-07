@@ -45,7 +45,7 @@ object JavaScriptPage {
     // Only attach the non-refreshable line items to the commercial config
     // if not participating in the `FetchNonRefreshableLineItems` experiment
     val nonRefreshableConfig = if (!ActiveExperiments.isParticipating(FetchNonRefreshableLineItems)(request)) {
-      Map("dfpNonRefreshableLineItemIds" -> nonRefreshableLineItemIds)
+      Map("nonRefreshableLineItemIds" -> nonRefreshableLineItemIds)
     } else {
       Map()
     }

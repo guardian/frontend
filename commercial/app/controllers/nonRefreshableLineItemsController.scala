@@ -8,14 +8,14 @@ import play.api.mvc._
 
 import scala.concurrent.duration._
 
-class DfpNonRefreshableLineItemsController(val controllerComponents: ControllerComponents)
+class nonRefreshableLineItemsController(val controllerComponents: ControllerComponents)
     extends BaseController
     with implicits.Requests {
 
   def getIds: Action[AnyContent] =
     Action { implicit request =>
-      val dfpNonRefreshableLineItems: Seq[Long] = DfpAgent.nonRefreshableLineItemIds()
-      val json = Json.toJson(dfpNonRefreshableLineItems)
+      val nonRefreshableLineItems: Seq[Long] = DfpAgent.nonRefreshableLineItemIds()
+      val json = Json.toJson(nonRefreshableLineItems)
       Cached(15.minutes) {
         JsonComponent(json)
       }

@@ -6,7 +6,7 @@ export const fetchNonRefreshableLineItemIds = async (): Promise<
 	number[] | undefined
 > => {
 	const response = await window.fetch(
-		'/commercial/dfp-non-refreshable-line-items.json',
+		'/commercial/non-refreshable-line-items.json',
 	);
 	if (response.ok) {
 		const json: unknown = await response.json();

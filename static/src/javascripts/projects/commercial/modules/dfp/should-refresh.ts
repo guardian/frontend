@@ -18,7 +18,7 @@ const outstreamSizes = [
  *  - Outstream ads should not refresh
  *  - Pageskins should not refresh
  *  - Ads that have line items marked as non-refreshable should not be
- * 	  refreshed. This information is retrieved via the DFP non refreshable
+ * 	  refreshed. This information is retrieved via the non refreshable
  * 	  line item API endpoint
  *
  * @param advert The candidate advert to check

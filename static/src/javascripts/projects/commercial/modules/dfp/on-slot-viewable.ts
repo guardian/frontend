@@ -16,7 +16,7 @@ const setSlotAdRefresh = (
 
 	// Asynchronously retrieve the non-refreshable line item ids
 	// Only do this if they haven't been attached to the page config
-	if (!window.guardian.config.page.dfpNonRefreshableLineItemIds) {
+	if (!window.guardian.config.page.nonRefreshableLineItemIds) {
 		// Call the memoized function so we only retrieve the value from the API once
 		void memoizedFetchNonRefreshableLineItemIds().then(
 			(nonRefreshableLineItemIds) => {
