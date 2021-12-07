@@ -25,7 +25,7 @@ describe('nonRefreshableLineItems', () => {
 		expect(ids).toEqual([1, 2, 3]);
 	});
 
-	it('returns undefined when the API returns a non-array', async () => {
+	it('throws error when the API returns a non-array', async () => {
 		const response = {
 			ok: true,
 			json: () => Promise.resolve({ foo: 'bar' }),
@@ -36,11 +36,11 @@ describe('nonRefreshableLineItems', () => {
 			writable: true,
 		});
 
-		const ids = await fetchNonRefreshableLineItemIds();
+		await expect(fetchNonRefreshableLineItemIds()).rejects.toThrow(
+			'Failed to parse non-refreshable line items as an array',
+		);
 
 		expect(reportErrorMock).not.toHaveBeenCalled();
-
-		expect(ids).toBeUndefined();
 	});
 
 	it('returns undefined when the API returns string array', async () => {
@@ -54,11 +54,11 @@ describe('nonRefreshableLineItems', () => {
 			writable: true,
 		});
 
-		const ids = await fetchNonRefreshableLineItemIds();
+		await expect(fetchNonRefreshableLineItemIds()).rejects.toThrow(
+			'Failed to parse element in non-refreshable line item array as number',
+		);
 
 		expect(reportErrorMock).not.toHaveBeenCalled();
-
-		expect(ids).toBeUndefined();
 	});
 
 	it('returns undefined and reports error when the API call fails', async () => {
@@ -72,7 +72,9 @@ describe('nonRefreshableLineItems', () => {
 			writable: true,
 		});
 
-		const ids = await fetchNonRefreshableLineItemIds();
+		await expect(fetchNonRefreshableLineItemIds()).rejects.toThrow(
+			'Failed to fetch non-refreshable line items',
+		);
 
 		expect(reportErrorMock).toHaveBeenCalledWith(
 			new Error('Failed to fetch non-refreshable line items'),
@@ -82,8 +84,6 @@ describe('nonRefreshableLineItems', () => {
 			},
 			false,
 		);
-
-		expect(ids).toBeUndefined();
 	});
 });
 

@@ -1,3 +1,4 @@
+import { log } from '@guardian/libs';
 import { getUrlVars } from '../../../../lib/url';
 import { getAdvertById } from './get-advert-by-id';
 import { enableLazyLoad } from './lazy-load';
@@ -22,8 +23,8 @@ const setSlotAdRefresh = (
 		!page.nonRefreshableLineItemIds
 	) {
 		// Call the memoized function so we only retrieve the value from the API once
-		void memoizedFetchNonRefreshableLineItemIds().then(
-			(nonRefreshableLineItemIds) => {
+		void memoizedFetchNonRefreshableLineItemIds()
+			.then((nonRefreshableLineItemIds) => {
 				// Determine whether ad should refresh
 				// This value will then be checked when the timer has elapsed and
 				// we want to know whether to refresh
@@ -31,8 +32,14 @@ const setSlotAdRefresh = (
 					advert,
 					nonRefreshableLineItemIds,
 				);
-			},
-		);
+			})
+			.catch((error) => {
+				log(
+					'commercial',
+					'⚠️ Error fetching non-refreshable line items',
+					error,
+				);
+			});
 	}
 
 	// Event listener that will load an advert once a document becomes visible
