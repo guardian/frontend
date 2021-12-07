@@ -3,7 +3,7 @@
 import bean from 'bean';
 import config from 'lib/config';
 import { cleanUp, addSessionCookie } from 'lib/cookies';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
 import { storage } from '@guardian/libs';

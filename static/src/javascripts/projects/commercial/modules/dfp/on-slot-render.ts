@@ -2,7 +2,7 @@ import { adSizes } from '@guardian/commercial-core';
 import type { AdSizeString } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
 import config from '../../../../lib/config';
-import mediator from '../../../../lib/mediator';
+import { mediator } from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
 import { dfpEnv } from './dfp-env';
 import { emptyAdvert } from './empty-advert';

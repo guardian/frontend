@@ -4,7 +4,7 @@
  */
 import fastdom from '../../../../lib/fastdom-promise';
 import { Component } from '../component';
-import mediator from '../../../../lib/mediator';
+import { mediator } from '../../../../lib/mediator';
 import { once } from 'lodash-es';
 
 const promise = new Promise((resolve, reject) => {

@@ -15,7 +15,7 @@
  ],
  "../lib/detect.js": [
   "../lib/config.js",
-  "../lib/mediator.js"
+  "../lib/mediator.ts"
  ],
  "../lib/events.ts": [],
  "../lib/fastdom-promise.js": [
@@ -32,8 +32,8 @@
   "../lib/report-error.js"
  ],
  "../lib/launchpad.js": [],
- "../lib/mediator.js": [
-  "../../../../node_modules/wolfy87-eventemitter/EventEmitter.js"
+ "../lib/mediator.ts": [
+  "../../../../node_modules/wolfy87-eventemitter/EventEmitter.d.ts"
  ],
  "../lib/noop.ts": [],
  "../lib/partition.ts": [],
@@ -84,14 +84,14 @@
   "../lib/$$.ts",
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.js"
+  "../lib/mediator.ts"
  ],
  "../projects/commercial/modules/article-body-adverts.js": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js",
   "../lib/config.js",
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.js",
+  "../lib/mediator.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.ts",
@@ -114,7 +114,7 @@
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.js",
+  "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.ts",
@@ -132,7 +132,7 @@
  "../projects/commercial/modules/creatives/page-skin.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
   "../lib/detect.js",
-  "../lib/mediator.js",
+  "../lib/mediator.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/Advert.ts": [
@@ -219,7 +219,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/mediator.js",
+  "../lib/mediator.ts",
   "../lib/report-error.js",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/empty-advert.ts",
@@ -307,7 +307,7 @@
  ],
  "../projects/commercial/modules/dfp/refresh-on-resize.js": [
   "../lib/detect.js",
-  "../lib/mediator.js",
+  "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/load-advert.ts"
@@ -400,7 +400,7 @@
  "../projects/commercial/modules/liveblog-adverts.js": [
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.js",
+  "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slots.ts",
   "../projects/common/modules/article/space-filler.js",
@@ -472,7 +472,7 @@
  "../projects/commercial/modules/sticky-mpu.js": [
   "../lib/config.js",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.js",
+  "../lib/mediator.ts",
   "../projects/commercial/modules/messenger.js",
   "../projects/common/modules/ui/sticky.js"
  ],
@@ -506,7 +506,7 @@
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/mediator.js"
+  "../lib/mediator.ts"
  ],
  "../projects/common/modules/analytics/mvt-cookie.js": [
   "../lib/cookies.js"
@@ -636,7 +636,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fetch-json.ts",
-  "../lib/mediator.js",
+  "../lib/mediator.ts",
   "../lib/url.ts",
   "../projects/common/modules/async-call-merger.ts",
   "../projects/common/modules/identity/auth-component-event-params.js"
@@ -648,11 +648,11 @@
   "../../../../node_modules/bean/bean.js",
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.js"
+  "../lib/mediator.ts"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
-  "../lib/mediator.js"
+  "../lib/mediator.ts"
  ],
  "../projects/common/modules/user-prefs.js": [
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js"

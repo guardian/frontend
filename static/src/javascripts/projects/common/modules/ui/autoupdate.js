@@ -6,7 +6,7 @@ import $ from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
 import {fetchJson} from 'lib/fetch-json';
 import {initPageVisibility, isBreakpoint, pageVisible} from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import {enhanceTweets} from 'common/modules/article/twitter';
 import {Sticky} from 'common/modules/ui/sticky';
 import {scrollToElement} from 'lib/scroller';

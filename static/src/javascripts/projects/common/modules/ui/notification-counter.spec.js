@@ -1,7 +1,6 @@
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { initNotificationCounter } from './notification-counter';
 
-jest.mock('lib/mediator');
 
 describe('notification-counter', () => {
     const ORIGINAL_PAGETITLE = document.title;

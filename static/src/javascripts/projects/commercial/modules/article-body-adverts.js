@@ -1,6 +1,6 @@
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
-import mediator from '../../../lib/mediator';
+import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { adSizes } from '@guardian/commercial-core';
 import { addSlot } from './dfp/add-slot';

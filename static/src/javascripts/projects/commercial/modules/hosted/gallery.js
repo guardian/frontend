@@ -4,7 +4,7 @@ import config from '../../../../lib/config';
 import { getBreakpoint, hasTouchScreen } from '../../../../lib/detect';
 import { FiniteStateMachine } from '../../../../lib/fsm';
 import { loadCssPromise } from '../../../../lib/load-css-promise';
-import mediator from '../../../../lib/mediator';
+import { mediator } from '../../../../lib/mediator';
 import { pushUrl } from '../../../../lib/url';
 import interactionTracking from '../../../common/modules/analytics/interaction-tracking';
 

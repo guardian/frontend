@@ -1,5 +1,5 @@
 import { hasCrossedBreakpoint, breakpoints } from '../../../../lib/detect';
-import mediator from '../../../../lib/mediator';
+import { mediator } from '../../../../lib/mediator';
 import { dfpEnv } from './dfp-env';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { refreshAdvert } from './load-advert';

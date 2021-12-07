@@ -1,4 +1,4 @@
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 
 jest.mock(

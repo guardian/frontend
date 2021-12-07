@@ -1,5 +1,5 @@
 import config from 'lib/config';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { fetchJson } from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import { begin, error, end } from 'common/modules/analytics/register';

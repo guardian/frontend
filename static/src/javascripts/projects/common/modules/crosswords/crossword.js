@@ -1,7 +1,7 @@
 import React, { Component, findDOMNode } from 'preact/compat';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { isIOS, isBreakpoint } from 'lib/detect';
 import { scrollTo } from 'lib/scroller';
 import { AnagramHelper } from 'common/modules/crosswords/anagram-helper/main';

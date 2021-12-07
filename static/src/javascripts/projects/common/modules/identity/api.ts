@@ -2,7 +2,7 @@ import { getCookie, storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import config from '../../../../lib/config';
 import { fetchJson } from '../../../../lib/fetch-json';
-import mediator from '../../../../lib/mediator';
+import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
 import { createAuthenticationComponentEventParams } from './auth-component-event-params';
 

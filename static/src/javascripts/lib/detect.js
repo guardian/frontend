@@ -1,5 +1,5 @@
 import config from './config';
-import mediator from './mediator';
+import { mediator } from './mediator';
 
 // These should match those defined in:
 //   stylesheets/_vars.scss
