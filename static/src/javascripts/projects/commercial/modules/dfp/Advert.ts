@@ -80,6 +80,7 @@ class Advert {
 		lazyWaitComplete: null,
 	};
 	hasPrebidSize = false;
+	lineItemId: number | null = null;
 
 	constructor(adSlotNode: HTMLElement) {
 		const sizes = getAdBreakpointSizes(adSlotNode);
