@@ -1,8 +1,6 @@
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor } from '@guardian/consent-management-platform';
 import { loadScript } from '@guardian/libs';
+import { getInitialConsentState } from 'commercial/initialConsentState';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
@@ -93,7 +91,7 @@ export const init = (): Promise<void> => {
 			},
 		);
 
-		onConsentChange((state) => {
+		return getInitialConsentState().then((state) => {
 			let canRun = true;
 			if (state.ccpa) {
 				const doNotSell = state.ccpa.doNotSell;
@@ -143,7 +141,6 @@ export const init = (): Promise<void> => {
 				);
 			}
 		});
-		return Promise.resolve();
 	};
 
 	if (commercialFeatures.dfpAdvertising) {
