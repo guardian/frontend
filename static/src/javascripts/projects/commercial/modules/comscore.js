@@ -1,8 +1,6 @@
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor } from '@guardian/consent-management-platform';
 import { loadScript } from '@guardian/libs';
+import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 
@@ -44,9 +42,9 @@ const initOnConsent = (state) => {
 
 export const init = () => {
 	if (commercialFeatures.comscore) {
-		onConsentChange((state) => {
+		return getInitialConsentState.then((state) => {
 			/* Rule is that comscore can run:
-                - in Tcfv2: Based on consent for comsocre
+                - in Tcfv2: Based on consent for comscore
                 - in Australia: Always
                 - in CCPA: If the user hasn't chosen Do Not Sell
             */
