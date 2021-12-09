@@ -103,8 +103,9 @@ const init = () => {
 	if (!commercialFeatures.thirdPartyTags) {
 		return Promise.resolve(false);
 	}
+    loadOther();
 
-	return loadOther();
+	return Promise.resolve(true);
 };
 
 export { init };
