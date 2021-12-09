@@ -2,6 +2,7 @@ import {
 	getConsentFor,
 	onConsentChange,
 } from '@guardian/consent-management-platform';
+import { getInitialConsentState } from 'commercial/initialConsentState';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect-google-proxy';
@@ -42,13 +43,15 @@ const setupA9 = () => {
 const setupA9Once = once(setupA9);
 
 export const init = () => {
-	onConsentChange((state) => {
+	return getInitialConsentState((state) => {
 		if (getConsentFor('a9', state)) {
-			setupA9Once();
+			return setupA9Once();
+		} else {
+			throw Error('No consent for a9');
 		}
+	}).catch((e) => {
+		log('commercial', '⚠️ Failed to execute a9', e);
 	});
-
-	return Promise.resolve();
 };
 
 export const _ = {
