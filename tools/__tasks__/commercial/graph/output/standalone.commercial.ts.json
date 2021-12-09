@@ -60,6 +60,10 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
  ],
+ "../projects/commercial/initialConsentState.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
+ ],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/$$.ts",
@@ -123,6 +127,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
   "../lib/config.js",
+  "../projects/commercial/initialConsentState.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
@@ -238,10 +243,12 @@
  ],
  "../projects/commercial/modules/dfp/prepare-a9.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
+  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/a9-apstag.js",
   "../lib/config.js",
   "../lib/detect-google-proxy.ts",
+  "../projects/commercial/initialConsentState.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/a9/a9.js",
   "../projects/commercial/modules/header-bidding/utils.ts",
@@ -252,6 +259,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/raven.js",
+  "../projects/commercial/initialConsentState.ts",
   "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
   "../projects/commercial/modules/dfp/on-slot-load.ts",
@@ -288,6 +296,7 @@
   "../../../../node_modules/prebid.js/build/dist/prebid.js",
   "../lib/config.d.ts",
   "../lib/detect-google-proxy.ts",
+  "../projects/commercial/initialConsentState.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
@@ -402,7 +411,9 @@
  "../projects/commercial/modules/ipsos-mori.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../lib/config.js"
+  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
+  "../lib/config.js",
+  "../projects/commercial/initialConsentState.ts"
  ],
  "../projects/commercial/modules/liveblog-adverts.js": [
   "../lib/detect.js",
@@ -497,6 +508,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
   "../lib/config.js",
   "../lib/fastdom-promise.js",
+  "../projects/commercial/initialConsentState.ts",
   "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
   "../projects/commercial/modules/third-party-tags/imr-worldwide.js",
   "../projects/common/modules/commercial/commercial-features.ts"
