@@ -10,6 +10,7 @@ import { commercialFeatures } from '../../../common/modules/commercial/commercia
 import a9 from '../header-bidding/a9/a9';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
+import { log } from '@guardian/libs';
 
 const setupA9 = () => {
 	// TODO: Understand why we want to skip A9 for Google Proxy
