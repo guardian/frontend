@@ -12,6 +12,7 @@ import {
 	getConsentFor,
 	onConsentChange,
 } from '@guardian/consent-management-platform';
+import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -67,7 +68,7 @@ const insertScripts = (
 	performanceServices, // performanceServices always run
 ) => {
 	addScripts(performanceServices);
-	onConsentChange((state) => {
+	return getInitialConsentState().then((state) => {
 		const consentedAdvertisingServices = advertisingServices.filter(
 			(script) => getConsentFor(script.name, state),
 		);
@@ -95,7 +96,7 @@ const loadOther = () => {
 		imrWorldwideLegacy, // only in AU & NZ
 	].filter((_) => _.shouldRun);
 
-	insertScripts(advertisingServices, performanceServices);
+	return insertScripts(advertisingServices, performanceServices);
 };
 
 const init = () => {
@@ -103,9 +104,7 @@ const init = () => {
 		return Promise.resolve(false);
 	}
 
-	loadOther();
-
-	return Promise.resolve(true);
+	return loadOther();
 };
 
 export { init };
