@@ -3,7 +3,9 @@ import {
 	onConsentChange,
 } from '@guardian/consent-management-platform';
 import { getLocale, loadScript } from '@guardian/libs';
+import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
+import { log } from '@guardian/libs';
 
 const loadIpsosScript = () => {
 	window.dm = window.dm || { AjaxData: [] };
@@ -25,15 +27,22 @@ const loadIpsosScript = () => {
 };
 
 export const init = () => {
-	getLocale().then((locale) => {
-		if (locale === 'GB') {
-			onConsentChange((state) => {
-				if (getConsentFor('ipsos', state)) {
-					return loadIpsosScript();
-				}
-			});
-		}
-	});
-
-	return Promise.resolve();
+	return getLocale()
+		.then((locale) => {
+			if (locale === 'GB') {
+				return getInitialConsentState();
+			} else {
+				throw Error('Skipping ipsos outside of GB');
+			}
+		})
+		.then((state) => {
+			if (getConsentFor('ipsos', state)) {
+				return loadIpsosScript();
+			} else {
+				throw Error('No consent for ipsos');
+			}
+		})
+		.catch((e) => {
+			log('commercial', '⚠️ Failed to execute ipsos', e);
+		});
 };
