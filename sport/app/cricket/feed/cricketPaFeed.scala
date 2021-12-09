@@ -62,7 +62,6 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
   def getMatchIds(team: CricketTeam, fromDate: LocalDate)(implicit
       executionContext: ExecutionContext,
   ): Future[Seq[String]] = {
-    println(paEndpoint)
     Future
       .sequence(
         Seq(
