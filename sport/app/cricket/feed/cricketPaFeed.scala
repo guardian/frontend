@@ -21,7 +21,7 @@ object PaFeed {
 
 class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends GuLogging {
 
-  private val paEndpoint = "https://cricket.api.press.net/v1"
+  private val paEndpoint = "https://cricket-api.guardianapis.com/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept", "application/xml")
   private implicit val throttler = new CricketThrottler(actorSystem, materializer)
@@ -62,6 +62,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
   def getMatchIds(team: CricketTeam, fromDate: LocalDate)(implicit
       executionContext: ExecutionContext,
   ): Future[Seq[String]] = {
+    println(paEndpoint)
     Future
       .sequence(
         Seq(

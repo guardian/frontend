@@ -19,7 +19,7 @@ object AdminConfiguration {
       .getOrElse(throw new RuntimeException("unable to load pa cricket api key"))
 
     lazy val footballHost = PaClientConfig.baseUrl
-    lazy val cricketHost = "http://cricket.api.press.net/v1"
+    lazy val cricketHost = "http://cricket-api.guardianapis.com/v1"
     lazy val apiExplorer = "http://developer.press.net/io-docs"
   }
 
