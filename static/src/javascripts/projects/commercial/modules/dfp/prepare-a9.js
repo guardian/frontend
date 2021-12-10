@@ -41,15 +41,17 @@ const setupA9 = () => {
 const setupA9Once = once(setupA9);
 
 export const init = () => {
-	getInitialConsentState((state) => {
-		if (getConsentFor('a9', state)) {
-			return setupA9Once();
-		} else {
-			throw Error('No consent for a9');
-		}
-	}).catch((e) => {
-		log('commercial', '⚠️ Failed to execute a9', e);
-	});
+	getInitialConsentState
+		.then((state) => {
+			if (getConsentFor('a9', state)) {
+				return setupA9Once();
+			} else {
+				throw Error('No consent for a9');
+			}
+		})
+		.catch((e) => {
+			log('commercial', '⚠️ Failed to execute a9', e);
+		});
 
 	return Promise.resolve();
 };
