@@ -44,10 +44,10 @@ const setupPrebid = async (): Promise<void> => {
 			if (state.aus) framework = 'aus';
 
 			if (!framework) {
-				throw new Error('Unknown framework');
+				return Promise.reject('Unknown framework');
 			}
 			if (!getConsentFor('prebid', state)) {
-				throw new Error('No consent for prebid');
+				return Promise.reject('No consent for prebid');
 			}
 			return loadPrebid(framework);
 		})
