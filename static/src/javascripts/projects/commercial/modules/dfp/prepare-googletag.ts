@@ -91,7 +91,7 @@ export const init = (): Promise<void> => {
 			},
 		);
 
-		return getInitialConsentState().then((state) => {
+		void getInitialConsentState().then((state) => {
 			let canRun = true;
 			if (state.ccpa) {
 				const doNotSell = state.ccpa.doNotSell;
@@ -141,6 +141,7 @@ export const init = (): Promise<void> => {
 				);
 			}
 		});
+		return Promise.resolve();
 	};
 
 	if (commercialFeatures.dfpAdvertising) {

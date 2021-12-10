@@ -27,7 +27,7 @@ const loadIpsosScript = () => {
 };
 
 export const init = () => {
-	return getLocale()
+	getLocale()
 		.then((locale) => {
 			if (locale === 'GB') {
 				return getInitialConsentState();
@@ -45,4 +45,5 @@ export const init = () => {
 		.catch((e) => {
 			log('commercial', '⚠️ Failed to execute ipsos', e);
 		});
+	return Promise.resolve();
 };

@@ -68,7 +68,7 @@ const insertScripts = (
 	performanceServices, // performanceServices always run
 ) => {
 	addScripts(performanceServices);
-	return getInitialConsentState().then((state) => {
+	getInitialConsentState().then((state) => {
 		const consentedAdvertisingServices = advertisingServices.filter(
 			(script) => getConsentFor(script.name, state),
 		);
@@ -96,7 +96,7 @@ const loadOther = () => {
 		imrWorldwideLegacy, // only in AU & NZ
 	].filter((_) => _.shouldRun);
 
-	return insertScripts(advertisingServices, performanceServices);
+	insertScripts(advertisingServices, performanceServices);
 };
 
 const init = () => {

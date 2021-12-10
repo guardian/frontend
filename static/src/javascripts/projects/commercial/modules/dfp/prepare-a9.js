@@ -1,7 +1,4 @@
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor } from '@guardian/consent-management-platform';
 import { getInitialConsentState } from 'commercial/initialConsentState';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
@@ -44,7 +41,7 @@ const setupA9 = () => {
 const setupA9Once = once(setupA9);
 
 export const init = () => {
-	return getInitialConsentState((state) => {
+	getInitialConsentState((state) => {
 		if (getConsentFor('a9', state)) {
 			return setupA9Once();
 		} else {
@@ -53,6 +50,8 @@ export const init = () => {
 	}).catch((e) => {
 		log('commercial', '⚠️ Failed to execute a9', e);
 	});
+
+	return Promise.resolve();
 };
 
 export const _ = {
