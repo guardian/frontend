@@ -2,8 +2,9 @@ import { onConsentChange } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 
 /**
- * return a promise containing the first consent state provided by the user
- * as soon as it becomes available.
+ * Return a promise containing the first consent state provided by the user
+ * as soon as it becomes available. This will only only resolve once whereas
+ * callbacks passed to onConsentChange are executed each time consent state changes.
  * NOTE: depending on where this function is eventually used, it might be more appropriate
  * for it to be defined in the consent-management-platform
  * @returns Promise
