@@ -136,7 +136,7 @@ describe('third party tags', () => {
 			});
 	});
 
-	describe('await insertScripts', () => {
+	describe('insertScripts', () => {
 		const fakeThirdPartyAdvertisingTag = {
 			shouldRun: true,
 			url: '//fakeThirdPartyAdvertisingTag.js',
