@@ -312,6 +312,7 @@
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
   "../lib/config.js",
   "../lib/launchpad.js",
+  "../projects/commercial/initialConsentState.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
