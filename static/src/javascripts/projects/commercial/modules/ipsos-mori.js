@@ -26,7 +26,8 @@ const loadIpsosScript = () => {
 	});
 };
 
-export const init = () => {
+// TODO wrap in `lodash-es.once`
+export const init = () =>
 	getLocale()
 		.then((locale) => {
 			if (locale === 'GB') {
@@ -45,5 +46,3 @@ export const init = () => {
 		.catch((e) => {
 			log('commercial', '⚠️ Failed to execute ipsos', e);
 		});
-	return Promise.resolve();
-};
