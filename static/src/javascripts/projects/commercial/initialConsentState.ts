@@ -22,14 +22,10 @@ export const getInitialConsentState = (): Promise<ConsentState> => {
 			// For tcfv2 only, the first onConsentChange is fired before the user has
 			// interacted with the consent banner. We want to ignore this first consent state.
 			if (state.tcfv2.eventStatus !== 'cmpuishown')
-				resolveInitialState({ tcfv2: state.tcfv2 });
+				resolveInitialState(state);
 			else return;
-		}
-		if (state.ccpa) {
-			resolveInitialState({ ccpa: state.ccpa });
-		}
-		if (state.aus) {
-			resolveInitialState({ aus: state.aus });
+		} else if (state.ccpa || state.aus) {
+			resolveInitialState(state);
 		}
 
 		rejectInitialState('Unknown framework');
