@@ -6,6 +6,8 @@ import {
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { init, _ } from './comscore';
 
+const { setupComscore } = _;
+
 jest.mock('@guardian/consent-management-platform', () => ({
 	onConsentChange: jest.fn(),
 	getConsentFor: jest.fn(),
@@ -58,27 +60,30 @@ const AusWithConsentMock = (callback) =>
 		},
 	});
 
-jest.mock('@guardian/libs', () => ({
-	loadScript: jest.fn(() => Promise.resolve()),
-}));
-
+jest.mock('@guardian/libs', () => {
+	return {
+		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
+		...jest.requireActual('@guardian/libs'),
+		loadScript: jest.fn(() => Promise.resolve()),
+	};
+});
 jest.mock('../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {
 		comscore: true,
 	},
 }));
 
-describe('comscore init', () => {
+describe('setupComscore', () => {
 	it('should do nothing if the comscore is disabled in commercial features', () => {
 		commercialFeatures.comscore = false;
-		init();
+		setupComscore();
 
 		expect(onConsentChange).not.toBeCalled();
 	});
 
 	it('should register a callback with onConsentChange if enabled in commercial features', () => {
 		commercialFeatures.comscore = true;
-		init();
+		setupComscore();
 
 		expect(onConsentChange).toBeCalled();
 	});
@@ -86,104 +91,74 @@ describe('comscore init', () => {
 	describe('Framework consent: running on consent', () => {
 		beforeEach(() => {
 			jest.resetAllMocks();
-			_.resetInit();
 		});
 
 		it('TCFv2 with consent: runs', async () => {
 			onConsentChange.mockImplementation(tcfv2WithConsentMock);
 			getConsentFor.mockReturnValue(true);
-			await init();
+			await setupComscore();
 			expect(loadScript).toBeCalled();
 		});
 
 		it('TCFv2 without consent: does not run', async () => {
 			onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 			getConsentFor.mockReturnValue(false);
-			await init();
+			await setupComscore();
 			expect(loadScript).not.toBeCalled();
 		});
 		it('CCPA with consent: runs', async () => {
 			onConsentChange.mockImplementation(ccpaWithConsentMock);
-			await init();
+			await setupComscore();
 			expect(loadScript).toBeCalled();
 		});
 
 		it('CCPA without consent: does not run', async () => {
 			onConsentChange.mockImplementation(ccpaWithoutConsentMock);
-			await init();
+			await setupComscore();
 			expect(loadScript).not.toBeCalled();
 		});
 
 		it('Aus without consent: runs', async () => {
 			onConsentChange.mockImplementation(AusWithoutConsentMock);
-			await init();
+			await setupComscore();
 			expect(loadScript).toBeCalled();
 		});
 
 		it('Aus with consent: runs', async () => {
 			onConsentChange.mockImplementation(AusWithConsentMock);
-			await init();
+			await setupComscore();
 			expect(loadScript).toBeCalled();
 		});
-	});
-});
-
-describe('comscore initOnConsent', () => {
-	it('should call loadScript with the expected parameters', () => {
-		_.initOnConsent(true);
-
-		expect(loadScript).toBeCalledWith(_.comscoreSrc, {
-			id: 'comscore',
-			async: true,
-		});
-	});
-
-	it('should call loadScript exactly once regardless of how many times it runs', () => {
-		_.initOnConsent(true);
-		_.initOnConsent(true);
-		_.initOnConsent(true);
-
-		expect(loadScript).toBeCalledTimes(1);
 	});
 });
 
 describe('comscore getGlobals', () => {
 	it('return an object with the c1 and c2 properties correctly set when called with "Network Front" as keywords', () => {
 		const expectedGlobals = { c1: _.comscoreC1, c2: _.comscoreC2 };
-		expect(_.getGlobals(true, 'Network Front')).toMatchObject(
-			expectedGlobals,
-		);
+		expect(_.getGlobals('Network Front')).toMatchObject(expectedGlobals);
 	});
 
 	it('return an object with the c1 and c2 properties correctly set when called with non-"Network Front" as keywords', () => {
 		const expectedGlobals = { c1: _.comscoreC1, c2: _.comscoreC2 };
-		expect(_.getGlobals(true, '')).toMatchObject(expectedGlobals);
+		expect(_.getGlobals('')).toMatchObject(expectedGlobals);
 	});
 
 	it('returns an object with no comscorekw variable set when called with "Network Front" as keywords', () => {
-		const comscoreGlobals = Object.keys(
-			_.getGlobals(true, 'Network Front'),
-		);
+		const comscoreGlobals = Object.keys(_.getGlobals('Network Front'));
 		expect(comscoreGlobals).not.toContain('comscorekw');
 	});
 
 	it('returns an object with the correct comscorekw variable set when called with "Network Front" as keywords', () => {
 		const keywords = 'These are the best keywords. The greatest!';
 
-		expect(_.getGlobals(true, keywords)).toMatchObject({
+		expect(_.getGlobals(keywords)).toMatchObject({
 			comscorekw: keywords,
 		});
 	});
 
 	it('returns an object with the correct cs_ucfr variable set when calleed with consent sate as true', () => {
-		expect(_.getGlobals(true, '')).toMatchObject({
+		expect(_.getGlobals('')).toMatchObject({
 			cs_ucfr: '1',
-		});
-	});
-
-	it('returns an object with the correct cs_ucfr variable set when calleed with consent sate as false', () => {
-		expect(_.getGlobals(false, '')).toMatchObject({
-			cs_ucfr: '0',
 		});
 	});
 });
