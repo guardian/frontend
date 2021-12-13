@@ -5,9 +5,9 @@ import type { ConsentState } from '@guardian/consent-management-platform/dist/ty
  * Return a promise containing the first consent state provided by the user
  * as soon as it becomes available. This will only resolve once whereas
  * callbacks passed to onConsentChange are executed each time consent state changes.
+ * Avoid using this method in contexts where
  * NOTE: depending on where this function is eventually used, it might be more appropriate
  * for it to be defined in the consent-management-platform
- * @returns Promise
  */
 export const getInitialConsentState = (): Promise<ConsentState> => {
 	let resolveInitialState: (state: ConsentState) => void;
