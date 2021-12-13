@@ -42,7 +42,7 @@ const initOnConsent = (state) => {
 
 export const init = () => {
 	if (commercialFeatures.comscore) {
-		getInitialConsentState().then((state) => {
+		void getInitialConsentState().then((state) => {
 			/* Rule is that comscore can run:
                 - in Tcfv2: Based on consent for comscore
                 - in Australia: Always

@@ -41,7 +41,7 @@ const setupA9 = () => {
 const setupA9Once = once(setupA9);
 
 export const init = () => {
-	getInitialConsentState()
+	void getInitialConsentState()
 		.then((state) => {
 			if (getConsentFor('a9', state)) {
 				return setupA9Once();

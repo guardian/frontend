@@ -68,7 +68,7 @@ const insertScripts = (
 	performanceServices, // performanceServices always run
 ) => {
 	addScripts(performanceServices);
-	getInitialConsentState().then((state) => {
+	void getInitialConsentState().then((state) => {
 		const consentedAdvertisingServices = advertisingServices.filter(
 			(script) => getConsentFor(script.name, state),
 		);
