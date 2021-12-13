@@ -1,7 +1,4 @@
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor } from '@guardian/consent-management-platform';
 import { getLocale, loadScript } from '@guardian/libs';
 import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
