@@ -40,8 +40,8 @@ const setupA9 = () => {
 
 const setupA9Once = once(setupA9);
 
-export const init = () => {
-	void getInitialConsentState()
+export const init = () =>
+	getInitialConsentState()
 		.then((state) => {
 			if (getConsentFor('a9', state)) {
 				return setupA9Once();
@@ -52,9 +52,6 @@ export const init = () => {
 		.catch((e) => {
 			log('commercial', '⚠️ Failed to execute a9', e);
 		});
-
-	return Promise.resolve();
-};
 
 export const _ = {
 	setupA9,
