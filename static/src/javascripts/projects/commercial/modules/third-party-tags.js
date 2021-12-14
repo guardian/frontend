@@ -52,28 +52,29 @@ const addScripts = (tags) => {
 	});
 
 	if (hasScriptsToInsert) {
-		fastdom.mutate(() => {
+		return fastdom.mutate(() => {
 			if (ref && ref.parentNode) {
 				ref.parentNode.insertBefore(frag, ref);
 			}
 		});
 	}
+	return Promise.resolve();
 };
 
-const insertScripts = (
+const insertScripts = async (
 	advertisingServices,
 	performanceServices, // performanceServices always run
 ) => {
-	addScripts(performanceServices);
-	void getInitialConsentState().then((state) => {
-		const consentedAdvertisingServices = advertisingServices.filter(
-			(script) => getConsentFor(script.name, state),
-		);
+	await addScripts(performanceServices);
+	const state = await getInitialConsentState();
+	const consentedAdvertisingServices = advertisingServices.filter((script) =>
+		getConsentFor(script.name, state),
+	);
 
-		if (consentedAdvertisingServices.length > 0) {
-			addScripts(consentedAdvertisingServices);
-		}
-	});
+	if (consentedAdvertisingServices.length > 0) {
+		await addScripts(consentedAdvertisingServices);
+	}
+	return Promise.resolve(true);
 };
 
 const loadOther = () => {
@@ -93,16 +94,14 @@ const loadOther = () => {
 		imrWorldwideLegacy, // only in AU & NZ
 	].filter((_) => _.shouldRun);
 
-	insertScripts(advertisingServices, performanceServices);
+	return insertScripts(advertisingServices, performanceServices);
 };
 
 const init = () => {
 	if (!commercialFeatures.thirdPartyTags) {
 		return Promise.resolve(false);
 	}
-	loadOther();
-
-	return Promise.resolve(true);
+	return loadOther();
 };
 
 export { init };
