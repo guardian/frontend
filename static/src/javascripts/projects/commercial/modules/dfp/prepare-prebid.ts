@@ -35,8 +35,8 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 	return;
 };
 
-const setupPrebid = async (): Promise<void> => {
-	return getInitialConsentState()
+const setupPrebid = async (): Promise<void> =>
+	getInitialConsentState()
 		.then((state) => {
 			let framework: Framework | null = null;
 			if (state.tcfv2) framework = 'tcfv2';
@@ -54,13 +54,11 @@ const setupPrebid = async (): Promise<void> => {
 		.catch((e) => {
 			log('commercial', '⚠️ Failed to execute prebid', e);
 		});
-};
 
 export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
 export const init = (): Promise<void> => {
-	void setupPrebidOnce();
-	return Promise.resolve();
+	return setupPrebidOnce();
 };
 
 export const _ = {
