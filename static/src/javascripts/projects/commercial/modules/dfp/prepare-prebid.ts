@@ -1,7 +1,4 @@
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor } from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
@@ -9,6 +6,7 @@ import { isGoogleProxy } from 'lib/detect-google-proxy';
 import config from '../../../../lib/config';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { getInitialConsentState } from '../../initialConsentState';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
@@ -37,41 +35,25 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 	return;
 };
 
-const setupPrebid = async (): Promise<void> => {
-	let resolvePrebidLoaded: (value: void | PromiseLike<void>) => void;
-	let rejectPrebidLoaded: (
-		reason: 'No consent for prebid' | 'Unknown framework',
-	) => void;
-	const promise = new Promise<void>((resolve, reject) => {
-		resolvePrebidLoaded = resolve;
-		rejectPrebidLoaded = reject;
-	}).catch((e) => {
-		log('commercial', '⚠️ Failed to execute prebid', e);
-	});
+const setupPrebid = (): Promise<void> =>
+	getInitialConsentState()
+		.then((state) => {
+			let framework: Framework | null = null;
+			if (state.tcfv2) framework = 'tcfv2';
+			if (state.ccpa) framework = 'ccpa';
+			if (state.aus) framework = 'aus';
 
-	onConsentChange((state) => {
-		if (!getConsentFor('prebid', state)) {
-			rejectPrebidLoaded('No consent for prebid');
-			return;
-		}
-
-		let framework: Framework | null = null;
-		if (state.tcfv2) framework = 'tcfv2';
-		if (state.ccpa) framework = 'ccpa';
-		if (state.aus) framework = 'aus';
-
-		if (!framework) {
-			rejectPrebidLoaded('Unknown framework');
-			return;
-		}
-
-		void loadPrebid(framework).then(() => {
-			resolvePrebidLoaded();
+			if (!framework) {
+				return Promise.reject('Unknown framework');
+			}
+			if (!getConsentFor('prebid', state)) {
+				return Promise.reject('No consent for prebid');
+			}
+			return loadPrebid(framework);
+		})
+		.catch((e) => {
+			log('commercial', '⚠️ Failed to execute prebid', e);
 		});
-	});
-
-	return promise;
-};
 
 export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
