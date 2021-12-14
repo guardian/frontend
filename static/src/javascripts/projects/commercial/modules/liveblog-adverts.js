@@ -121,15 +121,13 @@ export const init = () => {
 		return Promise.resolve();
 	}
 
-	fastdom
+	return fastdom
 		.measure(() => {
 			WINDOWHEIGHT = getWindowHeight();
 			return WINDOWHEIGHT;
 		})
 		.then(getSpaceFillerRules)
 		.then(fill);
-
-	return Promise.resolve();
 };
 
 export const _ = { getSlotName };
