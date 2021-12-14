@@ -1,6 +1,6 @@
 import config from 'lib/config';
 import {isBreakpoint} from 'lib/detect';
-import { mediator } from 'lib/mediator';
+import {mediator} from 'lib/mediator';
 import {upgradeRichLinks} from 'common/modules/article/rich-links';
 import {Affix} from 'common/modules/experiments/affix';
 import {autoUpdate} from 'common/modules/ui/autoupdate';
@@ -10,6 +10,7 @@ import {initTrails} from 'bootstraps/enhanced/trail';
 import {catchErrorsWithContext} from 'lib/robust';
 import bean from "bean";
 import {scrollToElement} from "lib/scroller";
+import ophan from 'ophan/ng';
 
 const affixTimeline = () => {
     const keywordIds = config.get('page.keywordIds', '');
@@ -69,8 +70,27 @@ const setupListeners = () => {
     bean.on(document.body, 'click', '.pinned-block__label', () => {
         const pinnedBlockHeader = document.querySelector('.pinned-block__header')
         const pinnedBlockButton = document.querySelector('.pinned-block__button')
+        const pinnedBlockId = document.getElementById('pinned-block').firstElementChild.id
         if (!isVisible(pinnedBlockHeader) && pinnedBlockButton.checked) {
             scrollToElement(pinnedBlockHeader)
+
+            ophan.record({
+                component: {
+                    componentType: 'LIVE_BLOG_PINNED_POST'
+                },
+                action: 'CLICK',
+                value: 'show-less',
+                id: pinnedBlockId
+            });
+        } else {
+            ophan.record({
+                component: {
+                    componentType: 'LIVE_BLOG_PINNED_POST'
+                },
+                action: 'CLICK',
+                value: 'show-all',
+                id: pinnedBlockId
+            });
         }
     })
 }
