@@ -63,9 +63,7 @@ const setupComscore = () => {
 
 const setupComscoreOnce = once(setupComscore);
 
-export const init = () => {
-	return setupComscoreOnce();
-};
+export const init = () => setupComscoreOnce();
 
 export const _ = {
 	getGlobals,

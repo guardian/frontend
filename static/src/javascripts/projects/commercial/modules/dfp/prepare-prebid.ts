@@ -57,9 +57,7 @@ const setupPrebid = (): Promise<void> =>
 
 export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
-export const init = (): Promise<void> => {
-	return setupPrebidOnce();
-};
+export const init = (): Promise<void> => setupPrebidOnce();
 
 export const _ = {
 	setupPrebid,
