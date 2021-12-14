@@ -35,7 +35,7 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 	return;
 };
 
-const setupPrebid = async (): Promise<void> =>
+const setupPrebid = (): Promise<void> =>
 	getInitialConsentState()
 		.then((state) => {
 			let framework: Framework | null = null;
