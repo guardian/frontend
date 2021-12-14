@@ -91,7 +91,7 @@ export const init = (): Promise<void> => {
 			},
 		);
 
-		void getInitialConsentState().then((state) => {
+		return getInitialConsentState().then((state) => {
 			let canRun = true;
 			if (state.ccpa) {
 				const doNotSell = state.ccpa.doNotSell;
@@ -140,17 +140,18 @@ export const init = (): Promise<void> => {
 					{ async: false },
 				);
 			}
+			return Promise.resolve();
 		});
-		return Promise.resolve();
 	};
 
 	if (commercialFeatures.dfpAdvertising) {
-		// A promise error here, from a failed module load,
-		// could be a network problem or an intercepted request.
-		// Abandon the init sequence.
-		setupAdvertising().then(adFreeSlotRemove).catch(removeSlots);
-
-		return Promise.resolve();
+		return (
+			setupAdvertising()
+				// on success, remove slots for ad-free users
+				.then(adFreeSlotRemove)
+				// on error, remove all slots
+				.catch(removeSlots)
+		);
 	}
 
 	return removeSlots();
