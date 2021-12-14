@@ -126,6 +126,7 @@
  "../projects/commercial/modules/comscore.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
+  "../../../../node_modules/lodash-es/lodash.js",
   "../lib/config.js",
   "../projects/commercial/initialConsentState.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
