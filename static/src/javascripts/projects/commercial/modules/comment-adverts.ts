@@ -1,22 +1,18 @@
-import config_ from '../../../lib/config';
+import type { SizeKeys } from '@guardian/commercial-core';
+import { adSizes } from '@guardian/commercial-core';
+import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
-import mediator from '../../../lib/mediator';
+import { mediator } from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { isUserLoggedIn } from '../../common/modules/identity/api';
-import { adSizes } from './ad-sizes';
 import { addSlot } from './dfp/add-slot';
 import type { Advert } from './dfp/Advert';
 import { createSlots } from './dfp/create-slots';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string, d?: string) => string;
-};
-
-const createCommentSlots = (canBeDmpu: boolean): Element[] => {
+const createCommentSlots = (canBeDmpu: boolean): HTMLElement[] => {
 	const sizes = canBeDmpu
 		? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
 		: {};
@@ -70,7 +66,15 @@ const containsDMPU = (ad: Advert): boolean =>
 
 const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
 	if (!containsDMPU(ad)) {
-		ad.sizes.desktop.push([300, 600], [160, 600]);
+		const extraSizes: SizeKeys[] = ['halfPage', 'skyscraper'];
+		ad.sizes.desktop.push(
+			// TODO: add getTuple method to commercial-core
+			...extraSizes.map((size) => {
+				const { width, height } = adSizes[size];
+				const tuple: AdSizeTuple = [width, height];
+				return tuple;
+			}),
+		);
 		ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
 		void fastdom.mutate(() => {
 			adSlot.setAttribute(

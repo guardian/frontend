@@ -105,12 +105,16 @@ class ArticleController(
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
         Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
-      case JsonFormat                         => Future.successful(common.renderJson(getJson(article), article))
-      case EmailFormat                        => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
-      case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, article, blocks, pageType)
-      case HtmlFormat                         => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
-      case AmpFormat if isAmpSupported        => remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
-      case AmpFormat                          => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case JsonFormat =>
+        Future.successful(common.renderJson(getJson(article), article))
+      case EmailFormat =>
+        Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
+      case AmpFormat if isAmpSupported =>
+        remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
+      case HtmlFormat | AmpFormat if tier == RemoteRender =>
+        remoteRenderer.getArticle(ws, article, blocks, pageType)
+      case HtmlFormat | AmpFormat =>
+        Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
   }
 

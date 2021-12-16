@@ -80,7 +80,7 @@ module.exports = (
                 SASS_SETTINGS
             );
 
-            const postcssPlugins = [autoprefixer({ browsers })];
+            const postcssPlugins = [autoprefixer({ overrideBrowserslist: browsers })];
             if (remify) {
                 postcssPlugins.push(pxtorem(REMIFICATIONS));
             }
@@ -99,8 +99,8 @@ module.exports = (
                 )
                 .then(result =>
                     Promise.all([
-                        writeFileP(dest, result.css),
-                        writeFileP(`${dest}.map`, result.map),
+                        writeFileP(dest, result.css.toString()),
+                        writeFileP(`${dest}.map`, result.map.toString()),
                     ])
                 );
         })

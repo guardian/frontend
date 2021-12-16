@@ -1,3 +1,5 @@
+type ServerSideABTest = `${string}${'Variant' | 'Control'}`;
+
 declare const twttr: {
 	widgets?: {
 		load?: (arg0: Element | null | undefined) => void;
@@ -54,6 +56,9 @@ type AdUnit = string;
 interface CommercialPageConfig {
 	pbIndexSites: PrebidIndexSite[];
 	adUnit: AdUnit;
+	appNexusPageTargeting?: string;
+	sharedAdTargeting?: Record<string, string | string[]>;
+	pageAdTargeting?: Record<string, string | string[]>;
 }
 
 interface Config {
@@ -64,18 +69,38 @@ interface Config {
 	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
-	tests?: Record<string, 'control' | 'variant'>;
+	tests?: Record<ServerSideABTest, 'control' | 'variant'>;
 	isDotcomRendering: boolean;
 }
 
+type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
+
 interface PageConfig extends CommercialPageConfig {
+	edition: Edition;
 	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
 	isSensitive: boolean;
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
+	hasPageSkin: boolean; //https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L48
 	assetsPath: string;
 	frontendAssetsFullURL?: string; // only in DCR
+	nonRefreshableLineItemIds?: number[];
+	section: string;
+	isPaidContent: boolean;
+	isSensitive: boolean;
+	videoDuration: number;
+	source: string;
+	pageId: string;
+	authorIds: string;
+	blogIds: string;
+	contentType: string;
+	keywordIds: string;
+	publication: string;
+	seriesId: string;
+	sponsorshipType: string;
+	tones: string;
+	hasInlineMerchandise: boolean;
 }
 
 interface Ophan {
@@ -86,6 +111,55 @@ interface Ophan {
 	pageViewId: string;
 }
 
+interface ImpressionsDfpObject {
+	s: string; // Slot element ID
+	ad: string; // Advertiser ID
+	c: string; // Creative ID
+	I: string; // Line item ID
+	o: string; // Order ID
+	A: string; // Ad unit name
+	y: string; // Yield group ID (Exchange Bidder)
+	co: string; // DFP Company ID (Exchange Bidder)
+}
+
+enum BlockingType {
+	Manual = 1, // Deprecated
+	Creative, // Creative-based detection
+	ProviderSecurity, // Domain-based detection for unsafe domains
+	BannedDomain, // Domain-based detection for banned domains
+	ProviderIbv, // Domain-based detection for in-banner-video
+	UnsafeJS, // JavaScript-based detection for unsafe ads
+	Hrap, // Domain-based detection for high risk ad platform domains
+}
+
+type ConfiantCallback = (
+	blockingType: BlockingType,
+	blockingId: string,
+	isBlocked: boolean,
+	wrapperId: string,
+	tagId: string,
+	impressionsData?: {
+		prebid?: {
+			adId?: string | null;
+			cpm?: number | null; // IN USD
+			s?: string; // slot ID
+		};
+		dfp?: ImpressionsDfpObject;
+	},
+) => void;
+
+interface Confiant extends Record<string, unknown> {
+	settings: {
+		callback: ConfiantCallback;
+		[key: string]: unknown;
+	};
+}
+
+type AdBlockers = {
+	active: boolean | undefined;
+	onDetect: function[];
+};
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -94,5 +168,10 @@ interface Window {
 		queue: Array<() => Promise<void>>;
 		mustardCut?: boolean;
 		polyfilled?: boolean;
+		adBlockers: AdBlockers;
+		// /frontend/common/app/templates/inlineJS/blocking/enableStylesheets.scala.js
+		css: { onLoad: () => void; loaded: boolean };
 	};
+
+	confiant?: Confiant;
 }

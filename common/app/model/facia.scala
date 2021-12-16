@@ -54,6 +54,7 @@ case class FrontProperties(
     isImageDisplayed: Boolean,
     editorialType: Option[String],
     commercial: Option[CommercialProperties],
+    priority: Option[String],
 ) {
   val isPaidContent: Boolean = commercial.exists(_.isPaidContent)
 }
@@ -69,6 +70,7 @@ object FrontProperties {
     isImageDisplayed = false,
     editorialType = None,
     commercial = None,
+    priority = None,
   )
 
   def fromBranding(edition: Edition, branding: Branding): FrontProperties =

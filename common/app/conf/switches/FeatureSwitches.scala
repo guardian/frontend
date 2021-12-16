@@ -458,9 +458,10 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "interactive-picker",
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
-    owners = Seq(Owner.withName("Pascal")),
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2021, 9, 30),
+    sellByDate = LocalDate.of(2022, 6, 30),
     exposeClientSide = false,
   )
+
 }

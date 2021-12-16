@@ -128,7 +128,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
      */
 
-    TestCanonicalLink.significantParams should be(Seq("index", "page"))
+    TestCanonicalLink.significantParams should be(Seq("index", "page", "filterKeyEvents"))
 
   }
 

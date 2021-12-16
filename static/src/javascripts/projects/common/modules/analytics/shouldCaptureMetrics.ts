@@ -1,24 +1,31 @@
 import type { ABTest } from '@guardian/ab-core';
-import { getSynchronousTestsToRun } from '../experiments/ab';
+import { isInABTestSynchronous } from '../experiments/ab';
+import { integrateCriteo } from '../experiments/tests/integrate-criteo';
+import { integrateSmart } from '../experiments/tests/integrate-smart';
 
-const defaultClientSideTests: ABTest[] = [];
-const serverSideTests: string[] = [];
+const defaultClientSideTests: ABTest[] = [
+	/* linter, please keep this array multi-line */
+	integrateCriteo,
+	integrateSmart,
+];
+
+const serverSideTests: ServerSideABTest[] = [];
 
 /**
- * Function to check wether metrics should be captured for the current page
+ * Function to check whether metrics should be captured for the current page
  * @param tests - optional array of ABTest to check against.
  * @returns {boolean} whether the user is in a one of a set of client or server-side tests
  * for which we want to always capture metrics.
  */
 const shouldCaptureMetrics = (tests = defaultClientSideTests): boolean => {
-	const userInClientSideTest = getSynchronousTestsToRun().some((test) =>
-		tests.map((t) => t.id).includes(test.id),
+	const userInClientSideTest = tests.some((test) =>
+		isInABTestSynchronous(test),
 	);
 
 	const userInServerSideTest =
 		window.guardian.config.tests !== undefined &&
 		Object.keys(window.guardian.config.tests).some((test) =>
-			serverSideTests.includes(test),
+			String(serverSideTests).includes(test),
 		);
 	return userInClientSideTest || userInServerSideTest;
 };

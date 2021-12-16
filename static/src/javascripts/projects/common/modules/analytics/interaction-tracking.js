@@ -1,4 +1,4 @@
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { storage } from '@guardian/libs';
 import {
     trackSamePageLinkClick as trackSamePageLinkClickGoogle,

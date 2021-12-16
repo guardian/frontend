@@ -136,7 +136,6 @@ GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                       
 GET        /$path<.+>/lite.json                                                                controllers.FaciaDraftController.renderFrontJsonLite(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                       controllers.FaciaDraftController.renderFrontJson(path)
 
-
 GET        /container/*id.json                                                                 controllers.FaciaDraftController.renderContainerJson(id)
 
 # Newspaper pages
@@ -198,11 +197,11 @@ GET        /weatherapi/city.json                                                
 GET        /weatherapi/locations                                                               weather.controllers.LocationsController.findCity(query: String)
 
 # Articles
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt  controllers.LiveBlogController.renderEmail(path)
-GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], format: Option[String])
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean])
 GET     /*path.json                 controllers.ArticleController.renderJson(path)
 GET     /*path/email                controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)

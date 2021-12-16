@@ -4,7 +4,7 @@ import qwery from 'qwery';
 import $ from 'lib/$';
 import { catchErrorsWithContext } from 'lib/robust';
 import { isBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import {
     insertTagRichLink,

@@ -12,7 +12,7 @@
 @import controllers.editprofile.ProfileForms
 @import _root_.utils.ConsentsJourneyType._
 
-@import com.gu.identity.model.EmailNewsletter
+@import services.newsletters.NewsletterResponse
 @(
     user: com.gu.identity.model.User,
     forms: ProfileForms,
@@ -22,7 +22,7 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
-    availableLists: List[EmailNewsletter],
+    availableLists: List[NewsletterResponse],
     consentHint: Option[String] = None,
     skin: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 

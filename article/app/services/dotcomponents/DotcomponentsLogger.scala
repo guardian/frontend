@@ -76,6 +76,12 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
     )
   }
 
+  def logRequest(msg: String, results: Map[String, String], page: PageWithStoryPackage)(implicit
+      request: RequestHeader,
+  ): Unit = {
+    withRequestHeaders(request).results(msg, results, page)
+  }
+
   def withRequestHeaders(rh: RequestHeader): DotcomponentsLogger = {
     copy(Some(rh))
   }
@@ -99,5 +105,7 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
 }
 
 object DotcomponentsLogger {
+  val logger = DotcomponentsLogger()
+
   def apply(): DotcomponentsLogger = DotcomponentsLogger(None)
 }

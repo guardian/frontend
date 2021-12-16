@@ -26,21 +26,21 @@ self.addEventListener('message', function onMessage(evt) {
 */
 
 const findAdvert = (adSlot) =>
-    dfpEnv.adverts.find((advert) => advert.node.isSameNode(adSlot));
+	dfpEnv.adverts.find((advert) => advert.node.isSameNode(adSlot));
 
 const init = (register) => {
-    register('disable-refresh', (specs, ret, iframe) => {
-        if (iframe) {
-            const adSlot = iframe.closest('.js-ad-slot');
+	register('disable-refresh', (specs, ret, iframe) => {
+		if (iframe) {
+			const adSlot = iframe.closest('.js-ad-slot');
 
-            if (adSlot instanceof HTMLElement) {
-                const advert = findAdvert(adSlot);
-                if (advert) {
-                    advert.shouldRefresh = false;
-                }
-            }
-        }
-    });
+			if (adSlot instanceof HTMLElement) {
+				const advert = findAdvert(adSlot);
+				if (advert) {
+					advert.shouldRefresh = false;
+				}
+			}
+		}
+	});
 };
 
 export { init };

@@ -7,8 +7,8 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
-    InteractiveLibrarianExp,
-    StandaloneCommercialBundle,
+    LiveblogPinnedBlock,
+    FetchNonRefreshableLineItems,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -19,24 +19,24 @@ object LiveblogRendering
       name = "liveblog-rendering",
       description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = LocalDate.of(2021, 11, 30),
-      participationGroup = Perc0A,
+      sellByDate = LocalDate.of(2022, 6, 2),
+      participationGroup = Perc10A,
     )
 
-object InteractiveLibrarianExp
+object LiveblogPinnedBlock
     extends Experiment(
-      name = "interactive-librarian",
-      description = "The Interactive Librarian private experiment",
-      owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = LocalDate.of(2022, 1, 31),
-      participationGroup = Perc0B,
+      name = "liveblog-pinned-post",
+      description = "Pin a post at the top of a liveblog",
+      owners = Seq(Owner.withGithub("alinaboghiu")),
+      sellByDate = LocalDate.of(2022, 1, 3),
+      participationGroup = Perc0C,
     )
 
-object StandaloneCommercialBundle
+object FetchNonRefreshableLineItems
     extends Experiment(
-      name = "standalone-commercial-bundle",
-      description = "Serve a standalone commercial bundle to a subset of users",
-      owners = Seq(Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2021, 10, 1),
-      participationGroup = Perc0E,
+      name = "fetch-non-refreshable-line-items",
+      description = "Fetch non-refreshable line items via a new endpoint",
+      owners = Seq(Owner.withGithub("chrislomaxjones")),
+      sellByDate = LocalDate.of(2022, 1, 24),
+      participationGroup = Perc20A,
     )

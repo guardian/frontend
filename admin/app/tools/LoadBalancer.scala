@@ -33,7 +33,6 @@ object LoadBalancer extends GuLogging {
     LoadBalancer("frontend-PROD-sport-ELB", "Sport", "frontend-sport"),
     LoadBalancer("frontend-PROD-commercial-ELB", "Commercial", "frontend-commercial"),
     LoadBalancer("frontend-PROD-onward-ELB", "Onward", "frontend-onward"),
-    LoadBalancer("frontend-PROD-diagnostics-ELB", "Diagnostics", "frontend-diagnostics"),
     LoadBalancer("frontend-PROD-archive-ELB", "Archive", "frontend-archive"),
     LoadBalancer("frontend-PROD-rss-ELB", "Rss", "frontend-rss"),
   )

@@ -21,9 +21,11 @@ import {
 	getBreakpointKey,
 	shouldIncludeAdYouLike,
 	shouldIncludeAppNexus,
+	shouldIncludeCriteo,
 	shouldIncludeImproveDigital,
 	shouldIncludeImproveDigitalSkin,
 	shouldIncludeOpenx,
+	shouldIncludeSmart,
 	shouldIncludeSonobi,
 	shouldIncludeTripleLift,
 	shouldIncludeTrustX,
@@ -422,6 +424,24 @@ const adYouLikeBidder: PrebidBidder = {
 	},
 };
 
+const criteoBidder: PrebidBidder = {
+	name: 'criteo',
+	switchName: 'prebidCriteo',
+	bidParams: () => ({
+		networkId: 337,
+	}),
+};
+
+const smartBidder: PrebidBidder = {
+	name: 'smartadserver',
+	switchName: 'prebidSmart',
+	bidParams: () => ({
+		siteId: 465656,
+		pageId: 1472549,
+		formatId: 105870,
+	}),
+};
+
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders = (
 	slotSizes: HeaderBiddingSize[],
@@ -449,6 +469,8 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 
 const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 	const otherBidders: PrebidBidder[] = [
+		...(inPbTestOr(shouldIncludeCriteo()) ? [criteoBidder] : []),
+		...(inPbTestOr(shouldIncludeSmart()) ? [smartBidder] : []),
 		...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
 		...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
 		...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),

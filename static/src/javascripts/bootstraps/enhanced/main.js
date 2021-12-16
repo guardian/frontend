@@ -160,6 +160,7 @@ const bootEnhanced = () => {
                 );
             }
 
+            // TODO: consider issues with double-loading bundles in hosted + standalone commercial (@mxdvl 2021-09-30)
             if (
                 config.get('page.contentType') === 'Audio' ||
                 config.get('page.contentType') === 'Video' ||

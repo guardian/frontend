@@ -3,7 +3,7 @@
 import bean from 'bean';
 import config from 'lib/config';
 import { cleanUp, addSessionCookie } from 'lib/cookies';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
 import { storage } from '@guardian/libs';
@@ -11,7 +11,6 @@ import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
-import { requestUserSegmentsFromId } from 'common/modules/commercial/user-ad-targeting';
 import {
     refresh as refreshUserFeatures,
     extendContribsCookieExpiry,
@@ -175,7 +174,7 @@ const updateArticleCounts = async () => {
 
     if (page && !page.isFront && hasConsentedToArticleCounts) {
         incrementDailyArticleCount(page);
-        incrementWeeklyArticleCount(storage.local, page.pageId);
+        incrementWeeklyArticleCount(storage.local, page.pageId, page.keywordIds.split(','));
     }
 };
 
@@ -312,7 +311,6 @@ const init = () => {
         ['c-analytics', loadAnalytics],
         ['c-consent-cookie-tracking', initialiseConsentCookieTracking],
         ['c-identity', initIdentity],
-        ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],
         ['c-test-cookie', testCookie],
         ['c-event-listeners', windowEventListeners],

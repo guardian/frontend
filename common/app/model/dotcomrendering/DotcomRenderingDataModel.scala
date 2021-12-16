@@ -5,10 +5,10 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import common.{Edition, Localisation, RichRequestHeader}
+import common.{Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import conf.switches.Switches
-import experiments.{ActiveExperiments, StandaloneCommercialBundle}
+import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
@@ -22,7 +22,6 @@ import model.{
   PageWithStoryPackage,
 }
 import navigation._
-import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
@@ -229,10 +228,18 @@ object DotcomRenderingDataModel {
     })
 
     val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
-    val keyEvents =
+
+    val allKeyEvents =
       blocks.requestedBodyBlocks
-        .flatMap(blocks => blocks.get("body:key-events"))
-        .getOrElse(Seq.empty[APIBlock])
+        .flatMap(bodyBlocks => bodyBlocks.get("body:key-events"))
+        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.keyEvent.contains(true))))
+
+    val latestSummary = blocks.body.flatMap(_.find(_.attributes.summary.contains(true)))
+
+    val keyEvents =
+      (latestSummary.toSeq ++ allKeyEvents)
+        .sortBy(block => block.publishedDate.orElse(block.createdDate).map(_.dateTime))
+        .reverse
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,
@@ -367,7 +374,7 @@ object DotcomRenderingDataModel {
 
     val isLegacyInteractive =
       modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate
-        .isBefore(InteractiveSwitchOver.date)
+        .isBefore(Chronos.javaTimeLocalDateTimeToJodaDateTime(InteractiveSwitchOver.date))
 
     DotcomRenderingDataModel(
       author = author,

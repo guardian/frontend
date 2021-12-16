@@ -1,5 +1,4 @@
 import { breakpoints } from '../../../../lib/detect';
-import { getCurrentTime } from '../../../../lib/user-timing';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { defineSlot } from './define-slot';
 
@@ -15,6 +14,16 @@ type Timings = {
 	lazyWaitComplete: number | null;
 };
 
+const stringToTuple = (size: string): AdSizeTuple => {
+	const dimensions = size.split(',', 2).map(Number);
+
+	// Return an outOfPage tuple if the string is not `{number},{number}`
+	if (dimensions.length !== 2 || dimensions.some((n) => isNaN(n)))
+		return [0, 0]; // adSizes.outOfPage
+
+	return [dimensions[0], dimensions[1]];
+};
+
 /** A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
  *
@@ -24,10 +33,13 @@ type Timings = {
 const createSizeMapping = (attr: string): AdSize[] =>
 	attr
 		.split('|')
-		.map((size) =>
-			size === 'fluid' ? 'fluid' : size.split(',').map(Number),
-		);
+		.map((size) => (size === 'fluid' ? 'fluid' : stringToTuple(size)));
 
+/** Extract the ad sizes from the breakpoint data attributes of an ad slot
+ *
+ * @param advertNode The ad slot HTML element that contains the breakpoint attributes
+ * @returns A mapping from the breakpoints supported by the slot to an array of ad sizes
+ */
 const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
 	breakpoints.reduce<Record<string, AdSize[]>>((sizes, breakpoint) => {
 		const data = advertNode.getAttribute(
@@ -68,6 +80,7 @@ class Advert {
 		lazyWaitComplete: null,
 	};
 	hasPrebidSize = false;
+	lineItemId: number | null = null;
 
 	constructor(adSlotNode: HTMLElement) {
 		const sizes = getAdBreakpointSizes(adSlotNode);
@@ -103,7 +116,7 @@ class Advert {
 
 	startLoading(): void {
 		this.isLoading = true;
-		this.timings.startLoading = getCurrentTime();
+		this.timings.startLoading = window.performance.now();
 	}
 
 	stopLoading(isLoaded: boolean): void {
@@ -111,12 +124,12 @@ class Advert {
 		if (this.whenLoadedResolver) {
 			this.whenLoadedResolver(isLoaded);
 		}
-		this.timings.stopLoading = getCurrentTime();
+		this.timings.stopLoading = window.performance.now();
 	}
 
 	startRendering(): void {
 		this.isRendering = true;
-		this.timings.startRendering = getCurrentTime();
+		this.timings.startRendering = window.performance.now();
 	}
 
 	stopRendering(isRendered: boolean): void {
@@ -142,4 +155,6 @@ export { Advert };
 
 export const _ = {
 	filterClasses: Advert.filterClasses,
+	createSizeMapping,
+	getAdBreakpointSizes,
 };

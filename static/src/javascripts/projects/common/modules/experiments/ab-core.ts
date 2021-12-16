@@ -1,20 +1,12 @@
 import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
-import {
-	getMvtNumValues,
-	getMvtValue,
-} from 'common/modules/analytics/mvt-cookie';
 import { logAutomatEvent } from 'common/modules/experiments/automatLog';
-import config_ from 'lib/config';
+import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
+import { getMvtNumValues, getMvtValue } from '../analytics/mvt-cookie';
 import { NOT_IN_TEST } from './ab-constants';
 import { getVariantFromLocalStorage } from './ab-local-storage';
 import { getIgnoreCanRunFromUrl, getVariantFromUrl } from './ab-url';
 import { isTestSwitchedOn } from './ab-utils';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string, d?: string) => string | boolean;
-};
 
 // We only take account of a variant's canRun function if it's defined.
 // If it's not, assume the variant can be run.
@@ -53,12 +45,10 @@ const testCanBeRun = (test: ABTest): boolean => {
 //
 // The test population is just a subset of MVT ids. A test population must
 // begin from a specific value. Overlapping test ranges are permitted.
-const computeVariantFromMvtCookie = (
-	test: ABTest,
-): Variant | null | undefined => {
+const computeVariantFromMvtCookie = (test: ABTest): Variant | null => {
 	const smallestTestId = getMvtNumValues() * test.audienceOffset;
 	const largestTestId = smallestTestId + getMvtNumValues() * test.audience;
-	const mvtCookieId = Number(getMvtValue());
+	const mvtCookieId = getMvtValue();
 
 	if (
 		mvtCookieId &&

@@ -1,7 +1,7 @@
 import { mocked } from 'ts-jest/utils';
 import { getBreakpoint as getBreakpoint_ } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
-import fakeMediator from '../../../lib/mediator';
+import { mediator as fakeMediator } from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../../common/modules/identity/api';
 import { _, initCommentAdverts } from './comment-adverts';
@@ -13,7 +13,9 @@ import { refreshAdvert as refreshAdvert_ } from './dfp/load-advert';
 // Mock advert type by overwriting slot property with only one function for defining size mapping
 // This avoids having to set the rest of the slot properties that are unnecessary for the tests
 type MockAdvert = Omit<Advert, 'slot'> & {
-	slot: { defineSizeMapping: (asm: SizeMapping[]) => googletag.Slot };
+	slot: {
+		defineSizeMapping: (asm: googletag.SizeMappingArray) => googletag.Slot;
+	};
 };
 
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
@@ -23,7 +25,6 @@ Object.defineProperty(HTMLElement.prototype, 'dataset', {
 	value: {},
 });
 
-jest.mock('../../../lib/mediator');
 jest.mock('../../../lib/config', () => ({ page: {}, get: () => false }));
 
 jest.mock('./dfp/add-slot', () => ({
@@ -62,7 +63,7 @@ const refreshAdvert = refreshAdvert_;
 const mockHeight = (height: number) => {
 	// this is an issue with fastdom's typing of measure: () => Promise<void>
 	jest.spyOn(fastdom, 'measure').mockReturnValue(
-		(Promise.resolve(height) as unknown) as Promise<void>,
+		Promise.resolve(height) as unknown as Promise<void>,
 	);
 };
 

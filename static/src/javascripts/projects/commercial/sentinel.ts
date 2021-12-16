@@ -1,9 +1,4 @@
-import config_ from '../../lib/config';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string, d: boolean) => boolean;
-};
+import config from '../../lib/config';
 
 export type SentinelLoggingEvent = {
 	label: string;
@@ -37,9 +32,9 @@ export const amIUsed = (
 	>,
 ): void => {
 	// The function will return early if the sentinelLogger switch is disabled.
-	if (!config.get('switches.sentinelLogger', false)) return;
+	if (!config.get<boolean>('switches.sentinelLogger', false)) return;
 
-	const endpoint = config.get('page.isDev', false)
+	const endpoint = config.get<boolean>('page.isDev', false)
 		? '//logs.code.dev-guardianapis.com/log'
 		: '//logs.guardianapis.com/log';
 

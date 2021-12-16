@@ -1,8 +1,8 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
-import config from '../lib/config';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
+import { initAdblockAsk } from '../projects/commercial/adblock-ask';
 import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from '../projects/commercial/modules/ad-verification/prepare-ad-verification';
 import { init as initArticleAsideAdverts } from '../projects/commercial/modules/article-aside-adverts';
@@ -65,6 +65,7 @@ if (!commercialFeatures.adFree) {
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],
 		['cm-commentAdverts', initCommentAdverts],
+		['rr-adblock-ask', initAdblockAsk],
 	);
 }
 
@@ -72,7 +73,7 @@ if (!commercialFeatures.adFree) {
  * Load modules that are specific to `frontend`.
  */
 const loadFrontendBundle = async (): Promise<void> => {
-	if (isDotcomRendering) return void 0;
+	if (isDotcomRendering) return;
 
 	const commercialMetrics = await import(
 		/* webpackChunkName: "frontend" */
@@ -83,7 +84,7 @@ const loadFrontendBundle = async (): Promise<void> => {
 		['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
 	);
 
-	return void 0;
+	return;
 };
 
 /**
@@ -92,7 +93,7 @@ const loadFrontendBundle = async (): Promise<void> => {
  * Introduced by @tomrf1
  */
 const loadDcrBundle = async (): Promise<void> => {
-	if (!isDotcomRendering) return void 0;
+	if (!isDotcomRendering) return;
 
 	const userFeatures = await import(
 		/* webpackChunkName: "dcr" */
@@ -100,43 +101,7 @@ const loadDcrBundle = async (): Promise<void> => {
 	);
 
 	commercialModules.push(['c-user-features', userFeatures.refresh]);
-	return void 0;
-};
-
-/**
- * Load commercial modules that are used in hosted pages
- */
-const loadHostedBundle = async (): Promise<void> => {
-	if (!config.get('page.isHosted')) return void 0;
-
-	const hostedAbout = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/about'
-	);
-	const initHostedVideo = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/video'
-	);
-	const hostedGallery = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/gallery'
-	);
-	const initHostedCarousel = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/onward-journey-carousel'
-	);
-	const loadOnwardComponent = await import(
-		/* webpackChunkName: "hosted" */
-		'commercial/modules/hosted/onward'
-	);
-
-	commercialModules.push(
-		['cm-hostedAbout', hostedAbout.init],
-		['cm-hostedVideo', initHostedVideo.initHostedVideo],
-		['cm-hostedGallery', hostedGallery.init],
-		['cm-hostedOnward', loadOnwardComponent.loadOnwardComponent],
-		['cm-hostedOJCarousel', initHostedCarousel.initHostedCarousel],
-	);
+	return;
 };
 
 const loadModules = () => {
@@ -177,9 +142,7 @@ const bootCommercial = async (): Promise<void> => {
 				},
 			],
 		],
-		{
-			feature: 'commercial',
-		},
+		tags,
 	);
 
 	// Stub the command queue
@@ -191,7 +154,6 @@ const bootCommercial = async (): Promise<void> => {
 	try {
 		await loadFrontendBundle();
 		await loadDcrBundle();
-		await loadHostedBundle();
 		await loadModules();
 
 		return catchErrorsWithContext(

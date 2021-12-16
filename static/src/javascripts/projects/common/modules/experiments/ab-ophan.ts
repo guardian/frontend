@@ -1,17 +1,15 @@
 import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
 import ophan from 'ophan/ng';
-import config_ from '../../../../lib/config';
+import config from '../../../../lib/config';
 import { noop } from '../../../../lib/noop';
 import reportError from '../../../../lib/report-error';
 
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string, d?: string) => string;
-};
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- generics don’t play nice
 type BooleanFunction = (...args: any[]) => boolean;
-const not = (f: BooleanFunction): BooleanFunction => (...args) => !f(...args);
+const not =
+	(f: BooleanFunction): BooleanFunction =>
+	(...args) =>
+		!f(...args);
 
 const submit = (payload: OphanABPayload): void =>
 	void ophan.record({
@@ -66,16 +64,19 @@ const buildOphanSubmitter = (
  *
  * @see {@link defersImpression}
  */
-const registerCompleteEvent = (complete: boolean) => (test: Runnable): void => {
-	const variant = test.variantToRun;
-	const listener = (complete ? variant.success : variant.impression) ?? noop;
+const registerCompleteEvent =
+	(complete: boolean) =>
+	(test: Runnable): void => {
+		const variant = test.variantToRun;
+		const listener =
+			(complete ? variant.success : variant.impression) ?? noop;
 
-	try {
-		listener(buildOphanSubmitter(test, variant, complete));
-	} catch (err) {
-		reportError(err, {}, false);
-	}
-};
+		try {
+			listener(buildOphanSubmitter(test, variant, complete));
+		} catch (err) {
+			reportError(err, {}, false);
+		}
+	};
 
 export const registerCompleteEvents = (tests: readonly Runnable[]): void =>
 	tests.forEach(registerCompleteEvent(true));
@@ -88,7 +89,7 @@ export const buildOphanPayload = (
 ): OphanABPayload => {
 	try {
 		const log: OphanABPayload = {};
-		const serverSideTests = Object.keys(config.get('tests')).filter(
+		const serverSideTests = Object.keys(config.get('tests', {})).filter(
 			(test) => !!config.get(`tests.${test}`),
 		);
 

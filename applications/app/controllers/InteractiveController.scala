@@ -19,8 +19,6 @@ import services.{CAPILookup, USElection2020AmpPages, _}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import experiments.{ActiveExperiments, InteractiveLibrarianExp}
-import services.dotcomrendering.InteractiveLibrarian
 
 class InteractiveController(
     contentApiClient: ContentApiClient,
@@ -54,6 +52,13 @@ class InteractiveController(
         }
       }
     }
+
+  def servePressedPage(path: String)(implicit request: RequestHeader): Future[Result] = {
+    val cacheable = WithoutRevalidationResult(
+      Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/www.theguardian.com/$path"),
+    )
+    Future.successful(Cached(CacheTime.ArchiveRedirect)(cacheable))
+  }
 
   private def getWebWorkerPath(path: String, file: String, timestamp: Option[String]): String = {
     val stage = if (context.isPreview) "preview" else "live"
@@ -113,15 +118,14 @@ class InteractiveController(
     def render(model: Either[(InteractivePage, Blocks), Result]): Future[Result] = {
       model match {
         case Left((page, blocks)) => {
-          val tags = page.interactive.tags.tags
-          val date = page.interactive.trail.webPublicationDate
-          val tier = InteractivePicker.getRenderingTier(requestFormat, path, date, tags)
+          val tier = InteractivePicker.getRenderingTier(path)
 
           (requestFormat, tier) match {
-            case (AmpFormat, DotcomRendering)  => renderAmp(page, blocks)
-            case (JsonFormat, DotcomRendering) => renderJson(page, blocks)
-            case (HtmlFormat, DotcomRendering) => renderHtml(page, blocks)
-            case _                             => renderNonDCR(page)
+            case (AmpFormat, DotcomRendering)     => renderAmp(page, blocks)
+            case (JsonFormat, DotcomRendering)    => renderJson(page, blocks)
+            case (HtmlFormat, PressedInteractive) => servePressedPage(path)
+            case (HtmlFormat, DotcomRendering)    => renderHtml(page, blocks)
+            case _                                => renderNonDCR(page)
           }
         }
         case Right(result) => Future.successful(result)
@@ -130,12 +134,6 @@ class InteractiveController(
 
     if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
       renderUSElectionAMPPage(path)
-    } else if (ActiveExperiments.isParticipating(InteractiveLibrarianExp)) {
-      val result = InteractiveLibrarian.getDocumentFromS3(path) match {
-        case Some(document) => Ok(document).as("text/plain") // purposely set to "text/plain" for the moment
-        case None           => NotFound(s"Could not retrieve stored document at www.theguardian.com/${path}")
-      }
-      Future.successful(result)
     } else {
       val res = for {
         resp <- lookupItemResponse(path)

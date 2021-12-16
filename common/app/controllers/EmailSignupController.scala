@@ -29,6 +29,8 @@ case class EmailForm(
     email: String,
     listName: Option[String],
     referrer: Option[String],
+    ref: Option[String],
+    refViewId: Option[String],
     campaignCode: Option[String],
     name: String,
 ) {
@@ -56,9 +58,14 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
         .map(ip => List("X-Forwarded-For" -> ip))
         .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
 
+      val queryStringParameters = form.ref.map("ref" -> _).toList ++
+        form.refViewId.map("refViewId" -> _).toList ++
+        form.listName.map("listName" -> _).toList
+
       //FIXME: this should go via the identity api client / app
       wsClient
         .url(consentMailerUrl)
+        .withQueryStringParameters(queryStringParameters: _*)
         .addHttpHeaders(headers: _*)
         .post(consentMailerPayload)
     }
@@ -81,6 +88,8 @@ class EmailSignupController(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
+      "ref" -> optional[String](of[String]),
+      "refViewId" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
       "name" -> text,
     )(EmailForm.apply)(EmailForm.unapply),
@@ -249,6 +258,8 @@ class EmailSignupController(
           log.info(
             s"Post request received to /email/ - " +
               s"email: ${form.email}, " +
+              s"ref: ${form.ref}, " +
+              s"refViewId: ${form.refViewId}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
@@ -312,6 +323,8 @@ class EmailSignupController(
           log.info(
             s"Post request received to /email/ - " +
               s"email: ${form.email}, " +
+              s"ref: ${form.ref}, " +
+              s"refViewId: ${form.refViewId}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",

@@ -1,52 +1,61 @@
-import {
-    getConsentFor,
-    onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor } from '@guardian/consent-management-platform';
+import { getInitialConsentState } from 'commercial/initialConsentState';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
-import { isGoogleProxy } from '../../../../lib/detect';
+import { isGoogleProxy } from '../../../../lib/detect-google-proxy';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import a9 from '../header-bidding/a9/a9';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
+import { log } from '@guardian/libs';
 
 const setupA9 = () => {
-    // There are two articles that InfoSec would like to avoid loading scripts on
-    if (commercialFeatures.isSecureContact) {
-        return Promise.resolve();
-    }
+	// TODO: Understand why we want to skip A9 for Google Proxy
+	if (isGoogleProxy()) return Promise.resolve(false);
 
-    let moduleLoadResult = Promise.resolve();
-    if (
-        shouldIncludeOnlyA9 ||
-        (dfpEnv.hbImpl.a9 &&
-            commercialFeatures.dfpAdvertising &&
-            !commercialFeatures.adFree &&
-            !config.get('page.hasPageSkin') &&
-            !isGoogleProxy())
-    ) {
-        moduleLoadResult = import(/* webpackChunkName: "a9" */ '../../../../lib/a9-apstag.js').then(() => {
-            a9.initialise();
+	// There are two articles that InfoSec would like to avoid loading scripts on
+	if (commercialFeatures.isSecureContact) {
+		return Promise.resolve();
+	}
 
-            return Promise.resolve();
-        });
-    }
+	let moduleLoadResult = Promise.resolve();
+	if (
+		shouldIncludeOnlyA9 ||
+		(dfpEnv.hbImpl.a9 &&
+			commercialFeatures.dfpAdvertising &&
+			!commercialFeatures.adFree &&
+			!config.get('page.hasPageSkin'))
+	) {
+		moduleLoadResult = import(
+			/* webpackChunkName: "a9" */ '../../../../lib/a9-apstag.js'
+		).then(() => {
+			a9.initialise();
 
-    return moduleLoadResult;
+			return Promise.resolve();
+		});
+	}
+
+	return moduleLoadResult;
 };
 
 const setupA9Once = once(setupA9);
 
 export const init = () => {
-    onConsentChange(state => {
-        if (getConsentFor('a9', state)) {
-            setupA9Once();
-        }
-    });
+	void getInitialConsentState()
+		.then((state) => {
+			if (getConsentFor('a9', state)) {
+				return setupA9Once();
+			} else {
+				throw Error('No consent for a9');
+			}
+		})
+		.catch((e) => {
+			log('commercial', '⚠️ Failed to execute a9', e);
+		});
 
-    return Promise.resolve();
+	return Promise.resolve();
 };
 
 export const _ = {
-    setupA9,
+	setupA9,
 };

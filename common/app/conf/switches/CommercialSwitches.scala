@@ -16,6 +16,16 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
+  val StandaloneCommercialBundle = Switch(
+    Commercial,
+    "standalone-commercial-bundle",
+    "Serve the standalone commercial bundle on all platforms",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",
@@ -110,6 +120,16 @@ trait CommercialSwitches {
     Commercial,
     "permutive",
     "Enable Permutive library loading",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val ampAmazon = Switch(
+    Commercial,
+    "amp-amazon",
+    "Amp inventory is being auctioned through Amazon",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -485,6 +505,26 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-ad-you-like",
     description = "Include AdYouLike adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val prebidCriteo: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-criteo",
+    description = "Include Criteo adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val prebidSmart: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-smart",
+    description = "Include the Smart AdServer adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

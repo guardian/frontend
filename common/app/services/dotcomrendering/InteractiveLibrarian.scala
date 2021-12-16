@@ -3,10 +3,13 @@ package services.dotcomrendering
 import common.GuLogging
 import conf.Configuration
 import play.api.libs.ws.WSClient
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 
 import scala.concurrent._
 import ExecutionContext.Implicits.global
-import scala.xml.Document
+
+import pagepresser.{InteractiveImmersiveHtmlCleaner}
 
 /*
 
@@ -80,8 +83,13 @@ object InteractiveLibrarian extends GuLogging {
   // Cleaning
 
   def cleanOriginalDocument(document: String): String = {
-    // For the moment this function is the identity
-    document
+    val parsedDoc = Jsoup.parse(document)
+
+    // In the clean function below we hardcode argument convertToHttps to false.
+    // Interactive immersives use http links to, for example, ensure svgs load,
+    // so we don't want to force these links to be relative.
+    val doc: Document = InteractiveImmersiveHtmlCleaner.clean(parsedDoc, false)
+    doc.toString
   }
 
   def applyCleaning(s3path: String): Boolean = {
@@ -106,21 +114,26 @@ object InteractiveLibrarian extends GuLogging {
     // 2. Queries the live contents ( https://www.theguardian.com/books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
     // 3. Stores the document at S3 path ( www.theguardian.com/books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
     log.info(s"Interactive Librarian. Pressing path: ${path}")
-    val liveUrl = s"https://www.theguardian.com/${path}"
+    val liveUrl = s"https://www.theguardian.com/${path}?dcr=false"
     val s3path = s"www.theguardian.com/${path}"
     val wsRequest = wsClient.url(liveUrl)
-    wsRequest.get().map { response =>
+    wsRequest.get().flatMap { response =>
       response.status match {
         case 200 => {
           val liveDocument = response.body
-          val status = commitOriginalDocumentToS3(s3path, liveDocument)
-          if (status._1) {
-            s"Live Contents S3 Pressing. Operation successful. Path: ${path}. Length: ${liveDocument.length}"
+          val (ok, errorMsg) = commitOriginalDocumentToS3(s3path, liveDocument)
+          if (ok) {
+            Future.successful(
+              s"Live Contents S3 Pressing. Operation successful. Path: ${path}. Length: ${liveDocument.length}",
+            )
           } else {
-            s"Live Contents S3 Pressing. Operation not successful. Path: ${path}. Error: ${status._2}"
+            Future.failed[String](
+              new Throwable(s"Live Contents S3 Pressing. Operation not successful. Path: ${path}. Error: ${errorMsg}"),
+            )
           }
         }
-        case non200 => s"Unexpected response from ${wsRequest.uri}, status code: $non200"
+        case non200 =>
+          Future.failed[String](new Throwable(s"Unexpected response from ${wsRequest.uri}, status code: $non200"))
       }
     }
   }

@@ -1,6 +1,7 @@
 package test
 
 import controllers.LiveBlogController
+import experiments.{ActiveExperiments}
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
@@ -35,17 +36,18 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
       Some(lastUpdateBlock),
       None,
       Some(true),
+      filterKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)
 
     // newer blocks
-    content should include("block-56d03894e4b0bd5a0524cbab")
+    content should include("block-56d03968e4b0bd5a0524cbae")
     content should include("block-56d039fce4b0d38537b1f61e")
     content should not include "56d04877e4b0bd5a0524cbe2" // at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
 
-    //this block
+    //this blockLiveBlogCurrentPageTest.scala
     content should not include lastUpdateBlock
 
     //older block
@@ -53,4 +55,102 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
   }
 
+  it should "return only the key event blocks of a live blog, when switch is on" in {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
+      filterKeyEvents = Some(true),
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+
+    content should not include "56d084d0e4b0bd5a0524ccbe"
+  }
+
+  it should "use DCR if the parameter dcr=true is passed" in {
+    val forceDCROff = false
+    val forceDCR = true
+    val participatingInTest = false
+    val dcrCanRender = true
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(true)
+  }
+
+  it should "use frontend if the parameter dcr=false is passed" in {
+    val forceDCROff = true
+    val forceDCR = false
+    val participatingInTest = false
+    val dcrCanRender = true
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(false)
+
+  }
+
+  it should "use dcr if the user is in the test and no dcr param is included" in {
+    val forceDCROff = false
+    val forceDCR = false
+    val participatingInTest = true
+    val dcrCanRender = true
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(true)
+  }
+
+  it should " use frontend if it can render but not in test" in {
+    val forceDCROff = false
+    val forceDCR = false
+    val participatingInTest = false
+    val dcrCanRender = true
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(false)
+  }
+
+  it should "use DCR if dcrCanRender is false and dcr=true" in {
+    val forceDCROff = false
+    val forceDCR = true
+    val participatingInTest = true
+    val dcrCanRender = false
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(true)
+  }
+
+  it should "use frontend if dcrCanRender is false no param is passed" in {
+    val forceDCROff = false
+    val forceDCR = false
+    val participatingInTest = true
+    val dcrCanRender = false
+
+    val shouldRemoteRender =
+      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, participatingInTest, dcrCanRender)
+    shouldRemoteRender should be(false)
+  }
+
+  it should "filter when the filter parameter is true" in {
+    liveBlogController.shouldFilter(Some(true)) should be(true)
+  }
+
+  it should "not filter when the filter parameter is false" in {
+    liveBlogController.shouldFilter(Some(false)) should be(false)
+  }
+
+  it should "not filter when the filter parameter is not provided" in {
+    liveBlogController.shouldFilter(None) should be(false)
+  }
 }

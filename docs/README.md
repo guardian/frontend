@@ -9,7 +9,7 @@
 - [Development tips](01-start-here/05-development-tips.md)
 - [Testing tips](01-start-here/06-testing-tips.md)
 - [FAQs](01-start-here/07-faqs.md)
-- [Incident Response & Triage](01-start-here/08-incidents.md)
+- [Incident handling](01-start-here/08-incidents.md)
 
 ## [Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
@@ -53,7 +53,8 @@
 ## [Commercial](05-commercial/)
 - [⚠️ Moved to https://github.com/guardian/commercial-core/blob/3a8c75e619c2e4ac2d731d251f5bf186f7af89dd/docs/GAM-Advertising.md ⚠️](05-commercial/01-DFP-Advertising.md)
 - [Integration of commercial components](05-commercial/02-commercial-components.md)
-- [Commercial javascript](05-commercial/03-commercial-javascript.md)
+- [Standalone Commercial Bundle](05-commercial/03-commercial-javascript.md)
+- [Non-refreshable line items](05-commercial/04-non-refreshable-line-items.md)
 
 ## [Features and components](06-features-and-components/)
 - [SteadyPage JS utility](06-features-and-components/01-steadypage-js-utility.md)

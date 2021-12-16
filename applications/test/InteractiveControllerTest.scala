@@ -4,6 +4,24 @@ import controllers.InteractiveController
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, PrivateMethodTester}
 import conf.Configuration.interactive.cdnPath
+import play.api.libs.ws.WSClient
+import com.gu.contentapi.client.model.v1.Blocks
+import model.dotcomrendering.PageType
+import model.{InteractivePage}
+import play.twirl.api.Html
+import play.api.mvc.{RequestHeader, Result, Results}
+import scala.concurrent.{ExecutionContext, Future}
+
+class DCRFake() extends renderers.DotcomRenderingService {
+  override def getInteractive(
+      ws: WSClient,
+      page: InteractivePage,
+      blocks: Blocks,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    Future.successful(Results.Ok("test"))
+  }
+}
 
 @DoNotDiscover class InteractiveControllerTest
     extends FlatSpec
@@ -21,6 +39,7 @@ import conf.Configuration.interactive.cdnPath
     testContentApiClient,
     wsClient,
     play.api.test.Helpers.stubControllerComponents(),
+    new DCRFake(),
   )
   val getWebWorkerPath = PrivateMethod[String]('getWebWorkerPath)
 
@@ -49,4 +68,11 @@ import conf.Configuration.interactive.cdnPath
     )
   }
 
+  "Interactive serve pressed page" should "return expected headers and path" in {
+    val result = interactiveController.servePressedPage(url)(TestRequest(url))
+
+    header("X-Accel-Redirect", result).head should be(
+      s"/s3-archive/www.theguardian.com/$url",
+    )
+  }
 }

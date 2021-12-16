@@ -80,16 +80,29 @@ const updateTOC = changed => {
     }
     return changed;
 };
-const commercialGraph = changed => {
-    if (!changed.some(file => file.includes('/commercial/'))) return changed;
-    return execa(
-        './tools/task-runner/runner',
-        ['commercial/graph', '--verbose'],
-        {
-            stdio: 'inherit',
-        }
-    ).then(() => changed);
-}
+const commercialGraph = (changed) => {
+	if (!changed.some((file) => file.includes('/commercial/'))) return changed;
+	const { graphFile } = require('../tools/__tasks__/commercial/graph/index');
+	return execa(
+		'./tools/task-runner/runner',
+		['commercial/graph', '--verbose'],
+		{
+			stdio: 'inherit',
+		},
+	)
+		.then(() => execa.sync('git', ['add', graphFile]))
+		.then(() =>
+			execa.sync('git', [
+				'commit',
+				'-m',
+				'rebuild commercial bundle graph',
+			]),
+		)
+		.catch(() => {
+			/* nothing to commit */
+		})
+		.finally(() => changed);
+};
 confirmIfMain
     .then(validate)
     .then(getChangedFiles)

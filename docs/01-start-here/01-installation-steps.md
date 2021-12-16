@@ -123,14 +123,14 @@ Alternatively you could use your system Node, for instance using the following:
 Ubuntu:
 
 ```bash
-$ curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+$ curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
 $ sudo apt-get install -y nodejs
 ```
 
 Mac:
 
 ```bash
-$ brew install node@10.22
+$ brew install node@12.22
 ```
 
 ### Client side code

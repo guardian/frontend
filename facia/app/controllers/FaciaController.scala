@@ -198,6 +198,8 @@ trait FaciaController
               JsonFront(faciaPage)
             } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
+            } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
+              renderShowcaseFront(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
             },
@@ -208,7 +210,9 @@ trait FaciaController
         if (targetedTerritories) {
           result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
         } else result
-      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      case None => {
+        successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      }
     }
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
@@ -238,6 +242,18 @@ trait FaciaController
     } else {
       RevalidatableResult.Ok(htmResponseInlined)
     }
+  }
+
+  protected def renderShowcaseFront(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
+    val (rundownPanelOutcome, singleStoryPanelOutcomes) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val showcase = TrailsToShowcase(
+      feedTitle = faciaPage.metadata.title,
+      url = Some(faciaPage.metadata.url),
+      description = faciaPage.metadata.description,
+      singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption),
+      maybeRundownPanel = rundownPanelOutcome.toOption,
+    )
+    RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase)
   }
 
   def renderFrontPress(path: String): Action[AnyContent] =

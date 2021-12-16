@@ -2,26 +2,18 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import type { AUSConsentState } from '@guardian/consent-management-platform/dist/types/aus';
 import type { CCPAConsentState } from '@guardian/consent-management-platform/dist/types/ccpa';
+import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import _config from '../../../../lib/config';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
-import { fillAdvertSlots as fillAdvertSlots_ } from './fill-advert-slots';
+import { fillAdvertSlots } from './fill-advert-slots';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
-
-// Note: this does not appear to be typed in @guardian/consent-management-platform
-type AUSRejectedMockType = {
-	rejectedCategories:
-		| Array<{
-				_id: string;
-				name: string;
-		  }>
-		| never[];
-};
 
 const config = _config as {
 	get: (k: string) => string;
@@ -50,11 +42,6 @@ const config = _config as {
 	) => void;
 };
 
-interface TCFv2ConsentStateMockType {
-	consents: Record<string, boolean | null>;
-	vendorConsents: Record<string, boolean | null>;
-}
-
 const getAdverts = (withEmpty: boolean) =>
 	Object.keys(dfpEnv.advertIds).reduce(
 		(advertsById: Record<string, Advert | null>, id) => {
@@ -71,38 +58,21 @@ const getAdverts = (withEmpty: boolean) =>
 const getCreativeIDs = () => dfpEnv.creativeIDs;
 
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
-	(
-		fn: (
-			arg0:
-				| { tcfv2: TCFv2ConsentStateMockType }
-				| { ccpa: CCPAConsentState }
-				| { aus: AUSRejectedMockType },
-		) => void,
-	) => void
+	typeof onConsentChange_
 >;
 const getConsentFor = getConsentFor_ as jest.MockedFunction<
-	(vendor: string) => boolean
+	typeof getConsentFor_
 >;
-
-// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
-const actualFillAdvertSlots = jest.requireActual('./fill-advert-slots')
-	.fillAdvertSlots as () => Promise<void | undefined>;
 
 const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
-	(includeTweakpoint: boolean) => string
->;
-const fillAdvertSlots = fillAdvertSlots_ as jest.MockedFunction<
-	() => Promise<void | undefined>
+	typeof getBreakpoint_
 >;
 
-jest.mock('./fill-advert-slots', () => ({
-	fillAdvertSlots: jest.fn(),
-}));
 jest.mock('../../../../lib/raven');
 jest.mock('../../../common/modules/identity/api', () => ({
 	isUserLoggedIn: () => true,
 	getUserFromCookie: jest.fn(),
-	getUserFromApi: jest.fn(),
+	getUserIdentifiersFromApi: jest.fn(),
 	getUrl: jest.fn(),
 }));
 jest.mock('ophan/ng', () => null);
@@ -111,7 +81,7 @@ jest.mock('../../../../lib/detect', () => ({
 	hasCrossedBreakpoint: jest.fn(),
 	isBreakpoint: jest.fn(),
 	getBreakpoint: jest.fn(),
-	getViewport: jest.fn(),
+	getViewport: jest.fn(() => ({ width: 0, height: 0 })),
 	hasPushStateSupport: jest.fn(),
 	getReferrer: jest.fn(() => ''),
 	breakpoints: [
@@ -149,16 +119,20 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	},
 }));
 jest.mock('@guardian/libs', () => {
-	/* */
 	return {
+		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
+		...jest.requireActual<typeof import('@guardian/libs')>(
+			'@guardian/libs',
+		),
 		loadScript: jest.fn(() => Promise.resolve()),
-		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
-		log: jest.requireActual('@guardian/libs').log,
-		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
-		storage: jest.requireActual('@guardian/libs').storage,
 	};
 });
-jest.mock('lodash-es/once', () => <T>(fn: (...args: unknown[]) => T) => fn);
+jest.mock(
+	'lodash-es/once',
+	() =>
+		<T>(fn: (...args: unknown[]) => T) =>
+			fn,
+);
 jest.mock('./refresh-on-resize', () => ({
 	refreshOnResize: jest.fn(),
 }));
@@ -184,14 +158,17 @@ jest.mock('@guardian/consent-management-platform', () => ({
 }));
 
 let $style: HTMLElement;
-const makeFakeEvent = (creativeId: string, id: string) => ({
+const makeFakeEvent = (
+	creativeId: number,
+	id: string,
+): DeepPartial<googletag.events.SlotRenderEndedEvent> => ({
 	creativeId,
 	slot: {
 		getSlotElementId() {
 			return id;
 		},
 	},
-	size: ['300', '250'],
+	size: [300, 250],
 });
 
 const reset = () => {
@@ -200,10 +177,9 @@ const reset = () => {
 	dfpEnv.advertsToRefresh = [];
 	dfpEnv.advertsToLoad = [];
 	dfpEnv.hbImpl = { prebid: false, a9: false };
-	fillAdvertSlots.mockReset();
 };
 
-const tcfv2WithConsent = {
+const tcfv2WithConsent: { tcfv2: TCFv2ConsentState } = {
 	tcfv2: {
 		consents: {
 			'1': true,
@@ -211,37 +187,53 @@ const tcfv2WithConsent = {
 			'3': true,
 			'4': true,
 			'5': true,
+			'6': true,
+			'7': true,
+			'8': true,
+			'9': true,
+			'10': true,
 		},
 		vendorConsents: {
 			'5f1aada6b8e05c306c0597d7': true, // Googletag
 		},
+		eventStatus: 'tcloaded',
+		addtlConsent: 'unknown',
+		gdprApplies: true,
+		tcString: 'BOGUS.YAA',
 	},
 };
 
-const ausNotRejected = {
-	aus: {
-		rejectedCategories: [],
+const tcfv2WithoutConsent: { tcfv2: TCFv2ConsentState } = {
+	tcfv2: {
+		consents: {
+			'1': false,
+			'2': false,
+		},
+		vendorConsents: {
+			'5f1aada6b8e05c306c0597d7': true, // Googletag
+		},
+		eventStatus: 'tcloaded',
+		addtlConsent: 'unknown',
+		gdprApplies: true,
+		tcString: 'BOGUS.YAA',
 	},
 };
 
-const ausRejected = {
-	aus: {
-		rejectedCategories: [
-			{
-				_id: '5f859c3420e4ec3e476c7006',
-				name: 'Advertising',
-			},
-		],
-	},
+const ausNotRejected: { aus: AUSConsentState } = {
+	aus: { personalisedAdvertising: true },
 };
 
-const ccpaWithConsent = { ccpa: { doNotSell: false } } as {
+const ausRejected: { aus: AUSConsentState } = {
+	aus: { personalisedAdvertising: false },
+};
+
+const ccpaWithConsent: {
 	ccpa: CCPAConsentState;
-};
+} = { ccpa: { doNotSell: false } };
 
-const ccpaWithoutConsent = { ccpa: { doNotSell: true } } as {
+const ccpaWithoutConsent: {
 	ccpa: CCPAConsentState;
-};
+} = { ccpa: { doNotSell: true } };
 
 describe('DFP', () => {
 	const domSnippet = `
@@ -251,15 +243,33 @@ describe('DFP', () => {
         <div id="dfp-ad-dont-label" class="js-ad-slot" data-label="false" data-name="dont-label" data-mobile="300,50|320,50"  data-tablet="728,90" data-desktop="728,90|900,250|970,250"></div>
     `;
 
-	let googleTag: googletag.Googletag;
+	let googleTag: typeof googletag;
 	let googleSlot: googletag.Slot;
 	let pubAds: googletag.PubAdsService;
 	let sizeMapping: googletag.SizeMappingBuilder;
 
-	const listeners: Record<
-		string,
-		(event: googletag.events.SlotRenderEndedEvent) => void
-	> = {};
+	const listeners: {
+		impressionViewable?: (
+			event: googletag.events.ImpressionViewableEvent,
+		) => void;
+		slotOnload?: (event: googletag.events.SlotOnloadEvent) => void;
+		slotRenderEnded?: (
+			event: googletag.events.SlotRenderEndedEvent,
+		) => void;
+		slotRequested?: (event: googletag.events.SlotRequestedEvent) => void;
+		slotResponseReceived?: (
+			event: googletag.events.SlotResponseReceived,
+		) => void;
+		slotVisibilityChanged?: (
+			event: googletag.events.SlotVisibilityChangedEvent,
+		) => void;
+	} = {} as const;
+
+	beforeAll(() => {
+		onConsentChange.mockImplementation((callback) =>
+			callback(tcfv2WithoutConsent),
+		);
+	});
 
 	beforeEach(() => {
 		config.set('switches.commercial', true);
@@ -306,7 +316,7 @@ describe('DFP', () => {
 
 		let sizesArray: googletag.SizeMappingArray = [];
 
-		sizeMapping = ({
+		sizeMapping = {
 			sizes: sizesArray,
 			addSize: jest.fn((width, sizes) => {
 				sizesArray.unshift([width, sizes]);
@@ -316,16 +326,16 @@ describe('DFP', () => {
 				sizesArray = [];
 				return tmp;
 			}),
-		} as unknown) as googletag.SizeMappingBuilder;
+		} as unknown as googletag.SizeMappingBuilder;
 
-		googleSlot = ({
+		googleSlot = {
 			defineSizeMapping: jest.fn(() => googleSlot),
 			setSafeFrameConfig: jest.fn(() => googleSlot),
 			setTargeting: jest.fn(() => googleSlot),
 			addService: jest.fn(() => googleSlot),
-		} as unknown) as googletag.Slot;
+		} as unknown as googletag.Slot;
 
-		googleTag = ({
+		googleTag = {
 			cmd: {
 				push(...args: Array<() => void>) {
 					args.forEach((command) => {
@@ -344,12 +354,14 @@ describe('DFP', () => {
 			defineOutOfPageSlot: jest.fn(() => googleSlot),
 			enableServices: jest.fn(),
 			display: jest.fn(),
-		} as unknown) as googletag.Googletag;
+		} as unknown as typeof googletag;
 
 		window.googletag = googleTag;
-		((window as unknown) as {
-			__switch_zero: boolean;
-		}).__switch_zero = false;
+		(
+			window as unknown as {
+				__switch_zero: boolean;
+			}
+		).__switch_zero = false;
 
 		commercialFeatures.dfpAdvertising = true;
 	});
@@ -358,6 +370,7 @@ describe('DFP', () => {
 		reset();
 		document.body.innerHTML = '';
 		$style.remove();
+		// @ts-expect-error -- we’re removing it
 		window.googletag = undefined;
 	});
 
@@ -375,32 +388,24 @@ describe('DFP', () => {
 		expect(remainingAdSlots.length).toBe(0);
 	});
 
-	it('should get the slots', () =>
-		new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+	it('should get the slots', async () => {
+		expect.hasAssertions();
 
-			void prepareGoogletag();
-		}).then(() => {
-			expect(Object.keys(getAdverts(true)).length).toBe(4);
-		}));
+		await fillAdvertSlots();
+		await prepareGoogletag();
+
+		expect(Object.keys(getAdverts(true)).length).toBe(4);
+	});
 
 	it('should not get hidden ad slots', async () => {
-		const adSlot: HTMLElement | null = document.querySelector(
-			'.js-ad-slot',
-		);
+		const adSlot = document.querySelector<HTMLElement>('.js-ad-slot');
 		if (adSlot) {
 			adSlot.style.display = 'none';
 		}
 
-		await new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+		await fillAdvertSlots();
+		await prepareGoogletag();
 
-			void prepareGoogletag();
-		});
 		const slots = getAdverts(true);
 		expect(Object.keys(slots).length).toBe(3);
 		Object.keys(slots).forEach((slotId) => {
@@ -417,127 +422,119 @@ describe('DFP', () => {
 			);
 		}));
 
-	it('should define slots', async () =>
-		new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+	it('should define slots', async () => {
+		expect.hasAssertions();
 
-			void prepareGoogletag();
-		}).then(() => {
+		await fillAdvertSlots();
+		await prepareGoogletag();
+
+		[
 			[
+				'dfp-ad-html-slot',
+				[[300, 50]],
+				[[[0, 0], [[300, 50]]]],
+				'html-slot',
+			],
+			[
+				'dfp-ad-script-slot',
 				[
-					'dfp-ad-html-slot',
-					[[300, 50]],
-					[[[0, 0], [[300, 50]]]],
-					'html-slot',
+					[300, 50],
+					[320, 50],
 				],
 				[
-					'dfp-ad-script-slot',
 					[
-						[300, 50],
-						[320, 50],
-					],
-					[
+						[0, 0],
 						[
-							[0, 0],
-							[
-								[300, 50],
-								[320, 50],
-							],
+							[300, 50],
+							[320, 50],
 						],
 					],
-					'script-slot',
+				],
+				'script-slot',
+			],
+			[
+				'dfp-ad-already-labelled',
+				[
+					[728, 90],
+					[300, 50],
+					[320, 50],
 				],
 				[
-					'dfp-ad-already-labelled',
+					[[740, 0], [[728, 90]]],
 					[
-						[728, 90],
-						[300, 50],
-						[320, 50],
-					],
-					[
-						[[740, 0], [[728, 90]]],
+						[0, 0],
 						[
-							[0, 0],
-							[
-								[300, 50],
-								[320, 50],
-							],
+							[300, 50],
+							[320, 50],
 						],
 					],
-					'already-labelled',
+				],
+				'already-labelled',
+			],
+			[
+				'dfp-ad-dont-label',
+				[
+					[728, 90],
+					[900, 250],
+					[970, 250],
+					[300, 50],
+					[320, 50],
 				],
 				[
-					'dfp-ad-dont-label',
 					[
-						[728, 90],
-						[900, 250],
-						[970, 250],
-						[300, 50],
-						[320, 50],
-					],
-					[
+						[980, 0],
 						[
-							[980, 0],
-							[
-								[728, 90],
-								[900, 250],
-								[970, 250],
-							],
-						],
-						[[740, 0], [[728, 90]]],
-						[
-							[0, 0],
-							[
-								[300, 50],
-								[320, 50],
-							],
+							[728, 90],
+							[900, 250],
+							[970, 250],
 						],
 					],
-					'dont-label',
+					[[740, 0], [[728, 90]]],
+					[
+						[0, 0],
+						[
+							[300, 50],
+							[320, 50],
+						],
+					],
 				],
-			].forEach((data) => {
-				expect(window.googletag?.defineSlot).toHaveBeenCalledWith(
-					'/123456/theguardian.com/front',
-					data[1],
-					data[0],
+				'dont-label',
+			],
+		].forEach((data) => {
+			expect(window.googletag.defineSlot).toHaveBeenCalledWith(
+				'/123456/theguardian.com/front',
+				data[1],
+				data[0],
+			);
+			expect(googleSlot.addService).toHaveBeenCalledWith(pubAds);
+			if (Array.isArray(data[2])) {
+				data[2].forEach(
+					(size: number[] | Array<number[] | number[][]>) => {
+						expect(sizeMapping.addSize).toHaveBeenCalledWith(
+							size[0],
+							size[1],
+						);
+					},
 				);
-				expect(googleSlot.addService).toHaveBeenCalledWith(pubAds);
-				if (Array.isArray(data[2])) {
-					data[2].forEach(
-						(size: number[] | Array<number[] | number[][]>) => {
-							expect(sizeMapping.addSize).toHaveBeenCalledWith(
-								size[0],
-								size[1],
-							);
-						},
-					);
-				}
-				expect(googleSlot.defineSizeMapping).toHaveBeenCalledWith(
-					data[2],
-				);
-				expect(googleSlot.setTargeting).toHaveBeenCalledWith(
-					'slot',
-					data[3],
-				);
-			});
-		}));
+			}
+			expect(googleSlot.defineSizeMapping).toHaveBeenCalledWith(data[2]);
+			expect(googleSlot.setTargeting).toHaveBeenCalledWith(
+				'slot',
+				data[3],
+			);
+		});
+	});
 
 	it('should display ads', async () => {
 		config.set('page.hasPageSkin', true);
 		getBreakpoint.mockReturnValue('wide');
 
-		await new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+		await fillAdvertSlots();
+		await prepareGoogletag();
 
-			void prepareGoogletag();
-		});
 		expect(pubAds.enableSingleRequest).toHaveBeenCalled();
 		expect(pubAds.collapseEmptyDivs).toHaveBeenCalled();
-		expect(window.googletag?.enableServices).toHaveBeenCalled();
+		expect(window.googletag.enableServices).toHaveBeenCalled();
 		expect(loadAdvert).toHaveBeenCalled();
 	});
 
@@ -546,35 +543,27 @@ describe('DFP', () => {
 			.querySelector('.js-ad-slot')
 			?.setAttribute('data-out-of-page', 'true');
 
-		await new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+		await fillAdvertSlots();
+		await prepareGoogletag();
 
-			void prepareGoogletag();
-		});
-		expect(window.googletag?.defineOutOfPageSlot).toHaveBeenCalled();
+		expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
 	});
 
 	it('should expose ads IDs', async () => {
-		const fakeEventOne = (makeFakeEvent(
-			'1',
+		const fakeEventOne = makeFakeEvent(
+			1,
 			'dfp-ad-html-slot',
-		) as unknown) as googletag.events.SlotRenderEndedEvent;
-		const fakeEventTwo = (makeFakeEvent(
-			'2',
+		) as googletag.events.SlotRenderEndedEvent;
+		const fakeEventTwo = makeFakeEvent(
+			2,
 			'dfp-ad-script-slot',
-		) as unknown) as googletag.events.SlotRenderEndedEvent;
+		) as googletag.events.SlotRenderEndedEvent;
 
-		await new Promise((resolve) => {
-			fillAdvertSlots.mockImplementation(() => {
-				return actualFillAdvertSlots().then(resolve);
-			});
+		await fillAdvertSlots();
+		await prepareGoogletag();
 
-			void prepareGoogletag();
-		});
-		listeners.slotRenderEnded(fakeEventOne);
-		listeners.slotRenderEnded(fakeEventTwo);
+		listeners.slotRenderEnded?.(fakeEventOne);
+		listeners.slotRenderEnded?.(fakeEventTwo);
 		const result_4 = getCreativeIDs();
 		expect(result_4.length).toBe(2);
 		expect(result_4[0]).toEqual('1');
@@ -595,12 +584,8 @@ describe('DFP', () => {
 
 	describe('keyword targeting', () => {
 		it('should send page level keywords', async () => {
-			onConsentChange.mockImplementation(
-				(
-					callback: (val: {
-						tcfv2: TCFv2ConsentStateMockType;
-					}) => void,
-				) => callback(tcfv2WithConsent),
+			onConsentChange.mockImplementation((callback) =>
+				callback(tcfv2WithConsent),
 			);
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
@@ -613,18 +598,16 @@ describe('DFP', () => {
 
 	describe('NPA flag in AUS', () => {
 		it('when AUS has not retracted advertising consent', async () => {
-			onConsentChange.mockImplementation(
-				(callback: (val: { aus: AUSRejectedMockType }) => void) =>
-					callback(ausNotRejected),
+			onConsentChange.mockImplementation((callback) =>
+				callback(ausNotRejected),
 			);
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
 			expect(pubAds.setRequestNonPersonalizedAds).toHaveBeenCalledWith(0);
 		});
 		it('when AUS has retracted advertising consent', async () => {
-			onConsentChange.mockImplementation(
-				(callback: (val: { aus: AUSRejectedMockType }) => void) =>
-					callback(ausRejected),
+			onConsentChange.mockImplementation((callback) =>
+				callback(ausRejected),
 			);
 			getConsentFor.mockReturnValue(false);
 			await prepareGoogletag();
@@ -633,11 +616,9 @@ describe('DFP', () => {
 	});
 	describe('restrictDataProcessing flag is set correctly', () => {
 		it('when CCPA consent was given', async () => {
-			onConsentChange.mockImplementation(
-				(callback: (val: { ccpa: CCPAConsentState }) => void) => {
-					return callback(ccpaWithConsent);
-				},
-			);
+			onConsentChange.mockImplementation((callback) => {
+				return callback(ccpaWithConsent);
+			});
 			getConsentFor.mockReturnValue(true);
 			await prepareGoogletag();
 			expect(pubAds.setPrivacySettings).toHaveBeenCalledWith({
@@ -645,9 +626,8 @@ describe('DFP', () => {
 			});
 		});
 		it('when CCPA consent was denied', async () => {
-			onConsentChange.mockImplementation(
-				(callback: (val: { ccpa: CCPAConsentState }) => void) =>
-					callback(ccpaWithoutConsent),
+			onConsentChange.mockImplementation((callback) =>
+				callback(ccpaWithoutConsent),
 			);
 			getConsentFor.mockReturnValue(false);
 			await prepareGoogletag();

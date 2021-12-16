@@ -1,4 +1,11 @@
+import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
+import {
+	isInABTestSynchronous,
+	isInVariantSynchronous,
+} from 'common/modules/experiments/ab';
+import { integrateCriteo } from 'common/modules/experiments/tests/integrate-criteo';
+import { integrateSmart } from 'common/modules/experiments/tests/integrate-smart';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
@@ -33,15 +40,35 @@ const contains = (
 	size: HeaderBiddingSize,
 ): boolean => Boolean(sizes.find((s) => s[0] === size[0] && s[1] === size[1]));
 
-export const removeFalseyValues = (
-	o: Record<string, string>,
-): Record<string, string> =>
-	Object.keys(o).reduce((m: Record<string, string>, k: string) => {
-		if (o[k]) {
-			m[k] = o[k];
-		}
-		return m;
-	}, {});
+/**
+ * Cleans an object for targetting. Removes empty strings and other falsey values.
+ * @param o object with falsey values
+ * @returns {Record<string, string | string[]>} object with only non-empty strings, or arrays of non-empty strings.
+ */
+export const removeFalseyValues = <O extends Record<string, unknown>>(
+	o: O,
+): Record<string, string | string[]> =>
+	Object.entries(o).reduce<Record<string, string | string[]>>(
+		(prev, curr) => {
+			const [key, val] = curr;
+			if (!val) return prev;
+
+			if (isString(val)) {
+				prev[key] = val;
+			}
+			if (
+				Array.isArray(val) &&
+				val.length > 0 &&
+				val.some(Boolean) &&
+				val.every(isString)
+			) {
+				prev[key] = val.filter(Boolean);
+			}
+
+			return prev;
+		},
+		{},
+	);
 
 export const stripDfpAdPrefixFrom = (s: string): string =>
 	stripPrefix(s, 'dfp-ad--');
@@ -145,6 +172,36 @@ export const shouldIncludeImproveDigitalSkin = (): boolean =>
 	(isInUk() || isInRow()) &&
 	getBreakpointKey() === 'D'; // Desktop only
 
+/**
+ * Determine if a visitor is participating in a test for integrating an SSP
+ *
+ * Add additional tests here when integrating a new SSP
+ */
+const inSSPTest = (): boolean =>
+	isInABTestSynchronous(integrateCriteo) ||
+	isInABTestSynchronous(integrateSmart);
+
+/**
+ * Determine whether to include Criteo as a bidder
+ *
+ * Include Criteo if visitor is not a participant in an AB test for integrating an SSP
+ * or that they are in the variant of the Criteo test
+ */
+export const shouldIncludeCriteo = (): boolean =>
+	!isInAuOrNz() &&
+	(!inSSPTest() || isInVariantSynchronous(integrateCriteo, 'variant'));
+
+/**
+ * Determine whether to include Smart as a bidder
+ *
+ * First and foremost visitors need to be in the UK or rest of world regions.
+ * Include Smart if that check passes and visitor is not a participant in an AB test for integrating an SSP
+ * or that they are in the variant of the Smart test.
+ */
+export const shouldIncludeSmart = (): boolean =>
+	(!inSSPTest() || isInVariantSynchronous(integrateSmart, 'variant')) &&
+	(isInUk() || isInRow());
+
 export const shouldIncludeMobileSticky = once(
 	(): boolean =>
 		window.location.hash.includes('#mobile-sticky') ||
@@ -155,7 +212,7 @@ export const shouldIncludeMobileSticky = once(
 			}) &&
 			(isInUsOrCa() || isInAuOrNz()) &&
 			config.get('page.contentType') === 'Article' &&
-			!config.get('page.isHosted')),
+			!window.guardian.config.page.isHosted),
 );
 
 export const stripMobileSuffix = (s: string): string =>

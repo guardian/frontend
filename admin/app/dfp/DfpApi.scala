@@ -2,8 +2,8 @@ package dfp
 
 // StatementBuilder query language is PQL defined here:
 // https://developers.google.com/ad-manager/api/pqlreference
-import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
-import com.google.api.ads.admanager.axis.v202011._
+import com.google.api.ads.admanager.axis.utils.v202108.StatementBuilder
+import com.google.api.ads.admanager.axis.v202108._
 import common.GuLogging
 import common.dfp._
 import org.joda.time.DateTime
@@ -75,11 +75,17 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
 
   def readSponsorshipLineItemIds(): Seq[Long] = {
 
+    // The advertiser ID for "Amazon Transparent Ad Marketplace"
+    val amazonAdvertiserId = 4751525411L
+
     val stmtBuilder = new StatementBuilder()
-      .where("(status = :readyStatus OR status = :deliveringStatus) AND lineItemType = :sponsorshipType")
+      .where(
+        "(status = :readyStatus OR status = :deliveringStatus) AND lineItemType = :sponsorshipType AND advertiserId != :amazonAdvertiserId",
+      )
       .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
       .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
       .withBindVariableValue("sponsorshipType", LineItemType.SPONSORSHIP.toString)
+      .withBindVariableValue("amazonAdvertiserId", amazonAdvertiserId.toString)
       .orderBy("id ASC")
 
     // Lets avoid Prebid lineitems

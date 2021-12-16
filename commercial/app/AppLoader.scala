@@ -11,6 +11,7 @@ import commercial.model.merchandise.jobs.{Industries, JobsAgent}
 import commercial.model.merchandise.travel.TravelOffersAgent
 import common.CloudWatchMetricsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
+import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -63,6 +64,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
     wire[CommercialLifecycle],
+    wire[DfpAgentLifecycle],
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[CachedHealthCheckLifeCycle],

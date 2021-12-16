@@ -1,6 +1,6 @@
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { isIOS, getUserAgent } from 'lib/detect';
 import $ from 'lib/$';
 

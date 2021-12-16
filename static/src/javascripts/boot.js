@@ -1,5 +1,5 @@
 // es7 polyfills not provided by pollyfill.io
-import 'core-js/modules/es7.object.get-own-property-descriptors';
+import 'core-js/modules/es.object.get-own-property-descriptors';
 
 import domready from 'domready';
 import { bootStandard } from 'bootstraps/standard/main';
@@ -11,6 +11,7 @@ import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { getLocale, loadScript } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { trackPerformance } from 'common/modules/analytics/google';
+import { init as detectAdBlockers } from 'commercial/detect-adblock';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -59,32 +60,40 @@ const go = () => {
 
         cmp.init({ pubData, country: await getLocale() });
 
+        detectAdBlockers()
+
         // 2. once standard is done, next is commercial
-        if (process.env.NODE_ENV !== 'production') {
-            window.guardian.adBlockers.onDetect.push(isInUse => {
+        // Handle ad blockers
+        window.guardian.adBlockers.onDetect.push((adblockInUse) => {
+            if (!adblockInUse) return;
+
+            // For the moment we'll hide the top-above-nav slot if we detect that the user has ad blockers enabled
+            // in order to avoid showing them a large blank space.
+            // TODO improve shady pie to make better use of the slot.
+            document.querySelector('.top-banner-ad-container').style.display =
+                'none';
+
+            if (process.env.NODE_ENV !== 'production') {
                 const needsMessage =
-                    isInUse && window.console && window.console.warn;
+                    adblockInUse && window.console && window.console.warn;
                 const message =
                     'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
                 if (needsMessage) {
                     window.console.warn(message);
                 }
-            });
-        }
+            }
+        });
 
-        const fakeBootCommercial = { bootCommercial: () => {} }
-        const useStandaloneBundle =
-			config.get('tests.standaloneCommercialBundleVariant', false) ===
-			'variant';
-		const commercialBundle = () =>
-			useStandaloneBundle
-				? loadScript(
-						config.get('page.commercialBundleUrl'),
-				  ).then(() => (fakeBootCommercial))
-				: import(
-						/* webpackChunkName: "commercial" */
-						'bootstraps/commercial'
-				  );
+        const fakeBootCommercial = { bootCommercial: () => { } };
+        const commercialBundle = () =>
+            config.get('switches.standaloneCommercialBundle') && !config.get('page.isHosted', false)
+                ? loadScript(config.get('page.commercialBundleUrl')).then(
+                    () => fakeBootCommercial,
+                )
+                : import(
+                    /* webpackChunkName: "commercial" */
+                    'bootstraps/commercial-legacy'
+                );
 
 
         // Start downloading these ASAP
@@ -93,14 +102,14 @@ const go = () => {
         // eslint-disable-next-line no-nested-ternary
         const fetchCommercial = config.get('switches.commercial')
             ? (markTime('commercial request'),
-              commercialBundle())
+                commercialBundle())
             : Promise.resolve(fakeBootCommercial);
 
 
         const fetchEnhanced = window.guardian.isEnhanced
             ? (markTime('enhanced request'),
-              import(/* webpackChunkName: "enhanced" */ 'bootstraps/enhanced/main'))
-            : Promise.resolve({ bootEnhanced: () => {} });
+                import(/* webpackChunkName: "enhanced" */ 'bootstraps/enhanced/main'))
+            : Promise.resolve({ bootEnhanced: () => { } });
 
         Promise.all([
             fetchCommercial.then(({ bootCommercial }) => {

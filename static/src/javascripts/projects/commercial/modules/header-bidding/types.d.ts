@@ -78,32 +78,46 @@ type PrebidAdYouLikeParams = {
 	placement: string;
 };
 
+type PrebidCriteoParams = {
+	networkId: number;
+};
+
+type PrebidSmartParams = {
+	siteId: number;
+	pageId: number;
+	formatId: number;
+};
+
 type BidderCode =
 	| 'adyoulike'
 	| 'and'
 	| 'appnexus'
+	| 'criteo'
 	| 'improvedigital'
 	| 'ix'
 	| 'oxd'
 	| 'ozone'
 	| 'pubmatic'
+	| 'smartadserver'
 	| 'sonobi'
 	| 'triplelift'
 	| 'trustx'
 	| 'xhb';
 
 type PrebidParams =
-	| PrebidSonobiParams
-	| PrebidIndexExchangeParams
-	| PrebidTrustXParams
-	| PrebidTripleLiftParams
-	| PrebidImproveParams
-	| PrebidXaxisParams
+	| PrebidAdYouLikeParams
 	| PrebidAppNexusParams
+	| PrebidCriteoParams
+	| PrebidImproveParams
+	| PrebidIndexExchangeParams
 	| PrebidOpenXParams
 	| PrebidOzoneParams
-	| PrebidAdYouLikeParams
-	| PrebidPubmaticParams;
+	| PrebidPubmaticParams
+	| PrebidSmartParams
+	| PrebidSonobiParams
+	| PrebidTripleLiftParams
+	| PrebidTrustXParams
+	| PrebidXaxisParams;
 
 type PrebidBidder = {
 	name: BidderCode;

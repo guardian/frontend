@@ -1,9 +1,9 @@
 import { EventTimer } from '@guardian/commercial-core';
+import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
+import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';
-import { captureCommercialMetrics } from 'commercial/commercial-metrics';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import config from '../../../../../lib/config';
-import { setForceSendMetrics } from '../../../../common/modules/analytics/forceSendMetrics';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { getHeaderBiddingAdSlots } from '../slot-config';
@@ -52,10 +52,14 @@ type UserSync =
 
 type PbjsConfig = {
 	bidderTimeout: number;
+	timeoutBuffer?: number;
 	priceGranularity: typeof priceGranularity;
 	userSync: UserSync;
 	consentManagement?: ConsentManagement;
 	realTimeData?: unknown;
+	criteo?: {
+		fastBidVersion: 'latest' | 'none' | `${number}`;
+	};
 };
 
 type PbjsEvent = 'bidWon';
@@ -97,14 +101,14 @@ type XaxisBidResponse = {
 	[x: string]: unknown;
 };
 
-type BuyerTargetting<T> = {
+type BuyerTargeting<T> = {
 	key: string;
 	val: (bidResponse: DeepPartial<T>) => string | null | undefined;
 };
 
 // https://docs.prebid.org/dev-docs/publisher-api-reference/bidderSettings.html
 type BidderSetting<T = Record<string, unknown>> = {
-	adserverTargeting: Array<BuyerTargetting<T>>;
+	adserverTargeting: Array<BuyerTargeting<T>>;
 	bidCpmAdjustment: (n: number) => number;
 	suppressEmptyKeys: boolean;
 	sendStandardTargeting: boolean;
@@ -136,9 +140,7 @@ declare global {
 				auctionId?: string;
 			}): void;
 			setConfig: (config: PbjsConfig) => void;
-			getConfig: (
-				item?: string,
-			) => PbjsConfig & {
+			getConfig: (item?: string) => PbjsConfig & {
 				dataProviders: Array<{
 					name: string;
 					params: {
@@ -157,7 +159,17 @@ declare global {
 	}
 }
 
-const bidderTimeout = 1500;
+/**
+ * Prebid supports an additional timeout buffer to account for noisiness in
+ * timing JavaScript on the page. This value is passed to the Prebid config
+ * and is adjustable via this constant
+ */
+const timeoutBuffer = 400;
+
+/**
+ * The amount of time reserved for the auction
+ */
+const bidderTimeout = PREBID_TIMEOUT;
 
 class PrebidAdUnit {
 	code: string | null | undefined;
@@ -179,7 +191,7 @@ class PrebidAdUnit {
 let requestQueue: Promise<void> = Promise.resolve();
 let initialised = false;
 
-const initialise = (window: Window, framework = 'tcfv2'): void => {
+const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 	if (!window.pbjs) {
 		console.warn('window.pbjs not found on window');
 		return void 0; // We couldn’t initialise
@@ -226,6 +238,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		{},
 		{
 			bidderTimeout,
+			timeoutBuffer,
 			priceGranularity,
 			userSync,
 		},
@@ -254,9 +267,15 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		};
 	}
 
+	if (window.guardian.config.switches.prebidCriteo) {
+		pbjsConfig.criteo = {
+			fastBidVersion: 'latest',
+		};
+	}
+
 	window.pbjs.setConfig(pbjsConfig);
 
-	if (config.get('switches.prebidAnalytics', false)) {
+	if (config.get<boolean>('switches.prebidAnalytics', false)) {
 		window.pbjs.enableAnalytics([
 			{
 				provider: 'gu',
@@ -272,7 +291,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 	// allows dynamic assignment.
 	window.pbjs.bidderSettings = {};
 
-	if (config.get('switches.prebidXaxis', false)) {
+	if (config.get<boolean>('switches.prebidXaxis', false)) {
 		window.pbjs.bidderSettings.xhb = {
 			adserverTargeting: [
 				{
@@ -289,7 +308,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		};
 	}
 
-	if (config.get('switches.prebidImproveDigital', false)) {
+	if (config.get<boolean>('switches.prebidImproveDigital', false)) {
 		// Add placement ID for Improve Digital, reading from the bid response
 		const REGEX_PID = new RegExp(/placement_id=\\?"(\d+)\\?"/);
 		window.pbjs.bidderSettings.improvedigital = {
@@ -317,7 +336,7 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 			return;
 		}
 
-		const size = [width, height]; // eg. [300, 250]
+		const size: AdSizeTuple = [width, height]; // eg. [300, 250]
 		const advert = getAdvertById(adUnitCode);
 
 		if (!advert) {
@@ -330,15 +349,6 @@ const initialise = (window: Window, framework = 'tcfv2'): void => {
 		 * set here when adjusting the slot size.
 		 * */
 		advert.hasPrebidSize = true;
-
-		/**
-		 * If improve skin has won auction, toggle force send metrics on.
-		 * TODO remove after improve skin release.
-		 * */
-		if (data.bidderCode === 'improvedigital') {
-			setForceSendMetrics(true);
-			captureCommercialMetrics();
-		}
 	});
 };
 

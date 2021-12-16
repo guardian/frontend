@@ -2,7 +2,7 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { isBreakpoint, getBreakpoint } from 'lib/detect';
 import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';

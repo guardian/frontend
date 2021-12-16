@@ -68,7 +68,6 @@ class DevParametersHttpRequestHandler(
     "s", // section in commercial component requests
     "seg", // user segments in commercial component requests
     "t", // specific item targetting
-    "0p19G", // Google AMP AB test parameter
     "dll", // Disable lazy loading of ads
     "iasdebug", // IAS troubleshooting
     "cmpdebug", // CMP troubleshooting
@@ -90,7 +89,6 @@ class DevParametersHttpRequestHandler(
       !request.forceDCR &&
       !request.isLazyLoad &&
       !request.uri.startsWith("/oauth2callback") &&
-      !request.uri.startsWith("/px.gif") && // diagnostics box
       !request.uri.startsWith("/crosswords/search") &&
       !request.uri.startsWith("/crosswords/lookup") &&
       !request.uri.startsWith(

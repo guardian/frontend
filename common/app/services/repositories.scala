@@ -1,5 +1,6 @@
 package services
 
+import com.github.nscala_time.time.Implicits._
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
@@ -7,7 +8,6 @@ import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLo
 import implicits.Collections
 import model._
 import org.joda.time.DateTime
-import com.github.nscala_time.time.Implicits._
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
@@ -18,7 +18,7 @@ trait Index extends ConciergeRepository with Collections {
 
   val contentApiClient: ContentApiClient
   val sectionsLookUp: SectionsLookUp
-  private val rssFields = s"${QueryDefaults.trailFields},byline,body,standfirst"
+  private val rssFields = s"${QueryDefaults.trailFields},byline,standfirst"
 
   def normaliseTag(tag: String): String = {
     val conversions: Map[String, String] =
@@ -127,6 +127,7 @@ trait Index extends ConciergeRepository with Collections {
   ): Future[Either[IndexPage, PlayResult]] = {
 
     val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
+    val blocks = if (isRss) Some(TrailsToRss.BlocksToGenerateRssIntro) else None
 
     val maybeSection = sectionsLookUp.get(path)
 
@@ -160,17 +161,18 @@ trait Index extends ConciergeRepository with Collections {
     val reducedPageSize = 5 // Determined through trial and error.
     val pageSize = if (isRss && isExceptionalProfileForRss) reducedPageSize else IndexPagePagination.pageSize
 
-    val promiseOfResponse = contentApiClient.getResponse(
-      contentApiClient
-        .item(queryPath, edition)
-        .page(pageNum)
-        .pageSize(pageSize)
-        .showFields(fields),
-    ) map { response =>
+    val itemQuery = contentApiClient
+      .item(queryPath, edition)
+      .page(pageNum)
+      .pageSize(pageSize)
+      .showFields(fields)
+      .showBlocks(blocks)
+    val withBlocks = blocks.map(itemQuery.showBlocks(_)).getOrElse(itemQuery)
+
+    val promiseOfResponse = contentApiClient.getResponse(withBlocks) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(_ => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
-
       ModelOrResult(page, response, maybeSection)
     }
 

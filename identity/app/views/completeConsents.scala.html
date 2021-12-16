@@ -1,6 +1,6 @@
 @import services.EmailPrefsData
 
-@import com.gu.identity.model.EmailNewsletter
+@import services.newsletters.NewsletterResponse
 @(
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
@@ -8,7 +8,7 @@
     email: String,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
-    availableLists: List[EmailNewsletter],
+    availableLists: List[NewsletterResponse],
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import common.LinkTo

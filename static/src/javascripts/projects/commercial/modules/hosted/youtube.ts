@@ -3,7 +3,7 @@ import {
 	initYoutubeEvents,
 	trackYoutubeEvent,
 } from 'common/modules/atoms/youtube-tracking';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 
 type PlaybackEvents = { '25': number; '50': number; '75': number };
 
@@ -36,7 +36,10 @@ const sendPercentageCompleteEvents = (
 	);
 };
 
-export const initHostedYoutube = (el: HTMLElement): void => {
+export const initHostedYoutube = async (el: HTMLElement): Promise<void> => {
+	// dataset is slower for a single attribute
+	// https://jsbench.me/5wku5obaj4/1
+	// @MarSavar (2021-09-29)
 	const atomId = el.getAttribute('data-media-id');
 	const duration = Number(el.getAttribute('data-duration')) || null;
 
@@ -50,7 +53,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
 	let playTimer: number | undefined;
 	initYoutubeEvents(atomId);
 
-	void initYoutubePlayer(
+	return initYoutubePlayer(
 		el,
 		{
 			onPlayerReady: () => {
@@ -89,6 +92,6 @@ export const initHostedYoutube = (el: HTMLElement): void => {
 				}
 			},
 		},
-		el.dataset.assetId as string,
-	);
+		String(el.getAttribute('data-asset-id')),
+	).then(() => void 0);
 };

@@ -2,7 +2,7 @@ import $ from 'lib/$';
 import bonzo from 'bonzo';
 import config from 'lib/config';
 import debounce from 'lodash/debounce';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 
 let seen = false;
 

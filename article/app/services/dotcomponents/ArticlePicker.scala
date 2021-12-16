@@ -23,6 +23,12 @@ object ArticlePageChecks {
       "https://interactive.guim.co.uk/2017/07/booklisted/boot.js", // not supported but fallback ok
       "https://interactive.guim.co.uk/page-enhancers/super-lists/boot.js", // broken on frontend anyway
       "https://gdn-cdn.s3.amazonaws.com/quiz-builder/", // old quiz builder quizzes work fine
+      "https://uploads.guim.co.uk/2019/03/20/boot.js", //creates a contents section component
+      "https://uploads.guim.co.uk/2019/12/11/boot.js", //another variant of the contents block
+      "https://interactive.guim.co.uk/page-enhancers/nav/boot.js", //another variant of the contents block
+      "https://interactive.guim.co.uk/testing/2020/11/voterSlideshow/boot.js", //why on earth are there so many contents blocks?
+      "https://uploads.guim.co.uk/2021/10/15/boot.js", //somehow there are even more
+      "https://interactive.guim.co.uk/embed/2018/02/divider/index.html", //A simple divider that renders fine in DCR
     )
 
     def unsupportedElement(blockElement: BlockElement) =
@@ -47,14 +53,6 @@ object ArticlePageChecks {
 }
 
 object ArticlePicker {
-
-  private[this] val logger = DotcomponentsLogger()
-
-  private[this] def logRequest(msg: String, results: Map[String, String], page: PageWithStoryPackage)(implicit
-      request: RequestHeader,
-  ): Unit = {
-    logger.withRequestHeaders(request).results(msg, results, page)
-  }
 
   def dcrChecks(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
@@ -99,9 +97,9 @@ object ArticlePicker {
       ("pageTones" -> pageTones)
 
     if (tier == RemoteRender) {
-      logRequest(s"path executing in dotcomponents", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page)
     } else {
-      logRequest(s"path executing in web", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page)
     }
 
     tier

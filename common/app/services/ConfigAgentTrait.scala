@@ -139,6 +139,7 @@ object ConfigAgent extends GuLogging {
       isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
       editorialType = None, // value found in Content API
       commercial = None, // value found in Content API
+      priority = frontOption.flatMap(_.priority),
     )
   }
 

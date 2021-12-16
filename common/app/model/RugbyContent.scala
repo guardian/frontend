@@ -1,12 +1,12 @@
 package model
 
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import java.time.format.DateTimeFormatter
+import java.time.ZoneId
 
 object RugbyContent {
 
-  val timeFormatter: DateTimeFormatter = {
-    DateTimeFormat.forPattern("YYYY/MM/dd")
-  }
+  val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("YYYY/MM/dd")
+  timeFormatter.withZone(ZoneId.of("UTC"))
 
   val teamNameIds = Map(
     ("sport/japanrugby", "73710"),

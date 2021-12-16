@@ -118,7 +118,8 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
     getRequest.failed.foreach {
       case error: ContentApiError =>
         log.error(
-          s"Encountered content api error receiving message from queue: ${error.httpMessage} status: ${error.httpStatus}",
+          s"Encountered content api error receiving message from queue: httpMessage: ${error.httpMessage}; status: ${error.httpStatus}; response: ${error.errorResponse
+            .getOrElse("")}.",
           error,
         )
       case error: Throwable => log.error("Encountered error receiving message from queue", error)

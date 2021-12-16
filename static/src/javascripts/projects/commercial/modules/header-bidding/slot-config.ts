@@ -148,7 +148,7 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 	switch (getBreakpointKey()) {
 		case 'M':
 			return shouldIncludeMobileSticky() &&
-				config.get('switches.mobileStickyPrebid')
+				window.guardian.config.switches.mobileStickyPrebid
 				? commonSlots.concat([...mobileSlots, mobileStickySlot])
 				: commonSlots.concat(mobileSlots);
 		case 'T':

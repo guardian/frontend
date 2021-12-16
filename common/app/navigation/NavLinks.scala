@@ -112,7 +112,6 @@ private object NavLinks {
     ),
   )
   val soccer = football.copy(title = "Soccer")
-  val paralympics = NavLink("Tokyo 2020 Paralympics", "/sport/paralympic-games-2020")
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -176,9 +175,7 @@ private object NavLinks {
       NavLink("Obituaries", "/tone/obituaries"),
       NavLink("G2", "/theguardian/g2"),
       NavLink("Journal", "/theguardian/journal"),
-      NavLink("Weekend", "/theguardian/weekend"),
-      NavLink("The Guide", "/theguardian/theguide"),
-      NavLink("Saturday review", "/theguardian/guardianreview"),
+      NavLink("Saturday", "/theguardian/saturday"),
     ),
   )
   val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/membership")
@@ -229,6 +226,7 @@ private object NavLinks {
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
   val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
   val guardianPuzzlesApp = NavLink("Guardian Puzzles app", s"https://puzzles.theguardian.com/download")
+  val guardianLicensing = NavLink("Guardian content licensing site", s"https://licensing.theguardian.com/")
   val jobsRecruiter = NavLink(
     "Hire with Guardian Jobs",
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
@@ -365,7 +363,6 @@ private object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
-      paralympics,
       football,
       cricket,
       rugbyUnion,
@@ -381,7 +378,6 @@ private object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
-      paralympics,
       football,
       AFL,
       NRL,
@@ -395,7 +391,6 @@ private object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      paralympics,
       soccer,
       NFL,
       tennis,
@@ -588,23 +583,27 @@ private object NavLinks {
     printShop,
     ukPatrons,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
   val auBrandExtensions = List(
     auEvents,
     digitalNewspaperArchive,
     guardianPuzzlesApp,
     auWeekend,
+    guardianLicensing,
   )
   val usBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader_dropdown"),
     digitalNewspaperArchive,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader_dropdown"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
 
   // Tertiary Navigation

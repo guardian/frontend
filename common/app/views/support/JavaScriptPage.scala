@@ -5,14 +5,13 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import model.IpsosTags.getScriptTag
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
 import model.IpsosTags.getScriptTag
-import experiments.{ActiveExperiments, StandaloneCommercialBundle}
 import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
+import experiments.{ActiveExperiments, FetchNonRefreshableLineItems}
 
 object JavaScriptPage {
 
@@ -43,10 +42,17 @@ object JavaScriptPage {
       JsArray(ids map (id => JsNumber(id)))
     }
 
+    // Only attach the non-refreshable line items to the commercial config
+    // if not participating in the `FetchNonRefreshableLineItems` experiment
+    val nonRefreshableConfig = if (!ActiveExperiments.isParticipating(FetchNonRefreshableLineItems)(request)) {
+      Map("nonRefreshableLineItemIds" -> nonRefreshableLineItemIds)
+    } else {
+      Map()
+    }
+
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(request)),
-      "dfpNonRefreshableLineItemIds" -> nonRefreshableLineItemIds,
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
         case _: CommercialExpiryPage                            => true
@@ -55,7 +61,7 @@ object JavaScriptPage {
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
       "isSensitive" -> JsBoolean(page.metadata.sensitive),
-    ) ++ sponsorshipType
+    ) ++ sponsorshipType ++ nonRefreshableConfig
 
     val journalismMetaData = Map(
       "calloutsUrl" -> JsString(Configuration.journalism.calloutsUrl),
@@ -70,7 +76,7 @@ object JavaScriptPage {
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
     val commercialBundleUrl: Map[String, JsString] =
-      if (ActiveExperiments.isParticipating(StandaloneCommercialBundle)(request))
+      if (conf.switches.Switches.StandaloneCommercialBundle.isSwitchedOn)
         Map("commercialBundleUrl" -> JsString(assetURL("javascripts/commercial/graun.standalone.commercial.js")))
       else
         Map("commercialBundleUrl" -> JsString(assetURL("javascripts/graun.commercial.dcr.js")))

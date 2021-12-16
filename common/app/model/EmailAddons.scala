@@ -426,9 +426,11 @@ case object SavedForLater extends FrontEmailMetadata {
   override val banner = Some("saved-for-later.png")
 }
 
-case object TheGuideStayingIn extends FrontEmailMetadata {
-  val name = "The Guide Staying In"
-  override val banner = Some("home-entertainment-banner3-small.png")
+case object TheGuide extends ArticleEmailMetadata {
+  val name = "The Guide"
+  override val banner = Some("the-guide.png")
+  def test(c: ContentPage): Boolean =
+    c.item.tags.series.exists(_.id == "culture/series/the-guide")
 }
 
 case object DesignReview extends FrontEmailMetadata {
@@ -439,6 +441,11 @@ case object DesignReview extends FrontEmailMetadata {
 case object Documentaries extends FrontEmailMetadata {
   val name = "Documentaries"
   override val banner = Some("documentaries-2.png")
+}
+
+case object TheRuralNetwork extends FrontEmailMetadata {
+  val name = "The Rural Network"
+  override val banner = Some("rural-network.png")
 }
 
 case object AustraliasModernOutback extends FrontEmailMetadata {
@@ -487,6 +494,7 @@ object EmailAddons {
     USElectionBriefingForAustralia,
     TechScape,
     Tokyo2020DailyBriefing,
+    TheGuide,
   )
   private val frontEmails = Seq(
     SocialCareNetwork,
@@ -527,7 +535,7 @@ object EmailAddons {
     GreenLight,
     WordOfMouth,
     SavedForLater,
-    TheGuideStayingIn,
+    TheRuralNetwork,
     DesignReview,
     Documentaries,
     AustraliasModernOutback,

@@ -11,9 +11,9 @@ import com.gu.contentapi.client.model.v1.{
   Sponsorship => ApiSponsorship,
 }
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
-import common.Edition
+import common.{Chronos, Edition}
 import conf.Configuration
-import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
+import layout.ContentWidths.{BodyMedia, ImageRoleWidthsByBreakpointMapping, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
@@ -867,18 +867,23 @@ object PageElement {
         val imageAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
-        val imageSources: Seq[ImageSource] = DotcomRenderingImageRoleWidthByBreakpointMapping.all.map {
+        val imageRoleWidthsByBreakpoint =
+          if (isMainBlock) MainMedia
+          else if (isImmersive) ImmersiveMedia
+          else BodyMedia
+
+        val imageSources = imageRoleWidthsByBreakpoint.all.map {
           case (weighting, widths) =>
             val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
               Seq(
                 ImgSrc.srcsetForBreakpoint(
                   b,
-                  DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
+                  imageRoleWidthsByBreakpoint.immersive.breakpoints,
                   maybeImageMedia = Some(ImageMedia(imageAssets)),
                 ),
                 ImgSrc.srcsetForBreakpoint(
                   b,
-                  DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
+                  imageRoleWidthsByBreakpoint.immersive.breakpoints,
                   maybeImageMedia = Some(ImageMedia(imageAssets)),
                   hidpi = true,
                 ),
@@ -1065,7 +1070,8 @@ object PageElement {
           }
 
           case Some(interactive: InteractiveAtom) => {
-            val isLegacy = InteractiveSwitchOver.date.isAfter(webPublicationDate)
+            val isLegacy =
+              InteractiveSwitchOver.date.isAfter(Chronos.jodaDateTimeToJavaTimeDateTime(webPublicationDate))
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(
               InteractiveAtomBlockElement(
