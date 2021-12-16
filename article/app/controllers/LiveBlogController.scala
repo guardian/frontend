@@ -98,9 +98,11 @@ class LiveBlogController(
 
   private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
     blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
-      case NewsPillar  => true
-      case SportPillar => false
-      case _           => false
+      case NewsPillar      => true
+      case CulturePillar   => true
+      case LifestylePillar => true
+      case SportPillar     => false
+      case _               => false
     }
   }
 
