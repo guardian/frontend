@@ -400,8 +400,7 @@
   "../lib/url.ts",
   "../projects/common/modules/commercial/geo-utils.js",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/integrate-criteo.ts",
-  "../projects/common/modules/experiments/tests/integrate-smart.ts"
+  "../projects/common/modules/experiments/tests/integrate-criteo.ts"
  ],
  "../projects/commercial/modules/high-merch.ts": [
   "../lib/config.d.ts",
@@ -534,8 +533,7 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/integrate-criteo.ts",
-  "../projects/common/modules/experiments/tests/integrate-smart.ts"
+  "../projects/common/modules/experiments/tests/integrate-criteo.ts"
  ],
  "../projects/common/modules/article/space-filler.js": [
   "../lib/fastdom-promise.js",
@@ -615,7 +613,6 @@
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/integrate-criteo.ts",
-  "../projects/common/modules/experiments/tests/integrate-smart.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -642,10 +639,6 @@
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
  "../projects/common/modules/experiments/tests/integrate-criteo.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
- "../projects/common/modules/experiments/tests/integrate-smart.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
