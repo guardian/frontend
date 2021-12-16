@@ -124,7 +124,7 @@ const loadModules = () => {
 		);
 	});
 
-	return Promise.all(modulePromises);
+	return Promise.allSettled(modulePromises);
 };
 
 const bootCommercial = async (): Promise<void> => {
