@@ -5,10 +5,16 @@ const initEmbedResize = () => {
 		),
 	);
 
+    const allowedOrigins = ['https://www.theguardian.com', 'https://m.code.dev-theguardian.com', 'http://localhost:9000']
+
 	window.addEventListener('message', (event) => {
+        if (!allowedOrigins.includes(event.origin)) return
+
 		const iframes = allIframes.filter((i) => {
 			try {
-				return i.src === event.source.location.href;
+				return (
+					i.contentWindow === event.source
+				);
 			} catch (e) {
 				return false;
 			}
@@ -18,8 +24,11 @@ const initEmbedResize = () => {
 				const message = JSON.parse(event.data);
 				switch (message.type) {
 					case 'set-height':
+                        const value = parseInt(message.value);
+						if (!Number.isInteger(value)) return;
+
 						iframes.forEach((iframe) => {
-							iframe.height = message.value;
+							iframe.height = value;
 						});
 						break;
 					default:
