@@ -5,8 +5,17 @@ const initEmbedResize = () => {
 		),
 	);
 
-    const allowedOrigins = ['https://www.theguardian.com', 'https://m.code.dev-theguardian.com', 'http://localhost:9000']
+	// Tell the iframes to resize once this script is loaded
+	// Otherwise, earlier resize events might be missed
+	allIframes.forEach((iframe) => {
+		if (iframe && iframe.contentWindow)
+			iframe.contentWindow.postMessage("resize", "*");
+	});
 
+	const allowedOrigins = ['https://www.theguardian.com']
+	if (window.guardian.config.page.isDev) {
+		allowedOrigins.push('https://m.code.dev-theguardian.com')
+	}
 	window.addEventListener('message', (event) => {
         if (!allowedOrigins.includes(event.origin)) return
 
@@ -28,7 +37,7 @@ const initEmbedResize = () => {
 						if (!Number.isInteger(value)) return;
 
 						iframes.forEach((iframe) => {
-							iframe.height = value;
+							iframe.height = `${value}`;
 						});
 						break;
 					default:
