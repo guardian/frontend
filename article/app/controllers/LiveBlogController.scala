@@ -139,31 +139,31 @@ class LiveBlogController(
             Map(
               "participatingInTest" -> participatingInTest.toString,
               "dcrCouldRender" -> dcrCouldRender.toString,
+              "dcrCouldRenderAll" -> dcrCouldRenderAll.toString,
               "isLiveBlog" -> "true",
             )
           val remoteRendering =
             shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
 
-          val couldRemoteRender =
+          val notRemoteRendering =
             couldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRenderAll)
 
           if (remoteRendering) {
             DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
             val pageType: PageType = PageType(blog, request, context)
             remoteRenderer.getArticle(ws, blog, blocks, pageType)
+          } else if (notRemoteRendering) {
+            DotcomponentsLogger.logger.logRequest(
+              s"Could have been served in dcr without day filter",
+              properties,
+              page,
+            )
+            Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           } else {
             DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           }
 
-          if (couldRemoteRender) {
-            DotcomponentsLogger.logger.logRequest(s"liveblog could be executed in dotcomponents", properties, page)
-            val pageType: PageType = PageType(blog, request, context)
-            remoteRenderer.getArticle(ws, blog, blocks, pageType)
-          } else {
-            DotcomponentsLogger.logger.logRequest(s"liveblog not supported in dotcomponents", properties, page)
-            Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-          }
         case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
           remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
         case (blog: LiveBlogPage, AmpFormat) =>
@@ -187,6 +187,21 @@ class LiveBlogController(
     else if (forceDCR) true
     // User is in the test and dcr supports this blog . No param passed
     else if (participatingInTest && dcrCouldRender) true
+    else false
+  }
+
+  def couldRemoteRender(
+                         forceDCROff: Boolean,
+                         forceDCR: Boolean,
+                         participatingInTest: Boolean,
+                         dcrCouldRenderAll: Boolean,
+                       ): Boolean = {
+    // ?dcr=false, so never render DCR
+    if (forceDCROff) false
+    // ?dcr=true, so always render DCR
+    else if (forceDCR) true
+    // User is in the test and dcr supports this blog . No param passed
+    else if (participatingInTest && dcrCouldRenderAll) true
     else false
   }
 
