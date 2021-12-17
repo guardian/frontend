@@ -38,14 +38,17 @@
     </script>
     @if(EmailSignupRecaptcha.isSwitchedOn) {
         <script>
-            (() => {
+            const resizeToCurrentHeight = () => {
                 var height = parseInt(document.body.offsetHeight, 10);
                 var styles = document.defaultView.getComputedStyle(document.body);
                 height += parseInt(styles.getPropertyValue('margin-bottom'), 10);
                 height += parseInt(styles.getPropertyValue('margin-top'), 10);
-                sendResizeMessage(height)
-            })()
-            const submitButton = document.querySelector('.email-sub__submit-button')
+                sendResizeMessage(height);
+            }
+            window.addEventListener('message', (event) => {
+                if (event.data === 'resize') resizeToCurrentHeight();
+            })
+
             setupSubmitListener()
 
             const resizeToOriginalHeight = (() => {
@@ -56,8 +59,7 @@
             function sendResizeMessage(height) {
                 window.parent.postMessage(JSON.stringify({
                     type: 'set-height',
-                    value: height,
-                    src: window.location.href
+                    value: height
                 }), '*')
             }
 
@@ -66,6 +68,7 @@
             }
 
             function setupSubmitListener() {
+                const submitButton = document.querySelector('.email-sub__submit-button')
                 submitButton.addEventListener('click', (e) => onSubmit(e))
             }
 
