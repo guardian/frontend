@@ -96,25 +96,6 @@ class LiveBlogController(
 
   // Helper methods
 
-  private def isSupportedTheme(blog: LiveBlogPage): Boolean = {
-    blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
-      case NewsPillar  => true
-      case SportPillar => false
-      case _           => false
-    }
-  }
-
-  private def isDeadBlog(blog: LiveBlogPage): Boolean = !blog.article.fields.isLive
-
-  private def isNotRecent(blog: LiveBlogPage) = {
-    val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
-    blog.article.fields.lastModified.isBefore(twoDaysAgo)
-  }
-
-  def checkIfSupported(blog: LiveBlogPage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
-  }
-
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -126,7 +107,7 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) =>
-            val dcrCouldRender = checkIfSupported(blog)
+            val dcrCouldRender = LiveBlogController.checkIfSupported(blog)
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
             val properties =
               Map(
@@ -300,5 +281,26 @@ class LiveBlogController(
 
   def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
     filterKeyEvents.getOrElse(false)
+  }
+}
+
+object LiveBlogController {
+  private def isSupportedTheme(blog: PageWithStoryPackage): Boolean = {
+    blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
+      case NewsPillar  => true
+      case SportPillar => false
+      case _           => false
+    }
+  }
+
+  private def isDeadBlog(blog: PageWithStoryPackage): Boolean = !blog.article.fields.isLive
+
+  private def isNotRecent(blog: PageWithStoryPackage) = {
+    val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
+    blog.article.fields.lastModified.isBefore(twoDaysAgo)
+  }
+
+  def checkIfSupported(blog: PageWithStoryPackage): Boolean = {
+    isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
   }
 }
