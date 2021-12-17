@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
-import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar}
+import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar, CulturePillar, LifestylePillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
