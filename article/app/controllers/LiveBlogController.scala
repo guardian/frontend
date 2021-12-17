@@ -111,7 +111,7 @@ class LiveBlogController(
     blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }
 
-  private def checkIfSupported(blog: LiveBlogPage): Boolean = {
+  def checkIfSupported(blog: LiveBlogPage): Boolean = {
     isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
   }
 
