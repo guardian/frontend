@@ -33,7 +33,7 @@ const initEmbedResize = () => {
 				const message = JSON.parse(event.data);
 				switch (message.type) {
 					case 'set-height':
-                        const value = parseInt(message.value);
+						const value = parseInt(message.value);
 						if (!Number.isInteger(value)) return;
 
 						iframes.forEach((iframe) => {
