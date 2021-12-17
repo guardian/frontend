@@ -9080,10 +9080,10 @@ openurl@1.1.1:
   resolved "https://registry.yarnpkg.com/openurl/-/openurl-1.1.1.tgz#3875b4b0ef7a52c156f0db41d4609dbb0f94b387"
   integrity sha1-OHW0sO96UsFW8NtB1GCduw+Us4c=
 
-ophan-tracker-js@1.3.28:
-  version "1.3.28"
-  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.3.28.tgz#52d24a03a507dc491b0c27f2ded51b1ad44bae8b"
-  integrity sha512-1azFLoS1MS1mUX3+LN/MR0tkYqJd+PHByf5AkHsfoNxKz0O+G5L92x7AGdTfPvNiQZ0BCO1qhMoLyRo1OgNMSA==
+ophan-tracker-js@1.3.29:
+  version "1.3.29"
+  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.3.29.tgz#db211a121065173ebf45c1250d57768898f49cbb"
+  integrity sha512-PQ9iKiZ5hegavEzviZbrjCBHPYFMNKpyqyi49elD0Ehlt9Aeh75Yr8IM2GoP7iMS3nmtVjhMCmYNL8xSMCh7sQ==
 
 opn@5.3.0:
   version "5.3.0"
