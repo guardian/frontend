@@ -113,6 +113,8 @@ const setupListeners = () => {
 	});
 
 	bean.on(document.body, 'click', '.pinned-block__label', () => {
+
+        //scroll to element top on close if out of view.
 		const pinnedBlockHeader = document.querySelector(
 			'.pinned-block__header',
 		);
