@@ -10,12 +10,8 @@ import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
 import bean from 'bean';
 import { scrollToElement } from 'lib/scroller';
-import {
-	submitClickEvent,
-	submitInsertEvent,
-	submitViewEvent,
-} from 'common/modules/commercial/acquisitions-ophan';
 import { elementInView } from 'lib/element-inview';
+import ophan from 'ophan/ng';
 
 const affixTimeline = () => {
 	const keywordIds = config.get('page.keywordIds', '');
@@ -73,45 +69,40 @@ const cleanId = (blockIdString) => {
 	return blockIdString.substring(0, blockIdString.indexOf('-pinned'));
 };
 
-const buildComponentEventWithoutAction = (pinnedBlockId) => ({
+const componentEvent = (pinnedBlockId, action) => ({
 	component: {
 		componentType: 'LIVE_BLOG_PINNED_POST',
 		id: pinnedBlockId,
 	},
+	action: action,
 });
 
 const initTracking = () => {
 	const pinnedBlock = document.getElementById('pinned-block');
-	const pinnedBlockId = cleanId(pinnedBlock.dataset.blockId)
-	if (pinnedBlockId) {
-        submitInsertEvent(buildComponentEventWithoutAction(pinnedBlockId));
-        setupViewTracking(pinnedBlock, pinnedBlockId);
-    }
+	if (pinnedBlock) {
+		const pinnedBlockId = cleanId(pinnedBlock.dataset.blockId);
+
+		ophan.record(componentEvent(pinnedBlockId, 'INSERT'));
+		const inView = elementInView(pinnedBlock, window, {
+			top: 18,
+		});
+
+		inView.on('firstview', () => {
+			ophan.record(componentEvent(pinnedBlockId, 'VIEW'));
+		});
+	}
 };
 
-
-const setupViewTracking = (el, pinnedBlockId) => {
-	// top offset of 18 ensures view only counts when half of element is on screen
-	const inView = elementInView(el, window, {
-		top: 18,
-	});
-
-	inView.on('firstview', () => {
-		submitViewEvent(buildComponentEventWithoutAction(pinnedBlockId));
-	});
-};
-
-const trackOphanClick = (blockId, clickValue) => {
-	submitClickEvent({
-		component: {
-			componentType: 'LIVE_BLOG_PINNED_POST',
-			id: blockId,
-		},
+const trackOphanClick = (pinnedBlockId, clickValue) => {
+	ophan.record({
+		...componentEvent(pinnedBlockId, 'CLICK'),
 		value: clickValue,
 	});
 };
 
 const setupListeners = () => {
+	const pinnedBlockButton = document.querySelector('.pinned-block__button');
+
 	bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
 		const hasParam =
 			window.location.search.includes(`filterKeyEvents=true`);
@@ -125,17 +116,16 @@ const setupListeners = () => {
 		const pinnedBlockHeader = document.querySelector(
 			'.pinned-block__header',
 		);
-		const pinnedBlockButton = document.querySelector(
-			'.pinned-block__button',
-		);
-        const pinnedBlock = document.getElementById('pinned-block');
-        const pinnedBlockId = cleanId(pinnedBlock.dataset.blockId)
-
-		pinnedBlockButton.checked
-			? trackOphanClick(pinnedBlockId, 'show-less')
-			: trackOphanClick(pinnedBlockId, 'show-more');
 		if (!isVisible(pinnedBlockHeader) && pinnedBlockButton.checked)
 			scrollToElement(pinnedBlockHeader);
+	});
+
+	bean.on(document.body, 'click', '.pinned-block__label', () => {
+		const pinnedBlock = document.getElementById('pinned-block');
+		const pinnedBlockId = cleanId(pinnedBlock?.dataset?.blockId);
+		pinnedBlockId && pinnedBlockButton.checked
+			? trackOphanClick(pinnedBlockId, 'show-less')
+			: trackOphanClick(pinnedBlockId, 'show-more');
 	});
 };
 
