@@ -34,11 +34,10 @@ object StoryHtmlPage {
   def htmlDcrCouldRender(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
     if (pageWithStoryPackage.item.tags.isLiveBlog) {
       val thisDcrCouldRender: Boolean = checkIfSupported(pageWithStoryPackage)
-      Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
     } else {
       val thisDcrCouldRender: Boolean = dcrChecks(pageWithStoryPackage, request).values.forall(identity)
-      Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
     }
+    Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
   }
 
   def html(
