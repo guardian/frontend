@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
-import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar}
+import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar, CulturePillar, LifestylePillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
@@ -93,8 +93,6 @@ class LiveBlogController(
       }
     }
   }
-
-  // Helper methods
 
   private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
       request: RequestHeader,
@@ -287,9 +285,11 @@ class LiveBlogController(
 object LiveBlogController {
   private def isSupportedTheme(blog: PageWithStoryPackage): Boolean = {
     blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
-      case NewsPillar  => true
-      case SportPillar => false
-      case _           => false
+      case NewsPillar      => true
+      case CulturePillar   => true
+      case LifestylePillar => true
+      case SportPillar     => false
+      case _               => false
     }
   }
 

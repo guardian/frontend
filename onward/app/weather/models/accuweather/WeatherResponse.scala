@@ -13,6 +13,7 @@ object WeatherResponse {
 case class WeatherResponse(
     WeatherText: String,
     WeatherIcon: Int,
+    Link: String,
     Temperature: Map[String, Temperature],
 ) {
   def temperatureForEdition(edition: Edition): Temperature =

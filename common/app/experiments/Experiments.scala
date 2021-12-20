@@ -38,5 +38,5 @@ object FetchNonRefreshableLineItems
       description = "Fetch non-refreshable line items via a new endpoint",
       owners = Seq(Owner.withGithub("chrislomaxjones")),
       sellByDate = LocalDate.of(2022, 1, 24),
-      participationGroup = Perc1A,
+      participationGroup = Perc20A,
     )
