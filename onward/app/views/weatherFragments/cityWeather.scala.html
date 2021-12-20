@@ -21,6 +21,12 @@
     href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="weather__toggle-icon"></i>
     </button>
     <ul class="js-weather-forecast forecast"></ul>
+    <div class="weather__link-to-full" >
+        <div class="weather__icon--external-link">
+            @fragments.inlineSvg("external-link", "icon", List("weather__icon--external-link"))
+        </div>
+            <a href=@weatherResponse.Link&partner=web_guardian_adc target=”_blank” data-link-name="weather-view-full-forecast">View full forecast</a>
+    </div>
     <div class="weather__location">
         <div class="search-tool js-search-tool">
             <div class="search-tool__form u-cf">
