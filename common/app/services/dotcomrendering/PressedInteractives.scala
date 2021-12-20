@@ -75,6 +75,7 @@ object PressedInteractives {
     "/world/ng-interactive/2018/mar/05/italian-elections-2018-full-results-renzi-berlusconi",
     "/us-news/ng-interactive/2020/dec/08/us-election-results-2020-joe-biden-defeats-donald-trump-to-win-presidency",
     "/environment/ng-interactive/2021/apr/29/visualised-glaciers-now-and-then",
+    "/environment/ng-interactive/2015/nov/26/the-mekong-river-stories-from-the-heart-of-the-climate-crisis-interactive",
     // Specified by Newsletters UK
     "/info/ng-interactive/2017/may/05/sign-up-for-the-long-read-email",
     "/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email",
