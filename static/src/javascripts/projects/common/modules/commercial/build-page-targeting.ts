@@ -113,6 +113,12 @@ let latestCmpHasInitialised: boolean;
 let latestCMPState: ConsentState | null = null;
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
+// On every consent change we rebuildPageTargeting
+onConsentChange((state) => {
+	latestCMPState = state;
+	myPageTargeting = rebuildPageTargeting();
+});
+
 const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
 	const width = getViewport().width;
 	switch (getTweakpoint(width)) {
@@ -437,12 +443,6 @@ const getPageTargeting = (): PageTargeting => {
 		return myPageTargeting;
 	}
 
-	// First call binds to onConsentChange and returns {}
-	onConsentChange((state) => {
-		// On every consent change we rebuildPageTargeting
-		latestCMPState = state;
-		myPageTargeting = rebuildPageTargeting();
-	});
 	return myPageTargeting;
 };
 
