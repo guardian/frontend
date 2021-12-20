@@ -76,6 +76,7 @@
         case _ if (innings.declared) => { @innings.runsScored - @innings.wickets declared }
         case _ if (innings.forfeited) => { @innings.runsScored - @innings.wickets forfeited }
         case _ if (innings.allOut) => { @innings.runsScored }
+        case _ => { @innings.runsScored - @innings.wickets }
     }
 }
 
