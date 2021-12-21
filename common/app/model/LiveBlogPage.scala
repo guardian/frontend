@@ -5,5 +5,4 @@ case class LiveBlogPage(
     currentPage: LiveBlogCurrentPage,
     related: RelatedContent,
     filterKeyEvents: Boolean,
-    pinnedBlockSwitch: Boolean,
 ) extends PageWithStoryPackage

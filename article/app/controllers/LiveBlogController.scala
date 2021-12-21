@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar, CulturePi
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, LiveblogPinnedBlock, LiveblogRendering}
+import experiments.{ActiveExperiments, LiveblogRendering}
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
@@ -260,13 +260,11 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        val pinnedBlockSwitch = ActiveExperiments.isParticipating(LiveblogPinnedBlock)
         createLiveBlogModel(
           liveBlog,
           response,
           range,
           filterKeyEvents,
-          pinnedBlockSwitch,
         ).left
           .map(_ -> blocks)
       case unknown =>
