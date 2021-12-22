@@ -116,7 +116,7 @@ const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 // On every consent change we rebuildPageTargeting
 onConsentChange((state) => {
 	latestCMPState = state;
-	myPageTargeting = rebuildPageTargeting();
+	myPageTargeting = rebuildPageTargeting({});
 });
 
 const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
@@ -352,18 +352,15 @@ const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
 	return filtered;
 };
 
-const rebuildPageTargeting = () => {
-	latestCmpHasInitialised = cmp.hasInitialised();
-	const adConsentState = getAdConsentFromState(latestCMPState);
-	const ccpaState = latestCMPState?.ccpa
-		? latestCMPState.ccpa.doNotSell
-		: null;
-	const tcfv2EventStatus = latestCMPState?.tcfv2
-		? latestCMPState.tcfv2.eventStatus
+const rebuildPageTargeting = (consentState: ConsentState) => {
+	const adConsentState = getAdConsentFromState(consentState);
+	const ccpaState = consentState.ccpa ? consentState.ccpa.doNotSell : null;
+	const tcfv2EventStatus = consentState.tcfv2
+		? consentState.tcfv2.eventStatus
 		: 'na';
 
 	const { page } = window.guardian.config;
-	const amtgrp = latestCMPState?.tcfv2
+	const amtgrp = consentState.tcfv2
 		? getAdManagerGroup(adConsentState)
 		: getAdManagerGroup();
 	// personalised ads targeting
@@ -382,7 +379,7 @@ const rebuildPageTargeting = () => {
 			bp: findBreakpoint(),
 			cc: getCountryCode(), // if turned async, we could use getLocale()
 			cmp_interaction: tcfv2EventStatus,
-			consent_tcfv2: getTcfv2ConsentValue(latestCMPState),
+			consent_tcfv2: getTcfv2ConsentValue(consentState),
 			// dcre: DCR eligible
 			// when the page is DCR eligible and was rendered by DCR or
 			// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
@@ -434,17 +431,7 @@ const rebuildPageTargeting = () => {
 	return pageTargeting;
 };
 
-const getPageTargeting = (): PageTargeting => {
-	if (Object.keys(myPageTargeting).length !== 0) {
-		// If CMP was initialised since the last time myPageTargeting was built - rebuild
-		if (latestCmpHasInitialised !== cmp.hasInitialised()) {
-			myPageTargeting = rebuildPageTargeting();
-		}
-		return myPageTargeting;
-	}
-
-	return myPageTargeting;
-};
+const getPageTargeting = (): PageTargeting => rebuildPageTargeting({});
 
 const resetPageTargeting = (): void => {
 	myPageTargeting = {};
