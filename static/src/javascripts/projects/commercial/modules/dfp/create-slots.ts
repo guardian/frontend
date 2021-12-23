@@ -18,37 +18,35 @@ type CreateSlotOptions = {
 	sizes?: Record<string, AdSize[] | undefined>; // allow an empty object
 };
 
-const inlineDefinition: AdSlotConfig = {
-	sizeMappings: {
-		mobile: [
-			adSizes.outOfPage,
-			adSizes.empty,
-			adSizes.outstreamMobile,
-			adSizes.mpu,
-			adSizes.googleCard,
-			adSizes.fluid,
-		],
-		phablet: [
-			adSizes.outOfPage,
-			adSizes.empty,
-			adSizes.outstreamMobile,
-			adSizes.mpu,
-			adSizes.googleCard,
-			adSizes.outstreamDesktop,
-			adSizes.outstreamGoogleDesktop,
-			adSizes.fluid,
-		],
-		desktop: [
-			adSizes.outOfPage,
-			adSizes.empty,
-			adSizes.mpu,
-			adSizes.googleCard,
-			adSizes.video,
-			adSizes.outstreamDesktop,
-			adSizes.outstreamGoogleDesktop,
-			adSizes.fluid,
-		],
-	},
+const commonSizeMappings: SizeMappings = {
+	mobile: [
+		adSizes.outOfPage,
+		adSizes.empty,
+		adSizes.outstreamMobile,
+		adSizes.mpu,
+		adSizes.googleCard,
+		adSizes.fluid,
+	],
+	phablet: [
+		adSizes.outOfPage,
+		adSizes.empty,
+		adSizes.outstreamMobile,
+		adSizes.mpu,
+		adSizes.googleCard,
+		adSizes.outstreamDesktop,
+		adSizes.outstreamGoogleDesktop,
+		adSizes.fluid,
+	],
+	desktop: [
+		adSizes.outOfPage,
+		adSizes.empty,
+		adSizes.mpu,
+		adSizes.googleCard,
+		adSizes.video,
+		adSizes.outstreamDesktop,
+		adSizes.outstreamGoogleDesktop,
+		adSizes.fluid,
+	],
 };
 
 /*
@@ -109,9 +107,15 @@ const adSlotConfigs: AdSlotConfigs = {
 			],
 		},
 	},
-	inline: inlineDefinition,
-	mostpop: inlineDefinition,
-	comments: inlineDefinition,
+	inline: {
+		sizeMappings: commonSizeMappings,
+	},
+	mostpop: {
+		sizeMappings: commonSizeMappings,
+	},
+	comments: {
+		sizeMappings: commonSizeMappings,
+	},
 	'top-above-nav': {
 		sizeMappings: {
 			mobile: [
