@@ -206,7 +206,7 @@ const createClasses = (slotName: string, classes?: string): string[] =>
 const mergeSizeMappings = (
 	defaultSizeMappings: SizeMappings,
 	optionSizeMappings: CreateSlotOptions['sizes'],
-) => {
+): SizeMappings => {
 	if (!optionSizeMappings) return defaultSizeMappings;
 	const mergedSizeMappings: SizeMappings = { ...defaultSizeMappings };
 	const optionDevices = Object.keys(optionSizeMappings);
@@ -224,24 +224,30 @@ const mergeSizeMappings = (
 	return mergedSizeMappings;
 };
 
+const covertSizeMappingsToStrings = (
+	sizeMappings: SizeMappings,
+): Record<string, string> =>
+	Object.entries(sizeMappings).reduce(
+		(result: Record<string, string>, [device, sizes]) => {
+			result[device] = sizes.join('|');
+			return result;
+		},
+		{},
+	);
+
 export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
 ): HTMLElement => {
-	const adSlotConfig: AdSlotConfig = adSlotConfigs[type];
-	const slotName: string = options.name ?? adSlotConfig.name ?? type;
-	const sizeMappings: SizeMappings = mergeSizeMappings(
+	const adSlotConfig = adSlotConfigs[type];
+	const slotName = options.name ?? adSlotConfig.name ?? type;
+
+	const sizeMappings = mergeSizeMappings(
 		adSlotConfigs[type].sizeMappings,
 		options.sizes,
 	);
 
-	const sizeStrings: Record<string, string> = {};
-	Object.keys(sizeMappings).forEach((size) => {
-		sizeStrings[size] = sizeMappings[size].join('|');
-	});
-
-	const attributes: Record<string, string> = {};
-	Object.assign(attributes, sizeStrings);
+	const attributes = covertSizeMappingsToStrings(sizeMappings);
 
 	if (adSlotConfig.label === false) {
 		attributes.label = 'false';
