@@ -8,7 +8,7 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { isUserLoggedIn } from '../../common/modules/identity/api';
 import { addSlot } from './dfp/add-slot';
 import type { Advert } from './dfp/Advert';
-import { createSlots } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slots';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 
@@ -16,7 +16,7 @@ const createCommentSlots = (canBeDmpu: boolean): HTMLElement[] => {
 	const sizes = canBeDmpu
 		? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
 		: {};
-	const adSlots = createSlots('comments', { sizes });
+	const adSlots = createAdSlot('comments', { sizes });
 
 	adSlots.forEach((adSlot) => {
 		adSlot.classList.add('js-sticky-mpu');

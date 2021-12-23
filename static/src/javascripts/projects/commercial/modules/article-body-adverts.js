@@ -5,7 +5,7 @@ import { spaceFiller } from '../../common/modules/article/space-filler';
 import { adSizes } from '@guardian/commercial-core';
 import { addSlot } from './dfp/add-slot';
 import { trackAdRender } from './dfp/track-ad-render';
-import { createSlots } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slots';
 
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { initCarrot } from './carrot-traffic-driver';
@@ -19,7 +19,7 @@ const adSlotClassSelectorSizes = {
 };
 
 const insertAdAtPara = (para, name, type, classes, sizes) => {
-	const ads = createSlots(type, {
+	const ads = createAdSlot(type, {
 		name,
 		classes,
 		sizes,

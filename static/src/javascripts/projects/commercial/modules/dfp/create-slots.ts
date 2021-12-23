@@ -199,7 +199,7 @@ const createAdSlotElements = (
 	return adSlots;
 };
 
-export const createSlots = (
+export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
 ): HTMLElement[] => {

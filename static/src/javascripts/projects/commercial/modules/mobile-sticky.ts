@@ -1,12 +1,12 @@
 import fastdom from '../../../lib/fastdom-promise';
 import { addSlot } from './dfp/add-slot';
-import { createSlots } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slots';
 import { shouldIncludeMobileSticky } from './header-bidding/utils';
 
 const createAdWrapperClassic = () => {
 	const wrapper = document.createElement('div');
 	wrapper.className = 'mobilesticky-container';
-	const adSlot = createSlots('mobile-sticky', {})[0];
+	const adSlot = createAdSlot('mobile-sticky', {})[0];
 	wrapper.appendChild(adSlot);
 	return wrapper;
 };
@@ -14,7 +14,7 @@ const createAdWrapperClassic = () => {
 const createAdWrapperDCR = () => {
 	const wrapper = document.querySelector('.mobilesticky-container');
 	if (wrapper) {
-		const adSlot = createSlots('mobile-sticky', {})[0];
+		const adSlot = createAdSlot('mobile-sticky', {})[0];
 		wrapper.appendChild(adSlot);
 	}
 	return wrapper;

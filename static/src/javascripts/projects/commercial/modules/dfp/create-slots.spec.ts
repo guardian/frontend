@@ -1,5 +1,5 @@
 import { adSizes } from '@guardian/commercial-core';
-import { createSlots } from './create-slots';
+import { createAdSlot } from './create-slots';
 
 const imHtml = `
 <div id="dfp-ad--im"
@@ -26,7 +26,7 @@ const inline1Html = `
 
 describe('Create Ad Slot', () => {
 	it('should exist', () => {
-		expect(createSlots).toBeDefined();
+		expect(createAdSlot).toBeDefined();
 	});
 
 	[
@@ -42,7 +42,7 @@ describe('Create Ad Slot', () => {
 		},
 	].forEach((expectation) => {
 		it(`should create "${expectation.type}" ad slot`, () => {
-			const adSlots = createSlots(expectation.type, {
+			const adSlots = createAdSlot(expectation.type, {
 				name: expectation.name,
 				classes: expectation.classes,
 			});
@@ -58,14 +58,14 @@ describe('Create Ad Slot', () => {
 	});
 
 	it('should create "inline1" ad slot for inline-extra slots', () => {
-		const adSlots = createSlots('inline', { classes: 'inline-extra' });
+		const adSlots = createAdSlot('inline', { classes: 'inline-extra' });
 		const adSlot = adSlots[0];
 
 		expect(adSlot.classList.contains('ad-slot--inline-extra')).toBeTruthy();
 	});
 
 	it('should create "inline1" ad slot with additional size', () => {
-		const adSlots = createSlots('inline', {
+		const adSlots = createAdSlot('inline', {
 			sizes: { desktop: [adSizes.leaderboard] },
 		});
 		const adSlot = adSlots[0];
@@ -77,7 +77,7 @@ describe('Create Ad Slot', () => {
 	});
 
 	it('should use correct sizes for the mobile top-above-nav slot', () => {
-		const topAboveNavSlot = createSlots('top-above-nav')[0];
+		const topAboveNavSlot = createAdSlot('top-above-nav')[0];
 		const mobileSizes = topAboveNavSlot.getAttribute('data-mobile');
 		expect(mobileSizes).toBe('1,1|2,2|88,71|300,197|300,250|fluid');
 	});
