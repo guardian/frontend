@@ -236,7 +236,7 @@ const covertSizeMappingsToStrings = (
 	);
 
 const createDataAttributes = (
-	attrs: Record<string, string>
+	attrs: Record<string, string>,
 ): Record<string, string> =>
 	Object.entries(attrs).reduce(
 		(result: Record<string, string>, [key, value]) => {

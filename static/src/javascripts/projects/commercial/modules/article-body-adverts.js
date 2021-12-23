@@ -27,10 +27,10 @@ const insertAdAtPara = (para, name, type, classes, sizes) => {
 
 	return fastdom
 		.mutate(() => {
-            if (para.parentNode) {
-                para.parentNode.insertBefore(ad, para);
-            }
-        })
+			if (para.parentNode) {
+				para.parentNode.insertBefore(ad, para);
+			}
+		})
 		.then(() => {
 			const shouldForceDisplay = ['im', 'carrot'].includes(name);
 			// Only add the first ad (the DFP one) to GTP
