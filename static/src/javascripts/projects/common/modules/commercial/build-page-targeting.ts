@@ -3,7 +3,7 @@ import {
 	clearPermutiveSegments,
 	getPermutiveSegments,
 } from '@guardian/commercial-core';
-import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import type { CountryCode } from '@guardian/libs';
@@ -108,16 +108,7 @@ type PageTargeting = PartialWithNulls<{
 	[_: string]: string | string[];
 }>;
 
-let myPageTargeting: PageTargeting = {};
-let latestCmpHasInitialised: boolean;
-let latestCMPState: ConsentState | null = null;
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
-
-// On every consent change we rebuildPageTargeting
-onConsentChange((state) => {
-	latestCMPState = state;
-	myPageTargeting = rebuildPageTargeting({});
-});
 
 const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
 	const width = getViewport().width;
@@ -141,6 +132,7 @@ const skinsizeTargeting = () => {
 	return vp.width >= 1560 ? 'l' : 's';
 };
 
+// TODO - what does this mean if we now wait for consent state
 const inskinTargeting = (): TrueOrFalse => {
 	// Don’t show inskin if we cannot tell if a privacy message will be shown
 	if (!cmp.hasInitialised()) return 'f';
@@ -433,16 +425,8 @@ const rebuildPageTargeting = (consentState: ConsentState) => {
 
 const getPageTargeting = (): PageTargeting => rebuildPageTargeting({});
 
-const resetPageTargeting = (): void => {
-	myPageTargeting = {};
-};
-
 export {
 	getPageTargeting,
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
-};
-
-export const _ = {
-	resetPageTargeting,
 };
