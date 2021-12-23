@@ -12,15 +12,13 @@ export const init = (): Promise<void> => {
 		const container = document.createElement('div');
 
 		container.className = 'fc-container fc-container--commercial';
-		const slots = createAdSlot(
+		const slot = createAdSlot(
 			window.guardian.config.page.isPaidContent
 				? 'high-merch-paid'
 				: 'high-merch',
 		);
 
-		slots.forEach((slot) => {
-			container.appendChild(slot);
-		});
+		container.appendChild(slot);
 
 		return fastdom.mutate(() => {
 			if (anchor?.parentNode) {

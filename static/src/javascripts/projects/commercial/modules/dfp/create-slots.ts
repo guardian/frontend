@@ -161,13 +161,11 @@ const adSlotDefinitions: AdSlotDefinitions = {
   use addSlot from add-slot.js
 */
 
-const createAdSlotElements = (
+const createAdSlotElement = (
 	name: string,
 	attrs: Record<string, string>,
 	classes: string[],
-): HTMLElement[] => {
-	const adSlots = [];
-
+): HTMLElement => {
 	const id = `dfp-ad--${name}`;
 
 	// 3562dc07-78e9-4507-b922-78b979d4c5cb
@@ -194,15 +192,13 @@ const createAdSlotElements = (
 		adSlot.setAttribute(attr, attrs[attr]);
 	});
 
-	adSlots.push(adSlot);
-
-	return adSlots;
+	return adSlot;
 };
 
 export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
-): HTMLElement[] => {
+): HTMLElement => {
 	const attributes: Record<string, string> = {};
 	const definition: AdSlotDefinition = adSlotDefinitions[type];
 	const slotName: string = options.name ?? definition.name ?? type;
@@ -242,7 +238,7 @@ export const createAdSlot = (
 
 	classes.push(`ad-slot--${slotName}`);
 
-	return createAdSlotElements(
+	return createAdSlotElement(
 		slotName,
 		Object.keys(attributes).reduce(
 			(result, key) =>

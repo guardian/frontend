@@ -112,17 +112,15 @@ const desktopRules: SpacefinderRules = {
 };
 
 const insertSlot = (paras: HTMLElement[]): Promise<void> => {
-	const slots = createAdSlot('carrot');
+	const slot = createAdSlot('carrot');
 	const candidates = paras.slice(1);
 	return fastdom
 		.mutate(() => {
-			slots.forEach((slot) => {
-				if (candidates[0]?.parentNode) {
-					candidates[0].parentNode.insertBefore(slot, candidates[0]);
-				}
-			});
+			if (candidates[0]?.parentNode) {
+				candidates[0].parentNode.insertBefore(slot, candidates[0]);
+			}
 		})
-		.then(() => addSlot(slots[0], true));
+		.then(() => addSlot(slot, true));
 };
 
 const getRules = (): SpacefinderRules => {

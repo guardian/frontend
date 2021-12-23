@@ -19,24 +19,22 @@ const adSlotClassSelectorSizes = {
 };
 
 const insertAdAtPara = (para, name, type, classes, sizes) => {
-	const ads = createAdSlot(type, {
+	const ad = createAdSlot(type, {
 		name,
 		classes,
 		sizes,
 	});
 
 	return fastdom
-		.mutate(() =>
-			ads.forEach((ad) => {
-				if (para.parentNode) {
-					para.parentNode.insertBefore(ad, para);
-				}
-			}),
-		)
+		.mutate(() => {
+            if (para.parentNode) {
+                para.parentNode.insertBefore(ad, para);
+            }
+        })
 		.then(() => {
 			const shouldForceDisplay = ['im', 'carrot'].includes(name);
 			// Only add the first ad (the DFP one) to GTP
-			addSlot(ads[0], shouldForceDisplay);
+			addSlot(ad, shouldForceDisplay);
 		});
 };
 

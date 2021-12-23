@@ -12,16 +12,14 @@ import { createAdSlot } from './dfp/create-slots';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 
-const createCommentSlots = (canBeDmpu: boolean): HTMLElement[] => {
+const createCommentSlot = (canBeDmpu: boolean): HTMLElement => {
 	const sizes = canBeDmpu
 		? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
 		: {};
-	const adSlots = createAdSlot('comments', { sizes });
+	const adSlot = createAdSlot('comments', { sizes });
 
-	adSlots.forEach((adSlot) => {
-		adSlot.classList.add('js-sticky-mpu');
-	});
-	return adSlots;
+	adSlot.classList.add('js-sticky-mpu');
+	return adSlot;
 };
 
 const insertCommentAd = (
@@ -29,7 +27,7 @@ const insertCommentAd = (
 	adSlotContainer: Element,
 	canBeDmpu: boolean,
 ): Promise<void | EventEmitter> => {
-	const commentSlots = createCommentSlots(canBeDmpu);
+	const commentSlot = createCommentSlot(canBeDmpu);
 
 	return (
 		fastdom
@@ -43,11 +41,8 @@ const insertCommentAd = (
 						'discussion__ad-wrapper-wider',
 					);
 				}
-				// Append each slot into the adslot container...
-				commentSlots.forEach((adSlot) => {
-					adSlotContainer.appendChild(adSlot);
-				});
-				return commentSlots[0];
+				adSlotContainer.appendChild(commentSlot);
+				return commentSlot;
 			})
 			// Add only the fist slot (DFP slot) to GTP
 			.then((adSlot) => {
@@ -150,7 +145,7 @@ export const initCommentAdverts = (): Promise<boolean> => {
 
 export const _ = {
 	maybeUpgradeSlot,
-	createCommentSlots,
+	createCommentSlot,
 	insertCommentAd,
 	runSecondStage,
 	containsDMPU,

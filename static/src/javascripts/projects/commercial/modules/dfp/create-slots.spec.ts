@@ -32,44 +32,36 @@ describe('Create Ad Slot', () => {
 	[
 		{
 			type: 'im',
-			htmls: [imHtml],
+			htmls: imHtml,
 		},
 		{
 			type: 'inline',
 			classes: 'inline',
 			name: 'inline1',
-			htmls: [inline1Html],
+			htmls: inline1Html,
 		},
 	].forEach((expectation) => {
 		it(`should create "${expectation.type}" ad slot`, () => {
-			const adSlots = createAdSlot(expectation.type, {
+			const adSlot = createAdSlot(expectation.type, {
 				name: expectation.name,
 				classes: expectation.classes,
 			});
 
-			adSlots.forEach((adSlot, i) => {
-				expect(adSlot.outerHTML).toBe(
-					expectation.htmls[i]
-						.replace(/\n/g, '')
-						.replace(/\s+/g, ' '),
-				);
-			});
+			expect(adSlot.outerHTML).toBe(
+				expectation.htmls.replace(/\n/g, '').replace(/\s+/g, ' '),
+			);
 		});
 	});
 
 	it('should create "inline1" ad slot for inline-extra slots', () => {
-		const adSlots = createAdSlot('inline', { classes: 'inline-extra' });
-		const adSlot = adSlots[0];
-
+		const adSlot = createAdSlot('inline', { classes: 'inline-extra' });
 		expect(adSlot.classList.contains('ad-slot--inline-extra')).toBeTruthy();
 	});
 
 	it('should create "inline1" ad slot with additional size', () => {
-		const adSlots = createAdSlot('inline', {
+		const adSlot = createAdSlot('inline', {
 			sizes: { desktop: [adSizes.leaderboard] },
 		});
-		const adSlot = adSlots[0];
-
 		const desktopSizes = adSlot.getAttribute('data-desktop');
 		expect(
 			desktopSizes?.indexOf(adSizes.leaderboard.toString()),
@@ -77,7 +69,7 @@ describe('Create Ad Slot', () => {
 	});
 
 	it('should use correct sizes for the mobile top-above-nav slot', () => {
-		const topAboveNavSlot = createAdSlot('top-above-nav')[0];
+		const topAboveNavSlot = createAdSlot('top-above-nav');
 		const mobileSizes = topAboveNavSlot.getAttribute('data-mobile');
 		expect(mobileSizes).toBe('1,1|2,2|88,71|300,197|300,250|fluid');
 	});
