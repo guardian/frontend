@@ -3,14 +3,14 @@ import type { AdSize } from '@guardian/commercial-core';
 
 type SizeMappings = Record<string, AdSize[]>;
 
-type AdSlotDefinition = {
+type AdSlotConfig = {
 	sizeMappings: SizeMappings;
 	label?: boolean;
 	refresh?: boolean;
 	name?: string;
 };
 
-type AdSlotDefinitions = Record<string, AdSlotDefinition>;
+type AdSlotConfigs = Record<string, AdSlotConfig>;
 
 type CreateSlotOptions = {
 	classes?: string;
@@ -18,7 +18,7 @@ type CreateSlotOptions = {
 	sizes?: Record<string, AdSize[] | undefined>; // allow an empty object
 };
 
-const inlineDefinition: AdSlotDefinition = {
+const inlineDefinition: AdSlotConfig = {
 	sizeMappings: {
 		mobile: [
 			adSizes.outOfPage,
@@ -62,7 +62,7 @@ const inlineDefinition: AdSlotDefinition = {
 
  */
 
-const adSlotDefinitions: AdSlotDefinitions = {
+const adSlotConfigs: AdSlotConfigs = {
 	im: {
 		label: false,
 		refresh: false,
@@ -203,7 +203,7 @@ export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
 ): HTMLElement => {
-	const definition: AdSlotDefinition = adSlotDefinitions[type];
+	const definition: AdSlotConfig = adSlotConfigs[type];
 	const slotName: string = options.name ?? definition.name ?? type;
 	const sizes: SizeMappings = { ...definition.sizeMappings };
 
