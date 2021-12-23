@@ -235,6 +235,17 @@ const covertSizeMappingsToStrings = (
 		{},
 	);
 
+const createDataAttributes = (
+	attrs: Record<string, string>
+): Record<string, string> =>
+	Object.entries(attrs).reduce(
+		(result: Record<string, string>, [key, value]) => {
+			result[`data-${key}`] = value;
+			return result;
+		},
+		{},
+	);
+
 export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
@@ -259,11 +270,7 @@ export const createAdSlot = (
 
 	return createAdSlotElement(
 		slotName,
-		Object.keys(attributes).reduce(
-			(result, key) =>
-				Object.assign({}, result, { [`data-${key}`]: attributes[key] }),
-			{},
-		),
+		createDataAttributes(attributes),
 		createClasses(slotName, options.classes),
 	);
 };
