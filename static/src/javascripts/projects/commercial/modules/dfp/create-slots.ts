@@ -203,33 +203,41 @@ const createClasses = (slotName: string, classes?: string): string[] =>
 		(className: string) => `ad-slot--${className}`,
 	);
 
+const mergeSizeMappings = (
+	defaultSizeMappings: SizeMappings,
+	optionSizeMappings: CreateSlotOptions['sizes'],
+) => {
+	if (!optionSizeMappings) return defaultSizeMappings;
+	const mergedSizeMappings: SizeMappings = { ...defaultSizeMappings };
+	const optionDevices = Object.keys(optionSizeMappings);
+	for (let i = 0; i < optionDevices.length; i++) {
+		const device = optionDevices[i];
+		const optionSizeMappingsForDevice = optionSizeMappings[device];
+		const defaultSizeMappingsForDevice = defaultSizeMappings[device];
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
+		if (defaultSizeMappingsForDevice && optionSizeMappingsForDevice) {
+			mergedSizeMappings[device] = mergedSizeMappings[device].concat(
+				optionSizeMappingsForDevice,
+			);
+		}
+	}
+	return mergedSizeMappings;
+};
+
 export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
 ): HTMLElement => {
 	const adSlotConfig: AdSlotConfig = adSlotConfigs[type];
 	const slotName: string = options.name ?? adSlotConfig.name ?? type;
-	const defaultSizeMappings: SizeMappings = { ...adSlotConfig.sizeMappings };
-
-	const optionSizes = options.sizes;
-
-	if (optionSizes) {
-		Object.keys(optionSizes).forEach((optionSize: string) => {
-			const optionSizesArray = optionSizes[optionSize];
-			if (optionSizesArray) {
-				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
-				defaultSizeMappings[optionSize] = defaultSizeMappings[
-					optionSize
-				]
-					? defaultSizeMappings[optionSize].concat(optionSizesArray)
-					: optionSizesArray;
-			}
-		});
-	}
+	const sizeMappings: SizeMappings = mergeSizeMappings(
+		adSlotConfigs[type].sizeMappings,
+		options.sizes,
+	);
 
 	const sizeStrings: Record<string, string> = {};
-	Object.keys(defaultSizeMappings).forEach((size) => {
-		sizeStrings[size] = defaultSizeMappings[size].join('|');
+	Object.keys(sizeMappings).forEach((size) => {
+		sizeStrings[size] = sizeMappings[size].join('|');
 	});
 
 	const attributes: Record<string, string> = {};
