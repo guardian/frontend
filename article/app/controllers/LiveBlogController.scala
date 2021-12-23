@@ -106,16 +106,17 @@ class LiveBlogController(
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) =>
             val dcrCouldRender = LiveBlogController.checkIfSupported(blog)
+            val dcrCouldRenderNotOld = LiveBlogController.checkIfSupportedNotOld(blog)
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
             val properties =
               Map(
                 "participatingInTest" -> participatingInTest.toString,
                 "dcrCouldRender" -> dcrCouldRender.toString,
+                "dcrCouldRenderNotOld" -> dcrCouldRenderNotOld.toString,
                 "isLiveBlog" -> "true",
               )
             val remoteRendering =
               shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
-
             if (remoteRendering) {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
@@ -302,5 +303,8 @@ object LiveBlogController {
 
   def checkIfSupported(blog: PageWithStoryPackage): Boolean = {
     isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
+  }
+  def checkIfSupportedNotOld(blog: PageWithStoryPackage): Boolean = {
+    isDeadBlog(blog) && isSupportedTheme(blog)
   }
 }
