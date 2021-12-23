@@ -111,7 +111,7 @@ class LiveBlogController(
             val theme = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme
             val design = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).design
             val display = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).display
-            val isDeadBlog = LiveBlogController.isDeadBlog
+            val isDeadBlog = LiveBlogController.isDeadBlog(blog)
             val properties =
               Map(
                 "participatingInTest" -> participatingInTest.toString,
