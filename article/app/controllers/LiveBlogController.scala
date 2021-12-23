@@ -106,13 +106,21 @@ class LiveBlogController(
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) =>
             val dcrCouldRender = LiveBlogController.checkIfSupported(blog)
-            val dcrCouldRenderNotOld = LiveBlogController.checkIfSupportedNotOld(blog)
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
+            val isRecent = !LiveBlogController.isNotRecent(blog)
+            val theme = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme
+            val design = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).design
+            val display = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).display
+            val isDeadBlog = LiveBlogController.isDeadBlog
             val properties =
               Map(
                 "participatingInTest" -> participatingInTest.toString,
                 "dcrCouldRender" -> dcrCouldRender.toString,
-                "dcrCouldRenderNotOld" -> dcrCouldRenderNotOld.toString,
+                "theme" -> theme.toString,
+                "design" -> design.toString,
+                "display" -> display.toString,
+                "isRecent" -> isRecent.toString,
+                "isDead" -> isDeadBlog.toString,
                 "isLiveBlog" -> "true",
               )
             val remoteRendering =
@@ -294,17 +302,14 @@ object LiveBlogController {
     }
   }
 
-  private def isDeadBlog(blog: PageWithStoryPackage): Boolean = !blog.article.fields.isLive
+  def isDeadBlog(blog: PageWithStoryPackage): Boolean = !blog.article.fields.isLive
 
-  private def isNotRecent(blog: PageWithStoryPackage) = {
+  def isNotRecent(blog: PageWithStoryPackage) = {
     val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
     blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }
 
   def checkIfSupported(blog: PageWithStoryPackage): Boolean = {
     isDeadBlog(blog) && isSupportedTheme(blog) && isNotRecent(blog)
-  }
-  def checkIfSupportedNotOld(blog: PageWithStoryPackage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog)
   }
 }
