@@ -207,9 +207,9 @@ export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
 ): HTMLElement => {
-	const definition: AdSlotConfig = adSlotConfigs[type];
-	const slotName: string = options.name ?? definition.name ?? type;
-	const sizes: SizeMappings = { ...definition.sizeMappings };
+	const adSlotConfig: AdSlotConfig = adSlotConfigs[type];
+	const slotName: string = options.name ?? adSlotConfig.name ?? type;
+	const defaultSizeMappings: SizeMappings = { ...adSlotConfig.sizeMappings };
 
 	const optionSizes = options.sizes;
 
@@ -218,26 +218,28 @@ export const createAdSlot = (
 			const optionSizesArray = optionSizes[optionSize];
 			if (optionSizesArray) {
 				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
-				sizes[optionSize] = sizes[optionSize]
-					? sizes[optionSize].concat(optionSizesArray)
+				defaultSizeMappings[optionSize] = defaultSizeMappings[
+					optionSize
+				]
+					? defaultSizeMappings[optionSize].concat(optionSizesArray)
 					: optionSizesArray;
 			}
 		});
 	}
 
 	const sizeStrings: Record<string, string> = {};
-	Object.keys(sizes).forEach((size) => {
-		sizeStrings[size] = sizes[size].join('|');
+	Object.keys(defaultSizeMappings).forEach((size) => {
+		sizeStrings[size] = defaultSizeMappings[size].join('|');
 	});
 
 	const attributes: Record<string, string> = {};
 	Object.assign(attributes, sizeStrings);
 
-	if (definition.label === false) {
+	if (adSlotConfig.label === false) {
 		attributes.label = 'false';
 	}
 
-	if (definition.refresh === false) {
+	if (adSlotConfig.refresh === false) {
 		attributes.refresh = 'false';
 	}
 
