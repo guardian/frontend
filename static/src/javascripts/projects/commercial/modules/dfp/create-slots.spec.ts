@@ -63,9 +63,9 @@ describe('Create Ad Slot', () => {
 			sizes: { desktop: [adSizes.leaderboard] },
 		});
 		const desktopSizes = adSlot.getAttribute('data-desktop');
-		expect(
-			desktopSizes?.indexOf(adSizes.leaderboard.toString()),
-		).toBeTruthy();
+		expect(desktopSizes).toEqual(
+			'1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|728,90',
+		);
 	});
 
 	it('should use correct sizes for the mobile top-above-nav slot', () => {
