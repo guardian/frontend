@@ -195,6 +195,11 @@ const createAdSlotElement = (
 	return adSlot;
 };
 
+const createClasses = (slotName: string, classes?: string): string[] =>
+	[...(classes?.split(' ') ?? []), slotName].map(
+		(className: string) => `ad-slot--${className}`,
+	);
+
 export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
@@ -202,8 +207,6 @@ export const createAdSlot = (
 	const attributes: Record<string, string> = {};
 	const definition: AdSlotDefinition = adSlotDefinitions[type];
 	const slotName: string = options.name ?? definition.name ?? type;
-	const classes: string[] =
-		options.classes?.split(' ').map((cn) => `ad-slot--${cn}`) ?? [];
 
 	const sizes: SizeMappings = { ...definition.sizeMappings };
 	const sizeStrings: Record<string, string> = {};
@@ -236,8 +239,6 @@ export const createAdSlot = (
 		attributes.refresh = 'false';
 	}
 
-	classes.push(`ad-slot--${slotName}`);
-
 	return createAdSlotElement(
 		slotName,
 		Object.keys(attributes).reduce(
@@ -245,6 +246,6 @@ export const createAdSlot = (
 				Object.assign({}, result, { [`data-${key}`]: attributes[key] }),
 			{},
 		),
-		classes,
+		createClasses(slotName, options.classes),
 	);
 };
