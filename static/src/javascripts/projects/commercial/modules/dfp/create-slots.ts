@@ -160,7 +160,6 @@ const adSlotDefinitions: AdSlotDefinitions = {
   Note that for the DFP slot to be filled by GTP, you'll have to
   use addSlot from add-slot.js
 */
-
 const createAdSlotElement = (
 	name: string,
 	attrs: Record<string, string>,
@@ -204,12 +203,9 @@ export const createAdSlot = (
 	type: string,
 	options: CreateSlotOptions = {},
 ): HTMLElement => {
-	const attributes: Record<string, string> = {};
 	const definition: AdSlotDefinition = adSlotDefinitions[type];
 	const slotName: string = options.name ?? definition.name ?? type;
-
 	const sizes: SizeMappings = { ...definition.sizeMappings };
-	const sizeStrings: Record<string, string> = {};
 
 	const optionSizes = options.sizes;
 
@@ -225,10 +221,12 @@ export const createAdSlot = (
 		});
 	}
 
+	const sizeStrings: Record<string, string> = {};
 	Object.keys(sizes).forEach((size) => {
 		sizeStrings[size] = sizes[size].join('|');
 	});
 
+	const attributes: Record<string, string> = {};
 	Object.assign(attributes, sizeStrings);
 
 	if (definition.label === false) {
