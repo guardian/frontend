@@ -53,19 +53,23 @@ describe('Create Ad Slot', () => {
 		});
 	});
 
-	it('should create "inline1" ad slot for inline-extra slots', () => {
-		const adSlot = createAdSlot('inline', { classes: 'inline-extra' });
-		expect(adSlot.classList.contains('ad-slot--inline-extra')).toBeTruthy();
-	});
-
-	it('should create "inline1" ad slot with additional size', () => {
+	it('should create "inline1" ad slot and merge valid additional sizes', () => {
 		const adSlot = createAdSlot('inline', {
-			sizes: { desktop: [adSizes.leaderboard] },
+			sizes: {
+				desktop: [adSizes.leaderboard],
+				mobile: [adSizes.inlineMerchandising],
+				invalid: [adSizes.leaderboard],
+			},
 		});
 		const desktopSizes = adSlot.getAttribute('data-desktop');
 		expect(desktopSizes).toEqual(
 			'1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|728,90',
 		);
+		const mobileSizes = adSlot.getAttribute('data-mobile');
+		expect(mobileSizes).toEqual(
+			'1,1|2,2|300,197|300,250|300,274|fluid|88,85',
+		);
+		expect(adSlot.getAttributeNames()).not.toContain('data-invalid');
 	});
 
 	it('should use correct sizes for the mobile top-above-nav slot', () => {
