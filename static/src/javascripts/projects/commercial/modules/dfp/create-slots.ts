@@ -155,11 +155,9 @@ const adSlotConfigs: AdSlotConfigs = {
 };
 
 /*
-  Returns an array of adSlot HTMLElement(s) with always at least one HTMLDivElement
-  which is the main DFP slot.
+  Returns an adSlot HTMLElement which is the main DFP slot.
 
-  Insert those elements as siblings at the place
-  you want adverts to appear.
+  Insert that element as siblings at the place you want adverts to appear.
 
   Note that for the DFP slot to be filled by GTP, you'll have to
   use addSlot from add-slot.js
@@ -198,11 +196,22 @@ const createAdSlotElement = (
 	return adSlot;
 };
 
+/**
+ * Split class names and prefix all with ad-slot--${className}
+ */
 const createClasses = (slotName: string, classes?: string): string[] =>
 	[...(classes?.split(' ') ?? []), slotName].map(
 		(className: string) => `ad-slot--${className}`,
 	);
 
+/**
+ * Given default size mappings and additional size mappings from
+ * the createAdSlot options parameter.
+ *
+ * 1. Check that the options size mappings use known device names
+ * 2. If so merge the size mappings
+ *
+ */
 const mergeSizeMappings = (
 	defaultSizeMappings: SizeMappings,
 	optionSizeMappings: CreateSlotOptions['sizes'],
@@ -224,6 +233,13 @@ const mergeSizeMappings = (
 	return mergedSizeMappings;
 };
 
+/**
+ * Convert size mappings to a string that will be added to the ad slot
+ * data atttributes.
+ *
+ * e.g. { desktop: [[320,250], [320, 280]] } => { desktop: '320,250|320,280' }
+ *
+ */
 const covertSizeMappingsToStrings = (
 	sizeMappings: SizeMappings,
 ): Record<string, string> =>
@@ -235,6 +251,9 @@ const covertSizeMappingsToStrings = (
 		{},
 	);
 
+/**
+ * Prefix all object keys with data-${key}
+ */
 const createDataAttributes = (
 	attrs: Record<string, string>,
 ): Record<string, string> =>
