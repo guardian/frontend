@@ -41,11 +41,17 @@ const tags: Record<string, unknown> = {
 const commercialBaseModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
 	['cm-prepare-prebid', preparePrebid],
-	// etc.
+	// Permutive init code must run before google tag enableServices()
+	// The permutive lib however is loaded async with the third party tags
+	['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
+	['cm-mobileSticky', initMobileSticky],
+	['cm-highMerch', initHighMerch],
+	['cm-articleAsideAdverts', initArticleAsideAdverts],
+	['cm-articleBodyAdverts', initArticleBodyAdverts],
+	['cm-liveblogAdverts', initLiveblogAdverts],
 ];
 
 const commercialModules: Modules = [
-	// ['cm-setAdTestCookie', setAdTestCookie],
 	['cm-adFreeSlotRemove', adFreeSlotRemove],
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
@@ -54,19 +60,10 @@ const commercialModules: Modules = [
 
 if (!commercialFeatures.adFree) {
 	commercialModules.push(
-		// ['cm-prepare-prebid', preparePrebid],
 		['cm-prepare-a9', prepareA9],
 		['cm-thirdPartyTags', initThirdPartyTags],
-		// Permutive init code must run before google tag enableServices()
-		// The permutive lib however is loaded async with the third party tags
-		['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
 		['cm-redplanet', initRedplanet],
 		['cm-prepare-adverification', prepareAdVerification],
-		['cm-mobileSticky', initMobileSticky],
-		['cm-highMerch', initHighMerch],
-		['cm-articleAsideAdverts', initArticleAsideAdverts],
-		['cm-articleBodyAdverts', initArticleBodyAdverts],
-		['cm-liveblogAdverts', initLiveblogAdverts],
 		['cm-stickyTopBanner', initStickyTopBanner],
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],
