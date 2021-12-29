@@ -38,8 +38,14 @@ const tags: Record<string, unknown> = {
 	bundle: 'standalone',
 };
 
-const commercialModules: Modules = [
+const commercialBaseModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
+	['cm-prepare-prebid', preparePrebid],
+	// etc.
+];
+
+const commercialModules: Modules = [
+	// ['cm-setAdTestCookie', setAdTestCookie],
 	['cm-adFreeSlotRemove', adFreeSlotRemove],
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
@@ -48,7 +54,7 @@ const commercialModules: Modules = [
 
 if (!commercialFeatures.adFree) {
 	commercialModules.push(
-		['cm-prepare-prebid', preparePrebid],
+		// ['cm-prepare-prebid', preparePrebid],
 		['cm-prepare-a9', prepareA9],
 		['cm-thirdPartyTags', initThirdPartyTags],
 		// Permutive init code must run before google tag enableServices()
@@ -104,7 +110,30 @@ const loadDcrBundle = async (): Promise<void> => {
 	return;
 };
 
-const loadModules = () => {
+const loadBaseModules = () => {
+	const modulePromises: Array<Promise<unknown>> = [];
+
+	commercialBaseModules.forEach((module) => {
+		const [moduleName, moduleInit] = module;
+
+		catchErrorsWithContext(
+			[
+				[
+					moduleName,
+					function pushAfterComplete(): void {
+						const result = moduleInit();
+						modulePromises.push(result);
+					},
+				],
+			],
+			tags,
+		);
+	});
+
+	return Promise.allSettled(modulePromises);
+};
+
+const loadRemainingModules = () => {
 	const modulePromises: Array<Promise<unknown>> = [];
 
 	commercialModules.forEach((module) => {
@@ -154,19 +183,41 @@ const bootCommercial = async (): Promise<void> => {
 	try {
 		await loadFrontendBundle();
 		await loadDcrBundle();
-		await loadModules();
 
-		return catchErrorsWithContext(
-			[
+		// load just those modules required to display ads on the page
+		const baseModulesLoaded = loadBaseModules().then(() => {
+			catchErrorsWithContext(
 				[
-					'ga-user-timing-commercial-end',
-					function runTrackPerformance(): void {
-						EventTimer.get().trigger('commercialEnd');
-					},
+					[
+						'ga-user-timing-commercial-base-modules-loaded',
+						function runTrackPerformance(): void {
+							EventTimer.get().trigger(
+								'commercialBaseModulesLoaded',
+							);
+						},
+					],
 				],
-			],
-			tags,
-		);
+				tags,
+			);
+		});
+
+		// load the remaining modules
+		const remainingModulesLoaded = loadRemainingModules().then(() => {
+			catchErrorsWithContext(
+				[
+					[
+						'ga-user-timing-commercial-end',
+						function runTrackPerformance(): void {
+							EventTimer.get().trigger('commercialEnd');
+						},
+					],
+				],
+				tags,
+			);
+		});
+
+		await Promise.all([baseModulesLoaded, remainingModulesLoaded]);
+		return;
 	} catch (error) {
 		// report async errors in bootCommercial to Sentry with the commercial feature tag
 		reportError(error, tags, false);
