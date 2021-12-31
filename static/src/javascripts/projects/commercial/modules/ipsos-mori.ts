@@ -4,7 +4,7 @@ import { getConsentFor } from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
 import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
-import { stub } from './ipsos-mori-helpers';
+import { stub } from './vendor/ipsos-mori';
 
 const loadIpsosScript = () => {
 	stub();
