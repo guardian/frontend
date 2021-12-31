@@ -1,4 +1,4 @@
-// This is third party code and so should not be converted to typescript
+// This is third party code and should not be converted to TypeScript
 // See documentation here: https://git.io/Jy5w8
 
 export const stub = () => {
