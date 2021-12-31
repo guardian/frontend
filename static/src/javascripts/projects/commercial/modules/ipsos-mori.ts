@@ -1,20 +1,17 @@
+// DCR documentation https://git.io/Jy5w8
+
 import { getConsentFor } from '@guardian/consent-management-platform';
-import { getLocale, loadScript } from '@guardian/libs';
+import { getLocale, loadScript, log } from '@guardian/libs';
 import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
-import { log } from '@guardian/libs';
+import { stub } from './ipsos-mori-helpers';
 
 const loadIpsosScript = () => {
-	window.dm = window.dm || { AjaxData: [] };
-	window.dm.AjaxEvent = (et, d, ssid, ad) => {
-		dm.AjaxData.push({ et, d, ssid, ad }); // eslint-disable-line no-undef
-		if (window.DotMetricsObj) {
-			DotMetricsObj.onAjaxDataUpdate(); // eslint-disable-line no-undef
-		}
-	};
+	stub();
+
 	const ipsosSource = `https://uk-script.dotmetrics.net/door.js?d=${
 		document.location.host
-	}&t=${config.get('page.ipsosTag')}`;
+	}&t=${config.get('page.ipsosTag') as string}`;
 
 	return loadScript(ipsosSource, {
 		id: 'ipsos',
@@ -23,7 +20,7 @@ const loadIpsosScript = () => {
 	});
 };
 
-export const init = () => {
+export const init = (): Promise<void> => {
 	getLocale()
 		.then((locale) => {
 			if (locale === 'GB') {
