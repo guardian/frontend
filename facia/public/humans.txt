@@ -100,7 +100,8 @@ From: London, UK
 Senior Developer: Adam Fisher
 Twitter: @adamnfish
 
-Developer: Pascal Honoré
+Pascal Honoré
+https://github.com/shtukas
 
 Development Manager: Dominic Kendrick
 Twitter: @dominickendrick
