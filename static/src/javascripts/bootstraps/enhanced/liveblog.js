@@ -69,13 +69,14 @@ const cleanId = (blockIdString) => {
 	return blockIdString.substring(0, blockIdString.indexOf('-pinned'));
 };
 
-const componentEvent = (pinnedBlockId, action) => ({
+const componentEvent = (pinnedBlockId, action, value) => ({
     componentEvent: {
         component: {
             componentType: 'LIVE_BLOG_PINNED_POST',
             id: pinnedBlockId,
         },
         action: action,
+        ...value
     }
 });
 
@@ -96,16 +97,7 @@ const initTracking = () => {
 };
 
 const trackOphanClick = (pinnedBlockId, clickValue) => {
-	ophan.record({
-        componentEvent: {
-            component: {
-                componentType: 'LIVE_BLOG_PINNED_POST',
-                id: pinnedBlockId,
-            },
-            action: 'CLICK',
-            value: clickValue,
-        }
-	});
+    ophan.record(componentEvent(pinnedBlockId, 'VIEW', {value: clickValue}));
 };
 
 const setupListeners = () => {
