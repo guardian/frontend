@@ -9,9 +9,10 @@ import { stub } from './vendor/ipsos-mori';
 const loadIpsosScript = () => {
 	stub();
 
-	const ipsosSource = `https://uk-script.dotmetrics.net/door.js?d=${
-		document.location.host
-	}&t=${config.get<string>('page.ipsosTag')}`;
+	const ipsosTag = config.get<string>('page.ipsosTag');
+	if (ipsosTag === undefined) throw Error('Ipsos tag undefined');
+
+	const ipsosSource = `https://uk-script.dotmetrics.net/door.js?d=${document.location.host}&t=${ipsosTag}`;
 
 	return loadScript(ipsosSource, {
 		id: 'ipsos',
