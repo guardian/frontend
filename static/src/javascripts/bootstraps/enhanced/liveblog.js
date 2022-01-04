@@ -70,11 +70,13 @@ const cleanId = (blockIdString) => {
 };
 
 const componentEvent = (pinnedBlockId, action) => ({
-	component: {
-		componentType: 'LIVE_BLOG_PINNED_POST',
-		id: pinnedBlockId,
-	},
-	action: action,
+    componentEvent: {
+        component: {
+            componentType: 'LIVE_BLOG_PINNED_POST',
+            id: pinnedBlockId,
+        },
+        action: action,
+    }
 });
 
 const initTracking = () => {
@@ -95,8 +97,14 @@ const initTracking = () => {
 
 const trackOphanClick = (pinnedBlockId, clickValue) => {
 	ophan.record({
-		...componentEvent(pinnedBlockId, 'CLICK'),
-		value: clickValue,
+        componentEvent: {
+            component: {
+                componentType: 'LIVE_BLOG_PINNED_POST',
+                id: pinnedBlockId,
+            },
+            action: 'CLICK',
+            value: clickValue,
+        }
 	});
 };
 
