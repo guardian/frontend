@@ -107,7 +107,7 @@ const createSubscriptionFormEventHandlers = (buttonEl) => {
         const form = buttonEl.form;
         if (validate(form)) {
             if (window.guardian.config.switches.emailSignupRecaptcha) {
-                showCaptcha(buttonEl.value, () => submitForm(form, buttonEl))
+                showCaptcha(form, () => submitForm(form, buttonEl))
             } else {
                 submitForm(form, buttonEl);
             }
@@ -115,8 +115,9 @@ const createSubscriptionFormEventHandlers = (buttonEl) => {
     });
 };
 
-const showCaptcha = (listId, callback) => {
-    const captchaId = grecaptcha.render(`grecaptcha_container-${listId}`, {
+const showCaptcha = (form, callback) => {
+    const captchaContainer = $('.grecaptcha_container', form).get(0)
+    const captchaId = grecaptcha.render(captchaContainer, {
         sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
         callback: callback,
         size: 'invisible'
