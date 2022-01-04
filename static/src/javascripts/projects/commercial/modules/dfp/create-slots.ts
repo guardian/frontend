@@ -212,28 +212,28 @@ const createClasses = (
  * the createAdSlot options parameter.
  *
  * 1. Check that the options size mappings use known device names
- * 2. If so merge the size mappings
+ * 2. If so concat the size mappings
  *
  */
-const mergeSizeMappings = (
+const concatSizeMappings = (
 	defaultSizeMappings: SizeMappings,
 	optionSizeMappings: CreateSlotOptions['sizes'],
 ): SizeMappings => {
 	if (!optionSizeMappings) return defaultSizeMappings;
-	const mergedSizeMappings: SizeMappings = { ...defaultSizeMappings };
-	const optionDevices = Object.keys(optionSizeMappings);
+	const concatenatedSizeMappings: SizeMappings = { ...defaultSizeMappings };
+	const optionDevices = Object.keys(optionSizeMappings); // ['mobile', 'desktop']
 	for (let i = 0; i < optionDevices.length; i++) {
 		const device = optionDevices[i];
 		const optionSizeMappingsForDevice = optionSizeMappings[device];
 		const defaultSizeMappingsForDevice = defaultSizeMappings[device];
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
 		if (defaultSizeMappingsForDevice && optionSizeMappingsForDevice) {
-			mergedSizeMappings[device] = mergedSizeMappings[device].concat(
-				optionSizeMappingsForDevice,
-			);
+			concatenatedSizeMappings[device] = concatenatedSizeMappings[
+				device
+			].concat(optionSizeMappingsForDevice);
 		}
 	}
-	return mergedSizeMappings;
+	return concatenatedSizeMappings;
 };
 
 /**
@@ -275,7 +275,7 @@ export const createAdSlot = (
 	const adSlotConfig = adSlotConfigs[type];
 	const slotName = options.name ?? adSlotConfig.name ?? type;
 
-	const sizeMappings = mergeSizeMappings(
+	const sizeMappings = concatSizeMappings(
 		adSlotConfig.sizeMappings,
 		options.sizes,
 	);
