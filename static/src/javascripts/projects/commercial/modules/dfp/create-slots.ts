@@ -273,7 +273,7 @@ export const createAdSlot = (
 	const slotName = options.name ?? adSlotConfig.name ?? type;
 
 	const sizeMappings = mergeSizeMappings(
-		adSlotConfigs[type].sizeMappings,
+		adSlotConfig.sizeMappings,
 		options.sizes,
 	);
 
