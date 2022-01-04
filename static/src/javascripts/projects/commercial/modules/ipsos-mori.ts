@@ -11,7 +11,7 @@ const loadIpsosScript = () => {
 
 	const ipsosSource = `https://uk-script.dotmetrics.net/door.js?d=${
 		document.location.host
-	}&t=${config.get('page.ipsosTag') as string}`;
+	}&t=${config.get<string>('page.ipsosTag')}`;
 
 	return loadScript(ipsosSource, {
 		id: 'ipsos',
