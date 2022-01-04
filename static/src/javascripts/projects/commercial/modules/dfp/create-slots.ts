@@ -199,8 +199,11 @@ const createAdSlotElement = (
 /**
  * Split class names and prefix all with ad-slot--${className}
  */
-const createClasses = (slotName: string, classes?: string): string[] =>
-	[...(classes?.split(' ') ?? []), slotName].map(
+const createClasses = (
+	slotName: string,
+	classes?: string,
+): Array<`ad-slot--${string}`> =>
+	[...(classes?.split(' ') ?? []), slotName].map<`ad-slot--${string}`>(
 		(className: string) => `ad-slot--${className}`,
 	);
 
