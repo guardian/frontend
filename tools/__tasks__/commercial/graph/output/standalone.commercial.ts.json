@@ -408,13 +408,12 @@
   "../projects/commercial/modules/dfp/create-slots.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/ipsos-mori-helpers.js": [],
  "../projects/commercial/modules/ipsos-mori.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../projects/commercial/initialConsentState.ts",
-  "../projects/commercial/modules/ipsos-mori-helpers.js"
+  "../projects/commercial/modules/vendor/ipsos-mori.js"
  ],
  "../projects/commercial/modules/liveblog-adverts.js": [
   "../lib/detect.js",
@@ -522,6 +521,7 @@
   "../lib/config.js",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
+ "../projects/commercial/modules/vendor/ipsos-mori.js": [],
  "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
