@@ -69,18 +69,18 @@ const getSlotName = (isMobile, slotCounter) => {
 	return `inline${slotCounter + 1}`;
 };
 
-const insertAds = (slots) => {
+const insertAds = (paras) => {
 	const isMobile = getBreakpoint() === 'mobile';
 
-	for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {
-        const slot = slots[i];
+	for (let i = 0; i < paras.length && SLOTCOUNTER < MAX_ADS; i += 1) {
+        const para = paras[i];
 		const adSlot = createAdSlot('inline', {
 			name: getSlotName(isMobile, SLOTCOUNTER),
 			classes: 'liveblog-inline',
 		});
 
-		if (slot && slot.parentNode) {
-			slot.parentNode.insertBefore(adSlot, slot.nextSibling);
+		if (para && para.parentNode) {
+			para.parentNode.insertBefore(adSlot, para.nextSibling);
             addSlot(adSlot, false);
             SLOTCOUNTER += 1;
 		}
