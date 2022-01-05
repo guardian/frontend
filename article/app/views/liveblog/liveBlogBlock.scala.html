@@ -3,7 +3,7 @@
 @import model.liveblog.{LiveBlogDate, BodyBlock}
 @import views.BodyProcessor
 @import model.DotcomContentType
-@(block: BodyBlock, article: Article, timezone: DateTimeZone, isPinnedBlock: Boolean = false, isPinnedBlockInSitu: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(block: BodyBlock, article: Article, timezone: DateTimeZone, isPinnedBlock: Boolean = false, isOriginalPinnedBlock: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 @*
 * This template is for individual blocks
 *@
@@ -37,7 +37,7 @@ itemtype="http://schema.org/BlogPosting"
             @views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), !isPinnedBlock, true)
             </a>
         </p>
-        @if(isPinnedBlockInSitu){
+        @if(isOriginalPinnedBlock){
             <span>@fragments.inlineSvg("pin", "icon", List("inline-icon", "pinned-icon-situ", "pinned-block__icon"))</span>
         }
     </div>
