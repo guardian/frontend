@@ -18,9 +18,3 @@ type SafeFrameConfig = {
 	allowPushExpansion: boolean;
 	sandbox: boolean;
 };
-
-type GuAdSize = {
-	width: number;
-	height: number;
-	toString: (_: void) => string;
-};
