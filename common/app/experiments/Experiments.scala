@@ -22,7 +22,6 @@ object LiveblogRendering
       participationGroup = Perc10A,
     )
 
-
 object FetchNonRefreshableLineItems
     extends Experiment(
       name = "fetch-non-refreshable-line-items",
