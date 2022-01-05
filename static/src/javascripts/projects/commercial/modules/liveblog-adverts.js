@@ -73,13 +73,12 @@ const insertAds = (paras) => {
 	const isMobile = getBreakpoint() === 'mobile';
 
 	for (let i = 0; i < paras.length && AD_COUNTER < MAX_ADS; i += 1) {
-        const adSlot = createAdSlot('inline', {
-            name: getSlotName(isMobile, AD_COUNTER),
-			classes: 'liveblog-inline',
-		});
-
         const para = paras[i];
 		if (para && para.parentNode) {
+            const adSlot = createAdSlot('inline', {
+                name: getSlotName(isMobile, AD_COUNTER),
+                classes: 'liveblog-inline',
+            });
             // insert the ad slot container into the DOM
 			para.parentNode.insertBefore(adSlot, para.nextSibling);
             // load and display the advert via GAM
