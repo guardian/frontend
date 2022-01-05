@@ -33,7 +33,6 @@ const insertAdAtPara = (para, name, type, classes, sizes) => {
 		})
 		.then(() => {
 			const shouldForceDisplay = ['im', 'carrot'].includes(name);
-			// Only add the first ad (the DFP one) to GTP
 			addSlot(ad, shouldForceDisplay);
 		});
 };

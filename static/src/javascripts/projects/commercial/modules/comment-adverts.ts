@@ -29,27 +29,22 @@ const insertCommentAd = (
 ): Promise<void | EventEmitter> => {
 	const commentSlot = createCommentSlot(canBeDmpu);
 
-	return (
-		fastdom
-			.mutate(() => {
-				commentMainColumn.classList.add('discussion__ad-wrapper');
-				if (
-					!config.get('page.isLiveBlog') &&
-					!config.get('page.isMinuteArticle')
-				) {
-					commentMainColumn.classList.add(
-						'discussion__ad-wrapper-wider',
-					);
-				}
-				adSlotContainer.appendChild(commentSlot);
-				return commentSlot;
-			})
-			// Add only the fist slot (DFP slot) to GTP
-			.then((adSlot) => {
-				addSlot(adSlot, false);
-				void Promise.resolve(mediator.emit('page:commercial:comments'));
-			})
-	);
+	return fastdom
+		.mutate(() => {
+			commentMainColumn.classList.add('discussion__ad-wrapper');
+			if (
+				!config.get('page.isLiveBlog') &&
+				!config.get('page.isMinuteArticle')
+			) {
+				commentMainColumn.classList.add('discussion__ad-wrapper-wider');
+			}
+			adSlotContainer.appendChild(commentSlot);
+			return commentSlot;
+		})
+		.then((adSlot) => {
+			addSlot(adSlot, false);
+			void Promise.resolve(mediator.emit('page:commercial:comments'));
+		});
 };
 
 const containsDMPU = (ad: Advert): boolean =>
