@@ -1,6 +1,4 @@
-/* ---------------------------------------------------- */
-/* CURRENT                                              */
-/* ---------------------------------------------------- */
+/* CURRENT TEAM */
 
 Product Manager: Stephan Fowler
 Twitter: @stephanfowler
@@ -14,15 +12,28 @@ Agile Programme Manager: Nichola Johnson
 linkedin: nicholajohnson
 Location: London, UK
 
+Developer Manager: Natalia Baltazar
+Twitter: @NataliaLKB
+From: Halifax, Canada
+
 Developer: Justin Pinner
 Twitter: @_JustinPinner
 
 Developer: John Duffell
 
+Client-Side Developer: Gareth Trufitt
+Location: London, UK (snaps.digit.nails)
+Twitter: @gtrufitt
+Website: trufitt.com
+
 Client-side Developer: Max Duval
 Twitter: @mxdvl
 From: Montréal, CA
 Location: London, UK
+
+Developer: Régis Kuckaertz
+Twitter: @regiskuckaertz
+From: Luxembourg, Luxembourg
 
 Developer: Jon Soul
 Twitter: @jon_soul
@@ -35,13 +46,27 @@ Location: London, UK
 Developer: Jamie Byers
 Location: London, UK
 
+Digital Designer: Frank Hulley-Jones
+Twitter: @tobefrankj
+From: Ludlow, UK
+Location: London, UK
+
 Digital Designer / Unicorn: Ben Longden
 Twitter: @benlongden
 From: Europe
 Location: London, UK
 
+Developer: Kate Whalen
+Twitter: @KateAWhalen
+Location: London, UK
+
 Developer: Joseph Smith
 Twitter: @joelochlann
+Location: London, UK
+
+Developer: Thomas Bonnin
+Twitter: @tbonnin
+From: France
 Location: London, UK
 
 Client-Side Developer: Simon Adcock
@@ -58,6 +83,10 @@ Location: London, UK
 Developer: Calum Campbell
 From: Malvern, UK
 
+Product Manager: Scott Painter
+Twitter: @scottp719
+Location: London, UK
+
 Developer: Mariot Chauvin
 Twitter: @mchv
 
@@ -71,8 +100,7 @@ From: London, UK
 Senior Developer: Adam Fisher
 Twitter: @adamnfish
 
-Pascal Honoré
-https://github.com/shtukas
+Developer: Pascal Honoré
 
 Development Manager: Dominic Kendrick
 Twitter: @dominickendrick
@@ -82,9 +110,14 @@ Development Manager: Mark Butler
 Twitter: @mark_j_butler
 Location: London, UK
 
+Developer: Lauren Emms
+From: London, UK
+
 Associate Developer: Rhys Mills
 Website: rhysmills.com
 From: Tonbridge, UK
+
+/* CONTENT PRODUCTION */
 
 Editorial Systems: Luke Hoyland
 Twitter:@lukehoyland
@@ -95,18 +128,8 @@ Twitter:@twistedsweeter
 From: Narobi, Kenya
 Location: London, UK
 
-Developer: Oliver Barnwell
-Twitter: @olliethinks
-From: Norfolk, UK
-Location: London, UK
 
-Engineer: Oliver Lloyd
-From: London, UK
-Location: London, UK
-
-/* ---------------------------------------------------- */
-/* FORMER                                               */
-/* ---------------------------------------------------- */
+/* FORMER MEMBERS */
 
 Editor-in-chief: C.P.Scott
 From: Bath, Somerset
@@ -314,36 +337,11 @@ SETI (Tools & Infra): Matthew Walls
 GitHub: MatthewJWalls
 Location: Essex, UK
 
-Developer Manager: Natalia Baltazar
-Twitter: @NataliaLKB
-From: Halifax, Canada
-
-Client-Side Developer: Gareth Trufitt
-Location: London, UK (snaps.digit.nails)
-Twitter: @gtrufitt
-Website: trufitt.com
-
-Developer: Régis Kuckaertz
-Twitter: @regiskuckaertz
-From: Luxembourg, Luxembourg
-
-Digital Designer: Frank Hulley-Jones
-Twitter: @tobefrankj
-From: Ludlow, UK
+Developer: Oliver Barnwell
+Twitter: @olliethinks
+From: Norfolk, UK
 Location: London, UK
 
-Developer: Kate Whalen
-Twitter: @KateAWhalen
-Location: London, UK
-
-Developer: Thomas Bonnin
-Twitter: @tbonnin
-From: France
-Location: London, UK
-
-Product Manager: Scott Painter
-Twitter: @scottp719
-Location: London, UK
-
-Developer: Lauren Emms
+Engineer: Oliver Lloyd
 From: London, UK
+Location: London, UK
