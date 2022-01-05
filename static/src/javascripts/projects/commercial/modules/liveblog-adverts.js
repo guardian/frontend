@@ -9,7 +9,7 @@ import { spaceFiller } from '../../common/modules/article/space-filler';
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
 const MAX_ADS = 8; // maximum number of ads to display
 
-let SLOTCOUNTER = 0;
+let AD_COUNTER = 0;
 let WINDOWHEIGHT;
 let firstSlot;
 
@@ -72,24 +72,24 @@ const getSlotName = (isMobile, slotCounter) => {
 const insertAds = (paras) => {
 	const isMobile = getBreakpoint() === 'mobile';
 
-	for (let i = 0; i < paras.length && SLOTCOUNTER < MAX_ADS; i += 1) {
+	for (let i = 0; i < paras.length && AD_COUNTER < MAX_ADS; i += 1) {
         const para = paras[i];
 		const adSlot = createAdSlot('inline', {
-			name: getSlotName(isMobile, SLOTCOUNTER),
+			name: getSlotName(isMobile, AD_COUNTER),
 			classes: 'liveblog-inline',
 		});
 
 		if (para && para.parentNode) {
 			para.parentNode.insertBefore(adSlot, para.nextSibling);
             addSlot(adSlot, false);
-            SLOTCOUNTER += 1;
+            AD_COUNTER += 1;
 		}
 	}
 };
 
 const fill = (rules) =>
 	spaceFiller.fillSpace(rules, insertAds).then((result) => {
-		if (result && SLOTCOUNTER < MAX_ADS) {
+		if (result && AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,
 			);
