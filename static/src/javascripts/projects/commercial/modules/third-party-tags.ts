@@ -39,7 +39,6 @@ const addScripts = (tags: ThirdPartyTag[]) => {
 				script.src = tag.url;
 			}
 			// script.onload cannot be undefined
-			// TODO change type ThirdPartyTag.onLoad in commercial core
 			script.onload = tag.onLoad ?? null;
 			if (tag.async === true) {
 				script.setAttribute('async', '');
