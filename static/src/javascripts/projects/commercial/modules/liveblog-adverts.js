@@ -73,21 +73,16 @@ const insertAds = (slots) => {
 	const isMobile = getBreakpoint() === 'mobile';
 
 	for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {
-		const slotName = getSlotName(isMobile, SLOTCOUNTER);
-
+        const slot = slots[i];
 		const adSlot = createAdSlot('inline', {
-			name: slotName,
+			name: getSlotName(isMobile, SLOTCOUNTER),
 			classes: 'liveblog-inline',
 		});
 
-		if (slots[i] && slots[i].parentNode) {
-			slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
-		}
-
-		// Only add the first adSlot (the DFP one) in DFP/GTP
-		if (slots[i] && slots[i].parentNode) {
-			addSlot(adSlot, false);
-			SLOTCOUNTER += 1;
+		if (slot && slot.parentNode) {
+			slot.parentNode.insertBefore(adSlot, slot.nextSibling);
+            addSlot(adSlot, false);
+            SLOTCOUNTER += 1;
 		}
 	}
 };
