@@ -67,9 +67,9 @@ const addScripts = (tags: ThirdPartyTag[]) => {
 const insertScripts = (
 	advertisingServices: ThirdPartyTag[],
 	performanceServices: ThirdPartyTag[], // performanceServices always run
-): void => {
+): Promise<void> => {
 	addScripts(performanceServices);
-	void getInitialConsentState().then((state) => {
+	return getInitialConsentState().then((state) => {
 		const consentedAdvertisingServices = advertisingServices.filter(
 			(script) => {
 				// TODO - is this the correct behavior?
@@ -102,7 +102,7 @@ const loadOther = (): void => {
 		imrWorldwideLegacy, // only in AU & NZ
 	].filter((_) => _.shouldRun);
 
-	insertScripts(advertisingServices, performanceServices);
+	void insertScripts(advertisingServices, performanceServices);
 };
 
 const init = (): Promise<boolean> => {

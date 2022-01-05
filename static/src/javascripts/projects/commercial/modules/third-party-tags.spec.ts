@@ -183,7 +183,7 @@ describe('third party tags', () => {
 		it('should add scripts to the document when TCFv2 consent has been given', async () => {
 			onConsentChange.mockImplementation(tcfv2AllConsentMock);
 			getConsentFor.mockReturnValue(true);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag],
 				[fakeThirdPartyPerformanceTag],
 			);
@@ -193,7 +193,7 @@ describe('third party tags', () => {
 		it('should only add performance scripts to the document when TCFv2 consent has not been given', async () => {
 			onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 			getConsentFor.mockReturnValue(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag],
 				[fakeThirdPartyPerformanceTag],
 			);
@@ -204,7 +204,7 @@ describe('third party tags', () => {
 				callback({ ccpa: { doNotSell: false } }),
 			);
 			getConsentFor.mockReturnValue(true);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag],
 				[fakeThirdPartyPerformanceTag],
 			);
@@ -215,7 +215,7 @@ describe('third party tags', () => {
 				callback({ ccpa: { doNotSell: true } }),
 			);
 			getConsentFor.mockReturnValue(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag],
 				[fakeThirdPartyPerformanceTag],
 			);
@@ -226,7 +226,7 @@ describe('third party tags', () => {
 			onConsentChange.mockImplementation(tcfv2WithConsentMock);
 			getConsentFor.mockReturnValueOnce(true);
 			getConsentFor.mockReturnValueOnce(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
 				[],
 			);
@@ -239,11 +239,11 @@ describe('third party tags', () => {
 			getConsentFor.mockReturnValueOnce(false);
 			getConsentFor.mockReturnValueOnce(true);
 			getConsentFor.mockReturnValueOnce(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
 				[],
 			);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
 				[],
 			);
@@ -253,7 +253,7 @@ describe('third party tags', () => {
 		it('should not add scripts to the document when TCFv2 consent has not been given', async () => {
 			onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 			getConsentFor.mockReturnValue(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
 				[],
 			);
