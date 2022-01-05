@@ -402,7 +402,7 @@ input:focus-visible + .pinned-block__label {
 }
 
 .pinned-block__button + label::after {
-    content: 'Show all';
+    content: 'Show more';
 }
 
 .pinned-block__button:checked + label::after {

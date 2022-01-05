@@ -64,6 +64,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
  ],
+ "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/$$.ts",
@@ -408,12 +409,12 @@
   "../projects/commercial/modules/dfp/create-slots.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/ipsos-mori.js": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../lib/config.js",
-  "../projects/commercial/initialConsentState.ts"
+ "../projects/commercial/modules/ipsos-mori.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/config.d.ts",
+  "../projects/commercial/initialConsentState.ts",
+  "../projects/commercial/modules/__vendor/ipsos-mori.js"
  ],
  "../projects/commercial/modules/liveblog-adverts.js": [
   "../lib/detect.js",
@@ -694,7 +695,7 @@
   "../projects/commercial/modules/dfp/prepare-prebid.ts",
   "../projects/commercial/modules/dfp/redplanet.js",
   "../projects/commercial/modules/high-merch.ts",
-  "../projects/commercial/modules/ipsos-mori.js",
+  "../projects/commercial/modules/ipsos-mori.ts",
   "../projects/commercial/modules/liveblog-adverts.js",
   "../projects/commercial/modules/mobile-sticky.ts",
   "../projects/commercial/modules/paid-containers.ts",
