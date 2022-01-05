@@ -412,8 +412,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
-  "../projects/commercial/initialConsentState.ts",
-  "../projects/commercial/modules/vendor/ipsos-mori.js"
+  "../projects/commercial/initialConsentState.ts"
  ],
  "../projects/commercial/modules/liveblog-adverts.js": [
   "../lib/detect.js",
@@ -521,7 +520,6 @@
   "../lib/config.js",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
- "../projects/commercial/modules/vendor/ipsos-mori.js": [],
  "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
