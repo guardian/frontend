@@ -3,7 +3,7 @@
 @import model.liveblog.{LiveBlogDate, BodyBlock}
 @import views.BodyProcessor
 @import model.DotcomContentType
-@(block: BodyBlock, article: Article, timezone: DateTimeZone, isPinnedBlock: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(block: BodyBlock, article: Article, timezone: DateTimeZone, isPinnedBlock: Boolean = false, isPinnedBlockInSitu: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 @*
 * This template is for individual blocks
 *@
@@ -31,11 +31,16 @@ itemtype="http://schema.org/BlogPosting"
         </span>
     </span>
 
-    <p class="block-time published-time">
-        <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
-        @views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), !isPinnedBlock, true)
-        </a>
-    </p>
+    <div class="block-time">
+        <p class="published-time">
+            <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
+            @views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), !isPinnedBlock, true)
+            </a>
+        </p>
+        @if(isPinnedBlockInSitu){
+            <span>@fragments.inlineSvg("pin", "icon", List("inline-icon", "pinned-icon-situ", "pinned-block__icon"))</span>
+        }
+    </div>
 
     @block.title.map { title =>
         <h2 class="block-title">@title</h2>

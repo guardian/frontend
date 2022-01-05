@@ -5,5 +5,5 @@
 
 
 @blocks.map { block =>
-    @views.html.liveblog.liveBlogBlock(block, article, timezone)
+    @views.html.liveblog.liveBlogBlock(block, article, timezone, false, block.attributes.pinned == true)
 }
