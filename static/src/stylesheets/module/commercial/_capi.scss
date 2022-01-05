@@ -88,6 +88,7 @@
     .fc-container__header__title {
         @include f-textSans;
         font-weight: 400;
+        hyphens: auto;
     }
 
     .tone-news--item.fc-item,
