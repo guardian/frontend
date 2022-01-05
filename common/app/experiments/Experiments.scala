@@ -7,7 +7,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
-    LiveblogPinnedBlock,
     FetchNonRefreshableLineItems,
   )
 
@@ -21,15 +20,6 @@ object LiveblogRendering
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = LocalDate.of(2022, 6, 2),
       participationGroup = Perc10A,
-    )
-
-object LiveblogPinnedBlock
-    extends Experiment(
-      name = "liveblog-pinned-post",
-      description = "Pin a post at the top of a liveblog",
-      owners = Seq(Owner.withGithub("alinaboghiu")),
-      sellByDate = LocalDate.of(2022, 1, 11),
-      participationGroup = Perc0C,
     )
 
 object FetchNonRefreshableLineItems
