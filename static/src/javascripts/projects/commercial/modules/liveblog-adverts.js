@@ -80,12 +80,12 @@ const insertAds = (slots) => {
 			classes: 'liveblog-inline',
 		});
 
-		if (adSlot && adSlot.parentNode) {
-			adSlot.parentNode.insertBefore(adSlot, adSlot.nextSibling);
+		if (slots[i] && slots[i].parentNode) {
+			slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
 		}
 
 		// Only add the first adSlot (the DFP one) in DFP/GTP
-		if (adSlot && adSlot.parentNode) {
+		if (slots[i] && slots[i].parentNode) {
 			addSlot(adSlot, false);
 			SLOTCOUNTER += 1;
 		}
