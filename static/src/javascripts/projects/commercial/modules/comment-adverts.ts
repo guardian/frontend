@@ -8,7 +8,7 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { isUserLoggedIn } from '../../common/modules/identity/api';
 import { addSlot } from './dfp/add-slot';
 import type { Advert } from './dfp/Advert';
-import { createAdSlot } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 

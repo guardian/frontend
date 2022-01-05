@@ -1,7 +1,7 @@
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { createAdSlot } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 
 export const init = (): Promise<void> => {
 	if (commercialFeatures.highMerch) {

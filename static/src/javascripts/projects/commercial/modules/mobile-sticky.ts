@@ -1,6 +1,6 @@
 import fastdom from '../../../lib/fastdom-promise';
 import { addSlot } from './dfp/add-slot';
-import { createAdSlot } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 import { shouldIncludeMobileSticky } from './header-bidding/utils';
 
 const createAdWrapperClassic = () => {

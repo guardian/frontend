@@ -5,7 +5,7 @@ import { spaceFiller } from '../../common/modules/article/space-filler';
 import { adSizes } from '@guardian/commercial-core';
 import { addSlot } from './dfp/add-slot';
 import { trackAdRender } from './dfp/track-ad-render';
-import { createAdSlot } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { initCarrot } from './carrot-traffic-driver';

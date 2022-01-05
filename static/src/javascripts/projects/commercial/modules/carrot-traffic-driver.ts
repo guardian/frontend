@@ -4,7 +4,7 @@ import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { addSlot } from './dfp/add-slot';
-import { createAdSlot } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 
 // TODO Typescript Spacefinder
 type RuleSpacing = {

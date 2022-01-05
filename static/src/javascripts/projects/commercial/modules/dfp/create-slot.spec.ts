@@ -1,5 +1,5 @@
 import { adSizes } from '@guardian/commercial-core';
-import { createAdSlot } from './create-slots';
+import { createAdSlot } from './create-slot';
 
 const imHtml = `
 <div id="dfp-ad--im"

@@ -28,11 +28,10 @@ jest.mock('./dfp/add-slot', () => ({
 	addSlot: jest.fn(),
 }));
 
-const createFillSpaceMock = (paras) =>
-    (_, writerCallback) => {
-        writerCallback(paras);
-        return Promise.resolve(true);
-    };
+const createFillSpaceMock = (paras) => (_, writerCallback) => {
+	writerCallback(paras);
+	return Promise.resolve(true);
+};
 
 describe('Liveblog Dynamic Adverts', () => {
 	beforeEach(() => {
@@ -77,19 +76,23 @@ describe('Liveblog Dynamic Adverts', () => {
 	});
 
 	it('should insert ad slots', async () => {
-        spaceFiller.fillSpace.mockImplementationOnce(
-            createFillSpaceMock(
-                [
-                    document.querySelector('.x1'),
-                    document.querySelector('.x12'),
-                ]
-            )
-        );
-        return init().then(() => {
-            expect(document.querySelector('.x1').nextSibling.id).toEqual('dfp-ad--inline1');
-            expect(document.querySelector('.x12').nextSibling.id).toEqual('dfp-ad--inline2');
-            expect(document.querySelector('.js-liveblog-body').children.length).toBe(14);
-        });
+		spaceFiller.fillSpace.mockImplementationOnce(
+			createFillSpaceMock([
+				document.querySelector('.x1'),
+				document.querySelector('.x12'),
+			]),
+		);
+		return init().then(() => {
+			expect(document.querySelector('.x1').nextSibling.id).toEqual(
+				'dfp-ad--inline1',
+			);
+			expect(document.querySelector('.x12').nextSibling.id).toEqual(
+				'dfp-ad--inline2',
+			);
+			expect(
+				document.querySelector('.js-liveblog-body').children.length,
+			).toBe(14);
+		});
 	});
 
 	// todo: difficult to mock spacefiller, which is not yet ES6'ed, so come back to this

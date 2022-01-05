@@ -3,7 +3,7 @@ import { getBreakpoint } from '../../../lib/detect';
 import { mediator } from '../../../lib/mediator';
 import { addSlot } from './dfp/add-slot';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { createAdSlot } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
@@ -73,17 +73,17 @@ const insertAds = (paras) => {
 	const isMobile = getBreakpoint() === 'mobile';
 
 	for (let i = 0; i < paras.length && AD_COUNTER < MAX_ADS; i += 1) {
-        const para = paras[i];
+		const para = paras[i];
 		if (para && para.parentNode) {
-            const adSlot = createAdSlot('inline', {
-                name: getSlotName(isMobile, AD_COUNTER),
-                classes: 'liveblog-inline',
-            });
-            // insert the ad slot container into the DOM
+			const adSlot = createAdSlot('inline', {
+				name: getSlotName(isMobile, AD_COUNTER),
+				classes: 'liveblog-inline',
+			});
+			// insert the ad slot container into the DOM
 			para.parentNode.insertBefore(adSlot, para.nextSibling);
-            // load and display the advert via GAM
-            addSlot(adSlot, false);
-            AD_COUNTER += 1;
+			// load and display the advert via GAM
+			addSlot(adSlot, false);
+			AD_COUNTER += 1;
 		}
 	}
 };
