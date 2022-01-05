@@ -97,7 +97,7 @@ const initTracking = () => {
 };
 
 const trackOphanClick = (pinnedBlockId, clickValue) => {
-    ophan.record(componentEvent(pinnedBlockId, 'VIEW', {value: clickValue}));
+    ophan.record(componentEvent(pinnedBlockId, 'CLICK', {value: clickValue}));
 };
 
 const setupListeners = () => {
