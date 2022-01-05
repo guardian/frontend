@@ -1,4 +1,4 @@
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
 import { buildGoogleAnalyticsEvent } from 'common/modules/video/ga-helper';

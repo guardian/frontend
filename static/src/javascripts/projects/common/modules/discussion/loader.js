@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import raven from 'lib/raven';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { scrollToElement } from 'lib/scroller';
 import fastdom from 'lib/fastdom-promise';
 import { fetchJson } from 'lib/fetch-json';

@@ -75,11 +75,17 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
 
   def readSponsorshipLineItemIds(): Seq[Long] = {
 
+    // The advertiser ID for "Amazon Transparent Ad Marketplace"
+    val amazonAdvertiserId = 4751525411L
+
     val stmtBuilder = new StatementBuilder()
-      .where("(status = :readyStatus OR status = :deliveringStatus) AND lineItemType = :sponsorshipType")
+      .where(
+        "(status = :readyStatus OR status = :deliveringStatus) AND lineItemType = :sponsorshipType AND advertiserId != :amazonAdvertiserId",
+      )
       .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
       .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
       .withBindVariableValue("sponsorshipType", LineItemType.SPONSORSHIP.toString)
+      .withBindVariableValue("amazonAdvertiserId", amazonAdvertiserId.toString)
       .orderBy("id ASC")
 
     // Lets avoid Prebid lineitems

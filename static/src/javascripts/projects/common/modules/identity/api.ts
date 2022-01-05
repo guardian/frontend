@@ -1,9 +1,8 @@
-import { storage } from '@guardian/libs';
+import { getCookie, storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import config from '../../../../lib/config';
-import { getCookie as getCookieByName } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';
-import mediator from '../../../../lib/mediator';
+import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
 import { createAuthenticationComponentEventParams } from './auth-component-event-params';
 
@@ -116,15 +115,15 @@ export const decodeBase64 = (str: string): string =>
 
 export const getUserFromCookie = (): IdentityUserFromCache => {
 	if (userFromCookieCache === null) {
-		const cookieData = getCookieByName(cookieName) as string;
-		let userData = null;
+		const cookieData = getUserCookie();
+		let userData: string[] | null = null;
 
 		if (cookieData) {
 			userData = JSON.parse(
 				decodeBase64(cookieData.split('.')[0]),
 			) as string[];
 		}
-		if (userData) {
+		if (userData && cookieData) {
 			const displayName = decodeURIComponent(userData[2]);
 			userFromCookieCache = {
 				id: parseInt(userData[0], 10),
@@ -238,8 +237,7 @@ export const reset = (): void => {
 	userFromCookieCache = null;
 };
 
-export const getCookie = (): string | null =>
-	getCookieByName(cookieName) as string | null;
+const getUserCookie = (): string | null => getCookie({ name: cookieName });
 
 export const getUrl = (): string => profileRoot;
 
@@ -285,7 +283,9 @@ export const getUserOrSignIn = (
 };
 
 export const hasUserSignedOutInTheLast24Hours = (): boolean => {
-	const cookieData = getCookieByName(signOutCookieName) as string;
+	const cookieData = getCookie({
+		name: signOutCookieName,
+	});
 
 	if (cookieData) {
 		return (
@@ -297,7 +297,7 @@ export const hasUserSignedOutInTheLast24Hours = (): boolean => {
 };
 
 export const shouldAutoSigninInUser = (): boolean => {
-	const signedInUser = !!getCookieByName(cookieName);
+	const signedInUser = !!getUserCookie();
 	const checkFacebook = !!storage.local.get(fbCheckKey);
 	return (
 		!signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
@@ -354,3 +354,5 @@ export const setConsent = (consents: SettableConsent): Promise<void> =>
 		if (resp.ok) return Promise.resolve();
 		return Promise.reject();
 	});
+
+export { getUserCookie as getCookie };

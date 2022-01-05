@@ -162,80 +162,80 @@ describe('third party tags', () => {
 			fakeThirdPartyPerformanceTag.loaded = undefined;
 		});
 
-		it('should add scripts to the document when TCFv2 consent has been given', () => {
+		it('should add scripts to the document when TCFv2 consent has been given', async () => {
 			onConsentChange.mockImplementation(tcfv2AllConsentMock);
 			getConsentFor.mockReturnValue(true);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag],
 				[fakeThirdPartyPerformanceTag],
 			);
 			expect(document.scripts.length).toBe(3);
 		});
 
-		it('should only add performance scripts to the document when TCFv2 consent has not been given', () => {
+		it('should only add performance scripts to the document when TCFv2 consent has not been given', async () => {
 			onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 			getConsentFor.mockReturnValue(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag],
 				[fakeThirdPartyPerformanceTag],
 			);
 			expect(document.scripts.length).toBe(2);
 		});
-		it('should add scripts to the document when CCPA consent has been given', () => {
+		it('should add scripts to the document when CCPA consent has been given', async () => {
 			onConsentChange.mockImplementation((callback) =>
 				callback({ ccpa: { doNotSell: false } }),
 			);
 			getConsentFor.mockReturnValue(true);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag],
 				[fakeThirdPartyPerformanceTag],
 			);
 			expect(document.scripts.length).toBe(3);
 		});
-		it('should only add performance scripts to the document when CCPA consent has not been given', () => {
+		it('should only add performance scripts to the document when CCPA consent has not been given', async () => {
 			onConsentChange.mockImplementation((callback) =>
 				callback({ ccpa: { doNotSell: true } }),
 			);
 			getConsentFor.mockReturnValue(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag],
 				[fakeThirdPartyPerformanceTag],
 			);
 			expect(document.scripts.length).toBe(2);
 		});
 
-		it('should only add consented custom vendors to the document for TCFv2', () => {
+		it('should only add consented custom vendors to the document for TCFv2', async () => {
 			onConsentChange.mockImplementation(tcfv2WithConsentMock);
 			getConsentFor.mockReturnValueOnce(true);
 			getConsentFor.mockReturnValueOnce(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
 				[],
 			);
 			expect(document.scripts.length).toBe(2);
 		});
 
-		it('should not add already loaded tags ', () => {
+		it('should not add already loaded tags ', async () => {
 			onConsentChange.mockImplementation(tcfv2WithConsentMock);
 			getConsentFor.mockReturnValueOnce(true);
 			getConsentFor.mockReturnValueOnce(false);
 			getConsentFor.mockReturnValueOnce(true);
 			getConsentFor.mockReturnValueOnce(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
 				[],
 			);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
 				[],
 			);
 			expect(document.scripts.length).toBe(2);
 		});
 
-		it('should not add scripts to the document when TCFv2 consent has not been given', () => {
+		it('should not add scripts to the document when TCFv2 consent has not been given', async () => {
 			onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 			getConsentFor.mockReturnValue(false);
-			insertScripts(
+			await insertScripts(
 				[fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
 				[],
 			);

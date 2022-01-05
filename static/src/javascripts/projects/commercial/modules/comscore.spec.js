@@ -89,40 +89,40 @@ describe('comscore init', () => {
 			_.resetInit();
 		});
 
-		it('TCFv2 with consent: runs', () => {
+		it('TCFv2 with consent: runs', async () => {
 			onConsentChange.mockImplementation(tcfv2WithConsentMock);
 			getConsentFor.mockReturnValue(true);
-			init();
+			await init();
 			expect(loadScript).toBeCalled();
 		});
 
-		it('TCFv2 without consent: does not run', () => {
+		it('TCFv2 without consent: does not run', async () => {
 			onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 			getConsentFor.mockReturnValue(false);
-			init();
+			await init();
 			expect(loadScript).not.toBeCalled();
 		});
-		it('CCPA with consent: runs', () => {
+		it('CCPA with consent: runs', async () => {
 			onConsentChange.mockImplementation(ccpaWithConsentMock);
-			init();
+			await init();
 			expect(loadScript).toBeCalled();
 		});
 
-		it('CCPA without consent: does not run', () => {
+		it('CCPA without consent: does not run', async () => {
 			onConsentChange.mockImplementation(ccpaWithoutConsentMock);
-			init();
+			await init();
 			expect(loadScript).not.toBeCalled();
 		});
 
-		it('Aus without consent: runs', () => {
+		it('Aus without consent: runs', async () => {
 			onConsentChange.mockImplementation(AusWithoutConsentMock);
-			init();
+			await init();
 			expect(loadScript).toBeCalled();
 		});
 
-		it('Aus with consent: runs', () => {
+		it('Aus with consent: runs', async () => {
 			onConsentChange.mockImplementation(AusWithConsentMock);
-			init();
+			await init();
 			expect(loadScript).toBeCalled();
 		});
 	});

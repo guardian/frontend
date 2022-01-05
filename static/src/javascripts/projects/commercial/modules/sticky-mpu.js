@@ -1,5 +1,5 @@
 import config from '../../../lib/config';
-import mediator from '../../../lib/mediator';
+import { mediator } from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
 import { Sticky } from '../../common/modules/ui/sticky';
 import { register, unregister } from './messenger';

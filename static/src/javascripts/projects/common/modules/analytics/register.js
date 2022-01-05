@@ -6,7 +6,7 @@
  *  run analytics over (eg. ab tests, enhancement).
  */
 
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import ophan from 'ophan/ng';
 
 const register = [];

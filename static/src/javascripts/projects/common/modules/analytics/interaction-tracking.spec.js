@@ -3,12 +3,11 @@ import {
     trackExternalLinkClick,
     trackSponsorLogoLinkClick,
 } from 'common/modules/analytics/google';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { storage } from '@guardian/libs';
 
 import interactionTracking from './interaction-tracking';
 
-jest.mock('lib/mediator');
 jest.mock('lib/raven');
 
 jest.mock('common/modules/analytics/google', () => ({

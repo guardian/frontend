@@ -176,8 +176,7 @@ describe('Generating Permutive payload utils', () => {
 			};
 			const config3 = {
 				page: {
-					pageId:
-						'the-abcs-of-recruiting-teachers-remotely/2020/may/01/',
+					pageId: 'the-abcs-of-recruiting-teachers-remotely/2020/may/01/',
 					headline: 'Teacher training',
 					contentType: 'Article',
 					section: 'the-abcs-of-recruiting-teachers-remotely',
@@ -316,12 +315,10 @@ describe('Generating Permutive payload utils', () => {
 			};
 
 			_.runPermutive(config, mockPermutive, logger);
-			const [
-				identifyCallOrder,
-			] = mockPermutive.identify.mock.invocationCallOrder;
-			const [
-				addonCallOrder,
-			] = mockPermutive.addon.mock.invocationCallOrder;
+			const [identifyCallOrder] =
+				mockPermutive.identify.mock.invocationCallOrder;
+			const [addonCallOrder] =
+				mockPermutive.addon.mock.invocationCallOrder;
 			expect(identifyCallOrder).toBeLessThan(addonCallOrder);
 		});
 		it('does not call the identify method if no browser ID is present', () => {

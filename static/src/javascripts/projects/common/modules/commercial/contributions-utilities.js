@@ -8,7 +8,4 @@ const pageShouldHideReaderRevenue = () =>
 	config.get('page.shouldHideReaderRevenue') ||
 	config.get('page.sponsorshipType') === 'paid-content';
 
-export {
-	pageShouldHideReaderRevenue,
-	getVisitCount,
-};
+export { pageShouldHideReaderRevenue, getVisitCount };

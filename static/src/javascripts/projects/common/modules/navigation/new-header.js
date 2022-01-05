@@ -1,7 +1,7 @@
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { isBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { storage } from '@guardian/libs';
 import { scrollToElement } from 'lib/scroller';

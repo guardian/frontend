@@ -8,10 +8,8 @@ import {
 	remarketing,
 	twitter,
 } from '@guardian/commercial-core';
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor } from '@guardian/consent-management-platform';
+import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -67,7 +65,7 @@ const insertScripts = (
 	performanceServices, // performanceServices always run
 ) => {
 	addScripts(performanceServices);
-	onConsentChange((state) => {
+	void getInitialConsentState().then((state) => {
 		const consentedAdvertisingServices = advertisingServices.filter(
 			(script) => getConsentFor(script.name, state),
 		);
@@ -102,7 +100,6 @@ const init = () => {
 	if (!commercialFeatures.thirdPartyTags) {
 		return Promise.resolve(false);
 	}
-
 	loadOther();
 
 	return Promise.resolve(true);

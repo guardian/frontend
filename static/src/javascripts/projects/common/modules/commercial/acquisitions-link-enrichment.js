@@ -26,9 +26,8 @@ const addReferrerDataToAcquisitionLink = (rawUrl) => {
 
 	let acquisitionData;
 	try {
-		const acquisitionDataJsonString = url.searchParams.get(
-			acquisitionDataField,
-		);
+		const acquisitionDataJsonString =
+			url.searchParams.get(acquisitionDataField);
 
 		if (!acquisitionDataJsonString) return rawUrl;
 

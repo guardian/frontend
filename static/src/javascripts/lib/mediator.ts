@@ -1,3 +1,3 @@
 import EventEmitter from 'wolfy87-eventemitter';
 
-export default new EventEmitter();
+export const mediator = new EventEmitter();

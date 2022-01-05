@@ -1,6 +1,6 @@
 import { getCLS, getFID, getLCP } from 'web-vitals';
 import config from 'lib/config';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 
 const trackerName = config.get(
 	'googleAnalytics.trackers.editorial',

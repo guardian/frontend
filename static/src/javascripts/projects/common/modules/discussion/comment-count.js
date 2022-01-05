@@ -1,7 +1,7 @@
 import fastdom from 'lib/fastdom-promise';
 import { fetchJson } from 'lib/fetch-json';
 import { integerCommas } from 'lib/formatters';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { inlineSvg } from 'common/views/svgs';
 
 

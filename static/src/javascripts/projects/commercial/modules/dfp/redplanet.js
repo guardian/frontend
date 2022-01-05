@@ -1,8 +1,6 @@
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
+import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
@@ -29,38 +27,32 @@ const initialise = () => {
 	});
 };
 
-const setupRedplanet = async () => {
-	let resolveRedPlanetLoaded;
-	let rejectRedPlanetLoaded;
-	const promise = new Promise((resolve, reject) => {
-		resolveRedPlanetLoaded = resolve;
-		rejectRedPlanetLoaded = reject;
-	}).catch((e) => {
-		log('commercial', '⚠️ Failed to execute redplanet', e);
-	});
+const setupRedplanet = () =>
+	getInitialConsentState()
+		.then((state) => {
+			if (!getConsentFor('redplanet', state)) {
+				return Promise.reject('No consent for redplanet');
+			}
 
-	onConsentChange((state) => {
-		if (!getConsentFor('redplanet', state)) {
-			rejectRedPlanetLoaded('No consent for redplanet');
-			return;
-		}
+			if (!state.aus) {
+				return Promise.reject(
+					'Redplanet should only run in Australia on AUS mode',
+				);
+			}
 
-		if (!state.aus) {
-			rejectRedPlanetLoaded('Redplanet should only run in Australia on AUS mode');
-			return;
-		}
-
-        if (!initialised) {
-            initialised = true;
-            import(/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js').then(() => {
-                initialise();
-                resolveRedPlanetLoaded();
-            });
-        }
-	});
-
-	return promise;
-};
+			if (!initialised) {
+				initialised = true;
+				return import(
+					/* webpackChunkName: "redplanet" */ '../../../../lib/launchpad.js'
+				);
+			}
+		})
+		.then(() => {
+			initialise();
+		})
+		.catch((e) => {
+			log('commercial', '⚠️ Failed to execute redplanet', e);
+		});
 
 export const init = () => {
 	if (commercialFeatures.launchpad && isInAuOrNz()) {

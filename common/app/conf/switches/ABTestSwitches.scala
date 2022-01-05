@@ -1,9 +1,7 @@
 package conf.switches
 
 import conf.switches.SwitchGroup.ABTests
-import conf.switches.Owner.group
 import java.time.LocalDate
-import conf.switches.SwitchGroup.{Commercial}
 
 trait ABTestSwitches {
   Switch(
@@ -31,16 +29,6 @@ trait ABTestSwitches {
     "ab-integrate-criteo",
     "Integrate Criteo as a Prebid SSP",
     owners = Seq(Owner.withGithub("chrislomaxjones")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 1, 10)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-integrate-smart",
-    "Integrate Smart AdServer as a Prebid SSP",
-    owners = group(Commercial),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2022, 1, 10)),
     exposeClientSide = true,
