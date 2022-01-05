@@ -3,7 +3,7 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import type { Callback } from '@guardian/consent-management-platform/dist/types';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { _, init } from './third-party-tags';
 
@@ -23,9 +23,7 @@ const getConsentFor = getConsentFor_ as jest.MockedFunction<
 	typeof getConsentFor_
 >;
 
-const tcfv2AllConsentMock = (
-	callback: (consentState: Partial<ConsentState>) => void,
-) =>
+const tcfv2AllConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
 			consents: {
@@ -48,7 +46,7 @@ const tcfv2AllConsentMock = (
 		},
 	});
 
-const tcfv2WithConsentMock = (callback: (consentState: ConsentState) => void) =>
+const tcfv2WithConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
 			consents: {
@@ -71,9 +69,7 @@ const tcfv2WithConsentMock = (callback: (consentState: ConsentState) => void) =>
 		},
 	});
 
-const tcfv2WithoutConsentMock = (
-	callback: (consentState: ConsentState) => void,
-) =>
+const tcfv2WithoutConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
 			consents: {
