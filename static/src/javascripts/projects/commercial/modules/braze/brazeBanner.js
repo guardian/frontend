@@ -4,20 +4,20 @@ import { onConsentChange } from '@guardian/consent-management-platform';
 import { storage } from '@guardian/libs';
 import { shouldNotBeShownSupportMessaging } from 'common/modules/commercial/user-features';
 import ophan from 'ophan/ng';
-import config from '../../../lib/config';
-import reportError from '../../../lib/report-error';
-import { getUrlVars } from '../../../lib/url';
+import config from '../../../../lib/config';
+import reportError from '../../../../lib/report-error';
+import { getUrlVars } from '../../../../lib/url';
 import {
 	submitComponentEvent,
 	submitViewEvent,
-} from '../../common/modules/commercial/acquisitions-ophan';
-import { getUserFromApi } from '../../common/modules/identity/api';
+} from '../../../common/modules/commercial/acquisitions-ophan';
+import { getUserFromApi } from '../../../common/modules/identity/api';
 import {
 	clearHasCurrentBrazeUser,
 	hasCurrentBrazeUser,
 	setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
-import { measureTiming } from './measure-timing';
+import { measureTiming } from '../measure-timing';
 import {
 	BrazeMessages,
 	LocalMessageCache,
