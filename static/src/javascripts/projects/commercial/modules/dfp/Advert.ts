@@ -63,7 +63,6 @@ class Advert {
 	isLoaded = false;
 	isRendered = false;
 	shouldRefresh = false;
-	maxViewPercentage = 0;
 	whenLoaded: Promise<boolean>;
 	whenLoadedResolver: Resolver | null = null;
 	whenRendered: Promise<boolean>;
