@@ -71,8 +71,6 @@ const insertScripts = (
 	return getInitialConsentState().then((state) => {
 		const consentedAdvertisingServices = advertisingServices.filter(
 			(script) => {
-				// TODO - is this the correct behavior?
-				// throw error if script name undefined?
 				if (script.name === undefined) return false;
 				return getConsentFor(script.name, state);
 			},
