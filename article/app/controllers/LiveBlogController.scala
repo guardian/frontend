@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar, CulturePi
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, LiveblogPinnedBlock, LiveblogRendering}
+import experiments.{ActiveExperiments, LiveblogRendering}
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
@@ -107,15 +107,24 @@ class LiveBlogController(
           case (blog: LiveBlogPage, HtmlFormat) =>
             val dcrCouldRender = LiveBlogController.checkIfSupported(blog)
             val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
+            val isRecent = !LiveBlogController.isNotRecent(blog)
+            val theme = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme
+            val design = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).design
+            val display = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).display
+            val isDeadBlog = LiveBlogController.isDeadBlog(blog)
             val properties =
               Map(
                 "participatingInTest" -> participatingInTest.toString,
                 "dcrCouldRender" -> dcrCouldRender.toString,
+                "theme" -> theme.toString,
+                "design" -> design.toString,
+                "display" -> display.toString,
+                "isRecent" -> isRecent.toString,
+                "isDead" -> isDeadBlog.toString,
                 "isLiveBlog" -> "true",
               )
             val remoteRendering =
               shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
-
             if (remoteRendering) {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
@@ -260,13 +269,11 @@ class LiveBlogController(
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        val pinnedBlockSwitch = ActiveExperiments.isParticipating(LiveblogPinnedBlock)
         createLiveBlogModel(
           liveBlog,
           response,
           range,
           filterKeyEvents,
-          pinnedBlockSwitch,
         ).left
           .map(_ -> blocks)
       case unknown =>
@@ -293,9 +300,9 @@ object LiveBlogController {
     }
   }
 
-  private def isDeadBlog(blog: PageWithStoryPackage): Boolean = !blog.article.fields.isLive
+  def isDeadBlog(blog: PageWithStoryPackage): Boolean = !blog.article.fields.isLive
 
-  private def isNotRecent(blog: PageWithStoryPackage) = {
+  def isNotRecent(blog: PageWithStoryPackage) = {
     val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
     blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }

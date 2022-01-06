@@ -468,27 +468,26 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 };
 
 const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
-	const otherBidders: PrebidBidder[] = [
-		...(inPbTestOr(shouldIncludeCriteo()) ? [criteoBidder] : []),
-		...(inPbTestOr(shouldIncludeSmart()) ? [smartBidder] : []),
-		...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
-		...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
-		...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
-		...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
-		...(inPbTestOr(shouldIncludeImproveDigital())
-			? [improveDigitalBidder]
-			: []),
-		...(inPbTestOr(shouldIncludeImproveDigitalSkin())
-			? [improveDigitalSkinBidder]
-			: []),
-		...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
-		pubmaticBidder,
-		...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
-			? [adYouLikeBidder]
-			: []),
-		...(inPbTestOr(shouldUseOzoneAdaptor()) ? [ozoneClientSideBidder] : []),
-		...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
+	const biddersToCheck: Array<[boolean, PrebidBidder]> = [
+		[shouldIncludeCriteo(), criteoBidder],
+		[shouldIncludeSmart(), smartBidder],
+		[shouldIncludeSonobi(), sonobiBidder],
+		[shouldIncludeTrustX(), trustXBidder],
+		[shouldIncludeTripleLift(), tripleLiftBidder],
+		[shouldIncludeAppNexus(), appNexusBidder],
+		[shouldIncludeImproveDigital(), improveDigitalBidder],
+		[shouldIncludeImproveDigitalSkin(), improveDigitalSkinBidder],
+		[shouldIncludeXaxis(), xaxisBidder],
+		[true, pubmaticBidder],
+		[shouldIncludeAdYouLike(slotSizes), adYouLikeBidder],
+		[shouldUseOzoneAdaptor(), ozoneClientSideBidder],
+		[shouldIncludeOpenx(), openxClientSideBidder],
 	];
+
+	const otherBidders = biddersToCheck
+		.filter(([shouldInclude]) => inPbTestOr(shouldInclude))
+		.map(([, bidder]) => bidder);
+
 	const allBidders = indexExchangeBidders(slotSizes).concat(otherBidders);
 	return isPbTestOn()
 		? biddersBeingTested(allBidders)
