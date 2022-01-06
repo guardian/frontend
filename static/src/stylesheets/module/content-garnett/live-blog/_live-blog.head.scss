@@ -181,6 +181,8 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         @include fs-textSans(2);
         margin: 0;
         font-weight: bold;
+        padding-top: 0;
+        padding-bottom: $gs-baseline/2;
     }
 
     .live-pulse-icon--red {
