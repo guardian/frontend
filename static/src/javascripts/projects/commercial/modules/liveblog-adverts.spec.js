@@ -94,22 +94,4 @@ describe('Liveblog Dynamic Adverts', () => {
 			).toBe(14);
 		});
 	});
-
-	// todo: difficult to mock spacefiller, which is not yet ES6'ed, so come back to this
-	it.skip('should insert ads every 5th block', () =>
-		init().then(() => {
-			const adSlots = document.querySelectorAll(
-				'.js-liveblog-body .ad-slot',
-			);
-			const candidates = document.querySelectorAll(
-				'.js-liveblog-body > *:nth-child(5n+1)',
-			);
-			const candidatesAreAllAds = Array.prototype.every.call(
-				candidates,
-				(c) => c.classList.contains('ad-slot'),
-			);
-			expect(adSlots.length).toBeGreaterThan(0);
-			expect(candidatesAreAllAds).toBe(true);
-			expect(candidates.length).toEqual(adSlots.length);
-		}));
 });
