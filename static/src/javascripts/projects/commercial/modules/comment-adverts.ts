@@ -33,8 +33,8 @@ const insertCommentAd = (
 		.mutate(() => {
 			commentMainColumn.classList.add('discussion__ad-wrapper');
 			if (
-				!config.get('page.isLiveBlog') &&
-				!config.get('page.isMinuteArticle')
+				!config.get<boolean>('page.isLiveBlog') &&
+				!config.get<boolean>('page.isMinuteArticle')
 			) {
 				commentMainColumn.classList.add('discussion__ad-wrapper-wider');
 			}
