@@ -314,9 +314,7 @@ const show = () =>
 			submitViewEvent({
 				component: {
 					componentType: 'RETENTION_ENGAGEMENT_BANNER',
-					id:
-						message.extras.ophanComponentId ??
-						message.extras.componentName,
+					id: message.extras.componentName,
 				},
 			});
 
