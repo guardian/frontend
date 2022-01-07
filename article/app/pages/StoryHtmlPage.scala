@@ -16,6 +16,7 @@ import views.html.fragments.page.head._
 import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
 import services.dotcomponents.ArticlePicker.{dcrChecks}
+import controllers.LiveBlogController.{checkIfSupported}
 
 object StoryHtmlPage {
 
@@ -31,8 +32,13 @@ object StoryHtmlPage {
     }
 
   def htmlDcrCouldRender(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
-    val thisDcrCouldRender: Boolean = dcrChecks(pageWithStoryPackage, request).values.forall(identity)
-    Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
+    if (pageWithStoryPackage.item.tags.isLiveBlog) {
+      val thisDcrCouldRender: Boolean = checkIfSupported(pageWithStoryPackage)
+      Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
+    } else {
+      val thisDcrCouldRender: Boolean = dcrChecks(pageWithStoryPackage, request).values.forall(identity)
+      Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
+    }
   }
 
   def html(

@@ -1,7 +1,7 @@
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { createSlots } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 
 export const init = (): Promise<void> => {
 	if (commercialFeatures.highMerch) {
@@ -12,15 +12,13 @@ export const init = (): Promise<void> => {
 		const container = document.createElement('div');
 
 		container.className = 'fc-container fc-container--commercial';
-		const slots = createSlots(
+		const slot = createAdSlot(
 			window.guardian.config.page.isPaidContent
 				? 'high-merch-paid'
 				: 'high-merch',
 		);
 
-		slots.forEach((slot) => {
-			container.appendChild(slot);
-		});
+		container.appendChild(slot);
 
 		return fastdom.mutate(() => {
 			if (anchor?.parentNode) {

@@ -25,7 +25,6 @@ import { fillAdvertSlots } from './fill-advert-slots';
 import { onSlotLoad } from './on-slot-load';
 import { onSlotRender } from './on-slot-render';
 import { onSlotViewableFunction } from './on-slot-viewable';
-import { onSlotVisibilityChanged } from './on-slot-visibility-changed';
 import { refreshOnResize } from './refresh-on-resize';
 
 initMessenger(
@@ -54,7 +53,6 @@ const setDfpListeners = (): void => {
 		raven.wrap<typeof onSlotLoad>(onSlotLoad),
 	);
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());
-	pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
 };
 
 const setPageTargeting = (): void =>

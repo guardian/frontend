@@ -1,9 +1,11 @@
+import type { ThirdPartyTag } from '@guardian/commercial-core';
 import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import type { Callback } from '@guardian/consent-management-platform/dist/types';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { init, _ } from './third-party-tags';
+import { _, init } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
 
@@ -14,10 +16,14 @@ jest.mock('@guardian/consent-management-platform', () => ({
 	getConsentFor: jest.fn(),
 }));
 
-const onConsentChange = onConsentChange_;
-const getConsentFor = getConsentFor_;
+const onConsentChange = onConsentChange_ as jest.MockedFunction<
+	typeof onConsentChange_
+>;
+const getConsentFor = getConsentFor_ as jest.MockedFunction<
+	typeof getConsentFor_
+>;
 
-const tcfv2AllConsentMock = (callback) =>
+const tcfv2AllConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
 			consents: {
@@ -33,10 +39,14 @@ const tcfv2AllConsentMock = (callback) =>
 				10: true,
 			},
 			vendorConsents: { 100: true, 200: true, 300: true },
+			eventStatus: 'tcloaded',
+			addtlConsent: '',
+			gdprApplies: true,
+			tcString: 'blablabla',
 		},
 	});
 
-const tcfv2WithConsentMock = (callback) =>
+const tcfv2WithConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
 			consents: {
@@ -52,10 +62,14 @@ const tcfv2WithConsentMock = (callback) =>
 				10: false,
 			},
 			vendorConsents: { 100: true, 200: false, 300: false },
+			eventStatus: 'tcloaded',
+			addtlConsent: '',
+			gdprApplies: true,
+			tcString: 'blablabla',
 		},
 	});
 
-const tcfv2WithoutConsentMock = (callback) =>
+const tcfv2WithoutConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
 			consents: {
@@ -71,21 +85,21 @@ const tcfv2WithoutConsentMock = (callback) =>
 				10: false,
 			},
 			vendorConsents: { 100: false, 200: false, 300: false },
+			eventStatus: 'tcloaded',
+			addtlConsent: '',
+			gdprApplies: true,
+			tcString: 'blablabla',
 		},
 	});
 
 beforeEach(() => {
 	const firstScript = document.createElement('script');
-	if (document.body && firstScript) {
-		document.body.appendChild(firstScript);
-	}
+	document.body.appendChild(firstScript);
 	expect.hasAssertions();
 });
 
 afterEach(() => {
-	if (document.body) {
-		document.body.innerHTML = '';
-	}
+	document.body.innerHTML = '';
 });
 
 jest.mock('ophan/ng', () => null);
@@ -139,19 +153,19 @@ describe('third party tags', () => {
 	});
 
 	describe('insertScripts', () => {
-		const fakeThirdPartyAdvertisingTag = {
+		const fakeThirdPartyAdvertisingTag: ThirdPartyTag = {
 			shouldRun: true,
 			url: '//fakeThirdPartyAdvertisingTag.js',
 			onLoad: jest.fn(),
 			name: 'permutive',
 		};
-		const fakeThirdPartyAdvertisingTag2 = {
+		const fakeThirdPartyAdvertisingTag2: ThirdPartyTag = {
 			shouldRun: true,
 			url: '//fakeThirdPartyAdvertisingTag2.js',
 			onLoad: jest.fn(),
 			name: 'inizio',
 		};
-		const fakeThirdPartyPerformanceTag = {
+		const fakeThirdPartyPerformanceTag: ThirdPartyTag = {
 			shouldRun: true,
 			url: '//fakeThirdPartyPerformanceTag.js',
 			onLoad: jest.fn(),

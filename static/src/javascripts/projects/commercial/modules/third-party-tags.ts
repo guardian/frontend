@@ -8,6 +8,7 @@ import {
 	remarketing,
 	twitter,
 } from '@guardian/commercial-core';
+import type { ThirdPartyTag } from '@guardian/commercial-core';
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
@@ -16,7 +17,7 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { imrWorldwide } from './third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from './third-party-tags/imr-worldwide-legacy';
 
-const addScripts = (tags) => {
+const addScripts = (tags: ThirdPartyTag[]) => {
 	const ref = document.scripts[0];
 	const frag = document.createDocumentFragment();
 	let hasScriptsToInsert = false;
@@ -37,7 +38,8 @@ const addScripts = (tags) => {
 			if (typeof tag.url !== 'undefined') {
 				script.src = tag.url;
 			}
-			script.onload = tag.onLoad;
+			// script.onload cannot be undefined
+			script.onload = tag.onLoad ?? null;
 			if (tag.async === true) {
 				script.setAttribute('async', '');
 			}
@@ -51,9 +53,10 @@ const addScripts = (tags) => {
 		tag.loaded = true;
 	});
 
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- false positive
 	if (hasScriptsToInsert) {
 		return fastdom.mutate(() => {
-			if (ref && ref.parentNode) {
+			if (ref.parentNode) {
 				ref.parentNode.insertBefore(frag, ref);
 			}
 		});
@@ -62,23 +65,25 @@ const addScripts = (tags) => {
 };
 
 const insertScripts = async (
-	advertisingServices,
-	performanceServices, // performanceServices always run
-) => {
+	advertisingServices: ThirdPartyTag[],
+	performanceServices: ThirdPartyTag[], // performanceServices always run
+): Promise<void> => {
 	await addScripts(performanceServices);
 	const state = await getInitialConsentState();
-	const consentedAdvertisingServices = advertisingServices.filter((script) =>
-		getConsentFor(script.name, state),
+	const consentedAdvertisingServices = advertisingServices.filter(
+		(script) => {
+			if (script.name === undefined) return false;
+			return getConsentFor(script.name, state);
+		},
 	);
 
 	if (consentedAdvertisingServices.length > 0) {
 		await addScripts(consentedAdvertisingServices);
 	}
-	return Promise.resolve(true);
 };
 
-const loadOther = () => {
-	const advertisingServices = [
+const loadOther = (): Promise<void> => {
+	const advertisingServices: ThirdPartyTag[] = [
 		remarketing({ shouldRun: config.get('switches.remarketing', false) }),
 		permutive({ shouldRun: config.get('switches.permutive', false) }),
 		ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
@@ -89,7 +94,7 @@ const loadOther = () => {
 		twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
 	].filter((_) => _.shouldRun);
 
-	const performanceServices = [
+	const performanceServices: ThirdPartyTag[] = [
 		imrWorldwide, // only in AU & NZ
 		imrWorldwideLegacy, // only in AU & NZ
 	].filter((_) => _.shouldRun);
@@ -97,11 +102,12 @@ const loadOther = () => {
 	return insertScripts(advertisingServices, performanceServices);
 };
 
-const init = () => {
+const init = async (): Promise<boolean> => {
 	if (!commercialFeatures.thirdPartyTags) {
 		return Promise.resolve(false);
 	}
-	return loadOther();
+	await loadOther();
+	return Promise.resolve(true);
 };
 
 export { init };

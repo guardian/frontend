@@ -64,6 +64,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
  ],
+ "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/$$.ts",
@@ -94,7 +95,7 @@
   "../lib/mediator.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slots.ts",
+  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
   "../projects/common/modules/article/space-filler.js",
   "../projects/common/modules/commercial/commercial-features.ts"
@@ -104,7 +105,7 @@
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slots.ts",
+  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.js",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
@@ -117,7 +118,7 @@
   "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slots.ts",
+  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
@@ -150,7 +151,7 @@
   "../projects/commercial/modules/dfp/queue-advert.ts"
  ],
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
- "../projects/commercial/modules/dfp/create-slots.ts": [
+ "../projects/commercial/modules/dfp/create-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
@@ -401,28 +402,27 @@
   "../lib/url.ts",
   "../projects/common/modules/commercial/geo-utils.js",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/integrate-criteo.ts",
-  "../projects/common/modules/experiments/tests/integrate-smart.ts"
+  "../projects/common/modules/experiments/tests/integrate-criteo.ts"
  ],
  "../projects/commercial/modules/high-merch.ts": [
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/create-slots.ts",
+  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/ipsos-mori.js": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../lib/config.js",
-  "../projects/commercial/initialConsentState.ts"
+ "../projects/commercial/modules/ipsos-mori.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/config.d.ts",
+  "../projects/commercial/initialConsentState.ts",
+  "../projects/commercial/modules/__vendor/ipsos-mori.js"
  ],
  "../projects/commercial/modules/liveblog-adverts.js": [
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slots.ts",
+  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.js",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
@@ -469,7 +469,7 @@
  "../projects/commercial/modules/mobile-sticky.ts": [
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slots.ts",
+  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/paid-containers.ts": [
@@ -505,10 +505,11 @@
   "../projects/commercial/modules/messenger.js",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/third-party-tags.js": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js",
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../lib/config.js",
+ "../projects/commercial/modules/third-party-tags.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/initialConsentState.ts",
   "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
@@ -535,8 +536,7 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/integrate-criteo.ts",
-  "../projects/common/modules/experiments/tests/integrate-smart.ts"
+  "../projects/common/modules/experiments/tests/integrate-criteo.ts"
  ],
  "../projects/common/modules/article/space-filler.js": [
   "../lib/fastdom-promise.js",
@@ -616,7 +616,6 @@
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/integrate-criteo.ts",
-  "../projects/common/modules/experiments/tests/integrate-smart.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -643,10 +642,6 @@
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
  "../projects/common/modules/experiments/tests/integrate-criteo.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
- "../projects/common/modules/experiments/tests/integrate-smart.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
@@ -701,7 +696,7 @@
   "../projects/commercial/modules/dfp/prepare-prebid.ts",
   "../projects/commercial/modules/dfp/redplanet.js",
   "../projects/commercial/modules/high-merch.ts",
-  "../projects/commercial/modules/ipsos-mori.js",
+  "../projects/commercial/modules/ipsos-mori.ts",
   "../projects/commercial/modules/liveblog-adverts.js",
   "../projects/commercial/modules/mobile-sticky.ts",
   "../projects/commercial/modules/paid-containers.ts",
@@ -709,7 +704,7 @@
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/commercial/modules/set-adtest-cookie.ts",
   "../projects/commercial/modules/sticky-top-banner.js",
-  "../projects/commercial/modules/third-party-tags.js",
+  "../projects/commercial/modules/third-party-tags.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-features.ts",
   "types.ts"

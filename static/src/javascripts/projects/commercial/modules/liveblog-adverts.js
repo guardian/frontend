@@ -3,13 +3,13 @@ import { getBreakpoint } from '../../../lib/detect';
 import { mediator } from '../../../lib/mediator';
 import { addSlot } from './dfp/add-slot';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { createSlots } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
 const MAX_ADS = 8; // maximum number of ads to display
 
-let SLOTCOUNTER = 0;
+let AD_COUNTER = 0;
 let WINDOWHEIGHT;
 let firstSlot;
 
@@ -69,34 +69,28 @@ const getSlotName = (isMobile, slotCounter) => {
 	return `inline${slotCounter + 1}`;
 };
 
-const insertAds = (slots) => {
+const insertAds = (paras) => {
 	const isMobile = getBreakpoint() === 'mobile';
 
-	for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {
-		const slotName = getSlotName(isMobile, SLOTCOUNTER);
-
-		const adSlots = createSlots('inline', {
-			name: slotName,
-			classes: 'liveblog-inline',
-		});
-
-		adSlots.forEach((adSlot) => {
-			if (slots[i] && slots[i].parentNode) {
-				slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
-			}
-		});
-
-		// Only add the first adSlot (the DFP one) in DFP/GTP
-		if (slots[i] && slots[i].parentNode) {
-			addSlot(adSlots[0], false);
-			SLOTCOUNTER += 1;
+	for (let i = 0; i < paras.length && AD_COUNTER < MAX_ADS; i += 1) {
+		const para = paras[i];
+		if (para && para.parentNode) {
+			const adSlot = createAdSlot('inline', {
+				name: getSlotName(isMobile, AD_COUNTER),
+				classes: 'liveblog-inline',
+			});
+			// insert the ad slot container into the DOM
+			para.parentNode.insertBefore(adSlot, para.nextSibling);
+			// load and display the advert via GAM
+			addSlot(adSlot, false);
+			AD_COUNTER += 1;
 		}
 	}
 };
 
 const fill = (rules) =>
 	spaceFiller.fillSpace(rules, insertAds).then((result) => {
-		if (result && SLOTCOUNTER < MAX_ADS) {
+		if (result && AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,
 			);
