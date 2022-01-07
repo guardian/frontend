@@ -271,13 +271,6 @@ const buildAppNexusTargeting = once((pageTargeting: PageTargeting): string =>
 	formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting)),
 );
 
-const getRdpValue = (ccpaState: boolean | null): string => {
-	if (ccpaState === null) {
-		return 'na';
-	}
-	return ccpaState ? 't' : 'f';
-};
-
 const consentedToAllPurposes = (consents: TCFv2ConsentList): boolean => {
 	return (
 		Object.keys(consents).length > 0 &&
@@ -285,13 +278,7 @@ const consentedToAllPurposes = (consents: TCFv2ConsentList): boolean => {
 	);
 };
 
-const getTcfv2ConsentValue = (state: ConsentState | null): string => {
-	if (!state || !state.tcfv2) return 'na';
-
-	return consentedToAllPurposes(state.tcfv2.consents) ? 't' : 'f';
-};
-
-const getAdConsentFromState = (state: ConsentState | null): boolean => {
+const canTarget = (state?: ConsentState): boolean => {
 	if (!state) return false;
 
 	if (state.ccpa) {
@@ -344,34 +331,52 @@ const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
 	return filtered;
 };
 
-const rebuildPageTargeting = (consentState: ConsentState): PageTargeting => {
-	const adConsentState = getAdConsentFromState(consentState);
-	const ccpaState = consentState.ccpa ? consentState.ccpa.doNotSell : null;
-	const tcfv2EventStatus = consentState.tcfv2
-		? consentState.tcfv2.eventStatus
-		: 'na';
+const getConsentRelatedPageTargeting = (
+	canTargetAds: boolean,
+	consentState?: ConsentState,
+): PageTargeting => {
+	if (!consentState) {
+		return {
+			cmp_interaction: 'na',
+			consent_tcfv2: 'na',
+			pa: 'f',
+			rdp: 'na',
+		};
+	}
+	return {
+		amtgrp: consentState.tcfv2
+			? getAdManagerGroup(canTargetAds)
+			: getAdManagerGroup(),
+		cmp_interaction: consentState.tcfv2
+			? consentState.tcfv2.eventStatus
+			: 'na',
+		consent_tcfv2: consentState.tcfv2
+			? consentedToAllPurposes(consentState.tcfv2.consents)
+				? 't'
+				: 'f'
+			: 'na',
+		pa: canTargetAds ? 't' : 'f',
+		rdp: consentState.ccpa?.doNotSell ? 't' : 'f',
+	};
+};
 
+const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
+	const canTargetAds = canTarget(consentState);
+	if (!canTargetAds) clearPermutiveSegments();
+	const consentRelatedTargeting = getConsentRelatedPageTargeting(
+		canTargetAds,
+		consentState,
+	);
 	const { page } = window.guardian.config;
-	const amtgrp = consentState.tcfv2
-		? getAdManagerGroup(adConsentState)
-		: getAdManagerGroup();
-	// personalised ads targeting
-	if (!adConsentState) clearPermutiveSegments();
-	// flowlint-next-line sketchy-null-bool:off
-	const paTargeting: PageTargeting = { pa: adConsentState ? 't' : 'f' };
 	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
 		? { af: 't' }
 		: {};
-
 	const pageTargets: PageTargeting = {
 		...{
 			ab: abParam(),
-			amtgrp,
 			at: getCookie({ name: 'adtest', shouldMemoize: true }),
 			bp: findBreakpoint(),
 			cc: getCountryCode(), // if turned async, we could use getLocale()
-			cmp_interaction: tcfv2EventStatus,
-			consent_tcfv2: getTcfv2ConsentValue(consentState),
 			// dcre: DCR eligible
 			// when the page is DCR eligible and was rendered by DCR or
 			// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
@@ -384,7 +389,6 @@ const rebuildPageTargeting = (consentState: ConsentState): PageTargeting => {
 			inskin: inskinTargeting(),
 			permutive: getPermutiveSegments(),
 			pv: window.guardian.config.ophan.pageViewId,
-			rdp: getRdpValue(ccpaState),
 			ref: getReferrer(),
 			// rp: rendering platform
 			rp: window.guardian.config.isDotcomRendering
@@ -403,8 +407,8 @@ const rebuildPageTargeting = (consentState: ConsentState): PageTargeting => {
 				? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
 				: null,
 		},
+		...consentRelatedTargeting,
 		...page.sharedAdTargeting,
-		...paTargeting,
 		...adFreeTargeting,
 	};
 
@@ -424,7 +428,7 @@ const rebuildPageTargeting = (consentState: ConsentState): PageTargeting => {
 };
 
 export {
-	rebuildPageTargeting as getPageTargeting,
+	getPageTargeting,
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
 };
