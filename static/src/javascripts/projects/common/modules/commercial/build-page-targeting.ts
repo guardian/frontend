@@ -344,7 +344,7 @@ const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
 	return filtered;
 };
 
-const rebuildPageTargeting = (consentState: ConsentState) => {
+const rebuildPageTargeting = (consentState: ConsentState): PageTargeting => {
 	const adConsentState = getAdConsentFromState(consentState);
 	const ccpaState = consentState.ccpa ? consentState.ccpa.doNotSell : null;
 	const tcfv2EventStatus = consentState.tcfv2
@@ -423,10 +423,8 @@ const rebuildPageTargeting = (consentState: ConsentState) => {
 	return pageTargeting;
 };
 
-const getPageTargeting = (): PageTargeting => rebuildPageTargeting({});
-
 export {
-	getPageTargeting,
+	rebuildPageTargeting as getPageTargeting,
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
 };

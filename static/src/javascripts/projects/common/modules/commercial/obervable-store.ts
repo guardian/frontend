@@ -8,7 +8,7 @@ const consentObservable = new Observable<ConsentState>((subscriber) => {
 	onConsentChange((consentState) => {
 		if (consentState.tcfv2) {
 			// For tcfv2 only, the first onConsentChange is fired before the user has
-			// interacted with the consent banner. We want to ignore this first consent consentState.
+			// interacted with the consent banner. We want to ignore this first consentState.
 			if (consentState.tcfv2.eventStatus !== 'cmpuishown') {
 				subscriber.next(consentState);
 			}
@@ -19,7 +19,7 @@ const consentObservable = new Observable<ConsentState>((subscriber) => {
 });
 
 const pageTargetingObservable = consentObservable.pipe(
-	map((consentState) => [consentState, getPageTargeting()]),
+	map((consentState) => [consentState, getPageTargeting(consentState)]),
 );
 
 export { consentObservable, pageTargetingObservable };
