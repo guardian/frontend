@@ -4,3 +4,6 @@
 /static/src/javascripts/projects/common/modules/commercial/ @guardian/commercial-dev @guardian/dotcom-platform
 /static/src/javascripts/projects/commercial/ @guardian/commercial-dev @guardian/dotcom-platform
 /commercial/ @guardian/commercial-dev @guardian/dotcom-platform
+
+# Targeted Experiences (TX)
+/static/src/javascripts/projects/common/modules/commercial/braze @guardian/tx-engineers
