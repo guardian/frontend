@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <form action="@LinkTo("/email")" method="post" target="magicframe" class="newsletter-card__signup">
+                <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup">
                     @helper.CSRF.formField
                     <input class="newsletter-card__text-input u-h" type="text" name="name" autocomplete="off"/>
                     <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required/>
@@ -50,8 +50,6 @@
                         <span>Sign up</span>
                     </button>
                 </form>
-                @* This iframe is used for submitting the form without reloading the page *@
-                <iframe class="u-h" width="0" height="0" border="0" name="magicframe" id="magicframe"></iframe>
 
                 <div class="newsletter-card__example js-newsletter-preview is-hidden">
                 @if(emailListing.exampleUrl.isDefined) {
@@ -89,6 +87,8 @@
                     </div>
                 </a>
             </div>
+            @* This iframe is used for submitting the form without reloading the page *@
+            <iframe class="u-h" width="0" height="0" border="0" name="newsletterSignup" id="newsletterSignup" tabindex="-1"></iframe>
             @displayNewslettersByTheme
         </div>
     </div>
