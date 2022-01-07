@@ -1,5 +1,5 @@
 import { adSizes } from '@guardian/commercial-core';
-import { createSlots } from './create-slots';
+import { createAdSlot } from './create-slot';
 
 const imHtml = `
 <div id="dfp-ad--im"
@@ -26,58 +26,54 @@ const inline1Html = `
 
 describe('Create Ad Slot', () => {
 	it('should exist', () => {
-		expect(createSlots).toBeDefined();
+		expect(createAdSlot).toBeDefined();
 	});
 
 	[
 		{
 			type: 'im',
-			htmls: [imHtml],
+			htmls: imHtml,
 		},
 		{
 			type: 'inline',
 			classes: 'inline',
 			name: 'inline1',
-			htmls: [inline1Html],
+			htmls: inline1Html,
 		},
 	].forEach((expectation) => {
 		it(`should create "${expectation.type}" ad slot`, () => {
-			const adSlots = createSlots(expectation.type, {
+			const adSlot = createAdSlot(expectation.type, {
 				name: expectation.name,
 				classes: expectation.classes,
 			});
 
-			adSlots.forEach((adSlot, i) => {
-				expect(adSlot.outerHTML).toBe(
-					expectation.htmls[i]
-						.replace(/\n/g, '')
-						.replace(/\s+/g, ' '),
-				);
-			});
+			expect(adSlot.outerHTML).toBe(
+				expectation.htmls.replace(/\n/g, '').replace(/\s+/g, ' '),
+			);
 		});
 	});
 
-	it('should create "inline1" ad slot for inline-extra slots', () => {
-		const adSlots = createSlots('inline', { classes: 'inline-extra' });
-		const adSlot = adSlots[0];
-
-		expect(adSlot.classList.contains('ad-slot--inline-extra')).toBeTruthy();
-	});
-
-	it('should create "inline1" ad slot with additional size', () => {
-		const adSlots = createSlots('inline', {
-			sizes: { desktop: [adSizes.leaderboard] },
+	it('should create "inline1" ad slot and merge valid additional sizes', () => {
+		const adSlot = createAdSlot('inline', {
+			sizes: {
+				desktop: [adSizes.leaderboard],
+				mobile: [adSizes.inlineMerchandising],
+				invalid: [adSizes.leaderboard],
+			},
 		});
-		const adSlot = adSlots[0];
-
 		const desktopSizes = adSlot.getAttribute('data-desktop');
-		expect(
-			desktopSizes?.indexOf(adSizes.leaderboard.toString()),
-		).toBeTruthy();
+		expect(desktopSizes).toEqual(
+			'1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|728,90',
+		);
+		const mobileSizes = adSlot.getAttribute('data-mobile');
+		expect(mobileSizes).toEqual(
+			'1,1|2,2|300,197|300,250|300,274|fluid|88,85',
+		);
+		expect(adSlot.getAttributeNames()).not.toContain('data-invalid');
 	});
 
 	it('should use correct sizes for the mobile top-above-nav slot', () => {
-		const topAboveNavSlot = createSlots('top-above-nav')[0];
+		const topAboveNavSlot = createAdSlot('top-above-nav');
 		const mobileSizes = topAboveNavSlot.getAttribute('data-mobile');
 		expect(mobileSizes).toBe('1,1|2,2|88,71|300,197|300,250|fluid');
 	});

@@ -8,20 +8,18 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { isUserLoggedIn } from '../../common/modules/identity/api';
 import { addSlot } from './dfp/add-slot';
 import type { Advert } from './dfp/Advert';
-import { createSlots } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 
-const createCommentSlots = (canBeDmpu: boolean): HTMLElement[] => {
+const createCommentSlot = (canBeDmpu: boolean): HTMLElement => {
 	const sizes = canBeDmpu
 		? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
 		: {};
-	const adSlots = createSlots('comments', { sizes });
+	const adSlot = createAdSlot('comments', { sizes });
 
-	adSlots.forEach((adSlot) => {
-		adSlot.classList.add('js-sticky-mpu');
-	});
-	return adSlots;
+	adSlot.classList.add('js-sticky-mpu');
+	return adSlot;
 };
 
 const insertCommentAd = (
@@ -29,32 +27,24 @@ const insertCommentAd = (
 	adSlotContainer: Element,
 	canBeDmpu: boolean,
 ): Promise<void | EventEmitter> => {
-	const commentSlots = createCommentSlots(canBeDmpu);
+	const commentSlot = createCommentSlot(canBeDmpu);
 
-	return (
-		fastdom
-			.mutate(() => {
-				commentMainColumn.classList.add('discussion__ad-wrapper');
-				if (
-					!config.get('page.isLiveBlog') &&
-					!config.get('page.isMinuteArticle')
-				) {
-					commentMainColumn.classList.add(
-						'discussion__ad-wrapper-wider',
-					);
-				}
-				// Append each slot into the adslot container...
-				commentSlots.forEach((adSlot) => {
-					adSlotContainer.appendChild(adSlot);
-				});
-				return commentSlots[0];
-			})
-			// Add only the fist slot (DFP slot) to GTP
-			.then((adSlot) => {
-				addSlot(adSlot, false);
-				void Promise.resolve(mediator.emit('page:commercial:comments'));
-			})
-	);
+	return fastdom
+		.mutate(() => {
+			commentMainColumn.classList.add('discussion__ad-wrapper');
+			if (
+				!config.get<boolean>('page.isLiveBlog') &&
+				!config.get<boolean>('page.isMinuteArticle')
+			) {
+				commentMainColumn.classList.add('discussion__ad-wrapper-wider');
+			}
+			adSlotContainer.appendChild(commentSlot);
+			return commentSlot;
+		})
+		.then((adSlot) => {
+			addSlot(adSlot, false);
+			void Promise.resolve(mediator.emit('page:commercial:comments'));
+		});
 };
 
 const containsDMPU = (ad: Advert): boolean =>
@@ -150,7 +140,7 @@ export const initCommentAdverts = (): Promise<boolean> => {
 
 export const _ = {
 	maybeUpgradeSlot,
-	createCommentSlots,
+	createCommentSlot,
 	insertCommentAd,
 	runSecondStage,
 	containsDMPU,

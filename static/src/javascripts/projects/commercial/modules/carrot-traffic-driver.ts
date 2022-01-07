@@ -4,7 +4,7 @@ import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { addSlot } from './dfp/add-slot';
-import { createSlots } from './dfp/create-slots';
+import { createAdSlot } from './dfp/create-slot';
 
 // TODO Typescript Spacefinder
 type RuleSpacing = {
@@ -112,17 +112,15 @@ const desktopRules: SpacefinderRules = {
 };
 
 const insertSlot = (paras: HTMLElement[]): Promise<void> => {
-	const slots = createSlots('carrot');
+	const slot = createAdSlot('carrot');
 	const candidates = paras.slice(1);
 	return fastdom
 		.mutate(() => {
-			slots.forEach((slot) => {
-				if (candidates[0]?.parentNode) {
-					candidates[0].parentNode.insertBefore(slot, candidates[0]);
-				}
-			});
+			if (candidates[0]?.parentNode) {
+				candidates[0].parentNode.insertBefore(slot, candidates[0]);
+			}
 		})
-		.then(() => addSlot(slots[0], true));
+		.then(() => addSlot(slot, true));
 };
 
 const getRules = (): SpacefinderRules => {

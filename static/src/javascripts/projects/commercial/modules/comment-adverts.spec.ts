@@ -53,7 +53,7 @@ jest.mock('../../common/modules/identity/api', () => ({
 	isUserLoggedIn: jest.fn(),
 }));
 
-const { createCommentSlots, runSecondStage, maybeUpgradeSlot } = _;
+const { createCommentSlot, runSecondStage, maybeUpgradeSlot } = _;
 const commercialFeaturesMock = commercialFeatures;
 const isUserLoggedIn = isUserLoggedIn_;
 const getAdvertById = getAdvertById_;
@@ -88,7 +88,7 @@ const createTestAdvert = (testAdvert: Partial<MockAdvert>): Advert =>
 const getElement = (selector: string): Element =>
 	document.querySelector(selector) as Element;
 
-describe('createCommentSlots', () => {
+describe('createCommentSlot', () => {
 	beforeEach(() => {
 		mocked(isUserLoggedIn).mockReturnValue(false);
 		commercialFeaturesMock.commentAdverts = true;
@@ -104,8 +104,8 @@ describe('createCommentSlots', () => {
 	});
 
 	it('should return an ad slot with the correct sizes', () => {
-		const commentMpu = createCommentSlots(false)[0];
-		const commentDmpu = createCommentSlots(true)[0];
+		const commentMpu = createCommentSlot(false);
+		const commentDmpu = createCommentSlot(true);
 		expect(commentMpu.getAttribute('data-desktop')).toBe(
 			'1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid',
 		);
@@ -121,8 +121,8 @@ describe('createCommentSlots', () => {
 	});
 
 	it('should add js-sticky-mpu to the class list', () => {
-		const commentMpu = createCommentSlots(false)[0];
-		const commentDmpu = createCommentSlots(true)[0];
+		const commentMpu = createCommentSlot(false);
+		const commentDmpu = createCommentSlot(true);
 		expect(commentMpu.classList).toContain('js-sticky-mpu');
 		expect(commentDmpu.classList).toContain('js-sticky-mpu');
 	});
