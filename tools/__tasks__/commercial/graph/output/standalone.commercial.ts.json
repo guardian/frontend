@@ -239,10 +239,6 @@
   "../projects/commercial/modules/dfp/non-refreshable-line-items.ts",
   "../projects/commercial/modules/dfp/should-refresh.ts"
  ],
- "../projects/commercial/modules/dfp/on-slot-visibility-changed.js": [
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../projects/commercial/modules/dfp/get-advert-by-id.ts"
- ],
  "../projects/commercial/modules/dfp/prepare-a9.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
@@ -267,7 +263,6 @@
   "../projects/commercial/modules/dfp/on-slot-load.ts",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
   "../projects/commercial/modules/dfp/on-slot-viewable.ts",
-  "../projects/commercial/modules/dfp/on-slot-visibility-changed.js",
   "../projects/commercial/modules/dfp/refresh-on-resize.js",
   "../projects/commercial/modules/messenger.js",
   "../projects/commercial/modules/messenger/background.js",
