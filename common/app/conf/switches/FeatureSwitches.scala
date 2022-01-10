@@ -471,7 +471,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("georgeblahblah")),
     safeState = Off,
     sellByDate = LocalDate.of(2022, 1, 30),
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
 }
