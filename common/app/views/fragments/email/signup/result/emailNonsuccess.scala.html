@@ -1,4 +1,5 @@
 @import model.{InvalidEmail, OtherError, NonsuccessResult}
+@import conf.switches.Switches.IdentityDowntimeEmailSubscriptionError
 
 @(result: NonsuccessResult)
 
@@ -14,7 +15,13 @@
         case OtherError => {
             @fragments.inlineSvg("cross", "icon")
             <h2 class="email-sub__message__headline">Subscription error</h2>
-            <p class="email-sub__message__description">Sorry, there was a problem with your subscription request. Please try again or <a target="_blank" href="https://manage.theguardian.com/help-centre/contact-us">contact user help</a>.</p>
+            <p class="email-sub__message__description">
+                @if(IdentityDowntimeEmailSubscriptionError.isSwitchedOn) {
+                    Sorry, there was a problem with your subscription request due to scheduled maintenance. Please try again later.
+                } else {
+                    Sorry, there was a problem with your subscription request. Please try again or <a target=\"_blank\" href=\"https://manage.theguardian.com/help-centre/contact-us\">contact user help</a>.
+                }
+            </p>
         }
     }
     </div>
