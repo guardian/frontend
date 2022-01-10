@@ -238,10 +238,6 @@
   "../projects/commercial/modules/dfp/non-refreshable-line-items.ts",
   "../projects/commercial/modules/dfp/should-refresh.ts"
  ],
- "../projects/commercial/modules/dfp/on-slot-visibility-changed.js": [
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../projects/commercial/modules/dfp/get-advert-by-id.ts"
- ],
  "../projects/commercial/modules/dfp/prepare-a9.js": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
@@ -266,7 +262,6 @@
   "../projects/commercial/modules/dfp/on-slot-load.ts",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
   "../projects/commercial/modules/dfp/on-slot-viewable.ts",
-  "../projects/commercial/modules/dfp/on-slot-visibility-changed.js",
   "../projects/commercial/modules/dfp/refresh-on-resize.js",
   "../projects/commercial/modules/messenger.js",
   "../projects/commercial/modules/messenger/background.js",
@@ -399,9 +394,7 @@
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/url.ts",
-  "../projects/common/modules/commercial/geo-utils.js",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/integrate-criteo.ts"
+  "../projects/common/modules/commercial/geo-utils.js"
  ],
  "../projects/commercial/modules/high-merch.ts": [
   "../lib/config.d.ts",
@@ -534,8 +527,7 @@
  ],
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/integrate-criteo.ts"
+  "../projects/common/modules/experiments/ab.ts"
  ],
  "../projects/common/modules/article/space-filler.js": [
   "../lib/fastdom-promise.js",
@@ -614,7 +606,6 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/tests/integrate-criteo.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -640,10 +631,6 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
- "../projects/common/modules/experiments/tests/integrate-criteo.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
