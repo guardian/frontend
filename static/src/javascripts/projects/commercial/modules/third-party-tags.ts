@@ -84,13 +84,25 @@ const insertScripts = (
 
 const loadOther = (): void => {
 	const advertisingServices: ThirdPartyTag[] = [
+		// google conversion tracking
+		// https://support.google.com/google-ads/answer/6095821
 		remarketing({ shouldRun: config.get('switches.remarketing', false) }),
+
+		// TODO what's this?
 		permutive({ shouldRun: config.get('switches.permutive', false) }),
+
+		// TODO what's this?
 		ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
+
+		// TODO what's this?
 		inizio({ shouldRun: config.get('switches.inizio', false) }),
+
+		// TODO what's this?
 		fbPixel({
 			shouldRun: config.get('switches.facebookTrackingPixel', false),
 		}),
+
+		// TODO what's this?
 		twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
 	].filter((_) => _.shouldRun);
 
