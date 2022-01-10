@@ -107,33 +107,10 @@ const loadDcrBundle = async (): Promise<void> => {
 	return;
 };
 
-const loadBaseModules = () => {
+const loadModules = (modules: Modules) => {
 	const modulePromises: Array<Promise<unknown>> = [];
 
-	commercialBaseModules.forEach((module) => {
-		const [moduleName, moduleInit] = module;
-
-		catchErrorsWithContext(
-			[
-				[
-					moduleName,
-					function pushAfterComplete(): void {
-						const result = moduleInit();
-						modulePromises.push(result);
-					},
-				],
-			],
-			tags,
-		);
-	});
-
-	return Promise.allSettled(modulePromises);
-};
-
-const loadRemainingModules = () => {
-	const modulePromises: Array<Promise<unknown>> = [];
-
-	commercialModules.forEach((module) => {
+	modules.forEach((module) => {
 		const [moduleName, moduleInit] = module;
 
 		catchErrorsWithContext(
@@ -182,36 +159,40 @@ const bootCommercial = async (): Promise<void> => {
 		await loadDcrBundle();
 
 		// load just those modules required to display ads on the page
-		const baseModulesLoaded = loadBaseModules().then(() => {
-			catchErrorsWithContext(
-				[
+		const baseModulesLoaded = loadModules(commercialBaseModules).then(
+			() => {
+				catchErrorsWithContext(
 					[
-						'ga-user-timing-commercial-base-modules-loaded',
-						function runTrackPerformance(): void {
-							EventTimer.get().trigger(
-								'commercialBaseModulesLoaded',
-							);
-						},
+						[
+							'ga-user-timing-commercial-base-modules-loaded',
+							function runTrackPerformance(): void {
+								EventTimer.get().trigger(
+									'commercialBaseModulesLoaded',
+								);
+							},
+						],
 					],
-				],
-				tags,
-			);
-		});
+					tags,
+				);
+			},
+		);
 
 		// load the remaining modules
-		const remainingModulesLoaded = loadRemainingModules().then(() => {
-			catchErrorsWithContext(
-				[
+		const remainingModulesLoaded = loadModules(commercialModules).then(
+			() => {
+				catchErrorsWithContext(
 					[
-						'ga-user-timing-commercial-end',
-						function runTrackPerformance(): void {
-							EventTimer.get().trigger('commercialEnd');
-						},
+						[
+							'ga-user-timing-commercial-end',
+							function runTrackPerformance(): void {
+								EventTimer.get().trigger('commercialEnd');
+							},
+						],
 					],
-				],
-				tags,
-			);
-		});
+					tags,
+				);
+			},
+		);
 
 		await Promise.all([baseModulesLoaded, remainingModulesLoaded]);
 		return;
