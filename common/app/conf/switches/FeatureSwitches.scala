@@ -470,7 +470,7 @@ trait FeatureSwitches {
     "Use a different error message when Identity is offline for Postgres upgrade",
     owners = Seq(Owner.withGithub("georgeblahblah")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 1, 30),
+    sellByDate = LocalDate.of(2022, 1, 14),
     exposeClientSide = false,
   )
 
