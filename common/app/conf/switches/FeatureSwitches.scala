@@ -468,7 +468,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "identity-downtime-email-subscription-error",
     "Use a different error message when Identity is offline for Postgres upgrade",
-    owners = Seq(Owner.withGithub("georgeblahblah")),
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = LocalDate.of(2022, 1, 14),
     exposeClientSide = false,
