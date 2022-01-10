@@ -464,4 +464,14 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
+  val IdentityDowntimeEmailSubscriptionError = Switch(
+    SwitchGroup.Feature,
+    "identity-downtime-email-subscription-error",
+    "Use a different error message when Identity is offline for Postgres upgrade",
+    owners = Seq(Owner.withGithub("georgeblahblah")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2022, 1, 30),
+    exposeClientSide = false
+  )
+
 }
