@@ -54,7 +54,7 @@ const commercialBaseModules: Modules = [
 ];
 
 // remaining modules not necessary to load an ad
-const commercialModules: Modules = [
+const commercialExtraModules: Modules = [
 	['cm-adFreeSlotRemove', adFreeSlotRemove],
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
@@ -62,7 +62,7 @@ const commercialModules: Modules = [
 ];
 
 if (!commercialFeatures.adFree) {
-	commercialModules.push(
+	commercialExtraModules.push(
 		['cm-thirdPartyTags', initThirdPartyTags],
 		['cm-redplanet', initRedplanet],
 		['cm-prepare-adverification', prepareAdVerification],
@@ -85,7 +85,7 @@ const loadFrontendBundle = async (): Promise<void> => {
 		'commercial/commercial-metrics'
 	);
 
-	commercialModules.push(
+	commercialExtraModules.push(
 		['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
 	);
 
@@ -105,11 +105,11 @@ const loadDcrBundle = async (): Promise<void> => {
 		'common/modules/commercial/user-features'
 	);
 
-	commercialModules.push(['c-user-features', userFeatures.refresh]);
+	commercialExtraModules.push(['c-user-features', userFeatures.refresh]);
 	return;
 };
 
-const loadModules = (modules: Modules) => {
+const loadModules = (modules: Modules, eventName: string) => {
 	const modulePromises: Array<Promise<unknown>> = [];
 
 	modules.forEach((module) => {
@@ -129,7 +129,9 @@ const loadModules = (modules: Modules) => {
 		);
 	});
 
-	return Promise.allSettled(modulePromises);
+	return Promise.allSettled(modulePromises).then(() => {
+		EventTimer.get().trigger(eventName);
+	});
 };
 
 const bootCommercial = async (): Promise<void> => {
@@ -160,44 +162,17 @@ const bootCommercial = async (): Promise<void> => {
 		await loadFrontendBundle();
 		await loadDcrBundle();
 
-		// load just those modules required to display ads on the page
-		const baseModulesLoaded = loadModules(commercialBaseModules).then(
-			() => {
-				catchErrorsWithContext(
-					[
-						[
-							'ga-user-timing-commercial-base-modules-loaded',
-							function runTrackPerformance(): void {
-								EventTimer.get().trigger(
-									'commercialBaseModulesLoaded',
-								);
-							},
-						],
-					],
-					tags,
-				);
-			},
-		);
+		const allModules: Array<Parameters<typeof loadModules>> = [
+			[commercialBaseModules, 'commercialBaseModulesLoaded'],
+			[commercialExtraModules, 'commercialExtraModulesLoaded'],
+		];
+		const promises = allModules.map((args) => {
+			return loadModules(...args);
+		});
 
-		// load the remaining modules
-		const remainingModulesLoaded = loadModules(commercialModules).then(
-			() => {
-				catchErrorsWithContext(
-					[
-						[
-							'ga-user-timing-commercial-end',
-							function runTrackPerformance(): void {
-								EventTimer.get().trigger('commercialEnd');
-							},
-						],
-					],
-					tags,
-				);
-			},
-		);
-
-		await Promise.all([baseModulesLoaded, remainingModulesLoaded]);
-		return;
+		await Promise.all(promises).then(() => {
+			EventTimer.get().trigger('commercialEnd');
+		});
 	} catch (error) {
 		// report async errors in bootCommercial to Sentry with the commercial feature tag
 		reportError(error, tags, false);
