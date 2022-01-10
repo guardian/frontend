@@ -23,14 +23,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 12, 1)),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-integrate-criteo",
-    "Integrate Criteo as a Prebid SSP",
-    owners = Seq(Owner.withGithub("chrislomaxjones")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 1, 10)),
-    exposeClientSide = true,
-  )
 }
