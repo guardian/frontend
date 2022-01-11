@@ -391,10 +391,10 @@ $block-padding-left: gs-span(1) + 4;
 .pinned-block-original__icon {
     white-space: nowrap;
     text-overflow: ellipsis;
-    min-width: 32px;
+    min-width: 18px;
     max-width: 100%;
     width: auto;
-    height: 32px;
+    height: 18px;
     border-radius: 50%;
     display: inline-block;
     vertical-align: middle;
@@ -408,6 +408,8 @@ $block-padding-left: gs-span(1) + 4;
         left: 0;
         margin: auto;
         position: absolute;
+        height: 13.5px;
+        width: 7.76px;
     }
 }
 

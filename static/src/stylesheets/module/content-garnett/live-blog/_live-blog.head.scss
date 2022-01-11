@@ -177,12 +177,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2;
     position: relative;
 
-    .published-time {
+    &.published-time {
         @include fs-textSans(2);
         margin: 0;
         font-weight: bold;
-        padding-top: 0;
-        padding-bottom: $gs-baseline/2;
     }
 
     .live-pulse-icon--red {
@@ -450,7 +448,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
             &:last-child {
                 border-bottom: 0;
             }
-            margin-left: $block-padding-left;
         }
 
         > .element figcaption {
