@@ -10,9 +10,6 @@ const normalise = (length) => {
 	return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
 };
 
-const isLiveBlogInlineAdSlot = (adSlot) =>
-	!!adSlot && adSlot.classList.contains('ad-slot--liveblog-inline');
-
 const resize = (specs, iframe, iframeContainer, adSlot) => {
 	if (
 		!specs ||
@@ -25,7 +22,7 @@ const resize = (specs, iframe, iframeContainer, adSlot) => {
 
 	const styles = {};
 
-	if (specs.width && !isLiveBlogInlineAdSlot(adSlot)) {
+	if (specs.width) {
 		styles.width = normalise(specs.width);
 	}
 
