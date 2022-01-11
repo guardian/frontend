@@ -15,6 +15,7 @@ const shouldRemoveFaciaContainerWhenAdFree = (faciaContainer: HTMLElement) => {
 		faciaContainer.getAttribute('data-component');
 	return dataComponentAttribute?.includes('commercial-container');
 };
+
 /**
  * If the user is ad-free, remove all ad slots on the page
  */
