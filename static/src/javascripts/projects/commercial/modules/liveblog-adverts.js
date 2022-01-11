@@ -6,6 +6,10 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { createAdSlot } from './dfp/create-slot';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 
+/*
+ * Initialise liveblog ad slots
+ */
+
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
 const MAX_ADS = 8; // maximum number of ads to display
 

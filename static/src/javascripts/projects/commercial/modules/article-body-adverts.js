@@ -11,6 +11,11 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { initCarrot } from './carrot-traffic-driver';
 import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 
+
+/*
+ * Initialise article body ad slots
+ */
+
 const isPaidContent = config.get('page.isPaidContent', false);
 
 const adSlotClassSelectorSizes = {

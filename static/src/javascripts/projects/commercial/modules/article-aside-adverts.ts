@@ -3,6 +3,10 @@ import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 
+/*
+ * Initialise article aside ad slot
+ */
+
 const minArticleHeight = 1300;
 
 const getAllowedSizesForImmersive = (availableSpace: number) => {
