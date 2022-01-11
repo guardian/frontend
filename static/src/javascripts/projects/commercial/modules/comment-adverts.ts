@@ -12,6 +12,10 @@ import { createAdSlot } from './dfp/create-slot';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 
+/*
+ * Initialize ad slot for comment section
+ */
+
 const createCommentSlot = (canBeDmpu: boolean): HTMLElement => {
 	const sizes = canBeDmpu
 		? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
