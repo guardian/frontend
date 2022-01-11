@@ -6,7 +6,7 @@ import { shouldHideSupportMessaging } from '../common/modules/commercial/user-fe
 
 /*
  * Initialise ad block ask a.k.a Shady Pie
- * Shows a message to users with ad blockers enabled with a discounted subscription
+ * Shows a message to users who have ad blockers enabled with a discounted subscription
  */
 
 const params = new URLSearchParams();

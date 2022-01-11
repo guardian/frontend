@@ -177,7 +177,7 @@ const initState = () =>
 		);
 
 const init = () => {
-    console.log("stickyTopBannerAd", commercialFeatures.stickyTopBannerAd)
+	console.log('stickyTopBannerAd', commercialFeatures.stickyTopBannerAd);
 	if (!commercialFeatures.stickyTopBannerAd) {
 		return Promise.resolve();
 	}
