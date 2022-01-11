@@ -388,6 +388,29 @@ $block-padding-left: gs-span(1) + 4;
     padding: 3px 0 1px 5px;
 }
 
+.pinned-block-original__icon {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: 32px;
+    max-width: 100%;
+    width: auto;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    box-sizing: content-box;
+
+    svg {
+        top: 2px;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        position: absolute;
+    }
+}
+
 .pinned-block__button {
     opacity: 0;
     width: 0;
