@@ -1,10 +1,13 @@
-// DCR documentation https://git.io/Jy5w8
-
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
 import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
+
+/*
+ * Market research partner
+ * documentation on DCR: https://git.io/J9c6g
+ */
 
 const loadIpsosScript = () => {
 	stub();
