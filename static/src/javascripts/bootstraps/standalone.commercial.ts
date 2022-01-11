@@ -167,9 +167,7 @@ const bootCommercial = async (): Promise<void> => {
 			[commercialBaseModules, 'commercialBaseModulesLoaded'],
 			[commercialExtraModules, 'commercialExtraModulesLoaded'],
 		];
-		const promises = allModules.map((args) => {
-			return loadModules(...args);
-		});
+		const promises = allModules.map((args) => loadModules(...args));
 
 		await Promise.all(promises).then(() => {
 			EventTimer.get().trigger('commercialEnd');
