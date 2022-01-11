@@ -11,11 +11,6 @@ import { prebid } from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
-/*
- * Header bidding for display and video ads
- * https://docs.prebid.org/overview/intro.html
- */
-
 const loadPrebid = async (framework: Framework): Promise<void> => {
 	// TODO: Understand why we want to skip Prebid for Google Proxy
 	if (isGoogleProxy()) return;
@@ -62,6 +57,11 @@ const setupPrebid = (): Promise<void> =>
 
 export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
+/**
+ * Initialise prebid - header bidding for display and video ads
+ * https://docs.prebid.org/overview/intro.html
+ * @returns Promise
+ */
 export const init = (): Promise<void> => {
 	void setupPrebidOnce();
 	return Promise.resolve();

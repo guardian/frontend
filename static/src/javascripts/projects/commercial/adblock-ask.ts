@@ -4,11 +4,6 @@ import { pageShouldHideReaderRevenue } from '../common/modules/commercial/contri
 import { supportSubscribeDigitalURL } from '../common/modules/commercial/support-utilities';
 import { shouldHideSupportMessaging } from '../common/modules/commercial/user-features';
 
-/*
- * Initialise ad block ask a.k.a Shady Pie
- * Shows a message to users who have ad blockers enabled with a discounted subscription
- */
-
 const params = new URLSearchParams();
 params.set(
 	'acquisitionData',
@@ -36,6 +31,11 @@ const canShow = (): boolean =>
 	!pageShouldHideReaderRevenue() &&
 	!config.get('page.hasShowcaseMainElement');
 
+/**
+ * Initialise adblock ask a.k.a Shady Pie
+ * Shows a message to users who have ad blockers enabled with a discounted subscription
+ * @returns Promise
+ */
 export const initAdblockAsk = (): Promise<void> => {
 	if (!canShow()) return Promise.resolve();
 

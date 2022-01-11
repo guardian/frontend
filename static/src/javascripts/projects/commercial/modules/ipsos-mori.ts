@@ -4,11 +4,6 @@ import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
-/*
- * Market research partner
- * documentation on DCR: https://git.io/J9c6g
- */
-
 const loadIpsosScript = () => {
 	stub();
 
@@ -24,6 +19,11 @@ const loadIpsosScript = () => {
 	});
 };
 
+/**
+ * Initialise Ipsos Mori - market research partner
+ * documentation on DCR: https://git.io/J9c6g
+ * @returns Promise
+ */
 export const init = (): Promise<void> => {
 	getLocale()
 		.then((locale) => {

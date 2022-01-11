@@ -3,10 +3,6 @@ import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 
-/*
- * Initialise article aside ad slot
- */
-
 const minArticleHeight = 1300;
 
 const getAllowedSizesForImmersive = (availableSpace: number) => {
@@ -43,6 +39,10 @@ const getTopOffset = (element: HTMLElement | undefined): number => {
 	);
 };
 
+/**
+ * Initialise article aside ad slot
+ * @returns Promise
+ */
 export const init = (): Promise<void | boolean> => {
 	const col = $$('.js-secondary-column');
 

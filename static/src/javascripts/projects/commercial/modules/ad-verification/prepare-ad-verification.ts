@@ -6,10 +6,6 @@ import { getAdvertById } from '../dfp/get-advert-by-id';
 import { refreshAdvert } from '../dfp/load-advert';
 import { stripDfpAdPrefixFrom } from '../header-bidding/utils';
 
-/* Confiant - block bad ads
- * https://www.confiant.com/solutions/quality
- */
-
 const errorHandler = (error: Error) => {
 	// Looks like some plugins block ad-verification
 	// Avoid barraging Sentry with errors from these pageviews
@@ -65,6 +61,11 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 	confiantRefreshedSlots.push(blockedSlotPath);
 };
 
+/**
+ * Initialise Confiant - block bad ads
+ * https://www.confiant.com/solutions/quality
+ * @returns Promise
+ */
 export const init = async (): Promise<void> => {
 	const host = 'confiant-integrations.global.ssl.fastly.net';
 	const id = '7oDgiTsq88US4rrBG0_Nxpafkrg';

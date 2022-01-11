@@ -1,10 +1,6 @@
 import fastdom from 'fastdom';
 import { $$ } from '../../../lib/$$';
 
-/*
- * Initialise Guardian Labs paid content container a.k.a Dumathoin
- */
-
 const onKeyPress = (handler: EventListener) => (event: KeyboardEvent) => {
 	if (event.code === 'Enter' || event.code === 'Space') {
 		handler(event);
@@ -27,6 +23,10 @@ const onOpenClick = (event: Event) => {
 	}
 };
 
+/**
+ * Initialise Guardian Labs paid content container a.k.a Dumathoin
+ * @returns Promise
+ */
 const paidContainers = (): Promise<void> => {
 	const showMores = $$('.dumathoin-more > summary').get();
 	showMores.forEach((el) => el.addEventListener('click', onOpenClick));

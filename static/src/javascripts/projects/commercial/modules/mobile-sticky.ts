@@ -3,10 +3,6 @@ import { addSlot } from './dfp/add-slot';
 import { createAdSlot } from './dfp/create-slot';
 import { shouldIncludeMobileSticky } from './header-bidding/utils';
 
-/*
- * Initialise mobile sticky ad slot
- */
-
 const createAdWrapperClassic = () => {
 	const wrapper = document.createElement('div');
 	wrapper.className = 'mobilesticky-container';
@@ -30,7 +26,10 @@ const createAdWrapper = () => {
 	}
 	return createAdWrapperDCR();
 };
-
+/**
+ * Initialise mobile sticky ad slot
+ * @returns Promise
+ */
 export const init = (): Promise<void> => {
 	if (shouldIncludeMobileSticky()) {
 		const mobileStickyWrapper = createAdWrapper();

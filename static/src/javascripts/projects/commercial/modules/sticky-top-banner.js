@@ -6,11 +6,6 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { register, unregister } from './messenger';
 
-/*
- * for ~5% of browsers that don't support css sticky (https://caniuse.com/css-sticky)
- * make top-above-nav sticky with javascript
- */
-
 const topSlotId = 'dfp-ad--top-above-nav';
 let updateQueued = false;
 let header;
@@ -176,8 +171,11 @@ const initState = () =>
 			Promise.all([resizeStickyBanner(currentHeight), onScroll()]),
 		);
 
+/**
+ * for ~5% of browsers that don't support css sticky (https://caniuse.com/css-sticky)
+ * make top-above-nav sticky with javascript
+ */
 const init = () => {
-	console.log('stickyTopBannerAd', commercialFeatures.stickyTopBannerAd);
 	if (!commercialFeatures.stickyTopBannerAd) {
 		return Promise.resolve();
 	}

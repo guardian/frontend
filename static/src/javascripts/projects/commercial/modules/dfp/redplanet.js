@@ -5,11 +5,6 @@ import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
-/*
- * Pre and post campaign analysis
- * https://docs.google.com/presentation/d/1B8eg9GP5CUMTH9lkjtmkcExq32tx97nngXB0wOBoweI/edit#slide=id.g51461c3927_0_83
- */
-
 let initialised = false;
 
 const initialise = () => {
@@ -59,6 +54,10 @@ const setupRedplanet = () =>
 			log('commercial', '⚠️ Failed to execute redplanet', e);
 		});
 
+/**
+ * Initialise Redplanet, pre and post campaign analysis
+ * https://docs.google.com/presentation/d/1B8eg9GP5CUMTH9lkjtmkcExq32tx97nngXB0wOBoweI/edit#slide=id.g51461c3927_0_83
+ */
 export const init = () => {
 	if (commercialFeatures.launchpad && isInAuOrNz()) {
 		return setupRedplanet();
