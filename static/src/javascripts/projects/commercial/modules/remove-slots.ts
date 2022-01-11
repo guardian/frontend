@@ -25,6 +25,9 @@ const removeNodes = (nodes: Element[]): Promise<void> =>
 
 const removeSlots = (): Promise<void> => removeNodes(selectNodes());
 
+/*
+ * Remove ad slot elements that have style display: none
+ */
 const removeDisabledSlots = once(() =>
 	removeNodes(filterDisabledNodes(selectNodes())),
 );
