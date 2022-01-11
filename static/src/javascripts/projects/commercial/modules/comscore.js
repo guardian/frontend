@@ -4,6 +4,11 @@ import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 
+/**
+ * Industry-wide audience tracking
+ * https://www.comscore.com/About
+ */
+
 const comscoreSrc = '//sb.scorecardresearch.com/cs/6035250/beacon.js';
 const comscoreC1 = '2';
 const comscoreC2 = '6035250';
