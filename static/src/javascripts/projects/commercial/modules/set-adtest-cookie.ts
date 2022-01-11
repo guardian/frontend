@@ -1,6 +1,12 @@
 import { removeCookie, setCookie } from '@guardian/libs';
 import { getUrlVars } from '../../../lib/url';
 
+/*
+ * Set or remove adtest cookie.
+ * This is used as a custom targeting parameter in Google Ad Manager
+ * in order to test individual line items
+ */
+
 const init = (): Promise<void> => {
 	const queryParams = getUrlVars();
 
