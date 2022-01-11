@@ -1,6 +1,7 @@
 @import services.newsletters.NewsletterResponse
 @import views.support.`package`.Seq2zipWithRowInfo
 @import staticpages.NewsletterRoundupPage
+@import conf.switches.Switches.IdentityDowntimeEmailSubscriptionError
 
 @import common.LinkTo
 
@@ -41,15 +42,17 @@
                     </div>
                 </div>
 
-                <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup">
-                    @helper.CSRF.formField
-                    <input class="newsletter-card__text-input u-h" type="text" name="name" autocomplete="off"/>
-                    <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required/>
-                    <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.id" />
-                    <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit" data-link-name="Subscribe to @emailListing.id" type="submit" value="@emailListing.listIdv1">
-                        <span>Sign up</span>
-                    </button>
-                </form>
+                @if(!IdentityDowntimeEmailSubscriptionError.isSwitchedOn) {
+                    <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup">
+                        @helper.CSRF.formField
+                        <input class="newsletter-card__text-input u-h" type="text" name="name" autocomplete="off"/>
+                        <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required/>
+                        <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.id" />
+                        <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit" data-link-name="Subscribe to @emailListing.id" type="submit" value="@emailListing.listIdv1">
+                            <span>Sign up</span>
+                        </button>
+                    </form>
+                }
 
                 <div class="newsletter-card__example js-newsletter-preview is-hidden">
                 @if(emailListing.exampleUrl.isDefined) {
@@ -89,6 +92,11 @@
             </div>
             @* This iframe is used for submitting the form without reloading the page *@
             <iframe class="u-h" width="0" height="0" border="0" name="newsletterSignup" id="newsletterSignup" tabindex="-1"></iframe>
+            @if(IdentityDowntimeEmailSubscriptionError.isSwitchedOn) {
+                <div>
+                    <p><strong>Please note:</strong> newsletter signups are currently unavailable due to scheduled maintenance. Please try again later.</p>
+                </div>
+            }
             @displayNewslettersByTheme
         </div>
     </div>
