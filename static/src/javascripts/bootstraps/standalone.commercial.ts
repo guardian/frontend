@@ -38,20 +38,8 @@ const tags: Record<string, unknown> = {
 	bundle: 'standalone',
 };
 
-// modules necessary to load an ad
-const commercialBaseModules: Modules = [
-	['cm-setAdTestCookie', setAdTestCookie],
-	['cm-prepare-prebid', preparePrebid],
-	// Permutive init code must run before google tag enableServices()
-	// The permutive lib however is loaded async with the third party tags
-	['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
-	['cm-prepare-a9', prepareA9],
-	['cm-mobileSticky', initMobileSticky],
-	['cm-highMerch', initHighMerch],
-	['cm-articleAsideAdverts', initArticleAsideAdverts],
-	['cm-articleBodyAdverts', initArticleBodyAdverts],
-	['cm-liveblogAdverts', initLiveblogAdverts],
-];
+// modules necessary to load the first ads on the page
+const commercialBaseModules: Modules = [];
 
 // remaining modules not necessary to load an ad
 const commercialExtraModules: Modules = [
@@ -62,10 +50,23 @@ const commercialExtraModules: Modules = [
 ];
 
 if (!commercialFeatures.adFree) {
+	commercialBaseModules.push(
+		['cm-setAdTestCookie', setAdTestCookie],
+		['cm-prepare-prebid', preparePrebid],
+		// Permutive init code must run before google tag enableServices()
+		// The permutive lib however is loaded async with the third party tags
+		['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
+		['cm-prepare-a9', prepareA9],
+	);
 	commercialExtraModules.push(
+		['cm-prepare-adverification', prepareAdVerification],
+		['cm-mobileSticky', initMobileSticky],
+		['cm-highMerch', initHighMerch],
+		['cm-articleAsideAdverts', initArticleAsideAdverts],
+		['cm-articleBodyAdverts', initArticleBodyAdverts],
+		['cm-liveblogAdverts', initLiveblogAdverts],
 		['cm-thirdPartyTags', initThirdPartyTags],
 		['cm-redplanet', initRedplanet],
-		['cm-prepare-adverification', prepareAdVerification],
 		['cm-stickyTopBanner', initStickyTopBanner],
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],

@@ -95,6 +95,7 @@ const runSecondStage = (
 };
 
 export const initCommentAdverts = (): Promise<boolean> => {
+	// TODO is this relevant? add amIUsed
 	const adSlotContainer = document.querySelector('.js-discussion__ad-slot');
 	const isMobile = getBreakpoint() === 'mobile';
 	if (!commercialFeatures.commentAdverts || !adSlotContainer || isMobile) {
