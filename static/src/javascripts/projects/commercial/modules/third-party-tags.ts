@@ -88,25 +88,31 @@ const loadOther = (): void => {
 		// https://support.google.com/google-ads/answer/6095821
 		remarketing({ shouldRun: config.get('switches.remarketing', false) }),
 
-		// TODO what's this?
+		// updates local user segmentation data
 		permutive({ shouldRun: config.get('switches.permutive', false) }),
 
-		// TODO what's this?
+		// Filter bad ads
+		// https://integralads.com/uk/
 		ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
 
-		// TODO what's this?
+		// Allows creatives to show surveys
+		// https://trello.com/c/wHffHVF1/171-integrate-and-test-inizio
 		inizio({ shouldRun: config.get('switches.inizio', false) }),
 
-		// TODO what's this?
+		// tracking pixel
+		// https://en-gb.facebook.com/business/learn/facebook-ads-pixel
 		fbPixel({
 			shouldRun: config.get('switches.facebookTrackingPixel', false),
 		}),
 
-		// TODO what's this?
+		// tracking pixel
+		// https://business.twitter.com/en/help/campaign-measurement-and-analytics/conversion-tracking-for-websites.html
 		twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
 	].filter((_) => _.shouldRun);
 
 	const performanceServices: ThirdPartyTag[] = [
+		// a.k.a Nielsen Online - provides measurement and analysis of online audiences,
+		// advertising, video, consumer-generated media, word of mouth, commerce and consumer behavior.
 		imrWorldwide, // only in AU & NZ
 		imrWorldwideLegacy, // only in AU & NZ
 	].filter((_) => _.shouldRun);
