@@ -1,6 +1,11 @@
 import config from '../../../../lib/config';
 import reportError from '../../../../lib/report-error';
 
+/*
+ * User segmentation - reads data stored by third-part-tags permutive script for ad targeting
+ * https://permutive.com/audience-platform/publishers/
+ */
+
 const isEmpty = (value) =>
 	value === '' ||
 	value === null ||
