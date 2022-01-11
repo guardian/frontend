@@ -26,6 +26,7 @@ const createAdWrapper = () => {
 	}
 	return createAdWrapperDCR();
 };
+
 /**
  * Initialise mobile sticky ad slot
  * @returns Promise
