@@ -28,6 +28,7 @@ class LeagueTableController(
   // Competitions must be added to this list to show up at /football/tables
   val tableOrder: Seq[String] = Seq(
     "Premier League",
+    "Africa Cup of Nations",
     "Bundesliga",
     "Serie A",
     "La Liga",
