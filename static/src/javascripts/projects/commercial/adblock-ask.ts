@@ -33,7 +33,7 @@ const canShow = (): boolean =>
 
 /**
  * Initialise adblock ask a.k.a Shady Pie
- * Shows a message to users who have ad blockers enabled with a discounted subscription
+ * Shows a message with a discounted subscription to users who have ad blockers enabled
  * @returns Promise
  */
 export const initAdblockAsk = (): Promise<void> => {
