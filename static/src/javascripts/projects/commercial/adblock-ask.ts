@@ -4,6 +4,11 @@ import { pageShouldHideReaderRevenue } from '../common/modules/commercial/contri
 import { supportSubscribeDigitalURL } from '../common/modules/commercial/support-utilities';
 import { shouldHideSupportMessaging } from '../common/modules/commercial/user-features';
 
+/*
+ * Initialise ad block ask a.k.a Shady Pie
+ * Shows a message to users with ad blockers enabled with a discounted subscription
+ */
+
 const params = new URLSearchParams();
 params.set(
 	'acquisitionData',
