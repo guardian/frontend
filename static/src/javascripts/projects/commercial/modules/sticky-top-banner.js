@@ -171,6 +171,10 @@ const initState = () =>
 			Promise.all([resizeStickyBanner(currentHeight), onScroll()]),
 		);
 
+/**
+ * for ~5% of browsers that don't support css sticky (https://caniuse.com/css-sticky)
+ * make top-above-nav sticky with javascript
+ */
 const init = () => {
 	if (!commercialFeatures.stickyTopBannerAd) {
 		return Promise.resolve();

@@ -57,6 +57,11 @@ const setupPrebid = (): Promise<void> =>
 
 export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
+/**
+ * Initialise prebid - header bidding for display and video ads
+ * https://docs.prebid.org/overview/intro.html
+ * @returns Promise
+ */
 export const init = (): Promise<void> => {
 	void setupPrebidOnce();
 	return Promise.resolve();

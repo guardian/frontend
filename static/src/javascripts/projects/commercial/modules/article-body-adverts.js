@@ -248,6 +248,9 @@ const doInit = () => {
 	return im;
 };
 
+/**
+ * Initialise article body ad slots
+ */
 export const init = () => {
 	// Also init when the main article is redisplayed
 	// For instance by the signin gate.

@@ -61,6 +61,11 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 	confiantRefreshedSlots.push(blockedSlotPath);
 };
 
+/**
+ * Initialise Confiant - block bad ads
+ * https://www.confiant.com/solutions/quality
+ * @returns Promise
+ */
 export const init = async (): Promise<void> => {
 	const host = 'confiant-integrations.global.ssl.fastly.net';
 	const id = '7oDgiTsq88US4rrBG0_Nxpafkrg';

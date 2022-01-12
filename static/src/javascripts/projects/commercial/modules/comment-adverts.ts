@@ -94,6 +94,10 @@ const runSecondStage = (
 	}
 };
 
+/**
+ * Initialize ad slot for comment section
+ * @returns Promise
+ */
 export const initCommentAdverts = (): Promise<boolean> => {
 	const adSlotContainer = document.querySelector('.js-discussion__ad-slot');
 	const isMobile = getBreakpoint() === 'mobile';

@@ -102,6 +102,11 @@ const runPermutive = (pageConfig = {}, permutiveGlobal, logger) => {
 	}
 };
 
+/**
+ * Initialise Permutive user segmentation - reads data stored by third-party-tags permutive script for ad targeting
+ * https://permutive.com/audience-platform/publishers/
+ * @returns Promise
+ */
 /* eslint-disable */
 export const initPermutive = () =>
 	new Promise((resolve) => {
