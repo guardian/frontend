@@ -1,3 +1,5 @@
+import { isObject } from '@guardian/libs'
+
 const initEmbedResize = () => {
 	const allIframes = [].slice.call(
 		document.querySelectorAll(
@@ -21,7 +23,7 @@ const initEmbedResize = () => {
 
 		const iframes = allIframes.filter((i) => {
 			try {
-                if (i.contentWindow !== null && event.source !== null) return false
+                if (i.contentWindow === null && event.source === null) return false
 				return (
 					i.contentWindow === event.source
 				);
@@ -29,12 +31,17 @@ const initEmbedResize = () => {
 				return false;
 			}
 		});
+
 		if (iframes.length !== 0) {
 			try {
 				const message = JSON.parse(event.data);
+                if (!isObject(message) || typeof message.type !== 'string') {
+                    return
+                }
+
 				switch (message.type) {
 					case 'set-height':
-						const value = parseInt(message.value);
+                        const value = (typeof message.value === 'number') ? message.value : parseInt(message.value, 10)
 						if (!Number.isInteger(value)) return;
 
 						iframes.forEach((iframe) => {
