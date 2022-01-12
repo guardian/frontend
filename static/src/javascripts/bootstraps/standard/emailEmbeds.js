@@ -9,7 +9,7 @@ const initEmbedResize = () => {
 	// Otherwise, earlier resize events might be missed
 	allIframes.forEach((iframe) => {
 		if (iframe && iframe.contentWindow)
-			iframe.contentWindow.postMessage("resize", "*");
+			iframe.contentWindow.postMessage("resize", "https://www.theguardian.com");
 	});
 
 	const allowedOrigins = ['https://www.theguardian.com']
