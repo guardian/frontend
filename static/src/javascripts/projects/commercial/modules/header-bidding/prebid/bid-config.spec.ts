@@ -17,6 +17,7 @@ import {
 	getBreakpointKey as getBreakpointKey_,
 	shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
 	shouldIncludeAppNexus as shouldIncludeAppNexus_,
+	shouldIncludeCriteo as shouldIncludeCriteo_,
 	shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
 	shouldIncludeOpenx as shouldIncludeOpenx_,
 	shouldIncludeSonobi as shouldIncludeSonobi_,
@@ -64,6 +65,7 @@ const shouldIncludeTrustX = shouldIncludeTrustX_ as jest.Mock;
 const shouldIncludeXaxis = shouldIncludeXaxis_ as jest.Mock;
 const shouldIncludeSonobi = shouldIncludeSonobi_ as jest.Mock;
 const shouldIncludeTripleLift = shouldIncludeTripleLift_ as jest.Mock;
+const shouldIncludeCriteo = shouldIncludeCriteo_ as jest.Mock;
 const stripMobileSuffix = stripMobileSuffix_ as jest.Mock;
 const getBreakpointKey = getBreakpointKey_ as jest.Mock;
 const isInVariantSynchronous = isInVariantSynchronous_ as jest.Mock;
@@ -103,6 +105,7 @@ const resetConfig = () => {
 		prebidXaxis: true,
 		prebidAdYouLike: true,
 		prebidTriplelift: true,
+		prebidCriteo: true,
 	};
 	config.set('page.contentType', 'Article');
 	config.set('page.section', 'Magic');
@@ -450,6 +453,11 @@ describe('bids', () => {
 	test('should include TrustX if in target geolocation', () => {
 		shouldIncludeTrustX.mockReturnValue(true);
 		expect(getBidders()).toEqual(['ix', 'trustx', 'adyoulike']);
+	});
+
+	test('should include Criteo if in target geolocation', () => {
+		shouldIncludeCriteo.mockReturnValue(true);
+		expect(getBidders()).toEqual(['ix', 'criteo', 'adyoulike']);
 	});
 
 	test('should include ix bidder for each size that slot can take', () => {
