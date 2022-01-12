@@ -5,13 +5,13 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
+import conf.switches.Switches.fetchNonRefreshableLineItems
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
 import model.IpsosTags.getScriptTag
 import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
-import experiments.{ActiveExperiments, FetchNonRefreshableLineItems}
 
 object JavaScriptPage {
 
@@ -43,8 +43,8 @@ object JavaScriptPage {
     }
 
     // Only attach the non-refreshable line items to the commercial config
-    // if not participating in the `FetchNonRefreshableLineItems` experiment
-    val nonRefreshableConfig = if (!ActiveExperiments.isParticipating(FetchNonRefreshableLineItems)(request)) {
+    // if the `fetchNonRefreshableLineItems` switch is off
+    val nonRefreshableConfig = if (fetchNonRefreshableLineItems.isSwitchedOff) {
       Map("nonRefreshableLineItemIds" -> nonRefreshableLineItemIds)
     } else {
       Map()

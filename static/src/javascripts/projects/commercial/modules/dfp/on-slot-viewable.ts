@@ -17,9 +17,9 @@ const setSlotAdRefresh = (
 
 	// Asynchronously retrieve the non-refreshable line item ids
 	// Only do this if they haven't been attached to the page config
-	const { tests, page } = window.guardian.config;
+	const { switches, page } = window.guardian.config;
 	if (
-		tests?.fetchNonRefreshableLineItemsVariant === 'variant' &&
+		switches.fetchNonRefreshableLineItems &&
 		!page.nonRefreshableLineItemIds
 	) {
 		// Call the memoized function so we only retrieve the value from the API once
