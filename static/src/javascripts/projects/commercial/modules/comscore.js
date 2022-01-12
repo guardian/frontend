@@ -40,6 +40,10 @@ const initOnConsent = (state) => {
 	}
 };
 
+/**
+ * Initialise comscore, industry-wide audience tracking
+ * https://www.comscore.com/About
+ */
 export const init = () => {
 	if (commercialFeatures.comscore) {
 		void getInitialConsentState().then((state) => {

@@ -31,6 +31,11 @@ const canShow = (): boolean =>
 	!pageShouldHideReaderRevenue() &&
 	!config.get('page.hasShowcaseMainElement');
 
+/**
+ * Initialise adblock ask a.k.a Shady Pie
+ * Shows a message with a discounted subscription to users who have ad blockers enabled
+ * @returns Promise
+ */
 export const initAdblockAsk = (): Promise<void> => {
 	if (!canShow()) return Promise.resolve();
 

@@ -23,6 +23,10 @@ const onOpenClick = (event: Event) => {
 	}
 };
 
+/**
+ * Initialise Guardian Labs paid content container a.k.a Dumathoin
+ * @returns Promise
+ */
 const paidContainers = (): Promise<void> => {
 	const showMores = $$('.dumathoin-more > summary').get();
 	showMores.forEach((el) => el.addEventListener('click', onOpenClick));

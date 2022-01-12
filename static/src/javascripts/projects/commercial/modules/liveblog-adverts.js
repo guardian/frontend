@@ -110,6 +110,9 @@ const onUpdate = () => {
 	Promise.resolve(getSpaceFillerRules(WINDOWHEIGHT, true)).then(fill);
 };
 
+/**
+ * Initialise liveblog ad slots
+ */
 export const init = () => {
 	if (!commercialFeatures.liveblogAdverts) {
 		return Promise.resolve();

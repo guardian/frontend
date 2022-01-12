@@ -3,6 +3,10 @@ import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { createAdSlot } from './dfp/create-slot';
 
+/**
+ * Initialise high merch ad slot
+ * @returns Promise
+ */
 export const init = (): Promise<void> => {
 	if (commercialFeatures.highMerch) {
 		const anchorSelector = config.get('page.commentable')
