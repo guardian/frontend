@@ -132,6 +132,8 @@ object PressedInteractives {
     "/fashion/ng-interactive/2020/jan/12/gran-designs-maximal-80s-style-in-dressing-and-decor",
     "/artanddesign/ng-interactive/2020/jan/12/art-into-nature-nature-into-art-cesar-manrique-the-architect-of-lanzarote",
     "/environment/ng-interactive/2019/oct/16/the-guardians-climate-pledge-2019",
+    "/lifeandstyle/ng-interactive/2017/feb/19/the-5th-annual-ofm-50-what-we-love-about-food-in-2017",
+    "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
   )
 
   def isPressed(path: String): Boolean = interactives.contains(path)
