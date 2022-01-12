@@ -21,6 +21,7 @@ const initEmbedResize = () => {
 
 		const iframes = allIframes.filter((i) => {
 			try {
+                if (i.contentWindow !== null && event.source !== null) return false
 				return (
 					i.contentWindow === event.source
 				);
