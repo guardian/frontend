@@ -39,6 +39,10 @@ const getTopOffset = (element: HTMLElement | undefined): number => {
 	);
 };
 
+/**
+ * Initialise article aside ad slot
+ * @returns Promise
+ */
 export const init = (): Promise<void | boolean> => {
 	const col = $$('.js-secondary-column');
 

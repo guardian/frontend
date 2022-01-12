@@ -95,6 +95,8 @@ const loadOther = (): Promise<void> => {
 	].filter((_) => _.shouldRun);
 
 	const performanceServices: ThirdPartyTag[] = [
+		// a.k.a Nielsen Online - provides measurement and analysis of online audiences,
+		// advertising, video, consumer-generated media, word of mouth, commerce and consumer behavior.
 		imrWorldwide, // only in AU & NZ
 		imrWorldwideLegacy, // only in AU & NZ
 	].filter((_) => _.shouldRun);

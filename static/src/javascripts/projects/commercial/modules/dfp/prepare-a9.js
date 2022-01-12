@@ -40,6 +40,10 @@ const setupA9 = () => {
 
 const setupA9Once = once(setupA9);
 
+/**
+ * Initialise A9, Amazon header bidding library
+ * https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/display.html
+ */
 export const init = () =>
 	getInitialConsentState()
 		.then((state) => {

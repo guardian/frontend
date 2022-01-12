@@ -23,6 +23,10 @@ const onOpenClick = (event: Event) => {
 	}
 };
 
+/**
+ * Initialise Guardian Labs paid content container a.k.a Dumathoin
+ * @returns Promise
+ */
 const paidContainers = (): Promise<void> => {
 	// TODO is this relevant? add amIUsed
 	const showMores = $$('.dumathoin-more > summary').get();

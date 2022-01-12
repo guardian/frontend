@@ -1,5 +1,3 @@
-// DCR documentation https://git.io/Jy5w8
-
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
 import { getInitialConsentState } from 'commercial/initialConsentState';
@@ -21,6 +19,11 @@ const loadIpsosScript = () => {
 	});
 };
 
+/**
+ * Initialise Ipsos Mori - market research partner
+ * documentation on DCR: https://git.io/J9c6g
+ * @returns Promise
+ */
 export const init = (): Promise<void> =>
 	getLocale()
 		.then((locale) => {

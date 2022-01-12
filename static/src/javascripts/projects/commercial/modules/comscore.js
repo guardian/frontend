@@ -35,7 +35,11 @@ const initOnConsent = () => {
 	return loadScript(comscoreSrc, { id: 'comscore', async: true });
 };
 
-const setupComscore = () => {
+/**
+ * Initialise comscore, industry-wide audience tracking
+ * https://www.comscore.com/About
+ */
+ const setupComscore = () => {
 	if (commercialFeatures.comscore) {
 		return getInitialConsentState()
 			.then((state) => {

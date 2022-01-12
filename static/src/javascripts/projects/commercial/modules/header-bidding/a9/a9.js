@@ -2,6 +2,11 @@ import config from '../../../../../lib/config';
 import { getHeaderBiddingAdSlots } from '../slot-config';
 import { dfpEnv } from '../../dfp/dfp-env';
 
+/*
+ * Amazon's header bidding javascript library
+ * https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/display.html
+ */
+
 class A9AdUnit {
 	constructor(advert, slot) {
 		this.slotID = advert.id;

@@ -27,6 +27,10 @@ const createAdWrapper = () => {
 	return createAdWrapperDCR();
 };
 
+/**
+ * Initialise mobile sticky ad slot
+ * @returns Promise
+ */
 export const init = (): Promise<void> => {
 	if (shouldIncludeMobileSticky()) {
 		const mobileStickyWrapper = createAdWrapper();

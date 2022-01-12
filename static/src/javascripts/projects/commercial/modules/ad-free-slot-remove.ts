@@ -16,6 +16,9 @@ const shouldRemoveFaciaContainerWhenAdFree = (faciaContainer: HTMLElement) => {
 	return dataComponentAttribute?.includes('commercial-container');
 };
 
+/**
+ * If the user is ad-free, remove all ad slots on the page
+ */
 const adFreeSlotRemove = once(() => {
 	if (!commercialFeatures.adFree) {
 		return Promise.resolve();
