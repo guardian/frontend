@@ -212,6 +212,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         .block-time__absolute {
             display: block;
             margin-left: 0;
+
+            &.block-time__pinned {
+                display: inline-flex;
+            }
         }
     }
 }
