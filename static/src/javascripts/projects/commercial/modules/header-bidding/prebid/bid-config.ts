@@ -37,10 +37,6 @@ import {
 } from '../utils';
 import { getAppNexusDirectBidParams } from './appnexus';
 
-// The below line is needed for page skins to show
-// Why? Does it trigger an eager building of the page targeting?
-getPageTargeting();
-
 const isArticle = config.get('page.contentType') === 'Article';
 
 const isDesktopAndArticle = getBreakpointKey() === 'D' && isArticle;
