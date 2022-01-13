@@ -43,7 +43,9 @@
                 </div>
 
                 <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup">
-                    <div class="grecaptcha_container"></div>
+                    @if(EmailSignupRecaptcha.isSwitchedOn) {
+                        @fragments.email.signup.recaptchaContainer()
+                    }
                     @helper.CSRF.formField
                     <input class="newsletter-card__text-input u-h" type="text" name="name" autocomplete="off"/>
                     <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required/>
@@ -92,11 +94,7 @@
             @* This iframe is used for submitting the form without reloading the page *@
             <iframe class="u-h" width="0" height="0" border="0" name="newsletterSignup" id="newsletterSignup" tabindex="-1"></iframe>
             @if(EmailSignupRecaptcha.isSwitchedOn) {
-                <div class="captcha-terms">
-                    <p>
-                        This page is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
-                    </p>
-                </div>
+                @fragments.email.signup.recaptchaTerms()
             }
             @displayNewslettersByTheme
         </div>

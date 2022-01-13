@@ -30,7 +30,8 @@
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button" data-component="email-signup-button footer-@listName" data-link-name="footer | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
             @if(EmailSignupRecaptcha.isSwitchedOn) {
-                @fragments.email.signup.recaptcha()
+                @fragments.email.signup.recaptchaContainer()
+                @fragments.email.signup.recaptchaTerms()
             }
         </div>
     </form>
