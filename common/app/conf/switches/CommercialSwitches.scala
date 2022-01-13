@@ -106,16 +106,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val AdomikSwitch = Switch(
-    Commercial,
-    "adomik",
-    "Enable Adomik traffic splitting.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val PermutiveSwitch = Switch(
     Commercial,
     "permutive",
