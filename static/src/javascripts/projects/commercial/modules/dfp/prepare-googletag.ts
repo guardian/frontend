@@ -77,18 +77,6 @@ const setPublisherProvidedId = (): void =>
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
-		// note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
-		// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
-		// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
-		window.googletag.cmd.push(
-			setDfpListeners,
-			setPageTargeting,
-			refreshOnResize,
-			() => {
-				void fillAdvertSlots();
-			},
-		);
-
 		return getInitialConsentState().then((state) => {
 			let canRun = true;
 			if (state.ccpa) {
@@ -130,6 +118,18 @@ export const init = (): Promise<void> => {
 			// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
 			// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
 			if (canRun) {
+				// note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
+				// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
+				// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
+				window.googletag.cmd.push(
+					setDfpListeners,
+					setPageTargeting,
+					refreshOnResize,
+					() => {
+						void fillAdvertSlots();
+					},
+				);
+
 				void loadScript(
 					config.get<string>(
 						'libs.googletag',
