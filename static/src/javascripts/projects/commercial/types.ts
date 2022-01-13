@@ -1,5 +1,11 @@
-import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import type {
+	ConsentState,
+	Framework,
+} from '@guardian/consent-management-platform/dist/types';
 
-type ConsentStateEnhanced = ConsentState & { canTarget: boolean };
+type ConsentStateEnhanced = ConsentState & {
+	canTarget: boolean;
+	framework: Framework | null;
+};
 
 export { ConsentStateEnhanced };

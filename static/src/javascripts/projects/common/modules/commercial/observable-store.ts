@@ -1,5 +1,8 @@
 import { onConsentChange } from '@guardian/consent-management-platform';
-import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import type {
+	ConsentState,
+	Framework,
+} from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,18 +16,33 @@ const tcfv2ConsentedToAll = (consents: TCFv2ConsentList): boolean => {
 	);
 };
 
+const buildConsentStateEnhanced = (
+	consentState: ConsentState,
+	canTarget: boolean,
+	framework: Framework | null,
+): ConsentStateEnhanced => ({
+	...consentState,
+	canTarget,
+	framework,
+});
+
 const enhanceConsentState = (state: ConsentState): ConsentStateEnhanced => {
-	if (state.ccpa) {
-		return { ...state, canTarget: !state.ccpa.doNotSell };
-	} else if (state.tcfv2) {
-		return {
-			...state,
-			canTarget: tcfv2ConsentedToAll(state.tcfv2.consents),
-		};
+	if (state.tcfv2) {
+		return buildConsentStateEnhanced(
+			state,
+			tcfv2ConsentedToAll(state.tcfv2.consents),
+			'tcfv2',
+		);
+	} else if (state.ccpa) {
+		return buildConsentStateEnhanced(state, !state.ccpa.doNotSell, 'ccpa');
 	} else if (state.aus) {
-		return { ...state, canTarget: state.aus.personalisedAdvertising };
+		return buildConsentStateEnhanced(
+			state,
+			state.aus.personalisedAdvertising,
+			'aus',
+		);
 	}
-	return { ...state, canTarget: false };
+	return buildConsentStateEnhanced(state, false, null);
 };
 
 const consentObservable = new Observable<ConsentState>((subscriber) => {
