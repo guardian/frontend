@@ -4,7 +4,6 @@ import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import { isGoogleProxy } from 'lib/detect-google-proxy';
 import config from '../../../../lib/config';
-import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { getInitialConsentState } from '../../initialConsentState';
 import { prebid } from '../header-bidding/prebid/prebid';
@@ -29,7 +28,6 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 		/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid'
 	);
 
-	getPageTargeting();
 	prebid.initialise(window, framework);
 
 	return;
