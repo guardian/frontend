@@ -53,7 +53,7 @@
 
             const resizeToOriginalHeight = (() => {
                 const originalHeight = document.body.clientHeight
-                return () => sendResizeMessage(`${originalHeight}px`)
+                return () => sendResizeMessage(originalHeight)
             })()
 
             function sendResizeMessage(height) {
