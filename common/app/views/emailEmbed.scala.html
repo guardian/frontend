@@ -78,8 +78,9 @@
             }
 
             function onRecaptchaScriptLoaded() {
-                resizeToFitCaptcha()
-                grecaptcha.render('grecaptcha_container', {
+                resizeToFitCaptcha();
+                const captchaContainer = document.getElementsByClassName('grecaptcha_container')[0]
+                grecaptcha.render(captchaContainer, {
                     sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
                     callback: onCaptchaCompleted,
                     'error-callback': onCaptchaError,
