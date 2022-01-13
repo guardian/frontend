@@ -33,43 +33,36 @@
         @body
     </body>
     <script src="https://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js"></script>
-    <script>
-        iframeMessenger.enableAutoResize();
-    </script>
     @if(EmailSignupRecaptcha.isSwitchedOn) {
         <script>
-            const resizeToCurrentHeight = () => {
-                var height = parseInt(document.body.offsetHeight, 10);
-                var styles = document.defaultView.getComputedStyle(document.body);
-                height += parseInt(styles.getPropertyValue('margin-bottom'), 10);
-                height += parseInt(styles.getPropertyValue('margin-top'), 10);
-                sendResizeMessage(height);
-            }
             window.addEventListener('message', (event) => {
+                const allowedOrigins = ['https://www.theguardian.com'];
+                if (!allowedOrigins.includes(event.origin)) return;
                 if (event.data === 'resize') resizeToCurrentHeight();
             })
+            setupSubmitListener();
+            resizeToCurrentHeight();
 
-            setupSubmitListener()
+            function resizeToCurrentHeight() {
+                iframeMessenger.resize()
+            }
 
             const resizeToOriginalHeight = (() => {
-                const originalHeight = document.body.clientHeight
-                return () => sendResizeMessage(originalHeight)
-            })()
+                const originalHeight = document.body.clientHeight;
+                return () => sendResizeMessage(originalHeight);
+            })();
 
             function sendResizeMessage(height) {
-                window.parent.postMessage(JSON.stringify({
-                    type: 'set-height',
-                    value: height
-                }), '*')
+                iframeMessenger.resize(height);
             }
 
             function resizeToFitCaptcha() {
-                sendResizeMessage(500)
+                sendResizeMessage(500);
             }
 
             function setupSubmitListener() {
-                const submitButton = document.querySelector('.email-sub__submit-button')
-                submitButton.addEventListener('click', (e) => onSubmit(e))
+                const submitButton = document.querySelector('.email-sub__submit-button');
+                submitButton.addEventListener('click', (e) => onSubmit(e));
             }
 
             function onSubmit(e) {
@@ -78,7 +71,7 @@
                     script = d.createElement('script');
                     script.type = 'text/javascript';
                     script.async = true;
-                    script.defer = true
+                    script.defer = true;
                     script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit';
                     d.getElementsByTagName('head')[0].appendChild(script);
                 }(document));
@@ -92,21 +85,21 @@
                     'error-callback': onCaptchaError,
                     'expired-callback': onCaptchaExpired,
                     size: 'invisible'
-                })
-                grecaptcha.execute()
+                });
+                grecaptcha.execute();
             }
 
             function onCaptchaCompleted(token) {
-                resizeToOriginalHeight()
-                document.querySelector('.email-sub__form').submit()
+                resizeToOriginalHeight();
+                document.querySelector('.email-sub__form').submit();
             }
 
             function onCaptchaError() {
-                resizeToOriginalHeight()
+                resizeToOriginalHeight();
             }
 
             function onCaptchaExpired() {
-                resizeToOriginalHeight()
+                resizeToOriginalHeight();
             }
         </script>
     }
