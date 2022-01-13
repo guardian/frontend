@@ -16,13 +16,13 @@ body {
 }
 
 .email-sub .captcha-terms {
-    color: #121212;
+    color: $brightness-7;
     clear: both;
     font-family: $f-sans-serif-text;
     font-size: 12px;
 
     a {
-        color: #121212;
+        color: $brightness-7;
     }
 }
 
