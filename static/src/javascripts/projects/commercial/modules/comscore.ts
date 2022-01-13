@@ -1,18 +1,16 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { loadScript, log } from '@guardian/libs';
+import { once } from 'lodash-es';
 import { getInitialConsentState } from 'commercial/initialConsentState';
 import config from '../../../lib/config';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { once } from 'lodash-es';
 
 const comscoreSrc = '//sb.scorecardresearch.com/cs/6035250/beacon.js';
 const comscoreC1 = '2';
 const comscoreC2 = '6035250';
 
-let initialised = false;
-
-const getGlobals = (keywords) => {
-	const globals = {
+const getGlobals = (keywords: string): ComscoreGlobals => {
+	const globals: ComscoreGlobals = {
 		c1: comscoreC1,
 		c2: comscoreC2,
 		cs_ucfr: '1',
@@ -26,10 +24,7 @@ const getGlobals = (keywords) => {
 };
 
 const initOnConsent = () => {
-	// eslint-disable-next-line no-underscore-dangle
-	window._comscore = window._comscore || [];
-
-	// eslint-disable-next-line no-underscore-dangle
+	window._comscore = window._comscore ?? [];
 	window._comscore.push(getGlobals(config.get('page.keywords', '')));
 
 	return loadScript(comscoreSrc, { id: 'comscore', async: true });
@@ -39,35 +34,41 @@ const initOnConsent = () => {
  * Initialise comscore, industry-wide audience tracking
  * https://www.comscore.com/About
  */
-const setupComscore = () => {
+const setupComscore = (): Promise<void> => {
 	if (commercialFeatures.comscore) {
-		return getInitialConsentState()
-			.then((state) => {
-				/* Rule is that comscore can run:
-                - in Tcfv2: Based on consent for comscore
-                - in Australia: Always
-                - in CCPA: If the user hasn't chosen Do Not Sell
-                */
-				const canRunTcfv2 =
-					state.tcfv2 && getConsentFor('comscore', state);
-				const canRunAus = !!state.aus;
-				const canRunCcpa = !!state.ccpa && !state.ccpa.doNotSell;
+		return (
+			getInitialConsentState()
+				.then((state) => {
+					/* Rule is that comscore can run:
+					- in Tcfv2: Based on consent for comscore
+					- in Australia: Always
+					- in CCPA: If the user hasn't chosen Do Not Sell
+					*/
+					const canRunTcfv2 =
+						state.tcfv2 && getConsentFor('comscore', state);
+					const canRunAus = !!state.aus;
+					const canRunCcpa = !!state.ccpa && !state.ccpa.doNotSell;
 
-				if (!(canRunTcfv2 || canRunAus || canRunCcpa)) {
-					return Promise.reject('No consent for comscore');
-				}
-				return initOnConsent();
-			})
-			.catch((e) => {
-				log('commercial', '⚠️ Failed to execute comscore', e);
-			});
+					if (!(canRunTcfv2 || canRunAus || canRunCcpa)) {
+						return Promise.reject('No consent for comscore');
+					}
+					return initOnConsent();
+				})
+				// is there a better way?
+				.then(() => {
+					return;
+				})
+				.catch((e) => {
+					log('commercial', '⚠️ Failed to execute comscore', e);
+				})
+		);
 	}
 	return Promise.resolve();
 };
 
 const setupComscoreOnce = once(setupComscore);
 
-export const init = () => setupComscoreOnce();
+export const init = (): Promise<void> => setupComscoreOnce();
 
 export const _ = {
 	getGlobals,
