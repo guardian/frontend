@@ -1,19 +1,24 @@
 package model
 
-import model.liveblog.BodyBlock.KeyEvent
+import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.liveblog._
 import org.joda.time.DateTime
 import org.scalatest.{Assertion, FlatSpec, Matchers}
 
 class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
 
-  def fakeBlock(publicationOrder: Int, isKeyEvent: Boolean = false, isPinnedBlock: Boolean = false): BodyBlock =
+  def fakeBlock(
+      publicationOrder: Int,
+      isKeyEvent: Boolean = false,
+      isPinnedBlock: Boolean = false,
+      isSummaryBlock: Boolean = false,
+  ): BodyBlock =
     BodyBlock(
       s"$publicationOrder",
       "",
       "",
       None,
-      BlockAttributes(isPinnedBlock, isKeyEvent, false, None),
+      BlockAttributes(isPinnedBlock, isKeyEvent, isSummaryBlock, None),
       false,
       None,
       firstPublishedDate = Some(new DateTime(publicationOrder)),
@@ -23,12 +28,29 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
       Nil,
     )
 
-  private def fakeBlocks(number: Int, ofWhichKeyEvents: Int = 0, ofWhichPinnedBlocks: Int = 0): List[BodyBlock] = {
-    number should be > ofWhichKeyEvents + ofWhichPinnedBlocks
-    val regular = Range(number, ofWhichKeyEvents, -1).map(p => fakeBlock(p)).toList
-    val keyEvents = Range(ofWhichKeyEvents, ofWhichPinnedBlocks, -1).map(p => fakeBlock(p, true, false)).toList
-    val pinnedBlocks = Range(ofWhichPinnedBlocks, 0, -1).map(p => fakeBlock(p, false, true)).toList
-    pinnedBlocks ++ regular ++ keyEvents
+  private def fakeBlocks(
+      number: Int,
+      ofWhichKeyEvents: Int = 0,
+      ofWhichPinnedBlocks: Int = 0,
+      ofWhichSummaries: Int = 0,
+  ): List[BodyBlock] = {
+    number should be > ofWhichKeyEvents + ofWhichPinnedBlocks + ofWhichSummaries
+
+    val regular =
+      Range(number, ofWhichKeyEvents + ofWhichPinnedBlocks + ofWhichSummaries, -1).map(p => fakeBlock(p)).toList
+
+    val keyEvents = Range(
+      ofWhichKeyEvents + ofWhichPinnedBlocks + ofWhichSummaries,
+      ofWhichPinnedBlocks + ofWhichSummaries,
+      -1,
+    ).map(p => fakeBlock(p, true, false)).toList
+
+    val pinnedBlocks =
+      Range(ofWhichPinnedBlocks + ofWhichSummaries, ofWhichSummaries, -1).map(p => fakeBlock(p, false, true)).toList
+
+    val summaries = Range(ofWhichSummaries, 0, -1).map(p => fakeBlock(p, false, false, true)).toList
+
+    regular ++ keyEvents ++ pinnedBlocks ++ summaries
   }
 
   "firstPage" should "allow 1 block on one page" in {
@@ -62,10 +84,12 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
   }
 
   it should "add the most recent pinned post to the first page" in {
-    val blocks = fakeBlocks(5, 0, 2)
-    val latestPinnedBlock = fakeBlock(2, false, true).copy(id = "2-pinned")
-    val olderPinnedBlock = fakeBlock(1, false, true)
-    val evenOlderPinnedBlock = fakeBlock(0, false, true)
+    // 5, 4 regular and
+    // 3, 2, 1 pinned
+    val blocks = fakeBlocks(5, 0, 3, 0)
+    val latestPinnedBlock = fakeBlock(3, false, true).copy(id = "3-pinned")
+    val olderPinnedBlock = fakeBlock(2, false, true)
+    val evenOlderPinnedBlock = fakeBlock(1, false, true)
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
@@ -74,7 +98,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
         None,
         Map(
           CanonicalLiveBlog.firstPage -> blocks.take(3),
-          CanonicalLiveBlog.pinned -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.slice(2, 5),
           CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
         ),
       ),
@@ -86,10 +110,10 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
   }
 
   it should "not add a pinned post as the first standard block" in {
-    val firstBlock = fakeBlock(2, false, true)
-    val secondBlock = fakeBlock(3, false, false)
+    val firstBlock = fakeBlock(3, false, false)
+    val secondBlock = fakeBlock(2, false, true)
     val thirdBlock = fakeBlock(1, false, false)
-    val blocks = List(firstBlock, secondBlock, thirdBlock)
+    val blocks = List(firstBlock, secondBlock, thirdBlock) // blocks list should be ordered based on publication order
     val expectedPinnedBlock = fakeBlock(2, false, true).copy(id = "2-pinned")
     val result = LiveBlogCurrentPage.firstPage(
       2,
@@ -99,7 +123,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
         None,
         Map(
           CanonicalLiveBlog.firstPage -> blocks.take(3),
-          CanonicalLiveBlog.pinned -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.slice(1, 2),
           CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
         ),
       ),
@@ -111,6 +135,9 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
   }
 
   it should "still include pinned post when filtering for key events" in {
+    // 10, 9, 8 regular and
+    // 7, 6, 5 key events and
+    // 4, 3, 2, 1 pinned
     val blocks = fakeBlocks(10, 3, 4)
     val expectedPinnedBlock = fakeBlock(4, false, true).copy(id = "4-pinned")
     val result = LiveBlogCurrentPage.firstPage(
@@ -121,15 +148,80 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
         None,
         Map(
           CanonicalLiveBlog.firstPage -> blocks.take(3),
-          CanonicalLiveBlog.pinned -> blocks.take(4),
-          CanonicalLiveBlog.timeline -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> blocks.slice(6, 10),
+          CanonicalLiveBlog.timeline -> blocks.slice(3, 6),
           CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+          CanonicalLiveBlog.summary -> Seq.empty,
         ),
       ),
       true,
     )
 
     result.get.pinnedBlock should be(Some(expectedPinnedBlock))
+  }
+
+  it should "return none when no summary exist in requestedBodyBlocks and the filter is on" in {
+    val blocks = fakeBlocks(5, 4)
+    val result = LiveBlogCurrentPage.firstPage(
+      2,
+      Blocks(
+        3,
+        Nil,
+        None,
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> List(),
+          CanonicalLiveBlog.timeline -> blocks.take(6),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
+      ),
+      true,
+    )
+
+    result should be(None)
+  }
+
+  it should "return none when no key events exist in requestedBodyBlocks and the filter is on" in {
+    val blocks = fakeBlocks(5, 0, 0, 4)
+    val result = LiveBlogCurrentPage.firstPage(
+      2,
+      Blocks(
+        3,
+        Nil,
+        None,
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> List(),
+          CanonicalLiveBlog.summary -> blocks.take(6),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
+      ),
+      true,
+    )
+
+    result should be(None)
+  }
+
+  it should "display a page with no blocks when key events and summary lists are empty and filter is on" in {
+    val blocks = fakeBlocks(5, 0, 0, 4)
+    val result = LiveBlogCurrentPage.firstPage(
+      2,
+      Blocks(
+        3,
+        Nil,
+        None,
+        Map(
+          CanonicalLiveBlog.firstPage -> blocks.take(3),
+          CanonicalLiveBlog.pinned -> List(),
+          CanonicalLiveBlog.timeline -> List(),
+          CanonicalLiveBlog.summary -> List(),
+          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+        ),
+      ),
+      true,
+    )
+
+    should(result, currentPage = FirstPage(List(), true), pagination = None)
   }
 
   it should "allow 3 blocks on one page" in {
@@ -206,9 +298,16 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     should(result, currentPage = expectedCurrentPage, pagination = expectedPagination)
   }
 
-  it should "only display key events" in {
-    val blocks = fakeBlocks(10, 5)
+  it should "only display key events and summaries" in {
+    // 11, 10, 9 regular and
+    // 8, 7, 6, 5, 4 key events and
+    // 3 pinned and
+    // 2, 1 summary
+    val blocks = fakeBlocks(11, 5, 1, 2)
+    println(s"blocks length: ${blocks.length}")
     val keyBlocks = blocks.filter(_.eventType == KeyEvent)
+    val summaryBlocks = blocks.filter(_.eventType == SummaryEvent)
+    println(s"summaryBlocks: ${summaryBlocks}")
     val result = LiveBlogCurrentPage.firstPage(
       2,
       Blocks(
@@ -217,25 +316,28 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
         None,
         Map(
           CanonicalLiveBlog.firstPage -> blocks.take(4),
-          CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
+          CanonicalLiveBlog.oldestPage -> blocks.takeRight(2),
           CanonicalLiveBlog.timeline -> keyBlocks,
+          CanonicalLiveBlog.summary -> summaryBlocks,
         ),
       ),
       true,
     )
 
     val expectedCurrentPage = FirstPage(blocks = keyBlocks.take(3), filterKeyEvents = true)
-    val expectedOldestPage = BlockPage(blocks = Nil, blockId = "1", pageNumber = 2, filterKeyEvents = true)
-    val expectedOlderPage = BlockPage(blocks = Nil, blockId = "2", pageNumber = 2, filterKeyEvents = true)
+    val expectedOldestPage = BlockPage(blocks = Nil, blockId = "1", pageNumber = 3, filterKeyEvents = true)
+    val expectedOlderPage = BlockPage(blocks = Nil, blockId = "5", pageNumber = 2, filterKeyEvents = true)
     val expectedPagination = Some(
       N1Pagination(
         newest = None,
         newer = None,
         older = Some(expectedOlderPage),
         oldest = Some(expectedOldestPage),
-        numberOfPages = 2,
+        numberOfPages = 3,
       ),
     )
+
+    println(s"older: ${result.get.pagination.get.numberOfPages}")
 
     should(result, currentPage = expectedCurrentPage, pagination = expectedPagination)
   }

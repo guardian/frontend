@@ -47,14 +47,20 @@ object LiveBlogCurrentPage {
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
   def firstPage(pageSize: Int, blocks: Blocks, filterKeyEvents: Boolean): Option[LiveBlogCurrentPage] = {
     val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = if (filterKeyEvents) {
-      val keys = Seq(CanonicalLiveBlog.timeline, CanonicalLiveBlog.summary)
-      val keyEventsAndSummaries =
-        (keys flatMap (x => blocks.requestedBodyBlocks get x)).flatten.sortBy(_.publishedCreatedTimestamp).reverse
 
-      val keyEventsCount = keyEventsAndSummaries.size
-      val keyEventsAndSummariesOption = if (keyEventsCount > 0) Some(keyEventsAndSummaries) else None
-      val oldestPageBlockId = keyEventsAndSummaries.lastOption map (_.id)
-      (keyEventsAndSummariesOption, keyEventsCount, oldestPageBlockId)
+      val keyEventsAndSummaries = for {
+        keyEvents <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
+        summaries <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.summary)
+      } yield {
+        (keyEvents ++ summaries).sortBy(_.publishedCreatedTimestamp).reverse
+      }
+
+      val keyEventsAndSummariesCount = keyEventsAndSummaries.getOrElse(Seq.empty).size
+
+      val oldestPageBlockId = keyEventsAndSummaries.flatMap(_.lastOption map (_.id))
+
+      (keyEventsAndSummaries, keyEventsAndSummariesCount, oldestPageBlockId)
+
     } else {
       val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
       val oldestPageBlockId =
