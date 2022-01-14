@@ -134,6 +134,7 @@ object PressedInteractives {
     "/environment/ng-interactive/2019/oct/16/the-guardians-climate-pledge-2019",
     "/lifeandstyle/ng-interactive/2017/feb/19/the-5th-annual-ofm-50-what-we-love-about-food-in-2017",
     "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
+    "/cities/ng-interactive/2016/nov/10/subterranean-london",
   )
 
   def isPressed(path: String): Boolean = interactives.contains(path)
