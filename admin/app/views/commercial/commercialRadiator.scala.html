@@ -1,8 +1,0 @@
-@(confidenceGraph: tools.AwsLineChart)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@import views.html.fragments.lineChart
-
-@admin_main("Commercial Radiator", isAuthed = true, hasCharts = true) {
-    <h3>Commercial Radiator</h3>
-    @lineChart(confidenceGraph)
-}
