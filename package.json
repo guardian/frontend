@@ -23,7 +23,7 @@
     "@guardian/consent-management-platform": "^10.1.0",
     "@guardian/libs": "^3.4.1",
     "@guardian/shimport": "^1.0.2",
-    "@guardian/source-foundations": "^4.0.0-rc.4",
+    "@guardian/source-foundations": "^4.0.0-rc.6",
     "@guardian/source-react-components": "^4.0.0-rc.2",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
