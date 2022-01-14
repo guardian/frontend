@@ -209,7 +209,7 @@
  "../projects/commercial/modules/dfp/load-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
-  "../projects/commercial/modules/header-bidding/a9/a9.js",
+  "../projects/commercial/modules/header-bidding/a9/a9.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
@@ -248,7 +248,7 @@
   "../lib/detect-google-proxy.ts",
   "../projects/commercial/initialConsentState.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/commercial/modules/header-bidding/a9/a9.js",
+  "../projects/commercial/modules/header-bidding/a9/a9.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
@@ -347,8 +347,9 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts"
  ],
- "../projects/commercial/modules/header-bidding/a9/a9.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/header-bidding/a9/a9.ts": [
+  "../lib/config.d.ts",
+  "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/slot-config.ts"
  ],
