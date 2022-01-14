@@ -77,34 +77,34 @@ const setPublisherProvidedId = (): void =>
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
-		return getEnhancedConsent().then((state) => {
+		return getEnhancedConsent().then((consentState) => {
 			let canRun = true;
-			if (state.ccpa) {
-				const doNotSell = state.ccpa.doNotSell;
+			if (consentState.ccpa) {
+				const doNotSell = consentState.ccpa.doNotSell;
 				// CCPA mode
 				window.googletag.cmd.push(() => {
 					window.googletag.pubads().setPrivacySettings({
 						restrictDataProcessing: doNotSell,
 					});
 				});
-				if (!state.ccpa.doNotSell) {
+				if (!consentState.ccpa.doNotSell) {
 					window.googletag.cmd.push(setPublisherProvidedId);
 				}
 			} else {
-				if (state.tcfv2) {
+				if (consentState.tcfv2) {
 					// TCFv2 mode
-					const canTarget = Object.values(state.tcfv2.consents).every(
-						Boolean,
-					);
+					const canTarget = Object.values(
+						consentState.tcfv2.consents,
+					).every(Boolean);
 					if (canTarget) {
 						window.googletag.cmd.push(setPublisherProvidedId);
 					}
 
-					canRun = getConsentFor('googletag', state);
-				} else if (state.aus) {
+					canRun = getConsentFor('googletag', consentState);
+				} else if (consentState.aus) {
 					// AUS mode
 					// canRun stays true, set NPA flag if consent is retracted
-					const npaFlag = !getConsentFor('googletag', state);
+					const npaFlag = !getConsentFor('googletag', consentState);
 					window.googletag.cmd.push(() => {
 						window.googletag
 							.pubads()
