@@ -1,7 +1,7 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { loadScript } from '@guardian/libs';
-import { getInitialConsentState } from 'commercial/initialConsentState';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
+import { getEnhancedConsent } from 'common/modules/commercial/observable-store';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
 import { removeSlots } from '../../../commercial/modules/remove-slots';
@@ -77,7 +77,7 @@ const setPublisherProvidedId = (): void =>
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
-		return getInitialConsentState().then((state) => {
+		return getEnhancedConsent().then((state) => {
 			let canRun = true;
 			if (state.ccpa) {
 				const doNotSell = state.ccpa.doNotSell;
