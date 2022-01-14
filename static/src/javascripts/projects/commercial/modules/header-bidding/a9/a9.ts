@@ -1,14 +1,19 @@
 import config from '../../../../../lib/config';
-import { getHeaderBiddingAdSlots } from '../slot-config';
+import type { Advert } from '../../dfp/Advert';
 import { dfpEnv } from '../../dfp/dfp-env';
+import { getHeaderBiddingAdSlots } from '../slot-config';
 
 /*
  * Amazon's header bidding javascript library
  * https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/display.html
  */
 
-class A9AdUnit {
-	constructor(advert, slot) {
+class A9AdUnit implements A9AdUnitInterface {
+	slotID?: string;
+	slotName?: string;
+	sizes?: HeaderBiddingSize[];
+
+	constructor(advert: Advert, slot: HeaderBiddingSlot) {
 		this.slotID = advert.id;
 		this.slotName = config.get('page.adUnit');
 		this.sizes = slot.sizes;
@@ -24,8 +29,8 @@ let requestQueue = Promise.resolve();
 
 const bidderTimeout = 1500;
 
-const initialise = () => {
-	if (!initialised) {
+const initialise = (): void => {
+	if (!initialised && window.apstag) {
 		initialised = true;
 		window.apstag.init({
 			pubID: config.get('page.a9PublisherId'),
@@ -37,7 +42,10 @@ const initialise = () => {
 
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
 // for this given request for bids.
-const requestBids = (advert, slotFlatMap) => {
+const requestBids = (
+	advert: Advert,
+	slotFlatMap?: SlotFlatMap,
+): Promise<void> => {
 	if (!initialised) {
 		return requestQueue;
 	}
@@ -54,30 +62,28 @@ const requestBids = (advert, slotFlatMap) => {
 		return requestQueue;
 	}
 
-	requestQueue = requestQueue
-		.then(
-			() =>
-				new Promise((resolve) => {
-					window.apstag.fetchBids({ slots: adUnits }, () => {
-						window.googletag.cmd.push(() => {
-							window.apstag.setDisplayBids();
-							resolve();
-						});
+	requestQueue = requestQueue.then(
+		() =>
+			new Promise((resolve) => {
+				window.apstag?.fetchBids({ slots: adUnits }, () => {
+					window.googletag.cmd.push(() => {
+						window.apstag?.setDisplayBids();
+						resolve();
 					});
-				}),
-		)
-		.catch(() => {});
+				});
+			}),
+	);
 
 	return requestQueue;
 };
 
-export default {
+export const a9 = {
 	initialise,
 	requestBids,
 };
 
 export const _ = {
-	resetModule: () => {
+	resetModule: (): void => {
 		initialised = false;
 		requestQueue = Promise.resolve();
 	},
