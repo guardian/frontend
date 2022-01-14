@@ -6,6 +6,58 @@
     padding-bottom: 16px;
 }
 
+.newsletters-heading__divider {
+    margin-bottom: 16px;
+    border-bottom: 1px solid $brightness-86;
+}
+
+.newsletters-privacy-notice__container {
+    position: sticky;
+    top: 0;
+    background-color: #ffe500;
+    padding-top: 16px;
+    margin-bottom: 16px;
+    z-index: 1;
+}
+
+.newsletters-privacy-notice__heading {
+    @include fs-header(2);
+    color: $brightness-7;
+    position: relative;
+    margin: ($gs-baseline / 2) 0 $gs-baseline;
+    padding-left: 8px;
+
+    @include mq(leftCol) {
+        position: absolute;
+        width: gs-span(3);
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+}
+
+.newsletters-privacy-notice__content {
+    @include fs-textSans(4);
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    @include mq(tablet) {
+        margin-right: -$gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+}
+
 .newsletters-heading {
     @include fs-headline(8);
     font-weight: 700;
