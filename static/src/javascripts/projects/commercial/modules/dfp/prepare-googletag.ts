@@ -92,34 +92,30 @@ export const init = (): Promise<void> => {
 					if (!consentState.ccpa.doNotSell) {
 						window.googletag.cmd.push(setPublisherProvidedId);
 					}
-				} else {
-					if (consentState.tcfv2) {
-						// TCFv2 mode
-						const canTarget = Object.values(
-							consentState.tcfv2.consents,
-						).every(Boolean);
-						if (canTarget) {
-							window.googletag.cmd.push(setPublisherProvidedId);
-						}
+				} else if (consentState.tcfv2) {
+					// TCFv2 mode
+					const canTarget = Object.values(
+						consentState.tcfv2.consents,
+					).every(Boolean);
+					if (canTarget) {
+						window.googletag.cmd.push(setPublisherProvidedId);
+					}
 
-						canRun = getConsentFor('googletag', consentState);
-					} else if (consentState.aus) {
-						// AUS mode
-						// canRun stays true, set NPA flag if consent is retracted
-						const npaFlag = !getConsentFor(
-							'googletag',
-							consentState,
-						);
-						window.googletag.cmd.push(() => {
-							window.googletag
-								.pubads()
-								.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
-						});
-						if (!npaFlag) {
-							window.googletag.cmd.push(setPublisherProvidedId);
-						}
+					canRun = getConsentFor('googletag', consentState);
+				} else if (consentState.aus) {
+					// AUS mode
+					// canRun stays true, set NPA flag if consent is retracted
+					const npaFlag = !getConsentFor('googletag', consentState);
+					window.googletag.cmd.push(() => {
+						window.googletag
+							.pubads()
+							.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
+					});
+					if (!npaFlag) {
+						window.googletag.cmd.push(setPublisherProvidedId);
 					}
 				}
+
 				// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
 				// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
 				if (canRun) {
