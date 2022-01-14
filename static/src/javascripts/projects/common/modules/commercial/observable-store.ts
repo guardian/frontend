@@ -45,7 +45,7 @@ const enhanceConsentState = (state: ConsentState): ConsentStateEnhanced => {
 	return buildConsentStateEnhanced(state, false, null);
 };
 
-const enhancedConsent = new Promise((resolve, reject) => {
+const getEnhancedConsent = new Promise((resolve, reject) => {
 	onConsentChange((consentState) => {
 		if (consentState.tcfv2) {
 			// For tcfv2 only, the first onConsentChange is fired before the user has
@@ -80,4 +80,4 @@ const pageTargetingObservable = consentObservable.pipe(
 	map((consentState) => [consentState, getPageTargeting(consentState)]),
 );
 
-export { consentObservable, enhancedConsent, pageTargetingObservable };
+export { consentObservable, getEnhancedConsent, pageTargetingObservable };
