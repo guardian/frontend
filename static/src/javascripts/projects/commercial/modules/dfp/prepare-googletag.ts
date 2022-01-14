@@ -1,6 +1,7 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { loadScript } from '@guardian/libs';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
+import type { ConsentStateEnhanced } from 'commercial/types';
 import { getEnhancedConsent } from 'common/modules/commercial/observable-store';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
@@ -77,69 +78,74 @@ const setPublisherProvidedId = (): void =>
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
-		return getEnhancedConsent().then((consentState) => {
-			let canRun = true;
-			if (consentState.ccpa) {
-				const doNotSell = consentState.ccpa.doNotSell;
-				// CCPA mode
-				window.googletag.cmd.push(() => {
-					window.googletag.pubads().setPrivacySettings({
-						restrictDataProcessing: doNotSell,
-					});
-				});
-				if (!consentState.ccpa.doNotSell) {
-					window.googletag.cmd.push(setPublisherProvidedId);
-				}
-			} else {
-				if (consentState.tcfv2) {
-					// TCFv2 mode
-					const canTarget = Object.values(
-						consentState.tcfv2.consents,
-					).every(Boolean);
-					if (canTarget) {
-						window.googletag.cmd.push(setPublisherProvidedId);
-					}
-
-					canRun = getConsentFor('googletag', consentState);
-				} else if (consentState.aus) {
-					// AUS mode
-					// canRun stays true, set NPA flag if consent is retracted
-					const npaFlag = !getConsentFor('googletag', consentState);
+		return getEnhancedConsent().then(
+			(consentState: ConsentStateEnhanced) => {
+				let canRun = true;
+				if (consentState.ccpa) {
+					const doNotSell = consentState.ccpa.doNotSell;
+					// CCPA mode
 					window.googletag.cmd.push(() => {
-						window.googletag
-							.pubads()
-							.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
+						window.googletag.pubads().setPrivacySettings({
+							restrictDataProcessing: doNotSell,
+						});
 					});
-					if (!npaFlag) {
+					if (!consentState.ccpa.doNotSell) {
 						window.googletag.cmd.push(setPublisherProvidedId);
 					}
-				}
-			}
-			// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
-			// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-			if (canRun) {
-				// note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
-				// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
-				// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
-				window.googletag.cmd.push(
-					setDfpListeners,
-					setPageTargeting,
-					refreshOnResize,
-					() => {
-						void fillAdvertSlots();
-					},
-				);
+				} else {
+					if (consentState.tcfv2) {
+						// TCFv2 mode
+						const canTarget = Object.values(
+							consentState.tcfv2.consents,
+						).every(Boolean);
+						if (canTarget) {
+							window.googletag.cmd.push(setPublisherProvidedId);
+						}
 
-				void loadScript(
-					config.get<string>(
-						'libs.googletag',
-						'//www.googletagservices.com/tag/js/gpt.js',
-					),
-					{ async: false },
-				);
-			}
-			return Promise.resolve();
-		});
+						canRun = getConsentFor('googletag', consentState);
+					} else if (consentState.aus) {
+						// AUS mode
+						// canRun stays true, set NPA flag if consent is retracted
+						const npaFlag = !getConsentFor(
+							'googletag',
+							consentState,
+						);
+						window.googletag.cmd.push(() => {
+							window.googletag
+								.pubads()
+								.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
+						});
+						if (!npaFlag) {
+							window.googletag.cmd.push(setPublisherProvidedId);
+						}
+					}
+				}
+				// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
+				// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
+				if (canRun) {
+					// note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
+					// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
+					// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
+					window.googletag.cmd.push(
+						setDfpListeners,
+						setPageTargeting,
+						refreshOnResize,
+						() => {
+							void fillAdvertSlots();
+						},
+					);
+
+					void loadScript(
+						config.get<string>(
+							'libs.googletag',
+							'//www.googletagservices.com/tag/js/gpt.js',
+						),
+						{ async: false },
+					);
+				}
+				return Promise.resolve();
+			},
+		);
 	};
 
 	if (commercialFeatures.dfpAdvertising) {
