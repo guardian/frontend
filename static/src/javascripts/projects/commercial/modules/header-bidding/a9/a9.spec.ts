@@ -2,19 +2,41 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import a9, { _ } from './a9';
+import type { Callback } from '@guardian/consent-management-platform/dist/types';
+import { _, a9 } from './a9';
 
-const onConsentChange = onConsentChange_;
+const onConsentChange = onConsentChange_ as jest.MockedFunction<
+	typeof onConsentChange_
+>;
+const getConsentFor = getConsentFor_ as jest.MockedFunction<
+	typeof getConsentFor_
+>;
 
-const tcfv2WithConsentMock = (callback) =>
+const tcfv2WithConsentMock = (callback: Callback) =>
 	callback({
-		tcfv2: { vendorConsents: { '5edf9a821dc4e95986b66df4': true } },
+		tcfv2: {
+			consents: {
+				1: true,
+				2: true,
+				3: true,
+				4: true,
+				5: true,
+				6: true,
+				7: true,
+				8: true,
+				9: true,
+				10: true,
+			},
+			vendorConsents: { '5edf9a821dc4e95986b66df4': true },
+			eventStatus: 'tcloaded',
+			addtlConsent: '',
+			gdprApplies: true,
+			tcString: 'blablabla',
+		},
 	});
 
-const CcpaWithConsentMock = (callback) =>
+const CcpaWithConsentMock = (callback: Callback) =>
 	callback({ ccpa: { doNotSell: false } });
-
-const getConsentFor = getConsentFor_;
 
 jest.mock('../../../../../lib/raven');
 jest.mock('../../dfp/Advert', () =>
@@ -38,7 +60,7 @@ jest.mock('@guardian/consent-management-platform', () => ({
 	getConsentFor: jest.fn(),
 }));
 
-beforeEach(async () => {
+beforeEach(() => {
 	jest.resetModules();
 	_.resetModule();
 	window.apstag = {
@@ -58,7 +80,7 @@ describe('initialise', () => {
 		getConsentFor.mockReturnValue(true);
 		a9.initialise();
 		expect(window.apstag).toBeDefined();
-		expect(window.apstag.init).toHaveBeenCalled();
+		expect(window.apstag?.init).toHaveBeenCalled();
 	});
 
 	it('should generate initialise A9 library when CCPA consent has been given', () => {
@@ -66,6 +88,6 @@ describe('initialise', () => {
 		getConsentFor.mockReturnValue(true);
 		a9.initialise();
 		expect(window.apstag).toBeDefined();
-		expect(window.apstag.init).toHaveBeenCalled();
+		expect(window.apstag?.init).toHaveBeenCalled();
 	});
 });
