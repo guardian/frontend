@@ -81,39 +81,31 @@ export const init = (): Promise<void> => {
 		return getEnhancedConsent().then(
 			(consentState: ConsentStateEnhanced) => {
 				let canRun = true;
+
+				if (consentState.canTarget) {
+					window.googletag.cmd.push(setPublisherProvidedId);
+				}
+
 				if (consentState.ccpa) {
-					const doNotSell = consentState.ccpa.doNotSell;
 					// CCPA mode
+					// canRun stays true, set RDP flag
 					window.googletag.cmd.push(() => {
 						window.googletag.pubads().setPrivacySettings({
-							restrictDataProcessing: doNotSell,
+							restrictDataProcessing: consentState.canTarget,
 						});
 					});
-					if (!consentState.ccpa.doNotSell) {
-						window.googletag.cmd.push(setPublisherProvidedId);
-					}
 				} else if (consentState.tcfv2) {
 					// TCFv2 mode
-					const canTarget = Object.values(
-						consentState.tcfv2.consents,
-					).every(Boolean);
-					if (canTarget) {
-						window.googletag.cmd.push(setPublisherProvidedId);
-					}
-
 					canRun = getConsentFor('googletag', consentState);
 				} else if (consentState.aus) {
 					// AUS mode
-					// canRun stays true, set NPA flag if consent is retracted
+					// canRun stays true, set NPA flag
 					const npaFlag = !getConsentFor('googletag', consentState);
 					window.googletag.cmd.push(() => {
 						window.googletag
 							.pubads()
 							.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
 					});
-					if (!npaFlag) {
-						window.googletag.cmd.push(setPublisherProvidedId);
-					}
 				}
 
 				// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
