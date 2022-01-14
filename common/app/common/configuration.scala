@@ -442,7 +442,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
-    lazy val frontendAssetsVersion = "v1.5.0"
+    lazy val frontendAssetsVersion = "v1.6.0"
   }
 
   object readerRevenue {
