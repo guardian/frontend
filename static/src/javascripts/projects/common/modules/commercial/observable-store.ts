@@ -45,22 +45,23 @@ const enhanceConsentState = (state: ConsentState): ConsentStateEnhanced => {
 	return buildConsentStateEnhanced(state, false, null);
 };
 
-const getEnhancedConsent = new Promise((resolve, reject) => {
-	onConsentChange((consentState) => {
-		if (consentState.tcfv2) {
-			// For tcfv2 only, the first onConsentChange is fired before the user has
-			// interacted with the consent banner. We want to ignore this first consent state.
-			if (consentState.tcfv2.eventStatus !== 'cmpuishown') {
+const getEnhancedConsent = (): Promise<ConsentStateEnhanced> =>
+	new Promise<ConsentStateEnhanced>((resolve, reject) => {
+		onConsentChange((consentState) => {
+			if (consentState.tcfv2) {
+				// For tcfv2 only, the first onConsentChange is fired before the user has
+				// interacted with the consent banner. We want to ignore this first consent state.
+				if (consentState.tcfv2.eventStatus !== 'cmpuishown') {
+					resolve(enhanceConsentState(consentState));
+				}
+				return;
+			} else if (consentState.ccpa || consentState.aus) {
 				resolve(enhanceConsentState(consentState));
 			}
-			return;
-		} else if (consentState.ccpa || consentState.aus) {
-			resolve(enhanceConsentState(consentState));
-		}
 
-		reject('Unknown framework');
+			reject('Unknown framework');
+		});
 	});
-});
 
 const consentObservable = new Observable<ConsentState>((subscriber) => {
 	onConsentChange((consentState) => {
