@@ -56,8 +56,8 @@ const setDfpListeners = (): void => {
 	pubads.addEventListener('impressionViewable', onSlotViewableFunction());
 };
 
-const setPageTargeting = (): void =>
-	Object.entries(getPageTargeting()).forEach(([key, value]) => {
+const setPageTargeting = (consentState: ConsentStateEnhanced) => (): void =>
+	Object.entries(getPageTargeting(consentState)).forEach(([key, value]) => {
 		if (!value) return;
 		window.googletag.pubads().setTargeting(key, value);
 	});
@@ -116,7 +116,7 @@ export const init = (): Promise<void> => {
 					// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
 					window.googletag.cmd.push(
 						setDfpListeners,
-						setPageTargeting,
+						setPageTargeting(consentState),
 						refreshOnResize,
 						() => {
 							void fillAdvertSlots();
