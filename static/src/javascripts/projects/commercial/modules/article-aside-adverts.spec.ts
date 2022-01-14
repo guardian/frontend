@@ -1,29 +1,33 @@
-import fakeConfig from '../../../lib/config';
-import { mediator as fakeMediator } from '../../../lib/mediator';
+import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
+import { mediator as fakeMediator } from '../../../lib/mediator';
 import { init } from './article-aside-adverts';
 
 // This module removes sticky behaviour from ads in immersive article. Example below:
 // https://www.theguardian.com/saving-for-a-sunny-day-with-nsandi/2021/apr/20/its-incredibly-liberating-what-saving-for-a-piano-taught-me-about-my-finances
 
-const fastdomMeasureSpy = jest.spyOn(fastdom, 'measure');
+const mockMeasure = (mainColHeight: number, immersiveOffset: number) => {
+	// this is an issue with fastdom's typing of measure: () => Promise<void>
+	jest.spyOn(fastdom, 'measure').mockReturnValue(
+		Promise.resolve([
+			mainColHeight,
+			immersiveOffset,
+		]) as unknown as Promise<void>,
+	);
+};
 
-const sharedBeforeEach = (domSnippet) => () => {
+const sharedBeforeEach = (domSnippet: string) => () => {
 	jest.resetAllMocks();
 	fakeMediator.removeAllListeners();
-	fakeConfig.page.isImmersive = false;
-	fakeConfig.page.hasShowcaseMainElement = false;
+	config.set('page.isImmersive', false);
+	config.set('page.hasShowcaseMainElement', false);
 
-	if (document.body) {
-		document.body.innerHTML = domSnippet;
-	}
+	document.body.innerHTML = domSnippet;
 	expect.hasAssertions();
 };
 
 const sharedAfterEach = () => {
-	if (document.body) {
-		document.body.innerHTML = '';
-	}
+	document.body.innerHTML = '';
 };
 
 describe('Standard Article Aside Adverts', () => {
@@ -45,38 +49,42 @@ describe('Standard Article Aside Adverts', () => {
 	});
 
 	it('should resolve immediately if the secondary column does not exist', (done) => {
-		if (document.body) {
-			document.body.innerHTML = `<div class="js-content-main-column"></div>`;
-		}
+		document.body.innerHTML = `<div class="js-content-main-column"></div>`;
 
-		init().then((resolve) => {
+		void init().then((resolve) => {
 			expect(resolve).toBe(false);
 			done();
 		});
 	});
 
 	it('should have the correct size mappings and classes', (done) => {
-		fastdomMeasureSpy.mockReturnValue(Promise.resolve([2000, 0]));
-		fakeMediator.once('page:defaultcommercial:right', (adSlot) => {
-			expect(adSlot.classList).toContain('js-sticky-mpu');
-			expect(adSlot.getAttribute('data-mobile')).toBe(
-				'1,1|2,2|300,250|300,274|300,600|fluid',
-			);
-			done();
-		});
-		init();
+		mockMeasure(2000, 0);
+		fakeMediator.once(
+			'page:defaultcommercial:right',
+			(adSlot: HTMLElement) => {
+				expect(adSlot.classList).toContain('js-sticky-mpu');
+				expect(adSlot.getAttribute('data-mobile')).toBe(
+					'1,1|2,2|300,250|300,274|300,600|fluid',
+				);
+				done();
+			},
+		);
+		void init();
 	});
 
 	it('should mutate the ad slot in short articles', (done) => {
-		fastdomMeasureSpy.mockReturnValue(Promise.resolve([10, 0]));
-		fakeMediator.once('page:defaultcommercial:right', (adSlot) => {
-			expect(adSlot.classList).not.toContain('js-sticky-mpu');
-			expect(adSlot.getAttribute('data-mobile')).toBe(
-				'1,1|2,2|300,250|300,274|fluid',
-			);
-			done();
-		});
-		init();
+		mockMeasure(10, 0);
+		fakeMediator.once(
+			'page:defaultcommercial:right',
+			(adSlot: HTMLElement) => {
+				expect(adSlot.classList).not.toContain('js-sticky-mpu');
+				expect(adSlot.getAttribute('data-mobile')).toBe(
+					'1,1|2,2|300,250|300,274|fluid',
+				);
+				done();
+			},
+		);
+		void init();
 	});
 });
 
@@ -104,39 +112,45 @@ describe('Immersive Article Aside Adverts', () => {
 	});
 
 	it('should remove sticky and return all slot sizes when there is enough space', (done) => {
-		fastdomMeasureSpy.mockReturnValueOnce(Promise.resolve([900001, 10000]));
-		fakeConfig.page.isImmersive = true;
+		mockMeasure(900001, 10000);
+		config.set('page.isImmersive', true);
 
-		fakeMediator.once('page:defaultcommercial:right', (adSlot) => {
-			expect(adSlot.classList).not.toContain('js-sticky-mpu');
-			const sizes = adSlot.getAttribute('data-mobile').split('|');
-			expect(sizes).toContain('1,1');
-			expect(sizes).toContain('2,2');
-			expect(sizes).toContain('300,250');
-			expect(sizes).toContain('300,274');
-			expect(sizes).toContain('300,600');
-			expect(sizes).toContain('fluid');
-			done();
-		});
-		init();
+		fakeMediator.once(
+			'page:defaultcommercial:right',
+			(adSlot: HTMLElement) => {
+				expect(adSlot.classList).not.toContain('js-sticky-mpu');
+				const sizes = adSlot.getAttribute('data-mobile')?.split('|');
+				expect(sizes).toContain('1,1');
+				expect(sizes).toContain('2,2');
+				expect(sizes).toContain('300,250');
+				expect(sizes).toContain('300,274');
+				expect(sizes).toContain('300,600');
+				expect(sizes).toContain('fluid');
+				done();
+			},
+		);
+		void init();
 	});
 
 	it('should remove sticky and return sizes that will fit when there is limited space', (done) => {
-		fastdomMeasureSpy.mockReturnValueOnce(Promise.resolve([900002, 260]));
-		fakeConfig.page.isImmersive = true;
+		mockMeasure(900002, 260);
+		config.set('page.isImmersive', true);
 
-		fakeMediator.once('page:defaultcommercial:right', (adSlot) => {
-			expect(adSlot.classList).not.toContain('js-sticky-mpu');
-			const sizes = adSlot.getAttribute('data-mobile').split('|');
-			expect(sizes).toContain('1,1');
-			expect(sizes).toContain('2,2');
-			expect(sizes).toContain('300,250');
-			expect(sizes).not.toContain('300,274');
-			expect(sizes).not.toContain('300,600');
-			expect(sizes).not.toContain('fluid');
-			done();
-		});
-		init();
+		fakeMediator.once(
+			'page:defaultcommercial:right',
+			(adSlot: HTMLElement) => {
+				expect(adSlot.classList).not.toContain('js-sticky-mpu');
+				const sizes = adSlot.getAttribute('data-mobile')?.split('|');
+				expect(sizes).toContain('1,1');
+				expect(sizes).toContain('2,2');
+				expect(sizes).toContain('300,250');
+				expect(sizes).not.toContain('300,274');
+				expect(sizes).not.toContain('300,600');
+				expect(sizes).not.toContain('fluid');
+				done();
+			},
+		);
+		void init();
 	});
 });
 
@@ -153,16 +167,19 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
 	afterEach(sharedAfterEach);
 
 	it('should have the correct size mappings and classes (leaves it untouched)', (done) => {
-		fastdomMeasureSpy.mockReturnValue(Promise.resolve([900000, 0]));
-		fakeConfig.page.isImmersive = true;
+		mockMeasure(900000, 0);
+		config.set('page.isImmersive', true);
 
-		fakeMediator.once('page:defaultcommercial:right', (adSlot) => {
-			expect(adSlot.classList).toContain('js-sticky-mpu');
-			expect(adSlot.getAttribute('data-mobile')).toBe(
-				'1,1|2,2|300,250|300,274|300,600|fluid',
-			);
-			done();
-		});
-		init();
+		fakeMediator.once(
+			'page:defaultcommercial:right',
+			(adSlot: HTMLElement) => {
+				expect(adSlot.classList).toContain('js-sticky-mpu');
+				expect(adSlot.getAttribute('data-mobile')).toBe(
+					'1,1|2,2|300,250|300,274|300,600|fluid',
+				);
+				done();
+			},
+		);
+		void init();
 	});
 });
