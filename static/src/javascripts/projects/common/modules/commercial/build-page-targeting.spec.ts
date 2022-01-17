@@ -82,12 +82,14 @@ const mockViewport = (width: number, height: number): void => {
 // CCPA
 const ccpaWithConsentMock = (callback: Callback): void =>
 	callback({ ccpa: { doNotSell: false } });
+
 const ccpaWithoutConsentMock = (callback: Callback): void =>
 	callback({ ccpa: { doNotSell: true } });
 
 // AUS
 const ausWithConsentMock = (callback: Callback) =>
 	callback({ aus: { personalisedAdvertising: true } });
+
 const ausWithoutConsentMock = (callback: Callback) =>
 	callback({ aus: { personalisedAdvertising: false } });
 
@@ -100,6 +102,7 @@ const defaultState: TCFv2ConsentState = {
 	gdprApplies: true,
 	tcString: 'YAAA',
 };
+
 const tcfv2WithConsentMock = (callback: Callback): void =>
 	callback({
 		tcfv2: {
@@ -108,12 +111,15 @@ const tcfv2WithConsentMock = (callback: Callback): void =>
 			eventStatus: 'useractioncomplete',
 		},
 	});
+
 const tcfv2WithoutConsentMock = (callback: Callback): void =>
 	callback({
 		tcfv2: { ...defaultState, consents: {}, eventStatus: 'cmpuishown' },
 	});
+
 const tcfv2NullConsentMock = (callback: Callback): void =>
 	callback({ tcfv2: undefined });
+
 const tcfv2MixedConsentMock = (callback: Callback): void =>
 	callback({
 		tcfv2: {
