@@ -272,7 +272,9 @@ const appNexusBidder: PrebidBidder = {
 	): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes),
 };
 
-const openxClientSideBidder: PrebidBidder = {
+const openxClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
+	pageTargeting: PageTargeting,
+) => ({
 	name: 'oxd',
 	switchName: 'prebidOpenx',
 	bidParams: (): PrebidOpenXParams => {
@@ -280,24 +282,25 @@ const openxClientSideBidder: PrebidBidder = {
 			return {
 				delDomain: 'guardian-us-d.openx.net',
 				unit: '540279544',
-				customParams: buildAppNexusTargetingObject(getPageTargeting()),
+				customParams: buildAppNexusTargetingObject(pageTargeting),
 			};
 		}
 		if (isInAuOrNz()) {
 			return {
 				delDomain: 'guardian-aus-d.openx.net',
 				unit: '540279542',
-				customParams: buildAppNexusTargetingObject(getPageTargeting()),
+				customParams: buildAppNexusTargetingObject(pageTargeting),
 			};
 		}
 		// UK and ROW
 		return {
 			delDomain: 'guardian-d.openx.net',
 			unit: '540279541',
-			customParams: buildAppNexusTargetingObject(getPageTargeting()),
+			customParams: buildAppNexusTargetingObject(pageTargeting),
 		};
 	},
-};
+});
+
 const ozoneClientSideBidder: PrebidBidder = {
 	name: 'ozone',
 	switchName: 'prebidOzone',
@@ -485,7 +488,7 @@ const currentBidders = (
 		[true, pubmaticBidder],
 		[shouldIncludeAdYouLike(slotSizes), adYouLikeBidder],
 		[shouldUseOzoneAdaptor(), ozoneClientSideBidder],
-		[shouldIncludeOpenx(), openxClientSideBidder],
+		[shouldIncludeOpenx(), openxClientSideBidder(pageTargeting)],
 	];
 
 	const otherBidders = biddersToCheck
