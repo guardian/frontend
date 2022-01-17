@@ -250,13 +250,6 @@ const getTripleLiftInventoryCode = (
 	return '';
 };
 
-const getOzoneTargeting = (): Record<string, unknown> => {
-	const appNexusTargetingObject = buildAppNexusTargetingObject(
-		getPageTargeting(),
-	);
-	return appNexusTargetingObject;
-};
-
 // Is pbtest being used?
 const isPbTestOn = () => Object.keys(pbTestNameMap()).length > 0;
 // Helper for conditions
@@ -301,7 +294,9 @@ const openxClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
 	},
 });
 
-const ozoneClientSideBidder: PrebidBidder = {
+const ozoneClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
+	pageTargeting: PageTargeting,
+) => ({
 	name: 'ozone',
 	switchName: 'prebidOzone',
 	bidParams: (): PrebidOzoneParams => ({
@@ -311,12 +306,12 @@ const ozoneClientSideBidder: PrebidBidder = {
 		customData: [
 			{
 				settings: {},
-				targeting: getOzoneTargeting(),
+				targeting: buildAppNexusTargetingObject(pageTargeting),
 			},
 		],
 		ozoneData: {}, // TODO: confirm if we need to send any
 	}),
-};
+});
 
 const sonobiBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
 	pageTargeting: PageTargeting,
@@ -487,7 +482,7 @@ const currentBidders = (
 		[shouldIncludeXaxis(), xaxisBidder],
 		[true, pubmaticBidder],
 		[shouldIncludeAdYouLike(slotSizes), adYouLikeBidder],
-		[shouldUseOzoneAdaptor(), ozoneClientSideBidder],
+		[shouldUseOzoneAdaptor(), ozoneClientSideBidder(pageTargeting)],
 		[shouldIncludeOpenx(), openxClientSideBidder(pageTargeting)],
 	];
 
