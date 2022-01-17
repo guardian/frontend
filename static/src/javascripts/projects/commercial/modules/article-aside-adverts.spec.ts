@@ -48,43 +48,31 @@ describe('Standard Article Aside Adverts', () => {
 		expect(document.querySelectorAll('.ad-slot').length).toBe(1);
 	});
 
-	it('should resolve immediately if the secondary column does not exist', (done) => {
+	it('should resolve immediately if the secondary column does not exist', async () => {
 		document.body.innerHTML = `<div class="js-content-main-column"></div>`;
 
-		void init().then((resolve) => {
-			expect(resolve).toBe(false);
-			done();
-		});
+		const result = await init();
+		expect(result).toBe(false);
 	});
 
-	it('should have the correct size mappings and classes', (done) => {
+	it('should have the correct size mappings and classes', async () => {
 		mockMeasure(2000, 0);
-		fakeMediator.once(
-			'page:defaultcommercial:right',
-			(adSlot: HTMLElement) => {
-				expect(adSlot.classList).toContain('js-sticky-mpu');
-				expect(adSlot.getAttribute('data-mobile')).toBe(
-					'1,1|2,2|300,250|300,274|300,600|fluid',
-				);
-				done();
-			},
+		await init();
+		const adSlot = document.getElementById('dfp-ad--right');
+		expect(adSlot?.classList).toContain('js-sticky-mpu');
+		expect(adSlot?.getAttribute('data-mobile')).toBe(
+			'1,1|2,2|300,250|300,274|300,600|fluid',
 		);
-		void init();
 	});
 
-	it('should mutate the ad slot in short articles', (done) => {
+	it('should mutate the ad slot in short articles', async () => {
 		mockMeasure(10, 0);
-		fakeMediator.once(
-			'page:defaultcommercial:right',
-			(adSlot: HTMLElement) => {
-				expect(adSlot.classList).not.toContain('js-sticky-mpu');
-				expect(adSlot.getAttribute('data-mobile')).toBe(
-					'1,1|2,2|300,250|300,274|fluid',
-				);
-				done();
-			},
+		await init();
+		const adSlot = document.getElementById('dfp-ad--right');
+		expect(adSlot?.classList).not.toContain('js-sticky-mpu');
+		expect(adSlot?.getAttribute('data-mobile')).toBe(
+			'1,1|2,2|300,250|300,274|fluid',
 		);
-		void init();
 	});
 });
 
@@ -111,46 +99,36 @@ describe('Immersive Article Aside Adverts', () => {
 		).toBe(2);
 	});
 
-	it('should remove sticky and return all slot sizes when there is enough space', (done) => {
+	it('should remove sticky and return all slot sizes when there is enough space', async () => {
 		mockMeasure(900001, 10000);
 		config.set('page.isImmersive', true);
+		await init();
 
-		fakeMediator.once(
-			'page:defaultcommercial:right',
-			(adSlot: HTMLElement) => {
-				expect(adSlot.classList).not.toContain('js-sticky-mpu');
-				const sizes = adSlot.getAttribute('data-mobile')?.split('|');
-				expect(sizes).toContain('1,1');
-				expect(sizes).toContain('2,2');
-				expect(sizes).toContain('300,250');
-				expect(sizes).toContain('300,274');
-				expect(sizes).toContain('300,600');
-				expect(sizes).toContain('fluid');
-				done();
-			},
-		);
-		void init();
+		const adSlot = document.getElementById('dfp-ad--right');
+		expect(adSlot?.classList).not.toContain('js-sticky-mpu');
+		const sizes = adSlot?.getAttribute('data-mobile')?.split('|');
+		expect(sizes).toContain('1,1');
+		expect(sizes).toContain('2,2');
+		expect(sizes).toContain('300,250');
+		expect(sizes).toContain('300,274');
+		expect(sizes).toContain('300,600');
+		expect(sizes).toContain('fluid');
 	});
 
-	it('should remove sticky and return sizes that will fit when there is limited space', (done) => {
+	it('should remove sticky and return sizes that will fit when there is limited space', async () => {
 		mockMeasure(900002, 260);
 		config.set('page.isImmersive', true);
+		await init();
 
-		fakeMediator.once(
-			'page:defaultcommercial:right',
-			(adSlot: HTMLElement) => {
-				expect(adSlot.classList).not.toContain('js-sticky-mpu');
-				const sizes = adSlot.getAttribute('data-mobile')?.split('|');
-				expect(sizes).toContain('1,1');
-				expect(sizes).toContain('2,2');
-				expect(sizes).toContain('300,250');
-				expect(sizes).not.toContain('300,274');
-				expect(sizes).not.toContain('300,600');
-				expect(sizes).not.toContain('fluid');
-				done();
-			},
-		);
-		void init();
+		const adSlot = document.getElementById('dfp-ad--right');
+		expect(adSlot?.classList).not.toContain('js-sticky-mpu');
+		const sizes = adSlot?.getAttribute('data-mobile')?.split('|');
+		expect(sizes).toContain('1,1');
+		expect(sizes).toContain('2,2');
+		expect(sizes).toContain('300,250');
+		expect(sizes).not.toContain('300,274');
+		expect(sizes).not.toContain('300,600');
+		expect(sizes).not.toContain('fluid');
 	});
 });
 
@@ -166,20 +144,15 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
 	beforeEach(sharedBeforeEach(domSnippet));
 	afterEach(sharedAfterEach);
 
-	it('should have the correct size mappings and classes (leaves it untouched)', (done) => {
+	it('should have the correct size mappings and classes (leaves it untouched)', async () => {
 		mockMeasure(900000, 0);
 		config.set('page.isImmersive', true);
+		await init();
 
-		fakeMediator.once(
-			'page:defaultcommercial:right',
-			(adSlot: HTMLElement) => {
-				expect(adSlot.classList).toContain('js-sticky-mpu');
-				expect(adSlot.getAttribute('data-mobile')).toBe(
-					'1,1|2,2|300,250|300,274|300,600|fluid',
-				);
-				done();
-			},
+		const adSlot = document.getElementById('dfp-ad--right');
+		expect(adSlot?.classList).toContain('js-sticky-mpu');
+		expect(adSlot?.getAttribute('data-mobile')).toBe(
+			'1,1|2,2|300,250|300,274|300,600|fluid',
 		);
-		void init();
 	});
 });
