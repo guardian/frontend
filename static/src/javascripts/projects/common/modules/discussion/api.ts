@@ -117,4 +117,4 @@ export const reportComment = (
 	send(`/comment/${id}/reportAbuse`, 'POST', report);
 
 export const getUser = (id: Id = 'me'): Promise<CommentResponse> =>
-	send(`/profile/${id}`, 'GET');
+	send(`/profile/${id}?strict_sanctions_check=false`, 'GET');
