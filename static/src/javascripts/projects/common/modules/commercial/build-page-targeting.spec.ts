@@ -10,7 +10,7 @@ import { getCountryCode as getCountryCode_ } from '../../../../lib/geolocation';
 import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from '../experiments/ab';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
-import { _, getPageTargeting } from './build-page-targeting';
+import { getPageTargeting } from './build-page-targeting';
 import { commercialFeatures } from './commercial-features';
 
 const getSynchronousParticipations =
@@ -175,8 +175,6 @@ describe('Build Page Targeting', () => {
 
 		setCookie({ name: 'adtest', value: 'ng101' });
 
-		// Reset mocking to default values.
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
 		getReferrer.mockReturnValue('');
@@ -234,47 +232,37 @@ describe('Build Page Targeting', () => {
 		onConsentChange.mockImplementation(tcfv2WithConsentMock);
 		expect(getPageTargeting().pa).toBe('t');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 		expect(getPageTargeting().pa).toBe('f');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2NullConsentMock);
 		expect(getPageTargeting().pa).toBe('f');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2MixedConsentMock);
 		expect(getPageTargeting().pa).toBe('f');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(ccpaWithConsentMock);
 		expect(getPageTargeting().pa).toBe('t');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(ccpaWithoutConsentMock);
 		expect(getPageTargeting().pa).toBe('f');
 	});
 
 	it('Should correctly set the RDP flag (rdp) param', () => {
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 		expect(getPageTargeting().rdp).toBe('na');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2NullConsentMock);
 		expect(getPageTargeting().rdp).toBe('na');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(ccpaWithConsentMock);
 		expect(getPageTargeting().rdp).toBe('f');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(ccpaWithoutConsentMock);
 		expect(getPageTargeting().rdp).toBe('t');
 	});
 
 	it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', () => {
-		_.resetPageTargeting();
 		getPrivacyFramework.mockReturnValue({ tcfv2: true });
 
 		onConsentChange.mockImplementation(tcfv2WithConsentMock);
@@ -282,13 +270,11 @@ describe('Build Page Targeting', () => {
 		expect(getPageTargeting().consent_tcfv2).toBe('t');
 		expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 
 		expect(getPageTargeting().consent_tcfv2).toBe('f');
 		expect(getPageTargeting().cmp_interaction).toBe('cmpuishown');
 
-		_.resetPageTargeting();
 		onConsentChange.mockImplementation(tcfv2MixedConsentMock);
 
 		expect(getPageTargeting().consent_tcfv2).toBe('f');
