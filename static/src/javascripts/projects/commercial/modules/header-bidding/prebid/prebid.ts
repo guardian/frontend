@@ -3,7 +3,8 @@ import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
-import type { ConsentStateEnhanced } from 'common/modules/commercial/get-enhanced-consent';
+import type { PageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { getEnhancedConsent } from 'common/modules/commercial/get-enhanced-consent';
 import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';
@@ -181,10 +182,10 @@ class PrebidAdUnit {
 	constructor(
 		advert: Advert,
 		slot: HeaderBiddingSlot,
-		consentState: ConsentStateEnhanced,
+		pageTargeting: PageTargeting,
 	) {
 		this.code = advert.id;
-		this.bids = bids(advert.id, slot.sizes, consentState);
+		this.bids = bids(advert.id, slot.sizes, pageTargeting);
 		this.mediaTypes = { banner: { sizes: slot.sizes } };
 		log('commercial', `PrebidAdUnit ${this.code}`, this.bids);
 	}
@@ -373,11 +374,13 @@ const requestBids = async (
 	}
 
 	const adUnits = await getEnhancedConsent()
-		.then((consentState) =>
-			getHeaderBiddingAdSlots(advert, slotFlatMap)
-				.map((slot) => new PrebidAdUnit(advert, slot, consentState))
-				.filter((adUnit) => !adUnit.isEmpty()),
-		)
+		.then((consentState) => {
+			// calculate this once before mapping over
+			const pageTargeting = getPageTargeting(consentState);
+			return getHeaderBiddingAdSlots(advert, slotFlatMap)
+				.map((slot) => new PrebidAdUnit(advert, slot, pageTargeting))
+				.filter((adUnit) => !adUnit.isEmpty());
+		})
 		.catch((e) => {
 			// silently fail
 			log('commercial', 'Failed to execute prebid getEnhancedConsent', e);

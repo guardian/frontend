@@ -1,12 +1,10 @@
 import { log } from '@guardian/libs';
-import type { ConsentStateEnhanced } from 'common/modules/commercial/get-enhanced-consent';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
 import type { PageTargeting } from '../../../../common/modules/commercial/build-page-targeting';
 import {
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
-	getPageTargeting,
 } from '../../../../common/modules/commercial/build-page-targeting';
 import {
 	isInAuOrNz,
@@ -467,9 +465,8 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 
 const currentBidders = (
 	slotSizes: HeaderBiddingSize[],
-	consentState: ConsentStateEnhanced,
+	pageTargeting: PageTargeting,
 ): PrebidBidder[] => {
-	const pageTargeting = getPageTargeting(consentState);
 	const biddersToCheck: Array<[boolean, PrebidBidder]> = [
 		[shouldIncludeCriteo(), criteoBidder],
 		[shouldIncludeSmart(), smartBidder],
@@ -499,9 +496,9 @@ const currentBidders = (
 export const bids = (
 	slotId: string,
 	slotSizes: HeaderBiddingSize[],
-	consentState: ConsentStateEnhanced,
+	pageTargeting: PageTargeting,
 ): PrebidBid[] =>
-	currentBidders(slotSizes, consentState).map((bidder: PrebidBidder) => ({
+	currentBidders(slotSizes, pageTargeting).map((bidder: PrebidBidder) => ({
 		bidder: bidder.name,
 		params: bidder.bidParams(slotId, slotSizes),
 	}));
