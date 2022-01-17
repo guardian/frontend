@@ -480,7 +480,7 @@ trait FeatureSwitches {
     "Remove confirmation step when user sign up to a newsletter",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 1, 14),
+    sellByDate = never,
     exposeClientSide = false,
   )
 }

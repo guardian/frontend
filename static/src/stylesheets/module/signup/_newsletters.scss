@@ -14,8 +14,8 @@
 .newsletters-privacy-notice__container {
     position: sticky;
     top: 0;
-    background-color: #ffe500;
-    padding-top: 16px;
+    background-color: $highlight-main;
+    padding-top: 8px;
     margin-bottom: 16px;
     z-index: 1;
 }
@@ -25,7 +25,7 @@
     color: $brightness-7;
     position: relative;
     margin: ($gs-baseline / 2) 0 $gs-baseline;
-    padding-left: 8px;
+    padding-left: 28px;
 
     @include mq(leftCol) {
         position: absolute;
