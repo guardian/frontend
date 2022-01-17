@@ -1,5 +1,4 @@
 import { cmp as cmp_ } from '@guardian/consent-management-platform';
-import type { Callback } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { setCookie, storage } from '@guardian/libs';
 import { getReferrer as getReferrer_ } from '../../../../lib/detect';
@@ -61,7 +60,6 @@ jest.mock('./commercial-features', () => ({
 	},
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
-	onConsentChange: jest.fn(),
 	cmp: {
 		hasInitialised: jest.fn(),
 		willShowPrivacyMessageSync: jest.fn(),
@@ -80,18 +78,14 @@ const mockViewport = (width: number, height: number): void => {
 };
 
 // CCPA
-const ccpaWithConsentMock = (callback: Callback): void =>
-	callback({ ccpa: { doNotSell: false } });
+const ccpaWithConsentMock = { ccpa: { doNotSell: false } };
 
-const ccpaWithoutConsentMock = (callback: Callback): void =>
-	callback({ ccpa: { doNotSell: true } });
+const ccpaWithoutConsentMock = { ccpa: { doNotSell: true } };
 
 // AUS
-const ausWithConsentMock = (callback: Callback) =>
-	callback({ aus: { personalisedAdvertising: true } });
+const ausWithConsentMock = { aus: { personalisedAdvertising: true } };
 
-const ausWithoutConsentMock = (callback: Callback) =>
-	callback({ aus: { personalisedAdvertising: false } });
+const ausWithoutConsentMock = { aus: { personalisedAdvertising: false } };
 
 // TCFv2
 const defaultState: TCFv2ConsentState = {
@@ -103,31 +97,27 @@ const defaultState: TCFv2ConsentState = {
 	tcString: 'YAAA',
 };
 
-const tcfv2WithConsentMock = (callback: Callback): void =>
-	callback({
-		tcfv2: {
-			...defaultState,
-			consents: { '1': true, '2': true },
-			eventStatus: 'useractioncomplete',
-		},
-	});
+const tcfv2WithConsentMock = {
+	tcfv2: {
+		...defaultState,
+		consents: { '1': true, '2': true },
+		eventStatus: 'useractioncomplete',
+	},
+};
 
-const tcfv2WithoutConsentMock = (callback: Callback): void =>
-	callback({
-		tcfv2: { ...defaultState, consents: {}, eventStatus: 'cmpuishown' },
-	});
+const tcfv2WithoutConsentMock = {
+	tcfv2: { ...defaultState, consents: {}, eventStatus: 'cmpuishown' },
+};
 
-const tcfv2NullConsentMock = (callback: Callback): void =>
-	callback({ tcfv2: undefined });
+const tcfv2NullConsentMock = { tcfv2: undefined };
 
-const tcfv2MixedConsentMock = (callback: Callback): void =>
-	callback({
-		tcfv2: {
-			...defaultState,
-			consents: { '1': false, '2': true },
-			eventStatus: 'useractioncomplete',
-		},
-	});
+const tcfv2MixedConsentMock = {
+	tcfv2: {
+		...defaultState,
+		consents: { '1': false, '2': true },
+		eventStatus: 'useractioncomplete',
+	},
+};
 
 describe('Build Page Targeting', () => {
 	beforeEach(() => {
