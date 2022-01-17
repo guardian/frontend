@@ -90,17 +90,16 @@ jest.mock('../../common/modules/commercial/commercial-features', () => ({
 }));
 
 describe('setupComscore', () => {
-	it('should do nothing if the comscore is disabled in commercial features', () => {
+	it('should do nothing if the comscore is disabled in commercial features', async () => {
 		commercialFeatures.comscore = false;
-		void setupComscore();
-
+		await setupComscore();
 		expect(onConsentChange).not.toBeCalled();
 	});
 
-	it('should register a callback with onConsentChange if enabled in commercial features', () => {
+	it('should register a callback with onConsentChange if enabled in commercial features', async () => {
+		onConsentChange.mockImplementation(tcfv2WithConsentMock);
 		commercialFeatures.comscore = true;
-		void setupComscore();
-
+		await setupComscore();
 		expect(onConsentChange).toBeCalled();
 	});
 
