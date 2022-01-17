@@ -3,6 +3,7 @@ import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
+import type { ConsentStateEnhanced } from 'common/modules/commercial/get-enhanced-consent';
 import { getEnhancedConsent } from 'common/modules/commercial/get-enhanced-consent';
 import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';
