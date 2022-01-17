@@ -366,6 +366,7 @@
   "../lib/url.ts",
   "../projects/commercial/modules/header-bidding/prebid/appnexus.js",
   "../projects/commercial/modules/header-bidding/utils.ts",
+  "../projects/commercial/types.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
@@ -382,7 +383,9 @@
   "../projects/commercial/modules/header-bidding/prebid/price-config.ts",
   "../projects/commercial/modules/header-bidding/prebid/pubmatic.js",
   "../projects/commercial/modules/header-bidding/slot-config.ts",
-  "../projects/commercial/modules/header-bidding/utils.ts"
+  "../projects/commercial/modules/header-bidding/utils.ts",
+  "../projects/commercial/types.ts",
+  "../projects/common/modules/commercial/observable-store.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
