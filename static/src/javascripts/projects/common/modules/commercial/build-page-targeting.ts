@@ -335,8 +335,13 @@ const getConsentRelatedPageTargeting = (
 	canTargetAds: boolean,
 	consentState?: ConsentState,
 ): PageTargeting => {
+	const amtgrp = consentState?.tcfv2
+		? getAdManagerGroup(canTargetAds)
+		: getAdManagerGroup();
+
 	if (!consentState) {
 		return {
+			amtgrp,
 			cmp_interaction: 'na',
 			consent_tcfv2: 'na',
 			pa: 'f',
@@ -344,9 +349,7 @@ const getConsentRelatedPageTargeting = (
 		};
 	}
 	return {
-		amtgrp: consentState.tcfv2
-			? getAdManagerGroup(canTargetAds)
-			: getAdManagerGroup(),
+		amtgrp,
 		cmp_interaction: consentState.tcfv2
 			? consentState.tcfv2.eventStatus
 			: 'na',
@@ -356,7 +359,11 @@ const getConsentRelatedPageTargeting = (
 				: 'f'
 			: 'na',
 		pa: canTargetAds ? 't' : 'f',
-		rdp: consentState.ccpa?.doNotSell ? 't' : 'f',
+		rdp: consentState.ccpa
+			? consentState.ccpa.doNotSell
+				? 't'
+				: 'f'
+			: 'na',
 	};
 };
 
