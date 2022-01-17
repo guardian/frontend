@@ -1,5 +1,5 @@
 import { log } from '@guardian/libs';
-import type { ConsentStateEnhanced } from 'commercial/types';
+import type { ConsentStateEnhanced } from 'common/modules/commercial/get-enhanced-consent';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
 import type { PageTargeting } from '../../../../common/modules/commercial/build-page-targeting';

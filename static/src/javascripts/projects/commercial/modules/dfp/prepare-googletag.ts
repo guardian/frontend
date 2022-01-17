@@ -1,8 +1,8 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { loadScript } from '@guardian/libs';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
-import type { ConsentStateEnhanced } from 'commercial/types';
-import { getEnhancedConsent } from 'common/modules/commercial/observable-store';
+import type { ConsentStateEnhanced } from 'common/modules/commercial/get-enhanced-consent';
+import { getEnhancedConsent } from 'common/modules/commercial/get-enhanced-consent';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
 import { removeSlots } from '../../../commercial/modules/remove-slots';
