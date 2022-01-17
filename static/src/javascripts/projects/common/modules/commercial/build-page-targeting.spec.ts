@@ -1,7 +1,4 @@
-import {
-	cmp as cmp_,
-	onConsentChange as onConsentChange_,
-} from '@guardian/consent-management-platform';
+import { cmp as cmp_ } from '@guardian/consent-management-platform';
 import type { Callback } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { setCookie, storage } from '@guardian/libs';
@@ -36,9 +33,6 @@ const cmp = {
 			typeof cmp_.willShowPrivacyMessageSync
 		>,
 };
-const onConsentChange = onConsentChange_ as jest.MockedFunction<
-	typeof onConsentChange_
->;
 
 type UnknownFunc = (...args: unknown[]) => unknown;
 
@@ -174,8 +168,6 @@ describe('Build Page Targeting', () => {
 		commercialFeatures.adFree = false;
 
 		setCookie({ name: 'adtest', value: 'ng101' });
-
-		onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
 		getReferrer.mockReturnValue('');
 		mockViewport(0, 0);
