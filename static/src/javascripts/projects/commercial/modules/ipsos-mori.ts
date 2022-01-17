@@ -24,7 +24,7 @@ const loadIpsosScript = () => {
  * documentation on DCR: https://git.io/J9c6g
  * @returns Promise
  */
-export const init = (): Promise<void> => {
+export const init = (): Promise<void> =>
 	getLocale()
 		.then((locale) => {
 			if (locale === 'GB') {
@@ -35,7 +35,7 @@ export const init = (): Promise<void> => {
 		})
 		.then((state) => {
 			if (getConsentFor('ipsos', state)) {
-				return loadIpsosScript();
+				void loadIpsosScript();
 			} else {
 				throw Error('No consent for ipsos');
 			}
@@ -43,5 +43,3 @@ export const init = (): Promise<void> => {
 		.catch((e) => {
 			log('commercial', '⚠️ Failed to execute ipsos', e);
 		});
-	return Promise.resolve();
-};

@@ -28,6 +28,7 @@ const onOpenClick = (event: Event) => {
  * @returns Promise
  */
 const paidContainers = (): Promise<void> => {
+	// TODO is this relevant? add amIUsed
 	const showMores = $$('.dumathoin-more > summary').get();
 	showMores.forEach((el) => el.addEventListener('click', onOpenClick));
 	showMores.forEach((el) =>

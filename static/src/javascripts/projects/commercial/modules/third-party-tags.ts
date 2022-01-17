@@ -55,34 +55,34 @@ const addScripts = (tags: ThirdPartyTag[]) => {
 
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- false positive
 	if (hasScriptsToInsert) {
-		void fastdom.mutate(() => {
+		return fastdom.mutate(() => {
 			if (ref.parentNode) {
 				ref.parentNode.insertBefore(frag, ref);
 			}
 		});
 	}
+	return Promise.resolve();
 };
 
-const insertScripts = (
+const insertScripts = async (
 	advertisingServices: ThirdPartyTag[],
 	performanceServices: ThirdPartyTag[], // performanceServices always run
 ): Promise<void> => {
-	addScripts(performanceServices);
-	return getInitialConsentState().then((state) => {
-		const consentedAdvertisingServices = advertisingServices.filter(
-			(script) => {
-				if (script.name === undefined) return false;
-				return getConsentFor(script.name, state);
-			},
-		);
+	await addScripts(performanceServices);
+	const state = await getInitialConsentState();
+	const consentedAdvertisingServices = advertisingServices.filter(
+		(script) => {
+			if (script.name === undefined) return false;
+			return getConsentFor(script.name, state);
+		},
+	);
 
-		if (consentedAdvertisingServices.length > 0) {
-			addScripts(consentedAdvertisingServices);
-		}
-	});
+	if (consentedAdvertisingServices.length > 0) {
+		await addScripts(consentedAdvertisingServices);
+	}
 };
 
-const loadOther = (): void => {
+const loadOther = (): Promise<void> => {
 	const advertisingServices: ThirdPartyTag[] = [
 		remarketing({ shouldRun: config.get('switches.remarketing', false) }),
 		permutive({ shouldRun: config.get('switches.permutive', false) }),
@@ -101,15 +101,14 @@ const loadOther = (): void => {
 		imrWorldwideLegacy, // only in AU & NZ
 	].filter((_) => _.shouldRun);
 
-	void insertScripts(advertisingServices, performanceServices);
+	return insertScripts(advertisingServices, performanceServices);
 };
 
-const init = (): Promise<boolean> => {
+const init = async (): Promise<boolean> => {
 	if (!commercialFeatures.thirdPartyTags) {
 		return Promise.resolve(false);
 	}
-	loadOther();
-
+	await loadOther();
 	return Promise.resolve(true);
 };
 

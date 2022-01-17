@@ -38,8 +38,11 @@ const tags: Record<string, unknown> = {
 	bundle: 'standalone',
 };
 
-const commercialModules: Modules = [
-	['cm-setAdTestCookie', setAdTestCookie],
+// modules necessary to load the first ads on the page
+const commercialBaseModules: Modules = [];
+
+// remaining modules not necessary to load an ad
+const commercialExtraModules: Modules = [
 	['cm-adFreeSlotRemove', adFreeSlotRemove],
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
@@ -47,20 +50,23 @@ const commercialModules: Modules = [
 ];
 
 if (!commercialFeatures.adFree) {
-	commercialModules.push(
+	commercialBaseModules.push(
+		['cm-setAdTestCookie', setAdTestCookie],
 		['cm-prepare-prebid', preparePrebid],
-		['cm-prepare-a9', prepareA9],
-		['cm-thirdPartyTags', initThirdPartyTags],
 		// Permutive init code must run before google tag enableServices()
 		// The permutive lib however is loaded async with the third party tags
 		['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
-		['cm-redplanet', initRedplanet],
+		['cm-prepare-a9', prepareA9],
+	);
+	commercialExtraModules.push(
 		['cm-prepare-adverification', prepareAdVerification],
 		['cm-mobileSticky', initMobileSticky],
 		['cm-highMerch', initHighMerch],
 		['cm-articleAsideAdverts', initArticleAsideAdverts],
 		['cm-articleBodyAdverts', initArticleBodyAdverts],
 		['cm-liveblogAdverts', initLiveblogAdverts],
+		['cm-thirdPartyTags', initThirdPartyTags],
+		['cm-redplanet', initRedplanet],
 		['cm-stickyTopBanner', initStickyTopBanner],
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],
@@ -80,7 +86,7 @@ const loadFrontendBundle = async (): Promise<void> => {
 		'commercial/commercial-metrics'
 	);
 
-	commercialModules.push(
+	commercialExtraModules.push(
 		['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
 	);
 
@@ -100,14 +106,14 @@ const loadDcrBundle = async (): Promise<void> => {
 		'common/modules/commercial/user-features'
 	);
 
-	commercialModules.push(['c-user-features', userFeatures.refresh]);
+	commercialExtraModules.push(['c-user-features', userFeatures.refresh]);
 	return;
 };
 
-const loadModules = () => {
+const loadModules = (modules: Modules, eventName: string) => {
 	const modulePromises: Array<Promise<unknown>> = [];
 
-	commercialModules.forEach((module) => {
+	modules.forEach((module) => {
 		const [moduleName, moduleInit] = module;
 
 		catchErrorsWithContext(
@@ -124,7 +130,9 @@ const loadModules = () => {
 		);
 	});
 
-	return Promise.all(modulePromises);
+	return Promise.allSettled(modulePromises).then(() => {
+		EventTimer.get().trigger(eventName);
+	});
 };
 
 const bootCommercial = async (): Promise<void> => {
@@ -154,19 +162,16 @@ const bootCommercial = async (): Promise<void> => {
 	try {
 		await loadFrontendBundle();
 		await loadDcrBundle();
-		await loadModules();
 
-		return catchErrorsWithContext(
-			[
-				[
-					'ga-user-timing-commercial-end',
-					function runTrackPerformance(): void {
-						EventTimer.get().trigger('commercialEnd');
-					},
-				],
-			],
-			tags,
-		);
+		const allModules: Array<Parameters<typeof loadModules>> = [
+			[commercialBaseModules, 'commercialBaseModulesLoaded'],
+			[commercialExtraModules, 'commercialExtraModulesLoaded'],
+		];
+		const promises = allModules.map((args) => loadModules(...args));
+
+		await Promise.all(promises).then(() => {
+			EventTimer.get().trigger('commercialEnd');
+		});
 	} catch (error) {
 		// report async errors in bootCommercial to Sentry with the commercial feature tag
 		reportError(error, tags, false);

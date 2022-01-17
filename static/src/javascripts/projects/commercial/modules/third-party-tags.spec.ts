@@ -126,6 +126,7 @@ describe('third party tags', () => {
 	});
 
 	it('should not run if disabled in commercial features', (done) => {
+		onConsentChange.mockImplementation(tcfv2AllConsentMock);
 		commercialFeatures.thirdPartyTags = false;
 		init()
 			.then((enabled) => {
@@ -138,6 +139,7 @@ describe('third party tags', () => {
 	});
 
 	it('should run if commercial enabled', (done) => {
+		onConsentChange.mockImplementation(tcfv2AllConsentMock);
 		commercialFeatures.thirdPartyTags = true;
 		commercialFeatures.adFree = false;
 		init()
