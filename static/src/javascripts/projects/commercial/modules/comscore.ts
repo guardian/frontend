@@ -34,36 +34,30 @@ const initOnConsent = () => {
  * Initialise comscore, industry-wide audience tracking
  * https://www.comscore.com/About
  */
-const setupComscore = (): Promise<void> => {
-	if (commercialFeatures.comscore) {
-		return (
-			getInitialConsentState()
-				.then((state) => {
-					/* Rule is that comscore can run:
-					- in Tcfv2: Based on consent for comscore
-					- in Australia: Always
-					- in CCPA: If the user hasn't chosen Do Not Sell
-					*/
-					const canRunTcfv2 =
-						state.tcfv2 && getConsentFor('comscore', state);
-					const canRunAus = !!state.aus;
-					const canRunCcpa = !!state.ccpa && !state.ccpa.doNotSell;
-
-					if (!(canRunTcfv2 || canRunAus || canRunCcpa)) {
-						return Promise.reject('No consent for comscore');
-					}
-					return initOnConsent();
-				})
-				// is there a better way?
-				.then(() => {
-					return;
-				})
-				.catch((e) => {
-					log('commercial', '⚠️ Failed to execute comscore', e);
-				})
-		);
+const setupComscore = async (): Promise<void> => {
+	if (!commercialFeatures.comscore) {
+		return Promise.resolve();
 	}
-	return Promise.resolve();
+	try {
+		const state = await getInitialConsentState();
+		/* Rule is that comscore can run:
+		- in Tcfv2: Based on consent for comscore
+		- in Australia: Always
+		- in CCPA: If the user hasn't chosen Do Not Sell
+		TODO move this logic to getConsentFor
+		*/
+		const canRunTcfv2 = state.tcfv2 && getConsentFor('comscore', state);
+		const canRunAus = !!state.aus;
+		const canRunCcpa = !!state.ccpa && !state.ccpa.doNotSell;
+
+		if (!(canRunTcfv2 || canRunAus || canRunCcpa)) {
+			throw Error('No consent for comscore');
+		}
+		await initOnConsent();
+		return;
+	} catch (e) {
+		log('commercial', '⚠️ Failed to execute comscore', e);
+	}
 };
 
 const setupComscoreOnce = once(setupComscore);
