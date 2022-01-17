@@ -303,10 +303,10 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
- "../projects/commercial/modules/dfp/redplanet.js": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../lib/config.js",
+ "../projects/commercial/modules/dfp/redplanet.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/config.d.ts",
   "../lib/launchpad.js",
   "../projects/commercial/initialConsentState.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
@@ -680,7 +680,7 @@
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
   "../projects/commercial/modules/dfp/prepare-permutive.js",
   "../projects/commercial/modules/dfp/prepare-prebid.ts",
-  "../projects/commercial/modules/dfp/redplanet.js",
+  "../projects/commercial/modules/dfp/redplanet.ts",
   "../projects/commercial/modules/high-merch.ts",
   "../projects/commercial/modules/ipsos-mori.ts",
   "../projects/commercial/modules/liveblog-adverts.js",

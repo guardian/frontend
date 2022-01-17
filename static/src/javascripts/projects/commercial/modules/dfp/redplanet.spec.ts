@@ -2,26 +2,32 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import { log } from '@guardian/libs';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import { log as log_ } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz as isInAuOrNz_ } from '../../../common/modules/commercial/geo-utils';
 import { init, resetModule } from './redplanet';
+
 jest.mock('lib/raven');
 
-const isInAuOrNz = isInAuOrNz_;
+const isInAuOrNz = isInAuOrNz_ as jest.MockedFunction<typeof isInAuOrNz_>;
 
-const AusWithConsentMock = (callback) =>
+const AusWithConsentMock = (callback: (state: ConsentState) => void): void =>
 	callback({
 		aus: { personalisedAdvertising: true },
 	});
 
-const AusWithoutConsentMock = (callback) =>
+const AusWithoutConsentMock = (callback: (state: ConsentState) => void): void =>
 	callback({
 		aus: { personalisedAdvertising: true },
 	});
 
-const onConsentChange = onConsentChange_;
+const onConsentChange = onConsentChange_ as jest.MockedFunction<
+	typeof onConsentChange_
+>;
+
+const log = log_ as jest.MockedFunction<typeof log_>;
 
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
@@ -60,10 +66,12 @@ jest.mock('@guardian/libs', () => ({
 	log: jest.fn(),
 }));
 
-const CcpaWithConsentMock = (callback) =>
+const CcpaWithConsentMock = (callback: (state: ConsentState) => void): void =>
 	callback({ ccpa: { doNotSell: false } });
 
-const getConsentFor = getConsentFor_;
+const getConsentFor = getConsentFor_ as jest.MockedFunction<
+	typeof getConsentFor_
+>;
 
 window.launchpad = jest.fn().mockImplementationOnce(() => jest.fn());
 
@@ -111,10 +119,10 @@ describe('init', () => {
 				},
 			},
 		];
-		expect(window.launchpad.mock.calls).toEqual([
-			expectedNewTrackerCall,
-			expectedTrackUnstructEventCall,
-		]);
+		expect(
+			(window.launchpad as jest.MockedFunction<typeof window.launchpad>)
+				.mock.calls,
+		).toEqual([expectedNewTrackerCall, expectedTrackUnstructEventCall]);
 	});
 
 	it('should initialise redplanet when TCFv2 consent has been given', async () => {
