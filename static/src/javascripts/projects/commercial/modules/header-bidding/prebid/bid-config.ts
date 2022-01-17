@@ -1,6 +1,8 @@
 import { log } from '@guardian/libs';
+import type { ConsentStateEnhanced } from 'commercial/types';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
+import type { PageTargeting } from '../../../../common/modules/commercial/build-page-targeting';
 import {
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
@@ -313,16 +315,18 @@ const ozoneClientSideBidder: PrebidBidder = {
 	}),
 };
 
-const sonobiBidder: PrebidBidder = {
+const sonobiBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
+	pageTargeting: PageTargeting,
+) => ({
 	name: 'sonobi',
 	switchName: 'prebidSonobi',
 	bidParams: (slotId: string): PrebidSonobiParams => ({
 		ad_unit: window.guardian.config.page.adUnit,
 		dom_id: slotId,
-		appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
+		appNexusTargeting: buildAppNexusTargeting(pageTargeting),
 		pageViewId: window.guardian.ophan.pageViewId,
 	}),
-};
+});
 
 const getPubmaticPublisherId = (): string => {
 	if (isInUsOrCa()) {
@@ -463,11 +467,15 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 	return allBidders.filter((bidder) => isSwitchedOn(bidder));
 };
 
-const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
+const currentBidders = (
+	slotSizes: HeaderBiddingSize[],
+	consentState: ConsentStateEnhanced,
+): PrebidBidder[] => {
+	const pageTargeting = getPageTargeting(consentState);
 	const biddersToCheck: Array<[boolean, PrebidBidder]> = [
 		[shouldIncludeCriteo(), criteoBidder],
 		[shouldIncludeSmart(), smartBidder],
-		[shouldIncludeSonobi(), sonobiBidder],
+		[shouldIncludeSonobi(), sonobiBidder(pageTargeting)],
 		[shouldIncludeTrustX(), trustXBidder],
 		[shouldIncludeTripleLift(), tripleLiftBidder],
 		[shouldIncludeAppNexus(), appNexusBidder],
@@ -493,8 +501,9 @@ const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 export const bids = (
 	slotId: string,
 	slotSizes: HeaderBiddingSize[],
+	consentState: ConsentStateEnhanced,
 ): PrebidBid[] =>
-	currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
+	currentBidders(slotSizes, consentState).map((bidder: PrebidBidder) => ({
 		bidder: bidder.name,
 		params: bidder.bidParams(slotId, slotSizes),
 	}));

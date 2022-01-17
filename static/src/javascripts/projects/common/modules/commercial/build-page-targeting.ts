@@ -67,7 +67,7 @@ type ContentType =
 	| 'audio'
 	| 'article';
 
-type PageTargeting = PartialWithNulls<{
+export type PageTargeting = PartialWithNulls<{
 	ab: string[];
 	at: string; // Ad Test
 	bl: string[]; // BLog tags
