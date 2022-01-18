@@ -24,6 +24,7 @@ case class NewsletterResponse(
     exampleUrl: Option[String],
     emailEmbed: EmailEmbed,
     illustration: Option[NewsletterIllustration] = None,
+    signupPage: Option[String],
 )
 
 object NewsletterResponse {

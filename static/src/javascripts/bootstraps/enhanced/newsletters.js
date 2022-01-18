@@ -73,12 +73,19 @@ const submitForm = (
     const refViewId = encodeURIComponent(
         config.get('ophan.pageViewId')
     );
+    const googleRecaptchaResponse = encodeURIComponent(
+        $('[name="g-recaptcha-response"]', form).val()
+    );
+
     let formQueryString = `${inputs.email}=${email}`;
     formQueryString += `&csrfToken=${csrfToken}`;
     formQueryString += `&listName=${listName}`;
     formQueryString += `&ref=${ref}`;
     formQueryString += `&refViewId=${refViewId}`;
     formQueryString += `&${inputs.dummy}=${dummyEmail}`;
+    if (window.guardian.config.switches.emailSignupRecaptcha) {
+        formQueryString += `&g-recaptcha-response=${googleRecaptchaResponse}`
+    }
 
     return fetch(`${config.get('page.ajaxUrl')}/email`, {
         method: 'POST',
@@ -99,10 +106,24 @@ const createSubscriptionFormEventHandlers = (buttonEl) => {
         event.preventDefault();
         const form = buttonEl.form;
         if (validate(form)) {
-            submitForm(form, buttonEl);
+            if (window.guardian.config.switches.emailSignupRecaptcha) {
+                showCaptcha(form, () => submitForm(form, buttonEl))
+            } else {
+                submitForm(form, buttonEl);
+            }
         }
     });
 };
+
+const showCaptcha = (form, callback) => {
+    const captchaContainer = $('.grecaptcha_container', form).get(0)
+    const captchaId = grecaptcha.render(captchaContainer, {
+        sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
+        callback: callback,
+        size: 'invisible'
+    })
+    grecaptcha.execute(captchaId)
+}
 
 const modifyFormForSignedIn = (el) => {
     modifyLinkNamesForSignedInUser(el);
