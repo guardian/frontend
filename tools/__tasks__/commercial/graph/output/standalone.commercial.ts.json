@@ -264,13 +264,13 @@
   "../projects/commercial/modules/dfp/on-slot-render.ts",
   "../projects/commercial/modules/dfp/on-slot-viewable.ts",
   "../projects/commercial/modules/dfp/refresh-on-resize.js",
-  "../projects/commercial/modules/messenger.js",
+  "../projects/commercial/modules/messenger.ts",
   "../projects/commercial/modules/messenger/background.js",
   "../projects/commercial/modules/messenger/click.js",
   "../projects/commercial/modules/messenger/disable-refresh.js",
   "../projects/commercial/modules/messenger/get-page-targeting.js",
   "../projects/commercial/modules/messenger/get-page-url.ts",
-  "../projects/commercial/modules/messenger/get-stylesheet.js",
+  "../projects/commercial/modules/messenger/get-stylesheet.ts",
   "../projects/commercial/modules/messenger/measure-ad-load.js",
   "../projects/commercial/modules/messenger/resize.js",
   "../projects/commercial/modules/messenger/scroll.js",
@@ -419,7 +419,8 @@
   "../projects/common/modules/article/space-filler.js",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/messenger.js": [
+ "../projects/commercial/modules/messenger.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/report-error.js",
   "../projects/commercial/modules/messenger/post-message.ts"
  ],
@@ -438,8 +439,12 @@
  "../projects/commercial/modules/messenger/get-page-targeting.js": [
   "../lib/config.js"
  ],
- "../projects/commercial/modules/messenger/get-page-url.ts": [],
- "../projects/commercial/modules/messenger/get-stylesheet.js": [],
+ "../projects/commercial/modules/messenger/get-page-url.ts": [
+  "../projects/commercial/modules/messenger.ts"
+ ],
+ "../projects/commercial/modules/messenger/get-stylesheet.ts": [
+  "../projects/commercial/modules/messenger.ts"
+ ],
  "../projects/commercial/modules/messenger/measure-ad-load.js": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js"
  ],
@@ -486,7 +491,7 @@
   "../lib/config.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
-  "../projects/commercial/modules/messenger.js",
+  "../projects/commercial/modules/messenger.ts",
   "../projects/common/modules/ui/sticky.js"
  ],
  "../projects/commercial/modules/sticky-top-banner.js": [
@@ -495,7 +500,7 @@
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
-  "../projects/commercial/modules/messenger.js",
+  "../projects/commercial/modules/messenger.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/third-party-tags.ts": [
