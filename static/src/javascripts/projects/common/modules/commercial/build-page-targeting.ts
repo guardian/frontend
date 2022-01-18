@@ -379,41 +379,39 @@ const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
 		? { af: 't' }
 		: {};
 	const pageTargets: PageTargeting = {
-		...{
-			ab: abParam(),
-			at: getCookie({ name: 'adtest', shouldMemoize: true }),
-			bp: findBreakpoint(),
-			cc: getCountryCode(), // if turned async, we could use getLocale()
-			// dcre: DCR eligible
-			// when the page is DCR eligible and was rendered by DCR or
-			// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
-			dcre:
-				window.guardian.config.isDotcomRendering ||
-				config.get<boolean>('page.dcrCouldRender', false)
-					? 't'
-					: 'f',
-			fr: getFrequencyValue(),
-			inskin: inskinTargeting(),
-			permutive: getPermutiveSegments(),
-			pv: window.guardian.config.ophan.pageViewId,
-			ref: getReferrer(),
-			// rp: rendering platform
-			rp: window.guardian.config.isDotcomRendering
-				? 'dotcom-rendering'
-				: 'dotcom-platform',
-			// s: section
-			// for reference in a macro, so cannot be extracted from ad unit
-			s: page.section,
-			sens: page.isSensitive ? 't' : 'f',
-			si: isUserLoggedIn() ? 't' : 'f',
-			skinsize: skinsizeTargeting(),
-			urlkw: getUrlKeywords(page.pageId),
-			// vl: video length
-			// round video duration up to nearest 30 multiple
-			vl: page.videoDuration
-				? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-				: null,
-		},
+		ab: abParam(),
+		at: getCookie({ name: 'adtest', shouldMemoize: true }),
+		bp: findBreakpoint(),
+		cc: getCountryCode(), // if turned async, we could use getLocale()
+		// dcre: DCR eligible
+		// when the page is DCR eligible and was rendered by DCR or
+		// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
+		dcre:
+			window.guardian.config.isDotcomRendering ||
+			config.get<boolean>('page.dcrCouldRender', false)
+				? 't'
+				: 'f',
+		fr: getFrequencyValue(),
+		inskin: inskinTargeting(),
+		permutive: getPermutiveSegments(),
+		pv: window.guardian.config.ophan.pageViewId,
+		ref: getReferrer(),
+		// rp: rendering platform
+		rp: window.guardian.config.isDotcomRendering
+			? 'dotcom-rendering'
+			: 'dotcom-platform',
+		// s: section
+		// for reference in a macro, so cannot be extracted from ad unit
+		s: page.section,
+		sens: page.isSensitive ? 't' : 'f',
+		si: isUserLoggedIn() ? 't' : 'f',
+		skinsize: skinsizeTargeting(),
+		urlkw: getUrlKeywords(page.pageId),
+		// vl: video length
+		// round video duration up to nearest 30 multiple
+		vl: page.videoDuration
+			? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
+			: null,
 		...consentRelatedTargeting,
 		...page.sharedAdTargeting,
 		...adFreeTargeting,
