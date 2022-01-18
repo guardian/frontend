@@ -28,16 +28,18 @@ import { postMessage } from './messenger/post-message';
  *		value: 'foo'
  * };
  */
-type StandardMessage = {
+type StandardMessage<T = unknown> = {
 	id: string;
 	type: string;
 	iframeId?: string | null | undefined;
 	slotId?: string | null | undefined;
 	/**
-	 * The `value` property is generic since it is up to the sender to attach data
-	 * }
+	 * The `value` property is generic since it is up to the sender to attach arbitrary data
+	 *
+	 * We mostly treat this as unknown and leave it up to the message
+	 * listeners to convert to a type they can handle
 	 */
-	value: unknown;
+	value: T;
 };
 
 /**
@@ -76,13 +78,18 @@ interface Options {
 export type RegisterListener = (
 	type: string,
 	callback: ListenerCallback,
-	options?: Options,
+	options?: {
+		window?: WindowProxy;
+		persist?: boolean;
+	},
 ) => void;
 
 export type UnregisterListener = (
 	type: string,
 	callback?: ListenerCallback,
-	options?: Options,
+	options?: {
+		window?: WindowProxy;
+	},
 ) => void;
 
 const LISTENERS: Listeners = {};
@@ -120,7 +127,9 @@ const isProgrammaticMessage = (
  * @param payload
  * @returns
  */
-const toStandardMessage = (payload: ProgrammaticMessage): StandardMessage => ({
+const toStandardMessage = (
+	payload: ProgrammaticMessage,
+): StandardMessage<{ width: number; height: number }> => ({
 	id: 'aaaa0000-bb11-cc22-dd33-eeeeee444444',
 	type: 'resize',
 	iframeId: payload.value.id,
@@ -260,7 +269,7 @@ const onMessage = (
 						);
 						return thisRet === undefined ? ret : thisRet;
 					}),
-				Promise.resolve(true),
+				Promise.resolve(),
 			);
 
 		return promise
