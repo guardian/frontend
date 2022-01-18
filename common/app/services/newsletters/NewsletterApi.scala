@@ -44,28 +44,28 @@ object GroupedNewsletterResponse {
 
 // TODO: Find a better way to define this that means Frontend doesn't have knowledge of the fields returned.
 case class GroupedNewslettersResponse(
-    newsRoundups: GroupedNewsletterResponse,
-    newsByTopic: GroupedNewsletterResponse,
-    features: GroupedNewsletterResponse,
-    sport: GroupedNewsletterResponse,
-    culture: GroupedNewsletterResponse,
-    lifestyle: GroupedNewsletterResponse,
-    comment: GroupedNewsletterResponse,
-    work: GroupedNewsletterResponse,
-    fromThePapers: GroupedNewsletterResponse,
+    newsRoundups: Option[GroupedNewsletterResponse],
+    newsByTopic: Option[GroupedNewsletterResponse],
+    features: Option[GroupedNewsletterResponse],
+    sport: Option[GroupedNewsletterResponse],
+    culture: Option[GroupedNewsletterResponse],
+    lifestyle: Option[GroupedNewsletterResponse],
+    comment: Option[GroupedNewsletterResponse],
+    work: Option[GroupedNewsletterResponse],
+    fromThePapers: Option[GroupedNewsletterResponse],
 ) {
   val toList: () => List[(String, List[NewsletterResponse])] = () =>
     List(
-      newsRoundups.displayName -> newsRoundups.newsletters,
-      newsByTopic.displayName -> newsByTopic.newsletters,
-      features.displayName -> features.newsletters,
-      sport.displayName -> sport.newsletters,
-      culture.displayName -> culture.newsletters,
-      lifestyle.displayName -> lifestyle.newsletters,
-      comment.displayName -> comment.newsletters,
-      work.displayName -> work.newsletters,
-      fromThePapers.displayName -> fromThePapers.newsletters,
-    )
+      newsRoundups,
+      newsByTopic,
+      features,
+      sport,
+      culture,
+      lifestyle,
+      comment,
+      work,
+      fromThePapers
+    ).flatten.map(g => (g.displayName, g.newsletters))
 }
 
 object GroupedNewslettersResponse {
@@ -73,15 +73,15 @@ object GroupedNewslettersResponse {
 
   // Create an empty response to initialise the box
   val empty = GroupedNewslettersResponse(
-    GroupedNewsletterResponse("News roundups", Nil),
-    GroupedNewsletterResponse("News by topic", Nil),
-    GroupedNewsletterResponse("Features", Nil),
-    GroupedNewsletterResponse("Sport", Nil),
-    GroupedNewsletterResponse("Culture", Nil),
-    GroupedNewsletterResponse("Lifestyle", Nil),
-    GroupedNewsletterResponse("Comment", Nil),
-    GroupedNewsletterResponse("Work", Nil),
-    GroupedNewsletterResponse("From the papers", Nil),
+    Option(GroupedNewsletterResponse("News roundups", Nil)),
+    Option(GroupedNewsletterResponse("News by topic", Nil)),
+    Option(GroupedNewsletterResponse("Features", Nil)),
+    Option(GroupedNewsletterResponse("Sport", Nil)),
+    Option(GroupedNewsletterResponse("Culture", Nil)),
+    Option(GroupedNewsletterResponse("Lifestyle", Nil)),
+    Option(GroupedNewsletterResponse("Comment", Nil)),
+    Option(GroupedNewsletterResponse("Work", Nil)),
+    Option(GroupedNewsletterResponse("From the papers", Nil)),
   )
 }
 
