@@ -191,7 +191,7 @@ const isValidPayload = (payload: unknown): payload is StandardMessage => {
  * formatError({ message: "%%, you are so %%" }, "Regis", "lovely")
  * => { message: "Regis, you are so lovely" }
  */
-const formatError = (error: { message: string }, ...args: string[]) =>
+const formatError = (error: { code: number, message: string }, ...args: string[]) =>
 	args.reduce((e, arg) => {
 		e.message = e.message.replace('%%', arg);
 		return e;
