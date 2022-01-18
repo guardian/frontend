@@ -1,6 +1,5 @@
 import config from '../../../../../lib/config';
 import {
-	getPageTargeting,
 	buildAppNexusTargetingObject,
 } from '../../../../common/modules/commercial/build-page-targeting';
 
@@ -96,7 +95,7 @@ export const getAppNexusDirectPlacementId = (sizes) => {
 	}
 };
 
-export const getAppNexusDirectBidParams = (sizes) => {
+export const getAppNexusDirectBidParams = (sizes, pageTargeting) => {
 	if (isInAuOrNz() && config.get('switches.prebidAppnexusInvcode')) {
 		const invCode = getAppNexusInvCode(sizes);
 		// flowlint sketchy-null-string:warn
@@ -106,14 +105,14 @@ export const getAppNexusDirectBidParams = (sizes) => {
 				member: '7012',
 				keywords: {
 					invc: [invCode],
-					...buildAppNexusTargetingObject(getPageTargeting()),
+					...buildAppNexusTargetingObject(pageTargeting),
 				},
 			};
 		}
 	}
 	return {
 		placementId: getAppNexusDirectPlacementId(sizes),
-		keywords: buildAppNexusTargetingObject(getPageTargeting()),
+		keywords: buildAppNexusTargetingObject(pageTargeting),
 	};
 };
 

@@ -254,14 +254,16 @@ const isPbTestOn = () => Object.keys(pbTestNameMap()).length > 0;
 const inPbTestOr = (liveClause: boolean) => isPbTestOn() || liveClause;
 
 /* Bidders */
-const appNexusBidder: PrebidBidder = {
+const appNexusBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
+	pageTargeting: PageTargeting,
+) => ({
 	name: 'and',
 	switchName: 'prebidAppnexus',
 	bidParams: (
 		slotId: string,
 		sizes: HeaderBiddingSize[],
-	): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes),
-};
+	): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes, pageTargeting),
+});
 
 const openxClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
 	pageTargeting: PageTargeting,
@@ -473,7 +475,7 @@ const currentBidders = (
 		[shouldIncludeSonobi(), sonobiBidder(pageTargeting)],
 		[shouldIncludeTrustX(), trustXBidder],
 		[shouldIncludeTripleLift(), tripleLiftBidder],
-		[shouldIncludeAppNexus(), appNexusBidder],
+		[shouldIncludeAppNexus(), appNexusBidder(pageTargeting)],
 		[shouldIncludeImproveDigital(), improveDigitalBidder],
 		[shouldIncludeImproveDigitalSkin(), improveDigitalSkinBidder],
 		[shouldIncludeXaxis(), xaxisBidder],
