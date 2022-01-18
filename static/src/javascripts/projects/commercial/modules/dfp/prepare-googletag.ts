@@ -91,7 +91,7 @@ export const init = (): Promise<void> => {
 					// canRun stays true, set RDP flag
 					window.googletag.cmd.push(() => {
 						window.googletag.pubads().setPrivacySettings({
-							restrictDataProcessing: consentState.canTarget,
+							restrictDataProcessing: !consentState.canTarget,
 						});
 					});
 				} else if (consentState.tcfv2) {
