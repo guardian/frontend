@@ -100,7 +100,7 @@ describe('Immersive Article Aside Adverts', () => {
 	});
 
 	it('should remove sticky and return all slot sizes when there is enough space', async () => {
-		mockMeasure(900001, 10000);
+		mockMeasure(900_001, 10_000);
 		config.set('page.isImmersive', true);
 		await init();
 
@@ -116,7 +116,7 @@ describe('Immersive Article Aside Adverts', () => {
 	});
 
 	it('should remove sticky and return sizes that will fit when there is limited space', async () => {
-		mockMeasure(900002, 260);
+		mockMeasure(900_002, 260);
 		config.set('page.isImmersive', true);
 		await init();
 
@@ -145,7 +145,7 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
 	afterEach(sharedAfterEach);
 
 	it('should have the correct size mappings and classes (leaves it untouched)', async () => {
-		mockMeasure(900000, 0);
+		mockMeasure(900_000, 0);
 		config.set('page.isImmersive', true);
 		await init();
 
