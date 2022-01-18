@@ -474,4 +474,14 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
+  val ValidateEmailSignupRecaptchaTokens = Switch(
+    SwitchGroup.Feature,
+    "validate-email-signup-recaptcha-tokens",
+    "Enables validation of reCAPTCHA tokens on email signup submissions",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
+
 }
