@@ -224,6 +224,26 @@ const eventToStandardMessage = (event: MessageEvent) => {
 };
 
 /**
+ * Respond to the original iframe with the result of calling the
+ * persistent listener / listener chain
+ */
+const respond = (
+	id: string,
+	target: MessageEventSource | null,
+	error: { message: string } | null,
+	result: unknown,
+) => {
+	postMessage(
+		{
+			id,
+			error,
+			result,
+		},
+		target ?? window,
+	);
+};
+
+/**
  * Callback that is fired when an arbitrary message is received on the window
  *
  * @param event The message event received on the window
@@ -236,18 +256,6 @@ const onMessage = (
 	if (!data) {
 		return;
 	}
-
-	// Respond to the original iframe with the result of calling the persistent listener / listener chain
-	const respond = (error: { message: string } | null, result: unknown) => {
-		postMessage(
-			{
-				id: data.id,
-				error,
-				result,
-			},
-			event.source ?? window,
-		);
-	};
 
 	const listener = LISTENERS[data.type];
 
@@ -281,13 +289,13 @@ const onMessage = (
 
 		return promise
 			.then((response) => {
-				respond(null, response);
+				respond(data.id, event.source, null, response);
 			})
 			.catch((ex) => {
 				reportError(ex, {
 					feature: 'native-ads',
 				});
-				respond(formatError(error500, ex), null);
+				respond(data.id, event.source, formatError(error500, ex), null);
 			});
 	} else if (typeof listener === 'function') {
 		// We found a persistent listener, to which we just delegate
@@ -296,7 +304,7 @@ const onMessage = (
 	} else {
 		// If there is no routine attached to this event type, we just answer
 		// with an error code
-		respond(formatError(error405, data.type), null);
+		respond(data.id, event.source, formatError(error405, data.type), null);
 	}
 };
 
