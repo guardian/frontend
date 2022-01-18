@@ -251,9 +251,7 @@ const respond = (
  *
  * @param event The message event received on the window
  */
-const onMessage = (
-	event: MessageEvent<string>,
-): Promise<unknown> | undefined => {
+const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 	const data = eventToStandardMessage(event);
 
 	if (!data) {
