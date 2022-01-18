@@ -9,8 +9,8 @@ import { postMessage } from './messenger/post-message';
 type StandardMessage<T = unknown> = {
 	id: string;
 	type: string;
-	iframeId?: string | null | undefined;
-	slotId?: string | null | undefined;
+	iframeId?: string;
+	slotId?: string;
 	/**
 	 * The `value` property is generic since it is up to the sender to attach arbitrary data
 	 *
@@ -28,8 +28,8 @@ type StandardMessage<T = unknown> = {
 type ProgrammaticMessage = {
 	type: string;
 	value: {
-		id?: string | null | undefined;
-		slotId?: string | null | undefined;
+		id?: string;
+		slotId?: string;
 		height: number;
 		width: number;
 	};
@@ -44,7 +44,7 @@ type ListenerCallback = (
 	 * predict what the iframe will send. It is the responsibility of the callback
 	 * to obtain a value of the desired type (or fail gracefully)
 	 */
-	specs: unknown | null | undefined,
+	specs: unknown | undefined,
 	/**
 	 * Non-persistent callbacks can be chained together. This value is the return
 	 * value of the previously fired callback in the chain. It is the responsibility
@@ -54,7 +54,7 @@ type ListenerCallback = (
 	/**
 	 * Reference to the iframe that is the source of the message
 	 */
-	iframe?: HTMLIFrameElement | null | undefined,
+	iframe?: HTMLIFrameElement,
 ) => unknown;
 
 /**
@@ -66,7 +66,7 @@ type ListenerCallback = (
  */
 type Listeners = Record<
 	string,
-	ListenerCallback | ListenerCallback[] | undefined | null
+	ListenerCallback | ListenerCallback[] | undefined
 >;
 
 /**
@@ -145,19 +145,18 @@ const toStandardMessage = (
  *
  * Incoming messages contain the ID of the iframe into which the source window is embedded.
  */
-const getIframe = (data: StandardMessage) => {
+const getIframe = (data: StandardMessage): HTMLIFrameElement | undefined => {
 	if (data.slotId) {
 		const container = document.getElementById(`dfp-ad--${data.slotId}`);
 		const iframes = container
 			? container.getElementsByTagName('iframe')
 			: null;
-		return iframes?.length ? iframes[0] : null;
+		return iframes?.length ? iframes[0] : undefined;
 	} else if (data.iframeId) {
 		const el = document.getElementById(data.iframeId);
 		if (el instanceof HTMLIFrameElement) {
 			return el;
 		}
-		return null;
 	}
 };
 
@@ -352,7 +351,7 @@ export const unregister: UnregisterListener = (type, callback, options) => {
 	if (listeners === undefined) {
 		throw new Error(formatError(error405, type).message);
 	} else if (listeners === callback) {
-		LISTENERS[type] = null;
+		LISTENERS[type] = undefined;
 		REGISTERED_LISTENERS -= 1;
 	} else if (Array.isArray(listeners)) {
 		if (callback === undefined) {
