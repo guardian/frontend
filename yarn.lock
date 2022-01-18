@@ -1305,10 +1305,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@guardian/source-foundations@^4.0.0-rc.4":
-  version "4.0.0-rc.4"
-  resolved "https://registry.npmjs.org/@guardian/source-foundations/-/source-foundations-4.0.0-rc.4.tgz#3029c958497e181f85caee1c662dd7aefb906838"
-  integrity sha512-4nyvLDOQRXdzpfuxfUDIgpr0xeb1cCjLqsb9XhRHRX6Xh3Vhp/oMsAKxPbj3GcLMfehM1ZEGn4RYmEy6An/e4w==
+"@guardian/source-foundations@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-4.0.0.tgz#ffeb4e661f3aae894ac651bb21f0842fe893dbbe"
+  integrity sha512-NnVSbWFMgatBiqWdiqmThG6ohNl6NRAnBlxMaA9L+9OFuxjAW9gs8L7XULitm8VGnmdoCmm1z4iQ6Ds8JJt4Qw==
   dependencies:
     mini-svg-data-uri "^1.3.3"
 
