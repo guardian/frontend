@@ -160,6 +160,9 @@ const getIframe = (data: StandardMessage): HTMLIFrameElement | undefined => {
 	}
 };
 
+// Regex for testing validity of message ids
+const validMessageRegex = /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/;
+
 /**
  * Convert an `unknown` payload to the standard message format
  *
@@ -175,7 +178,7 @@ const isValidPayload = (payload: unknown): payload is StandardMessage => {
 		'value' in payloadToCheck &&
 		'id' in payloadToCheck &&
 		payloadToCheck.type in LISTENERS &&
-		/^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(payloadToCheck.id)
+		validMessageRegex.test(payloadToCheck.id)
 	);
 };
 
