@@ -4,7 +4,9 @@ import { postMessage } from './messenger/post-message';
 
 const LISTENERS: Record<
 	MessageType,
-	Array<(...args: unknown[]) => unknown> | undefined
+	| Array<(...args: unknown[]) => unknown>
+	| ((...args: unknown[]) => unknown)
+	| undefined
 > = {
 	'get-page-url': undefined,
 	'get-styles': undefined,
@@ -148,9 +150,9 @@ const getValidPayload = (data: unknown): StandardMessage | null => {
 	}
 };
 
-const onMessage = (event: MessageEvent<string>): void => {
+const onMessage = (event: MessageEvent<string>): Promise<unknown> => {
 	const data = getValidPayload(event.data);
-	if (!data) return;
+	if (!data) return Promise.resolve();
 
 	const respond = (
 		error: { code: number; message: string } | null,
@@ -166,12 +168,13 @@ const onMessage = (event: MessageEvent<string>): void => {
 		);
 	};
 
-	if (Array.isArray(LISTENERS[data.type]) && LISTENERS[data.type]?.length) {
+	const listener = LISTENERS[data.type];
+
+	if (Array.isArray(listener) && listener.length) {
 		// Because any listener can have side-effects (by unregistering itself),
 		// we run the promise chain on a copy of the `LISTENERS` array.
 		// Hat tip @piuccio
-		const promise = LISTENERS[data.type]
-			?.slice()
+		const promise = listener
 			// We offer, but don't impose, the possibility that a listener returns
 			// a value that must be sent back to the calling frame. To do this,
 			// we pass the cumulated returned value as a second argument to each
@@ -183,22 +186,22 @@ const onMessage = (event: MessageEvent<string>): void => {
 			// And so we wrap each call in a promise chain, in case one drops the
 			// occasional fastdom bomb in the middle.
 			.reduce(
-				(
-					func: Promise<boolean>,
+				<T>(
+					func: Promise<T>,
 					listener: (
 						arg0:
 							| {
-									id?: string | undefined;
-									slotId?: string | undefined;
+									id?: string;
+									slotId?: string;
 									height: number;
 									width: number;
 							  }
 							| { height: number; width: number },
 						arg1: any,
 						arg2: HTMLElement | null,
-					) => any,
+					) => T | undefined,
 				) =>
-					func.then((ret: any) => {
+					func.then((ret) => {
 						const thisRet = listener(
 							data.value,
 							ret,
@@ -206,11 +209,11 @@ const onMessage = (event: MessageEvent<string>): void => {
 						);
 						return thisRet === undefined ? ret : thisRet;
 					}),
-				Promise.resolve(true),
+				Promise.resolve(),
 			);
 
 		return promise
-			?.then((response) => {
+			.then((response) => {
 				respond(null, response);
 			})
 			.catch((ex: string) => {
@@ -219,15 +222,17 @@ const onMessage = (event: MessageEvent<string>): void => {
 				});
 				respond(formatError(error500, ex), null);
 			});
-	} else if (typeof LISTENERS[data.type] === 'function') {
+	} else if (typeof listener === 'function') {
 		// We found a persistent listener, to which we just delegate
 		// responsibility to write something. Anything. Really.
-		LISTENERS[data.type](respond, data.value, getIframe(data));
+		listener(respond, data.value, getIframe(data));
 	} else {
 		// If there is no routine attached to this event type, we just answer
 		// with an error code
 		respond(formatError(error405, data.type), null);
 	}
+
+	return Promise.resolve();
 };
 
 const on = (window: WindowProxy): void => {
