@@ -366,8 +366,7 @@
   "../projects/commercial/modules/header-bidding/prebid/appnexus.js",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
-  "../projects/common/modules/commercial/geo-utils.js",
-  "../projects/common/modules/commercial/get-enhanced-consent.ts"
+  "../projects/common/modules/commercial/geo-utils.js"
  ],
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -383,6 +382,7 @@
   "../projects/commercial/modules/header-bidding/prebid/pubmatic.js",
   "../projects/commercial/modules/header-bidding/slot-config.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
+  "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/get-enhanced-consent.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
