@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
-import conf.switches.Switches.EmailSignupRecaptcha
+import conf.switches.Switches.{EmailSignupRecaptcha, ValidateEmailSignupRecaptchaTokens}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
@@ -73,6 +73,23 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
     }
 }
 
+class GoogleRecaptchaTokenValidationService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
+  def submit(token: Option[String])(implicit request: Request[AnyContent]): Future[WSResponse] = {
+    if (token.isEmpty) {
+      Future.failed(new IllegalAccessException("reCAPTCHA token not provided"))
+    } else {
+      val googleCaptchaVerificationUrl = "https://www.google.com/recaptcha/api/siteverify"
+      val googleCaptchaVerificationPayload =
+        Map("response" -> Seq(token.get), "secret" -> Seq(Configuration.google.googleRecaptchaSecret))
+
+      wsClient
+        .url(googleCaptchaVerificationUrl)
+        .post(googleCaptchaVerificationPayload)
+
+    }
+  }
+}
+
 class EmailSignupController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
@@ -84,6 +101,7 @@ class EmailSignupController(
     with ImplicitControllerExecutionContext
     with GuLogging {
   val emailFormService = new EmailFormService(wsClient)
+  val googleRecaptchaTokenValidationService = new GoogleRecaptchaTokenValidationService(wsClient)
 
   val emailForm: Form[EmailForm] = Form(
     mapping(
@@ -341,6 +359,12 @@ class EmailSignupController(
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
           )
+
+          if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
+            googleRecaptchaTokenValidationService
+              .submit(form.googleRecaptchaResponse)
+          }
+
           emailFormService
             .submit(form)
             .map(_.status match {
