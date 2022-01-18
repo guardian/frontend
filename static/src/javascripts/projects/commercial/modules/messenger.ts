@@ -2,31 +2,9 @@ import reportError from '../../../lib/report-error';
 import { postMessage } from './messenger/post-message';
 
 /**
- * A message that is sent from an iframe following a standard format we own
+ * A message that is sent from an iframe following a standard format
  *
- * Allow messages with `unknown` payloads so the consumer can deal with deserializing into
- * a format they can handle
- *
- * TODO: EXAMPLE OF FORMAT
- *
- * @example
- *
- * const msg: StandardMessage<{
- *		width: number; height: number;
- * }> = {
- *		id: 'id',
- *		type: 'resize',
- *  	value: {
- * 			width: 300,
- * 			height: 250,
- *  	};
- * };
- *
- * const msg2: StandardMessage = {
- *		id: 'id',
- *		type: 'type',
- *		value: 'foo'
- * };
+ * TODO Is this format formally defined somewhere?
  */
 type StandardMessage<T = unknown> = {
 	id: string;
@@ -58,23 +36,42 @@ type ProgrammaticMessage = {
 };
 
 /**
- * TODO
+ * Callbacks that can be registered to fire when receiving messages from an iframe
  */
 type ListenerCallback = (
+	/**
+	 * The data payload sent by an iframe, and has type `unknown` because we can't
+	 * predict what the iframe will send. It is the responsibility of the callback
+	 * to obtain a value of the desired type (or fail gracefully)
+	 */
 	specs: unknown | null | undefined,
+	/**
+	 * Non-persistent callbacks can be chained together. This value is the return
+	 * value of the previously fired callback in the chain. It is the responsibility
+	 * of the current callback to either ignore it or use it / pass along
+	 */
 	ret: unknown,
+	/**
+	 * Reference to the iframe that is the source of the message
+	 */
 	iframe?: HTMLIFrameElement | null | undefined,
 ) => unknown;
 
+/**
+ * The set of listeners currently registered
+ *
+ * Each message sent by an iframe has a `type` field which indicates the kind of
+ * message e.g. `resize`, `measure-ad-load`. One or more listeners is registered
+ * for each type.
+ */
 type Listeners = Record<
 	string,
 	ListenerCallback | ListenerCallback[] | undefined | null
 >;
-interface Options {
-	window?: WindowProxy;
-	persist?: boolean;
-}
 
+/**
+ * Types of functions to register a listener for a given type of iframe message
+ */
 export type RegisterListener = (
 	type: string,
 	callback: ListenerCallback,
@@ -84,6 +81,10 @@ export type RegisterListener = (
 	},
 ) => void;
 
+/**
+ * Types of functions to unregister a listener for a given type of iframe message
+ *
+ */
 export type UnregisterListener = (
 	type: string,
 	callback?: ListenerCallback,
@@ -105,10 +106,9 @@ const error500 = {
 };
 
 /**
- * Convert a ...
+ * Determine if an unknown payload has the shape of a programmatic message
  *
- * @param payload
- * @returns
+ * @param payload The unknown message payload
  */
 const isProgrammaticMessage = (
 	payload: unknown,
@@ -122,10 +122,10 @@ const isProgrammaticMessage = (
 };
 
 /**
- * TODO ...
+ * Convert a legacy programmatic message to a standard message
  *
- * @param payload
- * @returns
+ * Note that this only applies to specific resize programmatic messages
+ * (these include specific width and height values)
  */
 const toStandardMessage = (
 	payload: ProgrammaticMessage,
@@ -141,6 +141,8 @@ const toStandardMessage = (
 });
 
 /**
+ * Retrieve a reference to the calling iframe via it's ID.
+ *
  * Incoming messages contain the ID of the iframe into which the source window is embedded.
  */
 const getIframe = (data: StandardMessage) => {
@@ -196,13 +198,15 @@ const formatError = (error: { message: string }, ...args: string[]) =>
 	}, error);
 
 /**
- * TODO
+ * Convert a posted message to our StandardMessage format
  *
- * @param event
- * @returns
+ * @param event The message event received on the window
+ * @returns A message with the `StandardMessage` format, or null if the conversion was unsuccessful
  */
 const eventToStandardMessage = (event: MessageEvent) => {
 	try {
+		// Currently all non-string messages are discarded here since parsing throws an error
+		// TODO Review whether this is the desired outcome
 		const data: unknown = JSON.parse(event.data);
 
 		const message = isProgrammaticMessage(data)
@@ -218,9 +222,9 @@ const eventToStandardMessage = (event: MessageEvent) => {
 };
 
 /**
- * TODO ...
- * @param event
- * @returns
+ * Callback that is fired when an arbitrary message is received on the window
+ *
+ * @param event The message event received on the window
  */
 const onMessage = (
 	event: MessageEvent<string>,
@@ -231,6 +235,7 @@ const onMessage = (
 		return;
 	}
 
+	// Respond to the original iframe with the result of calling the persistent listener / listener chain
 	const respond = (error: { message: string } | null, result: unknown) => {
 		postMessage(
 			{
@@ -301,6 +306,13 @@ const off = (window: WindowProxy) => {
 	window.removeEventListener('message', (event) => void onMessage(event));
 };
 
+/**
+ * Register a callback for a given type of iframe message
+ *
+ * @param type The `type` of message to register against
+ * @param callback The callback to register that will receive messages of the given type
+ * @param options Options for the target window and whether the callback is persistent
+ */
 export const register: RegisterListener = (type, callback, options): void => {
 	if (REGISTERED_LISTENERS === 0) {
 		on(options?.window ?? window);
@@ -320,6 +332,17 @@ export const register: RegisterListener = (type, callback, options): void => {
 	}
 };
 
+/**
+ * Unregister a callback for a given type
+ *
+ * @param type The type of message to unregister against. An iframe will send
+ * messages annotated with the type
+ * @param callback Optionally include the original callback. If this is included
+ * for a persistent callback this function will be unregistered. If it's
+ * included for a non-persistent callback only the matching callback is removed,
+ * otherwise all callbacks for that type will be unregistered
+ * @param options Option for the target window
+ */
 export const unregister: UnregisterListener = (type, callback, options) => {
 	const listeners = LISTENERS[type];
 
@@ -348,6 +371,11 @@ export const unregister: UnregisterListener = (type, callback, options) => {
 	}
 };
 
+/**
+ * Initialize an array of listener callbacks in a batch
+ *
+ * @param modules The modules that will register callbacks
+ */
 export const init = (
 	...modules: Array<(register: RegisterListener) => void>
 ): void => {
