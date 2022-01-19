@@ -9,18 +9,14 @@ import { getHeaderBiddingAdSlots } from '../slot-config';
  */
 
 class A9AdUnit implements A9AdUnitInterface {
-	slotID?: string;
+	slotID: string;
 	slotName?: string;
-	sizes?: HeaderBiddingSize[];
+	sizes: HeaderBiddingSize[];
 
 	constructor(advert: Advert, slot: HeaderBiddingSlot) {
 		this.slotID = advert.id;
 		this.slotName = config.get('page.adUnit');
 		this.sizes = slot.sizes;
-	}
-
-	isEmpty() {
-		return this.slotID == null;
 	}
 }
 
@@ -54,9 +50,9 @@ const requestBids = (
 		return requestQueue;
 	}
 
-	const adUnits = getHeaderBiddingAdSlots(advert, slotFlatMap)
-		.map((slot) => new A9AdUnit(advert, slot))
-		.filter((adUnit) => !adUnit.isEmpty());
+	const adUnits = getHeaderBiddingAdSlots(advert, slotFlatMap).map(
+		(slot) => new A9AdUnit(advert, slot),
+	);
 
 	if (adUnits.length === 0) {
 		return requestQueue;

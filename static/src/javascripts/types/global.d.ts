@@ -157,9 +157,9 @@ interface Confiant extends Record<string, unknown> {
 
 // https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/api-reference.html#apstaginit
 interface A9AdUnitInterface {
-	slotID?: string;
+	slotID: string;
 	slotName?: string;
-	sizes?: HeaderBiddingSize[];
+	sizes: HeaderBiddingSize[];
 }
 
 type ApstagInitConfig = {
