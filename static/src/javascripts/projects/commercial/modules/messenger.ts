@@ -180,7 +180,7 @@ const getIframe = (data: StandardMessage): HTMLIFrameElement | undefined => {
 const validMessageRegex = /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/;
 
 /**
- * Convert an `unknown` payload to the standard message format
+ * Narrow an `unknown` payload to the standard message format
  *
  * Until DFP provides a way for us to identify with 100% certainty our
  * in-house creatives, we are left with doing some basic tests
