@@ -5,7 +5,7 @@ import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import type { PageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { getEnhancedConsent } from 'common/modules/commercial/get-enhanced-consent';
+import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
 import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
