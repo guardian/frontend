@@ -5,15 +5,10 @@ import {
 } from '../../../../common/modules/commercial/geo-utils';
 import { _, getAppNexusDirectBidParams } from './appnexus';
 import { getBreakpointKey as getBreakpointKey_ } from '../utils';
+import { buildAppNexusTargetingObject } from '../../../../common/modules/commercial/build-page-targeting';
 
 jest.mock('../../../../common/modules/commercial/build-page-targeting', () => ({
-	buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
-	buildAppNexusTargetingObject: () => ({
-		url: 'gu.com',
-		sens: 'f',
-		edition: 'UK',
-	}),
-	getPageTargeting: () => 'pageTargeting',
+	buildAppNexusTargetingObject: jest.fn()
 }));
 
 jest.mock('../utils', () => {
@@ -221,27 +216,37 @@ describe('getAppNexusPlacementId', () => {
 describe('getAppNexusDirectBidParams', () => {
 	beforeEach(() => {
 		resetConfig();
+        buildAppNexusTargetingObject.mockReturnValue({
+            edition: 'UK',
+            sens: 'f',
+            url: 'gu.com',
+        });
 	});
 
 	afterEach(() => {
 		jest.resetAllMocks();
-		resetConfig();
 	});
 
 	test('should include placementId for AU region when invCode switch is off', () => {
 		getBreakpointKey.mockReturnValue('M');
 		isInAuOrNz.mockReturnValue(true);
-		expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
+        const pageTargeting = {};
+
+		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual({
 			keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
 			placementId: '11016434',
 		});
+        expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
+        expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(pageTargeting);
 	});
 
 	test('should exclude placementId for AU region when including member and invCode', () => {
 		config.set('switches.prebidAppnexusInvcode', true);
 		getBreakpointKey.mockReturnValue('M');
 		isInAuOrNz.mockReturnValueOnce(true);
-		expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
+        const pageTargeting = {};
+
+		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual({
 			keywords: {
 				edition: 'UK',
 				sens: 'f',
@@ -251,14 +256,22 @@ describe('getAppNexusDirectBidParams', () => {
 			member: '7012',
 			invCode: 'Mmagic300x250',
 		});
+
+        expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
+        expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(pageTargeting);
 	});
 
 	test('should include placementId and not include invCode if outside AU region', () => {
 		config.set('switches.prebidAppnexusInvcode', true);
 		getBreakpointKey.mockReturnValue('M');
-		expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
+        const pageTargeting = {};
+
+		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual({
 			keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
 			placementId: '4298191',
 		});
+
+        expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
+        expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(pageTargeting);
 	});
 });
