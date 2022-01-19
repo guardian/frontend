@@ -6,6 +6,7 @@
 
 @import common.LinkTo
 @import conf.switches.Switches.EmailSignupRecaptcha
+@import conf.switches.Switches.NewslettersRemoveConfirmationStep
 
 @listNamesTones = @{  List(
     bestOfOpinionUK.identityName -> "comment",
@@ -51,6 +52,9 @@
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
+            @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+                @fragments.email.signup.privacyNotice("terms newsletters-privacy-notice")
+            }
             @if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms()

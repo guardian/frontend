@@ -1,6 +1,7 @@
 @(listName: String)(implicit request: RequestHeader)
 
 @import conf.switches.Switches.EmailSignupRecaptcha
+@import conf.switches.Switches.NewslettersRemoveConfirmationStep
 
 @import common.LinkTo
 @formId = @{"footer-email-sub-form"}
@@ -11,8 +12,8 @@
 @formClass = @{ "email-sub__form email-sub__form--footer" }
 @headerClass = @{"email-sub__header email-sub__header--footer" }
 
-@formHeading = @{"Sign up for the Guardian Today email"}
-@formDescription = @{"All the day's headlines and highlights from the Guardian, direct to you every morning"}
+@formHeading = @{"Sign up for the Guardian Morning Briefing email"}
+@formDescription = @{"Start the day one step ahead. Our email breaks down the key stories of the day and why they matter"}
 
 
 @form = {
@@ -29,6 +30,9 @@
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button" data-component="email-signup-button footer-@listName" data-link-name="footer | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
+            @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+                @fragments.email.signup.privacyNotice("terms newsletters-privacy-notice")
+            }
             @if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms()
