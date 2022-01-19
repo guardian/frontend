@@ -2,13 +2,30 @@ import reportError from '../../../lib/report-error';
 import { postMessage } from './messenger/post-message';
 
 /**
+ * The type of iframe messages we accept
+ */
+type MessageType =
+	| 'background'
+	| 'click'
+	| 'disable-refresh'
+	| 'get-page-targeting'
+	| 'get-page-url'
+	| 'get-styles'
+	| 'measure-ad-load'
+	| 'resize'
+	| 'set-ad-height'
+	| 'scroll'
+	| 'type'
+	| 'viewport';
+
+/**
  * A message that is sent from an iframe following a standard format
  *
  * TODO Is this format formally defined somewhere?
  */
 type StandardMessage<T = unknown> = {
 	id: string;
-	type: string;
+	type: MessageType;
 	iframeId?: string;
 	slotId?: string;
 	/**
@@ -64,16 +81,15 @@ type ListenerCallback = (
  * message e.g. `resize`, `measure-ad-load`. One or more listeners is registered
  * for each type.
  */
-type Listeners = Record<
-	string,
-	ListenerCallback | ListenerCallback[] | undefined
+type Listeners = Partial<
+	Record<MessageType, ListenerCallback | ListenerCallback[] | undefined>
 >;
 
 /**
  * Types of functions to register a listener for a given type of iframe message
  */
 export type RegisterListener = (
-	type: string,
+	type: MessageType,
 	callback: ListenerCallback,
 	options?: {
 		window?: WindowProxy;
@@ -86,7 +102,7 @@ export type RegisterListener = (
  *
  */
 export type UnregisterListener = (
-	type: string,
+	type: MessageType,
 	callback?: ListenerCallback,
 	options?: {
 		window?: WindowProxy;
