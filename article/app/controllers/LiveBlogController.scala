@@ -212,7 +212,7 @@ class LiveBlogController(
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
-      model.KeyEventData(newBlocks, Edition(request).timezone, filterKeyEvents),
+      model.KeyEventData(newBlocks, Edition(request).timezone),
       filterKeyEvents,
     )
 

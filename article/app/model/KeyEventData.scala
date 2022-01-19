@@ -7,7 +7,7 @@ import com.github.nscala_time.time.Imports._
 object KeyEventData {
 
   // just for convenience for use from the templates
-  def apply(maybeBlocks: Option[Blocks], timezone: DateTimeZone, filterKeyEvents: Boolean): Seq[KeyEventData] = {
+  def apply(maybeBlocks: Option[Blocks], timezone: DateTimeZone): Seq[KeyEventData] = {
     val blocks = maybeBlocks.toSeq.flatMap(blocks => {
       if (blocks.body.length > 0) {
         blocks.body.filter(block => block.eventType == SummaryEvent || block.eventType == KeyEvent)
@@ -17,10 +17,10 @@ object KeyEventData {
         keyEvent ++ summaryEvent
       }
     })
-    apply(blocks, timezone, filterKeyEvents)
+    apply(blocks, timezone)
   }
 
-  def apply(blocks: Seq[BodyBlock], timezone: DateTimeZone, filterKeyEvents: Boolean): Seq[KeyEventData] = {
+  def apply(blocks: Seq[BodyBlock], timezone: DateTimeZone): Seq[KeyEventData] = {
     val TimelineMaxEntries = 7
     val timelineBlocks = blocks.sortBy(_.publishedCreatedTimestamp).reverse.take(TimelineMaxEntries)
     timelineBlocks.map { bodyBlock =>
