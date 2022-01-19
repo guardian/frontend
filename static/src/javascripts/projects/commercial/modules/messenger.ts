@@ -153,10 +153,10 @@ const getIframe = (data: StandardMessage): HTMLIFrameElement | undefined => {
 			: null;
 		return iframes?.length ? iframes[0] : undefined;
 	} else if (data.iframeId) {
-		const el = document.getElementById(data.iframeId);
-		if (el instanceof HTMLIFrameElement) {
-			return el;
-		}
+		const iframe = document.querySelector<HTMLIFrameElement>(
+			`iframe#${data.iframeId}`,
+		);
+		return iframe ?? undefined;
 	}
 };
 
