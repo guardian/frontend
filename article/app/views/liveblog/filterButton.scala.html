@@ -6,7 +6,7 @@
 
 <div class="live-blog__filter-switch" data-component="filter-key-events">
     <label class="live-blog__filter-switch-label" for="filter-switch">
-        @defining(if(filterKeyEvents) "on" else "off") { case switchState =>
+        @defining(if(filterKeyEvents) "off" else "on") { case switchState =>
             <input type="checkbox" id="filter-switch" value="@(filterKeyEvents)" data-link-name="filter-key-events-@(switchState)">
         }
         <span class="live-blog__filter-switch-slider round"></span>
