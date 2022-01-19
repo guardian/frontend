@@ -158,7 +158,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
 
   it should "return none when no summary key exist in requestedBodyBlocks and the filter is on" in {
     val blocks = fakeBlocks(5, 4)
-    val requestedBocyBlocks = Map(
+    val requestedBodyBlocks = Map(
       CanonicalLiveBlog.firstPage -> blocks.take(3),
       CanonicalLiveBlog.pinned -> List(),
       CanonicalLiveBlog.timeline -> blocks.take(6),
@@ -170,7 +170,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
         3,
         Nil,
         None,
-        requestedBocyBlocks,
+        requestedBodyBlocks,
       ),
       true,
     )
