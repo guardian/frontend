@@ -458,6 +458,13 @@ case object AustraliasModernOutback extends FrontEmailMetadata {
   override val banner = Some("aus-modern-outback.png")
 }
 
+case object FiveGreatReads extends FrontEmailMetadata {
+  val name = "Australia Modern Outback"
+  override val banner = Some("five-great-reads.png")
+  def test(c: ContentPage): Boolean =
+    c.item.tags.series.exists(_.id == "australia-news/series/five-great-reads")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
