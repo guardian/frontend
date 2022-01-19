@@ -373,6 +373,7 @@ const requestBids = async (
 		return requestQueue;
 	}
 
+	// prepare-prebid already waits for consent so this should resolve immediately
 	const adUnits = await getEnhancedConsent()
 		.then((consentState) => {
 			// calculate this once before mapping over
