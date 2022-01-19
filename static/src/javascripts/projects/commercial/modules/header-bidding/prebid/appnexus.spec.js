@@ -35,7 +35,6 @@ jest.mock('../../../../common/modules/experiments/ab', () => ({
 }));
 
 const {
-	getAppNexusPlacementId,
 	getAppNexusInvCode,
 	getAppNexusDirectPlacementId,
 } = _;
@@ -147,71 +146,6 @@ describe('getAppNexusDirectPlacementId', () => {
 	});
 });
 
-describe('getAppNexusPlacementId', () => {
-	beforeEach(() => {
-		resetConfig();
-		isInAuOrNz.mockReturnValue(false);
-		isInUsOrCa.mockReturnValue(false);
-	});
-
-	afterEach(() => {
-		jest.resetAllMocks();
-		resetConfig();
-	});
-
-	const generateTestIds = () => {
-		const prebidSizes = [
-			[[300, 250]],
-			[[300, 600]],
-			[[970, 250]],
-			[[728, 90]],
-			[[1, 2]],
-		];
-		return prebidSizes.map(getAppNexusPlacementId);
-	};
-
-	test('should return the expected values when on desktop device', () => {
-		getBreakpointKey.mockReturnValue('D');
-		expect(generateTestIds()).toEqual([
-			'13366606',
-			'13366606',
-			'13366615',
-			'13366615',
-			'13915593',
-		]);
-	});
-
-	test('should return the expected values when on tablet device', () => {
-		getBreakpointKey.mockReturnValue('T');
-		expect(generateTestIds()).toEqual([
-			'13366913',
-			'13915593',
-			'13915593',
-			'13366916',
-			'13915593',
-		]);
-	});
-
-	test('should return the expected values when on mobile device', () => {
-		getBreakpointKey.mockReturnValue('M');
-		expect(generateTestIds()).toEqual([
-			'13366904',
-			'13915593',
-			'13915593',
-			'13915593',
-			'13915593',
-		]);
-	});
-
-	test('should return the default value if in US or AU regions', () => {
-		getBreakpointKey.mockReturnValue('D');
-		isInAuOrNz.mockReturnValueOnce(true);
-		isInUsOrCa.mockReturnValueOnce(true);
-		expect(getAppNexusPlacementId([[300, 250]])).toEqual('13915593');
-		expect(getAppNexusPlacementId([[970, 250]])).toEqual('13915593');
-		expect(getAppNexusPlacementId([[1, 2]])).toEqual('13915593');
-	});
-});
 
 describe('getAppNexusDirectBidParams', () => {
 	beforeEach(() => {

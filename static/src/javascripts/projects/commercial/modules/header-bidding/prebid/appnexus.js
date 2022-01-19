@@ -30,38 +30,6 @@ const getAppNexusInvCode = (sizes) => {
 	}
 };
 
-export const getAppNexusPlacementId = (sizes) => {
-	const defaultPlacementId = '13915593';
-	if (isInUsOrCa() || isInAuOrNz()) {
-		return defaultPlacementId;
-	}
-	switch (getBreakpointKey()) {
-		case 'D':
-			if (containsMpuOrDmpu(sizes)) {
-				return '13366606';
-			}
-			if (containsLeaderboardOrBillboard(sizes)) {
-				return '13366615';
-			}
-			return defaultPlacementId;
-		case 'M':
-			if (containsMpu(sizes)) {
-				return '13366904';
-			}
-			return defaultPlacementId;
-		case 'T':
-			if (containsMpu(sizes)) {
-				return '13366913';
-			}
-			if (containsLeaderboard(sizes)) {
-				return '13366916';
-			}
-			return defaultPlacementId;
-		default:
-			return defaultPlacementId;
-	}
-};
-
 export const getAppNexusDirectPlacementId = (sizes) => {
 	if (isInAuOrNz()) {
 		return '11016434';
@@ -117,7 +85,6 @@ export const getAppNexusDirectBidParams = (sizes, pageTargeting) => {
 };
 
 export const _ = {
-	getAppNexusPlacementId,
 	getAppNexusInvCode,
 	getAppNexusDirectPlacementId,
 };
