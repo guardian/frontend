@@ -291,7 +291,7 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 			// We don't know what each callack will be made of, we don't want to.
 			// And so we wrap each call in a promise chain, in case one drops the
 			// occasional fastdom bomb in the middle.
-			listener.slice().reduce<Promise<unknown>>(
+			listener.reduce<Promise<unknown>>(
 				(func, listener) =>
 					func.then((ret) => {
 						const thisRet = listener(
