@@ -58,9 +58,9 @@
                 <div class="newsletter-card__example js-newsletter-preview is-hidden">
                 @if(emailListing.exampleUrl.isDefined) {
                     <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                        <button class="newsletter-card__lozenge newsletter-card__lozenge--preview" data-link-name="Preview @emailListing.id" type="button">
+                        <div class="newsletter-card__lozenge newsletter-card__lozenge--preview" data-link-name="Preview @emailListing.id">
                             <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
-                        </button>
+                        </div>
                     </a>
                 }
                 </div>
