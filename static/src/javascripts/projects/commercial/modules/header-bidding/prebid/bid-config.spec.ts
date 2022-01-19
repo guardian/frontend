@@ -29,9 +29,7 @@ import {
 } from '../utils';
 import { _, bids } from './bid-config';
 
-const mockPageTargeting = {
-	someProp: 'someValue',
-} as unknown as PageTargeting;
+const mockPageTargeting = {} as unknown as PageTargeting;
 
 const getBidders = () =>
 	bids('dfp-ad--top-above-nav', [[728, 90]], mockPageTargeting).map(
