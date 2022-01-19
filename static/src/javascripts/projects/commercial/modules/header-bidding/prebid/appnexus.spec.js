@@ -8,7 +8,7 @@ import { getBreakpointKey as getBreakpointKey_ } from '../utils';
 import { buildAppNexusTargetingObject } from '../../../../common/modules/commercial/build-page-targeting';
 
 jest.mock('../../../../common/modules/commercial/build-page-targeting', () => ({
-	buildAppNexusTargetingObject: jest.fn()
+	buildAppNexusTargetingObject: jest.fn(),
 }));
 
 jest.mock('../utils', () => {
@@ -34,10 +34,7 @@ jest.mock('../../../../common/modules/experiments/ab', () => ({
 	),
 }));
 
-const {
-	getAppNexusInvCode,
-	getAppNexusDirectPlacementId,
-} = _;
+const { getAppNexusInvCode, getAppNexusDirectPlacementId } = _;
 
 const getBreakpointKey = getBreakpointKey_;
 const isInAuOrNz = isInAuOrNz_;
@@ -146,15 +143,14 @@ describe('getAppNexusDirectPlacementId', () => {
 	});
 });
 
-
 describe('getAppNexusDirectBidParams', () => {
 	beforeEach(() => {
 		resetConfig();
-        buildAppNexusTargetingObject.mockReturnValue({
-            edition: 'UK',
-            sens: 'f',
-            url: 'gu.com',
-        });
+		buildAppNexusTargetingObject.mockReturnValue({
+			edition: 'UK',
+			sens: 'f',
+			url: 'gu.com',
+		});
 	});
 
 	afterEach(() => {
@@ -164,48 +160,60 @@ describe('getAppNexusDirectBidParams', () => {
 	test('should include placementId for AU region when invCode switch is off', () => {
 		getBreakpointKey.mockReturnValue('M');
 		isInAuOrNz.mockReturnValue(true);
-        const pageTargeting = {};
+		const pageTargeting = {};
 
-		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual({
-			keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
-			placementId: '11016434',
-		});
-        expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
-        expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(pageTargeting);
+		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual(
+			{
+				keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
+				placementId: '11016434',
+			},
+		);
+		expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
+		expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(
+			pageTargeting,
+		);
 	});
 
 	test('should exclude placementId for AU region when including member and invCode', () => {
 		config.set('switches.prebidAppnexusInvcode', true);
 		getBreakpointKey.mockReturnValue('M');
 		isInAuOrNz.mockReturnValueOnce(true);
-        const pageTargeting = {};
+		const pageTargeting = {};
 
-		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual({
-			keywords: {
-				edition: 'UK',
-				sens: 'f',
-				url: 'gu.com',
-				invc: ['Mmagic300x250'],
+		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual(
+			{
+				keywords: {
+					edition: 'UK',
+					sens: 'f',
+					url: 'gu.com',
+					invc: ['Mmagic300x250'],
+				},
+				member: '7012',
+				invCode: 'Mmagic300x250',
 			},
-			member: '7012',
-			invCode: 'Mmagic300x250',
-		});
+		);
 
-        expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
-        expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(pageTargeting);
+		expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
+		expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(
+			pageTargeting,
+		);
 	});
 
 	test('should include placementId and not include invCode if outside AU region', () => {
 		config.set('switches.prebidAppnexusInvcode', true);
 		getBreakpointKey.mockReturnValue('M');
-        const pageTargeting = {};
+		const pageTargeting = {};
 
-		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual({
-			keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
-			placementId: '4298191',
-		});
+		expect(getAppNexusDirectBidParams([[300, 250]], pageTargeting)).toEqual(
+			{
+				keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
+				placementId: '4298191',
+			},
+		);
 
-        expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
-        expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(pageTargeting);
+		expect(buildAppNexusTargetingObject).toHaveBeenCalledTimes(1);
+		expect(buildAppNexusTargetingObject).toHaveBeenCalledWith(
+			pageTargeting,
+		);
 	});
 });

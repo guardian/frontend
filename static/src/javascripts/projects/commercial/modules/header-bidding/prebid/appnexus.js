@@ -1,7 +1,5 @@
 import config from '../../../../../lib/config';
-import {
-	buildAppNexusTargetingObject,
-} from '../../../../common/modules/commercial/build-page-targeting';
+import { buildAppNexusTargetingObject } from '../../../../common/modules/commercial/build-page-targeting';
 
 import {
 	isInUsOrCa,
