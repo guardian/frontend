@@ -278,7 +278,7 @@
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/commercial/get-enhanced-consent.ts",
+  "../projects/common/modules/commercial/enhanced-consent.ts",
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-permutive.js": [
@@ -293,11 +293,11 @@
   "../../../../node_modules/prebid.js/build/dist/prebid.js",
   "../lib/config.d.ts",
   "../lib/detect-google-proxy.ts",
-  "../projects/commercial/initialConsentState.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/commercial/enhanced-consent.ts"
  ],
  "../projects/commercial/modules/dfp/queue-advert.ts": [
   "../projects/commercial/modules/dfp/Advert.ts",
@@ -383,7 +383,7 @@
   "../projects/commercial/modules/header-bidding/slot-config.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
-  "../projects/common/modules/commercial/get-enhanced-consent.ts"
+  "../projects/common/modules/commercial/enhanced-consent.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
@@ -581,13 +581,13 @@
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
   "../lib/config.js"
  ],
- "../projects/common/modules/commercial/geo-utils.js": [
-  "../lib/geolocation.ts"
- ],
- "../projects/common/modules/commercial/get-enhanced-consent.ts": [
+ "../projects/common/modules/commercial/enhanced-consent.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts"
+ ],
+ "../projects/common/modules/commercial/geo-utils.js": [
+  "../lib/geolocation.ts"
  ],
  "../projects/common/modules/commercial/support-utilities.js": [
   "../lib/geolocation.ts"
