@@ -1,8 +1,7 @@
 export const postMessage = (
 	message: Record<string, unknown>,
 	target: MessageEventSource,
-	targetOrigin?: string,
+	targetOrigin = '*',
 ): void => {
-	const postMessageOptions = targetOrigin ? { targetOrigin } : {};
-	target.postMessage(JSON.stringify(message), postMessageOptions);
+	target.postMessage(JSON.stringify(message), { targetOrigin });
 };
