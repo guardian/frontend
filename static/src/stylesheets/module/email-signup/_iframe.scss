@@ -8,9 +8,13 @@ body {
     left: -2000px;
 }
 
-.newsletters-privacy-notice {
-    padding-top: 5px;
-    line-height: 12px;
+
+.email-sub .newsletters-privacy-notice-visible {
+    display: block;
+}
+
+.email-sub .newsletters-privacy-notice-hidden {
+    display: none;
 }
 
 /**

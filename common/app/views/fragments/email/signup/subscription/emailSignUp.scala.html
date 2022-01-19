@@ -35,6 +35,14 @@
 @formClass = @{ "email-sub__form" + " email-sub__form--" + componentClass }
 @headerClass = @{"email-sub__header" + " email-sub__header--" + componentClass  }
 
+@privacyNotice = {
+    @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+        <span id="embed-privacy-notice" class="newsletters-privacy-notice-hidden">
+            We thought you should know this newsletter may also contain information about Guardian products, services and chosen charities or online advertisements.
+            Newsletters mays also contain content funded by outside parties.
+        </span>
+    }
+}
 
 @form = {
     <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName">
@@ -52,12 +60,9 @@
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
-            @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
-                @fragments.email.signup.privacyNotice("terms newsletters-privacy-notice")
-            }
             @if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
-                @fragments.email.signup.recaptchaTerms()
+                @fragments.email.signup.recaptchaTerms(privacyNotice)
             }
         </div>
     </form>
@@ -76,5 +81,15 @@
     trackClickEvent(document.getElementById("email-embed-signup-button--old"))
     document.getElementById("email-sub__ref-input").value = window.parent.location.href
     document.getElementById("email-sub__refviewid-input").value = window.parent.guardian.config.ophan.pageViewId
+    @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+        document.getElementById("@inputId")
+        .addEventListener("focusin", ()=> {
+            document.getElementById("embed-privacy-notice")?.setAttribute('class', 'newsletters-privacy-notice-visible')
+        });
+    document.getElementById("@inputId")
+        .addEventListener("focusout", ()=> {
+            document.getElementById("embed-privacy-notice")?.setAttribute('class', 'newsletters-privacy-notice-hidden')
+        });
+    }
 </script>
 
