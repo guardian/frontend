@@ -3,7 +3,7 @@ package services.newsletters
 import com.gu.identity.model.{EmailEmbed, NewsletterIllustration}
 import common.{BadConfigurationException, GuLogging}
 import conf.Configuration._
-import play.api.libs.json.{JsError, JsResult, JsSuccess, JsValue, Json}
+import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.duration.DurationInt
@@ -64,7 +64,7 @@ case class GroupedNewslettersResponse(
       lifestyle,
       comment,
       work,
-      fromThePapers
+      fromThePapers,
     ).flatten.map(g => (g.displayName, g.newsletters))
 }
 
@@ -89,28 +89,6 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
     extends GuLogging
     with implicits.WSRequests {
 
-  private def ensureHostSecure(host: String): String = host.replace("http:", "https:")
-
-  private def getBody(path: String): Future[JsValue] = {
-    val maybeJson: Option[Future[JsValue]] = for {
-      host <- newsletterApi.host
-      origin <- newsletterApi.origin
-    } yield {
-      val url = s"${ensureHostSecure(host)}/$path"
-      log.info(s"Making request to newsletters API: $url")
-      wsClient
-        .url(url)
-        .withRequestTimeout(10.seconds)
-        .withHttpHeaders(("Origin", origin))
-        .getOKResponse()
-        .map(_.json)
-    }
-
-    maybeJson.getOrElse(
-      Future.failed(new BadConfigurationException("Newsletters API host or origin not configured")),
-    )
-  }
-
   def getGroupedNewsletters(): Future[Either[String, GroupedNewslettersResponse]] = {
     getBody("newsletters/grouped").map { json =>
       {
@@ -132,5 +110,27 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
       }
     }
   }
+
+  private def getBody(path: String): Future[JsValue] = {
+    val maybeJson: Option[Future[JsValue]] = for {
+      host <- newsletterApi.host
+      origin <- newsletterApi.origin
+    } yield {
+      val url = s"${ensureHostSecure(host)}/$path"
+      log.info(s"Making request to newsletters API: $url")
+      wsClient
+        .url(url)
+        .withRequestTimeout(10.seconds)
+        .withHttpHeaders(("Origin", origin))
+        .getOKResponse()
+        .map(_.json)
+    }
+
+    maybeJson.getOrElse(
+      Future.failed(new BadConfigurationException("Newsletters API host or origin not configured")),
+    )
+  }
+
+  private def ensureHostSecure(host: String): String = host.replace("http:", "https:")
 
 }
