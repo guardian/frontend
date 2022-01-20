@@ -24,9 +24,9 @@
     text-decoration: none;
     text-align: center;
     a {
-        text-decoration: underline !important;
-        text-underline-offset: 1px;
-        text-decoration-thickness: 2px;
+        display: inline-block;
+        text-decoration: none !important;
+        border-bottom: 2px solid #ffffff;
 
         &,
         &:visited,
@@ -39,9 +39,7 @@
             font-size: 12px !important;
             font-weight: lighter !important;
             line-height: 14px !important;
-            text-decoration: underline !important;
-            text-underline-offset: 1px !important;
-            text-decoration-thickness: 2px !important;
+            text-decoration: none !important;
         }
     }
 }
