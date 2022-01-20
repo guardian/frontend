@@ -458,11 +458,7 @@ case object AustraliasModernOutback extends FrontEmailMetadata {
   override val banner = Some("aus-modern-outback.png")
 }
 
-<<<<<<< HEAD
-case object FiveGreatReads extends FrontEmailMetadata {
-=======
 case object FiveGreatReads extends ArticleEmailMetadata {
->>>>>>> 050f8da270 (Use ArticleEmailMetadata for FiveGreatReads)
   val name = "Five Great Reads"
   override val banner = Some("five-great-reads.png")
   def test(c: ContentPage): Boolean =
