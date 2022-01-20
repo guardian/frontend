@@ -1,10 +1,12 @@
-import { loadScript } from '@guardian/libs';
 import {
-	onConsentChange as onConsentChange_,
 	getConsentFor as getConsentFor_,
+	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import type { Callback } from '@guardian/consent-management-platform/dist/types';
+import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
+import { loadScript } from '@guardian/libs';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { init, _ } from './comscore';
+import { _ } from './comscore';
 
 const { setupComscore } = _;
 
@@ -13,56 +15,70 @@ jest.mock('@guardian/consent-management-platform', () => ({
 	getConsentFor: jest.fn(),
 }));
 
-const onConsentChange = onConsentChange_;
-const getConsentFor = getConsentFor_;
-const SOURCEPOINT_ID = '5efefe25b8e05c06542b2a77';
+const onConsentChange = onConsentChange_ as jest.MockedFunction<
+	typeof onConsentChange_
+>;
+const getConsentFor = getConsentFor_ as jest.MockedFunction<
+	typeof getConsentFor_
+>;
 
-const tcfv2WithConsentMock = (callback) =>
+const SOURCEPOINT_ID = '5efefe25b8e05c06542b2a77';
+const defaultTCFv2State: TCFv2ConsentState = {
+	consents: { 1: false },
+	eventStatus: 'tcloaded',
+	vendorConsents: { abc: false },
+	addtlConsent: 'xyz',
+	gdprApplies: true,
+	tcString: 'YAAA',
+};
+
+const tcfv2WithConsentMock = (callback: Callback): void =>
 	callback({
 		tcfv2: {
+			...defaultTCFv2State,
 			vendorConsents: {
 				[SOURCEPOINT_ID]: true,
 			},
 		},
 	});
-const tcfv2WithoutConsentMock = (callback) =>
+const tcfv2WithoutConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
+			...defaultTCFv2State,
 			vendorConsents: {
 				[SOURCEPOINT_ID]: false,
 			},
 		},
 	});
-const ccpaWithConsentMock = (callback) =>
+const ccpaWithConsentMock = (callback: Callback) =>
 	callback({
 		ccpa: {
 			doNotSell: false,
 		},
 	});
-const ccpaWithoutConsentMock = (callback) =>
+const ccpaWithoutConsentMock = (callback: Callback) =>
 	callback({
 		ccpa: {
 			doNotSell: true,
 		},
 	});
 
-const AusWithoutConsentMock = (callback) =>
+const AusWithoutConsentMock = (callback: Callback) =>
 	callback({
 		aus: {
-			doNotSell: true,
+			personalisedAdvertising: false,
 		},
 	});
 
-const AusWithConsentMock = (callback) =>
+const AusWithConsentMock = (callback: Callback) =>
 	callback({
 		aus: {
-			doNotSell: false,
+			personalisedAdvertising: true,
 		},
 	});
 
 jest.mock('@guardian/libs', () => {
 	return {
-		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 		...jest.requireActual('@guardian/libs'),
 		loadScript: jest.fn(() => Promise.resolve()),
 	};
@@ -74,17 +90,16 @@ jest.mock('../../common/modules/commercial/commercial-features', () => ({
 }));
 
 describe('setupComscore', () => {
-	it('should do nothing if the comscore is disabled in commercial features', () => {
+	it('should do nothing if the comscore is disabled in commercial features', async () => {
 		commercialFeatures.comscore = false;
-		setupComscore();
-
+		await setupComscore();
 		expect(onConsentChange).not.toBeCalled();
 	});
 
-	it('should register a callback with onConsentChange if enabled in commercial features', () => {
+	it('should register a callback with onConsentChange if enabled in commercial features', async () => {
+		onConsentChange.mockImplementation(tcfv2WithConsentMock);
 		commercialFeatures.comscore = true;
-		setupComscore();
-
+		await setupComscore();
 		expect(onConsentChange).toBeCalled();
 	});
 

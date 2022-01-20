@@ -155,6 +155,13 @@ interface Confiant extends Record<string, unknown> {
 	};
 }
 
+type ComscoreGlobals = {
+	c1: string;
+	c2: string;
+	cs_ucfr: string;
+	comscorekw?: string;
+};
+
 type AdBlockers = {
 	active: boolean | undefined;
 	onDetect: function[];
@@ -174,4 +181,5 @@ interface Window {
 	};
 
 	confiant?: Confiant;
+	_comscore?: ComscoreGlobals[];
 }
