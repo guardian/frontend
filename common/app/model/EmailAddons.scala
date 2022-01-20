@@ -552,6 +552,7 @@ object EmailAddons {
     DesignReview,
     Documentaries,
     AustraliasModernOutback,
+    WinterOlympics2022,
   )
 
   implicit class EmailContentType(p: Page) {
