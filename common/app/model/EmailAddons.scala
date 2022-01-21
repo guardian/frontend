@@ -246,6 +246,13 @@ case object Tokyo2020DailyBriefing extends ArticleEmailMetadata {
     c.item.tags.series.exists(_.id == "sport/series/tokyo-2020-daily-briefing")
 }
 
+case object Beijing2022DailyBriefing extends ArticleEmailMetadata {
+  val name = "Beijing 2022 daily briefing"
+  override val banner = Some("winter-olympics-2022.png")
+    def test(c: ContentPage): Boolean =
+    c.item.tags.series.exists(_.id == "sport/series/beijing-2022-daily-briefing")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
@@ -319,11 +326,6 @@ case object ThisLandIsYourLand extends FrontEmailMetadata {
 case object WinterOlympics2018 extends FrontEmailMetadata {
   val name = "Winter Olympics 2018"
   override val banner = Some("winter-olympics-2018.png")
-}
-
-case object WinterOlympics2022 extends FrontEmailMetadata {
-  val name = "Winter Olympics 2022"
-  override val banner = Some("winter-olympics-2022.png")
 }
 
 case object ThisIsEurope extends FrontEmailMetadata {
@@ -508,6 +510,7 @@ object EmailAddons {
     Tokyo2020DailyBriefing,
     TheGuide,
     FiveGreatReads,
+    Beijing2022DailyBriefing,
   )
   private val frontEmails = Seq(
     SocialCareNetwork,
@@ -552,7 +555,6 @@ object EmailAddons {
     DesignReview,
     Documentaries,
     AustraliasModernOutback,
-    WinterOlympics2022,
   )
 
   implicit class EmailContentType(p: Page) {
