@@ -349,6 +349,7 @@
  ],
  "../projects/commercial/modules/header-bidding/a9/a9.ts": [
   "../lib/config.d.ts",
+  "../lib/noop.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/slot-config.ts"
