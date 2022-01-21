@@ -176,7 +176,7 @@ type Apstag = {
 	init: (ApstagInitConfig) => void;
 	fetchBids: (FetchBidsBidConfig, callback: () => void) => void;
 	setDisplayBids: () => void;
-}
+};
 
 type ComscoreGlobals = {
 	c1: string;
