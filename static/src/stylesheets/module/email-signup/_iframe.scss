@@ -9,6 +9,32 @@ body {
 }
 
 /**
+* Google reCAPTCHA styles
+*/
+.email-sub .grecaptcha-badge {
+    visibility: hidden;
+}
+
+.email-sub .captcha-terms {
+    color: $brightness-7;
+    clear: both;
+    font-family: $f-sans-serif-text;
+    font-size: 12px;
+
+    a {
+        color: $brightness-7;
+    }
+}
+
+.email-sub--footer .captcha-terms {
+    color: #ffffff;
+
+    a {
+        color: #ffffff;
+    }
+}
+
+/**
 * IFRAME MODS
 */
 .email-sub__text-input,
@@ -204,6 +230,40 @@ body {
         border-top: 0 none;
         min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
         padding-bottom: $gs-baseline * 2;
+    }
+}
+
+/**
+* Styles for temporary footer link to sign up page
+*/
+.email-sub__link--footer {
+
+    .email-sub__description {
+        @include fs-textSans(3);
+        border: 0;
+        margin-top: 12px;
+        margin-bottom: 8px;
+    }
+
+    .email-sub__link-button {
+        display: inline-flex;
+        -moz-box-pack: justify;
+        justify-content: space-between;
+        -moz-box-align: center;
+        align-items: center;
+        box-sizing: border-box;
+        background: #ffffff;
+        cursor: pointer;
+        text-decoration: none;
+        font-family: $f-sans-serif-text;
+        font-size: .9rem;
+        line-height: 1.5;
+        font-weight: 700;
+        height: 44px;
+        min-height: 44px;
+        padding: 0px 20px 2px;
+        border-radius: 44px;
+        color: rgb(5, 41, 98);
     }
 }
 

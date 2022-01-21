@@ -176,6 +176,13 @@ type Apstag = {
 	init: (ApstagInitConfig) => void;
 	fetchBids: (FetchBidsBidConfig, callback: () => void) => void;
 	setDisplayBids: () => void;
+}
+
+type ComscoreGlobals = {
+	c1: string;
+	c2: string;
+	cs_ucfr: string;
+	comscorekw?: string;
 };
 
 type AdBlockers = {
@@ -198,4 +205,5 @@ interface Window {
 
 	confiant?: Confiant;
 	apstag?: Apstag;
+	_comscore?: ComscoreGlobals[];
 }

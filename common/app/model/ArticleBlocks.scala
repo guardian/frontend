@@ -14,8 +14,9 @@ case object CanonicalLiveBlog extends BlockRange {
   val firstPage = "body:latest:60"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
+  val summary = "body:summary"
   val pinned = "body:pinned"
-  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, pinned))
+  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned))
 }
 
 // Created to handle ArticleController (for preview) specifically, where we may render an

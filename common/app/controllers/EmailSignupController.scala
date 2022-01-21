@@ -4,6 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
+import conf.switches.Switches.EmailSignupRecaptcha
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
@@ -32,6 +33,7 @@ case class EmailForm(
     ref: Option[String],
     refViewId: Option[String],
     campaignCode: Option[String],
+    googleRecaptchaResponse: Option[String],
     name: String,
 ) {
 
@@ -91,6 +93,7 @@ class EmailSignupController(
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
+      "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> text,
     )(EmailForm.apply)(EmailForm.unapply),
   )
@@ -113,8 +116,15 @@ class EmailSignupController(
       Action { implicit request =>
         val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
         identityNewsletter match {
-          case Right(Some(_)) =>
-            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
+          case Right(Some(newsletter)) =>
+            if (EmailSignupRecaptcha.isSwitchedOn && newsletter.signupPage.isDefined) {
+              Cached(1.day)(
+                RevalidatableResult
+                  .Ok(views.html.linkToEmailSignupPage(emailLandingPage, newsletter.signupPage.get, newsletter.name)),
+              )
+            } else {
+              Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
+            }
           case Right(None) =>
             logNewsletterNotFoundError(listName)
             Cached(15.minute)(WithoutRevalidationResult(NoContent))
@@ -260,6 +270,7 @@ class EmailSignupController(
               s"email: ${form.email}, " +
               s"ref: ${form.ref}, " +
               s"refViewId: ${form.refViewId}, " +
+              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
@@ -325,6 +336,7 @@ class EmailSignupController(
               s"email: ${form.email}, " +
               s"ref: ${form.ref}, " +
               s"refViewId: ${form.refViewId}, " +
+              s"g-recaptcha-response: ${form.googleRecaptchaResponse}," +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",

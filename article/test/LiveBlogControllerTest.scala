@@ -75,6 +75,28 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     content should not include "56d084d0e4b0bd5a0524ccbe"
   }
 
+  it should "return only the key event and summary blocks of a live blog, when switch is on" in {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"/world/live/2022/jan/17/covid-news-live-new-zealand-begins-vaccinating-children-aged-5-11-french-parliament-approves-vaccine-pass.json",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      "/world/live/2022/jan/17/covid-news-live-new-zealand-begins-vaccinating-children-aged-5-11-french-parliament-approves-vaccine-pass",
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
+      filterKeyEvents = Some(true),
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+
+    content should not include "61e611b28f0856426bba2624"
+    content should include("61e5b40e8f0856426bba21ea") // summary
+    content should include("61e5fa058f0856426bba251f") // key event
+  }
+
   it should "use DCR if the parameter dcr=true is passed" in {
     val forceDCROff = false
     val forceDCR = true
