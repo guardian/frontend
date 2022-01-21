@@ -1,3 +1,4 @@
+import { noop } from 'lib/noop';
 import config from '../../../../../lib/config';
 import type { Advert } from '../../dfp/Advert';
 import { dfpEnv } from '../../dfp/dfp-env';
@@ -58,17 +59,19 @@ const requestBids = (
 		return requestQueue;
 	}
 
-	requestQueue = requestQueue.then(
-		() =>
-			new Promise((resolve) => {
-				window.apstag?.fetchBids({ slots: adUnits }, () => {
-					window.googletag.cmd.push(() => {
-						window.apstag?.setDisplayBids();
-						resolve();
+	requestQueue = requestQueue
+		.then(
+			() =>
+				new Promise<void>((resolve) => {
+					window.apstag?.fetchBids({ slots: adUnits }, () => {
+						window.googletag.cmd.push(() => {
+							window.apstag?.setDisplayBids();
+							resolve();
+						});
 					});
-				});
-			}),
-	);
+				}),
+		)
+		.catch(noop);
 
 	return requestQueue;
 };
