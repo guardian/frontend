@@ -155,6 +155,29 @@ interface Confiant extends Record<string, unknown> {
 	};
 }
 
+// https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/api-reference.html#apstaginit
+interface A9AdUnitInterface {
+	slotID: string;
+	slotName?: string;
+	sizes: HeaderBiddingSize[];
+}
+
+type ApstagInitConfig = {
+	pubID: string;
+	adServer?: string;
+	bidTimeout?: number;
+};
+
+type FetchBidsBidConfig = {
+	slots: A9AdUnitInterface;
+};
+
+type Apstag = {
+	init: (ApstagInitConfig) => void;
+	fetchBids: (FetchBidsBidConfig, callback: () => void) => void;
+	setDisplayBids: () => void;
+};
+
 type ComscoreGlobals = {
 	c1: string;
 	c2: string;
@@ -181,5 +204,6 @@ interface Window {
 	};
 
 	confiant?: Confiant;
+	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];
 }
