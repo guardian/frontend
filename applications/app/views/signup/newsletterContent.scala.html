@@ -98,18 +98,18 @@
                         Privacy Notice
                     </div>
                     <div class="newsletters-privacy-notice__content">
-                        <p>We thought you should know this newsletter may also contain information about Guardian products,
-                        services and chosen charities or online advertisements.</p>
-                        <p>Newsletters mays also contain content funded by outside parties.</p>
-                        <p>You can read more about <a data-link-name="privacy-policy" href="/help/privacy-policy">our privacy policy here</a>.</p>
+                        @if(EmailSignupRecaptcha.isSwitchedOn) {
+                            @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent())
+                        } else {
+                            @fragments.email.signup.privacyNoticeContent()
+                        }
                     </div>
                 </div>
+            } else if(EmailSignupRecaptcha.isSwitchedOn) {
+                @fragments.email.signup.recaptchaTerms()
             }
             @* This iframe is used for submitting the form without reloading the page *@
             <iframe class="u-h" width="0" height="0" border="0" name="newsletterSignup" id="newsletterSignup" tabindex="-1"></iframe>
-            @if(EmailSignupRecaptcha.isSwitchedOn) {
-                @fragments.email.signup.recaptchaTerms()
-            }
             @displayNewslettersByTheme
         </div>
     </div>

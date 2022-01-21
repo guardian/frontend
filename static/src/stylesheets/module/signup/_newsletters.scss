@@ -15,7 +15,8 @@
     position: sticky;
     top: 0;
     background-color: $highlight-main;
-    padding-top: 8px;
+    padding-top: 20px;
+    padding-bottom: 8px;
     margin-bottom: 16px;
     z-index: 1;
 }
@@ -25,7 +26,7 @@
     color: $brightness-7;
     position: relative;
     margin: ($gs-baseline / 2) 0 $gs-baseline;
-    padding-left: 28px;
+    padding-left: 8px;
 
     @include mq(leftCol) {
         position: absolute;
@@ -42,8 +43,9 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
+    margin-top: -8px;
     padding-left: 8px;
-    padding-right: 8px;
+    padding-right: 24px;
 
     @include mq(tablet) {
         margin-right: -$gs-gutter;
