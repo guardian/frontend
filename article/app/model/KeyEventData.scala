@@ -29,8 +29,8 @@ object KeyEventData {
     Until this work is complete, the following pattern match ensures we set a default title of `Summary`
        */
       val title = bodyBlock.eventType match {
-        case SummaryEvent => bodyBlock.title.getOrElse("Summary")
-        case _            => bodyBlock.title.getOrElse("")
+        case SummaryEvent if bodyBlock.title.isEmpty => Some("Summary")
+        case _                                       => bodyBlock.title
       }
       KeyEventData(bodyBlock.id, bodyBlock.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), title)
     }
@@ -38,4 +38,4 @@ object KeyEventData {
 
 }
 
-case class KeyEventData(id: String, time: Option[LiveBlogDate], title: String)
+case class KeyEventData(id: String, time: Option[LiveBlogDate], title: Option[String])
