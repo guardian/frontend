@@ -28,8 +28,8 @@ GET            /crosswords/search                                               
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Email paths
-GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
-GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
+GET        /email/form/$emailType<plain|plaindark|plaintone|squarefield>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<plain|plaindark|plaintone|squarefield>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
 GET        /email/form/footer/:listName                                              controllers.EmailSignupController.renderFooterForm(listName: String)
 ## Submission results (Only accessed server side)
 GET        /email/$result<success|invalid|error>/footer                         controllers.EmailSignupController.subscriptionResultFooter(result: String)
