@@ -26,7 +26,7 @@ let requestQueue = Promise.resolve();
 
 const bidderTimeout = 1500;
 
-export const initialise = (): void => {
+const initialise = (): void => {
 	if (!initialised && window.apstag) {
 		initialised = true;
 		window.apstag.init({
@@ -77,6 +77,7 @@ const requestBids = (
 };
 
 export const a9 = {
+	initialise,
 	requestBids,
 };
 

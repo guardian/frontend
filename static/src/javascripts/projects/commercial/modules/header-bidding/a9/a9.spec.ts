@@ -3,7 +3,7 @@ import {
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
 import type { Callback } from '@guardian/consent-management-platform/dist/types';
-import { _, initialise } from './a9';
+import { _, a9 } from './a9';
 
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
 	typeof onConsentChange_
@@ -78,7 +78,7 @@ describe('initialise', () => {
 	it('should generate initialise A9 library when TCFv2 consent has been given', () => {
 		onConsentChange.mockImplementation(tcfv2WithConsentMock);
 		getConsentFor.mockReturnValue(true);
-		initialise();
+		a9.initialise();
 		expect(window.apstag).toBeDefined();
 		expect(window.apstag?.init).toHaveBeenCalled();
 	});
@@ -86,7 +86,7 @@ describe('initialise', () => {
 	it('should generate initialise A9 library when CCPA consent has been given', () => {
 		onConsentChange.mockImplementation(CcpaWithConsentMock);
 		getConsentFor.mockReturnValue(true);
-		initialise();
+		a9.initialise();
 		expect(window.apstag).toBeDefined();
 		expect(window.apstag?.init).toHaveBeenCalled();
 	});

@@ -4,7 +4,7 @@ import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect-google-proxy';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import { initialise } from '../header-bidding/a9/a9';
+import { a9 } from '../header-bidding/a9/a9';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 import { log } from '@guardian/libs';
@@ -29,7 +29,7 @@ const setupA9 = () => {
 		moduleLoadResult = import(
 			/* webpackChunkName: "a9" */ '../../../../lib/a9-apstag.js'
 		).then(() => {
-			initialise();
+			a9.initialise();
 
 			return Promise.resolve();
 		});
