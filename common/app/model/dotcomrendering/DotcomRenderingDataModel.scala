@@ -10,7 +10,17 @@ import conf.Configuration
 import conf.switches.Switches
 import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
-import model.{ArticleDateTimes, Badges, ContentFormat, ContentPage, DotcomContentType, GUDateTimeFormatNew, InteractivePage, LiveBlogPage, PageWithStoryPackage}
+import model.{
+  ArticleDateTimes,
+  Badges,
+  ContentFormat,
+  ContentPage,
+  DotcomContentType,
+  GUDateTimeFormatNew,
+  InteractivePage,
+  LiveBlogPage,
+  PageWithStoryPackage,
+}
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
