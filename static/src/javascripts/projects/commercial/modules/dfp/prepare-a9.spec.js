@@ -1,5 +1,5 @@
 import config from '../../../../lib/config';
-import a9 from '../header-bidding/a9/a9';
+import { a9 } from '../header-bidding/a9/a9';
 import { dfpEnv } from './dfp-env';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { _ } from './prepare-a9';
@@ -13,7 +13,7 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 }));
 
 jest.mock('../header-bidding/a9/a9', () => ({
-	initialise: jest.fn(),
+	a9: { initialise: jest.fn() },
 }));
 
 jest.mock('./Advert', () =>
