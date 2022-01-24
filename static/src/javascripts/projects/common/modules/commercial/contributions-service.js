@@ -3,6 +3,7 @@ import {
 	getViewLog,
 	getWeeklyArticleHistory,
 } from '@guardian/automat-contributions';
+import { getEpic, getLiveblogEpic, getEpicViewLog } from '@guardian/support-dotcom-components';
 import { mountDynamic } from '@guardian/automat-modules';
 import { onConsentChange } from '@guardian/consent-management-platform';
 import userPrefs from 'common/modules/user-prefs';
@@ -30,6 +31,11 @@ import {
 export const ModulesVersion = 'v3';
 
 const isHosted = config.get('page.isHosted');
+
+const supportDotcomComponentsUrl = config.get('page.isDev')
+    // ? `https://contributions.code.dev-guardianapis.com/${path}`
+    ? `http://localhost:8082/${path}`
+    : `https://contributions.guardianapis.com/${path}`;
 
 const buildKeywordTags = (page) => {
 	const keywordIds = page.keywordIds.split(',');
@@ -128,7 +134,7 @@ const buildEpicPayload = async () => {
 			getLastOneOffContributionTimestamp() || undefined,
 		mvtId: getMvtValue(),
 		countryCode,
-		epicViewLog: getViewLog(storage.local),
+		epicViewLog: getEpicViewLog(storage.local),
 		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
 		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
 		modulesVersion: ModulesVersion,
@@ -226,16 +232,6 @@ const buildBannerPayload = async () => {
 	};
 };
 
-const checkResponseOk = (response) => {
-	if (response.ok) {
-		return response;
-	}
-
-	throw new Error(
-		`Contributions fetch failed with response code: ${response.status}`,
-	);
-};
-
 const getForcedVariant = (type) => {
 	if (URLSearchParams) {
 		const params = new URLSearchParams(window.location.search);
@@ -297,38 +293,22 @@ const getHeaderLinks = (payload) => {
 	});
 };
 
-const getEpicUrl = (contentType) => {
-	const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
-	return config.get('page.isDev')
-		? `https://contributions.code.dev-guardianapis.com/${path}`
-		: `https://contributions.guardianapis.com/${path}`;
-};
-
-const renderLiveblogEpic = async (module, meta) => {
+const renderLiveblogEpic = async (module) => {
 	const component = await window.guardianPolyfilledImport(module.url);
 
-	const {
-		abTestName,
-		abTestVariant,
-		componentType,
-		products = [],
-		campaignCode,
-		campaignId,
-	} = meta;
-
 	const element = setupRemoteEpicInLiveblog(
-		component.ContributionsLiveblogEpic,
+		component[module.name],
 		{ submitComponentEvent, ...module.props },
 	);
 };
 
-const renderEpic = async (module, meta) => {
+const renderEpic = async (module) => {
 	const component = await window.guardianPolyfilledImport(module.url);
 
 	const el = epicEl();
 	mountDynamic(
 		el,
-		component.ContributionsEpic,
+		component[module.name],
 		{ submitComponentEvent, ...module.props },
 		true,
 	);
@@ -468,18 +448,19 @@ export const fetchAndRenderEpic = async () => {
 		try {
 			const payload = await buildEpicPayload();
 
-			const url = getEpicUrl(page.contentType);
-			const response = await getEpicMeta(payload, url);
-			checkResponseOk(response);
+			const response = await contentType === 'LiveBlog' ?
+                getLiveblogEpic(supportDotcomComponentsUrl, payload) :
+                getEpic(supportDotcomComponentsUrl, payload);
+
 			const json = await response.json();
 
 			if (json && json.data) {
-				const { module, meta } = json.data;
+				const { module } = json.data;
 
 				if (page.contentType === 'Article') {
-					await renderEpic(module, meta);
+					await renderEpic(module);
 				} else if (page.contentType === 'LiveBlog') {
-					await renderLiveblogEpic(module, meta);
+					await renderLiveblogEpic(module);
 				}
 			}
 		} catch (error) {
