@@ -39,18 +39,31 @@
     <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName">
         @helper.CSRF.formField
         <div class="email-sub__form-wrapper">
-            <div class="email-sub__inline-label">
 
-                <input class="email-sub__text-input" type="email" name="email" id="@inputId" />
-                <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Enter your email address</label>
-                <input class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" placeholder="Name" />
+            @if(componentClass == "squarefield") {
+                <label class="email-sub__squarefield-label" for="@inputId">Enter your email</label>
+                <div class="email-sub__squarefield-row">
+                    <input class="email-sub__squarefield-input" type="email" name="email" id="@inputId" />
+                    <button type="submit" class="email-sub__squarefield-button" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">
+                        <span>Sign up</span>
+                        @fragments.inlineSvg("arrow-right", "icon", Seq("email-sub__squarefield-icon"))
+                    </button>
+                </div>
+            } else {
+                <div class="email-sub__inline-label">
+                    <input class="email-sub__text-input" type="email" name="email" id="@inputId" />
+                    <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Enter your email address</label>
+                </div>            
+                <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
+            }
 
-                <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
-                <input class="email-sub__ref-input" type="hidden" name="ref" id="email-sub__ref-input" value="" />
-                <input class="email-sub__refviewid-input" type="hidden" name="refViewId" id="email-sub__refviewid-input" value="" />
+            <label aria-hidden="true">
+                <input tabindex="-1" class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" placeholder="Name" />
+            </label>
+            <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
+            <input class="email-sub__ref-input" type="hidden" name="ref" id="email-sub__ref-input" value="" />
+            <input class="email-sub__refviewid-input" type="hidden" name="refViewId" id="email-sub__refviewid-input" value="" />
 
-            </div>
-            <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
             @if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms()
