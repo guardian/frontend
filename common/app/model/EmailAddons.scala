@@ -249,7 +249,7 @@ case object Tokyo2020DailyBriefing extends ArticleEmailMetadata {
 case object Beijing2022DailyBriefing extends ArticleEmailMetadata {
   val name = "Beijing 2022 daily briefing"
   override val banner = Some("winter-olympics-2022.png")
-    def test(c: ContentPage): Boolean =
+  def test(c: ContentPage): Boolean =
     c.item.tags.series.exists(_.id == "sport/series/beijing-2022-daily-briefing")
 }
 
