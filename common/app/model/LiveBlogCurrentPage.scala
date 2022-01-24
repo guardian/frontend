@@ -1,6 +1,6 @@
 package model
 
-import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
+import model.liveblog.BodyBlock.KeyEvent
 import model.liveblog.{Blocks, BodyBlock}
 
 case class LiveBlogCurrentPage(
@@ -47,20 +47,11 @@ object LiveBlogCurrentPage {
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
   def firstPage(pageSize: Int, blocks: Blocks, filterKeyEvents: Boolean): Option[LiveBlogCurrentPage] = {
     val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = if (filterKeyEvents) {
+      val keyEvents = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
+      val keyEventsCount = keyEvents.getOrElse(Seq.empty).size
+      val oldestPageBlockId = keyEvents.flatMap(_.lastOption map (_.id))
 
-      val keyEventsAndSummaries = for {
-        keyEvents <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
-        summaries <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.summary)
-      } yield {
-        (keyEvents ++ summaries).sortBy(_.publishedCreatedTimestamp).reverse
-      }
-
-      val keyEventsAndSummariesCount = keyEventsAndSummaries.getOrElse(Seq.empty).size
-
-      val oldestPageBlockId = keyEventsAndSummaries.flatMap(_.lastOption map (_.id))
-
-      (keyEventsAndSummaries, keyEventsAndSummariesCount, oldestPageBlockId)
-
+      (keyEvents, keyEventsCount, oldestPageBlockId)
     } else {
       val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
       val oldestPageBlockId =
@@ -170,7 +161,7 @@ object LiveBlogCurrentPage {
 
   private def applyFilters(blocks: Seq[BodyBlock], filterKeyEvents: Boolean) = {
     if (filterKeyEvents) {
-      blocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
+      blocks.filter(_.eventType == KeyEvent)
     } else {
       blocks
     }
@@ -229,7 +220,7 @@ object LatestKeyBlock {
     maybeBlocks.flatMap { blocks =>
       blocks.requestedBodyBlocks
         .getOrElse(CanonicalLiveBlog.firstPage, blocks.body)
-        .find(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
+        .find(_.eventType == KeyEvent)
         .map(_.id)
     }
   }

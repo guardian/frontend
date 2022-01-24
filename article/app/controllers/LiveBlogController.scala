@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
-import com.gu.contentapi.client.utils.format.{CulturePillar, LifestylePillar, NewsPillar, SportPillar}
+import com.gu.contentapi.client.utils.format.{NewsPillar, SportPillar, CulturePillar, LifestylePillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
@@ -12,7 +12,7 @@ import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
-import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
+import model.liveblog.BodyBlock.KeyEvent
 import model.{ApplicationContext, CanonicalLiveBlog, _}
 import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
@@ -194,7 +194,7 @@ class LiveBlogController(
       _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
     }
     val filteredBlocks = if (filterKeyEvents) {
-      requestedBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
+      requestedBlocks.filter(_.eventType == KeyEvent)
     } else requestedBlocks
 
     filteredBlocks.takeWhile { block =>
