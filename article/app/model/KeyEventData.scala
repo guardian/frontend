@@ -24,10 +24,18 @@ object KeyEventData {
     val TimelineMaxEntries = 7
     val timelineBlocks = blocks.sortBy(_.publishedCreatedTimestamp).reverse.take(TimelineMaxEntries)
     timelineBlocks.map { bodyBlock =>
-      KeyEventData(bodyBlock.id, bodyBlock.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), bodyBlock.title)
+      /*
+    Composer should set a default title of `Summary` on summary blocks but instead it allows title to be empty (None).
+    Until this work is complete, the following pattern match ensures we set a default title of `Summary`
+       */
+      val title = bodyBlock.eventType match {
+        case SummaryEvent => bodyBlock.title.getOrElse("Summary")
+        case _            => bodyBlock.title.getOrElse("")
+      }
+      KeyEventData(bodyBlock.id, bodyBlock.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), title)
     }
   }
 
 }
 
-case class KeyEventData(id: String, time: Option[LiveBlogDate], title: Option[String])
+case class KeyEventData(id: String, time: Option[LiveBlogDate], title: String)
