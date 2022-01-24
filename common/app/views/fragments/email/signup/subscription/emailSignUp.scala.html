@@ -66,7 +66,10 @@
 
             @if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
-                @fragments.email.signup.recaptchaTerms()
+                @if(componentClass != "squarefield") { 
+                     <!-- recaptchaTerms should be part of the block containing the embed -->
+                    @fragments.email.signup.recaptchaTerms()
+                }
             }
         </div>
     </form>
