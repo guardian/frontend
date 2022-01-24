@@ -1247,20 +1247,20 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-5.2.0.tgz#2df527364471bdc8905824f34e67312214b7684e"
-  integrity sha512-8x5iyWIOIvlF/XMVbNxzBxaAlekbicc5XqqvPRJRPVOQBTnZalwOin2XzfaUuE73q/00cICQXCtgAnqr1clCKw==
+"@guardian/braze-components@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-5.3.0.tgz#abe79666e5636ad2a0064cb2f227a64239231d2f"
+  integrity sha512-3tljnI79cIR2e3RrnXMc0liSPAuFjezDZ50MCpXw9Y3KX8jD92AqWDAfjsC0XrpGj946ZB149Z/EarhrSRQ/hg==
 
 "@guardian/commercial-core@^0.39.0":
   version "0.39.0"
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.39.0.tgz#314af346a02599d75219492dac89a89be169cc93"
   integrity sha512-3OGfM9K3KQR1PMOJoPM6EL1tuy6s4YRoIfnFTvM4NY+Z5Yc11uDZXqthzXBmRjlnf8EHVMZo2a2ffDlZnrguTA==
 
-"@guardian/consent-management-platform@^10.1.0":
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.1.0.tgz#defabd279ca3e8344bfbfbb0d604e42ba549ae1c"
-  integrity sha512-7q4mb8b5jVcecOMYp0cTN02OIz7ZHw0HgKKVID7mOjV7NwSNBY+Lwtj85VyYAR/cnC2SJFbpezPivFdvyE5rTg==
+"@guardian/consent-management-platform@^10.1.1":
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.1.1.tgz#c49ccdde26582b571accd925f576fb178c619004"
+  integrity sha512-hzhmrlhNVkwshKXKYVQUrl4NBA6iCkyFg79LQHUD3nDpo5IjxzwOGlUU4ML1gzFFID4lZ1AM2klxkM7ZUfYySg==
   dependencies:
     "@guardian/libs" "1.6.1 - 3.3.0"
 

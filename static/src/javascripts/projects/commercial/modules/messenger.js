@@ -1,5 +1,6 @@
 import reportError from '../../../lib/report-error';
 import { postMessage } from './messenger/post-message';
+import { amIUsed } from 'commercial/sentinel';
 
 const LISTENERS = {};
 let REGISTERED_LISTENERS = 0;
@@ -86,6 +87,9 @@ const onMessage = (event) => {
 
 	// These legacy messages are converted into bona fide resize messages
 	if (isProgrammaticMessage(data)) {
+		// Check if we ever reach the point that isProgrammaticMessage(data) is true
+		// This would imply these legacy messages are still in use
+		amIUsed('messenger.js', 'isProgrammaticMessage');
 		data = toStandardMessage(data);
 	}
 

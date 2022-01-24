@@ -24,6 +24,10 @@
     text-decoration: none;
     text-align: center;
     a {
+        display: inline-block;
+        text-decoration: none !important;
+        border-bottom: 2px solid #ffffff;
+
         &,
         &:visited,
         &:hover,
