@@ -1229,11 +1229,6 @@
     style-loader "1.0.0"
     webpack "^4.2.0"
 
-"@guardian/automat-contributions@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/automat-contributions/-/automat-contributions-0.4.2.tgz#38eff2111ee032a1a25dc6bc32798cbf62a9db7e"
-  integrity sha512-6aSGaIHgkcVYLW5tgmiWYdv3N5k7I4NOCwv+YIz8HPWOq/QBHR43nx1tliF8+7LX9bKBVPuEEvPkND1i44tQbA==
-
 "@guardian/automat-modules@^0.3.8":
   version "0.3.8"
   resolved "https://registry.yarnpkg.com/@guardian/automat-modules/-/automat-modules-0.3.8.tgz#e809e26beece699717a1480100a2ec23cb5db422"
@@ -1321,6 +1316,11 @@
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.12.0.tgz#52d11d2fff649e04934033473b3ed7c7bf4a1639"
   integrity sha512-JIFBybaCd69tf+zJZZ7KNLdqaVePOAc36wGFor0I60vc9Ib0jMuzYVffMjMhF6LHSXMdoOcqGwiPdFucObVYAA==
+
+"@guardian/support-dotcom-components@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.0.tgz#802b507de87c4ef120ae9f02d6f44be1fea47353"
+  integrity sha512-zxtDDUYy3RDlizQ3UrYUYIQ2ooojj5gJmtEZjiAPN+SvL8cHlIPDQnX6aaTx6RMoIQUpQ4vVZyAVrLDOuUY37Q==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
