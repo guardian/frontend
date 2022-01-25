@@ -221,7 +221,9 @@ const formatError = (
  * @param event The message event received on the window
  * @returns A message with the `StandardMessage` format, or null if the conversion was unsuccessful
  */
-const eventToStandardMessage = (event: MessageEvent) => {
+const eventToStandardMessage = (
+	event: MessageEvent,
+): StandardMessage | undefined => {
 	try {
 		// Currently all non-string messages are discarded here since parsing throws an error
 		// TODO Review whether this is the desired outcome
@@ -235,7 +237,7 @@ const eventToStandardMessage = (event: MessageEvent) => {
 			return message;
 		}
 	} catch (ex) {
-		return null;
+		// Do nothing
 	}
 };
 
