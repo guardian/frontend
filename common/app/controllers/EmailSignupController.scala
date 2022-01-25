@@ -372,26 +372,27 @@ class EmailSignupController(
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
           )
+          def submitForm = {
+            emailFormService
+              .submit(form)
+              .map(_.status match {
+                case 200 | 201 =>
+                  EmailSubmission.increment()
+                  respond(Subscribed, form.listName)
 
-          lazy val submitForm = emailFormService
-            .submit(form)
-            .map(_.status match {
-              case 200 | 201 =>
-                EmailSubmission.increment()
+                case status =>
+                  log.error(s"Error posting to ExactTarget: HTTP $status")
+                  APIHTTPError.increment()
+                  respond(OtherError)
+
+              }) recover {
+              case _: IllegalAccessException =>
                 respond(Subscribed, form.listName)
-
-              case status =>
-                log.error(s"Error posting to ExactTarget: HTTP $status")
-                APIHTTPError.increment()
+              case e: Exception =>
+                log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+                APINetworkError.increment()
                 respond(OtherError)
-
-            }) recover {
-            case _: IllegalAccessException =>
-              respond(Subscribed, form.listName)
-            case e: Exception =>
-              log.error(s"Error posting to ExactTarget: ${e.getMessage}")
-              APINetworkError.increment()
-              respond(OtherError)
+            }
           }
 
           if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
