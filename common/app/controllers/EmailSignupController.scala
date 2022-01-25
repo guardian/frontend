@@ -5,16 +5,18 @@ import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
 import conf.switches.Switches.{EmailSignupRecaptcha, ValidateEmailSignupRecaptchaTokens}
+import controllers.GoogleRecaptcha.GoogleResponse
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
 import play.api.data.validation.Constraints.emailAddress
+import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import play.filters.csrf.CSRFAddToken
 import services.newsletters.NewsletterSignupAgent
 import utils.RemoteAddress
 
@@ -90,10 +92,21 @@ class GoogleRecaptchaTokenValidationService(wsClient: WSClient) extends LazyLogg
   }
 }
 
+object GoogleRecaptcha {
+  case class GoogleResponse(success: Boolean, `error-codes`: Option[Seq[String]])
+
+  implicit val googleResponseReads: Reads[GoogleResponse] = (
+    (JsPath \ "success").read[Boolean] and
+      (JsPath \ "error-codes").readNullable[Seq[String]]
+  )(GoogleResponse.apply _)
+
+  implicit val googleResponseWrites: Writes[GoogleResponse] =
+    Json.writes[GoogleResponse]
+}
+
 class EmailSignupController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
-    csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
     emailEmbedAgent: NewsletterSignupAgent,
 )(implicit context: ApplicationContext)
@@ -360,12 +373,7 @@ class EmailSignupController(
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
           )
 
-          if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
-            googleRecaptchaTokenValidationService
-              .submit(form.googleRecaptchaResponse)
-          }
-
-          emailFormService
+          lazy val submitForm = emailFormService
             .submit(form)
             .map(_.status match {
               case 200 | 201 =>
@@ -384,6 +392,28 @@ class EmailSignupController(
               log.error(s"Error posting to ExactTarget: ${e.getMessage}")
               APINetworkError.increment()
               respond(OtherError)
+          }
+
+          if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
+            def verifyGoogleResponse(googleResponse: GoogleResponse) = {
+              if (googleResponse.success) {
+                Future.successful(())
+              } else {
+                Future.failed(
+                  new Exception(s"Google token validation failed with error: ${googleResponse.`error-codes`}"),
+                )
+              }
+            }
+
+            for {
+              validationResponse <- googleRecaptchaTokenValidationService.submit(form.googleRecaptchaResponse)
+              googleResponse = validationResponse.json.as[GoogleResponse]
+              _ <- verifyGoogleResponse(googleResponse)
+              result <- submitForm
+            } yield (result)
+
+          } else {
+            submitForm
           }
         },
       )
