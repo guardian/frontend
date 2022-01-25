@@ -421,6 +421,11 @@
   "../projects/common/modules/article/space-filler.js",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
+ "../projects/commercial/modules/messenger.js": [
+  "../lib/report-error.js",
+  "../projects/commercial/modules/messenger/post-message.ts",
+  "../projects/commercial/sentinel.ts"
+ ],
  "../projects/commercial/modules/messenger.ts": [
   "../lib/report-error.js",
   "../projects/commercial/modules/messenger/post-message.ts"
@@ -490,7 +495,7 @@
   "../lib/config.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
-  "../projects/commercial/modules/messenger.ts",
+  "../projects/commercial/modules/messenger.js",
   "../projects/common/modules/ui/sticky.js"
  ],
  "../projects/commercial/modules/sticky-top-banner.js": [
@@ -499,7 +504,7 @@
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
-  "../projects/commercial/modules/messenger.ts",
+  "../projects/commercial/modules/messenger.js",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/third-party-tags.ts": [
