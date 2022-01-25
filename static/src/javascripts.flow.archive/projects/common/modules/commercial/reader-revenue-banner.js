@@ -13,7 +13,7 @@
 // @flow
 
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { fetchBannerData, renderBanner, type BannerDataResponse } from 'common/modules/commercial/contributions-service';
+import { fetchBannerData, renderBanner, type BannerDataResponse } from 'common/modules/support/epic';
 import config from "lib/config";
 import reportError from "lib/report-error";
 

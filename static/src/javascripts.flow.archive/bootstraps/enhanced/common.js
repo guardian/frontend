@@ -68,7 +68,7 @@ import {
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { brazeBanner } from 'commercial/modules/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
-import { getArticleCountConsent } from 'common/modules/commercial/contributions-service';
+import { getArticleCountConsent } from 'common/modules/support/epic';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 
 const initialiseTopNavItems = (): void => {
