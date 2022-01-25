@@ -4,7 +4,7 @@ import {
 	getEpic,
 	getEpicViewLog,
 	getLiveblogEpic,
-	getWeeklyArticleHistory
+	getWeeklyArticleHistory,
 } from '@guardian/support-dotcom-components';
 import type {
 	EpicPayload,

@@ -3,7 +3,7 @@ import { storage } from '@guardian/libs';
 import {
 	getBanner,
 	getPuzzlesBanner,
-	getWeeklyArticleHistory
+	getWeeklyArticleHistory,
 } from '@guardian/support-dotcom-components';
 import type {
 	BannerPayload,
