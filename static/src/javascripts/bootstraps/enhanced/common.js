@@ -30,7 +30,7 @@ import {
     showInMegaNav,
     incrementDailyArticleCount,
 } from 'common/modules/onward/history';
-import { incrementWeeklyArticleCount } from '@guardian/automat-contributions';
+import { incrementWeeklyArticleCount } from '@guardian/support-dotcom-components';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';

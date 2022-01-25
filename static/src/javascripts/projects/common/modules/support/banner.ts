@@ -1,4 +1,4 @@
-import { getWeeklyArticleHistory } from '@guardian/automat-contributions';
+import { getWeeklyArticleHistory } from '@guardian/support-dotcom-components';
 import { mountDynamic } from '@guardian/automat-modules';
 import { storage } from '@guardian/libs';
 import {
