@@ -5,19 +5,17 @@ import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
 import conf.switches.Switches.{EmailSignupRecaptcha, ValidateEmailSignupRecaptchaTokens}
-import controllers.GoogleRecaptcha.GoogleResponse
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
 import play.api.data.validation.Constraints.emailAddress
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 import play.filters.csrf.CSRFAddToken
-import services.newsletters.NewsletterSignupAgent
+import services.newsletters.{GoogleRecaptchaValidationService, GoogleResponse, NewsletterSignupAgent}
 import utils.RemoteAddress
 
 import scala.concurrent.Future
@@ -73,31 +71,6 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
         .addHttpHeaders(headers: _*)
         .post(consentMailerPayload)
     }
-}
-
-class GoogleRecaptchaValidationService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
-  def submit(token: Option[String])(implicit request: Request[AnyContent]): Future[WSResponse] = {
-    if (token.isEmpty) {
-      Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
-    } else {
-      val url = "https://www.google.com/recaptcha/api/siteverify"
-      val payload =
-        Map("response" -> Seq(token.get), "secret" -> Seq(Configuration.google.googleRecaptchaSecret))
-
-      wsClient
-        .url(url)
-        .post(payload)
-    }
-  }
-}
-
-object GoogleRecaptcha {
-  case class GoogleResponse(success: Boolean, `error-codes`: Option[Seq[String]])
-
-  implicit val googleResponseReads: Reads[GoogleResponse] = (
-    (JsPath \ "success").read[Boolean] and
-      (JsPath \ "error-codes").readNullable[Seq[String]]
-  )(GoogleResponse.apply _)
 }
 
 class EmailSignupController(
