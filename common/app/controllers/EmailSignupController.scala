@@ -75,19 +75,18 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
     }
 }
 
-class GoogleRecaptchaTokenValidationService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
+class GoogleRecaptchaValidationService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
   def submit(token: Option[String])(implicit request: Request[AnyContent]): Future[WSResponse] = {
     if (token.isEmpty) {
-      Future.failed(new IllegalAccessException("reCAPTCHA token not provided"))
+      Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
     } else {
-      val googleCaptchaVerificationUrl = "https://www.google.com/recaptcha/api/siteverify"
-      val googleCaptchaVerificationPayload =
+      val url = "https://www.google.com/recaptcha/api/siteverify"
+      val payload =
         Map("response" -> Seq(token.get), "secret" -> Seq(Configuration.google.googleRecaptchaSecret))
 
       wsClient
-        .url(googleCaptchaVerificationUrl)
-        .post(googleCaptchaVerificationPayload)
-
+        .url(url)
+        .post(payload)
     }
   }
 }
@@ -99,9 +98,6 @@ object GoogleRecaptcha {
     (JsPath \ "success").read[Boolean] and
       (JsPath \ "error-codes").readNullable[Seq[String]]
   )(GoogleResponse.apply _)
-
-  implicit val googleResponseWrites: Writes[GoogleResponse] =
-    Json.writes[GoogleResponse]
 }
 
 class EmailSignupController(
@@ -114,7 +110,7 @@ class EmailSignupController(
     with ImplicitControllerExecutionContext
     with GuLogging {
   val emailFormService = new EmailFormService(wsClient)
-  val googleRecaptchaTokenValidationService = new GoogleRecaptchaTokenValidationService(wsClient)
+  val googleRecaptchaTokenValidationService = new GoogleRecaptchaValidationService(wsClient)
 
   val emailForm: Form[EmailForm] = Form(
     mapping(
