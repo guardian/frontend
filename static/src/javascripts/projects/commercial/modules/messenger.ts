@@ -319,7 +319,14 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 	} else if (typeof listener === 'function') {
 		// We found a persistent listener, to which we just delegate
 		// responsibility to write something. Anything. Really.
-		listener(message.value, respond, getIframe(message));
+		// The listener writes something by being given the `respond` function as the spec
+		listener(
+			// TODO change the arguments expected by persistent listeners to avoid this
+			(error: { message: string } | null, result: unknown) =>
+				respond(message.id, event.source, error, result),
+			message.value,
+			getIframe(message),
+		);
 	} else {
 		// If there is no routine attached to this event type, we just answer
 		// with an error code
