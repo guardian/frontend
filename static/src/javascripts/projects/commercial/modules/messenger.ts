@@ -166,10 +166,8 @@ const getIframe = (message: StandardMessage): HTMLIFrameElement | undefined => {
 		const container = document.getElementById(`dfp-ad--${message.slotId}`);
 		return container?.querySelector('iframe') ?? undefined;
 	} else if (message.iframeId) {
-		const iframe = document.querySelector<HTMLIFrameElement>(
-			`iframe#${message.iframeId}`,
-		);
-		return iframe ?? undefined;
+		const el = document.getElementById(message.iframeId);
+		return el instanceof HTMLIFrameElement ? el : undefined;
 	}
 };
 
