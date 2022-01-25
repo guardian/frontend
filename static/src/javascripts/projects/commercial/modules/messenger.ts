@@ -151,8 +151,8 @@ const toStandardMessage = (
 	iframeId: payload.value.id,
 	slotId: payload.value.slotId,
 	value: {
-		height: +payload.value.height,
-		width: +payload.value.width,
+		height: payload.value.height,
+		width: payload.value.width,
 	},
 });
 
