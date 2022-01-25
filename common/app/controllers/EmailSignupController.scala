@@ -377,7 +377,7 @@ class EmailSignupController(
                   respond(Subscribed, form.listName)
 
                 case status =>
-                  log.error(s"Error posting to ExactTarget: HTTP $status")
+                  log.error(s"Error posting to Identity API: HTTP $status")
                   APIHTTPError.increment()
                   respond(OtherError)
 
@@ -385,7 +385,7 @@ class EmailSignupController(
               case _: IllegalAccessException =>
                 respond(Subscribed, form.listName)
               case e: Exception =>
-                log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+                log.error(s"Error posting to Identity API: ${e.getMessage}")
                 APINetworkError.increment()
                 respond(OtherError)
             }
