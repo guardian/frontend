@@ -1,9 +1,9 @@
-import { getWeeklyArticleHistory } from '@guardian/support-dotcom-components';
 import { mountDynamic } from '@guardian/automat-modules';
 import { storage } from '@guardian/libs';
 import {
 	getBanner,
 	getPuzzlesBanner,
+	getWeeklyArticleHistory
 } from '@guardian/support-dotcom-components';
 import type {
 	BannerPayload,

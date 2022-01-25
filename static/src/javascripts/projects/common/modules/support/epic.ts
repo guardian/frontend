@@ -1,10 +1,10 @@
-import { getWeeklyArticleHistory } from '@guardian/support-dotcom-components';
 import { mountDynamic } from '@guardian/automat-modules';
 import { storage } from '@guardian/libs';
 import {
 	getEpic,
 	getEpicViewLog,
 	getLiveblogEpic,
+	getWeeklyArticleHistory
 } from '@guardian/support-dotcom-components';
 import type {
 	EpicPayload,
