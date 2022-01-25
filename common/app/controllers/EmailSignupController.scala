@@ -394,8 +394,10 @@ class EmailSignupController(
           if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
             def verifyGoogleResponse(googleResponse: GoogleResponse) = {
               if (googleResponse.success) {
+                RecaptchaValidationSuccess.increment()
                 Future.successful(())
               } else {
+                RecaptchaValidationError.increment()
                 Future.failed(
                   new Exception(s"Google token validation failed with error: ${googleResponse.`error-codes`}"),
                 )

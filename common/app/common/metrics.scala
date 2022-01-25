@@ -162,6 +162,8 @@ object EmailSubsciptionMetrics {
   val APIHTTPError = CountMetric("email-api-http-error", "Non-200/201 response from email subscription API")
   val APINetworkError = CountMetric("email-api-network-error", "Email subscription API network failure")
   val ListIDError = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
+  val RecaptchaValidationError = CountMetric("email-captcha-validation-failure", "Recaptcha validation error")
+  val RecaptchaValidationSuccess = CountMetric("email-captcha-validation-success", "Recaptcha validation success")
 }
 
 case class ApplicationMetrics(metrics: List[FrontendMetric])
