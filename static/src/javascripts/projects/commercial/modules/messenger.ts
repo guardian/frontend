@@ -161,16 +161,13 @@ const toStandardMessage = (
  *
  * Incoming messages contain the ID of the iframe into which the source window is embedded.
  */
-const getIframe = (data: StandardMessage): HTMLIFrameElement | undefined => {
-	if (data.slotId) {
-		const container = document.getElementById(`dfp-ad--${data.slotId}`);
-		const iframes = container
-			? container.getElementsByTagName('iframe')
-			: null;
-		return iframes?.length ? iframes[0] : undefined;
-	} else if (data.iframeId) {
+const getIframe = (message: StandardMessage): HTMLIFrameElement | undefined => {
+	if (message.slotId) {
+		const container = document.getElementById(`dfp-ad--${message.slotId}`);
+		return container?.querySelector('iframe') ?? undefined;
+	} else if (message.iframeId) {
 		const iframe = document.querySelector<HTMLIFrameElement>(
-			`iframe#${data.iframeId}`,
+			`iframe#${message.iframeId}`,
 		);
 		return iframe ?? undefined;
 	}
@@ -268,13 +265,13 @@ const respond = (
  * @param event The message event received on the window
  */
 const onMessage = async (event: MessageEvent<string>): Promise<void> => {
-	const data = eventToStandardMessage(event);
+	const message = eventToStandardMessage(event);
 
-	if (!data) {
+	if (!message) {
 		return;
 	}
 
-	const listener = LISTENERS[data.type];
+	const listener = LISTENERS[message.type];
 
 	if (Array.isArray(listener) && listener.length) {
 		// Because any listener can have side-effects (by unregistering itself),
@@ -295,9 +292,9 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 				(func, listener) =>
 					func.then((ret) => {
 						const thisRet = listener(
-							data.value,
+							message.value,
 							ret,
-							getIframe(data),
+							getIframe(message),
 						);
 						return thisRet === undefined ? ret : thisRet;
 					}),
@@ -306,22 +303,32 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 
 		return promise
 			.then((response) => {
-				respond(data.id, event.source, null, response);
+				respond(message.id, event.source, null, response);
 			})
 			.catch((ex) => {
 				reportError(ex, {
 					feature: 'native-ads',
 				});
-				respond(data.id, event.source, formatError(error500, ex), null);
+				respond(
+					message.id,
+					event.source,
+					formatError(error500, ex),
+					null,
+				);
 			});
 	} else if (typeof listener === 'function') {
 		// We found a persistent listener, to which we just delegate
 		// responsibility to write something. Anything. Really.
-		listener(data.value, respond, getIframe(data));
+		listener(message.value, respond, getIframe(message));
 	} else {
 		// If there is no routine attached to this event type, we just answer
 		// with an error code
-		respond(data.id, event.source, formatError(error405, data.type), null);
+		respond(
+			message.id,
+			event.source,
+			formatError(error405, message.type),
+			null,
+		);
 	}
 };
 
