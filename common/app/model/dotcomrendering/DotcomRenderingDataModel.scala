@@ -215,6 +215,7 @@ object DotcomRenderingDataModel {
       blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
+      requestedBlocks: Option[String] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -227,7 +228,7 @@ object DotcomRenderingDataModel {
       )
     })
 
-    val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
+    val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks, requestedBlocks)
 
     val allKeyEvents =
       blocks.requestedBodyBlocks

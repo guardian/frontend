@@ -82,7 +82,7 @@ class LiveBlogController(
       val range = getRange(lastUpdate)
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
-        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks))
+        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks, range))
         case (blog: LiveBlogPage, _)                             => getJson(blog, range, isLivePage, filter)
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
@@ -235,9 +235,14 @@ class LiveBlogController(
   private[this] def renderGuuiJson(
       blog: LiveBlogPage,
       blocks: Blocks,
+      range: BlockRange,
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
-    val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType)
+    val requestedBlocks = range match {
+      case sinceBlockId @ SinceBlockId(_) => Some(sinceBlockId.around)
+      case _                              => None
+    }
+    val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, requestedBlocks)
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }

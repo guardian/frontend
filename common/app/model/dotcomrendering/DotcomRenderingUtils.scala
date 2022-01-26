@@ -8,7 +8,7 @@ import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
 import model.pressed.SpecialReport
-import model.{CanonicalLiveBlog, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
+import model.{BlockRange, CanonicalLiveBlog, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
@@ -98,10 +98,10 @@ object DotcomRenderingUtils {
       .getOrElse("news")
   }
 
-  def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
+  def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks, requestedBlocks: Option[String]): Seq[APIBlock] = {
     val last60 = blocks.requestedBodyBlocks
       .getOrElse(Map.empty[String, Seq[APIBlock]])
-      .getOrElse(CanonicalLiveBlog.firstPage, Seq.empty[APIBlock])
+      .getOrElse(requestedBlocks.getOrElse(CanonicalLiveBlog.firstPage), Seq.empty[APIBlock])
       .toList
 
     // For the newest page, the last 60 blocks are requested, but for other page,
