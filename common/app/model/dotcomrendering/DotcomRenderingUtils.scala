@@ -98,7 +98,11 @@ object DotcomRenderingUtils {
       .getOrElse("news")
   }
 
-  def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks, requestedBlocks: Option[String]): Seq[APIBlock] = {
+  def blocksForLiveblogPage(
+      liveblog: LiveBlogPage,
+      blocks: APIBlocks,
+      requestedBlocks: Option[String],
+  ): Seq[APIBlock] = {
     val last60 = blocks.requestedBodyBlocks
       .getOrElse(Map.empty[String, Seq[APIBlock]])
       .getOrElse(requestedBlocks.getOrElse(CanonicalLiveBlog.firstPage), Seq.empty[APIBlock])
