@@ -14,8 +14,7 @@ export const ModulesVersion = 'v3';
 export const isHosted = config.get('page.isHosted');
 
 export const supportDotcomComponentsUrl = config.get('page.isDev')
-	? // ? `https://contributions.code.dev-guardianapis.com`
-	  `http://localhost:8082`
+	? `https://contributions.code.dev-guardianapis.com`
 	: `https://contributions.guardianapis.com`;
 
 export const dynamicImport = async (
