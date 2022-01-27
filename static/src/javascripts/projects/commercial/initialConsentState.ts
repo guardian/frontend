@@ -10,27 +10,20 @@ import type { ConsentState } from '@guardian/consent-management-platform/dist/ty
  * NOTE: depending on where this function is eventually used, it might be more appropriate
  * for it to be defined in the consent-management-platform
  */
-export const getInitialConsentState = (): Promise<ConsentState> => {
-	let resolveInitialState: (state: ConsentState) => void;
-	let rejectInitialState: (reason: 'Unknown framework') => void;
-	const promise = new Promise<ConsentState>((resolve, reject) => {
-		resolveInitialState = resolve;
-		rejectInitialState = reject;
+export const getInitialConsentState = (): Promise<ConsentState> =>
+	new Promise<ConsentState>((resolve, reject) => {
+		onConsentChange((consentState: ConsentState) => {
+			if (consentState.tcfv2) {
+				// For tcfv2 only, the first onConsentChange is fired before the user has
+				// interacted with the consent banner. We want to ignore this first consent state.
+				if (consentState.tcfv2.eventStatus !== 'cmpuishown') {
+					resolve(consentState);
+				}
+				return;
+			} else if (consentState.ccpa || consentState.aus) {
+				resolve(consentState);
+			}
+
+			reject('Unknown framework');
+		});
 	});
-
-	onConsentChange((state) => {
-		if (state.tcfv2) {
-			// For tcfv2 only, the first onConsentChange is fired before the user has
-			// interacted with the consent banner. We want to ignore this first consent state.
-			if (state.tcfv2.eventStatus !== 'cmpuishown')
-				resolveInitialState(state);
-			else return;
-		} else if (state.ccpa || state.aus) {
-			resolveInitialState(state);
-		}
-
-		rejectInitialState('Unknown framework');
-	});
-
-	return promise;
-};
