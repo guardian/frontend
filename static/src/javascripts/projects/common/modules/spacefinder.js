@@ -111,7 +111,7 @@ const onInteractivesLoaded = memoize((rules) => {
 const filter = (list, filterElement, exclusions) => {
 	const filtered = [];
 	list.forEach((element) => {
-		if (filterElement(element)) {
+		if (filterElement(element, filtered[filtered.length - 1])) {
 			filtered.push(element);
 		} else {
 			exclusions.push(element);

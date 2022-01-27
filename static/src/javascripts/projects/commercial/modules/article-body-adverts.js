@@ -37,17 +37,13 @@ const insertAdAtPara = (para, name, type, classes, sizes) => {
 		});
 };
 
-let previousAllowedCandidate;
-
 // this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
-const filterNearbyCandidates = (maximumAdHeight) => (candidate) => {
+const filterNearbyCandidates = (maximumAdHeight) => (candidate, lastWinner) => {
 	if (
-		!previousAllowedCandidate ||
-		Math.abs(candidate.top - previousAllowedCandidate.top) -
-			maximumAdHeight >=
+		!lastWinner ||
+		Math.abs(candidate.top - lastWinner.top) - maximumAdHeight >=
 			adSlotClassSelectorSizes.minBelow
 	) {
-		previousAllowedCandidate = candidate;
 		return true;
 	}
 	return false;
