@@ -1,5 +1,5 @@
 import { mountDynamic } from '@guardian/automat-modules';
-import { storage } from '@guardian/libs';
+import { log, storage } from '@guardian/libs';
 import {
 	getEpic,
 	getEpicViewLog,
@@ -20,7 +20,6 @@ import {
 	isRecurringContributor,
 	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
-import type { Page } from 'common/modules/support/supportMessaging';
 import {
 	buildKeywordTags,
 	buildSeriesTag,
@@ -53,17 +52,17 @@ const getEpicElement = (): HTMLDivElement => {
 };
 
 const buildEpicPayload = async (): Promise<EpicPayload> => {
-	const page = config.get('page') as Page;
+	const { contentType, section, shouldHideReaderRevenue, isPaidContent } = window.guardian.config.page;
 
 	const countryCode = getCountryCode();
 
 	const targeting: EpicTargeting = {
-		contentType: page.contentType,
-		sectionId: page.section,
-		shouldHideReaderRevenue: page.shouldHideReaderRevenue,
+		contentType: contentType,
+		sectionId: section,
+		shouldHideReaderRevenue: shouldHideReaderRevenue ?? false,
 		isMinuteArticle: config.hasTone('Minute'),
-		isPaidContent: page.isPaidContent,
-		tags: buildKeywordTags(page).concat([buildSeriesTag(page)]),
+		isPaidContent: isPaidContent,
+		tags: buildKeywordTags().concat([buildSeriesTag()]),
 		showSupportMessaging: !shouldHideSupportMessaging(),
 		isRecurringContributor: isRecurringContributor(),
 		lastOneOffContributionDate:
@@ -131,7 +130,7 @@ export const fetchAndRenderEpic = (): Promise<void> => {
 		.then(render)
 		.catch((error) => {
 			/* eslint-disable @typescript-eslint/restrict-template-expressions -- error log */
-			console.log(`Error importing remote epic: ${error}`);
+			log('supporterRevenue', `Error importing remote epic: ${error}`);
 			reportError(
 				new Error(`Error importing remote epic: ${error}`),
 				{},

@@ -45,20 +45,8 @@ export const tracking: PageTracking = {
 	referrerUrl: window.location.origin + window.location.pathname,
 };
 
-export interface Page {
-	contentType: string;
-	section: string;
-	shouldHideReaderRevenue: boolean;
-	isPaidContent: boolean;
-	isSensitive: boolean;
-	keywordIds: string;
-	keywords: string;
-	seriesId: string;
-	series: string;
-	toneIds: string;
-}
-
-export const buildKeywordTags = (page: Page): Tag[] => {
+export const buildKeywordTags = (): Tag[] => {
+	const { page } = window.guardian.config;
 	const keywordIds = page.keywordIds.split(',');
 	const keywords = page.keywords.split(',');
 	return keywordIds.map((id, idx) => ({
@@ -67,14 +55,17 @@ export const buildKeywordTags = (page: Page): Tag[] => {
 		title: keywords[idx],
 	}));
 };
-export const buildSeriesTag = (page: Page) => ({
-	id: page.seriesId,
-	type: 'Series',
-	title: page.series,
-});
+export const buildSeriesTag = () => {
+	const { seriesId, series } = window.guardian.config.page;
+	return {
+		id: seriesId,
+		type: 'Series',
+		title: series,
+	}
+};
 
-export const buildTagIds = (page: Page) => {
-	const { keywordIds, toneIds, seriesId } = page;
+export const buildTagIds = () => {
+	const { keywordIds, toneIds, seriesId } = window.guardian.config.page;
 	const keywords = keywordIds ? keywordIds.split(',') : [];
 	const tones = toneIds ? toneIds.split(',') : [];
 	const series = seriesId ? [seriesId] : [];

@@ -1,5 +1,5 @@
 import { mountDynamic } from '@guardian/automat-modules';
-import { storage } from '@guardian/libs';
+import { log, storage } from '@guardian/libs';
 import {
 	getBanner,
 	getPuzzlesBanner,
@@ -25,7 +25,6 @@ import {
 	supportDotcomComponentsUrl,
 	tracking,
 } from 'common/modules/support/supportMessaging';
-import type { Page } from 'common/modules/support/supportMessaging';
 import userPrefs from 'common/modules/user-prefs';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
@@ -97,7 +96,7 @@ export const renderBanner = (
 		})
 		.catch((error: any) => {
 			/* eslint-disable @typescript-eslint/restrict-template-expressions -- error log */
-			console.log(`Error importing remote banner: ${error}`);
+			log('supporterRevenue', `Error importing remote banner: ${error}`);
 			reportError(
 				new Error(`Error importing remote banner: ${error}`),
 				{},
@@ -109,12 +108,12 @@ export const renderBanner = (
 };
 
 const buildBannerPayload = async (): Promise<BannerPayload> => {
-	const page = config.get('page') as Page;
+	const { section, shouldHideReaderRevenue, isPaidContent } = window.guardian.config.page;
 
 	const targeting: BannerTargeting = {
 		alreadyVisitedCount: getVisitCount(),
-		shouldHideReaderRevenue: page.shouldHideReaderRevenue,
-		isPaidContent: page.isPaidContent,
+		shouldHideReaderRevenue: shouldHideReaderRevenue,
+		isPaidContent: isPaidContent,
 		showSupportMessaging: !shouldHideSupportMessaging(),
 		engagementBannerLastClosedAt:
 			(userPrefs.get('engagementBannerLastClosedAt') as string) ||
@@ -127,8 +126,8 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
 		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
 		modulesVersion: ModulesVersion,
-		sectionId: page.section,
-		tagIds: buildTagIds(page),
+		sectionId: section,
+		tagIds: buildTagIds(),
 	};
 
 	return {
@@ -139,14 +138,15 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 
 export const fetchPuzzlesData =
 	async (): Promise<ModuleDataResponse | null> => {
-		const page = config.get('page') as Page;
+		const { section, series } = window.guardian.config.page;
+
 		const payload = await buildBannerPayload();
 		const isPuzzlesBannerSwitchOn = config.get<boolean>(
 			'switches.puzzlesBanner',
 			false,
 		);
 		const isPuzzlesPage =
-			page.section === 'crosswords' || page.series === 'Sudoku';
+			section === 'crosswords' || series === 'Sudoku';
 
 		if (
 			payload.targeting.shouldHideReaderRevenue ||

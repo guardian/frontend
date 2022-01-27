@@ -1,4 +1,5 @@
 import { mountDynamic } from '@guardian/automat-modules';
+import { log } from '@guardian/libs';
 import { getHeader } from '@guardian/support-dotcom-components';
 import type { HeaderPayload } from '@guardian/support-dotcom-components/dist/dotcom/src/types';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
@@ -37,9 +38,9 @@ const buildHeaderLinksPayload = (): HeaderPayload => {
 export const fetchAndRenderHeaderLinks = async (): Promise<void> => {
 	const requestData = buildHeaderLinksPayload();
 	const isEnabled = config.get<boolean>('switches.remoteHeader', false);
-	const isGallery = config.get('page.contentType') === 'Gallery';
+	const { contentType } = window.guardian.config.page;
 
-	if (!isEnabled || isGallery) {
+	if (!isEnabled || contentType === 'Gallery') {
 		return;
 	}
 
@@ -68,7 +69,7 @@ export const fetchAndRenderHeaderLinks = async (): Promise<void> => {
 		}
 	} catch (error) {
 		/* eslint-disable @typescript-eslint/restrict-template-expressions -- error log */
-		console.log(`Error importing remote header: ${error}`);
+		log('supporterRevenue', `Error importing remote header: ${error}`);
 		reportError(
 			new Error(`Error importing remote header: ${error}`),
 			{},
