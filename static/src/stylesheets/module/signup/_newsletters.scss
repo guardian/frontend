@@ -161,6 +161,8 @@
     }
 
     .newsletter-card__lozenge--preview {
+        display: inline;
+        text-align: center;
         border-color: $brightness-7;
         color: $brightness-7;
         background-color: transparent;
