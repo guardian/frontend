@@ -61,7 +61,7 @@ export const buildSeriesTag = () => {
 		id: seriesId,
 		type: 'Series',
 		title: series,
-	}
+	};
 };
 
 export const buildTagIds = () => {

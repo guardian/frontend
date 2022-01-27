@@ -108,7 +108,8 @@ export const renderBanner = (
 };
 
 const buildBannerPayload = async (): Promise<BannerPayload> => {
-	const { section, shouldHideReaderRevenue, isPaidContent } = window.guardian.config.page;
+	const { section, shouldHideReaderRevenue, isPaidContent } =
+		window.guardian.config.page;
 
 	const targeting: BannerTargeting = {
 		alreadyVisitedCount: getVisitCount(),
@@ -145,8 +146,7 @@ export const fetchPuzzlesData =
 			'switches.puzzlesBanner',
 			false,
 		);
-		const isPuzzlesPage =
-			section === 'crosswords' || series === 'Sudoku';
+		const isPuzzlesPage = section === 'crosswords' || series === 'Sudoku';
 
 		if (
 			payload.targeting.shouldHideReaderRevenue ||

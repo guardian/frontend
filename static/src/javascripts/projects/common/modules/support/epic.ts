@@ -52,7 +52,8 @@ const getEpicElement = (): HTMLDivElement => {
 };
 
 const buildEpicPayload = async (): Promise<EpicPayload> => {
-	const { contentType, section, shouldHideReaderRevenue, isPaidContent } = window.guardian.config.page;
+	const { contentType, section, shouldHideReaderRevenue, isPaidContent } =
+		window.guardian.config.page;
 
 	const countryCode = getCountryCode();
 
