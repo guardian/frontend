@@ -365,25 +365,20 @@ class EmailSignupController(
           }
 
           if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
-            def verifyGoogleResponse(googleResponse: GoogleResponse) = {
-              if (googleResponse.success) {
-                RecaptchaValidationSuccess.increment()
-                Future.successful(())
-              } else {
-                RecaptchaValidationError.increment()
-                Future.failed(
-                  new Exception(s"Google token validation failed with error: ${googleResponse.`error-codes`}"),
-                )
-              }
-            }
-
-            for {
-              validationResponse <- googleRecaptchaTokenValidationService.submit(form.googleRecaptchaResponse)
-              googleResponse = validationResponse.json.as[GoogleResponse]
-              _ <- verifyGoogleResponse(googleResponse)
-              result <- submitForm
-            } yield (result)
-
+            googleRecaptchaTokenValidationService
+              .submit(form.googleRecaptchaResponse)
+              .map(_.json.as[GoogleResponse])
+              .flatMap(response =>
+                response.success match {
+                  case true =>
+                    RecaptchaValidationSuccess.increment()
+                    submitForm
+                  case false =>
+                    RecaptchaValidationError.increment()
+                    log.error(s"Google token validation failed with error: ${response.`error-codes`}")
+                    Future.successful(respond(OtherError))
+                },
+              )
           } else {
             submitForm
           }
