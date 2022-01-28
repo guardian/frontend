@@ -1,4 +1,4 @@
-// total_hours_spent_maintaining_this = 72
+// total_hours_spent_maintaining_this = 80
 
 import bean from 'bean';
 import fastdom from '../../../lib/fastdom-promise';
