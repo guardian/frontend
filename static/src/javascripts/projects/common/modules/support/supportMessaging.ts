@@ -17,25 +17,14 @@ export const supportDotcomComponentsUrl = config.get('page.isDev')
 	? `https://contributions.code.dev-guardianapis.com`
 	: `https://contributions.guardianapis.com`;
 
-export const dynamicImport = async (
+export const dynamicImport = async <T extends unknown>(
 	url: string,
 	name: string,
-): Promise<React.FC<any>> => {
-	/* eslint-disable
-			@typescript-eslint/no-unsafe-assignment,
-			@typescript-eslint/no-unsafe-call,
-			@typescript-eslint/no-unsafe-member-access,
-			--
-			dynamic import
-		 */
-	// @ts-expect-error -- see dynamic-import-init.js
-	const component = await window.guardianPolyfilledImport(url);
-	return component[name] as React.FC<any>;
-	/* eslint-enable
-		@typescript-eslint/no-unsafe-assignment,
-		@typescript-eslint/no-unsafe-call,
-		@typescript-eslint/no-unsafe-member-access,
-	 */
+): Promise<React.FC<T>> => {
+	const component = await window.guardianPolyfilledImport<
+		Record<string, React.FC<T>>
+	>(url);
+	return component[name];
 };
 
 export const tracking: PageTracking = {

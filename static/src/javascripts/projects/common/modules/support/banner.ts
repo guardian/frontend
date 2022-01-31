@@ -59,7 +59,7 @@ export const renderBanner = (
 	const { module, meta } = response.data;
 
 	return dynamicImport(module.url, module.name)
-		.then((Banner: React.FC<any>) => {
+		.then((Banner: React.FC) => {
 			const isPuzzlesBanner = module.name === 'PuzzlesBanner';
 
 			return fastdom
@@ -94,15 +94,17 @@ export const renderBanner = (
 					return true;
 				});
 		})
-		.catch((error: any) => {
-			/* eslint-disable @typescript-eslint/restrict-template-expressions -- error log */
-			log('supporterRevenue', `Error importing remote banner: ${error}`);
+		.catch((error) => {
+			log(
+				'supporterRevenue',
+				`Error importing remote banner: ${String(error)}`,
+			);
 			reportError(
-				new Error(`Error importing remote banner: ${error}`),
+				new Error(`Error importing remote banner: ${String(error)}`),
 				{},
 				false,
 			);
-			/* eslint-enable @typescript-eslint/restrict-template-expressions */
+
 			return false;
 		});
 };
