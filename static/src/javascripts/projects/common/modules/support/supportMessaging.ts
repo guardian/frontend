@@ -20,7 +20,7 @@ export const supportDotcomComponentsUrl = config.get('page.isDev')
 export const dynamicImport = async (
 	url: string,
 	name: string,
-): Promise<React.FC<any>> => {
+): Promise<React.FC> => {
 	/* eslint-disable
 			@typescript-eslint/no-unsafe-assignment,
 			@typescript-eslint/no-unsafe-call,
@@ -30,7 +30,7 @@ export const dynamicImport = async (
 		 */
 	// @ts-expect-error -- see dynamic-import-init.js
 	const component = await window.guardianPolyfilledImport(url);
-	return component[name] as React.FC<any>;
+	return component[name] as React.FC;
 	/* eslint-enable
 		@typescript-eslint/no-unsafe-assignment,
 		@typescript-eslint/no-unsafe-call,

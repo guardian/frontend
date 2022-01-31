@@ -59,7 +59,7 @@ export const renderBanner = (
 	const { module, meta } = response.data;
 
 	return dynamicImport(module.url, module.name)
-		.then((Banner: React.FC<any>) => {
+		.then((Banner: React.FC) => {
 			const isPuzzlesBanner = module.name === 'PuzzlesBanner';
 
 			return fastdom
