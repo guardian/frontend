@@ -104,7 +104,6 @@ export const renderBanner = (
 				{},
 				false,
 			);
-
 			return false;
 		});
 };
