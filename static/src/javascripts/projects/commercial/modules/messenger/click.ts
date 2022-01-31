@@ -1,16 +1,18 @@
+import { isString } from '@guardian/libs';
 import { trackNativeAdLinkClick } from '../../../common/modules/analytics/google';
+import type { RegisterListener } from '../messenger';
 
-const sendClick = (adSlot, linkName) => {
+const sendClick = (adSlot: { id: string }, linkName: string): void => {
 	trackNativeAdLinkClick(adSlot.id, linkName);
 };
 
-const init = (register) => {
-	register('click', (linkName, ret, iframe = {}) =>
+const init = (register: RegisterListener): void => {
+	register('click', (linkName, ret, iframe) =>
 		sendClick(
-			iframe.closest('.js-ad-slot') || {
+			iframe?.closest('.js-ad-slot') ?? {
 				id: 'unknown',
 			},
-			linkName || '',
+			isString(linkName) ? linkName : '',
 		),
 	);
 };
