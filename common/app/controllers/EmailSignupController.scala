@@ -313,9 +313,9 @@ class EmailSignupController(
                 },
               ) recover {
               case _: IllegalAccessException =>
-                respond(Subscribed)
+                respond(OtherError)
               case e: Exception =>
-                log.error(s"Error posting to Identity API: ${e.getMessage}")
+                log.error(s"Error validating captcha token: ${e.getMessage}")
                 APINetworkError.increment()
                 respond(OtherError)
             }
@@ -404,7 +404,14 @@ class EmailSignupController(
                   log.error(s"Google token validation failed with error: ${response.`error-codes`}")
                   Future.successful(respond(OtherError))
                 },
-              )
+              ) recover {
+              case _: IllegalAccessException =>
+                respond(OtherError)
+              case e: Exception =>
+                log.error(s"Error validating captcha token: ${e.getMessage}")
+                APINetworkError.increment()
+                respond(OtherError)
+            }
           } else {
             submitForm
           }
