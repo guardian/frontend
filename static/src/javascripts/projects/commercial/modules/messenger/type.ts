@@ -1,14 +1,20 @@
+import { isString } from '@guardian/libs';
 import fastdom from '../../../../lib/fastdom-promise';
+import type { RegisterListener } from '../messenger';
 
-const setType = (type, adSlot) =>
+const setType = (type: string, adSlot: Element) =>
 	fastdom.mutate(() => {
-		adSlot.classList.add(`ad-slot--${type || ''}`);
+		adSlot.classList.add(`ad-slot--${type}`);
 	});
 
-const init = (register) => {
-	register('type', (specs, ret, iframe) =>
-		setType(specs, iframe && iframe.closest('.js-ad-slot')),
-	);
+const init = (register: RegisterListener): void => {
+	register('type', (specs, ret, iframe) => {
+		const adSlot = iframe?.closest('.js-ad-slot');
+
+		if (adSlot && isString(specs)) {
+			void setType(specs, adSlot);
+		}
+	});
 };
 
 export { init };
