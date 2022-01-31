@@ -100,7 +100,7 @@ const renderEpic = async (module: ModuleData): Promise<void> => {
 };
 
 export const fetchAndRenderEpic = (): Promise<void> => {
-	const contentType = config.get('page.contentType') as string;
+	const { contentType } = window.guardian.config.page;
 	const isSupportedContentType =
 		contentType === 'Article' || contentType === 'LiveBlog';
 
