@@ -44,7 +44,13 @@ export const buildKeywordTags = (): Tag[] => {
 		title: keywords[idx],
 	}));
 };
-export const buildSeriesTag = () => {
+
+type SeriesTag = {
+	id: string;
+	type: 'Series';
+	title: string;
+};
+export const buildSeriesTag = (): SeriesTag => {
 	const { seriesId, series } = window.guardian.config.page;
 	return {
 		id: seriesId,
@@ -53,7 +59,7 @@ export const buildSeriesTag = () => {
 	};
 };
 
-export const buildTagIds = () => {
+export const buildTagIds = (): string[] => {
 	const { keywordIds, toneIds, seriesId } = window.guardian.config.page;
 	const keywords = keywordIds ? keywordIds.split(',') : [];
 	const tones = toneIds ? toneIds.split(',') : [];
