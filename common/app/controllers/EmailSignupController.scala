@@ -275,25 +275,52 @@ class EmailSignupController(
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
               s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
           )
-          emailFormService
-            .submit(form)
-            .map(_.status match {
-              case 200 | 201 =>
-                EmailSubmission.increment()
+          def submitForm = {
+            emailFormService
+              .submit(form)
+              .map(_.status match {
+                case 200 | 201 =>
+                  EmailSubmission.increment()
+                  respond(Subscribed)
+
+                case status =>
+                  log.error(s"Error posting to Identity API: HTTP $status")
+                  APIHTTPError.increment()
+                  respond(OtherError)
+
+              }) recover {
+              case _: IllegalAccessException =>
                 respond(Subscribed)
-
-              case status =>
-                log.error(s"Error posting to Identity API: HTTP $status")
-                APIHTTPError.increment()
+              case e: Exception =>
+                log.error(s"Error posting to Identity API: ${e.getMessage}")
+                APINetworkError.increment()
                 respond(OtherError)
+            }
+          }
 
-            }) recover {
-            case _: IllegalAccessException =>
-              respond(Subscribed)
-            case e: Exception =>
-              log.error(s"Error posting to Identity API: ${e.getMessage}")
-              APINetworkError.increment()
-              respond(OtherError)
+          if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
+            googleRecaptchaTokenValidationService
+              .submit(form.googleRecaptchaResponse)
+              .map(_.json.as[GoogleResponse])
+              .flatMap(response =>
+                if (response.success) {
+                  RecaptchaValidationSuccess.increment()
+                  submitForm
+                } else {
+                  RecaptchaValidationError.increment()
+                  log.error(s"Google token validation failed with error: ${response.`error-codes`}")
+                  Future.successful(respond(OtherError))
+                },
+              ) recover {
+              case _: IllegalAccessException =>
+                respond(Subscribed)
+              case e: Exception =>
+                log.error(s"Error posting to Identity API: ${e.getMessage}")
+                APINetworkError.increment()
+                respond(OtherError)
+            }
+          } else {
+            submitForm
           }
         },
       )
@@ -369,14 +396,13 @@ class EmailSignupController(
               .submit(form.googleRecaptchaResponse)
               .map(_.json.as[GoogleResponse])
               .flatMap(response =>
-                response.success match {
-                  case true =>
-                    RecaptchaValidationSuccess.increment()
-                    submitForm
-                  case false =>
-                    RecaptchaValidationError.increment()
-                    log.error(s"Google token validation failed with error: ${response.`error-codes`}")
-                    Future.successful(respond(OtherError))
+                if (response.success) {
+                  RecaptchaValidationSuccess.increment()
+                  submitForm
+                } else {
+                  RecaptchaValidationError.increment()
+                  log.error(s"Google token validation failed with error: ${response.`error-codes`}")
+                  Future.successful(respond(OtherError))
                 },
               )
           } else {
