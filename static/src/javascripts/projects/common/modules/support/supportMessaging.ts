@@ -17,25 +17,14 @@ export const supportDotcomComponentsUrl = config.get('page.isDev')
 	? `https://contributions.code.dev-guardianapis.com`
 	: `https://contributions.guardianapis.com`;
 
-export const dynamicImport = async (
+export const dynamicImport = async <T extends unknown>(
 	url: string,
 	name: string,
-): Promise<React.FC> => {
-	/* eslint-disable
-			@typescript-eslint/no-unsafe-assignment,
-			@typescript-eslint/no-unsafe-call,
-			@typescript-eslint/no-unsafe-member-access,
-			--
-			dynamic import
-		 */
-	// @ts-expect-error -- see dynamic-import-init.js
-	const component = await window.guardianPolyfilledImport(url);
-	return component[name] as React.FC;
-	/* eslint-enable
-		@typescript-eslint/no-unsafe-assignment,
-		@typescript-eslint/no-unsafe-call,
-		@typescript-eslint/no-unsafe-member-access,
-	 */
+): Promise<React.FC<T>> => {
+	const component = await window.guardianPolyfilledImport<
+		Record<string, React.FC<T>>
+	>(url);
+	return component[name];
 };
 
 export const tracking: PageTracking = {
@@ -55,7 +44,13 @@ export const buildKeywordTags = (): Tag[] => {
 		title: keywords[idx],
 	}));
 };
-export const buildSeriesTag = () => {
+
+type SeriesTag = {
+	id: string;
+	type: 'Series';
+	title: string;
+};
+export const buildSeriesTag = (): SeriesTag => {
 	const { seriesId, series } = window.guardian.config.page;
 	return {
 		id: seriesId,
@@ -64,7 +59,7 @@ export const buildSeriesTag = () => {
 	};
 };
 
-export const buildTagIds = () => {
+export const buildTagIds = (): string[] => {
 	const { keywordIds, toneIds, seriesId } = window.guardian.config.page;
 	const keywords = keywordIds ? keywordIds.split(',') : [];
 	const tones = toneIds ? toneIds.split(',') : [];
