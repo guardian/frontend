@@ -2,7 +2,6 @@ import type { AdSize } from '@guardian/commercial-core';
 import { adSizes } from '@guardian/commercial-core';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import config from '../../../lib/config';
-import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -30,17 +29,11 @@ const insertAdAtPara = (
 		classes,
 		sizes,
 	});
-
-	void fastdom
-		.mutate(() => {
-			if (para.parentNode) {
-				para.parentNode.insertBefore(ad, para);
-			}
-		})
-		.then(() => {
-			const shouldForceDisplay = ['im', 'carrot'].includes(name);
-			addSlot(ad, shouldForceDisplay);
-		});
+	if (para.parentNode) {
+		para.parentNode.insertBefore(ad, para);
+	}
+	const shouldForceDisplay = ['im', 'carrot'].includes(name);
+	addSlot(ad, shouldForceDisplay);
 };
 
 let previousAllowedCandidate: SpacefinderItem;
@@ -119,8 +112,7 @@ const addDesktopInlineAds = (isInline1: boolean) => {
 	const insertAds: SpacefinderWriter = (paras) => {
 		paras.slice(0, isInline1 ? 1 : paras.length).map((para, i) => {
 			const inlineId = i + (isInline1 ? 1 : 2);
-
-			return insertAdAtPara(
+			insertAdAtPara(
 				para,
 				`inline${inlineId}`,
 				'inline',
