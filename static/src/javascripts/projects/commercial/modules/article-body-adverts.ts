@@ -1,31 +1,37 @@
+import type { AdSize } from '@guardian/commercial-core';
+import { adSizes } from '@guardian/commercial-core';
+import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
-import { adSizes } from '@guardian/commercial-core';
-import { addSlot } from './dfp/add-slot';
-import { trackAdRender } from './dfp/track-ad-render';
-import { createAdSlot } from './dfp/create-slot';
-
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { initCarrot } from './carrot-traffic-driver';
-import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
+import { addSlot } from './dfp/add-slot';
+import { createAdSlot } from './dfp/create-slot';
+import { trackAdRender } from './dfp/track-ad-render';
 
-const isPaidContent = config.get('page.isPaidContent', false);
+const isPaidContent = config.get('page.isPaidContent', false) as boolean;
 
 const adSlotClassSelectorSizes = {
 	minAbove: 500,
 	minBelow: 500,
 };
 
-const insertAdAtPara = (para, name, type, classes, sizes) => {
+const insertAdAtPara = (
+	para: Node,
+	name: string,
+	type: string,
+	classes?: string,
+	sizes?: Record<string, AdSize[]>,
+): void => {
 	const ad = createAdSlot(type, {
 		name,
 		classes,
 		sizes,
 	});
 
-	return fastdom
+	void fastdom
 		.mutate(() => {
 			if (para.parentNode) {
 				para.parentNode.insertBefore(ad, para);
@@ -37,30 +43,31 @@ const insertAdAtPara = (para, name, type, classes, sizes) => {
 		});
 };
 
-let previousAllowedCandidate;
+let previousAllowedCandidate: SpacefinderItem;
 
 // this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
-const filterNearbyCandidates = (maximumAdHeight) => (candidate) => {
-	if (
-		!previousAllowedCandidate ||
-		Math.abs(candidate.top - previousAllowedCandidate.top) -
-			maximumAdHeight >=
-			adSlotClassSelectorSizes.minBelow
-	) {
-		previousAllowedCandidate = candidate;
-		return true;
-	}
-	return false;
-};
+const filterNearbyCandidates =
+	(maximumAdHeight: number) => (candidate: SpacefinderItem) => {
+		if (
+			!previousAllowedCandidate ||
+			Math.abs(candidate.top - previousAllowedCandidate.top) -
+				maximumAdHeight >=
+				adSlotClassSelectorSizes.minBelow
+		) {
+			previousAllowedCandidate = candidate;
+			return true;
+		}
+		return false;
+	};
 
-const isDotcomRendering = config.get('isDotcomRendering', false);
+const isDotcomRendering = config.get('isDotcomRendering', false) as boolean;
 const articleBodySelector = isDotcomRendering
 	? '.article-body-commercial-selector'
 	: '.js-article__body';
 
-const addDesktopInlineAds = (isInline1) => {
+const addDesktopInlineAds = (isInline1: boolean) => {
 	const isImmersive = config.get('page.isImmersive');
-	const defaultRules = {
+	const defaultRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: isImmersive ? 700 : 300,
@@ -88,7 +95,7 @@ const addDesktopInlineAds = (isInline1) => {
 	};
 
 	// For any other inline
-	const relaxedRules = {
+	const relaxedRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: isPaidContent ? 1600 : 1000,
@@ -109,24 +116,20 @@ const addDesktopInlineAds = (isInline1) => {
 
 	const rules = isInline1 ? defaultRules : relaxedRules;
 
-	const insertAds = (paras) => {
-		const slots = paras
-			.slice(0, isInline1 ? 1 : paras.length)
-			.map((para, i) => {
-				const inlineId = i + (isInline1 ? 1 : 2);
+	const insertAds: SpacefinderWriter = (paras) => {
+		paras.slice(0, isInline1 ? 1 : paras.length).map((para, i) => {
+			const inlineId = i + (isInline1 ? 1 : 2);
 
-				return insertAdAtPara(
-					para,
-					`inline${inlineId}`,
-					'inline',
-					`inline${isInline1 ? '' : ' offset-right'}`,
-					isInline1
-						? null
-						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
-				);
-			});
-
-		return Promise.all(slots).then(() => slots.length);
+			return insertAdAtPara(
+				para,
+				`inline${inlineId}`,
+				'inline',
+				`inline${isInline1 ? '' : ' offset-right'}`,
+				isInline1
+					? undefined
+					: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
+			);
+		});
 	};
 
 	return spaceFiller.fillSpace(rules, insertAds, {
@@ -137,7 +140,7 @@ const addDesktopInlineAds = (isInline1) => {
 };
 
 const addMobileInlineAds = () => {
-	const rules = {
+	const rules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: 200,
@@ -152,13 +155,15 @@ const addMobileInlineAds = () => {
 				minAbove: 35,
 				minBelow: 200,
 			},
-			fromBottom: true,
 		},
+		// TODO this looks like it was mistakenly put in the selectors object.
+		// What is the impact of correcting the typo??
+		fromBottom: true,
 		filter: filterNearbyCandidates(adSizes.mpu.height),
 	};
 
-	const insertAds = (paras) => {
-		const slots = paras.map((para, i) =>
+	const insertAds: SpacefinderWriter = (paras) => {
+		paras.map((para, i) =>
 			insertAdAtPara(
 				para,
 				i === 0 ? 'top-above-nav' : `inline${i}`,
@@ -166,8 +171,6 @@ const addMobileInlineAds = () => {
 				'inline',
 			),
 		);
-
-		return Promise.all(slots).then(() => slots.length);
 	};
 
 	// This just returns whatever is passed in the second argument
@@ -194,7 +197,7 @@ const attemptToAddInlineMerchAd = () => {
 	const breakpoint = getBreakpoint(getViewport().width);
 	const isMobileOrTablet = breakpoint === 'mobile' || breakpoint === 'tablet';
 
-	const rules = {
+	const rules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: 300,
@@ -220,18 +223,17 @@ const attemptToAddInlineMerchAd = () => {
 		},
 	};
 
-	return spaceFiller.fillSpace(
-		rules,
-		(paras) => insertAdAtPara(paras[0], 'im', 'im').then(() => true),
-		{
-			waitForImages: true,
-			waitForLinks: true,
-			waitForInteractives: true,
-		},
-	);
+	const insertAds: SpacefinderWriter = (paras) =>
+		insertAdAtPara(paras[0], 'im', 'im');
+
+	return spaceFiller.fillSpace(rules, insertAds, {
+		waitForImages: true,
+		waitForLinks: true,
+		waitForInteractives: true,
+	});
 };
 
-const doInit = () => {
+const doInit = async (): Promise<boolean> => {
 	if (!commercialFeatures.articleBodyAdverts) {
 		return Promise.resolve(false);
 	}
@@ -239,11 +241,10 @@ const doInit = () => {
 	const im = config.get('page.hasInlineMerchandise')
 		? attemptToAddInlineMerchAd()
 		: Promise.resolve(false);
-	im.then((inlineMerchAdded) =>
-		inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve(),
-	)
-		.then(addInlineAds)
-		.then(initCarrot);
+	const inlineMerchAdded = await im;
+	if (inlineMerchAdded) await trackAdRender('dfp-ad--im');
+	await addInlineAds();
+	await initCarrot();
 
 	return im;
 };
@@ -251,7 +252,7 @@ const doInit = () => {
 /**
  * Initialise article body ad slots
  */
-export const init = () => {
+export const init = (): Promise<boolean | void> => {
 	// Also init when the main article is redisplayed
 	// For instance by the signin gate.
 	mediator.on('page:article:redisplayed', doInit);
