@@ -10,7 +10,7 @@ import { addSlot } from './dfp/add-slot';
 import { createAdSlot } from './dfp/create-slot';
 import { trackAdRender } from './dfp/track-ad-render';
 
-const isPaidContent = config.get('page.isPaidContent', false) as boolean;
+const isPaidContent = config.get<boolean>('page.isPaidContent', false);
 
 const adSlotClassSelectorSizes = {
 	minAbove: 500,
