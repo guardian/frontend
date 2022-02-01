@@ -36,9 +36,6 @@ itemtype="http://schema.org/BlogPosting"
         <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
         @views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), !isPinnedBlock, true, isOriginalPinnedBlock)
         </a>
-        @if(isOriginalPinnedBlock){
-            @fragments.inlineSvg("pin", "icon", List("inline-icon", "pinned-block-original__icon"))
-        }
     </p>
     
     @if(block.title.isDefined) {
