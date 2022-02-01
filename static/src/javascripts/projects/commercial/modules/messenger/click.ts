@@ -18,5 +18,3 @@ const init = (register: RegisterListener): void => {
 };
 
 export { init };
-
-export const _ = { sendClick };
