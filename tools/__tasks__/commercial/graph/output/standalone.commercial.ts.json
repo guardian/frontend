@@ -272,7 +272,7 @@
   "../projects/commercial/modules/messenger/get-page-url.ts",
   "../projects/commercial/modules/messenger/get-stylesheet.js",
   "../projects/commercial/modules/messenger/measure-ad-load.js",
-  "../projects/commercial/modules/messenger/resize.js",
+  "../projects/commercial/modules/messenger/resize.ts",
   "../projects/commercial/modules/messenger/scroll.js",
   "../projects/commercial/modules/messenger/type.ts",
   "../projects/commercial/modules/messenger/viewport.js",
@@ -450,8 +450,9 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js"
  ],
  "../projects/commercial/modules/messenger/post-message.ts": [],
- "../projects/commercial/modules/messenger/resize.js": [
-  "../lib/fastdom-promise.js"
+ "../projects/commercial/modules/messenger/resize.ts": [
+  "../lib/fastdom-promise.js",
+  "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/messenger/scroll.js": [
   "../lib/detect-viewport.ts",
