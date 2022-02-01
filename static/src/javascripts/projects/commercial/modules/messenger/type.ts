@@ -2,9 +2,9 @@ import { isString } from '@guardian/libs';
 import fastdom from '../../../../lib/fastdom-promise';
 import type { RegisterListener } from '../messenger';
 
-const setType = (type: string, adSlot: Element) =>
+const setType = (adSlotType: string, adSlot: Element) =>
 	fastdom.mutate(() => {
-		adSlot.classList.add(`ad-slot--${type}`);
+		adSlot.classList.add(`ad-slot--${adSlotType}`);
 	});
 
 const init = (register: RegisterListener): void => {
