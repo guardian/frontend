@@ -224,15 +224,15 @@
 }
 
 .email-sub__squarefield-button {
+    @include fs-textSans(1, true);
     position: relative;
     flex-basis: 6rem;
     flex-shrink: 0;
-    border: none;
+    border: 0;
     border-radius: 1000px;
     padding: 5px 10px 2px;
     background-color: $brightness-100;
     color: $brightness-7;
-    @include fs-textSans(1, true);
     font-weight: 700;
     letter-spacing: -1px;
     margin-bottom: 4px;
