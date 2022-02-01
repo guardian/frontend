@@ -266,7 +266,7 @@
   "../projects/commercial/modules/dfp/refresh-on-resize.js",
   "../projects/commercial/modules/messenger.ts",
   "../projects/commercial/modules/messenger/background.js",
-  "../projects/commercial/modules/messenger/click.js",
+  "../projects/commercial/modules/messenger/click.ts",
   "../projects/commercial/modules/messenger/disable-refresh.js",
   "../projects/commercial/modules/messenger/get-page-targeting.js",
   "../projects/commercial/modules/messenger/get-page-url.ts",
@@ -431,7 +431,9 @@
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
- "../projects/commercial/modules/messenger/click.js": [
+ "../projects/commercial/modules/messenger/click.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/commercial/modules/messenger.ts",
   "../projects/common/modules/analytics/google.ts"
  ],
  "../projects/commercial/modules/messenger/disable-refresh.js": [
