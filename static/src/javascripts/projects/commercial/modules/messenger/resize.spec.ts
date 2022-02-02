@@ -2,8 +2,6 @@ import { _ } from './resize';
 
 const { normalise, resize } = _;
 
-const foolFlow = (mockFn) => mockFn;
-
 describe('Cross-frame messenger: resize', () => {
 	beforeEach(() => {
 		if (document.body) {
@@ -68,13 +66,11 @@ describe('Cross-frame messenger: resize', () => {
 				document.getElementById('container01') || fallback;
 			const fakeIframe = document.getElementById('iframe01') || fallback;
 			const fakeAdSlot = document.getElementById('slot01') || fallback;
-			return foolFlow(
-				resize(
-					{ width: '20', height: '10' },
-					fakeIframe,
-					fakeIframeContainer,
-					fakeAdSlot,
-				),
+			return resize(
+				{ width: '20', height: '10' },
+				fakeIframe,
+				fakeIframeContainer,
+				fakeAdSlot,
 			).then(() => {
 				expect(fakeIframe.style.height).toBe('10px');
 				expect(fakeIframe.style.width).toBe('20px');
