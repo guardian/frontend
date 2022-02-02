@@ -157,13 +157,8 @@ object DotcomRenderingDataModel {
   }
 
   def toJson(model: DotcomRenderingDataModel): String = {
-    def withoutNull(json: JsValue): JsValue =
-      json match {
-        case JsObject(fields) => JsObject(fields.filterNot { case (_, value) => value == JsNull })
-        case other            => other
-      }
     val jsValue = Json.toJson(model)
-    Json.stringify(withoutNull(jsValue))
+    Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }
 
   def forInteractive(
@@ -324,8 +319,7 @@ object DotcomRenderingDataModel {
     }
 
     val calloutsUrl: Option[String] = combinedConfig.fields.toList
-      .filter(entry => entry._1 == "calloutsUrl")
-      .headOption
+      .find(entry => entry._1 == "calloutsUrl")
       .flatMap(entry => entry._2.asOpt[String])
 
     val mainMediaElements =

@@ -8,7 +8,7 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.CacheTime
-import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils}
+import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomRenderingDataModel, DotcomRenderingUtils, PageType}
 import model.{ArticlePage, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{RequestHeader, Result}
@@ -18,7 +18,6 @@ import play.twirl.api.Html
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import model.dotcomrendering.PageType
 import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
 
@@ -131,6 +130,51 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", page)
+  }
+
+  def getBlocks(
+                 ws: WSClient,
+                 page: PageWithStoryPackage,
+                 blocks: Blocks,
+                 pageType: PageType,
+                )(implicit request: RequestHeader): Future[Result] = {
+
+
+    val dataModel = DotcomBlocksRenderingDataModel.forLiveblog()
+    val payload = DotcomBlocksRenderingDataModel.toJson()
+
+    post(ws, ???, Configuration.rendering.baseURL + "/Blocks", page)
+
+
+    //BlocksRequest {
+      //    blocks: Block[];
+      //    format: ContentFormat,
+      //    host?: string; //Configuration.site.host?
+      //    pageId: string; // content.metadata.id
+      //    webTitle: string; // content.metadata.webTitle
+      //    ajaxUrl: string; // atoms?
+      //    isAdFreeUser: boolean;
+      //    isSensitive: boolean;
+      //    edition: string;
+      //    section: string;
+      //    sharedAdTargeting: Record<string, unknown>;
+      //    adUnit: string;
+      //    videoDuration?: number | undefined;
+      //  }
+
+      //  case class Block(
+      //                    id: String,
+      //                    elements: List[PageElement],
+      //                    blockCreatedOn: Option[Long],
+      //                    blockCreatedOnDisplay: Option[String],
+      //                    blockLastUpdated: Option[Long],
+      //                    blockLastUpdatedDisplay: Option[String],
+      //                    blockFirstPublished: Option[Long],
+      //                    blockFirstPublishedDisplay: Option[String],
+      //                    title: Option[String],
+      //                    primaryDateLine: String,
+      //                    secondaryDateLine: String,
+      //                  )
   }
 
   def getInteractive(

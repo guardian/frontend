@@ -80,9 +80,10 @@ class LiveBlogController(
     Action.async { implicit request: Request[AnyContent] =>
       val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate)
+
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
-        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks, range))
+//        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks, range))
         case (blog: LiveBlogPage, _)                             => getJson(blog, range, isLivePage, filter)
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
@@ -178,9 +179,13 @@ class LiveBlogController(
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
+    val dcrCouldRender = LiveBlogController.checkIfSupported(liveblog)
+    val participating = ActiveExperiments.isParticipating(LiveblogRendering)
+    val remoteRender = shouldRemoteRender(request.forceDCROff, request.forceDCR, participating, dcrCouldRender)
+
     range match {
       case SinceBlockId(lastBlockId) =>
-        renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterKeyEvents)
+        renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterKeyEvents, remoteRender, liveblog)
       case _ => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog), liveblog))
     }
   }
@@ -207,9 +212,18 @@ class LiveBlogController(
       lastUpdateBlockId: SinceBlockId,
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
+      remoteRender: Boolean,
+      liveblog: LiveBlogPage,
   )(implicit request: RequestHeader): Future[Result] = {
-    val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
-    val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
+    val newBlocks: Seq[BodyBlock] = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
+    val blocksHtml = remoteRender match {
+      case false => views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
+
+
+      case true =>
+        val pageType = PageType(liveblog, request, context)
+        remoteRenderer.getBlocks(ws, page, ???, ???)
+    }
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
       model.KeyEventData(newBlocks, Edition(request).timezone),

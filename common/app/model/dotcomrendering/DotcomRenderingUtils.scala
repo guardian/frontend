@@ -4,11 +4,12 @@ import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
+import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
 import model.pressed.SpecialReport
-import model.{BlockRange, CanonicalLiveBlog, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
+import model.{ArticleDateTimes, BlockRange, CanonicalLiveBlog, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
@@ -192,6 +193,35 @@ object DotcomRenderingUtils {
     } else {
       "Last modified on " + format(content.fields.lastModified, request)
     }
+  }
+
+  def withoutNull(json: JsValue): JsValue = {
+    json match {
+      case JsObject(fields) => JsObject(fields.filterNot { case (_, value) => value == JsNull })
+      case other            => other
+    }
+  }
+
+  def shouldAddAffiliateLinks(content: ContentType) = {
+    AffiliateLinksCleaner.shouldAddAffiliateLinks(
+      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+      section = content.metadata.sectionId,
+      showAffiliateLinks = content.content.fields.showAffiliateLinks,
+      supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
+      defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
+      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+      tagPaths = content.content.tags.tags.map(_.id),
+      firstPublishedDate = content.content.fields.firstPublicationDate,
+    )
+  }
+
+  def contentDateTimes(content: ContentType) = {
+    ArticleDateTimes(
+      webPublicationDate = content.trail.webPublicationDate,
+      firstPublicationDate = content.fields.firstPublicationDate,
+      hasBeenModified = content.content.hasBeenModified,
+      lastModificationDate = content.fields.lastModified,
+    )
   }
 
 }
