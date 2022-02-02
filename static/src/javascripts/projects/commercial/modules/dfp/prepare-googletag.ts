@@ -78,9 +78,10 @@ const setPublisherProvidedId = (): void =>
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
-		// note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
+		// Note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
 		// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
 		// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
+		// setPageTargeting early so it is available for appnexus scripts
 		window.googletag.cmd.push(
 			setDfpListeners,
 			setPageTargeting,
