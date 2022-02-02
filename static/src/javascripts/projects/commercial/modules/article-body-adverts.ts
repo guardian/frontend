@@ -60,7 +60,7 @@ const filterNearbyCandidates =
 		return false;
 	};
 
-const isDotcomRendering = config.get('isDotcomRendering', false) as boolean;
+const isDotcomRendering = config.get<boolean>('isDotcomRendering', false);
 const articleBodySelector = isDotcomRendering
 	? '.article-body-commercial-selector'
 	: '.js-article__body';
