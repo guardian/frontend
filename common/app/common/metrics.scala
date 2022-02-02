@@ -164,7 +164,8 @@ object EmailSubsciptionMetrics {
   val ListIDError = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
   val RecaptchaMissingTokenError = CountMetric("email-recaptcha-missing-token-failure", "Recaptcha missing token error")
   val RecaptchaValidationError = CountMetric("email-recaptcha-validation-failure", "Recaptcha validation error")
-  val RecaptchaAPIUnavailableError = CountMetric("email-recaptcha-api-unavailable-failure", "Recaptcha API unavailable error")
+  val RecaptchaAPIUnavailableError =
+    CountMetric("email-recaptcha-api-unavailable-failure", "Recaptcha API unavailable error")
   val RecaptchaValidationSuccess = CountMetric("email-recaptcha-validation-success", "Recaptcha validation success")
 }
 

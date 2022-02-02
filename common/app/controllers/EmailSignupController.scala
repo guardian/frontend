@@ -384,9 +384,10 @@ class EmailSignupController(
             RecaptchaMissingTokenError.increment()
             Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
         }
-        wsResponse <- googleRecaptchaTokenValidationService.submit(token) recoverWith { case e =>
-          RecaptchaAPIUnavailableError.increment()
-          Future.failed(e)
+        wsResponse <- googleRecaptchaTokenValidationService.submit(token) recoverWith {
+          case e =>
+            RecaptchaAPIUnavailableError.increment()
+            Future.failed(e)
         }
         googleResponse = wsResponse.json.as[GoogleResponse]
         _ <- {
