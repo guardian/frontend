@@ -45,7 +45,8 @@ let previousAllowedCandidate: SpacefinderItem;
 
 // this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
 const filterNearbyCandidates =
-	(maximumAdHeight: number) => (candidate: SpacefinderItem) => {
+	(maximumAdHeight: number) =>
+	(candidate: SpacefinderItem): boolean => {
 		if (
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- false positive
 			!previousAllowedCandidate ||
@@ -64,7 +65,7 @@ const articleBodySelector = isDotcomRendering
 	? '.article-body-commercial-selector'
 	: '.js-article__body';
 
-const addDesktopInlineAds = (isInline1: boolean) => {
+const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
@@ -137,7 +138,7 @@ const addDesktopInlineAds = (isInline1: boolean) => {
 	});
 };
 
-const addMobileInlineAds = () => {
+const addMobileInlineAds = (): Promise<boolean> => {
 	const rules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
@@ -179,7 +180,7 @@ const addMobileInlineAds = () => {
 	});
 };
 
-const addInlineAds = () => {
+const addInlineAds = (): Promise<boolean> => {
 	const isMobile = getBreakpoint(getViewport().width) === 'mobile';
 
 	if (isMobile) {
@@ -191,7 +192,7 @@ const addInlineAds = () => {
 	return addDesktopInlineAds(true).then(() => addDesktopInlineAds(false));
 };
 
-const attemptToAddInlineMerchAd = () => {
+const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 	const breakpoint = getBreakpoint(getViewport().width);
 	const isMobileOrTablet = breakpoint === 'mobile' || breakpoint === 'tablet';
 
@@ -250,7 +251,7 @@ const doInit = async (): Promise<boolean> => {
 /**
  * Initialise article body ad slots
  */
-export const init = (): Promise<boolean | void> => {
+export const init = (): Promise<boolean> => {
 	// Also init when the main article is redisplayed
 	// For instance by the signin gate.
 	mediator.on('page:article:redisplayed', doInit);
