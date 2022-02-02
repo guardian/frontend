@@ -1,26 +1,51 @@
+import { isObject, isString } from '@guardian/libs';
 import fastdom from '../../../../lib/fastdom-promise';
+import type { RegisterListener } from '../messenger';
 
-const normalise = (length) => {
+interface Styles {
+	width?: string;
+	height?: string;
+}
+
+interface ResizeSpecs {
+	width?: string | number;
+	height?: string | number;
+}
+
+const isValidResizeSpecs = (specs: unknown): specs is ResizeSpecs => {
+	return (
+		isObject(specs) &&
+		(specs.width === undefined ||
+			isString(specs.width) ||
+			typeof specs.width === 'number') &&
+		(specs.height === undefined ||
+			isString(specs.height) ||
+			typeof specs.height === 'number')
+	);
+};
+
+const normalise = (length: string | number): string => {
 	const lengthRegexp = /^(\d+)(%|px|em|ex|ch|rem|vh|vw|vmin|vmax)?/;
 	const defaultUnit = 'px';
-	const matches = String(length).match(lengthRegexp);
+	const matches = lengthRegexp.exec(String(length));
 	if (!matches) {
 		return '';
 	}
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- update tsconfig: "noUncheckedIndexedAccess": true
 	return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
 };
 
-const resize = (specs, iframe, iframeContainer, adSlot) => {
-	if (
-		!specs ||
-		!('height' in specs || 'width' in specs) ||
-		!iframe ||
-		!adSlot
-	) {
-		return null;
+const resize = (
+	specs: unknown,
+	iframe: HTMLIFrameElement | undefined,
+	iframeContainer: HTMLElement | undefined,
+	adSlot: HTMLElement | undefined,
+): Promise<void> => {
+	if (!isValidResizeSpecs(specs) || !iframe || !adSlot) {
+		return Promise.resolve();
 	}
 
-	const styles = {};
+	const styles: Styles = {};
 
 	if (specs.width) {
 		styles.width = normalise(specs.width);
@@ -40,21 +65,22 @@ const resize = (specs, iframe, iframeContainer, adSlot) => {
 };
 
 // When an outstream resizes we want it to revert to its original styling
-const removeAnyOutstreamClass = (adSlot) => {
-	fastdom.mutate(() => {
+const removeAnyOutstreamClass = (adSlot: HTMLElement | undefined) => {
+	void fastdom.mutate(() => {
 		if (adSlot) {
 			adSlot.classList.remove('ad-slot--outstream');
 		}
 	});
 };
 
-const init = (register) => {
+const init = (register: RegisterListener): void => {
 	register('resize', (specs, ret, iframe) => {
 		if (iframe && specs) {
-			const adSlot = iframe && iframe.closest('.js-ad-slot');
+			const adSlot =
+				iframe.closest<HTMLElement>('.js-ad-slot') ?? undefined;
 			removeAnyOutstreamClass(adSlot);
 			const iframeContainer =
-				iframe && iframe.closest('.ad-slot__content');
+				iframe.closest<HTMLElement>('.ad-slot__content') ?? undefined;
 			return resize(specs, iframe, iframeContainer, adSlot);
 		}
 	});
