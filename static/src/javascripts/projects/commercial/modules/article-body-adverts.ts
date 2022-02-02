@@ -172,7 +172,6 @@ const addMobileInlineAds = (): Promise<boolean> => {
 		);
 	};
 
-	// This just returns whatever is passed in the second argument
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
 		waitForLinks: true,
