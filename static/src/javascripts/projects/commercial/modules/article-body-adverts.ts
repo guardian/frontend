@@ -1,4 +1,3 @@
-import type { AdSize } from '@guardian/commercial-core';
 import { adSizes } from '@guardian/commercial-core';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import config from '../../../lib/config';
@@ -10,6 +9,7 @@ import type {
 	SpacefinderWriter,
 } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+import type { SizeMappings } from '../modules/dfp/create-slot';
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
 import { createAdSlot } from './dfp/create-slot';
@@ -27,7 +27,7 @@ const insertAdAtPara = (
 	name: string,
 	type: string,
 	classes?: string,
-	sizes?: Record<string, AdSize[]>,
+	sizes?: SizeMappings,
 ): void => {
 	const ad = createAdSlot(type, {
 		name,

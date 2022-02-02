@@ -1,8 +1,6 @@
 import { adSizes } from '@guardian/commercial-core';
 import type { AdSize } from '@guardian/commercial-core';
 
-type SizeMappings = Record<string, AdSize[]>;
-
 type AdSlotConfig = {
 	sizeMappings: SizeMappings;
 	label?: boolean;
@@ -267,6 +265,8 @@ const createDataAttributes = (
 		},
 		{},
 	);
+
+export type SizeMappings = Record<string, AdSize[]>;
 
 export const createAdSlot = (
 	type: string,
