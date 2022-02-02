@@ -235,51 +235,78 @@ class EmailSignupController(
 
   def submitFooter(): Action[AnyContent] =
     Action.async { implicit request =>
-      submitWith(submitFormFooter, respondFooter(InvalidEmail))
+      AllEmailSubmission.increment()
+
+      emailForm.bindFromRequest.fold(
+        formWithErrors => {
+          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+          EmailFormError.increment()
+          Future.successful(respondFooter(InvalidEmail))
+        },
+        form => {
+          log.info(
+            s"Post request received to /email/ - " +
+              s"email: ${form.email}, " +
+              s"ref: ${form.ref}, " +
+              s"refViewId: ${form.refViewId}, " +
+              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
+              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+          )
+
+          (for {
+            _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+            result <- submitFormFooter(form)
+          } yield {
+            result
+          }) recover {
+            case _ =>
+              respondFooter(OtherError)
+          }
+        },
+      )
     }
 
   def submit(): Action[AnyContent] =
     Action.async { implicit request =>
-      submitWith(submitForm, respond(InvalidEmail))
+      AllEmailSubmission.increment()
+
+      emailForm.bindFromRequest.fold(
+        formWithErrors => {
+          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+          EmailFormError.increment()
+          Future.successful(respond(InvalidEmail))
+        },
+        form => {
+          log.info(
+            s"Post request received to /email/ - " +
+              s"email: ${form.email}, " +
+              s"ref: ${form.ref}, " +
+              s"refViewId: ${form.refViewId}, " +
+              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
+              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+          )
+
+          (for {
+            _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+            result <- submitForm(form)
+          } yield {
+            result
+          }) recover {
+            case _ =>
+              respond(OtherError)
+          }
+        },
+      )
     }
 
   def options(): Action[AnyContent] =
     Action { implicit request =>
       TinyResponse.noContent(Some("GET, POST, OPTIONS"))
     }
-
-  private def submitWith(submitForm: EmailForm => Future[Result], response: Result)(implicit
-      request: Request[AnyContent],
-  ) = {
-    AllEmailSubmission.increment()
-
-    emailForm.bindFromRequest.fold(
-      formWithErrors => {
-        log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-        EmailFormError.increment()
-        Future.successful(response)
-      },
-      form => {
-        log.info(
-          s"Post request received to /email/ - " +
-            s"email: ${form.email}, " +
-            s"ref: ${form.ref}, " +
-            s"refViewId: ${form.refViewId}, " +
-            s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
-            s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-            s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-            s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-        )
-
-        for {
-          _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-          result <- submitForm(form)
-        } yield {
-          result
-        }
-      },
-    )
-  }
 
   private def respond(result: SubscriptionResult, listName: Option[String] = None)(implicit
       request: Request[AnyContent],
