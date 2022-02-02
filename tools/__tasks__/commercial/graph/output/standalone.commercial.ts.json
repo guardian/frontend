@@ -89,7 +89,6 @@
  ],
  "../projects/commercial/modules/article-body-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect-viewport.ts",
   "../lib/mediator.ts",
