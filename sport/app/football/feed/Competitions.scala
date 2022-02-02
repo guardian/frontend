@@ -6,7 +6,7 @@ import conf.FootballClient
 import football.controllers.Interval
 import model.{Competition, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.DateTimeComparator
-import pa._
+import pa.{FootballMatch, _}
 
 import java.time.LocalDate
 import java.util.Comparator
@@ -100,6 +100,9 @@ trait Competitions extends implicits.Football {
   def sortedMatches: Seq[FootballMatch] = matches.sortByDate
 
   def matches: Seq[FootballMatch] = competitions.flatMap(_.matches)
+
+  def isAMatchInProgress(matches: Seq[FootballMatch], clock: Clock): Boolean =
+    matches.exists(game => game.isLive || game.date.minusMinutes(5).toLocalDate.isBefore(LocalDate.now(clock)))
 
 }
 
@@ -401,5 +404,16 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
         }
     })
     result.map(_.flatten).flatMap(Future.sequence(_))
+  }
+
+  def maybeRefreshLiveMatches(
+      clock: Clock,
+  )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
+    // matches is the list of all matches from all competitions
+    if (isAMatchInProgress(matches, clock)) {
+      refreshMatchDay(clock)
+    } else {
+      Future.successful(immutable.Iterable[Competition]())
+    }
   }
 }
