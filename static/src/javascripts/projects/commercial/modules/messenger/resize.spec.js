@@ -1,4 +1,4 @@
-import { _ } from './resize.js';
+import { _ } from './resize';
 
 const { normalise, resize } = _;
 
