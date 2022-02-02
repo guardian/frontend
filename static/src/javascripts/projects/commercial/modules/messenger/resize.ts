@@ -65,11 +65,9 @@ const resize = (
 };
 
 // When an outstream resizes we want it to revert to its original styling
-const removeAnyOutstreamClass = (adSlot: HTMLElement | undefined) => {
+const removeAnyOutstreamClass = (adSlot: HTMLElement) => {
 	void fastdom.mutate(() => {
-		if (adSlot) {
-			adSlot.classList.remove('ad-slot--outstream');
-		}
+		adSlot.classList.remove('ad-slot--outstream');
 	});
 };
 
@@ -79,7 +77,9 @@ const init = (register: RegisterListener): void => {
 			const adSlot =
 				iframe.closest<HTMLElement>('.js-ad-slot') ?? undefined;
 
-			removeAnyOutstreamClass(adSlot);
+			if (adSlot) {
+				removeAnyOutstreamClass(adSlot);
+			}
 
 			const iframeContainer =
 				iframe.closest<HTMLElement>('.ad-slot__content') ?? undefined;
