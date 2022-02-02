@@ -527,9 +527,6 @@
   "../lib/config.js",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
- "../projects/commercial/sentinel.ts": [
-  "../lib/config.d.ts"
- ],
  "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
