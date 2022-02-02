@@ -37,11 +37,11 @@ const normalise = (length: string | number): string => {
 
 const resize = (
 	specs: unknown,
-	iframe: HTMLIFrameElement | undefined,
-	iframeContainer: HTMLElement | undefined,
-	adSlot: HTMLElement | undefined,
+	iframe: HTMLIFrameElement,
+	iframeContainer?: HTMLElement,
+	adSlot?: HTMLElement,
 ): Promise<void> => {
-	if (!isValidResizeSpecs(specs) || !iframe || !adSlot) {
+	if (!isValidResizeSpecs(specs) || !adSlot) {
 		return Promise.resolve();
 	}
 
@@ -78,9 +78,12 @@ const init = (register: RegisterListener): void => {
 		if (iframe && specs) {
 			const adSlot =
 				iframe.closest<HTMLElement>('.js-ad-slot') ?? undefined;
+
 			removeAnyOutstreamClass(adSlot);
+
 			const iframeContainer =
 				iframe.closest<HTMLElement>('.ad-slot__content') ?? undefined;
+
 			return resize(specs, iframe, iframeContainer, adSlot);
 		}
 	});
