@@ -92,7 +92,6 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect-viewport.ts",
-  "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
