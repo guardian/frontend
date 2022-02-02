@@ -47,6 +47,7 @@ let previousAllowedCandidate: SpacefinderItem;
 const filterNearbyCandidates =
 	(maximumAdHeight: number) => (candidate: SpacefinderItem) => {
 		if (
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- false positive
 			!previousAllowedCandidate ||
 			Math.abs(candidate.top - previousAllowedCandidate.top) -
 				maximumAdHeight >=
@@ -254,6 +255,8 @@ export const init = (): Promise<boolean | void> => {
 	// For instance by the signin gate.
 	mediator.on('page:article:redisplayed', doInit);
 	// DCR doesn't have mediator, so listen for CustomEvent
-	document.addEventListener('dcr:page:article:redisplayed', doInit);
+	document.addEventListener('dcr:page:article:redisplayed', () => {
+		void doInit();
+	});
 	return doInit();
 };
