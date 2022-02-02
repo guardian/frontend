@@ -470,7 +470,7 @@ trait FeatureSwitches {
     "Enables showing reCAPTCHA when signing up to email newsletters",
     owners = Seq(Owner.withGithub("georgeblahblah")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = LocalDate.of(2022, 5, 4),
     exposeClientSide = true,
   )
 
@@ -480,7 +480,7 @@ trait FeatureSwitches {
     "Enables validation of reCAPTCHA tokens on email signup submissions",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = LocalDate.of(2022, 5, 4),
     exposeClientSide = false,
   )
 
