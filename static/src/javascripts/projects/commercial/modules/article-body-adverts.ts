@@ -41,14 +41,13 @@ const insertAdAtPara = (
 	addSlot(ad, shouldForceDisplay);
 };
 
-let previousAllowedCandidate: SpacefinderItem;
+let previousAllowedCandidate: SpacefinderItem | undefined;
 
 // this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
 const filterNearbyCandidates =
 	(maximumAdHeight: number) =>
 	(candidate: SpacefinderItem): boolean => {
 		if (
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- false positive
 			!previousAllowedCandidate ||
 			Math.abs(candidate.top - previousAllowedCandidate.top) -
 				maximumAdHeight >=
