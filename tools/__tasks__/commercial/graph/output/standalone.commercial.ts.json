@@ -451,6 +451,7 @@
  ],
  "../projects/commercial/modules/messenger/post-message.ts": [],
  "../projects/commercial/modules/messenger/resize.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/messenger.ts"
  ],
