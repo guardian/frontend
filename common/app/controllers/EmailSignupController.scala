@@ -235,192 +235,173 @@ class EmailSignupController(
 
   def submitFooter(): Action[AnyContent] =
     Action.async { implicit request =>
-      AllEmailSubmission.increment()
-
-      def respond(result: SubscriptionResult): Result = {
-        render {
-          case Accepts.Html() =>
-            result match {
-              case Subscribed   => SeeOther(LinkTo(s"/email/success/footer"))
-              case InvalidEmail => SeeOther(LinkTo(s"/email/invalid/footer"))
-              case OtherError   => SeeOther(LinkTo(s"/email/error/footer"))
-            }
-
-          case Accepts.Json() =>
-            Cors(NoCache(result match {
-              case Subscribed   => Created("Subscribed")
-              case InvalidEmail => BadRequest("Invalid email")
-              case OtherError   => InternalServerError("Internal error")
-            }))
-          case _ =>
-            NotAccepted.increment()
-            NotAcceptable
-        }
-      }
-
-      emailForm.bindFromRequest.fold(
-        formWithErrors => {
-          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-          EmailFormError.increment()
-          Future.successful(respond(InvalidEmail))
-        },
-        form => {
-          log.info(
-            s"Post request received to /email/ - " +
-              s"email: ${form.email}, " +
-              s"ref: ${form.ref}, " +
-              s"refViewId: ${form.refViewId}, " +
-              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
-              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-          )
-          def submitForm = {
-            emailFormService
-              .submit(form)
-              .map(_.status match {
-                case 200 | 201 =>
-                  EmailSubmission.increment()
-                  respond(Subscribed)
-
-                case status =>
-                  log.error(s"Error posting to Identity API: HTTP $status")
-                  APIHTTPError.increment()
-                  respond(OtherError)
-
-              }) recover {
-              case _: IllegalAccessException =>
-                respond(Subscribed)
-              case e: Exception =>
-                log.error(s"Error posting to Identity API: ${e.getMessage}")
-                APINetworkError.increment()
-                respond(OtherError)
-            }
-          }
-
-          if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
-            googleRecaptchaTokenValidationService
-              .submit(form.googleRecaptchaResponse)
-              .map(_.json.as[GoogleResponse])
-              .flatMap(response =>
-                if (response.success) {
-                  RecaptchaValidationSuccess.increment()
-                  submitForm
-                } else {
-                  RecaptchaValidationError.increment()
-                  log.error(s"Google token validation failed with error: ${response.`error-codes`}")
-                  Future.successful(respond(OtherError))
-                },
-              ) recover {
-              case _: IllegalAccessException =>
-                respond(OtherError)
-              case e: Exception =>
-                log.error(s"Error validating captcha token: ${e.getMessage}")
-                APINetworkError.increment()
-                respond(OtherError)
-            }
-          } else {
-            submitForm
-          }
-        },
-      )
+      submitWith(submitFormFooter, respondFooter(InvalidEmail))
     }
 
   def submit(): Action[AnyContent] =
     Action.async { implicit request =>
-      AllEmailSubmission.increment()
-
-      def respond(result: SubscriptionResult, listName: Option[String] = None): Result = {
-        render {
-          case Accepts.Html() =>
-            result match {
-              case Subscribed   => SeeOther(LinkTo(s"/email/success/${listName.get}"))
-              case InvalidEmail => SeeOther(LinkTo(s"/email/invalid"))
-              case OtherError   => SeeOther(LinkTo(s"/email/error"))
-            }
-
-          case Accepts.Json() =>
-            Cors(NoCache(result match {
-              case Subscribed   => Created("Subscribed")
-              case InvalidEmail => BadRequest("Invalid email")
-              case OtherError   => InternalServerError("Internal error")
-            }))
-          case _ =>
-            NotAccepted.increment()
-            NotAcceptable
-        }
-      }
-
-      emailForm.bindFromRequest.fold(
-        formWithErrors => {
-          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-          EmailFormError.increment()
-          Future.successful(respond(InvalidEmail))
-        },
-        form => {
-          log.info(
-            s"Post request received to /email/ - " +
-              s"email: ${form.email}, " +
-              s"ref: ${form.ref}, " +
-              s"refViewId: ${form.refViewId}, " +
-              s"g-recaptcha-response: ${form.googleRecaptchaResponse}," +
-              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-          )
-          def submitForm = {
-            emailFormService
-              .submit(form)
-              .map(_.status match {
-                case 200 | 201 =>
-                  EmailSubmission.increment()
-                  respond(Subscribed, form.listName)
-
-                case status =>
-                  log.error(s"Error posting to Identity API: HTTP $status")
-                  APIHTTPError.increment()
-                  respond(OtherError)
-
-              }) recover {
-              case _: IllegalAccessException =>
-                respond(Subscribed, form.listName)
-              case e: Exception =>
-                log.error(s"Error posting to Identity API: ${e.getMessage}")
-                APINetworkError.increment()
-                respond(OtherError)
-            }
-          }
-
-          if (ValidateEmailSignupRecaptchaTokens.isSwitchedOn) {
-            googleRecaptchaTokenValidationService
-              .submit(form.googleRecaptchaResponse)
-              .map(_.json.as[GoogleResponse])
-              .flatMap(response =>
-                if (response.success) {
-                  RecaptchaValidationSuccess.increment()
-                  submitForm
-                } else {
-                  RecaptchaValidationError.increment()
-                  log.error(s"Google token validation failed with error: ${response.`error-codes`}")
-                  Future.successful(respond(OtherError))
-                },
-              ) recover {
-              case _: IllegalAccessException =>
-                respond(OtherError)
-              case e: Exception =>
-                log.error(s"Error validating captcha token: ${e.getMessage}")
-                APINetworkError.increment()
-                respond(OtherError)
-            }
-          } else {
-            submitForm
-          }
-        },
-      )
+      submitWith(submitForm, respond(InvalidEmail))
     }
 
   def options(): Action[AnyContent] =
     Action { implicit request =>
       TinyResponse.noContent(Some("GET, POST, OPTIONS"))
     }
+
+  private def submitWith(submitForm: EmailForm => Future[Result], response: Result)(implicit
+      request: Request[AnyContent],
+  ) = {
+    AllEmailSubmission.increment()
+
+    emailForm.bindFromRequest.fold(
+      formWithErrors => {
+        log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+        EmailFormError.increment()
+        Future.successful(response)
+      },
+      form => {
+        log.info(
+          s"Post request received to /email/ - " +
+            s"email: ${form.email}, " +
+            s"ref: ${form.ref}, " +
+            s"refViewId: ${form.refViewId}, " +
+            s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
+            s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+            s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+            s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+        )
+
+        for {
+          _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+          result <- submitForm(form)
+        } yield {
+          result
+        }
+      },
+    )
+  }
+
+  private def respond(result: SubscriptionResult, listName: Option[String] = None)(implicit
+      request: Request[AnyContent],
+  ): Result = {
+    render {
+      case Accepts.Html() =>
+        result match {
+          case Subscribed   => SeeOther(LinkTo(s"/email/success/${listName.get}"))
+          case InvalidEmail => SeeOther(LinkTo(s"/email/invalid"))
+          case OtherError   => SeeOther(LinkTo(s"/email/error"))
+        }
+
+      case Accepts.Json() =>
+        Cors(NoCache(result match {
+          case Subscribed   => Created("Subscribed")
+          case InvalidEmail => BadRequest("Invalid email")
+          case OtherError   => InternalServerError("Internal error")
+        }))
+      case _ =>
+        NotAccepted.increment()
+        NotAcceptable
+    }
+  }
+
+  private def respondFooter(result: SubscriptionResult)(implicit
+      request: Request[AnyContent],
+  ): Result = {
+    render {
+      case Accepts.Html() =>
+        result match {
+          case Subscribed   => SeeOther(LinkTo(s"/email/success/footer"))
+          case InvalidEmail => SeeOther(LinkTo(s"/email/invalid/footer"))
+          case OtherError   => SeeOther(LinkTo(s"/email/error/footer"))
+        }
+
+      case Accepts.Json() =>
+        Cors(NoCache(result match {
+          case Subscribed   => Created("Subscribed")
+          case InvalidEmail => BadRequest("Invalid email")
+          case OtherError   => InternalServerError("Internal error")
+        }))
+      case _ =>
+        NotAccepted.increment()
+        NotAcceptable
+    }
+  }
+
+  private def submitForm(form: EmailForm)(implicit request: Request[AnyContent]) = {
+    emailFormService
+      .submit(form)
+      .map(_.status match {
+        case 200 | 201 =>
+          EmailSubmission.increment()
+          respond(Subscribed, form.listName)
+
+        case status =>
+          log.error(s"Error posting to Identity API: HTTP $status")
+          APIHTTPError.increment()
+          respond(OtherError)
+
+      }) recover {
+      case _: IllegalAccessException =>
+        respond(Subscribed, form.listName)
+      case e: Exception =>
+        log.error(s"Error posting to Identity API: ${e.getMessage}")
+        APINetworkError.increment()
+        respond(OtherError)
+    }
+  }
+
+  private def submitFormFooter(form: EmailForm)(implicit request: Request[AnyContent]) = {
+    emailFormService
+      .submit(form)
+      .map(_.status match {
+        case 200 | 201 =>
+          EmailSubmission.increment()
+          respondFooter(Subscribed)
+
+        case status =>
+          log.error(s"Error posting to Identity API: HTTP $status")
+          APIHTTPError.increment()
+          respondFooter(OtherError)
+
+      }) recover {
+      case _: IllegalAccessException =>
+        respondFooter(Subscribed)
+      case e: Exception =>
+        log.error(s"Error posting to Identity API: ${e.getMessage}")
+        APINetworkError.increment()
+        respondFooter(OtherError)
+    }
+  }
+
+  private def validateCaptcha(form: EmailForm, shouldValidateCaptcha: Boolean)(implicit
+      request: Request[AnyContent],
+  ) = {
+    if (shouldValidateCaptcha) {
+      for {
+        token <- form.googleRecaptchaResponse match {
+          case Some(token) => Future.successful(token)
+          case None =>
+            RecaptchaMissingTokenError.increment()
+            Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
+        }
+        wsResponse <- googleRecaptchaTokenValidationService.submit(token) recoverWith { case e =>
+          RecaptchaAPIUnavailableError.increment()
+          Future.failed(e)
+        }
+        googleResponse = wsResponse.json.as[GoogleResponse]
+        _ <- {
+          if (googleResponse.success) {
+            RecaptchaValidationSuccess.increment()
+            Future.successful(())
+          } else {
+            RecaptchaValidationError.increment()
+            val errorMessage = s"Google token validation failed with error: ${googleResponse.`error-codes`}"
+            Future.failed(new IllegalAccessException(errorMessage))
+          }
+        }
+      } yield ()
+    } else {
+      Future.successful(())
+    }
+  }
 }
