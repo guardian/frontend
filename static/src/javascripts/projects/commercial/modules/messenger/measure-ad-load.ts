@@ -22,10 +22,6 @@ top.window.postMessage(JSON.stringify(
 </script>
 * */
 
-/**
- * Shape of data we expect to receive from creatives sending 'measure-ad-load' messages
- */
-
 const getSlotId = (specs: unknown): string | undefined =>
 	isObject(specs) && isString(specs.slotId) ? specs.slotId : undefined;
 
