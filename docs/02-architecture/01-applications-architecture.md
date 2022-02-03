@@ -120,7 +120,7 @@ Rss app is rendering the RSS version for all Guardian content.
 # Admin
 Admin app hosts a set of dashboards and tools used by Guardian developers to monitor, manage and troubleshoot the Guardian website.
 
-[All supported routes](https://github.com/guardian/frontend/blob/main/sport/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/admin/conf/routes)
 
 # Archive
 In case none of the other apps can serve a given request, it is finally passed to the Archive app which checks if there is any redirect setup for this url or any old static content attached to it.
