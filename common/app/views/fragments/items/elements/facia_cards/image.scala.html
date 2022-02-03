@@ -28,6 +28,6 @@
     }
     <!--[if IE 9]></video><![endif]-->
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath.map(ImgSrc(_, ImageProfile(width = widths.desktop.map(_.get))))).map { src =>
-        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn && shouldLazyLoadIndex) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src""/>
+        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn && shouldLazyLoadIndex) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
     }
 </picture>
