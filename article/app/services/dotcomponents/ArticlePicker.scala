@@ -4,6 +4,7 @@ import implicits.Requests._
 import model.liveblog.{BlockElement, InteractiveBlockElement}
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
+import services.dotcomrendering.PressedContent
 
 object ArticlePageChecks {
 
@@ -78,14 +79,17 @@ object ArticlePicker {
     article100PercentPageFeatures.forall({ case (_, isMet) => isMet })
   }
 
-  def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
+  def getTier(page: PageWithStoryPackage, path: String, isPressed: String => Boolean = PressedContent.isPressed)(
+      implicit request: RequestHeader,
+  ): RenderType = {
     val checks = dcrChecks(page, request)
     val dcrCanRender = checks.values.forall(identity)
 
     val tier =
-      if (request.forceDCROff) LocalRenderArticle
-      else if (request.forceDCR || dcrCanRender) RemoteRender
-      else LocalRenderArticle
+      if (request.forceDCROff) FrontendLegacy
+      else if (isPressed(path)) PressedArticle
+      else if (request.forceDCR || dcrCanRender) DotcomRendering
+      else FrontendLegacy
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
@@ -96,7 +100,7 @@ object ArticlePicker {
       ("dcrCouldRender" -> dcrCanRender.toString) +
       ("pageTones" -> pageTones)
 
-    if (tier == RemoteRender) {
+    if (tier == DotcomRendering) {
       DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page)
     } else {
       DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page)

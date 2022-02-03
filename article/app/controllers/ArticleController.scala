@@ -99,7 +99,7 @@ class ArticleController(
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit
       request: RequestHeader,
   ): Future[Result] = {
-    val tier = ArticlePicker.getTier(article)
+    val tier = ArticlePicker.getTier(article, path)
     val isAmpSupported = article.article.content.shouldAmplify
     val pageType: PageType = PageType(article, request, context)
     request.getRequestFormat match {
@@ -111,7 +111,7 @@ class ArticleController(
         Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
       case AmpFormat if isAmpSupported =>
         remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
-      case HtmlFormat | AmpFormat if tier == RemoteRender =>
+      case HtmlFormat | AmpFormat if tier == DotcomRendering =>
         remoteRenderer.getArticle(ws, article, blocks, pageType, filterKeyEvents = false)
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
