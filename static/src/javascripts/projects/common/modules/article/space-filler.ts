@@ -1,5 +1,4 @@
 import { findSpace, SpaceError } from 'common/modules/spacefinder';
-import fastdom from 'lib/fastdom-promise';
 import raven from 'lib/raven';
 
 // TODO Move these types to spacefinder once it has been converted to typescript.
@@ -39,7 +38,7 @@ type SpacefinderRules = {
 	fromBottom?: boolean;
 };
 
-type SpacefinderWriter = (paras: HTMLElement[]) => void;
+type SpacefinderWriter = (paras: HTMLElement[]) => Promise<void>;
 
 type SpacefinderOptions = {
 	waitForLinks?: boolean;
@@ -63,9 +62,7 @@ class SpaceFiller {
 	): Promise<boolean> {
 		const insertNextContent = () =>
 			findSpace(rules, options)
-				.then((paragraphs: HTMLElement[]) =>
-					fastdom.mutate(() => writer(paragraphs)),
-				)
+				.then((paragraphs: HTMLElement[]) => writer(paragraphs))
 				.then(() => {
 					return true;
 				})

@@ -71,7 +71,7 @@ const getSlotName = (isMobile, slotCounter) => {
 
 const insertAds = (paras) => {
 	const isMobile = getBreakpoint() === 'mobile';
-
+	let fastdomPromises = [];
 	for (let i = 0; i < paras.length && AD_COUNTER < MAX_ADS; i += 1) {
 		const para = paras[i];
 		if (para && para.parentNode) {
@@ -80,12 +80,16 @@ const insertAds = (paras) => {
 				classes: 'liveblog-inline',
 			});
 			// insert the ad slot container into the DOM
-			para.parentNode.insertBefore(adSlot, para.nextSibling);
+			const result = fastdom.mutate(() => {
+				para.parentNode.insertBefore(adSlot, para.nextSibling);
+			});
+			fastdomPromises.push(result);
 			// load and display the advert via GAM
 			addSlot(adSlot, false);
 			AD_COUNTER += 1;
 		}
 	}
+	return Promise.all(fastdomPromises);
 };
 
 const fill = (rules) =>

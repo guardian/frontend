@@ -1,6 +1,7 @@
 import { adSizes } from '@guardian/commercial-core';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import config from '../../../lib/config';
+import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import type {
@@ -28,17 +29,23 @@ const insertAdAtPara = (
 	type: string,
 	classes?: string,
 	sizes?: SizeMappings,
-): void => {
+): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
 		classes,
 		sizes,
 	});
-	if (para.parentNode) {
-		para.parentNode.insertBefore(ad, para);
-	}
-	const shouldForceDisplay = ['im', 'carrot'].includes(name);
-	addSlot(ad, shouldForceDisplay);
+
+	return fastdom
+		.mutate(() => {
+			if (para.parentNode) {
+				para.parentNode.insertBefore(ad, para);
+			}
+		})
+		.then(() => {
+			const shouldForceDisplay = ['im', 'carrot'].includes(name);
+			addSlot(ad, shouldForceDisplay);
+		});
 };
 
 let previousAllowedCandidate: SpacefinderItem | undefined;
@@ -115,19 +122,22 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 	const rules = isInline1 ? defaultRules : relaxedRules;
 
-	const insertAds: SpacefinderWriter = (paras) => {
-		paras.slice(0, isInline1 ? 1 : paras.length).map((para, i) => {
-			const inlineId = i + (isInline1 ? 1 : 2);
-			insertAdAtPara(
-				para,
-				`inline${inlineId}`,
-				'inline',
-				`inline${isInline1 ? '' : ' offset-right'}`,
-				isInline1
-					? undefined
-					: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
-			);
-		});
+	const insertAds: SpacefinderWriter = async (paras) => {
+		const slots = paras
+			.slice(0, isInline1 ? 1 : paras.length)
+			.map((para, i) => {
+				const inlineId = i + (isInline1 ? 1 : 2);
+				return insertAdAtPara(
+					para,
+					`inline${inlineId}`,
+					'inline',
+					`inline${isInline1 ? '' : ' offset-right'}`,
+					isInline1
+						? undefined
+						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
+				);
+			});
+		await Promise.all(slots);
 	};
 
 	return spaceFiller.fillSpace(rules, insertAds, {
@@ -161,8 +171,8 @@ const addMobileInlineAds = (): Promise<boolean> => {
 		filter: filterNearbyCandidates(adSizes.mpu.height),
 	};
 
-	const insertAds: SpacefinderWriter = (paras) => {
-		paras.map((para, i) =>
+	const insertAds: SpacefinderWriter = async (paras) => {
+		const slots = paras.map((para, i) =>
 			insertAdAtPara(
 				para,
 				i === 0 ? 'top-above-nav' : `inline${i}`,
@@ -170,6 +180,7 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				'inline',
 			),
 		);
+		await Promise.all(slots);
 	};
 
 	return spaceFiller.fillSpace(rules, insertAds, {
