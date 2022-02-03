@@ -3,7 +3,7 @@ import {
 	clearPermutiveSegments,
 	getPermutiveSegments,
 } from '@guardian/commercial-core';
-import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import type { CountryCode } from '@guardian/libs';
@@ -67,7 +67,7 @@ type ContentType =
 	| 'audio'
 	| 'article';
 
-type PageTargeting = PartialWithNulls<{
+export type PageTargeting = PartialWithNulls<{
 	ab: string[];
 	at: string; // Ad Test
 	bl: string[]; // BLog tags
@@ -108,9 +108,6 @@ type PageTargeting = PartialWithNulls<{
 	[_: string]: string | string[];
 }>;
 
-let myPageTargeting: PageTargeting = {};
-let latestCmpHasInitialised: boolean;
-let latestCMPState: ConsentState | null = null;
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
 const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
@@ -135,6 +132,7 @@ const skinsizeTargeting = () => {
 	return vp.width >= 1560 ? 'l' : 's';
 };
 
+// TODO - what does this mean if we now wait for consent state
 const inskinTargeting = (): TrueOrFalse => {
 	// Don’t show inskin if we cannot tell if a privacy message will be shown
 	if (!cmp.hasInitialised()) return 'f';
@@ -273,13 +271,6 @@ const buildAppNexusTargeting = once((pageTargeting: PageTargeting): string =>
 	formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting)),
 );
 
-const getRdpValue = (ccpaState: boolean | null): string => {
-	if (ccpaState === null) {
-		return 'na';
-	}
-	return ccpaState ? 't' : 'f';
-};
-
 const consentedToAllPurposes = (consents: TCFv2ConsentList): boolean => {
 	return (
 		Object.keys(consents).length > 0 &&
@@ -287,13 +278,7 @@ const consentedToAllPurposes = (consents: TCFv2ConsentList): boolean => {
 	);
 };
 
-const getTcfv2ConsentValue = (state: ConsentState | null): string => {
-	if (!state || !state.tcfv2) return 'na';
-
-	return consentedToAllPurposes(state.tcfv2.consents) ? 't' : 'f';
-};
-
-const getAdConsentFromState = (state: ConsentState | null): boolean => {
+const canTarget = (state?: ConsentState): boolean => {
 	if (!state) return false;
 
 	if (state.ccpa) {
@@ -346,70 +331,89 @@ const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
 	return filtered;
 };
 
-const rebuildPageTargeting = () => {
-	latestCmpHasInitialised = cmp.hasInitialised();
-	const adConsentState = getAdConsentFromState(latestCMPState);
-	const ccpaState = latestCMPState?.ccpa
-		? latestCMPState.ccpa.doNotSell
-		: null;
-	const tcfv2EventStatus = latestCMPState?.tcfv2
-		? latestCMPState.tcfv2.eventStatus
-		: 'na';
-
-	const { page } = window.guardian.config;
-	const amtgrp = latestCMPState?.tcfv2
-		? getAdManagerGroup(adConsentState)
+const getConsentRelatedPageTargeting = (
+	canTargetAds: boolean,
+	consentState?: ConsentState,
+): PageTargeting => {
+	const amtgrp = consentState?.tcfv2
+		? getAdManagerGroup(canTargetAds)
 		: getAdManagerGroup();
-	// personalised ads targeting
-	if (!adConsentState) clearPermutiveSegments();
-	// flowlint-next-line sketchy-null-bool:off
-	const paTargeting: PageTargeting = { pa: adConsentState ? 't' : 'f' };
+
+	if (!consentState) {
+		return {
+			amtgrp,
+			cmp_interaction: 'na',
+			consent_tcfv2: 'na',
+			pa: 'f',
+			rdp: 'na',
+		};
+	}
+	return {
+		amtgrp,
+		cmp_interaction: consentState.tcfv2
+			? consentState.tcfv2.eventStatus
+			: 'na',
+		consent_tcfv2: consentState.tcfv2
+			? consentedToAllPurposes(consentState.tcfv2.consents)
+				? 't'
+				: 'f'
+			: 'na',
+		pa: canTargetAds ? 't' : 'f',
+		rdp: consentState.ccpa
+			? consentState.ccpa.doNotSell
+				? 't'
+				: 'f'
+			: 'na',
+	};
+};
+
+const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
+	const canTargetAds = canTarget(consentState);
+	if (!canTargetAds) clearPermutiveSegments();
+	const consentRelatedTargeting = getConsentRelatedPageTargeting(
+		canTargetAds,
+		consentState,
+	);
+	const { page } = window.guardian.config;
 	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
 		? { af: 't' }
 		: {};
-
 	const pageTargets: PageTargeting = {
-		...{
-			ab: abParam(),
-			amtgrp,
-			at: getCookie({ name: 'adtest', shouldMemoize: true }),
-			bp: findBreakpoint(),
-			cc: getCountryCode(), // if turned async, we could use getLocale()
-			cmp_interaction: tcfv2EventStatus,
-			consent_tcfv2: getTcfv2ConsentValue(latestCMPState),
-			// dcre: DCR eligible
-			// when the page is DCR eligible and was rendered by DCR or
-			// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
-			dcre:
-				window.guardian.config.isDotcomRendering ||
-				config.get<boolean>('page.dcrCouldRender', false)
-					? 't'
-					: 'f',
-			fr: getFrequencyValue(),
-			inskin: inskinTargeting(),
-			permutive: getPermutiveSegments(),
-			pv: window.guardian.config.ophan.pageViewId,
-			rdp: getRdpValue(ccpaState),
-			ref: getReferrer(),
-			// rp: rendering platform
-			rp: window.guardian.config.isDotcomRendering
-				? 'dotcom-rendering'
-				: 'dotcom-platform',
-			// s: section
-			// for reference in a macro, so cannot be extracted from ad unit
-			s: page.section,
-			sens: page.isSensitive ? 't' : 'f',
-			si: isUserLoggedIn() ? 't' : 'f',
-			skinsize: skinsizeTargeting(),
-			urlkw: getUrlKeywords(page.pageId),
-			// vl: video length
-			// round video duration up to nearest 30 multiple
-			vl: page.videoDuration
-				? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-				: null,
-		},
+		ab: abParam(),
+		at: getCookie({ name: 'adtest', shouldMemoize: true }),
+		bp: findBreakpoint(),
+		cc: getCountryCode(), // if turned async, we could use getLocale()
+		// dcre: DCR eligible
+		// when the page is DCR eligible and was rendered by DCR or
+		// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
+		dcre:
+			window.guardian.config.isDotcomRendering ||
+			config.get<boolean>('page.dcrCouldRender', false)
+				? 't'
+				: 'f',
+		fr: getFrequencyValue(),
+		inskin: inskinTargeting(),
+		permutive: getPermutiveSegments(),
+		pv: window.guardian.config.ophan.pageViewId,
+		ref: getReferrer(),
+		// rp: rendering platform
+		rp: window.guardian.config.isDotcomRendering
+			? 'dotcom-rendering'
+			: 'dotcom-platform',
+		// s: section
+		// for reference in a macro, so cannot be extracted from ad unit
+		s: page.section,
+		sens: page.isSensitive ? 't' : 'f',
+		si: isUserLoggedIn() ? 't' : 'f',
+		skinsize: skinsizeTargeting(),
+		urlkw: getUrlKeywords(page.pageId),
+		// vl: video length
+		// round video duration up to nearest 30 multiple
+		vl: page.videoDuration
+			? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
+			: null,
+		...consentRelatedTargeting,
 		...page.sharedAdTargeting,
-		...paTargeting,
 		...adFreeTargeting,
 	};
 
@@ -428,34 +432,8 @@ const rebuildPageTargeting = () => {
 	return pageTargeting;
 };
 
-const getPageTargeting = (): PageTargeting => {
-	if (Object.keys(myPageTargeting).length !== 0) {
-		// If CMP was initialised since the last time myPageTargeting was built - rebuild
-		if (latestCmpHasInitialised !== cmp.hasInitialised()) {
-			myPageTargeting = rebuildPageTargeting();
-		}
-		return myPageTargeting;
-	}
-
-	// First call binds to onConsentChange and returns {}
-	onConsentChange((state) => {
-		// On every consent change we rebuildPageTargeting
-		latestCMPState = state;
-		myPageTargeting = rebuildPageTargeting();
-	});
-	return myPageTargeting;
-};
-
-const resetPageTargeting = (): void => {
-	myPageTargeting = {};
-};
-
 export {
 	getPageTargeting,
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
-};
-
-export const _ = {
-	resetPageTargeting,
 };
