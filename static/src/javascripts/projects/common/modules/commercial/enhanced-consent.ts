@@ -46,6 +46,13 @@ const enhanceConsentState = (state: ConsentState): ConsentStateEnhanced => {
 	return buildConsentStateEnhanced(state, false, null);
 };
 
+/**
+ * Resolves `ConsentStateEnhanced` which enhances `ConsentState` with two properties:
+ * - `canTarget`: if the user can be targeted for personalisation according to the active consent framework
+ * - `framework`: the active consent framework
+ *
+ * @returns Promise<ConsentStateEnhanced>
+ */
 const getEnhancedConsent = (): Promise<ConsentStateEnhanced> =>
 	new Promise<ConsentStateEnhanced>((resolve, reject) => {
 		onConsentChange((consentState) => {
