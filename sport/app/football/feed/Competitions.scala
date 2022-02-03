@@ -8,12 +8,11 @@ import model.{Competition, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.DateTimeComparator
 import pa.{FootballMatch, _}
 
-import java.time.LocalDate
+import java.time.{Clock, LocalDate, ZoneOffset, ZonedDateTime}
 import java.util.Comparator
 import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.Ordering.Implicits._
-import java.time.Clock
 
 trait Competitions extends implicits.Football {
 
@@ -102,8 +101,13 @@ trait Competitions extends implicits.Football {
   def matches: Seq[FootballMatch] = competitions.flatMap(_.matches)
 
   def isAMatchInProgress(matches: Seq[FootballMatch], clock: Clock): Boolean =
-    matches.exists(game => game.isLive || game.date.minusMinutes(5).toLocalDate.isBefore(LocalDate.now(clock)))
-
+    matches.exists(game => {
+      val gameUtc = game.date.withZoneSameInstant(ZoneOffset.UTC)
+      val currentTimeUtc = ZonedDateTime.now.withZoneSameInstant(ZoneOffset.UTC)
+      game.isLive || (gameUtc.minusMinutes(5).isBefore(currentTimeUtc) && gameUtc
+        .plusMinutes(5)
+        .isAfter(currentTimeUtc))
+    })
 }
 
 object Competitions {
