@@ -141,7 +141,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
 
     val dataModel = DotcomBlocksRenderingDataModel.forLiveblog()
-    val payload = DotcomBlocksRenderingDataModel.toJson()
+    val payload = DotcomBlocksRenderingDataModel.toJson(dataModel)
 
     post(ws, ???, Configuration.rendering.baseURL + "/Blocks", page)
 

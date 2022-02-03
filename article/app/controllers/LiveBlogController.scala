@@ -18,6 +18,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
+import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
@@ -84,7 +85,7 @@ class LiveBlogController(
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
 //        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks, range))
-        case (blog: LiveBlogPage, _)                             => getJson(blog, range, isLivePage, filter)
+        case (blog: LiveBlogPage, _) => getJson(blog, range, isLivePage, filter)
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
@@ -207,6 +208,12 @@ class LiveBlogController(
     }
   }
 
+  private def getDCRBlocksHTML(): Future[Html] = {
+    remoteRenderer.getBlocks(ws, ???, ???, ???) map { result =>
+      new Html(result.body.toString)
+    }
+  }
+
   private[this] def renderNewerUpdatesJson(
       page: PageWithStoryPackage,
       lastUpdateBlockId: SinceBlockId,
@@ -215,35 +222,38 @@ class LiveBlogController(
       remoteRender: Boolean,
       liveblog: LiveBlogPage,
   )(implicit request: RequestHeader): Future[Result] = {
-    val newBlocks: Seq[BodyBlock] = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
-    val blocksHtml = remoteRender match {
-      case false => views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
+    val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
 
-
-      case true =>
-        val pageType = PageType(liveblog, request, context)
-        remoteRenderer.getBlocks(ws, page, ???, ???)
-    }
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
       model.KeyEventData(newBlocks, Edition(request).timezone),
       filterKeyEvents,
     )
 
-    val allPagesJson = Seq(
-      "timeline" -> timelineHtml,
-      "numNewBlocks" -> newBlocks.size,
-    )
-    val livePageJson = isLivePage.filter(_ == true).map { _ =>
-      "html" -> blocksHtml
-    }
-    val mostRecent = newBlocks.headOption.map { block =>
-      "mostRecentBlockId" -> s"block-${block.id}"
-    }
+    for {
+      blocksHtml <- remoteRender match {
+        case true =>
+//          val pageType = PageType(liveblog, request, context)
+          getDCRBlocksHTML()
+        case false =>
+          Future.successful(views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone))
+          ???
+      }
+    } yield {
+      val allPagesJson = Seq(
+        "timeline" -> timelineHtml,
+        "numNewBlocks" -> newBlocks.size,
+      )
+      val livePageJson = isLivePage.filter(_ == true).map { _ =>
+        "html" -> blocksHtml
+      }
+      val mostRecent = newBlocks.headOption.map { block =>
+        "mostRecentBlockId" -> s"block-${block.id}"
+      }
 
-    Future {
       Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
     }
+
   }
 
   private[this] def renderGuuiJson(

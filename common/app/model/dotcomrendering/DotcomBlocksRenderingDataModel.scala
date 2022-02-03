@@ -43,7 +43,7 @@ object DotcomBlocksRenderingDataModel {
         "config" -> model.config,
       )
 
-      ElementsEnhancer.enhanceDcrObject(obj)
+      ElementsEnhancer.enhanceBlocks(obj)
     }
   }
 
