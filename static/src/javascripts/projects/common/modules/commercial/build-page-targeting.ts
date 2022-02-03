@@ -6,6 +6,8 @@ import { getContentTargeting } from '@guardian/commercial-core/dist/esm/targetin
 import type { ContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
 import type { SessionTargeting } from '@guardian/commercial-core/dist/esm/targeting/session';
 import { getSessionTargeting } from '@guardian/commercial-core/dist/esm/targeting/session';
+import type { ViewportTargeting } from '@guardian/commercial-core/dist/esm/targeting/viewport';
+import { getViewportTargeting } from '@guardian/commercial-core/dist/esm/targeting/viewport';
 import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
@@ -14,7 +16,7 @@ import { getCookie, isString, log, storage } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getReferrer as detectGetReferrer } from '../../../../lib/detect';
-import { getTweakpoint, getViewport } from '../../../../lib/detect-viewport';
+import { getViewport } from '../../../../lib/detect-viewport';
 import { getCountryCode } from '../../../../lib/geolocation';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
 import { getSynchronousParticipations } from '../experiments/ab';
@@ -112,35 +114,6 @@ export type PageTargeting = PartialWithNulls<{
 }>;
 
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
-
-const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
-	const width = getViewport().width;
-	switch (getTweakpoint(width)) {
-		case 'mobile':
-		case 'mobileMedium':
-		case 'mobileLandscape':
-			return 'mobile';
-		case 'phablet':
-		case 'tablet':
-			return 'tablet';
-		case 'desktop':
-		case 'leftCol':
-		case 'wide':
-			return 'desktop';
-	}
-};
-
-const skinsizeTargeting = () => {
-	const vp = getViewport();
-	return vp.width >= 1560 ? 'l' : 's';
-};
-
-// TODO - what does this mean if we now wait for consent state
-const inskinTargeting = (): TrueOrFalse => {
-	// Don’t show inskin if we cannot tell if a privacy message will be shown
-	if (!cmp.hasInitialised()) return 'f';
-	return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
-};
 
 const getFrequencyValue = (): Frequency => {
 	const visitCount: number = parseInt(
@@ -332,17 +305,20 @@ const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
 		referrer: detectGetReferrer(),
 	});
 
+	const viewportTargeting: ViewportTargeting = getViewportTargeting(
+		getViewport().width,
+		!cmp.hasInitialised() || cmp.willShowPrivacyMessageSync(),
+	);
+
 	const pageTargets: PageTargeting = {
-		bp: findBreakpoint(),
 		fr: getFrequencyValue(),
-		inskin: inskinTargeting(),
 		permutive: getPermutiveSegments(),
-		skinsize: skinsizeTargeting(),
 		...consentRelatedTargeting,
 		...page.sharedAdTargeting,
 		...adFreeTargeting,
 		...contentTargeting,
 		...sessionTargeting,
+		...viewportTargeting,
 	};
 
 	// filter out empty values
