@@ -165,7 +165,10 @@ const createAdsConfigDisabled = (): AdsConfigDisabled => {
 const createAdsConfigEnabled = (
 	consentState: ConsentState,
 ): AdsConfigEnabled => {
-	const custParams = getPageTargeting() as Record<string, MaybeArray<string>>;
+	const custParams = getPageTargeting(consentState) as Record<
+		string,
+		MaybeArray<string>
+	>;
 	custParams.permutive = getPermutivePFPSegments();
 
 	const adsConfigBasic: AdsConfigBasic = {

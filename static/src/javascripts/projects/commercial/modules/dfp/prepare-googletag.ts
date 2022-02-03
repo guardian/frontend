@@ -1,7 +1,8 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { loadScript } from '@guardian/libs';
-import { getInitialConsentState } from 'commercial/initialConsentState';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
+import type { ConsentStateEnhanced } from 'common/modules/commercial/enhanced-consent';
+import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
 import { removeSlots } from '../../../commercial/modules/remove-slots';
@@ -77,9 +78,10 @@ const setPublisherProvidedId = (): void =>
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
-		// note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
+		// Note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
 		// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
 		// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
+		// setPageTargeting early so it is available for appnexus scripts
 		window.googletag.cmd.push(
 			setDfpListeners,
 			setPageTargeting,
@@ -89,57 +91,50 @@ export const init = (): Promise<void> => {
 			},
 		);
 
-		return getInitialConsentState().then((state) => {
-			let canRun = true;
-			if (state.ccpa) {
-				const doNotSell = state.ccpa.doNotSell;
-				// CCPA mode
-				window.googletag.cmd.push(() => {
-					window.googletag.pubads().setPrivacySettings({
-						restrictDataProcessing: doNotSell,
-					});
-				});
-				if (!state.ccpa.doNotSell) {
+		return getEnhancedConsent().then(
+			(consentState: ConsentStateEnhanced) => {
+				let canRun = true;
+
+				if (consentState.canTarget) {
 					window.googletag.cmd.push(setPublisherProvidedId);
 				}
-			} else {
-				if (state.tcfv2) {
-					// TCFv2 mode
-					const canTarget = Object.values(state.tcfv2.consents).every(
-						Boolean,
-					);
-					if (canTarget) {
-						window.googletag.cmd.push(setPublisherProvidedId);
-					}
 
-					canRun = getConsentFor('googletag', state);
-				} else if (state.aus) {
+				if (consentState.ccpa) {
+					// CCPA mode
+					// canRun stays true, set RDP flag
+					window.googletag.cmd.push(() => {
+						window.googletag.pubads().setPrivacySettings({
+							restrictDataProcessing: !consentState.canTarget,
+						});
+					});
+				} else if (consentState.tcfv2) {
+					// TCFv2 mode
+					canRun = getConsentFor('googletag', consentState);
+				} else if (consentState.aus) {
 					// AUS mode
-					// canRun stays true, set NPA flag if consent is retracted
-					const npaFlag = !getConsentFor('googletag', state);
+					// canRun stays true, set NPA flag
+					const npaFlag = !getConsentFor('googletag', consentState);
 					window.googletag.cmd.push(() => {
 						window.googletag
 							.pubads()
 							.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
 					});
-					if (!npaFlag) {
-						window.googletag.cmd.push(setPublisherProvidedId);
-					}
 				}
-			}
-			// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
-			// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-			if (canRun) {
-				void loadScript(
-					config.get<string>(
-						'libs.googletag',
-						'//www.googletagservices.com/tag/js/gpt.js',
-					),
-					{ async: false },
-				);
-			}
-			return Promise.resolve();
-		});
+
+				// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
+				// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
+				if (canRun) {
+					void loadScript(
+						config.get<string>(
+							'libs.googletag',
+							'//www.googletagservices.com/tag/js/gpt.js',
+						),
+						{ async: false },
+					);
+				}
+				return Promise.resolve();
+			},
+		);
 	};
 
 	if (commercialFeatures.dfpAdvertising) {

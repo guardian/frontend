@@ -1,10 +1,10 @@
 import { log } from '@guardian/libs';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
+import type { PageTargeting } from '../../../../common/modules/commercial/build-page-targeting';
 import {
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
-	getPageTargeting,
 } from '../../../../common/modules/commercial/build-page-targeting';
 import {
 	isInAuOrNz,
@@ -36,10 +36,6 @@ import {
 	stripTrailingNumbersAbove1,
 } from '../utils';
 import { getAppNexusDirectBidParams } from './appnexus';
-
-// The below line is needed for page skins to show
-// Why? Does it trigger an eager building of the page targeting?
-getPageTargeting();
 
 const isArticle = config.get('page.contentType') === 'Article';
 
@@ -252,29 +248,26 @@ const getTripleLiftInventoryCode = (
 	return '';
 };
 
-const getOzoneTargeting = (): Record<string, unknown> => {
-	const appNexusTargetingObject = buildAppNexusTargetingObject(
-		getPageTargeting(),
-	);
-	return appNexusTargetingObject;
-};
-
 // Is pbtest being used?
 const isPbTestOn = () => Object.keys(pbTestNameMap()).length > 0;
 // Helper for conditions
 const inPbTestOr = (liveClause: boolean) => isPbTestOn() || liveClause;
 
 /* Bidders */
-const appNexusBidder: PrebidBidder = {
+const appNexusBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
+	pageTargeting: PageTargeting,
+) => ({
 	name: 'and',
 	switchName: 'prebidAppnexus',
 	bidParams: (
 		slotId: string,
 		sizes: HeaderBiddingSize[],
-	): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes),
-};
+	): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes, pageTargeting),
+});
 
-const openxClientSideBidder: PrebidBidder = {
+const openxClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
+	pageTargeting: PageTargeting,
+) => ({
 	name: 'oxd',
 	switchName: 'prebidOpenx',
 	bidParams: (): PrebidOpenXParams => {
@@ -282,25 +275,28 @@ const openxClientSideBidder: PrebidBidder = {
 			return {
 				delDomain: 'guardian-us-d.openx.net',
 				unit: '540279544',
-				customParams: buildAppNexusTargetingObject(getPageTargeting()),
+				customParams: buildAppNexusTargetingObject(pageTargeting),
 			};
 		}
 		if (isInAuOrNz()) {
 			return {
 				delDomain: 'guardian-aus-d.openx.net',
 				unit: '540279542',
-				customParams: buildAppNexusTargetingObject(getPageTargeting()),
+				customParams: buildAppNexusTargetingObject(pageTargeting),
 			};
 		}
 		// UK and ROW
 		return {
 			delDomain: 'guardian-d.openx.net',
 			unit: '540279541',
-			customParams: buildAppNexusTargetingObject(getPageTargeting()),
+			customParams: buildAppNexusTargetingObject(pageTargeting),
 		};
 	},
-};
-const ozoneClientSideBidder: PrebidBidder = {
+});
+
+const ozoneClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
+	pageTargeting: PageTargeting,
+) => ({
 	name: 'ozone',
 	switchName: 'prebidOzone',
 	bidParams: (): PrebidOzoneParams => ({
@@ -310,23 +306,25 @@ const ozoneClientSideBidder: PrebidBidder = {
 		customData: [
 			{
 				settings: {},
-				targeting: getOzoneTargeting(),
+				targeting: buildAppNexusTargetingObject(pageTargeting),
 			},
 		],
 		ozoneData: {}, // TODO: confirm if we need to send any
 	}),
-};
+});
 
-const sonobiBidder: PrebidBidder = {
+const sonobiBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
+	pageTargeting: PageTargeting,
+) => ({
 	name: 'sonobi',
 	switchName: 'prebidSonobi',
 	bidParams: (slotId: string): PrebidSonobiParams => ({
 		ad_unit: window.guardian.config.page.adUnit,
 		dom_id: slotId,
-		appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
+		appNexusTargeting: buildAppNexusTargeting(pageTargeting),
 		pageViewId: window.guardian.ophan.pageViewId,
 	}),
-};
+});
 
 const getPubmaticPublisherId = (): string => {
 	if (isInUsOrCa()) {
@@ -467,21 +465,24 @@ const biddersSwitchedOn = (allBidders: PrebidBidder[]): PrebidBidder[] => {
 	return allBidders.filter((bidder) => isSwitchedOn(bidder));
 };
 
-const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
+const currentBidders = (
+	slotSizes: HeaderBiddingSize[],
+	pageTargeting: PageTargeting,
+): PrebidBidder[] => {
 	const biddersToCheck: Array<[boolean, PrebidBidder]> = [
 		[shouldIncludeCriteo(), criteoBidder],
 		[shouldIncludeSmart(), smartBidder],
-		[shouldIncludeSonobi(), sonobiBidder],
+		[shouldIncludeSonobi(), sonobiBidder(pageTargeting)],
 		[shouldIncludeTrustX(), trustXBidder],
 		[shouldIncludeTripleLift(), tripleLiftBidder],
-		[shouldIncludeAppNexus(), appNexusBidder],
+		[shouldIncludeAppNexus(), appNexusBidder(pageTargeting)],
 		[shouldIncludeImproveDigital(), improveDigitalBidder],
 		[shouldIncludeImproveDigitalSkin(), improveDigitalSkinBidder],
 		[shouldIncludeXaxis(), xaxisBidder],
 		[true, pubmaticBidder],
 		[shouldIncludeAdYouLike(slotSizes), adYouLikeBidder],
-		[shouldUseOzoneAdaptor(), ozoneClientSideBidder],
-		[shouldIncludeOpenx(), openxClientSideBidder],
+		[shouldUseOzoneAdaptor(), ozoneClientSideBidder(pageTargeting)],
+		[shouldIncludeOpenx(), openxClientSideBidder(pageTargeting)],
 	];
 
 	const otherBidders = biddersToCheck
@@ -497,8 +498,9 @@ const currentBidders = (slotSizes: HeaderBiddingSize[]): PrebidBidder[] => {
 export const bids = (
 	slotId: string,
 	slotSizes: HeaderBiddingSize[],
+	pageTargeting: PageTargeting,
 ): PrebidBid[] =>
-	currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
+	currentBidders(slotSizes, pageTargeting).map((bidder: PrebidBidder) => ({
 		bidder: bidder.name,
 		params: bidder.bidParams(slotId, slotSizes),
 	}));
