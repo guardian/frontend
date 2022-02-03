@@ -25,8 +25,10 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
       (Duration.ofSeconds(1), true),
       (Duration.ofMinutes(1), true),
       (Duration.ofMinutes(4).plusSeconds(59), true),
+      (Duration.ofMinutes(5), false),
+      (Duration.ofMinutes(10), false),
     ) foreach { testcase =>
-      ("isAMatchInProgress return true if there's a match that started " + testcase._1 + " minutes ago") in {
+      (s"isAMatchInProgress returns ${testcase._2} if there's a match that started ${testcase._1} ago") in {
         val matches: Seq[FootballMatch] =
           FootballTestData.matchesWithLiveMatchAtCurrentMinusDuration(testcase._1)
         val testCompetition = FootballTestData.competitions(1).copy(matches = matches)
@@ -37,11 +39,33 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
         isAMatchInProgress should equal(testcase._2)
       }
     }
+
+    Seq(
+      (Duration.ofSeconds(1), true),
+      (Duration.ofMinutes(1), true),
+      (Duration.ofMinutes(4).plusSeconds(59), true),
+      (Duration.ofMinutes(5), false),
+      (Duration.ofMinutes(10), false),
+    ) foreach { testcase =>
+      (s"isAMatchInProgress returns ${testcase._2} if there's a match that will in ${testcase._1}") in {
+        val matches: Seq[FootballMatch] =
+          FootballTestData.matchesWithLiveMatchAtCurrentPlusDuration(testcase._1)
+        val testCompetition = FootballTestData.competitions(1).copy(matches = matches)
+        val competitions = Competitions(Seq(testCompetition))
+        val test = FootballTestData.today
+        val isAMatchInProgress = competitions.isAMatchInProgress(competitions.matches, FootballTestData.clock)
+
+        isAMatchInProgress should equal(testcase._2)
+      }
+    }
   }
 
   // I had trouble using the original FootballTestData because it needed testFootballClient
   // And in my test I didn't need any client at all. As it's testing the Competitions methods
   // For now I copied the things from the original FootballTestData until I figure out how to fix this
+  // There has also been some changes compared to the original one such as adding clock,
+  // updating matchDay signature to have isLive as parameter and adding two methods
+  // matchesWithLiveMatchAtCurrentMinusDuration & matchesWithLiveMatchAtCurrentPlusDuration
   object FootballTestData {
     private val zone = ZoneId.of("Europe/London")
     val today = ZonedDateTime.now().withZoneSameInstant(zone)
