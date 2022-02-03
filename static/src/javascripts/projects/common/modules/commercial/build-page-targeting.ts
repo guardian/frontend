@@ -3,6 +3,8 @@ import {
 	clearPermutiveSegments,
 	getPermutiveSegments,
 } from '@guardian/commercial-core';
+import { getContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
+import type { ContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
 import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
@@ -225,18 +227,6 @@ const getReferrer = (): string | null => {
 	return matchedRef.id;
 };
 
-const getUrlKeywords = (pageId?: string): string[] => {
-	if (!pageId) return [];
-
-	const segments = pageId.split('/');
-	const noEmptyStrings = segments.filter(Boolean); // This handles a trailing slash
-	const keywords =
-		noEmptyStrings.length > 0
-			? noEmptyStrings[noEmptyStrings.length - 1].split('-')
-			: [];
-	return keywords;
-};
-
 const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
 	const asKeyValues = Object.entries(obj).map((entry) => {
 		const [key, value] = entry;
@@ -378,43 +368,36 @@ const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
 	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
 		? { af: 't' }
 		: {};
+
+	const contentTargeting: ContentTargeting = getContentTargeting({
+		eligibleForDCR:
+			window.guardian.config.isDotcomRendering ||
+			config.get<boolean>('page.dcrCouldRender', false),
+		path: `/${page.pageId}`,
+		renderingPlatform: window.guardian.config.isDotcomRendering
+			? 'dotcom-rendering'
+			: 'dotcom-platform',
+		section: page.section,
+		sensitive: page.isSensitive,
+		videoLength: page.videoDuration,
+	});
+
 	const pageTargets: PageTargeting = {
 		ab: abParam(),
 		at: getCookie({ name: 'adtest', shouldMemoize: true }),
 		bp: findBreakpoint(),
 		cc: getCountryCode(), // if turned async, we could use getLocale()
-		// dcre: DCR eligible
-		// when the page is DCR eligible and was rendered by DCR or
-		// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
-		dcre:
-			window.guardian.config.isDotcomRendering ||
-			config.get<boolean>('page.dcrCouldRender', false)
-				? 't'
-				: 'f',
 		fr: getFrequencyValue(),
 		inskin: inskinTargeting(),
 		permutive: getPermutiveSegments(),
 		pv: window.guardian.config.ophan.pageViewId,
 		ref: getReferrer(),
-		// rp: rendering platform
-		rp: window.guardian.config.isDotcomRendering
-			? 'dotcom-rendering'
-			: 'dotcom-platform',
-		// s: section
-		// for reference in a macro, so cannot be extracted from ad unit
-		s: page.section,
-		sens: page.isSensitive ? 't' : 'f',
 		si: isUserLoggedIn() ? 't' : 'f',
 		skinsize: skinsizeTargeting(),
-		urlkw: getUrlKeywords(page.pageId),
-		// vl: video length
-		// round video duration up to nearest 30 multiple
-		vl: page.videoDuration
-			? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-			: null,
 		...consentRelatedTargeting,
 		...page.sharedAdTargeting,
 		...adFreeTargeting,
+		...contentTargeting,
 	};
 
 	// filter out empty values
