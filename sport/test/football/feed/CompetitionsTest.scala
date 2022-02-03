@@ -21,28 +21,17 @@ import pa.{
 
 class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
   "Competitions" - {
-    "isAMatchInProgress return true if there's a match that started 1 minute ago" in {
-      val matches: Seq[FootballMatch] =
-        FootballTestData.matchesWithLiveMatchAtCurrentMinusDuration(Duration.ofMinutes(1))
-      val testCompetition = FootballTestData.competitions(1).copy(matches = matches)
-      val competitions = Competitions(Seq(testCompetition))
+    Seq((1, true), (5, true)) foreach { testcase =>
+      ("isAMatchInProgress return true if there's a match that started " + testcase._1 + " minutes ago") in {
+        val matches: Seq[FootballMatch] =
+          FootballTestData.matchesWithLiveMatchAtCurrentMinusDuration(Duration.ofMinutes(testcase._1))
+        val testCompetition = FootballTestData.competitions(1).copy(matches = matches)
+        val competitions = Competitions(Seq(testCompetition))
 
-      val isAMatchInProgress = competitions.isAMatchInProgress(competitions.matches, FootballTestData.clock)
+        val isAMatchInProgress = competitions.isAMatchInProgress(competitions.matches, FootballTestData.clock)
 
-      isAMatchInProgress should equal(true)
-    }
-
-    "isAMatchInProgress return true if there's a match that started 5 minute ago" in {
-      val matches: Seq[FootballMatch] =
-        FootballTestData.matchesWithLiveMatchAtCurrentMinusDuration(Duration.ofMinutes(5))
-      val testCompetition = FootballTestData.competitions(1).copy(matches = matches)
-
-      val test = FootballTestData.today
-      val competitions = Competitions(Seq(testCompetition))
-
-      val isAMatchInProgress = competitions.isAMatchInProgress(competitions.matches, FootballTestData.clock)
-
-      isAMatchInProgress should equal(true)
+        isAMatchInProgress should equal(testcase._2)
+      }
     }
   }
 
