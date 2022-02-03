@@ -17,6 +17,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       article: PageWithStoryPackage,
       blocks: Blocks,
       pageType: PageType,
+      filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     Future(
