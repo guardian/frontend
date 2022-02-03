@@ -153,10 +153,11 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				minAbove: 35,
 				minBelow: 200,
 			},
+			// fromBottom looks like it was mistakenly put in the selectors object where it's ignored by spacefinder
+			// and belongs at the root level of SpacefinderRules.
+			// TODO Investigate the impact of correcting the typo - should mobile inline slots be filled fromBottom?
+			// fromBottom: true,
 		},
-		// TODO this looks like it was mistakenly put in the selectors object.
-		// What is the impact of correcting the typo??
-		fromBottom: true,
 		filter: filterNearbyCandidates(adSizes.mpu.height),
 	};
 
