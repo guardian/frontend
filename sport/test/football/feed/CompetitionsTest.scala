@@ -21,10 +21,14 @@ import pa.{
 
 class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
   "Competitions" - {
-    Seq((1, true), (5, true)) foreach { testcase =>
+    Seq(
+      (Duration.ofSeconds(1), true),
+      (Duration.ofMinutes(1), true),
+      (Duration.ofMinutes(4).plusSeconds(59), true),
+    ) foreach { testcase =>
       ("isAMatchInProgress return true if there's a match that started " + testcase._1 + " minutes ago") in {
         val matches: Seq[FootballMatch] =
-          FootballTestData.matchesWithLiveMatchAtCurrentMinusDuration(Duration.ofMinutes(testcase._1))
+          FootballTestData.matchesWithLiveMatchAtCurrentMinusDuration(testcase._1)
         val testCompetition = FootballTestData.competitions(1).copy(matches = matches)
         val competitions = Competitions(Seq(testCompetition))
 
@@ -49,26 +53,27 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
 
     private val team = MatchDayTeam("1", "Team name", None, None, None, None)
 
-    private val matchDay = MatchDay(
-      "1234",
-      today,
-      None,
-      Stage("1"),
-      Round("1", None),
-      "1",
-      true,
-      false,
-      true,
-      false,
-      true,
-      "KO",
-      None,
-      team,
-      team,
-      None,
-      None,
-      None,
-    )
+    private val matchDay = (isLive: Boolean) =>
+      MatchDay(
+        "1234",
+        today,
+        None,
+        Stage("1"),
+        Round("1", None),
+        "1",
+        isLive,
+        false,
+        true,
+        false,
+        true,
+        "KO",
+        None,
+        team,
+        team,
+        None,
+        None,
+        None,
+      )
 
     private val _fixture = Fixture("1234", today, Stage("1"), Round("1", None), "1", team, team, None, None)
 
@@ -90,8 +95,8 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
           result("Fulham", "Norwich", 0, 0, today.minusDays(3)),
           result("Wigan", "Everton", 1, 1, today.minusDays(1)),
           result("Sunderland", "West Ham", 1, 1, today.`with`(LocalTime.of(13, 0))),
-          liveMatch("Arsenal", "Spurs", 1, 0, today.`with`(LocalTime.of(15, 0))),
-          liveMatch("Chelsea", "Man U", 0, 0, today.`with`(LocalTime.of(15, 0))),
+          liveMatch(true, "Arsenal", "Spurs", 1, 0, today.`with`(LocalTime.of(15, 0))),
+          liveMatch(true, "Chelsea", "Man U", 0, 0, today.`with`(LocalTime.of(15, 0))),
           fixture("Liverpool", "Man C", today.plusDays(2)),
           fixture("Wigan", "Fulham", today.plusDays(2)),
           fixture("Stoke", "Everton", today.plusDays(3)),
@@ -117,7 +122,7 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
         startDate = Some((today.minusMonths(2)).toLocalDate),
         matches = Seq(
           result("Bolton", "Derby", 1, 1, today.minusDays(1), Some("Bolton win 4-2 on penalties.")),
-          liveMatch("Cardiff", "Brighton", 2, 0, today.`with`(LocalTime.of(15, 0))),
+          liveMatch(true, "Cardiff", "Brighton", 2, 0, today.`with`(LocalTime.of(15, 0))),
           fixture("Wolves", "Burnley", today.plusDays(2)),
         ),
         leagueTable = Seq(
@@ -127,8 +132,15 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
       ),
     )
 
-    private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: ZonedDateTime) =
-      matchDay.copy(
+    private def liveMatch(
+        isLive: Boolean,
+        homeName: String,
+        awayName: String,
+        homeScore: Int,
+        awayScore: Int,
+        date: ZonedDateTime,
+    ) =
+      matchDay(isLive).copy(
         id = s"liveMatch $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
         date = date,
         homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
@@ -179,7 +191,7 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
     val matchesWithLiveMatchAtCurrentMinusDuration = (duration: Duration) => {
       Seq(
         result("Bolton", "Derby", 1, 1, today.minusDays(1), Some("Bolton win 4-2 on penalties.")),
-        liveMatch("Cardiff", "Brighton", 2, 0, today.minus(duration)),
+        liveMatch(false, "Cardiff", "Brighton", 2, 0, today.minus(duration)),
         fixture("Wolves", "Burnley", today.plusDays(2)),
       )
     }
@@ -187,7 +199,7 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
     val matchesWithLiveMatchAtCurrentPlusDuration = (duration: Duration) => {
       Seq(
         result("Bolton", "Derby", 1, 1, today.minusDays(1), Some("Bolton win 4-2 on penalties.")),
-        liveMatch("Cardiff", "Brighton", 2, 0, today.plus(duration)),
+        liveMatch(false, "Cardiff", "Brighton", 2, 0, today.plus(duration)),
         fixture("Wolves", "Burnley", today.plusDays(2)),
       )
     }
