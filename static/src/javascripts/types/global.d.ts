@@ -69,7 +69,10 @@ interface Config {
 	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
-	tests?: Record<ServerSideABTest, 'control' | 'variant'>;
+	tests?: {
+		[key: `${string}Control`]: 'control';
+		[key: `${string}Variant`]: 'variant';
+	};
 	isDotcomRendering: boolean;
 }
 

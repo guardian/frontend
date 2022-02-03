@@ -1,15 +1,16 @@
-import type { Participations } from '@guardian/ab-core';
 import {
 	clearPermutiveSegments,
 	getPermutiveSegments,
 } from '@guardian/commercial-core';
 import { getContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
 import type { ContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
+import type { SessionTargeting } from '@guardian/commercial-core/dist/esm/targeting/session';
+import { getSessionTargeting } from '@guardian/commercial-core/dist/esm/targeting/session';
 import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import type { CountryCode } from '@guardian/libs';
-import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
+import { getCookie, isString, log, storage } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getReferrer as detectGetReferrer } from '../../../../lib/detect';
@@ -141,36 +142,6 @@ const inskinTargeting = (): TrueOrFalse => {
 	return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
 };
 
-const abParam = (): string[] => {
-	const abParticipations: Participations = getSynchronousParticipations();
-	const abParams: string[] = [];
-
-	const pushAbParams = (testName: string, testValue: unknown): void => {
-		if (typeof testValue === 'string' && testValue !== 'notintest') {
-			const testData = `${testName}-${testValue}`;
-			// DFP key-value pairs accept value strings up to 40 characters long
-			abParams.push(testData.substring(0, 40));
-		}
-	};
-
-	Object.keys(abParticipations).forEach((testKey: string): void => {
-		const testValue: {
-			variant: string;
-		} = abParticipations[testKey];
-		pushAbParams(testKey, testValue.variant);
-	});
-
-	const tests = window.guardian.config.tests;
-
-	if (isObject(tests)) {
-		Object.entries(tests).forEach(([testName, testValue]) => {
-			pushAbParams(testName, testValue);
-		});
-	}
-
-	return abParams;
-};
-
 const getFrequencyValue = (): Frequency => {
 	const visitCount: number = parseInt(
 		storage.local.getRaw('gu.alreadyVisited') ?? '0',
@@ -192,39 +163,6 @@ const getFrequencyValue = (): Frequency => {
 	}
 
 	return '0';
-};
-
-const getReferrer = (): string | null => {
-	type MatchType = {
-		id: string;
-		match: string;
-	};
-
-	const referrerTypes: MatchType[] = [
-		{
-			id: 'facebook',
-			match: 'facebook.com',
-		},
-		{
-			id: 'twitter',
-			match: 't.co/',
-		}, // added (/) because without slash it is picking up reddit.com too
-		{
-			id: 'reddit',
-			match: 'reddit.com',
-		},
-		{
-			id: 'google',
-			match: 'www.google',
-		},
-	];
-
-	const matchedRef: MatchType =
-		referrerTypes.filter((referrerType) =>
-			detectGetReferrer().includes(referrerType.match),
-		)[0] || {};
-
-	return matchedRef.id;
 };
 
 const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
@@ -382,22 +320,29 @@ const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
 		videoLength: page.videoDuration,
 	});
 
+	const sessionTargeting: SessionTargeting = getSessionTargeting({
+		adTest: getCookie({ name: 'adtest', shouldMemoize: true }),
+		countryCode: getCountryCode(),
+		isSignedIn: isUserLoggedIn(),
+		pageViewId: window.guardian.config.ophan.pageViewId,
+		participations: {
+			clientSideParticipations: getSynchronousParticipations(),
+			serverSideParticipations: window.guardian.config.tests ?? {},
+		},
+		referrer: detectGetReferrer(),
+	});
+
 	const pageTargets: PageTargeting = {
-		ab: abParam(),
-		at: getCookie({ name: 'adtest', shouldMemoize: true }),
 		bp: findBreakpoint(),
-		cc: getCountryCode(), // if turned async, we could use getLocale()
 		fr: getFrequencyValue(),
 		inskin: inskinTargeting(),
 		permutive: getPermutiveSegments(),
-		pv: window.guardian.config.ophan.pageViewId,
-		ref: getReferrer(),
-		si: isUserLoggedIn() ? 't' : 'f',
 		skinsize: skinsizeTargeting(),
 		...consentRelatedTargeting,
 		...page.sharedAdTargeting,
 		...adFreeTargeting,
 		...contentTargeting,
+		...sessionTargeting,
 	};
 
 	// filter out empty values
