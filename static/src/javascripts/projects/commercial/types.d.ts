@@ -24,8 +24,3 @@ type GuAdSize = {
 	height: number;
 	toString: (_: void) => string;
 };
-
-type RuleSpacing = {
-	minAbove: number;
-	minBelow: number;
-};

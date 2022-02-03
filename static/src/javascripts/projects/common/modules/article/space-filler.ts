@@ -2,7 +2,12 @@ import { findSpace, SpaceError } from 'common/modules/spacefinder';
 import fastdom from 'lib/fastdom-promise';
 import raven from 'lib/raven';
 
-// TODO move these types to spacefinder once it is converted to typescript
+// TODO Move these types to spacefinder once it has been converted to typescript.
+type RuleSpacing = {
+	minAbove: number;
+	minBelow: number;
+};
+
 type SpacefinderItem = {
 	top: number;
 	bottom: number;
