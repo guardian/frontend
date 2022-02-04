@@ -1,57 +1,62 @@
 import { onConsentChange } from '@guardian/consent-management-platform';
-import type { Callback } from '@guardian/consent-management-platform/dist/types';
-import type { TCEventStatusCode } from '@guardian/consent-management-platform/dist/types/tcfv2';
+import type {
+	Callback,
+	ConsentState,
+} from '@guardian/consent-management-platform/dist/types';
+import type { AUSConsentState } from '@guardian/consent-management-platform/dist/types/aus';
+import type { CCPAConsentState } from '@guardian/consent-management-platform/dist/types/ccpa';
+import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { getInitialConsentState } from './initial-consent-state';
 
 jest.mock('@guardian/consent-management-platform', () => ({
 	onConsentChange: jest.fn(),
 }));
 
-const buildTcfv2ConsentState = (eventStatus: string) => ({
-	tcfv2: {
-		consents: { 1: false },
-		eventStatus: eventStatus as TCEventStatusCode,
-		vendorConsents: {
-			['5efefe25b8e05c06542b2a77']: true,
-		},
-		addtlConsent: 'xyz',
-		gdprApplies: true,
-		tcString: 'YAAA',
+const tcfv2ConsentState: TCFv2ConsentState = {
+	consents: { 1: false },
+	eventStatus: 'tcloaded',
+	vendorConsents: {
+		['5efefe25b8e05c06542b2a77']: true,
 	},
-});
+	addtlConsent: 'xyz',
+	gdprApplies: true,
+	tcString: 'YAAA',
+};
+
+const ccpaConsentState: CCPAConsentState = {
+	doNotSell: false,
+};
+
+const ausConsentState: AUSConsentState = {
+	personalisedAdvertising: true,
+};
 
 describe('getInitialConsentState', () => {
 	test('tcfv2 with event-status not equal to `cmpuishown` resolves immediately', async () => {
-		const tcfv2ConsentState = buildTcfv2ConsentState('tcloaded');
+		const consentState: ConsentState = { tcfv2: tcfv2ConsentState };
 		(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
-			cb(tcfv2ConsentState),
+			cb(consentState),
 		);
 		const resolvedConsentState = await getInitialConsentState();
-		expect(resolvedConsentState).toBe(tcfv2ConsentState);
+		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('ccpa resolves immediately', async () => {
-		const ccpaConsentState = {
-			ccpa: {
-				doNotSell: false,
-			},
-		};
+		const consentState: ConsentState = { ccpa: ccpaConsentState };
+
 		(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
-			cb(ccpaConsentState),
+			cb(consentState),
 		);
 		const resolvedConsentState = await getInitialConsentState();
-		expect(resolvedConsentState).toBe(ccpaConsentState);
+		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('aus resolves immediately', async () => {
-		const ausConsentState = {
-			aus: {
-				personalisedAdvertising: true,
-			},
-		};
+		const consentState: ConsentState = { aus: ausConsentState };
+
 		(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
-			cb(ausConsentState),
+			cb(consentState),
 		);
 		const resolvedConsentState = await getInitialConsentState();
-		expect(resolvedConsentState).toBe(ausConsentState);
+		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('unknown region rejects', async () => {
 		const consentState = {};
