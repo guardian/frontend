@@ -23,13 +23,14 @@ trait ServerSideExperimentSwitches {
     )
   }
 
-  val InteractiveLibrarianAdminRoutes = Switch(
+  val ContentPresser = Switch(
     SwitchGroup.Feature,
-    "interactive-librarian-admin-routes",
-    "Enables the Interactive Librarian routes for pressing and cleaning (use only if you know what you're doing).",
-    owners = Seq(Owner.withGithub("shtukas")),
+    "content-presser",
+    "Enables routes for pressing and cleaning articles and interactives.",
+    owners = Seq(Owner.withName("dotcom platform")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
   )
+
 }
