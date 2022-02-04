@@ -479,11 +479,11 @@ trait FeatureSwitches {
     "newsletters-remove-confirmation-step",
     "Remove confirmation step when user sign up to a newsletter",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = never,
+    safeState = On,
+    sellByDate = LocalDate.of(2022, 3, 4),
     exposeClientSide = false,
   )
-  
+
   val ValidateEmailSignupRecaptchaTokens = Switch(
     SwitchGroup.Feature,
     "validate-email-signup-recaptcha-tokens",

@@ -59,6 +59,10 @@
         margin-left: gs-span(2) + $gs-gutter;
     }
 }
+.newsletters-privacy-notice__content a {
+    text-decoration: underline;
+    color: $brightness-7;
+}
 
 .newsletters-heading {
     @include fs-headline(8);
