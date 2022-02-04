@@ -1,5 +1,5 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
-import { getInitialConsentState } from 'commercial/initialConsentState';
+import { getInitialConsentState } from 'commercial/initial-consent-state';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect-google-proxy';

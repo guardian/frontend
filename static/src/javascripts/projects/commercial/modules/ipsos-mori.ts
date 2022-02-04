@@ -1,6 +1,6 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
-import { getInitialConsentState } from 'commercial/initialConsentState';
+import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
