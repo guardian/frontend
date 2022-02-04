@@ -109,7 +109,7 @@ class ArticleController(
         Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat =>
         Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
-      case HtmlFormat | AmpFormat if PressedArticle =>
+      case HtmlFormat | AmpFormat if tier == PressedArticle =>
         servePressedPage(path)
       case AmpFormat if isAmpSupported =>
         remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
