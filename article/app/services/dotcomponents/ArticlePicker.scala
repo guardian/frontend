@@ -86,7 +86,7 @@ object ArticlePicker {
     val checks = dcrChecks(page, request)
     val dcrCanRender = checks.values.forall(identity)
 
-    val tier: RenderType = calculateTier(isPressed(path), dcrCanRender)
+    val tier: RenderType = calculateTier(isPressed(ensureStartingForwardSlash(path)), dcrCanRender)
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
@@ -115,5 +115,9 @@ object ArticlePicker {
     else if (isPressed) PressedArticle
     else if (request.forceDCR || dcrCanRender) DotcomRendering
     else FrontendLegacy
+  }
+
+  private def ensureStartingForwardSlash(str: String): String = {
+    if (!str.startsWith("/")) "/" + str else str
   }
 }
