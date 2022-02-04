@@ -1,5 +1,5 @@
 import reportError from 'lib/report-error';
-import { fetchPuzzlesData, renderBanner } from './contributions-service';
+import { fetchPuzzlesData, renderBanner } from 'common/modules/support/banner';
 
 const messageCode = 'puzzles-banner';
 

@@ -18,13 +18,13 @@
                 sponsor.sponsorshipType.name.toLowerCase()
             }"
         }}">
-            <a class="rich-link__link" href="@href">
+            <a class="rich-link__link" href="@href" aria-label="read more: @title">
                 <h3 class="rich-link__header">@title</h3>
             </a>
 
             @if(!sponsorship.isDefined) {
                 <div class="rich-link__read-more">
-                    <a class="rich-link__link" href="@href">
+                    <a class="rich-link__link" href="@href" aria-label="read more: @title">
                         <p class="rich-link__read-more">
                             Read more
                         </p>
@@ -39,7 +39,7 @@
                             <tr>
                                 <td>
                                     <div class="rich-link__read-more">
-                                        <a class="rich-link__link" href="@href">
+                                        <a class="rich-link__link" href="@href" aria-label="read more: @title">
                                             <p class="rich-link__read-more">
                                                 Read more
                                             </p>

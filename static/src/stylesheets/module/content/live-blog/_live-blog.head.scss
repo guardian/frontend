@@ -166,7 +166,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
             margin-left: 0;
 
             &.block-time__pinned {
-                display: inline-flex;
+                display: flex;
             }
         }
     }

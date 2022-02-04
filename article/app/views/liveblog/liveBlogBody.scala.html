@@ -74,7 +74,7 @@
                         <div class="js-live-blog__sticky-components">
                             <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
                                 @if(article.hasKeyEvents) {
-                                    @defining(KeyEventData(article.content.fields.blocks, timezone, model.filterKeyEvents)) { case keyEventData =>
+                                    @defining(KeyEventData(article.content.fields.blocks, timezone)) { case keyEventData =>
                                         <div class="modern-visible js-updates-desktop">
                                             <div data-component="timeline">
                                             @fragments.dropdown("Key events", Some("key-events"), true) {

@@ -1,11 +1,6 @@
-// Should be declared in messenger.ts
-export type RegisterListeners = (
-	type: string,
-	callback?: () => unknown,
-	options?: Record<string, unknown>,
-) => void;
+import type { RegisterListener } from '../messenger';
 
-const init = (register: RegisterListeners): void => {
+const init = (register: RegisterListener): void => {
 	register(
 		'get-page-url',
 		() => window.location.origin + window.location.pathname,

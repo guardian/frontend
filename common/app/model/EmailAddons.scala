@@ -246,6 +246,13 @@ case object Tokyo2020DailyBriefing extends ArticleEmailMetadata {
     c.item.tags.series.exists(_.id == "sport/series/tokyo-2020-daily-briefing")
 }
 
+case object Beijing2022DailyBriefing extends ArticleEmailMetadata {
+  val name = "Beijing 2022 daily briefing"
+  override val banner = Some("winter-olympics-2022.png")
+  def test(c: ContentPage): Boolean =
+    c.item.tags.series.exists(_.id == "sport/series/beijing-2022-daily-briefing")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
@@ -453,6 +460,13 @@ case object AustraliasModernOutback extends FrontEmailMetadata {
   override val banner = Some("aus-modern-outback.png")
 }
 
+case object FiveGreatReads extends ArticleEmailMetadata {
+  val name = "Five Great Reads"
+  override val banner = Some("five-great-reads.png")
+  def test(c: ContentPage): Boolean =
+    c.item.tags.series.exists(_.id == "australia-news/series/five-great-reads")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -495,6 +509,8 @@ object EmailAddons {
     TechScape,
     Tokyo2020DailyBriefing,
     TheGuide,
+    FiveGreatReads,
+    Beijing2022DailyBriefing,
   )
   private val frontEmails = Seq(
     SocialCareNetwork,

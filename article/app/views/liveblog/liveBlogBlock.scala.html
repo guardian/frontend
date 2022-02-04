@@ -3,6 +3,7 @@
 @import model.liveblog.{LiveBlogDate, BodyBlock}
 @import views.BodyProcessor
 @import model.DotcomContentType
+@import model.liveblog.BodyBlock.SummaryEvent
 @(block: BodyBlock, article: Article, timezone: DateTimeZone, isPinnedBlock: Boolean = false, isOriginalPinnedBlock: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 @*
 * This template is for individual blocks
@@ -35,13 +36,16 @@ itemtype="http://schema.org/BlogPosting"
         <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
         @views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), !isPinnedBlock, true, isOriginalPinnedBlock)
         </a>
-        @if(isOriginalPinnedBlock){
-            @fragments.inlineSvg("pin", "icon", List("inline-icon", "pinned-block-original__icon"))
-        }
     </p>
-
-    @block.title.map { title =>
-        <h2 class="block-title">@title</h2>
+    
+    @if(block.title.isDefined) {
+        @block.title.map { title =>
+            <h2 class="block-title">@title</h2>
+        }
+    } else {
+      @if(block.eventType == SummaryEvent) {
+          <h2 class="block-title">Summary</h2>
+      }
     }
 
     @block.contributors.map { contributorId =>

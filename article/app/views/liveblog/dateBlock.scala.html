@@ -5,8 +5,15 @@
         @if(showDate) {
             <time datetime="@date.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@date.ampm <span class="timezone">@date.gmt</span></time>
         }
-        @if(showTimestamp) {
-            <span class="block-time__absolute @if(isPinned) { block-time__pinned }">@date.hhmm</span>
-        }
+
+        <span class="block-time__absolute @if(isPinned) { block-time__pinned }">
+            @if(showTimestamp) {
+                <span class="block-time__absolute">@date.hhmm</span>
+            }
+
+            @if(isPinned){
+                @fragments.inlineSvg("pin", "icon", List("inline-icon", "pinned-block-original__icon"))
+            }
+        </span>
     }
 

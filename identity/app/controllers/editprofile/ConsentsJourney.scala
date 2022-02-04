@@ -1,17 +1,14 @@
 package controllers.editprofile
 
 import actions.AuthenticatedActions._
-import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
-import com.typesafe.play.cachecontrol.CacheDirectives
+import com.gu.identity.model.{Consent, User}
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText, single, text}
-import play.api.data.validation.Constraints
-import play.api.i18n.MessagesProvider
+import play.api.data.Forms.{nonEmptyText, single}
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, DiscardingCookie, Result}
+import play.api.mvc.{Action, AnyContent, Result}
 import services.PlaySigninService
 import services.newsletters.NewsletterSignupAgent
 import utils.ConsentOrder.userWithOrderedConsents
