@@ -7,7 +7,7 @@ jest.mock('@guardian/consent-management-platform', () => ({
 	onConsentChange: jest.fn(),
 }));
 
-const builTcfv2ConsentState = (eventStatus: string) => ({
+const buildTcfv2ConsentState = (eventStatus: string) => ({
 	tcfv2: {
 		consents: { 1: false },
 		eventStatus: eventStatus as TCEventStatusCode,
@@ -22,7 +22,7 @@ const builTcfv2ConsentState = (eventStatus: string) => ({
 
 describe('getInitialConsentState', () => {
 	test('tcfv2 with event-status not equal to `cmpuishown` resolves immediately', async () => {
-		const tcfv2ConsentState = builTcfv2ConsentState('tcloaded');
+		const tcfv2ConsentState = buildTcfv2ConsentState('tcloaded');
 		(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
 			cb(tcfv2ConsentState),
 		);
