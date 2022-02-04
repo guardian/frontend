@@ -1,6 +1,7 @@
 package test
 
 import org.scalatest.{Suites, Tag}
+import services.dotcomponents.{ArticlePickerTest}
 object ArticleComponents extends Tag("article components")
 
 class ArticleTestSuite
@@ -11,6 +12,7 @@ class ArticleTestSuite
       new CdnHealthCheckTest,
       new PublicationControllerTest,
       new LiveBlogControllerTest,
+      new ArticlePickerTest,
     )
     with SingleServerSuite {
   override lazy val port: Int = 19005
