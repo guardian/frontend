@@ -109,6 +109,8 @@ class ArticleController(
         Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat =>
         Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
+      case HtmlFormat | AmpFormat if PressedArticle =>
+        servePressedPage(path)
       case AmpFormat if isAmpSupported =>
         remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
       case HtmlFormat | AmpFormat if tier == DotcomRendering =>
@@ -142,6 +144,13 @@ class ArticleController(
       case Right(r)               => Right(r)
       case _                      => Right(NotFound)
     }
+  }
+
+  def servePressedPage(path: String)(implicit request: RequestHeader): Future[Result] = {
+    val cacheable = WithoutRevalidationResult(
+      Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/www.theguardian.com/$path"),
+    )
+    Future.successful(Cached(CacheTime.ArchiveRedirect)(cacheable))
   }
 
 }
