@@ -102,6 +102,8 @@ object ArticlePicker {
 
     if (tier == DotcomRendering) {
       DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page)
+    } else if (tier == PressedArticle) {
+      DotcomponentsLogger.logger.logRequest(s"Article served from pressed content", features, page)
     } else {
       DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page)
     }
