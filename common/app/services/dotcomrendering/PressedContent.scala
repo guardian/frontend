@@ -137,7 +137,7 @@ object PressedContent {
     "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
     "/cities/ng-interactive/2016/nov/10/subterranean-london",
     // articles
-    "/environment/2015/may/17/shell-accused-of-strategy-risking-catastrophic-climate-change"
+    "environment/2015/may/17/shell-accused-of-strategy-risking-catastrophic-climate-change"
   )
 
   def isPressed(path: String): Boolean = content.contains(path)
