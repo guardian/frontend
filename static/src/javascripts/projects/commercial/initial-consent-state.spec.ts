@@ -31,38 +31,33 @@ const ausConsentState: AUSConsentState = {
 	personalisedAdvertising: true,
 };
 
+const mockOnConsentChange = (consentState: ConsentState) =>
+	(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
+		cb(consentState),
+	);
+
 describe('getInitialConsentState', () => {
 	test('tcfv2 with event-status not equal to `cmpuishown` resolves immediately', async () => {
 		const consentState: ConsentState = { tcfv2: tcfv2ConsentState };
-		(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
-			cb(consentState),
-		);
+		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
 		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('ccpa resolves immediately', async () => {
 		const consentState: ConsentState = { ccpa: ccpaConsentState };
-
-		(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
-			cb(consentState),
-		);
+		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
 		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('aus resolves immediately', async () => {
 		const consentState: ConsentState = { aus: ausConsentState };
-
-		(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
-			cb(consentState),
-		);
+		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
 		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('unknown region rejects', async () => {
 		const consentState = {};
-		(onConsentChange as jest.Mock).mockImplementation((cb: Callback) =>
-			cb(consentState),
-		);
+		mockOnConsentChange(consentState);
 		await expect(getInitialConsentState()).rejects.toEqual(
 			'Unknown framework',
 		);
