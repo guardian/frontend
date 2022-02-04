@@ -1,21 +1,21 @@
 @(bucket: String = "aws-frontend-archive")(implicit request: RequestHeader, context: model.ApplicationContext)
 @import conf.switches.Switches.ContentPresser
 
-@admin_main("Interactive Presser (archiver)", isAuthed = true) {
-    <h2>Press (archive) an individual interactive</h2>
+@admin_main("Article Presser (archiver)", isAuthed = true) {
+    <h2>Press (archive) an individual article</h2>
     <br>
     <ul>
         <li>
-            This will <strong>only</strong> work as expected for interactive articles.
+            This will <strong>only</strong> work as expected for articles.
         </li>
         <li>
-            This tool will only press interactive articles. To serve the pressed articles to readers, please contact the dotcom team (dotcom.platform@@theguardian.com).
+            This tool will only press articles. To serve the pressed articles to readers, please contact the dotcom team (dotcom.platform@@theguardian.com).
         </li>
         <li>
-            Please provide full URLs like <strong>https://www.theguardian.com/something/ng-interactive/something</strong>
+            Please provide full URLs like <strong>https://www.theguardian.com/something</strong>
         </li>
         <li>
-            Pressing an interactive can take ~10 seconds.
+            Pressing an article can take ~10 seconds.
         </li>
     </ul>
     <br>
@@ -47,7 +47,7 @@
     </div>
   <br>
   <br>
-    <h2>Un-press an interactive</h2>
+    <h2>Un-press an article</h2>
     <br>
     <ul>
         <li>

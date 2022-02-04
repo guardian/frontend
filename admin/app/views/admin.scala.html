@@ -1,7 +1,7 @@
 @()(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches.R2PagePressServiceSwitch
-@import conf.switches.Switches.InteractiveLibrarianAdminRoutes
+@import conf.switches.Switches.ContentPresser
 @import conf.Configuration
 @admin_main("Frontend Admin", isAuthed = true) {
     <div class="springboard">
@@ -34,8 +34,9 @@
                         @if(R2PagePressServiceSwitch.isSwitchedOn) {
                             <li><a href="@controllers.admin.routes.R2PressController.pressForm()">Press-a-page (R2)</a></li>
                         }
-                        @if(InteractiveLibrarianAdminRoutes.isSwitchedOn) {
+                        @if(ContentPresser.isSwitchedOn) {
                             <li><a href="@controllers.admin.routes.InteractiveLibrarianController.pressForm()">Press an interactive</a></li>
+                            <li><a href="@controllers.admin.routes.InteractiveLibrarianController.pressArticle()">Press an article</a></li>
                         }
                         <li><a href="@controllers.admin.routes.RedirectController.redirect()">Redirects</a></li>
                         <li><a href="@controllers.cache.routes.ImageDecacheController.renderImageDecacheForm()">Clear cache (images)</a></li>
