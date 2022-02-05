@@ -40,7 +40,9 @@ const expire = (resolve) => {
 const getFuncId = (rules) => rules.bodySelector || 'document';
 
 const onImagesLoaded = memoize((rules) => {
-	const notLoaded = query('img', rules.body).filter((img) => !img.complete);
+	const notLoaded = query('img', rules.body).filter(
+		(img) => !img.complete && img.loading !== 'lazy',
+	);
 
 	return notLoaded.length === 0
 		? Promise.resolve()
