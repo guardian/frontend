@@ -37,6 +37,25 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
         isAMatchInProgress should equal(testcase._2)
       }
     }
+    "withTodaysMatches should only return the matches that are on today" in {
+
+      //for now, i am manually creating the matches within the test so it is clearly visible how many are on today.
+      val matches = Seq(
+        FootballTestData
+          .result("Bolton", "Derby", 1, 1, FootballTestData.today.minusDays(1), Some("Bolton win 4-2 on penalties.")),
+        FootballTestData.liveMatch(false, "Cardiff", "Brighton", 2, 0, FootballTestData.today),
+        FootballTestData.liveMatch(true, "Derby", "Manchester", 3, 1, FootballTestData.today),
+        FootballTestData.fixture("Wolves", "Burnley", FootballTestData.today.plusDays(2)),
+      )
+      val testCompetition = FootballTestData.competitions(1).copy(matches = matches)
+      val competitions = Competitions(Seq(testCompetition))
+
+      val todaysCompetition = competitions.withTodaysMatches
+      val todaysMatchesTotal = todaysCompetition.matches.length
+
+      todaysMatchesTotal should equal(2)
+
+    }
   }
 
   // I had trouble using the original FootballTestData because it needed testFootballClient
@@ -132,7 +151,7 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
       ),
     )
 
-    private def liveMatch(
+    def liveMatch(
         isLive: Boolean,
         homeName: String,
         awayName: String,
@@ -147,7 +166,7 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
         awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),
       )
 
-    private def fixture(homeName: String, awayName: String, date: ZonedDateTime) =
+    def fixture(homeName: String, awayName: String, date: ZonedDateTime) =
       _fixture.copy(
         id = s"fixture $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
         date = date,
@@ -155,7 +174,7 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
         awayTeam = team.copy(id = awayName, name = awayName, score = None),
       )
 
-    private def result(
+    def result(
         homeName: String,
         awayName: String,
         homeScore: Int,
