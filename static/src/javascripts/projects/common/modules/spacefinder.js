@@ -1,6 +1,5 @@
 // total_hours_spent_maintaining_this = 80
 
-import bean from 'bean';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { memoize } from 'lodash-es';
@@ -48,14 +47,14 @@ const onImagesLoaded = memoize((rules) => {
 		? Promise.resolve()
 		: new Promise((resolve) => {
 				let loadedCount = 0;
-				bean.on(rules.body, 'load', notLoaded, function onImgLoaded() {
-					loadedCount += 1;
-					if (loadedCount === notLoaded.length) {
-						bean.off(rules.body, 'load', onImgLoaded);
-						notLoaded.length = 0;
-						resolve();
-					}
-				});
+				notLoaded.forEach((img) =>
+					img.addEventListener('load', () => {
+						loadedCount += 1;
+						if (loadedCount === notLoaded.length) {
+							resolve();
+						}
+					}),
+				);
 		  });
 }, getFuncId);
 
