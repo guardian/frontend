@@ -42,10 +42,6 @@ class FootballLifecycle(
         }
     }
 
-    jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
-      competitionsService.refreshMatchDay(defaultClock)
-    }
-
     jobs.schedule("MaybeMatchDayAgentRefreshJob", "0 0/1 * * * ?") {
       // at second 30 of every 1 minute
       competitionsService.maybeRefreshLiveMatches(defaultClock)
