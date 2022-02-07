@@ -2,7 +2,7 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import staticpages.NewsletterRoundupPage
 @import conf.switches.Switches.EmailSignupRecaptcha
-
+@import conf.switches.Switches.NewslettersRemoveConfirmationStep
 @import common.LinkTo
 
 @(signupPage: NewsletterRoundupPage)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -97,11 +97,25 @@
                     </div>
                 </a>
             </div>
-            @* This iframe is used for submitting the form without reloading the page *@
-            <iframe class="u-h" width="0" height="0" border="0" name="newsletterSignup" id="newsletterSignup" tabindex="-1"></iframe>
-            @if(EmailSignupRecaptcha.isSwitchedOn) {
+            @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+                <div class="newsletters-heading__divider"></div>
+                <div class="newsletters-privacy-notice__container">
+                    <div class="newsletters-privacy-notice__heading">
+                        Privacy Notice
+                    </div>
+                    <div class="newsletters-privacy-notice__content">
+                        @if(EmailSignupRecaptcha.isSwitchedOn) {
+                            @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent())
+                        } else {
+                            @fragments.email.signup.privacyNoticeContent()
+                        }
+                    </div>
+                </div>
+            } else if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaTerms()
             }
+            @* This iframe is used for submitting the form without reloading the page *@
+            <iframe class="u-h" width="0" height="0" border="0" name="newsletterSignup" id="newsletterSignup" tabindex="-1"></iframe>
             @displayNewslettersByTheme
         </div>
     </div>
