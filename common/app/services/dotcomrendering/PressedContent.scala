@@ -139,6 +139,7 @@ object PressedContent {
     // articles
     "/environment/2015/may/17/shell-accused-of-strategy-risking-catastrophic-climate-change",
     "/world/2021/aug/27/we-want-to-create-magic-taking-cinema-to-remote-spanish-villages",
+    "/us-news/2016/jun/21/gun-control-debate-mass-shootings-gun-violence",
   )
 
   def isPressed(path: String): Boolean = content.contains(path)
