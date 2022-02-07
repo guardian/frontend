@@ -663,8 +663,6 @@
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/config.d.ts",
-  "../lib/detect-viewport.ts",
   "../lib/noop.ts"
  ],
  "../projects/common/modules/identity/api.ts": [
