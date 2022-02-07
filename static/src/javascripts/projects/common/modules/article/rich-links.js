@@ -158,8 +158,9 @@ const insertTagRichLink = () => {
                     href: config.get('page.richLink'),
                 });
                 return fastdom.mutate(() => {
-					paras[0].insertAdjacentHTML('beforebegin', html);
-				});
+                    paras[0].insertAdjacentHTML('beforebegin', html);
+                    insertedEl = paras[0].previousElementSibling;
+                });
             })
             .then(didInsert => {
                 if (didInsert && insertedEl) {
