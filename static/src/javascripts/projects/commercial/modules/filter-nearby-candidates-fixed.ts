@@ -12,10 +12,7 @@ type SpacefinderItem = {
 // this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
 export const filterNearbyCandidatesFixed =
 	(maximumAdHeight: number) =>
-	(
-		candidate: SpacefinderItem,
-		lastWinner: SpacefinderItem | undefined,
-	): boolean => {
+	(candidate: SpacefinderItem, lastWinner?: SpacefinderItem): boolean => {
 		if (
 			!lastWinner ||
 			Math.abs(candidate.top - lastWinner.top) - maximumAdHeight >=

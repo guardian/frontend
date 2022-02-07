@@ -29,7 +29,7 @@ type SpacefinderRules = {
 	// custom rules using selectors.
 	selectors: Record<string, RuleSpacing>;
 	// will run each slot through this fn to check if it must be counted in
-	filter?: (x: SpacefinderItem) => boolean;
+	filter?: (x: SpacefinderItem, lastWinner?: SpacefinderItem) => boolean;
 	// will remove slots before this one
 	startAt?: HTMLElement;
 	// will remove slots from this one on
