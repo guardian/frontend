@@ -409,7 +409,7 @@ describe('Build Page Targeting', () => {
 
 		it('should set ref to Twitter', () => {
 			getReferrer.mockReturnValue(
-				'https://www.t.co/you-must-unlearn-what-you-have-learned',
+				'https://t.co/you-must-unlearn-what-you-have-learned',
 			);
 			expect(getPageTargeting().ref).toEqual('twitter');
 		});
