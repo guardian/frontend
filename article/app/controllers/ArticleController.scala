@@ -147,10 +147,10 @@ class ArticleController(
   }
 
   def servePressedPage(path: String)(implicit request: RequestHeader): Future[Result] = {
+    val redirectPath = services.S3Archive.redirectPath
     val cacheable = WithoutRevalidationResult(
-      Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/www.theguardian.com/$path"),
+      Ok.withHeaders("X-Accel-Redirect" -> s"/$redirectPath/www.theguardian.com/$path"),
     )
     Future.successful(Cached(CacheTime.ArchiveRedirect)(cacheable))
   }
-
 }
