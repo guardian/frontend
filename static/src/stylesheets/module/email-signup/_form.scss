@@ -201,7 +201,7 @@
     }
 }
 
-.email-sub__squarefield-label {
+.email-sub__thrasher-embed-label {
     @include fs-textSans(1, true);
     font-weight: 700;
     color: $brightness-100;
@@ -209,21 +209,21 @@
     padding-bottom: 2px;
 }
 
-.email-sub__squarefield-row {
+.email-sub__thrasher-embed-row {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 }
 
-.email-sub__squarefield-input {
+.email-sub__thrasher-embed-input {
     @include fs-textSans(3, true);
     flex-basis: 14rem;
     margin-right: 4px;
     margin-bottom: 4px;
 }
 
-.email-sub__squarefield-button {
+.email-sub__thrasher-embed-button {
     @include fs-textSans(1, true);
     position: relative;
     flex-basis: 6rem;
@@ -238,7 +238,7 @@
     margin-bottom: 4px;
 }
 
-.email-sub__squarefield-icon {
+.email-sub__thrasher-embed-icon {
     display: inline-flex;
     height: 100%;
     justify-content: center;
