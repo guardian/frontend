@@ -31,6 +31,8 @@
     @include mq(leftCol) {
         position: absolute;
         width: gs-span(3);
+        padding-left: 24px;
+        margin: 0;
     }
 
     @include mq(wide) {
