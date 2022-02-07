@@ -291,7 +291,10 @@ describe('Build Page Targeting', () => {
 	});
 
 	it('should remove empty values', () => {
-		window.guardian.config.page = {} as PageConfig;
+		window.guardian.config.page = {
+			// pageId should always be defined
+			pageId: 'football/series/footballweekly',
+		} as PageConfig;
 		window.guardian.config.ophan = { pageViewId: '123456' };
 
 		expect(getPageTargeting()).toEqual({
@@ -312,6 +315,7 @@ describe('Build Page Targeting', () => {
 			sens: 'f',
 			si: 't',
 			skinsize: 's',
+			urlkw: ['footballweekly'],
 		});
 	});
 
