@@ -46,7 +46,7 @@ class FootballLifecycle(
       competitionsService.refreshMatchDay(defaultClock)
     }
 
-    jobs.schedule("MaybeMatchDayAgentRefreshJob", "30 * * ? * * *") {
+    jobs.schedule("MaybeMatchDayAgentRefreshJob", "0 0/1 * * * ?") {
       // at second 30 of every 1 minute
       competitionsService.maybeRefreshLiveMatches(defaultClock)
     }
