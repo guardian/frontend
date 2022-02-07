@@ -15,10 +15,13 @@
     position: sticky;
     top: 0;
     background-color: $highlight-main;
-    padding-top: 20px;
+    padding-top: 5px;
     padding-bottom: 8px;
     margin-bottom: 16px;
     z-index: 1;
+    @include mq(leftCol) {
+        padding-top: 10px;
+    }
 }
 
 .newsletters-privacy-notice__heading {
@@ -31,7 +34,7 @@
     @include mq(leftCol) {
         position: absolute;
         width: gs-span(3);
-        padding-left: 24px;
+        padding-left: 31px;
         margin: 0;
     }
 

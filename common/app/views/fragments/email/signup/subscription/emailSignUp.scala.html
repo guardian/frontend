@@ -84,10 +84,12 @@
         document.getElementById("@inputId")
         .addEventListener("focusin", ()=> {
             document.getElementById("@privacyNoticeId")?.setAttribute('class', '@privacyNoticeVisibleClass')
+            iframeMessenger?.resize();
         });
     document.getElementById("@inputId")
         .addEventListener("focusout", ()=> {
             document.getElementById("@privacyNoticeId")?.setAttribute('class', '@privacyNoticeHiddenClass')
+            iframeMessenger?.resize();
         });
     }
 </script>
