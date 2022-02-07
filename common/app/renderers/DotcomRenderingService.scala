@@ -106,11 +106,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: PageWithStoryPackage,
       blocks: Blocks,
       pageType: PageType,
+      filterKeyEvents: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] = {
 
     val dataModel = page match {
-      case liveblog: LiveBlogPage => DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType)
-      case _                      => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
+      case liveblog: LiveBlogPage =>
+        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents)
+      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
@@ -122,11 +124,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: PageWithStoryPackage,
       blocks: Blocks,
       pageType: PageType,
+      filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
 
     val dataModel = page match {
-      case liveblog: LiveBlogPage => DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType)
-      case _                      => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
+      case liveblog: LiveBlogPage =>
+        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents)
+      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
