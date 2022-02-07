@@ -169,9 +169,6 @@ object S3Archive extends S3 {
   override lazy val bucket: String =
     if (Configuration.environment.isNonProd) "aws-frontend-archive-code" else "aws-frontend-archive"
   def getHtml(path: String): Option[String] = get(path)
-
-  lazy val redirectPath: String =
-    if (Configuration.environment.isNonProd) "s3-archive-code" else "s3-archive"
 }
 
 object S3ArchiveOriginals extends S3 {
