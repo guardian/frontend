@@ -44,7 +44,7 @@
 }
 
 .newsletters-privacy-notice__content {
-    @include fs-textSans(4);
+    @include fs-textSans(5);
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -58,6 +58,7 @@
 
     @include mq(leftCol) {
         margin-left: gs-span(2) + $gs-gutter;
+        padding-top: 6px;
     }
 
     @include mq(wide) {
