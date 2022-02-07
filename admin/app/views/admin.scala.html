@@ -35,8 +35,7 @@
                             <li><a href="@controllers.admin.routes.R2PressController.pressForm()">Press-a-page (R2)</a></li>
                         }
                         @if(ContentPresser.isSwitchedOn) {
-                            <li><a href="@controllers.admin.routes.InteractiveLibrarianController.pressForm()">Press an interactive</a></li>
-                            <li><a href="@controllers.admin.routes.InteractiveLibrarianController.pressArticle()">Press an article</a></li>
+                            <li><a href="@controllers.admin.routes.InteractiveLibrarianController.pressForm()">Press an article / interactive</a></li>
                         }
                         <li><a href="@controllers.admin.routes.RedirectController.redirect()">Redirects</a></li>
                         <li><a href="@controllers.cache.routes.ImageDecacheController.renderImageDecacheForm()">Clear cache (images)</a></li>

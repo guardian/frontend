@@ -20,12 +20,7 @@ class InteractiveLibrarianController(
 
   def pressForm(): Action[AnyContent] =
     Action { implicit request =>
-      Ok(views.html.pressInteractive(services.S3Archive.bucket))
-    }
-
-  def pressArticle(): Action[AnyContent] =
-    Action { implicit request =>
-      Ok(views.html.pressArticle(services.S3Archive.bucket))
+      Ok(views.html.pressContent(services.S3Archive.bucket))
     }
 
   /**
