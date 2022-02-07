@@ -1,11 +1,12 @@
 import { adSizes } from '@guardian/commercial-core';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { spacefinderOkr1FilterNearby } from 'common/modules/experiments/tests/spacefinder-okr-1-filter-nearby';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import type {
-	SpacefinderItem,
 	SpacefinderRules,
 	SpacefinderWriter,
 } from '../../common/modules/article/space-filler';
@@ -15,6 +16,8 @@ import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
 import { createAdSlot } from './dfp/create-slot';
 import { trackAdRender } from './dfp/track-ad-render';
+import { filterNearbyCandidatesBroken } from './filter-nearby-candidates-broken';
+import { filterNearbyCandidatesFixed } from './filter-nearby-candidates-fixed';
 
 const isPaidContent = config.get<boolean>('page.isPaidContent', false);
 
@@ -48,23 +51,12 @@ const insertAdAtPara = (
 		});
 };
 
-let previousAllowedCandidate: SpacefinderItem | undefined;
-
-// this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
-const filterNearbyCandidates =
-	(maximumAdHeight: number) =>
-	(candidate: SpacefinderItem): boolean => {
-		if (
-			!previousAllowedCandidate ||
-			Math.abs(candidate.top - previousAllowedCandidate.top) -
-				maximumAdHeight >=
-				adSlotClassSelectorSizes.minBelow
-		) {
-			previousAllowedCandidate = candidate;
-			return true;
-		}
-		return false;
-	};
+const filterNearbyCandidates = isInVariantSynchronous(
+	spacefinderOkr1FilterNearby,
+	'variant',
+)
+	? filterNearbyCandidatesFixed
+	: filterNearbyCandidatesBroken;
 
 const isDotcomRendering = config.get<boolean>('isDotcomRendering', false);
 const articleBodySelector = isDotcomRendering
