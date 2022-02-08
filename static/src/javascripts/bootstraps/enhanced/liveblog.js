@@ -12,6 +12,8 @@ import bean from 'bean';
 import { scrollToElement } from 'lib/scroller';
 import { elementInView } from 'lib/element-inview';
 import ophan from 'ophan/ng';
+import $ from 'lib/$';
+
 
 const affixTimeline = () => {
 	const keywordIds = config.get('page.keywordIds', '');
@@ -101,7 +103,22 @@ const trackOphanClick = (pinnedBlockId, clickValue) => {
 };
 
 const setupListeners = () => {
+    const $window = $(window)
 	const pinnedBlockButton = document.querySelector('.pinned-block__button');
+    const $mediaAtom = $(`.element-atom--media`)
+    const nextSibling = $mediaAtom.next('p')
+
+    bean.on(window, 'scroll', () => {
+        const windowScrollTop = $window.scrollTop()
+        const videoBottom = nextSibling.offset().top - $mediaAtom.height();
+
+        if (windowScrollTop > videoBottom ) {
+            $mediaAtom.addClass("stuck")
+        } else {
+            $mediaAtom.removeClass("stuck")
+        }
+    })
+
 
 	bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
 		const hasParam =

@@ -345,9 +345,29 @@ $quote-mark: 35px;
         line-height: 75px;
     }
 
+    @keyframes fade-in-up {
+        0% { opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
     .element-atom--media {
         .fc-item.fc-item--media::before {
             content: none;
+        }
+
+        &.stuck {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 260px;
+            height: 145px;
+            z-index: 9999999;
+            transform: translateY(100%);
+            animation: fade-in-up .25s ease forwards;
+
+            figcaption {
+                display: none;
+            }
         }
     }
 
