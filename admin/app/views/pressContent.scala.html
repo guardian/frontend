@@ -21,15 +21,15 @@
     <br>
     <div class="form-horizontal redirect-form">
         <div class="form-group">
-            <label for="interactiveUrl" class="control-label col-sm-1">URL:</label>
+            <label for="contentUrl" class="control-label col-sm-1">URL:</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="interactiveUrlInput" name="interactiveUrl" value="" placeholder="https://www.theguardian.com/path" />
+                <input type="text" class="form-control" id="contentUrlInput" name="contentUrl" value="" placeholder="https://www.theguardian.com/path" />
             </div>
         </div>
         <div class="form-group">
             <div class="controls col-sm-offset-1 col-sm-11">
                 @if(ContentPresser.isSwitchedOn) {
-                    <input class="btn btn-default" id="interactiveUrlBtn" type="button" value="Press"/>
+                    <input class="btn btn-default" id="contentUrlBtn" type="button" value="Press"/>
                 } else {
                     <div class="col-sm-6">
                         This feature is currently switched off (use the switchboard to re-enable it)
@@ -55,17 +55,17 @@
         </li>
     </ul>
     <script>
-        const btn = document.getElementById('interactiveUrlBtn');
+        const btn = document.getElementById('contentUrlBtn');
 
         btn.addEventListener('click', function() {
-            const interactiveUrl = document.getElementById('interactiveUrlInput').value;
+            const contentUrl = document.getElementById('contentUrlInput').value;
 
             // don't allow a request to be sent if no url provided
-            if (interactiveUrl.length === 0) {
+            if (contentUrl.length === 0) {
                 return;
             }
 
-            const url = new URL(interactiveUrl);
+            const url = new URL(contentUrl);
 
             // don't allow a request to be sent if url cannot be parsed or doesn't contain a path
             if (!url || !url.pathname) {
