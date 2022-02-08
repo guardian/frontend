@@ -86,7 +86,7 @@ object ArticlePicker {
     val checks = dcrChecks(page, request)
     val dcrCanRender = checks.values.forall(identity)
 
-    val tier: RenderType = calculateTier(isPressed(ensureStartingForwardSlash(path)), dcrCanRender)
+    val tier: RenderType = decideTier(isPressed(ensureStartingForwardSlash(path)), dcrCanRender)
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
@@ -97,10 +97,10 @@ object ArticlePicker {
       ("dcrCouldRender" -> dcrCanRender.toString) +
       ("pageTones" -> pageTones)
 
-    if (tier == DotcomRendering) {
+    if (tier == RemoteRender) {
       DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page)
     } else if (tier == PressedArticle) {
-      DotcomponentsLogger.logger.logRequest(s"Article served from pressed content", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing from pressed content", features, page)
     } else {
       DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page)
     }
@@ -108,13 +108,13 @@ object ArticlePicker {
     tier
   }
 
-  def calculateTier(isPressed: Boolean, dcrCanRender: Boolean)(implicit
+  def decideTier(isPressed: Boolean, dcrCanRender: Boolean)(implicit
       request: RequestHeader,
   ): RenderType = {
-    if (request.forceDCROff) FrontendLegacy
+    if (request.forceDCROff) LocalRenderArticle
     else if (isPressed) PressedArticle
-    else if (request.forceDCR || dcrCanRender) DotcomRendering
-    else FrontendLegacy
+    else if (request.forceDCR || dcrCanRender) RemoteRender
+    else LocalRenderArticle
   }
 
   private def ensureStartingForwardSlash(str: String): String = {
