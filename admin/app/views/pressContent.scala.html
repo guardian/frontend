@@ -1,35 +1,35 @@
 @(bucket: String = "aws-frontend-archive")(implicit request: RequestHeader, context: model.ApplicationContext)
-@import conf.switches.Switches.InteractiveLibrarianAdminRoutes
+@import conf.switches.Switches.ContentPresser
 
-@admin_main("Interactive Presser (archiver)", isAuthed = true) {
-    <h2>Press (archive) an individual interactive</h2>
+@admin_main("Content Presser (archiver)", isAuthed = true) {
+    <h2>Press (archive) an article / interactive page</h2>
     <br>
     <ul>
         <li>
-            This will <strong>only</strong> work as expected for interactive articles.
+            This will <strong>only</strong> work as expected for article / interactive pages.
         </li>
         <li>
-            This tool will only press interactive articles. To serve the pressed articles to readers, please contact the dotcom team (dotcom.platform@@theguardian.com).
+            This tool will only <strong>press</strong> articles / interactive pages. To <strong>serve</strong> the pressed content to readers, please contact the dotcom team (dotcom.platform@@theguardian.com).
         </li>
         <li>
-            Please provide full URLs like <strong>https://www.theguardian.com/something/ng-interactive/something</strong>
+            Please provide full URLs like <strong>https://www.theguardian.com/path</strong>
         </li>
         <li>
-            Pressing an interactive can take ~10 seconds.
+            Pressing an article / interactive can take ~10 seconds.
         </li>
     </ul>
     <br>
     <div class="form-horizontal redirect-form">
         <div class="form-group">
-            <label for="interactiveUrl" class="control-label col-sm-1">URL:</label>
+            <label for="contentUrl" class="control-label col-sm-1">URL:</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="interactiveUrlInput" name="interactiveUrl" value="" placeholder="https://www.theguardian.com/xxx/ng-interactive/path" />
+                <input type="text" class="form-control" id="contentUrlInput" name="contentUrl" value="" placeholder="https://www.theguardian.com/path" />
             </div>
         </div>
         <div class="form-group">
             <div class="controls col-sm-offset-1 col-sm-11">
-                @if(InteractiveLibrarianAdminRoutes.isSwitchedOn) {
-                    <input class="btn btn-default" id="interactiveUrlBtn" type="button" value="Press"/>
+                @if(ContentPresser.isSwitchedOn) {
+                    <input class="btn btn-default" id="contentUrlBtn" type="button" value="Press"/>
                 } else {
                     <div class="col-sm-6">
                         This feature is currently switched off (use the switchboard to re-enable it)
@@ -47,25 +47,25 @@
     </div>
   <br>
   <br>
-    <h2>Un-press an interactive</h2>
+    <h2>Un-press an article / interactive</h2>
     <br>
     <ul>
         <li>
-            Un-pressing is not currently an automated process. Please contact the dotcom team (dotcom.platform@@theguardian.com) if you need to un-press an individual interactive.
+            Un-pressing is not currently an automated process. Please contact the dotcom team (dotcom.platform@@theguardian.com) if you need to un-press an article / interactive.
         </li>
     </ul>
     <script>
-        const btn = document.getElementById('interactiveUrlBtn');
+        const btn = document.getElementById('contentUrlBtn');
 
         btn.addEventListener('click', function() {
-            const interactiveUrl = document.getElementById('interactiveUrlInput').value;
+            const contentUrl = document.getElementById('contentUrlInput').value;
 
             // don't allow a request to be sent if no url provided
-            if (interactiveUrl.length === 0) {
+            if (contentUrl.length === 0) {
                 return;
             }
 
-            const url = new URL(interactiveUrl);
+            const url = new URL(contentUrl);
 
             // don't allow a request to be sent if url cannot be parsed or doesn't contain a path
             if (!url || !url.pathname) {
@@ -76,7 +76,7 @@
             document.getElementById('server-message').innerText = 'Pressing an article can take up to 10 seconds, please wait';
             document.getElementById('progress-url').innerText = `Pressing: ${url.pathname}`
 
-            fetch(`/press/interactive${url.pathname}`, {
+            fetch(`/press/content${url.pathname}`, {
                 method : 'POST',
             })
             .then(res => {
