@@ -86,7 +86,7 @@ object TrailsToShowcase {
   // Questionable placement of controller logic
   def generatePanelsFrom(
       faciaPage: PressedPage,
-  ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]]) = {
+  ): (Either[Seq[String], RundownPanel], Seq[Either[Seq[String], SingleStoryPanel]], Map[String, Int]) = {
     // Given our pressed page locate the single story and rundown collections and convert their trails into panels
     val maybeRundownCollection = faciaPage.collections
       .find(_.displayName == RundownCollectionName)
@@ -97,6 +97,21 @@ object TrailsToShowcase {
 
     val singleStoryCollections =
       faciaPage.collections.filter(_.displayName.trim.startsWith(SingleStoriesCollectionName))
+
+    // duplicateMap will contain a list of content (card) id
+    // and the number of instances of that id where there are more than one.
+    // We don't seem to care if duplication exists between the single
+    // stories and the rundown collection, only when something is
+    // duplicated within the single stories collections.
+    // TODO: figure out how to include the collection(s)
+    //  the duplicates are in
+    val duplicateMap = singleStoryCollections
+      .flatMap(_.curated)
+      .map(_.card.id)
+      .groupBy(identity)
+      .mapValues(_.size)
+      .filter(_._2 > 1)
+
     val singleStoryPanelsOutcome = if (singleStoryCollections.nonEmpty) {
       // Attempt to map all trails from all single story collections to panels
       singleStoryCollections.flatMap(_.curated).map(asSingleStoryPanel)
@@ -106,7 +121,7 @@ object TrailsToShowcase {
       )
     }
 
-    (rundownPanelOutcome, singleStoryPanelsOutcome)
+    (rundownPanelOutcome, singleStoryPanelsOutcome, duplicateMap)
   }
 
   def asSingleStoryPanel(content: PressedContent): Either[Seq[String], SingleStoryPanel] = {

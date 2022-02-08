@@ -1,4 +1,4 @@
-@(rundownPanelOutcomes: Either[Seq[String], common.TrailsToShowcase.RundownPanel], singleStoryPanelOutcomes: Seq[Either[Seq[String], common.TrailsToShowcase.SingleStoryPanel]])
+@(rundownPanelOutcomes: Either[Seq[String], common.TrailsToShowcase.RundownPanel], singleStoryPanelOutcomes: Seq[Either[Seq[String], common.TrailsToShowcase.SingleStoryPanel]], duplicates: Map[String, Int])
 <!DOCTYPE html>
 <html>
     <head>
@@ -99,7 +99,18 @@
                 @for(panel <- panelOutcome.right.toOption) {
                     <li class="panel singleStory">
                         @for(panelTitle <- panel.panelTitle) {
-                            <h2 class="panelTitle">@panel.panelTitle</h2>
+                            <h2 class="panelTitle">
+                                @panel.title
+                            </h2>
+                        }
+                        @for(dupe <- duplicates.find(d => panel.guid.endsWith(d._1))) {
+                            <h3 class="errors">
+                            @if(dupe._2 == 2) {
+                                used twice
+                            } else {
+                                used @dupe._2 times
+                            }
+                            </h3>
                         }
                         <a href="@panel.link" target="_blank"><img src="@panel.imageUrl"/></a>
                         @for(overline <- panel.overline) {

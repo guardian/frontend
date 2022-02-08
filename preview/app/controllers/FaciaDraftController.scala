@@ -37,8 +37,8 @@ class FaciaDraftController(
   override protected def renderShowcaseFront(
       faciaPage: PressedPage,
   )(implicit request: RequestHeader): RevalidatableResult = {
-    val (rundownPanelOutcomes, singleStoryPanelOutcomes) = TrailsToShowcase.generatePanelsFrom(faciaPage)
-    val html = views.html.showcase(rundownPanelOutcomes, singleStoryPanelOutcomes)
+    val (rundownPanelOutcomes, singleStoryPanelOutcomes, duplicates) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val html = views.html.showcase(rundownPanelOutcomes, singleStoryPanelOutcomes, duplicates)
     RevalidatableResult(Ok(html), html.body)
   }
 
