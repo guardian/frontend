@@ -17,6 +17,7 @@ const defaultOptions = {
 	waitForImages: true,
 	waitForLinks: true,
 	waitForInteractives: false,
+	debug: false,
 };
 
 const isIframe = (node) => node instanceof HTMLIFrameElement;
@@ -126,7 +127,13 @@ const testCandidate = (rule, challenger, opponent) => {
 	const isMinAbove = challenger.top - opponent.bottom >= rule.minAbove;
 	const isMinBelow = opponent.top - challenger.top >= rule.minBelow;
 
-	return isMinAbove || isMinBelow;
+	const pass = isMinAbove || isMinBelow;
+
+	if (!pass) {
+		challenger.meta.tooClose.push(opponent.element);
+	}
+
+	return pass;
 };
 
 // test one element vs an array of other elements for the given rules
@@ -196,6 +203,76 @@ const enforceRules = (measurements, rules, exclusions) => {
 	return candidates;
 };
 
+const markCandidates = (exclusions, winners, options) => {
+	if (!options.debug) return winners;
+
+	const colours = {
+		red: 'rgb(255 178 178)',
+		orange: 'rgb(255 213 178)',
+		yellow: 'rgb(254 255 178)',
+		blue: 'rgb(178 248 255)',
+		pink: 'rgb(255 178 242)',
+		green: 'rgb(178 255 184)',
+	};
+
+	const exclusionTypes = {
+		absoluteMinAbove: {
+			colour: colours.red,
+			reason: 'Too close to the top of page',
+		},
+		aboveAndBelow: {
+			colour: colours.orange,
+			reason: 'Too close to top or bottom of article',
+		},
+		custom: {
+			colour: colours.yellow,
+			reason: 'Too close to other winner',
+		},
+	};
+
+	const addHoverListener = (candidate, tooClose) => {
+		tooClose.forEach((opponent) => {
+			candidate.addEventListener(
+				'mouseenter',
+				() =>
+					(opponent.style.cssText = `border: thick solid ${colours.blue}; color: ${colours.blue}`),
+			);
+
+			candidate.addEventListener(
+				'mouseleave',
+				() => (opponent.style.cssText = ''),
+			);
+		});
+	};
+
+	// Mark losing candidates
+	for (const [key, arr] of Object.entries(exclusions)) {
+		arr.forEach((exclusion) => {
+			const type = exclusionTypes[key];
+
+			if (type) {
+				exclusion.element.title = type.reason;
+				exclusion.element.style.cssText += `background:${type.colour}`;
+			} else if (exclusion.meta.tooClose.length > 0) {
+				exclusion.element.title = 'Too close to other element';
+				exclusion.element.style.cssText += `background:${colours.blue}`;
+				addHoverListener(exclusion.element, exclusion.meta.tooClose);
+			} else {
+				exclusion.element.title = `Unknown key: ${key}`;
+				exclusion.element.style.cssText += `background:${colours.pink}`;
+			}
+		});
+	}
+
+	// Mark winning candidates
+	winners.forEach((winner) => {
+		winner.element.title = 'Winner';
+		winner.element.style.cssText += `background:${colours.green};`;
+	});
+
+	return winners;
+};
+
 class SpaceError extends Error {
 	constructor(rules) {
 		super();
@@ -250,6 +327,9 @@ const getDimensions = (el) =>
 		top: el.offsetTop,
 		bottom: el.offsetTop + el.offsetHeight,
 		element: el,
+		meta: {
+			tooClose: [],
+		},
 	});
 
 const getMeasurements = (rules, candidates) => {
@@ -309,6 +389,7 @@ const findSpace = (rules, options, excluded) => {
 		.then(() => getCandidates(rules, exclusions))
 		.then((candidates) => getMeasurements(rules, candidates))
 		.then((measurements) => enforceRules(measurements, rules, exclusions))
+		.then((winners) => markCandidates(exclusions, winners, options))
 		.then((winners) => returnCandidates(rules, winners));
 };
 
