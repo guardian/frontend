@@ -176,7 +176,7 @@
     @page.article.fields.blocks.toSeq.map { blocks =>
         @blocks.body.map { block =>
 
-            @block.elements.map { element =>
+            @block.elements.zipWithIndex.map { case (element, elementIndex )=>
                 @element match {
                     case TextBlockElement(Some(html)) => {
                         @row(Seq("padded"))(Html(html))
@@ -261,6 +261,8 @@
 
                     case _ => {}
                 }
+
+                @brazePlaceholder(s"Below Element ${elementIndex + 1}")
             }
         }
     }
