@@ -76,7 +76,7 @@
             document.getElementById('server-message').innerText = 'Pressing an article can take up to 10 seconds, please wait';
             document.getElementById('progress-url').innerText = `Pressing: ${url.pathname}`
 
-            fetch(`/press/interactive${url.pathname}`, {
+            fetch(`/press/content${url.pathname}`, {
                 method : 'POST',
             })
             .then(res => {
