@@ -6,7 +6,7 @@ object PressedContent {
   // When we can tag pressed articles (tracking/dcroptout) then we will:
   // - tag all articles that appear in this list
   // - remove this file entirely
-  // - update the InteractiveController to show pressed pages based on presence of the tag
+  // - update the ArticleController and the InteractiveController to show pressed pages based on presence of the tag
   // - update the press+clean functionality to automate tagging as part of this process?
   private[this] val content = Set[String](
     // Specified by Visuals UK
