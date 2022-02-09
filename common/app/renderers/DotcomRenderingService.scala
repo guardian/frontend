@@ -1,7 +1,7 @@
 package renderers
 
 import akka.actor.ActorSystem
-import com.gu.contentapi.client.model.v1.Blocks
+import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import common.{GuLogging, LinkTo}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -20,6 +20,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
+import model.liveblog.BodyBlock
 
 import java.net.ConnectException
 import java.util.concurrent.TimeoutException
@@ -43,7 +44,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       payload: String,
       endpoint: String,
       page: Page,
-      timeout: Duration = Configuration.rendering.timeout,
+      timeout: Duration = Configuration.rendering.timeout
   )(implicit request: RequestHeader): Future[Result] = {
 
     def doPost() = {
@@ -134,47 +135,21 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getBlocks(
                  ws: WSClient,
-                 page: PageWithStoryPackage,
-                 blocks: Blocks,
-                 pageType: PageType,
-                )(implicit request: RequestHeader): Future[Result] = {
+                 page: LiveBlogPage,
+                 blocks: Seq[Block],
+                )(implicit request: RequestHeader): Future[String] = {
 
-
-    val dataModel = DotcomBlocksRenderingDataModel.forLiveblog()
+    val dataModel = DotcomBlocksRenderingDataModel.forLiveblog(page, blocks, request)
     val payload = DotcomBlocksRenderingDataModel.toJson(dataModel)
 
-    post(ws, ???, Configuration.rendering.baseURL + "/Blocks", page)
+    println(payload)
 
-
-    //BlocksRequest {
-      //    blocks: Block[];
-      //    format: ContentFormat,
-      //    host?: string; //Configuration.site.host?
-      //    pageId: string; // content.metadata.id
-      //    webTitle: string; // content.metadata.webTitle
-      //    ajaxUrl: string; // atoms?
-      //    isAdFreeUser: boolean;
-      //    isSensitive: boolean;
-      //    edition: string;
-      //    section: string;
-      //    sharedAdTargeting: Record<string, unknown>;
-      //    adUnit: string;
-      //    videoDuration?: number | undefined;
-      //  }
-
-      //  case class Block(
-      //                    id: String,
-      //                    elements: List[PageElement],
-      //                    blockCreatedOn: Option[Long],
-      //                    blockCreatedOnDisplay: Option[String],
-      //                    blockLastUpdated: Option[Long],
-      //                    blockLastUpdatedDisplay: Option[String],
-      //                    blockFirstPublished: Option[Long],
-      //                    blockFirstPublishedDisplay: Option[String],
-      //                    title: Option[String],
-      //                    primaryDateLine: String,
-      //                    secondaryDateLine: String,
-      //                  )
+    ws
+      .url(Configuration.rendering.baseURL + "/Blocks")
+      .withRequestTimeout(Configuration.rendering.timeout)
+      .addHttpHeaders("Content-Type" -> "application/json")
+      .post(payload)
+      .map(_.body[String])
   }
 
   def getInteractive(

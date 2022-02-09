@@ -1,19 +1,15 @@
 package model.dotcomrendering
 
-import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.AdvertisementFeature
-import com.gu.contentapi.client.utils.format.InteractiveDesign
-import common.{Chronos, Edition, Localisation}
-import common.commercial.EditionCommercialProperties
+import com.gu.commercial.display.AdTargetParam.toMap
+import com.gu.contentapi.client.model.v1.{Block => APIBlock}
+import common.Edition
 import conf.Configuration
-import conf.switches.Switches
 import experiments.ActiveExperiments
-import model.{ArticleDateTimes, Badges, ContentFormat, ContentPage, ContentType, DotcomContentType, GUDateTimeFormatNew, InteractivePage, LiveBlogPage, PageWithStoryPackage}
-import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
-import navigation._
+import model.dotcomrendering.pageElements.PageElement
+import model.{ContentFormat, ContentPage, LiveBlogPage}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
+import views.support.{CamelCase, JavaScriptPage}
 
 // -----------------------------------------------------------------
 // DCR Blocks DataModel
@@ -26,6 +22,7 @@ case class DotcomBlocksRenderingDataModel(
     webTitle: String,
     isAdFreeUser: Boolean,
     config: JsObject,
+    sharedAdTargeting: JsValue
 )
 
 object DotcomBlocksRenderingDataModel {
@@ -41,6 +38,8 @@ object DotcomBlocksRenderingDataModel {
         "webTitle" -> model.webTitle,
         "isAdFreeUser" -> model.isAdFreeUser,
         "config" -> model.config,
+        "sharedAdTargeting" -> model.sharedAdTargeting,
+        "filterKeyEvents" -> false
       )
 
       ElementsEnhancer.enhanceBlocks(obj)
@@ -54,17 +53,17 @@ object DotcomBlocksRenderingDataModel {
 
   def forLiveblog(
       page: LiveBlogPage,
-      blocks: APIBlocks,
+      blocks: Seq[APIBlock],
       request: RequestHeader,
       requestedBlocks: Option[String] = None,
   ): DotcomBlocksRenderingDataModel = {
 
-    val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks, requestedBlocks)
+//    val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks, requestedBlocks)
 
     apply(
       page,
       request,
-      bodyBlocks
+      blocks
     )
   }
 
@@ -101,7 +100,8 @@ object DotcomBlocksRenderingDataModel {
       .find(entry => entry._1 == "calloutsUrl")
       .flatMap(_._2.asOpt[String])
 
-    val bodyBlocksDCR: List[model.dotcomrendering.Block] = bodyBlocks
+
+    val bodyBlocksDCR: List[Block] = bodyBlocks
       .filter(_.published)
       .map(block =>
         Block(block, page, shouldAddAffiliateLinks, request, isMainBlock = false, calloutsUrl, contentDateTimes),
@@ -115,6 +115,7 @@ object DotcomBlocksRenderingDataModel {
       webTitle = content.metadata.webTitle,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       config = combinedConfig,
+      sharedAdTargeting = (combinedConfig \ "sharedAdTargetting").getOrElse(JsObject.empty)
     )
   }
 }
