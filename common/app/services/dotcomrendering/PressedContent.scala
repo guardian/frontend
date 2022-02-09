@@ -1,14 +1,14 @@
 package services.dotcomrendering
 
-object PressedInteractives {
-  // Temporarily retain a list of pressed interactives that Visuals agree to show to readers
+object PressedContent {
+  // Temporarily retain a list of pressed content
   // Ed Tools are supporting us in how to batch/programmatically add tags to pressed articles.
   // When we can tag pressed articles (tracking/dcroptout) then we will:
   // - tag all articles that appear in this list
   // - remove this file entirely
-  // - update the InteractiveController to show pressed pages based on presence of the tag
-  // - update the press+clean functionality to automate tagging as part of this process
-  private[this] val interactives = Set[String](
+  // - update the ArticleController and the InteractiveController to show pressed pages based on presence of the tag
+  // - update the press+clean functionality to automate tagging as part of this process?
+  private[this] val content = Set[String](
     // Specified by Visuals UK
     "/world/ng-interactive/2020/nov/12/beirut-blast-a-night-of-horror-captured-by-its-victims",
     "/environment/ng-interactive/2021/feb/23/beneath-the-blue-dive-into-a-dazzling-ocean-under-threat-interactive",
@@ -136,7 +136,8 @@ object PressedInteractives {
     "/lifeandstyle/ng-interactive/2017/feb/19/the-5th-annual-ofm-50-what-we-love-about-food-in-2017",
     "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
     "/cities/ng-interactive/2016/nov/10/subterranean-london",
+    // articles
   )
 
-  def isPressed(path: String): Boolean = interactives.contains(path)
+  def isPressed(path: String): Boolean = content.contains(path)
 }
