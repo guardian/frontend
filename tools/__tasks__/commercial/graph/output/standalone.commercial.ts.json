@@ -559,7 +559,7 @@
  ],
  "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/commercial/build-page-targeting.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
