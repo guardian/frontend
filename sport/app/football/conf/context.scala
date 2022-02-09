@@ -60,7 +60,7 @@ class FootballLifecycle(
     competitionsService.competitionIds foreach { id =>
       jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
     }
-    jobs.deschedule("MatchDayAgentRefreshJob")
+    jobs.deschedule("MaybeMatchDayAgentRefreshJob")
     jobs.deschedule("CompetitionRefreshJob")
     jobs.deschedule("LiveBlogRefreshJob")
     jobs.deschedule("TeamMapRefreshJob")
