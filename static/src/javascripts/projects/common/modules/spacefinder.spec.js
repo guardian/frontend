@@ -3,6 +3,16 @@ import { _ } from 'common/modules/spacefinder';
 jest.mock('commercial/modules/dfp/track-ad-render', () =>
     Promise.resolve(true)
 );
+jest.mock('ophan/ng', () => null);
+jest.mock('raven-js', () => ({
+    config() {
+        return this;
+    },
+    install() {
+        return this;
+    },
+    captureException: jest.fn(),
+}));
 
 describe('spacefinder', () => {
     test('should test elements correctly', () => {
