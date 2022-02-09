@@ -1,13 +1,15 @@
+import type {
+	ContentTargeting,
+	SessionTargeting,
+	ViewportTargeting,
+} from '@guardian/commercial-core';
 import {
 	clearPermutiveSegments,
+	getContentTargeting,
 	getPermutiveSegments,
+	getSessionTargeting,
+	getViewportTargeting,
 } from '@guardian/commercial-core';
-import { getContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
-import type { ContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
-import type { SessionTargeting } from '@guardian/commercial-core/dist/esm/targeting/session';
-import { getSessionTargeting } from '@guardian/commercial-core/dist/esm/targeting/session';
-import type { ViewportTargeting } from '@guardian/commercial-core/dist/esm/targeting/viewport';
-import { getViewportTargeting } from '@guardian/commercial-core/dist/esm/targeting/viewport';
 import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
@@ -305,10 +307,11 @@ const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
 		referrer: detectGetReferrer(),
 	});
 
-	const viewportTargeting: ViewportTargeting = getViewportTargeting(
-		getViewport().width,
-		!cmp.hasInitialised() || cmp.willShowPrivacyMessageSync(),
-	);
+	const viewportTargeting: ViewportTargeting = getViewportTargeting({
+		viewPortWidth: getViewport().width,
+		cmpBannerWillShow:
+			!cmp.hasInitialised() || cmp.willShowPrivacyMessageSync(),
+	});
 
 	const pageTargets: PageTargeting = {
 		fr: getFrequencyValue(),
