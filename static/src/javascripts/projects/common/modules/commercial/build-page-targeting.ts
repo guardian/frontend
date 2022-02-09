@@ -1,12 +1,12 @@
 import type {
 	ContentTargeting,
+	PersonalisedTargeting,
 	SessionTargeting,
 	ViewportTargeting,
 } from '@guardian/commercial-core';
 import {
-	clearPermutiveSegments,
 	getContentTargeting,
-	getPermutiveSegments,
+	getPersonalisedTargeting,
 	getSessionTargeting,
 	getViewportTargeting,
 } from '@guardian/commercial-core';
@@ -14,9 +14,8 @@ import { getContentTargeting } from '@guardian/commercial-core/dist/esm/targetin
 import type { ContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
 import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
-import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import type { CountryCode } from '@guardian/libs';
-import { getCookie, isString, log, storage } from '@guardian/libs';
+import { getCookie, isString, log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getReferrer as detectGetReferrer } from '../../../../lib/detect';
@@ -26,7 +25,6 @@ import { removeFalseyValues } from '../../../commercial/modules/header-bidding/u
 import { getSynchronousParticipations } from '../experiments/ab';
 import { isUserLoggedIn } from '../identity/api';
 import { commercialFeatures } from './commercial-features';
-
 // https://admanager.google.com/59666047#inventory/custom_targeting/list
 
 type TrueOrFalse = 't' | 'f';
@@ -117,31 +115,6 @@ export type PageTargeting = PartialWithNulls<{
 	[_: string]: string | string[];
 }>;
 
-const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
-
-const getFrequencyValue = (): Frequency => {
-	const visitCount: number = parseInt(
-		storage.local.getRaw('gu.alreadyVisited') ?? '0',
-		10,
-	);
-
-	if (visitCount <= 5) {
-		return frequency[visitCount];
-	} else if (visitCount >= 6 && visitCount <= 9) {
-		return '6-9';
-	} else if (visitCount >= 10 && visitCount <= 15) {
-		return '10-15';
-	} else if (visitCount >= 16 && visitCount <= 19) {
-		return '16-19';
-	} else if (visitCount >= 20 && visitCount <= 29) {
-		return '20-29';
-	} else if (visitCount >= 30) {
-		return '30plus';
-	}
-
-	return '0';
-};
-
 const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
 	const asKeyValues = Object.entries(obj).map((entry) => {
 		const [key, value] = entry;
@@ -176,49 +149,6 @@ const buildAppNexusTargeting = once((pageTargeting: PageTargeting): string =>
 	formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting)),
 );
 
-const consentedToAllPurposes = (consents: TCFv2ConsentList): boolean => {
-	return (
-		Object.keys(consents).length > 0 &&
-		Object.values(consents).every(Boolean)
-	);
-};
-
-const canTarget = (state?: ConsentState): boolean => {
-	if (!state) return false;
-
-	if (state.ccpa) {
-		// CCPA mode
-		return !state.ccpa.doNotSell;
-	} else if (state.tcfv2) {
-		// TCFv2 mode
-		return consentedToAllPurposes(state.tcfv2.consents);
-	} else if (state.aus) {
-		// AUS mode
-		return state.aus.personalisedAdvertising;
-	}
-	// Unknown mode
-	return false;
-};
-
-const isAdManagerGroup = (s: string | null): s is AdManagerGroup =>
-	adManagerGroups.some((g) => g === s);
-
-const getAdManagerGroup = (consented = true): AdManagerGroup | null => {
-	if (!consented) return null;
-	const existingGroup = storage.local.getRaw(AMTGRP_STORAGE_KEY);
-
-	return isAdManagerGroup(existingGroup)
-		? existingGroup
-		: createAdManagerGroup();
-};
-
-const createAdManagerGroup = (): AdManagerGroup => {
-	const group =
-		adManagerGroups[Math.floor(Math.random() * adManagerGroups.length)];
-	storage.local.setRaw(AMTGRP_STORAGE_KEY, group);
-	return group;
-};
-
 const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
 	const filtered: Record<string, string | string[]> = {};
 	for (const key in pageTargets) {
@@ -236,49 +166,7 @@ const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
 	return filtered;
 };
 
-const getConsentRelatedPageTargeting = (
-	canTargetAds: boolean,
-	consentState?: ConsentState,
-): PageTargeting => {
-	const amtgrp = consentState?.tcfv2
-		? getAdManagerGroup(canTargetAds)
-		: getAdManagerGroup();
-
-	if (!consentState) {
-		return {
-			amtgrp,
-			cmp_interaction: 'na',
-			consent_tcfv2: 'na',
-			pa: 'f',
-			rdp: 'na',
-		};
-	}
-	return {
-		amtgrp,
-		cmp_interaction: consentState.tcfv2
-			? consentState.tcfv2.eventStatus
-			: 'na',
-		consent_tcfv2: consentState.tcfv2
-			? consentedToAllPurposes(consentState.tcfv2.consents)
-				? 't'
-				: 'f'
-			: 'na',
-		pa: canTargetAds ? 't' : 'f',
-		rdp: consentState.ccpa
-			? consentState.ccpa.doNotSell
-				? 't'
-				: 'f'
-			: 'na',
-	};
-};
-
-const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
-	const canTargetAds = canTarget(consentState);
-	if (!canTargetAds) clearPermutiveSegments();
-	const consentRelatedTargeting = getConsentRelatedPageTargeting(
-		canTargetAds,
-		consentState,
-	);
+const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 	const { page } = window.guardian.config;
 	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
 		? { af: 't' }
@@ -315,15 +203,16 @@ const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
 			!cmp.hasInitialised() || cmp.willShowPrivacyMessageSync(),
 	});
 
+	const personalisedTargeting: PersonalisedTargeting =
+		getPersonalisedTargeting(consentState);
+
 	const pageTargets: PageTargeting = {
-		fr: getFrequencyValue(),
-		permutive: getPermutiveSegments(),
-		...consentRelatedTargeting,
 		...page.sharedAdTargeting,
 		...adFreeTargeting,
 		...contentTargeting,
 		...sessionTargeting,
 		...viewportTargeting,
+		...personalisedTargeting,
 	};
 
 	// filter out empty values
