@@ -139,16 +139,31 @@
         }
     }
 
+    @row(Seq("no-pad braze-advert-placeholder")) {
+        @brazePlaceholder(s"Above Headline")
+    }
+
     @row(Seq("padded")) {
         <h1>@article.trail.headline</h1>
+    }
+
+    @row(Seq("no-pad braze-advert-placeholder")) {
+        @brazePlaceholder(s"Above Standfirst")
     }
 
     @article.fields.standfirst.map { standfirst =>
         @row(Seq("padded"))(Html(standfirst))
     }
 
+    @row(Seq("no-pad braze-advert-placeholder")) {
+        @brazePlaceholder(s"Above MainMedia")
+    }
+
     @fragments.emailMainMedia(article)
 
+    @row(Seq("no-pad braze-advert-placeholder")) {
+        @brazePlaceholder(s"Above Byline")
+    }
     @defining(
         article.tags.contributors,
         article.tags.tones.exists { _.id == "tone/features" } ||
@@ -177,6 +192,10 @@
         @blocks.body.map { block =>
 
             @block.elements.zipWithIndex.map { case (element, elementIndex )=>
+
+                @row(Seq("no-pad braze-advert-placeholder")) {
+                    @brazePlaceholder(s"Above Element ${elementIndex + 1}")
+                }
                 @element match {
                     case TextBlockElement(Some(html)) => {
                         @row(Seq("padded"))(Html(html))
@@ -262,7 +281,9 @@
                     case _ => {}
                 }
 
-                @brazePlaceholder(s"Below Element ${elementIndex + 1}")
+                @row(Seq("no-pad braze-advert-placeholder")) {
+                    @brazePlaceholder(s"Below Element ${elementIndex + 1}")
+                }
             }
         }
     }
