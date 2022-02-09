@@ -112,8 +112,9 @@ object ArticlePicker {
       request: RequestHeader,
   ): RenderType = {
     if (request.forceDCROff) LocalRenderArticle
+    else if (request.forceDCR) RemoteRender
     else if (isPressed) PressedArticle
-    else if (request.forceDCR || dcrCanRender) RemoteRender
+    else if (dcrCanRender) RemoteRender
     else LocalRenderArticle
   }
 
