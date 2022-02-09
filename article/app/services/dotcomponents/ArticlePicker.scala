@@ -5,7 +5,6 @@ import model.liveblog.{BlockElement, InteractiveBlockElement}
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
 import services.dotcomrendering.PressedContent
-import services.dotcomrendering.PressedContent.isPressed
 
 object ArticlePageChecks {
 
@@ -52,6 +51,8 @@ object ArticlePageChecks {
 
   def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
 
+  def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.item.tags.isPaidContent
+
 }
 
 object ArticlePicker {
@@ -85,8 +86,10 @@ object ArticlePicker {
   ): RenderType = {
     val checks = dcrChecks(page, request)
     val dcrCanRender = checks.values.forall(identity)
+    val isNotPaidContent = ArticlePageChecks.isNotPaidContent(page)
+    val shouldServePressed = isNotPaidContent && PressedContent.isPressed(ensureStartingForwardSlash(path))
 
-    val tier: RenderType = decideTier(isPressed(ensureStartingForwardSlash(path)), dcrCanRender)
+    val tier: RenderType = decideTier(shouldServePressed, dcrCanRender)
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
@@ -108,12 +111,12 @@ object ArticlePicker {
     tier
   }
 
-  def decideTier(isPressed: Boolean, dcrCanRender: Boolean)(implicit
+  def decideTier(shouldServePressed: Boolean, dcrCanRender: Boolean)(implicit
       request: RequestHeader,
   ): RenderType = {
     if (request.forceDCROff) LocalRenderArticle
     else if (request.forceDCR) RemoteRender
-    else if (isPressed) PressedArticle
+    else if (shouldServePressed) PressedArticle
     else if (dcrCanRender) RemoteRender
     else LocalRenderArticle
   }

@@ -24,7 +24,7 @@ import test.TestRequest
     tier should be(RemoteRender)
   }
 
-  it should "return RemoteRender if force DCR and content is pressed" in {
+  it should "return RemoteRender if force DCR and content should be served pressed" in {
     val testRequest = TestRequest("article-path?dcr=true")
     val tier = ArticlePicker.decideTier(true, true)(testRequest)
     tier should be(RemoteRender)
@@ -36,7 +36,7 @@ import test.TestRequest
     tier should be(PressedArticle)
   }
 
-  it should "return RemoteRender if dcr can render and article is not pressed" in {
+  it should "return RemoteRender if dcr can render and article should not be served pressed" in {
     val testRequest = TestRequest("article-path")
     val tier = ArticlePicker.decideTier(false, true)(testRequest)
     tier should be(RemoteRender)
