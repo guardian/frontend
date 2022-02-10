@@ -62,7 +62,7 @@
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.11.5",
     "@babel/runtime": "^7.11.2",
-    "@guardian/eslint-config-typescript": "^0.7.0",
+    "@guardian/eslint-config-typescript": "^1.0.0",
     "@guardian/prettier": "^0.5.0",
     "@types/google.analytics": "^0.0.42",
     "@types/googletag": "^1.1.3",
