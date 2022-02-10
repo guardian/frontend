@@ -18,16 +18,16 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
       (true, Duration.ofMinutes(5), true),
       (true, Duration.ofMinutes(10), true),
     ) foreach { testcase =>
-      (s"isAMatchInProgress returns ${testcase._3} if there's a match that started ${testcase._2} ago") in {
+      (s"isMatchLiveOrAboutToStart returns ${testcase._3} if there's a match that started ${testcase._2} ago") in {
         val matches: Seq[FootballMatch] =
           matchesWithLiveMatchAtCurrentMinusDuration(testcase._2, testcase._1)
 
         val testCompetition = competitions(1).copy(matches = matches)
         val competitionsList = Competitions(Seq(testCompetition))
 
-        val isAMatchInProgress = competitionsList.isAMatchInProgress(competitionsList.matches, clock)
+        val isMatchLiveOrAboutToStart = competitionsList.isMatchLiveOrAboutToStart(competitionsList.matches, clock)
 
-        isAMatchInProgress should equal(testcase._3)
+        isMatchLiveOrAboutToStart should equal(testcase._3)
       }
     }
 
@@ -40,14 +40,14 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
       (true, Duration.ofMinutes(5), true),
       (true, Duration.ofMinutes(10), true),
     ) foreach { testcase =>
-      (s"isAMatchInProgress returns ${testcase._3} if there's a match with liveMatch status ${testcase._1} that will start in ${testcase._2}") in {
+      (s"isMatchLiveOrAboutToStart returns ${testcase._3} if there's a match with liveMatch status ${testcase._1} that will start in ${testcase._2}") in {
         val matches: Seq[FootballMatch] =
           matchesWithLiveMatchAtCurrentPlusDuration(testcase._2, testcase._1)
         val testCompetition = competitions(1).copy(matches = matches)
         val competitionsList = Competitions(Seq(testCompetition))
-        val isAMatchInProgress = competitionsList.isAMatchInProgress(competitionsList.matches, clock)
+        val isMatchLiveOrAboutToStart = competitionsList.isMatchLiveOrAboutToStart(competitionsList.matches, clock)
 
-        isAMatchInProgress should equal(testcase._3)
+        isMatchLiveOrAboutToStart should equal(testcase._3)
       }
     }
   }

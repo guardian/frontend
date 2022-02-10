@@ -100,7 +100,7 @@ trait Competitions extends implicits.Football {
 
   def matches: Seq[FootballMatch] = competitions.flatMap(_.matches)
 
-  def isAMatchInProgress(matches: Seq[FootballMatch], clock: Clock): Boolean =
+  def isMatchLiveOrAboutToStart(matches: Seq[FootballMatch], clock: Clock): Boolean =
     matches.exists(game => {
       val currentTime = ZonedDateTime.now(clock)
       game.isLive ||
@@ -412,7 +412,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     // matches is the list of all matches from all competitions
-    if (isAMatchInProgress(matches, clock)) {
+    if (isMatchLiveOrAboutToStart(matches, clock)) {
       refreshMatchDay(clock)
     } else {
       Future.successful(immutable.Iterable[Competition]())
