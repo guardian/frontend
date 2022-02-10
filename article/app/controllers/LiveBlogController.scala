@@ -10,11 +10,10 @@ import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import model.dotcomrendering.PageType
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.{ApplicationContext, CanonicalLiveBlog, _}
-import org.apache.http.util.EntityUtils
 import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
@@ -85,11 +84,9 @@ class LiveBlogController(
 
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
-//        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks, range))
-        case (blog: LiveBlogPage, blocks) => {
+        case (blog: LiveBlogPage, blocks) =>
           val blocksFlattened = blocks.requestedBodyBlocks.getOrElse(Map.empty[String, Seq[Block]]).flatMap(_._2).toSeq
           getJson(blog, range, isLivePage, filter, blocksFlattened)
-        }
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
@@ -254,11 +251,10 @@ class LiveBlogController(
     )
 
     for {
-      blocksHtml <- remoteRender match {
-        case true =>
-          getDCRBlocksHTML(page, newCapiBlocks)
-        case false =>
-          Future.successful(views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone))
+      blocksHtml <- if (remoteRender) {
+        getDCRBlocksHTML(page, newCapiBlocks)
+      } else {
+        Future.successful(views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone))
       }
     } yield {
       val allPagesJson = Seq(
@@ -275,21 +271,6 @@ class LiveBlogController(
       Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
     }
 
-  }
-
-  private[this] def renderGuuiJson(
-      blog: LiveBlogPage,
-      blocks: Blocks,
-      range: BlockRange,
-  )(implicit request: RequestHeader): Result = {
-    val pageType: PageType = PageType(blog, request, context)
-    val requestedBlocks = range match {
-      case sinceBlockId @ SinceBlockId(_) => Some(sinceBlockId.around)
-      case _                              => None
-    }
-    val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, requestedBlocks)
-    val json = DotcomRenderingDataModel.toJson(model)
-    common.renderJson(json, blog).as("application/json")
   }
 
   private[this] def mapModel(path: String, range: BlockRange, filterKeyEvents: Boolean = false)(
@@ -353,7 +334,7 @@ object LiveBlogController {
 
   def isDeadBlog(blog: PageWithStoryPackage): Boolean = !blog.article.fields.isLive
 
-  def isNotRecent(blog: PageWithStoryPackage) = {
+  def isNotRecent(blog: PageWithStoryPackage): Boolean = {
     val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
     blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }

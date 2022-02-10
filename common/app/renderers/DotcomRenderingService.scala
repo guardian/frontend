@@ -2,28 +2,24 @@ package renderers
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
-import common.{GuLogging, LinkTo}
+import common.GuLogging
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
+import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.CacheTime
-import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomRenderingDataModel, DotcomRenderingUtils, PageType}
-import model.{ArticlePage, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
+import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomRenderingDataModel, PageType}
+import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
 import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.mvc.{RequestHeader, Result}
 import play.api.mvc.Results.{InternalServerError, NotFound}
+import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import scala.concurrent.duration._
-import http.ResultWithPreconnectPreload
-import http.HttpPreconnections
-import model.liveblog.BodyBlock
 
 import java.net.ConnectException
 import java.util.concurrent.TimeoutException
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.duration._
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
@@ -140,15 +136,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
                 )(implicit request: RequestHeader): Future[String] = {
 
     val dataModel = DotcomBlocksRenderingDataModel.forLiveblog(page, blocks, request)
-    val payload = DotcomBlocksRenderingDataModel.toJson(dataModel)
-
-    println(payload)
+    val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
 
     ws
       .url(Configuration.rendering.baseURL + "/Blocks")
       .withRequestTimeout(Configuration.rendering.timeout)
       .addHttpHeaders("Content-Type" -> "application/json")
-      .post(payload)
+      .post(json)
       .map(_.body[String])
   }
 
