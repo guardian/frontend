@@ -87,7 +87,7 @@ object ArticlePicker {
     val checks = dcrChecks(page, request)
     val dcrCanRender = checks.values.forall(identity)
     val isNotPaidContent = ArticlePageChecks.isNotPaidContent(page)
-    val shouldServePressed = isNotPaidContent && PressedContent.isPressed(ensureStartingForwardSlash(path))
+    val shouldServePressed = PressedContent.isPressed(ensureStartingForwardSlash(path)) && isNotPaidContent
 
     val tier: RenderType = decideTier(shouldServePressed, dcrCanRender)
 
