@@ -137,6 +137,11 @@ object PressedContent {
     "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
     "/cities/ng-interactive/2016/nov/10/subterranean-london",
     // articles
+    "/travel/2015/dec/03/machu-picchu-google-street-view-peru",
+    "/membership/2017/jan/23/saving-retirement-pension-generation-old-age",
+    "/us-news/2015/jun/05/black-women-police-killing-tanisha-anderson",
+    "/environment/2015/may/17/shell-accused-of-strategy-risking-catastrophic-climate-change",
+    "/environment/2016/jun/07/the-great-barrier-reef-a-catastrophe-laid-bare",
   )
 
   def isPressed(path: String): Boolean = content.contains(path)
