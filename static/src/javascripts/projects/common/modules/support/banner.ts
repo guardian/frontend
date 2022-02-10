@@ -30,6 +30,7 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getCountryCode } from 'lib/geolocation';
 import reportError from 'lib/report-error';
+import { getArticleViewCountForDays } from 'common/modules/onward/history';
 
 export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp'; // timestamp of when we were last told not to show a RR banner
 const twentyMins = 20 * 60_000;
@@ -109,7 +110,7 @@ export const renderBanner = (
 };
 
 const buildBannerPayload = async (): Promise<BannerPayload> => {
-	const { section, shouldHideReaderRevenue, isPaidContent } =
+	const { contentType, section, shouldHideReaderRevenue, isPaidContent } =
 		window.guardian.config.page;
 
 	const targeting: BannerTargeting = {
@@ -126,10 +127,12 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 		mvtId: getMvtValue() ?? 0,
 		countryCode: getCountryCode(),
 		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
+		articleCountToday: getArticleViewCountForDays(1),
 		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
 		modulesVersion: ModulesVersion,
 		sectionId: section,
 		tagIds: buildTagIds(),
+		contentType,
 	};
 
 	return {
