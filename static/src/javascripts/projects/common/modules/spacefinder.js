@@ -235,7 +235,7 @@ const markCandidates = (exclusions, winners, options) => {
 			candidate.addEventListener(
 				'mouseenter',
 				() =>
-					(opponent.style.cssText = `border: thick solid ${colours.blue}; color: ${colours.blue}`),
+					(opponent.style.cssText = `box-shadow: 0px 0px 0px 20px ${colours.blue}`),
 			);
 
 			candidate.addEventListener(
@@ -245,20 +245,34 @@ const markCandidates = (exclusions, winners, options) => {
 		});
 	};
 
+	const addExplainer = (element, text) => {
+		const explainer = document.createElement('div');
+		explainer.appendChild(document.createTextNode(text));
+		explainer.style.cssText = `
+            position:absolute;
+            right:0;
+            background-color:#fffffff7;
+            padding:10px;
+            border-radius:0 0 0 10px;
+            font-family: sans-serif;
+        `;
+		element.before(explainer);
+	};
+
 	// Mark losing candidates
 	for (const [key, arr] of Object.entries(exclusions)) {
 		arr.forEach((exclusion) => {
 			const type = exclusionTypes[key];
 
 			if (type) {
-				exclusion.element.title = type.reason;
+				addExplainer(exclusion.element, type.reason);
 				exclusion.element.style.cssText += `background:${type.colour}`;
 			} else if (exclusion.meta.tooClose.length > 0) {
-				exclusion.element.title = 'Too close to other element';
+				addExplainer(exclusion.element, 'Too close to other element');
 				exclusion.element.style.cssText += `background:${colours.blue}`;
 				addHoverListener(exclusion.element, exclusion.meta.tooClose);
 			} else {
-				exclusion.element.title = `Unknown key: ${key}`;
+				addExplainer(exclusion.element, `Unknown key: ${key}`);
 				exclusion.element.style.cssText += `background:${colours.pink}`;
 			}
 		});
@@ -266,7 +280,7 @@ const markCandidates = (exclusions, winners, options) => {
 
 	// Mark winning candidates
 	winners.forEach((winner) => {
-		winner.element.title = 'Winner';
+		addExplainer(winner.element, 'Winner');
 		winner.element.style.cssText += `background:${colours.green};`;
 	});
 
