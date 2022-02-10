@@ -102,11 +102,9 @@ trait Competitions extends implicits.Football {
 
   def isAMatchInProgress(matches: Seq[FootballMatch], clock: Clock): Boolean =
     matches.exists(game => {
-      val gameUtc = game.date.withZoneSameInstant(ZoneOffset.UTC) // game.date.withZoneSameInstant(ZoneOffset.UTC)
-      val currentTimeUtc = clock.instant.atZone(ZoneOffset.UTC)
-      game.isLive || (gameUtc.minusMinutes(5).isBefore(currentTimeUtc) && gameUtc
-        .plusMinutes(5)
-        .isAfter(currentTimeUtc))
+      val currentTime = ZonedDateTime.now(clock)
+      game.isLive ||
+      (game.date.minusMinutes(5).isBefore(currentTime) && game.date.plusMinutes(5).isAfter(currentTime))
     })
 }
 
