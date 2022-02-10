@@ -1,7 +1,6 @@
 package services.dotcomponents
 
 import implicits.Requests._
-import model.liveblog.{BlockElement, InteractiveBlockElement}
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
 import services.dotcomrendering.PressedContent
@@ -13,36 +12,6 @@ object ArticlePageChecks {
       case a: ArticlePage => true
       case _              => false
     }
-  }
-
-  def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
-
-    val supportedInteractiveScriptPrefixes: List[String] = List(
-      "https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js", // standard iframe wrapper boot
-      "https://open-module.appspot.com/boot.js", // script no longer exists, i.e. parity with frontend
-      "https://embed.actionbutton.co/widget/boot.js", // supported in DCR
-      "https://interactive.guim.co.uk/2017/07/booklisted/boot.js", // not supported but fallback ok
-      "https://interactive.guim.co.uk/page-enhancers/super-lists/boot.js", // broken on frontend anyway
-      "https://gdn-cdn.s3.amazonaws.com/quiz-builder/", // old quiz builder quizzes work fine
-      "https://uploads.guim.co.uk/2019/03/20/boot.js", //creates a contents section component
-      "https://uploads.guim.co.uk/2019/12/11/boot.js", //another variant of the contents block
-      "https://interactive.guim.co.uk/page-enhancers/nav/boot.js", //another variant of the contents block
-      "https://interactive.guim.co.uk/testing/2020/11/voterSlideshow/boot.js", //why on earth are there so many contents blocks?
-      "https://uploads.guim.co.uk/2021/10/15/boot.js", //somehow there are even more
-      "https://interactive.guim.co.uk/embed/2018/02/divider/index.html", //A simple divider that renders fine in DCR
-    )
-
-    def unsupportedElement(blockElement: BlockElement) =
-      blockElement match {
-        case InteractiveBlockElement(_, scriptUrl) =>
-          scriptUrl match {
-            case Some(scriptUrl) if supportedInteractiveScriptPrefixes.exists(scriptUrl.startsWith) => false
-            case _                                                                                  => true
-          }
-        case _ => false
-      }
-
-    !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
@@ -60,7 +29,6 @@ object ArticlePicker {
   def dcrChecks(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
-      ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
