@@ -123,22 +123,22 @@ const filter = (list, filterElement) => {
 };
 
 // test one element vs another for the given rules
-const testCandidate = (rule, challenger, opponent) => {
-	const isMinAbove = challenger.top - opponent.bottom >= rule.minAbove;
-	const isMinBelow = opponent.top - challenger.top >= rule.minBelow;
+const testCandidate = (rule, candidate, opponent) => {
+	const isMinAbove = candidate.top - opponent.bottom >= rule.minAbove;
+	const isMinBelow = opponent.top - candidate.top >= rule.minBelow;
 
 	const pass = isMinAbove || isMinBelow;
 
 	if (!pass) {
-		challenger.meta.tooClose.push(opponent.element);
+		candidate.meta.tooClose.push(opponent.element);
 	}
 
 	return pass;
 };
 
 // test one element vs an array of other elements for the given rules
-const testCandidates = (rules, challenger, opponents) =>
-	opponents.every(testCandidate.bind(undefined, rules, challenger));
+const testCandidates = (rules, candidate, opponents) =>
+	opponents.every(testCandidate.bind(undefined, rules, candidate));
 
 const enforceRules = (measurements, rules, exclusions) => {
 	let candidates = measurements.candidates;
