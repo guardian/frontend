@@ -42,8 +42,16 @@ class FootballLifecycle(
         }
     }
 
+    /*
+    This is a legacy job. It will possibly duplicate the MaybeMatchDayAgentRefreshJob once every 5 minutes IF a match is in progress.
+    Ideally, we should combine the logic of these two jobs so we only call once. This is tricky to achieve with the current code.
+    We intend to move to a stream model so we can achieve this.
+     */
+    jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
+      competitionsService.refreshMatchDay(defaultClock)
+    }
+
     jobs.schedule("MaybeMatchDayAgentRefreshJob", "0 0/1 * * * ?") {
-      // at second 30 of every 1 minute
       competitionsService.maybeRefreshLiveMatches(defaultClock)
     }
 
@@ -60,6 +68,7 @@ class FootballLifecycle(
     competitionsService.competitionIds foreach { id =>
       jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
     }
+    jobs.deschedule("MatchDayAgentRefreshJob")
     jobs.deschedule("MaybeMatchDayAgentRefreshJob")
     jobs.deschedule("CompetitionRefreshJob")
     jobs.deschedule("LiveBlogRefreshJob")
