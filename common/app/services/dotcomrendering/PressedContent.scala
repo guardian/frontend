@@ -1,14 +1,14 @@
 package services.dotcomrendering
 
-object PressedInteractives {
-  // Temporarily retain a list of pressed interactives that Visuals agree to show to readers
+object PressedContent {
+  // Temporarily retain a list of pressed content
   // Ed Tools are supporting us in how to batch/programmatically add tags to pressed articles.
   // When we can tag pressed articles (tracking/dcroptout) then we will:
   // - tag all articles that appear in this list
   // - remove this file entirely
-  // - update the InteractiveController to show pressed pages based on presence of the tag
-  // - update the press+clean functionality to automate tagging as part of this process
-  private[this] val interactives = Set[String](
+  // - update the ArticleController and the InteractiveController to show pressed pages based on presence of the tag
+  // - update the press+clean functionality to automate tagging as part of this process?
+  private[this] val content = Set[String](
     // Specified by Visuals UK
     "/world/ng-interactive/2020/nov/12/beirut-blast-a-night-of-horror-captured-by-its-victims",
     "/environment/ng-interactive/2021/feb/23/beneath-the-blue-dive-into-a-dazzling-ocean-under-threat-interactive",
@@ -77,6 +77,7 @@ object PressedInteractives {
     "/environment/ng-interactive/2021/apr/29/visualised-glaciers-now-and-then",
     "/environment/ng-interactive/2015/nov/26/the-mekong-river-stories-from-the-heart-of-the-climate-crisis-interactive",
     "/football/ng-interactive/2014/dec/21/the-top-100-footballers-2014-interactive",
+    "/uk-news/ng-interactive/2014/feb/11/britain-100-years-of-conflict",
     // Specified by Newsletters UK
     "/info/ng-interactive/2017/may/05/sign-up-for-the-long-read-email",
     "/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email",
@@ -135,7 +136,13 @@ object PressedInteractives {
     "/lifeandstyle/ng-interactive/2017/feb/19/the-5th-annual-ofm-50-what-we-love-about-food-in-2017",
     "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
     "/cities/ng-interactive/2016/nov/10/subterranean-london",
+    // articles
+    "/travel/2015/dec/03/machu-picchu-google-street-view-peru",
+    "/membership/2017/jan/23/saving-retirement-pension-generation-old-age",
+    "/us-news/2015/jun/05/black-women-police-killing-tanisha-anderson",
+    "/environment/2015/may/17/shell-accused-of-strategy-risking-catastrophic-climate-change",
+    "/environment/2016/jun/07/the-great-barrier-reef-a-catastrophe-laid-bare",
   )
 
-  def isPressed(path: String): Boolean = interactives.contains(path)
+  def isPressed(path: String): Boolean = content.contains(path)
 }
