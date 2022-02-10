@@ -163,15 +163,23 @@ object FootballTestData {
     ),
   )
 
-  private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: ZonedDateTime) =
+  def liveMatch(
+      homeName: String,
+      awayName: String,
+      homeScore: Int,
+      awayScore: Int,
+      date: ZonedDateTime,
+      isLive: Boolean = true,
+  ) =
     matchDay.copy(
       id = s"liveMatch $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
       homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
       awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),
+      liveMatch = isLive,
     )
 
-  private def fixture(homeName: String, awayName: String, date: ZonedDateTime) =
+  def fixture(homeName: String, awayName: String, date: ZonedDateTime) =
     _fixture.copy(
       id = s"fixture $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
@@ -179,7 +187,7 @@ object FootballTestData {
       awayTeam = team.copy(id = awayName, name = awayName, score = None),
     )
 
-  private def result(
+  def result(
       homeName: String,
       awayName: String,
       homeScore: Int,
