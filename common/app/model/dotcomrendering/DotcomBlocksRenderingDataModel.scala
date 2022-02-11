@@ -1,15 +1,14 @@
 package model.dotcomrendering
 
-import com.gu.commercial.display.AdTargetParam.toMap
+import com.gu.commercial.display.AdTargetParamValue
 import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import common.Edition
+import common.commercial.EditionAdTargeting.adTargetParamValueWrites
 import conf.Configuration
-import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.PageElement
 import model.{ContentFormat, ContentPage, LiveBlogPage}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, JavaScriptPage}
 
 // -----------------------------------------------------------------
 // DCR Blocks DataModel
@@ -20,9 +19,13 @@ case class DotcomBlocksRenderingDataModel(
     format: ContentFormat,
     pageId: String,
     webTitle: String,
+    ajaxUrl: String,
     isAdFreeUser: Boolean,
-    config: JsObject,
-    sharedAdTargeting: JsValue,
+    isSensitive: Boolean,
+    edition: String,
+    section: String,
+    sharedAdTargeting: Map[String, AdTargetParamValue],
+    adUnit: String,
 )
 
 object DotcomBlocksRenderingDataModel {
@@ -36,10 +39,13 @@ object DotcomBlocksRenderingDataModel {
         "format" -> model.format,
         "pageId" -> model.pageId,
         "webTitle" -> model.webTitle,
+        "ajaxUrl" -> model.ajaxUrl,
         "isAdFreeUser" -> model.isAdFreeUser,
-        "config" -> model.config,
-        "sharedAdTargeting" -> model.sharedAdTargeting,
-        "filterKeyEvents" -> false,
+        "isSensitive" -> model.isSensitive,
+        "edition" -> model.edition,
+        "section" -> model.section,
+        "sharedAdTargeting" -> Json.toJson(model.sharedAdTargeting),
+        "adUnit" -> model.adUnit,
       )
 
       ElementsEnhancer.enhanceBlocks(obj)
@@ -51,22 +57,6 @@ object DotcomBlocksRenderingDataModel {
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }
 
-  def forLiveblog(
-      page: LiveBlogPage,
-      blocks: Seq[APIBlock],
-      request: RequestHeader,
-      requestedBlocks: Option[String] = None,
-  ): DotcomBlocksRenderingDataModel = {
-
-//    val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks, requestedBlocks)
-
-    apply(
-      page,
-      request,
-      blocks,
-    )
-  }
-
   def apply(
       page: ContentPage,
       request: RequestHeader,
@@ -76,29 +66,9 @@ object DotcomBlocksRenderingDataModel {
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
     val contentDateTimes = DotcomRenderingUtils.contentDateTimes(content)
 
-    val switches: Map[String, Boolean] = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
+    val edition = Edition(request)
 
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
-    )
-
-    val combinedConfig = {
-      val jsPageConfig = JavaScriptPage.getMap(page, Edition(request), isPreview = false, request)
-      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    }
-
-    val calloutsUrl = combinedConfig.fields.toList
-      .find(entry => entry._1 == "calloutsUrl")
-      .flatMap(_._2.asOpt[String])
+    val calloutsUrl = Option(Configuration.journalism.calloutsUrl);
 
     val bodyBlocksDCR: List[Block] = bodyBlocks
       .filter(_.published)
@@ -112,9 +82,14 @@ object DotcomBlocksRenderingDataModel {
       format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       pageId = content.metadata.id,
       webTitle = content.metadata.webTitle,
+      ajaxUrl = Configuration.ajax.url,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
-      config = combinedConfig,
-      sharedAdTargeting = (combinedConfig \ "sharedAdTargetting").getOrElse(JsObject.empty),
+      isSensitive = content.metadata.sensitive,
+      edition = edition.id,
+      section = content.metadata.sectionId,
+      sharedAdTargeting =
+        content.metadata.commercial.map(_.adTargeting(edition)).getOrElse(Set.empty).map(f => (f.name, f.value)).toMap,
+      adUnit = content.metadata.adUnitSuffix,
     )
   }
 }
