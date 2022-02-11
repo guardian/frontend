@@ -1,4 +1,4 @@
-// total_hours_spent_maintaining_this = 72
+// total_hours_spent_maintaining_this = 80
 
 import bean from 'bean';
 import fastdom from '../../../lib/fastdom-promise';
@@ -108,16 +108,17 @@ const onInteractivesLoaded = memoize((rules) => {
 		  ).then(() => undefined);
 }, getFuncId);
 
-const filter = (list, filterElement, exclusions) => {
+const filter = (list, filterElement) => {
 	const filtered = [];
+	const exclusions = [];
 	list.forEach((element) => {
-		if (filterElement(element)) {
+		if (filterElement(element, filtered[filtered.length - 1])) {
 			filtered.push(element);
 		} else {
 			exclusions.push(element);
 		}
 	});
-	return filtered;
+	return { filtered, exclusions };
 };
 
 // test one element vs another for the given rules
@@ -134,65 +135,62 @@ const testCandidates = (rules, challenger, opponents) =>
 
 const enforceRules = (measurements, rules, exclusions) => {
 	let candidates = measurements.candidates;
+	let result;
 
 	// enforce absoluteMinAbove rule
-	exclusions.absoluteMinAbove = [];
-	candidates = filter(
+	result = filter(
 		candidates,
 		(candidate) =>
 			!rules.absoluteMinAbove ||
 			candidate.top + measurements.bodyTop >= rules.absoluteMinAbove,
-		exclusions.absoluteMinAbove,
 	);
+	exclusions.absoluteMinAbove = result.exclusions;
+	candidates = result.filtered;
 
 	// enforce minAbove and minBelow rules
-	exclusions.aboveAndBelow = [];
-	candidates = filter(
-		candidates,
-		(candidate) => {
-			const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
-			const farEnoughFromBottomOfBody =
-				candidate.top + rules.minBelow <= measurements.bodyHeight;
-			return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
-		},
-		exclusions.aboveAndBelow,
-	);
+	result = filter(candidates, (candidate) => {
+		const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
+		const farEnoughFromBottomOfBody =
+			candidate.top + rules.minBelow <= measurements.bodyHeight;
+		return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
+	});
+	exclusions.aboveAndBelow = result.exclusions;
+	candidates = result.filtered;
 
 	// enforce content meta rule
 	if (rules.clearContentMeta) {
-		exclusions.contentMeta = [];
-		candidates = filter(
+		result = filter(
 			candidates,
 			(c) =>
 				!!measurements.contentMeta &&
 				c.top >
 					measurements.contentMeta.bottom + rules.clearContentMeta,
-			exclusions.contentMeta,
 		);
+		exclusions.contentMeta = result.exclusions;
+		candidates = result.filtered;
 	}
 
 	// enforce selector rules
 	if (rules.selectors) {
 		Object.keys(rules.selectors).forEach((selector) => {
-			exclusions[selector] = [];
-			candidates = filter(
-				candidates,
-				(candidate) =>
-					testCandidates(
-						rules.selectors[selector],
-						candidate,
-						measurements.opponents
-							? measurements.opponents[selector]
-							: [],
-					),
-				exclusions[selector],
+			result = filter(candidates, (candidate) =>
+				testCandidates(
+					rules.selectors[selector],
+					candidate,
+					measurements.opponents
+						? measurements.opponents[selector]
+						: [],
+				),
 			);
+			exclusions[selector] = result.exclusions;
+			candidates = result.filtered;
 		});
 	}
 
 	if (rules.filter) {
-		exclusions.custom = [];
-		candidates = filter(candidates, rules.filter, exclusions.custom);
+		result = filter(candidates, rules.filter);
+		exclusions.custom = result.exclusions;
+		candidates = result.filtered;
 	}
 
 	return candidates;
@@ -218,36 +216,31 @@ const getReady = (rules, options) =>
 
 const getCandidates = (rules, exclusions) => {
 	let candidates = query(rules.bodySelector + rules.slotSelector);
+	let result;
 	if (rules.fromBottom) {
 		candidates.reverse();
 	}
 	if (rules.startAt) {
 		let drop = true;
-		exclusions.startAt = [];
-		candidates = filter(
-			candidates,
-			(candidate) => {
-				if (candidate === rules.startAt) {
-					drop = false;
-				}
-				return !drop;
-			},
-			exclusions.startAt,
-		);
+		result = filter(candidates, (candidate) => {
+			if (candidate === rules.startAt) {
+				drop = false;
+			}
+			return !drop;
+		});
+		exclusions.startAt = result.exclusions;
+		candidates = result.filtered;
 	}
 	if (rules.stopAt) {
 		let keep = true;
-		exclusions.stopAt = [];
-		candidates = filter(
-			candidates,
-			(candidate) => {
-				if (candidate === rules.stopAt) {
-					keep = false;
-				}
-				return keep;
-			},
-			exclusions.stopAt,
-		);
+		result = filter(candidates, (candidate) => {
+			if (candidate === rules.stopAt) {
+				keep = false;
+			}
+			return keep;
+		});
+		exclusions.stopAt = result.exclusions;
+		candidates = result.filtered;
 	}
 	return candidates;
 };

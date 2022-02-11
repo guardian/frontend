@@ -3,7 +3,7 @@ package services
 import conf.switches.Switches.InteractivePickerFeature
 import play.api.mvc.RequestHeader
 import implicits.Requests._
-import services.dotcomrendering.PressedInteractives
+import services.dotcomrendering.PressedContent
 
 sealed trait RenderingTier
 object DotcomRendering extends RenderingTier
@@ -19,7 +19,7 @@ object InteractivePicker {
 
   def getRenderingTier(
       path: String,
-      isPressed: (String => Boolean) = PressedInteractives.isPressed,
+      isPressed: (String => Boolean) = PressedContent.isPressed,
   )(implicit
       request: RequestHeader,
   ): RenderingTier = {

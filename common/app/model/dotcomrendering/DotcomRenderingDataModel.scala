@@ -37,6 +37,7 @@ case class DotcomRenderingDataModel(
     webTitle: String,
     mainMediaElements: List[PageElement],
     main: String,
+    filterKeyEvents: Boolean,
     keyEvents: List[Block],
     blocks: List[Block],
     pagination: Option[Pagination],
@@ -101,6 +102,7 @@ object DotcomRenderingDataModel {
         "webTitle" -> model.webTitle,
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
+        "filterKeyEvents" -> model.filterKeyEvents,
         "keyEvents" -> model.keyEvents,
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
@@ -210,6 +212,7 @@ object DotcomRenderingDataModel {
       blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
+      filterKeyEvents: Boolean,
       requestedBlocks: Option[String] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
@@ -254,6 +257,7 @@ object DotcomRenderingDataModel {
       pageType,
       page.related.hasStoryPackage,
       keyEvents,
+      filterKeyEvents,
     )
   }
 
@@ -267,6 +271,7 @@ object DotcomRenderingDataModel {
       pageType: PageType, // TODO remove as format is better
       hasStoryPackage: Boolean,
       keyEvents: Seq[APIBlock],
+      filterKeyEvents: Boolean = false,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -393,6 +398,7 @@ object DotcomRenderingDataModel {
       isImmersive = isImmersive,
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
+      filterKeyEvents = filterKeyEvents,
       keyEvents = keyEventsDCR.toList,
       linkedData = linkedData,
       main = content.fields.main,

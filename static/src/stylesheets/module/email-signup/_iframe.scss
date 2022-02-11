@@ -8,6 +8,14 @@ body {
     left: -2000px;
 }
 
+.email-sub .newsletters-privacy-notice-visible {
+    display: inline;
+}
+
+.email-sub .newsletters-privacy-notice-hidden {
+    display: none;
+}
+
 /**
 * Google reCAPTCHA styles
 */
@@ -15,7 +23,7 @@ body {
     visibility: hidden;
 }
 
-.email-sub .captcha-terms {
+.email-sub terms {
     color: $brightness-7;
     clear: both;
     font-family: $f-sans-serif-text;
@@ -26,7 +34,7 @@ body {
     }
 }
 
-.email-sub--footer .captcha-terms {
+.email-sub--footer .terms {
     color: #ffffff;
 
     a {

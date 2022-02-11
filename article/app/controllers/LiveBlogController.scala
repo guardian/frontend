@@ -10,7 +10,7 @@ import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.dotcomrendering.PageType
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.{ApplicationContext, CanonicalLiveBlog, _}
@@ -84,6 +84,7 @@ class LiveBlogController(
 
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
+        case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty    => Future.successful(renderGuuiJson(blog, blocks, filter))
         case (blog: LiveBlogPage, blocks) =>
           val blocksFlattened = blocks.requestedBodyBlocks.getOrElse(Map.empty[String, Seq[Block]]).flatMap(_._2).toSeq
           getJson(blog, range, isLivePage, filter, blocksFlattened)
@@ -131,13 +132,13 @@ class LiveBlogController(
             if (remoteRendering) {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
-              remoteRenderer.getArticle(ws, blog, blocks, pageType)
+              remoteRenderer.getArticle(ws, blog, blocks, pageType, filterKeyEvents)
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case _ => Future.successful(NotFound)
@@ -180,7 +181,7 @@ class LiveBlogController(
       range: BlockRange,
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
-      capiBlocks: Seq[Block]
+      capiBlocks: Seq[Block] = Seq.empty
   )(implicit request: RequestHeader): Future[Result] = {
     val dcrCouldRender = LiveBlogController.checkIfSupported(liveblog)
     val participating = ActiveExperiments.isParticipating(LiveblogRendering)
@@ -270,7 +271,17 @@ class LiveBlogController(
 
       Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
     }
+  }
 
+  private[this] def renderGuuiJson(
+      blog: LiveBlogPage,
+      blocks: Blocks,
+      filterKeyEvents: Boolean,
+  )(implicit request: RequestHeader): Result = {
+    val pageType: PageType = PageType(blog, request, context)
+    val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, filterKeyEvents)
+    val json = DotcomRenderingDataModel.toJson(model)
+    common.renderJson(json, blog).as("application/json")
   }
 
   private[this] def mapModel(path: String, range: BlockRange, filterKeyEvents: Boolean = false)(

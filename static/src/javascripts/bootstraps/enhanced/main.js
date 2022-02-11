@@ -10,7 +10,8 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
-import { fetchAndRenderEpic, fetchAndRenderHeaderLinks } from "common/modules/commercial/contributions-service";
+import { fetchAndRenderHeaderLinks } from "common/modules/support/header";
+import { fetchAndRenderEpic } from "common/modules/support/epic";
 import { coreVitals } from 'common/modules/analytics/coreVitals';
 
 const bootEnhanced = () => {
