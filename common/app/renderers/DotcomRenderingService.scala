@@ -10,6 +10,7 @@ import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomRenderingDataModel, PageType}
 import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
+import play.api.libs.json.JsResult.Exception
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -24,6 +25,7 @@ import scala.concurrent.duration._
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
 case class DCRTimeoutException(message: String) extends TimeoutException(message)
+case class DCRRenderingException(message: String) extends IllegalStateException(message)
 
 class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload {
 
@@ -147,7 +149,12 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       .withRequestTimeout(Configuration.rendering.timeout)
       .addHttpHeaders("Content-Type" -> "application/json")
       .post(json)
-      .map(_.body[String])
+      .map(response => {
+        if (response.status == 200)
+          response.body
+        else
+          throw DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}")
+      })
   }
 
   def getInteractive(
