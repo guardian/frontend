@@ -93,6 +93,7 @@
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
+  "../lib/url.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
