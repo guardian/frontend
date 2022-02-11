@@ -11,17 +11,11 @@ export const onImagesLoadedFixed = memoize((rules) => {
 		(img) => !img.complete && img.loading !== 'lazy',
 	);
 
-	return notLoaded.length === 0
-		? Promise.resolve()
-		: new Promise((resolve) => {
-				let loadedCount = 0;
-				notLoaded.forEach((img) =>
-					img.addEventListener('load', () => {
-						loadedCount += 1;
-						if (loadedCount === notLoaded.length) {
-							resolve();
-						}
-					}),
-				);
-		  });
+	const imgPromises = notLoaded.map(
+		(img) =>
+			new Promise((resolve) => {
+				img.addEventListener('load', resolve);
+			}),
+	);
+	return Promise.all(imgPromises);
 }, getFuncId);
