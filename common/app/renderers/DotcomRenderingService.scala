@@ -42,7 +42,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       payload: String,
       endpoint: String,
       page: Page,
-      timeout: Duration = Configuration.rendering.timeout
+      timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
 
     def doPost() = {
@@ -136,16 +136,15 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   }
 
   def getBlocks(
-                 ws: WSClient,
-                 page: LiveBlogPage,
-                 blocks: Seq[Block],
-                )(implicit request: RequestHeader): Future[String] = {
+      ws: WSClient,
+      page: LiveBlogPage,
+      blocks: Seq[Block],
+  )(implicit request: RequestHeader): Future[String] = {
 
     val dataModel = DotcomBlocksRenderingDataModel.forLiveblog(page, blocks, request)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
 
-    ws
-      .url(Configuration.rendering.baseURL + "/Blocks")
+    ws.url(Configuration.rendering.baseURL + "/Blocks")
       .withRequestTimeout(Configuration.rendering.timeout)
       .addHttpHeaders("Content-Type" -> "application/json")
       .post(json)

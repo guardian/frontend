@@ -22,7 +22,7 @@ case class DotcomBlocksRenderingDataModel(
     webTitle: String,
     isAdFreeUser: Boolean,
     config: JsObject,
-    sharedAdTargeting: JsValue
+    sharedAdTargeting: JsValue,
 )
 
 object DotcomBlocksRenderingDataModel {
@@ -39,7 +39,7 @@ object DotcomBlocksRenderingDataModel {
         "isAdFreeUser" -> model.isAdFreeUser,
         "config" -> model.config,
         "sharedAdTargeting" -> model.sharedAdTargeting,
-        "filterKeyEvents" -> false
+        "filterKeyEvents" -> false,
       )
 
       ElementsEnhancer.enhanceBlocks(obj)
@@ -63,7 +63,7 @@ object DotcomBlocksRenderingDataModel {
     apply(
       page,
       request,
-      blocks
+      blocks,
     )
   }
 
@@ -100,7 +100,6 @@ object DotcomBlocksRenderingDataModel {
       .find(entry => entry._1 == "calloutsUrl")
       .flatMap(_._2.asOpt[String])
 
-
     val bodyBlocksDCR: List[Block] = bodyBlocks
       .filter(_.published)
       .map(block =>
@@ -115,7 +114,7 @@ object DotcomBlocksRenderingDataModel {
       webTitle = content.metadata.webTitle,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       config = combinedConfig,
-      sharedAdTargeting = (combinedConfig \ "sharedAdTargetting").getOrElse(JsObject.empty)
+      sharedAdTargeting = (combinedConfig \ "sharedAdTargetting").getOrElse(JsObject.empty),
     )
   }
 }

@@ -9,7 +9,16 @@ import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
 import model.pressed.SpecialReport
-import model.{ArticleDateTimes, BlockRange, CanonicalLiveBlog, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
+import model.{
+  ArticleDateTimes,
+  BlockRange,
+  CanonicalLiveBlog,
+  ContentPage,
+  ContentType,
+  GUDateTimeFormatNew,
+  LiveBlogPage,
+  Pillar,
+}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
