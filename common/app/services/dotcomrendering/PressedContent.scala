@@ -78,6 +78,7 @@ object PressedContent {
     "/environment/ng-interactive/2015/nov/26/the-mekong-river-stories-from-the-heart-of-the-climate-crisis-interactive",
     "/football/ng-interactive/2014/dec/21/the-top-100-footballers-2014-interactive",
     "/uk-news/ng-interactive/2014/feb/11/britain-100-years-of-conflict",
+    "/society/ng-interactive/2019/aug/12/life-on-thin-ice-mental-health-at-the-heart-of-the-climate-crisis",
     // Specified by Newsletters UK
     "/info/ng-interactive/2017/may/05/sign-up-for-the-long-read-email",
     "/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email",
