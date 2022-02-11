@@ -111,11 +111,10 @@ object DotcomRenderingUtils {
   def blocksForLiveblogPage(
       liveblog: LiveBlogPage,
       blocks: APIBlocks,
-      requestedBlocks: Option[String],
   ): Seq[APIBlock] = {
     val last60 = blocks.requestedBodyBlocks
       .getOrElse(Map.empty[String, Seq[APIBlock]])
-      .getOrElse(requestedBlocks.getOrElse(CanonicalLiveBlog.firstPage), Seq.empty[APIBlock])
+      .getOrElse(CanonicalLiveBlog.firstPage, Seq.empty[APIBlock])
       .toList
 
     // For the newest page, the last 60 blocks are requested, but for other page,
