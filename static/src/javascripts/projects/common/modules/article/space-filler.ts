@@ -44,6 +44,7 @@ type SpacefinderOptions = {
 	waitForLinks?: boolean;
 	waitForImages?: boolean;
 	waitForInteractives?: boolean;
+	debug?: boolean;
 };
 
 class SpaceFiller {
