@@ -85,6 +85,7 @@ class FootballLifecycle(
         competitionsService.competitionIds.foreach(id => competitionsService.refreshCompetitionAgent(id, defaultClock))
       }
       competitionsService.refreshMatchDay(defaultClock)
+      competitionsService.maybeRefreshLiveMatches(defaultClock)
       TeamMap.refresh()(contentApiClient, ec)
     }
   }
