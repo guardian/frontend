@@ -1,14 +1,14 @@
 package services.dotcomrendering
 
-object PressedInteractives {
-  // Temporarily retain a list of pressed interactives that Visuals agree to show to readers
+object PressedContent {
+  // Temporarily retain a list of pressed content
   // Ed Tools are supporting us in how to batch/programmatically add tags to pressed articles.
   // When we can tag pressed articles (tracking/dcroptout) then we will:
   // - tag all articles that appear in this list
   // - remove this file entirely
-  // - update the InteractiveController to show pressed pages based on presence of the tag
-  // - update the press+clean functionality to automate tagging as part of this process
-  private[this] val interactives = Set[String](
+  // - update the ArticleController and the InteractiveController to show pressed pages based on presence of the tag
+  // - update the press+clean functionality to automate tagging as part of this process?
+  private[this] val content = Set[String](
     // Specified by Visuals UK
     "/world/ng-interactive/2020/nov/12/beirut-blast-a-night-of-horror-captured-by-its-victims",
     "/environment/ng-interactive/2021/feb/23/beneath-the-blue-dive-into-a-dazzling-ocean-under-threat-interactive",
@@ -77,6 +77,8 @@ object PressedInteractives {
     "/environment/ng-interactive/2021/apr/29/visualised-glaciers-now-and-then",
     "/environment/ng-interactive/2015/nov/26/the-mekong-river-stories-from-the-heart-of-the-climate-crisis-interactive",
     "/football/ng-interactive/2014/dec/21/the-top-100-footballers-2014-interactive",
+    "/uk-news/ng-interactive/2014/feb/11/britain-100-years-of-conflict",
+    "/society/ng-interactive/2019/aug/12/life-on-thin-ice-mental-health-at-the-heart-of-the-climate-crisis",
     // Specified by Newsletters UK
     "/info/ng-interactive/2017/may/05/sign-up-for-the-long-read-email",
     "/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email",
@@ -135,7 +137,96 @@ object PressedInteractives {
     "/lifeandstyle/ng-interactive/2017/feb/19/the-5th-annual-ofm-50-what-we-love-about-food-in-2017",
     "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
     "/cities/ng-interactive/2016/nov/10/subterranean-london",
+    // articles
+    "/us-news/2015/nov/05/police-tasers-deaths-the-counted",
+    "/science/2017/sep/30/alien-photo-roswell-new-mexico-mystery",
+    "/us-news/2019/feb/25/a-young-woman-vanishes-the-police-cant-help-her-desperate-family-wont-give-up",
+    "/technology/2017/oct/10/american-trucker-automation-jobs",
+    "/world/2015/jan/14/-sp-saudi-blogger-extracts-raif-badawi",
+    "/us-news/2015/dec/08/the-county-kern-county-california-sexual-assault-secret-payoffs",
+    "/world/2018/apr/26/lynchings-sadism-white-men-why-america-must-atone",
+    "/us-news/2019/sep/24/detained-us-largest-immigrant-detention-trump",
+    "/us-news/2015/dec/31/ties-that-bind-conflicts-of-interest-police-killings",
+    "/society/2017/sep/29/pine-ridge-indian-reservation-south-dakota",
+    "/tv-and-radio/2017/nov/30/the-50-best-tv-shows-of-2017",
+    "/us-news/2016/sep/09/cia-insider-daniel-jones-senate-torture-investigation",
+    "/football/2015/mar/31/italian-football-quiz-serie-a-heyday-italy",
+    "/technology/2016/apr/12/the-dark-side-of-guardian-comments",
+    "/artanddesign/2017/jan/28/charisma-droids-todays-robots-da-vinci-michelangelo-science-museum-robots",
+    "/business/2015/feb/10/hsbc-files-swiss-bank-aggressive-marketing-clients-avoid-new-tax",
+    "/film/2016/nov/29/the-50-best-uk-films-of-2016-full-list",
+    "/us-news/2018/jul/30/black-panthers-prison-interviews-african-american-activism",
+    "/info/2016/apr/27/the-guardian-australia-independence-matters",
+    "/film/2017/dec/05/the-50-top-films-of-2017-in-the-uk",
+    "/film/2016/nov/29/50-best-us-film-of-2016-the-full-list",
+    "/news/2015/feb/12/hsbc-politically-exposed-clients-fugitives-aides-bagmen",
+    "/business/2015/feb/09/ex-hsbc-boss-stephen-green-the-ethical-banker-with-questions-to-answer",
+    "/environment/2015/mar/09/climate-fight-wont-wait-for-paris-vive-la-resistance",
+    "/world/2018/aug/07/osama-bin-laden-mother-speaks-out-family-interview-in-arabic",
+    "/us-news/2016/jun/02/chicago-water-lead-pipes-replacement",
+    "/us-news/2016/jun/02/flint-water-crisis-tests-targeted-homes-far-from-lead-pipes",
+    "/music/2016/nov/11/the-future-50-the-rising-stars-to-look-out-for",
+    "/fashion/2017/sep/13/talent-show-london-fashion-week-designers-know-aw17-season-lfw",
+    "/music/2017/dec/05/the-best-albums-of-2017",
+    "/us-news/2015/sep/01/moving-targets-police-shootings-vehicles-the-counted",
+    "/lifeandstyle/2017/mar/25/parkour-free-runner-killed-on-paris-metro-sport-mustang-wanted",
+    "/environment/2015/may/20/bp-ditched-arctic-concerns-for-strategic-deal-with-russia",
+    "/environment/2015/may/19/peabody-energy-exploited-ebola-crisis-for-corporate-gain-say-health-experts",
+    "/music/2016/nov/30/the-best-albums-of-2016",
+    "/us-news/2015/dec/01/the-county-kern-county-deadliest-police-killings",
+    "/us-news/2015/dec/04/the-county-kern-county-california-deputies-tactics",
+    "/world/2016/sep/24/americas-war-the-killing-jaiden-dixon-and-tyler-dunn",
+    "/tv-and-radio/2016/dec/06/best-tv-shows-of-2016",
+    "/books/2017/may/27/arundhati-roy-the-ministry-of-utmost-happiness-exclusive-extract",
+    "/tv-and-radio/2016/dec/21/the-50-best-podcasts-of-2016",
+    "/environment/2015/mar/08/how-will-everything-change-under-climate-change",
+    "/business/2015/feb/08/hsbc-files-expose-swiss-bank-clients-dodge-taxes-hide-millions",
+    "/science/2016/nov/21/magic-numbers-can-maths-equations-be-beautiful",
+    "/environment/2015/oct/13/agriculture-farming-food-addiction-meat-harvest-hungry-world",
+    "/us-news/2014/dec/16/-sp-dear-chelsea-manning-birthday-messages-from-edward-snowden-terry-gilliam-and-more",
+    "/us-news/2015/oct/06/suicide-by-cop-the-counted",
+    "/business/2015/feb/09/hsbc-files-richard-caring-2million-cash-withdrawal",
+    "/business/nils-pratley-on-finance/2015/feb/09/hsbcs-presbyterian-principles-forgotten-in-the-global-dash-for-cash",
+    "/politics/2014/sep/09/-sp-scottish-independence-everything-you-need-to-know-vote",
+    "/business/2015/feb/11/hsbc-files-reveal-how-uks-non-dom-tax-concession-is-being-exploited",
+    "/business/2015/feb/08/hsbc-responds-revelations-misconduct-swiss-bank",
+    "/business/2015/feb/08/hsbc-files-catalogue-malpractice-bankers-tax",
+    "/politics/2015/apr/17/inside-election-campaigns-now-its-all-about-survival",
+    "/commentisfree/2015/jul/14/guardian-editorial-iran-nuclear-deal-farsi",
+    "/politics/2015/apr/17/who-is-winning-the-election-battle-on-social-media",
+    "/books/2015/apr/17/stella-prize-2015-six-australian-authors-on-the-stories-behind-their-books",
+    "/tv-and-radio/tvandradioblog/2017/dec/21/the-best-tv-episodes-of-2017-from-the-deuce-to-line-of-duty",
+    "/commentisfree/2016/jul/07/guardian-view-on-the-chilcot-report",
+    "/tv-and-radio/2016/dec/17/christmas-tv-2016-50-shows-to-watch",
+    "/observer-food-monthly-awards/2015/apr/17/vote-in-the-observer-food-monthly-awards-2015",
+    "/environment/2016/sep/01/frontline-bloody-battle-save-africa-elephants",
+    "/environment/2016/sep/13/frontline-bloody-battle-save-africa-elephants-chinese-language",
+    "/us-news/2015/dec/10/kern-county-california-police-killings-misconduct-district-attorney",
+    "/business/2015/feb/08/hsbc-files-public-right-to-know-swiss-operation-leaked-data",
+    "/us-news/2017/apr/25/trump-supporters-elect-again-100-days",
+    "/business/2015/feb/08/hsbc-files-1934-swiss-law-secrecy",
+    "/film/2015/mar/25/match-the-evil-quote-to-the-disney-villain-quiz",
+    "/business/2015/feb/09/hsbc-files-hmrc-data-misconduct-stephen-green-trade-minister",
+    "/us-news/2017/sep/15/tracking-trump-clinton-memoir-daca-democrats-deal",
+    "/news/2015/feb/08/us-government-biggest-leak-banking-history-questions-irs-taxes",
+    "/business/2015/feb/11/hsbc-files-show-tories-raised-over-5m-from-hsbc-swiss-account-holders",
+    "/tv-and-radio/2017/oct/30/best-podcasts-of-2017-part-2-from-dirty-john-to-mogul-and-the-guilty-feminist",
+    "/politics/2017/jun/01/somerset-we-liked-may-at-first-but-is-she-out-of-touch",
+    "/australia-news/2015/jul/21/immigration-healthcare-firm-likely-to-fail-on-child-protection-briefing-note",
+    "/politics/2017/jun/29/derbyshire-north-east-jeremy-corbyn-wasnt-an-asset",
+    "/us-news/2017/dec/24/trump-voters-see-his-flaws-but-stand-by-president-who-shakes-things-up",
+    "/fashion/2015/sep/26/fashion-all-ages-high-street-dynasty-hollywood-addams",
+    "/politics/2015/apr/17/what-can-we-expect-in-the-second-half-of-the-election-campaign",
+    "/global-development/2016/sep/06/poorest-countries-hit-hardest-world-lags-behind-global-education-goals-unesco-report",
+    "/lifeandstyle/2016/dec/24/what-made-2016-thrilling-year-wildlife",
+    "/membership/2016/jun/23/labour-liverpool-ewen-macaskill",
+    "/australia-news/2018/nov/17/i-wasnt-rusted-to-either-side-ricky-muir-makes-another-tilt-at-politics",
+    "/australia-news/2018/nov/15/it-feels-like-change-is-coming-can-the-greens-take-brunswick",
+    "/australia-news/2018/nov/21/will-the-crime-focused-liberal-unseat-labor-in-cranbourne",
+    "/us-news/2017/jun/20/trump-muslims-pennsylvania-the-promise",
+    "/australia-news/2015/mar/25/political-parties-fortunes-laid-out-in-black-and-white-and-red-by-aec",
+    "/tv-and-radio/2016/dec/17/christmas-tv-2016-50-shows-to-watch",
   )
 
-  def isPressed(path: String): Boolean = interactives.contains(path)
+  def isPressed(path: String): Boolean = content.contains(path)
 }

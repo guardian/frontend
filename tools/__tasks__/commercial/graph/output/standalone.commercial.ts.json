@@ -93,6 +93,7 @@
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
+  "../lib/url.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
@@ -258,6 +259,7 @@
  ],
  "../projects/commercial/modules/dfp/prepare-googletag.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/raven.js",
@@ -548,7 +550,8 @@
  ],
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/ab.ts"
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
@@ -556,7 +559,7 @@
  ],
  "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/commercial/build-page-targeting.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",

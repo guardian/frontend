@@ -1,17 +1,24 @@
-import type { Participations } from '@guardian/ab-core';
+import type {
+	ContentTargeting,
+	SessionTargeting,
+	ViewportTargeting,
+} from '@guardian/commercial-core';
 import {
 	clearPermutiveSegments,
+	getContentTargeting,
 	getPermutiveSegments,
+	getSessionTargeting,
+	getViewportTargeting,
 } from '@guardian/commercial-core';
 import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentList } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import type { CountryCode } from '@guardian/libs';
-import { getCookie, isObject, isString, log, storage } from '@guardian/libs';
+import { getCookie, isString, log, storage } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { getReferrer as detectGetReferrer } from '../../../../lib/detect';
-import { getTweakpoint, getViewport } from '../../../../lib/detect-viewport';
+import { getViewport } from '../../../../lib/detect-viewport';
 import { getCountryCode } from '../../../../lib/geolocation';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
 import { getSynchronousParticipations } from '../experiments/ab';
@@ -110,65 +117,6 @@ export type PageTargeting = PartialWithNulls<{
 
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
-const findBreakpoint = (): 'mobile' | 'tablet' | 'desktop' => {
-	const width = getViewport().width;
-	switch (getTweakpoint(width)) {
-		case 'mobile':
-		case 'mobileMedium':
-		case 'mobileLandscape':
-			return 'mobile';
-		case 'phablet':
-		case 'tablet':
-			return 'tablet';
-		case 'desktop':
-		case 'leftCol':
-		case 'wide':
-			return 'desktop';
-	}
-};
-
-const skinsizeTargeting = () => {
-	const vp = getViewport();
-	return vp.width >= 1560 ? 'l' : 's';
-};
-
-// TODO - what does this mean if we now wait for consent state
-const inskinTargeting = (): TrueOrFalse => {
-	// Don’t show inskin if we cannot tell if a privacy message will be shown
-	if (!cmp.hasInitialised()) return 'f';
-	return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
-};
-
-const abParam = (): string[] => {
-	const abParticipations: Participations = getSynchronousParticipations();
-	const abParams: string[] = [];
-
-	const pushAbParams = (testName: string, testValue: unknown): void => {
-		if (typeof testValue === 'string' && testValue !== 'notintest') {
-			const testData = `${testName}-${testValue}`;
-			// DFP key-value pairs accept value strings up to 40 characters long
-			abParams.push(testData.substring(0, 40));
-		}
-	};
-
-	Object.keys(abParticipations).forEach((testKey: string): void => {
-		const testValue: {
-			variant: string;
-		} = abParticipations[testKey];
-		pushAbParams(testKey, testValue.variant);
-	});
-
-	const tests = window.guardian.config.tests;
-
-	if (isObject(tests)) {
-		Object.entries(tests).forEach(([testName, testValue]) => {
-			pushAbParams(testName, testValue);
-		});
-	}
-
-	return abParams;
-};
-
 const getFrequencyValue = (): Frequency => {
 	const visitCount: number = parseInt(
 		storage.local.getRaw('gu.alreadyVisited') ?? '0',
@@ -190,51 +138,6 @@ const getFrequencyValue = (): Frequency => {
 	}
 
 	return '0';
-};
-
-const getReferrer = (): string | null => {
-	type MatchType = {
-		id: string;
-		match: string;
-	};
-
-	const referrerTypes: MatchType[] = [
-		{
-			id: 'facebook',
-			match: 'facebook.com',
-		},
-		{
-			id: 'twitter',
-			match: 't.co/',
-		}, // added (/) because without slash it is picking up reddit.com too
-		{
-			id: 'reddit',
-			match: 'reddit.com',
-		},
-		{
-			id: 'google',
-			match: 'www.google',
-		},
-	];
-
-	const matchedRef: MatchType =
-		referrerTypes.filter((referrerType) =>
-			detectGetReferrer().includes(referrerType.match),
-		)[0] || {};
-
-	return matchedRef.id;
-};
-
-const getUrlKeywords = (pageId?: string): string[] => {
-	if (!pageId) return [];
-
-	const segments = pageId.split('/');
-	const noEmptyStrings = segments.filter(Boolean); // This handles a trailing slash
-	const keywords =
-		noEmptyStrings.length > 0
-			? noEmptyStrings[noEmptyStrings.length - 1].split('-')
-			: [];
-	return keywords;
 };
 
 const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
@@ -378,43 +281,47 @@ const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
 	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
 		? { af: 't' }
 		: {};
-	const pageTargets: PageTargeting = {
-		ab: abParam(),
-		at: getCookie({ name: 'adtest', shouldMemoize: true }),
-		bp: findBreakpoint(),
-		cc: getCountryCode(), // if turned async, we could use getLocale()
-		// dcre: DCR eligible
-		// when the page is DCR eligible and was rendered by DCR or
-		// when the page is DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
-		dcre:
+
+	const contentTargeting: ContentTargeting = getContentTargeting({
+		eligibleForDCR:
 			window.guardian.config.isDotcomRendering ||
-			config.get<boolean>('page.dcrCouldRender', false)
-				? 't'
-				: 'f',
-		fr: getFrequencyValue(),
-		inskin: inskinTargeting(),
-		permutive: getPermutiveSegments(),
-		pv: window.guardian.config.ophan.pageViewId,
-		ref: getReferrer(),
-		// rp: rendering platform
-		rp: window.guardian.config.isDotcomRendering
+			config.get<boolean>('page.dcrCouldRender', false),
+		path: `/${page.pageId}`,
+		renderingPlatform: window.guardian.config.isDotcomRendering
 			? 'dotcom-rendering'
 			: 'dotcom-platform',
-		// s: section
-		// for reference in a macro, so cannot be extracted from ad unit
-		s: page.section,
-		sens: page.isSensitive ? 't' : 'f',
-		si: isUserLoggedIn() ? 't' : 'f',
-		skinsize: skinsizeTargeting(),
-		urlkw: getUrlKeywords(page.pageId),
-		// vl: video length
-		// round video duration up to nearest 30 multiple
-		vl: page.videoDuration
-			? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-			: null,
+		section: page.section,
+		sensitive: page.isSensitive,
+		videoLength: page.videoDuration,
+	});
+
+	const sessionTargeting: SessionTargeting = getSessionTargeting({
+		adTest: getCookie({ name: 'adtest', shouldMemoize: true }),
+		countryCode: getCountryCode(),
+		isSignedIn: isUserLoggedIn(),
+		pageViewId: window.guardian.config.ophan.pageViewId,
+		participations: {
+			clientSideParticipations: getSynchronousParticipations(),
+			serverSideParticipations: window.guardian.config.tests ?? {},
+		},
+		referrer: detectGetReferrer(),
+	});
+
+	const viewportTargeting: ViewportTargeting = getViewportTargeting({
+		viewPortWidth: getViewport().width,
+		cmpBannerWillShow:
+			!cmp.hasInitialised() || cmp.willShowPrivacyMessageSync(),
+	});
+
+	const pageTargets: PageTargeting = {
+		fr: getFrequencyValue(),
+		permutive: getPermutiveSegments(),
 		...consentRelatedTargeting,
 		...page.sharedAdTargeting,
 		...adFreeTargeting,
+		...contentTargeting,
+		...sessionTargeting,
+		...viewportTargeting,
 	};
 
 	// filter out empty values

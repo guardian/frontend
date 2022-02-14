@@ -2,6 +2,7 @@ import { adSizes } from '@guardian/commercial-core';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { spacefinderOkr1FilterNearby } from 'common/modules/experiments/tests/spacefinder-okr-1-filter-nearby';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
+import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
@@ -18,6 +19,8 @@ import { createAdSlot } from './dfp/create-slot';
 import { trackAdRender } from './dfp/track-ad-render';
 import { filterNearbyCandidatesBroken } from './filter-nearby-candidates-broken';
 import { filterNearbyCandidatesFixed } from './filter-nearby-candidates-fixed';
+
+const sfdebug = getUrlVars().sfdebug;
 
 const isPaidContent = config.get<boolean>('page.isPaidContent', false);
 
@@ -119,6 +122,11 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 			.slice(0, isInline1 ? 1 : paras.length)
 			.map((para, i) => {
 				const inlineId = i + (isInline1 ? 1 : 2);
+
+				if (sfdebug) {
+					para.style.cssText += 'border: thick solid green;';
+				}
+
 				return insertAdAtPara(
 					para,
 					`inline${inlineId}`,
@@ -132,10 +140,14 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		await Promise.all(slots);
 	};
 
+	const enableDebug =
+		(sfdebug === '1' && isInline1) || (sfdebug === '2' && !isInline1);
+
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
 		waitForLinks: true,
 		waitForInteractives: true,
+		debug: enableDebug,
 	});
 };
 
@@ -175,10 +187,13 @@ const addMobileInlineAds = (): Promise<boolean> => {
 		await Promise.all(slots);
 	};
 
+	const enableDebug = sfdebug === '1';
+
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
 		waitForLinks: true,
 		waitForInteractives: true,
+		debug: enableDebug,
 	});
 };
 
