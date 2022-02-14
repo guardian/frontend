@@ -64,7 +64,6 @@ object PressedContent {
     "/us-news/2015/dec/31/ties-that-bind-conflicts-of-interest-police-killings",
     // 2016
     "/technology/2016/apr/12/the-dark-side-of-guardian-comments",
-    "/technology/2016/apr/12/the-dark-side-of-guardian-comments",
     "/info/2016/apr/27/the-guardian-australia-independence-matters",
     "/politics/2016/may/06/holyrood-elections-see-rise-of-team-ruth-and-demise-of-labour-vision",
     "/us-news/2016/jun/02/chicago-water-lead-pipes-replacement",
@@ -86,7 +85,6 @@ object PressedContent {
     "/music/2016/nov/30/the-best-albums-of-2016",
     "/tv-and-radio/2016/dec/06/best-tv-shows-of-2016",
     "/info/ng-interactive/2016/dec/07/sign-up-for-the-flyer",
-    "/tv-and-radio/2016/dec/17/christmas-tv-2016-50-shows-to-watch",
     "/tv-and-radio/2016/dec/17/christmas-tv-2016-50-shows-to-watch",
     "/tv-and-radio/2016/dec/21/the-50-best-podcasts-of-2016",
     "/lifeandstyle/2016/dec/24/what-made-2016-thrilling-year-wildlife",
