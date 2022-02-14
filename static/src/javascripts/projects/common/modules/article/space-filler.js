@@ -24,7 +24,6 @@ class SpaceFiller {
 			fastdom.mutate(() => writer(paragraphs));
 
 		const onNoSpacesFound = (ex) => {
-			console.log(ex);
 			if (ex instanceof SpaceError) {
 				return false;
 			}
