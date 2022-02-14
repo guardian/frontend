@@ -413,6 +413,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     // matches is the list of all matches from all competitions
     if (isMatchLiveOrAboutToStart(matches, clock)) {
+      log.info("Match is in Progress - refreshing match day data")
       refreshMatchDay(clock)
     } else {
       Future.successful(immutable.Iterable[Competition]())
