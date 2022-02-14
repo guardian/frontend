@@ -680,11 +680,13 @@
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
  ],
+ "../projects/common/modules/mark-candidates.js": [],
  "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/bean/bean.js",
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.ts"
+  "../lib/mediator.ts",
+  "../projects/common/modules/mark-candidates.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
