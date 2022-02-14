@@ -10,6 +10,14 @@ import { createAdSlot } from './dfp/create-slot';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { initCarrot } from './carrot-traffic-driver';
 import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
+import { getUrlVars } from 'lib/url';
+
+import { filterNearbyCandidatesBroken } from './filter-nearby-candidates-broken.ts';
+import { filterNearbyCandidatesFixed } from './filter-nearby-candidates-fixed.ts';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { spacefinderOkr1FilterNearby } from 'common/modules/experiments/tests/spacefinder-okr-1-filter-nearby';
+
+const sfdebug = getUrlVars().sfdebug;
 
 const isPaidContent = config.get('page.isPaidContent', false);
 
@@ -37,21 +45,12 @@ const insertAdAtPara = (para, name, type, classes, sizes) => {
 		});
 };
 
-let previousAllowedCandidate;
-
-// this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
-const filterNearbyCandidates = (maximumAdHeight) => (candidate) => {
-	if (
-		!previousAllowedCandidate ||
-		Math.abs(candidate.top - previousAllowedCandidate.top) -
-			maximumAdHeight >=
-			adSlotClassSelectorSizes.minBelow
-	) {
-		previousAllowedCandidate = candidate;
-		return true;
-	}
-	return false;
-};
+const filterNearbyCandidates = isInVariantSynchronous(
+	spacefinderOkr1FilterNearby,
+	'variant',
+)
+	? filterNearbyCandidatesFixed
+	: filterNearbyCandidatesBroken;
 
 const isDotcomRendering = config.get('isDotcomRendering', false);
 const articleBodySelector = isDotcomRendering
@@ -115,6 +114,10 @@ const addDesktopInlineAds = (isInline1) => {
 			.map((para, i) => {
 				const inlineId = i + (isInline1 ? 1 : 2);
 
+				if (sfdebug) {
+					para.style.cssText += 'border: thick solid green;';
+				}
+
 				return insertAdAtPara(
 					para,
 					`inline${inlineId}`,
@@ -129,10 +132,14 @@ const addDesktopInlineAds = (isInline1) => {
 		return Promise.all(slots).then(() => slots.length);
 	};
 
+	const enableDebug =
+		(sfdebug === '1' && isInline1) || (sfdebug === '2' && !isInline1);
+
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
 		waitForLinks: true,
 		waitForInteractives: true,
+		debug: enableDebug,
 	});
 };
 
@@ -170,11 +177,14 @@ const addMobileInlineAds = () => {
 		return Promise.all(slots).then(() => slots.length);
 	};
 
+	const enableDebug = sfdebug === '1';
+
 	// This just returns whatever is passed in the second argument
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
 		waitForLinks: true,
 		waitForInteractives: true,
+		debug: enableDebug,
 	});
 };
 

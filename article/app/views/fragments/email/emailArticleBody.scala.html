@@ -18,13 +18,13 @@
                 sponsor.sponsorshipType.name.toLowerCase()
             }"
         }}">
-            <a class="rich-link__link" href="@href">
+            <a class="rich-link__link" href="@href" aria-label="read more: @title">
                 <h3 class="rich-link__header">@title</h3>
             </a>
 
             @if(!sponsorship.isDefined) {
                 <div class="rich-link__read-more">
-                    <a class="rich-link__link" href="@href">
+                    <a class="rich-link__link" href="@href" aria-label="read more: @title">
                         <p class="rich-link__read-more">
                             Read more
                         </p>
@@ -39,7 +39,7 @@
                             <tr>
                                 <td>
                                     <div class="rich-link__read-more">
-                                        <a class="rich-link__link" href="@href">
+                                        <a class="rich-link__link" href="@href" aria-label="read more: @title">
                                             <p class="rich-link__read-more">
                                                 Read more
                                             </p>
@@ -139,16 +139,31 @@
         }
     }
 
+    @row(Seq("no-pad braze-advert-placeholder")) {
+        @brazePlaceholder(s"Above Headline")
+    }
+
     @row(Seq("padded")) {
         <h1>@article.trail.headline</h1>
+    }
+
+    @row(Seq("no-pad braze-advert-placeholder")) {
+        @brazePlaceholder(s"Above Standfirst")
     }
 
     @article.fields.standfirst.map { standfirst =>
         @row(Seq("padded"))(Html(standfirst))
     }
 
+    @row(Seq("no-pad braze-advert-placeholder")) {
+        @brazePlaceholder(s"Above MainMedia")
+    }
+
     @fragments.emailMainMedia(article)
 
+    @row(Seq("no-pad braze-advert-placeholder")) {
+        @brazePlaceholder(s"Above Byline")
+    }
     @defining(
         article.tags.contributors,
         article.tags.tones.exists { _.id == "tone/features" } ||
@@ -176,7 +191,11 @@
     @page.article.fields.blocks.toSeq.map { blocks =>
         @blocks.body.map { block =>
 
-            @block.elements.map { element =>
+            @block.elements.zipWithIndex.map { case (element, elementIndex )=>
+
+                @row(Seq("no-pad braze-advert-placeholder")) {
+                    @brazePlaceholder(s"Above Element ${elementIndex + 1}")
+                }
                 @element match {
                     case TextBlockElement(Some(html)) => {
                         @row(Seq("padded"))(Html(html))
@@ -260,6 +279,10 @@
                     }
 
                     case _ => {}
+                }
+
+                @row(Seq("no-pad braze-advert-placeholder")) {
+                    @brazePlaceholder(s"Below Element ${elementIndex + 1}")
                 }
             }
         }

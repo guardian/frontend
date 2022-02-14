@@ -61,6 +61,7 @@ private object NavLinks {
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/tone/obituaries")
   val greenLight = NavLink("Green light", "/environment/series/green-light")
+  val fightToVote = NavLink("Fight to vote", "/us-news/series/the-fight-to-vote")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -111,6 +112,7 @@ private object NavLinks {
       NavLink("Clubs", "/football/teams", Some("football/teams")),
     ),
   )
+  val winterOlympics = NavLink("Winter Olympics", "/sport/winter-olympics-2022")
   val soccer = football.copy(title = "Soccer")
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
@@ -295,7 +297,7 @@ private object NavLinks {
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}?INTCMP=DOTCOM_NAV_NEWSLETTER_US"),
-      greenLight,
+      fightToVote,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -364,6 +366,7 @@ private object NavLinks {
     iconName = Some("home"),
     List(
       football,
+      winterOlympics,
       cricket,
       rugbyUnion,
       tennis,
@@ -379,6 +382,7 @@ private object NavLinks {
   val auSportPillar = ukSportPillar.copy(
     children = List(
       football,
+      winterOlympics,
       AFL,
       NRL,
       aLeague,
@@ -392,6 +396,7 @@ private object NavLinks {
   val usSportPillar = ukSportPillar.copy(
     children = List(
       soccer,
+      winterOlympics,
       NFL,
       tennis,
       MLB,
@@ -403,6 +408,7 @@ private object NavLinks {
   val intSportPillar = ukSportPillar.copy(
     children = List(
       football,
+      winterOlympics,
       cricket,
       rugbyUnion,
       tennis,

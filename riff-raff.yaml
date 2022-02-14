@@ -46,7 +46,7 @@ deployments:
       bucket: aws-frontend-static
       cacheControl: public, max-age=315360000
       prefixStack: false
-      publicReadAcl: true
+      publicReadAcl: false
   update-ami:
     type: ami-cloudformation-parameter
     parameters:

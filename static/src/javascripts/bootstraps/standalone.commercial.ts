@@ -170,7 +170,7 @@ const bootCommercial = async (): Promise<void> => {
 		const promises = allModules.map((args) => loadModules(...args));
 
 		await Promise.all(promises).then(() => {
-			EventTimer.get().trigger('commercialEnd');
+			EventTimer.get().trigger('commercialModulesLoaded');
 		});
 	} catch (error) {
 		// report async errors in bootCommercial to Sentry with the commercial feature tag

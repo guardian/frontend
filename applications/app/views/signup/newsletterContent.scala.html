@@ -2,7 +2,7 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import staticpages.NewsletterRoundupPage
 @import conf.switches.Switches.EmailSignupRecaptcha
-
+@import conf.switches.Switches.NewslettersRemoveConfirmationStep
 @import common.LinkTo
 
 @(signupPage: NewsletterRoundupPage)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -42,14 +42,20 @@
                     </div>
                 </div>
 
-                <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup">
+                <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup" name="newsletter-signup-@emailListing.id">
                     @if(EmailSignupRecaptcha.isSwitchedOn) {
                         @fragments.email.signup.recaptchaContainer()
                     }
                     @helper.CSRF.formField
-                    <input class="newsletter-card__text-input u-h" type="text" name="name" autocomplete="off"/>
-                    <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required/>
-                    <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.id" />
+                    <label aria-hidden="true">
+                        <input tabindex="-1" class="newsletter-card__text-input u-h" type="text" name="name" autocomplete="off"/>
+                    </label>
+                    <label>
+                        <span class="u-h">email address</span>
+                        <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required aria-label="Enter email address" title="Email address"/>
+                    </label>
+                    <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.id" aria-hidden="true"/>
+
                     <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit" data-link-name="Subscribe to @emailListing.id" type="submit" value="@emailListing.listIdv1">
                         <span>Sign up</span>
                     </button>
@@ -58,9 +64,9 @@
                 <div class="newsletter-card__example js-newsletter-preview is-hidden">
                 @if(emailListing.exampleUrl.isDefined) {
                     <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                        <button class="newsletter-card__lozenge newsletter-card__lozenge--preview" data-link-name="Preview @emailListing.id" type="button">
+                        <div class="newsletter-card__lozenge newsletter-card__lozenge--preview" data-link-name="Preview @emailListing.id">
                             <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
-                        </button>
+                        </div>
                     </a>
                 }
                 </div>
@@ -91,11 +97,25 @@
                     </div>
                 </a>
             </div>
-            @* This iframe is used for submitting the form without reloading the page *@
-            <iframe class="u-h" width="0" height="0" border="0" name="newsletterSignup" id="newsletterSignup" tabindex="-1"></iframe>
-            @if(EmailSignupRecaptcha.isSwitchedOn) {
+            @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+                <div class="newsletters-heading__divider"></div>
+                <div class="newsletters-privacy-notice__container">
+                    <div class="newsletters-privacy-notice__heading">
+                        Privacy Notice
+                    </div>
+                    <div class="newsletters-privacy-notice__content">
+                        @if(EmailSignupRecaptcha.isSwitchedOn) {
+                            @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent())
+                        } else {
+                            @fragments.email.signup.privacyNoticeContent()
+                        }
+                    </div>
+                </div>
+            } else if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaTerms()
             }
+            @* This iframe is used for submitting the form without reloading the page *@
+            <iframe class="u-h" width="0" height="0" border="0" name="newsletterSignup" id="newsletterSignup" tabindex="-1"></iframe>
             @displayNewslettersByTheme
         </div>
     </div>

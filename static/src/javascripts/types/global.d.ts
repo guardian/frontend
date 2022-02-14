@@ -69,7 +69,10 @@ interface Config {
 	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
-	tests?: Record<ServerSideABTest, 'control' | 'variant'>;
+	tests?: {
+		[key: `${string}Control`]: 'control';
+		[key: `${string}Variant`]: 'variant';
+	};
 	isDotcomRendering: boolean;
 }
 
@@ -88,7 +91,6 @@ interface PageConfig extends CommercialPageConfig {
 	nonRefreshableLineItemIds?: number[];
 	section: string;
 	isPaidContent: boolean;
-	isSensitive: boolean;
 	videoDuration: number;
 	source: string;
 	pageId: string;
@@ -96,11 +98,15 @@ interface PageConfig extends CommercialPageConfig {
 	blogIds: string;
 	contentType: string;
 	keywordIds: string;
+	keywords: string;
+	toneIds: string;
 	publication: string;
 	seriesId: string;
+	series: string;
 	sponsorshipType: string;
 	tones: string;
 	hasInlineMerchandise: boolean;
+	shouldHideReaderRevenue?: boolean;
 }
 
 interface Ophan {
@@ -155,6 +161,29 @@ interface Confiant extends Record<string, unknown> {
 	};
 }
 
+// https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/api-reference.html#apstaginit
+interface A9AdUnitInterface {
+	slotID: string;
+	slotName?: string;
+	sizes: HeaderBiddingSize[];
+}
+
+type ApstagInitConfig = {
+	pubID: string;
+	adServer?: string;
+	bidTimeout?: number;
+};
+
+type FetchBidsBidConfig = {
+	slots: A9AdUnitInterface;
+};
+
+type Apstag = {
+	init: (ApstagInitConfig) => void;
+	fetchBids: (FetchBidsBidConfig, callback: () => void) => void;
+	setDisplayBids: () => void;
+};
+
 type ComscoreGlobals = {
 	c1: string;
 	c2: string;
@@ -181,5 +210,6 @@ interface Window {
 	};
 
 	confiant?: Confiant;
+	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];
 }

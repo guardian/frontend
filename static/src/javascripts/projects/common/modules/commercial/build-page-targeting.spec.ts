@@ -1,8 +1,5 @@
-import {
-	cmp as cmp_,
-	onConsentChange as onConsentChange_,
-} from '@guardian/consent-management-platform';
-import type { Callback } from '@guardian/consent-management-platform/dist/types';
+import { cmp as cmp_ } from '@guardian/consent-management-platform';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { setCookie, storage } from '@guardian/libs';
 import { getReferrer as getReferrer_ } from '../../../../lib/detect';
@@ -10,7 +7,7 @@ import { getCountryCode as getCountryCode_ } from '../../../../lib/geolocation';
 import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from '../experiments/ab';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
-import { _, getPageTargeting } from './build-page-targeting';
+import { getPageTargeting } from './build-page-targeting';
 import { commercialFeatures } from './commercial-features';
 
 const getSynchronousParticipations =
@@ -36,9 +33,6 @@ const cmp = {
 			typeof cmp_.willShowPrivacyMessageSync
 		>,
 };
-const onConsentChange = onConsentChange_ as jest.MockedFunction<
-	typeof onConsentChange_
->;
 
 type UnknownFunc = (...args: unknown[]) => unknown;
 
@@ -67,7 +61,6 @@ jest.mock('./commercial-features', () => ({
 	},
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
-	onConsentChange: jest.fn(),
 	cmp: {
 		hasInitialised: jest.fn(),
 		willShowPrivacyMessageSync: jest.fn(),
@@ -86,16 +79,18 @@ const mockViewport = (width: number, height: number): void => {
 };
 
 // CCPA
-const ccpaWithConsentMock = (callback: Callback): void =>
-	callback({ ccpa: { doNotSell: false } });
-const ccpaWithoutConsentMock = (callback: Callback): void =>
-	callback({ ccpa: { doNotSell: true } });
+const ccpaWithConsentMock: ConsentState = { ccpa: { doNotSell: false } };
+
+const ccpaWithoutConsentMock: ConsentState = { ccpa: { doNotSell: true } };
 
 // AUS
-const ausWithConsentMock = (callback: Callback) =>
-	callback({ aus: { personalisedAdvertising: true } });
-const ausWithoutConsentMock = (callback: Callback) =>
-	callback({ aus: { personalisedAdvertising: false } });
+const ausWithConsentMock: ConsentState = {
+	aus: { personalisedAdvertising: true },
+};
+
+const ausWithoutConsentMock: ConsentState = {
+	aus: { personalisedAdvertising: false },
+};
 
 // TCFv2
 const defaultState: TCFv2ConsentState = {
@@ -106,28 +101,28 @@ const defaultState: TCFv2ConsentState = {
 	gdprApplies: true,
 	tcString: 'YAAA',
 };
-const tcfv2WithConsentMock = (callback: Callback): void =>
-	callback({
-		tcfv2: {
-			...defaultState,
-			consents: { '1': true, '2': true },
-			eventStatus: 'useractioncomplete',
-		},
-	});
-const tcfv2WithoutConsentMock = (callback: Callback): void =>
-	callback({
-		tcfv2: { ...defaultState, consents: {}, eventStatus: 'cmpuishown' },
-	});
-const tcfv2NullConsentMock = (callback: Callback): void =>
-	callback({ tcfv2: undefined });
-const tcfv2MixedConsentMock = (callback: Callback): void =>
-	callback({
-		tcfv2: {
-			...defaultState,
-			consents: { '1': false, '2': true },
-			eventStatus: 'useractioncomplete',
-		},
-	});
+
+const tcfv2WithConsentMock: ConsentState = {
+	tcfv2: {
+		...defaultState,
+		consents: { '1': true, '2': true },
+		eventStatus: 'useractioncomplete',
+	},
+};
+
+const tcfv2WithoutConsentMock: ConsentState = {
+	tcfv2: { ...defaultState, consents: {}, eventStatus: 'cmpuishown' },
+};
+
+const tcfv2NullConsentMock: ConsentState = { tcfv2: undefined };
+
+const tcfv2MixedConsentMock: ConsentState = {
+	tcfv2: {
+		...defaultState,
+		consents: { '1': false, '2': true },
+		eventStatus: 'useractioncomplete',
+	},
+};
 
 describe('Build Page Targeting', () => {
 	beforeEach(() => {
@@ -174,10 +169,6 @@ describe('Build Page Targeting', () => {
 		commercialFeatures.adFree = false;
 
 		setCookie({ name: 'adtest', value: 'ng101' });
-
-		// Reset mocking to default values.
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
 		getReferrer.mockReturnValue('');
 		mockViewport(0, 0);
@@ -231,68 +222,40 @@ describe('Build Page Targeting', () => {
 	});
 
 	it('should set correct personalized ad (pa) param', () => {
-		onConsentChange.mockImplementation(tcfv2WithConsentMock);
-		expect(getPageTargeting().pa).toBe('t');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-		expect(getPageTargeting().pa).toBe('f');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(tcfv2NullConsentMock);
-		expect(getPageTargeting().pa).toBe('f');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(tcfv2MixedConsentMock);
-		expect(getPageTargeting().pa).toBe('f');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(ccpaWithConsentMock);
-		expect(getPageTargeting().pa).toBe('t');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(ccpaWithoutConsentMock);
-		expect(getPageTargeting().pa).toBe('f');
+		expect(getPageTargeting(tcfv2WithConsentMock).pa).toBe('t');
+		expect(getPageTargeting(tcfv2WithoutConsentMock).pa).toBe('f');
+		expect(getPageTargeting(tcfv2NullConsentMock).pa).toBe('f');
+		expect(getPageTargeting(tcfv2MixedConsentMock).pa).toBe('f');
+		expect(getPageTargeting(ccpaWithConsentMock).pa).toBe('t');
+		expect(getPageTargeting(ccpaWithoutConsentMock).pa).toBe('f');
 	});
 
 	it('Should correctly set the RDP flag (rdp) param', () => {
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-		expect(getPageTargeting().rdp).toBe('na');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(tcfv2NullConsentMock);
-		expect(getPageTargeting().rdp).toBe('na');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(ccpaWithConsentMock);
-		expect(getPageTargeting().rdp).toBe('f');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(ccpaWithoutConsentMock);
-		expect(getPageTargeting().rdp).toBe('t');
+		expect(getPageTargeting(tcfv2WithoutConsentMock).rdp).toBe('na');
+		expect(getPageTargeting(tcfv2NullConsentMock).rdp).toBe('na');
+		expect(getPageTargeting(ccpaWithConsentMock).rdp).toBe('f');
+		expect(getPageTargeting(ccpaWithoutConsentMock).rdp).toBe('t');
 	});
 
 	it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', () => {
-		_.resetPageTargeting();
 		getPrivacyFramework.mockReturnValue({ tcfv2: true });
 
-		onConsentChange.mockImplementation(tcfv2WithConsentMock);
+		expect(getPageTargeting(tcfv2WithConsentMock).consent_tcfv2).toBe('t');
+		expect(getPageTargeting(tcfv2WithConsentMock).cmp_interaction).toBe(
+			'useractioncomplete',
+		);
 
-		expect(getPageTargeting().consent_tcfv2).toBe('t');
-		expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+		expect(getPageTargeting(tcfv2WithoutConsentMock).consent_tcfv2).toBe(
+			'f',
+		);
+		expect(getPageTargeting(tcfv2WithoutConsentMock).cmp_interaction).toBe(
+			'cmpuishown',
+		);
 
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-
-		expect(getPageTargeting().consent_tcfv2).toBe('f');
-		expect(getPageTargeting().cmp_interaction).toBe('cmpuishown');
-
-		_.resetPageTargeting();
-		onConsentChange.mockImplementation(tcfv2MixedConsentMock);
-
-		expect(getPageTargeting().consent_tcfv2).toBe('f');
-		expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+		expect(getPageTargeting(tcfv2MixedConsentMock).consent_tcfv2).toBe('f');
+		expect(getPageTargeting(tcfv2MixedConsentMock).cmp_interaction).toBe(
+			'useractioncomplete',
+		);
 	});
 
 	it('should set correct edition param', () => {
@@ -328,7 +291,10 @@ describe('Build Page Targeting', () => {
 	});
 
 	it('should remove empty values', () => {
-		window.guardian.config.page = {} as PageConfig;
+		window.guardian.config.page = {
+			// pageId should always be defined
+			pageId: 'football/series/footballweekly',
+		} as PageConfig;
 		window.guardian.config.ophan = { pageViewId: '123456' };
 
 		expect(getPageTargeting()).toEqual({
@@ -349,6 +315,7 @@ describe('Build Page Targeting', () => {
 			sens: 'f',
 			si: 't',
 			skinsize: 's',
+			urlkw: ['footballweekly'],
 		});
 	});
 
@@ -446,7 +413,7 @@ describe('Build Page Targeting', () => {
 
 		it('should set ref to Twitter', () => {
 			getReferrer.mockReturnValue(
-				'https://www.t.co/you-must-unlearn-what-you-have-learned',
+				'https://t.co/you-must-unlearn-what-you-have-learned',
 			);
 			expect(getPageTargeting().ref).toEqual('twitter');
 		});
@@ -548,10 +515,8 @@ describe('Build Page Targeting', () => {
 	describe('ad manager group value', () => {
 		const STORAGE_KEY = 'gu.adManagerGroup';
 		it('if present in localstorage, use value from storage', () => {
-			onConsentChange.mockImplementation(tcfv2WithConsentMock);
-
 			storage.local.setRaw(STORAGE_KEY, '10');
-			expect(getPageTargeting().amtgrp).toEqual('10');
+			expect(getPageTargeting(tcfv2WithConsentMock).amtgrp).toEqual('10');
 			storage.local.remove(STORAGE_KEY);
 		});
 
@@ -566,20 +531,17 @@ describe('Build Page Targeting', () => {
 			[tcfv2WithoutConsentMock, undefined],
 			[tcfv2MixedConsentMock, undefined],
 			[tcfv2MixedConsentMock, undefined],
-		])('Framework %p => amtgrp is %s', (framewok, value) => {
-			onConsentChange.mockImplementation(framewok);
-
+		])('Framework %p => amtgrp is %s', (consentState, value) => {
 			storage.local.setRaw(STORAGE_KEY, '9');
-			expect(getPageTargeting().amtgrp).toEqual(value);
+			expect(getPageTargeting(consentState).amtgrp).toEqual(value);
 			storage.local.remove(STORAGE_KEY);
 		});
 
 		it('if not present in localstorage, generate a random group 1-12, store in localstorage', () => {
-			onConsentChange.mockImplementation(tcfv2WithConsentMock);
-
 			// restore Math.random for this test so we can assert the group value range is 1-12
 			jest.spyOn(global.Math, 'random').mockRestore();
-			const valueGenerated = getPageTargeting().amtgrp;
+			const valueGenerated =
+				getPageTargeting(tcfv2WithConsentMock).amtgrp;
 			expect(valueGenerated).toBeDefined();
 			expect(Number(valueGenerated)).toBeGreaterThanOrEqual(1);
 			expect(Number(valueGenerated)).toBeLessThanOrEqual(12);

@@ -414,13 +414,17 @@ describe('DFP', () => {
 		});
 	});
 
-	it('should set listeners', () =>
-		prepareGoogletag().then(() => {
-			expect(pubAds.addEventListener).toHaveBeenCalledWith(
-				'slotRenderEnded',
-				expect.anything(),
-			);
-		}));
+	it('should set listeners', async () => {
+		onConsentChange.mockImplementation((callback) =>
+			callback(tcfv2WithConsent),
+		);
+		getConsentFor.mockReturnValue(true);
+		await prepareGoogletag();
+		expect(pubAds.addEventListener).toHaveBeenCalledWith(
+			'slotRenderEnded',
+			expect.anything(),
+		);
+	});
 
 	it('should define slots', async () => {
 		expect.hasAssertions();

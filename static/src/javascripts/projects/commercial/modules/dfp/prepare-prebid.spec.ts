@@ -66,7 +66,7 @@ const tcfv2WithConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
 			...defaultTCFv2State,
-			vendorConsents: { '5f22bfd82a6b6c1afd1181a9': true },
+			vendorConsents: { '5f92a62aa22863685f4daa4c': true },
 		},
 	});
 
@@ -74,7 +74,7 @@ const tcfv2WithoutConsentMock = (callback: Callback) =>
 	callback({
 		tcfv2: {
 			...defaultTCFv2State,
-			vendorConsents: { '5f22bfd82a6b6c1afd1181a9': false },
+			vendorConsents: { '5f92a62aa22863685f4daa4c': false },
 		},
 	});
 

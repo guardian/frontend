@@ -82,7 +82,7 @@ class LiveBlogController(
       val range = getRange(lastUpdate)
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
-        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks))
+        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks, filter))
         case (blog: LiveBlogPage, _)                             => getJson(blog, range, isLivePage, filter)
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
@@ -128,13 +128,13 @@ class LiveBlogController(
             if (remoteRendering) {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
-              remoteRenderer.getArticle(ws, blog, blocks, pageType)
+              remoteRenderer.getArticle(ws, blog, blocks, pageType, filterKeyEvents)
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case _ => Future.successful(NotFound)
@@ -212,7 +212,7 @@ class LiveBlogController(
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
-      model.KeyEventData(newBlocks, Edition(request).timezone, filterKeyEvents),
+      model.KeyEventData(newBlocks, Edition(request).timezone),
       filterKeyEvents,
     )
 
@@ -235,9 +235,10 @@ class LiveBlogController(
   private[this] def renderGuuiJson(
       blog: LiveBlogPage,
       blocks: Blocks,
+      filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
-    val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType)
+    val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, filterKeyEvents)
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }
