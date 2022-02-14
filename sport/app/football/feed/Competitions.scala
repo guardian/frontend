@@ -104,7 +104,7 @@ trait Competitions extends implicits.Football {
     matches.exists(game => {
       val currentTime = ZonedDateTime.now(clock)
       game.isLive ||
-      (game.date.minusMinutes(5).isBefore(currentTime) && game.date.plusMinutes(5).isAfter(currentTime))
+      (game.date.minusMinutes(5).isBefore(currentTime) && game.date.plusMinutes(15).isAfter(currentTime))
     })
 }
 
