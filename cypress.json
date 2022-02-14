@@ -1,0 +1,5 @@
+{
+  "chromeWebSecurity": false,
+  "video": false,
+  "retries": 2
+}
