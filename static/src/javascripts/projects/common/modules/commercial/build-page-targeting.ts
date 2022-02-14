@@ -10,8 +10,6 @@ import {
 	getSessionTargeting,
 	getViewportTargeting,
 } from '@guardian/commercial-core';
-import { getContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
-import type { ContentTargeting } from '@guardian/commercial-core/dist/esm/targeting/content';
 import { cmp } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { CountryCode } from '@guardian/libs';
