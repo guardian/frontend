@@ -10,7 +10,7 @@ import {
 } from '@guardian/commercial-core';
 import type { ThirdPartyTag } from '@guardian/commercial-core';
 import { getConsentFor } from '@guardian/consent-management-platform';
-import { getInitialConsentState } from 'commercial/initialConsentState';
+import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
