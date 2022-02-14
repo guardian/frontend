@@ -12,11 +12,11 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
     Seq(
       (false, Duration.ofSeconds(1), true),
       (false, Duration.ofMinutes(1), true),
-      (false, Duration.ofMinutes(4).plusSeconds(59), true),
-      (false, Duration.ofMinutes(5), false),
-      (false, Duration.ofMinutes(10), false),
-      (true, Duration.ofMinutes(5), true),
-      (true, Duration.ofMinutes(10), true),
+      (false, Duration.ofMinutes(14).plusSeconds(59), true),
+      (false, Duration.ofMinutes(15), false),
+      (false, Duration.ofMinutes(16), false),
+      (true, Duration.ofMinutes(16), true),
+      (true, Duration.ofMinutes(20), true),
     ) foreach { testcase =>
       (s"isMatchLiveOrAboutToStart returns ${testcase._3} if there's a match that started ${testcase._2} ago") in {
         val matches: Seq[FootballMatch] =
