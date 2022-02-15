@@ -343,24 +343,25 @@ object DotcomRenderingDataModel {
       .find(_._1 == "calloutsUrl")
       .flatMap(entry => entry._2.asOpt[String])
 
-    def toDCRBlock = { block: APIBlock =>
-      Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes)
+    def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
+      Block(block, page, shouldAddAffiliateLinks, request, isMainBlock, calloutsUrl, contentDateTimes)
     }
 
     val mainMediaElements =
       mainBlock
-        .map(toDCRBlock)
+        .map(toDCRBlock(isMainBlock = true))
         .toList
         .flatMap(_.elements)
 
-    val bodyBlocksDCR: List[model.dotcomrendering.Block] = bodyBlocks
-      .filter(_.published || pageType.isPreview) // TODO lift?
-      .map(toDCRBlock)
-      .toList
+    val bodyBlocksDCR =
+      bodyBlocks
+        .filter(_.published || pageType.isPreview) // TODO lift?
+        .map(toDCRBlock())
+        .toList
 
-    val keyEventsDCR = keyEvents.map(toDCRBlock)
+    val keyEventsDCR = keyEvents.map(toDCRBlock())
 
-    val pinnedPostDCR = pinnedPost.map(toDCRBlock)
+    val pinnedPostDCR = pinnedPost.map(toDCRBlock())
 
     val commercial: Commercial = {
       val editionCommercialProperties = content.metadata.commercial
