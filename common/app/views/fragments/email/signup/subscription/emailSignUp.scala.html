@@ -37,7 +37,6 @@
 
 @privacyNoticeId = @{"embed-privacy-notice"}
 @privacyNoticeHiddenClass = @{"newsletters-privacy-notice-hidden"}
-@privacyNoticeVisibleClass = @{"newsletters-privacy-notice-visible"}
 @termsId = @{"newsletters-terms"}
 @termsDark = @{"dark"}
 
@@ -85,14 +84,14 @@
     @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
         document.getElementById("@inputId")
         .addEventListener("focusin", ()=> {
-            document.getElementById("@privacyNoticeId")?.setAttribute('class', '@privacyNoticeVisibleClass')
-            document.getElementById("@termsId")?.setAttribute('class', 'terms @termsDark')
+            document.getElementById("@privacyNoticeId")?.classList?.remove("@privacyNoticeHiddenClass")
+            document.getElementById("@termsId")?.classList?.add("@termsDark")
             iframeMessenger?.resize();
         });
     document.getElementById("@inputId")
         .addEventListener("focusout", ()=> {
-            document.getElementById("@privacyNoticeId")?.setAttribute('class', '@privacyNoticeHiddenClass')
-            document.getElementById("@termsId")?.setAttribute('class', 'terms')
+            document.getElementById("@privacyNoticeId")?.classList?.add("@privacyNoticeHiddenClass")
+            document.getElementById("@termsId")?.classList?.remove("@termsDark")
             iframeMessenger?.resize();
         });
     }
