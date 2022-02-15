@@ -470,8 +470,28 @@ trait FeatureSwitches {
     "Enables showing reCAPTCHA when signing up to email newsletters",
     owners = Seq(Owner.withGithub("georgeblahblah")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = LocalDate.of(2022, 5, 4),
     exposeClientSide = true,
+  )
+
+  val NewslettersRemoveConfirmationStep = Switch(
+    SwitchGroup.Feature,
+    "newsletters-remove-confirmation-step",
+    "Remove confirmation step when user sign up to a newsletter",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2022, 3, 4),
+    exposeClientSide = false,
+  )
+
+  val ValidateEmailSignupRecaptchaTokens = Switch(
+    SwitchGroup.Feature,
+    "validate-email-signup-recaptcha-tokens",
+    "Enables validation of reCAPTCHA tokens on email signup submissions",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2022, 5, 4),
+    exposeClientSide = false,
   )
 
 }

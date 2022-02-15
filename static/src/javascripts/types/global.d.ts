@@ -69,7 +69,10 @@ interface Config {
 	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
-	tests?: Record<ServerSideABTest, 'control' | 'variant'>;
+	tests?: {
+		[key: `${string}Control`]: 'control';
+		[key: `${string}Variant`]: 'variant';
+	};
 	isDotcomRendering: boolean;
 }
 
@@ -88,7 +91,6 @@ interface PageConfig extends CommercialPageConfig {
 	nonRefreshableLineItemIds?: number[];
 	section: string;
 	isPaidContent: boolean;
-	isSensitive: boolean;
 	videoDuration: number;
 	source: string;
 	pageId: string;
@@ -96,11 +98,15 @@ interface PageConfig extends CommercialPageConfig {
 	blogIds: string;
 	contentType: string;
 	keywordIds: string;
+	keywords: string;
+	toneIds: string;
 	publication: string;
 	seriesId: string;
+	series: string;
 	sponsorshipType: string;
 	tones: string;
 	hasInlineMerchandise: boolean;
+	shouldHideReaderRevenue?: boolean;
 }
 
 interface Ophan {

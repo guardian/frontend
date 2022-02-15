@@ -8,6 +8,14 @@ body {
     left: -2000px;
 }
 
+.email-sub .newsletters-privacy-notice-visible {
+    display: inline;
+}
+
+.email-sub .newsletters-privacy-notice-hidden {
+    display: none;
+}
+
 /**
 * Google reCAPTCHA styles
 */
@@ -15,18 +23,19 @@ body {
     visibility: hidden;
 }
 
-.email-sub .captcha-terms {
-    color: $brightness-7;
+.email-sub .terms {
+    color: $brightness-46;
     clear: both;
     font-family: $f-sans-serif-text;
-    font-size: 12px;
+    font-size: .7rem;
+    margin-left: 5px;
 
     a {
-        color: $brightness-7;
+        color: $brightness-46;
     }
 }
 
-.email-sub--footer .captcha-terms {
+.email-sub--footer .terms {
     color: #ffffff;
 
     a {

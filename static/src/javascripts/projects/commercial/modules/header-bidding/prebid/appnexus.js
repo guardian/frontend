@@ -1,8 +1,5 @@
 import config from '../../../../../lib/config';
-import {
-	getPageTargeting,
-	buildAppNexusTargetingObject,
-} from '../../../../common/modules/commercial/build-page-targeting';
+import { buildAppNexusTargetingObject } from '../../../../common/modules/commercial/build-page-targeting';
 
 import {
 	isInUsOrCa,
@@ -28,38 +25,6 @@ const getAppNexusInvCode = (sizes) => {
 	const slotSize = getLargestSize(sizes);
 	if (slotSize) {
 		return `${device}${sectionName.toLowerCase()}${slotSize.join('x')}`;
-	}
-};
-
-export const getAppNexusPlacementId = (sizes) => {
-	const defaultPlacementId = '13915593';
-	if (isInUsOrCa() || isInAuOrNz()) {
-		return defaultPlacementId;
-	}
-	switch (getBreakpointKey()) {
-		case 'D':
-			if (containsMpuOrDmpu(sizes)) {
-				return '13366606';
-			}
-			if (containsLeaderboardOrBillboard(sizes)) {
-				return '13366615';
-			}
-			return defaultPlacementId;
-		case 'M':
-			if (containsMpu(sizes)) {
-				return '13366904';
-			}
-			return defaultPlacementId;
-		case 'T':
-			if (containsMpu(sizes)) {
-				return '13366913';
-			}
-			if (containsLeaderboard(sizes)) {
-				return '13366916';
-			}
-			return defaultPlacementId;
-		default:
-			return defaultPlacementId;
 	}
 };
 
@@ -96,7 +61,7 @@ export const getAppNexusDirectPlacementId = (sizes) => {
 	}
 };
 
-export const getAppNexusDirectBidParams = (sizes) => {
+export const getAppNexusDirectBidParams = (sizes, pageTargeting) => {
 	if (isInAuOrNz() && config.get('switches.prebidAppnexusInvcode')) {
 		const invCode = getAppNexusInvCode(sizes);
 		// flowlint sketchy-null-string:warn
@@ -106,19 +71,18 @@ export const getAppNexusDirectBidParams = (sizes) => {
 				member: '7012',
 				keywords: {
 					invc: [invCode],
-					...buildAppNexusTargetingObject(getPageTargeting()),
+					...buildAppNexusTargetingObject(pageTargeting),
 				},
 			};
 		}
 	}
 	return {
 		placementId: getAppNexusDirectPlacementId(sizes),
-		keywords: buildAppNexusTargetingObject(getPageTargeting()),
+		keywords: buildAppNexusTargetingObject(pageTargeting),
 	};
 };
 
 export const _ = {
-	getAppNexusPlacementId,
 	getAppNexusInvCode,
 	getAppNexusDirectPlacementId,
 };

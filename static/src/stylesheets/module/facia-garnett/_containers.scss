@@ -1,6 +1,6 @@
 @import 'container--video';
 
-.fc-container--first#palette-styles-new-do-not-delete + .fc-container, 
+.fc-container--first#palette-styles-new-do-not-delete + .fc-container,
 .fc-container--first {
     margin-top: 0;
     padding-top: 0;
@@ -93,7 +93,7 @@
     margin-top: 0;
     margin-bottom: $gs-baseline * 2;
     padding-bottom: 0;
-    background: $brightness-97;
+    background: transparent;
 
     .fc-container__inner {
         border-top: 0;

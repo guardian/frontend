@@ -1,7 +1,7 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { loadScript, log } from '@guardian/libs';
 import { once } from 'lodash-es';
-import { getInitialConsentState } from 'commercial/initialConsentState';
+import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../lib/config';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 

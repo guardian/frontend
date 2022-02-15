@@ -1229,11 +1229,6 @@
     style-loader "1.0.0"
     webpack "^4.2.0"
 
-"@guardian/automat-contributions@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/automat-contributions/-/automat-contributions-0.4.2.tgz#38eff2111ee032a1a25dc6bc32798cbf62a9db7e"
-  integrity sha512-6aSGaIHgkcVYLW5tgmiWYdv3N5k7I4NOCwv+YIz8HPWOq/QBHR43nx1tliF8+7LX9bKBVPuEEvPkND1i44tQbA==
-
 "@guardian/automat-modules@^0.3.8":
   version "0.3.8"
   resolved "https://registry.yarnpkg.com/@guardian/automat-modules/-/automat-modules-0.3.8.tgz#e809e26beece699717a1480100a2ec23cb5db422"
@@ -1252,15 +1247,15 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-5.3.0.tgz#abe79666e5636ad2a0064cb2f227a64239231d2f"
   integrity sha512-3tljnI79cIR2e3RrnXMc0liSPAuFjezDZ50MCpXw9Y3KX8jD92AqWDAfjsC0XrpGj946ZB149Z/EarhrSRQ/hg==
 
-"@guardian/commercial-core@^0.39.0":
-  version "0.39.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.39.0.tgz#314af346a02599d75219492dac89a89be169cc93"
-  integrity sha512-3OGfM9K3KQR1PMOJoPM6EL1tuy6s4YRoIfnFTvM4NY+Z5Yc11uDZXqthzXBmRjlnf8EHVMZo2a2ffDlZnrguTA==
+"@guardian/commercial-core@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.41.0.tgz#5ac9848d151b8291a0f0bdd2d4f278048bda39b7"
+  integrity sha512-A5G5qd+ZqFfV8SlAJ+SS+EwkUkscbLo0M4+3xIlIcpxGUb6cVkYJItt6hUR/FmFS/6Ie5177bBzFqRpxQziIFg==
 
-"@guardian/consent-management-platform@^10.1.1":
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.1.1.tgz#c49ccdde26582b571accd925f576fb178c619004"
-  integrity sha512-hzhmrlhNVkwshKXKYVQUrl4NBA6iCkyFg79LQHUD3nDpo5IjxzwOGlUU4ML1gzFFID4lZ1AM2klxkM7ZUfYySg==
+"@guardian/consent-management-platform@^10.1.2":
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.1.2.tgz#f7ea2ce14c1ee9c5822c8f0fe34aec006adfda89"
+  integrity sha512-2rJxMIqAekwWxerxscWai4pbEnOnmf1rrPO5kawLlkppv9AKMS+KpK+9/C8vqqHBC2Niat5JpT845IJJUYv4CA==
   dependencies:
     "@guardian/libs" "1.6.1 - 3.3.0"
 
@@ -1288,10 +1283,15 @@
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-3.3.0.tgz#fa98c7b8216ab35b8cf3087cd9ba336958fac99a"
   integrity sha512-XB9o8qtDOg+KlPh1sjEr4u+Ai3RFTRr2riZ/HJpdlh8Cu4ZpYjCSGUZXSGkxp1CwFWT9sduANnsWSqZ97iBloQ==
 
-"@guardian/libs@^3.1.0", "@guardian/libs@^3.4.1":
+"@guardian/libs@^3.1.0":
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-3.5.1.tgz#069fb9140f77d88cc68d476da9c626c18b9ed883"
   integrity sha512-obu0aPfkbe6kdo18e0dEq/esVjAhwZpQusU/yRjDQFBQMcG4CvPtD0HZb6sI1Grm2NWdBueHHQcJ0YX48SDCsg==
+
+"@guardian/libs@^3.6.1":
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-3.6.1.tgz#111d10c2aec32671a7cc7f70d8e93398edc523e2"
+  integrity sha512-n0nJLRL143Tn5RKfr5YLaprrYJCVWdMftMry10l/7d87t6i2bL/OpewTe8j4F4DGH5GjVPuSTVpZmMsgIl5hww==
 
 "@guardian/prettier@^0.5.0":
   version "0.5.0"
@@ -1321,6 +1321,11 @@
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.12.0.tgz#52d11d2fff649e04934033473b3ed7c7bf4a1639"
   integrity sha512-JIFBybaCd69tf+zJZZ7KNLdqaVePOAc36wGFor0I60vc9Ib0jMuzYVffMjMhF6LHSXMdoOcqGwiPdFucObVYAA==
+
+"@guardian/support-dotcom-components@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.0.tgz#802b507de87c4ef120ae9f02d6f44be1fea47353"
+  integrity sha512-zxtDDUYy3RDlizQ3UrYUYIQ2ooojj5gJmtEZjiAPN+SvL8cHlIPDQnX6aaTx6RMoIQUpQ4vVZyAVrLDOuUY37Q==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
@@ -10651,7 +10656,7 @@ rxjs@^5.5.6:
   dependencies:
     symbol-observable "1.0.1"
 
-rxjs@^6.3.3, rxjs@^6.6.3:
+rxjs@^6.3.3, rxjs@^6.6.7:
   version "6.6.7"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
   integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==

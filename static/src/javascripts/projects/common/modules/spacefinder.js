@@ -1,9 +1,10 @@
-// total_hours_spent_maintaining_this = 72
+// total_hours_spent_maintaining_this = 80
 
 import bean from 'bean';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { memoize } from 'lodash-es';
+import { markCandidates } from './mark-candidates';
 
 const query = (selector, context) => [
 	...(context ?? document).querySelectorAll(selector),
@@ -17,6 +18,7 @@ const defaultOptions = {
 	waitForImages: true,
 	waitForLinks: true,
 	waitForInteractives: false,
+	debug: false,
 };
 
 const isIframe = (node) => node instanceof HTMLIFrameElement;
@@ -108,91 +110,95 @@ const onInteractivesLoaded = memoize((rules) => {
 		  ).then(() => undefined);
 }, getFuncId);
 
-const filter = (list, filterElement, exclusions) => {
+const filter = (list, filterElement) => {
 	const filtered = [];
+	const exclusions = [];
 	list.forEach((element) => {
-		if (filterElement(element)) {
+		if (filterElement(element, filtered[filtered.length - 1])) {
 			filtered.push(element);
 		} else {
 			exclusions.push(element);
 		}
 	});
-	return filtered;
+	return { filtered, exclusions };
 };
 
 // test one element vs another for the given rules
-const testCandidate = (rule, challenger, opponent) => {
-	const isMinAbove = challenger.top - opponent.bottom >= rule.minAbove;
-	const isMinBelow = opponent.top - challenger.top >= rule.minBelow;
+const testCandidate = (rule, candidate, opponent) => {
+	const isMinAbove = candidate.top - opponent.bottom >= rule.minAbove;
+	const isMinBelow = opponent.top - candidate.top >= rule.minBelow;
 
-	return isMinAbove || isMinBelow;
+	const pass = isMinAbove || isMinBelow;
+
+	if (!pass) {
+		candidate.meta.tooClose.push(opponent.element);
+	}
+
+	return pass;
 };
 
 // test one element vs an array of other elements for the given rules
-const testCandidates = (rules, challenger, opponents) =>
-	opponents.every(testCandidate.bind(undefined, rules, challenger));
+const testCandidates = (rules, candidate, opponents) =>
+	opponents.every(testCandidate.bind(undefined, rules, candidate));
 
 const enforceRules = (measurements, rules, exclusions) => {
 	let candidates = measurements.candidates;
+	let result;
 
 	// enforce absoluteMinAbove rule
-	exclusions.absoluteMinAbove = [];
-	candidates = filter(
+	result = filter(
 		candidates,
 		(candidate) =>
 			!rules.absoluteMinAbove ||
 			candidate.top + measurements.bodyTop >= rules.absoluteMinAbove,
-		exclusions.absoluteMinAbove,
 	);
+	exclusions.absoluteMinAbove = result.exclusions;
+	candidates = result.filtered;
 
 	// enforce minAbove and minBelow rules
-	exclusions.aboveAndBelow = [];
-	candidates = filter(
-		candidates,
-		(candidate) => {
-			const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
-			const farEnoughFromBottomOfBody =
-				candidate.top + rules.minBelow <= measurements.bodyHeight;
-			return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
-		},
-		exclusions.aboveAndBelow,
-	);
+	result = filter(candidates, (candidate) => {
+		const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
+		const farEnoughFromBottomOfBody =
+			candidate.top + rules.minBelow <= measurements.bodyHeight;
+		return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
+	});
+	exclusions.aboveAndBelow = result.exclusions;
+	candidates = result.filtered;
 
 	// enforce content meta rule
 	if (rules.clearContentMeta) {
-		exclusions.contentMeta = [];
-		candidates = filter(
+		result = filter(
 			candidates,
 			(c) =>
 				!!measurements.contentMeta &&
 				c.top >
 					measurements.contentMeta.bottom + rules.clearContentMeta,
-			exclusions.contentMeta,
 		);
+		exclusions.contentMeta = result.exclusions;
+		candidates = result.filtered;
 	}
 
 	// enforce selector rules
 	if (rules.selectors) {
 		Object.keys(rules.selectors).forEach((selector) => {
-			exclusions[selector] = [];
-			candidates = filter(
-				candidates,
-				(candidate) =>
-					testCandidates(
-						rules.selectors[selector],
-						candidate,
-						measurements.opponents
-							? measurements.opponents[selector]
-							: [],
-					),
-				exclusions[selector],
+			result = filter(candidates, (candidate) =>
+				testCandidates(
+					rules.selectors[selector],
+					candidate,
+					measurements.opponents
+						? measurements.opponents[selector]
+						: [],
+				),
 			);
+			exclusions[selector] = result.exclusions;
+			candidates = result.filtered;
 		});
 	}
 
 	if (rules.filter) {
-		exclusions.custom = [];
-		candidates = filter(candidates, rules.filter, exclusions.custom);
+		result = filter(candidates, rules.filter);
+		exclusions.custom = result.exclusions;
+		candidates = result.filtered;
 	}
 
 	return candidates;
@@ -218,36 +224,31 @@ const getReady = (rules, options) =>
 
 const getCandidates = (rules, exclusions) => {
 	let candidates = query(rules.bodySelector + rules.slotSelector);
+	let result;
 	if (rules.fromBottom) {
 		candidates.reverse();
 	}
 	if (rules.startAt) {
 		let drop = true;
-		exclusions.startAt = [];
-		candidates = filter(
-			candidates,
-			(candidate) => {
-				if (candidate === rules.startAt) {
-					drop = false;
-				}
-				return !drop;
-			},
-			exclusions.startAt,
-		);
+		result = filter(candidates, (candidate) => {
+			if (candidate === rules.startAt) {
+				drop = false;
+			}
+			return !drop;
+		});
+		exclusions.startAt = result.exclusions;
+		candidates = result.filtered;
 	}
 	if (rules.stopAt) {
 		let keep = true;
-		exclusions.stopAt = [];
-		candidates = filter(
-			candidates,
-			(candidate) => {
-				if (candidate === rules.stopAt) {
-					keep = false;
-				}
-				return keep;
-			},
-			exclusions.stopAt,
-		);
+		result = filter(candidates, (candidate) => {
+			if (candidate === rules.stopAt) {
+				keep = false;
+			}
+			return keep;
+		});
+		exclusions.stopAt = result.exclusions;
+		candidates = result.filtered;
 	}
 	return candidates;
 };
@@ -257,6 +258,9 @@ const getDimensions = (el) =>
 		top: el.offsetTop,
 		bottom: el.offsetTop + el.offsetHeight,
 		element: el,
+		meta: {
+			tooClose: [],
+		},
 	});
 
 const getMeasurements = (rules, candidates) => {
@@ -316,6 +320,7 @@ const findSpace = (rules, options, excluded) => {
 		.then(() => getCandidates(rules, exclusions))
 		.then((candidates) => getMeasurements(rules, candidates))
 		.then((measurements) => enforceRules(measurements, rules, exclusions))
+		.then((winners) => markCandidates(exclusions, winners, options))
 		.then((winners) => returnCandidates(rules, winners));
 };
 
