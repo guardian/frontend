@@ -37,6 +37,35 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     resetTimeout = Configuration.rendering.timeout * 4,
   )
 
+  private[this] def postWithoutHandler(
+                          ws: WSClient,
+                          payload: String,
+                          endpoint: String,
+                          timeout: Duration = Configuration.rendering.timeout,
+                        )(implicit request: RequestHeader): Future[WSResponse] = {
+    val resp = ws
+      .url(endpoint)
+      .withRequestTimeout(timeout)
+      .addHttpHeaders("Content-Type" -> "application/json")
+      .post(payload)
+
+    resp.recoverWith({
+      case _: ConnectException if Configuration.environment.stage == "DEV" =>
+        val msg = s"""Connection refused to ${endpoint}.
+                     |
+                     |You are trying to access a Dotcom Rendering page via Frontend but it
+                     |doesn't look like DCR is running locally on the expected port (3030).
+                     |
+                     |Note, for most use cases, we recommend developing directly on DCR.
+                     |
+                     |To get started with dotcom-rendering, see:
+                     |
+                     |    https://github.com/guardian/dotcom-rendering""".stripMargin
+        Future.failed(DCRLocalConnectException(msg))
+      case t: TimeoutException => Future.failed(DCRTimeoutException(t.getMessage))
+    })
+  }
+
   private[this] def post(
       ws: WSClient,
       payload: String,
@@ -44,31 +73,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: Page,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
-
-    def doPost() = {
-      val resp = ws
-        .url(endpoint)
-        .withRequestTimeout(timeout)
-        .addHttpHeaders("Content-Type" -> "application/json")
-        .post(payload)
-
-      resp.recoverWith({
-        case _: ConnectException if Configuration.environment.stage == "DEV" =>
-          val msg = s"""Connection refused to ${endpoint}.
-              |
-              |You are trying to access a Dotcom Rendering page via Frontend but it
-              |doesn't look like DCR is running locally on the expected port (3030).
-              |
-              |Note, for most use cases, we recommend developing directly on DCR.
-              |
-              |To get started with dotcom-rendering, see:
-              |
-              |    https://github.com/guardian/dotcom-rendering""".stripMargin
-          Future.failed(DCRLocalConnectException(msg))
-        case t: TimeoutException => Future.failed(DCRTimeoutException(t.getMessage))
-      })
-    }
-
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
@@ -93,9 +97,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     if (CircuitBreakerSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(doPost()).map(handler)
+      circuitBreaker.withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, timeout)).map(handler)
     } else {
-      doPost().map(handler)
+      postWithoutHandler(ws, payload, endpoint, timeout).map(handler)
     }
   }
 
@@ -140,19 +144,15 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: LiveBlogPage,
       blocks: Seq[Block],
   )(implicit request: RequestHeader): Future[String] = {
-
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
 
-    ws.url(Configuration.rendering.baseURL + "/Blocks")
-      .withRequestTimeout(Configuration.rendering.timeout)
-      .addHttpHeaders("Content-Type" -> "application/json")
-      .post(json)
-      .map(response => {
+    postWithoutHandler(ws, json, Configuration.rendering.baseURL + "/Blocks")
+      .flatMap(response => {
         if (response.status == 200)
-          response.body
+          Future.successful(response.body)
         else
-          throw DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}")
+          Future.failed(DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"))
       })
   }
 
