@@ -38,6 +38,8 @@
 @privacyNoticeId = @{"embed-privacy-notice"}
 @privacyNoticeHiddenClass = @{"newsletters-privacy-notice-hidden"}
 @privacyNoticeVisibleClass = @{"newsletters-privacy-notice-visible"}
+@termsId = @{"newsletters-terms"}
+@termsDark = @{"dark"}
 
 @form = {
     <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName">
@@ -84,11 +86,13 @@
         document.getElementById("@inputId")
         .addEventListener("focusin", ()=> {
             document.getElementById("@privacyNoticeId")?.setAttribute('class', '@privacyNoticeVisibleClass')
+            document.getElementById("@termsId")?.setAttribute('class', 'terms @termsDark')
             iframeMessenger?.resize();
         });
     document.getElementById("@inputId")
         .addEventListener("focusout", ()=> {
             document.getElementById("@privacyNoticeId")?.setAttribute('class', '@privacyNoticeHiddenClass')
+            document.getElementById("@termsId")?.setAttribute('class', 'terms')
             iframeMessenger?.resize();
         });
     }

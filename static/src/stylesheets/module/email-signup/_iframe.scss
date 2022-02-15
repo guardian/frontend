@@ -35,6 +35,13 @@ body {
     }
 }
 
+.email-sub .dark {
+    color: $brightness-7;
+    a {
+        color: $brightness-7;
+    }
+}
+
 .email-sub--footer .terms {
     color: #ffffff;
 
