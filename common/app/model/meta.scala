@@ -499,11 +499,7 @@ trait ContentPage extends Page {
   def getOpenGraphProperties: Map[String, String] =
     metadata.opengraphProperties ++
       item.content.opengraphProperties ++
-      metadata.opengraphPropertiesOverrides map {
-      // We should never have HTML tags in `content` attribute of the <meta> tag
-      case (key, value) =>
-        (key, StripHtmlTagsAndUnescapeEntities(value))
-    }
+      metadata.opengraphPropertiesOverrides
 
   def getTwitterProperties: Map[String, String] =
     metadata.twitterProperties ++
@@ -526,11 +522,7 @@ trait StandalonePage extends Page {
     metadata.javascriptConfig ++ metadata.javascriptConfigOverrides
 
   def getOpenGraphProperties: Map[String, String] =
-    metadata.opengraphProperties ++ metadata.opengraphPropertiesOverrides map {
-      // We should never have HTML tags in `content` attribute of the <meta> tag
-      case (key, value) =>
-        (key, StripHtmlTagsAndUnescapeEntities(value))
-    }
+    metadata.opengraphProperties ++ metadata.opengraphPropertiesOverrides
 
   def getTwitterProperties: Map[String, String] =
     metadata.twitterProperties ++ metadata.twitterPropertiesOverrides
