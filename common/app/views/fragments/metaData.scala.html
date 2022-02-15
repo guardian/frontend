@@ -110,7 +110,7 @@
     }
     case s: model.StandalonePage => {
         @s.getOpenGraphProperties.map{ case (key, value) =>
-            <meta property="@key" content="@value" />
+            <meta property="@key" content="@Html(value)" />
         }
         @s.getTwitterProperties.map{ case (key, value) =>
             <meta name="@key" content="@value" />
