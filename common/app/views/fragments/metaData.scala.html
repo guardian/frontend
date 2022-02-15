@@ -105,7 +105,7 @@
             <meta property="@key" content="@Html(value)" />
         }
         @c.getTwitterProperties.map{ case (key, value) =>
-            <meta name="@key" content="@value" />
+            <meta name="@key" content="@Html(value)" />
         }
     }
     case s: model.StandalonePage => {
@@ -113,7 +113,7 @@
             <meta property="@key" content="@Html(value)" />
         }
         @s.getTwitterProperties.map{ case (key, value) =>
-            <meta name="@key" content="@value" />
+            <meta name="@key" content="@Html(value)" />
         }
     }
     case _ => {}
