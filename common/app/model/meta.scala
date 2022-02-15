@@ -25,7 +25,6 @@ import navigation.GuardianFoundationHelper
 
 import scala.util.matching.Regex
 import utils.ShortUrls
-import views.support.StripHtmlTagsAndUnescapeEntities
 
 import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
 
