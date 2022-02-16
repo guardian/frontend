@@ -22,6 +22,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
+    new DCRFake(),
   )
 
   it should "return the latest blocks of a live blog" in {
@@ -53,6 +54,50 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     //older block
     content should not include "block-56d02bd2e4b0d38537b1f5fa"
 
+  }
+
+  it should "return the latest blocks of a live blog using DCR" in {
+    val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
+    val fakeRequest = FakeRequest(
+      GET,
+      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock&dcr=true",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      Some(lastUpdateBlock),
+      None,
+      Some(true),
+      filterKeyEvents = None,
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+
+    // newer blocks
+    content should include("FakeRemoteRender has found you out if you rely on this markup!")
+  }
+
+  it should "return the full CAPI response if DCR is true but lastUpdate is empty" in {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?dcr=true",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      None,
+      None,
+      Some(true),
+      filterKeyEvents = None,
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+
+    content should include("\"webTitle\"")
+    content should include("\"headline\"")
+    content should not include ("FakeRemoteRender has found you out if you rely on this markup!")
   }
 
   it should "return only the key event blocks of a live blog, when switch is on" in {
