@@ -87,8 +87,9 @@ class LiveBlogController(
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
           Future.successful(renderGuuiJson(blog, blocks, filter))
         case (blog: LiveBlogPage, blocks) =>
-          val blocksFlattened = blocks.requestedBodyBlocks.getOrElse(Map.empty[String, Seq[Block]]).flatMap(_._2).toSeq
-          getJson(blog, range, isLivePage, filter, blocksFlattened)
+          val capiAroundLatestBlocks =
+            blocks.requestedBodyBlocks.getOrElse(Map.empty[String, Seq[Block]]).flatMap(_._2).toSeq
+          getJson(blog, range, isLivePage, filter, capiAroundLatestBlocks)
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
