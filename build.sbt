@@ -91,6 +91,7 @@ val sport = application("sport")
   .settings(
     libraryDependencies ++= Seq(
       paClient,
+      monix,
     ),
   )
 

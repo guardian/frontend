@@ -4,7 +4,7 @@ import app.LifecycleComponent
 import common._
 import contentapi.ContentApiClient
 import feed.CompetitionsService
-import model.TeamMap
+import model.{Competition, TeamMap}
 import pa.{Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
@@ -19,13 +19,15 @@ class FootballLifecycle(
     competitionsService: CompetitionsService,
     contentApiClient: ContentApiClient,
 )(implicit ec: ExecutionContext)
-    extends LifecycleComponent {
+    extends LifecycleComponent
+    with GuLogging {
 
   val defaultClock = Clock.systemDefaultZone()
 
   appLifeCycle.addStopHook { () =>
     Future {
       descheduleJobs()
+      monixJobs.stop // stop the observable
     }
   }
 
@@ -65,7 +67,55 @@ class FootballLifecycle(
     jobs.deschedule("TeamMapRefreshJob")
   }
 
+  object monixJobs {
+
+    // ********* Monix implementation *********
+    import monix.eval.Task
+    import monix.execution.Scheduler
+    import monix.reactive.Observable
+    import monix.execution.ExecutionModel.AlwaysAsyncExecution
+    import monix.reactive.{Consumer}
+
+    // We need a schedular in scope
+    lazy implicit val scheduler = Scheduler(scala.concurrent.ExecutionContext.Implicits.global, AlwaysAsyncExecution)
+
+    // Maybe handle error like this?
+    def retryWithDelay[A](source: Observable[A], delay: FiniteDuration): Observable[A] =
+      source.onErrorHandleWith { _ =>
+        retryWithDelay(source, delay).delayExecution(delay)
+      }
+
+    import scala.collection.immutable
+
+    val observableInterval = 10.second
+    val stream = {
+      Observable
+        .intervalAtFixedRate(observableInterval)
+        .mapEval(_ => {
+          Task.defer {
+            val task = Task.fromFuture(competitionsService.refreshMatchDay(defaultClock)).timeout(observableInterval)
+            task.onErrorHandle { error =>
+              {
+                log.error(s"Refreshing match day data failed due to ${error.getMessage}")
+                immutable.Iterable[Competition]()
+              }
+            }
+          }
+        })
+        .onErrorRestartUnlimited // in case there was any error in any operator in observable, we don't want to stop the observable
+        .consumeWith(Consumer.complete) // Here the observable is converted to a task
+    }
+
+    lazy val start = stream.runToFuture(monixJobs.scheduler)
+    def stop = start.cancel()
+
+    // ********* end of Monix implementation *********
+
+  }
+
   override def start(): Unit = {
+    monixJobs.start
+
     descheduleJobs()
     scheduleJobs()
 
