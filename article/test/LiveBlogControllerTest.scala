@@ -95,9 +95,9 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val content = contentAsString(result)
 
-    content should include ("\"webTitle\"")
-    content should include ("\"headline\"")
-    content should not include("FakeRemoteRender has found you out if you rely on this markup!")
+    content should include("\"webTitle\"")
+    content should include("\"headline\"")
+    content should not include ("FakeRemoteRender has found you out if you rely on this markup!")
   }
 
   it should "return only the key event blocks of a live blog, when switch is on" in {

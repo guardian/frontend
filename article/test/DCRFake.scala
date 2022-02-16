@@ -25,7 +25,9 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
     )
   }
 
-  override def getBlocks(ws: WSClient, page: LiveBlogPage, blocks: Seq[Block])(implicit request: RequestHeader): Future[String] = {
+  override def getBlocks(ws: WSClient, page: LiveBlogPage, blocks: Seq[Block])(implicit
+      request: RequestHeader,
+  ): Future[String] = {
     Future.successful("FakeRemoteRender has found you out if you rely on this markup!")
   }
 }
