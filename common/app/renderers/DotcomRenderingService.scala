@@ -38,11 +38,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )
 
   private[this] def postWithoutHandler(
-                          ws: WSClient,
-                          payload: String,
-                          endpoint: String,
-                          timeout: Duration = Configuration.rendering.timeout,
-                        )(implicit request: RequestHeader): Future[WSResponse] = {
+      ws: WSClient,
+      payload: String,
+      endpoint: String,
+      timeout: Duration = Configuration.rendering.timeout,
+  )(implicit request: RequestHeader): Future[WSResponse] = {
     val resp = ws
       .url(endpoint)
       .withRequestTimeout(timeout)
@@ -152,7 +152,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
         if (response.status == 200)
           Future.successful(response.body)
         else
-          Future.failed(DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"))
+          Future.failed(
+            DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"),
+          )
       })
   }
 
