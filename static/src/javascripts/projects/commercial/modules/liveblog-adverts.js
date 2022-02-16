@@ -71,7 +71,7 @@ const getSlotName = (isMobile, slotCounter) => {
 
 const insertAds = (paras) => {
 	const isMobile = getBreakpoint() === 'mobile';
-
+	let fastdomPromises = [];
 	for (let i = 0; i < paras.length && AD_COUNTER < MAX_ADS; i += 1) {
 		const para = paras[i];
 		if (para && para.parentNode) {
@@ -80,16 +80,24 @@ const insertAds = (paras) => {
 				classes: 'liveblog-inline',
 			});
 			// insert the ad slot container into the DOM
-			para.parentNode.insertBefore(adSlot, para.nextSibling);
+			const result = fastdom.mutate(() => {
+				para.parentNode.insertBefore(adSlot, para.nextSibling);
+			});
+			fastdomPromises.push(result);
 			// load and display the advert via GAM
 			addSlot(adSlot, false);
 			AD_COUNTER += 1;
 		}
 	}
+	return Promise.all(fastdomPromises);
 };
 
 const fill = (rules) =>
 	spaceFiller.fillSpace(rules, insertAds).then((result) => {
+		// Before the refactor of fillSpace in https://github.com/guardian/frontend/pull/24599,
+		// since insertAds returned void, result is only ever undefined and the code path below was dead.
+		// TODO investigate the impact of removing the following line.
+		result = undefined;
 		if (result && AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,

@@ -33,4 +33,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 2, 21)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-spacefinder-okr-2-images-loaded",
+    "Check whether fixing spacefinder's ability to detect when images have loaded leads to revenue uplift",
+    owners = Seq(Owner.withGithub("simonbyford")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 2, 28)),
+    exposeClientSide = true,
+  )
 }

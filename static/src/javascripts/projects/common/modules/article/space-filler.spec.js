@@ -31,18 +31,22 @@ describe('spacefiller', () => {
 
     it('Returns a promise that resolves when the insertion completes', () => {
         const rules = {};
-        const els = [document.createElement('div')];
+        const els = true;
 
         findSpace.mockReturnValue(Promise.resolve(els));
 
-        const insertion = spaceFiller.fillSpace(rules, elements => elements);
+        const insertion = spaceFiller.fillSpace(rules, () => {
+            return;
+        });
 
         return expect(insertion).resolves.toBe(els);
     });
 
     it('Passes a ruleset to the spacefinder', () => {
         const rules = {};
-        const insertion = spaceFiller.fillSpace(rules, elements => elements);
+        const insertion = spaceFiller.fillSpace(rules, () => {
+            return;
+        });
 
         return insertion.then(() => {
             const spaceFinderArgs = findSpace.mock.calls[0];
