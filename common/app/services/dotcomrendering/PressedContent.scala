@@ -16,6 +16,7 @@ object PressedContent {
     "/world/ng-interactive/2014/jul/23/a-global-guide-to-the-first-world-war-interactive-documentary",
     "/commentisfree/ng-interactive/2014/aug/29/-sp-mike-brown-stories-racial-profiling-police",
     "/politics/2014/sep/09/-sp-scottish-independence-everything-you-need-to-know-vote",
+    "/sustainable-business/ng-interactive/2014/nov/10/palm-oil-rainforest-cupboard-interactive",
     "/us-news/2014/dec/16/-sp-dear-chelsea-manning-birthday-messages-from-edward-snowden-terry-gilliam-and-more",
     "/football/ng-interactive/2014/dec/21/the-top-100-footballers-2014-interactive",
     // 2015
