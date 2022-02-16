@@ -3,6 +3,7 @@
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { memoize } from 'lodash-es';
+import { markCandidates } from './mark-candidates';
 
 import { onImagesLoadedFixed } from './on-images-loaded-fixed.js';
 import { onImagesLoadedBroken } from './on-images-loaded-broken.js';
@@ -21,6 +22,7 @@ const defaultOptions = {
 	waitForImages: true,
 	waitForLinks: true,
 	waitForInteractives: false,
+	debug: false,
 };
 
 const isIframe = (node) => node instanceof HTMLIFrameElement;
@@ -115,16 +117,22 @@ const filter = (list, filterElement) => {
 };
 
 // test one element vs another for the given rules
-const testCandidate = (rule, challenger, opponent) => {
-	const isMinAbove = challenger.top - opponent.bottom >= rule.minAbove;
-	const isMinBelow = opponent.top - challenger.top >= rule.minBelow;
+const testCandidate = (rule, candidate, opponent) => {
+	const isMinAbove = candidate.top - opponent.bottom >= rule.minAbove;
+	const isMinBelow = opponent.top - candidate.top >= rule.minBelow;
 
-	return isMinAbove || isMinBelow;
+	const pass = isMinAbove || isMinBelow;
+
+	if (!pass) {
+		candidate.meta.tooClose.push(opponent.element);
+	}
+
+	return pass;
 };
 
 // test one element vs an array of other elements for the given rules
-const testCandidates = (rules, challenger, opponents) =>
-	opponents.every(testCandidate.bind(undefined, rules, challenger));
+const testCandidates = (rules, candidate, opponents) =>
+	opponents.every(testCandidate.bind(undefined, rules, candidate));
 
 const enforceRules = (measurements, rules, exclusions) => {
 	let candidates = measurements.candidates;
@@ -243,6 +251,9 @@ const getDimensions = (el) =>
 		top: el.offsetTop,
 		bottom: el.offsetTop + el.offsetHeight,
 		element: el,
+		meta: {
+			tooClose: [],
+		},
 	});
 
 const getMeasurements = (rules, candidates) => {
@@ -302,6 +313,7 @@ const findSpace = (rules, options, excluded) => {
 		.then(() => getCandidates(rules, exclusions))
 		.then((candidates) => getMeasurements(rules, candidates))
 		.then((measurements) => enforceRules(measurements, rules, exclusions))
+		.then((winners) => markCandidates(exclusions, winners, options))
 		.then((winners) => returnCandidates(rules, winners));
 };
 

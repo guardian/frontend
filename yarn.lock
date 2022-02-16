@@ -1247,15 +1247,15 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-5.3.0.tgz#abe79666e5636ad2a0064cb2f227a64239231d2f"
   integrity sha512-3tljnI79cIR2e3RrnXMc0liSPAuFjezDZ50MCpXw9Y3KX8jD92AqWDAfjsC0XrpGj946ZB149Z/EarhrSRQ/hg==
 
-"@guardian/commercial-core@^0.39.0":
-  version "0.39.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.39.0.tgz#314af346a02599d75219492dac89a89be169cc93"
-  integrity sha512-3OGfM9K3KQR1PMOJoPM6EL1tuy6s4YRoIfnFTvM4NY+Z5Yc11uDZXqthzXBmRjlnf8EHVMZo2a2ffDlZnrguTA==
+"@guardian/commercial-core@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.41.0.tgz#5ac9848d151b8291a0f0bdd2d4f278048bda39b7"
+  integrity sha512-A5G5qd+ZqFfV8SlAJ+SS+EwkUkscbLo0M4+3xIlIcpxGUb6cVkYJItt6hUR/FmFS/6Ie5177bBzFqRpxQziIFg==
 
-"@guardian/consent-management-platform@^10.1.1":
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.1.1.tgz#c49ccdde26582b571accd925f576fb178c619004"
-  integrity sha512-hzhmrlhNVkwshKXKYVQUrl4NBA6iCkyFg79LQHUD3nDpo5IjxzwOGlUU4ML1gzFFID4lZ1AM2klxkM7ZUfYySg==
+"@guardian/consent-management-platform@^10.1.2":
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.1.2.tgz#f7ea2ce14c1ee9c5822c8f0fe34aec006adfda89"
+  integrity sha512-2rJxMIqAekwWxerxscWai4pbEnOnmf1rrPO5kawLlkppv9AKMS+KpK+9/C8vqqHBC2Niat5JpT845IJJUYv4CA==
   dependencies:
     "@guardian/libs" "1.6.1 - 3.3.0"
 

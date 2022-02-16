@@ -23,14 +23,15 @@ body {
     visibility: hidden;
 }
 
-.email-sub terms {
-    color: $brightness-7;
+.email-sub .terms {
+    color: $brightness-46;
     clear: both;
     font-family: $f-sans-serif-text;
-    font-size: 12px;
+    font-size: .7rem;
+    margin-left: 5px;
 
     a {
-        color: $brightness-7;
+        color: $brightness-46;
     }
 }
 
