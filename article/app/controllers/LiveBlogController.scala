@@ -87,9 +87,7 @@ class LiveBlogController(
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
           Future.successful(renderGuuiJson(blog, blocks, filter))
         case (blog: LiveBlogPage, blocks) =>
-          val capiAroundLatestBlocks =
-            blocks.requestedBodyBlocks.getOrElse(Map.empty[String, Seq[Block]]).flatMap(_._2).toSeq
-          getJson(blog, range, isLivePage, filter, capiAroundLatestBlocks)
+          getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.map(_.toMap).getOrElse(Map.empty))
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
@@ -183,7 +181,7 @@ class LiveBlogController(
       range: BlockRange,
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
-      capiBlocks: Seq[Block] = Seq.empty,
+      requestedBodyBlocks: Map[String, Seq[Block]] = Map.empty,
   )(implicit request: RequestHeader): Future[Result] = {
     val dcrCouldRender = LiveBlogController.checkIfSupported(liveblog)
     val participating = ActiveExperiments.isParticipating(LiveblogRendering)
@@ -197,7 +195,7 @@ class LiveBlogController(
           isLivePage,
           filterKeyEvents,
           remoteRender,
-          capiBlocks,
+          requestedBodyBlocks,
         )
       case _ => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog), liveblog))
     }
@@ -222,14 +220,17 @@ class LiveBlogController(
   }
 
   private[this] def getNewBlocks(
-      blocks: Seq[Block],
+      requestedBodyBlocks: Map[String, Seq[Block]],
       lastUpdateBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
   ): Seq[Block] = {
+    val blocksAround = requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty)
 
     val filteredBlocks = if (filterKeyEvents) {
-      blocks.filter(block => block.attributes.keyEvent.getOrElse(false) || block.attributes.summary.getOrElse(false))
-    } else blocks
+      blocksAround.filter(block =>
+        block.attributes.keyEvent.getOrElse(false) || block.attributes.summary.getOrElse(false),
+      )
+    } else blocksAround
 
     filteredBlocks.takeWhile { block =>
       block.id != lastUpdateBlockId.lastUpdate
@@ -250,11 +251,11 @@ class LiveBlogController(
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
       remoteRender: Boolean,
-      capiBlocks: Seq[Block],
+      requestedBodyBlocks: Map[String, Seq[Block]],
   )(implicit request: RequestHeader): Future[Result] = {
 
     val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
-    val newCapiBlocks = getNewBlocks(capiBlocks, lastUpdateBlockId, filterKeyEvents)
+    val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents)
 
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
