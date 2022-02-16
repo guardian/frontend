@@ -1,9 +1,14 @@
 // total_hours_spent_maintaining_this = 80
 
-import bean from 'bean';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { memoize } from 'lodash-es';
+import { markCandidates } from './mark-candidates';
+
+import { onImagesLoadedFixed } from './on-images-loaded-fixed.js';
+import { onImagesLoadedBroken } from './on-images-loaded-broken.js';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { spacefinderOkr2ImagesLoaded } from 'common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts';
 
 const query = (selector, context) => [
 	...(context ?? document).querySelectorAll(selector),
@@ -17,6 +22,7 @@ const defaultOptions = {
 	waitForImages: true,
 	waitForLinks: true,
 	waitForInteractives: false,
+	debug: false,
 };
 
 const isIframe = (node) => node instanceof HTMLIFrameElement;
@@ -39,23 +45,12 @@ const expire = (resolve) => {
 
 const getFuncId = (rules) => rules.bodySelector || 'document';
 
-const onImagesLoaded = memoize((rules) => {
-	const notLoaded = query('img', rules.body).filter((img) => !img.complete);
-
-	return notLoaded.length === 0
-		? Promise.resolve()
-		: new Promise((resolve) => {
-				let loadedCount = 0;
-				bean.on(rules.body, 'load', notLoaded, function onImgLoaded() {
-					loadedCount += 1;
-					if (loadedCount === notLoaded.length) {
-						bean.off(rules.body, 'load', onImgLoaded);
-						notLoaded.length = 0;
-						resolve();
-					}
-				});
-		  });
-}, getFuncId);
+const onImagesLoaded = isInVariantSynchronous(
+	spacefinderOkr2ImagesLoaded,
+	'variant',
+)
+	? onImagesLoadedFixed
+	: onImagesLoadedBroken;
 
 const onRichLinksUpgraded = memoize(
 	(rules) =>
@@ -122,16 +117,22 @@ const filter = (list, filterElement) => {
 };
 
 // test one element vs another for the given rules
-const testCandidate = (rule, challenger, opponent) => {
-	const isMinAbove = challenger.top - opponent.bottom >= rule.minAbove;
-	const isMinBelow = opponent.top - challenger.top >= rule.minBelow;
+const testCandidate = (rule, candidate, opponent) => {
+	const isMinAbove = candidate.top - opponent.bottom >= rule.minAbove;
+	const isMinBelow = opponent.top - candidate.top >= rule.minBelow;
 
-	return isMinAbove || isMinBelow;
+	const pass = isMinAbove || isMinBelow;
+
+	if (!pass) {
+		candidate.meta.tooClose.push(opponent.element);
+	}
+
+	return pass;
 };
 
 // test one element vs an array of other elements for the given rules
-const testCandidates = (rules, challenger, opponents) =>
-	opponents.every(testCandidate.bind(undefined, rules, challenger));
+const testCandidates = (rules, candidate, opponents) =>
+	opponents.every(testCandidate.bind(undefined, rules, candidate));
 
 const enforceRules = (measurements, rules, exclusions) => {
 	let candidates = measurements.candidates;
@@ -250,6 +251,9 @@ const getDimensions = (el) =>
 		top: el.offsetTop,
 		bottom: el.offsetTop + el.offsetHeight,
 		element: el,
+		meta: {
+			tooClose: [],
+		},
 	});
 
 const getMeasurements = (rules, candidates) => {
@@ -309,6 +313,7 @@ const findSpace = (rules, options, excluded) => {
 		.then(() => getCandidates(rules, exclusions))
 		.then((candidates) => getMeasurements(rules, candidates))
 		.then((measurements) => enforceRules(measurements, rules, exclusions))
+		.then((winners) => markCandidates(exclusions, winners, options))
 		.then((winners) => returnCandidates(rules, winners));
 };
 

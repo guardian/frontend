@@ -87,19 +87,20 @@
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts"
  ],
- "../projects/commercial/modules/article-body-adverts.js": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js",
-  "../lib/config.js",
+ "../projects/commercial/modules/article-body-adverts.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/config.d.ts",
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
+  "../lib/url.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
   "../projects/commercial/modules/filter-nearby-candidates-broken.ts",
   "../projects/commercial/modules/filter-nearby-candidates-fixed.ts",
-  "../projects/common/modules/article/space-filler.js",
+  "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts"
@@ -110,7 +111,7 @@
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
-  "../projects/common/modules/article/space-filler.js",
+  "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
@@ -426,7 +427,7 @@
   "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
-  "../projects/common/modules/article/space-filler.js",
+  "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/messenger.ts": [
@@ -552,8 +553,7 @@
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts"
  ],
- "../projects/common/modules/article/space-filler.js": [
-  "../lib/fastdom-promise.js",
+ "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
   "../projects/common/modules/spacefinder.js"
  ],
@@ -679,11 +679,13 @@
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
  ],
+ "../projects/common/modules/mark-candidates.js": [],
  "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/bean/bean.js",
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.ts"
+  "../lib/mediator.ts",
+  "../projects/common/modules/mark-candidates.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
@@ -706,7 +708,7 @@
   "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
   "../projects/commercial/modules/article-aside-adverts.ts",
-  "../projects/commercial/modules/article-body-adverts.js",
+  "../projects/commercial/modules/article-body-adverts.ts",
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
   "../projects/commercial/modules/dfp/prepare-a9.js",
