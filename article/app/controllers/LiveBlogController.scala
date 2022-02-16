@@ -87,7 +87,7 @@ class LiveBlogController(
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
           Future.successful(renderGuuiJson(blog, blocks, filter))
         case (blog: LiveBlogPage, blocks) =>
-          getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.map(_.toMap).getOrElse(Map.empty))
+          getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty))
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
@@ -181,7 +181,7 @@ class LiveBlogController(
       range: BlockRange,
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
-      requestedBodyBlocks: Map[String, Seq[Block]] = Map.empty,
+      requestedBodyBlocks: scala.collection.Map[String, Seq[Block]] = Map.empty,
   )(implicit request: RequestHeader): Future[Result] = {
     val dcrCouldRender = LiveBlogController.checkIfSupported(liveblog)
     val participating = ActiveExperiments.isParticipating(LiveblogRendering)
@@ -220,7 +220,7 @@ class LiveBlogController(
   }
 
   private[this] def getNewBlocks(
-      requestedBodyBlocks: Map[String, Seq[Block]],
+      requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
       lastUpdateBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
   ): Seq[Block] = {
@@ -251,7 +251,7 @@ class LiveBlogController(
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
       remoteRender: Boolean,
-      requestedBodyBlocks: Map[String, Seq[Block]],
+      requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
   )(implicit request: RequestHeader): Future[Result] = {
 
     val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
