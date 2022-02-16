@@ -3,12 +3,22 @@ import { _ } from 'common/modules/spacefinder';
 jest.mock('commercial/modules/dfp/track-ad-render', () =>
     Promise.resolve(true)
 );
+jest.mock('ophan/ng', () => null);
+jest.mock('raven-js', () => ({
+    config() {
+        return this;
+    },
+    install() {
+        return this;
+    },
+    captureException: jest.fn(),
+}));
 
 describe('spacefinder', () => {
     test('should test elements correctly', () => {
         const rules = { minAbove: 50, minBelow: 300 };
         const element = document.createElement('div');
-        const para = { top: 200, bottom: 300, element };
+        const para = { top: 200, bottom: 300, element, meta: { tooClose: [] } };
         const others = [
             {
                 opponent: { top: 0, bottom: 100, element },
