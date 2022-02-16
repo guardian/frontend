@@ -1,10 +1,14 @@
 // total_hours_spent_maintaining_this = 80
 
-import bean from 'bean';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { memoize } from 'lodash-es';
 import { markCandidates } from './mark-candidates';
+
+import { onImagesLoadedFixed } from './on-images-loaded-fixed.js';
+import { onImagesLoadedBroken } from './on-images-loaded-broken.js';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { spacefinderOkr2ImagesLoaded } from 'common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts';
 
 const query = (selector, context) => [
 	...(context ?? document).querySelectorAll(selector),
@@ -41,23 +45,12 @@ const expire = (resolve) => {
 
 const getFuncId = (rules) => rules.bodySelector || 'document';
 
-const onImagesLoaded = memoize((rules) => {
-	const notLoaded = query('img', rules.body).filter((img) => !img.complete);
-
-	return notLoaded.length === 0
-		? Promise.resolve()
-		: new Promise((resolve) => {
-				let loadedCount = 0;
-				bean.on(rules.body, 'load', notLoaded, function onImgLoaded() {
-					loadedCount += 1;
-					if (loadedCount === notLoaded.length) {
-						bean.off(rules.body, 'load', onImgLoaded);
-						notLoaded.length = 0;
-						resolve();
-					}
-				});
-		  });
-}, getFuncId);
+const onImagesLoaded = isInVariantSynchronous(
+	spacefinderOkr2ImagesLoaded,
+	'variant',
+)
+	? onImagesLoadedFixed
+	: onImagesLoadedBroken;
 
 const onRichLinksUpgraded = memoize(
 	(rules) =>
