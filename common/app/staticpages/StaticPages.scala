@@ -10,6 +10,12 @@ case class NewsletterRoundupPage(
   val groupedNewslettersResponses = groupedNewsletterResponses
 }
 
+case class NewsletterSeriesDetailPage(
+    metadata: MetaData,
+    newsletter: NewsletterResponse,
+) extends StandalonePage {
+}
+
 object StaticPages {
   def simpleSurveyStaticPageForId(id: String): SimplePage =
     SimplePage(
@@ -49,5 +55,21 @@ object StaticPages {
         shouldGoogleIndex = true,
       ),
       groupedNewsletterResponses,
+    )
+
+  def simpleNewsletterDetailPage(
+      id: String,
+      newsletter: NewsletterResponse,
+  ): NewsletterSeriesDetailPage =
+    NewsletterSeriesDetailPage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "newsletter-detail-page")),
+        webTitle = "Guardian newsletters: " + newsletter.name,
+        contentType = Some(DotcomContentType.Signup),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+      newsletter,
     )
 }

@@ -1,0 +1,56 @@
+@import services.newsletters.NewsletterResponse
+@import views.support.`package`.Seq2zipWithRowInfo
+@import staticpages.NewsletterSeriesDetailPage
+@import conf.switches.Switches.EmailSignupRecaptcha
+@import conf.switches.Switches.NewslettersRemoveConfirmationStep
+@import common.LinkTo
+
+@(signupPage: NewsletterSeriesDetailPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@manageEmailsUrl = @{
+    "https://manage.theguardian.com/email-prefs"
+}
+
+
+<div class="l-side-margins">
+    <div class="content">
+        <div class="gs-container">
+            <div class="newsletters-heading__container">
+                <div class="newsletters-heading">
+                    @signupPage.newsletter.name
+                </div>
+                <a data-link-name="all-newsletters : manage-emails" href="@manageEmailsUrl">
+                    <div class="newsletters-heading__manage-button">
+                        <span> Manage my newsletters </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="gs-container">
+            <p>@signupPage.newsletter.description</p>
+            <p>
+                <span class="newsletter-card__frequency ">
+                    @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                </span>
+                @signupPage.newsletter.frequency
+            </p>
+
+            @* cant set data-form-campaign-code because: *@
+            @* value campaignCode is not a member of services.newsletters.NewsletterResponse *@
+            <iframe
+                src="https://www.theguardian.com/email/form/plaintone/@signupPage.newsletter.listId"
+                height="62"
+                data-form-title="@signupPage.newsletter.emailEmbed.title"
+                data-form-description="@signupPage.newsletter.emailEmbed.description"
+                data-form-success-desc="@signupPage.newsletter.emailEmbed.successDescription"
+                scrolling="no" seamless="" frameborder="0"
+                class="iframed--overflow-hidden email-sub__iframe js-email-sub__iframe js-email-sub__iframe--article"
+                title="Sign up to Guardian Today UK edition"
+            ></iframe>
+
+        </div>
+    </div>
+</div>
+
+

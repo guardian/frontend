@@ -3,7 +3,7 @@ package controllers
 import common.{GuLogging, ImplicitControllerExecutionContext}
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import pages.NewsletterHtmlPage
+import pages.{NewsletterHtmlPage, NewsletterDetailHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.filters.csrf.CSRFAddToken
@@ -53,7 +53,7 @@ class SignupPageController(
         case Right(Some(newsletter)) =>
           Cached(15.minute)(
             RevalidatableResult.Ok(
-              "There is a newsletter called "+newsletter.name
+              NewsletterDetailHtmlPage.html(StaticPages.simpleNewsletterDetailPage(request.path, newsletter))
             ),
           )
         case Right(None) =>
