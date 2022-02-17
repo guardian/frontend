@@ -281,22 +281,24 @@
 
 .signup-confirmation {
     position: relative;
-    padding: 0 $gs-gutter / 4;
+    padding: 0;
 
-    .signup-confirmation__message {
-        position: relative;
-        display: inline-block;
-        vertical-align: text-bottom;
+    .signup-confirmation__success-headline-container {
+        display: flex;
+        align-items: center;
+        background-color: $brightness-86;
+        border-radius: $gs-baseline * 4;
     }
 
     .signup-confirmation--success {
         @include fs-textSans(3);
+        font-weight: 700;
         color: $brightness-7;
         display: inline;
     }
 
     .inline-icon {
-        background-color: $brightness-86;
+        flex-shrink: 0;
         border-radius: 1000px;
         fill: $brightness-7;
         height: $gs-baseline * 3;
