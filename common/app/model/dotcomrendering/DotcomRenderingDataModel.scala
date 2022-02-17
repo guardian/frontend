@@ -38,6 +38,7 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     filterKeyEvents: Boolean,
+    pinnedPost: Option[Block],
     keyEvents: List[Block],
     blocks: List[Block],
     pagination: Option[Pagination],
@@ -103,6 +104,7 @@ object DotcomRenderingDataModel {
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
+        "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
@@ -175,14 +177,15 @@ object DotcomRenderingDataModel {
       pageType: PageType,
   ): DotcomRenderingDataModel = {
     apply(
-      page,
-      request,
-      None,
+      page = page,
+      request = request,
+      pagination = None,
       linkedData = Nil, // TODO
       mainBlock = blocks.main,
       bodyBlocks = blocks.body.getOrElse(Nil),
-      pageType,
-      page.related.hasStoryPackage,
+      pageType = pageType,
+      hasStoryPackage = page.related.hasStoryPackage,
+      pinnedPost = None,
       keyEvents = Nil,
     )
   }
@@ -208,6 +211,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
+      pinnedPost = None,
       keyEvents = Nil,
     )
   }
@@ -239,7 +243,7 @@ object DotcomRenderingDataModel {
 
     val latestSummary = blocks.body.flatMap(_.find(_.attributes.summary.contains(true)))
 
-    val keyEvents =
+    val keyEvents: Seq[APIBlock] =
       (latestSummary.toSeq ++ allKeyEvents)
         .sortBy(block => block.publishedDate.orElse(block.createdDate).map(_.dateTime))
         .reverse
@@ -251,6 +255,12 @@ object DotcomRenderingDataModel {
       fallbackLogo = Configuration.images.fallbackLogo,
     )
 
+    val pinnedPost: Option[APIBlock] =
+      blocks.requestedBodyBlocks
+        .flatMap(_.get("body:pinned"))
+        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
+        .headOption
+
     apply(
       page,
       request,
@@ -260,6 +270,7 @@ object DotcomRenderingDataModel {
       bodyBlocks,
       pageType,
       page.related.hasStoryPackage,
+      pinnedPost,
       keyEvents,
       filterKeyEvents,
     )
@@ -274,6 +285,7 @@ object DotcomRenderingDataModel {
       bodyBlocks: Seq[APIBlock],
       pageType: PageType, // TODO remove as format is better
       hasStoryPackage: Boolean,
+      pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
   ): DotcomRenderingDataModel = {
@@ -328,23 +340,28 @@ object DotcomRenderingDataModel {
     }
 
     val calloutsUrl: Option[String] = combinedConfig.fields.toList
-      .filter(entry => entry._1 == "calloutsUrl")
-      .headOption
+      .find(_._1 == "calloutsUrl")
       .flatMap(entry => entry._2.asOpt[String])
+
+    def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
+      Block(block, page, shouldAddAffiliateLinks, request, isMainBlock, calloutsUrl, contentDateTimes)
+    }
 
     val mainMediaElements =
       mainBlock
-        .map(block => Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes))
+        .map(toDCRBlock(isMainBlock = true))
         .toList
         .flatMap(_.elements)
 
-    val bodyBlocksDCR: List[model.dotcomrendering.Block] = bodyBlocks
-      .filter(_.published || pageType.isPreview) // TODO lift?
-      .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
-      .toList
+    val bodyBlocksDCR =
+      bodyBlocks
+        .filter(_.published || pageType.isPreview) // TODO lift?
+        .map(toDCRBlock())
+        .toList
 
-    val keyEventsDCR =
-      keyEvents.map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
+    val keyEventsDCR = keyEvents.map(toDCRBlock())
+
+    val pinnedPostDCR = pinnedPost.map(toDCRBlock())
 
     val commercial: Commercial = {
       val editionCommercialProperties = content.metadata.commercial
@@ -404,6 +421,7 @@ object DotcomRenderingDataModel {
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
       filterKeyEvents = filterKeyEvents,
+      pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
       linkedData = linkedData,
       main = content.fields.main,

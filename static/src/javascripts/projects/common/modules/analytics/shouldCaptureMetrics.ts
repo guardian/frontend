@@ -1,10 +1,12 @@
 import type { ABTest } from '@guardian/ab-core';
 import { isInABTestSynchronous } from '../experiments/ab';
 import { spacefinderOkr1FilterNearby } from '../experiments/tests/spacefinder-okr-1-filter-nearby';
+import { spacefinderOkr2ImagesLoaded } from '../experiments/tests/spacefinder-okr-2-images-loaded';
 
 const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
 	spacefinderOkr1FilterNearby,
+	spacefinderOkr2ImagesLoaded,
 ];
 
 const serverSideTests: ServerSideABTest[] = [];

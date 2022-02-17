@@ -1,5 +1,5 @@
 export const markCandidates = (exclusions, winners, options) => {
-	if (!options.debug) return winners;
+	if (!options?.debug) return winners;
 
 	const colours = {
 		red: 'rgb(255 178 178)',
