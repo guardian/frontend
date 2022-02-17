@@ -8,10 +8,6 @@ body {
     left: -2000px;
 }
 
-.email-sub .newsletters-privacy-notice-hidden {
-    display: none;
-}
-
 /**
 * Google reCAPTCHA styles
 */
@@ -31,18 +27,29 @@ body {
     }
 }
 
-.email-sub .dark {
-    color: $brightness-7;
-    a {
-        color: $brightness-7;
-    }
-}
-
 .email-sub--footer .terms {
     color: #ffffff;
 
     a {
         color: #ffffff;
+    }
+}
+
+.email-sub__form-wrapper {
+    .newsletters-privacy-notice {
+        display: none;
+    }
+}
+
+.email-sub__form-wrapper:focus-within {
+    .newsletters-privacy-notice {
+        display: inline;
+    }
+    .dark {
+        color: $brightness-7;
+        a {
+            color: $brightness-7;
+        }
     }
 }
 

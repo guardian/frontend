@@ -1,7 +1,7 @@
 
-@(privacyNoticeId: String = "privacy-notice", privacyNoticeClass: String  = "terms", plural: Boolean = true)(implicit request: RequestHeader)
+@(plural: Boolean = true, termsClass: String  = "")(implicit request: RequestHeader)
 
-<span id="@privacyNoticeId" class="@privacyNoticeClass">
+<span id="privacy-notice" class="newsletters-privacy-notice @termsClass">
     We thought you should know @if(plural){ these newsletters } else { this newsletter } may also contain information about Guardian products,
     services and chosen charities or online advertisements.
     Newsletters mays also contain content funded by outside parties.
