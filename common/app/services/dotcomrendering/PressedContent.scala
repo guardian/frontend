@@ -229,6 +229,19 @@ object PressedContent {
     "/world/ng-interactive/2021/jun/28/vaccine-inequality-how-rich-countries-cut-covid-deaths-as-poorer-fall-behind",
     "/tv-and-radio/ng-interactive/2021/jul/01/whats-on-netflix-and-amazon-this-month-july",
     "/global-development/ng-interactive/2021/jul/28/countdown-to-demolition-the-story-of-al-jalaa-tower-gaza-israel-palestine",
+    // 2022
+    "/cities/ng-interactive/2019/jan/30/high-street-crisis-town-centres-lose-8-of-shops-in-five-years",
+    "/us-news/ng-interactive/2018/aug/07/mendocino-fire-california-biggest-state-history-mapped-explained",
+    "/news/ng-interactive/2018/apr/05/women-are-paid-less-than-men-heres-how-to-fix-it",
+    "/news/ng-interactive/2018/apr/04/gender-pay-gap-when-does-your-company-stop-paying-women-in-2018",
+    "/cities/ng-interactive/2018/feb/03/day-zero-how-cape-town-running-out-water",
+    "/environment/ng-interactive/2018/jan/01/london-air-pollution-live-data-where-will-be-first-to-break-legal-limits-in-2018",
+    "/society/ng-interactive/2018/jan/11/how-the-nhs-winter-beds-crisis-is-hitting-patient-care",
+    "/world/ng-interactive/2017/nov/03/worlds-biggest-grave-robbery-asias-disappearing-ww2-shipwrecks",
+    "/us-news/ng-interactive/2017/jul/25/us-healthcare-system-vs-other-countries",
+    "/uk-news/ng-interactive/2017/feb/20/what-the-eu27-want-brexit-red-lines-from-the-other-side-of-the-table",
+    "/sport/ng-interactive/2017/aug/02/usain-bolt-fastest-man-ever-lived",
+    "/global-development/ng-interactive/2021/aug/23/devastating-how-cuts-in-uks-foreign-aid-could-hurt-the-worlds-poorest",
   )
 
   def isPressed(path: String): Boolean = content.contains(path)
