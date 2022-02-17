@@ -1,5 +1,6 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { AD_SLOT_ID_PREFIX } from 'projects/commercial/modules/dfp/create-slot';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
@@ -170,7 +171,18 @@ const bootCommercial = async (): Promise<void> => {
 		const promises = allModules.map((args) => loadModules(...args));
 
 		await Promise.all(promises).then(() => {
-			EventTimer.get().trigger('commercialModulesLoaded');
+			const eventTimer = EventTimer.get();
+			eventTimer.trigger('commercialModulesLoaded');
+			// how many ad slots are there on the page?
+			const adSlotsTotal = document.querySelectorAll(
+				`[id^="${AD_SLOT_ID_PREFIX}"]`,
+			).length;
+			eventTimer.setProperty('adSlotsTotal', adSlotsTotal);
+			// how many inline slots?
+			const adSlotsInline = document.querySelectorAll(
+				`[id^="${AD_SLOT_ID_PREFIX}inline"]`,
+			).length;
+			eventTimer.setProperty('adSlotsInline', adSlotsInline);
 		});
 	} catch (error) {
 		// report async errors in bootCommercial to Sentry with the commercial feature tag
