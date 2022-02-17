@@ -38,16 +38,10 @@
                 <div class="signup-confirmation is-hidden js-signup-confirmation">
                     <div class="signup-confirmation__success-headline-container">
                         @fragments.inlineSvg("envelope", "icon")
-                        <span class="signup-confirmation--success">Subscription confirmed.</span>
-                        @**** To use the emailListing.emailEmbed data
                         <span class="signup-confirmation--success">@Html(emailListing.emailEmbed.successHeadline)</span>
-                        ****@
                     </div>
                     <div class="newsletter-card__content">
-                        <span>We'll send you @emailListing.name @emailListing.frequency.toLowerCase.</span>
-                        @**** To use the emailListing.emailEmbed data
                         <p class="signup-confirmation--success">@Html(emailListing.emailEmbed.successDescription)</p>
-                        *****@
                     </div>
                 </div>
 
