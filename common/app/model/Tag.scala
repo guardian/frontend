@@ -6,7 +6,7 @@ import common.{Pagination, RelativePathEscaper}
 import conf.Configuration
 import contentapi.SectionTagLookUp
 import play.api.libs.json._
-import views.support.{Contributor, ImgSrc, Item140}
+import views.support.{Contributor, ImgSrc, Item140, StripHtmlTagsAndUnescapeEntities}
 import navigation.GuardianFoundationHelper
 
 object Tag {
@@ -22,7 +22,7 @@ object Tag {
     def optionalMapEntry(key: String, o: Option[String]): Map[String, String] =
       o.map(value => Map(key -> value)).getOrElse(Map())
 
-    val openGraphDescription: Option[String] = tag.bio.orElse(tag.description)
+    val openGraphDescription: Option[String] = tag.bio.orElse(tag.description).map(StripHtmlTagsAndUnescapeEntities(_))
     val openGraphImage = tag.bylineImageUrl
       .map(ImgSrc(_, Item140))
       .map { s: String => if (s.startsWith("//")) s"http:$s" else s }
