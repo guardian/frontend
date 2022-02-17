@@ -2,7 +2,7 @@ package controllers
 
 import common.{GuLogging, ImplicitControllerExecutionContext}
 import model.{ApplicationContext, Cached, NoCache}
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import pages.NewsletterHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
@@ -44,4 +44,23 @@ class SignupPageController(
       }
     }
 
+  def renderNewsletterDetailPage(listName:String): Action[AnyContent] =
+    Action { implicit request =>
+
+      val newsletter = newsletterSignupAgent.getNewsletterByName(listName)
+
+      newsletter match {
+        case Right(Some(newsletter)) =>
+          Cached(15.minute)(
+            RevalidatableResult.Ok(
+              "There is a newsletter called "+newsletter.name
+            ),
+          )
+        case Right(None) =>
+          Cached(15.minute)(WithoutRevalidationResult(NotFound))
+        case Left(e) =>
+          Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
+      }
+
+    }
 }
