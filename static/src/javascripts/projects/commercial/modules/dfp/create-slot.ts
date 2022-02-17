@@ -152,6 +152,8 @@ const adSlotConfigs: AdSlotConfigs = {
 	},
 };
 
+export const AD_SLOT_ID_PREFIX = 'dfp-ad--';
+
 /*
   Returns an adSlot HTMLElement which is the main DFP slot.
 
@@ -165,7 +167,7 @@ const createAdSlotElement = (
 	attrs: Record<string, string>,
 	classes: string[],
 ): HTMLElement => {
-	const id = `dfp-ad--${name}`;
+	const id = `${AD_SLOT_ID_PREFIX}${name}`;
 
 	// 3562dc07-78e9-4507-b922-78b979d4c5cb
 	if (window.guardian.config.isDotcomRendering && name === 'top-above-nav') {
