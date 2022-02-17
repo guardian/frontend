@@ -13,6 +13,7 @@ case class NewsletterRoundupPage(
 case class NewsletterSeriesDetailPage(
     metadata: MetaData,
     newsletter: NewsletterResponse,
+    recomendations: List[NewsletterResponse],
 ) extends StandalonePage {
 }
 
@@ -60,6 +61,7 @@ object StaticPages {
   def simpleNewsletterDetailPage(
       id: String,
       newsletter: NewsletterResponse,
+      recomendations: List[NewsletterResponse]
   ): NewsletterSeriesDetailPage =
     NewsletterSeriesDetailPage(
       MetaData.make(
@@ -71,5 +73,6 @@ object StaticPages {
         shouldGoogleIndex = true,
       ),
       newsletter,
+      recomendations,
     )
 }

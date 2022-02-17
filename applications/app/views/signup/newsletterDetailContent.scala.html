@@ -50,6 +50,19 @@
             ></iframe>
 
         </div>
+
+        <div class="gs-container">
+            <h2>You might also like:</h2>
+            <ul>
+                @signupPage.recomendations.map { case (recomendation) =>
+                    <li>
+                        <a href="/email-newsletters/@recomendation.id">
+                            @recomendation.name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
     </div>
 </div>
 

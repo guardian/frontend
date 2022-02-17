@@ -7,7 +7,7 @@ import pages.{NewsletterHtmlPage, NewsletterDetailHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.filters.csrf.CSRFAddToken
-import services.newsletters.{GroupedNewslettersResponse, NewsletterSignupAgent}
+import services.newsletters.{GroupedNewslettersResponse, NewsletterSignupAgent, NewsletterResponse}
 import staticpages.StaticPages
 
 import scala.concurrent.duration._
@@ -44,6 +44,18 @@ class SignupPageController(
       }
     }
 
+  def getNewslettersWithSameTheme(newsletter: NewsletterResponse): List[NewsletterResponse] = {
+    val allNewsletters = newsletterSignupAgent.getNewsletters();
+    allNewsletters match {
+      case Right(allNewsletters) => allNewsletters
+        .filter(_.theme == newsletter.theme)
+        .filter(_.id != newsletter.id)
+      case Left(e) =>
+        log.error(s"API call to get newsletters failed: $e")
+        List()
+    }
+  }
+
   def renderNewsletterDetailPage(listName:String): Action[AnyContent] =
     Action { implicit request =>
 
@@ -51,9 +63,10 @@ class SignupPageController(
 
       newsletter match {
         case Right(Some(newsletter)) =>
+          val recomendations = this.getNewslettersWithSameTheme(newsletter); // TO DO - proper method for picking and sorting recomendations
           Cached(15.minute)(
             RevalidatableResult.Ok(
-              NewsletterDetailHtmlPage.html(StaticPages.simpleNewsletterDetailPage(request.path, newsletter))
+              NewsletterDetailHtmlPage.html(StaticPages.simpleNewsletterDetailPage(request.path, newsletter, recomendations))
             ),
           )
         case Right(None) =>
