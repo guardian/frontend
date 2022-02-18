@@ -31,9 +31,9 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
         val testCompetition = competitions(1).copy(matches = matches)
         val competitionsList = Competitions(Seq(testCompetition))
 
-        val result = competitionsList.isMatchLiveOrAboutToStart(competitionsList.matches, clock)
+        val actualResult = competitionsList.isMatchLiveOrAboutToStart(competitionsList.matches, clock)
 
-        result should equal(testcase.expectedStatus)
+        actualResult should equal(testcase.expectedStatus)
       }
     }
 
@@ -55,9 +55,10 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
           )
         val testCompetition = competitions(1).copy(matches = matches)
         val competitionsList = Competitions(Seq(testCompetition))
-        val result = competitionsList.isMatchLiveOrAboutToStart(competitionsList.matches, clock)
 
-        result should equal(testcase.expectedStatus)
+        val actualResult = competitionsList.isMatchLiveOrAboutToStart(competitionsList.matches, clock)
+
+        actualResult should equal(testcase.expectedStatus)
       }
     }
   }
@@ -70,5 +71,4 @@ class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
     val fixedDate = today.toInstant
     Clock.fixed(fixedDate, zone)
   }
-
 }
