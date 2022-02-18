@@ -7,47 +7,49 @@ import org.scalatest._
 import pa.FootballMatch
 import test.FootballTestData.{competitions, result, liveMatch, fixture}
 
+case class TestCase(isLive: Boolean, startTimeDelta: Duration, expectedStatus: Boolean)
+
 class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
   "Competitions" - {
     Seq(
-      (false, Duration.ofSeconds(1), true),
-      (false, Duration.ofMinutes(1), true),
-      (false, Duration.ofMinutes(14).plusSeconds(59), true),
-      (false, Duration.ofMinutes(15), false),
-      (false, Duration.ofMinutes(16), false),
-      (true, Duration.ofMinutes(16), true),
-      (true, Duration.ofMinutes(20), true),
+      TestCase(false, Duration.ofSeconds(1), true),
+      TestCase(false, Duration.ofMinutes(1), true),
+      TestCase(false, Duration.ofMinutes(14).plusSeconds(59), true),
+      TestCase(false, Duration.ofMinutes(15), false),
+      TestCase(false, Duration.ofMinutes(16), false),
+      TestCase(true, Duration.ofMinutes(16), true),
+      TestCase(true, Duration.ofMinutes(20), true),
     ) foreach { testcase =>
-      (s"isMatchLiveOrAboutToStart returns ${testcase._3} if there's a match that started ${testcase._2} ago") in {
+      (s"isMatchLiveOrAboutToStart returns ${testcase.expectedStatus} if there's a match that started ${testcase.startTimeDelta} ago") in {
         val matches: Seq[FootballMatch] =
-          matchesWithLiveMatchAtCurrentMinusDuration(testcase._2, testcase._1)
+          matchesWithLiveMatchAtCurrentMinusDuration(testcase.startTimeDelta, testcase.isLive)
 
         val testCompetition = competitions(1).copy(matches = matches)
         val competitionsList = Competitions(Seq(testCompetition))
 
         val isMatchLiveOrAboutToStart = competitionsList.isMatchLiveOrAboutToStart(competitionsList.matches, clock)
 
-        isMatchLiveOrAboutToStart should equal(testcase._3)
+        isMatchLiveOrAboutToStart should equal(testcase.expectedStatus)
       }
     }
 
     Seq(
-      (false, Duration.ofSeconds(1), true),
-      (false, Duration.ofMinutes(1), true),
-      (false, Duration.ofMinutes(4).plusSeconds(59), true),
-      (false, Duration.ofMinutes(5), false),
-      (false, Duration.ofMinutes(10), false),
-      (true, Duration.ofMinutes(5), true),
-      (true, Duration.ofMinutes(10), true),
+      TestCase(false, Duration.ofSeconds(1), true),
+      TestCase(false, Duration.ofMinutes(1), true),
+      TestCase(false, Duration.ofMinutes(4).plusSeconds(59), true),
+      TestCase(false, Duration.ofMinutes(5), false),
+      TestCase(false, Duration.ofMinutes(10), false),
+      TestCase(true, Duration.ofMinutes(5), true),
+      TestCase(true, Duration.ofMinutes(10), true),
     ) foreach { testcase =>
-      (s"isMatchLiveOrAboutToStart returns ${testcase._3} if there's a match with liveMatch status ${testcase._1} that will start in ${testcase._2}") in {
+      (s"isMatchLiveOrAboutToStart returns ${testcase.expectedStatus} if there's a match with liveMatch status ${testcase.isLive} that will start in ${testcase.startTimeDelta}") in {
         val matches: Seq[FootballMatch] =
-          matchesWithLiveMatchAtCurrentPlusDuration(testcase._2, testcase._1)
+          matchesWithLiveMatchAtCurrentPlusDuration(testcase.startTimeDelta, testcase.isLive)
         val testCompetition = competitions(1).copy(matches = matches)
         val competitionsList = Competitions(Seq(testCompetition))
         val isMatchLiveOrAboutToStart = competitionsList.isMatchLiveOrAboutToStart(competitionsList.matches, clock)
 
-        isMatchLiveOrAboutToStart should equal(testcase._3)
+        isMatchLiveOrAboutToStart should equal(testcase.expectedStatus)
       }
     }
   }
