@@ -60,7 +60,7 @@
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms()
             }else if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
-                @fragments.email.signup.privacyNoticeContent(false, "terms dark")
+                @fragments.email.signup.privacyNoticeContent(plural = false, termsClass = "terms dark")
             }
         </div>
     </form>
