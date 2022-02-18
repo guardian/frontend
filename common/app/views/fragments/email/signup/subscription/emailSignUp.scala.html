@@ -53,10 +53,10 @@
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
-            @if(!EmailSignupRecaptcha.isSwitchedOn && NewslettersRemoveConfirmationStep.isSwitchedOn ) {
+            @if(EmailSignupRecaptcha.isSwitchedOn && NewslettersRemoveConfirmationStep.isSwitchedOn ) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent(false), "dark")
-            } else if(!EmailSignupRecaptcha.isSwitchedOn) {
+            } else if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms()
             }else if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
