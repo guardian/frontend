@@ -1605,27 +1605,32 @@ object PageElement {
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
   ): Option[PageElement] = {
-    for {
-      d <- element.embedTypeData
-      html <- d.html
-      mandatory = d.isMandatory.getOrElse(false)
-      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
-    } yield {
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
-        CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
-          EmbedBlockElement(
-            html,
-            d.safeEmbedCode,
-            d.alt,
-            mandatory,
-            d.role,
-            thirdPartyTracking,
-            d.source,
-            d.sourceDomain,
-            d.caption,
-          )
+    calloutsUrl match {
+      case Some(_) =>
+        element.embedTypeData flatMap (_.html flatMap (html =>
+          CalloutExtraction.extractCallout(html, campaigns, calloutsUrl),
+        ))
+      case None =>
+        for {
+          d <- element.embedTypeData
+          html <- d.html
+          mandatory = d.isMandatory.getOrElse(false)
+          thirdPartyTracking = containsThirdPartyTracking(element.tracking)
+        } yield {
+          extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
+            EmbedBlockElement(
+              html,
+              d.safeEmbedCode,
+              d.alt,
+              mandatory,
+              d.role,
+              thirdPartyTracking,
+              d.source,
+              d.sourceDomain,
+              d.caption,
+            )
+          }
         }
-      }
     }
   }
 
