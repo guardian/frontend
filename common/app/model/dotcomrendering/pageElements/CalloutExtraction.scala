@@ -172,6 +172,116 @@ object CalloutExtraction {
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
   ): Option[CalloutBlockElement] = {
+
+    val campaignsX1: JsValue = Json.parse(
+      """
+  [
+    {
+      "id": "b06a08e0-ca5f-410c-a28b-95e7d7ca37b7",
+      "name": "CALLOUT: Coronavirus",
+      "rules": [
+
+      ],
+      "priority": 0,
+      "activeFrom": 1579651200000,
+      "displayOnSensitive": false,
+      "fields": {
+        "formId": 3730905,
+        "callout": "Share your stories",
+        "_type": "callout",
+        "description": "<p>If you have been affected or have any information, we'd like to hear from you. You can get in touch by filling in the form below, anonymously if you \nwish or contact us&nbsp;<a href=\"https://www.theguardian.com/info/2015/aug/12/whatsapp-sharing-stories-with-the-guardian\">via WhatsApp</a>&nbsp;by&nbsp;<a href=\"https://api.whatsapp.com/send?phone=447867825056\">clicking here&nbsp;</a>or adding the contact +44(0)7867825056. Only the Guardian can see your contributions and one of our \njournalists may contact you to discuss further.&nbsp;<br></p>",
+        "formFields": [
+          {
+            "name": "share_your_experiences_here",
+            "description": "Please include as much detail as possible ",
+            "hide_label": "0",
+            "label": "Share your experiences here",
+            "id": "87320974",
+            "type": "textarea",
+            "required": "1"
+          },
+          {
+            "text_size": 50,
+            "name": "name",
+            "description": "You do not need to use your full name",
+            "hide_label": "0",
+            "label": "Name",
+            "id": "87320975",
+            "type": "text",
+            "required": "1"
+          },
+          {
+            "text_size": 50,
+            "name": "where_do_you_live",
+            "description": "Town or area is fine",
+            "hide_label": "0",
+            "label": "Where do you live?",
+            "id": "87320976",
+            "type": "text",
+            "required": "1"
+          },
+          {
+            "name": "can_we_publish_your_response",
+            "options": [
+              {
+                "label": "Yes, entirely",
+                "value": "Yes, entirely"
+              },
+              {
+                "label": "Yes, but please keep me anonymous",
+                "value": "Yes, but please keep me anonymous"
+              },
+              {
+                "label": "Yes, but please contact me first",
+                "value": "Yes, but please contact me first"
+              },
+              {
+                "label": "No, this is information only",
+                "value": "No, this is information only"
+              }
+            ],
+            "hide_label": "0",
+            "label": "Can we publish your response?",
+            "id": "87320977",
+            "type": "radio",
+            "required": "1"
+          },
+          {
+            "text_size": 50,
+            "name": "email_address_",
+            "description": "Your contact details are helpful so we can contact you for more information. They will only be seen by the Guardian.",
+            "hide_label": "0",
+            "label": "Email address ",
+            "id": "87320978",
+            "type": "text",
+            "required": "1"
+          },
+          {
+            "text_size": 50,
+            "name": "phone_number",
+            "description": "Your contact details are helpful so we can contact you for more information. They will only be seen by the Guardian.",
+            "hide_label": "0",
+            "label": "Phone number",
+            "id": "87320979",
+            "type": "text",
+            "required": "0"
+          },
+          {
+            "name": "you_can_add_any_extra_information_here",
+            "hide_label": "0",
+            "label": "You can add any extra information here",
+            "id": "87320980",
+            "type": "textarea",
+            "required": "0"
+          }
+        ],
+        "tagName": "callout-coronavirus"
+      }
+    }
+  ]
+       """,
+    )
+
     val doc = Jsoup.parseBodyFragment(html)
     val tagName = doc.getElementsByTag("div").asScala.headOption.map(_.attr("data-callout-tagname"))
     for {
