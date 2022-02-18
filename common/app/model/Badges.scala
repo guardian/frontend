@@ -59,7 +59,7 @@ object Badges {
   val specialReport2 = SpecialBadge(
     "a-public-salt3W#ywHav!p+?r+W2$E6=",
     "45a016bed6c06c2b0ff7076ada8c8a97",
-    Static("images/badges/18_feb_2022.svg"),
+    Static("images/badges/18_feb_2022_Badge.svg"),
   )
   val pandoraPapers = Badge("news/series/pandora-papers", Static("images/badges/SpecialReportSep21.svg"))
   val nhs70 = Badge("society/series/nhs-at-70", Static("images/badges/nhs-70.svg"))
