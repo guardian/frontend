@@ -161,6 +161,7 @@ object Badges {
     tokyoparalympics2020,
     cop26,
     winterOlympics2022,
+    specialReport2,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {
