@@ -33,10 +33,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
-      Some(lastUpdateBlock),
-      None,
-      Some(true),
+      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      page = None,
+      lastUpdate = Some(lastUpdateBlock),
+      rendered = None,
+      isLivePage = Some(true),
       filterKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
@@ -64,10 +65,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
-      Some(lastUpdateBlock),
-      None,
-      Some(true),
+      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      page = None,
+      lastUpdate = Some(lastUpdateBlock),
+      rendered = None,
+      isLivePage = Some(true),
       filterKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
@@ -86,9 +88,10 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = liveBlogController.renderJson(
       "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
-      None,
-      None,
-      Some(true),
+      page = None,
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
       filterKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
@@ -107,7 +110,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      page = None,
       lastUpdate = None,
       rendered = None,
       isLivePage = Some(true),
@@ -127,7 +131,9 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      "/world/live/2022/jan/17/covid-news-live-new-zealand-begins-vaccinating-children-aged-5-11-french-parliament-approves-vaccine-pass",
+      path =
+        "/world/live/2022/jan/17/covid-news-live-new-zealand-begins-vaccinating-children-aged-5-11-french-parliament-approves-vaccine-pass",
+      page = None,
       lastUpdate = None,
       rendered = None,
       isLivePage = Some(true),
