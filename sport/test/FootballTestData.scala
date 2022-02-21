@@ -100,8 +100,8 @@ object FootballTestData {
         result("Fulham", "Norwich", 0, 0, today.minusDays(3)),
         result("Wigan", "Everton", 1, 1, today.minusDays(1)),
         result("Sunderland", "West Ham", 1, 1, today.`with`(LocalTime.of(13, 0))),
-        liveMatch("Arsenal", "Spurs", 1, 0, today.`with`(LocalTime.of(15, 0))),
-        liveMatch("Chelsea", "Man U", 0, 0, today.`with`(LocalTime.of(15, 0))),
+        liveMatch("Arsenal", "Spurs", 1, 0, today.`with`(LocalTime.of(15, 0)), true),
+        liveMatch("Chelsea", "Man U", 0, 0, today.`with`(LocalTime.of(15, 0)), true),
         fixture("Liverpool", "Man C", today.plusDays(2)),
         fixture("Wigan", "Fulham", today.plusDays(2)),
         fixture("Stoke", "Everton", today.plusDays(3)),
@@ -127,7 +127,7 @@ object FootballTestData {
       startDate = Some((today.minusMonths(2)).toLocalDate),
       matches = Seq(
         result("Bolton", "Derby", 1, 1, today.minusDays(1), Some("Bolton win 4-2 on penalties.")),
-        liveMatch("Cardiff", "Brighton", 2, 0, today.`with`(LocalTime.of(15, 0))),
+        liveMatch("Cardiff", "Brighton", 2, 0, today.`with`(LocalTime.of(15, 0)), true),
         fixture("Wolves", "Burnley", today.plusDays(2)),
       ),
       leagueTable = Seq(
@@ -163,15 +163,23 @@ object FootballTestData {
     ),
   )
 
-  private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: ZonedDateTime) =
+  def liveMatch(
+      homeName: String,
+      awayName: String,
+      homeScore: Int,
+      awayScore: Int,
+      date: ZonedDateTime,
+      isLive: Boolean,
+  ) =
     matchDay.copy(
       id = s"liveMatch $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
       homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
       awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),
+      liveMatch = isLive,
     )
 
-  private def fixture(homeName: String, awayName: String, date: ZonedDateTime) =
+  def fixture(homeName: String, awayName: String, date: ZonedDateTime) =
     _fixture.copy(
       id = s"fixture $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
@@ -179,7 +187,7 @@ object FootballTestData {
       awayTeam = team.copy(id = awayName, name = awayName, score = None),
     )
 
-  private def result(
+  def result(
       homeName: String,
       awayName: String,
       homeScore: Int,
