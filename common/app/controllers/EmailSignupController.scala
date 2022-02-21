@@ -17,6 +17,7 @@ import play.api.mvc._
 import play.filters.csrf.CSRFAddToken
 import services.newsletters.{GoogleRecaptchaValidationService, GoogleResponse, NewsletterSignupAgent}
 import utils.RemoteAddress
+import conf.switches.Switches.NewslettersRemoveConfirmationStep
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -35,6 +36,7 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: String,
+    emailConfirmation: Boolean,
 ) {
 
   // `name` is a hidden (via css) form input
@@ -49,12 +51,12 @@ case class EmailForm(
 
 class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
 
-  def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] =
+  def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     if (form.isLikelyBotSubmission) {
       Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
     } else {
       val idAccessClientToken = Configuration.id.apiClientToken
-      val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
+      val consentMailerUrl = serviceUrl(form)
       val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
       val headers = clientIp(request)
         .map(ip => List("X-Forwarded-For" -> ip))
@@ -71,6 +73,14 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
         .addHttpHeaders(headers: _*)
         .post(consentMailerPayload)
     }
+  }
+
+  private def serviceUrl(form: EmailForm): String = {
+    if (NewslettersRemoveConfirmationStep.isSwitchedOn && !form.emailConfirmation){
+      return s"${Configuration.id.apiRoot}/consent-signup"
+    }
+    s"${Configuration.id.apiRoot}/consent-email"
+  }
 }
 
 class EmailSignupController(
@@ -95,6 +105,7 @@ class EmailSignupController(
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> text,
+      "emailConfirmation" -> boolean,
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
