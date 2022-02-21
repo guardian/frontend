@@ -79,10 +79,4 @@
     trackClickEvent(document.getElementById("email-embed-signup-button--old"))
     document.getElementById("email-sub__ref-input").value = window.parent.location.href
     document.getElementById("email-sub__refviewid-input").value = window.parent.guardian.config.ophan.pageViewId
-    @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
-        document.getElementById("@inputId")
-        .addEventListener("focusin", ()=> iframeMessenger?.resize());
-    document.getElementById("@inputId")
-        .addEventListener("focusout", ()=> iframeMessenger?.resize());
-    }
 </script>
