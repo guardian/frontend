@@ -29,7 +29,16 @@
 }
 
 <div class="email-subscriptions">
-    @availableLists.map(_.theme).distinct.zipWithIndex.map { case (theme, index) =>
+    @List(
+        "news",
+        "features",
+        "sport",
+        "culture",
+        "lifestyle",
+        "comment",
+        "work",
+        "From the papers"
+    ).zipWithIndex.map { case (theme, index) =>
         @emailListCategoryList(
             theme,
             availableLists.filter(_.theme == theme),

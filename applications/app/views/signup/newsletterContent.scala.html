@@ -17,7 +17,7 @@
     </div>
     <div class="newsletter-card__wrapper">
     @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-        <div class="newsletter-card" data-component="newsletter-card @emailListing.identityName">
+        <div class="newsletter-card" data-component="newsletter-card @emailListing.id">
             <div class="newsletter-card__content js-newsletter-content">
                 <div class="newsletter-card__name">
                     @emailListing.name
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup" name="newsletter-signup-@emailListing.identityName">
+                <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup" name="newsletter-signup-@emailListing.id">
                     @if(EmailSignupRecaptcha.isSwitchedOn) {
                         @fragments.email.signup.recaptchaContainer()
                     }
@@ -54,10 +54,9 @@
                         <span class="u-h">email address</span>
                         <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required aria-label="Enter email address" title="Email address"/>
                     </label>
-                    <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.identityName" aria-hidden="true"/>
-                    <input class="js-email-sub__emailconfirmation-input" type="hidden" name="listName" value="@emailListing.emailConfirmation" aria-hidden="true"/>
+                    <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.id" aria-hidden="true"/>
 
-                    <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit" data-link-name="Subscribe to @emailListing.identityName" type="submit" value="@emailListing.listIdV1">
+                    <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit" data-link-name="Subscribe to @emailListing.id" type="submit" value="@emailListing.listIdv1">
                         <span>Sign up</span>
                     </button>
                 </form>
@@ -65,7 +64,7 @@
                 <div class="newsletter-card__example js-newsletter-preview is-hidden">
                 @if(emailListing.exampleUrl.isDefined) {
                     <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                        <div class="newsletter-card__lozenge newsletter-card__lozenge--preview" data-link-name="Preview @emailListing.identityName">
+                        <div class="newsletter-card__lozenge newsletter-card__lozenge--preview" data-link-name="Preview @emailListing.id">
                             <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
                         </div>
                     </a>

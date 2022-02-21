@@ -10,7 +10,7 @@ import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
 
 case class NewsletterResponse(
-    identityName: String,
+    id: String,
     name: String,
     brazeNewsletterName: String,
     brazeSubscribeAttributeName: String,
@@ -18,16 +18,13 @@ case class NewsletterResponse(
     theme: String,
     description: String,
     frequency: String,
-    listIdV1: Int,
+    exactTargetListId: Int,
+    listIdv1: Int,
     listId: Int,
     exampleUrl: Option[String],
     emailEmbed: EmailEmbed,
     illustration: Option[NewsletterIllustration] = None,
     signupPage: Option[String],
-    restricted: Boolean,
-    paused: Boolean,
-    emailConfirmation: Boolean,
-    group: String,
 )
 
 object NewsletterResponse {
@@ -36,16 +33,73 @@ object NewsletterResponse {
   implicit val newsletterResponseReads = Json.reads[NewsletterResponse]
 }
 
-object GroupedNewslettersResponse {
-  type GroupedNewslettersResponse = List[(String, List[NewsletterResponse])]
-}
+case class GroupedNewsletterResponse(
+    displayName: String,
+    newsletters: List[NewsletterResponse],
+)
+
 object GroupedNewsletterResponse {
-  type GroupedNewsletterResponse = (String, List[NewsletterResponse])
+  implicit val groupedNewsletterResponseReads = Json.reads[GroupedNewsletterResponse]
+}
+
+// TODO: Find a better way to define this that means Frontend doesn't have knowledge of the fields returned.
+case class GroupedNewslettersResponse(
+    newsRoundups: Option[GroupedNewsletterResponse],
+    newsByTopic: Option[GroupedNewsletterResponse],
+    features: Option[GroupedNewsletterResponse],
+    sport: Option[GroupedNewsletterResponse],
+    culture: Option[GroupedNewsletterResponse],
+    lifestyle: Option[GroupedNewsletterResponse],
+    comment: Option[GroupedNewsletterResponse],
+    work: Option[GroupedNewsletterResponse],
+    fromThePapers: Option[GroupedNewsletterResponse],
+) {
+  val toList: () => List[(String, List[NewsletterResponse])] = () =>
+    List(
+      newsRoundups,
+      newsByTopic,
+      features,
+      sport,
+      culture,
+      lifestyle,
+      comment,
+      work,
+      fromThePapers,
+    ).flatten.map(g => (g.displayName, g.newsletters))
+}
+
+object GroupedNewslettersResponse {
+  implicit val groupedNewslettersResponseReads = Json.reads[GroupedNewslettersResponse]
+
+  // Create an empty response to initialise the box
+  val empty = GroupedNewslettersResponse(
+    Option(GroupedNewsletterResponse("News roundups", Nil)),
+    Option(GroupedNewsletterResponse("News by topic", Nil)),
+    Option(GroupedNewsletterResponse("Features", Nil)),
+    Option(GroupedNewsletterResponse("Sport", Nil)),
+    Option(GroupedNewsletterResponse("Culture", Nil)),
+    Option(GroupedNewsletterResponse("Lifestyle", Nil)),
+    Option(GroupedNewsletterResponse("Comment", Nil)),
+    Option(GroupedNewsletterResponse("Work", Nil)),
+    Option(GroupedNewsletterResponse("From the papers", Nil)),
+  )
 }
 
 case class NewsletterApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     extends GuLogging
     with implicits.WSRequests {
+
+  def getGroupedNewsletters(): Future[Either[String, GroupedNewslettersResponse]] = {
+    getBody("newsletters/grouped").map { json =>
+      {
+        json.validate[GroupedNewslettersResponse] match {
+          case succ: JsSuccess[GroupedNewslettersResponse] =>
+            Right(succ.get)
+          case err: JsError => Left(err.toString)
+        }
+      }
+    }
+  }
 
   def getNewsletters(): Future[Either[String, List[NewsletterResponse]]] = {
     getBody("newsletters").map { json =>
