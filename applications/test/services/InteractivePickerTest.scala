@@ -42,4 +42,15 @@ import play.api.test.Helpers._
 
     tier should be(DotcomRendering)
   }
+
+  it should "return DotcomRendering if interactive is pressed and dcr=true" in {
+    val path = "/world/live/2021/oct/13/covid-news-live?dcr=true"
+    val testRequest = TestRequest(path)
+    val tier =
+      InteractivePicker.getRenderingTier(path, MockPressedInteractives.isPressed)(
+        testRequest,
+      )
+
+    tier should be(DotcomRendering)
+  }
 }
