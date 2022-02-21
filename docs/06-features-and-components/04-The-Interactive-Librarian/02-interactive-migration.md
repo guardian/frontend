@@ -23,7 +23,7 @@ Below describes the migration process:
 - For articles greater than 5 years old, we will press everything by default.
 - For articles less than 5 years old, The Visuals team will provide a list of interactives that will not be pressed, everything else will be pressed.
 
-If issues are found with a migrated interactive then we have the the option to fix in one of three different ways:
+If issues are found with a migrated interactive then we have the option to fix in one of three different ways:
 1. Pressing the piece
 2. Visuals team fixing the piece
 3. Dotcom adding support to the platform
@@ -53,7 +53,7 @@ For pressing a batch of interactives this is controlled using command line scrip
 2. For every URL make a request to /interactive-librarian/live-presser/{path}
 3. For every successfully pressed article make a request to /interactive-librarian/read-clean-write/{path}
 
-To press a single interactive we can use the frontend admin tool. On the admin tool, select the new option ‘Press an interactive’, enter the full URL for the interactive, click ‘Press’ and wait for the response. If there’s an error in the response it’ll need to be reported to the dotcom team.
+To press a single interactive we can use the frontend admin tool. On the admin tool, select the new option ‘Press an article / interactive’, enter the full URL, click ‘Press’ and wait for the response. If there’s an error in the response it’ll need to be reported to the dotcom team.
 
 **How do we know a page is pressed?**
 
