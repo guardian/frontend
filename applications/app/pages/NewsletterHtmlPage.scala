@@ -1,5 +1,6 @@
 package pages
 
+import common.Edition
 import conf.switches.Switches.WeAreHiring
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
@@ -15,6 +16,7 @@ import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.signup.newsletterContent
 import html.HtmlPageHelpers.ContentCSSFile
 import staticpages.NewsletterRoundupPage
+import views.html.stacked
 
 object NewsletterHtmlPage extends HtmlPage[NewsletterRoundupPage] {
 

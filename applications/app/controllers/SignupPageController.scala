@@ -7,8 +7,7 @@ import pages.NewsletterHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.filters.csrf.CSRFAddToken
-import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
-import services.newsletters.NewsletterSignupAgent
+import services.newsletters.{GroupedNewslettersResponse, NewsletterSignupAgent}
 import staticpages.StaticPages
 
 import scala.concurrent.duration._
@@ -35,7 +34,7 @@ class SignupPageController(
           case Right(groupedNewsletters) =>
             Cached(defaultCacheDuration)(
               RevalidatableResult.Ok(
-                NewsletterHtmlPage.html(StaticPages.simpleNewslettersPage(request.path, groupedNewsletters)),
+                NewsletterHtmlPage.html(StaticPages.simpleNewslettersPage(request.path, groupedNewsletters.toList())),
               ),
             )
           case Left(e) =>
