@@ -80,9 +80,10 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
 
   private def serviceUrl(form: EmailForm): String = {
     if (NewslettersRemoveConfirmationStep.isSwitchedOn && !form.emailConfirmation) {
-      return s"${Configuration.id.apiRoot}/consent-signup"
+      s"${Configuration.id.apiRoot}/consent-signup"
+    } else {
+      s"${Configuration.id.apiRoot}/consent-email"
     }
-    s"${Configuration.id.apiRoot}/consent-email"
   }
 }
 
