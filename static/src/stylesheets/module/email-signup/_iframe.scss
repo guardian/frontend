@@ -27,7 +27,7 @@ body {
         color: $brightness-46;
     }
 
-    &[data-privacy-visible="true"] {
+    &[data-privacy-visible='true'] {
         .newsletters-privacy-notice {
             display: inline;
         }
