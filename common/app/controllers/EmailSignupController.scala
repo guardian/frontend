@@ -26,8 +26,8 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object emailLandingPage extends StandalonePage {
-  override val metadata = MetaData.make(id = id, section = None, webTitle = "Email Landing Page")
   private val id = "email-landing-page"
+  override val metadata = MetaData.make(id = id, section = None, webTitle = "Email Landing Page")
 }
 
 case class EmailForm(
