@@ -3,6 +3,9 @@ import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
+import type { PageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
 import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
@@ -176,9 +179,13 @@ class PrebidAdUnit {
 	bids: PrebidBid[] | null | undefined;
 	mediaTypes: PrebidMediaTypes | null | undefined;
 
-	constructor(advert: Advert, slot: HeaderBiddingSlot) {
+	constructor(
+		advert: Advert,
+		slot: HeaderBiddingSlot,
+		pageTargeting: PageTargeting,
+	) {
 		this.code = advert.id;
-		this.bids = bids(advert.id, slot.sizes);
+		this.bids = bids(advert.id, slot.sizes, pageTargeting);
 		this.mediaTypes = { banner: { sizes: slot.sizes } };
 		log('commercial', `PrebidAdUnit ${this.code}`, this.bids);
 	}
@@ -354,7 +361,7 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
 // for this given request for bids.
-const requestBids = (
+const requestBids = async (
 	advert: Advert,
 	slotFlatMap?: SlotFlatMap,
 ): Promise<void> => {
@@ -366,9 +373,20 @@ const requestBids = (
 		return requestQueue;
 	}
 
-	const adUnits: PrebidAdUnit[] = getHeaderBiddingAdSlots(advert, slotFlatMap)
-		.map((slot) => new PrebidAdUnit(advert, slot))
-		.filter((adUnit) => !adUnit.isEmpty());
+	// prepare-prebid already waits for consent so this should resolve immediately
+	const adUnits = await getEnhancedConsent()
+		.then((consentState) => {
+			// calculate this once before mapping over
+			const pageTargeting = getPageTargeting(consentState);
+			return getHeaderBiddingAdSlots(advert, slotFlatMap)
+				.map((slot) => new PrebidAdUnit(advert, slot, pageTargeting))
+				.filter((adUnit) => !adUnit.isEmpty());
+		})
+		.catch((e) => {
+			// silently fail
+			log('commercial', 'Failed to execute prebid getEnhancedConsent', e);
+			return [];
+		});
 
 	if (adUnits.length === 0) {
 		return requestQueue;

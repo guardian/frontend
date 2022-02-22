@@ -1,7 +1,7 @@
 export const postMessage = (
 	message: Record<string, unknown>,
-	targetWindow: WindowProxy,
-	targetOrigin?: string | null | undefined,
+	target: MessageEventSource,
+	targetOrigin = '*',
 ): void => {
-	targetWindow.postMessage(JSON.stringify(message), targetOrigin ?? '*');
+	target.postMessage(JSON.stringify(message), { targetOrigin });
 };
