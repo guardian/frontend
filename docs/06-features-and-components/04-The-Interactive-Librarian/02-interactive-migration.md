@@ -103,3 +103,5 @@ A potential solution for reverting a migrated interactive to its pre-DCR form:
 - At this point,we also press every interactive (but not serve all this content to readers). Pressing the content would mean we save how the interactive renders via the existing platform.
 - If an article is migrated to DCR but we're unhappy with how it appears, we could fall back to serving the pressed version.
 
+## Articles Pressing
+Migration of 100% articles to DCR has been completed. In order to press articles, the same mechanism as interactives was used.
