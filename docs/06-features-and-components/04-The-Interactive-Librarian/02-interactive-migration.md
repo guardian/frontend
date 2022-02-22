@@ -68,7 +68,7 @@ In the long term we’d like to mark pressed articles with a tracking tag (track
 **How can we view a pressed page?**
 To view a pressed page there are a couple of options:
 - Get the document from S3 directly (aws-frontend-archive).
-- Intermediate solution: add the interactive path to the frontend config (https://github.com/guardian/frontend/blob/main/common/app/services/dotcomrendering/PressedContent.scala).
+- Intermediate solution: add the interactive path to the frontend config (https://github.com/guardian/frontend/blob/dlawes/serve-pressed-interactives/common/app/services/dotcomrendering/PressedInteractives.scala#L11).
 - Long-term solution: add tag tracking/dcroptout to article.
 
 **Can we opt-out of pressing and render via frontend or DCR?**
@@ -102,7 +102,4 @@ A potential solution for reverting a migrated interactive to its pre-DCR form:
 - We agree that the pressing process is satisfactory and we press (and serve) an initial batch of pressed interactives to readers.
 - At this point,we also press every interactive (but not serve all this content to readers). Pressing the content would mean we save how the interactive renders via the existing platform.
 - If an article is migrated to DCR but we're unhappy with how it appears, we could fall back to serving the pressed version.
-
-## Article Pressing
-The migration of 100% articles to DCR has been completed. For pressing articles we used the same mechanism as in interactives.
 

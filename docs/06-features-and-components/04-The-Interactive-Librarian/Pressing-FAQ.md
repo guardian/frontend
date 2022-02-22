@@ -22,6 +22,9 @@ Completing this means that the article will now be served by its pressed version
 "Un-pressing" is really just "No longer serving a pressed page", so the only step is to raise a PR changing [PressedContent.scala](https://github.com/guardian/frontend/blob/main/common/app/services/dotcomrendering/PressedContent.scala) removing the path of the pressed page we no longer want to serve.
 Completing this means we will return to rendering DCR versions of the article, rather than the pressed file.
 
+### How to update a pressed page?
++++
+
 ### What types of content can I press?
 Currently, articles and interactive pages.
 
