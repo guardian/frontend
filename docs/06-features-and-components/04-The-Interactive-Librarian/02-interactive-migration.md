@@ -68,7 +68,7 @@ In the long term we’d like to mark pressed articles with a tracking tag (track
 **How can we view a pressed page?**
 To view a pressed page there are a couple of options:
 - Get the document from S3 directly (aws-frontend-archive).
-- Intermediate solution: add the interactive path to the frontend config (https://github.com/guardian/frontend/blob/dlawes/serve-pressed-interactives/common/app/services/dotcomrendering/PressedInteractives.scala#L11).
+- Intermediate solution: add the interactive path to the frontend config (https://github.com/guardian/frontend/blob/main/common/app/model/pressedContent.scala).
 - Long-term solution: add tag tracking/dcroptout to article.
 
 **Can we opt-out of pressing and render via frontend or DCR?**
