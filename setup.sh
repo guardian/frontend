@@ -66,7 +66,7 @@ region = eu-west-1" > "$path/$filename"
 
 install_homebrew() {
   if mac && ! installed brew; then
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 }
 
