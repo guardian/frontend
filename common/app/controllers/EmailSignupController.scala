@@ -4,7 +4,11 @@ import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
-import conf.switches.Switches.{EmailSignupRecaptcha, ValidateEmailSignupRecaptchaTokens}
+import conf.switches.Switches.{
+  EmailSignupRecaptcha,
+  NewslettersRemoveConfirmationStep,
+  ValidateEmailSignupRecaptchaTokens,
+}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
@@ -35,6 +39,7 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: String,
+    emailConfirmation: Boolean,
 ) {
 
   // `name` is a hidden (via css) form input
@@ -49,12 +54,12 @@ case class EmailForm(
 
 class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
 
-  def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] =
+  def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     if (form.isLikelyBotSubmission) {
       Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
     } else {
       val idAccessClientToken = Configuration.id.apiClientToken
-      val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
+      val consentMailerUrl = serviceUrl(form)
       val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
       val headers = clientIp(request)
         .map(ip => List("X-Forwarded-For" -> ip))
@@ -71,6 +76,15 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
         .addHttpHeaders(headers: _*)
         .post(consentMailerPayload)
     }
+  }
+
+  private def serviceUrl(form: EmailForm): String = {
+    if (NewslettersRemoveConfirmationStep.isSwitchedOn && !form.emailConfirmation) {
+      s"${Configuration.id.apiRoot}/consent-signup"
+    } else {
+      s"${Configuration.id.apiRoot}/consent-email"
+    }
+  }
 }
 
 class EmailSignupController(
@@ -95,16 +109,9 @@ class EmailSignupController(
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> text,
+      "emailConfirmation" -> boolean,
     )(EmailForm.apply)(EmailForm.unapply),
   )
-
-  def logApiError(error: String): Unit = {
-    log.error(s"API call to get newsletters failed: $error")
-  }
-
-  def logNewsletterNotFoundError(newsletterName: String): Unit = {
-    log.error(s"Newsletter not found: Couldn't find $newsletterName")
-  }
 
   def renderPage(): Action[AnyContent] =
     Action { implicit request =>
@@ -243,6 +250,14 @@ class EmailSignupController(
       }
     }
 
+  def logApiError(error: String): Unit = {
+    log.error(s"API call to get newsletters failed: $error")
+  }
+
+  def logNewsletterNotFoundError(newsletterName: String): Unit = {
+    log.error(s"Newsletter not found: Couldn't find $newsletterName")
+  }
+
   def subscriptionNonsuccessResult(result: String): Action[AnyContent] =
     Action { implicit request =>
       Cached(1.hour)(result match {
@@ -293,69 +308,6 @@ class EmailSignupController(
       )
     }
 
-  def submit(): Action[AnyContent] =
-    Action.async { implicit request =>
-      AllEmailSubmission.increment()
-
-      emailForm.bindFromRequest.fold(
-        formWithErrors => {
-          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-          EmailFormError.increment()
-          Future.successful(respond(InvalidEmail))
-        },
-        form => {
-          log.info(
-            s"Post request received to /email/ - " +
-              s"email: ${form.email}, " +
-              s"ref: ${form.ref}, " +
-              s"refViewId: ${form.refViewId}, " +
-              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
-              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-          )
-
-          (for {
-            _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-            result <- submitForm(form)
-          } yield {
-            result
-          }) recover {
-            case _ =>
-              respond(OtherError)
-          }
-        },
-      )
-    }
-
-  def options(): Action[AnyContent] =
-    Action { implicit request =>
-      TinyResponse.noContent(Some("GET, POST, OPTIONS"))
-    }
-
-  private def respond(result: SubscriptionResult, listName: Option[String] = None)(implicit
-      request: Request[AnyContent],
-  ): Result = {
-    render {
-      case Accepts.Html() =>
-        result match {
-          case Subscribed   => SeeOther(LinkTo(s"/email/success/${listName.get}"))
-          case InvalidEmail => SeeOther(LinkTo(s"/email/invalid"))
-          case OtherError   => SeeOther(LinkTo(s"/email/error"))
-        }
-
-      case Accepts.Json() =>
-        Cors(NoCache(result match {
-          case Subscribed   => Created("Subscribed")
-          case InvalidEmail => BadRequest("Invalid email")
-          case OtherError   => InternalServerError("Internal error")
-        }))
-      case _ =>
-        NotAccepted.increment()
-        NotAcceptable
-    }
-  }
-
   private def respondFooter(result: SubscriptionResult)(implicit
       request: Request[AnyContent],
   ): Result = {
@@ -376,29 +328,6 @@ class EmailSignupController(
       case _ =>
         NotAccepted.increment()
         NotAcceptable
-    }
-  }
-
-  private def submitForm(form: EmailForm)(implicit request: Request[AnyContent]) = {
-    emailFormService
-      .submit(form)
-      .map(_.status match {
-        case 200 | 201 =>
-          EmailSubmission.increment()
-          respond(Subscribed, form.listName)
-
-        case status =>
-          log.error(s"Error posting to Identity API: HTTP $status")
-          APIHTTPError.increment()
-          respond(OtherError)
-
-      }) recover {
-      case _: IllegalAccessException =>
-        respond(Subscribed, form.listName)
-      case e: Exception =>
-        log.error(s"Error posting to Identity API: ${e.getMessage}")
-        APINetworkError.increment()
-        respond(OtherError)
     }
   }
 
@@ -457,4 +386,90 @@ class EmailSignupController(
       Future.successful(())
     }
   }
+
+  def submit(): Action[AnyContent] =
+    Action.async { implicit request =>
+      AllEmailSubmission.increment()
+
+      emailForm.bindFromRequest.fold(
+        formWithErrors => {
+          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+          EmailFormError.increment()
+          Future.successful(respond(InvalidEmail))
+        },
+        form => {
+          log.info(
+            s"Post request received to /email/ - " +
+              s"email: ${form.email}, " +
+              s"ref: ${form.ref}, " +
+              s"refViewId: ${form.refViewId}, " +
+              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
+              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+          )
+
+          (for {
+            _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+            result <- submitForm(form)
+          } yield {
+            result
+          }) recover {
+            case _ =>
+              respond(OtherError)
+          }
+        },
+      )
+    }
+
+  private def submitForm(form: EmailForm)(implicit request: Request[AnyContent]) = {
+    emailFormService
+      .submit(form)
+      .map(_.status match {
+        case 200 | 201 =>
+          EmailSubmission.increment()
+          respond(Subscribed, form.listName)
+
+        case status =>
+          log.error(s"Error posting to Identity API: HTTP $status")
+          APIHTTPError.increment()
+          respond(OtherError)
+
+      }) recover {
+      case _: IllegalAccessException =>
+        respond(Subscribed, form.listName)
+      case e: Exception =>
+        log.error(s"Error posting to Identity API: ${e.getMessage}")
+        APINetworkError.increment()
+        respond(OtherError)
+    }
+  }
+
+  private def respond(result: SubscriptionResult, listName: Option[String] = None)(implicit
+      request: Request[AnyContent],
+  ): Result = {
+    render {
+      case Accepts.Html() =>
+        result match {
+          case Subscribed   => SeeOther(LinkTo(s"/email/success/${listName.get}"))
+          case InvalidEmail => SeeOther(LinkTo(s"/email/invalid"))
+          case OtherError   => SeeOther(LinkTo(s"/email/error"))
+        }
+
+      case Accepts.Json() =>
+        Cors(NoCache(result match {
+          case Subscribed   => Created("Subscribed")
+          case InvalidEmail => BadRequest("Invalid email")
+          case OtherError   => InternalServerError("Internal error")
+        }))
+      case _ =>
+        NotAccepted.increment()
+        NotAcceptable
+    }
+  }
+
+  def options(): Action[AnyContent] =
+    Action { implicit request =>
+      TinyResponse.noContent(Some("GET, POST, OPTIONS"))
+    }
 }

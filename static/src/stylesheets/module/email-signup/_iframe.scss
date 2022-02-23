@@ -8,14 +8,6 @@ body {
     left: -2000px;
 }
 
-.email-sub .newsletters-privacy-notice-visible {
-    display: inline;
-}
-
-.email-sub .newsletters-privacy-notice-hidden {
-    display: none;
-}
-
 /**
 * Google reCAPTCHA styles
 */
@@ -23,15 +15,27 @@ body {
     visibility: hidden;
 }
 
-.email-sub .terms {
+.email-sub .newsletters-terms {
     color: $brightness-46;
     clear: both;
     font-family: $f-sans-serif-text;
     font-size: .7rem;
+    line-height: 16px;
     margin-left: 5px;
 
     a {
         color: $brightness-46;
+    }
+
+    &[data-privacy-visible='true'] {
+        .newsletters-privacy-notice {
+            display: inline;
+        }
+
+        color: $brightness-7;
+        a {
+            color: $brightness-7;
+        }
     }
 }
 
@@ -41,6 +45,10 @@ body {
     a {
         color: #ffffff;
     }
+}
+
+.email-sub__form-wrapper .newsletters-privacy-notice {
+    display: none;
 }
 
 /**

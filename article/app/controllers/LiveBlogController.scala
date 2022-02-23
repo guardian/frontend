@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
 import com.gu.contentapi.client.utils.format.{CulturePillar, LifestylePillar, NewsPillar, SportPillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
@@ -18,6 +18,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
+import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
@@ -80,10 +81,13 @@ class LiveBlogController(
     Action.async { implicit request: Request[AnyContent] =>
       val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate)
+
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
-        case (blog: LiveBlogPage, blocks) if request.forceDCR    => Future.successful(renderGuuiJson(blog, blocks, filter))
-        case (blog: LiveBlogPage, _)                             => getJson(blog, range, isLivePage, filter)
+        case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
+          Future.successful(renderGuuiJson(blog, blocks, filter))
+        case (blog: LiveBlogPage, blocks) =>
+          getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty))
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
@@ -177,10 +181,22 @@ class LiveBlogController(
       range: BlockRange,
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
+      requestedBodyBlocks: scala.collection.Map[String, Seq[Block]] = Map.empty,
   )(implicit request: RequestHeader): Future[Result] = {
+    val dcrCouldRender = LiveBlogController.checkIfSupported(liveblog)
+    val participating = ActiveExperiments.isParticipating(LiveblogRendering)
+    val remoteRender = shouldRemoteRender(request.forceDCROff, request.forceDCR, participating, dcrCouldRender)
+
     range match {
       case SinceBlockId(lastBlockId) =>
-        renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage, filterKeyEvents)
+        renderNewerUpdatesJson(
+          liveblog,
+          SinceBlockId(lastBlockId),
+          isLivePage,
+          filterKeyEvents,
+          remoteRender,
+          requestedBodyBlocks,
+        )
       case _ => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog), liveblog))
     }
   }
@@ -193,6 +209,7 @@ class LiveBlogController(
     val requestedBlocks = page.article.fields.blocks.toSeq.flatMap {
       _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
     }
+
     val filteredBlocks = if (filterKeyEvents) {
       requestedBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
     } else requestedBlocks
@@ -202,32 +219,69 @@ class LiveBlogController(
     }
   }
 
+  private[this] def getNewBlocks(
+      requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
+      lastUpdateBlockId: SinceBlockId,
+      filterKeyEvents: Boolean,
+  ): Seq[Block] = {
+    val blocksAround = requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty)
+
+    val filteredBlocks = if (filterKeyEvents) {
+      blocksAround.filter(block =>
+        block.attributes.keyEvent.getOrElse(false) || block.attributes.summary.getOrElse(false),
+      )
+    } else blocksAround
+
+    filteredBlocks.takeWhile { block =>
+      block.id != lastUpdateBlockId.lastUpdate
+    }
+  }
+
+  private def getDCRBlocksHTML(page: LiveBlogPage, blocks: Seq[Block])(implicit
+      request: RequestHeader,
+  ): Future[Html] = {
+    remoteRenderer.getBlocks(ws, page, blocks) map { result =>
+      new Html(result)
+    }
+  }
+
   private[this] def renderNewerUpdatesJson(
-      page: PageWithStoryPackage,
+      page: LiveBlogPage,
       lastUpdateBlockId: SinceBlockId,
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
+      remoteRender: Boolean,
+      requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
   )(implicit request: RequestHeader): Future[Result] = {
+
     val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
-    val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
+    val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents)
+
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
       model.KeyEventData(newBlocks, Edition(request).timezone),
       filterKeyEvents,
     )
 
-    val allPagesJson = Seq(
-      "timeline" -> timelineHtml,
-      "numNewBlocks" -> newBlocks.size,
-    )
-    val livePageJson = isLivePage.filter(_ == true).map { _ =>
-      "html" -> blocksHtml
-    }
-    val mostRecent = newBlocks.headOption.map { block =>
-      "mostRecentBlockId" -> s"block-${block.id}"
-    }
+    for {
+      blocksHtml <-
+        if (remoteRender) {
+          getDCRBlocksHTML(page, newCapiBlocks)
+        } else {
+          Future.successful(views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone))
+        }
+    } yield {
+      val allPagesJson = Seq(
+        "timeline" -> timelineHtml,
+        "numNewBlocks" -> newBlocks.size,
+      )
+      val livePageJson = isLivePage.filter(_ == true).map { _ =>
+        "html" -> blocksHtml
+      }
+      val mostRecent = newBlocks.headOption.map { block =>
+        "mostRecentBlockId" -> s"block-${block.id}"
+      }
 
-    Future {
       Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
     }
   }
@@ -303,7 +357,7 @@ object LiveBlogController {
 
   def isDeadBlog(blog: PageWithStoryPackage): Boolean = !blog.article.fields.isLive
 
-  def isNotRecent(blog: PageWithStoryPackage) = {
+  def isNotRecent(blog: PageWithStoryPackage): Boolean = {
     val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
     blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }

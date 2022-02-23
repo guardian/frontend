@@ -3,6 +3,7 @@
 }
 
 .email-sub__iframe {
+    min-height: 60px;
     // Fallback for browsers that don't support calc
     width: 100%;
 }

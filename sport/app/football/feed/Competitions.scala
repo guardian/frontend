@@ -6,14 +6,13 @@ import conf.FootballClient
 import football.controllers.Interval
 import model.{Competition, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.DateTimeComparator
-import pa._
+import pa.{FootballMatch, _}
 
-import java.time.LocalDate
+import java.time.{Clock, LocalDate, ZoneOffset, ZonedDateTime}
 import java.util.Comparator
 import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.Ordering.Implicits._
-import java.time.Clock
 
 trait Competitions extends implicits.Football {
 
@@ -101,6 +100,12 @@ trait Competitions extends implicits.Football {
 
   def matches: Seq[FootballMatch] = competitions.flatMap(_.matches)
 
+  def isMatchLiveOrAboutToStart(matches: Seq[FootballMatch], clock: Clock): Boolean =
+    matches.exists(game => {
+      val currentTime = ZonedDateTime.now(clock)
+      game.isLive ||
+      (game.date.minusMinutes(5).isBefore(currentTime) && game.date.plusMinutes(15).isAfter(currentTime))
+    })
 }
 
 object Competitions {
@@ -401,5 +406,17 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
         }
     })
     result.map(_.flatten).flatMap(Future.sequence(_))
+  }
+
+  def maybeRefreshLiveMatches(
+      clock: Clock,
+  )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
+    // matches is the list of all matches from all competitions
+    if (isMatchLiveOrAboutToStart(matches, clock)) {
+      log.info("Match is in Progress - refreshing match day data")
+      refreshMatchDay(clock)
+    } else {
+      Future.successful(immutable.Iterable[Competition]())
+    }
   }
 }
