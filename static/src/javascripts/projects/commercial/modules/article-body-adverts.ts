@@ -79,10 +79,11 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minBelow: 190,
 			},
 			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)': {
-				minAbove: 35,
-				minBelow: 400,
-			},
+			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-component="rich-link"])':
+				{
+					minAbove: 35,
+					minBelow: 400,
+				},
 			' figure.element-immersive': {
 				minAbove: 0,
 				minBelow: 600,
