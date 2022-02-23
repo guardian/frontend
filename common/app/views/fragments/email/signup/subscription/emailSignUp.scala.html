@@ -7,7 +7,7 @@
 
 @import common.LinkTo
 @import conf.switches.Switches.EmailSignupRecaptcha
-@import conf.switches.Switches.NewslettersRemoveConfirmationStep
+@import conf.switches.Switches.ShowNewPrivacyWordingOnEmailSignupEmbeds
 
 @listNamesTones = @{  List(
     bestOfOpinionUK.identityName -> "comment",
@@ -55,13 +55,13 @@
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
-            @if(EmailSignupRecaptcha.isSwitchedOn && NewslettersRemoveConfirmationStep.isSwitchedOn) {
+            @if(EmailSignupRecaptcha.isSwitchedOn && ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent(plural = false))
             } else if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms()
-            }else if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+            }else if(ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
                 @fragments.email.signup.privacyNoticeContent(plural = false)
             }
         </div>
