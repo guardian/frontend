@@ -13,7 +13,7 @@ export const measureTiming = (name) => {
 			perf.measure(name, startKey, endKey);
 
 			const measureEntries = perf.getEntriesByName(name, 'measure');
-			const timeTakenFloat = measureEntries[0].duration;
+            const timeTakenFloat = measureEntries[measureEntries.length-1].duration;
 			const timeTakenInt = Math.round(timeTakenFloat);
 
 			return timeTakenInt;
