@@ -7,7 +7,7 @@
 @import play.api.Mode.Dev
 @import conf.Static
 @import views.support.RenderClasses
-@import conf.switches.Switches.NewslettersRemoveConfirmationStep
+@import conf.switches.Switches.ShowNewPrivacyWordingOnEmailSignupEmbeds
 
 <!doctype html>
 <html>
@@ -34,7 +34,7 @@
         @body
     </body>
     <script src="https://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js"></script>
-    @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+    @if(ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
         <script>
             document.querySelector('.email-sub__text-input')
                 .addEventListener('focusin', () => {
