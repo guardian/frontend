@@ -484,6 +484,16 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
+  val ShowNewPrivacyWordingOnEmailSignupEmbeds = Switch(
+    SwitchGroup.Feature,
+    "show-new-privacy-wording-on-email-signup-embeds",
+    "Show new privacy wording on email signup embeds",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2022, 5, 4),
+    exposeClientSide = true,
+  )
+
   val ValidateEmailSignupRecaptchaTokens = Switch(
     SwitchGroup.Feature,
     "validate-email-signup-recaptcha-tokens",

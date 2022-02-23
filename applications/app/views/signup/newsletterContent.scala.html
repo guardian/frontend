@@ -2,7 +2,7 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import staticpages.NewsletterRoundupPage
 @import conf.switches.Switches.EmailSignupRecaptcha
-@import conf.switches.Switches.NewslettersRemoveConfirmationStep
+@import conf.switches.Switches.ShowNewPrivacyWordingOnEmailSignupEmbeds
 @import common.LinkTo
 
 @(signupPage: NewsletterRoundupPage)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -98,7 +98,7 @@
                     </div>
                 </a>
             </div>
-            @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
+            @if(ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
                 <div class="newsletters-heading__divider"></div>
                 <div class="newsletters-privacy-notice__container">
                     <div class="newsletters-privacy-notice__heading">
