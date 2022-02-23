@@ -347,7 +347,7 @@ const init = () => {
     );
 
 
-    if ( $('form.football-leagues')[0]) {
+    if ( $('form.football-leagues')?.[0]) {
         bean.on(
             document.body,
             'change',
