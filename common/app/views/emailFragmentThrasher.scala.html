@@ -3,8 +3,9 @@
 
 @emailEmbed(page) {
     @fragments.email.signup.subscription.thrasherEmailSignUp(
-        emailNewsletter.id,
-        emailNewsletter.emailEmbed
+        emailNewsletter.identityName,
+        emailNewsletter.emailEmbed,
+        emailNewsletter.emailConfirmation,
     )
 }
 
