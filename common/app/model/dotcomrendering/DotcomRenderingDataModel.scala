@@ -40,6 +40,7 @@ case class DotcomRenderingDataModel(
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
+    mostRecentBlockId: Option[String],
     blocks: List[Block],
     pagination: Option[Pagination],
     author: Author,
@@ -106,6 +107,7 @@ object DotcomRenderingDataModel {
         "filterKeyEvents" -> model.filterKeyEvents,
         "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
+        "mostRecentBlockId" -> model.mostRecentBlockId,
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
         "author" -> model.author,
@@ -256,6 +258,10 @@ object DotcomRenderingDataModel {
         .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
         .headOption
 
+    val mostRecentBlockId = page.currentPage.pagination.flatMap(paginationInfo =>
+      paginationInfo.newest.flatMap(_.blocks.headOption.map(_.id)),
+    )
+
     apply(
       page,
       request,
@@ -268,6 +274,7 @@ object DotcomRenderingDataModel {
       pinnedPost,
       keyEvents,
       filterKeyEvents,
+      mostRecentBlockId,
     )
   }
 
@@ -283,6 +290,7 @@ object DotcomRenderingDataModel {
       pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
+      mostRecentBlockId: Option[String] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -418,6 +426,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents = filterKeyEvents,
       pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
+      mostRecentBlockId = mostRecentBlockId,
       linkedData = linkedData,
       main = content.fields.main,
       mainMediaElements = mainMediaElements,
