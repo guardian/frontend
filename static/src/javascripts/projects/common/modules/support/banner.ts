@@ -16,6 +16,7 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { getVisitCount } from 'common/modules/commercial/contributions-utilities';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
+import { getArticleViewCountForDays } from 'common/modules/onward/history';
 import {
 	buildTagIds,
 	dynamicImport,
@@ -30,7 +31,6 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getCountryCode } from 'lib/geolocation';
 import reportError from 'lib/report-error';
-import { getArticleViewCountForDays } from 'common/modules/onward/history';
 
 export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp'; // timestamp of when we were last told not to show a RR banner
 const twentyMins = 20 * 60_000;
@@ -127,7 +127,7 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 		mvtId: getMvtValue() ?? 0,
 		countryCode: getCountryCode(),
 		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
-		articleCountToday: getArticleViewCountForDays(1),
+		articleCountToday: getArticleViewCountForDays(1) as number,
 		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
 		modulesVersion: ModulesVersion,
 		sectionId: section,
