@@ -108,7 +108,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minAbove: 0,
 				minBelow: 600,
 			},
-			' [data-spacefinder-ignore="numbered-list-title"]': {
+			' [data-spacefinder-component="numbered-list-title"]': {
 				minAbove: 25,
 				minBelow: 0,
 			},
