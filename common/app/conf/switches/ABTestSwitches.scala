@@ -43,4 +43,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 2, 28)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-spacefinder-okr-3-rich-links",
+    "Check whether ignoring rich links in spacefinder on desktop leads to revenue uplift",
+    owners = Seq(Owner.withGithub("simonbyford")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 3, 21)),
+    exposeClientSide = true,
+  )
 }
