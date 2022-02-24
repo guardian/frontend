@@ -1,27 +1,37 @@
-import { hasCrossedBreakpoint, breakpoints } from '../../../../lib/detect';
+import { breakpoints, hasCrossedBreakpoint } from '../../../../lib/detect';
 import { mediator } from '../../../../lib/mediator';
-import { dfpEnv } from './dfp-env';
+import type { Advert } from './Advert';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
+import { dfpEnv } from './dfp-env';
 import { refreshAdvert } from './load-advert';
 
-/* hasBreakpointChanged: ((string, string) -> undefined) -> undefined. Invokes the callback if a breakpoint has been crossed since last invocation */
+/**
+ * Invokes the callback if a breakpoint has been crossed since last invocation
+ */
 const hasBreakpointChanged = hasCrossedBreakpoint(true);
 
-/* breakpointNames: array<string>. List of breakpoint names */
-const breakpointNames = breakpoints.map((_) => _.name);
+/**
+ * Array of breakpoint names
+ */
+const breakpointNames = breakpoints.map(({ name }) => name);
 
 // TODO: reset advert flags
-const refresh = (currentBreakpoint, previousBreakpoint) => {
-	const getBreakpointIndex = (breakpoint, slotBreakpoints) => {
+const refresh = (currentBreakpoint: string, previousBreakpoint: string) => {
+	const getBreakpointIndex = (
+		breakpoint: string,
+		slotBreakpoints: string[],
+	) => {
 		const validBreakpointNames = breakpointNames
 			.slice(0, breakpointNames.indexOf(breakpoint) + 1)
 			.map(breakpointNameToAttribute);
 		return Math.max(
-			...slotBreakpoints.map((_) => validBreakpointNames.lastIndexOf(_)),
+			...slotBreakpoints.map((slotBreakpoint) =>
+				validBreakpointNames.lastIndexOf(slotBreakpoint),
+			),
 		);
 	};
 
-	const shouldRefresh = (advert) => {
+	const shouldRefresh = (advert: Advert) => {
 		// get the slot breakpoints
 		const slotBreakpoints = Object.keys(advert.sizes);
 		// find the currently matching breakpoint
@@ -50,6 +60,6 @@ const windowResize = () => {
 	hasBreakpointChanged(refresh);
 };
 
-export const refreshOnResize = () => {
+export const refreshOnResize = (): void => {
 	mediator.on('window:throttledResize', windowResize);
 };
