@@ -23,7 +23,7 @@ Below describes the migration process:
 - For articles greater than 5 years old, we will press everything by default.
 - For articles less than 5 years old, The Visuals team will provide a list of interactives that will not be pressed, everything else will be pressed.
 
-If issues are found with a migrated interactive then we have the the option to fix in one of three different ways:
+If issues are found with a migrated interactive then we have the option to fix in one of three different ways:
 1. Pressing the piece
 2. Visuals team fixing the piece
 3. Dotcom adding support to the platform
@@ -53,7 +53,7 @@ For pressing a batch of interactives this is controlled using command line scrip
 2. For every URL make a request to /interactive-librarian/live-presser/{path}
 3. For every successfully pressed article make a request to /interactive-librarian/read-clean-write/{path}
 
-To press a single interactive we can use the frontend admin tool. On the admin tool, select the new option ‘Press an interactive’, enter the full URL for the interactive, click ‘Press’ and wait for the response. If there’s an error in the response it’ll need to be reported to the dotcom team.
+To press a single interactive we can use the frontend admin tool. On the admin tool, select the new option ‘Press an article / interactive’, enter the full URL, click ‘Press’ and wait for the response. If there’s an error in the response it’ll need to be reported to the dotcom team.
 
 **How do we know a page is pressed?**
 
@@ -68,7 +68,7 @@ In the long term we’d like to mark pressed articles with a tracking tag (track
 **How can we view a pressed page?**
 To view a pressed page there are a couple of options:
 - Get the document from S3 directly (aws-frontend-archive).
-- Intermediate solution: add the interactive path to the frontend config (https://github.com/guardian/frontend/blob/dlawes/serve-pressed-interactives/common/app/services/dotcomrendering/PressedInteractives.scala#L11).
+- Intermediate solution: add the interactive path to the frontend config (https://github.com/guardian/frontend/blob/main/common/app/model/pressedContent.scala).
 - Long-term solution: add tag tracking/dcroptout to article.
 
 **Can we opt-out of pressing and render via frontend or DCR?**
@@ -103,3 +103,5 @@ A potential solution for reverting a migrated interactive to its pre-DCR form:
 - At this point,we also press every interactive (but not serve all this content to readers). Pressing the content would mean we save how the interactive renders via the existing platform.
 - If an article is migrated to DCR but we're unhappy with how it appears, we could fall back to serving the pressed version.
 
+## Articles Pressing
+Migration of 100% articles to DCR has been completed. In order to press articles, the same mechanism as interactives was used.

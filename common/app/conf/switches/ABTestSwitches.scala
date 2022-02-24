@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Check whether fixing a bug in spacefinder's nearby candidate filtering mechanism leads to revenue uplift",
     owners = Seq(Owner.withGithub("simonbyford")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 2, 21)),
+    sellByDate = Some(LocalDate.of(2022, 3, 7)),
     exposeClientSide = true,
   )
 

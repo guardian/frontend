@@ -7,6 +7,7 @@
 @import play.api.Mode.Dev
 @import conf.Static
 @import views.support.RenderClasses
+@import conf.switches.Switches.ShowNewPrivacyWordingOnEmailSignupEmbeds
 
 <!doctype html>
 <html>
@@ -33,6 +34,15 @@
         @body
     </body>
     <script src="https://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js"></script>
+    @if(ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
+        <script>
+            document.querySelector('.email-sub__text-input')
+                .addEventListener('focusin', () => {
+                    document.querySelector('.newsletters-terms').setAttribute('data-privacy-visible', "true")
+                    iframeMessenger?.resize()
+                });
+        </script>
+    }
     @if(EmailSignupRecaptcha.isSwitchedOn) {
         <script>
             window.addEventListener('message', (event) => {
