@@ -148,6 +148,27 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     content should include("61e5fa058f0856426bba251f") // key event
   }
 
+  it should "return the requested page for DCR" in {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?dcr=true&page=with:block-56d071d2e4b0bd5a0524cc66",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      page = Some("with:block-56d071d2e4b0bd5a0524cc66"),
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
+      filterKeyEvents = Some(false),
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+
+    content should include("56d071d2e4b0bd5a0524cc66")
+  }
+
   it should "use DCR if the parameter dcr=true is passed" in {
     val forceDCROff = false
     val forceDCR = true
