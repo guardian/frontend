@@ -63,8 +63,6 @@ describe('Slots and iframes load on pages', () => {
 
 				cy.get(`[data-name="right"]`).should('have.length', 1);
 
-				cy.scrollTo('bottom');
-
 				cy.get(`[data-name="merchandising-high"]`).should(
 					'have.length',
 					1,
