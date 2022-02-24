@@ -136,6 +136,23 @@ const loadModules = (modules: Modules, eventName: string) => {
 	});
 };
 
+const recordCommercialMetrics = () => {
+	const eventTimer = EventTimer.get();
+	eventTimer.trigger('commercialModulesLoaded');
+
+	// record the number of ad slots on the page?
+	const adSlotsTotal = document.querySelectorAll(
+		`[id^="${AD_SLOT_ID_PREFIX}"]`,
+	).length;
+	eventTimer.setProperty('adSlotsTotal', adSlotsTotal);
+
+	// how many inline ad slots?
+	const adSlotsInline = document.querySelectorAll(
+		`[id^="${AD_SLOT_ID_PREFIX}inline"]`,
+	).length;
+	eventTimer.setProperty('adSlotsInline', adSlotsInline);
+};
+
 const bootCommercial = async (): Promise<void> => {
 	log('commercial', '📦 standalone.commercial.ts', __webpack_public_path__);
 
@@ -170,20 +187,7 @@ const bootCommercial = async (): Promise<void> => {
 		];
 		const promises = allModules.map((args) => loadModules(...args));
 
-		await Promise.all(promises).then(() => {
-			const eventTimer = EventTimer.get();
-			eventTimer.trigger('commercialModulesLoaded');
-			// how many ad slots are there on the page?
-			const adSlotsTotal = document.querySelectorAll(
-				`[id^="${AD_SLOT_ID_PREFIX}"]`,
-			).length;
-			eventTimer.setProperty('adSlotsTotal', adSlotsTotal);
-			// how many inline slots?
-			const adSlotsInline = document.querySelectorAll(
-				`[id^="${AD_SLOT_ID_PREFIX}inline"]`,
-			).length;
-			eventTimer.setProperty('adSlotsInline', adSlotsInline);
-		});
+		await Promise.all(promises).then(recordCommercialMetrics);
 	} catch (error) {
 		// report async errors in bootCommercial to Sentry with the commercial feature tag
 		reportError(error, tags, false);
