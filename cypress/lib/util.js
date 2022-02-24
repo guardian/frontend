@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 /**
  * Generate a full URL for a given relative path and the desired stage
  *
@@ -7,7 +9,7 @@
  * @returns {string} The full path
  */
 export const getTestUrl = (stage, path, { isDcr } = { isDcr: false }) => {
-	switch (stage?.toLowerCase()) {
+	switch (stage) {
 		case 'code': {
 			return `https://code.dev-theguardian.com${path}`;
 		}
@@ -26,4 +28,13 @@ export const getTestUrl = (stage, path, { isDcr } = { isDcr: false }) => {
 			}
 		}
 	}
+};
+
+/**
+ * Pass different stage in via environment variable
+ * e.g. `yarn cypress run --env stage=code`
+ */
+export const getStage = () => {
+	const stage = Cypress.env('stage');
+	return stage?.toLowerCase();
 };

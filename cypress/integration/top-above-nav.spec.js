@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { getTestUrl } from '../lib/url';
+import { getStage, getTestUrl } from '../lib/util';
 import { getIframeBody } from '../lib/iframe';
 
 // Don't fail tests when uncaught exceptions occur
@@ -9,9 +9,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 	return false;
 });
 
-// Pass different stage in via environment variable
-// e.g. `yarn cypress run --env stage=code`
-const stage = Cypress.env('stage');
+const stage = getStage();
 
 const pages = [
 	{
