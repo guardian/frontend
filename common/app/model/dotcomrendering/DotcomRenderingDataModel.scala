@@ -13,6 +13,7 @@ import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
   Badges,
+  CanonicalLiveBlog,
   ContentFormat,
   ContentPage,
   DotcomContentType,
@@ -258,9 +259,8 @@ object DotcomRenderingDataModel {
         .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
         .headOption
 
-    val mostRecentBlockId = page.currentPage.pagination.flatMap(paginationInfo =>
-      paginationInfo.newest.flatMap(_.blocks.headOption.map(_.id)),
-    )
+    val mostRecentBlockId =
+      blocks.requestedBodyBlocks.flatMap(_.get(CanonicalLiveBlog.firstPage).flatMap(_.headOption)).map(_.id)
 
     apply(
       page,
