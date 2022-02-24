@@ -82,7 +82,6 @@ const componentEvent = (pinnedBlockId, action, value) => ({
 });
 
 const trackOphanPinnedDuration = (pinnedBlockId, duration) => {
-    console.log(`original pinned post in view with id ${pinnedBlockId} for ${duration} millisecond`);
     ophan.record(componentEvent(pinnedBlockId, 'DURATION', {value: duration}))
 };
 
