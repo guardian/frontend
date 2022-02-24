@@ -93,6 +93,7 @@
     "cpy": "^7.3.0",
     "cssstats": "^3.1.0",
     "csstype": "^3.0.6",
+    "cypress": "^9.4.1",
     "eslint": "^7.17.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-import-resolver-webpack": "^0.13.0",
