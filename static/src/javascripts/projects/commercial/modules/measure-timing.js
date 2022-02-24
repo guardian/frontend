@@ -13,8 +13,7 @@ export const measureTiming = (name) => {
 			perf.measure(name, startKey, endKey);
 
 			const measureEntries = perf.getEntriesByName(name, 'measure');
-			const timeTakenFloat =
-				measureEntries[measureEntries.length - 1].duration;
+			const timeTakenFloat = measureEntries[0].duration;
 			const timeTakenInt = Math.round(timeTakenFloat);
 
 			return timeTakenInt;
@@ -22,6 +21,8 @@ export const measureTiming = (name) => {
 
 		const clear = () => {
 			perf.clearMarks(startKey);
+			perf.clearMarks(endKey);
+			perf.clearMeasures(name);
 		};
 
 		return {
