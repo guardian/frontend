@@ -81,9 +81,30 @@ const componentEvent = (pinnedBlockId, action, value) => ({
     }
 });
 
-const trackOphanPinnedDuration = (pinnedBlockId, duration) => {
-    ophan.record(componentEvent(pinnedBlockId, 'DURATION', {value: duration}))
-};
+const trackPinnedPostDuration = (pinnedBlock) => {
+    let hasBeenSeen = false;
+    const pinnedPostTiming = measureTiming('pinned-post-view-duration');
+    const originalPinnedBlockId = pinnedBlock.dataset.blockId
+    const onIntersect = (entries) => {
+        entries
+            .forEach((entry) => {
+                if (entry.isIntersecting) {
+                    hasBeenSeen = true;
+                    pinnedPostTiming.clear();
+                    pinnedPostTiming.start();
+                } else if (hasBeenSeen) {
+                    const timeTaken = pinnedPostTiming.end();
+                    if (timeTaken) {
+                        ophan.record(componentEvent(originalPinnedBlockId, 'DURATION', {value: timeTaken}));
+                    }
+                }
+            });
+    };
+    const observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.8,
+    });
+    observer.observe(pinnedBlock);
+}
 
 const initTracking = () => {
 	const pinnedBlock = document.getElementById('pinned-block');
@@ -98,31 +119,9 @@ const initTracking = () => {
 		inView.on('firstview', () => {
 			ophan.record(componentEvent(pinnedBlockId, 'VIEW'));
 		});
-	}
 
-	// pinned post duration tracking
-    let hasBeenSeen = false;
-    const pinnedPostTiming = measureTiming('pinned-post-view-duration');
-    const originalPinnedBlockId = pinnedBlock.dataset.blockId
-    const onIntersect = (entries) => {
-        entries
-            .forEach((entry) => {
-                if (entry.isIntersecting) {
-                    hasBeenSeen = true;
-                    pinnedPostTiming.clear();
-                    pinnedPostTiming.start();
-                } else if (hasBeenSeen) {
-                    const timeTaken = pinnedPostTiming.end();
-                    if (timeTaken) {
-                        trackOphanPinnedDuration(originalPinnedBlockId, timeTaken);
-                    }
-                }
-            });
-    };
-    const observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.8,
-    });
-    observer.observe(pinnedBlock);
+        trackPinnedPostDuration(pinnedBlock);
+	}
 };
 
 const trackOphanClick = (pinnedBlockId, clickValue) => {
