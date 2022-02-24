@@ -90,7 +90,6 @@ const trackPinnedPostDuration = (pinnedBlock) => {
             .forEach((entry) => {
                 if (entry.isIntersecting) {
                     hasBeenSeen = true;
-                    pinnedPostTiming.clear();
                     pinnedPostTiming.start();
                 } else if (hasBeenSeen) {
                     const timeTaken = pinnedPostTiming.end();
