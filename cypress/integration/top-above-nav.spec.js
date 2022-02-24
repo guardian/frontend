@@ -49,16 +49,14 @@ describe('top-above-nav on pages', () => {
 
 			// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
 			getIframeBody('sp_message_iframe_597005')
-				.find('.btn-primary', { timeout: 10_000 })
+				.find('.btn-primary')
 				.click();
 
 			// Check that the top-above-nav ad slot is on the page
 			cy.get('#dfp-ad--top-above-nav').should('exist');
 
 			// Check that an iframe is placed inside the ad slot
-			cy.get('#dfp-ad--top-above-nav')
-				.find('iframe', { timeout: 10_000 })
-				.should('exist');
+			cy.get('#dfp-ad--top-above-nav').find('iframe').should('exist');
 		});
 	});
 });

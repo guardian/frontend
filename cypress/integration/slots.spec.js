@@ -37,7 +37,7 @@ describe('Slots and iframes load on pages', () => {
 
 				// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
 				getIframeBody('sp_message_iframe_597005')
-					.find('.btn-primary', { timeout: 10_000 })
+					.find('.btn-primary')
 					.click();
 
 				cy.scrollTo('bottom', { duration: 5000 });

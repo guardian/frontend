@@ -1,7 +1,8 @@
 {
   "chromeWebSecurity": false,
-  "video": false,
+  "defaultCommandTimeout": 10000,
   "retries": 2,
+  "video": false,
   "fixturesFolder": false,
   "pluginsFile": false,
   "supportFile": false

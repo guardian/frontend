@@ -3,7 +3,7 @@
 export const getIframeBody = (iframeId) => {
 	// Retrieve the iframe element on the page
 	const iframe = cy
-		.get(`iframe#${iframeId}`, { timeout: 10_000 })
+		.get(`iframe#${iframeId}`)
 		.its('0.contentDocument')
 		.should('exist');
 
