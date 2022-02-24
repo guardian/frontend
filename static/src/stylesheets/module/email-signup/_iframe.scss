@@ -15,15 +15,27 @@ body {
     visibility: hidden;
 }
 
-.email-sub .terms {
+.email-sub .newsletters-terms {
     color: $brightness-46;
     clear: both;
     font-family: $f-sans-serif-text;
     font-size: .7rem;
+    line-height: 16px;
     margin-left: 5px;
 
     a {
         color: $brightness-46;
+    }
+
+    &[data-privacy-visible='true'] {
+        .newsletters-privacy-notice {
+            display: inline;
+        }
+
+        color: $brightness-7;
+        a {
+            color: $brightness-7;
+        }
     }
 }
 
@@ -35,22 +47,8 @@ body {
     }
 }
 
-.email-sub__form-wrapper {
-    .newsletters-privacy-notice {
-        display: none;
-    }
-}
-
-.email-sub__form-wrapper:focus-within {
-    .newsletters-privacy-notice {
-        display: inline;
-    }
-    .dark {
-        color: $brightness-7;
-        a {
-            color: $brightness-7;
-        }
-    }
+.email-sub__form-wrapper .newsletters-privacy-notice {
+    display: none;
 }
 
 /**
