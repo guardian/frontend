@@ -226,7 +226,7 @@
 }
 
 .email-sub__thrasher-embed-button {
-    @include fs-textSans(1, true);
+    @include fs-textSans(1, false);
     position: relative;
     border: 0;
     border-radius: 1000px;
