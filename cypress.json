@@ -1,5 +1,8 @@
 {
   "chromeWebSecurity": false,
   "video": false,
-  "retries": 2
+  "retries": 2,
+  "fixturesFolder": false,
+  "pluginsFile": false,
+  "supportFile": false
 }
