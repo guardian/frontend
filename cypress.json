@@ -1,6 +1,6 @@
 {
   "chromeWebSecurity": false,
-  "defaultCommandTimeout": 10000,
+  "defaultCommandTimeout": 15000,
   "retries": 2,
   "video": false,
   "fixturesFolder": false,
