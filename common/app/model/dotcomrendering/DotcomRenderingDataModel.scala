@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
-import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
+import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign, LiveBlogDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Chronos, Edition, Localisation, RichRequestHeader}
@@ -10,18 +10,7 @@ import conf.Configuration
 import conf.switches.Switches
 import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
-import model.{
-  ArticleDateTimes,
-  Badges,
-  CanonicalLiveBlog,
-  ContentFormat,
-  ContentPage,
-  DotcomContentType,
-  GUDateTimeFormatNew,
-  InteractivePage,
-  LiveBlogPage,
-  PageWithStoryPackage,
-}
+import model.{ArticleDateTimes, Badges, CanonicalLiveBlog, ContentFormat, ContentPage, DotcomContentType, GUDateTimeFormatNew, InteractivePage, LiveBlogPage, PageWithStoryPackage}
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -220,6 +209,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       filterKeyEvents: Boolean,
+      forceLive: Boolean
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -275,6 +265,7 @@ object DotcomRenderingDataModel {
       keyEvents,
       filterKeyEvents,
       mostRecentBlockId,
+      forceLive
     )
   }
 
@@ -291,6 +282,7 @@ object DotcomRenderingDataModel {
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
+      forceLive: Boolean = false
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -391,9 +383,12 @@ object DotcomRenderingDataModel {
       // behaviour. At the moment we are seeing interactive articles with other
       // design types due to CAPI format logic. But interactive design should
       // always take precendent (or so we think).
-      content.metadata.contentType match {
-        case Some(DotcomContentType.Interactive) => originalFormat.copy(design = InteractiveDesign)
-        case _                                   => originalFormat
+      if (content.metadata.contentType.contains(DotcomContentType.Interactive)) {
+        originalFormat.copy(design = InteractiveDesign)
+      } else if (forceLive) {
+        originalFormat.copy(design = LiveBlogDesign)
+      } else {
+        originalFormat
       }
     }
 
