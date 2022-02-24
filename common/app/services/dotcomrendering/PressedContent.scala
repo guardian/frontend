@@ -59,6 +59,7 @@ object PressedContent {
     "/us-news/2015/nov/05/police-tasers-deaths-the-counted",
     "/environment/ng-interactive/2015/nov/26/the-mekong-river-stories-from-the-heart-of-the-climate-crisis-interactive",
     "/us-news/2015/dec/01/the-county-kern-county-deadliest-police-killings",
+    "/music/ng-interactive/2015/dec/02/best-albums-of-2015",
     "/us-news/2015/dec/04/the-county-kern-county-california-deputies-tactics",
     "/us-news/2015/dec/08/the-county-kern-county-california-sexual-assault-secret-payoffs",
     "/us-news/2015/dec/10/kern-county-california-police-killings-misconduct-district-attorney",
