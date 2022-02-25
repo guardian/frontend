@@ -349,8 +349,10 @@ object DotcomRenderingDataModel {
       .find(_._1 == "calloutsUrl")
       .flatMap(entry => entry._2.asOpt[String])
 
+    val dcrTags = content.tags.tags.map(Tag.apply)
+
     def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
-      Block(block, page, shouldAddAffiliateLinks, request, isMainBlock, calloutsUrl, contentDateTimes)
+      Block(block, page, shouldAddAffiliateLinks, request, isMainBlock, calloutsUrl, contentDateTimes, dcrTags)
     }
 
     val mainMediaElements =
@@ -454,7 +456,7 @@ object DotcomRenderingDataModel {
       subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
       subMetaSectionLinks =
         content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
-      tags = content.tags.tags.map(Tag.apply),
+      tags = dcrTags,
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
