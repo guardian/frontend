@@ -79,7 +79,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minBelow: 190,
 			},
 			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot)': {
+			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)': {
 				minAbove: 35,
 				minBelow: 400,
 			},
@@ -163,7 +163,7 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				minBelow: 250,
 			},
 			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot)': {
+			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)': {
 				minAbove: 35,
 				minBelow: 200,
 			},
@@ -232,7 +232,7 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 				minBelow: 250,
 			},
 			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot)': {
+			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)': {
 				minAbove: 200,
 				minBelow: 400,
 			},
