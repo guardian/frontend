@@ -1,6 +1,6 @@
 import { adSizes } from '@guardian/commercial-core';
 import type { AdSize } from '@guardian/commercial-core';
-import { dfpEnv } from './dfp-env';
+import { adSlotIdPrefix } from './dfp-env-globals';
 
 type AdSlotConfig = {
 	sizeMappings: SizeMappings;
@@ -166,7 +166,7 @@ const createAdSlotElement = (
 	attrs: Record<string, string>,
 	classes: string[],
 ): HTMLElement => {
-	const id = `${dfpEnv.adSlotIdPrefix}${name}`;
+	const id = `${adSlotIdPrefix}${name}`;
 
 	// 3562dc07-78e9-4507-b922-78b979d4c5cb
 	if (window.guardian.config.isDotcomRendering && name === 'top-above-nav') {

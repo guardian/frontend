@@ -9,7 +9,7 @@ import { init as initArticleAsideAdverts } from '../projects/commercial/modules/
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
 import { initCommentAdverts } from '../projects/commercial/modules/comment-adverts';
 import { init as initComscore } from '../projects/commercial/modules/comscore';
-import { dfpEnv } from '../projects/commercial/modules/dfp/dfp-env';
+import { adSlotIdPrefix } from '../projects/commercial/modules/dfp/dfp-env-globals';
 import { init as prepareA9 } from '../projects/commercial/modules/dfp/prepare-a9';
 import { init as prepareGoogletag } from '../projects/commercial/modules/dfp/prepare-googletag';
 import { initPermutive } from '../projects/commercial/modules/dfp/prepare-permutive';
@@ -141,13 +141,13 @@ const recordCommercialMetrics = () => {
 	eventTimer.trigger('commercialModulesLoaded');
 	// record the number of ad slots on the page
 	const adSlotsTotal = document.querySelectorAll(
-		`[id^="${dfpEnv.adSlotIdPrefix}"]`,
+		`[id^="${adSlotIdPrefix}"]`,
 	).length;
 	eventTimer.setProperty('adSlotsTotal', adSlotsTotal);
 
 	// and the number of inline ad slots
 	const adSlotsInline = document.querySelectorAll(
-		`[id^="${dfpEnv.adSlotIdPrefix}inline"]`,
+		`[id^="${adSlotIdPrefix}inline"]`,
 	).length;
 	eventTimer.setProperty('adSlotsInline', adSlotsInline);
 };

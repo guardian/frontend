@@ -7,7 +7,6 @@ const getUrlVars = _getUrlVars as (arg?: string) => Record<string, string>;
 interface DfpEnv {
 	renderStartTime: number;
 	adSlotSelector: string;
-	adSlotIdPrefix: string;
 	hbImpl: Record<string, boolean>;
 	lazyLoadEnabled: boolean;
 	lazyLoadObserve: boolean;
@@ -27,9 +26,6 @@ export const dfpEnv: DfpEnv = {
 
 	/* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
 	adSlotSelector: '.js-ad-slot',
-
-	/* prefix for id of all ad slot elements */
-	adSlotIdPrefix: 'dfp-ad--',
 
 	/* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
 	hbImpl: {
