@@ -1,6 +1,7 @@
 import { adSizes } from '@guardian/commercial-core';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { spacefinderOkr1FilterNearby } from 'common/modules/experiments/tests/spacefinder-okr-1-filter-nearby';
+import { spacefinderOkr3RichLinks } from 'common/modules/experiments/tests/spacefinder-okr-3-rich-links';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
@@ -67,6 +68,13 @@ const articleBodySelector = isDotcomRendering
 	: '.js-article__body';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
+	const ignoreList = isInVariantSynchronous(
+		spacefinderOkr3RichLinks,
+		'variant',
+	)
+		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-component="rich-link"])'
+		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
@@ -79,7 +87,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minBelow: 190,
 			},
 			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)': {
+			[ignoreList]: {
 				minAbove: 35,
 				minBelow: 400,
 			},
@@ -107,7 +115,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minAbove: 0,
 				minBelow: 600,
 			},
-			' [data-spacefinder-ignore="numbered-list-title"]': {
+			' [data-spacefinder-component="numbered-list-title"]': {
 				minAbove: 25,
 				minBelow: 0,
 			},

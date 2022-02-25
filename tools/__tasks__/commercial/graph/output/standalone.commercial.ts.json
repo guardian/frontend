@@ -102,7 +102,8 @@
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
   "../lib/config.d.ts",
@@ -551,7 +552,8 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
@@ -638,7 +640,8 @@
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
   "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -669,6 +672,10 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
