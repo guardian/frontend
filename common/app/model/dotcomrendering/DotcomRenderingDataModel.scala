@@ -306,16 +306,7 @@ object DotcomRenderingDataModel {
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
-      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-      section = content.metadata.sectionId,
-      showAffiliateLinks = content.content.fields.showAffiliateLinks,
-      supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
-      defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
-      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
-      tagPaths = content.content.tags.tags.map(_.id),
-      firstPublishedDate = content.content.fields.firstPublicationDate,
-    )
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -387,21 +378,7 @@ object DotcomRenderingDataModel {
       )
     }
 
-    val modifiedFormat = {
-      val originalFormat = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
-
-      // TODO move to content-api-scala-client once confirmed as correct
-      // behaviour. At the moment we are seeing interactive articles with other
-      // design types due to CAPI format logic. But interactive design should
-      // always take precendent (or so we think).
-      if (content.metadata.contentType.contains(DotcomContentType.Interactive)) {
-        originalFormat.copy(design = InteractiveDesign)
-      } else if (forceLive) {
-        originalFormat.copy(design = LiveBlogDesign)
-      } else {
-        originalFormat
-      }
-    }
+    val modifiedFormat = DotcomRenderingUtils.getModifiedContent(content, forceLive)
 
     val isLegacyInteractive =
       modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate

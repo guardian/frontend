@@ -108,9 +108,8 @@ trait Requests {
 
     // dotcom-rendering (DCR) parameters
     lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")
-    lazy val forceDCR: Boolean = {
-      r.getQueryString("dcr").isDefined && !forceDCROff // don't check for .contains(true) so people can be lazy
-    }
+    // don't check for .contains(true) so people can be lazy
+    lazy val forceDCR: Boolean = r.getQueryString("dcr").isDefined && !forceDCROff
     lazy val forceLiveOff: Boolean = r.getQueryString("live").contains("false")
     lazy val forceLive: Boolean = r.getQueryString("live").isDefined && !forceLiveOff
 
