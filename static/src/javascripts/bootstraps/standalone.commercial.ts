@@ -139,13 +139,13 @@ const loadModules = (modules: Modules, eventName: string) => {
 const recordCommercialMetrics = () => {
 	const eventTimer = EventTimer.get();
 	eventTimer.trigger('commercialModulesLoaded');
-	// record the number of ad slots on the page?
+	// record the number of ad slots on the page
 	const adSlotsTotal = document.querySelectorAll(
 		`[id^="${dfpEnv.adSlotIdPrefix}"]`,
 	).length;
 	eventTimer.setProperty('adSlotsTotal', adSlotsTotal);
 
-	// how many inline ad slots?
+	// and the number of inline ad slots
 	const adSlotsInline = document.querySelectorAll(
 		`[id^="${dfpEnv.adSlotIdPrefix}inline"]`,
 	).length;
