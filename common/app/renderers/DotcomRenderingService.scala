@@ -127,7 +127,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       blocks: Blocks,
       pageType: PageType,
       filterKeyEvents: Boolean,
-      forceLive: Boolean = false
+      forceLive: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] = {
 
     val dataModel = page match {

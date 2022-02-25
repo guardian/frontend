@@ -10,7 +10,18 @@ import conf.Configuration
 import conf.switches.Switches
 import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
-import model.{ArticleDateTimes, Badges, CanonicalLiveBlog, ContentFormat, ContentPage, DotcomContentType, GUDateTimeFormatNew, InteractivePage, LiveBlogPage, PageWithStoryPackage}
+import model.{
+  ArticleDateTimes,
+  Badges,
+  CanonicalLiveBlog,
+  ContentFormat,
+  ContentPage,
+  DotcomContentType,
+  GUDateTimeFormatNew,
+  InteractivePage,
+  LiveBlogPage,
+  PageWithStoryPackage,
+}
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -209,7 +220,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       filterKeyEvents: Boolean,
-      forceLive: Boolean
+      forceLive: Boolean,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -265,7 +276,7 @@ object DotcomRenderingDataModel {
       keyEvents,
       filterKeyEvents,
       mostRecentBlockId,
-      forceLive
+      forceLive,
     )
   }
 
@@ -282,7 +293,7 @@ object DotcomRenderingDataModel {
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
-      forceLive: Boolean = false
+      forceLive: Boolean = false,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
