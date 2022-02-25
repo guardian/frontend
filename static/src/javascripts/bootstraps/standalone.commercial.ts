@@ -1,6 +1,5 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
-import { AD_SLOT_ID_PREFIX } from 'projects/commercial/modules/dfp/create-slot';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
@@ -10,6 +9,7 @@ import { init as initArticleAsideAdverts } from '../projects/commercial/modules/
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
 import { initCommentAdverts } from '../projects/commercial/modules/comment-adverts';
 import { init as initComscore } from '../projects/commercial/modules/comscore';
+import { dfpEnv } from '../projects/commercial/modules/dfp/dfp-env';
 import { init as prepareA9 } from '../projects/commercial/modules/dfp/prepare-a9';
 import { init as prepareGoogletag } from '../projects/commercial/modules/dfp/prepare-googletag';
 import { initPermutive } from '../projects/commercial/modules/dfp/prepare-permutive';
@@ -139,16 +139,15 @@ const loadModules = (modules: Modules, eventName: string) => {
 const recordCommercialMetrics = () => {
 	const eventTimer = EventTimer.get();
 	eventTimer.trigger('commercialModulesLoaded');
-
 	// record the number of ad slots on the page?
 	const adSlotsTotal = document.querySelectorAll(
-		`[id^="${AD_SLOT_ID_PREFIX}"]`,
+		`[id^="${dfpEnv.adSlotIdPrefix}"]`,
 	).length;
 	eventTimer.setProperty('adSlotsTotal', adSlotsTotal);
 
 	// how many inline ad slots?
 	const adSlotsInline = document.querySelectorAll(
-		`[id^="${AD_SLOT_ID_PREFIX}inline"]`,
+		`[id^="${dfpEnv.adSlotIdPrefix}inline"]`,
 	).length;
 	eventTimer.setProperty('adSlotsInline', adSlotsInline);
 };
