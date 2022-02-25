@@ -259,8 +259,11 @@ object DotcomRenderingDataModel {
         .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
         .headOption
 
-    val mostRecentBlockId =
-      blocks.requestedBodyBlocks.flatMap(_.get(CanonicalLiveBlog.firstPage).flatMap(_.headOption)).map(_.id)
+    val mostRecentBlockId = blocks.requestedBodyBlocks
+      .flatMap(_.get(CanonicalLiveBlog.firstPage))
+      .getOrElse(blocks.body.getOrElse(Seq.empty))
+      .headOption
+      .map(_.id)
 
     apply(
       page,
@@ -346,8 +349,10 @@ object DotcomRenderingDataModel {
       .find(_._1 == "calloutsUrl")
       .flatMap(entry => entry._2.asOpt[String])
 
+    val dcrTags = content.tags.tags.map(Tag.apply)
+
     def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
-      Block(block, page, shouldAddAffiliateLinks, request, isMainBlock, calloutsUrl, contentDateTimes)
+      Block(block, page, shouldAddAffiliateLinks, request, isMainBlock, calloutsUrl, contentDateTimes, dcrTags)
     }
 
     val mainMediaElements =
@@ -451,7 +456,7 @@ object DotcomRenderingDataModel {
       subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
       subMetaSectionLinks =
         content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
-      tags = content.tags.tags.map(Tag.apply),
+      tags = dcrTags,
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,

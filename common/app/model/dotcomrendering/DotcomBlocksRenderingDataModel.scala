@@ -70,10 +70,21 @@ object DotcomBlocksRenderingDataModel {
 
     val calloutsUrl = Option(Configuration.journalism.calloutsUrl);
 
+    val dcrTags = content.tags.tags.map(Tag.apply)
+
     val bodyBlocksDCR: List[Block] = bodyBlocks
       .filter(_.published)
       .map(block =>
-        Block(block, page, shouldAddAffiliateLinks, request, isMainBlock = false, calloutsUrl, contentDateTimes),
+        Block(
+          block,
+          page,
+          shouldAddAffiliateLinks,
+          request,
+          isMainBlock = false,
+          calloutsUrl,
+          contentDateTimes,
+          dcrTags,
+        ),
       )
       .toList
 

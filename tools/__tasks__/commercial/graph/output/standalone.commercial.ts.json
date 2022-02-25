@@ -102,7 +102,8 @@
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
   "../lib/config.d.ts",
@@ -157,7 +158,8 @@
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
  "../projects/commercial/modules/dfp/create-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/define-slot.js": [
   "../../../../node_modules/lodash-es/lodash.js",
@@ -551,7 +553,8 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
@@ -638,7 +641,8 @@
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
   "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -669,6 +673,10 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
@@ -726,7 +734,7 @@
   "../projects/commercial/modules/article-body-adverts.ts",
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
-  "../projects/commercial/modules/dfp/create-slot.ts",
+  "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/prepare-a9.js",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
   "../projects/commercial/modules/dfp/prepare-permutive.js",
