@@ -49,6 +49,7 @@ case class Block(
     blockFirstPublished: Option[Long],
     blockFirstPublishedDisplay: Option[String],
     title: Option[String],
+    contributors: Seq[Contributor],
     primaryDateLine: String,
     secondaryDateLine: String,
 )
@@ -66,6 +67,7 @@ object Block {
       isMainBlock: Boolean,
       calloutsUrl: Option[String],
       dateTimes: ArticleDateTimes,
+      tags: Seq[Tag],
   ): Block = {
 
     val content = page.item
@@ -87,6 +89,10 @@ object Block {
     val displayedDateTimes = ArticleDateTimes.makeDisplayedDateTimesDCR(dateTimes, request)
     val campaigns = page.getJavascriptConfig.get("campaigns")
 
+    val contributors = block.contributors flatMap { contributorId =>
+      tags.find(_.id == s"profile/$contributorId").map(tag => Contributor(tag.title, tag.bylineImageUrl))
+    }
+
     Block(
       id = block.id,
       elements = DotcomRenderingUtils.blockElementsToPageElements(
@@ -104,6 +110,7 @@ object Block {
       blockLastUpdated = blockLastUpdated,
       blockLastUpdatedDisplay = blockLastUpdatedDisplay,
       title = block.title,
+      contributors = contributors,
       blockFirstPublished = blockFirstPublished,
       blockFirstPublishedDisplay = blockFirstPublishedDisplay,
       primaryDateLine = displayedDateTimes.primaryDateLine,
