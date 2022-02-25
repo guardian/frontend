@@ -262,7 +262,10 @@ object DotcomRenderingDataModel {
         .headOption
 
     val mostRecentBlockId = blocks.requestedBodyBlocks
-      .flatMap(_.get(CanonicalLiveBlog.firstPage)).getOrElse(blocks.body.getOrElse(Seq.empty)).headOption.map(_.id)
+      .flatMap(_.get(CanonicalLiveBlog.firstPage))
+      .getOrElse(blocks.body.getOrElse(Seq.empty))
+      .headOption
+      .map(_.id)
 
     apply(
       page,
