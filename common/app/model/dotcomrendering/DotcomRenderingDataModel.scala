@@ -27,8 +27,6 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
 
-import java.io
-
 // -----------------------------------------------------------------
 // DCR DataModel
 // -----------------------------------------------------------------
