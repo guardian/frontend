@@ -79,12 +79,6 @@ class FootballLifecycle(
     // We need a schedular in scope
     lazy implicit val scheduler = Scheduler(scala.concurrent.ExecutionContext.Implicits.global, AlwaysAsyncExecution)
 
-    // Maybe handle error like this?
-    def retryWithDelay[A](source: Observable[A], delay: FiniteDuration): Observable[A] =
-      source.onErrorHandleWith { _ =>
-        retryWithDelay(source, delay).delayExecution(delay)
-      }
-
     import scala.collection.immutable
 
     val observableInterval = 10.second
