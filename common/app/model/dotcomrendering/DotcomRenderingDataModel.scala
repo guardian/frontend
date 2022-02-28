@@ -260,11 +260,7 @@ object DotcomRenderingDataModel {
         .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
         .headOption
 
-    val mostRecentBlockId = blocks.requestedBodyBlocks
-      .flatMap(_.get(CanonicalLiveBlog.firstPage))
-      .getOrElse(blocks.body.getOrElse(Seq.empty))
-      .headOption
-      .map(_.id)
+    val mostRecentBlockId = DotcomRenderingUtils.getMostRecentBlockId(blocks)
 
     apply(
       page,
