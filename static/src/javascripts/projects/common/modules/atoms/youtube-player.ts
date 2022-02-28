@@ -283,8 +283,7 @@ const setupPlayer = (
 const hasPlayerStarted = (event: YTPlayerEvent) =>
 	event.target.getCurrentTime() > 0;
 
-const getPlayerIframe = (videoId: string) =>
-	document.getElementById(`youtube-${videoId}`);
+const getPlayerIframe = (id: string) => document.getElementById(id);
 
 export const initYoutubePlayer = async (
 	el: HTMLElement,
@@ -296,11 +295,11 @@ export const initYoutubePlayer = async (
 	const consentState = await initialConsent;
 
 	const onPlayerStateChange = (event: YTPlayerEvent) => {
-		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
+		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(el.id));
 	};
 
 	const onPlayerReady = (event: YTPlayerEvent) => {
-		const iframe = getPlayerIframe(videoId);
+		const iframe = getPlayerIframe(el.id);
 		if (hasPlayerStarted(event)) {
 			addVideoStartedClass(iframe);
 		}
