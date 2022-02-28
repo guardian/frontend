@@ -246,7 +246,7 @@ const setupPlayer = (
 	 * empty array.
 	 */
 
-	const adsConfig = commercialFeatures.adFree
+	const adsConfig = !commercialFeatures.youtubeAdvertising
 		? createAdsConfigDisabled()
 		: createAdsConfigEnabled(consentState);
 

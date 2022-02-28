@@ -55,7 +55,7 @@ const fetchNewsletters = Promise.all([
         nl =>
             new EmailConsentWithState(
                 nl,
-                subscribedNewsletters.includes(nl.exactTargetListId.toString())
+                subscribedNewsletters.includes(nl.listId.toString())
             )
     )
 );

@@ -56,6 +56,11 @@ object Badges {
     "feb78187bd4de427603a164d0a69f19f",
     Static("images/badges/56738_Badge.svg"),
   )
+  val specialReport2 = SpecialBadge(
+    "a-public-salt3W#ywHav!p+?r+W2$E6=",
+    "45a016bed6c06c2b0ff7076ada8c8a97",
+    Static("images/badges/18_feb_2022_Badge.svg"),
+  )
   val pandoraPapers = Badge("news/series/pandora-papers", Static("images/badges/SpecialReportSep21.svg"))
   val nhs70 = Badge("society/series/nhs-at-70", Static("images/badges/nhs-70.svg"))
   val cricketWorldCup = Badge("sport/cricket-world-cup-2019", Static("images/badges/cricket-world-cup.svg"))
@@ -156,6 +161,7 @@ object Badges {
     tokyoparalympics2020,
     cop26,
     winterOlympics2022,
+    specialReport2,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {

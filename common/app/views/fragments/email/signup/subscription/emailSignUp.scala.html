@@ -6,7 +6,7 @@
 
 @import common.LinkTo
 @import conf.switches.Switches.EmailSignupRecaptcha
-@import conf.switches.Switches.NewslettersRemoveConfirmationStep
+@import conf.switches.Switches.ShowNewPrivacyWordingOnEmailSignupEmbeds
 
 @listNamesTones = @{  List(
     bestOfOpinionUK.identityName -> "comment",
@@ -35,14 +35,10 @@
 @formClass = @{ "email-sub__form" + " email-sub__form--" + componentClass }
 @headerClass = @{"email-sub__header" + " email-sub__header--" + componentClass  }
 
-@privacyNoticeId = @{"embed-privacy-notice"}
-@privacyNoticeHiddenClass = @{"newsletters-privacy-notice-hidden"}
-@privacyNoticeVisibleClass = @{"newsletters-privacy-notice-visible"}
-
 @form = {
     <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName">
         @helper.CSRF.formField
-        <div class="email-sub__form-wrapper">
+        <div class="email-sub__form-wrapper" tabindex="-1">
             <div class="email-sub__inline-label">
 
                 <input class="email-sub__text-input" type="email" name="email" id="@inputId" />
@@ -57,11 +53,14 @@
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
-            @if(EmailSignupRecaptcha.isSwitchedOn) {
+            @if(EmailSignupRecaptcha.isSwitchedOn && ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
-                @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent(privacyNoticeId, privacyNoticeHiddenClass, false))
-            } else {
-                @fragments.email.signup.privacyNoticeContent(privacyNoticeId, privacyNoticeHiddenClass, false)
+                @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent())
+            } else if(EmailSignupRecaptcha.isSwitchedOn) {
+                @fragments.email.signup.recaptchaContainer()
+                @fragments.email.signup.recaptchaTerms()
+            } else if(ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
+                @fragments.email.signup.privacyNoticeContent()
             }
         </div>
     </form>
@@ -80,16 +79,4 @@
     trackClickEvent(document.getElementById("email-embed-signup-button--old"))
     document.getElementById("email-sub__ref-input").value = window.parent.location.href
     document.getElementById("email-sub__refviewid-input").value = window.parent.guardian.config.ophan.pageViewId
-    @if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
-        document.getElementById("@inputId")
-        .addEventListener("focusin", ()=> {
-            document.getElementById("@privacyNoticeId")?.setAttribute('class', '@privacyNoticeVisibleClass')
-            iframeMessenger?.resize();
-        });
-    document.getElementById("@inputId")
-        .addEventListener("focusout", ()=> {
-            document.getElementById("@privacyNoticeId")?.setAttribute('class', '@privacyNoticeHiddenClass')
-            iframeMessenger?.resize();
-        });
-    }
 </script>

@@ -24,13 +24,13 @@ object InteractivePicker {
       request: RequestHeader,
   ): RenderingTier = {
     // Allows us to press via InterativeLibrarian and also debug interactives rendering via dcr
-    val forceDCROff = request.forceDCROff
     val fullPath = ensureStartingForwardSlash(path)
 
     // Allow us to quickly revert to rendering content (instead of serving pressed content)
     val switchOn = InteractivePickerFeature.isSwitchedOn
 
-    if (forceDCROff) FrontendLegacy
+    if (request.forceDCROff) FrontendLegacy
+    else if (request.forceDCR) DotcomRendering
     else if (isPressed(fullPath) && switchOn) PressedInteractive
     else DotcomRendering
   }
