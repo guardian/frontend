@@ -5,7 +5,6 @@ export const measureTiming = (name) => {
 		const endKey = `${name}-end`;
 
 		const start = () => {
-			clear();
 			perf.mark(startKey);
 		};
 
@@ -22,8 +21,6 @@ export const measureTiming = (name) => {
 
 		const clear = () => {
 			perf.clearMarks(startKey);
-			perf.clearMarks(endKey);
-			perf.clearMeasures(name);
 		};
 
 		return {
