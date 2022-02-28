@@ -6,7 +6,7 @@ export const spacefinderOkr3RichLinks: ABTest = {
 	author: 'Simon Byford (@simonbyford)',
 	start: '2022-02-28',
 	expiry: '2022-03-21',
-	audience: 10 / 100,
+	audience: 20 / 100,
 	audienceOffset: 30 / 100,
 	audienceCriteria: 'All pageviews',
 	successMeasure:
