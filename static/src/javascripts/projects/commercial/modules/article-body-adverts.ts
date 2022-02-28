@@ -55,6 +55,16 @@ const insertAdAtPara = (
 		});
 };
 
+const isInRichLinksVariant = isInVariantSynchronous(
+	spacefinderOkr3RichLinks,
+	'variant',
+);
+
+const enableListItemsFix = isInVariantSynchronous(
+	spacefinderOkrMegaTest,
+	'variant',
+);
+
 const enableNearbyFilteringFix = () =>
 	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
 
@@ -68,17 +78,18 @@ const articleBodySelector = isDotcomRendering
 	: '.js-article__body';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
-	const ignoreList = isInVariantSynchronous(
-		spacefinderOkr3RichLinks,
-		'variant',
-	)
-		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-component="rich-link"])'
-		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+	let ignoreList = ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+
+	if (isInRichLinksVariant) {
+		ignoreList += ':not([data-spacefinder-component="rich-link"])';
+	} else if (enableListItemsFix) {
+		ignoreList += ':not(ul)';
+	}
 
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
-		slotSelector: ['p'],
+		slotSelector: enableListItemsFix ? ['p', 'ul li'] : ['p'],
 		minAbove: isImmersive ? 700 : 300,
 		minBelow: isDotcomRendering ? 300 : 700,
 		selectors: {
@@ -106,7 +117,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	// For any other inline
 	const relaxedRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
-		slotSelector: ['p'],
+		slotSelector: enableListItemsFix ? ['p', 'ul li'] : ['p'],
 		minAbove: isPaidContent ? 1600 : 1000,
 		minBelow: isDotcomRendering ? 300 : 800,
 		selectors: {
@@ -160,9 +171,15 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 };
 
 const addMobileInlineAds = (): Promise<boolean> => {
+	let ignoreList = ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+
+	if (enableListItemsFix) {
+		ignoreList += ':not(ul)';
+	}
+
 	const rules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
-		slotSelector: ['p'],
+		slotSelector: enableListItemsFix ? ['p', 'ul li'] : ['p'],
 		minAbove: 200,
 		minBelow: 200,
 		selectors: {
@@ -171,7 +188,7 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				minBelow: 250,
 			},
 			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)': {
+			[ignoreList]: {
 				minAbove: 35,
 				minBelow: 200,
 			},
