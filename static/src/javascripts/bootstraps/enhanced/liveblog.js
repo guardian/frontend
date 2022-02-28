@@ -94,7 +94,7 @@ const trackPinnedPostDuration = (pinnedBlock) => {
                 } else if (hasBeenSeen) {
                     const timeTaken = pinnedPostTiming.end();
                     if (timeTaken) {
-                        ophan.record(componentEvent(originalPinnedBlockId, 'DURATION', {value: timeTaken}));
+                        ophan.record(componentEvent(originalPinnedBlockId, 'VIEW', {value: timeTaken}));
                     }
                 }
             });
@@ -109,15 +109,7 @@ const initTracking = () => {
 	const pinnedBlock = document.getElementById('pinned-block');
 	if (pinnedBlock) {
 		const pinnedBlockId = cleanId(pinnedBlock.dataset.blockId);
-
 		ophan.record(componentEvent(pinnedBlockId, 'INSERT'));
-		const inView = elementInView(pinnedBlock, window, {
-			top: 18,
-		});
-
-		inView.on('firstview', () => {
-			ophan.record(componentEvent(pinnedBlockId, 'VIEW'));
-		});
 
         trackPinnedPostDuration(pinnedBlock);
 	}
