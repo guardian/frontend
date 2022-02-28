@@ -32,8 +32,12 @@ class YoutubeSpec extends MixedPlaySpec {
       val displayCaption = false
       val view = views.html.fragments.atoms
         .youtube(mediaAtom, displayCaption)(FakeRequest())
-      contentAsString(view) must include(
-        """<div id="youtube-assetId" data-asset-id="assetId" class="youtube-media-atom__iframe"></div>""",
+      val contentString = contentAsString(view)
+      contentString must include(
+        """<div id="youtube-assetId-""",
+      )
+      contentString must include(
+        """ data-asset-id="assetId" class="youtube-media-atom__iframe"></div>""",
       )
     }
   }

@@ -250,6 +250,12 @@ const setupPlayer = (
 		? createAdsConfigDisabled()
 		: createAdsConfigEnabled(consentState);
 
+	/**
+	 * Note:
+	 * This element id must be unique!
+	 * Ensured via the SSR render of youtube.scala.html
+	 */
+
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
 		host: getHost({
