@@ -248,4 +248,12 @@ object DotcomRenderingUtils {
     }
   }
 
+  def getMostRecentBlockId(blocks: APIBlocks): Option[String] = {
+    blocks.requestedBodyBlocks
+      .flatMap(_.get(CanonicalLiveBlog.firstPage))
+      .getOrElse(blocks.body.getOrElse(Seq.empty))
+      .headOption
+      .map(block => s"block-${block.id}")
+  }
+
 }
