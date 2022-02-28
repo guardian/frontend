@@ -96,7 +96,7 @@ const upgradeRichLink = (el) => {
 
 const getSpacefinderRules = () => ({
     bodySelector: '.js-article__body',
-    slotSelector: ' > p',
+    slotSelector: ['p'],
     minAbove: 200,
     minBelow: 250,
     clearContentMeta: 50,

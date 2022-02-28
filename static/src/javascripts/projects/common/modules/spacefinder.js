@@ -216,7 +216,11 @@ const getReady = (rules, options) =>
 	]).then(() => rules);
 
 const getCandidates = (rules, exclusions) => {
-	let candidates = query(rules.bodySelector + rules.slotSelector);
+	let combinedSelector = rules.slotSelector
+		.map((selector) => `${rules.bodySelector} > ${selector}`)
+		.join();
+	let candidates = query(combinedSelector);
+
 	let result;
 	if (rules.fromBottom) {
 		candidates.reverse();

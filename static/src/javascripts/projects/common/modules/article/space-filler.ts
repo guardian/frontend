@@ -16,7 +16,8 @@ type SpacefinderItem = {
 type SpacefinderRules = {
 	bodySelector: string;
 	body?: Node;
-	slotSelector: string;
+	// array of selectors for direct descendants of bodySelector to be considered as candidates
+	slotSelector: string[];
 	// minimum from slot to top of page
 	absoluteMinAbove?: number;
 	// minimum from para to top of article

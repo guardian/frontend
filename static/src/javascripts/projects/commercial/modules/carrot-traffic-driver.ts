@@ -17,7 +17,7 @@ const bodySelector = isDotcomRendering
 
 const wideRules: SpacefinderRules = {
 	bodySelector,
-	slotSelector: ' > p',
+	slotSelector: ['p'],
 	minAbove: 500,
 	minBelow: 400,
 	clearContentMeta: 0,

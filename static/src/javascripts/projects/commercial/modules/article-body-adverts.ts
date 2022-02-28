@@ -78,7 +78,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
-		slotSelector: ' > p',
+		slotSelector: ['p'],
 		minAbove: isImmersive ? 700 : 300,
 		minBelow: isDotcomRendering ? 300 : 700,
 		selectors: {
@@ -106,7 +106,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	// For any other inline
 	const relaxedRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
-		slotSelector: ' > p',
+		slotSelector: ['p'],
 		minAbove: isPaidContent ? 1600 : 1000,
 		minBelow: isDotcomRendering ? 300 : 800,
 		selectors: {
@@ -162,7 +162,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 const addMobileInlineAds = (): Promise<boolean> => {
 	const rules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
-		slotSelector: ' > p',
+		slotSelector: ['p'],
 		minAbove: 200,
 		minBelow: 200,
 		selectors: {
@@ -223,7 +223,7 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 
 	const rules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
-		slotSelector: ' > p',
+		slotSelector: ['p'],
 		minAbove: 300,
 		minBelow: 0,
 		selectors: {

@@ -48,7 +48,7 @@ const getSpaceFillerRules = (windowHeight, update) => {
 
 	return {
 		bodySelector: '.js-liveblog-body',
-		slotSelector: ' > .block',
+		slotSelector: ['.block'],
 		fromBottom: shouldUpdate,
 		startAt: shouldUpdate ? firstSlot : null,
 		absoluteMinAbove: shouldUpdate ? 0 : WINDOWHEIGHT * OFFSET,
