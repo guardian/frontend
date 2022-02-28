@@ -94,7 +94,8 @@ const trackPinnedPostDuration = (pinnedBlock) => {
                 } else if (hasBeenSeen) {
                     const timeTaken = pinnedPostTiming.end();
                     if (timeTaken) {
-                        ophan.record(componentEvent(originalPinnedBlockId, 'VIEW', {value: timeTaken}));
+                        const timeTakenInSeconds = timeTaken/1000;
+                        ophan.record(componentEvent(originalPinnedBlockId, 'VIEW', {value: timeTakenInSeconds}));
                     }
                 }
             });
