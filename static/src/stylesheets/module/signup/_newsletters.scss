@@ -286,13 +286,18 @@
     .signup-confirmation__success-headline-container {
         display: flex;
         align-items: center;
-        background-color: $brightness-86;
-        border-radius: $gs-baseline * 4;
     }
 
     .signup-confirmation--success {
         @include fs-textSans(3);
+        margin-bottom: 0;
         font-weight: 700;
+        color: $brightness-7;
+        display: inline;
+    }
+
+    .signup-confirmation--success-description {
+        @include fs-textSans(3);
         color: $brightness-7;
         display: inline;
     }
@@ -302,9 +307,10 @@
         border-radius: 1000px;
         fill: $brightness-7;
         height: $gs-baseline * 3;
-        left: 0;
         width: $gs-baseline * 3;
         display: inline-block;
+        background-color: $brightness-86;
+        margin-right: $gs-baseline;
 
         svg {
             height: 50%;
