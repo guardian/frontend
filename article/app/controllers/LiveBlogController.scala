@@ -73,6 +73,7 @@ class LiveBlogController(
 
   def renderJson(
       path: String,
+      page: Option[String],
       lastUpdate: Option[String],
       rendered: Option[Boolean],
       isLivePage: Option[Boolean],
@@ -80,7 +81,7 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
       val filter = shouldFilter(filterKeyEvents)
-      val range = getRange(lastUpdate)
+      val range = getRange(lastUpdate, page)
 
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
@@ -163,10 +164,11 @@ class LiveBlogController(
     else false
   }
 
-  private[this] def getRange(lastUpdate: Option[String]): BlockRange = {
-    lastUpdate.map(ParseBlockId.fromBlockId) match {
-      case Some(ParsedBlockId(id)) => SinceBlockId(id)
-      case _                       => CanonicalLiveBlog
+  private[this] def getRange(lastUpdate: Option[String], page: Option[String]): BlockRange = {
+    (lastUpdate.map(ParseBlockId.fromBlockId), page.map(ParseBlockId.fromPageParam)) match {
+      case (Some(ParsedBlockId(id)), _) => SinceBlockId(id)
+      case (_, Some(ParsedBlockId(id))) => PageWithBlock(id)
+      case _                            => CanonicalLiveBlog
     }
   }
 
