@@ -85,22 +85,21 @@ const trackPinnedPostDuration = (pinnedBlock) => {
     let hasBeenSeen = false;
     const pinnedPostTiming = measureTiming('pinned-post-view-duration');
     const originalPinnedBlockId = pinnedBlock.dataset.blockId
-
     if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
                 hasBeenSeen = true;
+                pinnedPostTiming.clear();
                 pinnedPostTiming.start();
             } else if (hasBeenSeen) {
                 const timeTaken = pinnedPostTiming.end();
                 if (timeTaken) {
                     const timeTakenInSeconds = timeTaken/1000;
-                    console.log(timeTakenInSeconds);
                     ophan.record(componentEvent(originalPinnedBlockId, 'VIEW', {value: timeTakenInSeconds}));
                 }
             }
         }, {
-            threshold: 0.8,
+            threshold: 0.2,
         });
         observer.observe(pinnedBlock);
     }
