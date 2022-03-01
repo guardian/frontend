@@ -62,7 +62,7 @@ to this:
 
 2. The initial implementation uses UUIDs, but in essence any reasonably unique string can do. 
 
-3. The value of `elementId` for each element is, as per original implementation, randomly chosen at each generation of the DCR data object. In any case, there is no 1-2-1 mapping between `PageElement`s or `BlockElement`s and those values. 
+3. The value of `elementId` for each element is, as per original implementation, randomly chosen at each generation of the DCR data object. In any case, there is no 1-to-1 mapping between `PageElement`s or `BlockElement`s and those values. 
 
 ### Main Media Elements renderId
 
