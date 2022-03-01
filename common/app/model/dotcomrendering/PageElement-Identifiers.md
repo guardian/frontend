@@ -8,7 +8,7 @@ This document explains why `elementId` was introduced as attribute of `PageEleme
 
 ### Introduction
 
-`trait PageElement` models the objects that the backend ("backend" here refers to the frontend Scala code) sends to DCR for rendering. In the DCR Data Object (the JSON object sent to DCR), they are referred to as `BlockElement`s. For instance 
+`trait PageElement` models the objects that the backend ("backend" here refers to Frontend's backend Scala application) sends to DCR for rendering. In the DCR Data Object (the JSON object sent to DCR), they are referred to as `BlockElement`s. For instance 
 
 ```
 model.dotcomrendering.pageElements.TextBlockElement
