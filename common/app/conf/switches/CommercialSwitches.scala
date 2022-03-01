@@ -561,4 +561,13 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val ampContentABTesting: Switch = Switch(
+    group = Commercial,
+    name = "amp-content-ab-testing",
+    description = "Enable content based testing on AMP",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
