@@ -1,6 +1,6 @@
 ( document id: 03feb394-a17d-4430-8384-edd1891e0d01 )
 
-Q: What is this id? A: This document is mentionned in a couple of comments in the frontend source code. The comments mention that one should look up that id in a string search to find it. 
+Q: What is this id? A: This document is mentioned in a couple of comments in the Frontend source code. The comments mention that one should look up that id in a string search to find it. 
 
 ## PageElement Identifiers
 
@@ -8,7 +8,7 @@ This document explains why `elementId` was introduced as attribute of `PageEleme
 
 ### Introduction
 
-`trait PageElement` models the objects that the backend ("backend" here refers to the frontend Scala code) sends to DCR for rendering. In the DCR Data Object (the JSON object sent to DCR), they are referred to as `BlockElement`s. For instance 
+`trait PageElement` models the objects that the backend ("backend" here refers to Frontend's backend Scala application) sends to DCR for rendering. In the DCR Data Object (the JSON object sent to DCR), they are referred to as `BlockElement`s. For instance 
 
 ```
 model.dotcomrendering.pageElements.TextBlockElement
@@ -29,7 +29,7 @@ but this `id`, as mentionned above, a CAPI id, and should be seen as metadata ab
 
 The general situation is that not all `BlockElement`s from CAPI have a naturally defined unique identifier. Moreover, `PageElement`s are more general than content held in CAPI. 
 
-(Indeed, as much as there should be a 121 correspondance between `PageElement`s in the backend, `BlockElement`s in the DCR data model, and ideally, DCR React Components, there is no direct correspondance between CAPI elements and `PageElement`s. This decision was taken by the Dotcom team at the time to free the design of DCR from inefficiencies in the CAPI data model.)
+(Indeed, as much as there should be a 1-to-1 correspondence between `PageElement`s in the backend, `BlockElement`s in the DCR data model, and ideally, DCR React Components, there is no direct correspondence between CAPI elements and `PageElement`s. This decision was taken by the Dotcom team at the time to free the design of DCR from inefficiencies in the CAPI data model.)
 
 ### Introducing an artificial identifier for PageElement
 
@@ -62,7 +62,7 @@ to this:
 
 2. The initial implementation uses UUIDs, but in essence any reasonably unique string can do. 
 
-3. The value of `elementId` for each element is, as per original implementation, randomly chosen at each generation of the DCR data object. In any case, there is no 1-2-1 mapping between `PageElement`s or `BlockElement`s and those values. 
+3. The value of `elementId` for each element is, as per original implementation, randomly chosen at each generation of the DCR data object. In any case, there is no 1-to-1 mapping between `PageElement`s or `BlockElement`s and those values. 
 
 ### Main Media Elements renderId
 
