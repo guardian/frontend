@@ -1,6 +1,6 @@
 ( document id: 03feb394-a17d-4430-8384-edd1891e0d01 )
 
-Q: What is this id? A: This document is mentionned in a couple of comments in the frontend source code. The comments mention that one should look up that id in a string search to find it. 
+Q: What is this id? A: This document is mentioned in a couple of comments in the Frontend source code. The comments mention that one should look up that id in a string search to find it. 
 
 ## PageElement Identifiers
 
