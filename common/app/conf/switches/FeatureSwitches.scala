@@ -480,8 +480,18 @@ trait FeatureSwitches {
     "Remove confirmation step when user sign up to a newsletter",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 3, 4),
+    sellByDate = LocalDate.of(2022, 5, 4),
     exposeClientSide = false,
+  )
+
+  val ShowNewPrivacyWordingOnEmailSignupEmbeds = Switch(
+    SwitchGroup.Feature,
+    "show-new-privacy-wording-on-email-signup-embeds",
+    "Show new privacy wording on email signup embeds",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2022, 5, 4),
+    exposeClientSide = true,
   )
 
   val ValidateEmailSignupRecaptchaTokens = Switch(

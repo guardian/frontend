@@ -305,7 +305,7 @@ object ContentFormat {
   implicit val contentFormatReads = contentFormatBuilder.apply(ContentFormat.apply _)
 }
 
-final case class MetaData(
+case class MetaData(
     id: String,
     url: String,
     webUrl: String,

@@ -20,6 +20,7 @@ class CommercialFeatures {
 	adFree: boolean;
 	comscore: boolean;
 	launchpad: boolean;
+	youtubeAdvertising: boolean;
 
 	constructor(config = defaultConfig) {
 		// this is used for SpeedCurve tests
@@ -56,6 +57,8 @@ class CommercialFeatures {
 
 		// Feature switches
 		this.adFree = !!forceAdFree || isAdFreeUser();
+
+		this.youtubeAdvertising = !this.adFree && !sensitiveContent;
 
 		this.dfpAdvertising =
 			forceAds ||

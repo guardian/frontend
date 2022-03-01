@@ -1,9 +1,9 @@
 package test
 
-import com.gu.contentapi.client.model.v1.Blocks
+import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.PageType
-import model.{ApplicationContext, Cached, PageWithStoryPackage}
+import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
@@ -18,10 +18,17 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       blocks: Blocks,
       pageType: PageType,
       filterKeyEvents: Boolean,
+      forceLive: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     Future(
       Cached(article)(RevalidatableResult.Ok(Html("FakeRemoteRender has found you out if you rely on this markup!"))),
     )
+  }
+
+  override def getBlocks(ws: WSClient, page: LiveBlogPage, blocks: Seq[Block])(implicit
+      request: RequestHeader,
+  ): Future[String] = {
+    Future.successful("FakeRemoteRender has found you out if you rely on this markup!")
   }
 }

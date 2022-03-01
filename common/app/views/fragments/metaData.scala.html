@@ -1,3 +1,4 @@
+@import views.support.StripHtmlTagsAndUnescapeEntities
 @()(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{AnalyticsHost, _}
@@ -101,19 +102,20 @@
             <meta name="keywords" content="@c.item.tags.keywords.map(_.name).mkString(",")" />
             <meta name="news_keywords" content="@c.item.tags.keywords.take(10).map(_.name).mkString(",")" />
         }
+
         @c.getOpenGraphProperties.map { case (key, value) =>
-            <meta property="@key" content="@Html(value)" />
+            <meta property="@key" content="@StripHtmlTagsAndUnescapeEntities(value)" />
         }
         @c.getTwitterProperties.map{ case (key, value) =>
-            <meta name="@key" content="@value" />
+            <meta name="@key" content="@StripHtmlTagsAndUnescapeEntities(value)" />
         }
     }
     case s: model.StandalonePage => {
         @s.getOpenGraphProperties.map{ case (key, value) =>
-            <meta property="@key" content="@value" />
+            <meta property="@key" content="@StripHtmlTagsAndUnescapeEntities(value)" />
         }
         @s.getTwitterProperties.map{ case (key, value) =>
-            <meta name="@key" content="@value" />
+            <meta name="@key" content="@StripHtmlTagsAndUnescapeEntities(value)" />
         }
     }
     case _ => {}
