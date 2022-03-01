@@ -21,6 +21,8 @@ export const measureTiming = (name) => {
 
 		const clear = () => {
 			perf.clearMarks(startKey);
+			perf.clearMarks(endKey);
+			perf.clearMeasures(name);
 		};
 
 		return {

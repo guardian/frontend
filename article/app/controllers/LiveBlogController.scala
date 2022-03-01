@@ -133,7 +133,7 @@ class LiveBlogController(
             if (remoteRendering) {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
-              remoteRenderer.getArticle(ws, blog, blocks, pageType, filterKeyEvents)
+              remoteRenderer.getArticle(ws, blog, blocks, pageType, filterKeyEvents, request.forceLive)
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
@@ -294,7 +294,8 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
-    val model = DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, filterKeyEvents)
+    val model =
+      DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, filterKeyEvents, request.forceLive)
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }

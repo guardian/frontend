@@ -2,6 +2,7 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
+import com.gu.contentapi.client.utils.format.{InteractiveDesign, LiveBlogDesign}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import conf.switches.Switches
@@ -11,10 +12,11 @@ import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, 
 import model.pressed.SpecialReport
 import model.{
   ArticleDateTimes,
-  BlockRange,
   CanonicalLiveBlog,
+  ContentFormat,
   ContentPage,
   ContentType,
+  DotcomContentType,
   GUDateTimeFormatNew,
   LiveBlogPage,
   Pillar,
@@ -62,26 +64,25 @@ object DotcomRenderingUtils {
       entries1 <- extraction1(references)
       entries2 =
         entries1
-          .map(entryToDataPair(_))
+          .map(entryToDataPair)
           .filter(_.isDefined)
           .map(_.get) // .get is fundamentally dangerous but fine in this case because we filtered the Nones out.
           .filter(_._1 == "pa-football-team")
     } yield {
       val pageId = URLEncoder.encode(articlePage.metadata.id, "UTF-8")
       entries2.toList match {
-        case e1 :: e2 :: _ => {
+        case e1 :: e2 :: _ =>
           val year = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("yyy"))
           val month = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("MM"))
           val day = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("dd"))
-          s"${Configuration.ajax.url}/football/api/match-nav/${year}/${month}/${day}/${e1._2}/${e2._2}.json?dcr=true&page=${pageId}"
-        }
+          s"${Configuration.ajax.url}/football/api/match-nav/$year/$month/$day/${e1._2}/${e2._2}.json?dcr=true&page=$pageId"
         case _ => ""
       }
     }
 
     // We need one more transformation because we could have a Some(""), which we don't want
 
-    if (optionalUrl.getOrElse("").size > 0) {
+    if (optionalUrl.getOrElse("").nonEmpty) {
       optionalUrl
     } else {
       None
@@ -101,7 +102,7 @@ object DotcomRenderingUtils {
   def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
     pillar
       .map { pillar =>
-        if (designType == AdvertisementFeature) "labs"
+        if (designType.contains(AdvertisementFeature)) "labs"
         else if (pillar.toString.toLowerCase == "arts") "culture"
         else pillar.toString.toLowerCase()
       }
@@ -134,10 +135,9 @@ object DotcomRenderingUtils {
     if (affiliateLinks) {
       val hasLinks = capiElems.exists(elem =>
         elem.`type` match {
-          case Text => {
+          case Text =>
             val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
             AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
-          }
           case _ => false
         },
       )
@@ -210,7 +210,7 @@ object DotcomRenderingUtils {
     }
   }
 
-  def shouldAddAffiliateLinks(content: ContentType) = {
+  def shouldAddAffiliateLinks(content: ContentType): Boolean = {
     AffiliateLinksCleaner.shouldAddAffiliateLinks(
       switchedOn = Switches.AffiliateLinks.isSwitchedOn,
       section = content.metadata.sectionId,
@@ -223,13 +223,37 @@ object DotcomRenderingUtils {
     )
   }
 
-  def contentDateTimes(content: ContentType) = {
+  def contentDateTimes(content: ContentType): ArticleDateTimes = {
     ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
       firstPublicationDate = content.fields.firstPublicationDate,
       hasBeenModified = content.content.hasBeenModified,
       lastModificationDate = content.fields.lastModified,
     )
+  }
+
+  def getModifiedContent(content: ContentType, forceLive: Boolean): ContentFormat = {
+    val originalFormat = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
+
+    // TODO move to content-api-scala-client once confirmed as correct
+    // behaviour. At the moment we are seeing interactive articles with other
+    // design types due to CAPI format logic. But interactive design should
+    // always take precendent (or so we think).
+    if (content.metadata.contentType.contains(DotcomContentType.Interactive)) {
+      originalFormat.copy(design = InteractiveDesign)
+    } else if (forceLive) {
+      originalFormat.copy(design = LiveBlogDesign)
+    } else {
+      originalFormat
+    }
+  }
+
+  def getMostRecentBlockId(blocks: APIBlocks): Option[String] = {
+    blocks.requestedBodyBlocks
+      .flatMap(_.get(CanonicalLiveBlog.firstPage))
+      .getOrElse(blocks.body.getOrElse(Seq.empty))
+      .headOption
+      .map(block => s"block-${block.id}")
   }
 
 }

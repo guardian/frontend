@@ -14,12 +14,17 @@ const init = (): Promise<void> => {
 		return Promise.resolve();
 	}
 
-	const args: [string, string | undefined, boolean, boolean?] =
+	const args =
 		adBlockers.active === undefined
-			? [pageViewId, browserId, isDev]
-			: [pageViewId, browserId, isDev, adBlockers.active];
+			? { pageViewId, browserId, isDev }
+			: {
+					pageViewId,
+					browserId,
+					isDev,
+					adBlockerInUse: adBlockers.active,
+			  };
 
-	initCommercialMetrics(...args);
+	initCommercialMetrics(args);
 
 	if (shouldCaptureMetrics()) {
 		// TODO: rename upstream
