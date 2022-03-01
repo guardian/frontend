@@ -29,7 +29,7 @@ but this `id`, as mentionned above, a CAPI id, and should be seen as metadata ab
 
 The general situation is that not all `BlockElement`s from CAPI have a naturally defined unique identifier. Moreover, `PageElement`s are more general than content held in CAPI. 
 
-(Indeed, as much as there should be a 121 correspondance between `PageElement`s in the backend, `BlockElement`s in the DCR data model, and ideally, DCR React Components, there is no direct correspondance between CAPI elements and `PageElement`s. This decision was taken by the Dotcom team at the time to free the design of DCR from inefficiencies in the CAPI data model.)
+(Indeed, as much as there should be a 1-to-1 correspondence between `PageElement`s in the backend, `BlockElement`s in the DCR data model, and ideally, DCR React Components, there is no direct correspondence between CAPI elements and `PageElement`s. This decision was taken by the Dotcom team at the time to free the design of DCR from inefficiencies in the CAPI data model.)
 
 ### Introducing an artificial identifier for PageElement
 
