@@ -99,7 +99,7 @@ const trackPinnedPostDuration = (pinnedBlock) => {
                 }
             }
         }, {
-            threshold: 0.2,
+            threshold: 0.1,
         });
         observer.observe(pinnedBlock);
     }
