@@ -202,6 +202,70 @@
     }
 }
 
+.email-sub__thrasher-embed-label {
+    @include fs-textSans(1, true);
+    font-weight: 700;
+    color: $brightness-100;
+    display: block;
+    padding-bottom: 2px;
+}
+
+.email-sub__thrasher-embed-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.email-sub__thrasher-embed-input {
+    @include fs-textSans(3, true);
+    margin-right: 4px;
+    margin-bottom: 4px;
+    flex: 1;
+    max-width: 18.5rem;
+    min-width: 7rem;
+}
+
+.email-sub__thrasher-embed-button {
+    @include fs-textSans(1, false);
+    position: relative;
+    border: 0;
+    border-radius: 1000px;
+    padding: 5px 10px 2px;
+    background-color: $brightness-100;
+    color: $brightness-7;
+    font-weight: 700;
+    margin-bottom: 4px;
+    flex-basis: 6rem;
+    flex-shrink: 0;
+}
+
+.email-sub__form--thrasher-first-edition,
+.email-sub__form--thrasher-morning-briefing {
+
+    .email-sub__thrasher-embed-label {
+        color: $brightness-7;
+    }
+
+    .email-sub__thrasher-embed-button {
+        background-color: $brand-main;
+        color: $brightness-100;
+        fill: $brightness-100;
+    }
+}
+
+.email-sub__thrasher-embed-icon {
+    display: inline-flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+
+    svg {
+        height: 20px;
+        width: 20px;
+    }
+}
+
 /**
 * Modifications
 */

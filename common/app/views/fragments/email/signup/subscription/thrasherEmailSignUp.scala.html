@@ -1,0 +1,60 @@
+@import com.gu.identity.model.EmailNewsletters._
+@import com.gu.identity.model.EmailEmbed
+@(
+    listName:String,
+    emailEmbedData: EmailEmbed,
+    emailConfirmation: Boolean)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import conf.switches.Switches.EmailSignupRecaptcha
+@import conf.switches.Switches.NewslettersRemoveConfirmationStep
+
+@componentClass = @{"thrasher-embed"}
+@formId = @{ componentClass + "-email-sub-form" }
+@inputId = @{ componentClass + "-email-sub-input" }
+@dummyInputId = @{ componentClass + "-email-sub-input-name" }
+
+@wrapperClass = @{ "email-sub" + " email-sub--" + componentClass  }
+@wrapperToneClass = @{ "email-sub--" + componentClass }
+@formClass = @{ "email-sub__form" + " email-sub__form--" + componentClass + " email-sub__form--thrasher-" + listName }
+
+
+@form = {
+    <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName">
+        @helper.CSRF.formField
+        <div class="email-sub__form-wrapper">
+
+            <label class="email-sub__thrasher-embed-label" for="@inputId">Enter your email</label>
+            <div class="email-sub__thrasher-embed-row">
+                <input class="email-sub__thrasher-embed-input" type="email" name="email" id="@inputId" />
+                <button type="submit" class="email-sub__thrasher-embed-button" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">
+                    <span>Sign up</span>
+                    @fragments.inlineSvg("arrow-right", "icon", Seq("email-sub__thrasher-embed-icon"))
+                </button>
+            </div>
+
+            <label aria-hidden="true">
+                <input tabindex="-1" class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" placeholder="Name" />
+            </label>
+            <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
+            <input class="email-sub__ref-input" type="hidden" name="ref" id="email-sub__ref-input" value="" />
+            <input class="email-sub__refviewid-input" type="hidden" name="refViewId" id="email-sub__refviewid-input" value="" />
+
+            @if(EmailSignupRecaptcha.isSwitchedOn) {
+                @fragments.email.signup.recaptchaContainer()
+            }
+        </div>
+    </form>
+}
+
+
+<div class="@wrapperClass @wrapperToneClass js-ab-embed-old-design">
+    @form
+</div>
+
+<script>
+    trackClickEvent(document.getElementById("email-embed-signup-button--old"))
+    document.getElementById("email-sub__ref-input").value = window.parent.location.href
+    document.getElementById("email-sub__refviewid-input").value = window.parent.guardian.config.ophan.pageViewId
+</script>
+

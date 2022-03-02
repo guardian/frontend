@@ -29,6 +29,8 @@ GET        /crosswords/lookup                                                   
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
 GET        /email/form/footer/:listName                                              controllers.EmailSignupController.renderFooterForm(listName: String)
+GET        /email/form/thrasher/$listId<[0-9]+>                                      controllers.EmailSignupController.renderThrasherForm(listId: Int)
+GET        /email/form/thrasher/:listName                                            controllers.EmailSignupController.renderThrasherFormFromName(listName: String)
 ## Submission results (Only accessed server side)
 GET        /email/$result<success|invalid|error>/footer                         controllers.EmailSignupController.subscriptionResultFooter(result: String)
 GET        /email/success/:listName                                             controllers.EmailSignupController.subscriptionSuccessResult(listName: String)

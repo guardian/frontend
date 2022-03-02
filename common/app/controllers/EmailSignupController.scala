@@ -145,6 +145,56 @@ class EmailSignupController(
       }
     }
 
+  def renderThrasherForm(listId: Int): Action[AnyContent] =
+    csrfAddToken {
+      Action { implicit request =>
+        val identityNewsletter = emailEmbedAgent.getNewsletterById(listId)
+
+        identityNewsletter match {
+          case Right(Some(newsletter)) =>
+            Cached(1.hour)(
+              RevalidatableResult.Ok(
+                views.html.emailFragmentThrasher(
+                  emailLandingPage,
+                  newsletter,
+                ),
+              ),
+            )
+          case Right(None) =>
+            logNewsletterNotFoundError(listId.toString)
+            Cached(15.minute)(WithoutRevalidationResult(NoContent))
+          case Left(e) =>
+            logApiError(e)
+            Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
+        }
+      }
+    }
+
+  def renderThrasherFormFromName(listName: String): Action[AnyContent] =
+    csrfAddToken {
+      Action { implicit request =>
+        val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
+
+        identityNewsletter match {
+          case Right(Some(newsletter)) =>
+            Cached(1.hour)(
+              RevalidatableResult.Ok(
+                views.html.emailFragmentThrasher(
+                  emailLandingPage,
+                  newsletter,
+                ),
+              ),
+            )
+          case Right(None) =>
+            logNewsletterNotFoundError(listName)
+            Cached(15.minute)(WithoutRevalidationResult(NoContent))
+          case Left(e) =>
+            logApiError(e)
+            Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
+        }
+      }
+    }
+
   def renderForm(emailType: String, listId: Int): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
