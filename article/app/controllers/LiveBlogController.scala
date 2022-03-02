@@ -10,6 +10,7 @@ import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
+import model.dotcomrendering.DotcomRenderingDataModel.getKeyEvents
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
@@ -245,6 +246,14 @@ class LiveBlogController(
     }
   }
 
+  private def getDCRKeyEventsHTML(page: LiveBlogPage, keyEvents: Seq[Block], filterKeyEvents: Boolean)(implicit
+      request: RequestHeader,
+  ): Future[Html] = {
+    remoteRenderer.getKeyEvents(ws, page, keyEvents, filterKeyEvents) map { result =>
+      new Html(result)
+    }
+  }
+
   private[this] def renderNewerUpdatesJson(
       page: LiveBlogPage,
       lastUpdateBlockId: SinceBlockId,
@@ -257,18 +266,29 @@ class LiveBlogController(
     val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
     val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents)
 
-    val timelineHtml = views.html.liveblog.keyEvents(
-      "",
-      model.KeyEventData(newBlocks, Edition(request).timezone),
-      filterKeyEvents,
-    )
-
     for {
       blocksHtml <-
         if (remoteRender) {
-          getDCRBlocksHTML(page, newCapiBlocks)
+          // Only query DCR if we know there are updates
+          if (newBlocks.nonEmpty)
+            getDCRBlocksHTML(page, newCapiBlocks)
+          else Future.successful(new Html(""))
         } else {
           Future.successful(views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone))
+        }
+      timelineHtml <-
+        if (remoteRender) {
+          if (newBlocks.nonEmpty)
+            getDCRKeyEventsHTML(page, getKeyEvents(requestedBodyBlocks), filterKeyEvents)
+          else Future.successful(new Html(""))
+        } else {
+          Future.successful(
+            views.html.liveblog.keyEvents(
+              "",
+              model.KeyEventData(newBlocks, Edition(request).timezone),
+              filterKeyEvents,
+            ),
+          )
         }
     } yield {
       val allPagesJson = Seq(

@@ -211,6 +211,19 @@ object DotcomRenderingDataModel {
     )
   }
 
+  def getKeyEvents(requestedBodyBlocks: scala.collection.Map[String, Seq[APIBlock]]): Seq[APIBlock] = {
+    val allKeyEvents =
+      requestedBodyBlocks.getOrElse("body:key-events", Seq.empty[APIBlock])
+
+    val latestSummary = requestedBodyBlocks
+      .get("body:summary")
+      .flatMap(_.headOption)
+
+    (latestSummary.toSeq ++ allKeyEvents)
+      .sortBy(block => block.publishedDate.orElse(block.createdDate).map(_.dateTime))
+      .reverse
+  }
+
   def forLiveblog(
       page: LiveBlogPage,
       blocks: APIBlocks,
@@ -231,17 +244,7 @@ object DotcomRenderingDataModel {
 
     val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
 
-    val allKeyEvents =
-      blocks.requestedBodyBlocks
-        .flatMap(bodyBlocks => bodyBlocks.get("body:key-events"))
-        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.keyEvent.contains(true))))
-
-    val latestSummary = blocks.body.flatMap(_.find(_.attributes.summary.contains(true)))
-
-    val keyEvents: Seq[APIBlock] =
-      (latestSummary.toSeq ++ allKeyEvents)
-        .sortBy(block => block.publishedDate.orElse(block.createdDate).map(_.dateTime))
-        .reverse
+    val keyEvents = getKeyEvents(blocks.requestedBodyBlocks.getOrElse(Map.empty))
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,

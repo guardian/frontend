@@ -34,12 +34,17 @@ case object GenericFallback extends BlockRange {
 
 case class PageWithBlock(page: String) extends BlockRange {
   // just get them all, the caching should prevent too many requests, could use "around"
-  val query = None
+  val timeline = "body:key-events"
+  val summary = "body:summary"
+  val body = "body"
+  val query = Some(Seq(body, timeline, summary))
 }
 
 case class SinceBlockId(lastUpdate: String) extends BlockRange {
   val mainBlock = "main"
   val around = s"body:around:$lastUpdate:5"
+  val timeline = "body:key-events"
+  val summary = "body:summary"
   // more than 5 could come in (in one go), but unlikely and won't matter as it'll just fetch again soon
-  val query = Some(Seq(mainBlock, around))
+  val query = Some(Seq(mainBlock, around, timeline, summary))
 }

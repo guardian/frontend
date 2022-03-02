@@ -30,6 +30,11 @@ object ElementsEnhancer {
       Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks")))
   }
 
+  def enhanceKeyEvents(obj: JsObject): JsObject = {
+    obj ++
+      Json.obj("keyEvents" -> enhanceObjectsWithElementsAtDepth1(obj.value("keyEvents")))
+  }
+
   def enhanceDcrObject(obj: JsObject): JsObject = {
     obj ++
       Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks"))) ++

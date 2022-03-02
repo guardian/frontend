@@ -8,7 +8,12 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomRenderingDataModel, PageType}
+import model.dotcomrendering.{
+  DotcomBlocksRenderingDataModel,
+  DotcomKeyEventsRenderingDataModel,
+  DotcomRenderingDataModel,
+  PageType,
+}
 import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
 import play.api.libs.json.JsResult.Exception
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -148,6 +153,26 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
 
     postWithoutHandler(ws, json, Configuration.rendering.baseURL + "/Blocks")
+      .flatMap(response => {
+        if (response.status == 200)
+          Future.successful(response.body)
+        else
+          Future.failed(
+            DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"),
+          )
+      })
+  }
+
+  def getKeyEvents(
+      ws: WSClient,
+      page: LiveBlogPage,
+      keyEvents: Seq[Block],
+      filterKeyEvents: Boolean,
+  )(implicit request: RequestHeader): Future[String] = {
+    val dataModel = DotcomKeyEventsRenderingDataModel(page, request, keyEvents, filterKeyEvents)
+    val json = DotcomKeyEventsRenderingDataModel.toJson(dataModel)
+
+    postWithoutHandler(ws, json, Configuration.rendering.baseURL + "/KeyEvents")
       .flatMap(response => {
         if (response.status == 200)
           Future.successful(response.body)
