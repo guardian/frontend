@@ -43,7 +43,7 @@ const wideRules: SpacefinderRules = {
 			minAbove: 50,
 			minBelow: 50,
 		},
-		' > *:not(p):not(h2):not(blockquote)': {
+		' > *:not(p):not(h2):not(blockquote):not(#sign-in-gate)': {
 			minAbove: 50,
 			minBelow: 50,
 		},

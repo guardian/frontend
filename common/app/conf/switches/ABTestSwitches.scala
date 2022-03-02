@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Check whether fixing a bug in spacefinder's nearby candidate filtering mechanism leads to revenue uplift",
     owners = Seq(Owner.withGithub("simonbyford")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 3, 7)),
+    sellByDate = Some(LocalDate.of(2022, 4, 1)),
     exposeClientSide = true,
   )
 
@@ -40,7 +40,17 @@ trait ABTestSwitches {
     "Check whether fixing spacefinder's ability to detect when images have loaded leads to revenue uplift",
     owners = Seq(Owner.withGithub("simonbyford")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 2, 28)),
+    sellByDate = Some(LocalDate.of(2022, 4, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-spacefinder-okr-3-rich-links",
+    "Check whether ignoring rich links in spacefinder on desktop leads to revenue uplift",
+    owners = Seq(Owner.withGithub("simonbyford")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 4, 1)),
     exposeClientSide = true,
   )
 }

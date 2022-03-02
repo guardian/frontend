@@ -2,12 +2,11 @@
 @import com.gu.identity.model.EmailEmbed
 @(  componentClass: String,
     listName:String,
-    emailEmbedData: EmailEmbed,
-    emailConfirmation: Boolean)(implicit request: RequestHeader)
+    emailEmbedData: EmailEmbed)(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import conf.switches.Switches.EmailSignupRecaptcha
-@import conf.switches.Switches.NewslettersRemoveConfirmationStep
+@import conf.switches.Switches.ShowNewPrivacyWordingOnEmailSignupEmbeds
 
 @listNamesTones = @{  List(
     bestOfOpinionUK.identityName -> "comment",
@@ -51,18 +50,17 @@
                 <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
                 <input class="email-sub__ref-input" type="hidden" name="ref" id="email-sub__ref-input" value="" />
                 <input class="email-sub__refviewid-input" type="hidden" name="refViewId" id="email-sub__refviewid-input" value="" />
-                <input class="email-sub__emailconfirmation-input" type="hidden" name="emailConfirmation" id="email-sub__emailconfirmation-input" value="@emailConfirmation" />
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
-            @if(EmailSignupRecaptcha.isSwitchedOn && NewslettersRemoveConfirmationStep.isSwitchedOn) {
+            @if(EmailSignupRecaptcha.isSwitchedOn && ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
-                @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent(plural = false))
+                @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent())
             } else if(EmailSignupRecaptcha.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms()
-            }else if(NewslettersRemoveConfirmationStep.isSwitchedOn) {
-                @fragments.email.signup.privacyNoticeContent(plural = false)
+            } else if(ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
+                @fragments.email.signup.privacyNoticeContent()
             }
         </div>
     </form>

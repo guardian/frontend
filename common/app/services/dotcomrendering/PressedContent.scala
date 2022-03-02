@@ -59,6 +59,7 @@ object PressedContent {
     "/us-news/2015/nov/05/police-tasers-deaths-the-counted",
     "/environment/ng-interactive/2015/nov/26/the-mekong-river-stories-from-the-heart-of-the-climate-crisis-interactive",
     "/us-news/2015/dec/01/the-county-kern-county-deadliest-police-killings",
+    "/music/ng-interactive/2015/dec/02/best-albums-of-2015",
     "/us-news/2015/dec/04/the-county-kern-county-california-deputies-tactics",
     "/us-news/2015/dec/08/the-county-kern-county-california-sexual-assault-secret-payoffs",
     "/us-news/2015/dec/10/kern-county-california-police-killings-misconduct-district-attorney",
@@ -241,7 +242,6 @@ object PressedContent {
     "/us-news/ng-interactive/2017/jul/25/us-healthcare-system-vs-other-countries",
     "/uk-news/ng-interactive/2017/feb/20/what-the-eu27-want-brexit-red-lines-from-the-other-side-of-the-table",
     "/sport/ng-interactive/2017/aug/02/usain-bolt-fastest-man-ever-lived",
-    "/global-development/ng-interactive/2021/aug/23/devastating-how-cuts-in-uks-foreign-aid-could-hurt-the-worlds-poorest",
   )
 
   def isPressed(path: String): Boolean = content.contains(path)

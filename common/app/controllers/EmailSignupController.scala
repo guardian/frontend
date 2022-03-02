@@ -39,7 +39,6 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: String,
-    emailConfirmation: Boolean,
 ) {
 
   // `name` is a hidden (via css) form input
@@ -52,14 +51,16 @@ case class EmailForm(
     }
 }
 
-class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
+class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgent)
+    extends LazyLogging
+    with RemoteAddress {
 
   def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     if (form.isLikelyBotSubmission) {
       Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
     } else {
       val idAccessClientToken = Configuration.id.apiClientToken
-      val consentMailerUrl = serviceUrl(form)
+      val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
       val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
       val headers = clientIp(request)
         .map(ip => List("X-Forwarded-For" -> ip))
@@ -78,8 +79,11 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
     }
   }
 
-  private def serviceUrl(form: EmailForm): String = {
-    if (NewslettersRemoveConfirmationStep.isSwitchedOn && !form.emailConfirmation) {
+  private def serviceUrl(form: EmailForm, emailEmbedAgent: NewsletterSignupAgent): String = {
+    val identityNewsletter = emailEmbedAgent.getNewsletterByName(form.listName.get)
+    val newsletterRequireConfirmation = identityNewsletter.map(_.get.emailConfirmation).getOrElse(true)
+
+    if (NewslettersRemoveConfirmationStep.isSwitchedOn && !newsletterRequireConfirmation) {
       s"${Configuration.id.apiRoot}/consent-signup"
     } else {
       s"${Configuration.id.apiRoot}/consent-email"
@@ -96,7 +100,7 @@ class EmailSignupController(
     extends BaseController
     with ImplicitControllerExecutionContext
     with GuLogging {
-  val emailFormService = new EmailFormService(wsClient)
+  val emailFormService = new EmailFormService(wsClient, emailEmbedAgent)
   val googleRecaptchaTokenValidationService = new GoogleRecaptchaValidationService(wsClient)
 
   val emailForm: Form[EmailForm] = Form(
@@ -109,7 +113,6 @@ class EmailSignupController(
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> text,
-      "emailConfirmation" -> boolean,
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
@@ -168,6 +171,14 @@ class EmailSignupController(
       }
     }
 
+  def logApiError(error: String): Unit = {
+    log.error(s"API call to get newsletters failed: $error")
+  }
+
+  def logNewsletterNotFoundError(newsletterName: String): Unit = {
+    log.error(s"Newsletter not found: Couldn't find $newsletterName")
+  }
+
   def renderFormFromName(emailType: String, listName: String): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
@@ -224,14 +235,6 @@ class EmailSignupController(
           Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
       }
     }
-
-  def logApiError(error: String): Unit = {
-    log.error(s"API call to get newsletters failed: $error")
-  }
-
-  def logNewsletterNotFoundError(newsletterName: String): Unit = {
-    log.error(s"Newsletter not found: Couldn't find $newsletterName")
-  }
 
   def subscriptionNonsuccessResult(result: String): Action[AnyContent] =
     Action { implicit request =>

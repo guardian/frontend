@@ -346,14 +346,17 @@ const init = () => {
         }
     );
 
-    bean.on(
-        document.body,
-        'change',
-        $('form.football-leagues')[0],
-        function onChange() {
-            window.location = this.value;
-        }
-    );
+
+    if ( $('form.football-leagues')?.[0]) {
+        bean.on(
+            document.body,
+            'change',
+            $('form.football-leagues')[0],
+            function onChange() {
+                window.location = this.value;
+            }
+        );
+    }
 
     tagPageStats();
 };

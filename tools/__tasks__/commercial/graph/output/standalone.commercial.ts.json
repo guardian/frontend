@@ -102,7 +102,8 @@
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
   "../lib/config.d.ts",
@@ -157,7 +158,8 @@
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
  "../projects/commercial/modules/dfp/create-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/define-slot.js": [
   "../../../../node_modules/lodash-es/lodash.js",
@@ -550,7 +552,9 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
@@ -636,7 +640,9 @@
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-1-filter-nearby.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -666,6 +672,14 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
+ "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/identity/api.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
@@ -679,12 +693,22 @@
   "../lib/url.ts"
  ],
  "../projects/common/modules/mark-candidates.js": [],
- "../projects/common/modules/spacefinder.js": [
+ "../projects/common/modules/on-images-loaded-broken.js": [
   "../../../../node_modules/bean/bean.js",
+  "../../../../node_modules/lodash-es/lodash.js"
+ ],
+ "../projects/common/modules/on-images-loaded-fixed.js": [
+  "../../../../node_modules/lodash-es/lodash.js"
+ ],
+ "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
-  "../projects/common/modules/mark-candidates.js"
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts",
+  "../projects/common/modules/mark-candidates.js",
+  "../projects/common/modules/on-images-loaded-broken.js",
+  "../projects/common/modules/on-images-loaded-fixed.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
@@ -710,6 +734,7 @@
   "../projects/commercial/modules/article-body-adverts.ts",
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
+  "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/prepare-a9.js",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
   "../projects/commercial/modules/dfp/prepare-permutive.js",
