@@ -124,7 +124,18 @@ const testCandidate = (rule, candidate, opponent) => {
 	const pass = isMinAbove || isMinBelow;
 
 	if (!pass) {
-		candidate.meta.tooClose.push(opponent.element);
+		// if the test fails, add debug information to the candidate metadata
+		const isBelow = candidate.top < opponent.top;
+		const required = isBelow ? rule.minBelow : rule.minAbove;
+		const actual = isBelow
+			? opponent.top - candidate.top
+			: candidate.top - opponent.bottom;
+
+		candidate.meta.tooClose.push({
+			required,
+			actual,
+			element: opponent.element,
+		});
 	}
 
 	return pass;
