@@ -132,7 +132,9 @@ const testCandidate = (rule, candidate, opponent) => {
 
 // test one element vs an array of other elements for the given rule
 const testCandidates = (rule, candidate, opponents) =>
-	opponents.every(testCandidate.bind(undefined, rule, candidate));
+	opponents
+		.map((opponent) => testCandidate(rule, candidate, opponent))
+		.every(Boolean);
 
 const enforceRules = (measurements, rules, exclusions) => {
 	let candidates = measurements.candidates;
@@ -173,6 +175,7 @@ const enforceRules = (measurements, rules, exclusions) => {
 
 	// enforce selector rules
 	if (rules.selectors) {
+		const selectorExclusions = [];
 		Object.keys(rules.selectors).forEach((selector) => {
 			result = filter(candidates, (candidate) =>
 				testCandidates(
@@ -184,8 +187,12 @@ const enforceRules = (measurements, rules, exclusions) => {
 				),
 			);
 			exclusions[selector] = result.exclusions;
-			candidates = result.filtered;
+			selectorExclusions.push(...result.exclusions);
 		});
+
+		candidates = candidates.filter(
+			(candidate) => !selectorExclusions.includes(candidate),
+		);
 	}
 
 	if (rules.filter) {
