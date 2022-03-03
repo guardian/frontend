@@ -1,10 +1,12 @@
 import type { ABTest } from '@guardian/ab-core';
 import { isInABTestSynchronous } from '../experiments/ab';
 import { spacefinderOkr3RichLinks } from '../experiments/tests/spacefinder-okr-3-rich-links';
+import { spacefinderOkrMegaTest } from '../experiments/tests/spacefinder-okr-mega-test';
 
 const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
 	spacefinderOkr3RichLinks,
+	spacefinderOkrMegaTest,
 ];
 
 const serverSideTests: ServerSideABTest[] = [];
