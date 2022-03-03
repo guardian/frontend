@@ -159,7 +159,7 @@
  "../projects/commercial/modules/dfp/create-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../projects/commercial/modules/dfp/dfp-env.ts"
+  "../projects/commercial/modules/dfp/dfp-env-globals.ts"
  ],
  "../projects/commercial/modules/dfp/define-slot.js": [
   "../../../../node_modules/lodash-es/lodash.js",
@@ -167,6 +167,7 @@
   "../lib/detect.js",
   "../lib/url.ts"
  ],
+ "../projects/commercial/modules/dfp/dfp-env-globals.ts": [],
  "../projects/commercial/modules/dfp/dfp-env.ts": [
   "../lib/config.d.ts",
   "../lib/url.ts",
@@ -734,7 +735,7 @@
   "../projects/commercial/modules/article-body-adverts.ts",
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
-  "../projects/commercial/modules/dfp/dfp-env.ts",
+  "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.js",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
   "../projects/commercial/modules/dfp/prepare-permutive.js",
