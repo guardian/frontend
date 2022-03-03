@@ -12,6 +12,7 @@ type MessageType =
 	| 'get-page-url'
 	| 'get-styles'
 	| 'measure-ad-load'
+	| 'passback'
 	| 'resize'
 	| 'set-ad-height'
 	| 'scroll'
