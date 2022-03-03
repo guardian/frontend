@@ -1354,10 +1354,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.12.0.tgz#52d11d2fff649e04934033473b3ed7c7bf4a1639"
   integrity sha512-JIFBybaCd69tf+zJZZ7KNLdqaVePOAc36wGFor0I60vc9Ib0jMuzYVffMjMhF6LHSXMdoOcqGwiPdFucObVYAA==
 
-"@guardian/support-dotcom-components@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.0.tgz#802b507de87c4ef120ae9f02d6f44be1fea47353"
-  integrity sha512-zxtDDUYy3RDlizQ3UrYUYIQ2ooojj5gJmtEZjiAPN+SvL8cHlIPDQnX6aaTx6RMoIQUpQ4vVZyAVrLDOuUY37Q==
+"@guardian/support-dotcom-components@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.1.tgz#a6f51ce1c93efbaac705989a9d63a601bbf80328"
+  integrity sha512-zoxBAQIRUiz3iMi+wgutSi36igLjpGUI66JT+ByxHgFkTELiqsflG6Htn1ynYy4j5q80LyEIwahLqtuFFWq+YQ==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
