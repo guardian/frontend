@@ -130,9 +130,9 @@ const testCandidate = (rule, candidate, opponent) => {
 	return pass;
 };
 
-// test one element vs an array of other elements for the given rules
-const testCandidates = (rules, candidate, opponents) =>
-	opponents.every(testCandidate.bind(undefined, rules, candidate));
+// test one element vs an array of other elements for the given rule
+const testCandidates = (rule, candidate, opponents) =>
+	opponents.every(testCandidate.bind(undefined, rule, candidate));
 
 const enforceRules = (measurements, rules, exclusions) => {
 	let candidates = measurements.candidates;
