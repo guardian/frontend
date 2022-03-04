@@ -1,7 +1,7 @@
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
 
-const slotId = `${adSlotIdPrefix}-inline1`;
+const slotId = `${adSlotIdPrefix}inline1`;
 
 const init = (register: RegisterListener): void => {
 	register('passback', () => {
