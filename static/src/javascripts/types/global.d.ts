@@ -1,3 +1,5 @@
+import type { ArticleCounts } from 'common/modules/support/articleCount';
+
 type ServerSideABTest = `${string}${'Variant' | 'Control'}`;
 
 declare const twttr: {
@@ -207,6 +209,7 @@ interface Window {
 		adBlockers: AdBlockers;
 		// /frontend/common/app/templates/inlineJS/blocking/enableStylesheets.scala.js
 		css: { onLoad: () => void; loaded: boolean };
+		articleCounts?: ArticleCounts;
 	};
 
 	confiant?: Confiant;

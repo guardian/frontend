@@ -473,8 +473,8 @@ const showInMegaNavEnable = (bool) => {
     saveSummary(summary);
 };
 
-const incrementDailyArticleCount = (pageConfig) => {
-    if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
+const incrementDailyArticleCount = (isFront) => {
+    if (!isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
         const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
 
         if (dailyCount[0] && dailyCount[0].day && dailyCount[0].day === today) {
@@ -496,6 +496,8 @@ const incrementDailyArticleCount = (pageConfig) => {
         storage.local.set(storageKeyDailyArticleCount, dailyCount);
     }
 };
+
+const getDailyArticleHistory = () => storage.local.get(storageKeyDailyArticleCount) || [];
 
 const getArticleViewCountForDays = (days) => {
     const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
@@ -528,6 +530,7 @@ export {
     mostViewedSeries,
     incrementDailyArticleCount,
     getArticleViewCountForDays,
+    getDailyArticleHistory,
     getMondayFromDate,
     storageKeyDailyArticleCount,
 };
