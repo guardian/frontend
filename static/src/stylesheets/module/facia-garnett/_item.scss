@@ -560,7 +560,7 @@ $block-height: 58px;
 
 
 @for $i from 2 through 5 {
-    $hangTime: 4;
+    $hangTime: 5;
     $fadeTime: 1;
     $totalLoopTime: $i * ($hangTime + $fadeTime);
     @keyframes fc-item__slideshow--#{$i} {
