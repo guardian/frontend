@@ -1,4 +1,6 @@
 import { once } from 'lodash-es';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { getAdvertById } from './get-advert-by-id';
@@ -43,7 +45,12 @@ const getObserver = once(() =>
 );
 
 export const enableLazyLoad = (advert: Advert): void => {
-	if (dfpEnv.lazyLoadObserve) {
+	if (
+		dfpEnv.lazyLoadObserve &&
+		isInVariantSynchronous(commercialGptLazyLoad, 'variant')
+	) {
+		window.googletag.pubads().enableLazyLoad();
+	} else if (dfpEnv.lazyLoadObserve) {
 		void getObserver().then((observer) => observer.observe(advert.node));
 	} else {
 		displayAd(advert.id);
