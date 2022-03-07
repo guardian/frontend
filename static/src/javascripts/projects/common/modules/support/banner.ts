@@ -113,10 +113,7 @@ const getArticleCountToday = (
 	articleCounts: ArticleCounts | undefined,
 ): number | undefined => {
 	if (articleCounts) {
-		return (
-			articleCounts.dailyArticleHistory[0] &&
-			articleCounts.dailyArticleHistory[0].count
-		);
+		return articleCounts.dailyArticleHistory[0]?.count;
 	}
 	return undefined;
 };

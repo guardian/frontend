@@ -1,5 +1,3 @@
-import type { ArticleCounts } from 'common/modules/support/articleCount';
-
 type ServerSideABTest = `${string}${'Variant' | 'Control'}`;
 
 declare const twttr: {
@@ -197,6 +195,26 @@ type AdBlockers = {
 	active: boolean | undefined;
 	onDetect: function[];
 };
+
+type TagCounts = Record<string, number>;
+type WeeklyArticleLog = {
+	week: number;
+	count: number;
+	tags?: TagCounts;
+};
+type WeeklyArticleHistory = WeeklyArticleLog[];
+
+interface DailyArticle {
+	day: number;
+	count: number;
+}
+
+type DailyArticleHistory = DailyArticle[];
+
+interface ArticleCounts {
+	weeklyArticleHistory: WeeklyArticleHistory;
+	dailyArticleHistory: DailyArticleHistory;
+}
 
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
