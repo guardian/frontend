@@ -4,8 +4,8 @@ import {
 	incrementWeeklyArticleCount,
 } from '@guardian/support-dotcom-components';
 import type { WeeklyArticleHistory } from '@guardian/support-dotcom-components/dist/shared/src/types/targeting';
+import { storageKeyDailyArticleCount } from 'common/modules/onward/history';
 import { getArticleCountConsent } from 'common/modules/support/supportMessaging';
-import {storageKeyDailyArticleCount} from "common/modules/onward/history";
 
 export interface DailyArticle {
 	day: number;

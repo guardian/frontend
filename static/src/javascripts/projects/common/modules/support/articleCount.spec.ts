@@ -1,5 +1,5 @@
-import {storage} from '@guardian/libs';
-import {incrementDailyArticleCount} from 'common/modules/support/articleCount';
+import { storage } from '@guardian/libs';
+import { incrementDailyArticleCount } from 'common/modules/support/articleCount';
 
 jest.mock('raven-js', () => ({
 	config() {
