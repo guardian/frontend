@@ -20,7 +20,7 @@
     "@guardian/braze-components": "^5.3.0",
     "@guardian/commercial-core": "^3.0.0",
     "@guardian/consent-management-platform": "^10.3.1",
-    "@guardian/libs": "^3.6.1",
+    "@guardian/libs": "^3.8.0",
     "@guardian/shimport": "^1.0.2",
     "@guardian/source-foundations": "^4.0.0-rc.4",
     "@guardian/source-react-components": "^4.0.0-rc.2",
