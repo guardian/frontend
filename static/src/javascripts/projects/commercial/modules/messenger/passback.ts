@@ -16,7 +16,12 @@ const init = (register: RegisterListener): void => {
 				.getSlots()
 				.find((s) => s.getSlotElementId() === slotIdWithPrefix);
 			if (slot) {
-				slot.defineSizeMapping([[[300, 250], []]]);
+				// TODO use size mappings frrom commercial-core
+				slot.defineSizeMapping([
+					[[1024, 768], [[300, 250]]],
+					[[640, 480], [[300, 250]]],
+					[[0, 0], []],
+				]);
 				slot.setTargeting('passback', ['teads']);
 				slot.setTargeting('slot', slotId);
 				window.googletag.pubads().refresh([slot]);
