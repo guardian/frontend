@@ -1,21 +1,25 @@
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
 
-const slotId = `${adSlotIdPrefix}inline1`;
+type PassbackPayload = {
+	slotId: string;
+};
 
 const init = (register: RegisterListener): void => {
-	register('passback', () => {
+	register('passback', (payloadFromCreative) => {
 		window.googletag.cmd.push(function () {
-			const slot = window.googletag.defineSlot(
-				'/59666047/theguardian.com/x-passback/teads',
-				[300, 250],
-				slotId,
-			);
+			const payload = payloadFromCreative as PassbackPayload;
+			const { slotId } = payload;
+			const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
+			const slot = window.googletag
+				.pubads()
+				.getSlots()
+				.find((s) => s.getSlotElementId() === slotIdWithPrefix);
 			if (slot) {
-				slot.addService(googletag.pubads());
+				slot.defineSizeMapping([[[300, 250], []]]);
 				slot.setTargeting('passback', ['teads']);
-				window.googletag.enableServices();
-				window.googletag.display(slotId);
+				slot.setTargeting('slot', slotId);
+				window.googletag.pubads().refresh([slot]);
 			}
 		});
 	});
