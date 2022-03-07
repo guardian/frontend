@@ -204,6 +204,7 @@
 
 .email-sub__thrasher-embed-label {
     @include fs-textSans(1, true);
+    font-size: 15px;
     font-weight: 700;
     color: $brightness-100;
     display: block;
@@ -213,20 +214,21 @@
 .email-sub__thrasher-embed-row {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    height: 36px;
+    align-items: stretch;
 }
 
 .email-sub__thrasher-embed-input {
     @include fs-textSans(3, true);
-    margin-right: 4px;
-    margin-bottom: 4px;
+    margin-right: 8px;
     flex: 1;
-    max-width: 18.5rem;
-    min-width: 7rem;
+    max-width: 296px;
+    min-width: 112px;
 }
 
 .email-sub__thrasher-embed-button {
     @include fs-textSans(1, false);
+    font-size: 17px;
     position: relative;
     border: 0;
     border-radius: 1000px;
@@ -234,8 +236,7 @@
     background-color: $brightness-100;
     color: $brightness-7;
     font-weight: 700;
-    margin-bottom: 4px;
-    flex-basis: 6rem;
+    flex-basis: 118px;
     flex-shrink: 0;
 }
 

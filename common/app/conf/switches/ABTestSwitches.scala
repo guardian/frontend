@@ -26,31 +26,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-spacefinder-okr-1-filter-nearby",
-    "Check whether fixing a bug in spacefinder's nearby candidate filtering mechanism leads to revenue uplift",
-    owners = Seq(Owner.withGithub("simonbyford")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 4, 1)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-spacefinder-okr-2-images-loaded",
-    "Check whether fixing spacefinder's ability to detect when images have loaded leads to revenue uplift",
-    owners = Seq(Owner.withGithub("simonbyford")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 4, 1)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-spacefinder-okr-3-rich-links",
     "Check whether ignoring rich links in spacefinder on desktop leads to revenue uplift",
     owners = Seq(Owner.withGithub("simonbyford")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2022, 4, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-spacefinder-okr-mega-test",
+    "Check whether all changes made this quarter when combined lead to revenue uplift",
+    owners = Seq(Owner.withGithub("simonbyford")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 5, 2)),
     exposeClientSide = true,
   )
 

@@ -8,7 +8,7 @@ import { markCandidates } from './mark-candidates';
 import { onImagesLoadedFixed } from './on-images-loaded-fixed.js';
 import { onImagesLoadedBroken } from './on-images-loaded-broken.js';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { spacefinderOkr2ImagesLoaded } from 'common/modules/experiments/tests/spacefinder-okr-2-images-loaded.ts';
+import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 
 const query = (selector, context) => [
 	...(context ?? document).querySelectorAll(selector),
@@ -45,10 +45,10 @@ const expire = (resolve) => {
 
 const getFuncId = (rules) => rules.bodySelector || 'document';
 
-const onImagesLoaded = isInVariantSynchronous(
-	spacefinderOkr2ImagesLoaded,
-	'variant',
-)
+const enableImageLoadingFix = () =>
+	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
+
+const onImagesLoaded = enableImageLoadingFix()
 	? onImagesLoadedFixed
 	: onImagesLoadedBroken;
 

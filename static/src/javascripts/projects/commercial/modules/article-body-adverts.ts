@@ -1,7 +1,7 @@
 import { adSizes } from '@guardian/commercial-core';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { spacefinderOkr1FilterNearby } from 'common/modules/experiments/tests/spacefinder-okr-1-filter-nearby';
 import { spacefinderOkr3RichLinks } from 'common/modules/experiments/tests/spacefinder-okr-3-rich-links';
+import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
@@ -55,10 +55,10 @@ const insertAdAtPara = (
 		});
 };
 
-const filterNearbyCandidates = isInVariantSynchronous(
-	spacefinderOkr1FilterNearby,
-	'variant',
-)
+const enableNearbyFilteringFix = () =>
+	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
+
+const filterNearbyCandidates = enableNearbyFilteringFix()
 	? filterNearbyCandidatesFixed
 	: filterNearbyCandidatesBroken;
 
