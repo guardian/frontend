@@ -2,11 +2,11 @@ package discussion.api
 
 import java.net.URLEncoder
 
-import com.netaporter.uri.dsl._
+import io.lemonlabs.uri.dsl._
+import io.lemonlabs.uri.Url
 import common.GuLogging
 import conf.Configuration
 import discussion.model.{CommentCount, _}
-import discussion.model._
 import discussion.util.Http
 import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -29,7 +29,8 @@ trait DiscussionApiLike extends Http with GuLogging {
   protected val pageSize: String = "10"
 
   def endpointUrl(relativePath: String, params: List[(String, Any)] = List()): String = { //Using List for params because order is important for caching reason
-    (apiRoot + relativePath).addParams(params ++ defaultParams).toString()
+    Url.parse(apiRoot + relativePath).addParams(params ++ defaultParams)
+//      .toString()
   }
 
   def commentCounts(ids: String)(implicit executionContext: ExecutionContext): Future[Seq[CommentCount]] = {

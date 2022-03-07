@@ -1,11 +1,10 @@
 package navigation
 
-import com.netaporter.uri.Uri
+import io.lemonlabs.uri.Url
 import conf.Configuration
 import enumeratum.EnumEntry
 
 import scala.collection.immutable.IndexedSeq
-import scala.util.Try
 
 sealed trait ReaderRevenueSite extends EnumEntry {
   val url: String
@@ -15,7 +14,7 @@ object ReaderRevenueSite extends enumeratum.Enum[ReaderRevenueSite] {
 
   override val values: IndexedSeq[ReaderRevenueSite] = findValues
 
-  private def getHost(url: String): Option[String] = Try(Uri.parse(url).host).toOption.flatten
+  private def getHost(url: String): Option[String] = Url.parse(url).hostOption.map(_.toString)
 
   private val hosts: Set[String] = values.flatMap(site => getHost(site.url)).toSet
 
