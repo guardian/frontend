@@ -61,6 +61,7 @@ export const getArticleCounts = async (
 	if (!hasConsentedToArticleCounts) return undefined;
 
 	if (!isFront && !window.guardian.articleCounts) {
+		// This is an article and the counts have not been initialised yet
 		incrementWeeklyArticleCount(
 			storage.local,
 			pageId,
@@ -68,11 +69,14 @@ export const getArticleCounts = async (
 		);
 
 		incrementDailyArticleCount();
+	}
 
+	if (!window.guardian.articleCounts) {
 		const weeklyArticleHistory =
 			getWeeklyArticleHistory(storage.local) ?? [];
 		const dailyArticleHistory: DailyArticleHistory =
 			getDailyArticleHistory() ?? [];
+
 		window.guardian.articleCounts = {
 			weeklyArticleHistory,
 			dailyArticleHistory,
