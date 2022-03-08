@@ -230,6 +230,8 @@ object PressedContent {
     "/world/ng-interactive/2021/jun/28/vaccine-inequality-how-rich-countries-cut-covid-deaths-as-poorer-fall-behind",
     "/tv-and-radio/ng-interactive/2021/jul/01/whats-on-netflix-and-amazon-this-month-july",
     "/global-development/ng-interactive/2021/jul/28/countdown-to-demolition-the-story-of-al-jalaa-tower-gaza-israel-palestine",
+    "/news/datablog/ng-interactive/2021/aug/17/which-parts-australia-have-highest-vaccination-rates-by-state-nsw-sydney-victoria-melbourne-lga-suburb-check-your-area-vaccine-number-coverage-percentage-percent-population-look-up-interactive-map",
+    "/news/datablog/ng-interactive/2021/aug/31/which-parts-australia-have-highest-vaccination-rate-by-state-nsw-sydney-victoria-melbourne-lga-suburb-check-your-area-vaccine-rates-number-coverage-percentage-percent-population-look-up-interactive-map",
     // 2022
     "/cities/ng-interactive/2019/jan/30/high-street-crisis-town-centres-lose-8-of-shops-in-five-years",
     "/us-news/ng-interactive/2018/aug/07/mendocino-fire-california-biggest-state-history-mapped-explained",
