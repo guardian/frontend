@@ -25,18 +25,42 @@ export const markCandidates = (exclusions, winners, options) => {
 		},
 	};
 
+	const addDistanceExplainer = (element, text) => {
+		const explainer = document.createElement('div');
+		explainer.className = 'distanceExplainer';
+		explainer.appendChild(document.createTextNode(text));
+		explainer.style.cssText = `
+            position:absolute;
+            right:0;
+            background-color:${colours.red};
+            padding:5px 5px 10px 20px;
+            font-family: sans-serif;
+            z-index:20;
+        `;
+		element.before(explainer);
+	};
+
 	const addHoverListener = (candidate, tooClose) => {
 		tooClose.forEach((opponent) => {
-			candidate.addEventListener(
-				'mouseenter',
-				() =>
-					(opponent.style.cssText = `box-shadow: 0px 0px 0px 20px ${colours.blue}`),
-			);
+			candidate.addEventListener('mouseenter', () => {
+				opponent.element.style.cssText = `
+                    box-shadow: 0px 0px 0px 10px ${colours.red};
+                    z-index:10;
+                    position:relative
+                `;
 
-			candidate.addEventListener(
-				'mouseleave',
-				() => (opponent.style.cssText = ''),
-			);
+				addDistanceExplainer(
+					opponent.element,
+					`${opponent.actual}px/${opponent.required}px`,
+				);
+			});
+
+			candidate.addEventListener('mouseleave', () => {
+				opponent.element.style.cssText = '';
+				document
+					.querySelectorAll('.distanceExplainer')
+					.forEach((el) => el.remove());
+			});
 		});
 	};
 

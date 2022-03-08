@@ -124,15 +124,28 @@ const testCandidate = (rule, candidate, opponent) => {
 	const pass = isMinAbove || isMinBelow;
 
 	if (!pass) {
-		candidate.meta.tooClose.push(opponent.element);
+		// if the test fails, add debug information to the candidate metadata
+		const isBelow = candidate.top < opponent.top;
+		const required = isBelow ? rule.minBelow : rule.minAbove;
+		const actual = isBelow
+			? opponent.top - candidate.top
+			: candidate.top - opponent.bottom;
+
+		candidate.meta.tooClose.push({
+			required,
+			actual,
+			element: opponent.element,
+		});
 	}
 
 	return pass;
 };
 
-// test one element vs an array of other elements for the given rules
-const testCandidates = (rules, candidate, opponents) =>
-	opponents.every(testCandidate.bind(undefined, rules, candidate));
+// test one element vs an array of other elements for the given rule
+const testCandidates = (rule, candidate, opponents) =>
+	opponents
+		.map((opponent) => testCandidate(rule, candidate, opponent))
+		.every(Boolean);
 
 const enforceRules = (measurements, rules, exclusions) => {
 	let candidates = measurements.candidates;
@@ -173,6 +186,7 @@ const enforceRules = (measurements, rules, exclusions) => {
 
 	// enforce selector rules
 	if (rules.selectors) {
+		const selectorExclusions = [];
 		Object.keys(rules.selectors).forEach((selector) => {
 			result = filter(candidates, (candidate) =>
 				testCandidates(
@@ -184,8 +198,12 @@ const enforceRules = (measurements, rules, exclusions) => {
 				),
 			);
 			exclusions[selector] = result.exclusions;
-			candidates = result.filtered;
+			selectorExclusions.push(...result.exclusions);
 		});
+
+		candidates = candidates.filter(
+			(candidate) => !selectorExclusions.includes(candidate),
+		);
 	}
 
 	if (rules.filter) {
