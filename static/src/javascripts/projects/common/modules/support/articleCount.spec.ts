@@ -13,7 +13,7 @@ jest.mock('raven-js', () => ({
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 
-describe('history', () => {
+describe('articleCount', () => {
 	afterEach(() => {
 		storage.local.remove('gu.history.dailyArticleCount');
 	});
