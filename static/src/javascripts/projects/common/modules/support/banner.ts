@@ -15,7 +15,6 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { getVisitCount } from 'common/modules/commercial/contributions-utilities';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
-import type { ArticleCounts } from 'common/modules/support/articleCount';
 import { getArticleCounts } from 'common/modules/support/articleCount';
 import {
 	buildTagIds,
@@ -109,15 +108,6 @@ export const renderBanner = (
 		});
 };
 
-const getArticleCountToday = (
-	articleCounts: ArticleCounts | undefined,
-): number | undefined => {
-	if (articleCounts) {
-		return articleCounts.dailyArticleHistory[0]?.count;
-	}
-	return undefined;
-};
-
 const buildBannerPayload = async (): Promise<BannerPayload> => {
 	const {
 		contentType,
@@ -131,7 +121,7 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 
 	const articleCounts = await getArticleCounts(pageId, keywordIds, isFront);
 	const weeklyArticleHistory = articleCounts?.weeklyArticleHistory;
-	const articleCountToday = getArticleCountToday(articleCounts);
+	const articleCountToday = articleCounts?.dailyArticleHistory[0]?.count;
 
 	const targeting: BannerTargeting = {
 		alreadyVisitedCount: getVisitCount(),
