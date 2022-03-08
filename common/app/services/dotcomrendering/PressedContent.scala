@@ -97,7 +97,6 @@ object PressedContent {
     "/lifeandstyle/ng-interactive/2017/feb/19/the-5th-annual-ofm-50-what-we-love-about-food-in-2017",
     "/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email",
     "/lifeandstyle/2017/mar/25/parkour-free-runner-killed-on-paris-metro-sport-mustang-wanted",
-    "/info/ng-interactive/2017/mar/30/sign-up-for-the-bookmarks-email",
     "/us-news/2017/apr/25/trump-supporters-elect-again-100-days",
     "/info/ng-interactive/2017/may/05/sign-up-for-the-long-read-email",
     "/books/2017/may/27/arundhati-roy-the-ministry-of-utmost-happiness-exclusive-extract",
