@@ -36,4 +36,19 @@ describe('articleCount', () => {
 			{ day: today, count: 1 },
 		]);
 	});
+
+	it('increments the daily article count', () => {
+		const counts = [
+			{ day: today, count: 9 },
+			{ day: today - 1, count: 2 },
+		];
+		storage.local.set('gu.history.dailyArticleCount', counts);
+
+		incrementDailyArticleCount();
+
+		expect(storage.local.get('gu.history.dailyArticleCount')).toEqual([
+			{ day: today, count: 10 },
+			{ day: today - 1, count: 2 },
+		]);
+	});
 });
