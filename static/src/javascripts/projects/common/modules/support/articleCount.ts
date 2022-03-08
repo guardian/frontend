@@ -16,11 +16,14 @@ type DailyArticleHistory = DailyArticleCount[];
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 
+const isDailyArticleHistory = (data: any): data is DailyArticleHistory =>
+	Array.isArray(data);
+
 const getDailyArticleHistory = (): DailyArticleHistory | undefined => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- reading from local storage
 	const item = storage.local.get(storageKeyDailyArticleCount);
-	if (item) {
-		return item as DailyArticleHistory;
+	if (isDailyArticleHistory(item)) {
+		return item;
 	}
 	return undefined;
 };
