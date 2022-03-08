@@ -1,7 +1,6 @@
 package discussion.api
 
 import java.net.URLEncoder
-
 import io.lemonlabs.uri.dsl._
 import io.lemonlabs.uri.Url
 import common.GuLogging
@@ -14,6 +13,7 @@ import play.api.mvc.{Cookie, Headers, RequestHeader}
 
 import scala.concurrent.duration._
 import conf.switches.Switches._
+import io.lemonlabs.uri.config.{ExcludeNones, UriConfig}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,9 +28,9 @@ trait DiscussionApiLike extends Http with GuLogging {
   protected val defaultParams = List("api-key" -> "dotcom")
   protected val pageSize: String = "10"
 
-  def endpointUrl(relativePath: String, params: List[(String, Any)] = List()): String = { //Using List for params because order is important for caching reason
-    Url.parse(apiRoot + relativePath).addParams(params ++ defaultParams)
-//      .toString()
+  def endpointUrl(relativePath: String, params: List[(String, String)] = List()): String = { //Using List for params because order is important for caching reason
+    implicit val config: UriConfig = UriConfig(renderQuery = ExcludeNones)
+    Url.parse(apiRoot + relativePath).addParams(defaultParams ++ params).toString()
   }
 
   def commentCounts(ids: String)(implicit executionContext: ExecutionContext): Future[Seq[CommentCount]] = {
