@@ -204,12 +204,12 @@ type WeeklyArticleLog = {
 };
 type WeeklyArticleHistory = WeeklyArticleLog[];
 
-interface DailyArticle {
+interface DailyArticleCount {
 	day: number;
 	count: number;
 }
 
-type DailyArticleHistory = DailyArticle[];
+type DailyArticleHistory = DailyArticleCount[];
 
 interface ArticleCounts {
 	weeklyArticleHistory: WeeklyArticleHistory;

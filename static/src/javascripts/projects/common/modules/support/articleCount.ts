@@ -7,12 +7,12 @@ import type { WeeklyArticleHistory } from '@guardian/support-dotcom-components/d
 import { storageKeyDailyArticleCount } from 'common/modules/onward/history';
 import { getArticleCountConsent } from 'common/modules/support/supportMessaging';
 
-export interface DailyArticle {
+export interface DailyArticleCount {
 	day: number;
 	count: number;
 }
 
-type DailyArticleHistory = DailyArticle[];
+type DailyArticleHistory = DailyArticleCount[];
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 
