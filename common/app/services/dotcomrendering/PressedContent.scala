@@ -146,6 +146,7 @@ object PressedContent {
     "/politics/ng-interactive/2019/feb/15/how-brexit-revealed-four-new-political-factions",
     "/food/ng-interactive/2019/feb/24/the-ofm-50-2019-everything-we-love-in-the-world-of-food-right-now",
     "/us-news/2019/feb/25/a-young-woman-vanishes-the-police-cant-help-her-desperate-family-wont-give-up",
+    "/australia-news/ng-interactive/2019/mar/04/massacre-map-australia-the-killing-times-frontier-wars",
     "/world/ng-interactive/2019/mar/06/revealed-the-rise-and-rise-of-populist-rhetoric",
     "/lifeandstyle/ng-interactive/2019/apr/07/green-design-waste-not-want",
     "/lifeandstyle/ng-interactive/2019/apr/08/madelon-vriesendorp-architectures-lost-heroine",
