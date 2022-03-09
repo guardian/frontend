@@ -49,7 +49,7 @@ trait DiscussionApiLike extends Http with GuLogging {
   def commentFor(id: Int, displayThreaded: Option[String] = None)(implicit
       executionContext: ExecutionContext,
   ): Future[Comment] = {
-    val parameters = List("displayResponses" -> "true", "displayThreaded" -> displayThreaded.getOrElse(""))
+    val parameters = List("displayResponses" -> "true", "displayThreaded" -> displayThreaded.orNull)
     val url = endpointUrl(s"/comment/$id", parameters)
     getCommentJsonForId(id, url)
   }
@@ -63,10 +63,10 @@ trait DiscussionApiLike extends Http with GuLogging {
       "orderBy" -> params.orderBy,
       "displayThreaded" -> (params.displayThreaded match {
         case false => "false"
-        case _     => ""
+        case _     => null
       }),
       "showSwitches" -> "true",
-      "maxResponses" -> params.maxResponses.getOrElse(""),
+      "maxResponses" -> params.maxResponses.orNull,
     )
     val path = s"/discussion/$key" + (if (params.topComments) "/topcomments" else "")
     val url = endpointUrl(path, parameters)
@@ -85,7 +85,7 @@ trait DiscussionApiLike extends Http with GuLogging {
       "orderBy" -> params.orderBy,
       "displayThreaded" -> (params.displayThreaded match {
         case false => "false"
-        case _     => ""
+        case _     => null
       }),
     )
     val path = s"/comment/$id/context"
@@ -119,7 +119,7 @@ trait DiscussionApiLike extends Http with GuLogging {
       "showSwitches" -> "true",
       "displayHighlighted" -> (picks match {
         case true  => "true"
-        case false => ""
+        case false => null
       }),
     )
     val path = s"/profile/$userId/comments"
