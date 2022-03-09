@@ -3,13 +3,14 @@ import type { RegisterListener } from '../messenger';
 
 type PassbackPayload = {
 	slotId: string;
+	source: string;
 };
 
 const init = (register: RegisterListener): void => {
 	register('passback', (payloadFromCreative) => {
 		window.googletag.cmd.push(function () {
 			const payload = payloadFromCreative as PassbackPayload;
-			const { slotId } = payload;
+			const { slotId, source } = payload;
 			const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
 			const slot = window.googletag
 				.pubads()
@@ -22,7 +23,7 @@ const init = (register: RegisterListener): void => {
 					[[640, 480], [[300, 250]]],
 					[[0, 0], []],
 				]);
-				slot.setTargeting('passback', ['teads']);
+				slot.setTargeting('passback', [source]);
 				slot.setTargeting('slot', slotId);
 				window.googletag.pubads().refresh([slot]);
 			}
