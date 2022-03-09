@@ -162,13 +162,21 @@ const toStandardMessage = (
  *
  * Incoming messages contain the ID of the iframe into which the source window is embedded.
  */
-const getIframe = (message: StandardMessage): HTMLIFrameElement | undefined => {
+const getIframe = (
+	message: StandardMessage,
+	messageEventSouce: MessageEventSource | null,
+): HTMLIFrameElement | undefined => {
 	if (message.slotId) {
 		const container = document.getElementById(`dfp-ad--${message.slotId}`);
 		return container?.querySelector('iframe') ?? undefined;
 	} else if (message.iframeId) {
 		const el = document.getElementById(message.iframeId);
 		return el instanceof HTMLIFrameElement ? el : undefined;
+	} else if (messageEventSouce) {
+		const iframes = document.querySelectorAll<HTMLIFrameElement>('iframe');
+		return Array.from(iframes).find(
+			(iframe) => iframe.contentWindow === messageEventSouce,
+		);
 	}
 };
 
@@ -295,7 +303,7 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 						const thisRet = listener(
 							message.value,
 							ret,
-							getIframe(message),
+							getIframe(message, event.source),
 						);
 						return thisRet === undefined ? ret : thisRet;
 					}),
@@ -326,7 +334,7 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 			(error: { message: string } | null, result: unknown) =>
 				respond(message.id, event.source, error, result),
 			message.value,
-			getIframe(message),
+			getIframe(message, event.source),
 		);
 	} else {
 		// If there is no routine attached to this event type, we just answer
