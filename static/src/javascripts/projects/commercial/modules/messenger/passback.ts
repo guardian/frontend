@@ -1,3 +1,4 @@
+import { log } from '@guardian/libs';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
 
@@ -13,13 +14,28 @@ type PassbackMessagePayload = {
 const init = (register: RegisterListener): void => {
 	register('passback', (messagePayload, ret, iframe) => {
 		window.googletag.cmd.push(function () {
-			const { source } = messagePayload as PassbackMessagePayload;
 			/**
-			 * Attempt to get the slotId from the calling iFrame as provided by messenger
+			 * Get the passback source from the incoming message
+			 */
+			const { source } = messagePayload as PassbackMessagePayload;
+			if (!source) {
+				log(
+					'commercial',
+					'Passback listener: message does not have source set',
+				);
+			}
+			/**
+			 * Get the slotId from the calling iFrame as provided by messenger
 			 */
 			const slotId =
 				iframe?.closest<HTMLDivElement>('.ad-slot')?.dataset.name;
-			if (slotId) {
+			if (!slotId) {
+				log(
+					'commercial',
+					'Passback listener: cannot determine the calling iFrame',
+				);
+			}
+			if (slotId && source) {
 				const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
 				/**
 				 * Find the live slot object from googletag
@@ -41,6 +57,10 @@ const init = (register: RegisterListener): void => {
 					 */
 					slot.setTargeting('passback', [source]);
 					slot.setTargeting('slot', slotId);
+					log(
+						'commercial',
+						`Passback listener: passback from ${source} refreshing slot: ${slotId}`,
+					);
 					window.googletag.pubads().refresh([slot]);
 				}
 			}
