@@ -45,12 +45,11 @@ const getObserver = once(() =>
 );
 
 export const enableLazyLoad = (advert: Advert): void => {
-	if (
-		dfpEnv.lazyLoadObserve &&
-		isInVariantSynchronous(commercialGptLazyLoad, 'variant')
-	) {
-		window.googletag.pubads().enableLazyLoad();
-	} else if (dfpEnv.lazyLoadObserve) {
+	const useGptLazyLoad = isInVariantSynchronous(
+		commercialGptLazyLoad,
+		'variant',
+	);
+	if (dfpEnv.lazyLoadObserve && !useGptLazyLoad) {
 		void getObserver().then((observer) => observer.observe(advert.node));
 	} else {
 		displayAd(advert.id);

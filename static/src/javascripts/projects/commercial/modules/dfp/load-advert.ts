@@ -32,6 +32,7 @@ const eventTimer = EventTimer.get();
 
 export const loadAdvert = (advert: Advert): void => {
 	const adName = stripDfpAdPrefixFrom(advert.id);
+	// TODO can slotReady come after header bidding?
 	void advert.whenSlotReady
 		.catch(() => {
 			// The display needs to be called, even in the event of an error.
