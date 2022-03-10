@@ -2,7 +2,6 @@ import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
 
 type PassbackMessagePayload = {
-	slotId: string;
 	source: string;
 };
 
@@ -14,14 +13,12 @@ type PassbackMessagePayload = {
 const init = (register: RegisterListener): void => {
 	register('passback', (messagePayload, ret, iframe) => {
 		window.googletag.cmd.push(function () {
-			const payload = messagePayload as PassbackMessagePayload;
-			const { slotId: slotIdFromMessage, source } = payload;
+			const { source } = messagePayload as PassbackMessagePayload;
 			/**
 			 * Attempt to get the slotId from the calling iFrame as provided by messenger
 			 */
-			const slotIdFromIframe =
+			const slotId =
 				iframe?.closest<HTMLDivElement>('.ad-slot')?.dataset.name;
-			const slotId = slotIdFromMessage || slotIdFromIframe;
 			if (slotId) {
 				const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
 				/**
