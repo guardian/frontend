@@ -465,6 +465,7 @@
   "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/messenger/passback.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/messenger.ts"
  ],
