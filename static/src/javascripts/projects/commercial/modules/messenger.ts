@@ -158,9 +158,14 @@ const toStandardMessage = (
 });
 
 /**
- * Retrieve a reference to the calling iframe via it's ID.
+ * Retrieve a reference to the calling iFrame
  *
- * Incoming messages contain the ID of the iframe into which the source window is embedded.
+ * Attempts the following strategies to find the correct iframe:
+ * - using the slotId from the incoming message
+ * - using the iframeId from the incoming message
+ * - checking message event.source (i.e. window) against all page level iframe contentWindows
+ *
+ * Listeners can use then use the iFrame to determine the slot making the postMessage call
  */
 const getIframe = (
 	message: StandardMessage,
