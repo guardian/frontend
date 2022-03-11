@@ -5,6 +5,7 @@ import conf.Configuration
 import enumeratum.EnumEntry
 
 import scala.collection.immutable.IndexedSeq
+import scala.util.Try
 
 sealed trait ReaderRevenueSite extends EnumEntry {
   val url: String
@@ -14,7 +15,7 @@ object ReaderRevenueSite extends enumeratum.Enum[ReaderRevenueSite] {
 
   override val values: IndexedSeq[ReaderRevenueSite] = findValues
 
-  private def getHost(url: String): Option[String] = Url.parse(url).hostOption.map(_.toString)
+  private def getHost(url: String): Option[String] = Try(Url.parse(url).hostOption).toOption.map(_.toString)
 
   private val hosts: Set[String] = values.flatMap(site => getHost(site.url)).toSet
 
