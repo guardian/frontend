@@ -2,45 +2,48 @@
 @import conf.switches.Switches.{AsyncCss, FontSwitch}
 @import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, shouldEnhance, loadApp}
 @import templates.inlineJS.blocking.polyfills.js.{details, raf, setTimeout}
+@import experiments.{ActiveExperiments, LoFi}
 
 @()(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 
-@* NOTE the order of these includes is important  *@
-<script id="gu">
-    // ************* POLYFILLS *************
-    // Mostly handled by polyfill.io below. These are needed for inline JS though, so cannot rely on pf.io
+@if(!ActiveExperiments.isParticipating(LoFi)) {
+    @* NOTE the order of these includes is important  *@
+    <script id="gu">
+        // ************* POLYFILLS *************
+        // Mostly handled by polyfill.io below. These are needed for inline JS though, so cannot rely on pf.io
 
-    // It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that.
-    // Used by RAF polyfill.
-    @Html(setTimeout().body)
+        // It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that.
+        // Used by RAF polyfill.
+        @Html(setTimeout().body)
 
-    // Pollyfill requestAnimationFrame
-    @InlineJs(raf().body, "raf.js")
+        // Pollyfill requestAnimationFrame
+        @InlineJs(raf().body, "raf.js")
 
-    // Polyfill details
-    @InlineJs(details().body, "details.js")
-
-
-    // ************* RENDER-CRITICAL BLOCKING JS *************
+        // Polyfill details
+        @InlineJs(details().body, "details.js")
 
 
-    // determine whether to run enhanced JS
-    @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
+        // ************* RENDER-CRITICAL BLOCKING JS *************
 
-    // page config
-    @Html(config(page).body)
 
-    // apply render conditions
-    @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
+        // determine whether to run enhanced JS
+        @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
 
-    @if(AsyncCss.isSwitchedOn) {
-        // enable non-blocking stylesheets
-        // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
-        @InlineJs(enableStylesheets().body, "enableStylesheets.js")
-    }
+        // page config
+        @Html(config(page).body)
 
-    // ************* LOAD THE MAIN APP ASYNC *************
+        // apply render conditions
+        @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
 
-    @InlineJs(loadApp().body, "loadApp.js")
+        @if(AsyncCss.isSwitchedOn) {
+            // enable non-blocking stylesheets
+            // borrows *heavily* from https://github.com/filamentgroup/loadCSS.
+            @InlineJs(enableStylesheets().body, "enableStylesheets.js")
+        }
 
-</script>
+        // ************* LOAD THE MAIN APP ASYNC *************
+
+        @InlineJs(loadApp().body, "loadApp.js")
+
+    </script>
+}

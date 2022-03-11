@@ -2,9 +2,10 @@
 @import conf.Configuration
 @import conf.Static
 @import views.support.FBPixel
+@import experiments.{ActiveExperiments, LoFi}
 
 
-@if(!page.metadata.isSecureContact) {
+@if(!page.metadata.isSecureContact && !ActiveExperiments.isParticipating(LoFi)) {
 
     @******************************************************************************
                                 Core Analytics

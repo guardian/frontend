@@ -4,6 +4,7 @@
 @import model.Page
 @import templates.inlineJS.nonBlocking.js._
 @import play.twirl.api.HtmlFormat
+@import experiments.{ActiveExperiments, LoFi}
 
 @import model.DotcomContentType
 @()(implicit page: Page, request: RequestHeader, context: model.ApplicationContext)
@@ -13,63 +14,65 @@
  * but that is too blocking / risky to be put in the `head` of the document
  *@
 
-<script>
-// non-blocking JS to improve the perceived rendering speed
-@InlineJs(getUserData().body, "getUserData.js")
+@if(!ActiveExperiments.isParticipating(LoFi)) {
+    <script>
+    // non-blocking JS to improve the perceived rendering speed
+    @InlineJs(getUserData().body, "getUserData.js")
 
-@if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-    // Insert username in top bar on page load
-    @InlineJs(showUserName().body, "showUserName.js")
-}
-
-// ************* ANALYTICS *************
-
-// Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag
-@InlineJs(ophanConfig().body, "ophanConfig.js")
-
-@if(page.metadata.contentType.exists { c =>
-        c == DotcomContentType.Article ||
-        c == DotcomContentType.LiveBlog ||
-        c == DotcomContentType.Interactive
+    @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+        // Insert username in top bar on page load
+        @InlineJs(showUserName().body, "showUserName.js")
     }
-) {
-    // provide CURL for interactives ASAP, and in perpetuity.
-    // this config may or may not be needed. but it has been present
-    // on the page for years, and if an interactive was released that assumed it,
-    // it will break. so we're providing just incase that is true.
-    window.curlConfig = {
-        baseUrl: '@{Configuration.assets.path}javascripts',
-        apiName: 'require',
-        paths: {
-            'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}'
+
+    // ************* ANALYTICS *************
+
+    // Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag
+    @InlineJs(ophanConfig().body, "ophanConfig.js")
+
+    @if(page.metadata.contentType.exists { c =>
+            c == DotcomContentType.Article ||
+            c == DotcomContentType.LiveBlog ||
+            c == DotcomContentType.Interactive
         }
-    };
-    window.curl = window.curlConfig;
-    @HtmlFormat.raw(common.Assets.js.curl)
-
-    [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
-        require([el.getAttribute('data-interactive')], function (interactive) {
-            interactive.boot(el, document, window.guardian.config);
-        }, function (err) {
-            console.log('Interactive failed', mainJS);
-            console.log('Error:', err);
-        });
-        require(['ophan/ng'], function(ophan) {
-            var a = el.querySelector('a');
-            var href = a && a.href;
-
-            if (href) {
-                ophan.trackComponentAttention(href, el);
+    ) {
+        // provide CURL for interactives ASAP, and in perpetuity.
+        // this config may or may not be needed. but it has been present
+        // on the page for years, and if an interactive was released that assumed it,
+        // it will break. so we're providing just incase that is true.
+        window.curlConfig = {
+            baseUrl: '@{Configuration.assets.path}javascripts',
+            apiName: 'require',
+            paths: {
+                'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}'
             }
+        };
+        window.curl = window.curlConfig;
+        @HtmlFormat.raw(common.Assets.js.curl)
+
+        [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
+            require([el.getAttribute('data-interactive')], function (interactive) {
+                interactive.boot(el, document, window.guardian.config);
+            }, function (err) {
+                console.log('Interactive failed', mainJS);
+                console.log('Error:', err);
+            });
+            require(['ophan/ng'], function(ophan) {
+                var a = el.querySelector('a');
+                var href = a && a.href;
+
+                if (href) {
+                    ophan.trackComponentAttention(href, el);
+                }
+            });
+            [].slice.apply(document.querySelectorAll('iframe.interactive-atom-fence')).forEach(function (el) {
+                var srcdoc;
+                if (!el.srcdoc) {
+                    srcdoc = el.getAttribute('srcdoc');
+                    el.contentWindow.contents = srcdoc;
+                    el.src = 'javascript:window["contents"]';
+                }
+            });
         });
-        [].slice.apply(document.querySelectorAll('iframe.interactive-atom-fence')).forEach(function (el) {
-            var srcdoc;
-            if (!el.srcdoc) {
-                srcdoc = el.getAttribute('srcdoc');
-                el.contentWindow.contents = srcdoc;
-                el.src = 'javascript:window["contents"]';
-            }
-        });
-    });
+    }
+    </script>
 }
-</script>

@@ -1,5 +1,6 @@
 @import layout.ContentWidths.MainMedia
 @import views.support.{ImgSrc, RenderClasses, SrcSet}
+@import experiments.{ActiveExperiments, LoFi}
 
 @(
     picture: model.ImageMedia,
@@ -33,36 +34,38 @@
     }
 }
 
-<picture>
-    @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
-    <!--[if IE 9]><video style="display: none;"><![endif]-->
+@if(!ActiveExperiments.isParticipating(LoFi)) {
+    <picture>
+        @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
 
-    @if(isImmersiveMainMedia) {
-        @picture.largestImage.map { largestImage =>
-            @immersivePortraitSource(largestImage, hidpi = true)
-            @immersivePortraitSource(largestImage)
+        @if(isImmersiveMainMedia) {
+            @picture.largestImage.map { largestImage =>
+                @immersivePortraitSource(largestImage, hidpi = true)
+                @immersivePortraitSource(largestImage)
+            }
         }
-    }
 
-    @widths.breakpoints.map { breakpointWidth =>
-        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
-        sizes="@breakpointWidth.width"
-        srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true))" />
-        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
-        sizes="@breakpointWidth.width"
-        srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture)))" />
-    }
+        @widths.breakpoints.map { breakpointWidth =>
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
+            sizes="@breakpointWidth.width"
+            srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true))" />
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+            sizes="@breakpointWidth.width"
+            srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture)))" />
+        }
 
-    <!--[if IE 9]></video><![endif]-->
+        <!--[if IE 9]></video><![endif]-->
 
-    <img class="@RenderClasses(classes: _*)"
-        itemprop="contentUrl"
-        alt="@imageAltText"
-        src="@ImgSrc.getFallbackUrl(picture)" />
-</picture>
+        <img class="@RenderClasses(classes: _*)"
+            itemprop="contentUrl"
+            alt="@imageAltText"
+            src="@ImgSrc.getFallbackUrl(picture)" />
+    </picture>
 
-@if(!isImmersiveMainMedia) {
-    @picture.largestImage.map{ largestImage =>
-        </div>
+    @if(!isImmersiveMainMedia) {
+        @picture.largestImage.map{ largestImage =>
+            </div>
+        }
     }
 }

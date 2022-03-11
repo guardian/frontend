@@ -8,6 +8,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
     StickyVideos,
+    LoFi,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -29,4 +30,13 @@ object StickyVideos
       owners = Seq(Owner.withGithub("joecowton1")),
       sellByDate = LocalDate.of(2022, 6, 2),
       participationGroup = Perc0C,
+    )
+
+object LoFi
+    extends Experiment(
+      name = "lo-fi",
+      description = "Renders a lo-fi version of the Guardian - no JS, fonts or images",
+      owners = Seq(Owner.withGithub("sndrs")),
+      sellByDate = LocalDate.of(2022, 9, 13),
+      participationGroup = Perc0A,
     )
