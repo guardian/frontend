@@ -45,12 +45,10 @@ const init = (register: RegisterListener): void => {
 					.getSlots()
 					.find((s) => s.getSlotElementId() === slotIdWithPrefix);
 				if (slot) {
-					// TODO use size mappings frrom commercial-core
-					slot.defineSizeMapping([
-						[[1024, 768], [[300, 250]]],
-						[[640, 480], [[300, 250]]],
-						[[0, 0], []],
-					]);
+					/**
+					 * All viewports >= 0x0 use fixed size 300x250
+					 */
+					slot.defineSizeMapping([[[0, 0], [[300, 250]]]]);
 					/**
 					 * Set passback targeting param so the passback line item can negatively target
 					 * This ensures that passback line items do not match for this request
