@@ -30,7 +30,7 @@ trait DiscussionApiLike extends Http with GuLogging {
 
   def endpointUrl(relativePath: String, params: List[(String, Option[String])] = List()): String = { //Using List for params because order is important for caching reason
     implicit val config: UriConfig = UriConfig(renderQuery = ExcludeNones)
-    Url.parse(apiRoot + relativePath).addParams(defaultParams ++ params).toString()
+    Url.parse(apiRoot + relativePath).addParams(params ++ defaultParams).toString()
   }
 
   def commentCounts(ids: String)(implicit executionContext: ExecutionContext): Future[Seq[CommentCount]] = {
