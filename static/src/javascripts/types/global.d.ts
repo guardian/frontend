@@ -196,6 +196,10 @@ type AdBlockers = {
 	onDetect: function[];
 };
 
+/**
+ *  All article history types here are duplicated from elsewhere.
+ *  This is because adding imports to this file causes typechecking to break for every use of window.guardian in the codebase.
+ */
 type TagCounts = Record<string, number>;
 type WeeklyArticleLog = {
 	week: number;
