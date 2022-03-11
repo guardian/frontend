@@ -28,9 +28,7 @@ import {
     logHistory,
     logSummary,
     showInMegaNav,
-    incrementDailyArticleCount,
 } from 'common/modules/onward/history';
-import { incrementWeeklyArticleCount } from '@guardian/support-dotcom-components';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
@@ -54,7 +52,6 @@ import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { brazeBanner } from 'common/modules/commercial/braze/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
-import { getArticleCountConsent } from 'common/modules/support/supportMessaging';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 
 const initialiseTopNavItems = () => {
@@ -165,16 +162,6 @@ const updateHistory = () => {
         }
 
         logHistory(page);
-    }
-};
-
-const updateArticleCounts = async () => {
-    const page = config.get('page');
-    const hasConsentedToArticleCounts = await getArticleCountConsent();
-
-    if (page && !page.isFront && hasConsentedToArticleCounts) {
-        incrementDailyArticleCount(page);
-        incrementWeeklyArticleCount(storage.local, page.pageId, page.keywordIds.split(','));
     }
 };
 
@@ -337,7 +324,6 @@ const init = () => {
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-banner-picker', initialiseBanner],
-        ['c-increment-article-counts', updateArticleCounts],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
         ['c-load-google-analytics', loadGoogleAnalytics],

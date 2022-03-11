@@ -9,9 +9,7 @@ import {
     reset,
     seriesSummary,
     mostViewedSeries,
-    getArticleViewCountForDays,
     _,
-    incrementDailyArticleCount,
     getMondayFromDate,
 } from 'common/modules/onward/history';
 import { getCookie as getCookie_ } from 'lib/cookies';
@@ -53,7 +51,6 @@ jest.mock('raven-js', () => ({
 const contains = [['/p/3kvgc', 1], ['/p/3kx8f', 1], ['/p/3kx7e', 1]];
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
-const startOfThisWeek = getMondayFromDate(new Date());
 
 const pageConfig = {
     pageId: '/p/3jbcb',
@@ -376,49 +373,5 @@ describe('history', () => {
 
         expect(getContributors().length).toEqual(1);
         expect(getContributors()[0][0]).toEqual('Finbarr Saunders');
-    });
-
-    // dailyArticleCount tests
-    it('gets article count for today only', () => {
-        const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        expect(getArticleViewCountForDays(1)).toEqual(1);
-    });
-
-    it('gets article count for 2 days', () => {
-        const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        expect(getArticleViewCountForDays(2)).toEqual(2);
-    });
-
-    it('increments the daily article count', () => {
-        const counts = [{ day: today, count: 1 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        incrementDailyArticleCount(pageConfig);
-
-        expect(getArticleViewCountForDays(1)).toEqual(2);
-    });
-
-    it('increments the yearly article count', () => {
-        const counts = [{ day: today, count: 1 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        incrementDailyArticleCount(pageConfig);
-
-        expect(getArticleViewCountForDays(1)).toEqual(2);
-    });
-
-    it('removes old daily history while incrementing the article count', () => {
-        const counts = [{ day: today - 70, count: 9 }];
-        storageStub.local.set('gu.history.dailyArticleCount', counts);
-
-        incrementDailyArticleCount(pageConfig);
-
-        expect(storageStub.local.get('gu.history.dailyArticleCount')).toEqual([
-            { day: today, count: 1 },
-        ]);
     });
 });
