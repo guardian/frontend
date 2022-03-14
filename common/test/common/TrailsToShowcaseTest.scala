@@ -194,7 +194,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val rundownPanel = rundownPanels.head
     val rundownPanelGuid = (rundownPanel \ "guid").head
-    rundownPanelGuid.text should be("rundown-container-id")
+    val rundownPanelHash = "rundown-container-id".hashCode
+    rundownPanelGuid.text should be(s"${"rundown-container-id-".concat(rundownPanelHash)}")
     rundownPanelGuid.attribute("isPermaLink").get.head.text should be("false")
 
     (rundownPanel \ "panel_title").filter(_.prefix == "g").head.text should be("My rundown panel title")
