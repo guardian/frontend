@@ -17,14 +17,14 @@ const displayLazyAds = (): void => {
 	);
 	if (useGptLazyLoad) {
 		window.googletag.pubads().enableLazyLoad({
-			// Values TBD
-			// Fetch slots within 5 viewports.
-			fetchMarginPercent: 100,
-			// Render slots within 2 viewports.
-			renderMarginPercent: 100,
-			// Double the above values on mobile, where viewports are smaller
-			// and users tend to scroll faster.
-			// mobileScaling: 2.0,
+			// average mobile and desktop screen size ~ 1080px
+			// 200px / 1080px = 18.5%
+			fetchMarginPercent: 18.5,
+			// Fetching and rendering at the same margin
+			// simulates control group behavior.
+			renderMarginPercent: 18.5,
+			// `mobileScaling` property omitted as the average
+			// mobile and desktop sizes are the same.
 		});
 	}
 
