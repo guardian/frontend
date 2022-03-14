@@ -264,7 +264,7 @@ object TrailsToShowcase {
       val updateTimes = articles.map(article => Some(article.updated)) :+ collectionLastUpdated
       val updated = updateTimes.flatten.sortBy(_.getMillis).lastOption.getOrElse(published)
       // to make the rundown panel ID unique when its title is changed, we'll use a hash of the title as part of the ID
-      val rundownPanelId = id.concat(s"-${panelTitle.replaceAll(" ","").toLowerCase.hashCode}")
+      val rundownPanelId = id.concat(s"-${panelTitle.replaceAll(" ", "").toLowerCase.hashCode}")
 
       RundownPanel(
         guid = rundownPanelId,
