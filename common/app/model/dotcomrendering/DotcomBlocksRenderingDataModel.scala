@@ -9,6 +9,7 @@ import model.dotcomrendering.pageElements.PageElement
 import model.{ContentFormat, ContentPage, LiveBlogPage}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
+import views.support.CamelCase
 
 // -----------------------------------------------------------------
 // DCR Blocks DataModel
@@ -26,6 +27,7 @@ case class DotcomBlocksRenderingDataModel(
     section: String,
     sharedAdTargeting: Map[String, AdTargetParamValue],
     adUnit: String,
+    switches: Map[String, Boolean],
 )
 
 object DotcomBlocksRenderingDataModel {
@@ -46,6 +48,7 @@ object DotcomBlocksRenderingDataModel {
         "section" -> model.section,
         "sharedAdTargeting" -> Json.toJson(model.sharedAdTargeting),
         "adUnit" -> model.adUnit,
+        "switches" -> model.switches,
       )
 
       ElementsEnhancer.enhanceBlocks(obj)
@@ -88,6 +91,12 @@ object DotcomBlocksRenderingDataModel {
       )
       .toList
 
+    val switches: Map[String, Boolean] = conf.switches.Switches.all
+      .filter(_.exposeClientSide)
+      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+      })
+
     DotcomBlocksRenderingDataModel(
       blocks = bodyBlocksDCR,
       format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
@@ -101,6 +110,7 @@ object DotcomBlocksRenderingDataModel {
       sharedAdTargeting =
         content.metadata.commercial.map(_.adTargeting(edition)).getOrElse(Set.empty).map(f => (f.name, f.value)).toMap,
       adUnit = content.metadata.adUnitSuffix,
+      switches = switches,
     )
   }
 }
