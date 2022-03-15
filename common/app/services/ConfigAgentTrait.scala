@@ -2,7 +2,6 @@ package services
 
 import akka.util.Timeout
 import app.LifecycleComponent
-import com.gu.Box
 import com.gu.facia.api.models.{Front, _}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson, FrontJson}

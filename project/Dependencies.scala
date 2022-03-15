@@ -12,7 +12,6 @@ object Dependencies {
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
   val playJsonExtensionsVersion = "0.42.0"
-  val guBox = "com.gu" %% "box" % "0.1.0"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion

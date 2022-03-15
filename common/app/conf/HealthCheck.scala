@@ -5,7 +5,6 @@ import common._
 import org.joda.time.DateTime
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
-import com.gu.Box
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.control.NonFatal

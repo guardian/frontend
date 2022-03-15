@@ -1,6 +1,5 @@
 package feed
 
-import com.gu.Box
 import contentapi.ContentApiClient
 import common._
 import model.RelatedContentItem

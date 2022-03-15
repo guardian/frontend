@@ -1,7 +1,6 @@
 package jobs
 
 import app.LifecycleComponent
-import com.gu.Box
 import common._
 import contentapi.ContentApiClient
 import services.{NewsSiteMap, VideoSiteMap}

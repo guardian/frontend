@@ -1,6 +1,5 @@
 package commercial.targeting
 
-import com.gu.Box
 import common._
 import com.gu.targeting.client.{Campaign, CampaignCache}
 import conf.Configuration
