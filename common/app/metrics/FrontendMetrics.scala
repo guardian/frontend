@@ -127,7 +127,7 @@ final case class DurationMetric(override val name: String, override val metricUn
   }
 
   // Public for tests.
-  def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
+  def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: dataPoints.get())
 
   def recordDuration(timeInMillis: Double): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
 
