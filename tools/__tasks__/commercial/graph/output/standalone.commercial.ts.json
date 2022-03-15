@@ -75,7 +75,6 @@
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../projects/commercial/commercial-metrics.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
@@ -87,18 +86,23 @@
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts"
  ],
- "../projects/commercial/modules/article-body-adverts.js": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.js",
-  "../lib/config.js",
+ "../projects/commercial/modules/article-body-adverts.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/config.d.ts",
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
+  "../lib/url.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
-  "../projects/common/modules/article/space-filler.js",
-  "../projects/common/modules/commercial/commercial-features.ts"
+  "../projects/commercial/modules/filter-nearby-candidates-broken.ts",
+  "../projects/commercial/modules/filter-nearby-candidates-fixed.ts",
+  "../projects/common/modules/article/space-filler.ts",
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
   "../lib/config.d.ts",
@@ -106,7 +110,7 @@
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
-  "../projects/common/modules/article/space-filler.js",
+  "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
@@ -153,7 +157,8 @@
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
  "../projects/commercial/modules/dfp/create-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../projects/commercial/modules/dfp/dfp-env-globals.ts"
  ],
  "../projects/commercial/modules/dfp/define-slot.js": [
   "../../../../node_modules/lodash-es/lodash.js",
@@ -161,6 +166,7 @@
   "../lib/detect.js",
   "../lib/url.ts"
  ],
+ "../projects/commercial/modules/dfp/dfp-env-globals.ts": [],
  "../projects/commercial/modules/dfp/dfp-env.ts": [
   "../lib/config.d.ts",
   "../lib/url.ts",
@@ -254,6 +260,7 @@
  ],
  "../projects/commercial/modules/dfp/prepare-googletag.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/raven.js",
@@ -346,6 +353,8 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts"
  ],
+ "../projects/commercial/modules/filter-nearby-candidates-broken.ts": [],
+ "../projects/commercial/modules/filter-nearby-candidates-fixed.ts": [],
  "../projects/commercial/modules/header-bidding/a9/a9.ts": [
   "../lib/config.d.ts",
   "../lib/noop.ts",
@@ -419,7 +428,7 @@
   "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
-  "../projects/common/modules/article/space-filler.js",
+  "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/messenger.ts": [
@@ -542,16 +551,16 @@
  ],
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/ab.ts"
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
- "../projects/common/modules/article/space-filler.js": [
-  "../lib/fastdom-promise.js",
+ "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
   "../projects/common/modules/spacefinder.js"
  ],
  "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/commercial/build-page-targeting.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
@@ -628,7 +637,8 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
-  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
+  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -654,6 +664,10 @@
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
+ "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/identity/api.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
@@ -666,11 +680,23 @@
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
  ],
- "../projects/common/modules/spacefinder.js": [
+ "../projects/common/modules/mark-candidates.js": [],
+ "../projects/common/modules/on-images-loaded-broken.js": [
   "../../../../node_modules/bean/bean.js",
+  "../../../../node_modules/lodash-es/lodash.js"
+ ],
+ "../projects/common/modules/on-images-loaded-fixed.js": [
+  "../../../../node_modules/lodash-es/lodash.js"
+ ],
+ "../projects/common/modules/spacefinder.js": [
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.ts"
+  "../lib/mediator.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts",
+  "../projects/common/modules/mark-candidates.js",
+  "../projects/common/modules/on-images-loaded-broken.js",
+  "../projects/common/modules/on-images-loaded-fixed.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
@@ -693,9 +719,10 @@
   "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
   "../projects/commercial/modules/article-aside-adverts.ts",
-  "../projects/commercial/modules/article-body-adverts.js",
+  "../projects/commercial/modules/article-body-adverts.ts",
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
+  "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.js",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
   "../projects/commercial/modules/dfp/prepare-permutive.js",

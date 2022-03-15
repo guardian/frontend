@@ -9,6 +9,7 @@ import { init as initArticleAsideAdverts } from '../projects/commercial/modules/
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
 import { initCommentAdverts } from '../projects/commercial/modules/comment-adverts';
 import { init as initComscore } from '../projects/commercial/modules/comscore';
+import { adSlotIdPrefix } from '../projects/commercial/modules/dfp/dfp-env-globals';
 import { init as prepareA9 } from '../projects/commercial/modules/dfp/prepare-a9';
 import { init as prepareGoogletag } from '../projects/commercial/modules/dfp/prepare-googletag';
 import { initPermutive } from '../projects/commercial/modules/dfp/prepare-permutive';
@@ -135,6 +136,22 @@ const loadModules = (modules: Modules, eventName: string) => {
 	});
 };
 
+const recordCommercialMetrics = () => {
+	const eventTimer = EventTimer.get();
+	eventTimer.trigger('commercialModulesLoaded');
+	// record the number of ad slots on the page
+	const adSlotsTotal = document.querySelectorAll(
+		`[id^="${adSlotIdPrefix}"]`,
+	).length;
+	eventTimer.setProperty('adSlotsTotal', adSlotsTotal);
+
+	// and the number of inline ad slots
+	const adSlotsInline = document.querySelectorAll(
+		`[id^="${adSlotIdPrefix}inline"]`,
+	).length;
+	eventTimer.setProperty('adSlotsInline', adSlotsInline);
+};
+
 const bootCommercial = async (): Promise<void> => {
 	log('commercial', '📦 standalone.commercial.ts', __webpack_public_path__);
 
@@ -169,9 +186,7 @@ const bootCommercial = async (): Promise<void> => {
 		];
 		const promises = allModules.map((args) => loadModules(...args));
 
-		await Promise.all(promises).then(() => {
-			EventTimer.get().trigger('commercialEnd');
-		});
+		await Promise.all(promises).then(recordCommercialMetrics);
 	} catch (error) {
 		// report async errors in bootCommercial to Sentry with the commercial feature tag
 		reportError(error, tags, false);

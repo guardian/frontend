@@ -29,12 +29,12 @@ Then leave the bowl for 30 minutes minimum (ideally, up to 4 hours).
 
 ### The cooking
 
-You’ll need a pan, or ideally a [crêpiere/_billig_][billig], from [Krampouz][].
+You’ll need a pan, or ideally a [crêpière/_billig_][billig], from [Krampouz][].
 
 [billig]: https://en.wikipedia.org/wiki/Crepe_maker#Denomination
 [Krampouz]: https://en.wikipedia.org/wiki/Krampouz
 
-Spread batter on the crêpiere, wait a few seconds, flip, wait,
+Spread batter on the crêpière, wait a few seconds, flip, wait,
 flip back again, paint the crêpe with butter, fold.
 
 Don't eat the first crêpe (in Britanny we say: “the first one goes to the dog”).

@@ -2,45 +2,13 @@ import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
+import type {
+	SpacefinderRules,
+	SpacefinderWriter,
+} from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { addSlot } from './dfp/add-slot';
 import { createAdSlot } from './dfp/create-slot';
-
-// TODO Typescript Spacefinder
-type RuleSpacing = {
-	minAbove: number;
-	minBelow: number;
-};
-
-type SpacefinderItem = {
-	top: number;
-	bottom: number;
-	element: HTMLElement;
-};
-
-type SpacefinderRules = {
-	bodySelector: string;
-	body?: Node;
-	slotSelector: string;
-	// minimum from slot to top of page
-	absoluteMinAbove?: number;
-	// minimum from para to top of article
-	minAbove: number;
-	// minimum from (top of) para to bottom of article
-	minBelow: number;
-	// vertical px to clear the content meta element (byline etc) by. 0 to ignore
-	clearContentMeta: number;
-	// custom rules using selectors.
-	selectors: Record<string, RuleSpacing>;
-	// will run each slot through this fn to check if it must be counted in
-	filter?: (x: SpacefinderItem) => boolean;
-	// will remove slots before this one
-	startAt?: HTMLElement;
-	// will remove slots from this one on
-	stopAt?: HTMLElement;
-	// will reverse the order of slots (this is useful for lazy loaded content)
-	fromBottom?: boolean;
-};
 
 const isDotcomRendering = config.get('isDotcomRendering', false) as boolean;
 const bodySelector = isDotcomRendering
@@ -75,7 +43,7 @@ const wideRules: SpacefinderRules = {
 			minAbove: 50,
 			minBelow: 50,
 		},
-		' > *:not(p):not(h2):not(blockquote)': {
+		' > *:not(p):not(h2):not(blockquote):not(#sign-in-gate)': {
 			minAbove: 50,
 			minBelow: 50,
 		},
@@ -111,7 +79,7 @@ const desktopRules: SpacefinderRules = {
 	},
 };
 
-const insertSlot = (paras: HTMLElement[]): Promise<void> => {
+const insertSlot: SpacefinderWriter = (paras) => {
 	const slot = createAdSlot('carrot');
 	const candidates = paras.slice(1);
 	return fastdom
@@ -133,7 +101,7 @@ const getRules = (): SpacefinderRules => {
 	}
 };
 
-export const initCarrot = (): Promise<void> => {
+export const initCarrot = (): Promise<boolean> => {
 	if (commercialFeatures.carrotTrafficDriver) {
 		return spaceFiller.fillSpace(getRules(), insertSlot, {
 			waitForImages: true,
@@ -141,5 +109,5 @@ export const initCarrot = (): Promise<void> => {
 			waitForInteractives: true,
 		});
 	}
-	return Promise.resolve();
+	return Promise.resolve(false);
 };

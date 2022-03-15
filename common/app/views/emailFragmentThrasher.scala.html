@@ -1,0 +1,11 @@
+@import services.newsletters.NewsletterResponse
+@(page: model.Page, emailNewsletter: NewsletterResponse)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@emailEmbed(page) {
+    @fragments.email.signup.subscription.thrasherEmailSignUp(
+        emailNewsletter.identityName,
+        emailNewsletter.emailEmbed,
+        emailNewsletter.emailConfirmation,
+    )
+}
+

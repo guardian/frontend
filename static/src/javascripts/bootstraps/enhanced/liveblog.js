@@ -12,6 +12,7 @@ import bean from 'bean';
 import { scrollToElement } from 'lib/scroller';
 import { elementInView } from 'lib/element-inview';
 import ophan from 'ophan/ng';
+import { measureTiming } from "commercial/modules/measure-timing";
 
 const affixTimeline = () => {
 	const keywordIds = config.get('page.keywordIds', '');
@@ -80,19 +81,34 @@ const componentEvent = (pinnedBlockId, action, value) => ({
     }
 });
 
+const trackPinnedPostDuration = (pinnedBlock) => {
+    let hasBeenSeen = false;
+    const pinnedPostTiming = measureTiming('pinned-post-view-duration');
+    const originalPinnedBlockId = pinnedBlock.dataset.blockId
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                hasBeenSeen = true;
+                pinnedPostTiming.clear();
+                pinnedPostTiming.start();
+            } else if (hasBeenSeen) {
+                const timeTaken = pinnedPostTiming.end();
+                if (timeTaken) {
+                    const timeTakenInSeconds = timeTaken/1000;
+                    ophan.record(componentEvent(originalPinnedBlockId, 'VIEW', {value: timeTakenInSeconds.toString()}));
+                }
+            }
+        }, {
+            threshold: 0.1,
+        });
+        observer.observe(pinnedBlock);
+    }
+}
+
 const initTracking = () => {
 	const pinnedBlock = document.getElementById('pinned-block');
 	if (pinnedBlock) {
-		const pinnedBlockId = cleanId(pinnedBlock.dataset.blockId);
-
-		ophan.record(componentEvent(pinnedBlockId, 'INSERT'));
-		const inView = elementInView(pinnedBlock, window, {
-			top: 18,
-		});
-
-		inView.on('firstview', () => {
-			ophan.record(componentEvent(pinnedBlockId, 'VIEW'));
-		});
+        trackPinnedPostDuration(pinnedBlock);
 	}
 };
 

@@ -1,33 +1,31 @@
 package renderers
 
 import akka.actor.ActorSystem
-import com.gu.contentapi.client.model.v1.Blocks
-import common.{GuLogging, LinkTo}
+import com.gu.contentapi.client.model.v1.{Block, Blocks}
+import common.GuLogging
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
+import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.CacheTime
-import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils}
-import model.{ArticlePage, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
+import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomRenderingDataModel, PageType}
+import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
+import play.api.libs.json.JsResult.Exception
 import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.mvc.{RequestHeader, Result}
 import play.api.mvc.Results.{InternalServerError, NotFound}
+import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import scala.concurrent.duration._
-import model.dotcomrendering.PageType
-import http.ResultWithPreconnectPreload
-import http.HttpPreconnections
 
 import java.net.ConnectException
 import java.util.concurrent.TimeoutException
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.duration._
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
 case class DCRTimeoutException(message: String) extends TimeoutException(message)
+case class DCRRenderingException(message: String) extends IllegalStateException(message)
 
 class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload {
 
@@ -39,6 +37,35 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     resetTimeout = Configuration.rendering.timeout * 4,
   )
 
+  private[this] def postWithoutHandler(
+      ws: WSClient,
+      payload: String,
+      endpoint: String,
+      timeout: Duration = Configuration.rendering.timeout,
+  )(implicit request: RequestHeader): Future[WSResponse] = {
+    val resp = ws
+      .url(endpoint)
+      .withRequestTimeout(timeout)
+      .addHttpHeaders("Content-Type" -> "application/json")
+      .post(payload)
+
+    resp.recoverWith({
+      case _: ConnectException if Configuration.environment.stage == "DEV" =>
+        val msg = s"""Connection refused to ${endpoint}.
+                     |
+                     |You are trying to access a Dotcom Rendering page via Frontend but it
+                     |doesn't look like DCR is running locally on the expected port (3030).
+                     |
+                     |Note, for most use cases, we recommend developing directly on DCR.
+                     |
+                     |To get started with dotcom-rendering, see:
+                     |
+                     |    https://github.com/guardian/dotcom-rendering""".stripMargin
+        Future.failed(DCRLocalConnectException(msg))
+      case t: TimeoutException => Future.failed(DCRTimeoutException(t.getMessage))
+    })
+  }
+
   private[this] def post(
       ws: WSClient,
       payload: String,
@@ -46,31 +73,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: Page,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
-
-    def doPost() = {
-      val resp = ws
-        .url(endpoint)
-        .withRequestTimeout(timeout)
-        .addHttpHeaders("Content-Type" -> "application/json")
-        .post(payload)
-
-      resp.recoverWith({
-        case _: ConnectException if Configuration.environment.stage == "DEV" =>
-          val msg = s"""Connection refused to ${endpoint}.
-              |
-              |You are trying to access a Dotcom Rendering page via Frontend but it
-              |doesn't look like DCR is running locally on the expected port (3030).
-              |
-              |Note, for most use cases, we recommend developing directly on DCR.
-              |
-              |To get started with dotcom-rendering, see:
-              |
-              |    https://github.com/guardian/dotcom-rendering""".stripMargin
-          Future.failed(DCRLocalConnectException(msg))
-        case t: TimeoutException => Future.failed(DCRTimeoutException(t.getMessage))
-      })
-    }
-
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
@@ -95,9 +97,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     if (CircuitBreakerSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(doPost()).map(handler)
+      circuitBreaker.withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, timeout)).map(handler)
     } else {
-      doPost().map(handler)
+      postWithoutHandler(ws, payload, endpoint, timeout).map(handler)
     }
   }
 
@@ -111,7 +113,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
-        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents)
+        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive = false)
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
     val json = DotcomRenderingDataModel.toJson(dataModel)
@@ -125,16 +127,36 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       blocks: Blocks,
       pageType: PageType,
       filterKeyEvents: Boolean,
+      forceLive: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] = {
 
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
-        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents)
+        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive)
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", page)
+  }
+
+  def getBlocks(
+      ws: WSClient,
+      page: LiveBlogPage,
+      blocks: Seq[Block],
+  )(implicit request: RequestHeader): Future[String] = {
+    val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
+    val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
+
+    postWithoutHandler(ws, json, Configuration.rendering.baseURL + "/Blocks")
+      .flatMap(response => {
+        if (response.status == 200)
+          Future.successful(response.body)
+        else
+          Future.failed(
+            DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"),
+          )
+      })
   }
 
   def getInteractive(

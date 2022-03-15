@@ -1,7 +1,6 @@
 import { adSizes } from '@guardian/commercial-core';
 import type { AdSize } from '@guardian/commercial-core';
-
-type SizeMappings = Record<string, AdSize[]>;
+import { adSlotIdPrefix } from './dfp-env-globals';
 
 type AdSlotConfig = {
 	sizeMappings: SizeMappings;
@@ -167,7 +166,7 @@ const createAdSlotElement = (
 	attrs: Record<string, string>,
 	classes: string[],
 ): HTMLElement => {
-	const id = `dfp-ad--${name}`;
+	const id = `${adSlotIdPrefix}${name}`;
 
 	// 3562dc07-78e9-4507-b922-78b979d4c5cb
 	if (window.guardian.config.isDotcomRendering && name === 'top-above-nav') {
@@ -267,6 +266,8 @@ const createDataAttributes = (
 		},
 		{},
 	);
+
+export type SizeMappings = Record<string, AdSize[]>;
 
 export const createAdSlot = (
 	type: string,

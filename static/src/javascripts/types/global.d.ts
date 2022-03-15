@@ -69,7 +69,10 @@ interface Config {
 	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
-	tests?: Record<ServerSideABTest, 'control' | 'variant'>;
+	tests?: {
+		[key: `${string}Control`]: 'control';
+		[key: `${string}Variant`]: 'variant';
+	};
 	isDotcomRendering: boolean;
 }
 
@@ -193,6 +196,30 @@ type AdBlockers = {
 	onDetect: function[];
 };
 
+/**
+ *  All article history types here are duplicated from elsewhere.
+ *  This is because adding imports to this file causes typechecking to break for every use of window.guardian in the codebase.
+ */
+type TagCounts = Record<string, number>;
+type WeeklyArticleLog = {
+	week: number;
+	count: number;
+	tags?: TagCounts;
+};
+type WeeklyArticleHistory = WeeklyArticleLog[];
+
+interface DailyArticleCount {
+	day: number;
+	count: number;
+}
+
+type DailyArticleHistory = DailyArticleCount[];
+
+interface ArticleCounts {
+	weeklyArticleHistory: WeeklyArticleHistory;
+	dailyArticleHistory: DailyArticleHistory;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -204,6 +231,7 @@ interface Window {
 		adBlockers: AdBlockers;
 		// /frontend/common/app/templates/inlineJS/blocking/enableStylesheets.scala.js
 		css: { onLoad: () => void; loaded: boolean };
+		articleCounts?: ArticleCounts;
 	};
 
 	confiant?: Confiant;

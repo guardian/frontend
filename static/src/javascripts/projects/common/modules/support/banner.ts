@@ -1,9 +1,8 @@
 import { mountDynamic } from '@guardian/automat-modules';
-import { log, storage } from '@guardian/libs';
+import { log } from '@guardian/libs';
 import {
 	getBanner,
 	getPuzzlesBanner,
-	getWeeklyArticleHistory,
 } from '@guardian/support-dotcom-components';
 import type {
 	BannerPayload,
@@ -16,6 +15,7 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { getVisitCount } from 'common/modules/commercial/contributions-utilities';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
+import { getArticleCounts } from 'common/modules/support/articleCount';
 import {
 	buildTagIds,
 	dynamicImport,
@@ -109,8 +109,19 @@ export const renderBanner = (
 };
 
 const buildBannerPayload = async (): Promise<BannerPayload> => {
-	const { section, shouldHideReaderRevenue, isPaidContent } =
-		window.guardian.config.page;
+	const {
+		contentType,
+		section,
+		shouldHideReaderRevenue,
+		isPaidContent,
+		pageId,
+		keywordIds,
+		isFront,
+	} = window.guardian.config.page;
+
+	const articleCounts = await getArticleCounts(pageId, keywordIds, isFront);
+	const weeklyArticleHistory = articleCounts?.weeklyArticleHistory;
+	const articleCountToday = articleCounts?.dailyArticleHistory[0]?.count;
 
 	const targeting: BannerTargeting = {
 		alreadyVisitedCount: getVisitCount(),
@@ -125,11 +136,13 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 			undefined,
 		mvtId: getMvtValue() ?? 0,
 		countryCode: getCountryCode(),
-		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
+		weeklyArticleHistory: weeklyArticleHistory,
+		articleCountToday: articleCountToday,
 		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
 		modulesVersion: ModulesVersion,
 		sectionId: section,
 		tagIds: buildTagIds(),
+		contentType,
 	};
 
 	return {

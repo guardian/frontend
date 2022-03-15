@@ -25,6 +25,11 @@ object ElementsEnhancer {
     objs.as[JsArray].value.map(obj => enhanceObjectWithElementsAtDepth1(obj))
   }
 
+  def enhanceBlocks(obj: JsObject): JsObject = {
+    obj ++
+      Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks")))
+  }
+
   def enhanceDcrObject(obj: JsObject): JsObject = {
     obj ++
       Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks"))) ++

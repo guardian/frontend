@@ -23,4 +23,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 12, 1)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-spacefinder-okr-mega-test",
+    "Check whether all changes made this quarter when combined lead to revenue uplift",
+    owners = Seq(Owner.withGithub("simonbyford")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 5, 2)),
+    exposeClientSide = true,
+  )
 }

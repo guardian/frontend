@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
-import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
+import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign, LiveBlogDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Chronos, Edition, Localisation, RichRequestHeader}
@@ -13,6 +13,7 @@ import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
   Badges,
+  CanonicalLiveBlog,
   ContentFormat,
   ContentPage,
   DotcomContentType,
@@ -38,7 +39,9 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     filterKeyEvents: Boolean,
+    pinnedPost: Option[Block],
     keyEvents: List[Block],
+    mostRecentBlockId: Option[String],
     blocks: List[Block],
     pagination: Option[Pagination],
     author: Author,
@@ -103,7 +106,9 @@ object DotcomRenderingDataModel {
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
+        "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
+        "mostRecentBlockId" -> model.mostRecentBlockId,
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
         "author" -> model.author,
@@ -159,13 +164,8 @@ object DotcomRenderingDataModel {
   }
 
   def toJson(model: DotcomRenderingDataModel): String = {
-    def withoutNull(json: JsValue): JsValue =
-      json match {
-        case JsObject(fields) => JsObject(fields.filterNot { case (_, value) => value == JsNull })
-        case other            => other
-      }
     val jsValue = Json.toJson(model)
-    Json.stringify(withoutNull(jsValue))
+    Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }
 
   def forInteractive(
@@ -175,14 +175,15 @@ object DotcomRenderingDataModel {
       pageType: PageType,
   ): DotcomRenderingDataModel = {
     apply(
-      page,
-      request,
-      None,
+      page = page,
+      request = request,
+      pagination = None,
       linkedData = Nil, // TODO
       mainBlock = blocks.main,
       bodyBlocks = blocks.body.getOrElse(Nil),
-      pageType,
-      page.related.hasStoryPackage,
+      pageType = pageType,
+      hasStoryPackage = page.related.hasStoryPackage,
+      pinnedPost = None,
       keyEvents = Nil,
     )
   }
@@ -208,6 +209,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
+      pinnedPost = None,
       keyEvents = Nil,
     )
   }
@@ -218,6 +220,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       filterKeyEvents: Boolean,
+      forceLive: Boolean,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -239,7 +242,7 @@ object DotcomRenderingDataModel {
 
     val latestSummary = blocks.body.flatMap(_.find(_.attributes.summary.contains(true)))
 
-    val keyEvents =
+    val keyEvents: Seq[APIBlock] =
       (latestSummary.toSeq ++ allKeyEvents)
         .sortBy(block => block.publishedDate.orElse(block.createdDate).map(_.dateTime))
         .reverse
@@ -251,6 +254,14 @@ object DotcomRenderingDataModel {
       fallbackLogo = Configuration.images.fallbackLogo,
     )
 
+    val pinnedPost: Option[APIBlock] =
+      blocks.requestedBodyBlocks
+        .flatMap(_.get("body:pinned"))
+        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
+        .headOption
+
+    val mostRecentBlockId = DotcomRenderingUtils.getMostRecentBlockId(blocks)
+
     apply(
       page,
       request,
@@ -260,8 +271,11 @@ object DotcomRenderingDataModel {
       bodyBlocks,
       pageType,
       page.related.hasStoryPackage,
+      pinnedPost,
       keyEvents,
       filterKeyEvents,
+      mostRecentBlockId,
+      forceLive,
     )
   }
 
@@ -274,8 +288,11 @@ object DotcomRenderingDataModel {
       bodyBlocks: Seq[APIBlock],
       pageType: PageType, // TODO remove as format is better
       hasStoryPackage: Boolean,
+      pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
+      mostRecentBlockId: Option[String] = None,
+      forceLive: Boolean = false,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -288,16 +305,7 @@ object DotcomRenderingDataModel {
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
-      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-      section = content.metadata.sectionId,
-      showAffiliateLinks = content.content.fields.showAffiliateLinks,
-      supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
-      defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
-      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
-      tagPaths = content.content.tags.tags.map(_.id),
-      firstPublishedDate = content.content.fields.firstPublicationDate,
-    )
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -328,23 +336,30 @@ object DotcomRenderingDataModel {
     }
 
     val calloutsUrl: Option[String] = combinedConfig.fields.toList
-      .filter(entry => entry._1 == "calloutsUrl")
-      .headOption
+      .find(_._1 == "calloutsUrl")
       .flatMap(entry => entry._2.asOpt[String])
+
+    val dcrTags = content.tags.tags.map(Tag.apply)
+
+    def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
+      Block(block, page, shouldAddAffiliateLinks, request, isMainBlock, calloutsUrl, contentDateTimes, dcrTags)
+    }
 
     val mainMediaElements =
       mainBlock
-        .map(block => Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes))
+        .map(toDCRBlock(isMainBlock = true))
         .toList
         .flatMap(_.elements)
 
-    val bodyBlocksDCR: List[model.dotcomrendering.Block] = bodyBlocks
-      .filter(_.published || pageType.isPreview) // TODO lift?
-      .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
-      .toList
+    val bodyBlocksDCR =
+      bodyBlocks
+        .filter(_.published || pageType.isPreview) // TODO lift?
+        .map(toDCRBlock())
+        .toList
 
-    val keyEventsDCR =
-      keyEvents.map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
+    val keyEventsDCR = keyEvents.map(toDCRBlock())
+
+    val pinnedPostDCR = pinnedPost.map(toDCRBlock())
 
     val commercial: Commercial = {
       val editionCommercialProperties = content.metadata.commercial
@@ -364,18 +379,7 @@ object DotcomRenderingDataModel {
       )
     }
 
-    val modifiedFormat = {
-      val originalFormat = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
-
-      // TODO move to content-api-scala-client once confirmed as correct
-      // behaviour. At the moment we are seeing interactive articles with other
-      // design types due to CAPI format logic. But interactive design should
-      // always take precendent (or so we think).
-      content.metadata.contentType match {
-        case Some(DotcomContentType.Interactive) => originalFormat.copy(design = InteractiveDesign)
-        case _                                   => originalFormat
-      }
-    }
+    val modifiedFormat = DotcomRenderingUtils.getModifiedContent(content, forceLive)
 
     val isLegacyInteractive =
       modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate
@@ -404,7 +408,9 @@ object DotcomRenderingDataModel {
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
       filterKeyEvents = filterKeyEvents,
+      pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
+      mostRecentBlockId = mostRecentBlockId,
       linkedData = linkedData,
       main = content.fields.main,
       mainMediaElements = mainMediaElements,
@@ -429,7 +435,7 @@ object DotcomRenderingDataModel {
       subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
       subMetaSectionLinks =
         content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
-      tags = content.tags.tags.map(Tag.apply),
+      tags = dcrTags,
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,

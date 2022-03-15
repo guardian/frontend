@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.240-C5"
   val awsVersion = "1.11.240"
-  val capiVersion = "17.22"
+  val capiVersion = "17.22.1"
   val faciaVersion = "3.3.8"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -40,7 +40,6 @@ object Dependencies {
   val jodaTime = "joda-time" % "joda-time" % "2.9.9"
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.10.3"
-  val liftJson = "net.liftweb" %% "lift-json" % "3.1.1"
   val json4s = "org.json4s" %% "json4s-native" % "3.5.3"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
@@ -68,7 +67,7 @@ object Dependencies {
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
   val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
   val scanamo = "com.gu" %% "scanamo" % "1.0.0-M8"
-  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.12"
+  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.6"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion

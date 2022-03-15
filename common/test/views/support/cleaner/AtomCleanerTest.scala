@@ -84,7 +84,7 @@ class AtomCleanerTest extends FlatSpec with Matchers with WithTestApplicationCon
   "AtomsCleaner" should "create YouTube template" in {
     Switches.UseAtomsSwitch.switchOn()
     val result: Document = clean(doc)
-    result.select("div").attr("id") shouldBe "youtube-nQuN9CUsdVg"
+    result.select("div").attr("id") should startWith("youtube-nQuN9CUsdVg-")
     result.select("figcaption").html should include("Bird")
   }
 
@@ -115,7 +115,7 @@ class AtomCleanerTest extends FlatSpec with Matchers with WithTestApplicationCon
       ),
     )
 
-    renderAndGetId(atom) should be("youtube-QRplDNMsS4U")
+    renderAndGetId(atom) should startWith("youtube-QRplDNMsS4U")
   }
 
   "Youtube template" should "use latest asset if no active version" in {
@@ -126,7 +126,7 @@ class AtomCleanerTest extends FlatSpec with Matchers with WithTestApplicationCon
       ),
     )
 
-    renderAndGetId(atom) should be(s"youtube-gyVuRflcEKM")
+    renderAndGetId(atom) should startWith(s"youtube-gyVuRflcEKM")
   }
 
   "Youtube template" should "render nothing if there are no assets" in {

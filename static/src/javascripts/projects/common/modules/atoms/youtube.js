@@ -453,6 +453,11 @@ const initYoutubePlayerForElem = (el) => {
             return;
         }
 
+        /**
+         * Note:
+         * This element id must be unique!
+         * Ensured via the SSR render of youtube.scala.html
+         */
         const iframeId = iframe.id;
 
         const atomId = el.getAttribute('data-media-atom-id') || '';

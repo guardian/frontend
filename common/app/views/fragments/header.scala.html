@@ -49,12 +49,12 @@
             <div class="new-header__top-bar hide-until-mobile">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
                 @if(!page.metadata.hasSlimHeader) {
-                    <div class="top-bar__commercial-items">
-                        <span class="top-bar__item__seperator hide-until-desktop"></span>
-                        <a class="top-bar__item hide-until-desktop" data-link-name="nav2 : supporter-cta" data-edition="@{editionId}" href="@getReaderRevenueUrl(SupportGuardianWeekly, Header)">
-                            Print subscriptions
-                        </a>
-                    </div>
+                <div class="top-bar__commercial-items">
+                    <span class="top-bar__item__seperator hide-until-desktop"></span>
+                    <a class="top-bar__item hide-until-desktop" data-link-name="nav2 : supporter-cta" data-edition="@{editionId}" href="@getReaderRevenueUrl(SupportGuardianWeekly, Header)">
+                        Print subscriptions
+                    </a>
+                </div>
 
                 @if(editionId != "au" || editionId == "uk") {
                 <div class="top-bar__commercial-items">

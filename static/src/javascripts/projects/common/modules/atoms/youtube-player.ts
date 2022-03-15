@@ -246,9 +246,15 @@ const setupPlayer = (
 	 * empty array.
 	 */
 
-	const adsConfig = commercialFeatures.adFree
+	const adsConfig = !commercialFeatures.youtubeAdvertising
 		? createAdsConfigDisabled()
 		: createAdsConfigEnabled(consentState);
+
+	/**
+	 * Note:
+	 * This element id must be unique!
+	 * Ensured via the SSR render of youtube.scala.html
+	 */
 
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
@@ -277,8 +283,7 @@ const setupPlayer = (
 const hasPlayerStarted = (event: YTPlayerEvent) =>
 	event.target.getCurrentTime() > 0;
 
-const getPlayerIframe = (videoId: string) =>
-	document.getElementById(`youtube-${videoId}`);
+const getPlayerIframe = (id: string) => document.getElementById(id);
 
 export const initYoutubePlayer = async (
 	el: HTMLElement,
@@ -290,11 +295,11 @@ export const initYoutubePlayer = async (
 	const consentState = await initialConsent;
 
 	const onPlayerStateChange = (event: YTPlayerEvent) => {
-		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
+		onPlayerStateChangeEvent(event, handlers, getPlayerIframe(el.id));
 	};
 
 	const onPlayerReady = (event: YTPlayerEvent) => {
-		const iframe = getPlayerIframe(videoId);
+		const iframe = getPlayerIframe(el.id);
 		if (hasPlayerStarted(event)) {
 			addVideoStartedClass(iframe);
 		}
