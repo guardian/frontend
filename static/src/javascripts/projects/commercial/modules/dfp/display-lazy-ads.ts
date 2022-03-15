@@ -17,8 +17,9 @@ const displayLazyAds = (): void => {
 	);
 	if (useGptLazyLoad) {
 		window.googletag.pubads().enableLazyLoad({
-			// average mobile and desktop screen size ~ 1080px
-			// 200px / 1080px = 18.5%
+			// The average mobile and desktop screen size, which we
+			// are using as a proxy for viewport height, is 1080px.
+			// 200px (the margin value for the control group) is 18.5% of 1080px.
 			fetchMarginPercent: 18.5,
 			// Fetching and rendering at the same margin
 			// simulates control group behavior.
