@@ -6,7 +6,7 @@
 @*
 * This template is to wrap pinned posts
 *@
-<div id="pinned-block" class="pinned-block" data-block-id="@block.id">
+<div id="pinned-block" class="pinned-block" data-block-id="@block.id" data-component="pinned-post">
     <input id="pinned-block-button" class="pinned-block__button" type="checkbox" aria-controls="pinned-block" />
     <label for="pinned-block-button" class="pinned-block__label pinned-block__label--collapsed pinned-block__label--expanded">
         @fragments.inlineSvg("plus", "icon", List("pinned-block__label-icon--expand"))
