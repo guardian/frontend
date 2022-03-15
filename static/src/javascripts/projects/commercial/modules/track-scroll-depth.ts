@@ -18,5 +18,4 @@ export const init = async (): Promise<void> => {
 	} else {
 		log('commercial', 'No consent to track scroll depth');
 	}
-	return Promise.resolve();
 };
