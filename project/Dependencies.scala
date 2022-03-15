@@ -40,7 +40,6 @@ object Dependencies {
   val jodaTime = "joda-time" % "joda-time" % "2.9.9"
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.10.3"
-  val liftJson = "net.liftweb" %% "lift-json" % "3.1.1"
   val json4s = "org.json4s" %% "json4s-native" % "3.5.3"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
