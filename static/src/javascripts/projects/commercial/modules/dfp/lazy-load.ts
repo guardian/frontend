@@ -49,7 +49,8 @@ export const enableLazyLoad = (advert: Advert): void => {
 		commercialGptLazyLoad,
 		'variant',
 	);
-	if (dfpEnv.lazyLoadObserve && !useGptLazyLoad) {
+	const useCustomLazyLoad = dfpEnv.lazyLoadObserve && !useGptLazyLoad;
+	if (useCustomLazyLoad) {
 		void getObserver().then((observer) => observer.observe(advert.node));
 	} else {
 		displayAd(advert.id);
