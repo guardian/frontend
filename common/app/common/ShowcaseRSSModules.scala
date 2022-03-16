@@ -45,8 +45,8 @@ object RssAtomModule {
 }
 
 case class GPanel(
-  `type`: String,
-  content: Option[String]
+    `type`: String,
+    content: Option[String],
 )
 
 trait GModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
