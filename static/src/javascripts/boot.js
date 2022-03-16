@@ -85,7 +85,7 @@ const go = () => {
                 }
 
                 const consentComponentEvent = makeConsentComponentEvent();
-                console.log(consentComponentEvent)
+  
                 ophan.record({
                     componentEvent: consentComponentEvent
                 });
