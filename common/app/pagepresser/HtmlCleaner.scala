@@ -1,6 +1,5 @@
 package pagepresser
 
-import com.netaporter.uri.Uri.parse
 import common.{GuLogging}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
