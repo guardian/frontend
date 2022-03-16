@@ -23,35 +23,7 @@ export const commercialLazyLoadMargin: ABTest = {
 			test: noop,
 		},
 		{
-			id: 'variant 1',
-			test: noop,
-		},
-		{
-			id: 'variant 2',
-			test: noop,
-		},
-		{
-			id: 'variant 3',
-			test: noop,
-		},
-		{
-			id: 'variant 4',
-			test: noop,
-		},
-		{
-			id: 'variant 5',
-			test: noop,
-		},
-		{
-			id: 'variant 6',
-			test: noop,
-		},
-		{
-			id: 'variant 7',
-			test: noop,
-		},
-		{
-			id: 'variant 8',
+			id: 'variant',
 			test: noop,
 		},
 	],
