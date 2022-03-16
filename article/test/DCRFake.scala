@@ -32,10 +32,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
     Future.successful("FakeRemoteRender has found you out if you rely on this markup!")
   }
 
-  override def getKeyEvents(ws: WSClient,
-                            page: LiveBlogPage,
-                            keyEvents: Seq[Block],
-                            filterKeyEvents: Boolean,)(implicit
+  override def getKeyEvents(ws: WSClient, page: LiveBlogPage, keyEvents: Seq[Block], filterKeyEvents: Boolean)(implicit
       request: RequestHeader,
   ): Future[String] = {
     Future.successful("FakeRemoteRender has found you out if you rely on this markup!")
