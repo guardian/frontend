@@ -44,12 +44,17 @@ object RssAtomModule {
   val URI = "http://www.w3.org/2005/Atom"
 }
 
+case class GPanel(
+  `type`: String,
+  content: Option[String]
+)
+
 trait GModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
   override def getUri: String = GModule.URI
 
-  def getPanel: Option[String]
+  def getPanel: Option[GPanel]
 
-  def setPanel(panel: Option[String])
+  def setPanel(panel: Option[GPanel])
 
   def getPanelTitle: Option[String]
 
@@ -69,15 +74,15 @@ trait GModule extends com.sun.syndication.feed.module.Module with Serializable w
 }
 
 class GModuleImpl() extends GModule {
-  private var panel: Option[String] = None
+  private var panel: Option[GPanel] = None
   private var panelTitle: Option[String] = None
   private var overline: Option[String] = None
   private var articleGroup: Option[GArticleGroup] = None
   private var bulletList: Option[GBulletList] = None
 
-  override def getPanel: Option[String] = panel
+  override def getPanel: Option[GPanel] = panel
 
-  override def setPanel(panel: Option[String]): Unit = this.panel = panel
+  override def setPanel(panel: Option[GPanel]): Unit = this.panel = panel
 
   override def getPanelTitle: Option[String] = panelTitle
 
@@ -174,7 +179,8 @@ class GModuleGenerator extends ModuleGenerator {
       case gModule: GModule =>
         gModule.getPanel.foreach { panel =>
           val panelElement = new org.jdom.Element("panel", NS)
-          panelElement.setAttribute(new Attribute("type", panel))
+          panelElement.setAttribute(new Attribute("type", panel.`type`))
+          panelElement.addContent(panel.content.getOrElse(""))
           element.addContent(panelElement)
         }
         gModule.getPanelTitle.foreach { panelTitle =>

@@ -603,7 +603,7 @@ object TrailsToShowcase {
     setEntryDates(singleStoryPanel, entry)
 
     val gModule = new GModuleImpl()
-    gModule.setPanel(Some(singleStoryPanel.`type`))
+    gModule.setPanel(Some(GPanel(singleStoryPanel.`type`, singleStoryPanel.panelTitle)))
     gModule.setPanelTitle(singleStoryPanel.panelTitle)
     gModule.setOverline(singleStoryPanel.overline)
     gModule.setBulletList(singleStoryPanel.bulletList.map(asGBulletList))
@@ -632,7 +632,7 @@ object TrailsToShowcase {
     setEntryDates(rundownPanel, entry)
 
     val gModule = new GModuleImpl()
-    gModule.setPanel(Some(rundownPanel.`type`))
+    gModule.setPanel(Some(GPanel(rundownPanel.`type`, Some(rundownPanel.panelTitle))))
     gModule.setPanelTitle(Some(rundownPanel.panelTitle))
     gModule.setArticleGroup(Some(asGArticleGroup(rundownPanel.articleGroup)))
     addModuleTo(entry, gModule)
