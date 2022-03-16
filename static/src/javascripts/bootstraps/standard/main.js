@@ -154,22 +154,6 @@ const addErrorHandler = () => {
     });
 };
 
-const makeConsentComponentEvent = () => {
-
-    const component = {
-        "componentType": "CONSENT",
-        "products": [],
-        "labels": ["01:TCF.v2","02:74f802af-db0d-430b-931d-7d13b39e87ee","03:EXPERIMENTAL"]
-    };
-
-    const componentEvent = {
-        component,
-        "action": "MANAGE_CONSENT"
-    }
-
-    return componentEvent;
-}
-
 const bootStandard = () => {
 
     markTime('standard start');
@@ -234,11 +218,6 @@ const bootStandard = () => {
     }
 
     ophan.setEventEmitter(mediator);
-
-    const consentComponentEvent = makeConsentComponentEvent();
-    ophan.record({
-        componentEvent: consentComponentEvent
-    });
 
     /*  Membership access
         Items with either of the following fields require Membership access

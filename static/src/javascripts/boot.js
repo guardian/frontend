@@ -12,6 +12,7 @@ import { getLocale, loadScript } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as detectAdBlockers } from 'commercial/detect-adblock';
+import ophan from 'ophan/ng';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -45,7 +46,8 @@ const go = () => {
         // keep this in sync with CONSENT_TIMING in src/web/components/App.tsx in frontend
         // mark: CONSENT_TIMING
         let recordedConsentTime = false;
-        onConsentChange(() => {
+        onConsentChange((consentState) => {
+
             if (!recordedConsentTime) {
                 recordedConsentTime = true;
                 cmp.willShowPrivacyMessage().then(willShow => {
@@ -56,6 +58,41 @@ const go = () => {
                     );
                 });
             }
+
+            // ------------------------------------------------------
+            // Sending Consent Data to Ophan
+
+            if (!consentState) return;
+
+            if (consentState.tcfv2) {
+                const consentUUID = getCookie('consentUUID') || '';
+                const consentString = consentState.tcfv2?.tcString;
+
+                const makeConsentComponentEvent = () => {
+
+                    const component = {
+                        "componentType": "CONSENT",
+                        "products": [],
+                        "labels": ["01:TCF.v2",`02:${consentUUID}`,`03:${consentString}`]
+                    };
+
+                    const componentEvent = {
+                        component,
+                        "action": "MANAGE_CONSENT"
+                    }
+
+                    return componentEvent;
+                }
+
+                const consentComponentEvent = makeConsentComponentEvent();
+                console.log(consentComponentEvent)
+                ophan.record({
+                    componentEvent: consentComponentEvent
+                });
+            }
+
+            // ------------------------------------------------------
+
         });
 
         cmp.init({ pubData, country: await getLocale() });
