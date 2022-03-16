@@ -1,5 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { isInABTestSynchronous } from '../experiments/ab';
+import { commercialLazyLoadMargin } from '../experiments/tests/commercial-lazy-load-margin';
 import { spacefinderOkr3RichLinks } from '../experiments/tests/spacefinder-okr-3-rich-links';
 import { spacefinderOkrMegaTest } from '../experiments/tests/spacefinder-okr-mega-test';
 
@@ -7,6 +8,7 @@ const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
 	spacefinderOkr3RichLinks,
 	spacefinderOkrMegaTest,
+	commercialLazyLoadMargin,
 ];
 
 const serverSideTests: ServerSideABTest[] = [];
