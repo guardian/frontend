@@ -159,7 +159,7 @@ final case class SamplerMetric(override val name: String, override val metricUni
   }
 
   def recordSample(sampleValue: Double, sampleTime: DateTime): Future[List[SampledDataPoint]] =
-    dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: _)
+    dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: dataPoints.get())
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty
 }
