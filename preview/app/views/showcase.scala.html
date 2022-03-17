@@ -100,7 +100,7 @@
                     <li class="panel singleStory">
                         @for(panelTitle <- panel.panelTitle) {
                             <h2 class="panelTitle">
-                                @panel.title
+                                @panel.panelTitle
                             </h2>
                         }
                         @for(dupe <- duplicateMap.find(d => panel.guid.endsWith(d._1))) {
