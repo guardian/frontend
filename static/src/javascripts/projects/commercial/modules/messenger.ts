@@ -165,7 +165,7 @@ const toStandardMessage = (
  * - using the iframeId from the incoming message
  * - checking message event.source (i.e. window) against all page level iframe contentWindows
  *
- * Listeners can use then use the iFrame to determine the slot making the postMessage call
+ * Listeners can then use the iFrame to determine the slot making the postMessage call
  */
 const getIframe = (
 	message: StandardMessage,
