@@ -108,9 +108,6 @@ const trackPinnedPostDuration = (pinnedBlock) => {
 const initTracking = () => {
 	const pinnedBlock = document.getElementById('pinned-block');
 	if (pinnedBlock) {
-		const pinnedBlockId = cleanId(pinnedBlock.dataset.blockId);
-		ophan.record(componentEvent(pinnedBlockId, 'INSERT'));
-
         trackPinnedPostDuration(pinnedBlock);
 	}
 };

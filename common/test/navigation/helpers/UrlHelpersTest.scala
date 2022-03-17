@@ -76,5 +76,11 @@ class UrlHelpersTest extends WordSpec with Matchers {
         UrlHelpers.getComponentType(AmpFooter) should be("ACQUISITIONS_FOOTER")
       }
     }
+
+    "getReaderRevenueUrl" should {
+      "correctly parse urls with double quotes" in {
+        UrlHelpers.getReaderRevenueUrl(SupportSubscribe, Footer) should include("%22")
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 package navigation
 
-import com.netaporter.uri.Uri
+import io.lemonlabs.uri.Url
 import conf.Configuration
 import enumeratum.EnumEntry
 
@@ -15,7 +15,7 @@ object ReaderRevenueSite extends enumeratum.Enum[ReaderRevenueSite] {
 
   override val values: IndexedSeq[ReaderRevenueSite] = findValues
 
-  private def getHost(url: String): Option[String] = Try(Uri.parse(url).host).toOption.flatten
+  private def getHost(url: String): Option[String] = Try(Url.parse(url).hostOption).toOption.map(_.toString)
 
   private val hosts: Set[String] = values.flatMap(site => getHost(site.url)).toSet
 
@@ -27,6 +27,10 @@ object ReaderRevenueSite extends enumeratum.Enum[ReaderRevenueSite] {
 
   case object SupportSubscribe extends ReaderRevenueSite {
     val url: String = s"${Configuration.id.supportUrl}/subscribe"
+  }
+
+  case object SupportGuardianWeekly extends ReaderRevenueSite {
+    val url: String = s"${Configuration.id.supportUrl}/subscribe/weekly"
   }
 
   case object SupportContribute extends ReaderRevenueSite {
