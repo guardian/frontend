@@ -16,6 +16,7 @@ let firstSlot;
 const startListening = () => {
 	// eslint-disable-next-line no-use-before-define
 	mediator.on('modules:autoupdate:updates', onUpdate);
+	document.addEventListener('liveblog:blocks-updated', onUpdate);
 };
 
 const stopListening = () => {
