@@ -50,7 +50,7 @@ object Dependencies {
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
-  val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.18.0"
+  val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.30.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.1" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
