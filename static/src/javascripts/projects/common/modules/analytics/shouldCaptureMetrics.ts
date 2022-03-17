@@ -1,10 +1,12 @@
 import type { ABTest } from '@guardian/ab-core';
 import { isInABTestSynchronous } from '../experiments/ab';
+import { spacefinderOkr4HandleNewLiveblogBlocks } from '../experiments/tests/spacefinder-okr-4-handle-new-liveblog-blocks';
 import { spacefinderOkrMegaTest } from '../experiments/tests/spacefinder-okr-mega-test';
 
 const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
 	spacefinderOkrMegaTest,
+	spacefinderOkr4HandleNewLiveblogBlocks,
 ];
 
 const serverSideTests: ServerSideABTest[] = [];
