@@ -10,7 +10,7 @@ object Dependencies {
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
-  val playJsonVersion = "2.6.3"
+  val playJsonVersion = "2.9.2"
   val playJsonExtensionsVersion = "0.42.0"
   val guBox = "com.gu" %% "box" % "0.1.0"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
