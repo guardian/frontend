@@ -46,7 +46,7 @@ object RssAtomModule {
 
 case class GPanel(
     `type`: String,
-    content: Option[String],
+    content: String,
 )
 
 trait GModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
@@ -180,7 +180,7 @@ class GModuleGenerator extends ModuleGenerator {
         gModule.getPanel.foreach { panel =>
           val panelElement = new org.jdom.Element("panel", NS)
           panelElement.setAttribute(new Attribute("type", panel.`type`))
-          panelElement.addContent(panel.content.getOrElse(""))
+          panelElement.addContent(panel.content)
           element.addContent(panelElement)
         }
         gModule.getPanelTitle.foreach { panelTitle =>

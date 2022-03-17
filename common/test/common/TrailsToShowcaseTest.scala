@@ -401,7 +401,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val gPanel = gModule.getPanel
     gPanel shouldNot be(None)
     gPanel.get.`type` should be("SINGLE_STORY")
-    gPanel.get.content should be(Some("My panel title"))
+    gPanel.get.content should be("My unique headline")
 
     gModule.getPanelTitle should be(Some("My panel title"))
     gModule.getOverline should be(Some("A kicker"))
@@ -767,7 +767,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val gPanel = gModule.getPanel
     gPanel shouldNot be(None)
     gPanel.get.`type` should be("RUNDOWN")
-    gPanel.get.content should be(Some("Rundown panel title"))
+    gPanel.get.content should be("Rundown panel title")
 
     gModule.getPanelTitle should be(Some("Rundown panel title"))
 
