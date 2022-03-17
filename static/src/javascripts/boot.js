@@ -67,7 +67,7 @@ const go = () => {
                 Date: March 2022
                 Author: Pascal
 
-                We reproduce here the same code that we had developed for DRC.
+                We reproduce here the same code that we had developed for DCR.
                 See this for details: https://github.com/guardian/dotcom-rendering/blob/4cb96485401398fdd88698493bdb75f56fcd8c96/dotcom-rendering/src/web/browser/bootCmp/init.ts#L69
                 The mapping: documentation also exists at https://github.com/guardian/transparency-consent-docs/blob/main/docs/capturing-consent-from-client-side.md
 
