@@ -169,7 +169,7 @@ const toStandardMessage = (
  */
 const getIframe = (
 	message: StandardMessage,
-	messageEventSouce: MessageEventSource | null,
+	messageEventSource: MessageEventSource | null,
 ): HTMLIFrameElement | undefined => {
 	if (message.slotId) {
 		const container = document.getElementById(`dfp-ad--${message.slotId}`);
@@ -177,10 +177,10 @@ const getIframe = (
 	} else if (message.iframeId) {
 		const el = document.getElementById(message.iframeId);
 		return el instanceof HTMLIFrameElement ? el : undefined;
-	} else if (messageEventSouce) {
+	} else if (messageEventSource) {
 		const iframes = document.querySelectorAll<HTMLIFrameElement>('iframe');
 		return Array.from(iframes).find(
-			(iframe) => iframe.contentWindow === messageEventSouce,
+			(iframe) => iframe.contentWindow === messageEventSource,
 		);
 	}
 };
