@@ -14,7 +14,7 @@ export interface DailyArticleCount {
 
 type DailyArticleHistory = DailyArticleCount[];
 
-const today = Math.floor(Date.now() / 86400000); // 1 day in ms
+export const today = Math.floor(Date.now() / 86_400_000); // 1 day in ms
 
 const isDailyArticleHistory = (data: unknown): data is DailyArticleHistory =>
 	Array.isArray(data);
@@ -87,4 +87,18 @@ export const getArticleCounts = async (
 	}
 
 	return window.guardian.articleCounts;
+};
+
+export const getArticleCountToday = (
+	articleCounts: ArticleCounts | undefined,
+): number | undefined => {
+	const latest = articleCounts?.dailyArticleHistory[0];
+	if (latest) {
+		if (latest.day === today) {
+			return articleCounts.dailyArticleHistory[0].count;
+		}
+		// article counting is enabled, but none so far today
+		return 0;
+	}
+	return undefined;
 };
