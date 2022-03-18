@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.240-C5"
   val awsVersion = "1.11.240"
-  val capiVersion = "17.22.1"
-  val faciaVersion = "3.3.8"
+  val capiVersion = "17.24.1"
+  val faciaVersion = "3.3.9"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -66,7 +66,7 @@ object Dependencies {
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
   val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
-  val scanamo = "com.gu" %% "scanamo" % "1.0.0-M8"
+  val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.6"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
