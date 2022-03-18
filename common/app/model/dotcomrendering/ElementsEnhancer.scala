@@ -1,6 +1,6 @@
 package model.dotcomrendering
 
-import play.api.libs.json._
+import play.api.libs.json.{Json, _}
 
 object ElementsEnhancer {
 
@@ -17,8 +17,12 @@ object ElementsEnhancer {
   }
 
   def enhanceObjectWithElementsAtDepth1(obj: JsValue): JsValue = {
-    val elements = obj.as[JsObject].value("elements")
-    obj.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
+    obj.asOpt[JsObject] match {
+      case Some(o) =>
+        val elements = o.value("elements")
+        o ++ Json.obj("elements" -> enhanceElements(elements))
+      case None => obj
+    }
   }
 
   def enhanceObjectsWithElementsAtDepth1(objs: JsValue): IndexedSeq[JsValue] = {
