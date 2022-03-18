@@ -16,7 +16,7 @@ type DailyArticleHistory = DailyArticleCount[];
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 
-const isDailyArticleHistory = (data: any): data is DailyArticleHistory =>
+const isDailyArticleHistory = (data: unknown): data is DailyArticleHistory =>
 	Array.isArray(data);
 
 const getDailyArticleHistory = (): DailyArticleHistory | undefined => {
