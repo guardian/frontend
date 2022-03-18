@@ -119,7 +119,7 @@ class RedirectService(implicit executionContext: ExecutionContext) extends GuLog
   def lookupRedirectDestination(source: String): Future[Option[Destination]] = {
     val fullUrl = if (source.head == '/') expectedSourceHost + source else s"$expectedSourceHost/$source"
     ScanamoAsync(DynamoDB.asyncClient)
-      .exec(table.get("source" -> source))
+      .exec(table.get("source" -> fullUrl))
       .map({
         case Some(Right(destination)) => Some(destination)
         case _                        => None
