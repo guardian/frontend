@@ -46,7 +46,7 @@ object Dependencies {
   val paClient = "com.gu" %% "pa-client" % "7.0.5"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.7.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.3"
-  val redisClient = "net.debasishg" %% "redisclient" % "3.4"
+  val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
