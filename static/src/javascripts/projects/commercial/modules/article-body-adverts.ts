@@ -285,5 +285,8 @@ export const init = (): Promise<boolean> => {
 	document.addEventListener('dcr:page:article:redisplayed', () => {
 		void doInit();
 	});
+	document.addEventListener('article:sign-in-gate-dismissed', () => {
+		void doInit();
+	});
 	return doInit();
 };
