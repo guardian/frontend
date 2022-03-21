@@ -33,7 +33,7 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     ImageMedia(Seq(asset))
   }
 
-  val replacedImage = Replace("http://localhost/replaced-image.jpg", "1200", "1000")
+  val replacedImage = Replace("http://localhost/replaced-image.jpg", "1200", "1000", None)
 
   val smallImageMedia: ImageMedia = {
     val asset = ImageAsset(
