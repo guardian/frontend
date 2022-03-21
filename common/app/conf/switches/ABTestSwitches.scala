@@ -33,14 +33,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 5, 2)),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-spacefinder-okr-4-handle-new-liveblog-blocks",
-    "Check whether fixing spacefinder's ability to re-run when new liveblog blocks are added leads to revenue uplift",
-    owners = Seq(Owner.withGithub("simonbyford")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 5, 2)),
-    exposeClientSide = true,
-  )
 }

@@ -3,8 +3,6 @@ import { spaceFiller } from '../../common/modules/article/space-filler';
 
 const { getSlotName } = _;
 
-jest.mock('ophan/ng', () => null);
-
 jest.mock('../../../lib/raven');
 
 jest.mock('../../../lib/mediator');

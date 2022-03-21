@@ -5,8 +5,6 @@ import { addSlot } from './dfp/add-slot';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { createAdSlot } from './dfp/create-slot';
 import { spaceFiller } from '../../common/modules/article/space-filler';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { spacefinderOkr4HandleNewLiveblogBlocks } from 'common/modules/experiments/tests/spacefinder-okr-4-handle-new-liveblog-blocks';
 
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
 const MAX_ADS = 8; // maximum number of ads to display
@@ -102,13 +100,10 @@ const insertAds = (paras) => {
 
 const fill = (rules) =>
 	spaceFiller.fillSpace(rules, insertAds).then((result) => {
-		const enableNewBlockFix = isInVariantSynchronous(
-			spacefinderOkr4HandleNewLiveblogBlocks,
-			'variant',
-		);
-		if (!enableNewBlockFix) {
-			result = undefined;
-		}
+		// Before the refactor of fillSpace in https://github.com/guardian/frontend/pull/24599,
+		// since insertAds returned void, result is only ever undefined and the code path below was dead.
+		// TODO investigate the impact of removing the following line.
+		result = undefined;
 		if (result && AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,
