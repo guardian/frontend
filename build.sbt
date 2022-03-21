@@ -25,7 +25,6 @@ val common = library("common")
       jodaConvert,
       jodaTime,
       jSoup,
-      liftJson,
       json4s,
       playGoogleAuth,
       quartzScheduler,
@@ -143,7 +142,6 @@ val identity = application("identity")
     libraryDependencies ++= Seq(
       filters,
       identityAuthPlay,
-      liftJson,
       slf4jExt,
       libPhoneNumber,
       supportInternationalisation,

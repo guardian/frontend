@@ -102,7 +102,6 @@
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
@@ -282,6 +281,7 @@
   "../projects/commercial/modules/messenger/get-page-url.ts",
   "../projects/commercial/modules/messenger/get-stylesheet.js",
   "../projects/commercial/modules/messenger/measure-ad-load.ts",
+  "../projects/commercial/modules/messenger/passback.ts",
   "../projects/commercial/modules/messenger/resize.ts",
   "../projects/commercial/modules/messenger/scroll.js",
   "../projects/commercial/modules/messenger/type.ts",
@@ -466,6 +466,11 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/commercial/modules/messenger.ts"
  ],
+ "../projects/commercial/modules/messenger/passback.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/commercial/modules/dfp/dfp-env-globals.ts",
+  "../projects/commercial/modules/messenger.ts"
+ ],
  "../projects/commercial/modules/messenger/post-message.ts": [],
  "../projects/commercial/modules/messenger/resize.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -544,6 +549,11 @@
   "../lib/config.js",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
+ "../projects/commercial/modules/track-scroll-depth.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/common/modules/commercial/enhanced-consent.ts"
+ ],
  "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
@@ -553,13 +563,7 @@
  "../projects/common/modules/analytics/mvt-cookie.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
- "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
- ],
+ "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
   "../projects/common/modules/spacefinder.js"
@@ -644,7 +648,6 @@
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
@@ -675,10 +678,6 @@
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
- "../projects/common/modules/experiments/tests/spacefinder-okr-3-rich-links.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
@@ -753,6 +752,7 @@
   "../projects/commercial/modules/set-adtest-cookie.ts",
   "../projects/commercial/modules/sticky-top-banner.js",
   "../projects/commercial/modules/third-party-tags.ts",
+  "../projects/commercial/modules/track-scroll-depth.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-features.ts",
   "types.ts"

@@ -1,10 +1,7 @@
 package pagepresser
 
-import com.netaporter.uri.Uri._
-import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
 import scala.collection.JavaConverters._
-import scala.io.Source
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
