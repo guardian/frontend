@@ -1,7 +1,7 @@
 package googleAuth
 
-import com.gu.googleauth.{GoogleAuth, GoogleAuthConfig, UserIdentity}
-import common.{Crypto, ImplicitControllerExecutionContext, GuLogging}
+import com.gu.googleauth.{AntiForgeryChecker, GoogleAuth, GoogleAuthConfig, UserIdentity}
+import common.{Crypto, GuLogging, ImplicitControllerExecutionContext}
 import conf.Configuration
 import org.joda.time.DateTime
 import play.api.http.HttpConfiguration
@@ -33,11 +33,8 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
       googleAuthConfig(request)
         .flatMap(overrideRedirectUrl)
         .map { config =>
-          val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
-          GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
-            _.withSession {
-              request.session + (ANTI_FORGERY_KEY -> antiForgeryToken)
-            }
+          config.antiForgeryChecker.ensureUserHasSessionId { sessionId =>
+            GoogleAuth.redirectToGoogle(config, sessionId)
           }
         }
         .getOrElse(Future.successful(forbiddenNoCredentials))
@@ -70,7 +67,7 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
               )
             case Some(token) =>
               GoogleAuth
-                .validatedUserIdentity(config, token)
+                .validatedUserIdentity(config)
                 // drop the avatarUrl as it can be very large and we don't use it anywhere
                 .map(_.copy(avatarUrl = None))
                 .map { userIdentity: UserIdentity =>
