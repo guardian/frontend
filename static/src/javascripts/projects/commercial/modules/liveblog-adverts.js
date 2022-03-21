@@ -5,6 +5,8 @@ import { addSlot } from './dfp/add-slot';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { createAdSlot } from './dfp/create-slot';
 import { spaceFiller } from '../../common/modules/article/space-filler';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
 const MAX_ADS = 8; // maximum number of ads to display
@@ -100,6 +102,13 @@ const insertAds = (paras) => {
 
 const fill = (rules) =>
 	spaceFiller.fillSpace(rules, insertAds).then((result) => {
+		if (isInVariantSynchronous(spacefinderOkrMegaTest, 'variant')) {
+			// Before the refactor of fillSpace in https://github.com/guardian/frontend/pull/24599,
+			// since insertAds returned void, result was always undefined and the code path below was dead.
+			// Measure the uplift in impressions from fixing the bug by keeping the feature broken for the
+			// variant group of the mega test.
+			result = undefined;
+		}
 		if (result && AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,
