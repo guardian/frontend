@@ -75,6 +75,23 @@ type ListenerCallback = (
 	iframe?: HTMLIFrameElement,
 ) => unknown;
 
+export type RespondProxy = (
+	error: { message: string } | null,
+	result: unknown,
+) => void;
+
+/**
+ * Callbacks that can be registered to fire when receiving messages from an iframe
+ */
+type PersistentListenerCallback<T> = (
+	respondProxy: RespondProxy,
+	specs: T,
+	/**
+	 * Reference to the iframe that is the source of the message
+	 */
+	iframe?: HTMLIFrameElement,
+) => unknown;
+
 /**
  * The set of listeners currently registered
  *
@@ -83,7 +100,10 @@ type ListenerCallback = (
  * for each type.
  */
 type Listeners = Partial<
-	Record<MessageType, ListenerCallback | ListenerCallback[] | undefined>
+	Record<
+		MessageType,
+		PersistentListenerCallback<unknown> | ListenerCallback[] | undefined
+	>
 >;
 
 /**
@@ -92,6 +112,18 @@ type Listeners = Partial<
 export type RegisterListener = (
 	type: MessageType,
 	callback: ListenerCallback,
+	options?: {
+		window?: WindowProxy;
+		persist?: boolean;
+	},
+) => void;
+
+/**
+ * Types of functions to register a persistent listener for a given type of iframe message
+ */
+export type RegisterPersistentListener<T> = (
+	type: MessageType,
+	callback: PersistentListenerCallback<T>,
 	options?: {
 		window?: WindowProxy;
 		persist?: boolean;
@@ -108,6 +140,17 @@ export type UnregisterListener = (
 	options?: {
 		window?: WindowProxy;
 	},
+) => void;
+
+/**
+ * Type of function that responds to the original iframe
+ * Passes result of calling the persistent listener / listener chain
+ */
+export type RespondCallback = (
+	id: string,
+	target: MessageEventSource | null,
+	error: { message: string } | null,
+	result: unknown,
 ) => void;
 
 const LISTENERS: Listeners = {};
@@ -257,7 +300,7 @@ const eventToStandardMessage = (
  * Respond to the original iframe with the result of calling the
  * persistent listener / listener chain
  */
-const respond = (
+const respond: RespondCallback = (
 	id: string,
 	target: MessageEventSource | null,
 	error: { message: string } | null,
@@ -432,7 +475,13 @@ export const unregister: UnregisterListener = (type, callback, options) => {
  * @param modules The modules that will register callbacks
  */
 export const init = (
-	...modules: Array<(register: RegisterListener) => void>
+	...modules: Array<
+		(
+			register:
+				| RegisterListener
+				| RegisterPersistentListener<unknown | boolean>,
+		) => void
+	>
 ): void => {
 	modules.forEach((moduleInit) => moduleInit(register));
 };
