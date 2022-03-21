@@ -1,9 +1,10 @@
 package services
 
 import java.net.URL
-import org.scanamo.error.MissingProperty
-import org.scanamo.syntax._
-import org.scanamo.{DynamoFormat, Scanamo, ScanamoAsync, Table}
+
+import com.gu.scanamo.error.MissingProperty
+import com.gu.scanamo.syntax._
+import com.gu.scanamo.{DynamoFormat, Scanamo, ScanamoAsync, Table}
 import common.GuLogging
 import conf.Configuration
 
@@ -118,8 +119,8 @@ class RedirectService(implicit executionContext: ExecutionContext) extends GuLog
 
   def lookupRedirectDestination(source: String): Future[Option[Destination]] = {
     val fullUrl = if (source.head == '/') expectedSourceHost + source else s"$expectedSourceHost/$source"
-    ScanamoAsync(DynamoDB.asyncClient)
-      .exec(table.get("source" -> fullUrl))
+    ScanamoAsync
+      .exec(DynamoDB.asyncClient)(table.get('source -> fullUrl))
       .map({
         case Some(Right(destination)) => Some(destination)
         case _                        => None
@@ -147,14 +148,14 @@ class RedirectService(implicit executionContext: ExecutionContext) extends GuLog
   def set(destination: Destination): Boolean =
     normaliseDestination(destination).exists { dest =>
       log.info(s"Setting redirect in: $tableName to: ${dest.source} -> ${dest.location}")
-      Scanamo(DynamoDB.syncClient).exec(table.put(dest))
+      Scanamo.exec(DynamoDB.syncClient)(table.put(dest))
       true
     }
 
   def remove(source: String): Boolean =
     normaliseSource(source).exists { src =>
       log.info(s"Removing redirect in: $tableName to: $src")
-      Scanamo(DynamoDB.syncClient).exec(table.delete("source" -> src))
+      Scanamo.exec(DynamoDB.syncClient)(table.delete('source -> src))
       true
     }
 }
