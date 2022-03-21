@@ -430,9 +430,7 @@
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-4-handle-new-liveblog-blocks.ts"
+  "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/messenger.ts": [
   "../lib/report-error.js",
@@ -565,7 +563,6 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-4-handle-new-liveblog-blocks.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
@@ -652,7 +649,6 @@
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-4-handle-new-liveblog-blocks.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
@@ -679,10 +675,6 @@
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
- "../projects/common/modules/experiments/tests/spacefinder-okr-4-handle-new-liveblog-blocks.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
