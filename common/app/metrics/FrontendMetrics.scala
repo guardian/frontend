@@ -127,7 +127,7 @@ final case class DurationMetric(override val name: String, override val metricUn
   }
 
   // Public for tests.
-  def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: dataPoints.get())
+  def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
   def recordDuration(timeInMillis: Double): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
 
@@ -159,7 +159,7 @@ final case class SamplerMetric(override val name: String, override val metricUni
   }
 
   def recordSample(sampleValue: Double, sampleTime: DateTime): Future[List[SampledDataPoint]] =
-    dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: dataPoints.get())
+    dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: _)
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty
 }
