@@ -24,7 +24,7 @@ import {
 	buildKeywordTags,
 	buildSeriesTag,
 	dynamicImport,
-	getArticleCountConsent,
+	hasCmpConsentForArticleCount,
 	isHosted,
 	ModulesVersion,
 	supportDotcomComponentsUrl,
@@ -82,7 +82,7 @@ const buildEpicPayload = async (): Promise<EpicPayload> => {
 		countryCode,
 		epicViewLog: getEpicViewLog(storage.local),
 		weeklyArticleHistory: weeklyArticleHistory,
-		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
+		hasOptedOutOfArticleCount: !(await hasCmpConsentForArticleCount()),
 		modulesVersion: ModulesVersion,
 		url: window.location.origin + window.location.pathname,
 	};
