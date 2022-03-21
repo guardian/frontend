@@ -7,7 +7,7 @@ import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
-  val ShareCounts = Switch(
+  val ServerShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
     "If this switch is on, share counts are fetched from the Facebook Graph API on the server",
@@ -17,7 +17,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val FixturesAndResultsContainerSwitch = Switch(
+  val FixturesAndResultsContainer = Switch(
     SwitchGroup.Feature,
     "fixtures-and-results-container",
     "Fixtures and results container on football tag pages",
@@ -87,7 +87,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val FontSwitch = Switch(
+  val WebFonts = Switch(
     SwitchGroup.Feature,
     "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
@@ -97,7 +97,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val FontKerningSwitch = Switch(
+  val FontKerning = Switch(
     SwitchGroup.Feature,
     "font-kerning",
     "If this is switched on then fonts will be kerned/optimised for legibility.",
@@ -107,7 +107,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val SearchSwitch = Switch(
+  val GoogleSearch = Switch(
     SwitchGroup.Feature,
     "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
@@ -117,7 +117,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val IdentityProfileNavigationSwitch = Switch(
+  val IdProfileNavigation = Switch(
     SwitchGroup.Feature,
     "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
@@ -127,7 +127,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val FacebookShareUseTrailPicFirstSwitch = Switch(
+  val FacebookShareimage = Switch(
     SwitchGroup.Feature,
     "facebook-shareimage",
     "Facebook shares try to use article trail picture image first when switched ON, or largest available " +
@@ -138,7 +138,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val IdentityFormstackSwitch = Switch(
+  val IdFormstack = Switch(
     SwitchGroup.Feature,
     "id-formstack",
     "If this switch is on, formstack forms will be available",
@@ -148,7 +148,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val IdentityAvatarUploadSwitch = Switch(
+  val IdAvatarUpload = Switch(
     SwitchGroup.Feature,
     "id-avatar-upload",
     "If this switch is on, users can upload avatars on their profile page",
@@ -158,7 +158,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val EnhanceTweetsSwitch = Switch(
+  val EnhanceTweets = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
@@ -188,7 +188,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val IdentityBlockSpamEmails = Switch(
+  val IdBlockSpamEmails = Switch(
     SwitchGroup.Feature,
     "id-block-spam-emails",
     "If switched on, any new registrations with emails from ae blacklisted domin will be blocked",
@@ -198,7 +198,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val IdentityLogRegistrationsFromTor = Switch(
+  val IdLogTorRegistrations = Switch(
     SwitchGroup.Feature,
     "id-log-tor-registrations",
     "If switched on, any user registrations from a known tor exit node will be logged",
@@ -208,7 +208,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val CrosswordSvgThumbnailsSwitch = Switch(
+  val CrosswordSvgThumbnails = Switch(
     SwitchGroup.Feature,
     "crossword-svg-thumbnails",
     "If switched on, crossword thumbnails will be accurate SVGs",
@@ -218,7 +218,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val SudokuSwitch = Switch(
+  val Sudoku = Switch(
     SwitchGroup.Feature,
     "sudoku",
     "If switched on, sudokus will be available",
@@ -228,7 +228,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val CricketScoresSwitch = Switch(
+  val CricketScores = Switch(
     SwitchGroup.Feature,
     "cricket-scores",
     "If switched on, cricket score and scorecard link will be displayed",
@@ -238,7 +238,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val RugbyScoresSwitch = Switch(
+  val RugbyWorldCup = Switch(
     SwitchGroup.Feature,
     "rugby-world-cup",
     "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
@@ -249,7 +249,7 @@ trait FeatureSwitches {
   )
 
   // Decommissioned, see marker: 7dde429f00b1
-  val StocksWidgetSwitch = Switch(
+  val StocksWidget = Switch(
     SwitchGroup.Feature,
     "stocks-widget",
     "If switched on, a stocks widget will be displayed on the business front (note: code is currently decommissioned, so switch has no effect)",
@@ -259,7 +259,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val MissingVideoEndcodingsJobSwitch = Switch(
+  val CheckForMissingVideoEndcodings = Switch(
     SwitchGroup.Feature,
     "check-for-missing-video-encodings",
     "If this switch is switched on then the job will run which will check all video content for missing encodings",
@@ -269,7 +269,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val EmailInlineInFooterSwitch = Switch(
+  val EmailInlineInFooter = Switch(
     SwitchGroup.Feature,
     "email-inline-in-footer",
     "show the email sign-up in the footer",
@@ -279,7 +279,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val UseAtomsSwitch = Switch(
+  val UseAtoms = Switch(
     SwitchGroup.Feature,
     "use-atoms",
     "use atoms from content api to enhance content",
@@ -309,7 +309,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val R2PagePressServiceSwitch = Switch(
+  val R2PagePressService = Switch(
     SwitchGroup.Feature,
     "r2-page-press-service",
     "When ON, the R2 page press service will monitor the queue and press pages to S3",
@@ -394,7 +394,7 @@ trait FeatureSwitches {
   )
 
   // Election interactive header switch
-  val InteractiveHeaderSwitch = Switch(
+  val InteractiveFullHeaderSwitch = Switch(
     SwitchGroup.Feature,
     "interactive-full-header-switch",
     "If switched on, the header on all interactives will display in full.",
@@ -404,7 +404,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val slotBodyEnd = Switch(
+  val SlotBodyEnd = Switch(
     SwitchGroup.Feature,
     "slot-body-end",
     "If on, will populate body end slot from Slot Machine (note, only relevant to DCR for now)",
@@ -414,7 +414,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val remoteBanner = Switch(
+  val RemoteBanner = Switch(
     SwitchGroup.Feature,
     "remote-banner",
     "Enables the banner fetched from support-dotcom-components",
@@ -424,7 +424,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val remoteHeader = Switch(
+  val RemoteHeader = Switch(
     SwitchGroup.Feature,
     "remote-header",
     "Enables the header fetched from support-dotcom-components",
@@ -434,7 +434,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val puzzlesBanner = Switch(
+  val PuzzlesBanner = Switch(
     SwitchGroup.Feature,
     "puzzles-banner",
     "Enables the puzzles banner on puzzles pages",
@@ -444,7 +444,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val AnniversaryLogoHeader = Switch(
+  val AnniversaryHeaderSvg = Switch(
     SwitchGroup.Feature,
     "anniversary-header-svg",
     "Enables the anniversary logo SVG in the header",
@@ -454,7 +454,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val InteractivePickerFeature = Switch(
+  val InteractivePicker = Switch(
     SwitchGroup.Feature,
     "interactive-picker",
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
