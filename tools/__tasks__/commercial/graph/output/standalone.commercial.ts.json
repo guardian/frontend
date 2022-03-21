@@ -430,7 +430,9 @@
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/commercial/modules/messenger.ts": [
   "../lib/report-error.js",
