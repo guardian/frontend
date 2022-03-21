@@ -100,10 +100,6 @@ const insertAds = (paras) => {
 
 const fill = (rules) =>
 	spaceFiller.fillSpace(rules, insertAds).then((result) => {
-		// Before the refactor of fillSpace in https://github.com/guardian/frontend/pull/24599,
-		// since insertAds returned void, result is only ever undefined and the code path below was dead.
-		// TODO investigate the impact of removing the following line.
-		result = undefined;
 		if (result && AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,
