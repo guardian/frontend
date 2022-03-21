@@ -31,18 +31,20 @@ import { onSlotViewableFunction } from './on-slot-viewable';
 import { refreshOnResize } from './refresh-on-resize';
 
 initMessenger(
-	type,
-	getStyles,
-	initGetPageTargeting,
-	initGetPageUrl,
-	initMeasureAdLoad,
-	resize,
-	scroll,
-	viewport,
-	sendClick,
-	background,
-	disableRefresh,
-	passback,
+	[
+		type,
+		getStyles,
+		initGetPageTargeting,
+		initGetPageUrl,
+		initMeasureAdLoad,
+		resize,
+		scroll,
+		sendClick,
+		background,
+		disableRefresh,
+		passback,
+	],
+	[viewport],
 );
 
 const setDfpListeners = (): void => {

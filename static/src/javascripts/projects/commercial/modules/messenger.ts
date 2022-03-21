@@ -83,9 +83,9 @@ export type RespondProxy = (
 /**
  * Callbacks that can be registered to fire when receiving messages from an iframe
  */
-type PersistentListenerCallback<T> = (
+type PersistentListenerCallback = (
 	respondProxy: RespondProxy,
-	specs: T,
+	specs: unknown,
 	/**
 	 * Reference to the iframe that is the source of the message
 	 */
@@ -102,7 +102,7 @@ type PersistentListenerCallback<T> = (
 type Listeners = Partial<
 	Record<
 		MessageType,
-		PersistentListenerCallback<unknown> | ListenerCallback[] | undefined
+		PersistentListenerCallback | ListenerCallback[] | undefined
 	>
 >;
 
@@ -118,16 +118,18 @@ export type RegisterListener = (
 	},
 ) => void;
 
+type ListenerOptions = {
+	window?: WindowProxy;
+	persist?: boolean;
+};
+
 /**
  * Types of functions to register a persistent listener for a given type of iframe message
  */
-export type RegisterPersistentListener<T> = (
+export type RegisterPersistentListener = (
 	type: MessageType,
-	callback: PersistentListenerCallback<T>,
-	options?: {
-		window?: WindowProxy;
-		persist?: boolean;
-	},
+	callback: PersistentListenerCallback,
+	options?: ListenerOptions,
 ) => void;
 
 /**
@@ -137,9 +139,7 @@ export type RegisterPersistentListener<T> = (
 export type UnregisterListener = (
 	type: MessageType,
 	callback?: ListenerCallback,
-	options?: {
-		window?: WindowProxy;
-	},
+	options?: ListenerOptions,
 ) => void;
 
 /**
@@ -411,22 +411,31 @@ const off = (window: WindowProxy) => {
  * @param callback The callback to register that will receive messages of the given type
  * @param options Options for the target window and whether the callback is persistent
  */
-export const register: RegisterListener = (type, callback, options): void => {
+export const register: RegisterListener = (type, callback, options?): void => {
 	if (REGISTERED_LISTENERS === 0) {
 		on(options?.window ?? window);
 	}
 
+	const listeners = LISTENERS[type] ?? [];
+
+	if (Array.isArray(listeners) && !listeners.includes(callback)) {
+		LISTENERS[type] = [...listeners, callback];
+		REGISTERED_LISTENERS += 1;
+	}
+};
+
+export const registerPersistentListener: RegisterPersistentListener = (
+	type: MessageType,
+	callback: PersistentListenerCallback,
+	options?: ListenerOptions,
+): void => {
+	if (REGISTERED_LISTENERS === 0) {
+		on(options?.window ?? window);
+	}
 	// Persistent LISTENERS are exclusive
 	if (options?.persist) {
 		LISTENERS[type] = callback;
 		REGISTERED_LISTENERS += 1;
-	} else {
-		const listeners = LISTENERS[type] ?? [];
-
-		if (Array.isArray(listeners) && !listeners.includes(callback)) {
-			LISTENERS[type] = [...listeners, callback];
-			REGISTERED_LISTENERS += 1;
-		}
 	}
 };
 
@@ -475,15 +484,13 @@ export const unregister: UnregisterListener = (type, callback, options) => {
  * @param modules The modules that will register callbacks
  */
 export const init = (
-	...modules: Array<
-		(
-			register:
-				| RegisterListener
-				| RegisterPersistentListener<unknown | boolean>,
-		) => void
-	>
+	modules: Array<(register: RegisterListener) => void>,
+	persistentModules: Array<(register: RegisterPersistentListener) => void>,
 ): void => {
 	modules.forEach((moduleInit) => moduleInit(register));
+	persistentModules.forEach((moduleInit) =>
+		moduleInit(registerPersistentListener),
+	);
 };
 
 export const _ = { onMessage };

@@ -8,8 +8,6 @@ type IFrameMapValue = {
 	respond: RespondProxy;
 };
 
-type MessagePayload = boolean;
-
 let w: Window = window;
 let iframes: Record<string, IFrameMapValue> = {};
 let iframeCounter = 0;
@@ -71,10 +69,11 @@ const removeResizeListener = (iframe: HTMLIFrameElement): void => {
 
 const onMessage = (
 	respond: RespondProxy,
-	start: MessagePayload,
+	start: unknown,
 	iframe: HTMLIFrameElement | undefined,
 ): void => {
 	if (!iframe) return;
+	if (typeof start !== 'boolean') return;
 	if (start) {
 		void addResizeListener(iframe, respond);
 	} else {
@@ -82,7 +81,7 @@ const onMessage = (
 	}
 };
 
-const init = (register: RegisterPersistentListener<boolean>): void => {
+const init = (register: RegisterPersistentListener): void => {
 	register('viewport', onMessage, {
 		persist: true,
 	});
