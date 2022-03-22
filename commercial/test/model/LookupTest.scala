@@ -93,6 +93,6 @@ import scala.concurrent.duration._
   }
 
   "latestContentByKeyword" should "not find content for a non-existent keyword" in {
-    contentsForKeyword("xxx-this-keyword-does-not-exist") should be(Nil)
+    contentsForKeyword("jklkl") should be(Nil)
   }
 }
