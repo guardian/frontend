@@ -81,7 +81,13 @@ export type RespondProxy = (
 ) => void;
 
 /**
- * Callbacks that can be registered to fire when receiving messages from an iframe
+ * Persistent callbacks that can be registered to fire when receiving messages from an iframe
+ *
+ * A persistent callback listener will be passed a RespondProxy function
+ *
+ * This function allows the listener to call respond (i.e. postMessage the originating iFrame) itself whenever it needs to
+ *
+ * This is useful for listeners such as viewport or scroll where the values change over time
  */
 type PersistentListenerCallback = (
 	respondProxy: RespondProxy,
@@ -405,11 +411,11 @@ const off = (window: WindowProxy) => {
 };
 
 /**
- * Register a callback for a given type of iframe message
+ * Register a listener for a given type of iframe message
  *
  * @param type The `type` of message to register against
- * @param callback The callback to register that will receive messages of the given type
- * @param options Options for the target window and whether the callback is persistent
+ * @param callback The listener callback to register that will receive messages of the given type
+ * @param options Options for the target window
  */
 export const register: RegisterListener = (type, callback, options?): void => {
 	if (REGISTERED_LISTENERS === 0) {
@@ -424,6 +430,13 @@ export const register: RegisterListener = (type, callback, options?): void => {
 	}
 };
 
+/**
+ * Register a persistent listener for a given type of iframe message
+ *
+ * @param type The `type` of message to register against
+ * @param callback The persistent listener callback to register that will receive messages of the given type
+ * @param options Options for the target window and whether the callback is persistent
+ */
 export const registerPersistentListener: RegisterPersistentListener = (
 	type: MessageType,
 	callback: PersistentListenerCallback,
