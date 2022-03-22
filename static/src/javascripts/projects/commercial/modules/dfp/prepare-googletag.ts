@@ -38,13 +38,12 @@ initMessenger(
 		initGetPageUrl,
 		initMeasureAdLoad,
 		resize,
-		scroll,
 		sendClick,
 		background,
 		disableRefresh,
 		passback,
 	],
-	[viewport],
+	[scroll, viewport],
 );
 
 const setDfpListeners = (): void => {

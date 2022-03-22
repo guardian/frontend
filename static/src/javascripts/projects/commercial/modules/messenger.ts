@@ -494,14 +494,15 @@ export const unregister: UnregisterListener = (type, callback, options) => {
 /**
  * Initialize an array of listener callbacks in a batch
  *
- * @param modules The modules that will register callbacks
+ * @param listeners The listener registration functions
+ * @param persistentListeners The persistent listener registration functions
  */
 export const init = (
-	modules: Array<(register: RegisterListener) => void>,
-	persistentModules: Array<(register: RegisterPersistentListener) => void>,
+	listeners: Array<(register: RegisterListener) => void>,
+	persistentListeners: Array<(register: RegisterPersistentListener) => void>,
 ): void => {
-	modules.forEach((moduleInit) => moduleInit(register));
-	persistentModules.forEach((moduleInit) =>
+	listeners.forEach((moduleInit) => moduleInit(register));
+	persistentListeners.forEach((moduleInit) =>
 		moduleInit(registerPersistentListener),
 	);
 };
