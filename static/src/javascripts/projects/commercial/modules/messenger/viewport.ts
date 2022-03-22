@@ -85,8 +85,12 @@ const onMessage = (
 	start: unknown,
 	iframe: HTMLIFrameElement | undefined,
 ): void => {
-	if (!iframe) return;
-	if (typeof start !== 'boolean') return;
+	if (!iframe) {
+		return;
+	}
+	if (typeof start !== 'boolean') {
+		return;
+	}
 	if (start) {
 		void addResizeListener(iframe, respond);
 	} else {
