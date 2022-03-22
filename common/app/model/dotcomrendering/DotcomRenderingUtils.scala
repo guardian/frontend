@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.format.{InteractiveDesign, LiveBlogDesign}
+import com.gu.contentapi.client.utils.format.{LiveBlogDesign}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import conf.switches.Switches
@@ -235,13 +235,7 @@ object DotcomRenderingUtils {
   def getModifiedContent(content: ContentType, forceLive: Boolean): ContentFormat = {
     val originalFormat = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
 
-    // TODO move to content-api-scala-client once confirmed as correct
-    // behaviour. At the moment we are seeing interactive articles with other
-    // design types due to CAPI format logic. But interactive design should
-    // always take precendent (or so we think).
-    if (content.metadata.contentType.contains(DotcomContentType.Interactive)) {
-      originalFormat.copy(design = InteractiveDesign)
-    } else if (forceLive) {
+    if (forceLive) {
       originalFormat.copy(design = LiveBlogDesign)
     } else {
       originalFormat
