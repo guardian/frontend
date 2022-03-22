@@ -16,7 +16,6 @@ let WINDOWHEIGHT;
 let firstSlot;
 
 const startListening = () => {
-	// eslint-disable-next-line no-use-before-define
 	// frontend - remove when migration to DCR is complete
 	mediator.on('modules:autoupdate:updates', onUpdate);
 	// DCR
@@ -24,7 +23,6 @@ const startListening = () => {
 };
 
 const stopListening = () => {
-	// eslint-disable-next-line no-use-before-define
 	// frontend - remove when migration to DCR is complete
 	mediator.off('modules:autoupdate:updates', onUpdate);
 	// DCR
