@@ -12,6 +12,7 @@ type MessageType =
 	| 'get-page-url'
 	| 'get-styles'
 	| 'measure-ad-load'
+	| 'passback'
 	| 'resize'
 	| 'set-ad-height'
 	| 'scroll'
@@ -157,17 +158,30 @@ const toStandardMessage = (
 });
 
 /**
- * Retrieve a reference to the calling iframe via it's ID.
+ * Retrieve a reference to the calling iFrame
  *
- * Incoming messages contain the ID of the iframe into which the source window is embedded.
+ * Attempts the following strategies to find the correct iframe:
+ * - using the slotId from the incoming message
+ * - using the iframeId from the incoming message
+ * - checking message event.source (i.e. window) against all page level iframe contentWindows
+ *
+ * Listeners can then use the iFrame to determine the slot making the postMessage call
  */
-const getIframe = (message: StandardMessage): HTMLIFrameElement | undefined => {
+const getIframe = (
+	message: StandardMessage,
+	messageEventSource: MessageEventSource | null,
+): HTMLIFrameElement | undefined => {
 	if (message.slotId) {
 		const container = document.getElementById(`dfp-ad--${message.slotId}`);
 		return container?.querySelector('iframe') ?? undefined;
 	} else if (message.iframeId) {
 		const el = document.getElementById(message.iframeId);
 		return el instanceof HTMLIFrameElement ? el : undefined;
+	} else if (messageEventSource) {
+		const iframes = document.querySelectorAll<HTMLIFrameElement>('iframe');
+		return Array.from(iframes).find(
+			(iframe) => iframe.contentWindow === messageEventSource,
+		);
 	}
 };
 
@@ -294,7 +308,7 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 						const thisRet = listener(
 							message.value,
 							ret,
-							getIframe(message),
+							getIframe(message, event.source),
 						);
 						return thisRet === undefined ? ret : thisRet;
 					}),
@@ -325,7 +339,7 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 			(error: { message: string } | null, result: unknown) =>
 				respond(message.id, event.source, error, result),
 			message.value,
-			getIframe(message),
+			getIframe(message, event.source),
 		);
 	} else {
 		// If there is no routine attached to this event type, we just answer

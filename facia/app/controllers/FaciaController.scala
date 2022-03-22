@@ -245,7 +245,7 @@ trait FaciaController
   }
 
   protected def renderShowcaseFront(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
-    val (rundownPanelOutcome, singleStoryPanelOutcomes) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val (rundownPanelOutcome, singleStoryPanelOutcomes, duplicateMap) = TrailsToShowcase.generatePanelsFrom(faciaPage)
     val showcase = TrailsToShowcase(
       feedTitle = faciaPage.metadata.title,
       url = Some(faciaPage.metadata.url),

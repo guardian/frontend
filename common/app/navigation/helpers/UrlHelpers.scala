@@ -1,7 +1,8 @@
 package navigation
 
-import com.netaporter.uri.config.UriConfig
-import com.netaporter.uri.encoding.PercentEncoder
+import io.lemonlabs.uri.Url
+import io.lemonlabs.uri.config.UriConfig
+import io.lemonlabs.uri.encoding.PercentEncoder
 import navigation.ReaderRevenueSite._
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
@@ -64,18 +65,22 @@ object UrlHelpers {
   def readerRevenueLinks(implicit request: RequestHeader): List[NavLink] =
     List(
       NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
-      NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe")),
+      NavLink(
+        "Print subscriptions",
+        getReaderRevenueUrl(SupportGuardianWeekly, SideMenu),
+        classList = Seq("js-subscribe"),
+      ),
     )
-
-  private val uriEncoder = UriConfig.default.copy(
-    // The default encoder does not encode double quotes in the querystring
-    queryEncoder = PercentEncoder(PercentEncoder.QUERY_CHARS_TO_ENCODE + '"'),
-  )
 
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position): String = {
     val componentId = getComponentId(destination, position)
     val componentType = getComponentType(position)
 
+    // Implicit - used when parsing url
+    implicit val uriEncoder = UriConfig.default.copy(
+      // The default encoder does not encode double quotes in the querystring
+      queryEncoder = PercentEncoder(PercentEncoder.QUERY_CHARS_TO_ENCODE + '"'),
+    )
     val acquisitionData = Json.obj(
       // GUARDIAN_WEB corresponds to a value in the Thrift enum
       // https://dashboard.ophan.co.uk/docs/thrift/acquisition.html#Enum_AcquisitionSource
@@ -89,12 +94,12 @@ object UrlHelpers {
       ),
     )
 
-    import com.netaporter.uri.dsl._
+    import io.lemonlabs.uri.typesafe.dsl._
 
     // INTCMP is passed as a separate param because people look at it in Google Analytics
     // It's set to the most specific thing (componentId) to maximise its usefulness
     val url = destination.url ? ("INTCMP" -> componentId) & ("acquisitionData" -> acquisitionData.toString)
-    url.toString(uriEncoder)
+    Url.parse(url.toString).toString
   }
 
   def getJobUrl(editionId: String): String =

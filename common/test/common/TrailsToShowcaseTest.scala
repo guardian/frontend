@@ -194,7 +194,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
 
     val rundownPanel = rundownPanels.head
     val rundownPanelGuid = (rundownPanel \ "guid").head
-    rundownPanelGuid.text should be("rundown-container-id")
+
+    rundownPanelGuid.text should be(s"rundown-container-id--1679333355")
     rundownPanelGuid.attribute("isPermaLink").get.head.text should be("false")
 
     (rundownPanel \ "panel_title").filter(_.prefix == "g").head.text should be("My rundown panel title")
@@ -397,7 +398,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     authorsEmail should be(Some("Trail byline"))
 
     val gModule = entry.getModule(GModule.URI).asInstanceOf[GModule]
-    gModule.getPanel should be(Some("SINGLE_STORY"))
+    val gPanel = gModule.getPanel
+    gPanel shouldNot be(None)
+    gPanel.get.`type` should be("SINGLE_STORY")
+    gPanel.get.content should be("My unique headline")
+
     gModule.getPanelTitle should be(Some("My panel title"))
     gModule.getOverline should be(Some("A kicker"))
     gModule.getArticleGroup.nonEmpty should be(true)
@@ -706,7 +711,8 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
       .get
 
     rundownPanel.`type` should be("RUNDOWN")
-    rundownPanel.guid should be("rundown-container-id") // Guid for rundown item is the container id.
+    // Guid for rundown item is the container id and the hash of the title
+    rundownPanel.guid should be("rundown-container-id--180248192")
     rundownPanel.panelTitle should be("My panel title")
 
     rundownPanel.articleGroup.role shouldBe ("RUNDOWN")
@@ -758,7 +764,11 @@ class TrailsToShowcaseTest extends FlatSpec with Matchers {
     val mediaModule = entry.getModule("http://search.yahoo.com/mrss/").asInstanceOf[MediaEntryModule]
     mediaModule should be(null)
     val gModule = entry.getModule(GModule.URI).asInstanceOf[GModule]
-    gModule.getPanel should be(Some("RUNDOWN"))
+    val gPanel = gModule.getPanel
+    gPanel shouldNot be(None)
+    gPanel.get.`type` should be("RUNDOWN")
+    gPanel.get.content should be("Rundown panel title")
+
     gModule.getPanelTitle should be(Some("Rundown panel title"))
 
     val articleGroup = gModule.getArticleGroup.get

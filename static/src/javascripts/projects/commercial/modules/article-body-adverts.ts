@@ -1,6 +1,5 @@
 import { adSizes } from '@guardian/commercial-core';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { spacefinderOkr3RichLinks } from 'common/modules/experiments/tests/spacefinder-okr-3-rich-links';
 import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
@@ -58,6 +57,11 @@ const insertAdAtPara = (
 const enableNearbyFilteringFix = () =>
 	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
 
+const enableRichLinksFix = !isInVariantSynchronous(
+	spacefinderOkrMegaTest,
+	'control',
+);
+
 const filterNearbyCandidates = enableNearbyFilteringFix()
 	? filterNearbyCandidatesFixed
 	: filterNearbyCandidatesBroken;
@@ -68,10 +72,7 @@ const articleBodySelector = isDotcomRendering
 	: '.js-article__body';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
-	const ignoreList = isInVariantSynchronous(
-		spacefinderOkr3RichLinks,
-		'variant',
-	)
+	const ignoreList = enableRichLinksFix
 		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-component="rich-link"])'
 		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
 
@@ -282,6 +283,9 @@ export const init = (): Promise<boolean> => {
 	mediator.on('page:article:redisplayed', doInit);
 	// DCR doesn't have mediator, so listen for CustomEvent
 	document.addEventListener('dcr:page:article:redisplayed', () => {
+		void doInit();
+	});
+	document.addEventListener('article:sign-in-gate-dismissed', () => {
 		void doInit();
 	});
 	return doInit();
