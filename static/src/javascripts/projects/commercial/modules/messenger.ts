@@ -96,7 +96,7 @@ type PersistentListenerCallback = (
 	 * Reference to the iframe that is the source of the message
 	 */
 	iframe?: HTMLIFrameElement,
-) => unknown;
+) => void;
 
 /**
  * The set of listeners currently registered
