@@ -23,10 +23,14 @@ const reset = (window_?: Window): void => {
 };
 
 const sendViewportDimensions = (iframeId: string, viewport: Viewport) => {
-	// TODO check
 	iframes[iframeId].respond(null, viewport);
 };
 
+/**
+ * When the viewport resizes send viewport dimensions
+ *
+ * to all registered iFrames
+ */
 const onResize = (): void => {
 	if (!taskQueued) {
 		taskQueued = true;
@@ -44,15 +48,24 @@ const addResizeListener = (
 	iframe: HTMLIFrameElement,
 	respond: RespondProxy,
 ): Promise<void> => {
+	/**
+	 * Initialise resize listener
+	 */
 	if (iframeCounter === 0) {
 		w.addEventListener('resize', onResize);
 	}
-
+	/**
+	 * Add to the map of all iFrames with their respective
+	 * respond functions
+	 */
 	iframes[iframe.id] = {
 		node: iframe,
 		respond,
 	};
 	iframeCounter += 1;
+	/**
+	 * Send viewport dimensions on first request
+	 */
 	return lastViewportRead().then((viewport) => {
 		sendViewportDimensions(iframe.id, viewport);
 	});
