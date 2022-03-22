@@ -19,7 +19,7 @@ object LiveblogRendering
       description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = LocalDate.of(2022, 6, 2),
-      participationGroup = Perc10A,
+      participationGroup = Perc1A,
     )
 
 object StickyVideos

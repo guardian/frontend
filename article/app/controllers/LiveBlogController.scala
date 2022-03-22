@@ -366,6 +366,6 @@ object LiveBlogController {
   }
 
   def checkIfSupported(blog: PageWithStoryPackage): Boolean = {
-    isDeadBlog(blog) && isSupportedTheme(blog)
+    isSupportedTheme(blog)
   }
 }
