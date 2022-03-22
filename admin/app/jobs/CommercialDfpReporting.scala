@@ -7,8 +7,7 @@ import com.google.api.ads.admanager.axis.v202108.Column.{AD_SERVER_IMPRESSIONS, 
 import com.google.api.ads.admanager.axis.v202108.DateRangeType.CUSTOM_DATE
 import com.google.api.ads.admanager.axis.v202108.Dimension.{CUSTOM_CRITERIA, DATE}
 import com.google.api.ads.admanager.axis.v202108._
-import com.gu.Box
-import common.{AkkaAsync, JobScheduler, GuLogging}
+import common.{AkkaAsync, Box, JobScheduler, GuLogging}
 import dfp.DfpApi
 import play.api.inject.ApplicationLifecycle
 

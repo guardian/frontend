@@ -1,11 +1,9 @@
 package jobs
 
-import common.GuLogging
+import common.{Box, GuLogging}
 
 import scala.collection.JavaConverters._
 import java.net.{InetAddress, URL}
-
-import com.gu.Box
 
 import scala.io.Source
 

@@ -1,6 +1,6 @@
 package commercial.model.merchandise.jobs
 
-import com.gu.Box
+import common.Box
 import commercial.model.capi.Lookup
 import contentapi.ContentApiClient
 

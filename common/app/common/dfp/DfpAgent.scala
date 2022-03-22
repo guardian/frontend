@@ -1,6 +1,6 @@
 package common.dfp
 
-import com.gu.Box
+import common.Box
 import conf.Configuration.commercial._
 import conf.Configuration.environment
 import play.api.libs.json.Json
