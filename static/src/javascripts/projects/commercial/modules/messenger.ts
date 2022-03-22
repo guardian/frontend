@@ -118,15 +118,11 @@ type Listeners = Partial<
 export type RegisterListener = (
 	type: MessageType,
 	callback: ListenerCallback,
-	options?: {
-		window?: WindowProxy;
-		persist?: boolean;
-	},
+	options?: ListenerOptions,
 ) => void;
 
 type ListenerOptions = {
 	window?: WindowProxy;
-	persist?: boolean;
 };
 
 /**
@@ -445,11 +441,8 @@ export const registerPersistentListener: RegisterPersistentListener = (
 	if (REGISTERED_LISTENERS === 0) {
 		on(options?.window ?? window);
 	}
-	// Persistent LISTENERS are exclusive
-	if (options?.persist) {
-		LISTENERS[type] = callback;
-		REGISTERED_LISTENERS += 1;
-	}
+	LISTENERS[type] = callback;
+	REGISTERED_LISTENERS += 1;
 };
 
 /**

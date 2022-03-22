@@ -132,9 +132,7 @@ const onMessage = (respond, start, iframe) => {
 };
 
 const init = (register) => {
-	register('scroll', onMessage, {
-		persist: true,
-	});
+	register('scroll', onMessage);
 };
 
 export const _ = { addScrollListener, removeScrollListener, reset, onMessage };

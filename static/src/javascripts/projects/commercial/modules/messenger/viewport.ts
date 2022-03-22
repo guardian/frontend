@@ -95,9 +95,7 @@ const onMessage = (
 };
 
 const init = (register: RegisterPersistentListener): void => {
-	register('viewport', onMessage, {
-		persist: true,
-	});
+	register('viewport', onMessage);
 };
 
 export const _ = { addResizeListener, removeResizeListener, reset, onMessage };
