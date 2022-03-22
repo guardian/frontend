@@ -86,12 +86,6 @@ import scala.concurrent.duration._
     contentsOf() should be(Nil)
   }
 
-  "latestContentByKeyword" should "find content ordered reverse chronologically for an existing keyword" in {
-    val contents = contentsForKeyword("technology/apps")
-    contents should have size 4
-    contents.sortBy(_.trail.webPublicationDate.getMillis).reverse should be(contents)
-  }
-
   "latestContentByKeyword" should "not find content for a non-existent keyword" in {
     contentsForKeyword("jklkl") should be(Nil)
   }
