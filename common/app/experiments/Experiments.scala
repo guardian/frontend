@@ -30,3 +30,12 @@ object StickyVideos
       sellByDate = LocalDate.of(2022, 6, 2),
       participationGroup = Perc0C,
     )
+
+object SlideshowCaptions
+    extends Experiment(
+      name = "slideshow-captions",
+      description = "Captions on fronts slideshows",
+      owners = Seq(Owner.withGithub("jamesgorrie")),
+      sellByDate = LocalDate.of(2022, 6, 2),
+      participationGroup = Perc0C,
+    )
