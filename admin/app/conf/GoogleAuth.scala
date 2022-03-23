@@ -1,8 +1,38 @@
 package conf
 
-import com.gu.googleauth.GoogleAuthConfig
+import com.amazonaws.auth.{AWSCredentialsProviderChain, DefaultAWSCredentialsProviderChain}
+import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagementClientBuilder
+import com.gu.googleauth.{AntiForgeryChecker, GoogleAuthConfig}
+import com.gu.play.secretrotation.{SnapshotProvider, TransitionTiming}
+import play.api.http.HttpConfiguration
 
-case class GoogleAuth(currentHost: Option[String]) {
+import java.time.Duration.{ofHours, ofMinutes}
+
+case class GoogleAuth(
+    currentHost: Option[String],
+    httpConfiguration: HttpConfiguration,
+) {
+  private val securityCredentialsProvider = new AWSCredentialsProviderChain(
+    Configuration.aws.mandatoryCredentials,
+  )
+  private val ssmClient = AWSSimpleSystemsManagementClientBuilder
+    .standard()
+    .withCredentials(securityCredentialsProvider)
+    .withRegion(Regions.EU_WEST_1)
+    .build()
+
+  val secretStateSupplier: SnapshotProvider = {
+    import com.gu.play.secretrotation.aws.parameterstore
+
+    new parameterstore.SecretSupplier(
+      TransitionTiming(usageDelay = ofMinutes(3), overlapDuration = ofHours(2)),
+      "/frontend/PlayAppSecret",
+      parameterstore.AwsSdkV1(ssmClient),
+    )
+  }
+
   val config = AdminConfiguration.oauthCredentials.flatMap { cred =>
     for {
       callback <- cred.authorizedOauthCallbacks.collectFirst {
@@ -17,7 +47,9 @@ case class GoogleAuth(currentHost: Option[String]) {
         cred.oauthClientId, // The client ID from the dev console
         cred.oauthSecret, // The client secret from the dev console
         callback, // The redirect URL Google send users back to (must be the same as that configured in the developer console)
-        "guardian.co.uk", // Google App domain to restrict login
+        List("guardian.co.uk"), // Google App domain to restrict login
+        antiForgeryChecker =
+          AntiForgeryChecker(secretStateSupplier, AntiForgeryChecker.signatureAlgorithmFromPlay(httpConfiguration)),
       )
     }
   }
@@ -27,5 +59,3 @@ case class GoogleAuth(currentHost: Option[String]) {
       throw new RuntimeException("You must set up credentials for Google Auth")
     }
 }
-
-object GoogleAuth extends GoogleAuth(None)

@@ -21,6 +21,6 @@ class OAuthLoginAdminController(
     }
   override def googleAuthConfig(request: Request[AnyContent]): Option[GoogleAuthConfig] = {
     val host = Some(s"${if (request.secure) "https" else "http"}://${request.host}")
-    conf.GoogleAuth(host).config
+    conf.GoogleAuth(host, httpConfiguration).config
   }
 }
