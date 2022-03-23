@@ -1,5 +1,7 @@
 package controllers
 
+import com.amazonaws.auth.AWSCredentialsProviderChain
+import com.amazonaws.regions.Regions
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagementClientBuilder
 import com.gu.googleauth.{AntiForgeryChecker, GoogleAuthConfig, UserIdentity}
 import com.gu.play.secretrotation.{SnapshotProvider, TransitionTiming}
@@ -24,15 +26,25 @@ class OAuthLoginPreviewController(
       Ok(views.html.previewAuth(context.applicationIdentity.name, "Dev", UserIdentity.fromRequest(request)))
     }
   override def googleAuthConfig(request: Request[AnyContent]): Option[GoogleAuthConfig] = {
+    val securityCredentialsProvider = new AWSCredentialsProviderChain(
+      Configuration.aws.mandatoryCredentials,
+    )
+    val ssmClient = AWSSimpleSystemsManagementClientBuilder
+      .standard()
+      .withCredentials(securityCredentialsProvider)
+      .withRegion(Regions.EU_WEST_1)
+      .build()
+
     val secretStateSupplier: SnapshotProvider = {
       import com.gu.play.secretrotation.aws.parameterstore
 
       new parameterstore.SecretSupplier(
         TransitionTiming(usageDelay = ofMinutes(3), overlapDuration = ofHours(2)),
-        "/Example/PlayAppSecret",
-        parameterstore.AwsSdkV1(AWSSimpleSystemsManagementClientBuilder.defaultClient()),
+        "/frontend/PlayAppSecret",
+        parameterstore.AwsSdkV1(ssmClient),
       )
     }
+
     Configuration.standalone.oauthCredentials.map { cred =>
       GoogleAuthConfig(
         cred.oauthClientId, // The client ID from the dev console
