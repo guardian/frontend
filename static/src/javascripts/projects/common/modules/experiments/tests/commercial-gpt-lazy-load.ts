@@ -3,7 +3,7 @@ import { noop } from '../../../../../lib/noop';
 
 export const commercialGptLazyLoad: ABTest = {
 	id: 'CommercialGptLazyLoad',
-	start: '2022-03-24',
+	start: '2022-03-23',
 	expiry: '2020-04-01',
 	author: 'Zeke Hunter-Green',
 	description:
