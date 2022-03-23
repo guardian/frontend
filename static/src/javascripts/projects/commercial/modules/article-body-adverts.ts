@@ -278,9 +278,6 @@ export const init = (): Promise<boolean> => {
 	// For instance by the signin gate.
 	mediator.on('page:article:redisplayed', doInit);
 	// DCR doesn't have mediator, so listen for CustomEvent
-	document.addEventListener('dcr:page:article:redisplayed', () => {
-		void doInit();
-	});
 	document.addEventListener('article:sign-in-gate-dismissed', () => {
 		void doInit();
 	});
