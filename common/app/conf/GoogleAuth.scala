@@ -1,6 +1,6 @@
 package conf
 
-import conf.Configuration.OAuthCredentialsWithMultipleCallbacks
+import conf.Configuration.OAuthCredentials
 import com.amazonaws.auth.AWSCredentialsProviderChain
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagementClientBuilder
@@ -13,7 +13,7 @@ import java.time.Duration.{ofHours, ofMinutes}
 case class GoogleAuth(
     currentHost: Option[String],
     httpConfiguration: HttpConfiguration,
-    oauthCredentials: Option[OAuthCredentialsWithMultipleCallbacks],
+    oauthCredentials: Option[OAuthCredentials],
 ) {
   private val securityCredentialsProvider = new AWSCredentialsProviderChain(
     Configuration.aws.mandatoryCredentials,
@@ -34,25 +34,15 @@ case class GoogleAuth(
     )
   }
 
-  val config = oauthCredentials.flatMap { cred =>
-    for {
-      callback <- cred.authorizedOauthCallbacks.collectFirst {
-        case defaultHost if currentHost.isEmpty =>
-          defaultHost // if oauthCallbackHost is NOT defineed, return the first authorized host in the list
-        case host if host.startsWith(currentHost.get) =>
-          host // if an authorized callback starts with current host, return it
-        // otherwise None will be returned
-      }
-    } yield {
-      GoogleAuthConfig(
-        cred.oauthClientId, // The client ID from the dev console
-        cred.oauthSecret, // The client secret from the dev console
-        callback, // The redirect URL Google send users back to (must be the same as that configured in the developer console)
-        List("guardian.co.uk"), // Google App domain to restrict login
-        antiForgeryChecker =
-          AntiForgeryChecker(secretStateSupplier, AntiForgeryChecker.signatureAlgorithmFromPlay(httpConfiguration)),
-      )
-    }
+  val config = oauthCredentials.map { cred =>
+    GoogleAuthConfig(
+      cred.oauthClientId, // The client ID from the dev console
+      cred.oauthSecret, // The client secret from the dev console
+      cred.oauthCallback, // The redirect URL Google send users back to (must be the same as that configured in the developer console)
+      List("guardian.co.uk"), // Google App domain to restrict login
+      antiForgeryChecker =
+        AntiForgeryChecker(secretStateSupplier, AntiForgeryChecker.signatureAlgorithmFromPlay(httpConfiguration)),
+    )
   }
 
   def getConfigOrDie: GoogleAuthConfig =

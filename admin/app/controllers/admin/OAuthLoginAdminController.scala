@@ -1,7 +1,7 @@
 package controllers.admin
 
 import com.gu.googleauth.GoogleAuthConfig
-import conf.AdminConfiguration
+import conf.{AdminConfiguration, Configuration}
 import googleAuth.OAuthLoginController
 import model.ApplicationContext
 import play.api.http.HttpConfiguration
@@ -21,12 +21,13 @@ class OAuthLoginAdminController(
       Ok(views.html.auth.login(error))
     }
   override def googleAuthConfig(request: Request[AnyContent]): Option[GoogleAuthConfig] = {
-    val host = Some(s"${if (request.secure) "https" else "http"}://${request.host}")
+    val currentHost = Some(s"${if (request.secure) "https" else "http"}://${request.host}")
+
     conf
       .GoogleAuth(
-        host,
+        currentHost,
         httpConfiguration,
-        AdminConfiguration.oauthCredentials,
+        AdminConfiguration.oauthCredentialsWithSingleCallBack(currentHost),
       )
       .config
   }

@@ -12,7 +12,9 @@ trait AdminAuthController {
 
   case class AdminAuthAction(httpConfiguration: HttpConfiguration)
       extends AuthAction(
-        conf.GoogleAuth(None, httpConfiguration, AdminConfiguration.oauthCredentials).getConfigOrDie,
+        conf
+          .GoogleAuth(None, httpConfiguration, AdminConfiguration.oauthCredentialsWithSingleCallBack(None))
+          .getConfigOrDie,
         routes.OAuthLoginAdminController.login,
         controllerComponents.parsers.default,
       )(controllerComponents.executionContext)
