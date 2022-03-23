@@ -1339,10 +1339,10 @@
   dependencies:
     mini-svg-data-uri "^1.3.3"
 
-"@guardian/source-react-components@^4.0.0-rc.2":
-  version "4.0.0-rc.2"
-  resolved "https://registry.npmjs.org/@guardian/source-react-components/-/source-react-components-4.0.0-rc.2.tgz#e306ad26cf155a67b8c26c21c038e8ae99c08065"
-  integrity sha512-H5Y80aAKP9G3pj1Cj3ygd5mP0GbwE6lI91l98yOTh6I1yfcthEzP4faCLKYVn9UvKexHwEhBEjjj8W99YmnfTQ==
+"@guardian/source-react-components@^4.0.0-rc.3":
+  version "4.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@guardian/source-react-components/-/source-react-components-4.0.0-rc.3.tgz#ef1faccad3e6a9816472e8546864fe72fd4d2780"
+  integrity sha512-QBpfqS4TqnEzDHmebtZDPj1kof8RVizyu5jTC0JWuv0n1lja9385bQkVwMQyr2av1f8JvOE+LHv8lUdagtJgPw==
 
 "@guardian/src-foundations@^3.5.0":
   version "3.12.0"
