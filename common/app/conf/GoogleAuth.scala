@@ -1,7 +1,7 @@
 package conf
 
-import com.amazonaws.auth.{AWSCredentialsProviderChain, DefaultAWSCredentialsProviderChain}
-import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import conf.Configuration.OAuthCredentialsWithMultipleCallbacks
+import com.amazonaws.auth.AWSCredentialsProviderChain
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagementClientBuilder
 import com.gu.googleauth.{AntiForgeryChecker, GoogleAuthConfig}
@@ -13,6 +13,7 @@ import java.time.Duration.{ofHours, ofMinutes}
 case class GoogleAuth(
     currentHost: Option[String],
     httpConfiguration: HttpConfiguration,
+    oauthCredentials: Option[OAuthCredentialsWithMultipleCallbacks],
 ) {
   private val securityCredentialsProvider = new AWSCredentialsProviderChain(
     Configuration.aws.mandatoryCredentials,
@@ -33,7 +34,7 @@ case class GoogleAuth(
     )
   }
 
-  val config = AdminConfiguration.oauthCredentials.flatMap { cred =>
+  val config = oauthCredentials.flatMap { cred =>
     for {
       callback <- cred.authorizedOauthCallbacks.collectFirst {
         case defaultHost if currentHost.isEmpty =>
