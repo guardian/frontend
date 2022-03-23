@@ -108,7 +108,7 @@ const fill = (rules) =>
 			// Before the refactor of fillSpace in https://github.com/guardian/frontend/pull/24599,
 			// since insertAds returned void, result was always undefined and the code path below was dead.
 			// Measure the uplift in impressions from fixing the bug by keeping the feature broken for the
-			// variant group of the mega test.
+			// control group of the mega test.
 			result = undefined;
 		}
 		if (result && AD_COUNTER < MAX_ADS) {
