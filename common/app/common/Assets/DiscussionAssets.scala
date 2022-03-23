@@ -1,8 +1,7 @@
 package common.Assets
 
 import app.LifecycleComponent
-import com.gu.Box
-import common.{GuLogging, GuardianConfiguration, JobScheduler}
+import common.{Box, GuLogging, GuardianConfiguration, JobScheduler}
 import conf.switches.Switches
 import play.api.libs.ws.{WSClient, WSResponse}
 

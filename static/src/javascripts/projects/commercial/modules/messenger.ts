@@ -12,6 +12,7 @@ type MessageType =
 	| 'get-page-url'
 	| 'get-styles'
 	| 'measure-ad-load'
+	| 'passback'
 	| 'resize'
 	| 'set-ad-height'
 	| 'scroll'
@@ -74,6 +75,29 @@ type ListenerCallback = (
 	iframe?: HTMLIFrameElement,
 ) => unknown;
 
+export type RespondProxy = (
+	error: { message: string } | null,
+	result: unknown,
+) => void;
+
+/**
+ * Persistent callbacks that can be registered to fire when receiving messages from an iframe
+ *
+ * A persistent callback listener will be passed a RespondProxy function
+ *
+ * This function allows the listener to call respond (i.e. postMessage the originating iFrame) itself whenever it needs to
+ *
+ * This is useful for listeners such as viewport or scroll where the values change over time
+ */
+type PersistentListenerCallback = (
+	respondProxy: RespondProxy,
+	specs: unknown,
+	/**
+	 * Reference to the iframe that is the source of the message
+	 */
+	iframe?: HTMLIFrameElement,
+) => void;
+
 /**
  * The set of listeners currently registered
  *
@@ -82,7 +106,10 @@ type ListenerCallback = (
  * for each type.
  */
 type Listeners = Partial<
-	Record<MessageType, ListenerCallback | ListenerCallback[] | undefined>
+	Record<
+		MessageType,
+		PersistentListenerCallback | ListenerCallback[] | undefined
+	>
 >;
 
 /**
@@ -91,10 +118,20 @@ type Listeners = Partial<
 export type RegisterListener = (
 	type: MessageType,
 	callback: ListenerCallback,
-	options?: {
-		window?: WindowProxy;
-		persist?: boolean;
-	},
+	options?: ListenerOptions,
+) => void;
+
+type ListenerOptions = {
+	window?: WindowProxy;
+};
+
+/**
+ * Types of functions to register a persistent listener for a given type of iframe message
+ */
+export type RegisterPersistentListener = (
+	type: MessageType,
+	callback: PersistentListenerCallback,
+	options?: ListenerOptions,
 ) => void;
 
 /**
@@ -104,9 +141,18 @@ export type RegisterListener = (
 export type UnregisterListener = (
 	type: MessageType,
 	callback?: ListenerCallback,
-	options?: {
-		window?: WindowProxy;
-	},
+	options?: ListenerOptions,
+) => void;
+
+/**
+ * Type of function that responds to the original iframe
+ * Passes result of calling the persistent listener / listener chain
+ */
+export type RespondCallback = (
+	id: string,
+	target: MessageEventSource | null,
+	error: { message: string } | null,
+	result: unknown,
 ) => void;
 
 const LISTENERS: Listeners = {};
@@ -157,17 +203,30 @@ const toStandardMessage = (
 });
 
 /**
- * Retrieve a reference to the calling iframe via it's ID.
+ * Retrieve a reference to the calling iFrame
  *
- * Incoming messages contain the ID of the iframe into which the source window is embedded.
+ * Attempts the following strategies to find the correct iframe:
+ * - using the slotId from the incoming message
+ * - using the iframeId from the incoming message
+ * - checking message event.source (i.e. window) against all page level iframe contentWindows
+ *
+ * Listeners can then use the iFrame to determine the slot making the postMessage call
  */
-const getIframe = (message: StandardMessage): HTMLIFrameElement | undefined => {
+const getIframe = (
+	message: StandardMessage,
+	messageEventSource: MessageEventSource | null,
+): HTMLIFrameElement | undefined => {
 	if (message.slotId) {
 		const container = document.getElementById(`dfp-ad--${message.slotId}`);
 		return container?.querySelector('iframe') ?? undefined;
 	} else if (message.iframeId) {
 		const el = document.getElementById(message.iframeId);
 		return el instanceof HTMLIFrameElement ? el : undefined;
+	} else if (messageEventSource) {
+		const iframes = document.querySelectorAll<HTMLIFrameElement>('iframe');
+		return Array.from(iframes).find(
+			(iframe) => iframe.contentWindow === messageEventSource,
+		);
 	}
 };
 
@@ -243,7 +302,7 @@ const eventToStandardMessage = (
  * Respond to the original iframe with the result of calling the
  * persistent listener / listener chain
  */
-const respond = (
+const respond: RespondCallback = (
 	id: string,
 	target: MessageEventSource | null,
 	error: { message: string } | null,
@@ -294,7 +353,7 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 						const thisRet = listener(
 							message.value,
 							ret,
-							getIframe(message),
+							getIframe(message, event.source),
 						);
 						return thisRet === undefined ? ret : thisRet;
 					}),
@@ -325,7 +384,7 @@ const onMessage = async (event: MessageEvent<string>): Promise<void> => {
 			(error: { message: string } | null, result: unknown) =>
 				respond(message.id, event.source, error, result),
 			message.value,
-			getIframe(message),
+			getIframe(message, event.source),
 		);
 	} else {
 		// If there is no routine attached to this event type, we just answer
@@ -348,29 +407,42 @@ const off = (window: WindowProxy) => {
 };
 
 /**
- * Register a callback for a given type of iframe message
+ * Register a listener for a given type of iframe message
  *
  * @param type The `type` of message to register against
- * @param callback The callback to register that will receive messages of the given type
- * @param options Options for the target window and whether the callback is persistent
+ * @param callback The listener callback to register that will receive messages of the given type
+ * @param options Options for the target window
  */
-export const register: RegisterListener = (type, callback, options): void => {
+export const register: RegisterListener = (type, callback, options?): void => {
 	if (REGISTERED_LISTENERS === 0) {
 		on(options?.window ?? window);
 	}
 
-	// Persistent LISTENERS are exclusive
-	if (options?.persist) {
-		LISTENERS[type] = callback;
-		REGISTERED_LISTENERS += 1;
-	} else {
-		const listeners = LISTENERS[type] ?? [];
+	const listeners = LISTENERS[type] ?? [];
 
-		if (Array.isArray(listeners) && !listeners.includes(callback)) {
-			LISTENERS[type] = [...listeners, callback];
-			REGISTERED_LISTENERS += 1;
-		}
+	if (Array.isArray(listeners) && !listeners.includes(callback)) {
+		LISTENERS[type] = [...listeners, callback];
+		REGISTERED_LISTENERS += 1;
 	}
+};
+
+/**
+ * Register a persistent listener for a given type of iframe message
+ *
+ * @param type The `type` of message to register against
+ * @param callback The persistent listener callback to register that will receive messages of the given type
+ * @param options Options for the target window and whether the callback is persistent
+ */
+export const registerPersistentListener: RegisterPersistentListener = (
+	type: MessageType,
+	callback: PersistentListenerCallback,
+	options?: ListenerOptions,
+): void => {
+	if (REGISTERED_LISTENERS === 0) {
+		on(options?.window ?? window);
+	}
+	LISTENERS[type] = callback;
+	REGISTERED_LISTENERS += 1;
 };
 
 /**
@@ -415,12 +487,17 @@ export const unregister: UnregisterListener = (type, callback, options) => {
 /**
  * Initialize an array of listener callbacks in a batch
  *
- * @param modules The modules that will register callbacks
+ * @param listeners The listener registration functions
+ * @param persistentListeners The persistent listener registration functions
  */
 export const init = (
-	...modules: Array<(register: RegisterListener) => void>
+	listeners: Array<(register: RegisterListener) => void>,
+	persistentListeners: Array<(register: RegisterPersistentListener) => void>,
 ): void => {
-	modules.forEach((moduleInit) => moduleInit(register));
+	listeners.forEach((moduleInit) => moduleInit(register));
+	persistentListeners.forEach((moduleInit) =>
+		moduleInit(registerPersistentListener),
+	);
 };
 
 export const _ = { onMessage };

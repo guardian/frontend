@@ -1,7 +1,6 @@
 package conf.switches
 
 import java.util.concurrent.TimeoutException
-import com.gu.Box
 import common._
 import java.time.{LocalDate, ZoneId}
 import java.time.Duration

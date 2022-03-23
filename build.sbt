@@ -8,7 +8,6 @@ val common = library("common")
   .settings(
     Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
     libraryDependencies ++= Seq(
-      guBox,
       apacheCommonsLang,
       awsCore,
       awsCloudwatch,
@@ -25,7 +24,6 @@ val common = library("common")
       jodaConvert,
       jodaTime,
       jSoup,
-      liftJson,
       json4s,
       playGoogleAuth,
       quartzScheduler,
@@ -143,7 +141,6 @@ val identity = application("identity")
     libraryDependencies ++= Seq(
       filters,
       identityAuthPlay,
-      liftJson,
       slf4jExt,
       libPhoneNumber,
       supportInternationalisation,

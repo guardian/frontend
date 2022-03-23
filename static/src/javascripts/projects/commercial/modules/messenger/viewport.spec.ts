@@ -8,7 +8,9 @@ jest.mock('../messenger', () => ({
 }));
 
 const domSnippet = `
-    <div id="ad-slot-1" class="js-ad-slot"><div id="iframe1" style="height: 200px"></div></div>
+    <div id="ad-slot-1" class="js-ad-slot">
+		<iframe id="iframe1" style="height: 200px"></iframe>
+	</div>
 `;
 
 const mockViewport = (width: number, height: number): void => {
@@ -24,10 +26,11 @@ const mockViewport = (width: number, height: number): void => {
 
 describe('Cross-frame messenger: viewport', () => {
 	const respond = jest.fn();
-	let iframe: HTMLElement | null;
+	let iframe: HTMLIFrameElement;
 	let onResize: (() => void) | null;
 
-	const mockWindow = {
+	const mockWindow: Window = {
+		// @ts-expect-error --we want to override the window event listener
 		addEventListener(_: string, callback: () => void) {
 			onResize = callback;
 		},
@@ -38,13 +41,12 @@ describe('Cross-frame messenger: viewport', () => {
 
 	beforeEach(() => {
 		document.body.innerHTML = domSnippet;
-		iframe = document.getElementById('iframe1');
+		iframe = document.getElementById('iframe1') as HTMLIFrameElement;
 		reset(mockWindow);
 		expect.hasAssertions();
 	});
 
 	afterEach(() => {
-		iframe = null;
 		reset();
 		document.body.innerHTML = '';
 	});

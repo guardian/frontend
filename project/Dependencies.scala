@@ -5,14 +5,13 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.240-C5"
   val awsVersion = "1.11.240"
-  val capiVersion = "17.22.1"
-  val faciaVersion = "3.3.8"
+  val capiVersion = "17.25.0"
+  val faciaVersion = "3.3.12"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
-  val playJsonVersion = "2.6.3"
+  val playJsonVersion = "2.9.2"
   val playJsonExtensionsVersion = "0.42.0"
-  val guBox = "com.gu" %% "box" % "0.1.0"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
@@ -40,21 +39,20 @@ object Dependencies {
   val jodaTime = "joda-time" % "joda-time" % "2.9.9"
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.10.3"
-  val liftJson = "net.liftweb" %% "lift-json" % "3.1.1"
-  val json4s = "org.json4s" %% "json4s-native" % "3.5.3"
+  val json4s = "org.json4s" %% "json4s-native" % "4.0.4"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.5"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.7.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.3"
-  val redisClient = "net.debasishg" %% "redisclient" % "3.4"
+  val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
-  val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.18.0"
+  val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.30.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.1" % Test
-  val scalaUri = "com.netaporter" %% "scala-uri" % "0.4.16"
+  val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "2.44.0"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.25"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
@@ -67,8 +65,8 @@ object Dependencies {
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
   val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
-  val scanamo = "com.gu" %% "scanamo" % "1.0.0-M8"
-  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.12"
+  val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
+  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.6"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion

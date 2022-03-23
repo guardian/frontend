@@ -1,9 +1,8 @@
 import { mountDynamic } from '@guardian/automat-modules';
-import { log, storage } from '@guardian/libs';
+import { log } from '@guardian/libs';
 import {
 	getBanner,
 	getPuzzlesBanner,
-	getWeeklyArticleHistory,
 } from '@guardian/support-dotcom-components';
 import type {
 	BannerPayload,
@@ -16,11 +15,15 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { getVisitCount } from 'common/modules/commercial/contributions-utilities';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
-import { getArticleViewCountForDays } from 'common/modules/onward/history';
+import {
+	getArticleCounts,
+	getArticleCountToday,
+} from 'common/modules/support/articleCount';
 import {
 	buildTagIds,
 	dynamicImport,
-	getArticleCountConsent,
+	hasCmpConsentForArticleCount,
+	hasCmpConsentForBrowserId,
 	isHosted,
 	ModulesVersion,
 	supportDotcomComponentsUrl,
@@ -110,8 +113,21 @@ export const renderBanner = (
 };
 
 const buildBannerPayload = async (): Promise<BannerPayload> => {
-	const { contentType, section, shouldHideReaderRevenue, isPaidContent } =
-		window.guardian.config.page;
+	const {
+		contentType,
+		section,
+		shouldHideReaderRevenue,
+		isPaidContent,
+		pageId,
+		keywordIds,
+		isFront,
+	} = window.guardian.config.page;
+
+	const articleCounts = await getArticleCounts(pageId, keywordIds, isFront);
+	const weeklyArticleHistory = articleCounts?.weeklyArticleHistory;
+	const articleCountToday = getArticleCountToday(articleCounts);
+
+	const browserId = window.guardian.config.ophan.browserId;
 
 	const targeting: BannerTargeting = {
 		alreadyVisitedCount: getVisitCount(),
@@ -126,13 +142,14 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 			undefined,
 		mvtId: getMvtValue() ?? 0,
 		countryCode: getCountryCode(),
-		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
-		articleCountToday: getArticleViewCountForDays(1) as number,
-		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
+		weeklyArticleHistory: weeklyArticleHistory,
+		articleCountToday: articleCountToday,
+		hasOptedOutOfArticleCount: !(await hasCmpConsentForArticleCount()),
 		modulesVersion: ModulesVersion,
 		sectionId: section,
 		tagIds: buildTagIds(),
 		contentType,
+		browserId: (await hasCmpConsentForBrowserId()) ? browserId : undefined,
 	};
 
 	return {

@@ -1,8 +1,7 @@
 package commercial.model.merchandise
 
-import com.gu.Box
 import commercial.model.Segment
-import common.GuLogging
+import common.{Box, GuLogging}
 
 import scala.concurrent.Future
 import scala.util.Random

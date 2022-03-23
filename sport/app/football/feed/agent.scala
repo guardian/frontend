@@ -1,6 +1,5 @@
 package feed
 
-import com.gu.Box
 import pa._
 import conf.FootballClient
 import common._

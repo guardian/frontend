@@ -4,7 +4,6 @@ import {
 	getEpic,
 	getEpicViewLog,
 	getLiveblogEpic,
-	getWeeklyArticleHistory,
 } from '@guardian/support-dotcom-components';
 import type {
 	EpicPayload,
@@ -20,11 +19,12 @@ import {
 	isRecurringContributor,
 	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
+import { getArticleCounts } from 'common/modules/support/articleCount';
 import {
 	buildKeywordTags,
 	buildSeriesTag,
 	dynamicImport,
-	getArticleCountConsent,
+	hasCmpConsentForArticleCount,
 	isHosted,
 	ModulesVersion,
 	supportDotcomComponentsUrl,
@@ -52,10 +52,20 @@ const getEpicElement = (): HTMLDivElement => {
 };
 
 const buildEpicPayload = async (): Promise<EpicPayload> => {
-	const { contentType, section, shouldHideReaderRevenue, isPaidContent } =
-		window.guardian.config.page;
+	const {
+		contentType,
+		section,
+		shouldHideReaderRevenue,
+		isPaidContent,
+		pageId,
+		keywordIds,
+		isFront,
+	} = window.guardian.config.page;
 
 	const countryCode = getCountryCode();
+
+	const articleCounts = await getArticleCounts(pageId, keywordIds, isFront);
+	const weeklyArticleHistory = articleCounts?.weeklyArticleHistory;
 
 	const targeting: EpicTargeting = {
 		contentType: contentType,
@@ -71,8 +81,8 @@ const buildEpicPayload = async (): Promise<EpicPayload> => {
 		mvtId: getMvtValue() ?? 0,
 		countryCode,
 		epicViewLog: getEpicViewLog(storage.local),
-		weeklyArticleHistory: getWeeklyArticleHistory(storage.local),
-		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
+		weeklyArticleHistory: weeklyArticleHistory,
+		hasOptedOutOfArticleCount: !(await hasCmpConsentForArticleCount()),
 		modulesVersion: ModulesVersion,
 		url: window.location.origin + window.location.pathname,
 	};

@@ -1,6 +1,5 @@
 package feed
 
-import com.gu.Box
 import common._
 import services.OphanApi
 

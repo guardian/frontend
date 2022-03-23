@@ -1,12 +1,10 @@
 package discussion.api
 
 import java.net.URLEncoder
-
-import com.netaporter.uri.dsl._
+import io.lemonlabs.uri.Url
 import common.GuLogging
 import conf.Configuration
 import discussion.model.{CommentCount, _}
-import discussion.model._
 import discussion.util.Http
 import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -14,6 +12,8 @@ import play.api.mvc.{Cookie, Headers, RequestHeader}
 
 import scala.concurrent.duration._
 import conf.switches.Switches._
+import io.lemonlabs.uri.config.{ExcludeNones, UriConfig}
+import io.lemonlabs.uri.typesafe.QueryKey.stringQueryKey
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -25,17 +25,18 @@ trait DiscussionApiLike extends Http with GuLogging {
 
   protected val apiRoot: String
   protected val clientHeaderValue: String
-  protected val defaultParams = List("api-key" -> "dotcom")
+  protected val defaultParams = List("api-key" -> Some("dotcom"))
   protected val pageSize: String = "10"
 
-  def endpointUrl(relativePath: String, params: List[(String, Any)] = List()): String = { //Using List for params because order is important for caching reason
-    (apiRoot + relativePath).addParams(params ++ defaultParams).toString()
+  def endpointUrl(relativePath: String, params: List[(String, Option[String])] = List()): String = { //Using List for params because order is important for caching reason
+    implicit val config: UriConfig = UriConfig(renderQuery = ExcludeNones)
+    Url.parse(apiRoot + relativePath).addParams(params ++ defaultParams).toString()
   }
 
   def commentCounts(ids: String)(implicit executionContext: ExecutionContext): Future[Seq[CommentCount]] = {
     def onError(response: WSResponse) =
       s"Discussion API: Error loading comment count ids: $ids status: ${response.status} message: ${response.statusText}"
-    val apiUrl = endpointUrl("/getCommentCounts", List(("short-urls", ids)))
+    val apiUrl = endpointUrl("/getCommentCounts", List(("short-urls", Some(ids))))
 
     getJsonOrError(apiUrl, onError) map { json =>
       json.asInstanceOf[JsObject].fieldSet.toSeq map {
@@ -48,7 +49,7 @@ trait DiscussionApiLike extends Http with GuLogging {
   def commentFor(id: Int, displayThreaded: Option[String] = None)(implicit
       executionContext: ExecutionContext,
   ): Future[Comment] = {
-    val parameters = List("displayResponses" -> "true", "displayThreaded" -> displayThreaded)
+    val parameters = List("displayResponses" -> Some("true"), "displayThreaded" -> displayThreaded)
     val url = endpointUrl(s"/comment/$id", parameters)
     getCommentJsonForId(id, url)
   }
@@ -57,14 +58,14 @@ trait DiscussionApiLike extends Http with GuLogging {
       executionContext: ExecutionContext,
   ): Future[DiscussionComments] = {
     val parameters = List(
-      "pageSize" -> params.pageSize,
-      "page" -> params.page,
-      "orderBy" -> params.orderBy,
+      "pageSize" -> Some(params.pageSize),
+      "page" -> Some(params.page),
+      "orderBy" -> Some(params.orderBy),
       "displayThreaded" -> (params.displayThreaded match {
-        case false => "false"
+        case false => Some("false")
         case _     => None
       }),
-      "showSwitches" -> "true",
+      "showSwitches" -> Some("true"),
       "maxResponses" -> params.maxResponses,
     )
     val path = s"/discussion/$key" + (if (params.topComments) "/topcomments" else "")
@@ -80,10 +81,10 @@ trait DiscussionApiLike extends Http with GuLogging {
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
 
     val parameters = List(
-      "pageSize" -> params.pageSize,
-      "orderBy" -> params.orderBy,
+      "pageSize" -> Some(params.pageSize),
+      "orderBy" -> Some(params.orderBy),
       "displayThreaded" -> (params.displayThreaded match {
-        case false => "false"
+        case false => Some("false")
         case _     => None
       }),
     )
@@ -112,12 +113,12 @@ trait DiscussionApiLike extends Http with GuLogging {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading comments for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val parameters = List(
-      "pageSize" -> pageSize,
-      "page" -> page,
-      "orderBy" -> orderBy,
-      "showSwitches" -> "true",
+      "pageSize" -> Some(pageSize),
+      "page" -> Some(page),
+      "orderBy" -> Some(orderBy),
+      "showSwitches" -> Some("true"),
       "displayHighlighted" -> (picks match {
-        case true  => "true"
+        case true  => Some("true")
         case false => None
       }),
     )
@@ -134,7 +135,12 @@ trait DiscussionApiLike extends Http with GuLogging {
   ): Future[ProfileComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading replies for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val parameters = List("pageSize" -> pageSize, "page" -> page, "orderBy" -> "newest", "showSwitches" -> "true")
+    val parameters = List(
+      "pageSize" -> Some(pageSize),
+      "page" -> Some(page),
+      "orderBy" -> Some("newest"),
+      "showSwitches" -> Some("true"),
+    )
     val path = s"/profile/$userId/replies"
     val apiUrl = endpointUrl(path, parameters)
 
@@ -148,7 +154,7 @@ trait DiscussionApiLike extends Http with GuLogging {
   ): Future[ProfileComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading search User $userId, Query: $q. status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val parameters = List("q" -> URLEncoder.encode(q, "UTF-8"), "page" -> page)
+    val parameters = List("q" -> Some(URLEncoder.encode(q, "UTF-8")), "page" -> Some(page))
     val path = s"/search/profile/$userId"
     val apiUrl = endpointUrl(path, parameters)
 
@@ -162,7 +168,12 @@ trait DiscussionApiLike extends Http with GuLogging {
   ): Future[ProfileDiscussions] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading discussions for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val parameters = List("pageSize" -> pageSize, "page" -> page, "orderBy" -> "newest", "showSwitches" -> "true")
+    val parameters = List(
+      "pageSize" -> Some(pageSize),
+      "page" -> Some(page),
+      "orderBy" -> Some("newest"),
+      "showSwitches" -> Some("true"),
+    )
     val path = s"/profile/$userId/discussions"
     val apiUrl = endpointUrl(path, parameters)
 

@@ -12,6 +12,7 @@ import { getLocale, loadScript } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as detectAdBlockers } from 'commercial/detect-adblock';
+import ophan from 'ophan/ng';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -45,7 +46,8 @@ const go = () => {
         // keep this in sync with CONSENT_TIMING in src/web/components/App.tsx in frontend
         // mark: CONSENT_TIMING
         let recordedConsentTime = false;
-        onConsentChange(() => {
+        onConsentChange((consentState) => {
+
             if (!recordedConsentTime) {
                 recordedConsentTime = true;
                 cmp.willShowPrivacyMessage().then(willShow => {
@@ -56,6 +58,65 @@ const go = () => {
                     );
                 });
             }
+
+            // ------------------------------------------------------
+            // Sending Consent Data to Ophan
+
+            /*
+
+                Date: March 2022
+                Author: Pascal
+
+                We reproduce here the same code that we had developed for DCR.
+                See this for details: https://github.com/guardian/dotcom-rendering/blob/4cb96485401398fdd88698493bdb75f56fcd8c96/dotcom-rendering/src/web/browser/bootCmp/init.ts#L69
+                The mapping: documentation also exists at https://github.com/guardian/transparency-consent-docs/blob/main/docs/capturing-consent-from-client-side.md
+
+            */
+
+            if (!consentState) return;
+
+            const decideConsentCarrierLabels = () => {
+                if (consentState.tcfv2) {
+                    const consentUUID = getCookie('consentUUID') || '';
+                    const consentString = consentState.tcfv2?.tcString;
+                    return [
+                        '01:TCF.v2',
+                        `02:${consentUUID}`,
+                        `03:${consentString}`,
+                    ];
+                }
+                if (consentState.ccpa) {
+                    const ccpaUUID = getCookie('ccpaUUID') || '';
+                    const flag = consentState.ccpa?.doNotSell ? 'true' : 'false';
+                    return ['01:CCPA', `04:${ccpaUUID}`, `05:${flag}`];
+                }
+                if (consentState.aus) {
+                    const ccpaUUID = getCookie('ccpaUUID') || '';
+                    const consentStatus = getCookie('consentStatus') || '';
+                    return ['01:AUS', `06:${ccpaUUID}`, `07:${consentStatus}`];
+                }
+                return [];
+            };
+
+            const componentType = 'CONSENT';
+
+            const action = 'MANAGE_CONSENT';
+
+            const event = {
+                component: {
+                    componentType,
+                    products: [],
+                    labels: decideConsentCarrierLabels(),
+                },
+                action,
+            };
+
+            ophan.record({
+                componentEvent: event
+            });
+
+            // ------------------------------------------------------
+
         });
 
         cmp.init({ pubData, country: await getLocale() });

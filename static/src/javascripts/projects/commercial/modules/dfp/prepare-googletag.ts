@@ -19,6 +19,7 @@ import { init as disableRefresh } from '../messenger/disable-refresh';
 import { init as initGetPageTargeting } from '../messenger/get-page-targeting';
 import { init as initGetPageUrl } from '../messenger/get-page-url';
 import { init as getStyles } from '../messenger/get-stylesheet';
+import { init as passback } from '../messenger/passback';
 import { init as resize } from '../messenger/resize';
 import { init as scroll } from '../messenger/scroll';
 import { init as type } from '../messenger/type';
@@ -30,17 +31,19 @@ import { onSlotViewableFunction } from './on-slot-viewable';
 import { refreshOnResize } from './refresh-on-resize';
 
 initMessenger(
-	type,
-	getStyles,
-	initGetPageTargeting,
-	initGetPageUrl,
-	initMeasureAdLoad,
-	resize,
-	scroll,
-	viewport,
-	sendClick,
-	background,
-	disableRefresh,
+	[
+		type,
+		getStyles,
+		initGetPageTargeting,
+		initGetPageUrl,
+		initMeasureAdLoad,
+		resize,
+		sendClick,
+		background,
+		disableRefresh,
+		passback,
+	],
+	[scroll, viewport],
 );
 
 const setDfpListeners = (): void => {

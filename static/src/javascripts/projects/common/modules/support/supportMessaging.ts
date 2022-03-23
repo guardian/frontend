@@ -79,8 +79,9 @@ const removeArticleCountsFromLocalStorage = (): void => {
 };
 
 const REQUIRED_CONSENTS_FOR_ARTICLE_COUNT = [1, 3, 7];
+const REQUIRED_CONSENTS_FOR_BROWSER_ID = [1, 3, 5, 7];
 
-export const getArticleCountConsent = (): Promise<boolean> => {
+export const hasCmpConsentForArticleCount = (): Promise<boolean> => {
 	if (hasOptedOutOfArticleCount()) {
 		return Promise.resolve(false);
 	}
@@ -103,3 +104,18 @@ export const getArticleCountConsent = (): Promise<boolean> => {
 		});
 	});
 };
+
+export const hasCmpConsentForBrowserId = (): Promise<boolean> =>
+	new Promise((resolve) => {
+		onConsentChange(({ ccpa, tcfv2, aus }) => {
+			if (ccpa || aus) {
+				resolve(true);
+			} else if (tcfv2) {
+				const hasRequiredConsents =
+					REQUIRED_CONSENTS_FOR_BROWSER_ID.every(
+						(consent) => tcfv2.consents[consent],
+					);
+				resolve(hasRequiredConsents);
+			}
+		});
+	});
