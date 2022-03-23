@@ -22,7 +22,8 @@ import {
 import {
 	buildTagIds,
 	dynamicImport,
-	getArticleCountConsent,
+	hasCmpConsentForArticleCount,
+	hasCmpConsentForBrowserId,
 	isHosted,
 	ModulesVersion,
 	supportDotcomComponentsUrl,
@@ -126,6 +127,8 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 	const weeklyArticleHistory = articleCounts?.weeklyArticleHistory;
 	const articleCountToday = getArticleCountToday(articleCounts);
 
+	const browserId = window.guardian.config.ophan.browserId;
+
 	const targeting: BannerTargeting = {
 		alreadyVisitedCount: getVisitCount(),
 		shouldHideReaderRevenue: shouldHideReaderRevenue,
@@ -141,11 +144,12 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 		countryCode: getCountryCode(),
 		weeklyArticleHistory: weeklyArticleHistory,
 		articleCountToday: articleCountToday,
-		hasOptedOutOfArticleCount: !(await getArticleCountConsent()),
+		hasOptedOutOfArticleCount: !(await hasCmpConsentForArticleCount()),
 		modulesVersion: ModulesVersion,
 		sectionId: section,
 		tagIds: buildTagIds(),
 		contentType,
+		browserId: (await hasCmpConsentForBrowserId()) ? browserId : undefined,
 	};
 
 	return {
