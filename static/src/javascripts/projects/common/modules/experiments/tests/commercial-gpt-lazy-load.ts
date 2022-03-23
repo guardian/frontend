@@ -4,7 +4,7 @@ import { noop } from '../../../../../lib/noop';
 export const commercialGptLazyLoad: ABTest = {
 	id: 'CommercialGptLazyLoad',
 	start: '2022-03-23',
-	expiry: '2020-04-01',
+	expiry: '2022-04-01',
 	author: 'Zeke Hunter-Green',
 	description:
 		'This test compares GPT enableLazyLoad to our custom-built lazy load solution',
