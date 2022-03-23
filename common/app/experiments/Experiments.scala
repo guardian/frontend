@@ -38,5 +38,5 @@ object SlideshowCaptions
       description = "Captions on fronts slideshows",
       owners = Seq(Owner.withGithub("jamesgorrie")),
       sellByDate = LocalDate.of(2022, 6, 2),
-      participationGroup = Perc0C,
+      participationGroup = Perc0B,
     )
