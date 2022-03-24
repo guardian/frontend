@@ -73,7 +73,7 @@ const articleBodySelector = isDotcomRendering
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const ignoreList = enableRichLinksFix
-		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="rich-link"])'
+		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
 		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
 
 	const isImmersive = config.get('page.isImmersive');
