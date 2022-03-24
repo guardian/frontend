@@ -561,8 +561,8 @@ $block-height: 58px;
     }
 
     figcaption {
-        @include fs-textSans(4);
-        font-weight: bold;
+        @include f-bodyHeading();
+        @include font-size(15, 20);
         position: absolute;
         bottom: 0;
         left: 0;
@@ -572,7 +572,7 @@ $block-height: 58px;
         padding: 60px 8px 8px;
 
         @include mq($until: tablet) {
-            @include fs-textSans(1);
+            @include font-size(12, 16);
         }
     }
 }
