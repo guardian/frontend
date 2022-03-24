@@ -24,6 +24,7 @@ import scala.concurrent.duration._
     Await.result(futureContents, timeout)
   }
 
+  /** Get the 4 latest pieces of content for a specific keyword */
   private def contentsForKeyword(keywordId: String) = {
     val futureContents = lookup.latestContentByKeyword(keywordId, 4)
     Await.result(futureContents, timeout)
@@ -84,6 +85,11 @@ import scala.concurrent.duration._
 
   it should "not find content for empty seq of URLs" in {
     contentsOf() should be(Nil)
+  }
+
+  "latestContentByKeyword" should "find 4 pieces of content by default for an existing keyword" in {
+    val contents = contentsForKeyword("technology/apple")
+    contents should have size 4
   }
 
   "latestContentByKeyword" should "not find content for a non-existent keyword" in {
