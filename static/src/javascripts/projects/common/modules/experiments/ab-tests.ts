@@ -1,5 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { commercialGptLazyLoad } from './tests/commercial-gpt-lazy-load';
+import { commercialLazyLoadMargin } from './tests/commercial-lazy-load-margin';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
@@ -13,4 +14,5 @@ export const concurrentTests: readonly ABTest[] = [
 	remoteRRHeaderLinksTest,
 	spacefinderOkrMegaTest,
 	commercialGptLazyLoad,
+	commercialLazyLoadMargin,
 ];
