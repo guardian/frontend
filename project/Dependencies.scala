@@ -5,14 +5,13 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.240-C5"
   val awsVersion = "1.11.240"
-  val capiVersion = "17.24.1"
+  val capiVersion = "17.25.0"
   val faciaVersion = "3.3.12"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.9.2"
   val playJsonExtensionsVersion = "0.42.0"
-  val guBox = "com.gu" %% "box" % "0.1.0"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion

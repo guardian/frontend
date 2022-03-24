@@ -5,7 +5,7 @@ import {
 } from '@guardian/support-dotcom-components';
 import type { WeeklyArticleHistory } from '@guardian/support-dotcom-components/dist/shared/src/types/targeting';
 import { storageKeyDailyArticleCount } from 'common/modules/onward/history';
-import { getArticleCountConsent } from 'common/modules/support/supportMessaging';
+import { hasCmpConsentForArticleCount } from 'common/modules/support/supportMessaging';
 
 export interface DailyArticleCount {
 	day: number;
@@ -60,7 +60,7 @@ export const getArticleCounts = async (
 	keywordIds: string,
 	isFront: boolean,
 ): Promise<ArticleCounts | undefined> => {
-	const hasConsentedToArticleCounts = await getArticleCountConsent();
+	const hasConsentedToArticleCounts = await hasCmpConsentForArticleCount();
 	if (!hasConsentedToArticleCounts) return undefined;
 
 	if (!isFront && !window.guardian.articleCounts) {

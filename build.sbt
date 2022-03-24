@@ -8,7 +8,6 @@ val common = library("common")
   .settings(
     Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
     libraryDependencies ++= Seq(
-      guBox,
       apacheCommonsLang,
       awsCore,
       awsCloudwatch,

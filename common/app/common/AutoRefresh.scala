@@ -5,7 +5,6 @@ import akka.actor.{ActorSystem, Cancellable}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
-import com.gu.Box
 
 /** Simple class for repeatedly updating a value on a schedule */
 abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration) extends GuLogging {

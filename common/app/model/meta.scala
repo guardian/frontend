@@ -254,25 +254,26 @@ object ContentFormat {
 
   def parseDesign(s: String): Design =
     s match {
-      case "ArticleDesign"     => ArticleDesign
-      case "MediaDesign"       => MediaDesign
-      case "ReviewDesign"      => ReviewDesign
-      case "AnalysisDesign"    => AnalysisDesign
-      case "CommentDesign"     => CommentDesign
-      case "LetterDesign"      => LetterDesign
-      case "FeatureDesign"     => FeatureDesign
-      case "LiveBlogDesign"    => LiveBlogDesign
-      case "DeadBlogDesign"    => DeadBlogDesign
-      case "RecipeDesign"      => RecipeDesign
-      case "MatchReportDesign" => MatchReportDesign
-      case "InterviewDesign"   => InterviewDesign
-      case "EditorialDesign"   => EditorialDesign
-      case "QuizDesign"        => QuizDesign
-      case "InteractiveDesign" => InteractiveDesign
-      case "PhotoEssayDesign"  => PhotoEssayDesign
-      case "PrintShopDesign"   => PrintShopDesign
-      case "ObituaryDesign"    => ObituaryDesign
-      case _                   => ArticleDesign
+      case "ArticleDesign"             => ArticleDesign
+      case "MediaDesign"               => MediaDesign
+      case "ReviewDesign"              => ReviewDesign
+      case "AnalysisDesign"            => AnalysisDesign
+      case "CommentDesign"             => CommentDesign
+      case "LetterDesign"              => LetterDesign
+      case "FeatureDesign"             => FeatureDesign
+      case "LiveBlogDesign"            => LiveBlogDesign
+      case "DeadBlogDesign"            => DeadBlogDesign
+      case "RecipeDesign"              => RecipeDesign
+      case "MatchReportDesign"         => MatchReportDesign
+      case "InterviewDesign"           => InterviewDesign
+      case "EditorialDesign"           => EditorialDesign
+      case "QuizDesign"                => QuizDesign
+      case "FullPageInteractiveDesign" => FullPageInteractiveDesign
+      case "InteractiveDesign"         => InteractiveDesign
+      case "PhotoEssayDesign"          => PhotoEssayDesign
+      case "PrintShopDesign"           => PrintShopDesign
+      case "ObituaryDesign"            => ObituaryDesign
+      case _                           => ArticleDesign
     }
 
   def parseTheme(s: String): Theme =
