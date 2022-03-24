@@ -92,7 +92,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minAbove: 35,
 				minBelow: 400,
 			},
-			' figure.element-immersive': {
+			' [data-spacefinder-role="immersive"]': {
 				minAbove: 0,
 				minBelow: 600,
 			},
@@ -112,7 +112,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		minBelow: isDotcomRendering ? 300 : 800,
 		selectors: {
 			' .ad-slot': adSlotClassSelectorSizes,
-			' figure.element-immersive': {
+			' [data-spacefinder-role="immersive"]': {
 				minAbove: 0,
 				minBelow: 600,
 			},
