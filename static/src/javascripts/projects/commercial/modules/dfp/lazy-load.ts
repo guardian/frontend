@@ -56,7 +56,7 @@ const getObserver = once(() => {
 		const margin = getRandomLazyLoadMargin();
 		const eventTimer = EventTimer.get();
 		eventTimer.setProperty('lazyLoadMarginPercent', margin);
-		rootMargin = `${margin}%`;
+		rootMargin = `${margin}% 0px`;
 	} else {
 		rootMargin = '200px 0px';
 	}
