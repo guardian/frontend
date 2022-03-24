@@ -20,11 +20,17 @@ object Cutout {
     Cutout(imageSrc = cutout.imageSrc, imageSrcHeight = cutout.imageSrcHeight, imageSrcWidth = cutout.imageSrcWidth)
 }
 
-final case class Replace(imageSrc: String, imageSrcWidth: String, imageSrcHeight: String) extends Image
+final case class Replace(imageSrc: String, imageSrcWidth: String, imageSrcHeight: String, imageCaption: Option[String])
+    extends Image
 
 object Replace {
   def make(replace: fapi.Replace): Replace =
-    Replace(imageSrc = replace.imageSrc, imageSrcHeight = replace.imageSrcHeight, imageSrcWidth = replace.imageSrcWidth)
+    Replace(
+      imageSrc = replace.imageSrc,
+      imageSrcHeight = replace.imageSrcHeight,
+      imageSrcWidth = replace.imageSrcWidth,
+      imageCaption = replace.imageCaption,
+    )
 
 }
 
