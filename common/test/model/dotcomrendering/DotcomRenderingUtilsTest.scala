@@ -15,26 +15,6 @@ class DotcomRenderingUtilsTest extends FlatSpec with Matchers with MockitoSugar 
   val testMetadata = mock[MetaData]
   val formatWithArticleDesign = ContentFormat.defaultContentFormat
 
-  "getModifiedContent" should "ensure an interactive design when the content type is interactive" in {
-    when(testContent.metadata) thenReturn testMetadata
-    when(testMetadata.format) thenReturn Some(formatWithArticleDesign)
-    when(testMetadata.contentType) thenReturn Some(DotcomContentType.Interactive)
-
-    val actual = DotcomRenderingUtils.getModifiedContent(testContent, forceLive = false)
-
-    actual.design should be(InteractiveDesign)
-  }
-
-  it should "ensure an interactive design when the content type is interactive even when we attempt to force a live design" in {
-    when(testContent.metadata) thenReturn testMetadata
-    when(testMetadata.format) thenReturn Some(formatWithArticleDesign)
-    when(testMetadata.contentType) thenReturn Some(DotcomContentType.Interactive)
-
-    val actual = DotcomRenderingUtils.getModifiedContent(testContent, forceLive = true)
-
-    actual.design should be(InteractiveDesign)
-  }
-
   it should "ensure a live design takes priority when the forceLive flag is set" in {
     when(testContent.metadata) thenReturn testMetadata
     when(testMetadata.format) thenReturn Some(formatWithArticleDesign)

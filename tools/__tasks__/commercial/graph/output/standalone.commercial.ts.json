@@ -282,7 +282,7 @@
   "../projects/commercial/modules/messenger/resize.ts",
   "../projects/commercial/modules/messenger/scroll.js",
   "../projects/commercial/modules/messenger/type.ts",
-  "../projects/commercial/modules/messenger/viewport.js",
+  "../projects/commercial/modules/messenger/viewport.ts",
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
@@ -484,9 +484,10 @@
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/messenger.ts"
  ],
- "../projects/commercial/modules/messenger/viewport.js": [
+ "../projects/commercial/modules/messenger/viewport.ts": [
   "../lib/detect-viewport.ts",
-  "../lib/fastdom-promise.js"
+  "../lib/fastdom-promise.js",
+  "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/mobile-sticky.ts": [
   "../lib/fastdom-promise.js",

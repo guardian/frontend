@@ -24,7 +24,7 @@
     "@guardian/shimport": "^1.0.2",
     "@guardian/source-foundations": "^4.0.0-rc.4",
     "@guardian/source-react-components": "^4.0.0-rc.2",
-    "@guardian/support-dotcom-components": "^1.0.1",
+    "@guardian/support-dotcom-components": "^1.0.2",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "bootstrap-sass": "^3.4.1",
