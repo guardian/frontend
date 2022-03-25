@@ -138,7 +138,16 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					'inline',
 					`inline${isInline1 ? '' : ' offset-right'}`,
 					isInline1
-						? undefined
+						? {
+								phablet: [
+									adSizes.outstreamDesktop,
+									adSizes.outstreamGoogleDesktop,
+								],
+								desktop: [
+									adSizes.outstreamDesktop,
+									adSizes.outstreamGoogleDesktop,
+								],
+						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
 				);
 			});
