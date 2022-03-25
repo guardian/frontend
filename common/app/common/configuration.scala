@@ -700,7 +700,7 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object googleOAuth {
-    lazy val playAppSecretParameterName = s"/frontend/${stage.toLowerCase()}/playAppSecret"
+    lazy val playAppSecretParameterName = s"/frontend/${stage.toLowerCase()}/${app.toLowerCase()}/playAppSecret"
   }
 
   object pngResizer {
