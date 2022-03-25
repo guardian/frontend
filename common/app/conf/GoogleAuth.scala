@@ -15,12 +15,12 @@ case class GoogleAuth(
     httpConfiguration: HttpConfiguration,
     oauthCredentials: Option[OAuthCredentials],
 ) {
-  private val securityCredentialsProvider = new AWSCredentialsProviderChain(
+  private val frontendCredentialsProvider = new AWSCredentialsProviderChain(
     Configuration.aws.mandatoryCredentials,
   )
   private val ssmClient = AWSSimpleSystemsManagementClientBuilder
     .standard()
-    .withCredentials(securityCredentialsProvider)
+    .withCredentials(frontendCredentialsProvider)
     .withRegion(Regions.EU_WEST_1)
     .build()
 
@@ -29,7 +29,7 @@ case class GoogleAuth(
 
     new parameterstore.SecretSupplier(
       TransitionTiming(usageDelay = ofMinutes(3), overlapDuration = ofHours(2)),
-      "/frontend/PlayAppSecret",
+      Configuration.googleOAuth.playAppSecretParameterName,
       parameterstore.AwsSdkV1(ssmClient),
     )
   }

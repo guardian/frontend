@@ -699,6 +699,10 @@ class GuardianConfiguration extends GuLogging {
     } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
   }
 
+  object googleOAuth {
+    lazy val playAppSecretParameterName = s"/frontend/${stage.toLowerCase()}/playAppSecret"
+  }
+
   object pngResizer {
     val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)

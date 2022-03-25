@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.googleauth.{AntiForgeryChecker, GoogleAuthConfig, UserIdentity}
+import com.gu.googleauth.{GoogleAuthConfig, UserIdentity}
 import conf.Configuration
 import googleAuth.OAuthLoginController
 import model.ApplicationContext
