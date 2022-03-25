@@ -19,8 +19,8 @@ const inline1Html = `
     data-name="inline1"
     aria-hidden="true"
     data-mobile="1,1|2,2|300,197|300,250|300,274|fluid"
-    data-phablet="1,1|2,2|300,197|300,250|300,274|620,350|550,310|fluid"
-    data-desktop="1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid">
+    data-phablet="1,1|2,2|300,197|300,250|300,274|fluid|620,350|550,310"
+    data-desktop="1,1|2,2|300,250|300,274|fluid|620,350|550,310">
 </div>
 `;
 
@@ -39,12 +39,23 @@ describe('Create Ad Slot', () => {
 			classes: 'inline',
 			name: 'inline1',
 			htmls: inline1Html,
+			sizes: {
+				desktop: [
+					adSizes.outstreamDesktop,
+					adSizes.outstreamGoogleDesktop,
+				],
+				phablet: [
+					adSizes.outstreamDesktop,
+					adSizes.outstreamGoogleDesktop,
+				],
+			},
 		},
 	].forEach((expectation) => {
 		it(`should create "${expectation.type}" ad slot`, () => {
 			const adSlot = createAdSlot(expectation.type, {
 				name: expectation.name,
 				classes: expectation.classes,
+				sizes: expectation.sizes,
 			});
 
 			expect(adSlot.outerHTML).toBe(
@@ -56,14 +67,17 @@ describe('Create Ad Slot', () => {
 	it('should create "inline1" ad slot and merge valid additional sizes', () => {
 		const adSlot = createAdSlot('inline', {
 			sizes: {
-				desktop: [adSizes.leaderboard],
+				desktop: [
+					adSizes.outstreamDesktop,
+					adSizes.outstreamGoogleDesktop,
+				],
 				mobile: [adSizes.inlineMerchandising],
 				invalid: [adSizes.leaderboard],
 			},
 		});
 		const desktopSizes = adSlot.getAttribute('data-desktop');
 		expect(desktopSizes).toEqual(
-			'1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|728,90',
+			'1,1|2,2|300,250|300,274|fluid|620,350|550,310',
 		);
 		const mobileSizes = adSlot.getAttribute('data-mobile');
 		expect(mobileSizes).toEqual(

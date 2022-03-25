@@ -114,11 +114,6 @@ sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
 		);
 	});
 
-sizeCallbacks[adSizes.video.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('u-h');
-	});
-
 sizeCallbacks[adSizes.outstreamDesktop.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
