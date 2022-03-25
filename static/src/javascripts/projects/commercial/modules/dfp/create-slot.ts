@@ -41,7 +41,6 @@ const commonSizeMappings: SizeMappings = {
 		adSizes.empty,
 		adSizes.mpu,
 		adSizes.googleCard,
-		adSizes.video,
 		adSizes.outstreamDesktop,
 		adSizes.outstreamGoogleDesktop,
 		adSizes.fluid,
