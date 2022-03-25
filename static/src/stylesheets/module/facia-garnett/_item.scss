@@ -561,8 +561,9 @@ $block-height: 58px;
     }
 
     figcaption {
-        @include f-bodyHeading();
+        @include f-textSans();
         @include font-size(15, 20);
+        font-weight: bold;
         position: absolute;
         bottom: 0;
         left: 0;
