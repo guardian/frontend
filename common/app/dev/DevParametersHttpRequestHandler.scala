@@ -76,6 +76,7 @@ class DevParametersHttpRequestHandler(
     "utm_campaign", // Google Analytics campaign
     "utm_term", // Google Analytics term
     "sfdebug", // enable spacefinder visualiser. '1' = first pass, '2' = second pass
+    "rikerdebug", // enable debug logging for Canadian ad setup managed by the Globe and Mail
   )
 
   val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty
