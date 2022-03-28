@@ -540,15 +540,18 @@ $block-height: 58px;
 }
 
 .fc-item__slideshow {
-    picture {
+    figure {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+
         @include mq($until: tablet) {
-            &:nth-child(1n+2) img {
+            &:nth-child(1n+2) {
                 display: none;
             }
         }
-    }
 
-    img {
         @include mq(tablet) {
             animation-timing-function: linear;
             animation-iteration-count: infinite;
@@ -556,8 +559,24 @@ $block-height: 58px;
             opacity: 0;
         }
     }
-}
 
+    figcaption {
+        @include f-textSans();
+        @include font-size(15, 20);
+        font-weight: bold;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%,  rgba(0, 0, 0, .8) 100%);
+        color: $brightness-100;
+        padding: 60px 8px 8px;
+
+        @include mq($until: tablet) {
+            @include font-size(12, 16);
+        }
+    }
+}
 
 @for $i from 2 through 5 {
     $hangTime: 5;
@@ -579,16 +598,14 @@ $block-height: 58px;
     }
     @include mq(tablet) {
         .fc-item__slideshow--#{$i} {
-            img {
+            figure {
                 animation-duration: #{$totalLoopTime}s;
                 animation-name: fc-item__slideshow--#{$i};
             }
 
             @for $j from 2 through $i {
-                picture:nth-child(#{$j}) {
-                    img {
-                        animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
-                    }
+                figure:nth-child(#{$j}) {
+                    animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
                 }
             }
         }
