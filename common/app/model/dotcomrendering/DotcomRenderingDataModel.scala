@@ -178,7 +178,7 @@ object DotcomRenderingDataModel {
       page = page,
       request = request,
       pagination = None,
-      linkedData = Nil, // TODO
+      linkedData = LinkedData.forInteractive(page),
       mainBlock = blocks.main,
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
