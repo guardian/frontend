@@ -195,7 +195,7 @@ trait FaciaController
               val body = TrailsToRss.fromPressedPage(faciaPage)
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             } else if (request.isJson) {
-              JsonFront(faciaPage)
+              JsonComponent("json" -> Json.toJson(faciaPage))
             } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
             } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
