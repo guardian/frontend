@@ -1,0 +1,32 @@
+@import layout.WidthsByBreakpoint
+@import model.ImageMedia
+@import implicits.Requests._
+@import experiments.{ActiveExperiments, SlideshowCaptions}
+
+@(
+    classes: Seq[String],
+    widths: WidthsByBreakpoint,
+    maybeImageMedia: Option[ImageMedia] = None,
+    maybePath: Option[String] = None,
+    maybeSrc: Option[String] = None,
+    shouldLazyLoadIndex: Boolean = false,
+    caption: Option[String] = None
+)(implicit request: RequestHeader)
+
+<figure class="fc-item__captioned-image">
+    @image(
+        classes = classes,
+        widths = widths,
+        maybeImageMedia = maybeImageMedia,
+        maybePath = maybePath,
+        maybeSrc = maybeSrc,
+        shouldLazyLoadIndex = shouldLazyLoadIndex
+    )
+    @if(ActiveExperiments.isParticipating(SlideshowCaptions)) {
+        @caption.map { captionText =>
+            <figcaption>
+                @captionText
+            </figcaption>
+        }
+    }
+</figure>

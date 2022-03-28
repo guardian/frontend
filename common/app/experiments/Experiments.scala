@@ -8,6 +8,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     LiveblogRendering,
     StickyVideos,
+    SlideshowCaptions,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -37,5 +38,5 @@ object SlideshowCaptions
       description = "Captions on fronts slideshows",
       owners = Seq(Owner.withGithub("jamesgorrie")),
       sellByDate = LocalDate.of(2022, 6, 2),
-      participationGroup = Perc0C,
+      participationGroup = Perc0B,
     )
