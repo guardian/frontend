@@ -179,15 +179,15 @@ data-test-id="facia-card"
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio fc-item__slideshow fc-item__slideshow--@imageElements.size">
                         @imageElements.headOption.map { imageElement =>
-                            @image(
-                                classes = Seq("responsive-img"),
+                            @captionedImage(
+                                classes = Seq("responsive-img "),
                                 widths = item.mediaWidthsByBreakpoint,
                                 maybePath = Some(imageElement.url),
                                 maybeSrc = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None,
                                 caption = imageElement.caption
                             )
                             @imageElements.tail.map { imageElement =>
-                                @image(
+                                @captionedImage(
                                     classes = Seq("responsive-img "),
                                     widths = item.mediaWidthsByBreakpoint,
                                     maybePath = Some(imageElement.url),
