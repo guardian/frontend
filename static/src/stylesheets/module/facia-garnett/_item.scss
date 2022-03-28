@@ -142,6 +142,13 @@ $fc-item-gutter: $gs-gutter / 4;
 // Wraps all media elements
 .fc-item__media-wrapper {
     box-sizing: border-box;
+
+    figure {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
 }
 
 // Wraps all non-media content
@@ -541,11 +548,6 @@ $block-height: 58px;
 
 .fc-item__slideshow {
     figure {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-
         @include mq($until: tablet) {
             &:nth-child(1n+2) {
                 display: none;
