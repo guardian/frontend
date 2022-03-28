@@ -3,10 +3,9 @@ package commercial.model.merchandise.books
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import akka.util.Timeout
-import com.gu.Box
 import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import commercial.model.merchandise.Book
-import common.GuLogging
+import common.{Box, GuLogging}
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
 import play.api.libs.json._

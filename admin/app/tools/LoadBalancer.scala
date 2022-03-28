@@ -1,8 +1,7 @@
 package tools
 
-import common.GuLogging
+import common.{Box, GuLogging}
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
-import com.gu.Box
 
 import scala.collection.JavaConverters._
 

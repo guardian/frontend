@@ -467,6 +467,13 @@ case object FiveGreatReads extends ArticleEmailMetadata {
     c.item.tags.series.exists(_.id == "australia-news/series/five-great-reads")
 }
 
+case object MovingTheGoalposts extends ArticleEmailMetadata {
+  val name = "Moving the Goalposts"
+  override val banner = Some("moving-the-goalposts.png")
+  def test(c: ContentPage): Boolean =
+    c.item.tags.series.exists(_.id == "football/series/moving-the-goalposts")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -511,6 +518,7 @@ object EmailAddons {
     TheGuide,
     FiveGreatReads,
     Beijing2022DailyBriefing,
+    MovingTheGoalposts,
   )
   private val frontEmails = Seq(
     SocialCareNetwork,

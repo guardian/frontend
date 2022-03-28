@@ -1,7 +1,6 @@
 package rugby.jobs
 
-import com.gu.Box
-import common.GuLogging
+import common.{Box, GuLogging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.feed.{Event, MatchNavigation, PARugbyAPIException, RugbyFeed}
 import rugby.model._

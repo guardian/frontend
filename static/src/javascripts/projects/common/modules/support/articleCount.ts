@@ -5,7 +5,7 @@ import {
 } from '@guardian/support-dotcom-components';
 import type { WeeklyArticleHistory } from '@guardian/support-dotcom-components/dist/shared/src/types/targeting';
 import { storageKeyDailyArticleCount } from 'common/modules/onward/history';
-import { getArticleCountConsent } from 'common/modules/support/supportMessaging';
+import { hasCmpConsentForArticleCount } from 'common/modules/support/supportMessaging';
 
 export interface DailyArticleCount {
 	day: number;
@@ -14,9 +14,9 @@ export interface DailyArticleCount {
 
 type DailyArticleHistory = DailyArticleCount[];
 
-const today = Math.floor(Date.now() / 86400000); // 1 day in ms
+export const today = Math.floor(Date.now() / 86_400_000); // 1 day in ms
 
-const isDailyArticleHistory = (data: any): data is DailyArticleHistory =>
+const isDailyArticleHistory = (data: unknown): data is DailyArticleHistory =>
 	Array.isArray(data);
 
 const getDailyArticleHistory = (): DailyArticleHistory | undefined => {
@@ -60,7 +60,7 @@ export const getArticleCounts = async (
 	keywordIds: string,
 	isFront: boolean,
 ): Promise<ArticleCounts | undefined> => {
-	const hasConsentedToArticleCounts = await getArticleCountConsent();
+	const hasConsentedToArticleCounts = await hasCmpConsentForArticleCount();
 	if (!hasConsentedToArticleCounts) return undefined;
 
 	if (!isFront && !window.guardian.articleCounts) {
@@ -87,4 +87,18 @@ export const getArticleCounts = async (
 	}
 
 	return window.guardian.articleCounts;
+};
+
+export const getArticleCountToday = (
+	articleCounts: ArticleCounts | undefined,
+): number | undefined => {
+	const latest = articleCounts?.dailyArticleHistory[0];
+	if (latest) {
+		if (latest.day === today) {
+			return articleCounts.dailyArticleHistory[0].count;
+		}
+		// article counting is enabled, but none so far today
+		return 0;
+	}
+	return undefined;
 };

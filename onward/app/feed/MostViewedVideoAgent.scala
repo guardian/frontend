@@ -1,6 +1,5 @@
 package feed
 
-import com.gu.Box
 import com.gu.contentapi.client
 import common._
 import common.editions.Uk

@@ -3,7 +3,6 @@ package model
 import common._
 import contentapi.ContentApiClient
 import _root_.feed.Competitions
-import com.gu.Box
 import implicits.Football
 import org.joda.time.{DateTime, Days}
 import pa._

@@ -1,6 +1,5 @@
 package feed
 
-import com.gu.Box
 import conf.Configuration
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.{Content, ContentFields, ContentType}

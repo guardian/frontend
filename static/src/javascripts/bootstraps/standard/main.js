@@ -155,6 +155,7 @@ const addErrorHandler = () => {
 };
 
 const bootStandard = () => {
+
     markTime('standard start');
 
     catchErrorsWithContext([

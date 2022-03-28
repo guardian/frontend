@@ -19,7 +19,7 @@ object LiveblogRendering
       description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = LocalDate.of(2022, 6, 2),
-      participationGroup = Perc10A,
+      participationGroup = Perc1A,
     )
 
 object StickyVideos
@@ -27,6 +27,15 @@ object StickyVideos
       name = "sticky-videos",
       description = "Stick videos on live blogs",
       owners = Seq(Owner.withGithub("joecowton1")),
+      sellByDate = LocalDate.of(2022, 6, 2),
+      participationGroup = Perc0C,
+    )
+
+object SlideshowCaptions
+    extends Experiment(
+      name = "slideshow-captions",
+      description = "Captions on fronts slideshows",
+      owners = Seq(Owner.withGithub("jamesgorrie")),
       sellByDate = LocalDate.of(2022, 6, 2),
       participationGroup = Perc0C,
     )

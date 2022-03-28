@@ -50,12 +50,14 @@ const getPoint = <IncludeTweakpoints extends boolean>(
 	return (point ?? 'mobile') as Point<IncludeTweakpoints>;
 };
 
+type Viewport = { width: number; height: number };
+
 /**
  * Expects `window.innerWidth` or `document.body.clientWidth` to return
  * a value
  * @returns
  */
-const getViewport = (): { width: number; height: number } => {
+const getViewport = (): Viewport => {
 	return {
 		width: window.innerWidth || document.body.clientWidth || 0,
 		height: window.innerHeight || document.body.clientHeight || 0,
@@ -67,4 +69,4 @@ const getBreakpoint = (width: number): Breakpoint => getPoint(false, width);
 const getTweakpoint = (width: number): Tweakpoint | Breakpoint =>
 	getPoint(true, width);
 
-export { getBreakpoint, getTweakpoint, getViewport };
+export { getBreakpoint, getTweakpoint, getViewport, Viewport };

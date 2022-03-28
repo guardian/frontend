@@ -2,9 +2,8 @@ package commercial.model.merchandise.events
 
 import java.lang.System._
 
-import com.gu.Box
 import commercial.model.feeds._
-import common.GuLogging
+import common.{Box, GuLogging}
 import conf.Configuration
 import commercial.model.merchandise.LiveEvent
 import play.api.libs.json.JsValue

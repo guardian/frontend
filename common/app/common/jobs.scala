@@ -8,7 +8,6 @@ import play.api.Mode.Test
 import scala.collection.mutable
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
-import com.gu.Box
 import scala.util.{Failure, Success}
 
 object JobsState {
