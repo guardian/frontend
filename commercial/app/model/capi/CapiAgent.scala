@@ -1,7 +1,6 @@
 package commercial.model.capi
 
-import com.gu.Box
-import common.GuLogging
+import common.{Box, GuLogging}
 import contentapi.ContentApiClient
 import model.ContentType
 

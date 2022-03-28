@@ -1,8 +1,7 @@
 package contentapi
 
-import com.gu.Box
 import com.gu.contentapi.client.model.v1.Section
-import common.GuLogging
+import common.{Box, GuLogging}
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}

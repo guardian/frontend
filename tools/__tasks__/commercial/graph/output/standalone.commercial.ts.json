@@ -206,11 +206,14 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/load-advert.ts"
+  "../projects/commercial/modules/dfp/load-advert.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts"
  ],
  "../projects/commercial/modules/dfp/load-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -282,7 +285,7 @@
   "../projects/commercial/modules/messenger/resize.ts",
   "../projects/commercial/modules/messenger/scroll.js",
   "../projects/commercial/modules/messenger/type.ts",
-  "../projects/commercial/modules/messenger/viewport.js",
+  "../projects/commercial/modules/messenger/viewport.ts",
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
@@ -486,9 +489,10 @@
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/messenger.ts"
  ],
- "../projects/commercial/modules/messenger/viewport.js": [
+ "../projects/commercial/modules/messenger/viewport.ts": [
   "../lib/detect-viewport.ts",
-  "../lib/fastdom-promise.js"
+  "../lib/fastdom-promise.js",
+  "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/mobile-sticky.ts": [
   "../lib/fastdom-promise.js",
@@ -565,6 +569,7 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
@@ -648,6 +653,7 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
@@ -674,6 +680,10 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
+ "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],

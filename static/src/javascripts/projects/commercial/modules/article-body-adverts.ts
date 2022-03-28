@@ -73,7 +73,7 @@ const articleBodySelector = isDotcomRendering
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const ignoreList = enableRichLinksFix
-		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-component="rich-link"])'
+		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
 		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
 
 	const isImmersive = config.get('page.isImmersive');
@@ -92,7 +92,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minAbove: 35,
 				minBelow: 400,
 			},
-			' figure.element-immersive': {
+			' [data-spacefinder-role="immersive"]': {
 				minAbove: 0,
 				minBelow: 600,
 			},
@@ -112,13 +112,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		minBelow: isDotcomRendering ? 300 : 800,
 		selectors: {
 			' .ad-slot': adSlotClassSelectorSizes,
-			' figure.element-immersive': {
+			' [data-spacefinder-role="immersive"]': {
 				minAbove: 0,
 				minBelow: 600,
-			},
-			' [data-spacefinder-component="numbered-list-title"]': {
-				minAbove: 25,
-				minBelow: 0,
 			},
 		},
 		filter: filterNearbyCandidates(adSizes.halfPage.height),
@@ -142,7 +138,16 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					'inline',
 					`inline${isInline1 ? '' : ' offset-right'}`,
 					isInline1
-						? undefined
+						? {
+								phablet: [
+									adSizes.outstreamDesktop,
+									adSizes.outstreamGoogleDesktop,
+								],
+								desktop: [
+									adSizes.outstreamDesktop,
+									adSizes.outstreamGoogleDesktop,
+								],
+						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
 				);
 			});
@@ -282,9 +287,6 @@ export const init = (): Promise<boolean> => {
 	// For instance by the signin gate.
 	mediator.on('page:article:redisplayed', doInit);
 	// DCR doesn't have mediator, so listen for CustomEvent
-	document.addEventListener('dcr:page:article:redisplayed', () => {
-		void doInit();
-	});
 	document.addEventListener('article:sign-in-gate-dismissed', () => {
 		void doInit();
 	});

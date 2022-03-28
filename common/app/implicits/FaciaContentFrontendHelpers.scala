@@ -50,7 +50,14 @@ object FaciaContentFrontendHelpers {
         case Some(ImageSlideshow(assets)) =>
           Option {
             assets.flatMap(asset =>
-              Try(FaciaImageElement(asset.imageSrc, asset.imageSrcWidth.toInt, asset.imageSrcHeight.toInt)).toOption,
+              Try(
+                FaciaImageElement(
+                  asset.imageSrc,
+                  asset.imageSrcWidth.toInt,
+                  asset.imageSrcHeight.toInt,
+                  asset.imageCaption,
+                ),
+              ).toOption,
             )
           }
         case _ => None
