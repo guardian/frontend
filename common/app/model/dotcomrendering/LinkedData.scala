@@ -73,7 +73,7 @@ object LinkedData {
       WebPage(
         `@id` = article.metadata.webUrl,
         potentialAction =
-          PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+          Some(PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))),
       ),
     )
   }
@@ -109,8 +109,9 @@ object LinkedData {
           ),
           WebPage(
             `@id` = article.metadata.webUrl,
-            potentialAction =
+            potentialAction = Some(
               PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+            ),
           ),
         )
       }
@@ -123,8 +124,6 @@ object LinkedData {
     List(
       WebPage(
         `@id` = article.metadata.webUrl,
-        potentialAction =
-          PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
       ),
     )
   }
@@ -212,7 +211,7 @@ case class WebPage(
     `@type`: String = "WebPage",
     `@context`: String = "https://schema.org",
     `@id`: String,
-    potentialAction: PotentialAction,
+    potentialAction: Option[PotentialAction] = None,
 ) extends LinkedData
 
 object WebPage {
