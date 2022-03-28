@@ -3,7 +3,6 @@
 @import model.ImageMedia
 @import views.support.{ImageProfile, ImgSrc, RenderClasses, SrcSet}
 @import implicits.Requests._
-@import experiments.{ActiveExperiments, SlideshowCaptions}
 
 @(
     classes: Seq[String],
@@ -11,32 +10,22 @@
     maybeImageMedia: Option[ImageMedia] = None,
     maybePath: Option[String] = None,
     maybeSrc: Option[String] = None,
-    shouldLazyLoadIndex: Boolean = false,
-    caption: Option[String] = None
+        shouldLazyLoadIndex: Boolean = false,
 )(implicit request: RequestHeader)
 
-<figure>
-    <picture>
-        @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
-        <!--[if IE 9]><video style="display: none;"><![endif]-->
-        @widths.breakpoints.map { breakpointWidth =>
-            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
-            sizes="@breakpointWidth.width"
-            srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true))" />
-            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
-            sizes="@breakpointWidth.width"
-            srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
-        }
-        <!--[if IE 9]></video><![endif]-->
-        @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath.map(ImgSrc(_, ImageProfile(width = widths.desktop.map(_.get))))).map { src =>
-            <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn && shouldLazyLoadIndex) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
-        }
-    </picture>
-    @if(ActiveExperiments.isParticipating(SlideshowCaptions)) {
-        @caption.map { captionText =>
-            <figcaption>
-                @captionText
-            </figcaption>
-        }
+<picture>
+    @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+    <!--[if IE 9]><video style="display: none;"><![endif]-->
+    @widths.breakpoints.map { breakpointWidth =>
+        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
+        sizes="@breakpointWidth.width"
+        srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true))" />
+        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+        sizes="@breakpointWidth.width"
+        srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
     }
-</figure>
+    <!--[if IE 9]></video><![endif]-->
+    @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath.map(ImgSrc(_, ImageProfile(width = widths.desktop.map(_.get))))).map { src =>
+        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn && shouldLazyLoadIndex) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
+    }
+</picture>
