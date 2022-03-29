@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => CAPIBlock}
-import model.{Article, LiveBlogPage}
+import model.{Article, InteractivePage, LiveBlogPage}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.functional.syntax._
@@ -73,7 +73,7 @@ object LinkedData {
       WebPage(
         `@id` = article.metadata.webUrl,
         potentialAction =
-          PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+          Some(PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))),
       ),
     )
   }
@@ -109,12 +109,23 @@ object LinkedData {
           ),
           WebPage(
             `@id` = article.metadata.webUrl,
-            potentialAction =
+            potentialAction = Some(
               PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+            ),
           ),
         )
       }
     }
+  }
+
+  def forInteractive(
+      article: InteractivePage,
+  ): List[LinkedData] = {
+    List(
+      WebPage(
+        `@id` = article.metadata.webUrl,
+      ),
+    )
   }
 
   private[this] def getImages(article: Article, fallbackLogo: String): List[String] = {
@@ -200,7 +211,7 @@ case class WebPage(
     `@type`: String = "WebPage",
     `@context`: String = "https://schema.org",
     `@id`: String,
-    potentialAction: PotentialAction,
+    potentialAction: Option[PotentialAction] = None,
 ) extends LinkedData
 
 object WebPage {
