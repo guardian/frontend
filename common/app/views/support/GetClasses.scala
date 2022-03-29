@@ -1,6 +1,16 @@
 package views.support
 
-import com.gu.facia.client.models.{BreakingPalette, EventAltPalette, EventPalette, InvestigationPalette, LongRunningAltPalette, LongRunningPalette, Metadata, SombreAltPalette, SombrePalette}
+import com.gu.facia.client.models.{
+  BreakingPalette,
+  EventAltPalette,
+  EventPalette,
+  InvestigationPalette,
+  LongRunningAltPalette,
+  LongRunningPalette,
+  Metadata,
+  SombreAltPalette,
+  SombrePalette,
+}
 import layout._
 import layout.slices._
 import layout.cards
