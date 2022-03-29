@@ -1,12 +1,12 @@
 package controllers.cache
 
 import java.net.URI
-
 import com.gu.googleauth.UserIdentity
-import common.{ImplicitControllerExecutionContext, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext}
 import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
 import org.apache.commons.codec.digest.DigestUtils
+import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
@@ -17,7 +17,11 @@ import scala.concurrent.Future.successful
 
 case class PrePurgeTestResult(url: String, passed: Boolean)
 
-class PageDecacheController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
+class PageDecacheController(
+    wsClient: WSClient,
+    val controllerComponents: ControllerComponents,
+    val httpConfiguration: HttpConfiguration,
+)(implicit
     context: ApplicationContext,
 ) extends BaseController
     with GuLogging
@@ -35,7 +39,7 @@ class PageDecacheController(wsClient: WSClient, val controllerComponents: Contro
     }
 
   def decacheAjax(): Action[AnyContent] =
-    AdminAuthAction.async { implicit request =>
+    AdminAuthAction(httpConfiguration).async { implicit request =>
       getSubmittedUrlPathMd5(request) match {
         case Some(path) =>
           CdnPurge.soft(wsClient, path, AjaxHost).map(message => NoCache(Ok(views.html.cache.ajaxDecache(message))))
@@ -44,7 +48,7 @@ class PageDecacheController(wsClient: WSClient, val controllerComponents: Contro
     }
 
   def decachePage(): Action[AnyContent] =
-    AdminAuthAction.async { implicit request =>
+    AdminAuthAction(httpConfiguration).async { implicit request =>
       getSubmittedUrlPathMd5(request) match {
         case Some(md5Path) =>
           CdnPurge

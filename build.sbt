@@ -26,6 +26,8 @@ val common = library("common")
       jSoup,
       json4s,
       playGoogleAuth,
+      playSecretRotation,
+      playSecretRotationAwsSdk,
       quartzScheduler,
       redisClient,
       rome,
