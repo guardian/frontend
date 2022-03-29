@@ -1,18 +1,10 @@
 package views.support
 
-import com.gu.facia.client.models.{
-  BreakingPalette,
-  EventAltPalette,
-  EventPalette,
-  InvestigationPalette,
-  LongRunningPalette,
-  Metadata,
-  SombrePalette,
-}
+import com.gu.facia.client.models.{BreakingPalette, EventAltPalette, EventPalette, InvestigationPalette, LongRunningAltPalette, LongRunningPalette, Metadata, SombreAltPalette, SombrePalette}
 import layout._
 import layout.slices._
 import layout.cards
-import model.pressed.{Audio, Gallery, Video, SpecialReport}
+import model.pressed.{Audio, Gallery, SpecialReport, Video}
 import slices.{Dynamic, DynamicSlowMPU}
 import play.api.mvc.RequestHeader
 import model.Pillar.RichPillar
@@ -184,7 +176,9 @@ object GetClasses {
 
   private val paletteClassesByMetadataTag: Map[Metadata, String] = Map(
     LongRunningPalette -> "fc-container--long-running-palette",
+    LongRunningAltPalette -> "fc-container--long-running-alt-palette",
     SombrePalette -> "fc-container--sombre-palette",
+    SombreAltPalette -> "fc-container--sombre-alt-palette",
     InvestigationPalette -> "fc-container--investigation-palette",
     BreakingPalette -> "fc-container--breaking-palette",
     EventPalette -> "fc-container--event-palette",
