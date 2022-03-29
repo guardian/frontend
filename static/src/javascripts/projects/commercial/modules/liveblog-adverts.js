@@ -16,16 +16,10 @@ let WINDOWHEIGHT;
 let firstSlot;
 
 const startListening = () => {
-	// frontend - remove when migration to DCR is complete
-	mediator.on('modules:autoupdate:updates', onUpdate);
-	// DCR
 	document.addEventListener('liveblog:blocks-updated', onUpdate);
 };
 
 const stopListening = () => {
-	// frontend - remove when migration to DCR is complete
-	mediator.off('modules:autoupdate:updates', onUpdate);
-	// DCR
 	document.removeEventListener('liveblog:blocks-updated', onUpdate);
 };
 
