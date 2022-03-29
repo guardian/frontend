@@ -1,16 +1,20 @@
 package controllers.admin
 
 import com.gu.googleauth.AuthAction
+import conf.AdminConfiguration
 import model.{ApplicationContext, NoCache}
+import play.api.http.HttpConfiguration
 import play.api.mvc._
 
 trait AdminAuthController {
 
   def controllerComponents: ControllerComponents
 
-  object AdminAuthAction
+  case class AdminAuthAction(httpConfiguration: HttpConfiguration)
       extends AuthAction(
-        conf.GoogleAuth.getConfigOrDie,
+        conf
+          .GoogleAuth(None, httpConfiguration, AdminConfiguration.oauthCredentialsWithSingleCallBack(None))
+          .getConfigOrDie,
         routes.OAuthLoginAdminController.login,
         controllerComponents.parsers.default,
       )(controllerComponents.executionContext)
