@@ -21,6 +21,7 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
+  PressedPage,
 }
 import navigation._
 import play.api.libs.json._
