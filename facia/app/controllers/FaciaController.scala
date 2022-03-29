@@ -21,7 +21,7 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
-import model.dotcomrendering.DotcomRenderingFrontsModel
+import model.dotcomrendering.{DotcomRenderingFrontsModel, PageType}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -191,12 +191,13 @@ trait FaciaController
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some((faciaPage: PressedPage, _)) if request.forceDCR && request.isJson =>
         successful(
-          common
-            .renderJson(
-              Json.stringify(Json.toJson(DotcomRenderingFrontsModel(page = faciaPage, request = request))),
-              faciaPage,
+          Cached(CacheTime.Facia)(
+            JsonComponent(
+              DotcomRenderingFrontsModel(page = faciaPage,
+                request = request,
+                pageType = PageType(faciaPage, request, context))
             )
-            .as("application/json"),
+          )
         )
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(
