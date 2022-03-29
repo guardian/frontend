@@ -27,9 +27,10 @@ case object GenericFallback extends BlockRange {
   val firstPage = "body:latest:60"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
+  val summary = "body:summary"
   val pinned = "body:pinned"
   val body = "body" // supports Dotcom Rendering model which currently requires field body
-  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, pinned, body))
+  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned, body))
 }
 
 case class PageWithBlock(page: String) extends BlockRange {

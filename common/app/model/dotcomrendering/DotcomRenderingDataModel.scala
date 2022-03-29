@@ -178,7 +178,7 @@ object DotcomRenderingDataModel {
       page = page,
       request = request,
       pagination = None,
-      linkedData = Nil, // TODO
+      linkedData = LinkedData.forInteractive(page),
       mainBlock = blocks.main,
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
@@ -214,6 +214,18 @@ object DotcomRenderingDataModel {
     )
   }
 
+  def keyEventsFallback(
+      blocks: APIBlocks,
+  ): Seq[APIBlock] = {
+    blocks.requestedBodyBlocks match {
+      case Some(requestedBlocks) =>
+        val keyEvent = requestedBlocks.getOrElse(CanonicalLiveBlog.timeline, Seq.empty[APIBlock])
+        val summaryEvent = requestedBlocks.getOrElse(CanonicalLiveBlog.summary, Seq.empty[APIBlock])
+        keyEvent ++ summaryEvent
+      case None => Seq.empty[APIBlock]
+    }
+  }
+
   def forLiveblog(
       page: LiveBlogPage,
       blocks: APIBlocks,
@@ -235,17 +247,14 @@ object DotcomRenderingDataModel {
 
     val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
 
-    val allKeyEvents =
-      blocks.requestedBodyBlocks
-        .flatMap(bodyBlocks => bodyBlocks.get("body:key-events"))
-        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.keyEvent.contains(true))))
-
-    val latestSummary = blocks.body.flatMap(_.find(_.attributes.summary.contains(true)))
+    val allKeyEvents = blocks.body match {
+      case Some(allBlocks) if allBlocks.nonEmpty =>
+        allBlocks.filter(block => block.attributes.keyEvent.contains(true) || block.attributes.summary.contains(true))
+      case _ => keyEventsFallback(blocks)
+    }
 
     val keyEvents: Seq[APIBlock] =
-      (latestSummary.toSeq ++ allKeyEvents)
-        .sortBy(block => block.publishedDate.orElse(block.createdDate).map(_.dateTime))
-        .reverse
+      allKeyEvents.sortBy(block => block.firstPublishedDate.orElse(block.createdDate).map(_.dateTime)).reverse
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,
