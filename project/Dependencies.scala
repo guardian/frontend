@@ -76,7 +76,7 @@ object Dependencies {
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
-  val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
+  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
 
   /*
