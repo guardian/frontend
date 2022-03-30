@@ -189,18 +189,6 @@ trait FaciaController
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
-      case Some((faciaPage: PressedPage, _)) if request.forceDCR && request.isJson =>
-        successful(
-          Cached(CacheTime.Facia)(
-            JsonComponent(
-              DotcomFrontsRenderingDataModel(
-                page = faciaPage,
-                request = request,
-                pageType = PageType(faciaPage, request, context),
-              ),
-            ),
-          ),
-        )
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(
           Cached(CacheTime.Facia)(
@@ -208,7 +196,15 @@ trait FaciaController
               val body = TrailsToRss.fromPressedPage(faciaPage)
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             } else if (request.isJson) {
-              JsonFront(faciaPage)
+              if (request.forceDCR) {
+                JsonComponent(
+                  DotcomFrontsRenderingDataModel(
+                    page = faciaPage,
+                    request = request,
+                    pageType = PageType(faciaPage, request, context),
+                  ),
+                )
+              } else JsonFront(faciaPage)
             } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
             } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
