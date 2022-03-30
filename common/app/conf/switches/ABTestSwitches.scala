@@ -50,7 +50,7 @@ trait ABTestSwitches {
     "This test enables GPT enableLazyLoad as an alternative to our custom lazy loading",
     owners = Seq(Owner.withGithub("zekehuntergreen")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 4, 5)),
+    sellByDate = Some(LocalDate.of(2022, 4, 12)),
     exposeClientSide = true,
   )
 }
