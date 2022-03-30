@@ -11,7 +11,7 @@ import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 
-case class DotcomRenderingFrontsModel(
+case class DotcomFrontsRenderingDataModel(
     pressedPage: PressedPage,
     nav: Nav,
     editionId: String,
@@ -24,10 +24,10 @@ case class DotcomRenderingFrontsModel(
     commercialProperties: Map[String, EditionCommercialProperties],
 )
 
-object DotcomRenderingFrontsModel {
-  implicit val writes = Json.writes[DotcomRenderingFrontsModel]
+object DotcomFrontsRenderingDataModel {
+  implicit val writes = Json.writes[DotcomFrontsRenderingDataModel]
 
-  def apply(page: PressedPage, request: RequestHeader, pageType: PageType): DotcomRenderingFrontsModel = {
+  def apply(page: PressedPage, request: RequestHeader, pageType: PageType): DotcomFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
 
@@ -56,7 +56,7 @@ object DotcomRenderingFrontsModel {
       .map { _.perEdition.mapKeys(_.id) }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
-    DotcomRenderingFrontsModel(
+    DotcomFrontsRenderingDataModel(
       pressedPage = page,
       nav = nav,
       editionId = edition.id,

@@ -21,7 +21,7 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
-import model.dotcomrendering.{DotcomRenderingFrontsModel, PageType}
+import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -193,7 +193,7 @@ trait FaciaController
         successful(
           Cached(CacheTime.Facia)(
             JsonComponent(
-              DotcomRenderingFrontsModel(
+              DotcomFrontsRenderingDataModel(
                 page = faciaPage,
                 request = request,
                 pageType = PageType(faciaPage, request, context),
