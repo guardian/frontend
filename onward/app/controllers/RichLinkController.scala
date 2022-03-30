@@ -7,7 +7,7 @@ import implicits.Requests
 import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType, ImageAsset}
 import models.dotcomponents.{RichLink, RichLinkTag}
 import model.dotcomrendering.OnwardsUtils
-import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Request, RequestHeader}
 import play.twirl.api.Html
 import views.support.{ImgSrc, Item460, RichLinkContributor}
 
@@ -21,7 +21,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
     with ImplicitControllerExecutionContext
     with Requests {
   def render(path: String): Action[AnyContent] =
-    Action.async { implicit request =>
+    Action.async { implicit request: Request[AnyContent] =>
       val resp = contentType(path) map {
         case Some(content) if request.forceDCR =>
           val richLink = RichLink(

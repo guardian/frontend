@@ -2,7 +2,6 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
-import com.gu.facia.client.models.TargetedTerritory
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
@@ -19,8 +18,11 @@ import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
 import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
-import utils.TargetedCollections
+import utils.{FaciaPicker, RemoteRender, TargetedCollections}
 import conf.Configuration
+import model.dotcomrendering.PageType
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -33,6 +35,8 @@ trait FaciaController
     with implicits.Requests {
 
   val frontJsonFapi: FrontJsonFapi
+  val ws: WSClient
+  val dotcomRenderingService: DotcomRenderingService
 
   implicit val context: ApplicationContext
 
@@ -200,6 +204,9 @@ trait FaciaController
               renderEmail(faciaPage)
             } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
               renderShowcaseFront(faciaPage)
+            } else if (FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender) {
+              val pageType = PageType(faciaPage, request, context)
+              dotcomRenderingService.getFront(ws, faciaPage, pageType)(request)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
             },
@@ -445,5 +452,7 @@ trait FaciaController
 class FaciaControllerImpl(
     val frontJsonFapi: FrontJsonFapiLive,
     val controllerComponents: ControllerComponents,
+    val dotcomRenderingService: DotcomRenderingService,
+    val ws: WSClient
 )(implicit val context: ApplicationContext)
     extends FaciaController

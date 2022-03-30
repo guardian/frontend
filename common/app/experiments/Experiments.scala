@@ -23,6 +23,15 @@ object LiveblogRendering
       participationGroup = Perc1A,
     )
 
+object FrontRendering
+    extends Experiment(
+      name = "front-rendering",
+      description = "Use DCR for fronts",
+      owners = Seq(Owner.withGithub("dotcom")),
+      sellByDate = LocalDate.of(2023, 6, 2),
+      participationGroup = Perc0A,
+    )
+
 object StickyVideos
     extends Experiment(
       name = "sticky-videos",
