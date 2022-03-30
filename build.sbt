@@ -12,6 +12,7 @@ val common = library("common")
       awsCore,
       awsCloudwatch,
       awsDynamodb,
+      awsKinesis,
       awsS3,
       awsSns,
       awsSts,
