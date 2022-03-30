@@ -36,26 +36,32 @@ const onIntersect = (
 		(advert) => !advertIds.includes(advert.id),
 	);
 };
-/**
- * return a random number between 20 (inclusive) and 420 (non-inclusive)
- * @returns number
- */
-const getRandomLazyLoadMargin = (): number => {
-	const min = 20;
-	const max = 420;
-	return Math.floor(Math.random() * (max - min)) + min;
-};
+
+const lazyLoadMargins = {
+	"variant 1": 20,
+	"variant 2": 70,
+	"variant 3": 120,
+	"variant 4": 170,
+	"variant 5": 220,
+	"variant 6": 270,
+	"variant 7": 320,
+	"variant 8": 370,
+} as const;
+
+type lazyLoadMarginTestVariant = keyof typeof lazyLoadMargins;
 
 const getObserver = once(() => {
-	const inLazyLoadMarginTestVariant = isInVariantSynchronous(
-		commercialLazyLoadMargin,
-		'variant',
-	);
+
+	const lazyLoadMarginTestVariants = Object.keys(lazyLoadMargins).filter((variantName) => {
+		return isInVariantSynchronous(
+			commercialLazyLoadMargin,
+			variantName,
+		);
+	}) as lazyLoadMarginTestVariant[];
+	const lazyLoadMarginTestVariant: lazyLoadMarginTestVariant | null = lazyLoadMarginTestVariants.length > 0 ? lazyLoadMarginTestVariants[0] : null
 	let rootMargin;
-	if (inLazyLoadMarginTestVariant) {
-		const margin = getRandomLazyLoadMargin();
-		const eventTimer = EventTimer.get();
-		eventTimer.setProperty('lazyLoadMarginPercent', margin);
+	if (lazyLoadMarginTestVariant !== null) {
+		const margin = lazyLoadMargins[lazyLoadMarginTestVariant]
 		rootMargin = `${margin}% 0px`;
 	} else {
 		rootMargin = '200px 0px';
