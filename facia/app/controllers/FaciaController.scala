@@ -193,11 +193,13 @@ trait FaciaController
         successful(
           Cached(CacheTime.Facia)(
             JsonComponent(
-              DotcomRenderingFrontsModel(page = faciaPage,
+              DotcomRenderingFrontsModel(
+                page = faciaPage,
                 request = request,
-                pageType = PageType(faciaPage, request, context))
-            )
-          )
+                pageType = PageType(faciaPage, request, context),
+              ),
+            ),
+          ),
         )
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(

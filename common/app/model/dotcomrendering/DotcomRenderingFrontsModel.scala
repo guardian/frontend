@@ -56,7 +56,8 @@ object DotcomRenderingFrontsModel {
       .map { _.perEdition.mapKeys(_.id) }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
-    DotcomRenderingFrontsModel(pressedPage = page,
+    DotcomRenderingFrontsModel(
+      pressedPage = page,
       nav = nav,
       editionId = edition.id,
       editionLongForm = edition.displayName,
