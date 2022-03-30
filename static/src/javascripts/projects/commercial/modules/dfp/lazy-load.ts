@@ -1,6 +1,7 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { once } from 'lodash-es';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
 import { commercialLazyLoadMargin } from 'common/modules/experiments/tests/commercial-lazy-load-margin';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
@@ -68,7 +69,12 @@ const getObserver = once(() => {
 });
 
 export const enableLazyLoad = (advert: Advert): void => {
-	if (dfpEnv.lazyLoadObserve) {
+	const useGptLazyLoad = isInVariantSynchronous(
+		commercialGptLazyLoad,
+		'variant',
+	);
+	const useCustomLazyLoad = dfpEnv.lazyLoadObserve && !useGptLazyLoad;
+	if (useCustomLazyLoad) {
 		void getObserver().then((observer) => observer.observe(advert.node));
 	} else {
 		displayAd(advert.id);

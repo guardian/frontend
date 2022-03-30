@@ -181,7 +181,9 @@
   "../lib/partition.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts",
-  "../projects/commercial/modules/dfp/load-advert.ts"
+  "../projects/commercial/modules/dfp/load-advert.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts"
  ],
  "../projects/commercial/modules/dfp/empty-advert.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
@@ -213,6 +215,7 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts"
  ],
  "../projects/commercial/modules/dfp/load-advert.ts": [
@@ -567,6 +570,7 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
@@ -651,6 +655,7 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
@@ -678,6 +683,10 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
+ "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
