@@ -219,7 +219,6 @@ trait FaciaController
         if (targetedTerritories) {
           result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
         } else result
-
       case None => {
         successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
       }
