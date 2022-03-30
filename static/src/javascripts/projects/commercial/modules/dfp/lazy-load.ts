@@ -1,4 +1,3 @@
-import { EventTimer } from '@guardian/commercial-core';
 import { once } from 'lodash-es';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialLazyLoadMargin } from 'common/modules/experiments/tests/commercial-lazy-load-margin';
@@ -38,30 +37,34 @@ const onIntersect = (
 };
 
 const lazyLoadMargins = {
-	"variant 1": 20,
-	"variant 2": 70,
-	"variant 3": 120,
-	"variant 4": 170,
-	"variant 5": 220,
-	"variant 6": 270,
-	"variant 7": 320,
-	"variant 8": 370,
+	'variant 1': 20,
+	'variant 2': 70,
+	'variant 3': 120,
+	'variant 4': 170,
+	'variant 5': 220,
+	'variant 6': 270,
+	'variant 7': 320,
+	'variant 8': 370,
 } as const;
 
-type lazyLoadMarginTestVariant = keyof typeof lazyLoadMargins;
+type LazyLoadMarginTestVariant = keyof typeof lazyLoadMargins;
 
 const getObserver = once(() => {
-
-	const lazyLoadMarginTestVariants = Object.keys(lazyLoadMargins).filter((variantName) => {
-		return isInVariantSynchronous(
-			commercialLazyLoadMargin,
-			variantName,
-		);
-	}) as lazyLoadMarginTestVariant[];
-	const lazyLoadMarginTestVariant: lazyLoadMarginTestVariant | null = lazyLoadMarginTestVariants.length > 0 ? lazyLoadMarginTestVariants[0] : null
+	const lazyLoadMarginTestVariants = Object.keys(lazyLoadMargins).filter(
+		(variantName) => {
+			return isInVariantSynchronous(
+				commercialLazyLoadMargin,
+				variantName,
+			);
+		},
+	) as LazyLoadMarginTestVariant[];
+	const lazyLoadMarginTestVariant: LazyLoadMarginTestVariant | null =
+		lazyLoadMarginTestVariants.length > 0
+			? lazyLoadMarginTestVariants[0]
+			: null;
 	let rootMargin;
 	if (lazyLoadMarginTestVariant !== null) {
-		const margin = lazyLoadMargins[lazyLoadMarginTestVariant]
+		const margin = lazyLoadMargins[lazyLoadMarginTestVariant];
 		rootMargin = `${margin}% 0px`;
 	} else {
 		rootMargin = '200px 0px';
