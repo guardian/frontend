@@ -17,6 +17,7 @@ class FaciaPicker extends GuLogging {
       Map(
         "participatingInTest" -> participatingInTest.toString,
         "dcrCouldRender" -> dcrCouldRender.toString,
+        "isFront" -> "true",
       )
 
     if (request.forceDCROff) {
