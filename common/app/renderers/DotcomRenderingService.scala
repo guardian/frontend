@@ -8,8 +8,9 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomRenderingDataModel, PageType}
+import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomFrontsRenderingDataModel, DotcomRenderingDataModel, DotcomRenderingUtils, PageType}
 import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage, PressedPage}
+import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -162,18 +163,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       page: PressedPage,
       pageType: PageType,
-  )(implicit request: RequestHeader): Future[String] = {
-//    val dataModel = DotcomFrontsRenderingDataModel(page, request, pageType)
-//
-////    this goes in DotcomFrontsRenderingDataModel
-////    def toJson(model: DotcomFrontsRenderingDataModel): String = {
-////      val jsValue = Json.toJson(model)
-////      Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
-////    }
-//
-//    val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-//    post(ws, json, Configuration.rendering.baseURL + "/Fronts", page)
-    ???
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomFrontsRenderingDataModel(page, request, pageType)
+
+    val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Fronts", page)
   }
 
   def getInteractive(

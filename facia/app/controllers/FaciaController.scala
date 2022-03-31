@@ -36,7 +36,7 @@ trait FaciaController
 
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
-  val dotcomRenderingService: DotcomRenderingService
+  val remoteRenderer: DotcomRenderingService
 
   implicit val context: ApplicationContext
 
@@ -192,6 +192,9 @@ trait FaciaController
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
+      case Some((faciaPage: PressedPage, _)) if FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender =>
+        val pageType = PageType(faciaPage, request, context)
+        remoteRenderer.getFront(ws, faciaPage, pageType)(request)
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(
           Cached(CacheTime.Facia)(
@@ -212,9 +215,6 @@ trait FaciaController
               renderEmail(faciaPage)
             } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
               renderShowcaseFront(faciaPage)
-            } else if (FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender) {
-              val pageType = PageType(faciaPage, request, context)
-              dotcomRenderingService.getFront(ws, faciaPage, pageType)(request)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
             },
@@ -460,7 +460,8 @@ trait FaciaController
 class FaciaControllerImpl(
     val frontJsonFapi: FrontJsonFapiLive,
     val controllerComponents: ControllerComponents,
-    val dotcomRenderingService: DotcomRenderingService,
     val ws: WSClient
 )(implicit val context: ApplicationContext)
-    extends FaciaController
+    extends FaciaController {
+  override val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
+}

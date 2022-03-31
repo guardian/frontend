@@ -21,13 +21,16 @@ class FaciaPicker extends GuLogging {
       )
 
     if (request.forceDCROff) {
+      DotcomFrontsLogger.logger.logRequest(s"front executing in web: $path, $properties", properties, faciaPage)
       LocalRender
     } else if (request.forceDCR) {
-      log.info(s"Front rendered by DCR: $path, $properties")
+      DotcomFrontsLogger.logger.logRequest(s"front executing in dotcomcomponents: $path, $properties", properties, faciaPage)
       RemoteRender
     } else if (participatingInTest && dcrCouldRender) {
+      DotcomFrontsLogger.logger.logRequest(s"front executing in dotcomcomponents: $path, $properties", properties, faciaPage)
       RemoteRender
     } else {
+      DotcomFrontsLogger.logger.logRequest(s"front executing in web: $path, $properties", properties, faciaPage)
       LocalRender
     }
   }
