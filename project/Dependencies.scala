@@ -16,6 +16,7 @@ object Dependencies {
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
   val awsDynamodb = "com.amazonaws" % "aws-java-sdk-dynamodb" % awsVersion
+  val awsEc2 = "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
