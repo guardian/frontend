@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
 import common.Edition
-import model.{ApplicationContext, Content, ContentPage, PageWithStoryPackage}
+import model.{ApplicationContext, Content, ContentPage, Page, PageWithStoryPackage}
 import play.api.libs.json.{JsBoolean, Json}
 import play.api.mvc.RequestHeader
 import views.support.JavaScriptPage.getMap
@@ -19,7 +19,7 @@ case class PageType(
 object PageType {
   implicit val writes = Json.writes[PageType]
 
-  def apply(page: ContentPage, request: RequestHeader, context: ApplicationContext): PageType = {
+  def apply(page: Page, request: RequestHeader, context: ApplicationContext): PageType = {
     PageType(
       getMap(page, Edition(request), false, request)
         .getOrElse("hasShowcaseMainElement", JsBoolean(false))

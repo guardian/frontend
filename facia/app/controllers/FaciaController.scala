@@ -21,6 +21,7 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
+import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -195,7 +196,15 @@ trait FaciaController
               val body = TrailsToRss.fromPressedPage(faciaPage)
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             } else if (request.isJson) {
-              JsonFront(faciaPage)
+              if (request.forceDCR) {
+                JsonComponent(
+                  DotcomFrontsRenderingDataModel(
+                    page = faciaPage,
+                    request = request,
+                    pageType = PageType(faciaPage, request, context),
+                  ),
+                )
+              } else JsonFront(faciaPage)
             } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
             } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
