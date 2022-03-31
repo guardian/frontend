@@ -238,7 +238,7 @@ object OpenGraphImage extends OverlayBase64 {
       shouldUpscale: Boolean = false,
   ): ShareImage = {
     val image = rating match {
-      case x if 0 to 5 contains x => s"overlay-base64=${overlayUrlBase64(s"tg-review-$x.png")}"
+      case x if 0 to 5 contains x => s"overlay-base64=${overlayUrlBase64(s"to-review-$x.png")}"
       case _                      => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
     }
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
