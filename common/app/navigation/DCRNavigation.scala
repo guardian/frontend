@@ -1,7 +1,7 @@
 package navigation
 
 import common.Edition
-import model.ContentPage
+import model.Page
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportGifting, SupportSubscribe, SupporterCTA}
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, Writes}
@@ -93,7 +93,7 @@ object Nav {
 
   implicit val writes = Json.writes[Nav]
 
-  def apply(page: ContentPage, edition: Edition): Nav = {
+  def apply(page: Page, edition: Edition): Nav = {
     val navMenu = NavMenu(page, edition)
     Nav(
       currentUrl = navMenu.currentUrl,
