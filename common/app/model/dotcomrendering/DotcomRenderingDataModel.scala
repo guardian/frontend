@@ -178,7 +178,11 @@ object DotcomRenderingDataModel {
       page = page,
       request = request,
       pagination = None,
-      linkedData = LinkedData.forInteractive(page),
+      linkedData = LinkedData.forInteractive(
+        interactive = page.item,
+        baseURL = Configuration.amp.baseUrl,
+        fallbackLogo = Configuration.images.fallbackLogo,
+      ),
       mainBlock = blocks.main,
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
