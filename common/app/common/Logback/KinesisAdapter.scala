@@ -1,20 +1,19 @@
 package common.Logback
 
-import java.util.concurrent.{ThreadFactory, ThreadPoolExecutor}
+import java.util.concurrent.ThreadPoolExecutor
 import akka.actor.ActorSystem
 import akka.dispatch.MessageDispatcher
 import akka.pattern.CircuitBreaker
 import ch.qos.logback.classic.spi.ILoggingEvent
 import com.amazonaws.ClientConfiguration
 import com.amazonaws.auth.AWSCredentialsProvider
-import com.amazonaws.client.builder.AwsAsyncClientBuilder
 import com.amazonaws.retry.{PredefinedRetryPolicies, RetryPolicy}
-import com.amazonaws.services.kinesis.{AmazonKinesisAsync, AmazonKinesisAsyncClient}
-import com.amazonaws.services.kinesis.AmazonKinesisAsyncClient.asyncBuilder
+import com.amazonaws.services.kinesis.AmazonKinesisAsyncClient
 import com.gu.logback.appender.kinesis.KinesisAppender
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
+import scala.annotation.nowarn
 
 // LogbackOperationsPool must be wired as a singleton
 class LogbackOperationsPool(val actorSystem: ActorSystem) {
@@ -32,6 +31,7 @@ class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) exte
     resetTimeout = 10.seconds,
   )(logbackOperations.logbackOperations)
 
+  @nowarn
   override protected def createClient(
       credentials: AWSCredentialsProvider,
       configuration: ClientConfiguration,
@@ -46,13 +46,6 @@ class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) exte
         true,
       ),
     )
-
-    // Trying to get rid of the deprecated class
-//    AmazonKinesisAsyncClient.asyncBuilder
-//      .withCredentials(credentials)
-//      .withClientConfiguration(configuration)
-//      .withExecutorFactory(ThreadFactory)
-//      .build()
 
     new AmazonKinesisAsyncClient(credentials, configuration, executor)
   }
