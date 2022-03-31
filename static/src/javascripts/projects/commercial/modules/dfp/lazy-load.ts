@@ -37,14 +37,14 @@ const onIntersect = (
 };
 
 const lazyLoadMargins = {
-	'variant 1': 20,
-	'variant 2': 70,
-	'variant 3': 120,
-	'variant 4': 170,
-	'variant 5': 220,
-	'variant 6': 270,
-	'variant 7': 320,
-	'variant 8': 370,
+	'variant-1': 20,
+	'variant-2': 70,
+	'variant-3': 120,
+	'variant-4': 170,
+	'variant-5': 220,
+	'variant-6': 270,
+	'variant-7': 320,
+	'variant-8': 370,
 } as const;
 
 type LazyLoadMarginTestVariant = keyof typeof lazyLoadMargins;
