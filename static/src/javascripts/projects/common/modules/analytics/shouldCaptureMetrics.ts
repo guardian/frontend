@@ -1,11 +1,13 @@
 import type { ABTest } from '@guardian/ab-core';
 import { isInABTestSynchronous } from '../experiments/ab';
+import { commercialGptLazyLoad } from '../experiments/tests/commercial-gpt-lazy-load';
 import { commercialLazyLoadMargin } from '../experiments/tests/commercial-lazy-load-margin';
 import { spacefinderOkrMegaTest } from '../experiments/tests/spacefinder-okr-mega-test';
 
 const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
 	spacefinderOkrMegaTest,
+	commercialGptLazyLoad,
 	commercialLazyLoadMargin,
 ];
 

@@ -32,6 +32,10 @@ const eventTimer = EventTimer.get();
 
 export const loadAdvert = (advert: Advert): void => {
 	const adName = stripDfpAdPrefixFrom(advert.id);
+	// TODO can slotReady come after header bidding?
+	// If so, the callbacks pushed onto the ias queue in define-slot.js
+	// could be run in parallel with the calls to requestBids below, reducing the
+	// total time to display the ad.
 	void advert.whenSlotReady
 		.catch(() => {
 			// The display needs to be called, even in the event of an error.

@@ -92,7 +92,11 @@ const autoUpdate = (opts) => {
 
             // Insert new blocks
             $liveblogBody.prepend(elementsToAdd);
+
             mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
+
+            const blockUpdated = new Event('liveblog:blocks-updated');
+            document.dispatchEvent(blockUpdated);
 
             initRelativeDates();
             enhanceTweets();
