@@ -50,20 +50,16 @@ const lazyLoadMargins = {
 type LazyLoadMarginTestVariant = keyof typeof lazyLoadMargins;
 
 const getObserver = once(() => {
-	const lazyLoadMarginTestVariants = Object.keys(lazyLoadMargins).filter(
+	const lazyLoadMarginTestVariant = Object.keys(lazyLoadMargins).find(
 		(variantName) => {
 			return isInVariantSynchronous(
 				commercialLazyLoadMargin,
 				variantName,
 			);
 		},
-	) as LazyLoadMarginTestVariant[];
-	const lazyLoadMarginTestVariant: LazyLoadMarginTestVariant | null =
-		lazyLoadMarginTestVariants.length > 0
-			? lazyLoadMarginTestVariants[0]
-			: null;
+	) as LazyLoadMarginTestVariant | undefined;
 	let rootMargin;
-	if (lazyLoadMarginTestVariant !== null) {
+	if (lazyLoadMarginTestVariant) {
 		const margin = lazyLoadMargins[lazyLoadMarginTestVariant];
 		rootMargin = `${margin}% 0px`;
 	} else {
