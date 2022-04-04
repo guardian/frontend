@@ -163,7 +163,7 @@ case object CrosswordEditorsUpdate extends ArticleEmailMetadata {
 
 case object HearHere extends ArticleEmailMetadata {
   val name = "Hear Here"
-  override val banner = Some("hear-here.png")
+  override val banner = Some("hear-here.gif")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "tv-and-radio/series/hear-here")
 }
 
