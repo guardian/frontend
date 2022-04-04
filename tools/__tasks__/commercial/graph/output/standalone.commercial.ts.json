@@ -7,7 +7,7 @@
  "../lib/config.js": [],
  "../lib/detect-google-proxy.ts": [],
  "../lib/detect-viewport.ts": [
-  "../../../../node_modules/@guardian/source-foundations/dist/index.d.ts"
+  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts"
  ],
  "../lib/detect.js": [
   "../lib/config.js",
