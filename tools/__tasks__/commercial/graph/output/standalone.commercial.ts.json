@@ -7,7 +7,7 @@
  "../lib/config.js": [],
  "../lib/detect-google-proxy.ts": [],
  "../lib/detect-viewport.ts": [
-  "../../../../node_modules/@guardian/source-foundations/dist/index.d.ts"
+  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts"
  ],
  "../lib/detect.js": [
   "../lib/config.js",
@@ -208,7 +208,6 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.ts": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",

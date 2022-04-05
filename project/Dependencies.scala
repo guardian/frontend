@@ -16,6 +16,7 @@ object Dependencies {
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
   val awsDynamodb = "com.amazonaws" % "aws-java-sdk-dynamodb" % awsVersion
+  val awsEc2 = "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
@@ -66,7 +67,7 @@ object Dependencies {
   // logback2  to prevent "error: reference to logback is ambiguous;"
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
-  val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
+  val targetingClient = "com.gu" %% "targeting-client" % "1.1.2"
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.6"
