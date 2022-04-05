@@ -353,7 +353,7 @@ object LiveBlogController {
       case NewsPillar      => true
       case CulturePillar   => true
       case LifestylePillar => true
-      case SportPillar     => false
+      case SportPillar     => true
       case _               => false
     }
   }
@@ -365,7 +365,11 @@ object LiveBlogController {
     blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }
 
+  def isCricket(blog: PageWithStoryPackage): Boolean = {
+    blog.article.tags.find(tag => tag.id == "sport/cricket")
+  }
+
   def checkIfSupported(blog: PageWithStoryPackage): Boolean = {
-    isSupportedTheme(blog)
+    isSupportedTheme(blog) && !isCricket(blog)
   }
 }
