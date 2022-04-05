@@ -19,7 +19,7 @@ class FaciaDraftController(
     sectionsLookUp: SectionsLookUp,
     val controllerComponents: ControllerComponents,
     val ws: WSClient,
-    val dotcomRenderingService: DotcomRenderingService,
+    val remoteRenderer: DotcomRenderingService,
 )(implicit val context: ApplicationContext)
     extends FaciaController
     with RendersItemResponse {
