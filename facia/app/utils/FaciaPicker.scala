@@ -35,7 +35,7 @@ class FaciaPicker extends GuLogging {
       dcrCouldRender: Boolean,
       tier: RenderType,
   )(implicit request: RequestHeader): Unit = {
-    val tierReadable = if (tier == RemoteRender) "dotcomcoponents" else "web";
+    val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web";
     val properties =
       Map(
         "participatingInTest" -> participatingInTest.toString,
