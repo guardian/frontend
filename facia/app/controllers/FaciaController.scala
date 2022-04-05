@@ -462,4 +462,4 @@ class FaciaControllerImpl(
     val controllerComponents: ControllerComponents,
     val ws: WSClient,
 )(implicit val context: ApplicationContext)
-    extends FaciaController {}
+    extends FaciaController
