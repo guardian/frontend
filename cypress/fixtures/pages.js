@@ -7,7 +7,7 @@ const fronts = [
 		path: getTestUrl(stage, 'uk'),
 		adTest: 'fixed-puppies',
 	},
-]
+];
 
 const articles = [
 	{
@@ -37,8 +37,8 @@ const liveblogs = [
 		),
 		adTest: 'fixed-puppies',
 	},
-]
+];
 
-const pages = [...fronts, ...articles, ...liveblogs]
+const pages = [...fronts, ...articles, ...liveblogs];
 
-export { pages, articles, liveblogs }
+export { pages, articles, liveblogs };
