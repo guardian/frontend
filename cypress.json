@@ -3,7 +3,6 @@
   "defaultCommandTimeout": 15000,
   "retries": 2,
   "video": false,
-  "fixturesFolder": false,
   "pluginsFile": false,
   "supportFile": false
 }
