@@ -13,30 +13,39 @@ class FaciaPicker extends GuLogging {
     val participatingInTest = ActiveExperiments.isParticipating(FrontRendering)
     val dcrCouldRender = false
 
+    val tier = if (request.forceDCROff) {
+      LocalRender
+    } else if (request.forceDCR) {
+      RemoteRender
+    } else if (participatingInTest && dcrCouldRender) {
+      RemoteRender
+    } else {
+      LocalRender
+    }
+
+    logTier(faciaPage, path, participatingInTest, dcrCouldRender, tier)
+
+    tier
+  }
+
+  def logTier(
+      faciaPage: PressedPage,
+      path: String,
+      participatingInTest: Boolean,
+      dcrCouldRender: Boolean,
+      tier: RenderType,
+  )(implicit request: RequestHeader): Unit = {
+    val tierReadable = if (tier == RemoteRender) "dotcomcoponents" else "web";
     val properties =
       Map(
         "participatingInTest" -> participatingInTest.toString,
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isFront" -> "true",
+        "tier" -> tierReadable,
       )
 
-    if (request.forceDCROff) {
-      DotcomFrontsLogger.logger.logRequest(s"front executing in web: $path, $properties", properties, faciaPage)
-      LocalRender
-    } else if (request.forceDCR) {
-      DotcomFrontsLogger.logger.logRequest(s"front executing in dotcomcomponents: $path, $properties", properties, faciaPage)
-      RemoteRender
-    } else if (participatingInTest && dcrCouldRender) {
-      DotcomFrontsLogger.logger.logRequest(s"front executing in dotcomcomponents: $path, $properties", properties, faciaPage)
-      RemoteRender
-    } else {
-      DotcomFrontsLogger.logger.logRequest(s"front executing in web: $path, $properties", properties, faciaPage)
-      LocalRender
-    }
+    DotcomFrontsLogger.logger.logRequest(s"front executing in $tierReadable: $path, $properties", properties, faciaPage)
   }
-
 }
 
 object FaciaPicker extends FaciaPicker
-
-

@@ -8,7 +8,7 @@ import play.api.mvc.RequestHeader
 import scala.util.Random
 
 case class DotcomFrontsLogger() extends GuLogging {
-  def logFieldFromRequest(request: RequestHeader): List[LogField] = {
+  def logFieldFromRequest()(implicit request: RequestHeader): List[LogField] = {
     List[LogField](
       "req.method" -> request.method,
       "req.url" -> request.uri,
@@ -35,7 +35,7 @@ case class DotcomFrontsLogger() extends GuLogging {
   def logRequest(msg: String, properties: Map[String, String], faciaPage: PressedPage)(implicit
       request: RequestHeader,
   ): Unit = {
-    log(msg, logFieldFromProperties(properties) ++ logFieldFromRequest(request), faciaPage)
+    log(msg, logFieldFromProperties(properties) ++ logFieldFromRequest(), faciaPage)
   }
 
   def log(message: String, results: List[LogField], faciaPage: PressedPage): Unit = {
