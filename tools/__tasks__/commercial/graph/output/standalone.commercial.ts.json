@@ -428,10 +428,9 @@
   "../projects/commercial/initial-consent-state.ts",
   "../projects/commercial/modules/__vendor/ipsos-mori.js"
  ],
- "../projects/commercial/modules/liveblog-adverts.js": [
+ "../projects/commercial/modules/liveblog-adverts.ts": [
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
@@ -761,7 +760,7 @@
   "../projects/commercial/modules/dfp/redplanet.ts",
   "../projects/commercial/modules/high-merch.ts",
   "../projects/commercial/modules/ipsos-mori.ts",
-  "../projects/commercial/modules/liveblog-adverts.js",
+  "../projects/commercial/modules/liveblog-adverts.ts",
   "../projects/commercial/modules/mobile-sticky.ts",
   "../projects/commercial/modules/paid-containers.ts",
   "../projects/commercial/modules/paidfor-band.js",
