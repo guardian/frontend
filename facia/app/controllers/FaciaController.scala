@@ -166,6 +166,13 @@ trait FaciaController
   private def nonHtmlEmail(request: RequestHeader) =
     (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
 
+  // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
+  // only set it for fronts with targeted collections
+  private def withVaryHeader(result: Future[Result], targetedTerritories: Boolean) =
+    if (targetedTerritories) {
+      result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
+    } else result
+
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
@@ -192,9 +199,10 @@ trait FaciaController
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
-      case Some((faciaPage: PressedPage, _)) if FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender =>
+      case Some((faciaPage: PressedPage, targetedTerritories))
+          if FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender =>
         val pageType = PageType(faciaPage, request, context)
-        remoteRenderer.getFront(ws, faciaPage, pageType)(request)
+        withVaryHeader(remoteRenderer.getFront(ws, faciaPage, pageType)(request), targetedTerritories)
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(
           Cached(CacheTime.Facia)(
@@ -220,11 +228,8 @@ trait FaciaController
             },
           ),
         )
-        // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
-        // only set it for fronts with targeted collections
-        if (targetedTerritories) {
-          result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
-        } else result
+
+        withVaryHeader(result, targetedTerritories)
       case None => {
         successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
       }

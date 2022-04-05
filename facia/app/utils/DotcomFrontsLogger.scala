@@ -17,7 +17,7 @@ case class DotcomFrontsLogger() extends GuLogging {
   }
 
   def logFieldFromProperties(properties: Map[String, String]): List[LogField] =
-    properties.map({ case (k, v) => LogFieldString(k, v) }).toList
+    properties.map({ case (key, value) => LogFieldString(key, value) }).toList
 
   def logFieldFromFront(faciaPage: PressedPage): List[LogField] = {
     List(
