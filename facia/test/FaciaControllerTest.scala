@@ -17,6 +17,7 @@ import org.scalatest.mockito.MockitoSugar
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
+import play.api.libs.typedmap.TypedKey
 
 @DoNotDiscover class FaciaControllerTest
     extends FlatSpec
@@ -35,7 +36,7 @@ import scala.concurrent.Await
   lazy val blockingOperations = new BlockingOperations(actorSystem)
   lazy val fapi = new TestFrontJsonFapi(blockingOperations)
 
-  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents())
+  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient)
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
   val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)
@@ -231,5 +232,19 @@ import scala.concurrent.Await
     contentAsString(emailJsonResponse) should include("<!DOCTYPE html")
     val responseHeaders = headers(emailJsonResponse)
     responseHeaders("Surrogate-Control") should include("max-age=900")
+  }
+
+  it should "render using DCR if ?dcr" in {
+    val fakeRequest = FakeRequest("GET", "/uk?dcr")
+    val result = faciaController.renderFront("uk")(fakeRequest)
+    status(result) should be(200)
+    header("X-GU-Dotcomponents", result) should be(Some("true"))
+  }
+
+  it should "render using Frontend if ?dcr=false" in {
+    val fakeRequest = FakeRequest("GET", "/uk?dcr=false")
+    val result = faciaController.renderFront("uk")(fakeRequest)
+    status(result) should be(200)
+    header("X-GU-Dotcomponents", result) should be(None)
   }
 }
