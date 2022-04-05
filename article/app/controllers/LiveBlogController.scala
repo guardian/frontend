@@ -366,7 +366,7 @@ object LiveBlogController {
   }
 
   def isCricket(blog: PageWithStoryPackage): Boolean = {
-    blog.article.tags.isCricketLiveBlog
+    blog.article.tags.tags.exists(tag => tag.id == "sport/cricket")
   }
 
   def checkIfSupported(blog: PageWithStoryPackage): Boolean = {
