@@ -48,7 +48,7 @@ describe('top-above-nav on pages', () => {
 			cy.visit(`${path}?adtest=${adTest}`);
 
 			// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-			getIframeBody('sp_message_iframe_597005')
+			getIframeBody('sp_message_iframe_')
 				.find('.btn-primary')
 				.click();
 
