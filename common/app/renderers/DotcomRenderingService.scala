@@ -8,7 +8,13 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomFrontsRenderingDataModel, DotcomRenderingDataModel, DotcomRenderingUtils, PageType}
+import model.dotcomrendering.{
+  DotcomBlocksRenderingDataModel,
+  DotcomFrontsRenderingDataModel,
+  DotcomRenderingDataModel,
+  DotcomRenderingUtils,
+  PageType,
+}
 import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage, PressedPage}
 import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -167,7 +173,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomFrontsRenderingDataModel(page, request, pageType)
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Fronts", page)
+    post(ws, json, Configuration.rendering.baseURL + "/Front", page)
   }
 
   def getInteractive(
