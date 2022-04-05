@@ -36,7 +36,7 @@ trait FaciaController
 
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
-  val remoteRenderer: DotcomRenderingService
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   implicit val context: ApplicationContext
 
@@ -460,8 +460,6 @@ trait FaciaController
 class FaciaControllerImpl(
     val frontJsonFapi: FrontJsonFapiLive,
     val controllerComponents: ControllerComponents,
-    val ws: WSClient
+    val ws: WSClient,
 )(implicit val context: ApplicationContext)
-    extends FaciaController {
-  override val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
-}
+    extends FaciaController {}
