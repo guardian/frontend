@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import { getIframeBody } from '../lib/iframe';
-import { pages } from '../fixtures/pages'
+import { pages } from '../fixtures/pages';
 
 // Don't fail tests when uncaught exceptions occur
 // This is because scripts loaded on the page and unrelated to these tests can cause this
