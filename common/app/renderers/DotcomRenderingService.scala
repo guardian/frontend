@@ -76,13 +76,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       payload: String,
       endpoint: String,
-      page: Page,
+      cached: CacheTime,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
-          Cached(page)(RevalidatableResult.Ok(Html(response.body)))
+          Cached(cached)(RevalidatableResult.Ok(Html(response.body)))
             .withHeaders("X-GU-Dotcomponents" -> "true")
             .withPreconnect(HttpPreconnections.defaultUrls)
         case 400 =>
@@ -124,7 +124,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
-    post(ws, json, Configuration.rendering.baseURL + "/AMPArticle", page)
+    post(ws, json, Configuration.rendering.baseURL + "/AMPArticle", page.metadata.cacheTime)
   }
 
   def getArticle(
@@ -143,7 +143,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Article", page)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", page.metadata.cacheTime)
   }
 
   def getBlocks(
@@ -173,7 +173,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomFrontsRenderingDataModel(page, request, pageType)
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Front", page)
+    post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)
   }
 
   def getInteractive(
@@ -189,7 +189,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     // Nb. interactives have a longer timeout because some of them are very
     // large unfortunately. E.g.
     // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
-    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page, 4.seconds)
+    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page.metadata.cacheTime, 4.seconds)
   }
 
   def getAMPInteractive(
@@ -201,7 +201,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page)
+    post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page.metadata.cacheTime)
   }
 
 }
