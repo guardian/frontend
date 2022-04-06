@@ -561,14 +561,14 @@ $block-height: 58px;
         color: $brightness-100;
         padding: 60px 8px 8px;
     }
-}
 
-.fc-item--has-floating-sublinks .fc-item__captioned-image {
-    figcaption {
-        @include mq(tablet) {
-            background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%,  rgba(0, 0, 0, .8) 100%);
-            padding: 8px 8px 60px;
-            bottom: inherit;
+    .fc-item--has-floating-sublinks & {
+        figcaption {
+            @include mq(tablet) {
+                background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%,  rgba(0, 0, 0, .8) 100%);
+                padding: 8px 8px 60px;
+                bottom: inherit;
+            }
         }
     }
 }
