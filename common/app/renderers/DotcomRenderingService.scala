@@ -76,13 +76,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       payload: String,
       endpoint: String,
-      cached: CacheTime,
+      cacheTime: CacheTime,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
-          Cached(cached)(RevalidatableResult.Ok(Html(response.body)))
+          Cached(cacheTime)(RevalidatableResult.Ok(Html(response.body)))
             .withHeaders("X-GU-Dotcomponents" -> "true")
             .withPreconnect(HttpPreconnections.defaultUrls)
         case 400 =>
