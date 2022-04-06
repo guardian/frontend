@@ -6,7 +6,9 @@ import contentapi.{ContentApiClient, SectionsLookUp}
 import controllers.front.FrontJsonFapiDraft
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, PressedPage}
+import play.api.libs.ws.WSClient
 import play.api.mvc._
+import renderers.DotcomRenderingService
 import services.ConfigAgent
 
 import scala.concurrent.Future
@@ -16,6 +18,7 @@ class FaciaDraftController(
     contentApiClient: ContentApiClient,
     sectionsLookUp: SectionsLookUp,
     val controllerComponents: ControllerComponents,
+    val ws: WSClient,
 )(implicit val context: ApplicationContext)
     extends FaciaController
     with RendersItemResponse {
