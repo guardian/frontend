@@ -122,7 +122,8 @@ const fill = (rules: SpacefinderRules) =>
 
 const onUpdate = () => {
 	stopListening();
-	void Promise.resolve(getSpaceFillerRules(WINDOWHEIGHT, true)).then(fill);
+	const rules = getSpaceFillerRules(WINDOWHEIGHT, true);
+	void fill(rules);
 };
 
 /**
