@@ -295,7 +295,7 @@ class LiveBlogController(
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
     val model =
-      DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, filterKeyEvents, request.forceLive)
+      DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, filterKeyEvents, request.forceLive, automaticFilterData = None) // TODO
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }

@@ -39,6 +39,7 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     filterKeyEvents: Boolean,
+    automaticFilterData: Option[FilterData],
     pinnedPost: Option[Block],
     keyEvents: List[Block],
     mostRecentBlockId: Option[String],
@@ -95,6 +96,7 @@ case class DotcomRenderingDataModel(
 object DotcomRenderingDataModel {
 
   implicit val pageElementWrites = PageElement.pageElementWrites
+  implicit val automaticFilterDataWrites = FilterData.filterDataWrites
 
   implicit val writes = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
@@ -106,6 +108,7 @@ object DotcomRenderingDataModel {
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
+        "automaticFilterData" -> model.automaticFilterData,
         "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
         "mostRecentBlockId" -> model.mostRecentBlockId,
@@ -189,6 +192,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
+      automaticFilterData = None,
     )
   }
 
@@ -215,6 +219,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
+      automaticFilterData = None,
     )
   }
 
@@ -237,6 +242,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
+      automaticFilterData: Option[FilterData],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -289,6 +295,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents,
       mostRecentBlockId,
       forceLive,
+      automaticFilterData,
     )
   }
 
@@ -306,6 +313,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
+      automaticFilterData: Option[FilterData],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -421,6 +429,7 @@ object DotcomRenderingDataModel {
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
       filterKeyEvents = filterKeyEvents,
+      automaticFilterData = automaticFilterData,
       pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
       mostRecentBlockId = mostRecentBlockId,

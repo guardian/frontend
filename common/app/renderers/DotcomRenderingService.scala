@@ -119,7 +119,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
-        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive = false)
+        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive = false, automaticFilterData = None) // TODO
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
     val json = DotcomRenderingDataModel.toJson(dataModel)
