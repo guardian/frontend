@@ -59,14 +59,14 @@ object LoggingField {
   case class LogFieldDouble(name: String, value: Double) extends LogField
   case class LogFieldLong(name: String, value: Long) extends LogField
   case class LogFieldBoolean(name: String, value: Boolean) extends LogField
-  case class LogFieldList(name: String, value: List[String]) extends LogField
+  case class LogFieldArray(name: String, value: Array[String]) extends LogField
 
   implicit def tupleToLogFieldInt(t: (String, Int)): LogFieldInt = LogFieldInt(t._1, t._2)
   implicit def tupleToLogFieldString(t: (String, String)): LogFieldString = LogFieldString(t._1, t._2)
   implicit def tupleToLogFieldDouble(t: (String, Double)): LogFieldDouble = LogFieldDouble(t._1, t._2)
   implicit def tupleToLogFieldLong(t: (String, Long)): LogFieldLong = LogFieldLong(t._1, t._2)
   implicit def tupleToLogFieldBoolean(t: (String, Boolean)): LogFieldBoolean = LogFieldBoolean(t._1, t._2)
-  implicit def tupleToLogFieldList(t: (String, List[String])): LogFieldList = LogFieldList(t._1, t._2)
+  implicit def tupleToLogFieldList(t: (String, Array[String])): LogFieldArray = LogFieldArray(t._1, t._2)
 
   def customFieldMarkers(fields: List[LogField]): LogstashMarker = {
     val fieldsMap = fields
@@ -76,10 +76,11 @@ object LoggingField {
         case LogFieldDouble(n, v)  => (n, v)
         case LogFieldLong(n, v)    => (n, v)
         case LogFieldBoolean(n, v) => (n, v)
-        case LogFieldList(n, v)    => (n, v)
+        case LogFieldArray(n, v)   => (n, v)
       }
       .toMap
       .asJava
+
     appendEntries(fieldsMap)
   }
 }
