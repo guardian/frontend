@@ -1,6 +1,6 @@
 package renderers
 
-import model.{MetaData, Page}
+import model.{MetaData, Page, CacheTime}
 import model.dotcomrendering.PageType
 import org.apache.commons.codec.digest.DigestUtils
 import org.scalatest.mockito.MockitoSugar
@@ -55,7 +55,7 @@ import org.scalatest.concurrent.ScalaFutures
         wsMock,
         payload,
         "https://endpoint.com",
-        fakePage(),
+        CacheTime.Default,
         Configuration.rendering.timeout,
         request,
       ),
