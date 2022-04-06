@@ -19,15 +19,7 @@ jest.mock('../../dfp/get-advert-by-id', () => ({
 }));
 
 jest.mock('../../../../common/modules/experiments/ab', () => ({
-	/**
-	 * Mock defaults to being in control for all tests
-	 * @example
-	 * isInVariantSynchronous(testId, 'control'); // => true
-	 * isInVariantSynchronous(testId, 'variant'); // => false
-	 */
-	isInVariantSynchronous: jest.fn(
-		(_testId, variantId) => variantId !== 'variant',
-	),
+	isInVariantSynchronous: jest.fn(),
 }));
 
 const resetPrebid = () => {
