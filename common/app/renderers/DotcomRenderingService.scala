@@ -17,6 +17,7 @@ import model.dotcomrendering.{
   FilterData,
   PageType,
 }
+import model.dotcomrendering.FilterData.filterDataFormat
 import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage, PressedPage}
 import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -48,7 +49,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   private[this] def getFilters(
       ws: WSClient,
       liveblogId: String,
-      timeout: Duration = Configuration.rendering.timeout,
+      timeout: Duration = 60.seconds,
   )(implicit request: RequestHeader): Future[Option[FilterData]] = {
     val endpoint =
       s"https://ner.gutools.co.uk/v1/top-mentions?entities=PERSON,LOC,GPE,ORG,PRODUCT,WORK_OF_ART&top=10&path=/${liveblogId}"
@@ -57,9 +58,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       .withRequestTimeout(timeout)
       .addHttpHeaders("Content-Type" -> "application/json")
       .get()
-    implicit val filterDataFormat = FilterData.filterDataFormat
-    implicit val filterFormat = Filter.filterFormat
-    handleFailure(resp, endpoint).map(result => Json.parse(result.body).asOpt[FilterData])
+    handleFailure(resp, endpoint).map(result => {
+      Json.parse(result.body).asOpt[FilterData]
+    })
   }
 
   private def handleFailure(resp: Future[WSResponse], endpoint: String) = {
@@ -78,6 +79,10 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
              |    https://github.com/guardian/dotcom-rendering""".stripMargin
         Future.failed(DCRLocalConnectException(msg))
       case t: TimeoutException => Future.failed(DCRTimeoutException(t.getMessage))
+      case error: Throwable => {
+        println(error.getMessage)
+        throw (error)
+      }
     })
   }
 
@@ -188,8 +193,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
         val filterDataFuture = getFilters(ws, liveblog.article.content.metadata.id)(request)
 
         filterDataFuture.map(filterData => {
-          println("******filter data received *********")
-          println(filterDataFuture)
           DotcomRenderingDataModel
             .forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive, filterData)
         })
