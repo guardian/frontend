@@ -5,7 +5,7 @@ export const commercialLazyLoadMargin: ABTest = {
 	id: 'CommercialLazyLoadMargin',
 	start: '2022-03-29',
 	// test should be in place for a minimum of 16 days
-	expiry: '2022-04-19',
+	expiry: '2022-05-01',
 	author: 'Zeke Hunter-Green',
 	description:
 		'Test various margins at which ads are lazily-loaded in order to find the optimal one',
