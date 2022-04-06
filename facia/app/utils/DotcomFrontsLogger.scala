@@ -26,7 +26,7 @@ case class DotcomFrontsLogger() extends GuLogging {
         faciaPage.id,
       ),
       LogFieldList(
-        "front.collections",
+        "front.collections.array",
         faciaPage.collections.map(_.collectionType),
       ),
     )
