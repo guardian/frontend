@@ -16,6 +16,7 @@ object Dependencies {
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
   val awsDynamodb = "com.amazonaws" % "aws-java-sdk-dynamodb" % awsVersion
+  val awsEc2 = "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
@@ -43,7 +44,9 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.5"
-  val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.7.0"
+  val playGoogleAuth = "com.gu.play-googleauth" %% "play-v28" % "2.1.1"
+  val playSecretRotation = "com.gu.play-secret-rotation" %% "play-v28" % "0.18"
+  val playSecretRotationAwsSdk = "com.gu.play-secret-rotation" %% "aws-parameterstore-sdk-v1" % "0.18"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.3"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
@@ -64,7 +67,7 @@ object Dependencies {
   // logback2  to prevent "error: reference to logback is ambiguous;"
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
-  val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
+  val targetingClient = "com.gu" %% "targeting-client" % "1.1.2"
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.6"
@@ -74,7 +77,7 @@ object Dependencies {
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
-  val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
+  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
 
   /*

@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 
-export const getIframeBody = (iframeId) => {
+export const getIframeBody = (iframeIdPrefix) => {
 	// Retrieve the iframe element on the page
 	const iframe = cy
-		.get(`iframe#${iframeId}`)
+		.get(`iframe[id^="${iframeIdPrefix}"]`)
 		.its('0.contentDocument')
 		.should('exist');
 

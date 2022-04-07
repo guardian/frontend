@@ -19,7 +19,16 @@ object LiveblogRendering
       description = "Use DCR for liveblogs",
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = LocalDate.of(2022, 6, 2),
-      participationGroup = Perc1A,
+      participationGroup = Perc50,
+    )
+
+object FrontRendering
+    extends Experiment(
+      name = "front-rendering",
+      description = "Use DCR for fronts",
+      owners = Seq(Owner.withGithub("dotcom")),
+      sellByDate = LocalDate.of(2023, 6, 2),
+      participationGroup = Perc0A,
     )
 
 object StickyVideos

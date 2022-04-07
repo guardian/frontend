@@ -40,7 +40,17 @@ trait ABTestSwitches {
     "Test various margins at which ads are lazily-loaded in order to find the optimal one",
     owners = Seq(Owner.withGithub("zekehuntergreen")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 4, 14)),
+    sellByDate = Some(LocalDate.of(2022, 5, 2)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-gpt-lazy-load",
+    "This test enables GPT enableLazyLoad as an alternative to our custom lazy loading",
+    owners = Seq(Owner.withGithub("zekehuntergreen")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 5, 2)),
     exposeClientSide = true,
   )
 }

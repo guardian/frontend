@@ -5,6 +5,8 @@ import { addSlot } from './dfp/add-slot';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { createAdSlot } from './dfp/create-slot';
 import { spaceFiller } from '../../common/modules/article/space-filler';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
 const MAX_ADS = 8; // maximum number of ads to display
@@ -14,13 +16,11 @@ let WINDOWHEIGHT;
 let firstSlot;
 
 const startListening = () => {
-	// eslint-disable-next-line no-use-before-define
-	mediator.on('modules:autoupdate:updates', onUpdate);
+	document.addEventListener('liveblog:blocks-updated', onUpdate);
 };
 
 const stopListening = () => {
-	// eslint-disable-next-line no-use-before-define
-	mediator.off('modules:autoupdate:updates', onUpdate);
+	document.removeEventListener('liveblog:blocks-updated', onUpdate);
 };
 
 const getWindowHeight = (doc = document) => {
@@ -94,11 +94,11 @@ const insertAds = (paras) => {
 
 const fill = (rules) =>
 	spaceFiller.fillSpace(rules, insertAds).then((result) => {
-		// Before the refactor of fillSpace in https://github.com/guardian/frontend/pull/24599,
-		// since insertAds returned void, result is only ever undefined and the code path below was dead.
-		// TODO investigate the impact of removing the following line.
-		result = undefined;
-		if (result && AD_COUNTER < MAX_ADS) {
+		const enableAdditionalBlocksFix = !isInVariantSynchronous(
+			spacefinderOkrMegaTest,
+			'control',
+		);
+		if (enableAdditionalBlocksFix && AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,
 			);

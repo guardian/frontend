@@ -440,7 +440,7 @@ trait FeatureSwitches {
     "Enables the puzzles banner on puzzles pages",
     owners = Seq(Owner.withGithub("i-hardy")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 3, 31),
+    sellByDate = never,
     exposeClientSide = true,
   )
 
@@ -504,4 +504,13 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
+  val FrontsSlideshowMobileSupport = Switch(
+    SwitchGroup.Feature,
+    "fronts-slideshow-mobile-support",
+    "Enables using captions and slideshows on fronts mobile displays",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }
