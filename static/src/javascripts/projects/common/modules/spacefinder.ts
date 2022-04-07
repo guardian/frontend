@@ -414,21 +414,22 @@ const returnCandidates = (rules, candidates) => {
 
 // Rather than calling this directly, use spaceFiller to inject content into the page.
 // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
-const findSpace = (
+const findSpace = async (
 	rules: SpacefinderRules,
 	options: SpacefinderOptions = defaultOptions,
 	exclusions: SpacefinderExclusions = {},
-): HTMLElement[] => {
+): Promise<HTMLElement[]> => {
 	rules.body =
 		(rules.bodySelector && document.querySelector(rules.bodySelector)) ||
 		document;
 
-	return getReady(rules, options)
-		.then(() => getCandidates(rules, exclusions))
-		.then((candidates) => getMeasurements(rules, candidates))
-		.then((measurements) => enforceRules(measurements, rules, exclusions))
-		.then((winners) => markCandidates(exclusions, winners, options))
-		.then((winners) => returnCandidates(rules, winners));
+	await getReady(rules, options);
+
+	const candidates = getCandidates(rules, exclusions);
+	const measurements = await getMeasurements(rules, candidates);
+	const winners = enforceRules(measurements, rules, exclusions);
+	const winners2 = markCandidates(exclusions, winners, options);
+	return returnCandidates(rules, winners2);
 };
 
 export const _ = {
