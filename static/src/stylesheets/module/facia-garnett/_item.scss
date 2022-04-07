@@ -4,6 +4,19 @@ $fc-item-gutter: $gs-gutter / 4;
    ==========================================================================
 */
 
+@mixin fc-slideshow-movement($totalLoopTime, $slideshowSize) {
+    figure {
+        animation-duration: #{$totalLoopTime}s;
+        animation-name: fc-item__slideshow--#{$slideshowSize};
+    }
+
+    @for $imageIndex from 2 through $slideshowSize {
+        figure:nth-child(#{$imageIndex}) {
+            animation-delay: #{($totalLoopTime / $slideshowSize) * ($imageIndex - 1)}s;
+        }
+    }
+}
+
 @mixin fs-headline-quote($level) {
     .fc-item__title--quoted .inline-garnett-quote__svg {
         height: get-font-size(headline, $level);
@@ -559,11 +572,32 @@ $block-height: 58px;
         @include mq($until: tablet) {
             @include font-size(12, 16);
         }
+
+        &:not(.fc-item__captioned-image-mobile-support) {
+            @include mq($until: tablet) {
+                display: none;
+            }
+        }
     }
 }
 
 .fc-item__slideshow {
-    figure {
+    &:not(.fc-item__slideshow-mobile-support) figure {
+        @include mq($until: tablet) {
+            &:nth-child(1n+2) {
+                display: none;
+            }
+        }
+
+        @include mq(tablet) {
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            opacity: 0;
+        }
+    }
+
+    &.fc-item__slideshow-mobile-support figure {
         animation-timing-function: linear;
         animation-iteration-count: infinite;
         animation-direction: normal;
@@ -589,17 +623,13 @@ $block-height: 58px;
             opacity: 0;
         }
     }
-
     .fc-item__slideshow--#{$i} {
-        figure {
-            animation-duration: #{$totalLoopTime}s;
-            animation-name: fc-item__slideshow--#{$i};
+        @include mq(tablet) {
+            @include fc-slideshow-movement($totalLoopTime, $i)
         }
 
-        @for $j from 2 through $i {
-            figure:nth-child(#{$j}) {
-                animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
-            }
+        &.fc-item__slideshow-mobile-support {
+            @include fc-slideshow-movement($totalLoopTime, $i)
         }
     }
 }

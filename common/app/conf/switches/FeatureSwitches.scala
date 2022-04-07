@@ -504,4 +504,13 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
+  val FrontsSlideshowMobileSupport = Switch(
+    SwitchGroup.Feature,
+    "fronts-slideshow-mobile-support",
+    "Enables using captions and slideshows on fronts mobile displays",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }
