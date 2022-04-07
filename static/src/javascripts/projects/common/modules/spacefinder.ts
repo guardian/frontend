@@ -161,15 +161,13 @@ const onInteractivesLoaded = memoize((rules) => {
 		  ).then(() => undefined);
 }, getFuncId);
 
-const partitionCandidates = (
-	list: HTMLElement[],
-	filterElement: (
-		element: HTMLElement,
-		lastFilteredElement: HTMLElement,
-	) => boolean,
+//  should generic be more specific? HTMLElement or SpacefinderItem
+const partitionCandidates = <T>(
+	list: T[],
+	filterElement: (element: T, lastFilteredElement: T) => boolean,
 ) => {
-	const filtered: HTMLElement[] = [];
-	const exclusions: HTMLElement[] = [];
+	const filtered: T[] = [];
+	const exclusions: T[] = [];
 	list.forEach((element) => {
 		if (filterElement(element, filtered[filtered.length - 1])) {
 			filtered.push(element);
@@ -181,7 +179,11 @@ const partitionCandidates = (
 };
 
 // test one element vs another for the given rules
-const testCandidate = (rule, candidate, opponent) => {
+const testCandidate = (
+	rule: RuleSpacing,
+	candidate: SpacefinderItem,
+	opponent: SpacefinderItem,
+): boolean => {
 	const isMinAbove = candidate.top - opponent.bottom >= rule.minAbove;
 	const isMinBelow = opponent.top - candidate.top >= rule.minBelow;
 
@@ -195,7 +197,7 @@ const testCandidate = (rule, candidate, opponent) => {
 			? opponent.top - candidate.top
 			: candidate.top - opponent.bottom;
 
-		candidate.meta.tooClose.push({
+		candidate.meta?.tooClose.push({
 			required,
 			actual,
 			element: opponent.element,
@@ -206,12 +208,20 @@ const testCandidate = (rule, candidate, opponent) => {
 };
 
 // test one element vs an array of other elements for the given rule
-const testCandidates = (rule, candidate, opponents) =>
+const testCandidates = (
+	rule: RuleSpacing,
+	candidate: SpacefinderItem,
+	opponents: SpacefinderItem[],
+): boolean =>
 	opponents
 		.map((opponent) => testCandidate(rule, candidate, opponent))
 		.every(Boolean);
 
-const enforceRules = (measurements, rules, exclusions) => {
+const enforceRules = (
+	measurements: Measurements,
+	rules: SpacefinderRules,
+	exclusions: SpacefinderExclusions,
+) => {
 	let candidates = measurements.candidates;
 	let result;
 
@@ -236,13 +246,14 @@ const enforceRules = (measurements, rules, exclusions) => {
 	candidates = result.filtered;
 
 	// enforce content meta rule
-	if (rules.clearContentMeta) {
+	if (rules.clearContentMeta !== undefined) {
 		result = partitionCandidates(
 			candidates,
-			(c) =>
+			(candidate) =>
 				!!measurements.contentMeta &&
-				c.top >
-					measurements.contentMeta.bottom + rules.clearContentMeta,
+				candidate.top >
+					measurements.contentMeta.bottom +
+						(rules.clearContentMeta ?? 0), // why do we need to do this despite the type guard?
 		);
 		exclusions.contentMeta = result.exclusions;
 		candidates = result.filtered;
@@ -250,11 +261,11 @@ const enforceRules = (measurements, rules, exclusions) => {
 
 	// enforce selector rules
 	if (rules.selectors) {
-		const selectorExclusions = [];
-		Object.keys(rules.selectors).forEach((selector) => {
+		const selectorExclusions: SpacefinderItem[] = [];
+		for (const [selector, rule] of Object.entries(rules.selectors)) {
 			result = partitionCandidates(candidates, (candidate) =>
 				testCandidates(
-					rules.selectors[selector],
+					rule,
 					candidate,
 					measurements.opponents
 						? measurements.opponents[selector]
@@ -263,7 +274,7 @@ const enforceRules = (measurements, rules, exclusions) => {
 			);
 			exclusions[selector] = result.exclusions;
 			selectorExclusions.push(...result.exclusions);
-		});
+		}
 
 		candidates = candidates.filter(
 			(candidate) => !selectorExclusions.includes(candidate),
