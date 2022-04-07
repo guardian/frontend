@@ -1,4 +1,4 @@
-// total_hours_spent_maintaining_this = 80
+// total_hours_spent_maintaining_this = 81.5
 
 import { memoize } from 'lodash-es';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
@@ -19,6 +19,9 @@ type SpacefinderItem = {
 	top: number;
 	bottom: number;
 	element: HTMLElement;
+	meta?: {
+		tooClose: unknown[];
+	};
 };
 
 type SpacefinderRules = {
@@ -35,7 +38,7 @@ type SpacefinderRules = {
 	// used for carrot ads
 	clearContentMeta?: number;
 	// custom rules using selectors.
-	selectors: Record<string, RuleSpacing>;
+	selectors?: Record<string, RuleSpacing>;
 	// will run each slot through this fn to check if it must be counted in
 	filter?: (x: SpacefinderItem, lastWinner?: SpacefinderItem) => boolean;
 	// will remove slots before this one
@@ -296,13 +299,18 @@ const getCandidates = (
 	exclusions: SpacefinderExclusions,
 ) => {
 	let candidates = query(rules.bodySelector + rules.slotSelector);
-	let result: HTMLElement[];
+	let result:
+		| {
+				filtered: HTMLElement[];
+				exclusions: HTMLElement[];
+		  }
+		| undefined;
 	if (rules.fromBottom) {
 		candidates.reverse();
 	}
 	if (rules.startAt) {
 		let drop = true;
-		result = partitionCandidates(candidates, (candidate: HTMLElement) => {
+		result = partitionCandidates(candidates, (candidate) => {
 			if (candidate === rules.startAt) {
 				drop = false;
 			}
@@ -325,46 +333,50 @@ const getCandidates = (
 	return candidates;
 };
 
-const getDimensions = (el) =>
+const getDimensions = (element: HTMLElement): Readonly<SpacefinderItem> =>
 	Object.freeze({
-		top: el.offsetTop,
-		bottom: el.offsetTop + el.offsetHeight,
-		element: el,
+		top: element.offsetTop,
+		bottom: element.offsetTop + element.offsetHeight,
+		element,
 		meta: {
 			tooClose: [],
 		},
 	});
 
-const getMeasurements = (rules, candidates) => {
+const getMeasurements = (
+	rules: SpacefinderRules,
+	candidates: HTMLElement[],
+) => {
 	const contentMeta = rules.clearContentMeta
-		? document.querySelector('.js-content-meta')
-		: null;
+		? document.querySelector<HTMLElement>('.js-content-meta') ?? undefined
+		: undefined;
 	const opponents = rules.selectors
-		? Object.keys(rules.selectors).map((selector) => [
-				selector,
-				query(rules.bodySelector + selector),
-		  ])
-		: null;
+		? Object.keys(rules.selectors).map(
+				(selector) =>
+					[selector, query(rules.bodySelector + selector)] as const,
+		  )
+		: [];
 
 	return fastdom.measure(() => {
 		const bodyDims =
-			rules.body instanceof Element && rules.body.getBoundingClientRect();
+			rules.body instanceof Element
+				? rules.body.getBoundingClientRect()
+				: undefined;
 		const candidatesWithDims = candidates.map(getDimensions);
 		const contentMetaWithDims =
 			rules.clearContentMeta && contentMeta
 				? getDimensions(contentMeta)
 				: null;
-		const opponentsWithDims = opponents
-			? opponents.reduce((result, selectorAndElements) => {
-					result[selectorAndElements[0]] =
-						selectorAndElements[1].map(getDimensions);
-					return result;
-			  }, {})
-			: null;
-
+		const opponentsWithDims = opponents.reduce<
+			Record<string, SpacefinderItem[]>
+		>((result, [selector, selectedElements]) => {
+			const x = selectedElements.map(getDimensions);
+			result[selector] = x;
+			return result;
+		}, {});
 		return {
-			bodyTop: bodyDims.top || 0,
-			bodyHeight: bodyDims.height || 0,
+			bodyTop: bodyDims?.top ?? 0,
+			bodyHeight: bodyDims?.height ?? 0,
 			candidates: candidatesWithDims,
 			contentMeta: contentMetaWithDims,
 			opponents: opponentsWithDims,
