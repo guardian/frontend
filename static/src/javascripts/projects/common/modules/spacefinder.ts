@@ -60,7 +60,17 @@ type SpacefinderOptions = {
 
 type ExcludedItem = SpacefinderItem | HTMLElement;
 
-export type SpacefinderExclusions = Record<string, ExcludedItem[]>;
+type SpacefinderExclusions = Record<string, ExcludedItem[]>;
+
+type ElementDimensionMap = Record<string, SpacefinderItem[]>;
+
+type Measurements = {
+	bodyTop: number;
+	bodyHeight: number;
+	candidates: SpacefinderItem[];
+	contentMeta?: SpacefinderItem;
+	opponents?: ElementDimensionMap;
+};
 
 const query = (selector: string, context?: HTMLElement) => [
 	...(context ?? document).querySelectorAll<HTMLElement>(selector),
@@ -346,7 +356,7 @@ const getDimensions = (element: HTMLElement): Readonly<SpacefinderItem> =>
 const getMeasurements = (
 	rules: SpacefinderRules,
 	candidates: HTMLElement[],
-) => {
+): Promise<Measurements> => {
 	const contentMeta = rules.clearContentMeta
 		? document.querySelector<HTMLElement>('.js-content-meta') ?? undefined
 		: undefined;
@@ -357,7 +367,7 @@ const getMeasurements = (
 		  )
 		: [];
 
-	return fastdom.measure(() => {
+	return fastdom.measure((): Measurements => {
 		const bodyDims =
 			rules.body instanceof Element
 				? rules.body.getBoundingClientRect()
@@ -366,7 +376,7 @@ const getMeasurements = (
 		const contentMetaWithDims =
 			rules.clearContentMeta && contentMeta
 				? getDimensions(contentMeta)
-				: null;
+				: undefined;
 		const opponentsWithDims = opponents.reduce<
 			Record<string, SpacefinderItem[]>
 		>((result, [selector, selectedElements]) => {
