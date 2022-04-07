@@ -13,10 +13,7 @@ jest.mock('../../../lib/raven');
 
 jest.mock('../../../lib/mediator');
 
-jest.mock('../../../lib/detect', () => ({
-	getBreakpoint: jest.fn(),
-	hasPushStateSupport: jest.fn(),
-}));
+jest.mock('../../../lib/detect');
 
 jest.mock('../../common/modules/article/space-filler', () => ({
 	spaceFiller: {
