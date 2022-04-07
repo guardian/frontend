@@ -2,6 +2,7 @@
 @import model.ImageMedia
 @import implicits.Requests._
 @import experiments.{ActiveExperiments, SlideshowCaptions}
+@import conf.switches.Switches.FrontsSlideshowMobileSupport
 
 @(
     classes: Seq[String],
@@ -24,7 +25,7 @@
     )
     @if(ActiveExperiments.isParticipating(SlideshowCaptions)) {
         @caption.map { captionText =>
-            <figcaption>
+            <figcaption class="@if(FrontsSlideshowMobileSupport.isSwitchedOn) {fc-item__captioned-image-mobile-support}">
                 @captionText
             </figcaption>
         }
