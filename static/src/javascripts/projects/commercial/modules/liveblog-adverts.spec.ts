@@ -27,9 +27,7 @@ jest.mock('../../common/modules/commercial/commercial-features', () => ({
 	},
 }));
 
-jest.mock('./dfp/add-slot', () => ({
-	addSlot: jest.fn(),
-}));
+jest.mock('./dfp/add-slot');
 
 const spaceFillerStub = spaceFiller.fillSpace as jest.MockedFunction<
 	typeof spaceFiller.fillSpace
