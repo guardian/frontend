@@ -46,7 +46,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     resetTimeout = Configuration.rendering.timeout * 4,
   )
 
-  private[this] def getFilters(
+  def getFilters(
       ws: WSClient,
       liveblogId: String,
       timeout: Duration = 60.seconds,

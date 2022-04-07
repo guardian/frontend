@@ -85,7 +85,7 @@ class LiveBlogController(
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderGuuiJson(blog, blocks, filter))
+          renderGuuiJson(blog, blocks, filter)
         case (blog: LiveBlogPage, blocks) =>
           getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty))
         case (minute: MinutePage, _) =>
@@ -291,20 +291,26 @@ class LiveBlogController(
       blog: LiveBlogPage,
       blocks: Blocks,
       filterKeyEvents: Boolean,
-  )(implicit request: RequestHeader): Result = {
+  )(implicit request: RequestHeader): Future[Result] = {
     val pageType: PageType = PageType(blog, request, context)
-    val model =
-      DotcomRenderingDataModel.forLiveblog(
-        blog,
-        blocks,
-        request,
-        pageType,
-        filterKeyEvents,
-        request.forceLive,
-        automaticFilterData = None,
-      ) // TODO
-    val json = DotcomRenderingDataModel.toJson(model)
-    common.renderJson(json, blog).as("application/json")
+    val filterDataFuture = remoteRenderer.getFilters(ws, blog.article.content.metadata.id)(request)
+    filterDataFuture.map(filterData => {
+      val model =
+        DotcomRenderingDataModel
+          .forLiveblog(
+            blog,
+            blocks,
+            request,
+            pageType,
+            filterKeyEvents,
+            request.forceLive,
+            automaticFilterData = filterData,
+          )
+
+      val json = DotcomRenderingDataModel.toJson(model)
+      common.renderJson(json, blog).as("application/json")
+    })
+
   }
 
   private[this] def mapModel(path: String, range: BlockRange, filterKeyEvents: Boolean = false)(
