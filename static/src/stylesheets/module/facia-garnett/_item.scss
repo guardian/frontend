@@ -583,6 +583,8 @@ $block-height: 58px;
 
     .fc-item--has-floating-sublinks & {
         figcaption {
+            @include font-size(12, 16);
+
             @include mq(tablet) {
                 background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%,  rgba(0, 0, 0, .8) 100%);
                 padding: 8px 8px 60px;
