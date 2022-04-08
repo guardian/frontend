@@ -1,7 +1,7 @@
 import { adSizes } from '@guardian/commercial-core';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
-import { getBreakpoint, getViewport } from 'lib/detect-viewport';
+import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
@@ -72,9 +72,13 @@ const articleBodySelector = isDotcomRendering
 	: '.js-article__body';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
-	const ignoreList = enableRichLinksFix
-		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
-		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+	const tweakpoint = getTweakpoint(getViewport().width);
+	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
+
+	const ignoreList =
+		enableRichLinksFix && hasLeftCol
+			? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
+			: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
 
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
