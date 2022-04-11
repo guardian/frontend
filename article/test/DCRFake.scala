@@ -31,7 +31,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
   override def getFilters(
       ws: WSClient,
       liveblogId: String,
-      timeout: Duration = 60.seconds,
+      timeout: Duration = Duration(60, java.util.concurrent.TimeUnit.SECONDS),
   )(implicit request: RequestHeader): Future[Option[FilterData]] = {
     Future.successful(None)
   }
