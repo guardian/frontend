@@ -285,16 +285,16 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		pbjsConfig.criteo = {
 			fastBidVersion: 'latest',
 		};
-	}
 
-	// Use a custom price granularity for Criteo
-	// Criteo has a different line item structure and so bids should be rounded to match these
-	window.pbjs.setBidderConfig({
-		bidders: ['criteo'],
-		config: {
-			customPriceBucket: criteoPriceGranularity,
-		},
-	});
+		// Use a custom price granularity for Criteo
+		// Criteo has a different line item structure and so bids should be rounded to match these
+		window.pbjs.setBidderConfig({
+			bidders: ['criteo'],
+			config: {
+				customPriceBucket: criteoPriceGranularity,
+			},
+		});
+	}
 
 	window.pbjs.setConfig(pbjsConfig);
 
