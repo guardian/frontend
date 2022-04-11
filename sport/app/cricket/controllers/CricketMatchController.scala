@@ -33,7 +33,9 @@ class CricketMatchController(cricketStatsJob: CricketStatsJob, val controllerCom
           cricketStatsJob.findMatch(team, date).map { matchData =>
             val page = CricketMatchPage(matchData, date, team)
             Cached(60) {
-              if (request.isJson)
+              if (request.isJson && request.forceDCR)
+                JsonComponent(page.theMatch)
+              else if (request.isJson)
                 JsonComponent(
                   "summary" -> cricket.views.html.fragments
                     .cricketMatchSummary(page.theMatch, page.metadata.id)
