@@ -291,7 +291,7 @@ const enforceRules = (
 };
 
 class SpaceError extends Error {
-	constructor(rules) {
+	constructor(rules: SpacefinderRules) {
 		super();
 		this.name = 'SpaceError';
 		this.message = `There is no space left matching rules from ${rules.bodySelector}`;
@@ -405,13 +405,6 @@ const getMeasurements = (
 	});
 };
 
-const returnCandidates = (rules, candidates) => {
-	if (!candidates.length) {
-		throw new SpaceError(rules);
-	}
-	return candidates.map((candidate) => candidate.element);
-};
-
 // Rather than calling this directly, use spaceFiller to inject content into the page.
 // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
 const findSpace = async (
@@ -428,8 +421,17 @@ const findSpace = async (
 	const candidates = getCandidates(rules, exclusions);
 	const measurements = await getMeasurements(rules, candidates);
 	const winners = enforceRules(measurements, rules, exclusions);
-	const winners2 = markCandidates(exclusions, winners, options);
-	return returnCandidates(rules, winners2);
+	const markedWinners = markCandidates(
+		exclusions,
+		winners,
+		options,
+	) as SpacefinderItem[];
+
+	// TODO Is this really an error condition?
+	if (!markedWinners.length) {
+		throw new SpaceError(rules);
+	}
+	return markedWinners.map((candidate) => candidate.element);
 };
 
 export const _ = {
