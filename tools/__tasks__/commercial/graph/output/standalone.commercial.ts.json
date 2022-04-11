@@ -274,7 +274,7 @@
   "../projects/commercial/modules/dfp/on-slot-load.ts",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
   "../projects/commercial/modules/dfp/on-slot-viewable.ts",
-  "../projects/commercial/modules/dfp/refresh-on-resize.js",
+  "../projects/commercial/modules/dfp/refresh-on-resize.ts",
   "../projects/commercial/modules/messenger.ts",
   "../projects/commercial/modules/messenger/background.js",
   "../projects/commercial/modules/messenger/click.ts",
@@ -325,9 +325,10 @@
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
- "../projects/commercial/modules/dfp/refresh-on-resize.js": [
+ "../projects/commercial/modules/dfp/refresh-on-resize.ts": [
   "../lib/detect.js",
   "../lib/mediator.ts",
+  "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/load-advert.ts"

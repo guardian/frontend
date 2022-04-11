@@ -1274,20 +1274,20 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-7.1.0.tgz#b8812002cc77f5c65a091ebf0f5b78d6fc1403f4"
-  integrity sha512-6X+CKHfElQQj7k8JELFuiUW0JyMJArY8XEum2RpnNs1qelPSwtmtibo4bh5LKtKVXf83zYs9PwUXd3AJwp3x1g==
+"@guardian/braze-components@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-7.2.0.tgz#e5e7ba7c19484ebe0e405a93b1c389dae681acef"
+  integrity sha512-Y2+XC0bP5mFacwtDlDqlQsbUyQwn4OSlpOTw3+u7t1RhJFw61SDYAER4gOpyJ4t+wQZFdk//LGJUjFqzDfEEuQ==
 
-"@guardian/commercial-core@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-3.2.0.tgz#489a56630c8cffb0fc74e8d75ce6206905876382"
-  integrity sha512-UFKiwuyRRw+X+bdY/AwOd2fJG38OLXMWw/gLkm8BZW5OYBy70KJr0PZeUWE+5MUfEUsU1TThokgLlDIfKkfCjA==
+"@guardian/commercial-core@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-3.2.1.tgz#15073e5718c12b12cc0973a36bf54b8ee5e3c2ef"
+  integrity sha512-e8Fs8h33oL9eRjluQHqDe4p4UkeuYrOAEI9x5nUBNMShwgv2ef9n0pPo7P0epe0gxJYKmm52J/IHsP+nbesVrQ==
 
-"@guardian/consent-management-platform@^10.3.1":
-  version "10.3.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.3.1.tgz#09e744ee81a54fe1ab7d0ed58b125ffb59cb0934"
-  integrity sha512-nW+YyQyOwbltiaEgIPtruNys0ZsxlQAJdWsgq+ENcJDvRdjJJPIOqoCY/cL3P3sqL2pwvKttANhSzM6aM0wJlw==
+"@guardian/consent-management-platform@^10.4.0":
+  version "10.4.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.4.0.tgz#2b3972374812efce569421a57949509d306e0e48"
+  integrity sha512-+j6LN0fgn/RUk1oJUkVJl/78dc7SXRB5iT/nPXUIFz64fO/Ge/wTQEUGfvwrhv0YxWBTKxHcCwgBOL4Wfk341g==
   dependencies:
     "@guardian/libs" "1.6.1 - 3.3.0"
 

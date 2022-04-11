@@ -8,9 +8,15 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomRenderingDataModel, PageType}
-import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage}
-import play.api.libs.json.JsResult.Exception
+import model.dotcomrendering.{
+  DotcomBlocksRenderingDataModel,
+  DotcomFrontsRenderingDataModel,
+  DotcomRenderingDataModel,
+  DotcomRenderingUtils,
+  PageType,
+}
+import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage, PressedPage}
+import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -157,6 +163,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
             DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"),
           )
       })
+  }
+
+  def getFront(
+      ws: WSClient,
+      page: PressedPage,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomFrontsRenderingDataModel(page, request, pageType)
+
+    val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Front", page)
   }
 
   def getInteractive(

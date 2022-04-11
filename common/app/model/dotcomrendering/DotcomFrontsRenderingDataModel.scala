@@ -69,4 +69,9 @@ object DotcomFrontsRenderingDataModel {
       commercialProperties = commercialProperties,
     )
   }
+
+  def toJson(model: DotcomFrontsRenderingDataModel): String = {
+    val jsValue = Json.toJson(model)
+    Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
+  }
 }
