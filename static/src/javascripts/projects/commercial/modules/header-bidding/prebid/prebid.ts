@@ -57,7 +57,7 @@ type UserSync =
 type PbjsConfig = {
 	bidderTimeout: number;
 	timeoutBuffer?: number;
-	priceGranularity: typeof priceGranularity;
+	priceGranularity: PrebidPriceGranularity;
 	userSync: UserSync;
 	consentManagement?: ConsentManagement;
 	realTimeData?: unknown;
