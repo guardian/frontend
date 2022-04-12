@@ -10,7 +10,7 @@ import { spaceFiller } from '../../common/modules/article/space-filler';
 import type {
 	SpacefinderRules,
 	SpacefinderWriter,
-} from '../../common/modules/article/space-filler';
+} from '../../common/modules/spacefinder';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import type { SizeMappings } from '../modules/dfp/create-slot';
 import { initCarrot } from './carrot-traffic-driver';

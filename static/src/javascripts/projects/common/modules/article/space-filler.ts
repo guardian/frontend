@@ -1,4 +1,9 @@
-import { findSpace, SpaceError, SpacefinderOptions, SpacefinderRules, SpacefinderWriter } from 'common/modules/spacefinder';
+import type {
+	SpacefinderOptions,
+	SpacefinderRules,
+	SpacefinderWriter,
+} from 'common/modules/spacefinder';
+import { findSpace, SpaceError } from 'common/modules/spacefinder';
 import raven from 'lib/raven';
 
 class SpaceFiller {
