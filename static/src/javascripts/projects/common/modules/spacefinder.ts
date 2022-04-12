@@ -26,7 +26,7 @@ type SpacefinderItem = {
 
 type SpacefinderRules = {
 	bodySelector: string;
-	body?: Node;
+	body?: HTMLElement | Document;
 	slotSelector: string;
 	// minimum from slot to top of page
 	absoluteMinAbove?: number;
@@ -72,7 +72,7 @@ type Measurements = {
 	opponents?: ElementDimensionMap;
 };
 
-const query = (selector: string, context?: HTMLElement) => [
+const query = (selector: string, context?: HTMLElement | Document) => [
 	...(context ?? document).querySelectorAll<HTMLElement>(selector),
 ];
 
@@ -87,21 +87,19 @@ const defaultOptions = {
 	debug: false,
 };
 
-const isIframe = (node) => node instanceof HTMLIFrameElement;
+const isIframe = (node: Node): node is HTMLIFrameElement =>
+	node instanceof HTMLIFrameElement;
 
-const isIframeLoaded = (iframe) => {
+const isIframeLoaded = (iframe: HTMLIFrameElement) => {
+	// TODO do we need this try / catch?
 	try {
-		return (
-			iframe.contentWindow &&
-			iframe.contentWindow.document &&
-			iframe.contentWindow.document.readyState === 'complete'
-		);
+		return iframe.contentWindow?.document.readyState === 'complete';
 	} catch (err) {
 		return true;
 	}
 };
 
-const getFuncId = (rules) => rules.bodySelector || 'document';
+const getFuncId = (rules: SpacefinderRules) => rules.bodySelector || 'document';
 
 const enableImageLoadingFix = () =>
 	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
@@ -111,7 +109,7 @@ const onImagesLoaded = enableImageLoadingFix()
 	: onImagesLoadedBroken;
 
 const onRichLinksUpgraded = memoize(
-	(rules) =>
+	(rules: SpacefinderRules) =>
 		query('.element-rich-link--not-upgraded', rules.body).length === 0
 			? Promise.resolve()
 			: new Promise((resolve) => {
@@ -120,45 +118,46 @@ const onRichLinksUpgraded = memoize(
 	getFuncId,
 );
 
-const onInteractivesLoaded = memoize((rules) => {
+const onInteractivesLoaded = memoize((rules: SpacefinderRules) => {
 	const notLoaded = query('.element-interactive', rules.body).filter(
 		(interactive) => {
-			const iframe = Array.from(interactive.children).filter(isIframe);
-			return !(iframe.length && isIframeLoaded(iframe[0]));
+			const iframes = Array.from(interactive.children).filter(isIframe);
+			return !(iframes.length && isIframeLoaded(iframes[0]));
 		},
 	);
 
-	return notLoaded.length === 0 || !('MutationObserver' in window)
-		? Promise.resolve()
-		: Promise.all(
-				notLoaded.map(
-					(interactive) =>
-						new Promise((resolve) => {
-							new MutationObserver((records, instance) => {
-								if (
-									!records.length ||
-									!records[0].addedNodes.length ||
-									!isIframe(records[0].addedNodes[0])
-								) {
-									return;
-								}
+	if (notLoaded.length === 0 || !('MutationObserver' in window))
+		return Promise.resolve();
 
-								const iframe = records[0].addedNodes[0];
-								if (isIframeLoaded(iframe)) {
-									instance.disconnect();
-									resolve();
-								} else {
-									iframe.addEventListener('load', () => {
-										instance.disconnect();
-										resolve();
-									});
-								}
-							}).observe(interactive, {
-								childList: true,
+	return Promise.all(
+		notLoaded.map(
+			(interactive) =>
+				new Promise<void>((resolve) => {
+					new MutationObserver((records, instance) => {
+						if (
+							!records.length ||
+							!records[0].addedNodes.length ||
+							!isIframe(records[0].addedNodes[0])
+						) {
+							return;
+						}
+
+						const iframe = records[0].addedNodes[0];
+						if (isIframeLoaded(iframe)) {
+							instance.disconnect();
+							resolve();
+						} else {
+							iframe.addEventListener('load', () => {
+								instance.disconnect();
+								resolve();
 							});
-						}),
-				),
-		  ).then(() => undefined);
+						}
+					}).observe(interactive, {
+						childList: true,
+					});
+				}),
+		),
+	).then(() => undefined);
 }, getFuncId);
 
 //  should generic be more specific? HTMLElement or SpacefinderItem
@@ -413,7 +412,8 @@ const findSpace = async (
 	exclusions: SpacefinderExclusions = {},
 ): Promise<HTMLElement[]> => {
 	rules.body =
-		(rules.bodySelector && document.querySelector(rules.bodySelector)) ||
+		(rules.bodySelector &&
+			document.querySelector<HTMLElement>(rules.bodySelector)) ||
 		document;
 
 	await getReady(rules, options);
