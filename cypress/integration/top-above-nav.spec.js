@@ -22,6 +22,9 @@ describe('top-above-nav on pages', () => {
 
 			// Check that an iframe is placed inside the ad slot
 			cy.get('#dfp-ad--top-above-nav').find('iframe').should('exist');
+
+            // Check the image snapshot
+            cy.get('#dfp-ad--top-above-nav').find('iframe').toMatchImageSnapshot();
 		});
 	});
 });

@@ -3,6 +3,10 @@
   "defaultCommandTimeout": 15000,
   "retries": 2,
   "video": false,
-  "pluginsFile": false,
-  "supportFile": false
+  "pluginsFile": "cypress/plugins/index.js",
+  "supportFile": "cypress/support/index.js",
+  "ignoreTestFiles": [
+    "**/__snapshots__/*",
+    "**/__image_snapshots__/*"
+  ]
 }
