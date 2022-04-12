@@ -36,10 +36,9 @@ const getWindowHeight = (doc = document) => {
 
 const getSpaceFillerRules = (
 	windowHeight: number,
-	update?: boolean,
+	shouldUpdate = false,
 ): SpacefinderRules => {
 	let prevSlot: SpacefinderItem | undefined;
-	const shouldUpdate = !!update;
 
 	// Only use a slot if it is double the window height from the previous slot.
 	const filterSlot = (slot: SpacefinderItem) => {
