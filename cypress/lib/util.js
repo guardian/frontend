@@ -22,7 +22,7 @@ export const getTestUrl = (stage, path, { isDcr } = { isDcr: false }) => {
 			// TODO We currently have two separate URLs for testing DCR locally
 			// Investigate why proxying URLs via 9000 doesn't work
 			if (isDcr) {
-				return `http://localhost:3030/Article?url=${path}`;
+				return `http://localhost:3030/Article?url=https://theguardian.com${path}`;
 			} else {
 				return `http://localhost:9000${path}`;
 			}
