@@ -4,7 +4,7 @@ const stage = getStage();
 
 const fronts = [
 	{
-		path: getTestUrl(stage, 'uk'),
+		path: getTestUrl(stage, '/uk'),
 		adTest: 'fixed-puppies',
 	},
 ];
