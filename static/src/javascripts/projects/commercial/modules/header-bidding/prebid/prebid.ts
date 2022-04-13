@@ -273,8 +273,6 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		},
 	);
 
-	// This creates an 'unsealed' object. Flows
-	// allows dynamic assignment.
 	window.pbjs.bidderSettings = {};
 
 	if (window.guardian.config.switches.consentManagement) {
