@@ -1,36 +1,5 @@
 @import 'social-icons';
 
-/*doc
----
-title: Social
-name: social
-category: Common
----
-
-```html_example
-<ul class="social u-unstyled u-cf">
-    <li class="social__item">
-        <a class="social__action social-icon-wrapper" href="#">
-            <span class="u-h">Share via Email</span>
-            <span class="social-icon"><i class="i-share-email--white i"></i></span>
-        </a>
-    </li>
-    <li class="social__item">
-        <a class="social__action social-icon-wrapper" href="#">
-            <span class="u-h">Share on Facebook</span>
-            <span class="social-icon"><i class="i-share-facebook--white i"></i></span>
-        </a>
-    </li>
-    <li class="social__item">
-        <a class="social__action social-icon-wrapper" href="#">
-            <span class="u-h">Share on Twitter</span>
-            <span class="social-icon"><i class="i-share-twitter--white i"></i></span>
-        </a>
-    </li>
-</ul>
-```
-*/
-
 .social__item {
     float: left;
     min-width: 32px;

@@ -1,5 +1,3 @@
-/* Button styles
-========================================================================== */
 @mixin identity-button($bg, $bg-hover, $font: $brightness-7) {
     background-color: $bg;
     &, &:hover, &:active, &:focus {

@@ -1,33 +1,3 @@
-/*doc
----
-title: Doughnut
-name: doughnut
-category: Charts
----
-
-```html_example
-<svg class="chart chart--doughnut" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200" viewbox="0 0 200 200">
-    <g class="chart__arc">
-        <path d="M 100 0 A 100 100 0 0 1 172.90 168.45 L 125.51 123.96 A 35 35 0 0 0 100 65 Z" fill="#6cf"/>
-        <text class="chart__label" transform="translate(161.95, 73.19)">
-            <tspan class="chart__label-text" x="0" dy="0">ARG</tspan>
-            <tspan class="chart__label-value" x="0" dy="1em">37</tspan>
-        </text>
-    </g>
-    <g class="chart__arc">
-        <path d="M 172.90 168.45 A 100 100 0 1 1 100 0 L 100 65 A 35 35 0 1 0 125.51 123.96 Z" fill="#eee"/>
-        <text class="chart__label" transform="translate(38.05, 126.81)">
-            <tspan class="chart__label-text" x="0" dy="0">DEU</tspan>
-            <tspan class="chart__label-value" x="0" dy="1em">63</tspan>
-        </text>
-    </g>
-    <text class="chart__unit" transform="translate(100,100)" dy="0.4em">%</text>
-</svg>
-```
-*/
-
-// Here be SVGs - use appropriate styling properties
-// http://www.w3.org/TR/SVG11/styling.html
 .chart--doughnut {
     position: relative;
 

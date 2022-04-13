@@ -1,33 +1,3 @@
-/*doc
----
-title: Faux block link utility
-name: u-faux-block-link
-category: Utilities
----
-
-A Faux block-level link. Used for when you need a block-level link with
-clickable areas within it as directly nesting a tags breaks things.
-
-```html_example
-<div class="u-faux-block-link">
-    <img src="" alt="This image is magically clickable" />
-
-    <h3><a href="#">This headline is clickable as a normal link</a></h3>
-
-    Lorem ipsum dolor sit amet.
-
-    <a href="#">another link</a>
-
-    <abbr title="Hoverable!">An hoverable abbreviation</abbr>
-
-    <video class="u-faux-block-link__promote">I can interact with that video</video>
-
-    <a href="#" class="u-faux-block-link__overlay" tabindex="-1">headline</a>
-</div>
-```
-*/
-// Thanks to @BPScott http://codepen.io/BPScott/pen/Erwan
-// for this great technique
 .u-faux-block-link {
     position: relative;
 }
