@@ -513,4 +513,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val LiveBlogsStickyVideos = Switch(
+    SwitchGroup.Feature,
+    "live-blogs-sticky-videos",
+    "Enables sticking videos in blogs",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
