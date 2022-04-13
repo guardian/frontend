@@ -1,7 +1,7 @@
 import { criteoPriceGranularity, priceGranularity } from './price-config';
 
 describe('priceGranularity', () => {
-	test('default should have correct number of buckets', () => {
+	test('default should have correct buckets', () => {
 		expect(priceGranularity).toEqual({
 			buckets: [
 				{
@@ -16,7 +16,7 @@ describe('priceGranularity', () => {
 		});
 	});
 
-	test('criteo should have correct number of buckets', () => {
+	test('criteo should have correct buckets', () => {
 		expect(criteoPriceGranularity).toEqual({
 			buckets: [
 				{
