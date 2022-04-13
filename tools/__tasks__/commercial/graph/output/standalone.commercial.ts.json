@@ -1,4 +1,5 @@
 {
+ "../../../../../Prebid.js/build/dist/prebid.js": [],
  "../lib/$$.ts": [
   "../../../../node_modules/csstype/index.d.ts"
  ],
@@ -299,11 +300,11 @@
   "../lib/report-error.js"
  ],
  "../projects/commercial/modules/dfp/prepare-prebid.ts": [
+  "../../../../../Prebid.js/build/dist/prebid.js",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../../../../node_modules/prebid.js/build/dist/prebid.js",
   "../lib/config.d.ts",
   "../lib/detect-google-proxy.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -399,7 +400,9 @@
   "../projects/commercial/modules/header-bidding/slot-config.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
-  "../projects/common/modules/commercial/enhanced-consent.ts"
+  "../projects/common/modules/commercial/enhanced-consent.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
@@ -574,6 +577,7 @@
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
+  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
@@ -659,6 +663,7 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
+  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
@@ -690,6 +695,10 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/prebid-price-granularity.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
