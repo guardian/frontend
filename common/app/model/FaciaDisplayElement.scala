@@ -10,7 +10,6 @@ import model.content.MediaAtom
 object FaciaDisplayElement {
   def fromFaciaContentAndCardType(
       faciaContent: PressedContent,
-      itemClasses: ItemClasses,
   ): Option[FaciaDisplayElement] = {
     faciaContent.mainVideo match {
       case Some(videoElement) if faciaContent.properties.showMainVideo =>
@@ -23,7 +22,7 @@ object FaciaDisplayElement {
         )
       case _ if faciaContent.properties.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         faciaContent.properties.maybeContentId map CrosswordSvg
-      case _ if faciaContent.properties.imageSlideshowReplace && itemClasses.canShowSlideshow =>
+      case _ if faciaContent.properties.imageSlideshowReplace =>
         InlineSlideshow.fromFaciaContent(faciaContent)
       case _ if faciaContent.properties.showMainVideo && faciaContent.mainYouTubeMediaAtom.isDefined =>
         Some(InlineYouTubeMediaAtom(faciaContent.mainYouTubeMediaAtom.get, faciaContent.trailPicture))

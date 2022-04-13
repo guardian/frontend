@@ -579,6 +579,12 @@ $block-height: 58px;
                 display: none;
             }
         }
+
+        .fc-item--list-media-mobile & {
+            @include mq($until: tablet) {
+                display: none;
+            }
+        }
     }
 
     .fc-item--has-floating-sublinks & {
@@ -615,6 +621,18 @@ $block-height: 58px;
         animation-iteration-count: infinite;
         animation-direction: normal;
         opacity: 0;
+    }
+
+    .fc-item--list-media-mobile & {
+        @include mq($until: tablet) {
+            figure {
+                animation-name: none;
+
+                &:nth-child(1) {
+                    opacity: 1;
+                }
+            }
+        }
     }
 }
 
