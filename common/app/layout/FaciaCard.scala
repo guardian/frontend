@@ -52,7 +52,7 @@ object FaciaCard {
       faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
       FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
       getByline(faciaContent).filterNot(Function.const(suppressByline)),
-      FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent),
+      FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
       CutOut.fromTrail(faciaContent),
       faciaContent.card.cardStyle,
       cardTypes,
