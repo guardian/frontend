@@ -514,7 +514,7 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val LiveBlogsStickyVideos = Switch(
+  val StickyVideos = Switch(
     SwitchGroup.Feature,
     "live-blogs-sticky-videos",
     "Enables sticking videos in blogs",
