@@ -1,7 +1,37 @@
-import { priceGranularity } from './price-config';
+import { criteoPriceGranularity, priceGranularity } from './price-config';
 
 describe('priceGranularity', () => {
-	test('should have correct number of buckets', () => {
-		expect(priceGranularity.buckets.length).toBe(2);
+	test('default should have correct number of buckets', () => {
+		expect(priceGranularity).toEqual({
+			buckets: [
+				{
+					max: 100,
+					increment: 0.01,
+				},
+				{
+					max: 500,
+					increment: 1,
+				},
+			],
+		});
+	});
+
+	test('criteo should have correct number of buckets', () => {
+		expect(criteoPriceGranularity).toEqual({
+			buckets: [
+				{
+					max: 12,
+					increment: 0.01,
+				},
+				{
+					max: 20,
+					increment: 0.05,
+				},
+				{
+					max: 500,
+					increment: 1,
+				},
+			],
+		});
 	});
 });
