@@ -9,7 +9,6 @@ import idapiclient.{TrackingData, _}
 import idapiclient.Auth
 import idapiclient.responses.Error
 import model.{Countries, PhoneNumbers}
-import com.gu.identity.model.EmailNewsletters
 import controllers.editprofile.EditProfileController
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
