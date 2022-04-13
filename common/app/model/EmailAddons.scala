@@ -385,7 +385,7 @@ case object SocietyWeekly extends FrontEmailMetadata {
 
 case object TheGuardianToday extends FrontEmailMetadata {
   val name = "The Guardian Today"
-  override val banner = Some("the-guardian-today.png")
+  override val banner = Some("the-guardian-today-uk.png")
 }
 
 case object TheGuardianTodayAustralia extends FrontEmailMetadata {
