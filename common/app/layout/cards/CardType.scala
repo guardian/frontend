@@ -51,7 +51,8 @@ sealed trait CardType {
 
   def canShowSlideshow: Boolean =
     this match {
-      case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 =>
+      case MediaList | Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 |
+          FullMedia100 =>
         true
       case _ => false
     }

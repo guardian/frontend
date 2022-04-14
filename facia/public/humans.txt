@@ -104,9 +104,14 @@ Engineer: Oliver Lloyd
 From: London, UK
 Location: London, UK
 
+
 Engineer: Ashleigh (Ash) Carr
 Location: Brighton, UK
 Github: AshCorr
+
+Developer: Fred O'Brien
+Twitter: @yagayagafred
+From: London, UK
 
 /* ---------------------------------------------------- */
 /* FORMER                                               */
