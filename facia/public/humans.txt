@@ -104,6 +104,10 @@ Engineer: Oliver Lloyd
 From: London, UK
 Location: London, UK
 
+Developer: Fred O'Brien
+Twitter: @yagayagafred
+From: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
