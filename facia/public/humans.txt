@@ -129,6 +129,10 @@ Developer: Aditya Bhaskar
 Website: https://c306.net/now/
 Location: Guildford, Uk
 
+Engineer: Chris Jones
+Location: London, UK
+Github: chrislomaxjones
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
