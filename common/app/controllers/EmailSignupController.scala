@@ -4,11 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
-import conf.switches.Switches.{
-  EmailSignupRecaptcha,
-  NewslettersRemoveConfirmationStep,
-  ValidateEmailSignupRecaptchaTokens,
-}
+import conf.switches.Switches.{EmailSignupRecaptcha, NewslettersRemoveConfirmationStep, ValidateEmailSignupRecaptchaTokens}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
@@ -119,7 +115,8 @@ class EmailSignupController(
   def renderPage(): Action[AnyContent] =
     Action { implicit request =>
       emailEmbedAgent.getNewsletterByName("today-uk") match {
-        case Right(Some(result)) => Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage, result)))
+        case Right(Some(result)) =>
+          Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage, result)))
         case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
       }
     }
