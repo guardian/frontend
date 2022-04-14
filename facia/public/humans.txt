@@ -125,6 +125,10 @@ Engineer: Mario Savarese
 Twitter: @mar_savar
 From: 40.8518° N, 14.2681° E
 
+Developer: Aditya Bhaskar
+Website: https://c306.net/now/
+Location: Guildford, Uk
+
 Engineer: Chris Jones
 Location: London, UK
 Github: chrislomaxjones
