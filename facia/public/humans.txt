@@ -108,6 +108,9 @@ Developer: Fred O'Brien
 Twitter: @yagayagafred
 From: London, UK
 
+Developer: Ara Cho
+From: Seoul, South Korea
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
