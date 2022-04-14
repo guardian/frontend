@@ -108,6 +108,10 @@ Developer: Fred O'Brien
 Twitter: @yagayagafred
 From: London, UK
 
+Engineer: Tom Pretty
+From: Nottingham, UK
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
