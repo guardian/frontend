@@ -4,7 +4,11 @@ import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
-import conf.switches.Switches.{EmailSignupRecaptcha, NewslettersRemoveConfirmationStep, ValidateEmailSignupRecaptchaTokens}
+import conf.switches.Switches.{
+  EmailSignupRecaptcha,
+  NewslettersRemoveConfirmationStep,
+  ValidateEmailSignupRecaptchaTokens,
+}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
