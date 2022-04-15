@@ -88,7 +88,7 @@ const init = (register: RegisterListener): void => {
 					 */
 					const passbackElement = document.createElement('div');
 					passbackElement.id = `${slotIdWithPrefix}--passback`;
-					passbackElement.className = `js-ad-slot ad-slot`;
+					passbackElement.classList.add('ad-slot', 'js-ad-slot');
 					passbackElement.setAttribute('aria-hidden', 'true');
 					slotElement.insertAdjacentElement(
 						'beforeend',
