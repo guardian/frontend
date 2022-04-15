@@ -52,6 +52,10 @@ const init = (register: RegisterListener): void => {
 				if (iFrameContainer) {
 					iFrameContainer.style.visibility = 'hidden';
 				}
+				if (slotElement) {
+					// TODO: this should be promoted to default styles for inline1
+					slotElement.style.position = 'relative';
+				}
 			}
 
 			if (slotId && source) {
@@ -90,6 +94,12 @@ const init = (register: RegisterListener): void => {
 					passbackElement.id = `${slotIdWithPrefix}--passback`;
 					passbackElement.classList.add('ad-slot', 'js-ad-slot');
 					passbackElement.setAttribute('aria-hidden', 'true');
+					// position absolute to position over the container slot
+					passbackElement.style.position = 'absolute';
+					// account for the ad label
+					passbackElement.style.top = '24px';
+					// take the full width so it will center horizontally
+					passbackElement.style.width = '100%';
 					slotElement.insertAdjacentElement(
 						'beforeend',
 						passbackElement,
