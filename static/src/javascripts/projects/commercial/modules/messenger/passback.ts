@@ -15,6 +15,8 @@ const getValuesForKeys = (
 		return acc;
 	}, []);
 
+const labelHeight = 24;
+
 /**
  * A listener for 'passback' messages from ad slot iFrames
  * Ad providers will invoke 'passback' to tell us they have not filled this slot
@@ -49,6 +51,11 @@ const init = (register: RegisterListener): void => {
 				const iFrameContainer =
 					iframe.closest<HTMLDivElement>('.ad-slot__content');
 
+				/**
+				 * Keep the initial iFrame which contains ad provider code
+				 * to detect passbacks.
+				 * Maintain its initial size by setting visibility to prevent CLS.
+				 */
 				if (iFrameContainer) {
 					iFrameContainer.style.visibility = 'hidden';
 				}
@@ -97,7 +104,7 @@ const init = (register: RegisterListener): void => {
 					// position absolute to position over the container slot
 					passbackElement.style.position = 'absolute';
 					// account for the ad label
-					passbackElement.style.top = '24px';
+					passbackElement.style.top = `${labelHeight}px`;
 					// take the full width so it will center horizontally
 					passbackElement.style.width = '100%';
 					slotElement.insertAdjacentElement(
@@ -120,6 +127,28 @@ const init = (register: RegisterListener): void => {
 						});
 						googletag.display(passbackElement.id);
 					});
+
+					/**
+					 * Resize the container height when the passback has loaded.
+					 * We need to do this because the passback ad is absolutely
+					 * positioned in order to not layout shift. Therefore it is
+					 * taken out of normal document flow and the parent container
+					 * does not take the height of the child ad element as normal.
+					 * So we set this by hooking into the googletag slotRenderEnded
+					 * event to get the size of the ad loaded.
+					 */
+					googletag
+						.pubads()
+						.addEventListener('slotRenderEnded', function (event) {
+							const slotId = event.slot.getSlotElementId();
+							if (slotId === passbackElement.id) {
+								const size =
+									event.slot.getSizes()[0] as googletag.Size;
+								slotElement.style.height = `${
+									size.getHeight() + labelHeight
+								}px`;
+							}
+						});
 
 					log(
 						'commercial',
