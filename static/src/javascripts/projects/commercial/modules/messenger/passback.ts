@@ -62,6 +62,8 @@ const init = (register: RegisterListener): void => {
 				if (slotElement) {
 					// TODO: this should be promoted to default styles for inline1
 					slotElement.style.position = 'relative';
+					// Remove any outstream styling for this slot
+					slotElement.classList.remove('ad-slot--outstream');
 				}
 			}
 
