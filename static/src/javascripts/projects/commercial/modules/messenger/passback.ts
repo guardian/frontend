@@ -20,7 +20,7 @@ const labelHeight = 24;
 /**
  * A listener for 'passback' messages from ad slot iFrames
  * Ad providers will invoke 'passback' to tell us they have not filled this slot
- * In which case we need to refresh the slot with another ad
+ * In which case we need to create a 'passback' slot with another ad
  */
 const init = (register: RegisterListener): void => {
 	register('passback', (messagePayload, ret, iframe) => {
@@ -51,13 +51,20 @@ const init = (register: RegisterListener): void => {
 				const iFrameContainer =
 					iframe.closest<HTMLDivElement>('.ad-slot__content');
 
-				/**
-				 * Keep the initial iFrame which contains ad provider code
-				 * to detect passbacks.
-				 * Maintain its initial size by setting visibility to prevent CLS.
-				 */
 				if (iFrameContainer) {
+					/**
+					 * Keep the initial outstream iFrame so they can detect passbacks.
+					 * Maintain the iFrame initial size by setting visibility to prevent CLS.
+					 * In a full width column we only then need to resize height.
+					 */
 					iFrameContainer.style.visibility = 'hidden';
+					/**
+					 * In liuei of https://github.com/guardian/dotcom-rendering/pull/4506
+					 * which changes inline1 to take the full width of the column, the ad
+					 * will float right. In which case we have to remove the initial
+					 * iFrame from document flow and set the width once known.
+					 */
+					// iFrameContainer.style.display = 'none';
 				}
 				if (slotElement) {
 					// TODO: this should be promoted to default styles for inline1
@@ -149,6 +156,12 @@ const init = (register: RegisterListener): void => {
 								slotElement.style.height = `${
 									size.getHeight() + labelHeight
 								}px`;
+								/**
+								 * In liuei of https://github.com/guardian/dotcom-rendering/pull/4506
+								 * which changes inline1 to take the full width of the column, the ad
+								 * will float right so we have to set the ad width.
+								 */
+								// slotElement.style.width = `${size.getWidth()}px`;
 							}
 						});
 
