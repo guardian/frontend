@@ -1,6 +1,0 @@
-@import services.newsletters.model.NewsletterResponse
-@(page: model.Page, guardianTodayUk: NewsletterResponse)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@mainLegacy(page){ }{
-    @fragments.emailLandingBody(guardianTodayUk)
-}
