@@ -12,7 +12,8 @@ import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { getHeaderBiddingAdSlots } from '../slot-config';
 import { stripDfpAdPrefixFrom } from '../utils';
 import { bids } from './bid-config';
-import { priceGranularity } from './price-config';
+import type { PrebidPriceGranularity } from './price-config';
+import { criteoPriceGranularity, priceGranularity } from './price-config';
 import { pubmatic } from './pubmatic';
 
 type CmpApi = 'iab' | 'static';
@@ -56,7 +57,7 @@ type UserSync =
 type PbjsConfig = {
 	bidderTimeout: number;
 	timeoutBuffer?: number;
-	priceGranularity: typeof priceGranularity;
+	priceGranularity: PrebidPriceGranularity;
 	userSync: UserSync;
 	consentManagement?: ConsentManagement;
 	realTimeData?: unknown;
@@ -143,6 +144,12 @@ declare global {
 				auctionId?: string;
 			}): void;
 			setConfig: (config: PbjsConfig) => void;
+			setBidderConfig: (bidderConfig: {
+				bidders: BidderCode[];
+				config: {
+					customPriceBucket?: PrebidPriceGranularity;
+				};
+			}) => void;
 			getConfig: (item?: string) => PbjsConfig & {
 				dataProviders: Array<{
 					name: string;
@@ -278,6 +285,15 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		pbjsConfig.criteo = {
 			fastBidVersion: 'latest',
 		};
+
+		// Use a custom price granularity for Criteo
+		// Criteo has a different line item structure and so bids should be rounded to match these
+		window.pbjs.setBidderConfig({
+			bidders: ['criteo'],
+			config: {
+				customPriceBucket: criteoPriceGranularity,
+			},
+		});
 	}
 
 	window.pbjs.setConfig(pbjsConfig);

@@ -1,5 +1,4 @@
-@import com.gu.identity.model.EmailNewsletters._
-@import com.gu.identity.model.EmailEmbed
+@import services.newsletters.model.EmailEmbed
 @(  componentClass: String,
     listName:String,
     emailEmbedData: EmailEmbed)(implicit request: RequestHeader)
@@ -8,22 +7,23 @@
 @import conf.switches.Switches.EmailSignupRecaptcha
 @import conf.switches.Switches.ShowNewPrivacyWordingOnEmailSignupEmbeds
 
+@* TODO add tones to newsletters API https://trello.com/c/MrlRJPlM/668-add-tones-to-newsletters-api *@
 @listNamesTones = @{  List(
-    bestOfOpinionUK.identityName -> "comment",
-    bestOfOpinionAUS.identityName -> "comment",
-    bestOfOpinionUS.identityName -> "comment",
-    bookmarks.identityName -> "review",
-    theFiver.identityName -> "feature",
-    theLongRead.identityName -> "feature",
-    documentaries.identityName -> "plaindark",
-    theFlyer.identityName -> "feature",
-    theBreakdown.identityName -> "feature",
-    theSpin.identityName -> "feature",
-    filmToday.identityName -> "media",
-    sleeveNotes.identityName -> "review",
-    theObserverFoodMonthly.identityName -> "feature",
-    firstDogOnTheMoon.identityName -> "media",
-    fashionStatement.identityName -> "media"
+    "best-of-opinion" -> "comment",
+    "best-of-opinion-au" -> "comment",
+    "best-of-opinion-us" -> "comment",
+    "bookmarks" -> "review",
+    "the-fiver" -> "feature",
+    "the-long-read" -> "feature",
+    "documentaries" -> "plaindark",
+    "the-flyer" -> "feature",
+    "the-breakdown" -> "feature",
+    "the-spin" -> "feature",
+    "film-today" -> "media",
+    "sleeve-notes" -> "review",
+    "observer-food" -> "feature",
+    "first-dog" -> "media",
+    "fashion-statement" -> "media"
 ).toMap: Map[String, String] }
 
 @formId = @{ componentClass + "-email-sub-form" }

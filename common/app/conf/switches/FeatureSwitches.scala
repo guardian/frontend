@@ -517,7 +517,7 @@ trait FeatureSwitches {
   val StickyVideos = Switch(
     SwitchGroup.Feature,
     "sticky-videos",
-    "Enables sticking videos",
+    "When ON, videos in liveblogs will 'stick' on the screen as the reader scrolls up and down the blog",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,

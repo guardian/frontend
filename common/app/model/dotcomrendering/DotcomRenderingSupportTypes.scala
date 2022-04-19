@@ -2,6 +2,7 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
+import common.Edition
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
 import model.{ArticleDateTimes, ContentPage, GUDateTimeFormatNew}
@@ -48,6 +49,7 @@ case class Block(
     blockLastUpdatedDisplay: Option[String],
     blockFirstPublished: Option[Long],
     blockFirstPublishedDisplay: Option[String],
+    blockFirstPublishedDisplayNoTimezone: Option[String],
     title: Option[String],
     contributors: Seq[Contributor],
     primaryDateLine: String,
@@ -81,6 +83,8 @@ object Block {
     val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
     val blockFirstPublishedDisplay =
       blockFirstPublished.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+    val blockFirstPublishedDisplayNoTimezone =
+      blockFirstPublished.map(dt => GUDateTimeFormatNew.formatTimeForDisplayNoTimezone(new DateTime(dt), request))
 
     val blockLastUpdated = block.lastModifiedDate.map(_.dateTime)
     val blockLastUpdatedDisplay =
@@ -113,6 +117,7 @@ object Block {
       contributors = contributors,
       blockFirstPublished = blockFirstPublished,
       blockFirstPublishedDisplay = blockFirstPublishedDisplay,
+      blockFirstPublishedDisplayNoTimezone = blockFirstPublishedDisplayNoTimezone,
       primaryDateLine = displayedDateTimes.primaryDateLine,
       secondaryDateLine = displayedDateTimes.secondaryDateLine,
     )

@@ -1,6 +1,5 @@
-@import com.gu.identity.model.EmailNewsletters
-@import com.gu.identity.model.EmailEmbed
-@()(implicit request: RequestHeader)
+@import services.newsletters.model.NewsletterResponse
+@(guardianTodayUk: NewsletterResponse)(implicit request: RequestHeader)
 @import views.support.RenderClasses
 
 <div>
@@ -13,8 +12,8 @@
             <div class="gs-container u-cf">
                 @fragments.email.signup.subscription.emailSignUp(
                     "landing",
-                    EmailNewsletters.guardianTodayUk.identityName,
-                    EmailNewsletters.guardianTodayUk.emailEmbed
+                    guardianTodayUk.identityName,
+                    guardianTodayUk.emailEmbed
                 )
             </div>
         </div>

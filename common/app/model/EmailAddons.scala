@@ -265,7 +265,7 @@ case object Opinion extends FrontEmailMetadata {
 
 case object TheGuardianTodayUS extends FrontEmailMetadata {
   val name = "The Guardian Today US"
-  override val banner = Some("the-guardian-today-us.png")
+  override val banner = Some("the-guardian-headlines-us.png")
 }
 
 case object SleeveNotes extends FrontEmailMetadata {
@@ -383,14 +383,14 @@ case object SocietyWeekly extends FrontEmailMetadata {
   override val banner = Some("society-weekly.png")
 }
 
-case object TheGuardianToday extends FrontEmailMetadata {
+case object TheGuardianTodayUK extends FrontEmailMetadata {
   val name = "The Guardian Today"
-  override val banner = Some("the-guardian-today.png")
+  override val banner = Some("the-guardian-headlines-uk.png")
 }
 
 case object TheGuardianTodayAustralia extends FrontEmailMetadata {
   val name = "The Guardian Today Australia"
-  override val banner = Some("the-guardian-today-australia.png")
+  override val banner = Some("the-guardian-headlines-australia.png")
 }
 
 case object FilmToday extends FrontEmailMetadata {
@@ -549,7 +549,7 @@ object EmailAddons {
     TeacherNetwork,
     TheCityscape,
     SocietyWeekly,
-    TheGuardianToday,
+    TheGuardianTodayUK,
     TheGuardianTodayAustralia,
     FilmToday,
     OpinionAus,

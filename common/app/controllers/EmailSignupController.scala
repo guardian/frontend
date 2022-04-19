@@ -118,7 +118,11 @@ class EmailSignupController(
 
   def renderPage(): Action[AnyContent] =
     Action { implicit request =>
-      Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
+      emailEmbedAgent.getNewsletterByName("today-uk") match {
+        case Right(Some(result)) =>
+          Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage, result)))
+        case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
+      }
     }
 
   def renderFooterForm(listName: String): Action[AnyContent] =
