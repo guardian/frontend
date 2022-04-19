@@ -20,7 +20,11 @@ type SpacefinderItem = {
 	bottom: number;
 	element: HTMLElement;
 	meta?: {
-		tooClose: unknown[];
+		tooClose: Array<{
+			required: number;
+			actual: number;
+			element: HTMLElement;
+		}>;
 	};
 };
 
