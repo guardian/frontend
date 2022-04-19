@@ -1,4 +1,4 @@
-@import services.newsletters.NewsletterResponse
+@import services.newsletters.model.NewsletterResponse
 @(listName: String, emailNewsletter: NewsletterResponse, resultHtml: Html)(implicit request: RequestHeader)
 
 @emailEmbedData = @{emailNewsletter.emailEmbed}

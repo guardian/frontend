@@ -1,6 +1,6 @@
-@(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import services.newsletters.model.NewsletterResponse
+@(page: model.Page, guardianTodayUk: NewsletterResponse)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @mainLegacy(page){ }{
-    @fragments.emailLandingBody()
+    @fragments.emailLandingBody(guardianTodayUk)
 }
-
