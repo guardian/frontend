@@ -157,7 +157,7 @@ const init = (register: RegisterListener): void => {
 									size.getHeight() + labelHeight
 								}px`;
 								/**
-								 * In liuei of https://github.com/guardian/dotcom-rendering/pull/4506
+								 * In lieu of https://github.com/guardian/dotcom-rendering/pull/4506
 								 * which changes inline1 to take the full width of the column, the ad
 								 * will float right so we have to set the ad width.
 								 */
