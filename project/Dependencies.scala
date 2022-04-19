@@ -47,7 +47,7 @@ object Dependencies {
   val playGoogleAuth = "com.gu.play-googleauth" %% "play-v28" % "2.1.1"
   val playSecretRotation = "com.gu.play-secret-rotation" %% "play-v28" % "0.18"
   val playSecretRotationAwsSdk = "com.gu.play-secret-rotation" %% "aws-parameterstore-sdk-v1" % "0.18"
-  val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
+  val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.3"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
