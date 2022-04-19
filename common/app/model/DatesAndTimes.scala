@@ -119,7 +119,9 @@ object GUDateTimeFormatNew {
       case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
     }
   }
-  def dateTimeToLiveBlogDisplay(dateTime: DateTime, timezone: DateTimeZone): String = {
-    dateTime.toString(DateTimeFormat.forPattern("HH:mm z").withZone(timezone))
+  def formatTimeForDisplayNoTimezone(dateTime: DateTime, request: RequestHeader): String = {
+    val edition = Edition(request)
+    val timezone = edition.timezone
+    dateTime.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone))
   }
 }
