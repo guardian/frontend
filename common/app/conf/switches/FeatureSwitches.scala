@@ -523,4 +523,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val KeyEventsCarousel = Switch(
+    SwitchGroup.Feature,
+    "key-events-carousel",
+    "When ON, shows the new key events timeline carousel and hides the old key events timeline",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
