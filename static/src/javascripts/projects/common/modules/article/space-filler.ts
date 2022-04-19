@@ -59,7 +59,7 @@ class SpaceFiller {
 	fillSpace(
 		rules: SpacefinderRules,
 		writer: SpacefinderWriter,
-		options: SpacefinderOptions,
+		options?: SpacefinderOptions,
 	): Promise<boolean> {
 		const insertNextContent = () =>
 			findSpace(rules, options)
