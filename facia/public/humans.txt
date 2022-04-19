@@ -133,6 +133,10 @@ Engineer: Chris Jones
 Location: London, UK
 Github: chrislomaxjones
 
+Client-Side Developer: Lucy Monie Hall
+Location: Flinders, Victoria, Australia
+Seconded from: London UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
