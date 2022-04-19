@@ -9,11 +9,7 @@ type PassbackMessagePayload = {
 const getValuesForKeys = (
 	keys: string[],
 	valueFn: (key: string) => string[],
-): Array<[string, string[]]> =>
-	keys.reduce((acc: Array<[string, string[]]>, key: string) => {
-		acc.push([key, valueFn(key)]);
-		return acc;
-	}, []);
+): Array<[string, string[]]> => keys.map((key) => [key, valueFn(key)]);
 
 const labelHeight = 24;
 
