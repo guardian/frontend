@@ -52,9 +52,9 @@ type SpacefinderRules = {
 type SpacefinderWriter = (paras: HTMLElement[]) => Promise<void>;
 
 type SpacefinderOptions = {
-	waitForLinks?: boolean;
-	waitForImages?: boolean;
-	waitForInteractives?: boolean;
+	waitForLinks: boolean;
+	waitForImages: boolean;
+	waitForInteractives: boolean;
 	debug?: boolean;
 };
 
