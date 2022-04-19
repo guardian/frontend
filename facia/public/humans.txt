@@ -104,7 +104,6 @@ Engineer: Oliver Lloyd
 From: London, UK
 Location: London, UK
 
-
 Engineer: Ashleigh (Ash) Carr
 Location: Brighton, UK
 Github: AshCorr
@@ -136,6 +135,10 @@ Github: chrislomaxjones
 Client-Side Developer: Lucy Monie Hall
 Location: Flinders, Victoria, Australia
 Seconded from: London UK
+
+Developer: Zeke Hunter-Green
+From: Spokane, WA
+Location: London, UK
 
 /* ---------------------------------------------------- */
 /* FORMER                                               */
