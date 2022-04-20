@@ -140,6 +140,10 @@ Developer: Zeke Hunter-Green
 From: Spokane, WA
 Location: London, UK
 
+Developer: Simon Byford
+From: Ipswich, UK
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
