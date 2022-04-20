@@ -1,6 +1,7 @@
 // total_hours_spent_maintaining_this = 81.5
 
 import { memoize } from 'lodash-es';
+import { amIUsed } from 'commercial/sentinel';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 import { noop } from 'lib/noop';
@@ -96,10 +97,11 @@ const isIframe = (node: Node): node is HTMLIFrameElement =>
 	node instanceof HTMLIFrameElement;
 
 const isIframeLoaded = (iframe: HTMLIFrameElement) => {
-	// TODO do we need this try / catch?
 	try {
 		return iframe.contentWindow?.document.readyState === 'complete';
 	} catch (err) {
+		// TODO remove try / catch if an error is never thrown
+		amIUsed('spacefinder.ts', 'isIframeLoaded');
 		return true;
 	}
 };
