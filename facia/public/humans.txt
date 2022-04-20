@@ -144,6 +144,10 @@ Developer: Silvija Blaslov
 From: Samobor, Croatia
 Location: London, UK
 
+Developer: Simon Byford
+From: Ipswich, UK
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
