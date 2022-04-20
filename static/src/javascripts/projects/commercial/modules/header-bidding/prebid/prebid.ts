@@ -156,8 +156,8 @@ declare global {
 				config: {
 					customPriceBucket?: PrebidPriceGranularity;
 					/**
-					 * This is a custom property that has been added to select
-					 * a price bucket based on the width and height of the slot
+					 * This is a custom property that has been added to our fork of prebid.js
+					 * to select a price bucket based on the width and height of the slot
 					 */
 					guCustomPriceBucket?: (bid: {
 						width: number;
