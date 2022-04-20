@@ -45,7 +45,7 @@ import scala.concurrent.Future
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
     val returnUrlVerifier = mock[ReturnUrlVerifier]
-    val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+    val newsletterService = spy(new NewsletterService(api))
     val httpConfiguration = HttpConfiguration.createWithDefaults()
     val newsletterSignupAgent = mock[NewsletterSignupAgent]
 
