@@ -3,7 +3,7 @@ package controllers
 import actions.AuthenticatedActions
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.Consent.Supporter
-import com.gu.identity.model.{EmailNewsletters, _}
+import com.gu.identity.model._
 import controllers.editprofile.EditProfileController
 import form._
 import idapiclient.{Auth, TrackingData, _}
