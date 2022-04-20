@@ -208,13 +208,14 @@ class LiveBlogController(
       _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
     }
 
-    val filteredBlocks = if (filterKeyEvents) {
-      requestedBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
-    } else requestedBlocks
-
-    filteredBlocks.takeWhile { block =>
+    val latestBlocks = requestedBlocks.takeWhile { block =>
       block.id != lastUpdateBlockId.lastUpdate
     }
+
+    if (filterKeyEvents) {
+      latestBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
+    } else latestBlocks
+
   }
 
   private[this] def getNewBlocks(
