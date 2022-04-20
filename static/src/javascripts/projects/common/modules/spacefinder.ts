@@ -83,7 +83,7 @@ const query = (selector: string, context?: HTMLElement | Document) => [
 
 // maximum time (in ms) to wait for images to be loaded and rich links
 // to be upgraded
-const LOADING_TIMEOUT = 5000;
+const LOADING_TIMEOUT = 5_000;
 
 const defaultOptions = {
 	waitForImages: true,
