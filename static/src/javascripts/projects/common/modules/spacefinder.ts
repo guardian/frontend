@@ -232,14 +232,14 @@ const enforceRules = (
 	candidates = filtered;
 
 	// enforce content meta rule
-	if (rules.clearContentMeta !== undefined) {
+	const clearContentMeta = rules.clearContentMeta;
+	if (clearContentMeta !== undefined) {
 		[filtered, exclusions] = partition(
 			candidates,
 			(candidate) =>
 				!!measurements.contentMeta &&
 				candidate.top >
-					measurements.contentMeta.bottom +
-						(rules.clearContentMeta ?? 0), // why do we need to do this despite the type guard?
+					measurements.contentMeta.bottom + clearContentMeta,
 		);
 		spacefinderExclusions.contentMeta = exclusions;
 		candidates = filtered;
