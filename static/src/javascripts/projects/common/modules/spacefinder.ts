@@ -371,8 +371,7 @@ const getMeasurements = (
 		const opponentsWithDims = opponents.reduce<
 			Record<string, SpacefinderItem[]>
 		>((result, [selector, selectedElements]) => {
-			const x = selectedElements.map(getDimensions);
-			result[selector] = x;
+			result[selector] = selectedElements.map(getDimensions);
 			return result;
 		}, {});
 		return {
