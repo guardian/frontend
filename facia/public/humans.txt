@@ -140,6 +140,10 @@ Developer: Zeke Hunter-Green
 From: Spokane, WA
 Location: London, UK
 
+Developer: Silvija Blaslov
+From: Samobor, Croatia
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
