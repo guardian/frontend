@@ -125,7 +125,7 @@ const onRichLinksUpgraded = memoize(
 	getFuncId,
 );
 
-const onInteractivesLoaded = memoize((rules: SpacefinderRules) => {
+const onInteractivesLoaded = memoize(async (rules: SpacefinderRules) => {
 	const notLoaded = query('.element-interactive', rules.body).filter(
 		(interactive) => {
 			const iframes = Array.from(interactive.children).filter(isIframe);
@@ -136,35 +136,34 @@ const onInteractivesLoaded = memoize((rules: SpacefinderRules) => {
 	if (notLoaded.length === 0 || !('MutationObserver' in window))
 		return Promise.resolve();
 
-	return Promise.all(
-		notLoaded.map(
-			(interactive) =>
-				new Promise<void>((resolve) => {
-					new MutationObserver((records, instance) => {
-						if (
-							!records.length ||
-							!records[0].addedNodes.length ||
-							!isIframe(records[0].addedNodes[0])
-						) {
-							return;
-						}
+	const mutations = notLoaded.map(
+		(interactive) =>
+			new Promise<void>((resolve) => {
+				new MutationObserver((records, instance) => {
+					if (
+						!records.length ||
+						!records[0].addedNodes.length ||
+						!isIframe(records[0].addedNodes[0])
+					) {
+						return;
+					}
 
-						const iframe = records[0].addedNodes[0];
-						if (isIframeLoaded(iframe)) {
+					const iframe = records[0].addedNodes[0];
+					if (isIframeLoaded(iframe)) {
+						instance.disconnect();
+						resolve();
+					} else {
+						iframe.addEventListener('load', () => {
 							instance.disconnect();
 							resolve();
-						} else {
-							iframe.addEventListener('load', () => {
-								instance.disconnect();
-								resolve();
-							});
-						}
-					}).observe(interactive, {
-						childList: true,
-					});
-				}),
-		),
-	).then(() => undefined);
+						});
+					}
+				}).observe(interactive, {
+					childList: true,
+				});
+			}),
+	);
+	await Promise.all(mutations);
 }, getFuncId);
 
 // test one element vs another for the given rules
