@@ -81,7 +81,7 @@ describe('priceGranularity', () => {
 		[[970, 250], granularityOption2],
 		[[300, 250], granularityOption2],
 	])(
-		'Ozone slot with size %d,%d gives correct granularity',
+		'Ozone slot with size %s gives correct granularity',
 		([width, height], expectedGranularity) => {
 			expect(ozonePriceGranularity(width, height)).toEqual(
 				expectedGranularity,
