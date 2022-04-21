@@ -1,7 +1,7 @@
 @import layout.WidthsByBreakpoint
 @import model.ImageMedia
 @import implicits.Requests._
-@import experiments.{ActiveExperiments, SlideshowCaptions}
+@import conf.switches.Switches.FrontsSlideshowMobileSupport
 
 @(
     classes: Seq[String],
@@ -22,11 +22,9 @@
         maybeSrc = maybeSrc,
         shouldLazyLoadIndex = shouldLazyLoadIndex
     )
-    @if(ActiveExperiments.isParticipating(SlideshowCaptions)) {
-        @caption.map { captionText =>
-            <figcaption>
-                @captionText
-            </figcaption>
-        }
+    @caption.map { captionText =>
+        <figcaption class="@if(FrontsSlideshowMobileSupport.isSwitchedOn) {fc-item__captioned-image-mobile-support}">
+            @captionText
+        </figcaption>
     }
 </figure>

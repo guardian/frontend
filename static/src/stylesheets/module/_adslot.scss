@@ -43,6 +43,7 @@
     @include font-size(12, 20);
     position: relative;
     height: $mpu-ad-label-height;
+    max-height: $mpu-ad-label-height;
     background-color: $brightness-97;
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $brightness-86;

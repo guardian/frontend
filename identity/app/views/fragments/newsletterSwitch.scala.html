@@ -1,10 +1,9 @@
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
-@import services.newsletters.NewsletterResponse
 
 @* Editorial Newsletter switch/checkbox *@
-
+@import services.newsletters.model.NewsletterResponse
 @(
     emailPrefsForm: Form[_],
     emailSubscriptions: List[String],
