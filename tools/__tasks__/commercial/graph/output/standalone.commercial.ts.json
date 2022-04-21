@@ -404,7 +404,9 @@
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/prebid-price-granularity.ts"
  ],
- "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
+ "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
+ ],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
  "../projects/commercial/modules/header-bidding/slot-config.ts": [
   "../lib/config.d.ts",
