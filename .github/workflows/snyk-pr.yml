@@ -1,0 +1,15 @@
+name: Snyk PR
+on:
+    pull_request:
+        paths:
+            - 'project/Dependencies.scala'
+            - 'project/plugins.sbt'
+            - 'package.json'
+jobs:
+    security:
+        uses: guardian/.github/.github/workflows/sbt-node-snyk-pr.yml@main
+        with:
+            ORG: guardian-dotcom
+            SEVERITY_THRESHOLD: critical
+        secrets:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
