@@ -15,6 +15,7 @@ type CreateSlotOptions = {
 	classes?: string;
 	name?: string;
 	sizes?: Record<string, AdSize[] | undefined>; // allow an empty object
+	includeContainer?: boolean;
 };
 
 const commonSizeMappings: SizeMappings = {
@@ -160,6 +161,7 @@ const createAdSlotElement = (
 	name: string,
 	attrs: Record<string, string>,
 	classes: string[],
+	includeContainer: boolean,
 ): HTMLElement => {
 	const id = `${adSlotIdPrefix}${name}`;
 
@@ -179,13 +181,23 @@ const createAdSlotElement = (
 	// The 'main' adSlot
 	const adSlot = document.createElement('div');
 	adSlot.id = id;
-	adSlot.className = `js-ad-slot ad-slot ${classes.join(' ')}`;
+	adSlot.className = `js-ad-slot ad-slot ${
+		includeContainer ? '' : classes.join(' ')
+	}`;
 	adSlot.setAttribute('data-link-name', `ad slot ${name}`);
 	adSlot.setAttribute('data-name', name);
 	adSlot.setAttribute('aria-hidden', 'true');
 	Object.keys(attrs).forEach((attr) => {
 		adSlot.setAttribute(attr, attrs[attr]);
 	});
+
+	if (includeContainer) {
+		const container = document.createElement('div');
+		container.className = `ad-slot-container ${classes.join(' ')}`;
+		container.appendChild(adSlot);
+
+		return container;
+	}
 
 	return adSlot;
 };
@@ -270,6 +282,7 @@ export const createAdSlot = (
 ): HTMLElement => {
 	const adSlotConfig = adSlotConfigs[type];
 	const slotName = options.name ?? adSlotConfig.name ?? type;
+	const includeContainer = options.includeContainer ?? false;
 
 	const sizeMappings = concatSizeMappings(
 		adSlotConfig.sizeMappings,
@@ -290,5 +303,6 @@ export const createAdSlot = (
 		slotName,
 		createDataAttributes(attributes),
 		createClasses(slotName, options.classes),
+		includeContainer,
 	);
 };

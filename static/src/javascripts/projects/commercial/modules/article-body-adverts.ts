@@ -35,11 +35,13 @@ const insertAdAtPara = (
 	type: string,
 	classes?: string,
 	sizes?: SizeMappings,
+	includeContainer?: boolean,
 ): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
 		classes,
 		sizes,
+		includeContainer,
 	});
 
 	return fastdom
@@ -153,6 +155,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 								],
 						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
+					!isInline1,
 				);
 			});
 		await Promise.all(slots);
