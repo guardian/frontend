@@ -1,13 +1,7 @@
 package services
 
-import actions.AuthenticatedActions
-import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{EmailList, EmailNewsletters, Subscriber}
 import idapiclient.{IdApiClient, TrackingData}
-import idapiclient.responses.Error
 import play.api.data._
-import play.api.libs.json._
-import play.api.mvc._
 import utils.SafeLogging
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,7 +9,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * This is the old EmailController converted *as is* to a service to be consumed by EditProfileController
   */
-class NewsletterService(api: IdApiClient, idRequestParser: IdRequestParser, idUrlBuilder: IdentityUrlBuilder)(implicit
+class NewsletterService(api: IdApiClient)(implicit
     executionContext: ExecutionContext,
 ) extends SafeLogging {
 
@@ -38,14 +32,6 @@ class NewsletterService(api: IdApiClient, idRequestParser: IdRequestParser, idUr
       remove: List[String] = List(),
   ): List[String] = {
     (form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add).toList
-  }
-
-  def getV1EmailSubscriptions(
-      form: Form[EmailPrefsData],
-      add: List[String] = List(),
-      remove: List[String] = List(),
-  ): List[String] = {
-    getEmailSubscriptions(form, add, remove).filter(EmailNewsletters.v1ListIds.contains)
   }
 }
 

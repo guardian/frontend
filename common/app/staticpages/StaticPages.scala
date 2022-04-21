@@ -1,7 +1,7 @@
 package staticpages
 
 import model.{DotcomContentType, MetaData, SectionId, SimplePage, StandalonePage}
-import services.newsletters.{GroupedNewslettersResponse, NewsletterResponse}
+import services.newsletters.model.NewsletterResponse
 
 case class NewsletterRoundupPage(
     metadata: MetaData,

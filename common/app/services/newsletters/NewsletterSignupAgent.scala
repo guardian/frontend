@@ -2,6 +2,7 @@ package services.newsletters
 
 import common.{Box, GuLogging}
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
+import services.newsletters.model.NewsletterResponse
 
 import scala.concurrent.ExecutionContext
 

@@ -1,10 +1,10 @@
-@import services.newsletters.NewsletterResponse
 @import views.support.`package`.Seq2zipWithRowInfo
 @import staticpages.NewsletterRoundupPage
 @import conf.switches.Switches.EmailSignupRecaptcha
 @import conf.switches.Switches.ShowNewPrivacyWordingOnEmailSignupEmbeds
 @import common.LinkTo
 
+@import services.newsletters.model.NewsletterResponse
 @(signupPage: NewsletterRoundupPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @manageEmailsUrl = @{

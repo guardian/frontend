@@ -38,7 +38,7 @@ class EmailVerificationControllerTest
   val idRequest = mock[IdentityRequest]
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val signinService = mock[PlaySigninService]
-  val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+  val newsletterService = spy(new NewsletterService(api))
 
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))

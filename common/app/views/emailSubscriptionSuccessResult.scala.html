@@ -1,5 +1,5 @@
 
-@import services.newsletters.NewsletterResponse
+@import services.newsletters.model.NewsletterResponse
 @(page: model.Page, emailNewsletter: NewsletterResponse, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @electionNewsletters = @{List("minute-us", "us-morning-newsletter", "today-us", "green-light")}

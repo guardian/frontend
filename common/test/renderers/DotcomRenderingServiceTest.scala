@@ -1,6 +1,6 @@
 package renderers
 
-import model.{MetaData, Page}
+import model.{MetaData, Page, CacheTime}
 import model.dotcomrendering.PageType
 import org.apache.commons.codec.digest.DigestUtils
 import org.scalatest.mockito.MockitoSugar
@@ -31,13 +31,6 @@ import org.scalatest.concurrent.ScalaFutures
   val articleUrl = "politics/2021/oct/07/coronavirus-report-warned-of-impact-on-uk-four-years-before-pandemic"
   val post = PrivateMethod[Future[Result]]('post)
   val request = TestRequest()
-  private case class fakePage() extends Page {
-    override val metadata = MetaData.make(
-      id = "",
-      section = None,
-      webTitle = "",
-    )
-  }
   private val wsMock = mock[WSClient]
   private val wsResponseMock = mock[WSResponse]
   private val wsRequestMock = mock[WSRequest]
@@ -55,7 +48,7 @@ import org.scalatest.concurrent.ScalaFutures
         wsMock,
         payload,
         "https://endpoint.com",
-        fakePage(),
+        CacheTime.Default,
         Configuration.rendering.timeout,
         request,
       ),

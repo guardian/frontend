@@ -1,4 +1,4 @@
-@import services.newsletters.NewsletterResponse
+@import services.newsletters.model.NewsletterResponse
 @(page: model.Page, emailType: String, emailNewsletter: NewsletterResponse)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @emailEmbed(page) {

@@ -104,6 +104,50 @@ Engineer: Oliver Lloyd
 From: London, UK
 Location: London, UK
 
+Engineer: Ashleigh (Ash) Carr
+Location: Brighton, UK
+Github: AshCorr
+
+Developer: Fred O'Brien
+Twitter: @yagayagafred
+From: London, UK
+
+Engineer: Tom Pretty
+From: Nottingham, UK
+Location: London, UK
+
+Engineer: Mahesh Makani
+Twitter: @coldlink_
+From: London, UK
+
+Engineer: Mario Savarese
+Twitter: @mar_savar
+From: 40.8518° N, 14.2681° E
+
+Developer: Aditya Bhaskar
+Website: https://c306.net/now/
+Location: Guildford, Uk
+
+Engineer: Chris Jones
+Location: London, UK
+Github: chrislomaxjones
+
+Client-Side Developer: Lucy Monie Hall
+Location: Flinders, Victoria, Australia
+Seconded from: London UK
+
+Developer: Zeke Hunter-Green
+From: Spokane, WA
+Location: London, UK
+
+Developer: Silvija Blaslov
+From: Samobor, Croatia
+Location: London, UK
+
+Developer: Simon Byford
+From: Ipswich, UK
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
