@@ -40,6 +40,8 @@ const tcfv2WithConsentMock = (callback: Callback): void =>
 				[SOURCEPOINT_ID]: true,
 			},
 		},
+		canTarget: true,
+		framework: "tcfv2"
 	});
 const tcfv2WithoutConsentMock = (callback: Callback) =>
 	callback({
@@ -49,18 +51,24 @@ const tcfv2WithoutConsentMock = (callback: Callback) =>
 				[SOURCEPOINT_ID]: false,
 			},
 		},
+		canTarget: false,
+		framework: "tcfv2"
 	});
 const ccpaWithConsentMock = (callback: Callback) =>
 	callback({
 		ccpa: {
 			doNotSell: false,
 		},
+		canTarget: true,
+		framework: "ccpa"
 	});
 const ccpaWithoutConsentMock = (callback: Callback) =>
 	callback({
 		ccpa: {
 			doNotSell: true,
 		},
+		canTarget: false,
+		framework: "ccpa"
 	});
 
 const AusWithoutConsentMock = (callback: Callback) =>
@@ -68,6 +76,8 @@ const AusWithoutConsentMock = (callback: Callback) =>
 		aus: {
 			personalisedAdvertising: false,
 		},
+		canTarget: true,
+		framework: "aus"
 	});
 
 const AusWithConsentMock = (callback: Callback) =>
@@ -75,6 +85,8 @@ const AusWithConsentMock = (callback: Callback) =>
 		aus: {
 			personalisedAdvertising: true,
 		},
+		canTarget: false,
+		framework: "aus"
 	});
 
 jest.mock('@guardian/libs', () => {

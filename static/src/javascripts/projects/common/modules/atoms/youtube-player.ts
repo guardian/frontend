@@ -71,7 +71,10 @@ const canTarget = (state: ConsentState): boolean => {
 let resolveInitialConsent: (state: ConsentState) => void;
 const initialConsent = new Promise<ConsentState>((resolve) => {
 	// We don’t need to wait for consent if Ad-Free
-	if (commercialFeatures.adFree) resolve({});
+	if (commercialFeatures.adFree) resolve({
+		canTarget: false,
+		framework: "tcfv2"
+	});
 
 	resolveInitialConsent = resolve;
 });

@@ -44,6 +44,8 @@ const tcfv2AllConsentMock = (callback: Callback) =>
 			gdprApplies: true,
 			tcString: 'blablabla',
 		},
+		canTarget: true,
+		framework: "tcfv2"
 	});
 
 const tcfv2WithConsentMock = (callback: Callback) =>
@@ -67,6 +69,8 @@ const tcfv2WithConsentMock = (callback: Callback) =>
 			gdprApplies: true,
 			tcString: 'blablabla',
 		},
+		canTarget: false,
+		framework: "tcfv2"
 	});
 
 const tcfv2WithoutConsentMock = (callback: Callback) =>
@@ -90,6 +94,8 @@ const tcfv2WithoutConsentMock = (callback: Callback) =>
 			gdprApplies: true,
 			tcString: 'blablabla',
 		},
+		canTarget: false,
+		framework: "tcfv2"
 	});
 
 beforeEach(() => {
@@ -199,7 +205,11 @@ describe('third party tags', () => {
 		});
 		it('should add scripts to the document when CCPA consent has been given', async () => {
 			onConsentChange.mockImplementation((callback) =>
-				callback({ ccpa: { doNotSell: false } }),
+				callback({
+					ccpa: { doNotSell: false },
+					canTarget: true,
+					framework: "ccpa"
+				}),
 			);
 			getConsentFor.mockReturnValue(true);
 			await insertScripts(
@@ -210,7 +220,11 @@ describe('third party tags', () => {
 		});
 		it('should only add performance scripts to the document when CCPA consent has not been given', async () => {
 			onConsentChange.mockImplementation((callback) =>
-				callback({ ccpa: { doNotSell: true } }),
+				callback({
+					ccpa: { doNotSell: true },
+					canTarget: false,
+					framework: "ccpa"
+				}),
 			);
 			getConsentFor.mockReturnValue(false);
 			await insertScripts(

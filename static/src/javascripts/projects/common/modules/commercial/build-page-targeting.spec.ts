@@ -79,17 +79,29 @@ const mockViewport = (width: number, height: number): void => {
 };
 
 // CCPA
-const ccpaWithConsentMock: ConsentState = { ccpa: { doNotSell: false } };
+const ccpaWithConsentMock: ConsentState = {
+	ccpa: { doNotSell: false },
+	canTarget: true,
+	framework: "ccpa"
+};
 
-const ccpaWithoutConsentMock: ConsentState = { ccpa: { doNotSell: true } };
+const ccpaWithoutConsentMock: ConsentState = {
+	ccpa: { doNotSell: true },
+	canTarget: false,
+	framework: "ccpa"
+};
 
 // AUS
 const ausWithConsentMock: ConsentState = {
-	aus: { personalisedAdvertising: true },
+	aus: {personalisedAdvertising: true,},
+	canTarget: true,
+	framework: "aus"
 };
 
 const ausWithoutConsentMock: ConsentState = {
 	aus: { personalisedAdvertising: false },
+	canTarget: false,
+	framework: "aus"
 };
 
 // TCFv2
@@ -108,13 +120,21 @@ const tcfv2WithConsentMock: ConsentState = {
 		consents: { '1': true, '2': true },
 		eventStatus: 'useractioncomplete',
 	},
+	canTarget: true,
+	framework: "tcfv2"
 };
 
 const tcfv2WithoutConsentMock: ConsentState = {
 	tcfv2: { ...defaultState, consents: {}, eventStatus: 'cmpuishown' },
+	canTarget: false,
+	framework: "tcfv2"
 };
 
-const tcfv2NullConsentMock: ConsentState = { tcfv2: undefined };
+const tcfv2NullConsentMock: ConsentState = {
+	tcfv2: undefined,
+	canTarget: false,
+	framework: "tcfv2"
+};
 
 const tcfv2MixedConsentMock: ConsentState = {
 	tcfv2: {
@@ -122,6 +142,8 @@ const tcfv2MixedConsentMock: ConsentState = {
 		consents: { '1': false, '2': true },
 		eventStatus: 'useractioncomplete',
 	},
+	canTarget: false,
+	framework: "tcfv2"
 };
 
 describe('Build Page Targeting', () => {

@@ -2,9 +2,6 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import type { AUSConsentState } from '@guardian/consent-management-platform/dist/types/aus';
-import type { CCPAConsentState } from '@guardian/consent-management-platform/dist/types/ccpa';
-import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import _config from '../../../../lib/config';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -14,6 +11,7 @@ import { fillAdvertSlots } from './fill-advert-slots';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
+import {ConsentState} from "@guardian/consent-management-platform/dist/types";
 
 const config = _config as {
 	get: (k: string) => string;
@@ -179,7 +177,7 @@ const reset = () => {
 	dfpEnv.hbImpl = { prebid: false, a9: false };
 };
 
-const tcfv2WithConsent: { tcfv2: TCFv2ConsentState } = {
+const tcfv2WithConsent: ConsentState = {
 	tcfv2: {
 		consents: {
 			'1': true,
@@ -201,9 +199,11 @@ const tcfv2WithConsent: { tcfv2: TCFv2ConsentState } = {
 		gdprApplies: true,
 		tcString: 'BOGUS.YAA',
 	},
+	canTarget: true,
+	framework: "tcfv2"
 };
 
-const tcfv2WithoutConsent: { tcfv2: TCFv2ConsentState } = {
+const tcfv2WithoutConsent: ConsentState = {
 	tcfv2: {
 		consents: {
 			'1': false,
@@ -217,23 +217,33 @@ const tcfv2WithoutConsent: { tcfv2: TCFv2ConsentState } = {
 		gdprApplies: true,
 		tcString: 'BOGUS.YAA',
 	},
+	canTarget: false,
+	framework: "tcfv2"
 };
 
-const ausNotRejected: { aus: AUSConsentState } = {
+const ausNotRejected: ConsentState = {
 	aus: { personalisedAdvertising: true },
+	canTarget: true,
+	framework: "aus"
 };
 
-const ausRejected: { aus: AUSConsentState } = {
+const ausRejected: ConsentState = {
 	aus: { personalisedAdvertising: false },
+	canTarget: false,
+	framework: "aus"
 };
 
-const ccpaWithConsent: {
-	ccpa: CCPAConsentState;
-} = { ccpa: { doNotSell: false } };
+const ccpaWithConsent: ConsentState = {
+	ccpa: { doNotSell: false },
+	canTarget: true,
+	framework: "ccpa"
+};
 
-const ccpaWithoutConsent: {
-	ccpa: CCPAConsentState;
-} = { ccpa: { doNotSell: true } };
+const ccpaWithoutConsent: ConsentState = {
+	ccpa: { doNotSell: true },
+	canTarget: false,
+	framework: "ccpa"
+};
 
 describe('DFP', () => {
 	const domSnippet = `

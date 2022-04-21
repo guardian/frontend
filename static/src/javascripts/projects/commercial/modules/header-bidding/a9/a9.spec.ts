@@ -33,10 +33,16 @@ const tcfv2WithConsentMock = (callback: Callback) =>
 			gdprApplies: true,
 			tcString: 'blablabla',
 		},
+		canTarget: true,
+		framework: "tcfv2"
 	});
 
 const CcpaWithConsentMock = (callback: Callback) =>
-	callback({ ccpa: { doNotSell: false } });
+	callback({
+		ccpa: { doNotSell: false },
+		canTarget: true,
+		framework: "ccpa"
+	});
 
 jest.mock('../../../../../lib/raven');
 jest.mock('../../dfp/Advert', () =>
