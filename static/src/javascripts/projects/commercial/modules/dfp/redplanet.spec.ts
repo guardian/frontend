@@ -17,14 +17,14 @@ const AusWithConsentMock = (callback: (state: ConsentState) => void): void =>
 	callback({
 		aus: { personalisedAdvertising: true },
 		canTarget: true,
-		framework: "aus"
+		framework: 'aus',
 	});
 
 const AusWithoutConsentMock = (callback: (state: ConsentState) => void): void =>
 	callback({
 		aus: { personalisedAdvertising: true },
 		canTarget: false,
-		framework: "aus"
+		framework: 'aus',
 	});
 
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
@@ -74,7 +74,7 @@ const CcpaWithConsentMock = (callback: (state: ConsentState) => void): void =>
 	callback({
 		ccpa: { doNotSell: false },
 		canTarget: true,
-		framework: "ccpa"
+		framework: 'ccpa',
 	});
 
 const getConsentFor = getConsentFor_ as jest.MockedFunction<

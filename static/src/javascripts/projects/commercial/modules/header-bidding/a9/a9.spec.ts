@@ -34,14 +34,14 @@ const tcfv2WithConsentMock = (callback: Callback) =>
 			tcString: 'blablabla',
 		},
 		canTarget: true,
-		framework: "tcfv2"
+		framework: 'tcfv2',
 	});
 
 const CcpaWithConsentMock = (callback: Callback) =>
 	callback({
 		ccpa: { doNotSell: false },
 		canTarget: true,
-		framework: "ccpa"
+		framework: 'ccpa',
 	});
 
 jest.mock('../../../../../lib/raven');

@@ -45,7 +45,7 @@ const tcfv2AllConsentMock = (callback: Callback) =>
 			tcString: 'blablabla',
 		},
 		canTarget: true,
-		framework: "tcfv2"
+		framework: 'tcfv2',
 	});
 
 const tcfv2WithConsentMock = (callback: Callback) =>
@@ -70,7 +70,7 @@ const tcfv2WithConsentMock = (callback: Callback) =>
 			tcString: 'blablabla',
 		},
 		canTarget: false,
-		framework: "tcfv2"
+		framework: 'tcfv2',
 	});
 
 const tcfv2WithoutConsentMock = (callback: Callback) =>
@@ -95,7 +95,7 @@ const tcfv2WithoutConsentMock = (callback: Callback) =>
 			tcString: 'blablabla',
 		},
 		canTarget: false,
-		framework: "tcfv2"
+		framework: 'tcfv2',
 	});
 
 beforeEach(() => {
@@ -208,7 +208,7 @@ describe('third party tags', () => {
 				callback({
 					ccpa: { doNotSell: false },
 					canTarget: true,
-					framework: "ccpa"
+					framework: 'ccpa',
 				}),
 			);
 			getConsentFor.mockReturnValue(true);
@@ -223,7 +223,7 @@ describe('third party tags', () => {
 				callback({
 					ccpa: { doNotSell: true },
 					canTarget: false,
-					framework: "ccpa"
+					framework: 'ccpa',
 				}),
 			);
 			getConsentFor.mockReturnValue(false);

@@ -2,6 +2,7 @@ import {
 	getConsentFor as getConsentFor_,
 	onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import _config from '../../../../lib/config';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -11,7 +12,6 @@ import { fillAdvertSlots } from './fill-advert-slots';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
-import {ConsentState} from "@guardian/consent-management-platform/dist/types";
 
 const config = _config as {
 	get: (k: string) => string;
@@ -200,7 +200,7 @@ const tcfv2WithConsent: ConsentState = {
 		tcString: 'BOGUS.YAA',
 	},
 	canTarget: true,
-	framework: "tcfv2"
+	framework: 'tcfv2',
 };
 
 const tcfv2WithoutConsent: ConsentState = {
@@ -218,31 +218,31 @@ const tcfv2WithoutConsent: ConsentState = {
 		tcString: 'BOGUS.YAA',
 	},
 	canTarget: false,
-	framework: "tcfv2"
+	framework: 'tcfv2',
 };
 
 const ausNotRejected: ConsentState = {
 	aus: { personalisedAdvertising: true },
 	canTarget: true,
-	framework: "aus"
+	framework: 'aus',
 };
 
 const ausRejected: ConsentState = {
 	aus: { personalisedAdvertising: false },
 	canTarget: false,
-	framework: "aus"
+	framework: 'aus',
 };
 
 const ccpaWithConsent: ConsentState = {
 	ccpa: { doNotSell: false },
 	canTarget: true,
-	framework: "ccpa"
+	framework: 'ccpa',
 };
 
 const ccpaWithoutConsent: ConsentState = {
 	ccpa: { doNotSell: true },
 	canTarget: false,
-	framework: "ccpa"
+	framework: 'ccpa',
 };
 
 describe('DFP', () => {

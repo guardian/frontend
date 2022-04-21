@@ -46,7 +46,7 @@ jest.mock('@guardian/consent-management-platform', () => ({
 				addtlConsent: 'testaddtlConsent',
 			},
 			canTarget: true,
-			framework: "tcfv2"
+			framework: 'tcfv2',
 		}),
 	),
 }));
@@ -69,7 +69,7 @@ const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
 		addtlConsent: 'testaddtlConsent',
 	},
 	canTarget: true,
-	framework: "tcfv2"
+	framework: 'tcfv2',
 });
 
 const canTargetCCPA = (canTarget: boolean): ConsentState => ({
@@ -77,7 +77,7 @@ const canTargetCCPA = (canTarget: boolean): ConsentState => ({
 		doNotSell: !canTarget,
 	},
 	canTarget: canTarget,
-	framework: "ccpa"
+	framework: 'ccpa',
 });
 
 const canTargetAUS = (canTarget: boolean): ConsentState => ({
@@ -85,7 +85,7 @@ const canTargetAUS = (canTarget: boolean): ConsentState => ({
 		personalisedAdvertising: canTarget,
 	},
 	canTarget: canTarget,
-	framework: "aus"
+	framework: 'aus',
 });
 
 describe('create ads config', () => {
@@ -181,7 +181,7 @@ describe('Get Host (no-cookie)', () => {
 		const host = youtubePlayer.getHost({
 			state: {
 				canTarget: false,
-				framework: null
+				framework: null,
 			},
 			adFree: false,
 			classes: ['youtube-media-atom__iframe'],
@@ -195,7 +195,7 @@ describe('Get Host (no-cookie)', () => {
 			state: {
 				aus: { personalisedAdvertising: true },
 				canTarget: true,
-				framework: "aus"
+				framework: 'aus',
 			},
 			adFree: true,
 			classes: ['youtube-media-atom__iframe'],
@@ -209,7 +209,7 @@ describe('Get Host (no-cookie)', () => {
 			state: {
 				aus: { personalisedAdvertising: true },
 				canTarget: true,
-				framework: "aus"
+				framework: 'aus',
 			},
 			adFree: false,
 			classes: ['not sure'],
@@ -223,7 +223,7 @@ describe('Get Host (no-cookie)', () => {
 			state: {
 				aus: { personalisedAdvertising: true },
 				canTarget: true,
-				framework: "aus"
+				framework: 'aus',
 			},
 			adFree: false,
 			classes: ['youtube-media-atom__iframe'],

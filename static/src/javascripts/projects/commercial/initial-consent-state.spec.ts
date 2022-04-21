@@ -41,7 +41,7 @@ describe('getInitialConsentState', () => {
 		const consentState: ConsentState = {
 			tcfv2: tcfv2ConsentState,
 			canTarget: false,
-			framework: "tcfv2"
+			framework: 'tcfv2',
 		};
 		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
@@ -51,7 +51,7 @@ describe('getInitialConsentState', () => {
 		const consentState: ConsentState = {
 			ccpa: ccpaConsentState,
 			canTarget: true,
-			framework: "ccpa"
+			framework: 'ccpa',
 		};
 		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
@@ -61,7 +61,7 @@ describe('getInitialConsentState', () => {
 		const consentState: ConsentState = {
 			aus: ausConsentState,
 			canTarget: true,
-			framework: "aus"
+			framework: 'aus',
 		};
 		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
@@ -70,7 +70,7 @@ describe('getInitialConsentState', () => {
 	test('unknown region rejects', async () => {
 		const consentState = {
 			canTarget: false,
-			framework: null
+			framework: null,
 		} as ConsentState;
 		mockOnConsentChange(consentState);
 		await expect(getInitialConsentState()).rejects.toEqual(
