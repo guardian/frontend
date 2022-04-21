@@ -1,40 +1,13 @@
 package services.newsletters
 
-import com.gu.identity.model.{EmailEmbed, NewsletterIllustration}
 import common.{BadConfigurationException, GuLogging}
 import conf.Configuration._
-import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
+import play.api.libs.json.{JsError, JsSuccess, JsValue}
 import play.api.libs.ws.WSClient
+import services.newsletters.model.NewsletterResponse
 
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
-
-case class NewsletterResponse(
-    identityName: String,
-    name: String,
-    brazeNewsletterName: String,
-    brazeSubscribeAttributeName: String,
-    brazeSubscribeEventNamePrefix: String,
-    theme: String,
-    description: String,
-    frequency: String,
-    listIdV1: Int,
-    listId: Int,
-    exampleUrl: Option[String],
-    emailEmbed: EmailEmbed,
-    illustration: Option[NewsletterIllustration] = None,
-    signupPage: Option[String],
-    restricted: Boolean,
-    paused: Boolean,
-    emailConfirmation: Boolean,
-    group: String,
-)
-
-object NewsletterResponse {
-  implicit val emailEmbedReads = Json.reads[EmailEmbed]
-  implicit val newsletterIllustrationReads = Json.reads[NewsletterIllustration]
-  implicit val newsletterResponseReads = Json.reads[NewsletterResponse]
-}
 
 object GroupedNewslettersResponse {
   type GroupedNewslettersResponse = List[(String, List[NewsletterResponse])]

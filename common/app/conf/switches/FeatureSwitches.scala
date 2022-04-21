@@ -504,4 +504,33 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
+  val FrontsSlideshowMobileSupport = Switch(
+    SwitchGroup.Feature,
+    "fronts-slideshow-mobile-support",
+    "Enables using captions and slideshows on fronts mobile displays",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
+
+  val StickyVideos = Switch(
+    SwitchGroup.Feature,
+    "sticky-videos",
+    "When ON, videos in liveblogs will 'stick' on the screen as the reader scrolls up and down the blog",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val KeyEventsCarousel = Switch(
+    SwitchGroup.Feature,
+    "key-events-carousel",
+    "When ON, shows the new key events timeline carousel and hides the old key events timeline",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
