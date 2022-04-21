@@ -181,7 +181,7 @@ describe('Get Host (no-cookie)', () => {
 		const host = youtubePlayer.getHost({
 			state: {
 				canTarget: false,
-				framework: "tcfv2"
+				framework: null
 			},
 			adFree: false,
 			classes: ['youtube-media-atom__iframe'],

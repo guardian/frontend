@@ -70,7 +70,7 @@ describe('getInitialConsentState', () => {
 	test('unknown region rejects', async () => {
 		const consentState = {
 			canTarget: false,
-			framework: "tcfv2"
+			framework: null
 		} as ConsentState;
 		mockOnConsentChange(consentState);
 		await expect(getInitialConsentState()).rejects.toEqual(

@@ -112,7 +112,7 @@ const ausWithoutConsentMock = (callback: Callback) =>
 
 const invalidWithoutConsentMock = (callback: Callback) => callback({
 	canTarget: false,
-	framework: "tcfv2"
+	framework: null
 });
 
 const originalUA = navigator.userAgent;
