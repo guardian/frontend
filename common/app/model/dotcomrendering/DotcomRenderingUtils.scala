@@ -50,14 +50,14 @@ object DotcomRenderingUtils {
   }
 
   def makeCricketMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
-    val cricketDate = articlePage.getJavascriptConfig.get("cricketMatchDate").map(_.toString)
-    val cricketTeam = articlePage.getJavascriptConfig.get("cricketTeam").map(_.toString)
+    val cricketDate = articlePage.item.content.cricketMatchDate
+    val cricketTeam = articlePage.item.content.cricketTeam
 
     (cricketDate, cricketTeam) match {
       case (Some(date), Some(team)) =>
         Some(
           DotcomRenderingMatchData(
-            s"${Configuration.ajax.url}/sport/cricket/match/${date.replaceAll("\"", "")}/${team.replaceAll("\"", "")}.json?dcr=true",
+            s"${Configuration.ajax.url}/sport/cricket/match/$date/${team}.json?dcr=true",
             CricketMatchType,
           ),
         )
