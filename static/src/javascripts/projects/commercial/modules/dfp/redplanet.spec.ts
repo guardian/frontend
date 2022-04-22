@@ -16,11 +16,15 @@ const isInAuOrNz = isInAuOrNz_ as jest.MockedFunction<typeof isInAuOrNz_>;
 const AusWithConsentMock = (callback: (state: ConsentState) => void): void =>
 	callback({
 		aus: { personalisedAdvertising: true },
+		canTarget: true,
+		framework: 'aus',
 	});
 
 const AusWithoutConsentMock = (callback: (state: ConsentState) => void): void =>
 	callback({
 		aus: { personalisedAdvertising: true },
+		canTarget: false,
+		framework: 'aus',
 	});
 
 const onConsentChange = onConsentChange_ as jest.MockedFunction<
@@ -67,7 +71,11 @@ jest.mock('@guardian/libs', () => ({
 }));
 
 const CcpaWithConsentMock = (callback: (state: ConsentState) => void): void =>
-	callback({ ccpa: { doNotSell: false } });
+	callback({
+		ccpa: { doNotSell: false },
+		canTarget: true,
+		framework: 'ccpa',
+	});
 
 const getConsentFor = getConsentFor_ as jest.MockedFunction<
 	typeof getConsentFor_
