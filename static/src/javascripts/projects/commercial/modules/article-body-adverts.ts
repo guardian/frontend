@@ -155,7 +155,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 								],
 						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
-					!isInline1,
+					false,
 				);
 			});
 		await Promise.all(slots);
