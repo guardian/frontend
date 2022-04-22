@@ -5,7 +5,6 @@ import { amIUsed } from 'commercial/sentinel';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 import { noop } from 'lib/noop';
-import { partition } from 'lib/partition';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { markCandidates } from './mark-candidates';
@@ -46,7 +45,7 @@ type SpacefinderRules = {
 	// custom rules using selectors.
 	selectors?: Record<string, RuleSpacing>;
 	// will run each slot through this fn to check if it must be counted in
-	filter?: (x: SpacefinderItem) => boolean;
+	filter?: (x: SpacefinderItem, lastWinner?: SpacefinderItem) => boolean;
 	// will remove slots before this one
 	startAt?: HTMLElement;
 	// will remove slots from this one on
@@ -166,6 +165,22 @@ const onInteractivesLoaded = memoize(async (rules: SpacefinderRules) => {
 	await Promise.all(mutations);
 }, getFuncId);
 
+const partitionCandidates = <T>(
+	list: T[],
+	filterElement: (element: T, lastFilteredElement: T) => boolean,
+) => {
+	const filtered: T[] = [];
+	const exclusions: T[] = [];
+	list.forEach((element) => {
+		if (filterElement(element, filtered[filtered.length - 1])) {
+			filtered.push(element);
+		} else {
+			exclusions.push(element);
+		}
+	});
+	return [filtered, exclusions];
+};
+
 // test one element vs another for the given rules
 const testCandidate = (
 	rule: RuleSpacing,
@@ -213,7 +228,7 @@ const enforceRules = (
 	let candidates = measurements.candidates;
 
 	// enforce absoluteMinAbove rule
-	let [filtered, exclusions] = partition(
+	let [filtered, exclusions] = partitionCandidates(
 		candidates,
 		(candidate) =>
 			!rules.absoluteMinAbove ||
@@ -223,7 +238,7 @@ const enforceRules = (
 	candidates = filtered;
 
 	// enforce minAbove and minBelow rules
-	[filtered, exclusions] = partition(candidates, (candidate) => {
+	[filtered, exclusions] = partitionCandidates(candidates, (candidate) => {
 		const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
 		const farEnoughFromBottomOfBody =
 			candidate.top + rules.minBelow <= measurements.bodyHeight;
@@ -235,7 +250,7 @@ const enforceRules = (
 	// enforce content meta rule
 	const { clearContentMeta } = rules;
 	if (clearContentMeta !== undefined) {
-		[filtered, exclusions] = partition(
+		[filtered, exclusions] = partitionCandidates(
 			candidates,
 			(candidate) =>
 				!!measurements.contentMeta &&
@@ -250,14 +265,16 @@ const enforceRules = (
 	if (rules.selectors) {
 		const selectorExclusions: SpacefinderItem[] = [];
 		for (const [selector, rule] of Object.entries(rules.selectors)) {
-			[filtered, exclusions] = partition(candidates, (candidate) =>
-				testCandidates(
-					rule,
-					candidate,
-					measurements.opponents
-						? measurements.opponents[selector]
-						: [],
-				),
+			[filtered, exclusions] = partitionCandidates(
+				candidates,
+				(candidate) =>
+					testCandidates(
+						rule,
+						candidate,
+						measurements.opponents
+							? measurements.opponents[selector]
+							: [],
+					),
 			);
 			spacefinderExclusions[selector] = exclusions;
 			selectorExclusions.push(...exclusions);
@@ -269,7 +286,7 @@ const enforceRules = (
 	}
 
 	if (rules.filter) {
-		[filtered, exclusions] = partition(candidates, rules.filter);
+		[filtered, exclusions] = partitionCandidates(candidates, rules.filter);
 		spacefinderExclusions.custom = exclusions;
 		candidates = filtered;
 	}
@@ -312,23 +329,29 @@ const getCandidates = (
 	}
 	if (rules.startAt) {
 		let drop = true;
-		const [filtered, exclusions] = partition(candidates, (candidate) => {
-			if (candidate === rules.startAt) {
-				drop = false;
-			}
-			return !drop;
-		});
+		const [filtered, exclusions] = partitionCandidates(
+			candidates,
+			(candidate) => {
+				if (candidate === rules.startAt) {
+					drop = false;
+				}
+				return !drop;
+			},
+		);
 		spacefinderExclusions.startAt = exclusions;
 		candidates = filtered;
 	}
 	if (rules.stopAt) {
 		let keep = true;
-		const [filtered, exclusions] = partition(candidates, (candidate) => {
-			if (candidate === rules.stopAt) {
-				keep = false;
-			}
-			return keep;
-		});
+		const [filtered, exclusions] = partitionCandidates(
+			candidates,
+			(candidate) => {
+				if (candidate === rules.stopAt) {
+					keep = false;
+				}
+				return keep;
+			},
+		);
 		spacefinderExclusions.stopAt = exclusions;
 		candidates = filtered;
 	}
