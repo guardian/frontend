@@ -112,7 +112,7 @@ object Badges {
   val ausElection2022 =
     Badge("australia-news/australian-election-2022", Static("images/badges/australian-election-2022.svg"))
   val newsletters =
-    Badge("tone/newsletter", Static("images/badges/newsletter-badge.svg"))
+    Badge("tone/newsletter-tone", Static("images/badges/newsletter-badge.svg"))
 
   val allBadges = Seq(
     newArrivals,
