@@ -114,7 +114,7 @@
                         <a class="menu-item__title @item.classList.mkString(" ")"
                            href="@item.url"
                            role="menuitem"
-                           data-link-name="nav2 : @item.title">
+                           data-link-name="nav2 : secondary : @item.title">
                             @item.title
                         </a>
                     </li>
@@ -135,7 +135,7 @@
                         <a class="@{"menu-item__title " ++ item.classList.mkString(" ")}"
                            href="@LinkTo { @item.url }"
                            role="menuitem"
-                           data-link-name="nav2 : @item.title">
+                           data-link-name="nav2 : secondary : @item.title">
                             @item.title
                         </a>
                     </li>
@@ -151,7 +151,7 @@
                         <a class="menu-item__title"
                             role="menuitem"
                             href="@LinkTo { @item.url }"
-                            data-link-name="nav2 : @item.title">
+                            data-link-name="nav2 : secondary : @item.title">
                             @item.title
                         </a>
                     </li>
@@ -162,7 +162,7 @@
                     <a class="menu-item__title"
                        href="https://www.facebook.com/theguardian"
                        role="menuitem"
-                       data-link-name="nav2 : facebook">
+                       data-link-name="nav2 : secondary : facebook">
                         @fragments.inlineSvg("share-facebook", "icon", List("menu-item__icon"), isPresentation = true)
                         Facebook
                     </a>
@@ -173,7 +173,7 @@
                     <a class="menu-item__title"
                        href="https://twitter.com/guardian"
                        role="menuitem"
-                       data-link-name="nav2 : twitter">
+                       data-link-name="nav2 : secondary : twitter">
                         @fragments.inlineSvg("share-twitter", "icon", List("menu-item__icon"), isPresentation = true)
                         Twitter
                     </a>
