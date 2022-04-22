@@ -1,10 +1,12 @@
 package views.support
 
 import model.{MetaData, SectionId}
-import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, OptionValues}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.{BeforeAndAfterEach, OptionValues}
+import org.scalatest.matchers.should.Matchers
 import views.support.Commercial.topAboveNavSlot
 
-class CommercialTest extends FlatSpec with Matchers with OptionValues with BeforeAndAfterEach {
+class CommercialTest extends AnyFlatSpec with Matchers with OptionValues with BeforeAndAfterEach {
 
   private def metaDataFromId(pageId: String): MetaData =
     MetaData.make(

@@ -2,10 +2,11 @@ package frontpress
 
 import helpers.FaciaTestData
 import model.facia.PressedCollection
-import org.scalatest.{FlatSpec, Matchers}
 import com.gu.facia.client.models.{AnyPlatform, AppCollection, CollectionPlatform, WebCollection}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class PressedCollectionVisibilityTest extends FlatSpec with Matchers with FaciaTestData {
+class PressedCollectionVisibilityTest extends AnyFlatSpec with Matchers with FaciaTestData {
 
   trait PressedCollectionVisibilityScope {
     val collections: List[PressedCollection] = ukFaciaPage.collections.map { collection =>

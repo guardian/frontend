@@ -1,9 +1,10 @@
 package html
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.twirl.api.Html
 
-class BrazeEmailFormatterTest extends FlatSpec with Matchers {
+class BrazeEmailFormatterTest extends AnyFlatSpec with Matchers {
 
   "HtmlLinkUtimInsertion" should "insert utm code place holders into an HTML string" in {
     val rawHtml =

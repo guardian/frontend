@@ -1,6 +1,8 @@
 package test
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Ignore, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{DoNotDiscover, Ignore}
 
 /*
   I'm getting endless timeouts trying to run this locally and as a result am missing the
@@ -8,7 +10,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Ignore, Matchers}
   Temporarily ignoring the navigation interaction parts of the test to see if we can move
   this on.
  */
-@DoNotDiscover @Ignore class AllIndexTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover @Ignore class AllIndexTemplateTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
   it should "render the /all page and navigate backwards and forwards" in goTo("/world/2019/jan/31/all") { browser =>
     import browser._
 
@@ -25,7 +27,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Ignore, Matchers}
   }
 }
 
-@DoNotDiscover class AllIndexTemplateTestLite extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class AllIndexTemplateTestLite extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
   it should "render the /all page and the correct Older and Newer button links for 2019 Jan 31" in goTo(
     "/world/2019/jan/31/all",
   ) { browser =>

@@ -2,13 +2,14 @@ package test
 
 import org.scalatest._
 import play.api.test.TestBrowser
-import org.fluentlenium.core.domain.FluentWebElement
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
 
-@DoNotDiscover class FaciaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class FaciaFeatureTest extends AnyFeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
-  feature("Facia") {
+  Feature("Facia") {
 
-    feature("Sponsorships") {
+    Feature("Sponsorships") {
 
       def testFrontSponsorship(browser: TestBrowser, sponsorshipType: String): Assertion = {
         import browser._
@@ -47,7 +48,7 @@ import org.fluentlenium.core.domain.FluentWebElement
         *
        * If they fail often, might need to look into setting up a reliable data source
         */
-      scenario("Advertisement Feature Front") {
+      Scenario("Advertisement Feature Front") {
 
         Given("I am on an advertisement feature front")
         goTo("/sustainable-business/hm-partner-zone") { browser =>
@@ -56,7 +57,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 
       }
 
-      scenario("Advertisement Feature Container") {
+      Scenario("Advertisement Feature Container") {
 
         Given("I am on a front with an advertisement feature container")
         goTo("/lifeandstyle/live-better") { browser =>
@@ -65,7 +66,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 
       }
 
-      scenario("Sponsored Front") {
+      Scenario("Sponsored Front") {
 
         Given("I am on a sponsored front")
         goTo("/lifeandstyle/live-better") { browser =>
@@ -74,7 +75,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 
       }
 
-      scenario("Sponsored Container") {
+      Scenario("Sponsored Container") {
 
         Given("I am on a front with a sponsored container")
         goTo("/lifeandstyle/live-better") { browser =>
@@ -83,7 +84,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 
       }
 
-      scenario("Foundation Supported Front") {
+      Scenario("Foundation Supported Front") {
 
         Given("I am on a foundation supported front")
         goTo("/global-development") { browser =>
@@ -92,7 +93,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 
       }
 
-      scenario("Foundation Supported Container") {
+      Scenario("Foundation Supported Container") {
 
         Given("I am on a front with a foundation supported container")
         goTo("/global-development") { browser =>

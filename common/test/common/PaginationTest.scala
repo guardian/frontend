@@ -1,8 +1,9 @@
 package common
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class PaginationTest extends FlatSpec with Matchers {
+class PaginationTest extends AnyFlatSpec with Matchers {
 
   it should "return the correct set of pages for pagination navigation" in {
     Pagination(1, 10, 1000).pages should be(List(1, 2, 3, 4))

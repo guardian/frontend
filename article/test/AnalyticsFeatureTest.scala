@@ -1,18 +1,21 @@
 package test
 
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest.{DoNotDiscover, GivenWhenThen}
+
 import collection.JavaConverters._
 import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
 
 @DoNotDiscover class AnalyticsFeatureTest
-    extends FeatureSpec
+    extends AnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with ConfiguredTestSuite {
   implicit val config = Configuration
 
-  feature("Analytics") {
+  Feature("Analytics") {
 
     conf.switches.Switches.EnableDiscussionSwitch.switchOff()
     // Feature
@@ -23,7 +26,7 @@ import conf.Configuration
 
     // Scenarios
 
-    scenario("Ensure all clicked links are recorded by Analytics") {
+    Scenario("Ensure all clicked links are recorded by Analytics") {
       Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
       goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
@@ -33,7 +36,7 @@ import conf.Configuration
 
     }
 
-    scenario("Ophan tracks user actions")(pending)
+    Scenario("Ophan tracks user actions")(pending)
 
   }
 

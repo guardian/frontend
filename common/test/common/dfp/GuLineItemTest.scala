@@ -3,9 +3,10 @@ package common.dfp
 import common.dfp.AdSize.leaderboardSize
 import org.joda.time.DateTime
 import org.joda.time.DateTime.now
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class GuLineItemTest extends FlatSpec with Matchers {
+class GuLineItemTest extends AnyFlatSpec with Matchers {
 
   private val defaultCreativePlaceholders =
     Seq(GuCreativePlaceholder(leaderboardSize, targeting = None))

@@ -1,12 +1,12 @@
 package idapiclient.parser
 
-import org.scalatest.path
 import net.liftweb.json.JsonAST.JValue
 import idapiclient.responses.{Error, HttpResponse}
-import org.scalatest.Matchers
 import net.liftweb.json.DefaultFormats
+import org.scalatest.freespec.PathAnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class JsonBodyParserTest extends path.FreeSpec with Matchers {
+class JsonBodyParserTest extends PathAnyFreeSpec with Matchers {
   case class TestType(test: String)
 
   val testErrors = List(Error("Test error", "Test description"))

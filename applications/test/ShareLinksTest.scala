@@ -1,12 +1,13 @@
 package test
 
 import com.gu.contentapi.client.model.v1.ItemResponse
-import contentapi.ContentApiClient
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.concurrent.{Futures, ScalaFutures}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 @DoNotDiscover class ShareLinksTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with Futures

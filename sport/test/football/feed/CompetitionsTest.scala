@@ -1,15 +1,16 @@
 package football.feed
 
 import java.time.{Clock, Duration, ZoneId, ZonedDateTime}
-
 import feed.Competitions
 import org.scalatest._
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 import pa.FootballMatch
-import test.FootballTestData.{competitions, result, liveMatch, fixture}
+import test.FootballTestData.{competitions, fixture, liveMatch, result}
 
 case class TestCase(isLive: Boolean, startTimeDelta: Duration, expectedStatus: Boolean)
 
-class CompetitionsTest extends FreeSpec with Matchers with OptionValues {
+class CompetitionsTest extends AnyFreeSpec with Matchers with OptionValues {
   "Competitions" - {
     Seq(
       TestCase(false, Duration.ofSeconds(1), true),

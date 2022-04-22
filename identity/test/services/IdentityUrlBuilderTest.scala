@@ -1,13 +1,13 @@
 package services
 
-import org.scalatest.path
-import org.scalatest.Matchers
-import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import idapiclient.TrackingData
+import org.scalatest.freespec.PathAnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 import test.WithTestIdConfig
 
-class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSugar with WithTestIdConfig {
+class IdentityUrlBuilderTest extends PathAnyFreeSpec with Matchers with MockitoSugar with WithTestIdConfig {
   val idRequest = mock[IdentityRequest]
   val omnitureTracking = mock[TrackingData]
   when(idRequest.trackingData) thenReturn omnitureTracking

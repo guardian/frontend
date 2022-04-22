@@ -1,12 +1,14 @@
 package test
 
-import controllers.{RecommendedContentCardController, RichLinkController}
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import controllers.RichLinkController
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.test.Helpers.{contentAsString, contentType, _}
 import play.api.test._
 
 @DoNotDiscover class OnwardContentCardControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

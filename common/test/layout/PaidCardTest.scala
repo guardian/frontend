@@ -2,9 +2,11 @@ package layout
 
 import common.facia.FixtureBuilder.mkPressedContent
 import model.pressed.{FreeHtmlKicker, ItemKicker, KickerProperties}
-import org.scalatest.{FlatSpec, Matchers, OptionValues}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.OptionValues
+import org.scalatest.matchers.should.Matchers
 
-class PaidCardTest extends FlatSpec with Matchers with OptionValues {
+class PaidCardTest extends AnyFlatSpec with Matchers with OptionValues {
 
   private def mkKicker(): ItemKicker =
     FreeHtmlKicker(

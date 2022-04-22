@@ -2,10 +2,10 @@ package utils
 
 import com.gu.facia.client.models.NZTerritory
 import helpers.FaciaTestData
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers._
+import metadata.MetaDataMatcher.{be, contain, not, convertToAnyShouldWrapper}
+import org.scalatest.flatspec.AnyFlatSpec
 
-class TargetedCollectionsTest extends FlatSpec with FaciaTestData {
+class TargetedCollectionsTest extends AnyFlatSpec with FaciaTestData {
 
   behavior of "FrontUtilsTest"
 

@@ -1,12 +1,12 @@
 package services
 
-import org.scalatest.FunSuite
-import org.scalatest.Matchers
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{FakeHeaders, FakeRequest}
 import test.WithTestIdConfig
 
-class ReturnUrlVerifierTest extends FunSuite with Matchers with WithTestIdConfig {
+class ReturnUrlVerifierTest extends AnyFunSuite with Matchers with WithTestIdConfig {
 
   val domain = testIdConfig.domain
 

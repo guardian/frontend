@@ -1,9 +1,9 @@
 package form
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class TelephoneNumberMappingTest extends WordSpec with Matchers {
+class TelephoneNumberMappingTest extends AnyWordSpec with Matchers {
 
   "Telephone Number Form Data" should {
     "be valid if neither country code or local number is provided" in {

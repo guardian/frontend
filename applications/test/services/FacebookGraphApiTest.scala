@@ -2,11 +2,13 @@ package services
 
 import helpers.FacebookGraphApiTestClient
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
 
 @DoNotDiscover class FacebookGraphApiTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
