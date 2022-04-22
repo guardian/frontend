@@ -249,7 +249,7 @@ const enforceRules = (
 
 	// enforce content meta rule
 	const { clearContentMeta } = rules;
-	if (clearContentMeta !== undefined) {
+	if (clearContentMeta) {
 		[filtered, exclusions] = partitionCandidates(
 			candidates,
 			(candidate) =>
