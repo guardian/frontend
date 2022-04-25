@@ -2,14 +2,10 @@
 
 import { memoize } from 'lodash-es';
 import { amIUsed } from 'commercial/sentinel';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 import { noop } from 'lib/noop';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { markCandidates } from './mark-candidates';
-import { onImagesLoadedBroken } from './on-images-loaded-broken.js';
-import { onImagesLoadedFixed } from './on-images-loaded-fixed.js';
 
 type RuleSpacing = {
 	minAbove: number;
@@ -107,12 +103,22 @@ const isIframeLoaded = (iframe: HTMLIFrameElement) => {
 
 const getFuncId = (rules: SpacefinderRules) => rules.bodySelector || 'document';
 
-const enableImageLoadingFix = () =>
-	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
+const isImage = (element: HTMLElement): element is HTMLImageElement =>
+	element instanceof HTMLImageElement;
 
-const onImagesLoaded = enableImageLoadingFix()
-	? onImagesLoadedFixed
-	: onImagesLoadedBroken;
+const onImagesLoaded = memoize((rules: SpacefinderRules) => {
+	const notLoaded = query('img', rules.body)
+		.filter(isImage)
+		.filter((img) => !img.complete && img.loading !== 'lazy');
+
+	const imgPromises = notLoaded.map(
+		(img) =>
+			new Promise((resolve) => {
+				img.addEventListener('load', resolve);
+			}),
+	);
+	return Promise.all(imgPromises);
+}, getFuncId);
 
 const onRichLinksUpgraded = memoize(
 	(rules: SpacefinderRules) =>
