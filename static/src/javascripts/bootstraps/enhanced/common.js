@@ -10,7 +10,6 @@ import { storage } from '@guardian/libs';
 import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
-import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import {
     refresh as refreshUserFeatures,
     extendContribsCookieExpiry,
@@ -100,17 +99,6 @@ const initialiseClickstream = () => {
 
 const loadAnalytics = () => {
     interactionTracking.init();
-    if (config.get('switches.ophan')) {
-        if (config.get('switches.scrollDepth')) {
-            mediator.on('scrolldepth:data', ophan.record);
-
-            new ScrollDepth({
-                isContent: /Article|LiveBlog/.test(
-                    config.get('page.contentType')
-                ),
-            });
-        }
-    }
 };
 
 const loadGoogleAnalytics = () => {
