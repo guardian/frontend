@@ -287,12 +287,8 @@ object DotcomRenderingUtils {
 
   def ensureSummaryTitle(block: APIBlock): APIBlock = {
     if (block.attributes.summary.contains(true) && block.title.isEmpty) {
-      val out = block.copy(title = Some("Summary"))
-      println(">>>> out", out)
-      out
-    } else {
-      block
-    }
+      block.copy(title = Some("Summary"))
+    } else block
   }
 
 }
