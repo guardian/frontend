@@ -449,4 +449,5 @@ export {
 	SpacefinderRules,
 	SpacefinderWriter,
 	SpacefinderOptions,
+	SpacefinderItem,
 };

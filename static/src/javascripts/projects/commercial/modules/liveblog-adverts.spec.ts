@@ -1,8 +1,8 @@
+import { spaceFiller } from '../../common/modules/article/space-filler';
 import type {
 	SpacefinderRules,
 	SpacefinderWriter,
-} from '../../common/modules/article/space-filler';
-import { spaceFiller } from '../../common/modules/article/space-filler';
+} from '../../common/modules/spacefinder';
 import { _, init } from './liveblog-adverts';
 
 const { getSlotName } = _;
