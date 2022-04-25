@@ -59,11 +59,6 @@ const insertAdAtPara = (
 const enableNearbyFilteringFix = () =>
 	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
 
-const enableRichLinksFix = !isInVariantSynchronous(
-	spacefinderOkrMegaTest,
-	'control',
-);
-
 const filterNearbyCandidates = enableNearbyFilteringFix()
 	? filterNearbyCandidatesFixed
 	: filterNearbyCandidatesBroken;
@@ -74,10 +69,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const tweakpoint = getTweakpoint(getViewport().width);
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
-	const ignoreList =
-		enableRichLinksFix && hasLeftCol
-			? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
-			: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+	const ignoreList = hasLeftCol
+		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
+		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
 
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
