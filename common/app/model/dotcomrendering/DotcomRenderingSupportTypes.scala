@@ -31,6 +31,8 @@ object Tag {
 
   def apply(t: model.Tag): Tag = {
 
+    // We are creating a fallback for small byline images because some contributors have not yet had
+    // larger images taken and uploaded. Once that's done, the aim is to remove the fallback and only use large images.
     val bylineImage: Option[String] = {
       t.properties.contributorLargeImagePath match {
         case Some(bylineLargeImage) => Some(ImgSrc(bylineLargeImage, Item300))
