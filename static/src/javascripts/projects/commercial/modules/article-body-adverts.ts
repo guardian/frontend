@@ -7,11 +7,11 @@ import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import type {
 	SpacefinderRules,
 	SpacefinderWriter,
-} from '../../common/modules/article/space-filler';
-import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+} from '../../common/modules/spacefinder';
 import type { SizeMappings } from '../modules/dfp/create-slot';
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';

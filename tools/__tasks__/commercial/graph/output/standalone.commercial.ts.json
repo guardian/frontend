@@ -102,7 +102,8 @@
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
+  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts",
+  "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
   "../lib/config.d.ts",
@@ -111,7 +112,8 @@
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -577,7 +579,7 @@
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
-  "../projects/common/modules/spacefinder.js"
+  "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/commercial/build-page-targeting.ts": [
@@ -719,10 +721,11 @@
  "../projects/common/modules/on-images-loaded-fixed.js": [
   "../../../../node_modules/lodash-es/lodash.js"
  ],
- "../projects/common/modules/spacefinder.js": [
-  "../../../../node_modules/lodash-es/lodash.js",
+ "../projects/common/modules/spacefinder.ts": [
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
+  "../lib/noop.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts",
   "../projects/common/modules/mark-candidates.js",
