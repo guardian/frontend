@@ -7,7 +7,6 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
-import conf.switches.Switches
 import experiments.ActiveExperiments
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
@@ -16,7 +15,6 @@ import model.{
   CanonicalLiveBlog,
   ContentFormat,
   ContentPage,
-  DotcomContentType,
   GUDateTimeFormatNew,
   InteractivePage,
   LiveBlogPage,
@@ -25,7 +23,7 @@ import model.{
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
+import views.support.{CamelCase, ContentLayout, JavaScriptPage}
 
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -89,6 +87,7 @@ case class DotcomRenderingDataModel(
     contributionsServiceUrl: String,
     badge: Option[DCRBadge],
     matchUrl: Option[String], // Optional url used for match data
+    matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
 )
 
@@ -156,6 +155,7 @@ object DotcomRenderingDataModel {
         "contributionsServiceUrl" -> model.contributionsServiceUrl,
         "badge" -> model.badge,
         "matchUrl" -> model.matchUrl,
+        "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
       )
 
@@ -398,6 +398,8 @@ object DotcomRenderingDataModel {
       modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate
         .isBefore(Chronos.javaTimeLocalDateTimeToJodaDateTime(InteractiveSwitchOver.date))
 
+    val matchData = DotcomRenderingUtils.makeMatchData(page)
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
@@ -427,7 +429,8 @@ object DotcomRenderingDataModel {
       linkedData = linkedData,
       main = content.fields.main,
       mainMediaElements = mainMediaElements,
-      matchUrl = DotcomRenderingUtils.makeMatchUrl(page),
+      matchUrl = matchData.map(_.matchUrl),
+      matchType = matchData.map(_.matchType),
       nav = Nav(page, edition),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
