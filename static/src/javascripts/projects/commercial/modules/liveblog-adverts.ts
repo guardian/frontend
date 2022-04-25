@@ -1,5 +1,3 @@
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
@@ -100,11 +98,7 @@ const insertAds: SpacefinderWriter = async (paras) => {
 
 const fill = (rules: SpacefinderRules) =>
 	spaceFiller.fillSpace(rules, insertAds).then(() => {
-		const enableAdditionalBlocksFix = !isInVariantSynchronous(
-			spacefinderOkrMegaTest,
-			'control',
-		);
-		if (enableAdditionalBlocksFix && AD_COUNTER < MAX_ADS) {
+		if (AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,
 			);
