@@ -4,10 +4,11 @@ import com.gu.contentapi.client.utils.format.{ArticleDesign, InteractiveDesign, 
 import model.{CanonicalLiveBlog, ContentFormat, ContentType, DotcomContentType, MetaData}
 import org.scalatest.{FlatSpec, Matchers}
 import model.dotcomrendering.DotcomRenderingUtils
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{verify, verifyZeroInteractions, when}
 import org.scalatest.mockito.MockitoSugar
 import com.gu.contentapi.client.model.v1.Blocks
 import com.gu.contentapi.client.model.v1.Block
+import com.gu.contentapi.client.model.v1.BlockAttributes
 
 class DotcomRenderingUtilsTest extends FlatSpec with Matchers with MockitoSugar {
 
@@ -15,7 +16,7 @@ class DotcomRenderingUtilsTest extends FlatSpec with Matchers with MockitoSugar 
   val testMetadata = mock[MetaData]
   val formatWithArticleDesign = ContentFormat.defaultContentFormat
 
-  it should "ensure a live design takes priority when the forceLive flag is set" in {
+  "getModifiedContent" should "ensure a live design takes priority when the forceLive flag is set" in {
     when(testContent.metadata) thenReturn testMetadata
     when(testMetadata.format) thenReturn Some(formatWithArticleDesign)
     when(testMetadata.contentType) thenReturn Some(DotcomContentType.Article)
@@ -90,5 +91,37 @@ class DotcomRenderingUtilsTest extends FlatSpec with Matchers with MockitoSugar 
     val actual = DotcomRenderingUtils.getMostRecentBlockId(testBlocks)
 
     actual should be(Some("block-testBlockId123"))
+  }
+
+  "ensureSummaryTitle" should "add a title to summary posts without a title" in {
+    val testBlock1 = mock[Block]
+    val testBlock2 = mock[Block]
+    val summaryBlockAttributes = BlockAttributes(Some(false), Some(true), None, Some(false), None)
+
+    when(testBlock1.title) thenReturn None
+    when(testBlock1.attributes) thenReturn summaryBlockAttributes
+    when(testBlock1.copy(title = Some("Summary"))) thenReturn testBlock2
+
+    DotcomRenderingUtils.ensureSummaryTitle(testBlock1) should be(testBlock2)
+  }
+
+  it should "not a title to a non summary posts without a title" in {
+    val testBlock1 = mock[Block]
+    val summaryBlockAttributes = BlockAttributes(Some(true), Some(false), None, Some(false), None)
+
+    when(testBlock1.title) thenReturn None
+    when(testBlock1.attributes) thenReturn summaryBlockAttributes
+
+    DotcomRenderingUtils.ensureSummaryTitle(testBlock1).title should be(None)
+  }
+
+  it should "not change the title of a summary post with a title" in {
+    val testBlock1 = mock[Block]
+    val summaryBlockAttributes: BlockAttributes = BlockAttributes(Some(false), Some(true), Some("I have a title"), Some(false), None)
+
+    when(testBlock1.title) thenReturn Some("I have a title")
+    when(testBlock1.attributes) thenReturn summaryBlockAttributes
+
+    DotcomRenderingUtils.ensureSummaryTitle(testBlock1).title should be(Some("I have a title"))
   }
 }

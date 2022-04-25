@@ -282,4 +282,17 @@ object DotcomRenderingUtils {
       .map(block => s"block-${block.id}")
   }
 
+  def orderBlocks(blocks: Seq[APIBlock]): Seq[APIBlock] =
+    blocks.sortBy(block => block.firstPublishedDate.orElse(block.createdDate).map(_.dateTime)).reverse
+
+  def ensureSummaryTitle(block: APIBlock): APIBlock = {
+    if (block.attributes.summary.contains(true) && block.title.isEmpty) {
+      val out = block.copy(title = Some("Summary"))
+      println(">>>> out", out)
+      out
+    } else {
+      block
+    }
+  }
+
 }
