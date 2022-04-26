@@ -2,6 +2,7 @@ import type { ABTest } from '@guardian/ab-core';
 import { isInABTestSynchronous } from '../experiments/ab';
 import { commercialGptLazyLoad } from '../experiments/tests/commercial-gpt-lazy-load';
 import { commercialLazyLoadMargin } from '../experiments/tests/commercial-lazy-load-margin';
+import { prebidPriceGranularity } from '../experiments/tests/prebid-price-granularity';
 import { spacefinderOkrMegaTest } from '../experiments/tests/spacefinder-okr-mega-test';
 
 const defaultClientSideTests: ABTest[] = [
@@ -9,6 +10,7 @@ const defaultClientSideTests: ABTest[] = [
 	spacefinderOkrMegaTest,
 	commercialGptLazyLoad,
 	commercialLazyLoadMargin,
+	prebidPriceGranularity,
 ];
 
 const serverSideTests: ServerSideABTest[] = [];

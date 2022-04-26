@@ -53,4 +53,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 5, 2)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-prebid-price-granularity",
+    "Test the commercial impact of changing the Prebid Price granularity for Ozone",
+    owners = Seq(Owner.withGithub("chrislomaxjones")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 5, 3)),
+    exposeClientSide = true,
+  )
 }

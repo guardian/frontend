@@ -19,9 +19,7 @@ jest.mock('../../dfp/get-advert-by-id', () => ({
 }));
 
 jest.mock('../../../../common/modules/experiments/ab', () => ({
-	isInVariantSynchronous: jest.fn(
-		(_testId, variantId) => variantId === 'variant',
-	),
+	isInVariantSynchronous: jest.fn(),
 }));
 
 const resetPrebid = () => {
