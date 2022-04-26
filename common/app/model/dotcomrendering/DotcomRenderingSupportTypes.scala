@@ -10,7 +10,7 @@ import navigation._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{ImgSrc, Item300}
+import views.support.{ImgSrc, Item140, Item300}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -30,12 +30,21 @@ object Tag {
   implicit val writes = Json.writes[Tag]
 
   def apply(t: model.Tag): Tag = {
+
+    // We are creating a fallback for small byline images because some contributors have not yet had
+    // larger images taken and uploaded. Once that's done, the aim is to remove the fallback and only use large images.
+    val bylineImage: Option[String] =
+      t.properties.contributorLargeImagePath match {
+        case Some(bylineLargeImage) => Some(ImgSrc(bylineLargeImage, Item300))
+        case None                   => t.contributorImagePath.map(bylineSmallImage => ImgSrc(bylineSmallImage, Item140))
+      }
+
     Tag(
       t.id,
       t.properties.tagType,
       t.properties.webTitle,
       t.properties.twitterHandle,
-      t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
+      bylineImage,
     )
   }
 }
