@@ -68,10 +68,7 @@ const filterNearbyCandidates = enableNearbyFilteringFix()
 	? filterNearbyCandidatesFixed
 	: filterNearbyCandidatesBroken;
 
-const isDotcomRendering = config.get<boolean>('isDotcomRendering', false);
-const articleBodySelector = isDotcomRendering
-	? '.article-body-commercial-selector'
-	: '.js-article__body';
+const articleBodySelector = '.article-body-commercial-selector';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const tweakpoint = getTweakpoint(getViewport().width);
@@ -87,7 +84,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: isImmersive ? 700 : 300,
-		minBelow: isDotcomRendering ? 300 : 700,
+		minBelow: 300,
 		selectors: {
 			' > h2': {
 				minAbove: 5,
@@ -115,7 +112,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: isPaidContent ? 1600 : 1000,
-		minBelow: isDotcomRendering ? 300 : 800,
+		minBelow: 300,
 		selectors: {
 			' .ad-slot': adSlotClassSelectorSizes,
 			' [data-spacefinder-role="immersive"]': {

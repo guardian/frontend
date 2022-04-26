@@ -1,4 +1,3 @@
-import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
@@ -10,10 +9,7 @@ import type {
 import { addSlot } from './dfp/add-slot';
 import { createAdSlot } from './dfp/create-slot';
 
-const isDotcomRendering = config.get('isDotcomRendering', false) as boolean;
-const bodySelector = isDotcomRendering
-	? '.article-body-commercial-selector'
-	: '.js-article__body';
+const bodySelector = '.article-body-commercial-selector';
 
 const wideRules: SpacefinderRules = {
 	bodySelector,
