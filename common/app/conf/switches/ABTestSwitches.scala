@@ -53,4 +53,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 5, 3)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-inline1-container-sizing",
+    "Tests the impact on CLS of fixing the inline1 ad container to full width",
+    owners = Seq(Owner.withGithub("arelra")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 5, 24)),
+    exposeClientSide = true,
+  )
 }
