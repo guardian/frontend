@@ -3,6 +3,7 @@ on:
     pull_request:
         paths:
             - 'project/Dependencies.scala'
+            - 'project/ProjectSettings.scala'
             - 'project/plugins.sbt'
             - 'package.json'
 jobs:
