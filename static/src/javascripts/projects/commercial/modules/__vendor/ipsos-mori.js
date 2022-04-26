@@ -1,5 +1,5 @@
 // This is third party code and should not be converted to TypeScript
-// See documentation here: https://git.io/Jy5w8
+// See documentation here: https://github.com/guardian/dotcom-rendering/blob/150fc2d81/dotcom-rendering/docs/architecture/3rd%20party%20technical%20review/002-ipsos-mori.md
 
 export const stub = () => {
 	window.dm = window.dm || { AjaxData: [] };

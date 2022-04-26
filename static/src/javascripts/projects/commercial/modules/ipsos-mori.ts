@@ -21,7 +21,7 @@ const loadIpsosScript = () => {
 
 /**
  * Initialise Ipsos Mori - market research partner
- * documentation on DCR: https://git.io/J9c6g
+ * documentation on DCR: https://github.com/guardian/dotcom-rendering/blob/150fc2d8/dotcom-rendering/docs/architecture/3rd%20party%20technical%20review/002-ipsos-mori.md#L0-L1
  * @returns Promise
  */
 export const init = (): Promise<void> =>
