@@ -1,6 +1,4 @@
 import { adSizes } from '@guardian/commercial-core';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
@@ -9,6 +7,7 @@ import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import type {
+	SpacefinderItem,
 	SpacefinderRules,
 	SpacefinderWriter,
 } from '../../common/modules/spacefinder';
@@ -17,8 +16,6 @@ import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
 import { createAdSlot } from './dfp/create-slot';
 import { trackAdRender } from './dfp/track-ad-render';
-import { filterNearbyCandidatesBroken } from './filter-nearby-candidates-broken';
-import { filterNearbyCandidatesFixed } from './filter-nearby-candidates-fixed';
 
 const sfdebug = getUrlVars().sfdebug;
 
@@ -56,17 +53,18 @@ const insertAdAtPara = (
 		});
 };
 
-const enableNearbyFilteringFix = () =>
-	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
+// this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
+const filterNearbyCandidates =
+	(maximumAdHeight: number) =>
+	(candidate: SpacefinderItem, lastWinner?: SpacefinderItem): boolean => {
+		// No previous winner
+		if (lastWinner === undefined) return true;
 
-const enableRichLinksFix = !isInVariantSynchronous(
-	spacefinderOkrMegaTest,
-	'control',
-);
-
-const filterNearbyCandidates = enableNearbyFilteringFix()
-	? filterNearbyCandidatesFixed
-	: filterNearbyCandidatesBroken;
+		return (
+			Math.abs(candidate.top - lastWinner.top) - maximumAdHeight >=
+			adSlotClassSelectorSizes.minBelow
+		);
+	};
 
 const articleBodySelector = '.article-body-commercial-selector';
 
@@ -74,10 +72,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const tweakpoint = getTweakpoint(getViewport().width);
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
-	const ignoreList =
-		enableRichLinksFix && hasLeftCol
-			? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
-			: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+	const ignoreList = hasLeftCol
+		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
+		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
 
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
