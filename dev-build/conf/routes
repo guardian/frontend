@@ -358,7 +358,7 @@ POST           /atom/quiz/:id/*path                                             
 GET            /atom/youtube/:id.json                                                                                            controllers.YoutubeController.getAtomId(id: String)
 
 # Nx1Config
-# mark: 2QJfZo - keep these in sync with other instances https://git.io/JkRox
+# mark: 2QJfZo - keep these in sync with other instances https://github.com/search?q=org%3Aguardian+2QJfZo&type=code
 GET            /switches.json                                                       controllers.Nx1ConfigController.switches
 GET            /tests.json                                                          controllers.Nx1ConfigController.tests
 
