@@ -38,7 +38,7 @@ class CricketMatchController(cricketStatsJob: CricketStatsJob, val controllerCom
               if (request.isJson && request.forceDCR)
                 JsonComponent(
                   "match" -> Json.toJson(page.theMatch),
-                  "matchUrl" -> (Configuration.site.host + page.metadata.id),
+                  "scoreboardUrl" -> (Configuration.site.host + page.metadata.id),
                 )
               else if (request.isJson)
                 JsonComponent(
