@@ -95,7 +95,9 @@ object Block {
     val campaigns = page.getJavascriptConfig.get("campaigns")
 
     val contributors = block.contributors flatMap { contributorId =>
-      tags.find(_.id == s"profile/$contributorId").map(tag => Contributor(tag.title, tag.bylineImageUrl))
+      tags
+        .find(_.id == s"profile/$contributorId")
+        .map(tag => Contributor(tag.title, tag.bylineImageUrl, tag.bylineLargeImageUrl))
     }
 
     Block(
