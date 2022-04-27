@@ -1,12 +1,13 @@
 package cricket.controllers
 
 import common._
+import conf.Configuration
 import cricketModel.Match
-import conf.cricketPa.PaFeed.dateFormat
 import conf.cricketPa.{CricketTeam, CricketTeams}
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
@@ -34,7 +35,10 @@ class CricketMatchController(cricketStatsJob: CricketStatsJob, val controllerCom
             val page = CricketMatchPage(matchData, date, team)
             Cached(60) {
               if (request.isJson && request.forceDCR)
-                JsonComponent(page.theMatch)
+                JsonComponent(
+                  "match" -> Json.toJson(page.theMatch),
+                  "scorecardUrl" -> (Configuration.site.host + page.metadata.id),
+                )
               else if (request.isJson)
                 JsonComponent(
                   "summary" -> cricket.views.html.fragments
