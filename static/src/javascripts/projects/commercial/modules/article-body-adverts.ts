@@ -36,15 +36,26 @@ const insertAdAtPara = (
 ): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
-		classes,
+		classes: includeContainer ? '' : classes,
 		sizes,
-		includeContainer,
 	});
+
+	let node: HTMLElement;
+
+	if (includeContainer) {
+		const container = document.createElement('div');
+		container.className = `ad-slot-container ad-slot--offset-right`;
+		container.appendChild(ad);
+
+		node = container;
+	} else {
+		node = ad;
+	}
 
 	return fastdom
 		.mutate(() => {
 			if (para.parentNode) {
-				para.parentNode.insertBefore(ad, para);
+				para.parentNode.insertBefore(node, para);
 			}
 		})
 		.then(() => {
@@ -127,6 +138,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 			.slice(0, isInline1 ? 1 : paras.length)
 			.map((para, i) => {
 				const inlineId = i + (isInline1 ? 1 : 2);
+				const includeContainer = !isInline1;
 
 				if (sfdebug) {
 					para.style.cssText += 'border: thick solid green;';
@@ -149,7 +161,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 								],
 						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
-					false,
+					includeContainer,
 				);
 			});
 		await Promise.all(slots);
