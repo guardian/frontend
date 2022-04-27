@@ -90,7 +90,7 @@ install_node() {
 
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
     nvm install
-    EXTRA_STEPS+=("Add https://git.io/vKTnK to your .bash_profile")
+    EXTRA_STEPS+=("Add https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb to your .bash_profile")
   else
     if ! nvm_available; then
       source_nvm

@@ -39,7 +39,8 @@ const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
 	daysToLive: 90,
 };
 
-// TODO: isn’t this duplicated from commercial features? https://git.io/JMvcu
+// TODO: isn’t this duplicated from commercial features?
+// https://github.com/guardian/frontend/blob/2a222cfb77748aa1140e19adca10bfc688fe6cad/static/src/javascripts/projects/common/modules/commercial/commercial-features.ts
 const forcedAdFreeMode = !!/[#&]noadsaf(&.*)?$/.exec(window.location.hash);
 
 const userHasData = () => {
