@@ -97,6 +97,7 @@ object PressedContent {
     "/lifeandstyle/ng-interactive/2017/feb/19/the-5th-annual-ofm-50-what-we-love-about-food-in-2017",
     "/uk-news/ng-interactive/2017/mar/03/northern-ireland-assembly-election-latest-results",
     "/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email",
+    "/help/ng-interactive/2017/mar/17/contact-the-guardian-securely",
     "/lifeandstyle/2017/mar/25/parkour-free-runner-killed-on-paris-metro-sport-mustang-wanted",
     "/us-news/2017/apr/25/trump-supporters-elect-again-100-days",
     "/info/ng-interactive/2017/may/05/sign-up-for-the-long-read-email",
