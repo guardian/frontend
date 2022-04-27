@@ -156,6 +156,10 @@ Engineer: Pete Faulconbridge
 From: Nottinghamshire, UK
 Location: Nottinghamshire, UK
 
+Developer: Jake Lee Kennedy
+GitHub: Jakeii
+From: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
