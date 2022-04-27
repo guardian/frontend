@@ -533,4 +533,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val NewsletterOnwards = Switch(
+    SwitchGroup.Feature,
+    "newsletter-onwards",
+    "When ON, we replace the standard related stories onwards container with a dedicated one for Newsletters",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
