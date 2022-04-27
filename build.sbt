@@ -149,6 +149,8 @@ val identity = application("identity")
       libPhoneNumber,
       supportInternationalisation,
     ),
+    PlayKeys.playDefaultPort := 9009,
+    Test / testOptions += Tests.Argument("-oF"),
   )
 
 val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
