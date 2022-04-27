@@ -1,14 +1,12 @@
 package model.dotcomrendering.pageElements
 
-import com.gu.contentapi.client.utils.format.{ArticleDesign, InteractiveDesign, LiveBlogDesign, StandardDisplay}
-import model.{CanonicalLiveBlog, ContentFormat, ContentType, DotcomContentType, MetaData}
-import org.scalatest.{FlatSpec, Matchers}
+import com.gu.contentapi.client.model.v1.{Block, BlockAttributes, Blocks}
+import com.gu.contentapi.client.utils.format.LiveBlogDesign
 import model.dotcomrendering.DotcomRenderingUtils
-import org.mockito.Mockito.{verify, verifyZeroInteractions, when}
+import model.{CanonicalLiveBlog, ContentFormat, ContentType, DotcomContentType, MetaData}
+import org.mockito.Mockito.when
 import org.scalatest.mockito.MockitoSugar
-import com.gu.contentapi.client.model.v1.Blocks
-import com.gu.contentapi.client.model.v1.Block
-import com.gu.contentapi.client.model.v1.BlockAttributes
+import org.scalatest.{FlatSpec, Matchers}
 
 class DotcomRenderingUtilsTest extends FlatSpec with Matchers with MockitoSugar {
 
@@ -117,7 +115,8 @@ class DotcomRenderingUtilsTest extends FlatSpec with Matchers with MockitoSugar 
 
   it should "not change the title of a summary post with a title" in {
     val testBlock1 = mock[Block]
-    val summaryBlockAttributes: BlockAttributes = BlockAttributes(Some(false), Some(true), Some("I have a title"), Some(false), None)
+    val summaryBlockAttributes: BlockAttributes =
+      BlockAttributes(Some(false), Some(true), Some("I have a title"), Some(false), None)
 
     when(testBlock1.title) thenReturn Some("I have a title")
     when(testBlock1.attributes) thenReturn summaryBlockAttributes
