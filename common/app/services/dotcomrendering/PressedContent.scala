@@ -208,6 +208,7 @@ object PressedContent {
     "/books/ng-interactive/2020/nov/07/caught-in-times-current-margaret-atwood-on-grief-poetry-and-the-past-four-years",
     "/us-news/ng-interactive/2020/nov/09/senate-and-house-elections-2020-full-results-for-congress",
     "/world/ng-interactive/2020/nov/12/beirut-blast-a-night-of-horror-captured-by-its-victims",
+    "/fashion/ng-interactive/2020/nov/19/indigenous-fashion-is-the-future-its-time-for-first-nations-people-to-reclaim-it",
     "/politics/ng-interactive/2020/nov/25/why-are-fish-a-sticking-point-in-the-brexit-talks",
     "/us-news/ng-interactive/2020/dec/08/us-election-results-2020-joe-biden-defeats-donald-trump-to-win-presidency",
     "/world/ng-interactive/2020/dec/14/coronavirus-2020-timeline-covid-19",
