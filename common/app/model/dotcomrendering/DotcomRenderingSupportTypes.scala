@@ -2,7 +2,6 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
-import common.Edition
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
 import model.{ArticleDateTimes, ContentPage, GUDateTimeFormatNew}
@@ -10,7 +9,7 @@ import navigation._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{ImgSrc, Item300, Item640}
+import views.support.{ImgSrc, Item300}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
