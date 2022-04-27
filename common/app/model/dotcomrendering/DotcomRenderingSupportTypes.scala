@@ -30,14 +30,15 @@ case class Tag(
 object Tag {
   implicit val writes = Json.writes[Tag]
 
+  // TODO: In second PR we will set bylineImageUrl to t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300)),
   def apply(t: model.Tag): Tag = {
     Tag(
       t.id,
       t.properties.tagType,
       t.properties.webTitle,
       t.properties.twitterHandle,
-      t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300)),
-      t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item640)),
+      t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
+      t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
     )
   }
 }
