@@ -3,12 +3,11 @@ package cricket.controllers
 import common._
 import conf.Configuration
 import cricketModel.Match
-import conf.cricketPa.PaFeed.dateFormat
 import conf.cricketPa.{CricketTeam, CricketTeams}
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._
-import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.libs.json.{Json}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
