@@ -10,7 +10,7 @@ import navigation._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{ImgSrc, Item140, Item300}
+import views.support.{ImgSrc, Item300, Item640}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -24,35 +24,20 @@ case class Tag(
     title: String,
     twitterHandle: Option[String],
     bylineImageUrl: Option[String],
-    isLargeBylineImage: Option[Boolean],
+    bylineLargeImageUrl: Option[String],
 )
-
-case class BylineImage(imageUrl: String, isLargeImage: Boolean)
 
 object Tag {
   implicit val writes = Json.writes[Tag]
 
   def apply(t: model.Tag): Tag = {
-
-    // We are creating a fallback for small byline images because some contributors have not yet had
-    // larger images taken and uploaded. Once that's done, the aim is to remove the fallback and only use large images.
-    val bylineImage: Option[BylineImage] =
-      t.properties.contributorLargeImagePath match {
-        case Some(bylineLargeImage) =>
-          Some(BylineImage(imageUrl = ImgSrc(bylineLargeImage, Item300), isLargeImage = true))
-        case None =>
-          t.contributorImagePath.map(bylineSmallImage =>
-            BylineImage(imageUrl = ImgSrc(bylineSmallImage, Item140), isLargeImage = false),
-          )
-      }
-
     Tag(
       t.id,
       t.properties.tagType,
       t.properties.webTitle,
       t.properties.twitterHandle,
-      bylineImage.map(_.imageUrl),
-      bylineImage.map(_.isLargeImage),
+      t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300)),
+      t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item640)),
     )
   }
 }
