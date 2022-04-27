@@ -10,6 +10,6 @@ jobs:
     security:
         uses: guardian/.github/.github/workflows/sbt-node-snyk.yml@main
         with:
-            ORG: guardian-dotcom
+            ORG: guardian-dotcom-n2y
         secrets:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
