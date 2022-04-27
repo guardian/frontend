@@ -85,13 +85,28 @@ object Dependencies {
     may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
     dependencies have been upgraded), then do remember to check for regressions.
    */
-  val jacksonVersion = "2.11.4"
-  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
+  val jacksonVersion = "2.13.2"
+  val jacksonDatabindVersion = "2.13.2.2"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
-  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
-  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
-  val jackson = Seq(jacksonDataFormat, jacksonCore, jacksonDataType, jacksonAnnotations)
+  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
+  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
+  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
+  val jacksonParameterName = "com.fasterxml.jackson.module" % "jackson-module-parameter-names" % jacksonVersion
+  val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
+  val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
+
+  val jackson =
+    Seq(
+      jacksonCore,
+      jacksonAnnotations,
+      jacksonDataTypeJdk8,
+      jacksonDataType,
+      jacksonDataFormat,
+      jacksonParameterName,
+      jackModule,
+      jacksonDatabind,
+    )
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
