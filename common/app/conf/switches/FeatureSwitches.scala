@@ -444,16 +444,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val AnniversaryLogoHeader = Switch(
-    SwitchGroup.Feature,
-    "anniversary-header-svg",
-    "Enables the anniversary logo SVG in the header",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2022, 5, 11),
-    exposeClientSide = true,
-  )
-
   val InteractivePickerFeature = Switch(
     SwitchGroup.Feature,
     "interactive-picker",

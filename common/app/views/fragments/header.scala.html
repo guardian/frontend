@@ -5,7 +5,7 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupporterCTA}
-@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch, AnniversaryLogoHeader}
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -19,9 +19,7 @@
             aria-label="Guardian sections">
 
             <a href="@LinkTo {/}"
-            class="@{if(AnniversaryLogoHeader.isSwitchedOn) {"new-header__logo news-header__logo-anniversary"} else {
-              "new-header__logo"
-            }}"
+            class="new-header__logo"
             data-link-name="nav2 : logo">
 
                 <span class="u-h">The Guardian - Back to home</span>
@@ -30,14 +28,8 @@
                     @{
                         if(page.metadata.hasSlimHeader) {
                             fragments.inlineSvg("the-guardian-roundel", "logo")
-                        } else if(page.metadata.isFront && editionId == "uk" && AnniversaryLogoHeader.isSwitchedOn) {
-                            fragments.inlineSvg("guardian-anniversary-logo-uk", "logo")
-                        } else if(editionId == "uk" && AnniversaryLogoHeader.isSwitchedOn) {
-                            fragments.inlineSvg("guardian-anniversary-logo-uk", "logo")
-                        } else if(AnniversaryLogoHeader.isSwitchedOn) {
-                            fragments.inlineSvg("guardian-anniversary-logo", "logo")
                         }else {
-                            fragments.inlineSvg("the-guardian-logo", "logo")
+                            fragments.inlineSvg("the-guardian-best-website-logo", "logo")
                         }
                     }
                 }
