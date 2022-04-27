@@ -21,7 +21,6 @@ import model.{
   LiveBlogPage,
   Pillar,
 }
-
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -280,6 +279,15 @@ object DotcomRenderingUtils {
       .getOrElse(blocks.body.getOrElse(Seq.empty))
       .headOption
       .map(block => s"block-${block.id}")
+  }
+
+  def orderBlocks(blocks: Seq[APIBlock]): Seq[APIBlock] =
+    blocks.sortBy(block => block.firstPublishedDate.orElse(block.createdDate).map(_.dateTime)).reverse
+
+  def ensureSummaryTitle(block: APIBlock): APIBlock = {
+    if (block.attributes.summary.contains(true) && block.title.isEmpty) {
+      block.copy(title = Some("Summary"))
+    } else block
   }
 
 }
