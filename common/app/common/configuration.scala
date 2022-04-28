@@ -169,6 +169,8 @@ class GuardianConfiguration extends GuLogging {
     lazy val tagIndexesBucket =
       configuration.getMandatoryStringProperty("tag_indexes.bucket")
 
+    // This shouldn't be > 60 as it's in the context of `0/$adminRebuildIndexRateInMinutes` and `0/60` is invalid
+    // see: https://support.hcltechsw.com/csm?id=kb_article&sysparm_article=KB0091722
     lazy val adminRebuildIndexRateInMinutes =
       configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(59)
   }
