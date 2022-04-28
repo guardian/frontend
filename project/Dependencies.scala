@@ -84,6 +84,9 @@ object Dependencies {
     Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
     may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
     dependencies have been upgraded), then do remember to check for regressions.
+
+    The versions are currently set as they are because of:
+    https://github.com/orgs/playframework/discussions/11222
    */
   val jacksonVersion = "2.13.2"
   val jacksonDatabindVersion = "2.13.2.2"
