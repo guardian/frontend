@@ -1,3 +1,5 @@
+import { log } from '@guardian/libs';
+import { pickBy } from 'lodash-es';
 import defaultConfig from '../../../../lib/config';
 import { getBreakpoint } from '../../../../lib/detect';
 import { isUserLoggedIn } from '../identity/api';
@@ -81,6 +83,28 @@ class CommercialFeatures {
 			!isLiveBlog &&
 			!isHosted &&
 			!newRecipeDesign;
+
+		if (isArticle && !this.articleBodyAdverts) {
+			const articleBodyAdvertsFalseIfTrue: Record<string, boolean> = {
+				forceAdFree,
+				isAdFreeUser: isAdFreeUser(),
+				sensitiveContent,
+				isMinuteArticle,
+				isLiveBlog,
+				isHosted,
+				newRecipeDesign: !!newRecipeDesign,
+			};
+
+			const articleBodyAdvertsFalseIfFalse: Record<string, boolean> = {
+				'switches.commercial': switches.commercial,
+				externalAdvertising: externalAdvertising,
+			};
+
+			log('commercial', 'articleBodyAdverts = false because:', {
+				...pickBy(articleBodyAdvertsFalseIfTrue, (v) => v),
+				...pickBy(articleBodyAdvertsFalseIfFalse, (v) => !v),
+			});
+		}
 
 		this.carrotTrafficDriver =
 			!this.adFree &&
