@@ -600,6 +600,8 @@
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/common/modules/commercial/commercial-features.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../projects/common/modules/commercial/user-features.ts",
