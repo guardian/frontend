@@ -170,7 +170,7 @@ class GuardianConfiguration extends GuLogging {
       configuration.getMandatoryStringProperty("tag_indexes.bucket")
 
     lazy val adminRebuildIndexRateInMinutes =
-      configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(60)
+      configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(59)
   }
 
   object environment {
