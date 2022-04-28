@@ -53,3 +53,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 5, 3)),
     exposeClientSide = true,
   )
+}
