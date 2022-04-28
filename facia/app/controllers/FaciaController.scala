@@ -274,7 +274,9 @@ trait FaciaController
       singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption),
       maybeRundownPanel = rundownPanelOutcome.toOption,
     )
-    RevalidatableResult(Ok(showcase).as("text/xml; charset=utf-8"), showcase)
+    val dcDateRegEx = """<dc:date>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d+Z</dc:date>""".r
+    val showcaseWithoutDcDates = dcDateRegEx.replaceAllIn(showcase, "")
+    RevalidatableResult(Ok(showcaseWithoutDcDates).as("text/xml; charset=utf-8"), showcaseWithoutDcDates)
   }
 
   def renderFrontPress(path: String): Action[AnyContent] =
