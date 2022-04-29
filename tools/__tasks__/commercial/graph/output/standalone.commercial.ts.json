@@ -426,7 +426,9 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../projects/commercial/initial-consent-state.ts",
-  "../projects/commercial/modules/__vendor/ipsos-mori.js"
+  "../projects/commercial/modules/__vendor/ipsos-mori.js",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/ipsos-mori-australia.ts"
  ],
  "../projects/commercial/modules/liveblog-adverts.ts": [
   "../lib/detect.js",
@@ -659,6 +661,7 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
+  "../projects/common/modules/experiments/tests/ipsos-mori-australia.ts",
   "../projects/common/modules/experiments/tests/prebid-price-granularity.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
@@ -690,6 +693,10 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/ipsos-mori-australia.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
