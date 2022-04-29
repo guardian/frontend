@@ -32,34 +32,22 @@ export const init = (): Promise<void> => {
 		'variant',
 	);
 
-	getLocale()
+	return getLocale()
 		.then((locale) => {
 			if (locale === 'GB') {
 				return getInitialConsentState();
-			} else {
-				throw Error('Skipping GB ipsos process outside GB');
-			}
-		})
-		.then((state) => {
-			if (getConsentFor('ipsos', state)) {
-				void loadIpsosScript();
-			} else {
-				throw Error('No consent for ipsos');
-			}
-		})
-		.catch((e) => {
-			log('commercial', '⚠️ Failed to execute ipsos', e);
-		});
-
-	// Australia is handled with a separate call to getLocale because its
-	// initial step doesn't return a consent state and would throw an error
-	getLocale()
-		.then((locale) => {
-			if (locale === 'AU' && forceIpsosMoriAustraliaTest) {
+			} else if (locale === 'AU' && forceIpsosMoriAustraliaTest) {
 				// Skipping consent step for Australia in 0% test
 				void loadIpsosScript();
 			} else {
-				throw Error('Skipping AU ipsos outside AU');
+				throw Error('Skipping ipsos process outside GB or AU');
+			}
+		})
+		.then((state) => {
+			if (!!state && getConsentFor('ipsos', state)) {
+				void loadIpsosScript();
+			} else {
+				throw Error('No consent for ipsos');
 			}
 		})
 		.catch((e) => {
