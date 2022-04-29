@@ -1,6 +1,8 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
 import { getInitialConsentState } from 'commercial/initial-consent-state';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { ipsosMoriAustralia } from 'common/modules/experiments/tests/ipsos-mori-australia';
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
@@ -24,13 +26,18 @@ const loadIpsosScript = () => {
  * documentation on DCR: [link](https://github.com/guardian/dotcom-rendering/blob/150fc2d81e6a66d9c3336185e874fc8cd0288546/dotcom-rendering/docs/architecture/3rd%20party%20technical%20review/002-ipsos-mori.md)
  * @returns Promise
  */
-export const init = (): Promise<void> =>
+export const init = (): Promise<void> => {
+	const forceIpsosMoriAustraliaTest = isInVariantSynchronous(
+		ipsosMoriAustralia,
+		'variant',
+	);
+
 	getLocale()
 		.then((locale) => {
 			if (locale === 'GB') {
 				return getInitialConsentState();
 			} else {
-				throw Error('Skipping ipsos outside of GB');
+				throw Error('Skipping GB ipsos process outside GB');
 			}
 		})
 		.then((state) => {
@@ -43,3 +50,19 @@ export const init = (): Promise<void> =>
 		.catch((e) => {
 			log('commercial', '⚠️ Failed to execute ipsos', e);
 		});
+
+	// Australia is handled with a separate call to getLocale because its
+	// initial step doesn't return a consent state and would throw an error
+	getLocale()
+		.then((locale) => {
+			if (locale === 'AU' && forceIpsosMoriAustraliaTest) {
+				// Skipping consent step for Australia in 0% test
+				void loadIpsosScript();
+			} else {
+				throw Error('Skipping AU ipsos outside AU');
+			}
+		})
+		.catch((e) => {
+			log('commercial', '⚠️ Failed to execute ipsos', e);
+		});
+};
