@@ -9,7 +9,7 @@
 @import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 @import views.support.Commercial.glabsLink
 
-<div data-id="@containerModel.id" class="fc-container" data-component="labs-container-@containerIndex">
+<div data-id="@containerModel.id" class="fc-container" data-component="container-@{containerIndex + 1} | labs">
     @containerWrapper(
         Seq("legacy", "capi", "paidfor", "tone-paidfor"),
         optKicker = Some(fragments.commercial.paidForMeta(Some(containerModel.id))),
