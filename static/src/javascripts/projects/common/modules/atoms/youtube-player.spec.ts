@@ -45,6 +45,8 @@ jest.mock('@guardian/consent-management-platform', () => ({
 				tcString: 'testTcString',
 				addtlConsent: 'testaddtlConsent',
 			},
+			canTarget: true,
+			framework: 'tcfv2',
 		}),
 	),
 }));
@@ -66,18 +68,24 @@ const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
 		tcString: 'testTcString',
 		addtlConsent: 'testaddtlConsent',
 	},
+	canTarget: true,
+	framework: 'tcfv2',
 });
 
 const canTargetCCPA = (canTarget: boolean): ConsentState => ({
 	ccpa: {
 		doNotSell: !canTarget,
 	},
+	canTarget: canTarget,
+	framework: 'ccpa',
 });
 
 const canTargetAUS = (canTarget: boolean): ConsentState => ({
 	aus: {
 		personalisedAdvertising: canTarget,
 	},
+	canTarget: canTarget,
+	framework: 'aus',
 });
 
 describe('create ads config', () => {
@@ -171,7 +179,10 @@ describe('create ads config', () => {
 describe('Get Host (no-cookie)', () => {
 	test('`youtube-nocookie.com` with an empty state', () => {
 		const host = youtubePlayer.getHost({
-			state: {},
+			state: {
+				canTarget: false,
+				framework: null,
+			},
 			adFree: false,
 			classes: ['youtube-media-atom__iframe'],
 		});
@@ -181,7 +192,11 @@ describe('Get Host (no-cookie)', () => {
 
 	test('`youtube-nocookie.com` with an ad-free', () => {
 		const host = youtubePlayer.getHost({
-			state: { aus: { personalisedAdvertising: true } },
+			state: {
+				aus: { personalisedAdvertising: true },
+				canTarget: true,
+				framework: 'aus',
+			},
 			adFree: true,
 			classes: ['youtube-media-atom__iframe'],
 		});
@@ -191,7 +206,11 @@ describe('Get Host (no-cookie)', () => {
 
 	test('`youtube-nocookie.com` with for other than youtube-media-atom__iframe', () => {
 		const host = youtubePlayer.getHost({
-			state: { aus: { personalisedAdvertising: true } },
+			state: {
+				aus: { personalisedAdvertising: true },
+				canTarget: true,
+				framework: 'aus',
+			},
 			adFree: false,
 			classes: ['not sure'],
 		});
@@ -201,7 +220,11 @@ describe('Get Host (no-cookie)', () => {
 
 	test('`youtube.com` when all three conditions met', () => {
 		const host = youtubePlayer.getHost({
-			state: { aus: { personalisedAdvertising: true } },
+			state: {
+				aus: { personalisedAdvertising: true },
+				canTarget: true,
+				framework: 'aus',
+			},
 			adFree: false,
 			classes: ['youtube-media-atom__iframe'],
 		});

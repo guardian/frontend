@@ -9,7 +9,6 @@ import idapiclient.{TrackingData, _}
 import idapiclient.Auth
 import idapiclient.responses.Error
 import model.{Countries, PhoneNumbers}
-import com.gu.identity.model.EmailNewsletters
 import controllers.editprofile.EditProfileController
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
@@ -50,7 +49,7 @@ import scala.concurrent.Future
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
     val returnUrlVerifier = mock[ReturnUrlVerifier]
-    val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+    val newsletterService = spy(new NewsletterService(api))
     val httpConfiguration = HttpConfiguration.createWithDefaults()
     val newsletterSignupAgent = mock[NewsletterSignupAgent]
 

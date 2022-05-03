@@ -1,5 +1,4 @@
-@import com.gu.identity.model.EmailNewsletters._
-@import com.gu.identity.model.EmailEmbed
+@import services.newsletters.model.EmailEmbed
 @(
     listName:String,
     emailEmbedData: EmailEmbed,
@@ -7,8 +6,6 @@
 
 @import common.LinkTo
 @import conf.switches.Switches.EmailSignupRecaptcha
-@import conf.switches.Switches.NewslettersRemoveConfirmationStep
-
 
 @wrapperClass = @{ "email-sub email-sub--thrasher-embed" }
 @wrapperToneClass = @{ "email-sub--thrasher-embed" }

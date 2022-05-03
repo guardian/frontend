@@ -26,16 +26,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-spacefinder-okr-mega-test",
-    "Check whether all changes made this quarter when combined lead to revenue uplift",
-    owners = Seq(Owner.withGithub("simonbyford")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 5, 2)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-lazy-load-margin",
     "Test various margins at which ads are lazily-loaded in order to find the optimal one",
     owners = Seq(Owner.withGithub("zekehuntergreen")),
@@ -51,6 +41,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("zekehuntergreen")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2022, 5, 2)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-prebid-price-granularity",
+    "Test the commercial impact of changing the Prebid Price granularity for Ozone",
+    owners = Seq(Owner.withGithub("chrislomaxjones")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 5, 9)),
     exposeClientSide = true,
   )
 }

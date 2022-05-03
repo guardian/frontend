@@ -111,6 +111,8 @@ object Badges {
     Badge("sport/winter-olympics-2022", Static("images/badges/winter-olympics-2022-badge.svg"))
   val ausElection2022 =
     Badge("australia-news/australian-election-2022", Static("images/badges/australian-election-2022.svg"))
+  val newsletters =
+    Badge("tone/newsletter-tone", Static("images/badges/newsletter-badge.svg"))
 
   val allBadges = Seq(
     newArrivals,
@@ -165,6 +167,7 @@ object Badges {
     winterOlympics2022,
     specialReport2,
     ausElection2022,
+    newsletters,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {

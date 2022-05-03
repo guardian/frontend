@@ -3,7 +3,7 @@ package controllers
 import actions.AuthenticatedActions
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.Consent.Supporter
-import com.gu.identity.model.{EmailNewsletters, _}
+import com.gu.identity.model._
 import controllers.editprofile.EditProfileController
 import form._
 import idapiclient.{Auth, TrackingData, _}
@@ -45,7 +45,7 @@ import scala.concurrent.Future
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
     val returnUrlVerifier = mock[ReturnUrlVerifier]
-    val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+    val newsletterService = spy(new NewsletterService(api))
     val httpConfiguration = HttpConfiguration.createWithDefaults()
     val newsletterSignupAgent = mock[NewsletterSignupAgent]
 

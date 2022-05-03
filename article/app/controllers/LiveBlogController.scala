@@ -5,7 +5,6 @@ import com.gu.contentapi.client.utils.format.{CulturePillar, LifestylePillar, Ne
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, LiveblogRendering}
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
@@ -111,7 +110,6 @@ class LiveBlogController(
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) =>
             val dcrCouldRender = LiveBlogController.checkIfSupported(blog)
-            val participatingInTest = ActiveExperiments.isParticipating(LiveblogRendering)
             val isRecent = !LiveBlogController.isNotRecent(blog)
             val theme = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme
             val design = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).design
@@ -119,7 +117,7 @@ class LiveBlogController(
             val isDeadBlog = LiveBlogController.isDeadBlog(blog)
             val properties =
               Map(
-                "participatingInTest" -> participatingInTest.toString,
+                "participatingInTest" -> "false",
                 "dcrCouldRender" -> dcrCouldRender.toString,
                 "theme" -> theme.toString,
                 "design" -> design.toString,
@@ -129,7 +127,7 @@ class LiveBlogController(
                 "isLiveBlog" -> "true",
               )
             val remoteRendering =
-              shouldRemoteRender(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
+              shouldRemoteRender(request.forceDCROff, request.forceDCR, dcrCouldRender)
             if (remoteRendering) {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
@@ -152,15 +150,14 @@ class LiveBlogController(
   def shouldRemoteRender(
       forceDCROff: Boolean,
       forceDCR: Boolean,
-      participatingInTest: Boolean,
       dcrCouldRender: Boolean,
   ): Boolean = {
     // ?dcr=false, so never render DCR
     if (forceDCROff) false
     // ?dcr=true, so always render DCR
     else if (forceDCR) true
-    // User is in the test and dcr supports this blog . No param passed
-    else if (participatingInTest && dcrCouldRender) true
+    // DCR supports this blog
+    else if (dcrCouldRender) true
     else false
   }
 
@@ -186,8 +183,7 @@ class LiveBlogController(
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]] = Map.empty,
   )(implicit request: RequestHeader): Future[Result] = {
     val dcrCouldRender = LiveBlogController.checkIfSupported(liveblog)
-    val participating = ActiveExperiments.isParticipating(LiveblogRendering)
-    val remoteRender = shouldRemoteRender(request.forceDCROff, request.forceDCR, participating, dcrCouldRender)
+    val remoteRender = shouldRemoteRender(request.forceDCROff, request.forceDCR, dcrCouldRender)
 
     range match {
       case SinceBlockId(lastBlockId) =>
@@ -212,13 +208,14 @@ class LiveBlogController(
       _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
     }
 
-    val filteredBlocks = if (filterKeyEvents) {
-      requestedBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
-    } else requestedBlocks
-
-    filteredBlocks.takeWhile { block =>
+    val latestBlocks = requestedBlocks.takeWhile { block =>
       block.id != lastUpdateBlockId.lastUpdate
     }
+
+    if (filterKeyEvents) {
+      latestBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
+    } else latestBlocks
+
   }
 
   private[this] def getNewBlocks(

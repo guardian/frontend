@@ -6,6 +6,8 @@ import type { Advert } from 'commercial/modules/dfp/Advert';
 import type { PageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { prebidPriceGranularity } from 'common/modules/experiments/tests/prebid-price-granularity';
 import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
@@ -13,7 +15,11 @@ import { getHeaderBiddingAdSlots } from '../slot-config';
 import { stripDfpAdPrefixFrom } from '../utils';
 import { bids } from './bid-config';
 import type { PrebidPriceGranularity } from './price-config';
-import { criteoPriceGranularity, priceGranularity } from './price-config';
+import {
+	criteoPriceGranularity,
+	ozonePriceGranularity,
+	priceGranularity,
+} from './price-config';
 import { pubmatic } from './pubmatic';
 
 type CmpApi = 'iab' | 'static';
@@ -122,6 +128,7 @@ type BidderSettings = {
 	standard?: never; // prevent overriding the default settings
 	xhb?: Partial<BidderSetting<XaxisBidResponse>>;
 	improvedigital?: Partial<BidderSetting>;
+	ozone?: Partial<BidderSetting>;
 };
 
 declare global {
@@ -148,6 +155,14 @@ declare global {
 				bidders: BidderCode[];
 				config: {
 					customPriceBucket?: PrebidPriceGranularity;
+					/**
+					 * This is a custom property that has been added to our fork of prebid.js
+					 * to select a price bucket based on the width and height of the slot
+					 */
+					guCustomPriceBucket?: (bid: {
+						width: number;
+						height: number;
+					}) => PrebidPriceGranularity;
 				};
 			}) => void;
 			getConfig: (item?: string) => PbjsConfig & {
@@ -258,6 +273,8 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		},
 	);
 
+	window.pbjs.bidderSettings = {};
+
 	if (window.guardian.config.switches.consentManagement) {
 		pbjsConfig.consentManagement = consentManagement();
 	}
@@ -296,6 +313,33 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		});
 	}
 
+	if (
+		window.guardian.config.switches.prebidOzone &&
+		isInVariantSynchronous(prebidPriceGranularity, 'variant')
+	) {
+		// When in the variant of the test use a custom price granularity for Ozone
+		// The variant line items will have a separate structure
+		window.pbjs.setBidderConfig({
+			bidders: ['ozone'],
+			config: {
+				// Select the ozone granularity, use default if not defined for the size
+				guCustomPriceBucket: ({ width, height }) =>
+					ozonePriceGranularity(width, height) ?? priceGranularity,
+			},
+		});
+
+		// Add key-value targeting to only match line items setup for variant of test
+		// Line items in control must negatively target this value
+		window.pbjs.bidderSettings.ozone = {
+			adserverTargeting: [
+				{
+					key: 'hb_ab_test',
+					val: () => 'variant',
+				},
+			],
+		};
+	}
+
 	window.pbjs.setConfig(pbjsConfig);
 
 	if (config.get<boolean>('switches.prebidAnalytics', false)) {
@@ -309,10 +353,6 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			},
 		]);
 	}
-
-	// This creates an 'unsealed' object. Flows
-	// allows dynamic assignment.
-	window.pbjs.bidderSettings = {};
 
 	if (config.get<boolean>('switches.prebidXaxis', false)) {
 		window.pbjs.bidderSettings.xhb = {

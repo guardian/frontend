@@ -2,7 +2,6 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
-import common.Edition
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
 import model.{ArticleDateTimes, ContentPage, GUDateTimeFormatNew}
@@ -24,6 +23,7 @@ case class Tag(
     title: String,
     twitterHandle: Option[String],
     bylineImageUrl: Option[String],
+    bylineLargeImageUrl: Option[String],
 )
 
 object Tag {
@@ -35,6 +35,7 @@ object Tag {
       t.properties.tagType,
       t.properties.webTitle,
       t.properties.twitterHandle,
+      t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300)),
       t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
     )
   }
@@ -94,7 +95,9 @@ object Block {
     val campaigns = page.getJavascriptConfig.get("campaigns")
 
     val contributors = block.contributors flatMap { contributorId =>
-      tags.find(_.id == s"profile/$contributorId").map(tag => Contributor(tag.title, tag.bylineImageUrl))
+      tags
+        .find(_.id == s"profile/$contributorId")
+        .map(tag => Contributor(tag.title, tag.bylineImageUrl, tag.bylineLargeImageUrl))
     }
 
     Block(

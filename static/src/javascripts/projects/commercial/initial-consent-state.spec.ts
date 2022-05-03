@@ -38,25 +38,40 @@ const mockOnConsentChange = (consentState: ConsentState) =>
 
 describe('getInitialConsentState', () => {
 	test('tcfv2 with event-status not equal to `cmpuishown` resolves immediately', async () => {
-		const consentState: ConsentState = { tcfv2: tcfv2ConsentState };
+		const consentState: ConsentState = {
+			tcfv2: tcfv2ConsentState,
+			canTarget: false,
+			framework: 'tcfv2',
+		};
 		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
 		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('ccpa resolves immediately', async () => {
-		const consentState: ConsentState = { ccpa: ccpaConsentState };
+		const consentState: ConsentState = {
+			ccpa: ccpaConsentState,
+			canTarget: true,
+			framework: 'ccpa',
+		};
 		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
 		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('aus resolves immediately', async () => {
-		const consentState: ConsentState = { aus: ausConsentState };
+		const consentState: ConsentState = {
+			aus: ausConsentState,
+			canTarget: true,
+			framework: 'aus',
+		};
 		mockOnConsentChange(consentState);
 		const resolvedConsentState = await getInitialConsentState();
 		expect(resolvedConsentState).toBe(consentState);
 	});
 	test('unknown region rejects', async () => {
-		const consentState = {};
+		const consentState = {
+			canTarget: false,
+			framework: null,
+		} as ConsentState;
 		mockOnConsentChange(consentState);
 		await expect(getInitialConsentState()).rejects.toEqual(
 			'Unknown framework',

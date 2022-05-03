@@ -1,8 +1,9 @@
 package model.dotcomrendering
 
+import com.github.nscala_time.time.Imports.DateTime
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.format.{LiveBlogDesign}
+import com.gu.contentapi.client.utils.format.LiveBlogDesign
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import conf.switches.Switches
@@ -16,12 +17,10 @@ import model.{
   ContentFormat,
   ContentPage,
   ContentType,
-  DotcomContentType,
   GUDateTimeFormatNew,
   LiveBlogPage,
   Pillar,
 }
-import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -30,9 +29,42 @@ import views.support.AffiliateLinksCleaner
 
 import java.net.URLEncoder
 
-object DotcomRenderingUtils {
+sealed trait DotcomRenderingMatchType
 
-  def makeMatchUrl(articlePage: ContentPage): Option[String] = {
+object DotcomRenderingMatchType {
+  implicit val matchTypesWrites = new Writes[DotcomRenderingMatchType] {
+    def writes(matchType: DotcomRenderingMatchType) =
+      JsString(matchType.toString)
+  }
+}
+
+case object CricketMatchType extends DotcomRenderingMatchType
+case object FootballMatchType extends DotcomRenderingMatchType
+
+case class DotcomRenderingMatchData(matchUrl: String, matchType: DotcomRenderingMatchType)
+
+object DotcomRenderingUtils {
+  def makeMatchData(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
+    makeFootballMatch(articlePage).orElse(makeCricketMatch(articlePage))
+  }
+
+  def makeCricketMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
+    val cricketDate = articlePage.item.content.cricketMatchDate
+    val cricketTeam = articlePage.item.content.cricketTeam
+
+    (cricketDate, cricketTeam) match {
+      case (Some(date), Some(team)) =>
+        Some(
+          DotcomRenderingMatchData(
+            s"${Configuration.ajax.url}/sport/cricket/match/$date/${team}.json?dcr=true",
+            CricketMatchType,
+          ),
+        )
+      case _ => None
+    }
+  }
+
+  def makeFootballMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
 
     def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
       val sequence = references match {
@@ -82,10 +114,9 @@ object DotcomRenderingUtils {
 
     // We need one more transformation because we could have a Some(""), which we don't want
 
-    if (optionalUrl.getOrElse("").nonEmpty) {
-      optionalUrl
-    } else {
-      None
+    optionalUrl match {
+      case Some(url) if url.nonEmpty => Some(DotcomRenderingMatchData(url, FootballMatchType))
+      case _                         => None
     }
   }
 
@@ -248,6 +279,15 @@ object DotcomRenderingUtils {
       .getOrElse(blocks.body.getOrElse(Seq.empty))
       .headOption
       .map(block => s"block-${block.id}")
+  }
+
+  def orderBlocks(blocks: Seq[APIBlock]): Seq[APIBlock] =
+    blocks.sortBy(block => block.firstPublishedDate.orElse(block.createdDate).map(_.dateTime)).reverse
+
+  def ensureSummaryTitle(block: APIBlock): APIBlock = {
+    if (block.attributes.summary.contains(true) && block.title.isEmpty) {
+      block.copy(title = Some("Summary"))
+    } else block
   }
 
 }

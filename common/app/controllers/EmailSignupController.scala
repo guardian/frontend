@@ -116,11 +116,6 @@ class EmailSignupController(
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
-  def renderPage(): Action[AnyContent] =
-    Action { implicit request =>
-      Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
-    }
-
   def renderFooterForm(listName: String): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>

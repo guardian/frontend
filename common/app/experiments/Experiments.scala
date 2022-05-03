@@ -5,21 +5,10 @@ import experiments.ParticipationGroups._
 import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
-  override val allExperiments: Set[Experiment] = Set(
-    LiveblogRendering,
-  )
+  override val allExperiments: Set[Experiment] = Set(Inline1ContainerSizing)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
-
-object LiveblogRendering
-    extends Experiment(
-      name = "liveblog-rendering",
-      description = "Use DCR for liveblogs",
-      owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = LocalDate.of(2022, 6, 2),
-      participationGroup = Perc50,
-    )
 
 object FrontRendering
     extends Experiment(
@@ -28,4 +17,13 @@ object FrontRendering
       owners = Seq(Owner.withGithub("dotcom")),
       sellByDate = LocalDate.of(2023, 6, 2),
       participationGroup = Perc0A,
+    )
+
+object Inline1ContainerSizing
+    extends Experiment(
+      name = "inline1-container-sizing",
+      description = "Tests the impact on CLS of fixing the inline1 ad container to full width",
+      owners = Seq(Owner.withGithub("arelra")),
+      sellByDate = LocalDate.of(2022, 5, 24),
+      participationGroup = Perc20A,
     )

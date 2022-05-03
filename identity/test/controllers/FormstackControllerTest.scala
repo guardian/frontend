@@ -38,7 +38,7 @@ class FormstackControllerTest
   val trackingData = mock[TrackingData]
   val authService = mock[AuthenticationService]
   val api = mock[IdApiClient]
-  val newsletterService = spy(new NewsletterService(api, requestParser, idUrlBuilder))
+  val newsletterService = spy(new NewsletterService(api))
 
   val userId = "123"
   val user = User("test@example.com", userId)

@@ -2,7 +2,6 @@ package model
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.`package`._
-import experiments.{ActiveExperiments, LiveblogRendering}
 import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
 import org.joda.time.DateTime
