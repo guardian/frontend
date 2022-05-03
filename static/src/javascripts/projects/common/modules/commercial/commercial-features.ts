@@ -1,10 +1,36 @@
 import { log } from '@guardian/libs';
-import { pickBy } from 'lodash-es';
 import defaultConfig from '../../../../lib/config';
 import { getBreakpoint } from '../../../../lib/detect';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
+
+/**
+ * Logs the reason why adverts are disabled on an article
+ *
+ * @param ifFalse - ads are disabled if these are false
+ * @param ifTrue - ads are disabled if these are true
+ */
+function articleAdsDisabledLogger(
+	ifFalse: Record<string, boolean>,
+	ifTrue: Record<string, boolean>,
+): void {
+	const adsDisabledBecause: Record<string, boolean> = {};
+
+	for (const reason in ifTrue) {
+		if (ifTrue[reason]) {
+			adsDisabledBecause[reason] = ifTrue[reason];
+		}
+	}
+
+	for (const reason in ifFalse) {
+		if (!ifFalse[reason]) {
+			adsDisabledBecause[reason] = ifFalse[reason];
+		}
+	}
+
+	log('commercial', 'Article adverts not shown because', adsDisabledBecause);
+}
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -85,25 +111,22 @@ class CommercialFeatures {
 			!newRecipeDesign;
 
 		if (isArticle && !this.articleBodyAdverts) {
-			const articleBodyAdvertsFalseIfTrue: Record<string, boolean> = {
-				forceAdFree,
-				isAdFreeUser: isAdFreeUser(),
-				sensitiveContent,
-				isMinuteArticle,
-				isLiveBlog,
-				isHosted,
-				newRecipeDesign: !!newRecipeDesign,
-			};
-
-			const articleBodyAdvertsFalseIfFalse: Record<string, boolean> = {
-				'switches.commercial': switches.commercial,
-				externalAdvertising: externalAdvertising,
-			};
-
-			log('commercial', 'articleBodyAdverts = false because:', {
-				...pickBy(articleBodyAdvertsFalseIfTrue, (v) => v),
-				...pickBy(articleBodyAdvertsFalseIfFalse, (v) => !v),
-			});
+			// Log why article adverts are disabled
+			articleAdsDisabledLogger(
+				{
+					forceAdFree,
+					isAdFreeUser: isAdFreeUser(),
+					sensitiveContent,
+					isMinuteArticle,
+					isLiveBlog,
+					isHosted,
+					newRecipeDesign: !!newRecipeDesign,
+				},
+				{
+					'switches.commercial': switches.commercial,
+					externalAdvertising,
+				},
+			);
 		}
 
 		this.carrotTrafficDriver =
