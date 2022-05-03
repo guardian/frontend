@@ -7,6 +7,7 @@ import java.util.Map.Entry
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import com.gu.contentapi.firehose.kinesis.KinesisStreamReaderConfig
 import com.typesafe.config.{ConfigException, ConfigFactory}
 import common.Environment.{app, awsRegion, stage}
 import conf.switches.Switches
@@ -232,8 +233,44 @@ class GuardianConfiguration extends GuLogging {
       )
     }
 
+    lazy val capiCrierRoleArn: String =
+      configuration.getStringProperty("aws.capiCrierRoleArn").getOrElse(sys.error("Missing aws.crierRoleArn parameter"))
+
+    lazy val capiKinesisCredsProvider = new AWSCredentialsProviderChain(
+      new EnvironmentVariableCredentialsProvider(),
+      new SystemPropertiesCredentialsProvider(),
+      new ProfileCredentialsProvider("capi"),
+      new STSAssumeRoleSessionCredentialsProvider.Builder(
+        capiCrierRoleArn,
+        "capi",
+      ).build(),
+    )
+
+    lazy val dynamoCredsProvider = new AWSCredentialsProviderChain(
+      new EnvironmentVariableCredentialsProvider(),
+      new SystemPropertiesCredentialsProvider(),
+      new ProfileCredentialsProvider("frontend"),
+      new ProfileCredentialsProvider(),
+      InstanceProfileCredentialsProvider.getInstance(),
+    )
+
     lazy val nextPreviousPageSize: Int =
       configuration.getIntegerProperty("content.api.nextPreviousPageSize").getOrElse(50)
+
+    lazy val indexStream: String = configuration
+      .getStringProperty("aws.kinesis.indexStream")
+      .getOrElse(sys.error("Missing aws.kinesis.indexStream parameter"))
+
+    lazy val kinesisStreamReaderConfig: KinesisStreamReaderConfig = KinesisStreamReaderConfig(
+      streamName = indexStream,
+      app = "support-apple-news",
+      stage = "live",
+      mode = stage,
+      suffix = None,
+      kinesisCredentialsProvider = capiKinesisCredsProvider,
+      dynamoCredentialsProvider = dynamoCredsProvider,
+      awsRegion = aws.region,
+    )
   }
 
   object ophanApi {

@@ -58,6 +58,7 @@ val common = library("common")
       identityModel,
       capiAws,
       okhttp,
+      contentApiFirehoseClient,
     ) ++ jackson,
   )
   .settings(

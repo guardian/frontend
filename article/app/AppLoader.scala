@@ -1,6 +1,7 @@
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
+import capiFirehoseConsumer.FirehoseConsumerLifecycle
 import com.softwaremill.macwire._
 import common.Assets.DiscussionExternalAssetsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
@@ -52,6 +53,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
+    wire[FirehoseConsumerLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
