@@ -6,13 +6,14 @@ import { ipsosMoriAustralia } from 'common/modules/experiments/tests/ipsos-mori-
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
-const loadIpsosScript = () => {
+const loadIpsosScript = (locale?: string) => {
 	stub();
 
 	const ipsosTag = config.get<string>('page.ipsosTag');
 	if (ipsosTag === undefined) throw Error('Ipsos tag undefined');
+	const dotmetricsLocation = !!locale && locale === 'AU' ? 'au' : 'uk';
 
-	const ipsosSource = `https://uk-script.dotmetrics.net/door.js?d=${document.location.host}&t=${ipsosTag}`;
+	const ipsosSource = `https://${dotmetricsLocation}-script.dotmetrics.net/door.js?d=${document.location.host}&t=${ipsosTag}`;
 
 	return loadScript(ipsosSource, {
 		id: 'ipsos',
@@ -38,7 +39,7 @@ export const init = (): Promise<void> => {
 				return getInitialConsentState();
 			} else if (locale === 'AU' && forceIpsosMoriAustraliaTest) {
 				// Skipping consent step for Australia in 0% test
-				void loadIpsosScript();
+				void loadIpsosScript(locale);
 			} else {
 				throw Error('Skipping ipsos process outside GB or AU');
 			}
