@@ -8,12 +8,12 @@ import { isAdFreeUser } from './user-features';
 /**
  * Logs the reason why adverts are disabled on an article
  *
- * @param ifFalse - ads are disabled if these are false
  * @param ifTrue - ads are disabled if these are true
+ * @param ifFalse - ads are disabled if these are false
  */
 function articleAdsDisabledLogger(
-	ifFalse: Record<string, boolean>,
 	ifTrue: Record<string, boolean>,
+	ifFalse: Record<string, boolean>,
 ): void {
 	const adsDisabledBecause: Record<string, boolean> = {};
 
