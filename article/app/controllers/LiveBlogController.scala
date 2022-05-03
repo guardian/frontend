@@ -362,15 +362,11 @@ object LiveBlogController {
     blog.article.fields.lastModified.isBefore(twoDaysAgo)
   }
 
-  def isCricket(blog: PageWithStoryPackage): Boolean = {
-    blog.article.tags.tags.exists(tag => tag.id == "sport/cricket")
-  }
-
   def isRugby(blog: PageWithStoryPackage): Boolean = {
     blog.article.tags.tags.exists(tag => tag.id == "sport/rugby-union")
   }
 
   def checkIfSupported(blog: PageWithStoryPackage): Boolean = {
-    isSupportedTheme(blog) && !isCricket(blog) && !isRugby(blog)
+    isSupportedTheme(blog) && !isRugby(blog)
   }
 }
