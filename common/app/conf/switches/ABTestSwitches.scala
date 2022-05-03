@@ -57,7 +57,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-ipsos-mori-australia",
-    "Use 0% test to check that ipsos mori tagging is working in AU region",
+    "Use 0% AB test to check that ipsos mori tagging is working in AU region",
     owners = Seq(Owner.withGithub("lucymonie")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2022, 7, 15)),
