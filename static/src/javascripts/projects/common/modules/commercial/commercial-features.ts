@@ -68,7 +68,10 @@ class CommercialFeatures {
 		const isIdentityPage =
 			config.get('page.contentType') === 'Identity' ||
 			config.get('page.section') === 'identity'; // needed for pages under profile.* subdomain
-		const switches = config.get<Record<string, boolean>>('switches', {});
+		const switches = config.get<Record<string, boolean | undefined>>(
+			'switches',
+			{},
+		);
 		const isWidePage = getBreakpoint() === 'wide';
 		const supportsSticky =
 			document.documentElement.classList.contains('has-sticky');
@@ -87,7 +90,7 @@ class CommercialFeatures {
 		this.youtubeAdvertising = !this.adFree && !sensitiveContent;
 
 		const dfpAdvertisingTrueConditions = {
-			'switches.commercial': switches.commercial,
+			'switches.commercial': !!switches.commercial,
 			externalAdvertising,
 		};
 
