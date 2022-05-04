@@ -6,30 +6,28 @@ import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
 
 /**
- * Logs the reason why adverts are disabled on an article
+ * Log the reason why adverts are disabled
  *
- * @param ifTrue - ads are disabled if these are true
- * @param ifFalse - ads are disabled if these are false
+ * @param trueConditions - normally true conditions, log if false
+ * @param falseConditions - normally false conditions, log if true
  */
-function articleAdsDisabledLogger(
-	ifTrue: Record<string, boolean>,
-	ifFalse: Record<string, boolean>,
+function adsDisabledLogger(
+	trueConditions: Record<string, boolean>,
+	falseConditions: Record<string, boolean>,
 ): void {
-	const adsDisabledBecause: Record<string, boolean> = {};
+	const noAdsLog = (condition: string, value: boolean): void =>
+		log(
+			'commercial',
+			`Adverts are not shown because ${condition} = ${value.toString()}`,
+		);
 
-	for (const reason in ifTrue) {
-		if (ifTrue[reason]) {
-			adsDisabledBecause[reason] = ifTrue[reason];
-		}
-	}
+	Object.entries(trueConditions).forEach(
+		([condition, value]) => !value && noAdsLog(condition, value),
+	);
 
-	for (const reason in ifFalse) {
-		if (!ifFalse[reason]) {
-			adsDisabledBecause[reason] = ifFalse[reason];
-		}
-	}
-
-	log('commercial', 'Article adverts not shown because', adsDisabledBecause);
+	Object.entries(falseConditions).forEach(
+		([condition, value]) => value && noAdsLog(condition, value),
+	);
 }
 
 // Having a constructor means we can easily re-instantiate the object in a test
@@ -88,44 +86,56 @@ class CommercialFeatures {
 
 		this.youtubeAdvertising = !this.adFree && !sensitiveContent;
 
+		const dfpAdvertisingTrueConditions = {
+			'switches.commercial': switches.commercial,
+			externalAdvertising,
+		};
+
+		const dfpAdvertisingFalseConditions = {
+			sensitiveContent,
+			isIdentityPage,
+			adFree: this.adFree,
+		};
+
 		this.dfpAdvertising =
 			forceAds ||
-			(switches.commercial &&
-				externalAdvertising &&
-				!sensitiveContent &&
-				!isIdentityPage &&
-				!this.adFree);
+			(Object.values(dfpAdvertisingTrueConditions).every(Boolean) &&
+				!Object.values(dfpAdvertisingFalseConditions).some(Boolean));
+
+		if (!this.dfpAdvertising) {
+			adsDisabledLogger(
+				dfpAdvertisingTrueConditions,
+				dfpAdvertisingFalseConditions,
+			);
+		}
 
 		this.stickyTopBannerAd =
 			!this.adFree &&
 			!config.get('page.disableStickyTopBanner') &&
 			!supportsSticky;
 
+		const articleBodyAdvertsTrueConditions = {
+			isArticle,
+		};
+
+		const articleBodyAdvertsFalseConditions = {
+			isMinuteArticle,
+			isLiveBlog,
+			isHosted,
+			newRecipeDesign: !!newRecipeDesign,
+		};
+
 		this.articleBodyAdverts =
 			this.dfpAdvertising &&
 			!this.adFree &&
-			!isMinuteArticle &&
-			isArticle &&
-			!isLiveBlog &&
-			!isHosted &&
-			!newRecipeDesign;
+			Object.values(articleBodyAdvertsTrueConditions).every(Boolean) &&
+			!Object.values(articleBodyAdvertsFalseConditions).some(Boolean);
 
 		if (isArticle && !this.articleBodyAdverts) {
 			// Log why article adverts are disabled
-			articleAdsDisabledLogger(
-				{
-					forceAdFree,
-					isAdFreeUser: isAdFreeUser(),
-					sensitiveContent,
-					isMinuteArticle,
-					isLiveBlog,
-					isHosted,
-					newRecipeDesign: !!newRecipeDesign,
-				},
-				{
-					'switches.commercial': switches.commercial,
-					externalAdvertising,
-				},
+			adsDisabledLogger(
+				articleBodyAdvertsTrueConditions,
+				articleBodyAdvertsFalseConditions,
 			);
 		}
 
