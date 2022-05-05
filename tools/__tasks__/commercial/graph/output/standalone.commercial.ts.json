@@ -7,7 +7,7 @@
  "../lib/config.js": [],
  "../lib/detect-google-proxy.ts": [],
  "../lib/detect-viewport.ts": [
-  "../../../../node_modules/@guardian/source-foundations/dist/index.d.ts"
+  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts"
  ],
  "../lib/detect.js": [
   "../lib/config.js",
@@ -282,7 +282,7 @@
   "../projects/commercial/modules/messenger/disable-refresh.ts",
   "../projects/commercial/modules/messenger/get-page-targeting.ts",
   "../projects/commercial/modules/messenger/get-page-url.ts",
-  "../projects/commercial/modules/messenger/get-stylesheet.js",
+  "../projects/commercial/modules/messenger/get-stylesheet.ts",
   "../projects/commercial/modules/messenger/measure-ad-load.ts",
   "../projects/commercial/modules/messenger/passback.ts",
   "../projects/commercial/modules/messenger/resize.ts",
@@ -465,7 +465,10 @@
  "../projects/commercial/modules/messenger/get-page-url.ts": [
   "../projects/commercial/modules/messenger.ts"
  ],
- "../projects/commercial/modules/messenger/get-stylesheet.js": [],
+ "../projects/commercial/modules/messenger/get-stylesheet.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/commercial/modules/messenger.ts"
+ ],
  "../projects/commercial/modules/messenger/measure-ad-load.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
