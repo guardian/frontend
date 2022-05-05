@@ -2,13 +2,15 @@ package test
 
 import controllers.ArticleController
 import org.apache.commons.codec.digest.DigestUtils
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatestplus.mockito.MockitoSugar
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test._
 
 @DoNotDiscover class ArticleControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with MockitoSugar

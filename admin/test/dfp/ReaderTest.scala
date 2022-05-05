@@ -2,9 +2,10 @@ package dfp
 
 import com.google.api.ads.admanager.axis.utils.v202108.StatementBuilder
 import dfp.Reader.read
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class ReaderTest extends FlatSpec with Matchers {
+class ReaderTest extends AnyFlatSpec with Matchers {
 
   "load" should "load a single page of results" in {
     val stmtBuilder = new StatementBuilder()

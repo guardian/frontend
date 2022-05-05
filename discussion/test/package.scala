@@ -4,10 +4,11 @@ import conf.Configuration
 import org.scalatest.Suites
 import recorder.DefaultHttpRecorder
 import play.api.libs.ws.WSClient
-import java.io.File
 
+import java.io.File
 import scala.concurrent.duration._
 import discussion.api.DiscussionApiLike
+import org.scalatestplus.play.PortNumber
 
 import scala.concurrent.ExecutionContext
 
@@ -38,6 +39,4 @@ class DiscussionTestSuite
       new CommentCountControllerTest,
       new ProfileTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19008
-}
+    with SingleServerSuite {}

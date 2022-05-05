@@ -1,10 +1,12 @@
 package football.containers
 
 import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import test._
 
 @DoNotDiscover class FixturesAndResultsTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with WithTestApplicationContext

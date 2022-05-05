@@ -3,9 +3,10 @@ package layout
 import com.gu.contentapi.client.model.v1.Tag
 import contentapi.FixtureTemplates
 import model.{Content, Trail}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class TagHistogramTest extends FlatSpec with Matchers {
+class TagHistogramTest extends AnyFlatSpec with Matchers {
   def tag(id: String): Tag =
     FixtureTemplates.emptyTag.copy(id = id)
 

@@ -1,17 +1,19 @@
 package weather
 
 import akka.actor.ActorSystem
-import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mockito.MockitoSugar
 import play.api.libs.json.{JsString, JsValue}
 import org.mockito.Mockito._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import scala.language.postfixOps
 
-class WeatherApiTest extends FlatSpec with ScalaFutures with Matchers with MockitoSugar {
+class WeatherApiTest extends AnyFlatSpec with ScalaFutures with Matchers with MockitoSugar {
   val actorSystem = ActorSystem()
 
   "retryWeatherRequest" should "return for a successful future" in {

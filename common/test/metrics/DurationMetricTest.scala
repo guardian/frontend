@@ -1,10 +1,11 @@
 package metrics
 
 import com.amazonaws.services.cloudwatch.model.StandardUnit
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
 import org.joda.time.DateTime
+import org.scalatest.flatspec.AnyFlatSpec
 
-class DurationMetricTest extends FlatSpec with Matchers {
+class DurationMetricTest extends AnyFlatSpec with Matchers {
 
   "DurationMetric" should "start off empty" in {
     val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.Count)

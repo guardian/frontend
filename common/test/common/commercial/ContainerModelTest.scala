@@ -3,9 +3,11 @@ package common.commercial
 import common.facia.PressedCollectionBuilder.mkPressedCollection
 import common.editions.Uk
 import model.facia.PressedCollection
-import org.scalatest.{FlatSpec, Matchers, OptionValues}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.OptionValues
 
-class ContainerModelTest extends FlatSpec with Matchers with OptionValues {
+class ContainerModelTest extends AnyFlatSpec with Matchers with OptionValues {
 
   def fromUkPressedCollection: (PressedCollection) => ContainerModel = {
     ContainerModel.fromPressedCollection(Uk)

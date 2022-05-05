@@ -1,21 +1,21 @@
 package common
 
 import java.time.ZoneOffset
-
 import com.gu.contentapi.client.model.v1.{Content, ItemResponse, Section, Tag, TagType}
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import test.{TestRequest, WithTestExecutionContext}
 import implicits.Dates.jodaToJavaInstant
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import org.scalatest.flatspec.AnyFlatSpec
 
 import scala.concurrent.Future
 
 private object TestModel
 
-class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionContext {
+class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecutionContext {
 
   val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 

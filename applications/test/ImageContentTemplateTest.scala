@@ -1,9 +1,10 @@
 package test
-import scala.collection.JavaConverters._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.DoNotDiscover
 
-@DoNotDiscover class ImageContentTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class ImageContentTemplateTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "render a cartoon" in goTo("/commentisfree/cartoon/2013/jul/15/iain-duncan-smith-benefits-cap") { browser =>
     import browser._

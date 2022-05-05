@@ -1,10 +1,11 @@
 package services.dotcomponents
 
-import model.{PageWithStoryPackage}
-import org.scalatest.{DoNotDiscover, FlatSpec, FunSuite, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.DoNotDiscover
 import test.TestRequest
 
-@DoNotDiscover class ArticlePickerTest extends FlatSpec with Matchers {
+@DoNotDiscover class ArticlePickerTest extends AnyFlatSpec with Matchers {
 
   "Article Picker decideTier" should "return LocalRenderArticle if forceDCROff and dcr cannot render" in {
     val testRequest = TestRequest("article-path?dcr=false")

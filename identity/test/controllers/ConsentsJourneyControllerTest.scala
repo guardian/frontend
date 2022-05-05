@@ -1,23 +1,24 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.Consent.Supporter
 import com.gu.identity.model._
 import controllers.editprofile.EditProfileController
 import form._
 import idapiclient.{Auth, TrackingData, _}
-import model.{Countries, PhoneNumbers}
+import model.PhoneNumbers
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
 import MockitoMatchers._
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mockito.MockitoSugar
 import org.scalatest._
 import org.scalatestplus.play.ConfiguredServer
 import _root_.play.api.http.HttpConfiguration
 import _root_.play.api.mvc._
 import _root_.play.api.test.Helpers._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.mockito.MockitoSugar
 import services._
 import services.newsletters.NewsletterSignupAgent
 import test._
@@ -25,7 +26,7 @@ import test._
 import scala.concurrent.Future
 
 @DoNotDiscover class ConsentsJourneyControllerTest
-    extends WordSpec
+    extends AnyWordSpec
     with WithTestExecutionContext
     with Matchers
     with MockitoSugar

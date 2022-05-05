@@ -1,9 +1,10 @@
 package navigation
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
 import AuthenticationComponentEvent._
+import org.scalatest.flatspec.AnyFlatSpec
 
-class AuthenticationComponentEventTest extends FlatSpec with Matchers {
+class AuthenticationComponentEventTest extends AnyFlatSpec with Matchers {
 
   "createAuthenticationComponentEventTuple" should "create a component event tuple with the parameters passed" in {
     createAuthenticationComponentEventTuple(

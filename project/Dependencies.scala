@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "3.253"
-  val awsVersion = "1.11.240"
+  val awsVersion = "1.12.205"
   val capiVersion = "17.25.0"
   val faciaVersion = "3.3.12"
   val dispatchVersion = "0.13.1"
@@ -47,17 +47,19 @@ object Dependencies {
   val playGoogleAuth = "com.gu.play-googleauth" %% "play-v28" % "2.1.1"
   val playSecretRotation = "com.gu.play-secret-rotation" %% "play-v28" % "0.18"
   val playSecretRotationAwsSdk = "com.gu.play-secret-rotation" %% "aws-parameterstore-sdk-v1" % "0.18"
-  val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.3"
+  val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
-  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
+  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.16.0" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.30.0"
-  val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
-  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.1" % Test
+  val scalaTest = "org.scalatest" %% "scalatest" % "3.2.11" % Test
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
+  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-3-4" % "3.3.0.0-SNAP3" % Test
+  val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "2.44.0"
-  val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.25"
+  val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.36"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
@@ -85,14 +87,32 @@ object Dependencies {
     Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
     may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
     dependencies have been upgraded), then do remember to check for regressions.
+
+    The versions are currently set as they are because of:
+    https://github.com/orgs/playframework/discussions/11222
    */
-  val jacksonVersion = "2.11.4"
-  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
+  val jacksonVersion = "2.13.2"
+  val jacksonDatabindVersion = "2.13.2.2"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
-  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
-  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
-  val jackson = Seq(jacksonDataFormat, jacksonCore, jacksonDataType, jacksonAnnotations)
+  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
+  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
+  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
+  val jacksonParameterName = "com.fasterxml.jackson.module" % "jackson-module-parameter-names" % jacksonVersion
+  val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
+  val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
+
+  val jackson =
+    Seq(
+      jacksonCore,
+      jacksonAnnotations,
+      jacksonDataTypeJdk8,
+      jacksonDataType,
+      jacksonDataFormat,
+      jacksonParameterName,
+      jackModule,
+      jacksonDatabind,
+    )
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"

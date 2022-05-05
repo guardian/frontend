@@ -7,12 +7,12 @@ import com.gu.contentapi.client.model.v1.{
   Tag => ApiTag,
   _,
 }
-import common.Edition
 import common.editions.Uk
 import conf.Configuration
 import model._
 import org.jsoup.Jsoup
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import test.TestRequest
@@ -21,7 +21,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import scala.collection.JavaConverters._
 import scala.xml.XML
 
-class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class TemplatesTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "RemoveOuterPara" should "remove outer paragraph tags" in {
     RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").body should be(" foo <b>bar</b> ")

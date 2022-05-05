@@ -1,10 +1,10 @@
 package common
 
-import model._
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class IsoDateTest extends FlatSpec with Matchers with implicits.Dates {
+class IsoDateTest extends AnyFlatSpec with Matchers with implicits.Dates {
 
   "Iso Date Parser" should "parse" in {
     "2013-11-11T23:02:18.311Z".parseISODateTime should be(

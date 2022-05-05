@@ -1,10 +1,13 @@
 package test
 
 import conf.switches.Switches.FacebookShareUseTrailPicFirstSwitch
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.DoNotDiscover
+import org.scalatest.matchers.should.Matchers
+
 import scala.collection.JavaConverters._
 
-@DoNotDiscover class GalleryTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class GalleryTemplateTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "render gallery headline" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
     browser.el("h1").text should be("Picture desk live: the day's best news images")

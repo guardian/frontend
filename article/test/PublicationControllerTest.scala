@@ -1,16 +1,17 @@
 package test
 
-import contentapi.ContentApiClient
 import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
-import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.Helpers._
 import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 
 @DoNotDiscover class PublicationControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with MockitoSugar

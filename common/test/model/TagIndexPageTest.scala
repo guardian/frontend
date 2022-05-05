@@ -1,9 +1,10 @@
 package model
 
 import common.ResourcesHelper
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class TagIndexPageTest extends FlatSpec with Matchers with ResourcesHelper {
+class TagIndexPageTest extends AnyFlatSpec with Matchers with ResourcesHelper {
   val fixture = slurpJsonOrDie[TagIndex]("c.json")
 
   val cuba = TagDefinition(

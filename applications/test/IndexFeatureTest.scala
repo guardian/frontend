@@ -2,13 +2,16 @@ package test
 
 import play.api.test.TestBrowser
 import org.scalatest._
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
+
 import scala.collection.JavaConverters._
 
-@DoNotDiscover class IndexFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class IndexFeatureTest extends AnyFeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
-  feature("Section") {
+  Feature("Section") {
 
-    feature("Sponsorships") {
+    Feature("Sponsorships") {
 
       def testFrontSponsorship(browser: TestBrowser, sponsorshipType: String): Assertion = {
         import browser._
@@ -31,7 +34,7 @@ import scala.collection.JavaConverters._
         *
        * If they fail often, might need to look into setting up a reliable data source
         */
-      scenario("Advertisement Feature Front") {
+      Scenario("Advertisement Feature Front") {
 
         Given("I am on an advertisement feature front")
         goTo("/visa-partner-zone") { browser =>
@@ -40,7 +43,7 @@ import scala.collection.JavaConverters._
 
       }
 
-      scenario("Sponsored Front") {
+      Scenario("Sponsored Front") {
 
         Given("I am on ansponsored front")
         goTo("/sustainable-business/role-business-development") { browser =>
@@ -49,7 +52,7 @@ import scala.collection.JavaConverters._
 
       }
 
-      scenario("Foundation Supported Front") {
+      Scenario("Foundation Supported Front") {
 
         Given("I am on a foundation supported front")
         goTo("/global-development") { browser =>

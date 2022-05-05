@@ -3,9 +3,11 @@ package model
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.liveblog._
 import org.joda.time.DateTime
-import org.scalatest.{Assertion, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.Assertion
 
-class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
+class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   def fakeBlock(
       publicationOrder: Int,

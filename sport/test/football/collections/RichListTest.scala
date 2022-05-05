@@ -1,9 +1,11 @@
 package football.collections
 
-import org.scalatest.{DoNotDiscover, Matchers, FunSuite}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.DoNotDiscover
+import org.scalatest.matchers.should.Matchers
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class RichListTest extends FunSuite with Matchers with RichList with ConfiguredTestSuite {
+@DoNotDiscover class RichListTest extends AnyFunSuite with Matchers with RichList with ConfiguredTestSuite {
   test("Should group simple List correctly") {
     val l = List(1, 1, 2, 3, 3, 3, 4, 5, 5)
     l.segment() should equal(
