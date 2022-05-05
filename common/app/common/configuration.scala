@@ -234,7 +234,9 @@ class GuardianConfiguration extends GuLogging {
     }
 
     lazy val capiCrierRoleArn: String =
-      configuration.getStringProperty("aws.capiCrierRoleArn").getOrElse(sys.error("Missing aws.crierRoleArn parameter"))
+      configuration
+        .getStringProperty("content.api.crierRoleArn")
+        .getOrElse(sys.error("Missing content.api.crierRoleArn parameter"))
 
     lazy val capiKinesisCredsProvider = new AWSCredentialsProviderChain(
       new EnvironmentVariableCredentialsProvider(),
@@ -258,12 +260,12 @@ class GuardianConfiguration extends GuLogging {
       configuration.getIntegerProperty("content.api.nextPreviousPageSize").getOrElse(50)
 
     lazy val indexStream: String = configuration
-      .getStringProperty("aws.kinesis.indexStream")
-      .getOrElse(sys.error("Missing aws.kinesis.indexStream parameter"))
+      .getStringProperty("content.api.kinesis.indexStream")
+      .getOrElse(sys.error("Missing content.api.kinesis.indexStream parameter"))
 
     lazy val kinesisStreamReaderConfig: KinesisStreamReaderConfig = KinesisStreamReaderConfig(
       streamName = indexStream,
-      app = "support-apple-news",
+      app = "frontend",
       stage = "live",
       mode = stage,
       suffix = None,
