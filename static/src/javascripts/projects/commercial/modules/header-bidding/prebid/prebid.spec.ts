@@ -31,6 +31,7 @@ const resetPrebid = () => {
 describe('initialise', () => {
 	beforeEach(() => {
 		resetPrebid();
+		config.set('switches.commercial', true);
 		config.set('switches.consentManagement', true);
 		config.set('switches.prebidUserSync', true);
 		config.set('switches.prebidAppNexus', true);
