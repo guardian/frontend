@@ -21,13 +21,13 @@ function adsDisabledLogger(
 			`Adverts are not shown because ${condition} = ${value.toString()}`,
 		);
 
-	Object.entries(trueConditions).forEach(
-		([condition, value]) => !value && noAdsLog(condition, value),
-	);
+	for (const [condition, value] of Object.entries(trueConditions)) {
+		if (!value) noAdsLog(condition, value);
+	}
 
-	Object.entries(falseConditions).forEach(
-		([condition, value]) => value && noAdsLog(condition, value),
-	);
+	for (const [condition, value] of Object.entries(falseConditions)) {
+		if (value) noAdsLog(condition, value);
+	}
 }
 
 // Having a constructor means we can easily re-instantiate the object in a test
@@ -68,10 +68,7 @@ class CommercialFeatures {
 		const isIdentityPage =
 			config.get('page.contentType') === 'Identity' ||
 			config.get('page.section') === 'identity'; // needed for pages under profile.* subdomain
-		const switches = config.get<Record<string, boolean | undefined>>(
-			'switches',
-			{},
-		);
+		const switches = config.get<Record<string, boolean>>('switches', {});
 		const isWidePage = getBreakpoint() === 'wide';
 		const supportsSticky =
 			document.documentElement.classList.contains('has-sticky');
@@ -90,7 +87,7 @@ class CommercialFeatures {
 		this.youtubeAdvertising = !this.adFree && !sensitiveContent;
 
 		const dfpAdvertisingTrueConditions = {
-			'switches.commercial': !!switches.commercial,
+			'switches.commercial': switches.commercial,
 			externalAdvertising,
 		};
 
