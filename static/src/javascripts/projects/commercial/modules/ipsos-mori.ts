@@ -46,7 +46,7 @@ export const init = (): Promise<void> => {
 		.then((state) => {
 			if (state.aus) {
 				void loadIpsosScript('au');
-			} else if (getConsentFor('ipsos', consentState)) {
+			} else if (getConsentFor('ipsos', state)) {
 				void loadIpsosScript('uk');
 			} else {
 				throw Error('No consent for ipsos');
