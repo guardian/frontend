@@ -173,7 +173,7 @@ from scrolling */
     }
 }
 
-.inline-the-guardian-logo__svg {
+.inline-the-guardian-logo__svg, .inline-the-guardian-best-website-logo__svg {
     display: block;
     height: 44px;
     width: 135px;
@@ -193,6 +193,9 @@ from scrolling */
         width: 295px;
     }
 
+}
+
+.inline-the-guardian-logo__svg {
     path {
         fill: $brightness-100;
     }
