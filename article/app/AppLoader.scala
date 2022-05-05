@@ -41,6 +41,8 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
 
+  lazy val kinesisConsumerService = wire[capiFirehoseConsumer.KinesisConsumerService]
+
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
     wire[NewspaperBooksAndSectionsAutoRefresh],

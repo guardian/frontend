@@ -1,4 +1,5 @@
 import app.FrontendComponents
+import com.softwaremill.macwire.wire
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import renderers.DotcomRenderingService
@@ -12,6 +13,7 @@ trait TestComponents extends WithTestContentApiClient {
 
   // Relying on DCR output for tests is always a mistake.
   override lazy val remoteRender: DotcomRenderingService = new DCRFake()
+  override lazy val kinesisConsumerService = new FakeKinesisConsumer()
 }
 
 class TestAppLoader extends AppLoader {
