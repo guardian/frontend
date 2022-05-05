@@ -6,14 +6,13 @@ import { ipsosMoriAustralia } from 'common/modules/experiments/tests/ipsos-mori-
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
-const loadIpsosScript = (locale?: string) => {
+const loadIpsosScript = (locale: 'au' | 'uk') => {
 	stub();
 
 	const ipsosTag = config.get<string>('page.ipsosTag');
 	if (ipsosTag === undefined) throw Error('Ipsos tag undefined');
-	const dotmetricsLocation = !!locale && locale === 'AU' ? 'au' : 'uk';
 
-	const ipsosSource = `https://${dotmetricsLocation}-script.dotmetrics.net/door.js?d=${document.location.host}&t=${ipsosTag}`;
+	const ipsosSource = `https://${locale}-script.dotmetrics.net/door.js?d=${document.location.host}&t=${ipsosTag}`;
 
 	return loadScript(ipsosSource, {
 		id: 'ipsos',
@@ -35,18 +34,20 @@ export const init = (): Promise<void> => {
 
 	return getLocale()
 		.then((locale) => {
-			if (locale === 'GB') {
+			if (
+				locale === 'GB' ||
+				(locale === 'AU' && forceIpsosMoriAustraliaTest)
+			) {
 				return getInitialConsentState();
-			} else if (locale === 'AU' && forceIpsosMoriAustraliaTest) {
-				// Skipping consent step for Australia in 0% test
-				void loadIpsosScript(locale);
 			} else {
 				throw Error('Skipping ipsos process outside GB or AU');
 			}
 		})
 		.then((state) => {
-			if (!!state && getConsentFor('ipsos', state)) {
-				void loadIpsosScript();
+			if (state.aus) {
+				void loadIpsosScript('au');
+			} else if (getConsentFor('ipsos', consentState)) {
+				void loadIpsosScript('uk');
 			} else {
 				throw Error('No consent for ipsos');
 			}
