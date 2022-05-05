@@ -7,11 +7,12 @@ import model.content._
 import model.{ImageAsset, ImageMedia}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import test.{TestRequest, WithTestApplicationContext}
 import views.support.AtomsCleaner
 
-class AtomCleanerTest extends FlatSpec with Matchers with WithTestApplicationContext with FakeRequests {
+class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplicationContext with FakeRequests {
 
   val asset: Asset = Asset(
     AssetType.Image,

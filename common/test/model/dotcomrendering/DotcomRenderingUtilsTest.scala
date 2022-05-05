@@ -5,10 +5,11 @@ import com.gu.contentapi.client.utils.format.LiveBlogDesign
 import model.dotcomrendering.DotcomRenderingUtils
 import model.{CanonicalLiveBlog, ContentFormat, ContentType, DotcomContentType, MetaData}
 import org.mockito.Mockito.when
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 
-class DotcomRenderingUtilsTest extends FlatSpec with Matchers with MockitoSugar {
+class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSugar {
 
   val testContent = mock[ContentType]
   val testMetadata = mock[MetaData]

@@ -1,9 +1,11 @@
 package model
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.DoNotDiscover
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class FaciaPageTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class FaciaPageTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 
   private def toPressedPage(id: String): PressedPage = {
     PressedPage(id, SeoData.empty, FrontProperties.empty, Nil)

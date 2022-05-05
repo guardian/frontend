@@ -1,10 +1,12 @@
 package commercial.model.merchandise.jobs
 
 import commercial.model.merchandise.Job
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.DoNotDiscover
+import org.scalatest.matchers.should.Matchers
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class JobTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class JobTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 
   "mainIndustry" should "give a value for jobs" in {
     val job = Job(1, "title", "desc", None, "recruiter", None, "logo", Seq(218), "Unpaid Voluntary Work")

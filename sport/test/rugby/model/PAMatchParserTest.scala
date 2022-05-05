@@ -1,12 +1,13 @@
 package rugby.model
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import rugby.feed.{JsonParseException, PAMatchesResponse}
 
 import scala.io.Source
 import scala.util.Try
 
-class PAMatchParserTest extends FlatSpec with Matchers {
+class PAMatchParserTest extends AnyFlatSpec with Matchers {
 
   behavior of "PA Match parser"
 

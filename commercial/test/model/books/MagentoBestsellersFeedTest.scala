@@ -1,12 +1,14 @@
 package commercial.model.merchandise.books
 
 import commercial.model.merchandise.Book
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.DoNotDiscover
 import test.ConfiguredTestSuite
 
 import scala.xml.XML
 
-@DoNotDiscover class MagentoBestsellersFeedTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class MagentoBestsellersFeedTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 
   private val xmlStr =
     """<BestSellers><Category>General</Category>

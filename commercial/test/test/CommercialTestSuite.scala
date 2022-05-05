@@ -3,6 +3,7 @@ package commercial.test
 import commercial.model.capi.LookupTest
 import commercial.model.merchandise.{books, events, jobs}
 import org.scalatest.Suites
+import org.scalatestplus.play.PortNumber
 import test.SingleServerSuite
 
 class CommercialTestSuite
@@ -15,6 +16,4 @@ class CommercialTestSuite
       new LookupTest,
       new books.BookTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19006
-}
+    with SingleServerSuite {}

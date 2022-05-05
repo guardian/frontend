@@ -1,26 +1,21 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.gu.identity.cookie.GuUCookieData
-import com.gu.identity.model.Consent.Supporter
 import com.gu.identity.model._
 import form._
 import idapiclient.{TrackingData, _}
-import idapiclient.Auth
-import idapiclient.responses.Error
-import model.{Countries, PhoneNumbers}
+import model.PhoneNumbers
 import controllers.editprofile.EditProfileController
-import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
-import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
+import org.mockito.{Matchers => MockitoMatchers}
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
-import org.scalatest.mockito.MockitoSugar
+import org.scalatest.{DoNotDiscover, OptionValues}
 import org.scalatestplus.play.ConfiguredServer
 import _root_.play.api.http.HttpConfiguration
 import _root_.play.api.mvc._
-import _root_.play.api.test.FakeRequest
-import _root_.play.api.test.Helpers._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.mockito.MockitoSugar
 import services._
 import services.newsletters.NewsletterSignupAgent
 import test._
@@ -29,7 +24,7 @@ import scala.concurrent.Future
 
 //TODO test form validation and population of form fields.
 @DoNotDiscover class EditProfileControllerTest
-    extends WordSpec
+    extends AnyWordSpec
     with WithTestExecutionContext
     with Matchers
     with MockitoSugar

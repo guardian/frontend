@@ -3,14 +3,17 @@ package services
 import com.gu.facia.client.models.{Branded, CollectionConfigJson, ConfigJson, FrontJson}
 import model.{ApplicationContext, ApplicationIdentity}
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.matchers.should.Matchers
 import play.api.Environment
 import test.WithTestApplicationContext
+
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
 class ShouldServeFrontTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with WithTestApplicationContext
     with ScalaFutures

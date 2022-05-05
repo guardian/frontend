@@ -1,14 +1,15 @@
 package formstack
 
-import org.scalatest.{Matchers, path}
-import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.{Matchers => MockitoMatchers}
+import org.scalatest.freespec.PathAnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 import test.WithTestExecutionContext
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class FormstackApiTest extends path.FreeSpec with Matchers with MockitoSugar with WithTestExecutionContext {
+class FormstackApiTest extends PathAnyFreeSpec with Matchers with MockitoSugar with WithTestExecutionContext {
   val httpClient = mock[WsFormstackHttp]
   val formstackApi = new FormstackApi(httpClient)
 

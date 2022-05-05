@@ -1,7 +1,8 @@
 package rugby.feed
 
 import org.joda.time.DateTime
-import org.scalatest.{AsyncFlatSpec, Matchers}
+import org.scalatest.flatspec.AsyncFlatSpec
+import org.scalatest.matchers.should.Matchers
 import rugby.model.{Match, Stage, Status, Team}
 
 import scala.concurrent.{ExecutionContext, Future}

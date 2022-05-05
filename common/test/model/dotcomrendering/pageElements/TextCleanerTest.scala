@@ -6,9 +6,10 @@ import common.editions
 import common.editions.Uk
 import conf.Configuration
 import model.dotcomrendering.pageElements.{TagLinker, TextBlockElement, TextCleaner}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class TextCleanerTest extends FlatSpec with Matchers {
+class TextCleanerTest extends AnyFlatSpec with Matchers {
 
   val host = Configuration.site.host
 

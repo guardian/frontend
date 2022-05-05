@@ -2,10 +2,11 @@ package commercial.model.merchandise.events
 
 import commercial.model.merchandise.Masterclass
 import commercial.model.merchandise.events.Eventbrite.Response
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json._
 
-class EventbriteMasterclassFeedParsingTest extends FlatSpec with Matchers {
+class EventbriteMasterclassFeedParsingTest extends AnyFlatSpec with Matchers {
 
   "MasterClassFeedParser" should "parse out a list of Event JsValues" in {
     val eventBriteFeed: JsValue = Json.parse(Fixtures.rawEventBriteFeed)

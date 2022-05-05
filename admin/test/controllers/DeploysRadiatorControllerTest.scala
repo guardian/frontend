@@ -2,7 +2,9 @@ package controllers.admin
 
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.libs.json.JsArray
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.ControllerComponents
@@ -14,7 +16,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 @DoNotDiscover class DeploysControllerTest
-    extends WordSpec
+    extends AnyWordSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

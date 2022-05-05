@@ -1,8 +1,9 @@
 package model
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class SeoDataTest extends FlatSpec with Matchers {
+class SeoDataTest extends AnyFlatSpec with Matchers {
 
   "SeoData" should "handle an path that has an edition" in {
     val seoData: SeoData = SeoData.fromPath("uk/culture")

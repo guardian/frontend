@@ -2,7 +2,7 @@ package metadata
 
 import model.meta.Logo
 import org.jsoup.Jsoup
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json._
 import play.api.mvc.Result
 import play.api.test.Helpers._

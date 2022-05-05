@@ -2,12 +2,14 @@ package test
 
 import controllers.MostViewedVideoController
 import feed.MostViewedVideoAgent
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.test.Helpers._
 import services.OphanApi
 
 @DoNotDiscover class MostViewedVideoTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

@@ -8,8 +8,8 @@ export const prebidPriceGranularity: ABTest = {
 	author: 'Chris Jones (@chrislomaxjones)',
 	description:
 		'Test the commercial impact of changing Prebid Price granularity for Ozone',
-	audience: 0 / 100,
-	audienceOffset: 0 / 100,
+	audience: 5 / 100,
+	audienceOffset: 25 / 100,
 	successMeasure:
 		'No significant negative impact on CPM when using a granularity that permits fewer line items',
 	audienceCriteria: 'n/a',
