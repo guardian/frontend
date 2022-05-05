@@ -8,13 +8,16 @@ type Specs = {
 const isSpecs = (specs: unknown): specs is Specs =>
 	isObject(specs) && typeof specs.selector === 'string';
 
+const isElement = (element: unknown): element is Element =>
+	isObject(element) && !!element.matches;
+
 const getStyles = (specs: Specs, styleSheets: StyleSheetList): string[] => {
 	const result = [];
 	for (let i = 0; i < styleSheets.length; i += 1) {
 		const sheet = styleSheets[i];
 		const ownerNode = sheet.ownerNode;
 
-		if (ownerNode instanceof Element) {
+		if (isElement(ownerNode)) {
 			if (ownerNode.matches(specs.selector)) {
 				if (
 					ownerNode.tagName === 'STYLE' &&
@@ -22,8 +25,10 @@ const getStyles = (specs: Specs, styleSheets: StyleSheetList): string[] => {
 				) {
 					result.push(ownerNode.textContent);
 				} else {
+					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- test
+					const cssRules = sheet.cssRules || [];
 					result.push(
-						[...sheet.cssRules].reduce((acc, input) => {
+						[...cssRules].reduce((acc, input) => {
 							return acc + input.cssText;
 						}, ''),
 					);

@@ -27,7 +27,7 @@ describe('Cross-frame messenger: get stylesheets', () => {
 									const res = Array.prototype.slice.call(
 										document.querySelectorAll(selector),
 									);
-									return res.includes(style);
+									return res.indexOf(style) > -1;
 								},
 							},
 							style,
