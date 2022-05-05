@@ -18,7 +18,7 @@ function adsDisabledLogger(
 	const noAdsLog = (condition: string, value: boolean): void =>
 		log(
 			'commercial',
-			`Adverts are not shown because ${condition} = ${value.toString()}`,
+			`Adverts are not shown because ${condition} = ${String(value)}`,
 		);
 
 	for (const [condition, value] of Object.entries(trueConditions)) {
