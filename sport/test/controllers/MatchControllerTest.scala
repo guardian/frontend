@@ -1,11 +1,13 @@
 package test
 
 import football.controllers.MatchController
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 
 @DoNotDiscover class MatchControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with ConfiguredTestSuite
     with Matchers
     with BeforeAndAfterAll

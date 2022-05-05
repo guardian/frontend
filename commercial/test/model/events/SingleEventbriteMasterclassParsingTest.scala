@@ -2,10 +2,12 @@ package commercial.model.merchandise.events
 
 import commercial.model.merchandise.Masterclass
 import commercial.model.merchandise.events.Eventbrite.{Event, Venue}
-import org.scalatest.{FlatSpec, Matchers, OptionValues}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.OptionValues
 import play.api.libs.json._
 
-class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with OptionValues {
+class SingleEventbriteMasterclassParsingTest extends AnyFlatSpec with Matchers with OptionValues {
 
   "MasterClass companion object" should
     "not create a masterclass object if there isn't at link to the Guardian with the words 'Click here'" in {

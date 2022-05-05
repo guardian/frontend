@@ -1,10 +1,13 @@
 package conf.switches
 
+import org.scalatest.flatspec.AnyFlatSpec
+
 import java.time.DayOfWeek.{SATURDAY, SUNDAY}
 import java.time.LocalDate
-import org.scalatest.{AppendedClues, FlatSpec, Matchers}
+import org.scalatest.AppendedClues
+import org.scalatest.matchers.should.Matchers
 
-class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
+class SwitchesTest extends AnyFlatSpec with Matchers with AppendedClues {
 
   private val SwitchNamePattern = """([a-z\d-]+)""".r
 

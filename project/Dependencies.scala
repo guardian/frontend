@@ -51,10 +51,12 @@ object Dependencies {
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
-  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
+  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.16.0" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.30.0"
-  val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
-  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.1" % Test
+  val scalaTest = "org.scalatest" %% "scalatest" % "3.2.11" % Test
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
+  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-3-4" % "3.3.0.0-SNAP3" % Test
+  val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "2.44.0"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.36"

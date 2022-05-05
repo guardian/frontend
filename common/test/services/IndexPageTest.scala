@@ -6,14 +6,16 @@ import model.{Section, Tags}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatest.matchers.should.Matchers
 import layout.slices.Fixed
+import org.scalatest.flatspec.AnyFlatSpec
 import test._
 
 import scala.concurrent.Future
 
 @DoNotDiscover class IndexPageTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

@@ -3,9 +3,10 @@ package model
 import common.Edition
 import model.liveblog.{BlockAttributes, Blocks, BodyBlock}
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class KeyEventDataTest extends FlatSpec with Matchers {
+class KeyEventDataTest extends AnyFlatSpec with Matchers {
   def fakeBlock(
       publicationOrder: Int,
       isKeyEvent: Boolean = false,

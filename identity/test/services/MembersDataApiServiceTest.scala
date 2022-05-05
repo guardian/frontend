@@ -1,15 +1,16 @@
 package services
 
 import conf.IdentityConfiguration
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.AsyncFlatSpec
+import metadata.MetaDataMatcher.{convertToAnyShouldWrapper, include}
 import org.scalatest.EitherValues
-import org.scalatest.Matchers._
 import org.mockito.Mockito._
 import org.mockito.Matchers._
+import org.scalatest.flatspec.AsyncFlatSpec
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import play.api.mvc.{Cookie, Cookies}
 import play.api.libs.json.Json
+
 import scala.concurrent.Future
 
 class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with MockitoSugar {
@@ -80,7 +81,7 @@ class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with Moc
 
     val futureEither = MdapiService.getUserContentAccess(cookies)
     futureEither map { either => either.isRight shouldBe true }
-    futureEither map { either => either.right.value shouldEqual ContentAccess(true, true, false, true, false, true) }
+    futureEither map { either => either.value shouldEqual ContentAccess(true, true, false, true, false, true) }
   }
 
   it should "return MdapiServiceException if unable to extract ContentAccess from json response" in {

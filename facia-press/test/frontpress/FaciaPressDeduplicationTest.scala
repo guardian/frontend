@@ -1,9 +1,10 @@
 package frontpress
 
+import org.scalatest.flatspec.AnyFlatSpec
 import testdata.FaciaPressDeduplicationTestData
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
 
-class FaciaPressDeduplicationTest extends FlatSpec with Matchers with FaciaPressDeduplicationTestData {
+class FaciaPressDeduplicationTest extends AnyFlatSpec with Matchers with FaciaPressDeduplicationTestData {
 
   var sequence = List(
     PressedCollectionVisibility(collection0, 0),

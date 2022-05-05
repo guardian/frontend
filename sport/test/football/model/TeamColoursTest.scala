@@ -1,11 +1,13 @@
 package football.model
 
-import org.scalatest.{DoNotDiscover, FreeSpec, Matchers}
+import org.scalatest.DoNotDiscover
 import model.TeamColours
-import pa.{Official, LineUpTeam}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import pa.{LineUpTeam, Official}
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class TeamColoursTest extends FreeSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class TeamColoursTest extends AnyFreeSpec with Matchers with ConfiguredTestSuite {
   "home team colour" - {
     "should be left as-is if it is the same as the away team" in {
       TeamColours(fakeTeam("#333333"), fakeTeam("#333333")).home should equal("#333333")

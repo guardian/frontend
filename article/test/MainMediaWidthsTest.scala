@@ -1,7 +1,6 @@
 package test
 
 import java.time.ZoneOffset
-
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import implicits.Dates.jodaToJavaInstant
@@ -11,8 +10,10 @@ import org.scalatest._
 import org.scalatest.concurrent.Eventually
 import views.MainMediaWidths
 import model.{Article, Content}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-@DoNotDiscover class MainMediaWidthsTest extends FreeSpec with Matchers with Eventually with ConfiguredTestSuite {
+@DoNotDiscover class MainMediaWidthsTest extends AnyFreeSpec with Matchers with Eventually with ConfiguredTestSuite {
   "should return correct widths" in {
     val item = ApiContent(
       id = "foo/2012/jan/07/bar",

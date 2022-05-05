@@ -1,7 +1,6 @@
 package common
 
 import java.time.ZoneOffset
-
 import com.gu.contentapi.client.model.v1.{ContentFields, TagType, Content => ApiContent, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import common.editions.Uk
@@ -11,14 +10,15 @@ import model.{Article, Content}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import views.support.TagLinker
 
 import scala.collection.JavaConverters._
 
-class TagLinkerTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class TagLinkerTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
   implicit val edition = Uk
   implicit val request = FakeRequest("GET", "/")

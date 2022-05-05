@@ -1,9 +1,10 @@
 package common.dfp
 
-import org.scalatest.{FlatSpec, Matchers, OptionValues}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.data.validation.{Invalid, Valid}
 
-class TakeoverWithEmptyMPUsTest extends FlatSpec with Matchers {
+class TakeoverWithEmptyMPUsTest extends AnyFlatSpec with Matchers {
 
   "TakeoverWithEmptyMPUs" should "recognise as valid urls that are at least 1 directory deep" in {
     TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com/uk") should equal(Valid)

@@ -1,18 +1,17 @@
 package common
 
 import conf.switches.Switches.AutoRefreshSwitch
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.flatspec.AnyFlatSpec
 import play.twirl.api.Html
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.libs.json.Json._
-import play.api.libs.json.{JsObject, Writes}
 import test.WithTestExecutionContext
 
 import scala.concurrent.Future
 
-class JsonComponentTest extends FlatSpec with Matchers with WithTestExecutionContext {
+class JsonComponentTest extends AnyFlatSpec with Matchers with WithTestExecutionContext {
 
   "JsonComponent" should "build json output with standard name" in {
     AutoRefreshSwitch.switchOn()

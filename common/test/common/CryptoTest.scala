@@ -1,8 +1,9 @@
 package common
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class CryptoTest extends FlatSpec with Matchers {
+class CryptoTest extends AnyFlatSpec with Matchers {
 
   val privateKey = "6FA3BE741DE87141F90EB3E67EB51976"
   val message = "Les sanglots longs des violons de l'automne blessent mon cœur d'une langueur monotone."

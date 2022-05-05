@@ -4,9 +4,11 @@ import football.controllers.LeagueTableController
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest._
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
 
 @DoNotDiscover class LeagueTablesFeatureTest
-    extends FeatureSpec
+    extends AnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with ConfiguredTestSuite
@@ -18,9 +20,9 @@ import org.scalatest._
     with WithTestApplicationContext
     with WithTestWsClient {
 
-  feature("League Tables") {
+  Feature("League Tables") {
 
-    scenario("Visit 'all tables' page") {
+    Scenario("Visit 'all tables' page") {
       Given("I visit the a all tables page")
 
       goTo("/football/tables") { browser =>
@@ -46,7 +48,7 @@ import org.scalatest._
       }
     }
 
-    scenario("Visit 'competition table' page") {
+    Scenario("Visit 'competition table' page") {
       Given("I visit the a competition league table page")
 
       goTo("/football/premierleague/table") { browser =>
@@ -63,7 +65,7 @@ import org.scalatest._
       }
     }
 
-    scenario("Should redirect when no competition table data found") {
+    Scenario("Should redirect when no competition table data found") {
       val leagueTableController =
         new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
       val result = leagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())

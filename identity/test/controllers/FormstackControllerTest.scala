@@ -1,7 +1,6 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.User
 import conf.FrontendIdentityCookieDecoder
 import conf.switches.Switches
@@ -10,8 +9,9 @@ import idapiclient.responses.Error
 import idapiclient.{IdApiClient, ScGuU, TrackingData}
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{Matchers, path}
+import org.scalatest.freespec.PathAnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import services._
@@ -20,7 +20,7 @@ import test.{Fake, TestRequest, WithTestApplicationContext, WithTestExecutionCon
 import scala.concurrent.{ExecutionContext, Future}
 
 class FormstackControllerTest
-    extends path.FreeSpec
+    extends PathAnyFreeSpec
     with Matchers
     with WithTestApplicationContext
     with WithTestExecutionContext

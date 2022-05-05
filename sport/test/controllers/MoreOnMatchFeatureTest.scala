@@ -2,11 +2,13 @@ package test
 
 import org.scalatest._
 import football.controllers.MoreOnMatchController
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
 
 @DoNotDiscover class MoreOnMatchFeatureTest
-    extends FeatureSpec
+    extends AnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with ConfiguredTestSuite
@@ -23,9 +25,9 @@ import play.api.test.FakeRequest
     play.api.test.Helpers.stubControllerComponents(),
   )
 
-  feature("Match Nav") {
+  Feature("Match Nav") {
 
-    scenario("View content related to a match") {
+    Scenario("View content related to a match") {
 
       Given("I visit a match page")
 
@@ -48,7 +50,7 @@ import play.api.test.FakeRequest
       }
     }
 
-    scenario("Non-existant match pages return status 404") {
+    Scenario("Non-existant match pages return status 404") {
 
       Given("I visit a non-existant match page")
 
@@ -64,9 +66,9 @@ import play.api.test.FakeRequest
     }
   }
 
-  feature("More on match") {
+  Feature("More on match") {
 
-    scenario("View content related to a match") {
+    Scenario("View content related to a match") {
 
       Given("I visit a match page")
 
@@ -88,7 +90,7 @@ import play.api.test.FakeRequest
       }
     }
 
-    scenario("Non-existant match pages return status 404") {
+    Scenario("Non-existant match pages return status 404") {
 
       Given("I visit a non-existant match page")
 

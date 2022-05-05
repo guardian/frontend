@@ -3,14 +3,16 @@ package common
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.contentapi.client.model.v1._
 import model.SimpleContentPage
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.JsValue
 import play.api.test.Helpers._
 import play.twirl.api.Html
 import test.{TestRequest, WithTestApplicationContext}
+
 import scala.concurrent.Future
 
-class CommonPackageTest extends FlatSpec with Matchers with WithTestApplicationContext {
+class CommonPackageTest extends AnyFlatSpec with Matchers with WithTestApplicationContext {
 
   trait PackageTestScope {
     val article = model.Content(

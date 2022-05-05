@@ -2,7 +2,9 @@ package filters
 
 import akka.stream.Materializer
 import http.StrictTransportSecurityHeaderFilter
-import org.scalatest.{DoNotDiscover, FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.DoNotDiscover
 import play.api.mvc.{RequestHeader, Result}
 import play.api.test.FakeRequest
 import play.api.mvc.Results._
@@ -12,7 +14,7 @@ import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 
 @DoNotDiscover class StrictTransportSecurityHeaderFilterTest
-    extends FunSuite
+    extends AnyFunSuite
     with Matchers
     with ConfiguredTestSuite
     with WithTestExecutionContext {

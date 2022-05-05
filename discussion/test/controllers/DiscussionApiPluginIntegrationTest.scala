@@ -4,6 +4,8 @@ import conf.Configuration
 import discussion.api.DiscussionApiLike
 import discussion.model.Comment
 import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpecLike
+import org.scalatest.matchers.should.Matchers
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
 
 import scala.concurrent.{Await, ExecutionContext, Future}
@@ -12,7 +14,7 @@ import scala.concurrent.duration._
 import play.api.libs.ws.{WSClient, WSResponse}
 
 @DoNotDiscover class DiscussionApiPluginIntegrationTest
-    extends FlatSpecLike
+    extends AnyFlatSpecLike
     with Matchers
     with BeforeAndAfterAll
     with ConfiguredTestSuite

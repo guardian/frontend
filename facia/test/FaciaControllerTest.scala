@@ -16,15 +16,16 @@ import helpers.FaciaTestData
 import org.mockito.Mockito.when
 import org.mockito.Matchers.any
 import org.mockito.Matchers.anyString
-import org.scalatest.mockito.MockitoSugar
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import play.api.libs.typedmap.TypedKey
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
 @DoNotDiscover class FaciaControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with FaciaTestData
     with Matchers
     with ConfiguredTestSuite

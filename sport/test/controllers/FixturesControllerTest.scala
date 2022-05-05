@@ -4,9 +4,11 @@ import football.controllers.FixturesController
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest._
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 @DoNotDiscover class FixturesControllerTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with ConfiguredTestSuite
     with Matchers
     with FootballTestData

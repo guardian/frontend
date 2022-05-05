@@ -1,8 +1,9 @@
 package common.facia
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class PressedCollectionTest extends FlatSpec with Matchers {
+class PressedCollectionTest extends AnyFlatSpec with Matchers {
   "withoutTrailTextOnTail" should "remove trail text from curated and backfill content, leaving the curated head" in {
     val pressedCollection = PressedCollectionBuilder.mkPressedCollection()
     val withoutTrailText = pressedCollection.withoutTrailTextOnTail

@@ -4,10 +4,11 @@ import concurrent.BlockingOperations
 import common.dfp.{GuAdUnit, GuLineItem, GuTargeting, Sponsorship}
 import com.google.api.ads.admanager.axis.v202108._
 import org.joda.time.DateTime
-import org.scalatest._
 import akka.actor.ActorSystem
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class DfpApiValidationTest extends FlatSpec with Matchers {
+class DfpApiValidationTest extends AnyFlatSpec with Matchers {
 
   private def lineItem(adUnitIds: Seq[String]): GuLineItem = {
     val adUnits = adUnitIds.map(adUnitId => {
