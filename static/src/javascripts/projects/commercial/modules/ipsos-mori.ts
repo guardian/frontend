@@ -26,7 +26,6 @@ const loadIpsosScript = (locale: 'au' | 'uk') => {
  * documentation on DCR: [link](https://github.com/guardian/dotcom-rendering/blob/150fc2d81e6a66d9c3336185e874fc8cd0288546/dotcom-rendering/docs/architecture/3rd%20party%20technical%20review/002-ipsos-mori.md)
  * @returns Promise
  */
-
 export const init = (): Promise<void> => {
 	const forceIpsosMoriAustraliaTest = isInVariantSynchronous(
 		ipsosMoriAustralia,
@@ -35,16 +34,19 @@ export const init = (): Promise<void> => {
 
 	return getLocale()
 		.then((locale) => {
-			if (locale === 'GB') {
+			if (
+				locale === 'GB' ||
+				(locale === 'AU' && forceIpsosMoriAustraliaTest)
+			) {
 				return getInitialConsentState();
-			} else if (locale === 'AU' && forceIpsosMoriAustraliaTest) {
-				void loadIpsosScript('au');
 			} else {
 				throw Error('Skipping ipsos process outside GB or AU');
 			}
 		})
 		.then((state) => {
-			if (!!state && getConsentFor('ipsos', state)) {
+			if (state.aus) {
+				void loadIpsosScript('au');
+			} else if (getConsentFor('ipsos', state)) {
 				void loadIpsosScript('uk');
 			} else {
 				throw Error('No consent for ipsos');
