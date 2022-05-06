@@ -49,7 +49,7 @@ export const init = (): Promise<void> => {
 			} else if (getConsentFor('ipsos', state)) {
 				void loadIpsosScript('uk');
 			} else {
-				throw Error('No consent for ipsos in GB or AU');
+				throw Error('No consent for ipsos in GB');
 			}
 		})
 		.catch((e) => {
