@@ -71,6 +71,8 @@ object ProjectSettings {
     libraryDependencies ++= Seq(
       scalaTest,
       scalaTestPlus,
+      scalaTestPlusMockito,
+      scalaTestPlusScalacheck,
       mockito,
     ),
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.

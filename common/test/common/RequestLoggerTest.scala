@@ -1,11 +1,11 @@
 package common
 
 import common.LoggingField._
-import org.scalatest.{FlatSpec, Matchers}
-import play.api.mvc.{ResponseHeader, Result}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.test.FakeRequest
 
-class RequestLoggerTest extends FlatSpec with Matchers {
+class RequestLoggerTest extends AnyFlatSpec with Matchers {
 
   "RequestLogger with no request, response or stopwatch" should "have no fields" in {
     val fields = RequestLoggerFields(request = None, response = None, stopWatch = None)

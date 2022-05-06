@@ -4,14 +4,15 @@ import com.gu.commercial.display.{AdTargetParam, KeywordParam, SeriesParam}
 import com.gu.contentapi.client.model.v1.{Tag, TagType}
 import common.Edition.defaultEdition
 import common.commercial.{CommercialProperties, EditionAdTargeting}
-import common.editions.{Au, Uk, Us}
+import common.editions.{Uk}
 import conf.Configuration.commercial.dfpAdUnitGuRoot
 import model.MetaData
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.test.FakeRequest
 import play.api.test.Helpers.GET
 
-class PageskinAdAgentTest extends FlatSpec with Matchers {
+class PageskinAdAgentTest extends AnyFlatSpec with Matchers {
   val keywordParamSet: Set[AdTargetParam] = KeywordParam.fromItemId("sport-keyword").toSet
   val commercialProperties = CommercialProperties(
     editionBrandings = Set.empty,

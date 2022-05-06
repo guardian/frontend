@@ -6,7 +6,7 @@ import common.commercial.EditionCommercialProperties
 import conf.Configuration
 import experiments.ActiveExperiments
 import model.PressedPage
-import navigation.Nav
+import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
@@ -22,6 +22,7 @@ case class DotcomFrontsRenderingDataModel(
     webURL: String,
     config: JsObject,
     commercialProperties: Map[String, EditionCommercialProperties],
+    pageFooter: PageFooter,
 )
 
 object DotcomFrontsRenderingDataModel {
@@ -67,6 +68,7 @@ object DotcomFrontsRenderingDataModel {
       webURL = page.metadata.webUrl,
       config = combinedConfig,
       commercialProperties = commercialProperties,
+      pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
     )
   }
 

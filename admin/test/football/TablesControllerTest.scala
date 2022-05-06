@@ -2,7 +2,9 @@ package football
 
 import _root_.controllers.admin.TablesController
 import football.model.PA
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
@@ -13,7 +15,7 @@ import scala.annotation.tailrec
 import scala.language.postfixOps
 
 @DoNotDiscover class TablesControllerTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

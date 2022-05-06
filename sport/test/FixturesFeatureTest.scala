@@ -1,19 +1,22 @@
 package test
 
-import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{DoNotDiscover, GivenWhenThen}
+
 import collection.JavaConverters._
 import tools.MatchListFeatureTools
 
 @DoNotDiscover class FixturesFeatureTest
-    extends FeatureSpec
+    extends AnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with MatchListFeatureTools
     with ConfiguredTestSuite {
 
-  feature("Football Fixtures") {
+  Feature("Football Fixtures") {
 
-    scenario("Visit the fixtures page") {
+    Scenario("Visit the fixtures page") {
 
       Given("I visit the fixtures page")
 
@@ -31,7 +34,7 @@ import tools.MatchListFeatureTools
       }
     }
 
-    scenario("Next fixtures") {
+    Scenario("Next fixtures") {
       Given("I am on the fixtures page")
       goTo("/football/fixtures") { browser =>
         import browser._
@@ -46,7 +49,7 @@ import tools.MatchListFeatureTools
       }
     }
 
-    scenario("Link tracking") {
+    Scenario("Link tracking") {
       Given("I visit the fixtures page")
       goTo("/football/fixtures/2012/oct/20") { browser =>
         import browser._

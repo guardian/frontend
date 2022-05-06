@@ -1,19 +1,23 @@
 package layout
 
 import java.time.ZoneOffset
-
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import implicits.Dates.jodaToJavaInstant
 import model.pressed.CollectionConfig
 import org.joda.time.DateTime
-import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 import services.FaciaContentConvert
 import slices.DesktopBehaviour
 
-class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks with GuiceOneAppPerSuite {
+class SliceWithCardsTest
+    extends AnyFlatSpec
+    with Matchers
+    with ScalaCheckDrivenPropertyChecks
+    with GuiceOneAppPerSuite {
   val NumberOfFixtures = 40
 
   def nthApiContent(n: Int): ApiContent =

@@ -14,7 +14,8 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import implicits.Dates.jodaToJavaInstant
 import model._
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 
@@ -23,7 +24,7 @@ import java.util.UUID
 import scala.util.Try
 import scala.xml._
 
-class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class TrailsToRssTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
   val request = FakeRequest()
 

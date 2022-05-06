@@ -1,9 +1,10 @@
 package discussion.model
 
-import org.scalatest.{DoNotDiscover, FreeSpec}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.DoNotDiscover
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class DiscussionKeyTest extends FreeSpec with ConfiguredTestSuite {
+@DoNotDiscover class DiscussionKeyTest extends AnyFreeSpec with ConfiguredTestSuite {
 
   "DiscussionKey" - {
 

@@ -11,12 +11,13 @@ import contentapi.FixtureTemplates.emptyApiContent
 import implicits.Dates.jodaToJavaInstant
 import model.pressed.{LatestSnap, PressedContent}
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import services.FaciaContentConvert
 import slices._
 
-class FrontTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class FrontTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
   def trailWithUrl(theUrl: String): PressedContent = {
     FaciaContentConvert.contentToFaciaContent(emptyApiContent.copy(id = theUrl, webUrl = theUrl))
   }

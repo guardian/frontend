@@ -1,15 +1,16 @@
 package layout.slices
 
-import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.OptionValues._
 import common.Seqs._
 import layout.slices.ArbitraryStories._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 
 /** Tests for common behaviour between the Dynamic Fast and Dynamic Slow containers -- this is mostly respecting error
   * conditions and the optional first slice, which appears for the same size combinations for either container.
   */
-trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+trait DynamicContainerTest extends AnyFlatSpec with Matchers with ScalaCheckDrivenPropertyChecks {
   val slicesFor: Seq[Story] => Option[Seq[Slice]]
 
   "slicesFor" should "return None for a non-descending list of groups" in {

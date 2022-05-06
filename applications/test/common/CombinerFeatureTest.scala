@@ -1,14 +1,21 @@
 package common
 
-import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{DoNotDiscover, GivenWhenThen}
 import test.ConfiguredTestSuite
+
 import collection.JavaConverters._
 
-@DoNotDiscover class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class CombinerFeatureTest
+    extends AnyFeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with ConfiguredTestSuite {
 
-  feature("Combiner pages") {
+  Feature("Combiner pages") {
 
-    scenario("Should combine 2 tags") {
+    Scenario("Should combine 2 tags") {
 
       Given("I visit a combiner page")
 
@@ -20,7 +27,7 @@ import collection.JavaConverters._
       }
     }
 
-    scenario("Should combine a section with a tag") {
+    Scenario("Should combine a section with a tag") {
 
       Given("I visit a combiner page")
 
@@ -33,7 +40,7 @@ import collection.JavaConverters._
       }
     }
 
-    scenario("Tags in same section") {
+    Scenario("Tags in same section") {
 
       Given("I visit a combiner page with tags in the same section")
 
@@ -45,7 +52,7 @@ import collection.JavaConverters._
       }
     }
 
-    scenario("Series combiner in the same section") {
+    Scenario("Series combiner in the same section") {
 
       Given("I visit a combiner page with a series tag in the same seciton")
 

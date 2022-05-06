@@ -1,17 +1,19 @@
 package model
 
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{DoNotDiscover, GivenWhenThen}
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class TopStoriesFeatureTest
-    extends FeatureSpec
+    extends AnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with ConfiguredTestSuite {
 
-  feature("Latest top stories") {
+  Feature("Latest top stories") {
 
-    scenario("Shows latest links when on a page in the UK edition") {
+    Scenario("Shows latest links when on a page in the UK edition") {
 
       Given("I am on any page in the UK edition")
       goTo("/top-stories") { browser =>
@@ -24,7 +26,7 @@ import test.ConfiguredTestSuite
       }
     }
 
-    scenario("Shows latest links for a section in US edition") {
+    Scenario("Shows latest links for a section in US edition") {
       Given("I am on any page in the US edition")
       US("/top-stories") { browser =>
         import browser._

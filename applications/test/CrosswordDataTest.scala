@@ -1,14 +1,16 @@
 package test
 
 import controllers.CrosswordPageController
-import model.{Entry, CrosswordData}
+import model.{CrosswordData, Entry}
 import org.joda.time.DateTime
 import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Span}
 
 @DoNotDiscover class CrosswordDataTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with ConfiguredTestSuite
     with ScalaFutures

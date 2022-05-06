@@ -1,13 +1,15 @@
 package experiments
 
 import conf.switches.Owner
+
 import java.time.LocalDate
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
 import test.TestRequest
 import ParticipationGroups._
+import org.scalatest.flatspec.AnyFlatSpec
 import play.api.mvc.RequestHeader
 
-class ExperimentsTest extends FlatSpec with Matchers {
+class ExperimentsTest extends AnyFlatSpec with Matchers {
 
   conf.switches.Switches.ServerSideExperiments.switchOn
 

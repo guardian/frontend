@@ -2,10 +2,12 @@ package football.model
 
 import org.scalatest._
 import implicits.Football
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class MatchDayListTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with MatchTestData
     with Football

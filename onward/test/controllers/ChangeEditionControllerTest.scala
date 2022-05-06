@@ -1,12 +1,13 @@
 package controllers
 
-import conf.switches.Switches
+import org.scalatest.flatspec.AnyFlatSpec
 import play.api.test.Helpers.{cookies => playCookies, _}
-import org.scalatest.{BeforeAndAfterEach, DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterEach, DoNotDiscover}
+import org.scalatest.matchers.should.Matchers
 import test.{ConfiguredTestSuite, TestRequest}
 
 @DoNotDiscover class ChangeEditionControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterEach {

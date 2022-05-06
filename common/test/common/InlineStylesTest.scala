@@ -1,12 +1,13 @@
 package common
 
 import org.jsoup.Jsoup
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.twirl.api.Html
 
 import scala.collection.immutable.ListMap
 
-class InlineStylesTest extends FlatSpec with Matchers {
+class InlineStylesTest extends AnyFlatSpec with Matchers {
   val stub: ListMap[String, String] = ListMap.empty
 
   // https://www.w3.org/TR/css3-selectors/#specificity

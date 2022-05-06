@@ -1,10 +1,16 @@
 package test
 
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{DoNotDiscover, GivenWhenThen}
 
-@DoNotDiscover class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class RelatedFeatureTest
+    extends AnyFeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with ConfiguredTestSuite {
 
-  feature("Related links") {
+  Feature("Related links") {
 
     // Feature
 
@@ -18,7 +24,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
     // Features
 
-    scenario("Shows related links for each article") {
+    Scenario("Shows related links for each article") {
 
       Given("there is an article 'Woman tortured during burglary tells of waterboarding ordeal'")
       goTo("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
