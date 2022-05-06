@@ -1,7 +1,7 @@
 import config from '../../../../lib/config';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { a9 } from '../header-bidding/a9/a9';
 import { dfpEnv } from './dfp-env';
-import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { _ } from './prepare-a9';
 
 const { setupA9 } = _;
@@ -44,7 +44,7 @@ jest.mock('@guardian/libs', () => ({
 }));
 
 const originalUA = navigator.userAgent;
-const fakeUserAgent = (userAgent) => {
+const fakeUserAgent = (userAgent?: string) => {
 	Object.defineProperty(navigator, 'userAgent', {
 		get: () => userAgent ?? originalUA,
 		configurable: true,
