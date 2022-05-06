@@ -1,4 +1,5 @@
 import { once } from 'lodash-es';
+import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
 import { $$ } from '../../../lib/$$';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -19,9 +20,10 @@ const shouldRemoveFaciaContainerWhenAdFree = (faciaContainer: HTMLElement) => {
 /**
  * If the user is ad-free, remove all ad slots on the page
  */
-const adFreeSlotRemove = once(() => {
-	if (!commercialFeatures.adFree) {
-		return Promise.resolve();
+const adFreeSlotRemove = once(async () => {
+	const consent = await getEnhancedConsent();
+	if (!commercialFeatures.adFree && consent.canTarget) {
+		return;
 	}
 
 	const bodyEl = document.body;
@@ -46,7 +48,9 @@ const adFreeSlotRemove = once(() => {
 			bodyEl.classList.remove('has-active-pageskin');
 		}
 
+		$$('.top-banner-ad-container').remove();
 		$adSlotsToRemove.remove();
+
 		mpusToRemove.forEach((mpu: HTMLElement) =>
 			mpu.classList.add('fc-slice__item--no-mpu'),
 		);
