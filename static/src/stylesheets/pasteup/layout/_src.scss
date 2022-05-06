@@ -1,7 +1,7 @@
 // ROWS
 @mixin layout-row($class, $detect: false) {
     @if ($detect) {
-        .has-flex {
+        @supports (display: flex) {
             @include flex-row($class);
         }
         .has-no-flex {

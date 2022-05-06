@@ -28,8 +28,10 @@
     margin-bottom: $gs-baseline;
 
     @include mq(tablet) {
-        .has-flex &:not(.fc-slice__item--mpu-candidate) {
-            display: flex;
+        @supports (display: flex) {
+            &:not(.fc-slice__item--mpu-candidate) {
+                display: flex;
+            }
         }
     }
 
@@ -105,13 +107,15 @@
         }
 
         &[class*='fc-item--has-sublinks'] {
-            .has-flex-wrap &.fc-item--has-cutout {
-                .fc-item__header {
-                    padding-right: 0;
-                }
+            @supports (flex-wrap: wrap) {
+                &.fc-item--has-cutout {
+                    .fc-item__header {
+                        padding-right: 0;
+                    }
 
-                .fc-sublinks {
-                    min-height: gs-height(3) + $gs-baseline;
+                    .fc-sublinks {
+                        min-height: gs-height(3) + $gs-baseline;
+                    }
                 }
             }
         }
@@ -263,9 +267,11 @@
         @include fc-item--fluid;
         @include fc-item--horizontal(20%);
 
-        .has-flex-wrap & {
-            .fc-item__container {
-                flex-direction: row;
+        @supports (display: flex) {
+            & {
+                .fc-item__container {
+                    flex-direction: row;
+                }
             }
         }
 

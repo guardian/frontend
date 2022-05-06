@@ -59,8 +59,10 @@ Full item with 75% width media.
         .fc-item__container {
             min-height: gs-height(5) + $gs-baseline * 3;
 
-            .has-flex-wrap & {
-                flex-direction: row;
+            @supports (flex-wrap: wrap) {
+                & {
+                    flex-direction: row;
+                }
             }
         }
 
@@ -72,8 +74,10 @@ Full item with 75% width media.
                 max-width: gs-span(8);
             }
 
-            .has-flex-wrap & {
-                flex-basis: auto;
+            @supports (flex-wrap: wrap) {
+                & {
+                    flex-basis: auto;
+                }
             }
         }
 

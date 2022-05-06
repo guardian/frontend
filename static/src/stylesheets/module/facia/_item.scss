@@ -22,7 +22,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .has-flex-wrap & {
+    @supports(flex-wrap: wrap) {
         .fc-item__container {
             flex-wrap: wrap;
             @if $media-align == right {
@@ -75,12 +75,16 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     @include mq(tablet) {
-        .has-flex & {
-            flex: 1 1 auto;
+        @supports (flex: 1 1 auto) {
+            & {
+                flex: 1 1 auto;
+            }
         }
 
-        .has-flex-wrap & {
-            display: flex;
+        @supports (flex-wrap: wrap) {
+            & {
+                display: flex;
+            }
         }
 
         .has-no-flex-wrap & {
@@ -95,13 +99,15 @@ $fc-item-gutter: $gs-gutter / 4;
     box-sizing: border-box;
 
     @include mq(tablet) {
-        .has-flex-wrap & {
-            flex-direction: column;
-            display: flex;
-            flex: 1 1 auto;
-            // see: http://stackoverflow.com/a/9737602/802472
-            // width:0 fixes child elements with white-space:nowrap below flex
-            width: 0;
+        @supports (flex: 1 1 auto) {
+            & {
+                flex-direction: column;
+                display: flex;
+                flex: 1 1 auto;
+                // see: http://stackoverflow.com/a/9737602/802472
+                // width:0 fixes child elements with white-space:nowrap below flex
+                width: 0;
+            }
         }
     }
 }

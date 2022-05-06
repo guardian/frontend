@@ -2,9 +2,11 @@
     width: 100%;
 
     @include mq(tablet) {
-        .has-flex-wrap & {
-            display: flex;
-            flex-wrap: wrap;
+        @supports (flex-wrap: wrap) {
+            & {
+                display: flex;
+                flex-wrap: wrap;
+            }
         }
     }
 }
@@ -12,9 +14,11 @@
 .l-list__item {
     float: left;
 
-    .has-flex-wrap & {
-        flex-grow: 0;
-        flex-basis: 100%;
+    @supports (flex-wrap: wrap) {
+        & {
+            flex-grow: 0;
+            flex-basis: 100%;
+        }
     }
 }
 
@@ -27,8 +31,10 @@
                     width: (100% / $column) * $span;
                     float: left;
 
-                    .has-flex & {
-                        flex: $span 1 auto;
+                    @supports (display: flex) {
+                        & {
+                            flex: $span 1 auto;
+                        }
                     }
                 }
             }
@@ -55,8 +61,10 @@
                     padding-bottom: 0;
                 }
 
-                .has-flex-wrap & {
-                    flex-basis: (100% / $column);
+                @supports (flex-wrap: wrap) {
+                    & {
+                        flex-basis: (100% / $column);
+                    }
                 }
             }
         }

@@ -15,19 +15,21 @@ Hence why a greater depth of selector specificity is needed.
 
 */
 .fc-slice--hl4-h {
-    .has-flex & {
-        flex-direction: row-reverse;
+    @supports (display: flex) {
+        & {
+            flex-direction: row-reverse;
 
-        .fc-slice__item:before {
-            display: none;
-        }
+            .fc-slice__item:before {
+                display: none;
+            }
 
-        .fc-item--half-tablet {
-            @include vertical-item-separator;
+            .fc-item--half-tablet {
+                @include vertical-item-separator;
 
-            .fc-item__standfirst {
-                @include mq(desktop) {
-                    display: none;
+                .fc-item__standfirst {
+                    @include mq(desktop) {
+                        display: none;
+                    }
                 }
             }
         }
@@ -119,11 +121,13 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .fc-slice--h14-q-q {
-    .has-flex & {
-        flex-direction: row-reverse;
+    @supports (display: flex) {
+        & {
+            flex-direction: row-reverse;
 
-        .fc-slice__item:before {
-            display: none;
+            .fc-slice__item:before {
+                display: none;
+            }
         }
     }
 

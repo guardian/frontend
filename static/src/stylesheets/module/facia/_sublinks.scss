@@ -34,15 +34,17 @@
 }
 
 @mixin fc-sublinks--horizontal {
-    .has-flex-wrap & {
-        .fc-sublinks {
-            display: flex;
-        }
-        .fc-sublink {
-            flex: 1 1 100%;
+    @supports (display: flex) {
+        & {
+            .fc-sublinks {
+                display: flex;
+            }
+            .fc-sublink {
+                flex: 1 1 100%;
 
-            & + * {
-                margin-left: $gs-gutter;
+                & + * {
+                    margin-left: $gs-gutter;
+                }
             }
         }
     }

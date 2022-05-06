@@ -77,15 +77,17 @@
         }
     }
 
-    .has-flex-wrap & {
-        .fc-slice__item {
-            @include mq(tablet) {
-                flex-grow: 0;
-                flex-basis: 50%;
-            }
+    @supports (flex-wrap: wrap) {
+        & {
+            .fc-slice__item {
+                @include mq(tablet) {
+                    flex-grow: 0;
+                    flex-basis: 50%;
+                }
 
-            @include mq(desktop) {
-                flex-basis: (100% / 3);
+                @include mq(desktop) {
+                    flex-basis: (100% / 3);
+                }
             }
         }
     }

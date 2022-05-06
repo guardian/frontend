@@ -24,9 +24,11 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
     @include fc-item--three-quarters;
 
-    .has-flex-wrap & {
-        .fc-item__container {
-            flex-direction: row;
+    @supports (flex-wrap: wrap) {
+        & {
+            .fc-item__container {
+                flex-direction: row;
+            }
         }
     }
 
