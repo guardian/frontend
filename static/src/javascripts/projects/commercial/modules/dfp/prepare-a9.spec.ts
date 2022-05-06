@@ -12,36 +12,23 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
 }));
 
-jest.mock('../header-bidding/a9/a9', () => ({
-	a9: { initialise: jest.fn() },
-}));
+jest.mock('../header-bidding/a9/a9');
 
-jest.mock('./Advert', () =>
-	jest.fn().mockImplementation(() => ({ advert: jest.fn() })),
-);
+jest.mock('./Advert');
 
 jest.mock('../../../../lib/a9-apstag', () => jest.fn());
 
-jest.mock('../../../common/modules/commercial/build-page-targeting', () => ({
-	buildPageTargeting: jest.fn(),
-}));
+jest.mock('../../../common/modules/commercial/build-page-targeting');
 
-jest.mock('../header-bidding/prebid/bid-config', () => ({
-	isInVariant: jest.fn(),
-}));
+jest.mock('../header-bidding/prebid/bid-config');
 
 jest.mock('../header-bidding/utils', () => ({
 	isInUsRegion: () => true,
 }));
 
-jest.mock('@guardian/consent-management-platform', () => ({
-	onConsentChange: jest.fn(),
-	getConsentFor: jest.fn(),
-}));
+jest.mock('@guardian/consent-management-platform');
 
-jest.mock('@guardian/libs', () => ({
-	loadScript: () => Promise.resolve(),
-}));
+jest.mock('@guardian/libs');
 
 const originalUA = navigator.userAgent;
 const fakeUserAgent = (userAgent?: string) => {
