@@ -72,7 +72,8 @@
   "../lib/$$.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/commercial/enhanced-consent.ts"
  ],
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
