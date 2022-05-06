@@ -2,6 +2,7 @@ import {
 	initCommercialMetrics,
 	bypassCommercialMetricsSampling as switchOffSampling,
 } from '@guardian/commercial-core';
+import { log } from '@guardian/libs';
 import { shouldCaptureMetrics } from '../common/modules/analytics/shouldCaptureMetrics';
 
 const { isDev } = window.guardian.config.page;
@@ -24,12 +25,16 @@ const init = (): Promise<void> => {
 					adBlockerInUse: adBlockers.active,
 			  };
 
-	initCommercialMetrics(args);
-
-	if (shouldCaptureMetrics()) {
-		// TODO: rename upstream
-		switchOffSampling();
-	}
+	initCommercialMetrics(args)
+		.then(() => {
+			if (shouldCaptureMetrics()) {
+				// TODO: rename upstream
+				void switchOffSampling();
+			}
+		})
+		.catch((error) =>
+			log('commercial', 'Error initialising commercial metrics', error),
+		);
 
 	return Promise.resolve();
 };
