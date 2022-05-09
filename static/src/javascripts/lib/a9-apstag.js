@@ -1,6 +1,6 @@
 /*eslint-disable */
 // Load Amazon A9 library as described here: https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/display.html
-export const a9apstag = !(function(a9, a, p, s, t, A, g) {
+export default !(function(a9, a, p, s, t, A, g) {
     if (a[a9]) return;
     function q(c, r) {
         a[a9]._Q.push([c, r]);
