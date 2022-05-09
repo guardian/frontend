@@ -1,8 +1,6 @@
 import { getConsentFor } from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
 import { getInitialConsentState } from 'commercial/initial-consent-state';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { ipsosMoriAustralia } from 'common/modules/experiments/tests/ipsos-mori-australia';
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
@@ -27,17 +25,9 @@ const loadIpsosScript = (locale: 'au' | 'uk') => {
  * @returns Promise
  */
 export const init = (): Promise<void> => {
-	const forceIpsosMoriAustraliaTest = isInVariantSynchronous(
-		ipsosMoriAustralia,
-		'variant',
-	);
-
 	return getLocale()
 		.then((locale) => {
-			if (
-				locale === 'GB' ||
-				(locale === 'AU' && forceIpsosMoriAustraliaTest)
-			) {
+			if (locale === 'GB' || locale === 'AU') {
 				return getInitialConsentState();
 			} else {
 				throw Error('Skipping ipsos process outside GB or AU');
