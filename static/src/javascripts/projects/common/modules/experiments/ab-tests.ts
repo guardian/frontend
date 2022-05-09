@@ -1,7 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { commercialGptLazyLoad } from './tests/commercial-gpt-lazy-load';
 import { commercialLazyLoadMargin } from './tests/commercial-lazy-load-margin';
-import { ipsosMoriAustralia } from './tests/ipsos-mori-australia';
 import { prebidPriceGranularity } from './tests/prebid-price-granularity';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -16,5 +15,4 @@ export const concurrentTests: readonly ABTest[] = [
 	commercialGptLazyLoad,
 	commercialLazyLoadMargin,
 	prebidPriceGranularity,
-	ipsosMoriAustralia,
 ];
