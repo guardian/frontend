@@ -8,24 +8,39 @@ import play.api.mvc.RequestHeader
 
 class FaciaPicker extends GuLogging {
 
-  // we don't yet use these parameters but they will play into dcrCouldRender later on
+  val SUPPORTED_COLLECTIONS: Set[String] =
+    Set("dynamic/fast", "dynamic/slow", "fixed/small/slow-IV", "fixed/large/slow-XIV")
+
+  def dcrSupportsAllCollectionTypes(faciaPage: PressedPage): Boolean = {
+    faciaPage.collections.forall(collection => SUPPORTED_COLLECTIONS.contains(collection.collectionType))
+  }
+
   def getTier(faciaPage: PressedPage, path: String)(implicit request: RequestHeader): RenderType = {
     val participatingInTest = ActiveExperiments.isParticipating(FrontRendering)
-    val dcrCouldRender = false
+    val dcrCouldRender = dcrSupportsAllCollectionTypes(faciaPage)
 
-    val tier = if (request.forceDCROff) {
+    val tier = decideTier(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
+
+    logTier(faciaPage, path, participatingInTest, dcrCouldRender, tier)
+
+    tier
+  }
+
+  def decideTier(
+      forceDCROff: Boolean,
+      forceDCR: Boolean,
+      participatingInTest: Boolean,
+      dcrCouldRender: Boolean,
+  ): RenderType = {
+    if (forceDCROff) {
       LocalRender
-    } else if (request.forceDCR) {
+    } else if (forceDCR) {
       RemoteRender
     } else if (participatingInTest && dcrCouldRender) {
       RemoteRender
     } else {
       LocalRender
     }
-
-    logTier(faciaPage, path, participatingInTest, dcrCouldRender, tier)
-
-    tier
   }
 
   def logTier(
