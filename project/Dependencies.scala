@@ -41,7 +41,7 @@ object Dependencies {
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.10.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.4"
-  val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
+  val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.5"
   val playGoogleAuth = "com.gu.play-googleauth" %% "play-v28" % "2.1.1"
@@ -78,7 +78,7 @@ object Dependencies {
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
-  val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
+  val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
 
