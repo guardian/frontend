@@ -27,6 +27,7 @@ import { markTime } from 'lib/user-timing';
 import { isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 import { init as initDynamicImport } from 'lib/dynamic-import-init';
+import { setTempAdFree } from 'lib/set-temp-ad-free';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
@@ -195,19 +196,7 @@ const bootStandard = () => {
     // if the user is genuinely ad-free, this one will be overwritten
     // in user-features
     if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
-        const daysToLive = 1;
-        const isCrossSubDomain = true;
-        const forcedAdFreeValidSeconds = 30;
-        const forcedAdFreeExpiryTime = new Date();
-        forcedAdFreeExpiryTime.setTime(
-            forcedAdFreeExpiryTime.getTime() + forcedAdFreeValidSeconds * 1000
-        );
-        addCookie(
-            'GU_AF1',
-            forcedAdFreeExpiryTime.getTime().toString(),
-            daysToLive,
-            isCrossSubDomain
-        );
+        setTempAdFree();
     }
 
     // set local storage: gu.alreadyVisited

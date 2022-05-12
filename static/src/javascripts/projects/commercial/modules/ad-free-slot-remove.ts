@@ -1,5 +1,6 @@
 import { once } from 'lodash-es';
 import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
+import { setTempAdFreeCookie } from 'lib/set-temp-ad-free';
 import { $$ } from '../../../lib/$$';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -24,6 +25,10 @@ const adFreeSlotRemove = once(async () => {
 	const consent = await getEnhancedConsent();
 	if (!commercialFeatures.adFree && consent.canTarget) {
 		return;
+	}
+
+	if (!consent.canTarget) {
+		setTempAdFreeCookie();
 	}
 
 	const bodyEl = document.body;
