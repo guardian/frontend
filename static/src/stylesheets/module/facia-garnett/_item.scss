@@ -559,11 +559,7 @@ $block-height: 58px;
 
     figcaption {
         @include f-textSans();
-        @include font-size(15, 20);
-
-        @include mq($until: tablet) {
-            @include font-size(12, 16);
-        }
+        @include font-size(12, 16);
 
         font-weight: bold;
         position: absolute;
@@ -589,8 +585,6 @@ $block-height: 58px;
 
     .fc-item--has-floating-sublinks & {
         figcaption {
-            @include font-size(12, 16);
-
             @include mq(tablet) {
                 background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%,  rgba(0, 0, 0, .8) 100%);
                 padding: 8px 8px 60px;
