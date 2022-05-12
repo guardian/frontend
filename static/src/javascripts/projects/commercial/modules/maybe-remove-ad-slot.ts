@@ -19,9 +19,9 @@ const shouldRemoveFaciaContainerWhenAdFree = (faciaContainer: HTMLElement) => {
 };
 
 /**
- * If the user is ad-free, remove all ad slots on the page
+ * If ads are disabled, but the slots have been rendered, remove all ad slots on the page
  */
-const adFreeSlotRemove = once(async () => {
+const maybeRemoveAdSlots = once(async () => {
 	const consent = await getEnhancedConsent();
 	if (!commercialFeatures.adFree && consent.canTarget) {
 		return;
@@ -74,4 +74,4 @@ const adFreeSlotRemove = once(async () => {
 	});
 });
 
-export { adFreeSlotRemove };
+export { maybeRemoveAdSlots };

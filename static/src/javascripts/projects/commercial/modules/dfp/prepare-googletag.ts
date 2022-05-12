@@ -11,7 +11,6 @@ import { getPageTargeting } from '../../../common/modules/commercial/build-page-
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import type { IdentityUserIdentifiers } from '../../../common/modules/identity/api';
 import { getUserIdentifiersFromApi } from '../../../common/modules/identity/api';
-import { adFreeSlotRemove } from '../ad-free-slot-remove';
 import { init as initMessenger } from '../messenger';
 import { init as background } from '../messenger/background';
 import { init as sendClick } from '../messenger/click';
@@ -145,8 +144,6 @@ export const init = (): Promise<void> => {
 	if (commercialFeatures.dfpAdvertising) {
 		return (
 			setupAdvertising()
-				// on success, remove slots for ad-free users
-				.then(adFreeSlotRemove)
 				// on error, remove all slots
 				.catch(removeSlots)
 		);

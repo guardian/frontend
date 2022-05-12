@@ -27,7 +27,7 @@ import { markTime } from 'lib/user-timing';
 import { isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 import { init as initDynamicImport } from 'lib/dynamic-import-init';
-import { setTempAdFree } from 'lib/set-temp-ad-free';
+import { setTempAdFreeCookie } from 'lib/set-temp-ad-free';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
@@ -196,7 +196,7 @@ const bootStandard = () => {
     // if the user is genuinely ad-free, this one will be overwritten
     // in user-features
     if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
-        setTempAdFree();
+        setTempAdFreeCookie();
     }
 
     // set local storage: gu.alreadyVisited

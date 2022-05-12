@@ -5,6 +5,10 @@
  "../lib/a9-apstag.js": [],
  "../lib/config.d.ts": [],
  "../lib/config.js": [],
+ "../lib/cookies.js": [
+  "../lib/config.js",
+  "../lib/report-error.js"
+ ],
  "../lib/detect-google-proxy.ts": [],
  "../lib/detect-viewport.ts": [
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts"
@@ -45,6 +49,9 @@
  "../lib/robust.js": [
   "../lib/report-error.js"
  ],
+ "../lib/set-temp-ad-free.ts": [
+  "../lib/cookies.js"
+ ],
  "../lib/time-utils.ts": [],
  "../lib/url.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
@@ -67,14 +74,6 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
- "../projects/commercial/modules/ad-free-slot-remove.ts": [
-  "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/$$.ts",
-  "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/commercial/enhanced-consent.ts"
- ],
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -264,7 +263,6 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/raven.js",
-  "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
   "../projects/commercial/modules/dfp/on-slot-load.ts",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
@@ -434,6 +432,15 @@
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
+ ],
+ "../projects/commercial/modules/maybe-remove-ad-slot.ts": [
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
+  "../lib/$$.ts",
+  "../lib/fastdom-promise.js",
+  "../lib/set-temp-ad-free.ts",
+  "../projects/commercial/modules/dfp/dfp-env.ts",
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/commercial/enhanced-consent.ts"
  ],
  "../projects/commercial/modules/messenger.ts": [
   "../lib/report-error.js",
@@ -726,7 +733,6 @@
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
   "../projects/commercial/commercial-metrics.ts",
-  "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
   "../projects/commercial/modules/article-aside-adverts.ts",
   "../projects/commercial/modules/article-body-adverts.ts",
@@ -741,6 +747,7 @@
   "../projects/commercial/modules/high-merch.ts",
   "../projects/commercial/modules/ipsos-mori.ts",
   "../projects/commercial/modules/liveblog-adverts.ts",
+  "../projects/commercial/modules/maybe-remove-ad-slot.ts",
   "../projects/commercial/modules/mobile-sticky.ts",
   "../projects/commercial/modules/paid-containers.ts",
   "../projects/commercial/modules/paidfor-band.js",
