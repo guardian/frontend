@@ -8,6 +8,9 @@ import play.api.mvc.RequestHeader
 
 class FaciaPicker extends GuLogging {
 
+  // To check which collections are supported by DCR and update this set please check:
+  // https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/src/web/lib/DecideContainer.tsx
+  // and https://github.com/guardian/dotcom-rendering/issues/4720
   val SUPPORTED_COLLECTIONS: Set[String] =
     Set("dynamic/fast", "dynamic/slow", "fixed/small/slow-IV", "fixed/large/slow-XIV")
 
