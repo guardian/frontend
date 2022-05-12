@@ -58,6 +58,7 @@
  ],
  "../projects/commercial/commercial-metrics.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
  ],
  "../projects/commercial/initial-consent-state.ts": [
@@ -247,12 +248,12 @@
   "../projects/commercial/modules/dfp/non-refreshable-line-items.ts",
   "../projects/commercial/modules/dfp/should-refresh.ts"
  ],
- "../projects/commercial/modules/dfp/prepare-a9.js": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../../../../node_modules/lodash-es/lodash.js",
+ "../projects/commercial/modules/dfp/prepare-a9.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/a9-apstag.js",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/detect-google-proxy.ts",
   "../projects/commercial/initial-consent-state.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -426,7 +427,9 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../projects/commercial/initial-consent-state.ts",
-  "../projects/commercial/modules/__vendor/ipsos-mori.js"
+  "../projects/commercial/modules/__vendor/ipsos-mori.js",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/ipsos-mori-australia.ts"
  ],
  "../projects/commercial/modules/liveblog-adverts.ts": [
   "../lib/detect.js",
@@ -600,6 +603,7 @@
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/common/modules/commercial/commercial-features.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../projects/common/modules/commercial/user-features.ts",
@@ -659,6 +663,7 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
+  "../projects/common/modules/experiments/tests/ipsos-mori-australia.ts",
   "../projects/common/modules/experiments/tests/prebid-price-granularity.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
@@ -690,6 +695,10 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/ipsos-mori-australia.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
@@ -746,7 +755,7 @@
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
-  "../projects/commercial/modules/dfp/prepare-a9.js",
+  "../projects/commercial/modules/dfp/prepare-a9.ts",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
   "../projects/commercial/modules/dfp/prepare-permutive.js",
   "../projects/commercial/modules/dfp/prepare-prebid.ts",

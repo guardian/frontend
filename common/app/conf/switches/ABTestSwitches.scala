@@ -50,7 +50,7 @@ trait ABTestSwitches {
     "Test the commercial impact of changing the Prebid Price granularity for Ozone",
     owners = Seq(Owner.withGithub("chrislomaxjones")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 5, 9)),
+    sellByDate = Some(LocalDate.of(2022, 6, 9)),
     exposeClientSide = true,
   )
 }

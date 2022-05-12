@@ -1,6 +1,6 @@
 /*eslint-disable */
 // Load Amazon A9 library as described here: https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/display.html
-!(function(a9, a, p, s, t, A, g) {
+export default !(function(a9, a, p, s, t, A, g) {
     if (a[a9]) return;
     function q(c, r) {
         a[a9]._Q.push([c, r]);
@@ -22,7 +22,7 @@
     A.async = !0;
     A.src = t;
     g = p.getElementsByTagName(s)[0];
-    
+
     g.parentNode.insertBefore(A, g);
 })(
     'apstag',
