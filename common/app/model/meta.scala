@@ -255,7 +255,9 @@ object ContentFormat {
   def parseDesign(s: String): Design =
     s match {
       case "ArticleDesign"             => ArticleDesign
-      case "MediaDesign"               => MediaDesign
+      case "GalleryDesign"             => GalleryDesign
+      case "AudioDesign"               => AudioDesign
+      case "VideoDesign"               => VideoDesign
       case "ReviewDesign"              => ReviewDesign
       case "AnalysisDesign"            => AnalysisDesign
       case "CommentDesign"             => CommentDesign
