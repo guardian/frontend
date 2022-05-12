@@ -8,6 +8,8 @@ object IpsosTags {
     "au" -> "au",
     "artanddesign" -> "artanddesign",
     "australia-news" -> "australianews",
+    "australia-news/australian-election-2022" -> "australianews",
+    "australia-news/series/anywhere-but-canberra" -> "australianews",
     "books" -> "books",
     "business" -> "business", /* Default for business articles */
     "uk/business" -> "business",
