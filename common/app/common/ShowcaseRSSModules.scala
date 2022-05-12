@@ -217,11 +217,14 @@ class GModuleGenerator extends ModuleGenerator {
             linkElement.addContent(article.link)
             articleElement.addContent(linkElement)
 
-            article.author.foreach { author =>
+            article.author.foreach { name =>
               val authorElement = new Element("author")
-              authorElement.addContent(author)
+              val authorNameElement = new Element("name")
+              authorNameElement.addContent(name)
+              authorElement.addContent(authorNameElement)
               articleElement.addContent(authorElement)
             }
+
             article.overline.foreach { overline =>
               val overlineElement = new Element("overline", NS)
               overlineElement.addContent(overline)

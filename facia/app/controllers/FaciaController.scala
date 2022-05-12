@@ -273,14 +273,9 @@ trait FaciaController
       description = faciaPage.metadata.description,
       singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption),
       maybeRundownPanel = rundownPanelOutcome.toOption,
-    )
-    // Google doesn't like <dc:date> elements in the showcase feed so we're going to remove them with a
-    // tightly-focussed regex replacement. The <dc:date> values are added in the depths of the Rome
-    // library which is not easy to intercept at that point. We can use this technique until we can figure
-    // out a better way. In the meantime it'll stop the validator from complaining at us.
-    val dcDateRegEx = """<dc:date>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d+Z</dc:date>""".r
-    val showcaseWithoutDcDates = dcDateRegEx.replaceAllIn(showcase, "")
-    RevalidatableResult(Ok(showcaseWithoutDcDates).as("text/xml; charset=utf-8"), showcaseWithoutDcDates)
+    ).xml
+
+    RevalidatableResult(Ok(showcase).as("application/xml; charset=utf-8"), showcase)
   }
 
   def renderFrontPress(path: String): Action[AnyContent] =

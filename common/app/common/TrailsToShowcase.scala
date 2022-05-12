@@ -6,6 +6,7 @@ import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, U
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
+import common.TrailsToShowcase.{RundownPanel, SingleStoryPanel, asSyndEntry, asXml, syndFeedOf}
 import model.pressed.{CuratedContent, PressedContent, Replace}
 import model.{ImageAsset, PressedPage}
 import org.joda.time.DateTime
@@ -16,6 +17,56 @@ import java.io.StringWriter
 import java.util.Date
 import scala.collection.JavaConverters._
 import scala.collection.immutable.WrappedString
+import scala.xml.{Elem, MetaData, NamespaceBinding, Node, NodeSeq, XML}
+import scala.xml.transform._
+
+class TrailsToShowcase(
+  feedTitle: Option[String],
+  url: Option[String] = None,
+  description: Option[String] = None,
+  singleStoryPanels: Seq[SingleStoryPanel],
+  maybeRundownPanel: Option[RundownPanel],
+) {
+
+  private def transform(node: Node, pf: PartialFunction[Node, Node]): Node =
+    pf.applyOrElse(node, identity[Node]) match {
+      case e: Elem => e.copy(child = e.child.map (c => transform(c, pf)))
+      case other => other
+    }
+
+  private def addNestedNameToAuthors(node: Node): Node = {
+    transform(node, {
+      case e: Elem if e.label == "author" => {
+        e.copy(child = <name>{e.text}</name>)
+      }
+    })
+  }
+
+  // this is an expensive operation - see if there's a simpler way
+  private val removeDcDateElements = new RewriteRule {
+    override def transform(node: Node): NodeSeq = node match {
+      case e: Elem if e.label == "date" => NodeSeq.Empty
+      case other => other
+    }
+  }
+
+  def xml: Node = {
+    // this could be a one-liner but it's really taxing to read when it is
+    val xmlWithoutDcDates = new RuleTransformer(removeDcDateElements)(asXml(feed))
+    addNestedNameToAuthors(xmlWithoutDcDates)
+  }
+
+  private def feed = {
+    // Map panels to RSS items
+    val allPanels = singleStoryPanels ++ maybeRundownPanel.toSeq
+    val entries = allPanels.map {
+      case singleStoryPanel: SingleStoryPanel => asSyndEntry(singleStoryPanel)
+      case rundownPanel: RundownPanel         => asSyndEntry(rundownPanel)
+    }
+    syndFeedOf(feedTitle, url, description, entries)
+  }
+
+}
 
 object TrailsToShowcase {
 
@@ -51,16 +102,11 @@ object TrailsToShowcase {
       description: Option[String] = None,
       singleStoryPanels: Seq[SingleStoryPanel],
       maybeRundownPanel: Option[RundownPanel],
-  )(implicit request: RequestHeader): String = {
-    // Map panels to RSS items
-    val allPanels = singleStoryPanels ++ maybeRundownPanel.toSeq
-    val entries = allPanels.map {
-      case singleStoryPanel: SingleStoryPanel => asSyndEntry(singleStoryPanel)
-      case rundownPanel: RundownPanel         => asSyndEntry(rundownPanel)
-    }
-    asString(syndFeedOf(feedTitle, url, description, entries))
+  )(implicit request: RequestHeader): TrailsToShowcase = {
+    new TrailsToShowcase(feedTitle, url, description, singleStoryPanels, maybeRundownPanel)
   }
 
+  // fromTrails is only referenced from tests?
   def fromTrails(
       feedTitle: Option[String],
       singleTrails: Seq[PressedContent],
@@ -69,13 +115,13 @@ object TrailsToShowcase {
       url: Option[String] = None,
       description: Option[String] = None,
       collectionLastUpdated: Option[DateTime] = None,
-  )(implicit request: RequestHeader): String = {
+  )(implicit request: RequestHeader): TrailsToShowcase = {
     val rundownPanelOutcome = asRundownPanel(rundownTrails, rundownContainerId, collectionLastUpdated)
     val singleStoryPanelOutcomes = singleTrails.map(asSingleStoryPanel)
 
     val maybeRundownPanel = rundownPanelOutcome.toOption
     val singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption)
-    TrailsToShowcase(feedTitle, url, description, singleStoryPanels, maybeRundownPanel)
+    new TrailsToShowcase(feedTitle, url, description, singleStoryPanels, maybeRundownPanel)
   }
 
   // Questionable placement of controller logic
@@ -525,7 +571,7 @@ object TrailsToShowcase {
       .filterOrElse(_.listItems.size >= 2, Seq("Need at least 2 valid bullet list items"))
   }
 
-  private def syndFeedOf(
+  protected def syndFeedOf(
       title: Option[String],
       url: Option[String],
       description: Option[String],
@@ -583,6 +629,10 @@ object TrailsToShowcase {
     output.output(feed, writer)
     writer.close()
     writer.toString
+  }
+
+  private def asXml(feed: SyndFeed) = {
+    XML.loadString(asString(feed))
   }
 
   def asSyndEntry(singleStoryPanel: SingleStoryPanel): SyndEntry = {
