@@ -36,13 +36,13 @@ import test.TestRequest
     FaciaPicker.dcrSupportsAllCollectionTypes(faciaPage) should be(true)
   }
 
-  "Facia Picker decideTier" should "return LocalRender if dcr=false" in {
+  "Facia Picker getTier" should "return LocalRender if dcr=false" in {
     val forceDCROff = true
     val forceDCR = false
     val participatingInTest = true
     val dcrCouldRender = true
 
-    val tier = FaciaPicker.decideTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.getTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(LocalRender)
   }
 
@@ -52,7 +52,7 @@ import test.TestRequest
     val participatingInTest = false
     val dcrCouldRender = false
 
-    val tier = FaciaPicker.decideTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.getTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(RemoteRender)
   }
 
@@ -62,7 +62,7 @@ import test.TestRequest
     val participatingInTest = false
     val dcrCouldRender = true
 
-    val tier = FaciaPicker.decideTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.getTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(LocalRender)
   }
 
@@ -72,7 +72,7 @@ import test.TestRequest
     val participatingInTest = true
     val dcrCouldRender = true
 
-    val tier = FaciaPicker.decideTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.getTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(RemoteRender)
   }
 }
