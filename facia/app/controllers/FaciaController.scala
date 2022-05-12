@@ -273,7 +273,7 @@ trait FaciaController
       description = faciaPage.metadata.description,
       singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption),
       maybeRundownPanel = rundownPanelOutcome.toOption,
-    ).xml
+    )
 
     RevalidatableResult(Ok(showcase).as("application/xml; charset=utf-8"), showcase)
   }
