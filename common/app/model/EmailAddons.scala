@@ -53,10 +53,10 @@ case object TheSpin extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "sport/series/thespin")
 }
 
-case object MorningBriefing extends ArticleEmailMetadata {
-  val name = "Morning Briefing"
-  override val banner = Some("morning-briefing.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/guardian-morning-briefing")
+case object FirstEdition extends ArticleEmailMetadata {
+  val name = "First Edition"
+  override val banner = Some("first-edition.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/first-edition")
 }
 
 case object FightToVote extends ArticleEmailMetadata {
@@ -486,7 +486,7 @@ object EmailAddons {
     WorldCupFiver,
     TheFiver,
     TheSpin,
-    MorningBriefing,
+    FirstEdition,
     FightToVote,
     EuReferendum,
     LabNotes,
