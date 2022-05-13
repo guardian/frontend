@@ -1,6 +1,6 @@
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { once } from 'lodash-es';
-import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
-import { setTempAdFreeCookie } from 'lib/set-temp-ad-free';
+import { setAdFreeCookie, unsetAdFreeCookie } from 'lib/set-ad-free-cookie';
 import { $$ } from '../../../lib/$$';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -18,19 +18,7 @@ const shouldRemoveFaciaContainerWhenAdFree = (faciaContainer: HTMLElement) => {
 	return dataComponentAttribute?.includes('commercial-container');
 };
 
-/**
- * If ads are disabled, but the slots have been rendered, remove all ad slots on the page
- */
-const maybeRemoveAdSlots = once(async () => {
-	const consent = await getEnhancedConsent();
-	if (!commercialFeatures.adFree && consent.canTarget) {
-		return;
-	}
-
-	if (!consent.canTarget) {
-		setTempAdFreeCookie();
-	}
-
+const removeAdSlots = (): Promise<void> => {
 	const bodyEl = document.body;
 
 	const $adSlotsToRemove = $$(dfpEnv.adSlotSelector);
@@ -72,6 +60,27 @@ const maybeRemoveAdSlots = once(async () => {
 			}
 		});
 	});
+};
+
+/**
+ * If ads are disabled, but the slots have been rendered, remove all ad slots on the page
+ */
+const maybeRemoveAdSlots = once(async (): Promise<void> => {
+	onConsentChange((consent) => {
+		if (!consent.canTarget) {
+			setAdFreeCookie();
+			void removeAdSlots();
+		} else if (!commercialFeatures.adFree) {
+			// only unset the cookie if we're not ad-free for other reasons
+			unsetAdFreeCookie();
+		}
+	});
+
+	if (!commercialFeatures.adFree) {
+		return;
+	}
+
+	return removeAdSlots();
 });
 
 export { maybeRemoveAdSlots };
