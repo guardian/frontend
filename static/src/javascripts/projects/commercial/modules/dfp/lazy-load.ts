@@ -1,7 +1,4 @@
 import { once } from 'lodash-es';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
-import { commercialLazyLoadMargin } from 'common/modules/experiments/tests/commercial-lazy-load-margin';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { getAdvertById } from './get-advert-by-id';
@@ -37,49 +34,16 @@ const onIntersect = (
 	);
 };
 
-const lazyLoadMargins = {
-	'variant-1': 20,
-	'variant-2': 70,
-	'variant-3': 120,
-	'variant-4': 170,
-	'variant-5': 220,
-	'variant-6': 270,
-	'variant-7': 320,
-	'variant-8': 370,
-} as const;
-
-type LazyLoadMarginTestVariant = keyof typeof lazyLoadMargins;
-
 const getObserver = once(() => {
-	const lazyLoadMarginTestVariant = Object.keys(lazyLoadMargins).find(
-		(variantName) => {
-			return isInVariantSynchronous(
-				commercialLazyLoadMargin,
-				variantName,
-			);
-		},
-	) as LazyLoadMarginTestVariant | undefined;
-	let rootMargin;
-	if (lazyLoadMarginTestVariant) {
-		const margin = lazyLoadMargins[lazyLoadMarginTestVariant];
-		rootMargin = `${margin}% 0px`;
-	} else {
-		rootMargin = '200px 0px';
-	}
 	return Promise.resolve(
 		new window.IntersectionObserver(onIntersect, {
-			rootMargin,
+			rootMargin: '200px 0px',
 		}),
 	);
 });
 
 export const enableLazyLoad = (advert: Advert): void => {
-	const useGptLazyLoad = isInVariantSynchronous(
-		commercialGptLazyLoad,
-		'variant',
-	);
-	const useCustomLazyLoad = dfpEnv.lazyLoadObserve && !useGptLazyLoad;
-	if (useCustomLazyLoad) {
+	if (dfpEnv.lazyLoadObserve) {
 		void getObserver().then((observer) => observer.observe(advert.node));
 	} else {
 		displayAd(advert.id);
