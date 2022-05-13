@@ -3,11 +3,13 @@ package dfp
 import common.dfp.{GuLineItem, GuTargeting, Sponsorship}
 import org.joda.time.DateTime
 import org.scalatest._
-import org.scalatest.mockito.MockitoSugar
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 import test._
 
 class DfpDataCacheJobTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with SingleServerSuite
     with BeforeAndAfterAll

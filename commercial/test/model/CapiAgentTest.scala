@@ -1,10 +1,12 @@
 package commercial.model.capi
 
-import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.BeforeAndAfterAll
 import test._
 
 class CapiAgentTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with SingleServerSuite
     with BeforeAndAfterAll

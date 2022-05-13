@@ -1,8 +1,34 @@
+import { log } from '@guardian/libs';
 import defaultConfig from '../../../../lib/config';
 import { getBreakpoint } from '../../../../lib/detect';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
+
+/**
+ * Log the reason why adverts are disabled
+ *
+ * @param trueConditions - normally true conditions, log if false
+ * @param falseConditions - normally false conditions, log if true
+ */
+function adsDisabledLogger(
+	trueConditions: Record<string, boolean>,
+	falseConditions: Record<string, boolean>,
+): void {
+	const noAdsLog = (condition: string, value: boolean): void =>
+		log(
+			'commercial',
+			`Adverts are not shown because ${condition} = ${String(value)}`,
+		);
+
+	for (const [condition, value] of Object.entries(trueConditions)) {
+		if (!value) noAdsLog(condition, value);
+	}
+
+	for (const [condition, value] of Object.entries(falseConditions)) {
+		if (value) noAdsLog(condition, value);
+	}
+}
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -60,27 +86,58 @@ class CommercialFeatures {
 
 		this.youtubeAdvertising = !this.adFree && !sensitiveContent;
 
+		const dfpAdvertisingTrueConditions = {
+			'switches.commercial': switches.commercial,
+			externalAdvertising,
+		};
+
+		const dfpAdvertisingFalseConditions = {
+			sensitiveContent,
+			isIdentityPage,
+			adFree: this.adFree,
+		};
+
 		this.dfpAdvertising =
 			forceAds ||
-			(switches.commercial &&
-				externalAdvertising &&
-				!sensitiveContent &&
-				!isIdentityPage &&
-				!this.adFree);
+			(Object.values(dfpAdvertisingTrueConditions).every(Boolean) &&
+				!Object.values(dfpAdvertisingFalseConditions).some(Boolean));
+
+		if (!this.dfpAdvertising) {
+			adsDisabledLogger(
+				dfpAdvertisingTrueConditions,
+				dfpAdvertisingFalseConditions,
+			);
+		}
 
 		this.stickyTopBannerAd =
 			!this.adFree &&
 			!config.get('page.disableStickyTopBanner') &&
 			!supportsSticky;
 
+		const articleBodyAdvertsTrueConditions = {
+			isArticle,
+		};
+
+		const articleBodyAdvertsFalseConditions = {
+			isMinuteArticle,
+			isLiveBlog,
+			isHosted,
+			newRecipeDesign: !!newRecipeDesign,
+		};
+
 		this.articleBodyAdverts =
 			this.dfpAdvertising &&
 			!this.adFree &&
-			!isMinuteArticle &&
-			isArticle &&
-			!isLiveBlog &&
-			!isHosted &&
-			!newRecipeDesign;
+			Object.values(articleBodyAdvertsTrueConditions).every(Boolean) &&
+			!Object.values(articleBodyAdvertsFalseConditions).some(Boolean);
+
+		if (isArticle && !this.articleBodyAdverts) {
+			// Log why article adverts are disabled
+			adsDisabledLogger(
+				articleBodyAdvertsTrueConditions,
+				articleBodyAdvertsFalseConditions,
+			);
+		}
 
 		this.carrotTrafficDriver =
 			!this.adFree &&

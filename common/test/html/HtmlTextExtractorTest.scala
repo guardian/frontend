@@ -1,9 +1,10 @@
 package html
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.twirl.api.Html
 
-class HtmlTextExtractorTest extends FlatSpec with Matchers {
+class HtmlTextExtractorTest extends AnyFlatSpec with Matchers {
 
   "HtmlTextExtractor" should "extract text from html" in {
     val rawHtml =

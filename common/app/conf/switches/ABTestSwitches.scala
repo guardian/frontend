@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Test various margins at which ads are lazily-loaded in order to find the optimal one",
     owners = Seq(Owner.withGithub("zekehuntergreen")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 5, 2)),
+    sellByDate = Some(LocalDate.of(2022, 5, 16)),
     exposeClientSide = true,
   )
 
@@ -40,7 +40,7 @@ trait ABTestSwitches {
     "This test enables GPT enableLazyLoad as an alternative to our custom lazy loading",
     owners = Seq(Owner.withGithub("zekehuntergreen")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 5, 2)),
+    sellByDate = Some(LocalDate.of(2022, 5, 16)),
     exposeClientSide = true,
   )
 
@@ -50,7 +50,7 @@ trait ABTestSwitches {
     "Test the commercial impact of changing the Prebid Price granularity for Ozone",
     owners = Seq(Owner.withGithub("chrislomaxjones")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 5, 9)),
+    sellByDate = Some(LocalDate.of(2022, 6, 9)),
     exposeClientSide = true,
   )
 }

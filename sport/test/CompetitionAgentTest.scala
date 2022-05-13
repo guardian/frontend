@@ -2,14 +2,17 @@ package test
 
 import feed.CompetitionsService
 import model.Competition
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import org.scalatest.concurrent.{ScalaFutures, Eventually}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatest.concurrent.{Eventually, ScalaFutures}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Span}
-import java.time.{ZonedDateTime, Clock, LocalDate}
+
+import java.time.{Clock, LocalDate, ZonedDateTime}
 import java.time.ZoneId
 
 @DoNotDiscover class CompetitionAgentTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with ConfiguredTestSuite
     with Matchers
     with implicits.Football

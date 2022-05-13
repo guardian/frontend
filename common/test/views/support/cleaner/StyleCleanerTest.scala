@@ -1,9 +1,10 @@
 package views.support.cleaner
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
 import StringCleaner._
+import org.scalatest.flatspec.AnyFlatSpec
 
-class StyleCleanerTest extends FlatSpec with Matchers {
+class StyleCleanerTest extends AnyFlatSpec with Matchers {
 
   def ignoreWhiteSpaces(s: String): String = s.replaceAll("\\s", "")
 

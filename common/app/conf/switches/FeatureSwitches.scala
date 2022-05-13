@@ -444,16 +444,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val AnniversaryLogoHeader = Switch(
-    SwitchGroup.Feature,
-    "anniversary-header-svg",
-    "Enables the anniversary logo SVG in the header",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2022, 5, 11),
-    exposeClientSide = true,
-  )
-
   val InteractivePickerFeature = Switch(
     SwitchGroup.Feature,
     "interactive-picker",
@@ -470,7 +460,7 @@ trait FeatureSwitches {
     "Enables showing reCAPTCHA when signing up to email newsletters",
     owners = Seq(Owner.withGithub("georgeblahblah")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 5, 4),
+    sellByDate = LocalDate.of(2022, 7, 5),
     exposeClientSide = true,
   )
 
@@ -480,7 +470,7 @@ trait FeatureSwitches {
     "Remove confirmation step when user sign up to a newsletter",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 5, 4),
+    sellByDate = LocalDate.of(2022, 7, 5),
     exposeClientSide = false,
   )
 
@@ -490,7 +480,7 @@ trait FeatureSwitches {
     "Show new privacy wording on email signup embeds",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 5, 4),
+    sellByDate = LocalDate.of(2022, 7, 5),
     exposeClientSide = true,
   )
 
@@ -500,7 +490,7 @@ trait FeatureSwitches {
     "Enables validation of reCAPTCHA tokens on email signup submissions",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 5, 4),
+    sellByDate = LocalDate.of(2022, 7, 5),
     exposeClientSide = false,
   )
 

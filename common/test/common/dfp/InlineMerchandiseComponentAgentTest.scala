@@ -2,9 +2,10 @@ package common.dfp
 
 import com.gu.contentapi.client.model.v1.{Tag => ApiTag, TagType => ApiTagType}
 import model.Tag
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class InlineMerchandiseComponentAgentTest extends FlatSpec with Matchers {
+class InlineMerchandiseComponentAgentTest extends AnyFlatSpec with Matchers {
 
   private def toTag(tagType: ApiTagType, tagId: String, sectionId: Option[String] = None): Tag = {
     Tag.make(

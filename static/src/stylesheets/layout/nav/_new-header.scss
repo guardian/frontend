@@ -146,9 +146,9 @@ from scrolling */
     }
 }
 
-.news-header__logo-anniversary {
+.news-header__logo-best-website {
     @include mq($until: mobileMedium) {
-        margin-top: 20px;
+        margin-bottom: 17px;
     }
 
     @include mq(mobileMedium) {
@@ -198,7 +198,7 @@ from scrolling */
     }
 }
 
-.inline-guardian-anniversary-logo__svg, .inline-guardian-anniversary-logo-uk {
+.inline-guardian-best-website-logo {
     display: block;
     height: auto;
     width: 146px;

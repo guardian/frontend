@@ -19,17 +19,23 @@ object IpsosTags {
     "uk/commentisfree" -> "commentisfree",
     "commentisfree" -> "commentisfree", /* Default for comment articles */
     "us/commentisfree" -> "uscommentisfree",
+    "au/commentisfree" -> "commentisfree",
     "community" -> "community",
     "crosswords" -> "crosswords",
-    "uk/culture" -> "culture", /* There is no US or AU culture tag - should these map to culture? */
+    "uk/culture" -> "culture", /* There is no US culture tag - should these map to culture? */
+    "au/culture" -> "culture",
     "education" -> "education",
-    "uk/environment" -> "environment", /* There is no US or AU environment tag - should these map to environment? */
+    "uk/environment" -> "environment", /* There is no US environment tag - should these map to environment? */
     "environment" -> "environment", /* Default for environment articles */
+    "au/environment" -> "environment",
     "fashion" -> "fashion",
+    "au/lifeandstyle/fashion" -> "fashion",
     "fashion/beauty" -> "fashion",
-    "uk/film" -> "film", /* There is no US or AU film tag - should these map to film? */
+    "uk/film" -> "film", /* There is no US film tag - should these map to film? */
     "film" -> "film",
+    "au/film" -> "film",
     "food" -> "food",
+    "au/food" -> "food",
     "football" -> "football",
     "games" -> "games",
     "global-development" -> "globaldevelopment",
@@ -40,7 +46,8 @@ object IpsosTags {
     "inequality" -> "inequality",
     "about" -> "info",
     "law" -> "law",
-    "uk/lifeandstyle" -> "lifeandstyle", /* There is no US or AU lifeandstyle tag - should these map to lifeandstyle? */
+    "uk/lifeandstyle" -> "lifeandstyle", /* There is no US lifeandstyle tag - should these map to lifeandstyle? */
+    "au/lifeandstyle" -> "lifeandstyle",
     "lifeandstyle" -> "lifeandstyle",
     "lifeandstyle/love-and-sex" -> "lifeandstyle",
     "lifeandstyle/women" -> "lifeandstyle",
@@ -48,9 +55,11 @@ object IpsosTags {
     "lifeandstyle/home-and-garden" -> "lifeandstyle",
     "us/lifeandstyle" -> "lifeandstyle",
     "lifeandstyle/home-and-garden" -> "lifeandstyle",
-    "uk/media" -> "media", /* There is no US or AU media tag - should these map to media? */
+    "au/media" -> "media",
+    "uk/media" -> "media", /* There is no US media tag - should these map to media? */
     "membership" -> "membership",
-    "uk/money" -> "money", /* There is no US or AU money tag - should these map to money? */
+    "au/money" -> "money",
+    "uk/money" -> "money", /* There is no US money tag - should these map to money? */
     "money" -> "money",
     "money/debt" -> "money",
     "money/property" -> "money",
@@ -63,11 +72,13 @@ object IpsosTags {
     "observer-food-monthly-awards" -> "ofmawards",
     "observer" -> "observer",
     "politics" -> "politics",
+    "australia-news/australian-politics" -> "politics",
     "public-leaders-network" -> "publicleaders",
     "science" -> "science",
     "small-business-network" -> "smallbusiness",
     "society" -> "society",
     "uk/sport" -> "sport",
+    "au/sport" -> "sport",
     "sport/cricket" -> "cricket",
     "sport/rugby-union" -> "rugbyunion",
     "sport/tennis" -> "tennis",
@@ -76,12 +87,16 @@ object IpsosTags {
     "sport/golf" -> "golf",
     "sport/boxing" -> "boxing",
     "sport/rugbyleague" -> "rugbyleague",
+    "sport/nrl" -> "rugbyleague",
+    "sport/netball" -> "netball",
+    "sport/afl" -> "australianrulesfootball",
     "sport/horse-racing" -> "horseracing",
     "sport/us-sport" -> "ussport",
     "sport" -> "sport", /* Default for sport articles */
     "stage" -> "stage",
     "teacher-network" -> "teachernetwork",
-    "uk/technology" -> "technology", /* There is no US or AU technology tag - should these map to technology? */
+    "uk/technology" -> "technology", /* There is no US technology tag - should these map to technology? */
+    "au/technology" -> "technology",
     "technology" -> "technology", /* Default for technology (including motoring) articles */
     "the-guardian-foundation" -> "foundation",
     "theguardian" -> "theguardian",
@@ -94,25 +109,31 @@ object IpsosTags {
     "au/travel" -> "travel",
     "tv-and-radio" -> "tvandradio",
     "uk/tv-and-radio" -> "tvandradio",
+    "au/tv-and-radio" -> "tvandradio",
     "uk-news" -> "uknews",
     "us-news" -> "us-news",
     "voluntary-sector-network" -> "voluntarysector",
     "world" -> "world",
     "world/coronavirus-outbreak" -> "coronavirusoutbreak",
     "tone/obituaries" -> "obituaries",
+    "australia-news+tone/obituaries" -> "obituaries",
     "tone/recipes" -> "recipes",
     "type/video" -> "video",
     "video" -> "video",
     "documentaries" -> "documentaries",
     "type/podcast" -> "podcasts",
     "podcasts" -> "podcasts",
+    "australia-podcasts" -> "podcasts",
     "inpictures" -> "inpictures",
     "type/gallery" -> "inpictures",
     "publication/guardianweekly" -> "weekly",
     "weekly" -> "weekly",
     "guardian-professional" -> "professional",
     "lifeandstyle/health-and-wellbeing" -> "healthandwellbeing",
+    "au/lifeandstyle/health-and-wellbeing" -> "healthandwellbeing",
     "jobs" -> "jobs",
+    "australia-news/indigenous-australians" -> "indigenous-australians",
+    "guardian-labs-australia" -> "advertisement-features",
   )
 
   // Default to top level `guardian` tag if key is not found

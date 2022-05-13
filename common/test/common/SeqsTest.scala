@@ -1,9 +1,10 @@
 package common
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.matchers.should.Matchers
 import Seqs._
+import org.scalatest.flatspec.AnyFlatSpec
 
-class SeqsTest extends FlatSpec with Matchers {
+class SeqsTest extends AnyFlatSpec with Matchers {
   "isDescending" should "return true for descending lists" in {
     Seq(3, 3, 3, 2, 1, 0, -2).isDescending shouldEqual true
   }

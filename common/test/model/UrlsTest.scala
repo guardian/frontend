@@ -1,15 +1,15 @@
 package model
 
 import java.time.ZoneOffset
-
 import com.gu.contentapi.client.model.v1.{TagType, Content => ApiContent, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import implicits.Dates.jodaToJavaInstant
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class UrlsTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
   val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 

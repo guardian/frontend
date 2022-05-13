@@ -2,13 +2,12 @@ package views.support.cleaner
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import model.{Article, Content}
-import org.jsoup.nodes.Element
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatest.{FlatSpec, Matchers}
-import scala.collection.JavaConverters._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class VideoEmbedCleanerTest extends FlatSpec with Matchers {
+class VideoEmbedCleanerTest extends AnyFlatSpec with Matchers {
 
   val contentApi = ApiContent(
     id = "foo/2012/jan/07/bar",

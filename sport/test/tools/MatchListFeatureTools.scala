@@ -1,10 +1,11 @@
 package tools
 
-import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
+import org.fluentlenium.core.domain.{FluentList, FluentWebElement}
 import org.openqa.selenium.interactions.Actions
 import play.api.test.TestBrowser
+
 import collection.JavaConverters._
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 trait MatchListFeatureTools extends Matchers {
 

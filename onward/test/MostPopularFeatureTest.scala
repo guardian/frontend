@@ -1,15 +1,17 @@
 package test
 
-import collection.JavaConverters._
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
+
+import org.scalatest.{DoNotDiscover, GivenWhenThen}
 
 @DoNotDiscover class MostPopularFeatureTest
-    extends FeatureSpec
+    extends AnyFeatureSpec
     with GivenWhenThen
     with Matchers
     with ConfiguredTestSuite {
 
-  feature("Most popular") {
+  Feature("Most popular") {
 
     // Feature
 
@@ -23,7 +25,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
     // Scenarios
 
-    scenario("Most popular for a section") {
+    Scenario("Most popular for a section") {
 
       Given("I am on a page in the 'World' section")
       goTo("/most-read/world") { browser =>

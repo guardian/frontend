@@ -4,12 +4,14 @@ import contentapi.SectionsLookUp
 import controllers.IndexController
 import metadata.MetaDataMatcher
 import org.jsoup.Jsoup
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.libs.json._
 import play.api.test.Helpers._
 
 @DoNotDiscover class IndexMetaDataTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

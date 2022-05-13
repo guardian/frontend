@@ -2,18 +2,18 @@ package test
 
 import conf.Configuration
 import controllers.ArchiveController
-import model.{ApplicationContext, ApplicationIdentity}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.mvc.Result
 import play.api.test.Helpers._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import play.api.Environment
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 
 import scala.concurrent.Future
 import services.RedirectService
 import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
 
 @DoNotDiscover class ArchiveControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with WithTestExecutionContext

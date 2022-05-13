@@ -1,19 +1,21 @@
 package services
 
 import controllers.NewspaperController
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.test.Helpers._
 import test.{
   ConfiguredTestSuite,
   TestRequest,
   WithMaterializer,
-  WithTestContentApiClient,
   WithTestApplicationContext,
+  WithTestContentApiClient,
   WithTestWsClient,
 }
 
 @DoNotDiscover class NewspaperControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

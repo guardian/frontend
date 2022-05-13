@@ -9,14 +9,15 @@ import implicits.Dates.jodaToJavaInstant
 import model.pressed._
 import model.{ImageAsset, ImageMedia}
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.test.FakeRequest
 
 import java.time.ZoneOffset
 import scala.collection.JavaConverters._
 import scala.xml.{Node, XML}
 
-class TrailsToShowcaseTest extends FlatSpec with Matchers {
+class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
 
   val request = FakeRequest()
 

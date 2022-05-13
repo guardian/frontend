@@ -1,23 +1,22 @@
 package renderers
 
-import model.{MetaData, Page, CacheTime}
-import model.dotcomrendering.PageType
-import org.apache.commons.codec.digest.DigestUtils
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, PrivateMethodTester}
-import play.api.test.Helpers._
-import play.api.test._
+import model.{CacheTime}
+import org.scalatestplus.mockito.MockitoSugar
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, PrivateMethodTester}
+import org.scalatest.matchers.should.Matchers
 import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestWsClient}
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
-import play.api.mvc.{RequestHeader, Result, Results}
+import play.api.mvc.{Result}
 import conf.Configuration
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
-import scala.concurrent.{ExecutionContext, Future}
+
+import scala.concurrent.{Future}
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.flatspec.AnyFlatSpec
 
 @DoNotDiscover class DotcomRenderingServiceTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with MockitoSugar

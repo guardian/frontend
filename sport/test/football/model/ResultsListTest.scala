@@ -2,12 +2,14 @@ package football.model
 
 import org.scalatest._
 import implicits.Football
-import pa.{FootballMatch, Result, MatchDay}
+import pa.{FootballMatch, MatchDay, Result}
 import model.Competition
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class ResultsListTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with MatchTestData
     with Football

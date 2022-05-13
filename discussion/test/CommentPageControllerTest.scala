@@ -1,12 +1,14 @@
 package test
 
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import controllers.CommentsController
 import discussion.model.DiscussionKey
+import org.scalatest.flatspec.AnyFlatSpec
 
 @DoNotDiscover class CommentPageControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

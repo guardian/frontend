@@ -1,9 +1,11 @@
 package common
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+
 import scala.util.{Failure, Success}
 
-class RetryTest extends FlatSpec with Matchers {
+class RetryTest extends AnyFlatSpec with Matchers {
   val onFail = (_: Throwable, _: Int) => ()
 
   it should "execute code once even if n is 0" in {

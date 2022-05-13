@@ -2,15 +2,17 @@ package test
 
 import controllers.InteractiveController
 import play.api.test.Helpers._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, PrivateMethodTester}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, PrivateMethodTester}
 import conf.Configuration.interactive.cdnPath
 import play.api.libs.ws.WSClient
 import com.gu.contentapi.client.model.v1.Blocks
 import model.dotcomrendering.PageType
-import model.{InteractivePage}
-import play.twirl.api.Html
+import model.InteractivePage
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.mvc.{RequestHeader, Result, Results}
-import scala.concurrent.{ExecutionContext, Future}
+
+import scala.concurrent.Future
 
 class DCRFake() extends renderers.DotcomRenderingService {
   override def getInteractive(
@@ -24,7 +26,7 @@ class DCRFake() extends renderers.DotcomRenderingService {
 }
 
 @DoNotDiscover class InteractiveControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

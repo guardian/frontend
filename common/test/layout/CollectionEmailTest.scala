@@ -1,9 +1,11 @@
 package layout
 
 import common.facia.FixtureBuilder
-import org.scalatest.{FlatSpec, Matchers, OptionValues}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.OptionValues
+import org.scalatest.matchers.should.Matchers
 
-class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
+class CollectionEmailTest extends AnyFlatSpec with Matchers with OptionValues {
 
   it should "respect the maxItemsToDisplay property if set" in {
     val pressedPage = FixtureBuilder.mkPressedPage(

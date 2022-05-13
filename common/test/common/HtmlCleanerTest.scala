@@ -1,13 +1,13 @@
 package common
 
 import org.jsoup.Jsoup
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import pagepresser.InteractiveImmersiveHtmlCleaner
 
-import pagepresser.{InteractiveImmersiveHtmlCleaner}
-
-class InteractiveImmersiveHtmlCleanerTest extends FlatSpec with Matchers {
+class InteractiveImmersiveHtmlCleanerTest extends AnyFlatSpec with Matchers {
   val now = LocalDateTime.parse("2021-08-26T10:15:30")
 
   "InteractiveImmersiveHtmlCleaner" should "only clean interactive immersives" in {

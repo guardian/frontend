@@ -1,13 +1,14 @@
 package test
 
 import controllers.HealthCheck
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.test.Helpers._
-import play.api.test.Helpers
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 @DoNotDiscover class CdnHealthCheckTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with ScalaFutures

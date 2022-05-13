@@ -2,9 +2,10 @@ package common.dfp
 
 import common.{Edition, editions}
 import model.{Tag, TagProperties}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
+class HighMerchandisingLineItemTest extends AnyFlatSpec with Matchers {
 
   private object TestAgent extends HighMerchandiseComponentAgent {
     override protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] = {

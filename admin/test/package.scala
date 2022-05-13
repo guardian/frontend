@@ -1,6 +1,7 @@
 package test
 
 import org.scalatest.Suites
+import org.scalatestplus.play.PortNumber
 
 class AdminTestSuite
     extends Suites(
@@ -12,6 +13,4 @@ class AdminTestSuite
       new pagepresser.InteractiveHtmlCleanerTest,
       new controllers.admin.DeploysControllerTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19015
-}
+    with SingleServerSuite {}

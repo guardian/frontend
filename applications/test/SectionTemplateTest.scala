@@ -1,14 +1,15 @@
 package test
 
 import java.net.URI
-
 import org.fluentlenium.core.domain.FluentWebElement
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.DoNotDiscover
 import play.api.test.TestBrowser
 
 import scala.collection.JavaConverters._
 
-@DoNotDiscover class SectionTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class SectionTemplateTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "render front title" in goTo("/uk-news") { browser =>
     browser.el("[data-test-id=header-title]").text should be("UK news")
