@@ -67,24 +67,28 @@ object TrailsToShowcase {
 
   private def transform(node: Node, pf: PartialFunction[Node, Node]): Node =
     pf.applyOrElse(node, identity[Node]) match {
-      case e: Elem => e.copy(child = e.child.map (c => transform(c, pf)))
-      case other => other
+      case e: Elem => e.copy(child = e.child.map(c => transform(c, pf)))
+      case other   => other
     }
 
   private def addNestedNameToAuthors(node: Node): Node = {
-    transform(node, {
-      case e: Elem if e.label == "author" => {
-        e.copy(child = <name>{e.text}</name>)
-      }
-    })
+    transform(
+      node,
+      {
+        case e: Elem if e.label == "author" => {
+          e.copy(child = <name>{e.text}</name>)
+        }
+      },
+    )
   }
 
   // this is an expensive operation - see if there's a simpler way
   private val removeDcDateElements = new RewriteRule {
-    override def transform(node: Node): NodeSeq = node match {
-      case e: Elem if e.label == "date" => NodeSeq.Empty
-      case other => other
-    }
+    override def transform(node: Node): NodeSeq =
+      node match {
+        case e: Elem if e.label == "date" => NodeSeq.Empty
+        case other                        => other
+      }
   }
 
   // fromTrails is only referenced from tests AFAICT
