@@ -136,18 +136,18 @@ const init = (register: RegisterListener): void => {
 						// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
 						const passbackSlot = googletag.defineSlot(
 							slot.getAdUnitPath(),
-							mpu,
+							[mpu, outstreamMobile, outstreamDesktop],
 							passbackElement.id,
 						);
 						// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
 						passbackSlot?.defineSizeMapping([
 							[
 								[breakpoints.phablet, 0],
-								[outstreamDesktop, mpu],
+								[mpu, outstreamDesktop],
 							],
 							[
 								[breakpoints.mobile, 0],
-								[outstreamMobile, mpu],
+								[mpu, outstreamMobile],
 							],
 						]);
 						passbackSlot?.addService(window.googletag.pubads());
