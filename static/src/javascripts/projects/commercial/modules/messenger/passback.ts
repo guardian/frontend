@@ -136,7 +136,7 @@ const init = (register: RegisterListener): void => {
 						// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
 						const passbackSlot = googletag.defineSlot(
 							slot.getAdUnitPath(),
-							[adSizes.mpu.width, adSizes.mpu.height],
+							mpu,
 							passbackElement.id,
 						);
 						// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
