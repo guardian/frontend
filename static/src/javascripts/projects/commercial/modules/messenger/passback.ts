@@ -133,11 +133,13 @@ const init = (register: RegisterListener): void => {
 					 * Define and display a new slot
 					 */
 					window.googletag.cmd.push(() => {
+						// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
 						const passbackSlot = googletag.defineSlot(
 							slot.getAdUnitPath(),
 							[adSizes.mpu.width, adSizes.mpu.height],
 							passbackElement.id,
 						);
+						// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
 						passbackSlot?.defineSizeMapping([
 							[
 								[breakpoints.phablet, 0],
@@ -163,6 +165,7 @@ const init = (register: RegisterListener): void => {
 					 * does not take the height of the child ad element as normal.
 					 * So we set this by hooking into the googletag slotRenderEnded
 					 * event to get the size of the ad loaded.
+					 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
 					 */
 					googletag
 						.pubads()
