@@ -1,4 +1,6 @@
+import { adSizes } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { breakpoints } from '@guardian/source-foundations';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
 
@@ -12,6 +14,16 @@ const getValuesForKeys = (
 ): Array<[string, string[]]> => keys.map((key) => [key, valueFn(key)]);
 
 const labelHeight = 24;
+
+const mpu: [number, number] = [adSizes.mpu.width, adSizes.mpu.height];
+const outstreamDesktop: [number, number] = [
+	adSizes.outstreamDesktop.width,
+	adSizes.outstreamDesktop.height,
+];
+const outstreamMobile: [number, number] = [
+	adSizes.outstreamMobile.width,
+	adSizes.outstreamMobile.height,
+];
 
 /**
  * A listener for 'passback' messages from ad slot iFrames
@@ -123,9 +135,19 @@ const init = (register: RegisterListener): void => {
 					window.googletag.cmd.push(() => {
 						const passbackSlot = googletag.defineSlot(
 							slot.getAdUnitPath(),
-							[300, 250],
+							[adSizes.mpu.width, adSizes.mpu.height],
 							passbackElement.id,
 						);
+						passbackSlot?.defineSizeMapping([
+							[
+								[breakpoints.phablet, 0],
+								[outstreamDesktop, mpu],
+							],
+							[
+								[breakpoints.mobile, 0],
+								[outstreamMobile, mpu],
+							],
+						]);
 						passbackSlot?.addService(window.googletag.pubads());
 						allTargeting.forEach(([key, value]) => {
 							slot.setTargeting(key, value);
