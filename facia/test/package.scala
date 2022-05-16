@@ -9,6 +9,7 @@ import org.scalatest.Suites
 import org.scalatestplus.play.PortNumber
 import play.api.libs.json.Json
 import recorder.HttpRecorder
+import utils.FaciaPickerTest
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
@@ -60,5 +61,6 @@ class FaciaTestSuite
       new layout.slices.StoryTest,
       new FaciaControllerTest,
       new metadata.FaciaMetaDataTest,
+      new FaciaPickerTest,
     )
     with SingleServerSuite {}
