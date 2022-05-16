@@ -4,7 +4,6 @@ import { memoize } from 'lodash-es';
 import { amIUsed } from 'commercial/sentinel';
 import { noop } from 'lib/noop';
 import fastdom from '../../../lib/fastdom-promise';
-import { mediator } from '../../../lib/mediator';
 import { markCandidates } from './mark-candidates';
 
 type RuleSpacing = {
@@ -124,9 +123,9 @@ const onRichLinksUpgraded = memoize(
 	(rules: SpacefinderRules) =>
 		query('.element-rich-link--not-upgraded', rules.body).length === 0
 			? Promise.resolve()
-			: new Promise((resolve) => {
-					mediator.once('rich-link:loaded', resolve);
-			  }),
+			: new Promise((resolve) =>
+					document.addEventListener('rich-link:loaded', resolve),
+			  ),
 	getFuncId,
 );
 
