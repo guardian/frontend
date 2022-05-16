@@ -17,7 +17,7 @@ import { init as initRedplanet } from '../projects/commercial/modules/dfp/redpla
 import { init as initHighMerch } from '../projects/commercial/modules/high-merch';
 import { init as initIpsosMori } from '../projects/commercial/modules/ipsos-mori';
 import { init as initLiveblogAdverts } from '../projects/commercial/modules/liveblog-adverts';
-import { maybeRemoveAdSlots } from '../projects/commercial/modules/maybe-remove-ad-slot';
+import { manageAdFreeCookieOnConsentChange } from '../projects/commercial/modules/maybe-remove-ad-slot';
 import { init as initMobileSticky } from '../projects/commercial/modules/mobile-sticky';
 import { paidContainers } from '../projects/commercial/modules/paid-containers';
 import { init as initPaidForBand } from '../projects/commercial/modules/paidfor-band';
@@ -45,7 +45,7 @@ const commercialBaseModules: Modules = [];
 
 // remaining modules not necessary to load an ad
 const commercialExtraModules: Modules = [
-	['cm-maybeRemoveAdSlots', maybeRemoveAdSlots],
+	['cm-manageAdFreeCookieOnConsentChange', manageAdFreeCookieOnConsentChange],
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
 	['cm-ipsosmori', initIpsosMori],
