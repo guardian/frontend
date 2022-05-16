@@ -2,7 +2,6 @@
 
 import { memoize } from 'lodash-es';
 import { amIUsed } from 'commercial/sentinel';
-import { noop } from 'lib/noop';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { markCandidates } from './mark-candidates';
@@ -315,9 +314,7 @@ class SpaceError extends Error {
  */
 const getReady = (rules: SpacefinderRules, options: SpacefinderOptions) =>
 	Promise.race([
-		new Promise(() => {
-			window.setTimeout(noop, LOADING_TIMEOUT);
-		}),
+		new Promise((resolve) => window.setTimeout(resolve, LOADING_TIMEOUT)),
 		Promise.all([
 			options.waitForImages ? onImagesLoaded(rules) : true,
 			options.waitForLinks ? onRichLinksUpgraded(rules) : true,
