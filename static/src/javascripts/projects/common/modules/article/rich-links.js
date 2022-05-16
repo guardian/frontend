@@ -50,7 +50,7 @@ const doUpgrade = (el, resp) =>
         ).forEach(sel => {
             sel.classList.remove('submeta-container--break');
         });
-        document.dispatchEvent(new CustomEvent('rich-links:loaded'));
+        document.dispatchEvent(new CustomEvent('rich-link:loaded'));
     });
 
 const upgradeRichLink = (el) => {
