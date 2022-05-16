@@ -13,7 +13,7 @@ import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
-import { maybeRemoveAdSlots } from 'commercial/modules/maybe-remove-ad-slot';
+import { manageAdFreeCookieOnConsentChange } from 'commercial/modules/maybe-remove-ad-slot';
 import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
@@ -31,7 +31,7 @@ import type { Modules } from './types';
 
 const commercialModules: Modules = [
 	['cm-setAdTestCookie', setAdTestCookie],
-	['cm-maybeRemoveAdSlots', maybeRemoveAdSlots],
+	['cm-manageAdFreeCookieOnConsentChange', manageAdFreeCookieOnConsentChange],
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
 	['cm-ipsosmori', initIpsosMori],
