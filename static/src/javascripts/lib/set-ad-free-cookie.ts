@@ -5,7 +5,9 @@ import { addCookie, removeCookie } from './cookies';
  * @param daysToLive - number of days the cookie should be valid
  */
 const setAdFreeCookie = (daysToLive?: number): void => {
-	addCookie('GU_AF1', '1', daysToLive, true);
+	const expires = new Date();
+	expires.setMonth(expires.getMonth() + 6);
+	addCookie('GU_AF1', expires.getTime(), daysToLive, true);
 };
 
 /*
