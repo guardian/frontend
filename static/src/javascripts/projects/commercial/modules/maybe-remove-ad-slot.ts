@@ -67,10 +67,10 @@ const removeAdSlots = (): Promise<void> => {
  */
 const maybeRemoveAdSlots = once(async (): Promise<void> => {
 	onConsentChange((consent) => {
-		if (!consent.canTarget) {
+		if (consent.tcfv2 && !consent.canTarget) {
 			setAdFreeCookie();
 			void removeAdSlots();
-		} else if (!commercialFeatures.adFree) {
+		} else if (!consent.tcfv2 && !commercialFeatures.adFree) {
 			// only unset the cookie if we're not ad-free for other reasons
 			unsetAdFreeCookie();
 		}
