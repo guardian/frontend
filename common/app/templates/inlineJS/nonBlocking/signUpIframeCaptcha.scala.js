@@ -107,8 +107,6 @@ function sendTrackingUsingButton() {
     const clickEvent = getClickEvent(submitButton)
     console.log({clickEvent})
     sendEvent(clickEvent, 'click-event')
-
-    console.log('!!', sendEvent, getClickEvent)
 }
 
 

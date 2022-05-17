@@ -27,7 +27,6 @@
 
     <script>
         @Html(config(page).body)
-        @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
     </script>
 
 </head>
@@ -44,10 +43,18 @@
                 });
         </script>
     }
+
+    <script info-for="emailIframeTracking">
+        @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
+    </script>
+
     @if(EmailSignupRecaptcha.isSwitchedOn) {
-        <script>
-            @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
+        <script info-for="captcha and send tracking after success">
             @InlineJs(signUpIframeCaptcha().body, "signUpIframeCaptcha.js")
+        </script>
+    } else {
+        <script info-for="tracking on button click when no captcha">
+            trackClickEvent(document.querySelector('button[type=submit]'));
         </script>
     }
 </html>
