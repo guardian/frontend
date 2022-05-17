@@ -703,7 +703,6 @@
  "../projects/common/modules/spacefinder.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.ts",
   "../projects/commercial/sentinel.ts",
   "../projects/common/modules/mark-candidates.js"
  ],
