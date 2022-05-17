@@ -1,5 +1,27 @@
 @()
 
+const sendEvent = (payload, eventType) => {
+    const msg = {
+        id: 'xxxxxxxxxx'.replace(/x/g, () =>
+            // eslint-disable-next-line no-bitwise
+            ((Math.random() * 36) | 0).toString(36)
+        ),
+        type: `ophan-iframe-${eventType}`,
+        iframeId: window.frameElement ? window.frameElement.id : null,
+        value: payload,
+    };
+    window.parent.postMessage(msg, '*');
+    return msg.id;
+};
+
+const getClickEvent = (el) => {
+    return {
+        clickComponent: el.getAttribute('data-component'), clickLinkNames: [el.getAttribute('data-link-name')]
+    }
+}
+
+
+
 window.addEventListener('message', (event) => {
 	const allowedOrigins = ['https://www.theguardian.com'];
 	if (!allowedOrigins.includes(event.origin)) return;
@@ -49,7 +71,7 @@ function validateForm() {
 
 	if (
 		!emailValue ||
-		emailValue.length > maxEmailLength ||
+		emailValue.length > 250 ||
 		!validateEmail(emailValue)
 	) {
 		alert('INVALID INPUT');
@@ -80,6 +102,7 @@ function onSubmit(e) {
 }
 
 function onRecaptchaScriptLoaded() {
+    console.log('onRecaptchaScriptLoaded')
 	resizeToFitCaptcha();
 	const captchaContainer = document.getElementsByClassName(
 		'grecaptcha_container'
@@ -94,9 +117,30 @@ function onRecaptchaScriptLoaded() {
 	grecaptcha.execute();
 }
 
+
+function sendTrackingUsingButton() {
+    console.log('sendTrackingUsingButton')
+    const submitButton = document.getElementById("email-embed-signup-button--old")
+    if (!submitButton) {
+        console.warn('no submit button')
+        return;
+    }
+
+    const clickEvent = getClickEvent(submitButton)
+    console.log({clickEvent})
+    sendEvent(clickEvent, 'click-event')
+
+    console.log('!!', sendEvent, getClickEvent)
+}
+
+
 function onCaptchaCompleted(token) {
+    console.log('onCaptchaCompleted')
 	resizeToOriginalHeight();
-	document.querySelector('.email-sub__form').submit();
+    console.log('valid form?',validateForm())
+    sendTrackingUsingButton()
+    alert('submitTime!')
+	// document.querySelector('.email-sub__form').submit();
 }
 
 function onCaptchaError() {
