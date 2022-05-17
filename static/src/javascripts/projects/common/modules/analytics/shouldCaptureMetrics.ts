@@ -1,13 +1,9 @@
 import type { ABTest } from '@guardian/ab-core';
 import { isInABTestSynchronous } from '../experiments/ab';
-import { commercialGptLazyLoad } from '../experiments/tests/commercial-gpt-lazy-load';
-import { commercialLazyLoadMargin } from '../experiments/tests/commercial-lazy-load-margin';
 import { prebidPriceGranularity } from '../experiments/tests/prebid-price-granularity';
 
 const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
-	commercialGptLazyLoad,
-	commercialLazyLoadMargin,
 	prebidPriceGranularity,
 ];
 
