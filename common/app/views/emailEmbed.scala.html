@@ -46,6 +46,7 @@
     }
     @if(EmailSignupRecaptcha.isSwitchedOn) {
         <script>
+            @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
             @InlineJs(signUpIframeCaptcha().body, "signUpIframeCaptcha.js")
         </script>
     }
