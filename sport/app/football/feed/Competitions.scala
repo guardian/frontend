@@ -329,8 +329,8 @@ object CompetitionsProvider {
     Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
     Competition(
       "423",
-      "/football/womens-euro-2022",
-      "UEFA Women's European Championship 2022",
+      "football/women-s-euro-2022",
+      "Women's Euro 2022",
       "Women's Euro 2022",
       "Internationals",
       showInTeamsList = true,
