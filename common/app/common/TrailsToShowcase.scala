@@ -6,6 +6,7 @@ import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, U
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import common.TrailsToRss.image
+import conf.switches.Switches.GoogleShowcaseAuthorNestedNameSwitch
 import model.pressed.{CuratedContent, PressedContent, Replace}
 import model.{ImageAsset, PressedPage}
 import org.joda.time.DateTime
@@ -62,7 +63,12 @@ object TrailsToShowcase {
     }
     val xml = asXml(syndFeedOf(feedTitle, url, description, entries))
     val xmlWithoutDcDates = new RuleTransformer(removeDcDateElements)(xml)
-    addNestedNameToAuthors(xmlWithoutDcDates)
+
+    if (GoogleShowcaseAuthorNestedNameSwitch.isSwitchedOn) {
+      addNestedNameToAuthors(xmlWithoutDcDates)
+    } else {
+      xmlWithoutDcDates
+    }
   }
 
   private def transform(node: Node, pf: PartialFunction[Node, Node]): Node =

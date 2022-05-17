@@ -17,6 +17,8 @@ import java.time.ZoneOffset
 import scala.collection.JavaConverters._
 import scala.xml.{Node, XML}
 
+import conf.switches.Switches
+
 class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
 
   val request = FakeRequest()
@@ -291,6 +293,75 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
 
     val rundownPanels = (rss \ "channel" \ "item").filter(ofRundownPanelType)
     rundownPanels.size should be(0)
+  }
+
+  "TrailsToShowcase" should "NOT embed <name> tag into <author> when switched OFF" in {
+    val startSwitchState = Switches.GoogleShowcaseAuthorNestedNameSwitch.isSwitchedOn
+    if (startSwitchState) {
+      Switches.GoogleShowcaseAuthorNestedNameSwitch.switchOff()
+    }
+    val withByline = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some(twoEncodedBulletItems),
+      byline = Some("Ann Author"),
+    )
+
+    val rss = TrailsToShowcase
+      .fromTrails(
+        Option("foo"),
+        Seq(withByline),
+        Seq.empty,
+        "rundown-container-id",
+      )(request)
+
+    val channelItems = rss \ "channel" \ "item"
+    val panel = channelItems.filter(ofSingleStoryPanelType).head
+
+    (panel \ "author" \ "name").isEmpty should be(true)
+    (panel \ "author").text should be("Ann Author")
+
+    if (startSwitchState) {
+      Switches.GoogleShowcaseAuthorNestedNameSwitch.switchOn()
+    } else {
+      Switches.GoogleShowcaseAuthorNestedNameSwitch.switchOff()
+    }
+  }
+
+  "TrailsToShowcase" should "embed <name> tag into <author> when switched ON" in {
+    val startSwitchState = Switches.GoogleShowcaseAuthorNestedNameSwitch.isSwitchedOn
+    if (!startSwitchState) {
+      Switches.GoogleShowcaseAuthorNestedNameSwitch.switchOn()
+    }
+
+    val withByline = makePressedContent(
+      webPublicationDate = wayBackWhen,
+      lastModified = Some(lastModifiedWayBackWhen),
+      trailPicture = Some(imageMedia),
+      trailText = Some(twoEncodedBulletItems),
+      byline = Some("Ann Author"),
+    )
+
+    val rss = TrailsToShowcase
+      .fromTrails(
+        Option("foo"),
+        Seq(withByline),
+        Seq.empty,
+        "rundown-container-id",
+      )(request)
+
+    val channelItems = rss \ "channel" \ "item"
+    val panel = channelItems.filter(ofSingleStoryPanelType).head
+
+    (panel \ "author" \ "name").isEmpty should be(false)
+    (panel \ "author" \ "name").text should be("Ann Author")
+
+    if (startSwitchState) {
+      Switches.GoogleShowcaseAuthorNestedNameSwitch.switchOn()
+    } else {
+      Switches.GoogleShowcaseAuthorNestedNameSwitch.switchOff()
+    }
   }
 
   "TrailToShowcase" can "create Single Story panels from single trails" in {

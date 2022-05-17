@@ -533,4 +533,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val GoogleShowcaseAuthorNestedNameSwitch = Switch(
+    SwitchGroup.Feature,
+    "google-showcase-author-nested-name",
+    "When ON, Google showcase feeds express <author><name>Ann Author</name></author>. When OFF it is <author>Ann Author</author>",
+    owners = Seq(Owner.withEmail("content-platforms.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }
