@@ -250,6 +250,7 @@ object PressedContent {
     "/environment/ng-interactive/2018/jan/01/london-air-pollution-live-data-where-will-be-first-to-break-legal-limits-in-2018",
     "/society/ng-interactive/2018/jan/11/how-the-nhs-winter-beds-crisis-is-hitting-patient-care",
     "/world/ng-interactive/2017/nov/03/worlds-biggest-grave-robbery-asias-disappearing-ww2-shipwrecks",
+    "/environment/ng-interactive/2021/nov/04/fossil-fuel-assets-worthless-2036-net-zero-transition",
     "/us-news/ng-interactive/2017/jul/25/us-healthcare-system-vs-other-countries",
     "/uk-news/ng-interactive/2017/feb/20/what-the-eu27-want-brexit-red-lines-from-the-other-side-of-the-table",
     "/sport/ng-interactive/2017/aug/02/usain-bolt-fastest-man-ever-lived",
