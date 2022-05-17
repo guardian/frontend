@@ -5,6 +5,7 @@
 @import templates.inlineJS.blocking.js._
 @import templates.inlineJS.nonBlocking.js.emailIframeTracking
 @import templates.inlineJS.nonBlocking.js.signUpIframeCaptcha
+@import templates.inlineJS.nonBlocking.js.signUpIframeWithoutCaptcha
 @import play.api.Mode.Dev
 @import conf.Static
 @import views.support.RenderClasses
@@ -49,12 +50,12 @@
     </script>
 
     @if(EmailSignupRecaptcha.isSwitchedOn) {
-        <script info-for="captcha and send tracking after success">
+        <script info-for="captcha resizing and sending tracking after success">
             @InlineJs(signUpIframeCaptcha().body, "signUpIframeCaptcha.js")
         </script>
     } else {
-        <script info-for="tracking on button click when no captcha">
-            trackClickEvent(document.querySelector('button[type=submit]'));
+        <script info-for="sending tracking on button click">
+            @InlineJs(signUpIframeWithoutCaptcha().body, "signUpIframeWithoutCaptcha.js")
         </script>
     }
 </html>

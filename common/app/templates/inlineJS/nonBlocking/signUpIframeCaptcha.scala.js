@@ -32,6 +32,8 @@ function setupSubmitListener() {
 	submitButton.addEventListener('click', (e) => onSubmit(e));
 }
 
+// TO DO - VALIDATE PROPERLY
+// need to figure out how to include regex without causing scala compilation failure
 function validateEmail(input) {
 	return input.indexOf('.') !== -1;
 }
