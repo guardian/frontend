@@ -28,7 +28,7 @@
     margin-bottom: $gs-baseline;
 
     @include mq(tablet) {
-        .has-flex &:not(.fc-slice__item--mpu-candidate) {
+        &:not(.fc-slice__item--mpu-candidate) {
             display: flex;
         }
     }
@@ -105,7 +105,7 @@
         }
 
         &[class*='fc-item--has-sublinks'] {
-            .has-flex-wrap &.fc-item--has-cutout {
+            &.fc-item--has-cutout {
                 .fc-item__header {
                     padding-right: 0;
                 }
@@ -263,10 +263,8 @@
         @include fc-item--fluid;
         @include fc-item--horizontal(20%);
 
-        .has-flex-wrap & {
-            .fc-item__container {
-                flex-direction: row;
-            }
+        .fc-item__container {
+            flex-direction: row;
         }
 
         .fc-item__header {
