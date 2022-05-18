@@ -56,7 +56,6 @@
 
     <script info-for="emailIframeTracking">
         @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
-        trackClickEvent(document.querySelector("button[type=submit]"))
     </script>
 
     @if(EmailSignupRecaptcha.isSwitchedOn) {

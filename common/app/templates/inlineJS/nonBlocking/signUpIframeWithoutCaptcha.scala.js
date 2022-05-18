@@ -11,6 +11,7 @@ function validateAndTrack(event) {
 }
 
 function trackFormSubmit(formElement) {
+    if (!formElement) {return}
     formElement.addEventListener('submit', validateAndTrack)
 }
 

@@ -20,22 +20,16 @@ const getClickEvent = (el) => {
     }
 }
 
-const getSubmitEvent = () => {
-
-    const formElement = document.querySelector('form');
-    if (!formElement) {
-        console.warn('no form element')
-        return {};
-    }
-
+const getSubmitEvent = (formElement) => {
     return {
         clickComponent: formElement.getAttribute('data-component'), clickLinkNames: [formElement.getAttribute('data-link-name')]
     }
 }
 
-const trackClickEvent = (el) => {
-    el.addEventListener('click', (event) => {
-        const clickEvent = getClickEvent(el)
+const trackClickEvent = (buttonElement) => {
+    if (!buttonElement) { return {} }
+    buttonElement.addEventListener('click', (event) => {
+        const clickEvent = getClickEvent(buttonElement)
         console.log({clickEvent})
         sendEvent(clickEvent, 'click-event')
     })
@@ -48,7 +42,9 @@ function validateForm() {
 
 function sendTrackingForFormSubmission() {
     console.log('sendTrackingForFormSubmission')
-    const submitEventData = getSubmitEvent()
+    const submitEventData = getSubmitEvent(document.querySelector('form'))
     console.log(JSON.stringify(submitEventData))
     sendEvent(submitEventData, 'click-event')
 }
+
+trackClickEvent(document.querySelector("button[type=submit]"))

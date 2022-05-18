@@ -27,6 +27,7 @@ function resizeToFitCaptcha() {
 
 function setupSubmitListener() {
     const formElement = document.querySelector('form');
+    if (!formElement) {return}
 	formElement.addEventListener('submit', (e) => onSubmit(e));
 }
 
