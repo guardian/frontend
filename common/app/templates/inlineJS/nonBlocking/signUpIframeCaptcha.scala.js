@@ -26,8 +26,8 @@ function resizeToFitCaptcha() {
 }
 
 function setupSubmitListener() {
-    const submitButton = document.querySelector('button[type=submit]');
-	submitButton.addEventListener('click', (e) => onSubmit(e));
+    const formElement = document.querySelector('form');
+	formElement.addEventListener('submit', (e) => onSubmit(e));
 }
 
 
@@ -53,7 +53,6 @@ function onSubmit(e) {
 }
 
 function onRecaptchaScriptLoaded() {
-    console.log('onRecaptchaScriptLoaded')
 	resizeToFitCaptcha();
 	const captchaContainer = document.querySelector('.grecaptcha_container');
 	grecaptcha.render(captchaContainer, {
@@ -68,12 +67,10 @@ function onRecaptchaScriptLoaded() {
 
 
 function onCaptchaCompleted(token) {
-    console.log('onCaptchaCompleted')
 	resizeToOriginalHeight();
-    console.log('valid form?',validateForm())
     sendTrackingUsingButton()
     alert('submitTime!')
-	// document.querySelector('form').submit();
+	document.querySelector('form').submit();
 }
 
 function onCaptchaError() {
