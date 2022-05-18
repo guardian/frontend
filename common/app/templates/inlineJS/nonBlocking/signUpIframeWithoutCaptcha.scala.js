@@ -15,5 +15,4 @@ function trackFormSubmit(formElement) {
     formElement.addEventListener('submit', validateAndTrack)
 }
 
-
 trackFormSubmit(document.querySelector('form'))

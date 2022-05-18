@@ -30,14 +30,9 @@ function setupSubmitListener() {
 	formElement.addEventListener('submit', (e) => onSubmit(e));
 }
 
-
-
 function onSubmit(e) {
 	e.preventDefault();
-
-	var formIsValid = validateForm();
-
-	console.log({ formIsValid });
+	const formIsValid = validateForm();
 
 	if (formIsValid) {
 		(function (d, script) {
@@ -64,7 +59,6 @@ function onRecaptchaScriptLoaded() {
 	});
 	grecaptcha.execute();
 }
-
 
 function onCaptchaCompleted(token) {
 	resizeToOriginalHeight();
