@@ -32,34 +32,7 @@ function setupSubmitListener() {
 	submitButton.addEventListener('click', (e) => onSubmit(e));
 }
 
-// TO DO - VALIDATE PROPERLY
-// need to figure out how to include regex without causing scala compilation failure
-function validateEmail(input) {
-	return input.indexOf('.') !== -1;
-}
 
-function validateForm() {
-	const formElement = document.querySelector('form');
-	const submitButton = formElement.querySelector('[type=submit]');
-	const emailField = formElement.querySelector('[type=email]');
-	if (!submitButton || !emailField) {
-		alert('missing field');
-		return false;
-	}
-
-	const emailValue = emailField.value;
-
-	if (
-		!emailValue ||
-		emailValue.length > 250 ||
-		!validateEmail(emailValue)
-	) {
-		alert('INVALID INPUT');
-		return false;
-	}
-
-	return true;
-}
 
 function onSubmit(e) {
 	e.preventDefault();
@@ -95,20 +68,6 @@ function onRecaptchaScriptLoaded() {
 		size: 'invisible',
 	});
 	grecaptcha.execute();
-}
-
-
-function sendTrackingUsingButton() {
-    console.log('sendTrackingUsingButton')
-    const submitButton = document.getElementById("email-embed-signup-button--old")
-    if (!submitButton) {
-        console.warn('no submit button')
-        return;
-    }
-
-    const clickEvent = getClickEvent(submitButton)
-    console.log({clickEvent})
-    sendEvent(clickEvent, 'click-event')
 }
 
 
