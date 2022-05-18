@@ -20,20 +20,35 @@ const getClickEvent = (el) => {
     }
 }
 
+const getSubmitEvent = () => {
+
+    const formElement = document.querySelector('form');
+    if (!formElement) {
+        console.warn('no form element')
+        return {};
+    }
+
+    return {
+        clickComponent: formElement.getAttribute('data-component'), clickLinkNames: [formElement.getAttribute('data-link-name')]
+    }
+}
+
+const trackClickEvent = (el) => {
+    el.addEventListener('click', (event) => {
+        const clickEvent = getClickEvent(el)
+        console.log({clickEvent})
+        sendEvent(clickEvent, 'click-event')
+    })
+}
+
 function validateForm() {
 	const formElement = document.querySelector('form');
 	return formElement.checkValidity();
 }
 
-function sendTrackingUsingButton() {
-    console.log('sendTrackingUsingButton')
-    const submitButton = document.querySelector('button[type=submit]');
-    if (!submitButton) {
-        console.warn('no submit button')
-        return;
-    }
-
-    const clickEvent = getClickEvent(submitButton)
-    console.log({clickEvent})
-    sendEvent(clickEvent, 'click-event')
+function sendTrackingForFormSubmission() {
+    console.log('sendTrackingForFormSubmission')
+    const submitEventData = getSubmitEvent()
+    console.log(JSON.stringify(submitEventData))
+    sendEvent(submitEventData, 'click-event')
 }

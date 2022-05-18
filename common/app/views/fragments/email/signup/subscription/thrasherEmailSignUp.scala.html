@@ -12,7 +12,7 @@
 
 
 <div class="@wrapperClass @wrapperToneClass js-ab-embed-old-design">
-    <form action="@LinkTo(s"/email")" method="post" id="thrasher-embed-email-sub-form" class="email-sub__form email-sub__form--thrasher-embed email-sub__form--thrasher-@listName" data-email-form-type="thrasher-embed" data-email-list-name="@listName">
+    <form action="@LinkTo(s"/email")" method="post" id="thrasher-embed-email-sub-form" class="email-sub__form email-sub__form--thrasher-embed email-sub__form--thrasher-@listName" data-email-form-type="thrasher-embed" data-email-list-name="@listName" data-component="email-signup-form thrasher-embed-@listName" data-link-name="thrasher-embed | @listName">
         @helper.CSRF.formField
         <div class="email-sub__form-wrapper">
 

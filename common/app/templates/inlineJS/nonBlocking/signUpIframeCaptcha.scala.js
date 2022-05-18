@@ -62,7 +62,7 @@ function onRecaptchaScriptLoaded() {
 
 function onCaptchaCompleted(token) {
 	resizeToOriginalHeight();
-    sendTrackingUsingButton()
+    sendTrackingForFormSubmission()
     alert('submitTime!')
 	document.querySelector('form').submit();
 }

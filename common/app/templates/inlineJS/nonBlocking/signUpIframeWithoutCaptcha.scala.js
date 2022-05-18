@@ -5,9 +5,8 @@ function validateAndTrack(event) {
     const formIsValid = validateForm();
 
     if (formIsValid) {
-        sendTrackingUsingButton()
-        const formElement = document.querySelector('form');
-        formElement.submit()
+        sendTrackingForFormSubmission()
+        document.querySelector('form').submit()
     }
 }
 
