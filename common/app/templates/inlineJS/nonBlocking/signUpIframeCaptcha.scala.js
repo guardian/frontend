@@ -26,9 +26,7 @@ function resizeToFitCaptcha() {
 }
 
 function setupSubmitListener() {
-	const submitButton = document.querySelector(
-		'.email-sub__form button[type=submit]'
-	);
+    const submitButton = document.querySelector('button[type=submit]');
 	submitButton.addEventListener('click', (e) => onSubmit(e));
 }
 
@@ -57,9 +55,7 @@ function onSubmit(e) {
 function onRecaptchaScriptLoaded() {
     console.log('onRecaptchaScriptLoaded')
 	resizeToFitCaptcha();
-	const captchaContainer = document.getElementsByClassName(
-		'grecaptcha_container'
-	)[0];
+	const captchaContainer = document.querySelector('.grecaptcha_container');
 	grecaptcha.render(captchaContainer, {
 		sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
 		callback: onCaptchaCompleted,
@@ -77,7 +73,7 @@ function onCaptchaCompleted(token) {
     console.log('valid form?',validateForm())
     sendTrackingUsingButton()
     alert('submitTime!')
-	// document.querySelector('.email-sub__form').submit();
+	// document.querySelector('form').submit();
 }
 
 function onCaptchaError() {

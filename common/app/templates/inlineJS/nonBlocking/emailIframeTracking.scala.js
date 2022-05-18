@@ -29,8 +29,8 @@ function validateEmail(input) {
 
 function validateForm() {
 	const formElement = document.querySelector('form');
-	const submitButton = formElement.querySelector('[type=submit]');
-	const emailField = formElement.querySelector('[type=email]');
+	const submitButton = formElement.querySelector('button[type=submit]');
+	const emailField = formElement.querySelector('input[type=email]');
 	if (!submitButton || !emailField) {
 		alert('missing field');
 		return false;
@@ -52,7 +52,7 @@ function validateForm() {
 
 function sendTrackingUsingButton() {
     console.log('sendTrackingUsingButton')
-    const submitButton = document.getElementById("email-embed-signup-button--old")
+    const submitButton = document.querySelector('button[type=submit]');
     if (!submitButton) {
         console.warn('no submit button')
         return;
