@@ -124,8 +124,8 @@ class LiveBlogController(
                 "isDead" -> isDeadBlog.toString,
                 "isLiveBlog" -> "true",
               )
-            val remoteRendering =
-              shouldRemoteRender(request.forceDCROff)
+            val remoteRendering = !request.forceDCROff
+
             if (remoteRendering) {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
@@ -143,14 +143,6 @@ class LiveBlogController(
       }
 
     }
-  }
-
-  def shouldRemoteRender(
-      forceDCROff: Boolean,
-  ): Boolean = {
-    // ?dcr=false, so never render DCR
-    if (forceDCROff) false
-    else true
   }
 
   private[this] def getRange(lastUpdate: Option[String], page: Option[String]): BlockRange = {
@@ -174,7 +166,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]] = Map.empty,
   )(implicit request: RequestHeader): Future[Result] = {
-    val remoteRender = shouldRemoteRender(request.forceDCROff)
+    val remoteRender = !request.forceDCROff
 
     range match {
       case SinceBlockId(lastBlockId) =>

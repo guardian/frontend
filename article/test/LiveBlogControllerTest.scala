@@ -173,24 +173,23 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
   it should "use dcr if no dcr param is passed" in {
     val forceDCROff = false
 
-    val shouldRemoteRender =
-      liveBlogController.shouldRemoteRender(forceDCROff)
+    val shouldRemoteRender = !forceDCROff
+
     shouldRemoteRender should be(true)
   }
 
   it should "use DCR if the parameter dcr=true is passed" in {
     val forceDCROff = false
 
-    val shouldRemoteRender =
-      liveBlogController.shouldRemoteRender(forceDCROff)
+    val shouldRemoteRender = !forceDCROff
     shouldRemoteRender should be(true)
   }
 
   it should "use frontend if the parameter dcr=false is passed" in {
     val forceDCROff = true
 
-    val shouldRemoteRender =
-      liveBlogController.shouldRemoteRender(forceDCROff)
+    val shouldRemoteRender = !forceDCROff
+
     shouldRemoteRender should be(false)
   }
 
