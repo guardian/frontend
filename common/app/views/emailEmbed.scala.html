@@ -36,12 +36,21 @@
     </body>
     <script src="https://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js"></script>
     @if(ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
-        <script info-for="adding focusin event listener to the email field to change privacy text ">
-            document.querySelector('.email-sub__text-input')
-                .addEventListener('focusin', () => {
-                    document.querySelector('.newsletters-terms').setAttribute('data-privacy-visible', "true")
+        <script info-for="adding focusin event listener to the email field to change privacy text">
+
+            function revealPrivacyWordingWhenUserInteractsWithEmailField() {
+                const termsText = document.querySelector('.newsletters-terms');
+                const emailInput = document.querySelector('.email-sub__text-input');
+                if (!termsText || !emailInput) {
+                    return
+                }
+                emailInput.addEventListener('focusin', ()=> {
+                    termsText.setAttribute('data-privacy-visible', "true")
                     iframeMessenger?.resize()
                 });
+            }
+
+            revealPrivacyWordingWhenUserInteractsWithEmailField()
         </script>
     }
 
