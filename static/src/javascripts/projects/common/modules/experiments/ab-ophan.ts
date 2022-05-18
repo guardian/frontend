@@ -4,10 +4,9 @@ import config from '../../../../lib/config';
 import { noop } from '../../../../lib/noop';
 import reportError from '../../../../lib/report-error';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- generics don’t play nice
-type BooleanFunction = (...args: any[]) => boolean;
+type BooleanFunction<Args extends unknown[]> = (...args: Args) => boolean;
 const not =
-	(f: BooleanFunction): BooleanFunction =>
+	<Args extends unknown[]>(f: BooleanFunction<Args>): BooleanFunction<Args> =>
 	(...args) =>
 		!f(...args);
 
