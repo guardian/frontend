@@ -92,6 +92,7 @@ interface PageConfig extends CommercialPageConfig {
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
 	isPaidContent: boolean;
+	isProd: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala
 	isSensitive: boolean;
 	keywordIds: string;
 	keywords: string;
