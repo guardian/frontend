@@ -21,13 +21,6 @@ const getClickEvent = (el) => {
 }
 
 
-const trackClickEvent = (el) => {
-    el.addEventListener('click', (event) => {
-        const clickEvent = getClickEvent(el)
-        sendEvent(clickEvent, 'click-event')
-    })
-}
-
 // TO DO - VALIDATE PROPERLY
 // need to figure out how to include regex without causing scala compilation failure
 function validateEmail(input) {
