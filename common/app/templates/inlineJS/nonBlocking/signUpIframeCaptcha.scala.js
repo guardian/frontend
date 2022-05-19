@@ -33,19 +33,21 @@ function setupSubmitListener() {
 
 function onSubmit(e) {
 	e.preventDefault();
-	const formIsValid = validateForm();
 
-	if (formIsValid) {
-		(function (d, script) {
-			script = d.createElement('script');
-			script.type = 'text/javascript';
-			script.async = true;
-			script.defer = true;
-			script.src =
-				'https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit';
-			d.getElementsByTagName('head')[0].appendChild(script);
-		})(document);
-	}
+    if (!window.grecaptcha) { // grecaptcha has not yet been rendered
+        (function (d, script) {
+            script = d.createElement('script');
+            script.type = 'text/javascript';
+            script.async = true;
+            script.defer = true;
+            script.src =
+                'https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit';
+            d.getElementsByTagName('head')[0].appendChild(script);
+        })(document);
+    } else { // grecaptcha has already been rendered, but been dismissed or expired
+        resizeToFitCaptcha();
+        grecaptcha.execute();
+    }
 }
 
 function onRecaptchaScriptLoaded() {
