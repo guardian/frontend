@@ -77,9 +77,7 @@ describe('getSlots', () => {
 	test('should return the correct slots at breakpoint M without mobile sticky', () => {
 		shouldIncludeMobileSticky.mockReturnValue(false);
 		getBreakpointKey.mockReturnValue('M');
-        const slots = getSlots('Article');
-        console.log(slots);
-		expect(slots).toEqual([
+		expect(getSlots('Article')).toEqual([
 			{
 				key: 'right',
 				sizes: [
@@ -168,6 +166,7 @@ describe('getSlots', () => {
             {
                 key: 'inline1',
                 sizes: [
+                    [300, 250],
                     [550, 310],
                     [620, 350]
                 ],
@@ -196,7 +195,7 @@ describe('getSlots', () => {
 		});
         expect(desktopSlots).toContainEqual({
             key: 'inline1',
-            sizes: [[550, 310], [620, 350]],
+            sizes: [[300, 250], [550, 310], [620, 350]],
         });
 		expect(desktopSlots).not.toContainEqual({
 			key: 'inline',
