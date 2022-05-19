@@ -77,6 +77,15 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 				: [[300, 250]],
 		},
 		{
+			key: 'inline1',
+			sizes: isArticle
+				? [
+						[550, 310],
+						[620, 350],
+				  ]
+				: [[300, 250]],
+		},
+		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
 				? [
@@ -116,6 +125,15 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 			sizes: [[300, 250]],
 		},
 		{
+			key: 'inline1',
+			sizes: isArticle
+				? [
+						[550, 310],
+						[620, 350],
+				  ]
+				: [[300, 250]],
+		},
+		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
 				? [
@@ -134,6 +152,15 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 		{
 			key: 'inline',
 			sizes: [[300, 250]],
+		},
+		{
+			key: 'inline1',
+			sizes: isArticle
+				? [
+						[300, 197],
+						[300, 250],
+				  ]
+				: [[300, 250]],
 		},
 		{
 			key: 'mostpop',
