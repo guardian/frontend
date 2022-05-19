@@ -1,7 +1,8 @@
 @import services.newsletters.model.EmailEmbed
 @(  componentClass: String,
     listName:String,
-    emailEmbedData: EmailEmbed)(implicit request: RequestHeader)
+    emailEmbedData: EmailEmbed,
+    iframeLocation: Option[String])(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import conf.switches.Switches.EmailSignupRecaptcha
@@ -35,8 +36,12 @@
 @formClass = @{ "email-sub__form" + " email-sub__form--" + componentClass }
 @headerClass = @{"email-sub__header" + " email-sub__header--" + componentClass  }
 
+@locationSuffix = @{ if (iframeLocation.nonEmpty) " " + iframeLocation.getOrElse("") else "" }
+@buttonDataComponent = @{ "email-signup-button " + componentClass + "-" + listName + locationSuffix }
+@formDataComponent = @{ "email-signup-form " + componentClass + "-" + listName + locationSuffix }
+
 @form = {
-    <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName" data-component="email-signup-form @componentClass-@listName" data-link-name="@componentClass | @listName">
+    <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName" data-component="@formDataComponent" data-link-name="@componentClass | @listName">
         @helper.CSRF.formField
         <div class="email-sub__form-wrapper" tabindex="-1">
             <div class="email-sub__inline-label">
@@ -52,7 +57,7 @@
                 <input class="email-sub__refviewid-input" type="hidden" name="refViewId" id="email-sub__refviewid-input" value="" />
 
             </div>
-            <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
+            <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="@buttonDataComponent" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
             @if(EmailSignupRecaptcha.isSwitchedOn && ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
                 @fragments.email.signup.recaptchaContainer()
                 @fragments.email.signup.recaptchaTerms(fragments.email.signup.privacyNoticeContent())
