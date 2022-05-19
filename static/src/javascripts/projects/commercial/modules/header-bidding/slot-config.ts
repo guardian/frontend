@@ -53,10 +53,6 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 						[300, 250],
 				  ],
 		},
-		{
-			key: 'inline1',
-			sizes: isCrossword ? [[728, 90]] : [[300, 250]],
-		},
 	];
 	const desktopSlots: HeaderBiddingSlot[] = [
 		{
@@ -83,6 +79,8 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 						[550, 310],
 						[620, 350],
 				  ]
+				: isCrossword
+				? [[728, 90]]
 				: [[300, 250]],
 		},
 		{
@@ -131,6 +129,8 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 						[550, 310],
 						[620, 350],
 				  ]
+				: isCrossword
+				? [[728, 90]]
 				: [[300, 250]],
 		},
 		{
