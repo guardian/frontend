@@ -55,10 +55,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
     &.fc-item--has-cutout {
         .fc-item__container {
             min-height: gs-height(7);
-
-            .has-flex-wrap & {
-                flex-direction: row;
-            }
+            flex-direction: row;
         }
 
         .fc-item__header {
@@ -69,13 +66,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
         .fc-item__content {
             width: auto;
             max-width: gs-span(5);
+            flex-basis: auto;
 
             @include mq(desktop) {
                 max-width: gs-span(6);
-            }
-
-            .has-flex-wrap & {
-                flex-basis: auto;
             }
         }
     }

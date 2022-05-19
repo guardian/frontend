@@ -57,22 +57,16 @@ Full item with 50% width media.
     &.fc-item--has-cutout {
         .fc-item__container {
             min-height: gs-height(5) + $gs-baseline * 3;
-
-            .has-flex-wrap & {
-                flex-direction: row;
-            }
+            flex-direction: row;
         }
 
         .fc-item__content {
             width: auto;
             max-width: gs-span(6);
+            flex-basis: auto;
 
             @include mq(desktop) {
                 max-width: gs-span(8);
-            }
-
-            .has-flex-wrap & {
-                flex-basis: auto;
             }
         }
 
