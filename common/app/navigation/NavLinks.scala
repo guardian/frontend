@@ -255,9 +255,10 @@ private object NavLinks {
     List(
       ukNews,
       world,
-      coronavirus,
       climateCrisis,
+      newsletters,
       football,
+      coronavirus,
       ukBusiness,
       ukEnvironment,
       politics,
@@ -266,7 +267,6 @@ private object NavLinks {
       science,
       tech,
       globalDevelopment,
-      obituaries,
     ),
   )
   val auNewsPillar = ukNewsPillar.copy(
