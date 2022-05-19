@@ -36,8 +36,7 @@
     </body>
     <script src="https://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js"></script>
     @if(ShowNewPrivacyWordingOnEmailSignupEmbeds.isSwitchedOn) {
-        <script info-for="adding focusin event listener to the email field to change privacy text">
-
+        <script>
             function revealPrivacyWordingWhenUserInteractsWithEmailField() {
                 const termsText = document.querySelector('.newsletters-terms');
                 const emailInput = document.querySelector('.email-sub__text-input');
@@ -54,16 +53,16 @@
         </script>
     }
 
-    <script info-for="emailIframeTracking">
+    <script>
         @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
     </script>
 
     @if(EmailSignupRecaptcha.isSwitchedOn) {
-        <script info-for="captcha resizing and sending tracking submit">
+        <script>
             @InlineJs(signUpIframeCaptcha().body, "signUpIframeCaptcha.js")
         </script>
     } else {
-        <script info-for="tracking submit no captcha">
+        <script>
             @InlineJs(signUpIframeWithoutCaptcha().body, "signUpIframeWithoutCaptcha.js")
         </script>
     }

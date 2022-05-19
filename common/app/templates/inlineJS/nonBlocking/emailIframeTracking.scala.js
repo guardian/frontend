@@ -30,7 +30,6 @@ const trackClickEvent = (buttonElement) => {
     if (!buttonElement) { return {} }
     buttonElement.addEventListener('click', (event) => {
         const clickEvent = getClickEvent(buttonElement)
-        console.log({clickEvent})
         sendEvent(clickEvent, 'click-event')
     })
 }
@@ -41,9 +40,7 @@ function validateForm() {
 }
 
 function sendTrackingForFormSubmission() {
-    console.log('sendTrackingForFormSubmission')
     const submitEventData = getSubmitEvent(document.querySelector('form'))
-    console.log(JSON.stringify(submitEventData))
     sendEvent(submitEventData, 'click-event')
 }
 
