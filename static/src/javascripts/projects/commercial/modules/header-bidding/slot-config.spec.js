@@ -77,17 +77,15 @@ describe('getSlots', () => {
 	test('should return the correct slots at breakpoint M without mobile sticky', () => {
 		shouldIncludeMobileSticky.mockReturnValue(false);
 		getBreakpointKey.mockReturnValue('M');
-		expect(getSlots('Article')).toEqual([
+        const slots = getSlots('Article');
+        console.log(slots);
+		expect(slots).toEqual([
 			{
 				key: 'right',
 				sizes: [
 					[300, 600],
 					[300, 250],
 				],
-			},
-			{
-				key: 'inline1',
-				sizes: [[300, 250]],
 			},
 			{
 				key: 'top-above-nav',
@@ -97,6 +95,13 @@ describe('getSlots', () => {
 				key: 'inline',
 				sizes: [[300, 250]],
 			},
+            {
+                key: 'inline1',
+                sizes: [
+                    [300, 197],
+                    [300, 250]
+                ],
+            },
 			{
 				key: 'mostpop',
 				sizes: [[300, 250]],
@@ -117,10 +122,6 @@ describe('getSlots', () => {
 				],
 			},
 			{
-				key: 'inline1',
-				sizes: [[300, 250]],
-			},
-			{
 				key: 'top-above-nav',
 				sizes: [[300, 250]],
 			},
@@ -128,6 +129,13 @@ describe('getSlots', () => {
 				key: 'inline',
 				sizes: [[300, 250]],
 			},
+            {
+                key: 'inline1',
+                sizes: [
+                    [300, 197],
+                    [300, 250]
+                ],
+            },
 			{
 				key: 'mostpop',
 				sizes: [[300, 250]],
@@ -150,17 +158,20 @@ describe('getSlots', () => {
 				],
 			},
 			{
-				key: 'inline1',
-				sizes: [[300, 250]],
-			},
-			{
-				key: 'top-above-nav',
+                key: 'top-above-nav',
 				sizes: [[728, 90]],
 			},
 			{
-				key: 'inline',
+                key: 'inline',
 				sizes: [[300, 250]],
 			},
+            {
+                key: 'inline1',
+                sizes: [
+                    [550, 310],
+                    [620, 350]
+                ],
+            },
 			{
 				key: 'mostpop',
 				sizes: [
