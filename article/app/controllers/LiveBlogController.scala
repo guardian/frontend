@@ -109,12 +109,11 @@ class LiveBlogController(
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
           case (blog: LiveBlogPage, HtmlFormat) =>
-            val dcrCouldRender = LiveBlogController.checkIfSupported(blog)
-            val isRecent = !LiveBlogController.isNotRecent(blog)
+            val dcrCouldRender = true
             val theme = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme
             val design = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).design
             val display = blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).display
-            val isDeadBlog = LiveBlogController.isDeadBlog(blog)
+            val isDeadBlog = !blog.article.fields.isLive
             val properties =
               Map(
                 "participatingInTest" -> "false",
@@ -122,12 +121,11 @@ class LiveBlogController(
                 "theme" -> theme.toString,
                 "design" -> design.toString,
                 "display" -> display.toString,
-                "isRecent" -> isRecent.toString,
                 "isDead" -> isDeadBlog.toString,
                 "isLiveBlog" -> "true",
               )
-            val remoteRendering =
-              shouldRemoteRender(request.forceDCROff, request.forceDCR, dcrCouldRender)
+            val remoteRendering = !request.forceDCROff
+
             if (remoteRendering) {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
@@ -145,20 +143,6 @@ class LiveBlogController(
       }
 
     }
-  }
-
-  def shouldRemoteRender(
-      forceDCROff: Boolean,
-      forceDCR: Boolean,
-      dcrCouldRender: Boolean,
-  ): Boolean = {
-    // ?dcr=false, so never render DCR
-    if (forceDCROff) false
-    // ?dcr=true, so always render DCR
-    else if (forceDCR) true
-    // DCR supports this blog
-    else if (dcrCouldRender) true
-    else false
   }
 
   private[this] def getRange(lastUpdate: Option[String], page: Option[String]): BlockRange = {
@@ -182,8 +166,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]] = Map.empty,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dcrCouldRender = LiveBlogController.checkIfSupported(liveblog)
-    val remoteRender = shouldRemoteRender(request.forceDCROff, request.forceDCR, dcrCouldRender)
+    val remoteRender = !request.forceDCROff
 
     range match {
       case SinceBlockId(lastBlockId) =>
@@ -341,32 +324,5 @@ class LiveBlogController(
 
   def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
     filterKeyEvents.getOrElse(false)
-  }
-}
-
-object LiveBlogController {
-  private def isSupportedTheme(blog: PageWithStoryPackage): Boolean = {
-    blog.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat).theme match {
-      case NewsPillar      => true
-      case CulturePillar   => true
-      case LifestylePillar => true
-      case SportPillar     => true
-      case _               => false
-    }
-  }
-
-  def isDeadBlog(blog: PageWithStoryPackage): Boolean = !blog.article.fields.isLive
-
-  def isNotRecent(blog: PageWithStoryPackage): Boolean = {
-    val twoDaysAgo = new DateTime(DateTimeZone.UTC).minusDays(2)
-    blog.article.fields.lastModified.isBefore(twoDaysAgo)
-  }
-
-  def isRugby(blog: PageWithStoryPackage): Boolean = {
-    blog.article.tags.tags.exists(tag => tag.id == "sport/rugby-union")
-  }
-
-  def checkIfSupported(blog: PageWithStoryPackage): Boolean = {
-    isSupportedTheme(blog) && !isRugby(blog)
   }
 }

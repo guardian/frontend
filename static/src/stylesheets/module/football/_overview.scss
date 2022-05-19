@@ -441,6 +441,11 @@
     }
 }
 
+.football-knockout-chart--3-rounds {
+    .football-round {
+        width: 20%; // 100/5 as there will be 5 columns in the chart
+    }
+}
 .football-knockout-chart--4-rounds,
 .football-knockout-chart--5-rounds {
     .football-round {

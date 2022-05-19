@@ -22,33 +22,31 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .has-flex-wrap & {
-        .fc-item__container {
-            flex-wrap: wrap;
-            @if $media-align == right {
-                flex-direction: row-reverse;
-            } @else {
-                flex-direction: row;
-            }
+    .fc-item__container {
+        flex-wrap: wrap;
+        @if $media-align == right {
+            flex-direction: row-reverse;
+        } @else {
+            flex-direction: row;
         }
+    }
 
-        .fc-item__media-wrapper {
-            flex-basis: $media-width;
-        }
+    .fc-item__media-wrapper {
+        flex-basis: $media-width;
+    }
 
-        .fc-item__video-fallback {
-            flex-basis: $media-width;
-        }
+    .fc-item__video-fallback {
+        flex-basis: $media-width;
+    }
 
-        .fc-item__content {
-            flex-basis: (100% - $media-width);
-            // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
-            max-width: (100% - $media-width);
-        }
+    .fc-item__content {
+        flex-basis: (100% - $media-width);
+        // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
+        max-width: (100% - $media-width);
+    }
 
-        .fc-item__footer--horizontal {
-            flex-basis: 100%;
-        }
+    .fc-item__footer--horizontal {
+        flex-basis: 100%;
     }
 
     .has-no-flex-wrap & {
@@ -75,13 +73,8 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     @include mq(tablet) {
-        .has-flex & {
-            flex: 1 1 auto;
-        }
-
-        .has-flex-wrap & {
-            display: flex;
-        }
+        display: flex;
+        flex: 1 1 auto;
 
         .has-no-flex-wrap & {
             @include clearfix;
@@ -95,14 +88,12 @@ $fc-item-gutter: $gs-gutter / 4;
     box-sizing: border-box;
 
     @include mq(tablet) {
-        .has-flex-wrap & {
-            flex-direction: column;
-            display: flex;
-            flex: 1 1 auto;
-            // see: http://stackoverflow.com/a/9737602/802472
-            // width:0 fixes child elements with white-space:nowrap below flex
-            width: 0;
-        }
+        flex-direction: column;
+        display: flex;
+        flex: 1 1 auto;
+        // see: http://stackoverflow.com/a/9737602/802472
+        // width:0 fixes child elements with white-space:nowrap below flex
+        width: 0;
     }
 }
 
