@@ -6,8 +6,10 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import {
 	getLastOneOffContributionDate,
+	getPurchaseInfo,
 	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import {
 	dynamicImport,
 	ModulesVersion,
@@ -31,6 +33,13 @@ const buildHeaderLinksPayload = (): HeaderPayload => {
 			mvtId: getMvtValue() ?? 0,
 			lastOneOffContributionDate:
 				getLastOneOffContributionDate() ?? undefined,
+			// TODO: remove this once PR in support-dotcom-components is merged and released
+			// https://github.com/guardian/support-dotcom-components/pull/665
+			// eslint-disable-next-line -- see above
+			// @ts-ignore
+			// eslint-disable-next-line -- see above
+			purchaseInfo: getPurchaseInfo(),
+			isSignedIn: isUserLoggedIn(),
 		},
 	};
 };
