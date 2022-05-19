@@ -6,13 +6,15 @@ import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { breakpoints } from '../../../../lib/detect';
 import { getUrlVars } from '../../../../lib/url';
-import {toGoogleTagSize} from '../../../common/modules/commercial/lib/googletag-ad-size';
+import { toGoogleTagSize } from '../../../common/modules/commercial/lib/googletag-ad-size';
 
-const adUnit = once(() => {
+const adUnit = once((): string | undefined => {
 	const urlVars = getUrlVars();
 	return urlVars['ad-unit']
-		? `/${config.get('page.dfpAccountId')}/${urlVars['ad-unit']}`
-		: config.get('page.adUnit');
+		? `/${window.guardian.config.page.dfpAccountId}/${String(
+				urlVars['ad-unit'],
+		  )}`
+		: window.guardian.config.page.adUnit;
 });
 
 /**
@@ -25,7 +27,7 @@ const adUnit = once(() => {
  * If it has been defined, then we add that size to the size mapping.
  *
  */
-const buildSizeMapping = (sizes) => {
+const buildSizeMapping = (sizes: AdSizes): googletag.SizeMappingArray => {
 	const mapping = window.googletag.sizeMapping();
 
 	breakpoints
@@ -55,7 +57,7 @@ const getSizeOpts = (sizesByBreakpoint) => {
 			return [...acc, ...current];
 		}, []);
 
-	let sizes = [];
+	const sizes = [];
 	flattenSizeMappings.forEach((arr) => {
 		if (
 			!sizes.some(
