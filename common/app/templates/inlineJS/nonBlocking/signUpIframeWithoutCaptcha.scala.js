@@ -1,18 +1,8 @@
 @()
 
-function validateAndTrack(event) {
-    event.preventDefault();
-    const formIsValid = validateForm();
-
-    if (formIsValid) {
-        sendTrackingForFormSubmission()
-        document.querySelector('form').submit()
-    }
-}
-
 function trackFormSubmit(formElement) {
     if (!formElement) {return}
-    formElement.addEventListener('submit', validateAndTrack)
+    formElement.addEventListener('submit', sendTrackingForFormSubmission)
 }
 
 trackFormSubmit(document.querySelector('form'))
