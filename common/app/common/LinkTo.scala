@@ -98,7 +98,7 @@ class CanonicalLink {
     "index",
     "page",
     "filterKeyEvents",
-    "iframe_location",
+    "iframe_parent_component",
   )
 
   def apply(implicit request: RequestHeader, webUrl: String): String = {

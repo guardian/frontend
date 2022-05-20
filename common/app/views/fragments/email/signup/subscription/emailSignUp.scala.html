@@ -2,7 +2,7 @@
 @(  componentClass: String,
     listName:String,
     emailEmbedData: EmailEmbed,
-    iframeLocation: Option[String])(implicit request: RequestHeader)
+    iframeParentComponent: Option[String])(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import conf.switches.Switches.EmailSignupRecaptcha
@@ -36,9 +36,9 @@
 @formClass = @{ "email-sub__form" + " email-sub__form--" + componentClass }
 @headerClass = @{"email-sub__header" + " email-sub__header--" + componentClass  }
 
-@locationSuffix = @{ if (iframeLocation.nonEmpty) " " + iframeLocation.getOrElse("") else "" }
-@buttonDataComponent = @{ "email-signup-button " + componentClass + "-" + listName + locationSuffix }
-@formDataComponent = @{ "email-signup-form " + componentClass + "-" + listName + locationSuffix }
+@parentSuffix = @{ if (iframeParentComponent.nonEmpty) " " + iframeParentComponent.getOrElse("") else "" }
+@buttonDataComponent = @{ "email-signup-button " + componentClass + "-" + listName + parentSuffix }
+@formDataComponent = @{ "email-signup-form " + componentClass + "-" + listName + parentSuffix }
 
 @form = {
     <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName" data-component="@formDataComponent" data-link-name="@componentClass | @listName">

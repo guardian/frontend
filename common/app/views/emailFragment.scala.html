@@ -1,12 +1,12 @@
 @import services.newsletters.model.NewsletterResponse
-@(page: model.Page, emailType: String, emailNewsletter: NewsletterResponse, iframeLocation: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, emailType: String, emailNewsletter: NewsletterResponse, iframeParentComponent: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @emailEmbed(page) {
     @fragments.email.signup.subscription.emailSignUp(
         emailType,
         emailNewsletter.identityName,
         emailNewsletter.emailEmbed,
-        iframeLocation,
+        iframeParentComponent,
     )
 }
 
