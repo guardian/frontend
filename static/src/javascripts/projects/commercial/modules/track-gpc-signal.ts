@@ -1,9 +1,7 @@
 import { initTrackGpcSignal } from '@guardian/commercial-core';
-import { log } from '@guardian/libs';
 import { onConsent } from '@guardian/consent-management-platform';
-import type {
-	ConsentState,
-} from '@guardian/consent-management-platform/dist/types';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import { log } from '@guardian/libs';
 
 /**
  * Initialise gpc signal tracking

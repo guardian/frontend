@@ -25,8 +25,8 @@ import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercia
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
 import { init as initStickyTopBanner } from '../projects/commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
-import { init as initTrackScrollDepth } from '../projects/commercial/modules/track-scroll-depth';
 import { init as initTrackGpcSignal } from '../projects/commercial/modules/track-gpc-signal';
+import { init as initTrackScrollDepth } from '../projects/commercial/modules/track-scroll-depth';
 import { commercialFeatures } from '../projects/common/modules/commercial/commercial-features';
 import type { Modules } from './types';
 
@@ -52,7 +52,6 @@ const commercialExtraModules: Modules = [
 	['cm-ipsosmori', initIpsosMori],
 	['cm-trackScrollDepth', initTrackScrollDepth],
 	['cm-trackGpcSignal', initTrackGpcSignal],
-
 ];
 
 if (!commercialFeatures.adFree) {
