@@ -17,7 +17,7 @@ import { init as initRedplanet } from '../projects/commercial/modules/dfp/redpla
 import { init as initHighMerch } from '../projects/commercial/modules/high-merch';
 import { init as initIpsosMori } from '../projects/commercial/modules/ipsos-mori';
 import { init as initLiveblogAdverts } from '../projects/commercial/modules/liveblog-adverts';
-import { manageAdFreeCookieOnConsentChange } from '../projects/commercial/modules/maybe-remove-ad-slot';
+import { manageAdFreeCookieOnConsentChange } from '../projects/commercial/modules/manage-ad-free-cookie-on-consent-change';
 import { init as initMobileSticky } from '../projects/commercial/modules/mobile-sticky';
 import { paidContainers } from '../projects/commercial/modules/paid-containers';
 import { init as initPaidForBand } from '../projects/commercial/modules/paidfor-band';

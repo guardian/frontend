@@ -19,7 +19,7 @@ import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
-import { manageAdFreeCookieOnConsentChange } from 'commercial/modules/maybe-remove-ad-slot';
+import { manageAdFreeCookieOnConsentChange } from 'commercial/modules/manage-ad-free-cookie-on-consent-change';
 import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
