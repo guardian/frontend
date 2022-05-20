@@ -2,20 +2,16 @@
     width: 100%;
 
     @include mq(tablet) {
-        .has-flex-wrap & {
-            display: flex;
-            flex-wrap: wrap;
-        }
+        display: flex;
+        flex-wrap: wrap;
     }
 }
 
 .l-list__item {
     float: left;
 
-    .has-flex-wrap & {
-        flex-grow: 0;
-        flex-basis: 100%;
-    }
+    flex-grow: 0;
+    flex-basis: 100%;
 }
 
 // We only need this functionality for 2 & 4 column rows.
@@ -27,9 +23,7 @@
                     width: (100% / $column) * $span;
                     float: left;
 
-                    .has-flex & {
-                        flex: $span 1 auto;
-                    }
+                    flex: $span 1 auto;
                 }
             }
         }
@@ -55,9 +49,9 @@
                     padding-bottom: 0;
                 }
 
-                .has-flex-wrap & {
-                    flex-basis: (100% / $column);
-                }
+
+                flex-basis: (100% / $column);
+
             }
         }
     }
