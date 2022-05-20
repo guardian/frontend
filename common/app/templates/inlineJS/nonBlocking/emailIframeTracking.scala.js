@@ -41,7 +41,7 @@ function validateForm() {
 
 function sendTrackingForFormSubmission() {
     const submitEventData = getSubmitEvent(document.querySelector('form'))
-    sendEvent(submitEventData, 'click-event')
+    sendEvent(submitEventData, 'submit-event')
 }
 
 trackClickEvent(document.querySelector("button[type=submit]"))
