@@ -551,6 +551,12 @@
   "../lib/config.js",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
+ "../projects/commercial/modules/track-gpc-signal.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/commercial/modules/track-scroll-depth.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -747,6 +753,7 @@
   "../projects/commercial/modules/set-adtest-cookie.ts",
   "../projects/commercial/modules/sticky-top-banner.js",
   "../projects/commercial/modules/third-party-tags.ts",
+  "../projects/commercial/modules/track-gpc-signal.ts",
   "../projects/commercial/modules/track-scroll-depth.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-features.ts",
