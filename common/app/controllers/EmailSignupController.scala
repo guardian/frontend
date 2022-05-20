@@ -194,7 +194,6 @@ class EmailSignupController(
     csrfAddToken {
       Action { implicit request =>
         val identityNewsletter = emailEmbedAgent.getNewsletterById(listId)
-        val iframeLocation = request.getQueryString("iframe_location")
 
         identityNewsletter match {
           case Right(Some(newsletter)) =>
@@ -204,7 +203,6 @@ class EmailSignupController(
                   emailLandingPage,
                   emailType,
                   newsletter,
-                  iframeLocation,
                 ),
               ),
             )
@@ -230,7 +228,6 @@ class EmailSignupController(
     csrfAddToken {
       Action { implicit request =>
         val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
-        val iframeLocation = request.getQueryString("iframe_location")
         identityNewsletter match {
           case Right(Some(newsletter)) =>
             Cached(1.hour)(
@@ -239,7 +236,6 @@ class EmailSignupController(
                   emailLandingPage,
                   emailType,
                   newsletter,
-                  iframeLocation,
                 ),
               ),
             )
