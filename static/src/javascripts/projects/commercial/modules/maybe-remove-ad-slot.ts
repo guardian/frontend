@@ -1,6 +1,10 @@
 import { onConsentChange } from '@guardian/consent-management-platform';
 import { once } from 'lodash-es';
-import { isDigitalSubscriber } from 'common/modules/commercial/user-features';
+import {
+	AD_FREE_COOKIE_REASON_LS,
+	AD_FREE_COOKIE_REASON_USER_OPT_OUT_LS,
+	isDigitalSubscriber,
+} from 'common/modules/commercial/user-features';
 import { setAdFreeCookie, unsetAdFreeCookie } from 'lib/set-ad-free-cookie';
 import { removeSlots } from './remove-slots';
 
@@ -14,9 +18,14 @@ const manageAdFreeCookieOnConsentChange = once((): Promise<void> => {
 		if (consent.tcfv2 && !isDigitalSubscriber()) {
 			if (!consent.canTarget) {
 				setAdFreeCookie();
+				localStorage.setItem(
+					AD_FREE_COOKIE_REASON_LS,
+					AD_FREE_COOKIE_REASON_USER_OPT_OUT_LS,
+				);
 				void removeSlots();
 			} else {
 				unsetAdFreeCookie();
+				localStorage.removeItem(AD_FREE_COOKIE_REASON_LS);
 			}
 		}
 	});

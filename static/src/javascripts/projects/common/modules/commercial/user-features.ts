@@ -39,6 +39,9 @@ const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
 	daysToLive: 90,
 };
 
+const AD_FREE_COOKIE_REASON_LS = 'gu.ad_free_cookie_reason';
+const AD_FREE_COOKIE_REASON_USER_OPT_OUT_LS = 'user_opt_out';
+
 // TODO: isn’t this duplicated from commercial features?
 // https://github.com/guardian/frontend/blob/2a222cfb77748aa1140e19adca10bfc688fe6cad/static/src/javascripts/projects/common/modules/commercial/commercial-features.ts
 const forcedAdFreeMode = !!/[#&]noadsaf(&.*)?$/.exec(window.location.hash);
@@ -131,7 +134,9 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 	if (
 		adFreeDataIsPresent() &&
 		!forcedAdFreeMode &&
-		!JsonResponse.contentAccess.digitalPack
+		!JsonResponse.contentAccess.digitalPack &&
+		localStorage.getItem(AD_FREE_COOKIE_REASON_LS) !=
+			AD_FREE_COOKIE_REASON_USER_OPT_OUT_LS
 	) {
 		removeCookie({ name: AD_FREE_USER_COOKIE });
 	}
@@ -415,4 +420,6 @@ export {
 	ARTICLES_VIEWED_OPT_OUT_COOKIE,
 	CONTRIBUTIONS_REMINDER_SIGNED_UP,
 	canShowContributionsReminderFeature,
+	AD_FREE_COOKIE_REASON_LS,
+	AD_FREE_COOKIE_REASON_USER_OPT_OUT_LS
 };
