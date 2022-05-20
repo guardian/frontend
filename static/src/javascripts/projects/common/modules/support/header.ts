@@ -62,7 +62,7 @@ export const fetchAndRenderHeaderLinks = async (): Promise<void> => {
 			return;
 		}
 		const { module } = response.data;
-		const Header = await dynamicImport(module.url, 'Header');
+		const Header = await dynamicImport(module.url, module.name);
 
 		const el = document.createElement('div');
 		const container = document.querySelector('.new-header__cta-bar');
