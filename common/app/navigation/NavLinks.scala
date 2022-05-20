@@ -267,6 +267,7 @@ private object NavLinks {
       science,
       tech,
       globalDevelopment,
+      obituaries,
     ),
   )
   val auNewsPillar = ukNewsPillar.copy(
