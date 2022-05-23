@@ -1,10 +1,11 @@
 package views.support.cleaner
 import conf.Configuration
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import views.support.AffiliateLinksCleaner._
 
-class AffiliateLinksCleanerTest extends FlatSpec with Matchers {
+class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
 
   "linkToSkimLink" should "correctly convert a link to a skimlink" in {
     val link = "https://www.piratendating.nl/"

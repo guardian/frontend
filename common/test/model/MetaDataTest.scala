@@ -1,14 +1,15 @@
 package model
 
-import java.time.{OffsetDateTime, ZoneOffset}
-import com.gu.contentapi.client.model.v1.{CapiDateTime, ContentFields, TagType, Content => ApiContent, Tag => ApiTag}
+import java.time.ZoneOffset
+import com.gu.contentapi.client.model.v1.{ContentFields, TagType, Content => ApiContent, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import implicits.Dates.jodaToJavaInstant
-import org.scalatest.{FlatSpec, Matchers}
 import org.joda.time.DateTime
 import common.Chronos
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class MetaDataTest extends FlatSpec with Matchers {
+class MetaDataTest extends AnyFlatSpec with Matchers {
 
   def testMetaData(id: String, section: String): MetaData = {
     MetaData.make(id, section = Some(SectionId.fromId(section)), webTitle = "t")

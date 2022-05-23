@@ -1,14 +1,15 @@
 package test
 
 import java.io.File
-
 import concurrent.BlockingOperations
 import controllers.front.FrontJsonFapiLive
 import model.{PressedPage, PressedPageType}
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
+import org.scalatestplus.play.PortNumber
 import play.api.libs.json.Json
 import recorder.HttpRecorder
+import utils.FaciaPickerTest
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
@@ -60,7 +61,6 @@ class FaciaTestSuite
       new layout.slices.StoryTest,
       new FaciaControllerTest,
       new metadata.FaciaMetaDataTest,
+      new FaciaPickerTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19009
-}
+    with SingleServerSuite {}

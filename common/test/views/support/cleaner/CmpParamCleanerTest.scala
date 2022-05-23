@@ -2,9 +2,10 @@ package views.support.cleaner
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class CmpParamCleanerTest extends FlatSpec with Matchers {
+class CmpParamCleanerTest extends AnyFlatSpec with Matchers {
 
   "CmpParamCleaner" should "attach an element-pass-cmp class to formstack iframes" in {
     val doc =

@@ -1,14 +1,14 @@
 package model
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
 import play.api.mvc.AnyContentAsEmpty
 import play.api.mvc.Results.NoContent
 import play.api.test.{FakeHeaders, FakeRequest}
 import play.api.test.Helpers._
 import model.Cors.isWhitelisted
-import org.scalacheck.Prop.True
+import org.scalatest.flatspec.AnyFlatSpec
 
-class CorsTest extends FlatSpec with Matchers {
+class CorsTest extends AnyFlatSpec with Matchers {
   "Cors Helper" should "not provide Cors response headers for unsupported origins" in {
     // This test is here to show that we really do accept any origin outside of the whitelist. We should change this policy.
     val fakeHeaders = FakeHeaders(List("Origin" -> "unknown.origin.com"))

@@ -1,9 +1,10 @@
 package utils
 
-import org.scalatest.{FunSuite, Matchers}
 import ThirdPartyConditions._
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ThirdPartyConditionsTest extends FunSuite with Matchers {
+class ThirdPartyConditionsTest extends AnyFunSuite with Matchers {
 
   test("validation of group code returns Some for a valid group code") {
     val thirdPartyConditions = List("GRS")

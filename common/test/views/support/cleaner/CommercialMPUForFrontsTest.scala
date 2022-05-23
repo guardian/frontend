@@ -1,11 +1,12 @@
 package views.support.cleaner
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
 import StringCleaner._
+import org.scalatest.flatspec.AnyFlatSpec
 import play.api.test.FakeRequest
 import views.support.CommercialMPUForFronts
 
-class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
+class CommercialMPUForFrontsTest extends AnyFlatSpec with Matchers {
 
   def getFileContent(filePath: String): String = {
     val source = scala.io.Source.fromInputStream(getClass.getResourceAsStream(filePath))

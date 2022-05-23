@@ -255,9 +255,10 @@ private object NavLinks {
     List(
       ukNews,
       world,
-      coronavirus,
       climateCrisis,
+      newsletters,
       football,
+      coronavirus,
       ukBusiness,
       ukEnvironment,
       politics,

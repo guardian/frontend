@@ -50,7 +50,7 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 	eventTimer.trigger(`${stripDfpAdPrefixFrom(advert.id)}-blockedByConfiant`);
 
 	setForceSendMetrics(true);
-	switchOffSampling();
+	void switchOffSampling();
 
 	advert.slot.setTargeting('confiant', String(blockingType));
 

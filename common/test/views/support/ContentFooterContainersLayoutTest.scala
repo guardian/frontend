@@ -3,10 +3,11 @@ package views.support
 import com.gu.contentapi.client.model.v1.{ContentFields, TagType}
 import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
 import model.{RelatedContent, RelatedContentItem}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.twirl.api.Html
 
-class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
+class ContentFooterContainersLayoutTest extends AnyFlatSpec with Matchers {
 
   private def contentItem(
       showInRelatedContent: Boolean = true,

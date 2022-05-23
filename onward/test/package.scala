@@ -1,7 +1,7 @@
 package test
 
-import controllers._
 import org.scalatest.Suites
+import org.scalatestplus.play.PortNumber
 
 class OnwardTestSuite
     extends Suites(
@@ -18,6 +18,4 @@ class OnwardTestSuite
       new RichLinkControllerTest,
       new NavigationControllerTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19011
-}
+    with SingleServerSuite {}

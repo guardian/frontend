@@ -13,10 +13,11 @@ import com.gu.contentapi.client.model.v1.{
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import contentapi.FixtureTemplates
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class ElementsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class ElementsTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "Elements" should "find the biggest crop of the main picture" in {
 

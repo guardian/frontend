@@ -19,9 +19,7 @@ jest.mock('../../dfp/get-advert-by-id', () => ({
 }));
 
 jest.mock('../../../../common/modules/experiments/ab', () => ({
-	isInVariantSynchronous: jest.fn(
-		(_testId, variantId) => variantId === 'variant',
-	),
+	isInVariantSynchronous: jest.fn(),
 }));
 
 const resetPrebid = () => {
@@ -33,6 +31,7 @@ const resetPrebid = () => {
 describe('initialise', () => {
 	beforeEach(() => {
 		resetPrebid();
+		config.set('switches.commercial', true);
 		config.set('switches.consentManagement', true);
 		config.set('switches.prebidUserSync', true);
 		config.set('switches.prebidAppNexus', true);

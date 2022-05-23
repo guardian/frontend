@@ -104,6 +104,10 @@ Engineer: Oliver Lloyd
 From: London, UK
 Location: London, UK
 
+Engineer: Oliver Namey
+Location: London, UK
+Github: OllysCoding
+
 Engineer: Ashleigh (Ash) Carr
 Location: Brighton, UK
 Github: AshCorr
@@ -147,6 +151,14 @@ Location: London, UK
 Developer: Simon Byford
 From: Ipswich, UK
 Location: London, UK
+
+Engineer: Pete Faulconbridge
+From: Nottinghamshire, UK
+Location: Nottinghamshire, UK
+
+Developer: Jake Lee Kennedy
+GitHub: Jakeii
+From: London, UK
 
 /* ---------------------------------------------------- */
 /* FORMER                                               */

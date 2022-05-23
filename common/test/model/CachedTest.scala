@@ -1,18 +1,17 @@
 package model
 
 import java.time.ZoneOffset
-
 import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import conf.switches.Switches.LongCacheSwitch
-import implicits.Dates.jodaToJavaInstant
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import org.joda.time.DateTime
 import com.github.nscala_time.time.Imports._
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.mvc.Results
 
-class CachedTest extends FlatSpec with Matchers with Results with implicits.Dates {
+class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.Dates {
 
   "Cached" should "cache live content for 5 seconds" in {
     LongCacheSwitch.switchOff()

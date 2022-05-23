@@ -1,23 +1,24 @@
 package model
 
-import java.time.{OffsetDateTime, ZoneOffset}
-
+import java.time.ZoneOffset
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import model.content.MediaAtom
 import org.joda.time.DateTime
-import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
-import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
+import org.scalatest.BeforeAndAfter
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.support.JavaScriptPage
 import common.Edition
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.JsBoolean
 import play.api.test.FakeRequest
 import play.api.test.Helpers.GET
 
 class ContentTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with GuiceOneAppPerSuite
     with implicits.Dates

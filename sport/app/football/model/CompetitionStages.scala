@@ -182,6 +182,23 @@ object KnockoutSpider {
       ZonedDateTime.of(2021, 7, 7, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 50
       ZonedDateTime.of(2021, 7, 11, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final         // Match 51
     ),
+    // Womens Euro 2022
+    "423" -> List(
+      // Group C Winner & Group D Runner up
+      ZonedDateTime.of(2022, 7, 22, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 3  // 4287727
+      // Group A Winner & Group B Runner Up
+      ZonedDateTime.of(2022, 7, 20, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 1  // 4287725
+      // Group D Winner & Group C Runner up
+      ZonedDateTime.of(2022, 7, 23, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 4  // 4287728
+      // Group B Winner & Group A Runner Up
+      ZonedDateTime.of(2022, 7, 21, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 2  // 4287726
+      // QF Winners 3 & 1
+      ZonedDateTime.of(2022, 7, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 1     // 4287730
+      // QF Winners 4 & 2
+      ZonedDateTime.of(2022, 7, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 2     // 4287731
+      // SM Winners 1 & 2
+      ZonedDateTime.of(2022, 7, 31, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final            // 4287732
+    ),
   )
 
   // adds a little flex around the match dates in case they aren't listed at exactly the right time

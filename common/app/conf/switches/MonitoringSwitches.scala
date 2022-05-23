@@ -35,16 +35,6 @@ trait MonitoringSwitches {
     exposeClientSide = true,
   )
 
-  val ScrollDepthSwitch = Switch(
-    SwitchGroup.Monitoring,
-    "scroll-depth",
-    "Enables tracking and measurement of scroll depth",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    never,
-    exposeClientSide = true,
-  )
-
   val ThirdPartyEmbedTracking = Switch(
     SwitchGroup.Monitoring,
     "third-party-embed-tracking",

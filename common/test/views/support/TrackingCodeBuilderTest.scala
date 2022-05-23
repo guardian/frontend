@@ -13,11 +13,13 @@ import layout.{
   PaidCard,
 }
 import model.pressed
-import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.matchers.should.Matchers
 import play.api.test.FakeRequest
 import views.support.Commercial.TrackingCodeBuilder
 
-class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfterEach {
+class TrackingCodeBuilderTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
 
   private def mkBranding(sponsorName: String) =
     Branding(

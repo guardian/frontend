@@ -1,12 +1,14 @@
 // ROWS
 @mixin layout-row($class, $detect: false) {
     @if ($detect) {
-        .has-flex {
-            @include flex-row($class);
-        }
+
+        @include flex-row($class);
+
+
         .has-no-flex {
             @include no-flex-row($class);
         }
+
     } @else {
         @if ($browser-supports-flexbox) {
             @include flex-row($class);

@@ -1,11 +1,11 @@
 package services
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
-import test.{ConfiguredTestSuite, TestRequest}
-import implicits.HtmlFormat
-import play.api.test.Helpers._
+import org.scalatest.DoNotDiscover
+import test.TestRequest
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-@DoNotDiscover class InteractivePickerTest extends FlatSpec with Matchers {
+@DoNotDiscover class InteractivePickerTest extends AnyFlatSpec with Matchers {
   val path = "/lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
   object MockPressedInteractives {
     private[this] val interactives = Set[String](path)

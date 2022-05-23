@@ -1,13 +1,14 @@
 package test
 
 import controllers.LiveBlogController
-import experiments.{ActiveExperiments}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 
 @DoNotDiscover class LiveBlogControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
@@ -171,52 +172,25 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
   it should "use dcr if no dcr param is passed" in {
     val forceDCROff = false
-    val forceDCR = false
-    val dcrCanRender = true
 
-    val shouldRemoteRender =
-      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, dcrCanRender)
+    val shouldRemoteRender = !forceDCROff
+
     shouldRemoteRender should be(true)
   }
 
   it should "use DCR if the parameter dcr=true is passed" in {
     val forceDCROff = false
-    val forceDCR = true
-    val dcrCanRender = true
 
-    val shouldRemoteRender =
-      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, dcrCanRender)
+    val shouldRemoteRender = !forceDCROff
     shouldRemoteRender should be(true)
   }
 
   it should "use frontend if the parameter dcr=false is passed" in {
     val forceDCROff = true
-    val forceDCR = false
-    val dcrCanRender = true
 
-    val shouldRemoteRender =
-      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, dcrCanRender)
+    val shouldRemoteRender = !forceDCROff
+
     shouldRemoteRender should be(false)
-  }
-
-  it should "use frontend if DCR cant render" in {
-    val forceDCROff = false
-    val forceDCR = false
-    val dcrCanRender = false
-
-    val shouldRemoteRender =
-      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, dcrCanRender)
-    shouldRemoteRender should be(false)
-  }
-
-  it should "use DCR if dcrCanRender is false and dcr=true" in {
-    val forceDCROff = false
-    val forceDCR = true
-    val dcrCanRender = false
-
-    val shouldRemoteRender =
-      liveBlogController.shouldRemoteRender(forceDCROff, forceDCR, dcrCanRender)
-    shouldRemoteRender should be(true)
   }
 
   it should "filter when the filter parameter is true" in {

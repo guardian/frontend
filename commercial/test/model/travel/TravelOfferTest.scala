@@ -2,11 +2,12 @@ package commercial.model.merchandise.travel
 
 import commercial.model.merchandise.TravelOffer
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.xml.Elem
 
-class TravelOfferTest extends FlatSpec with Matchers {
+class TravelOfferTest extends AnyFlatSpec with Matchers {
 
   private val xml: Elem =
     <product vibeid="a08878776d1429a5109064d64b5fda05"

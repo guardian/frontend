@@ -1,24 +1,21 @@
 import { adSizes } from '@guardian/commercial-core';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { spacefinderOkrMegaTest } from 'common/modules/experiments/tests/spacefinder-okr-mega-test';
 import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import type {
+	SpacefinderItem,
 	SpacefinderRules,
 	SpacefinderWriter,
-} from '../../common/modules/article/space-filler';
-import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+} from '../../common/modules/spacefinder';
 import type { SizeMappings } from '../modules/dfp/create-slot';
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
 import { createAdSlot } from './dfp/create-slot';
 import { trackAdRender } from './dfp/track-ad-render';
-import { filterNearbyCandidatesBroken } from './filter-nearby-candidates-broken';
-import { filterNearbyCandidatesFixed } from './filter-nearby-candidates-fixed';
 
 const sfdebug = getUrlVars().sfdebug;
 
@@ -35,17 +32,30 @@ const insertAdAtPara = (
 	type: string,
 	classes?: string,
 	sizes?: SizeMappings,
+	includeContainer?: boolean,
 ): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
-		classes,
+		classes: includeContainer ? '' : classes,
 		sizes,
 	});
+
+	let node: HTMLElement;
+
+	if (includeContainer) {
+		const container = document.createElement('div');
+		container.className = `ad-slot-container ad-slot--offset-right`;
+		container.appendChild(ad);
+
+		node = container;
+	} else {
+		node = ad;
+	}
 
 	return fastdom
 		.mutate(() => {
 			if (para.parentNode) {
-				para.parentNode.insertBefore(ad, para);
+				para.parentNode.insertBefore(node, para);
 			}
 		})
 		.then(() => {
@@ -54,38 +64,35 @@ const insertAdAtPara = (
 		});
 };
 
-const enableNearbyFilteringFix = () =>
-	!isInVariantSynchronous(spacefinderOkrMegaTest, 'control');
+// this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
+const filterNearbyCandidates =
+	(maximumAdHeight: number) =>
+	(candidate: SpacefinderItem, lastWinner?: SpacefinderItem): boolean => {
+		// No previous winner
+		if (lastWinner === undefined) return true;
 
-const enableRichLinksFix = !isInVariantSynchronous(
-	spacefinderOkrMegaTest,
-	'control',
-);
+		return (
+			Math.abs(candidate.top - lastWinner.top) - maximumAdHeight >=
+			adSlotClassSelectorSizes.minBelow
+		);
+	};
 
-const filterNearbyCandidates = enableNearbyFilteringFix()
-	? filterNearbyCandidatesFixed
-	: filterNearbyCandidatesBroken;
-
-const isDotcomRendering = config.get<boolean>('isDotcomRendering', false);
-const articleBodySelector = isDotcomRendering
-	? '.article-body-commercial-selector'
-	: '.js-article__body';
+const articleBodySelector = '.article-body-commercial-selector';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const tweakpoint = getTweakpoint(getViewport().width);
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
-	const ignoreList =
-		enableRichLinksFix && hasLeftCol
-			? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
-			: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+	const ignoreList = hasLeftCol
+		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
+		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
 
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: isImmersive ? 700 : 300,
-		minBelow: isDotcomRendering ? 300 : 700,
+		minBelow: 300,
 		selectors: {
 			' > h2': {
 				minAbove: 5,
@@ -113,7 +120,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: isPaidContent ? 1600 : 1000,
-		minBelow: isDotcomRendering ? 300 : 800,
+		minBelow: 300,
 		selectors: {
 			' .ad-slot': adSlotClassSelectorSizes,
 			' [data-spacefinder-role="immersive"]': {
@@ -131,6 +138,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 			.slice(0, isInline1 ? 1 : paras.length)
 			.map((para, i) => {
 				const inlineId = i + (isInline1 ? 1 : 2);
+				const includeContainer = !isInline1;
 
 				if (sfdebug) {
 					para.style.cssText += 'border: thick solid green;';
@@ -153,6 +161,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 								],
 						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
+					includeContainer,
 				);
 			});
 		await Promise.all(slots);

@@ -68,6 +68,8 @@ const tcfv2WithConsentMock = (callback: Callback) =>
 			...defaultTCFv2State,
 			vendorConsents: { '5f92a62aa22863685f4daa4c': true },
 		},
+		canTarget: true,
+		framework: 'tcfv2',
 	});
 
 const tcfv2WithoutConsentMock = (callback: Callback) =>
@@ -76,21 +78,43 @@ const tcfv2WithoutConsentMock = (callback: Callback) =>
 			...defaultTCFv2State,
 			vendorConsents: { '5f92a62aa22863685f4daa4c': false },
 		},
+		canTarget: false,
+		framework: 'tcfv2',
 	});
 
 const ccpaWithConsentMock = (callback: Callback) =>
-	callback({ ccpa: { doNotSell: false } });
+	callback({
+		ccpa: { doNotSell: false },
+		canTarget: true,
+		framework: 'ccpa',
+	});
 
 const ccpaWithoutConsentMock = (callback: Callback) =>
-	callback({ ccpa: { doNotSell: true } });
+	callback({
+		ccpa: { doNotSell: true },
+		canTarget: false,
+		framework: 'ccpa',
+	});
 
 const ausWithConsentMock = (callback: Callback) =>
-	callback({ aus: { personalisedAdvertising: true } });
+	callback({
+		aus: { personalisedAdvertising: true },
+		canTarget: true,
+		framework: 'aus',
+	});
 
 const ausWithoutConsentMock = (callback: Callback) =>
-	callback({ aus: { personalisedAdvertising: false } });
+	callback({
+		aus: { personalisedAdvertising: false },
+		canTarget: false,
+		framework: 'aus',
+	});
 
-const invalidWithoutConsentMock = (callback: Callback) => callback({});
+const invalidWithoutConsentMock = (callback: Callback) =>
+	callback({
+		canTarget: false,
+		framework: null,
+	});
 
 const originalUA = navigator.userAgent;
 const fakeUserAgent = (userAgent?: string) => {

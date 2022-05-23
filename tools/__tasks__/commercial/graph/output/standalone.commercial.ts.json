@@ -58,6 +58,7 @@
  ],
  "../projects/commercial/commercial-metrics.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
  ],
  "../projects/commercial/initial-consent-state.ts": [
@@ -97,21 +98,18 @@
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
-  "../projects/commercial/modules/filter-nearby-candidates-broken.ts",
-  "../projects/commercial/modules/filter-nearby-candidates-fixed.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
+  "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
-  "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -181,9 +179,7 @@
   "../lib/partition.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts",
-  "../projects/commercial/modules/dfp/load-advert.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts"
+  "../projects/commercial/modules/dfp/load-advert.ts"
  ],
  "../projects/commercial/modules/dfp/empty-advert.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
@@ -212,10 +208,7 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/load-advert.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
-  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts"
+  "../projects/commercial/modules/dfp/load-advert.ts"
  ],
  "../projects/commercial/modules/dfp/load-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -250,12 +243,12 @@
   "../projects/commercial/modules/dfp/non-refreshable-line-items.ts",
   "../projects/commercial/modules/dfp/should-refresh.ts"
  ],
- "../projects/commercial/modules/dfp/prepare-a9.js": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.js",
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../../../../node_modules/lodash-es/lodash.js",
+ "../projects/commercial/modules/dfp/prepare-a9.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/a9-apstag.js",
-  "../lib/config.js",
+  "../lib/config.d.ts",
   "../lib/detect-google-proxy.ts",
   "../projects/commercial/initial-consent-state.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -360,8 +353,6 @@
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts"
  ],
- "../projects/commercial/modules/filter-nearby-candidates-broken.ts": [],
- "../projects/commercial/modules/filter-nearby-candidates-fixed.ts": [],
  "../projects/commercial/modules/header-bidding/a9/a9.ts": [
   "../lib/config.d.ts",
   "../lib/noop.ts",
@@ -399,9 +390,13 @@
   "../projects/commercial/modules/header-bidding/slot-config.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
-  "../projects/common/modules/commercial/enhanced-consent.ts"
+  "../projects/common/modules/commercial/enhanced-consent.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts"
  ],
- "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [],
+ "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
+ ],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
  "../projects/commercial/modules/header-bidding/slot-config.ts": [
   "../lib/config.d.ts",
@@ -436,8 +431,7 @@
   "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
+  "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/messenger.ts": [
   "../lib/report-error.js",
@@ -471,7 +465,9 @@
   "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/messenger/passback.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/messenger.ts"
  ],
@@ -559,6 +555,9 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/common/modules/commercial/enhanced-consent.ts"
  ],
+ "../projects/commercial/sentinel.ts": [
+  "../lib/config.d.ts"
+ ],
  "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
@@ -571,13 +570,11 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
-  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
+  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
-  "../projects/common/modules/spacefinder.js"
+  "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/commercial/build-page-targeting.ts": [
@@ -599,6 +596,7 @@
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/common/modules/commercial/commercial-features.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../projects/common/modules/commercial/user-features.ts",
@@ -656,12 +654,10 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts",
-  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts",
+  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
-  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts"
+  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -684,21 +680,13 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
- "../projects/common/modules/experiments/tests/commercial-gpt-lazy-load.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
- "../projects/common/modules/experiments/tests/commercial-lazy-load-margin.ts": [
+ "../projects/common/modules/experiments/tests/prebid-price-granularity.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
- "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
  "../projects/common/modules/identity/api.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
@@ -712,22 +700,11 @@
   "../lib/url.ts"
  ],
  "../projects/common/modules/mark-candidates.js": [],
- "../projects/common/modules/on-images-loaded-broken.js": [
-  "../../../../node_modules/bean/bean.js",
-  "../../../../node_modules/lodash-es/lodash.js"
- ],
- "../projects/common/modules/on-images-loaded-fixed.js": [
-  "../../../../node_modules/lodash-es/lodash.js"
- ],
- "../projects/common/modules/spacefinder.js": [
-  "../../../../node_modules/lodash-es/lodash.js",
+ "../projects/common/modules/spacefinder.ts": [
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/spacefinder-okr-mega-test.ts",
-  "../projects/common/modules/mark-candidates.js",
-  "../projects/common/modules/on-images-loaded-broken.js",
-  "../projects/common/modules/on-images-loaded-fixed.js"
+  "../projects/commercial/sentinel.ts",
+  "../projects/common/modules/mark-candidates.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
@@ -754,7 +731,7 @@
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
-  "../projects/commercial/modules/dfp/prepare-a9.js",
+  "../projects/commercial/modules/dfp/prepare-a9.ts",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
   "../projects/commercial/modules/dfp/prepare-permutive.js",
   "../projects/commercial/modules/dfp/prepare-prebid.ts",

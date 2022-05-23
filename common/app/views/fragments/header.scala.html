@@ -5,7 +5,7 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupporterCTA}
-@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch, AnniversaryLogoHeader}
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -18,31 +18,26 @@
         role="navigation"
             aria-label="Guardian sections">
 
-            <a href="@LinkTo {/}"
-            class="@{if(AnniversaryLogoHeader.isSwitchedOn) {"new-header__logo news-header__logo-anniversary"} else {
-              "new-header__logo"
-            }}"
-            data-link-name="nav2 : logo">
+            @defining(Edition(request).id.toLowerCase()) { editionId =>
+                <a href="@LinkTo {/}"
+                class="@{if(editionId == "uk") {"new-header__logo news-header__logo-best-website"} else {
+                  "new-header__logo"
+                }}"
+                data-link-name="nav2 : logo">
 
-                <span class="u-h">The Guardian - Back to home</span>
+                    <span class="u-h">The Guardian - Back to home</span>
 
-                @defining(Edition(request).id.toLowerCase()) { editionId =>
                     @{
                         if(page.metadata.hasSlimHeader) {
                             fragments.inlineSvg("the-guardian-roundel", "logo")
-                        } else if(page.metadata.isFront && editionId == "uk" && AnniversaryLogoHeader.isSwitchedOn) {
-                            fragments.inlineSvg("guardian-anniversary-logo-uk", "logo")
-                        } else if(editionId == "uk" && AnniversaryLogoHeader.isSwitchedOn) {
-                            fragments.inlineSvg("guardian-anniversary-logo-uk", "logo")
-                        } else if(AnniversaryLogoHeader.isSwitchedOn) {
-                            fragments.inlineSvg("guardian-anniversary-logo", "logo")
-                        }else {
+                        } else if(editionId == "uk") {
+                            fragments.inlineSvg("guardian-best-website-logo", "logo")
+                        } else {
                             fragments.inlineSvg("the-guardian-logo", "logo")
                         }
                     }
-                }
-            </a>
-
+                </a>
+            }
             <div class="new-header__cta-bar" ></div>
 
             <div class="new-header__top-bar hide-until-mobile">
@@ -51,9 +46,9 @@
                 <div class="top-bar__commercial-items js-supporter-cta is-hidden">
                     <span class="top-bar__item__seperator hide-until-desktop"></span>
                     <a class="top-bar__item hide-until-desktop"
-                       data-link-name="nav2 : supporter-cta"
-                       data-edition="@{editionId}"
-                       href="@getReaderRevenueUrl(SupporterCTA, Header)">
+                        data-link-name="nav2 : supporter-cta"
+                        data-edition="@{editionId}"
+                        href="@getReaderRevenueUrl(SupporterCTA, Header)">
                         Subscriptions
                     </a>
                 </div>

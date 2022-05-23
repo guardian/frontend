@@ -4,14 +4,16 @@ import com.gu.contentapi.client.model.v1.{TagType, Tag => ApiTag}
 import model.{TagDefinition, TagIndex}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.DoNotDiscover
 import play.api.libs.iteratee.Enumerator
 import test.WithTestExecutionContext
 
 import scala.language.postfixOps
 import scala.concurrent.duration._
 
-@DoNotDiscover class TagPagesTest extends FlatSpec with Matchers with WithTestExecutionContext with ScalaFutures {
+@DoNotDiscover class TagPagesTest extends AnyFlatSpec with Matchers with WithTestExecutionContext with ScalaFutures {
 
   val tagPages = new TagPages
 

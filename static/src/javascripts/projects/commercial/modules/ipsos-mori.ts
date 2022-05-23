@@ -4,13 +4,13 @@ import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
-const loadIpsosScript = () => {
+const loadIpsosScript = (locale: 'au' | 'uk') => {
 	stub();
 
 	const ipsosTag = config.get<string>('page.ipsosTag');
 	if (ipsosTag === undefined) throw Error('Ipsos tag undefined');
 
-	const ipsosSource = `https://uk-script.dotmetrics.net/door.js?d=${document.location.host}&t=${ipsosTag}`;
+	const ipsosSource = `https://${locale}-script.dotmetrics.net/door.js?d=${document.location.host}&t=${ipsosTag}`;
 
 	return loadScript(ipsosSource, {
 		id: 'ipsos',
@@ -21,25 +21,28 @@ const loadIpsosScript = () => {
 
 /**
  * Initialise Ipsos Mori - market research partner
- * documentation on DCR: https://git.io/J9c6g
+ * documentation on DCR: [link](https://github.com/guardian/dotcom-rendering/blob/150fc2d81e6a66d9c3336185e874fc8cd0288546/dotcom-rendering/docs/architecture/3rd%20party%20technical%20review/002-ipsos-mori.md)
  * @returns Promise
  */
-export const init = (): Promise<void> =>
-	getLocale()
+export const init = (): Promise<void> => {
+	return getLocale()
 		.then((locale) => {
-			if (locale === 'GB') {
+			if (locale === 'GB' || locale === 'AU') {
 				return getInitialConsentState();
 			} else {
-				throw Error('Skipping ipsos outside of GB');
+				throw Error('Skipping ipsos process outside GB or AU');
 			}
 		})
 		.then((state) => {
-			if (getConsentFor('ipsos', state)) {
-				void loadIpsosScript();
+			if (state.aus) {
+				void loadIpsosScript('au');
+			} else if (getConsentFor('ipsos', state)) {
+				void loadIpsosScript('uk');
 			} else {
-				throw Error('No consent for ipsos');
+				throw Error('No consent for ipsos in GB');
 			}
 		})
 		.catch((e) => {
 			log('commercial', '⚠️ Failed to execute ipsos', e);
 		});
+};

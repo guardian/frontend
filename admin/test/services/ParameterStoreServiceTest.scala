@@ -2,12 +2,13 @@ package services
 
 import akka.actor.ActorSystem
 import concurrent.BlockingOperations
-import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 
-class ParameterStoreServiceTest extends FlatSpec with ScalaFutures with Matchers with MockitoSugar {
+class ParameterStoreServiceTest extends AnyFlatSpec with ScalaFutures with Matchers with MockitoSugar {
 
   "findParameterBySubstring" should "retrieve a parameter from the parameter store by substring" in {
     val actorSystem = ActorSystem()

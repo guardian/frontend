@@ -1,12 +1,14 @@
 package test
 
 import controllers.TopStoriesController
+import org.scalatest.flatspec.AnyFlatSpec
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatest.matchers.should.Matchers
 
 @DoNotDiscover class TopStoriesControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

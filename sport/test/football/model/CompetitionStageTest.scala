@@ -3,12 +3,15 @@ package football.model
 import org.scalatest._
 import pa.{Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
+
 import java.time.ZonedDateTime
 import implicits.Collections
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 import test._
 
 @DoNotDiscover class CompetitionStageTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with OptionValues
     with CompetitionTestData

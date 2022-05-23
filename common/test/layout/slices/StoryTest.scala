@@ -1,14 +1,16 @@
 package layout.slices
 
-import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import ArbitraryStories._
+import layout.slices.ArbitraryStories.arbitraryStories
+import org.scalatest.DoNotDiscover
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class StoryTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
-    with GeneratorDrivenPropertyChecks
+    with ScalaCheckDrivenPropertyChecks
     with ConfiguredTestSuite {
   "segmentByGroup" should "preserve order" in {
     forAll { stories: Seq[Story] =>

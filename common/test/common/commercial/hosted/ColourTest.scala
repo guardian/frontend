@@ -1,12 +1,13 @@
 package common.commercial.hosted
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 /*
  * For colours, see http://www.colorhexa.com/<hexcode>
  * eg. http://www.colorhexa.com/2ec869
  */
-class ColourTest extends FlatSpec with Matchers {
+class ColourTest extends AnyFlatSpec with Matchers {
 
   "isDark" should "be true for Zootropolis green" in {
     val zootropolisColour = Colour("#2ec869")

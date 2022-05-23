@@ -2,12 +2,14 @@ package test
 
 import contentapi.SectionsLookUp
 import controllers.IndexController
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 
 @DoNotDiscover class IndexControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with BeforeAndAfterAll
     with ConfiguredTestSuite

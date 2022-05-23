@@ -2,7 +2,9 @@ package controllers
 
 import akka.stream.Materializer
 import football.controllers.ResultsController
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -11,7 +13,7 @@ import test._
 import scala.concurrent.Future
 
 @DoNotDiscover class ResultsControllerTest
-    extends WordSpec
+    extends AnyWordSpec
     with ConfiguredTestSuite
     with Matchers
     with FootballTestData
