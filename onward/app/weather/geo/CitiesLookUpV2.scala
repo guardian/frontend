@@ -59,11 +59,11 @@ object CitiesLookUpV2 extends ResourcesHelper {
 
   private[geo] def getCsvLines: Iterator[CitiesCsvLineV2] = {
     val csv = getGeoIPCityInputStream
-    csv.getLines().drop(2) collect { case CitiesCsvLineV2(csvLine) => csvLine }
+    // first line is field names
+    csv.getLines().drop(1) collect { case CitiesCsvLineV2(csvLine) => csvLine }
   }
 
   def loadCache(): Map[CityRefV2, LatitudeLongitude] = {
-    // first two lines are Copyright info and field names
     getCsvLines
       .filter({ csvLine =>
         csvLine.country.nonEmpty && csvLine.city.nonEmpty
