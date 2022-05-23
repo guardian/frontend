@@ -7,6 +7,8 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 
 object Title {
+  // Sections added to this list won't be included in the page title.
+  // for example if we wanted `Page Title | The Guardian` instead of `Page Title | Section Name | The Guardian`
   val SectionsToIgnore = Set(
     "global",
     "newsletter-signup-page",
