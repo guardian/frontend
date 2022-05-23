@@ -113,8 +113,6 @@ object Block {
       membershipPlaceholder,
     )
 
-    println(block.attributes)
-
     Block(
       id = block.id,
       attributes = attributes,
