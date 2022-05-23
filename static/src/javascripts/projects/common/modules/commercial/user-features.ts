@@ -40,7 +40,10 @@ const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
 };
 
 const AD_FREE_COOKIE_REASON_LS = 'gu.ad_free_cookie_reason';
-const AD_FREE_COOKIE_REASON_USER_OPT_OUT_LS = 'user_opt_out';
+enum AdFreeCookieReasons {
+	AdFreeCookieReasonUserOptOut = 'user_opt_out',
+	AdFreeCookieReasonSubscriber = 'subscriber',
+}
 
 // TODO: isn’t this duplicated from commercial features?
 // https://github.com/guardian/frontend/blob/2a222cfb77748aa1140e19adca10bfc688fe6cad/static/src/javascripts/projects/common/modules/commercial/commercial-features.ts
@@ -66,6 +69,39 @@ const adFreeDataIsPresent = (): boolean => {
 	const cookieVal = getCookie({ name: AD_FREE_USER_COOKIE });
 	if (!cookieVal) return false;
 	return !Number.isNaN(parseInt(cookieVal, 10));
+};
+
+const setAdFreeCookieReason = (reason: AdFreeCookieReasons) => {
+	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
+	const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as {
+		reason?: Partial<Record<AdFreeCookieReasons, boolean>>;
+		expiry?: string;
+	};
+	adFreeReason.expiry = timeInDaysFromNow(1);
+	adFreeReason.reason = adFreeReason.reason ?? {};
+	adFreeReason.reason[reason] = true;
+	localStorage.setItem(
+		AD_FREE_COOKIE_REASON_LS,
+		JSON.stringify(adFreeReason),
+	);
+};
+
+const adFreeCookieFromOptOut = () => {
+	// ad free cookie reason is present helper function
+	const adFreeCookieReason = JSON.parse(
+		localStorage.getItem(AD_FREE_COOKIE_REASON_LS) ?? '{}',
+	) as { reason?: string; expiry?: string };
+	if (!adFreeCookieReason.reason || !adFreeCookieReason.expiry) {
+		return false;
+	}
+
+	const expiryTime = parseInt(adFreeCookieReason.expiry, 10);
+	const timeNow = new Date().getTime();
+	const expired = timeNow >= expiryTime;
+	return (
+		adFreeCookieReason.reason ==
+			AdFreeCookieReasons.AdFreeCookieReasonUserOptOut && !expired
+	);
 };
 
 const timeInDaysFromNow = (daysFromNow: number): string => {
@@ -134,15 +170,16 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 	if (
 		adFreeDataIsPresent() &&
 		!forcedAdFreeMode &&
-		!JsonResponse.contentAccess.digitalPack &&
-		localStorage.getItem(AD_FREE_COOKIE_REASON_LS) !=
-			AD_FREE_COOKIE_REASON_USER_OPT_OUT_LS
+		!JsonResponse.contentAccess.digitalPack
+		// !adFreeCookieFromOptOut()
+		// adFreeCookieFromSubscription()
 	) {
 		removeCookie({ name: AD_FREE_USER_COOKIE });
 	}
 
 	if (JsonResponse.contentAccess.digitalPack) {
 		setCookie({ name: AD_FREE_USER_COOKIE, value: timeInDaysFromNow(2) });
+		setAdFreeCookieReason(AdFreeCookieReasons.AdFreeCookieReasonSubscriber);
 	}
 };
 
@@ -420,6 +457,8 @@ export {
 	ARTICLES_VIEWED_OPT_OUT_COOKIE,
 	CONTRIBUTIONS_REMINDER_SIGNED_UP,
 	canShowContributionsReminderFeature,
+	timeInDaysFromNow,
 	AD_FREE_COOKIE_REASON_LS,
-	AD_FREE_COOKIE_REASON_USER_OPT_OUT_LS,
+	setAdFreeCookieReason,
+	AdFreeCookieReasons,
 };
