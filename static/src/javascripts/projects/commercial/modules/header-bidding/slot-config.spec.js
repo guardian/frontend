@@ -86,10 +86,6 @@ describe('getSlots', () => {
 				],
 			},
 			{
-				key: 'inline1',
-				sizes: [[300, 250]],
-			},
-			{
 				key: 'top-above-nav',
 				sizes: [[300, 250]],
 			},
@@ -97,6 +93,13 @@ describe('getSlots', () => {
 				key: 'inline',
 				sizes: [[300, 250]],
 			},
+            {
+                key: 'inline1',
+                sizes: [
+                    [300, 197],
+                    [300, 250]
+                ],
+            },
 			{
 				key: 'mostpop',
 				sizes: [[300, 250]],
@@ -117,10 +120,6 @@ describe('getSlots', () => {
 				],
 			},
 			{
-				key: 'inline1',
-				sizes: [[300, 250]],
-			},
-			{
 				key: 'top-above-nav',
 				sizes: [[300, 250]],
 			},
@@ -128,6 +127,13 @@ describe('getSlots', () => {
 				key: 'inline',
 				sizes: [[300, 250]],
 			},
+            {
+                key: 'inline1',
+                sizes: [
+                    [300, 197],
+                    [300, 250]
+                ],
+            },
 			{
 				key: 'mostpop',
 				sizes: [[300, 250]],
@@ -150,17 +156,21 @@ describe('getSlots', () => {
 				],
 			},
 			{
-				key: 'inline1',
-				sizes: [[300, 250]],
-			},
-			{
-				key: 'top-above-nav',
+                key: 'top-above-nav',
 				sizes: [[728, 90]],
 			},
 			{
-				key: 'inline',
+                key: 'inline',
 				sizes: [[300, 250]],
 			},
+            {
+                key: 'inline1',
+                sizes: [
+                    [300, 250],
+                    [550, 310],
+                    [620, 350]
+                ],
+            },
 			{
 				key: 'mostpop',
 				sizes: [
@@ -183,6 +193,10 @@ describe('getSlots', () => {
 				[300, 250],
 			],
 		});
+        expect(desktopSlots).toContainEqual({
+            key: 'inline1',
+            sizes: [[300, 250], [550, 310], [620, 350]],
+        });
 		expect(desktopSlots).not.toContainEqual({
 			key: 'inline',
 			sizes: [[300, 250]],
