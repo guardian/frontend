@@ -9,6 +9,7 @@ import play.twirl.api.Html
 object Title {
   val SectionsToIgnore = Set(
     "global",
+    "newsletter-signup-page",
   )
 
   def apply(page: Page)(implicit request: RequestHeader): Html =
