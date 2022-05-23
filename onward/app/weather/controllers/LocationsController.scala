@@ -47,7 +47,10 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
               Cached(CacheTime.NotFound)(JsonNotFound())
             } { weatherCity =>
               log.info(s"Matched $countryCode, $city, $maybeRegion to ${weatherCity.id}")
-              Cached(1 hour)(JsonComponent(weatherCity))
+              // We do this as accuwweather writes "New York, New York" if no region is specified, where as we
+              // just get "New York" from Fastly.
+              val weatherCityWithoutRegion = weatherCity.copy(city = city)
+              Cached(1 hour)(JsonComponent(weatherCityWithoutRegion))
             }
           }
 
