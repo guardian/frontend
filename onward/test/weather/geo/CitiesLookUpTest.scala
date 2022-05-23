@@ -16,13 +16,9 @@ class CitiesLookUpTest extends AnyFlatSpec with ScalaFutures with Matchers with 
   val actorSystem = ActorSystem()
 
   "getLatitudeLongitude" should "return a valid LatitudeLongitude" in {
-    val latLong = CitiesLookUp.getLatitudeLongitude(CityRef.makeFixedCase("Shanklin", "G2", "GB"))
-    val expected = Some(LatitudeLongitude(50.6167, -1.1833))
+    val latLong = CitiesLookUp.getLatitudeLongitude(CityRef.makeFixedCase("Shanklin", "IOW", "GB"))
+    val expected = Some(LatitudeLongitude(50.62613, -1.1785))
     latLong should equal(expected)
-
-    val latLongV2 = CitiesLookUpV2.getLatitudeLongitude(CityRefV2.makeFixedCase("Shanklin", "IOW", "GB"))
-    val expectedV2 = Some(LatitudeLongitude(50.62613, -1.1785))
-    latLongV2 should equal(expectedV2)
 
   }
 
