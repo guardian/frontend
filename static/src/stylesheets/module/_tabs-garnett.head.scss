@@ -1,39 +1,3 @@
-/*doc
----
-title: Base tab styles
-name: Tab
-category: Common
----
-
-```html_example
-<div class="tabs u-cf">
-    <ol class="tabs__container" role="tablist">
-        <li class="tabs__tab tabs__tab--selected" role="tab" id="tabs-example-1-tab" aria-selected="true" aria-controls="tabs-example-1">
-            <a href="#tabs-example-1"><span class="hide-until-desktop">Popular in </span>World news</a>
-        </li>
-        <li class="tabs__tab" role="tab" id="tabs-example-2-tab" aria-controls="tabs-example-2">
-            <a href="#tabs-example-2"><span class="hide-until-desktop">Popular in </span>The Guardian</a>
-        </li>
-    </ol>
-    <div class="tabs__content">
-        <div id="tabs-example-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-example-1-tab">
-            <!-- Content of tab 1 -->
-        </div>
-        <div id="tabs-example-2" class="tabs__pane modern-hidden u-cf" role="tabpanel" aria-labelledby="tabs-example-2-tab">
-            <!-- Content of tab 2 -->
-        </div>
-    </div>
-</div>
-```
-*/
-
-
-/* ==========================================================================
-   Tabs
-   ========================================================================== */
-
-/* Default tabs
-   ========================================================================== */
 .tabs__container {
     position: relative;
     margin: 0;

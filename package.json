@@ -137,7 +137,7 @@
     "rimraf": "^2.6.1",
     "rxjs": "^6.6.7",
     "sass-graph": "^2.2.4",
-    "sass-lint": "~1.10.2",
+    "sass-lint": "~1.13.1",
     "sass-mq": "~3.3.2",
     "semver": "^5.4.1",
     "split": "^1.0.0",
