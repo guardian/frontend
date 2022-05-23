@@ -38,14 +38,15 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
       val maybeCity = getEncodedHeader(CityHeader).filter(_.nonEmpty)
       val maybeRegion = getEncodedHeader(RegionHeader).filter(_.nonEmpty)
 
-      println(maybeCountry, maybeCity, maybeRegion)
       (maybeCountry, maybeCity) match {
         case (Some(countryCode), Some(city)) =>
           weatherApi.searchForCity(countryCode, city, maybeRegion) map { locations =>
             val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == countryCode).toList)
             cities.headOption.fold {
+              log.warn(s"Could not find $countryCode, $city")
               Cached(CacheTime.NotFound)(JsonNotFound())
             } { weatherCity =>
+              log.info(s"Matched $countryCode, $city, $maybeRegion to ${weatherCity.id}")
               Cached(1 hour)(JsonComponent(weatherCity))
             }
           }
