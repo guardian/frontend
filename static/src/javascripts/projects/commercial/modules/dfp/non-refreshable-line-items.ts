@@ -6,9 +6,12 @@ export const fetchNonRefreshableLineItemIds = async (): Promise<number[]> => {
 	const fileHost = window.guardian.config.page.isProd
 		? 'https://www.theguardian.com'
 		: 'https://m.code.dev-theguardian.com';
-	const fileLocation = `${fileHost}/commercial/non-refreshable-line-items.json`;
+	const fileLocation = new URL(
+		'/commercial/non-refreshable-line-items.json',
+		fileHost,
+	);
 
-	const response = await window.fetch(fileLocation);
+	const response = await fetch(fileLocation.toString());
 
 	if (response.ok) {
 		const json: unknown = await response.json();
