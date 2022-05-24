@@ -9,6 +9,7 @@ const AD_FREE_COOKIE_REASON_LS = 'gu.ad_free_cookie_reason';
 export enum AdFreeCookieReasons {
 	ConsentOptOut = 'consent_opt_out',
 	Subscriber = 'subscriber',
+	ForceAdFree = 'force_ad_free',
 }
 
 const getAdFreeCookie = (): string | null =>
@@ -33,17 +34,21 @@ const adFreeDataIsPresent = (): boolean => {
  * @param daysToLive - number of days the cookie should be valid
  */
 const setAdFreeCookie = (reason: AdFreeCookieReasons, daysToLive = 1): void => {
-	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
-	const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as Partial<
-		Record<AdFreeCookieReasons, string>
-	>;
+	if (reason !== AdFreeCookieReasons.ForceAdFree) {
+		const adFreeReasonString = localStorage.getItem(
+			AD_FREE_COOKIE_REASON_LS,
+		);
+		const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as Partial<
+			Record<AdFreeCookieReasons, string>
+		>;
 
-	adFreeReason[reason] = timeInDaysFromNow(daysToLive);
+		adFreeReason[reason] = timeInDaysFromNow(daysToLive);
 
-	localStorage.setItem(
-		AD_FREE_COOKIE_REASON_LS,
-		JSON.stringify(adFreeReason),
-	);
+		localStorage.setItem(
+			AD_FREE_COOKIE_REASON_LS,
+			JSON.stringify(adFreeReason),
+		);
+	}
 
 	const expires = new Date();
 	expires.setMonth(expires.getMonth() + 6);

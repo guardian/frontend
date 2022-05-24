@@ -27,7 +27,10 @@ import { markTime } from 'lib/user-timing';
 import { isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 import { init as initDynamicImport } from 'lib/dynamic-import-init';
-import { setAdFreeCookie } from 'lib/manage-ad-free-cookie';
+import {
+	AdFreeCookieReasons,
+	setAdFreeCookie,
+} from 'lib/manage-ad-free-cookie';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
@@ -196,8 +199,7 @@ const bootStandard = () => {
 	// in user-features
 	if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
 		// Sets a short-lived cookie to trigger server-side ad-freeness
-		// TODO pass in a reason
-		setAdFreeCookie(1);
+		setAdFreeCookie(AdFreeCookieReasons.ForceAdFree, 1);
 	}
 
 	// set local storage: gu.alreadyVisited
