@@ -4,7 +4,7 @@ const stage = getStage();
 
 const fronts = [
 	{
-		path: getTestUrl(stage, 'uk'),
+		path: getTestUrl(stage, '/uk'),
 		adTest: 'fixed-puppies',
 	},
 ];
@@ -33,7 +33,7 @@ const liveblogs = [
 		path: getTestUrl(
 			stage,
 			'/politics/live/2022/jan/31/uk-politics-live-omicron-nhs-workers-coronavirus-vaccines-no-10-sue-gray-report',
-			{ isDcr: false },
+			{ isDcr: true },
 		),
 		adTest: 'fixed-puppies',
 	},
