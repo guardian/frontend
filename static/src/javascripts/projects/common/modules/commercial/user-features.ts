@@ -125,17 +125,15 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 	}
 
 	if (JsonResponse.contentAccess.digitalPack) {
-		setAdFreeCookie(AdFreeCookieReasons.AdFreeCookieReasonSubscriber, 2);
+		setAdFreeCookie(AdFreeCookieReasons.Subscriber, 2);
 	} else if (adFreeDataIsPresent() && !forcedAdFreeMode) {
-		maybeUnsetAdFreeCookie(
-			AdFreeCookieReasons.AdFreeCookieReasonSubscriber,
-		);
+		maybeUnsetAdFreeCookie(AdFreeCookieReasons.Subscriber);
 	}
 };
 
 const deleteOldData = (): void => {
 	// We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
-	maybeUnsetAdFreeCookie(AdFreeCookieReasons.AdFreeCookieReasonSubscriber);
+	maybeUnsetAdFreeCookie(AdFreeCookieReasons.Subscriber);
 	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
 	removeCookie({ name: PAYING_MEMBER_COOKIE });
 	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });

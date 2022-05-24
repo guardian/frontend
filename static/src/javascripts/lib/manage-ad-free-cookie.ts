@@ -7,8 +7,8 @@ import {
 const AD_FREE_USER_COOKIE = 'GU_AF1';
 const AD_FREE_COOKIE_REASON_LS = 'gu.ad_free_cookie_reason';
 export enum AdFreeCookieReasons {
-	AdFreeCookieReasonUserOptOut = 'user_opt_out',
-	AdFreeCookieReasonSubscriber = 'subscriber',
+	ConsentOptOut = 'consent_opt_out',
+	Subscriber = 'subscriber',
 }
 
 const getAdFreeCookie = (): string | null =>

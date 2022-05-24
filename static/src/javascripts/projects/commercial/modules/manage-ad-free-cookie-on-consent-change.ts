@@ -16,14 +16,10 @@ const manageAdFreeCookieOnConsentChange = once((): Promise<void> => {
 	onConsentChange((consent) => {
 		if (consent.tcfv2) {
 			if (!consent.canTarget) {
-				setAdFreeCookie(
-					AdFreeCookieReasons.AdFreeCookieReasonUserOptOut,
-				);
+				setAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
 				void removeSlots();
 			} else {
-				maybeUnsetAdFreeCookie(
-					AdFreeCookieReasons.AdFreeCookieReasonUserOptOut,
-				);
+				maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
 			}
 		}
 	});
