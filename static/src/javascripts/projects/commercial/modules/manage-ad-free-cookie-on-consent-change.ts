@@ -2,10 +2,9 @@ import { onConsentChange } from '@guardian/consent-management-platform';
 import { once } from 'lodash-es';
 import {
 	AdFreeCookieReasons,
-	setAdFreeCookieReason,
-	unsetAdFreeCookieReason,
-} from 'common/modules/commercial/user-features';
-import { setAdFreeCookie, unsetAdFreeCookie } from 'lib/set-ad-free-cookie';
+	maybeUnsetAdFreeCookie,
+	setAdFreeCookie,
+} from 'lib/manage-ad-free-cookie';
 import { removeSlots } from './remove-slots';
 
 /**
@@ -17,14 +16,12 @@ const manageAdFreeCookieOnConsentChange = once((): Promise<void> => {
 	onConsentChange((consent) => {
 		if (consent.tcfv2) {
 			if (!consent.canTarget) {
-				setAdFreeCookie();
-				setAdFreeCookieReason(
+				setAdFreeCookie(
 					AdFreeCookieReasons.AdFreeCookieReasonUserOptOut,
 				);
 				void removeSlots();
 			} else {
-				unsetAdFreeCookie();
-				unsetAdFreeCookieReason(
+				maybeUnsetAdFreeCookie(
 					AdFreeCookieReasons.AdFreeCookieReasonUserOptOut,
 				);
 			}

@@ -27,152 +27,151 @@ import { markTime } from 'lib/user-timing';
 import { isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 import { init as initDynamicImport } from 'lib/dynamic-import-init';
-import { setAdFreeCookie } from 'lib/set-ad-free-cookie';
+import { setAdFreeCookie } from 'lib/manage-ad-free-cookie';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
-import { initEmbedResize } from "./emailEmbeds";
+import { initEmbedResize } from './emailEmbeds';
 
 const showHiringMessage = () => {
-    try {
-        if (!config.get('page.isDev') && config.get('switches.weAreHiring')) {
-            window.console.log(
-                '\n' +
-                    '%cHello.\n' +
-                    '\n' +
-                    '%cWe are hiring – ever thought about joining us? \n' +
-                    '%chttps://workforus.theguardian.com/careers/product-engineering%c \n' +
-                    '\n',
-                'font-family: Georgia, serif; font-size: 32px; color: #052962',
-                'font-family: Georgia, serif; font-size: 16px; color: #767676',
-                'font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676',
-                ''
-            );
-        }
-    } catch (e) {
-        /* do nothing */
-    }
+	try {
+		if (!config.get('page.isDev') && config.get('switches.weAreHiring')) {
+			window.console.log(
+				'\n' +
+					'%cHello.\n' +
+					'\n' +
+					'%cWe are hiring – ever thought about joining us? \n' +
+					'%chttps://workforus.theguardian.com/careers/product-engineering%c \n' +
+					'\n',
+				'font-family: Georgia, serif; font-size: 32px; color: #052962',
+				'font-family: Georgia, serif; font-size: 16px; color: #767676',
+				'font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676',
+				'',
+			);
+		}
+	} catch (e) {
+		/* do nothing */
+	}
 };
 
 const handleMembershipAccess = () => {
-    const { membershipUrl, membershipAccess, contentId } = config.get('page');
+	const { membershipUrl, membershipAccess, contentId } = config.get('page');
 
-    const redirect = () => {
-        window.location.assign(
-            `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`
-        );
-    };
+	const redirect = () => {
+		window.location.assign(
+			`${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`,
+		);
+	};
 
-    const updateDOM = (resp) => {
-        const requireClass = 'has-membership-access-requirement';
-        const requiresPaidTier = membershipAccess.includes('paid-members-only');
-        // Check the users access matches the content
-        const canViewContent = requiresPaidTier
-            ? !!resp.tier && resp.isPaidTier
-            : !!resp.tier;
+	const updateDOM = (resp) => {
+		const requireClass = 'has-membership-access-requirement';
+		const requiresPaidTier = membershipAccess.includes('paid-members-only');
+		// Check the users access matches the content
+		const canViewContent = requiresPaidTier
+			? !!resp.tier && resp.isPaidTier
+			: !!resp.tier;
 
-        if (canViewContent) {
-            const { body } = document;
+		if (canViewContent) {
+			const { body } = document;
 
-            if (body) {
-                fastdom.mutate(() => body.classList.remove(requireClass));
-            }
-        } else {
-            redirect();
-        }
-    };
+			if (body) {
+				fastdom.mutate(() => body.classList.remove(requireClass));
+			}
+		} else {
+			redirect();
+		}
+	};
 
-    if (isUserLoggedIn()) {
-        fetchJson(`${membershipUrl}/user/me`, {
-            mode: 'cors',
-            credentials: 'include',
-        })
-            .then(updateDOM)
-            .catch(redirect);
-    } else {
-        redirect();
-    }
+	if (isUserLoggedIn()) {
+		fetchJson(`${membershipUrl}/user/me`, {
+			mode: 'cors',
+			credentials: 'include',
+		})
+			.then(updateDOM)
+			.catch(redirect);
+	} else {
+		redirect();
+	}
 };
 
 const addScrollHandler = () => {
-    let scrollRunning = false;
+	let scrollRunning = false;
 
-    const onScroll = () => {
-        if (!scrollRunning) {
-            scrollRunning = true;
-            fastdom.measure(() => {
-                mediator.emitEvent('window:throttledScroll');
-                scrollRunning = false;
-            });
-        }
-    };
+	const onScroll = () => {
+		if (!scrollRunning) {
+			scrollRunning = true;
+			fastdom.measure(() => {
+				mediator.emitEvent('window:throttledScroll');
+				scrollRunning = false;
+			});
+		}
+	};
 
-    // #? is still still needed?
-    addEventListener(
-        window,
-        'scroll',
-        userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window
-            ? () => {
-                  window.requestIdleCallback(onScroll);
-              }
-            : onScroll,
-        { passive: true }
-    );
+	// #? is still still needed?
+	addEventListener(
+		window,
+		'scroll',
+		userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window
+			? () => {
+					window.requestIdleCallback(onScroll);
+			  }
+			: onScroll,
+		{ passive: true },
+	);
 };
 
 const addResizeHandler = () => {
-    // Adds a global window:throttledResize event to mediator, which debounces events
-    // until the user has stopped resizing the window for a reasonable amount of time.
-    const onResize = (evt) => {
-        mediator.emitEvent('window:throttledResize', [evt]);
-    };
+	// Adds a global window:throttledResize event to mediator, which debounces events
+	// until the user has stopped resizing the window for a reasonable amount of time.
+	const onResize = (evt) => {
+		mediator.emitEvent('window:throttledResize', [evt]);
+	};
 
-    addEventListener(window, 'resize', debounce(onResize, 200), {
-        passive: true,
-    });
+	addEventListener(window, 'resize', debounce(onResize, 200), {
+		passive: true,
+	});
 };
 
 const addErrorHandler = () => {
-    const oldOnError = window.onerror;
-    window.onerror = (message, filename, lineno, colno, error) => {
-        // Not all browsers pass the error object
-        if (!error || !error.reported) {
-            oldOnError.apply(window, arguments);
-        }
-    };
+	const oldOnError = window.onerror;
+	window.onerror = (message, filename, lineno, colno, error) => {
+		// Not all browsers pass the error object
+		if (!error || !error.reported) {
+			oldOnError.apply(window, arguments);
+		}
+	};
 
-    // Report unhandled promise rejections
-    // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
-    window.addEventListener('unhandledRejection', event => {
-        const error = event.detail.reason;
+	// Report unhandled promise rejections
+	// https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
+	window.addEventListener('unhandledRejection', (event) => {
+		const error = event.detail.reason;
 
-        if (error && !error.reported) {
-            raven.captureException(error);
-        }
-    });
+		if (error && !error.reported) {
+			raven.captureException(error);
+		}
+	});
 };
 
 const bootStandard = () => {
+	markTime('standard start');
 
-    markTime('standard start');
+	catchErrorsWithContext([
+		[
+			'ga-user-timing-standard-start',
+			() => {
+				trackPerformance(
+					'Javascript Load',
+					'standardStart',
+					'Standard start parse time',
+				);
+			},
+		],
+	]);
 
-    catchErrorsWithContext([
-        [
-            'ga-user-timing-standard-start',
-            () => {
-                trackPerformance(
-                    'Javascript Load',
-                    'standardStart',
-                    'Standard start parse time'
-                );
-            },
-        ],
-    ]);
-
-    /*
+	/*
         Add global pooled event listeners
         CAUTION: those are *passive*, which means calls to event.preventDefault
         will be ignored
@@ -185,70 +184,71 @@ const bootStandard = () => {
         However, this means it's VITAL that all writes in callbacks are
         delegated to fastdom.
     */
-    addErrorHandler();
-    addScrollHandler();
-    addResizeHandler();
+	addErrorHandler();
+	addScrollHandler();
+	addResizeHandler();
 
-    // polyfill dynamic import
-    initDynamicImport();
+	// polyfill dynamic import
+	initDynamicImport();
 
-    // set a short-lived cookie to trigger server-side ad-freeness
-    // if the user is genuinely ad-free, this one will be overwritten
-    // in user-features
-    if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
-        // Sets a short-lived cookie to trigger server-side ad-freeness
-        setAdFreeCookie(1);
-    }
+	// set a short-lived cookie to trigger server-side ad-freeness
+	// if the user is genuinely ad-free, this one will be overwritten
+	// in user-features
+	if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
+		// Sets a short-lived cookie to trigger server-side ad-freeness
+		// TODO pass in a reason
+		setAdFreeCookie(1);
+	}
 
-    // set local storage: gu.alreadyVisited
-    if (window.guardian.isEnhanced) {
-        const key = 'gu.alreadyVisited';
-        const alreadyVisited = parseInt(storage.local.getRaw(key), 10) || 0;
-        storage.local.setRaw(key, alreadyVisited + 1);
-    }
+	// set local storage: gu.alreadyVisited
+	if (window.guardian.isEnhanced) {
+		const key = 'gu.alreadyVisited';
+		const alreadyVisited = parseInt(storage.local.getRaw(key), 10) || 0;
+		storage.local.setRaw(key, alreadyVisited + 1);
+	}
 
-    ophan.setEventEmitter(mediator);
+	ophan.setEventEmitter(mediator);
 
-    /*  Membership access
+	/*  Membership access
         Items with either of the following fields require Membership access
         - membershipAccess=members-only
         - membershipAccess=paid-members-only
         Authenticating requires CORS and withCredentials. If we don't cut the
         mustard then pass through.
     */
-    if (config.get('page.requiresMembershipAccess')) {
-        handleMembershipAccess();
-    }
+	if (config.get('page.requiresMembershipAccess')) {
+		handleMembershipAccess();
+	}
 
-    newHeaderInit();
+	newHeaderInit();
 
-    const isAtLeastLeftCol = isBreakpoint({ min: 'leftCol' });
+	const isAtLeastLeftCol = isBreakpoint({ min: 'leftCol' });
 
-    // we only need to fix the secondary column from leftCol breakpoint up
-    if (config.get('page.hasShowcaseMainElement') && isAtLeastLeftCol) {
-        fixSecondaryColumn();
-    }
+	// we only need to fix the secondary column from leftCol breakpoint up
+	if (config.get('page.hasShowcaseMainElement') && isAtLeastLeftCol) {
+		fixSecondaryColumn();
+	}
 
-    initAtoms();
+	initAtoms();
 
-    initEmbedResize();
+	initEmbedResize();
 
-    showHiringMessage();
+	showHiringMessage();
 
-    markTime('standard end');
+	markTime('standard end');
 
-    catchErrorsWithContext([
-        [
-            'ga-user-timing-standard-end',
-            () => {
-                trackPerformance(
-                    'Javascript Load',
-                    'standardEnd',
-                    'Standard end parse time'
-                );
-            },
-        ],
-    ]);
+	catchErrorsWithContext([
+		[
+			'ga-user-timing-standard-end',
+			() => {
+				trackPerformance(
+					'Javascript Load',
+					'standardEnd',
+					'Standard end parse time',
+				);
+			},
+		],
+	]);
 };
 
 export { bootStandard };
