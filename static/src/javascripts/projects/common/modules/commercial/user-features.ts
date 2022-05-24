@@ -485,9 +485,7 @@ export {
 	CONTRIBUTIONS_REMINDER_SIGNED_UP,
 	canShowContributionsReminderFeature,
 	timeInDaysFromNow,
-	AD_FREE_COOKIE_REASON_LS,
 	setAdFreeCookieReason,
 	unsetAdFreeCookieReason,
-	fisAdFreeCookieReasonFalseOrExpired,
 	AdFreeCookieReasons,
 };
