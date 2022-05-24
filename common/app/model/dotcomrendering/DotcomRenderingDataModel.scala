@@ -39,7 +39,8 @@ case class DotcomRenderingDataModel(
     main: String,
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
-    keyEvents: List[Block],
+    keyEvents: List[Block], // TODO remove when timelineBlocks is used in DCR
+    timelineBlocks: List[Block],
     mostRecentBlockId: Option[String],
     blocks: List[Block],
     pagination: Option[Pagination],
@@ -107,7 +108,8 @@ object DotcomRenderingDataModel {
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
         "pinnedPost" -> model.pinnedPost,
-        "keyEvents" -> model.keyEvents,
+        "keyEvents" -> model.keyEvents, // TODO remove when timelineBlocks is used in DCR
+        "timelineBlocks" -> model.timelineBlocks,
         "mostRecentBlockId" -> model.mostRecentBlockId,
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
@@ -189,7 +191,8 @@ object DotcomRenderingDataModel {
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
-      keyEvents = Nil,
+      keyEvents = Nil, // TODO remove when timelineBlocks is used in DCR
+      timelineBlocks = Nil,
     )
   }
 
@@ -215,11 +218,12 @@ object DotcomRenderingDataModel {
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
-      keyEvents = Nil,
+      keyEvents = Nil, // TODO remove when timelineBlocks is used in DCR
+      timelineBlocks = Nil,
     )
   }
 
-  def keyEventsFallback(
+  def timelineBlocksFallback(
       blocks: APIBlocks,
   ): Seq[APIBlock] = {
     blocks.requestedBodyBlocks match {
@@ -255,7 +259,7 @@ object DotcomRenderingDataModel {
     val allTimelineBlocks = blocks.body match {
       case Some(allBlocks) if allBlocks.nonEmpty =>
         allBlocks.filter(block => block.attributes.keyEvent.contains(true) || block.attributes.summary.contains(true))
-      case _ => keyEventsFallback(blocks)
+      case _ => timelineBlocksFallback(blocks)
     }
 
     val timelineBlocks =
@@ -287,6 +291,7 @@ object DotcomRenderingDataModel {
       pageType,
       page.related.hasStoryPackage,
       pinnedPost,
+      timelineBlocks, // TODO remove when timelineBlocks is used in DCR
       timelineBlocks,
       filterKeyEvents,
       mostRecentBlockId,
@@ -304,7 +309,8 @@ object DotcomRenderingDataModel {
       pageType: PageType, // TODO remove as format is better
       hasStoryPackage: Boolean,
       pinnedPost: Option[APIBlock],
-      keyEvents: Seq[APIBlock],
+      keyEvents: Seq[APIBlock], // TODO remove when timelineBlocks is used in DCR
+      timelineBlocks: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
@@ -381,7 +387,9 @@ object DotcomRenderingDataModel {
         .map(toDCRBlock())
         .toList
 
-    val keyEventsDCR = keyEvents.map(toDCRBlock())
+    val keyEventsDCR = keyEvents.map(toDCRBlock()) // TODO remove when timelineBlocks is used in DCR
+
+    val timelineBlocksDCR = timelineBlocks.map(toDCRBlock())
 
     val pinnedPostDCR = pinnedPost.map(toDCRBlock())
 
@@ -435,7 +443,8 @@ object DotcomRenderingDataModel {
       isSpecialReport = isSpecialReport(page),
       filterKeyEvents = filterKeyEvents,
       pinnedPost = pinnedPostDCR,
-      keyEvents = keyEventsDCR.toList,
+      keyEvents = keyEventsDCR.toList, // TODO remove when timelineBlocks is used in DCR
+      timelineBlocks = timelineBlocksDCR.toList,
       mostRecentBlockId = mostRecentBlockId,
       linkedData = linkedData,
       main = content.fields.main,
