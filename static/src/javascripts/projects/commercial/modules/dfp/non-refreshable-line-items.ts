@@ -2,10 +2,10 @@ import { memoize } from 'lodash-es';
 import reportError from 'lib/report-error';
 
 export const fetchNonRefreshableLineItemIds = async (): Promise<number[]> => {
-	// Use the CODE environment's non-refreshable line item file for CODE and local testing
-	const fileHost = window.guardian.config.page.isProd
-		? 'https://www.theguardian.com'
-		: 'https://m.code.dev-theguardian.com';
+	// When the env is CODE or local, use the CODE env's non-refreshable line items file
+	const { host, isProd } = window.guardian.config.page;
+	const fileHost = isProd ? host : 'https://m.code.dev-theguardian.com';
+
 	const fileLocation = new URL(
 		'/commercial/non-refreshable-line-items.json',
 		fileHost,
