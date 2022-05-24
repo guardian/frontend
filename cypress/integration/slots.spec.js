@@ -35,7 +35,7 @@ describe('Slots and iframes load on pages', () => {
 				cy.visit(`${path}?adtest=${adTest}`);
 
 				// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-				cy.getIframeBody('sp_message_iframe_597005')
+				cy.getIframeBody('sp_message_iframe_')
 					.find('.btn-primary')
 					.click();
 
