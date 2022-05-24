@@ -71,37 +71,56 @@ const adFreeDataIsPresent = (): boolean => {
 	return !Number.isNaN(parseInt(cookieVal, 10));
 };
 
-const setAdFreeCookieReason = (reason: AdFreeCookieReasons) => {
+const setAdFreeCookieReason = (
+	reason: AdFreeCookieReasons,
+	expiry?: string,
+): void => {
 	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
-	const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as {
-		reason?: Partial<Record<AdFreeCookieReasons, boolean>>;
-		expiry?: string;
-	};
-	adFreeReason.expiry = timeInDaysFromNow(1);
-	adFreeReason.reason = adFreeReason.reason ?? {};
-	adFreeReason.reason[reason] = true;
+	const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as Partial<
+		Record<AdFreeCookieReasons, string>
+	>;
+
+	adFreeReason[reason] = expiry ?? timeInDaysFromNow(1);
+
 	localStorage.setItem(
 		AD_FREE_COOKIE_REASON_LS,
 		JSON.stringify(adFreeReason),
 	);
 };
 
-const adFreeCookieFromOptOut = () => {
-	// ad free cookie reason is present helper function
-	const adFreeCookieReason = JSON.parse(
-		localStorage.getItem(AD_FREE_COOKIE_REASON_LS) ?? '{}',
-	) as { reason?: string; expiry?: string };
-	if (!adFreeCookieReason.reason || !adFreeCookieReason.expiry) {
-		return false;
-	}
+const unsetAdFreeCookieReason = (reason: AdFreeCookieReasons): void => {
+	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
+	const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as Partial<
+		Record<AdFreeCookieReasons, string>
+	>;
 
-	const expiryTime = parseInt(adFreeCookieReason.expiry, 10);
-	const timeNow = new Date().getTime();
-	const expired = timeNow >= expiryTime;
-	return (
-		adFreeCookieReason.reason ==
-			AdFreeCookieReasons.AdFreeCookieReasonUserOptOut && !expired
+	delete adFreeReason[reason];
+
+	localStorage.setItem(
+		AD_FREE_COOKIE_REASON_LS,
+		JSON.stringify(adFreeReason),
 	);
+};
+
+const isAdFreeCookieReasonFalseOrExpired = (): boolean => {
+	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
+	const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as Partial<
+		Record<AdFreeCookieReasons, string>
+	>;
+
+	const allExpired = Object.entries(AdFreeCookieReasons).every(
+		([, reason]) => {
+			const expiry = adFreeReason[reason];
+			if (expiry) {
+				const expiryTime = parseInt(expiry, 10);
+				const timeNow = new Date().getTime();
+				return timeNow >= expiryTime;
+			}
+			return true;
+		},
+	);
+
+	return allExpired;
 };
 
 const timeInDaysFromNow = (daysFromNow: number): string => {
@@ -170,25 +189,33 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 	if (
 		adFreeDataIsPresent() &&
 		!forcedAdFreeMode &&
-		!JsonResponse.contentAccess.digitalPack
-		// !adFreeCookieFromOptOut()
-		// adFreeCookieFromSubscription()
+		!JsonResponse.contentAccess.digitalPack &&
+		isAdFreeCookieReasonFalseOrExpired()
 	) {
 		removeCookie({ name: AD_FREE_USER_COOKIE });
+		unsetAdFreeCookieReason(
+			AdFreeCookieReasons.AdFreeCookieReasonSubscriber,
+		);
 	}
 
 	if (JsonResponse.contentAccess.digitalPack) {
 		setCookie({ name: AD_FREE_USER_COOKIE, value: timeInDaysFromNow(2) });
-		setAdFreeCookieReason(AdFreeCookieReasons.AdFreeCookieReasonSubscriber);
+		setAdFreeCookieReason(
+			AdFreeCookieReasons.AdFreeCookieReasonSubscriber,
+			timeInDaysFromNow(2),
+		);
 	}
 };
 
 const deleteOldData = (): void => {
 	// We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
+	unsetAdFreeCookieReason(AdFreeCookieReasons.AdFreeCookieReasonSubscriber);
 	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
 	removeCookie({ name: PAYING_MEMBER_COOKIE });
 	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });
-	removeCookie({ name: AD_FREE_USER_COOKIE });
+	if (isAdFreeCookieReasonFalseOrExpired()) {
+		removeCookie({ name: AD_FREE_USER_COOKIE });
+	}
 	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
 	removeCookie({ name: DIGITAL_SUBSCRIBER_COOKIE });
 	removeCookie({ name: HIDE_SUPPORT_MESSAGING_COOKIE });
@@ -460,5 +487,7 @@ export {
 	timeInDaysFromNow,
 	AD_FREE_COOKIE_REASON_LS,
 	setAdFreeCookieReason,
+	unsetAdFreeCookieReason,
+	fisAdFreeCookieReasonFalseOrExpired,
 	AdFreeCookieReasons,
 };
