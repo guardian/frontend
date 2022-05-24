@@ -29,19 +29,20 @@ const adFreeDataIsPresent = (): boolean => {
 	return !Number.isNaN(parseInt(cookieVal, 10));
 };
 
+const getAdFreeCookieReason = () => {
+	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
+	return JSON.parse(adFreeReasonString ?? '{}') as Partial<
+		Record<AdFreeCookieReasons, string>
+	>;
+};
+
 /*
  * Sets a cookie to trigger server-side ad-freeness
  * @param daysToLive - number of days the cookie should be valid
  */
 const setAdFreeCookie = (reason: AdFreeCookieReasons, daysToLive = 1): void => {
 	if (reason !== AdFreeCookieReasons.ForceAdFree) {
-		const adFreeReasonString = localStorage.getItem(
-			AD_FREE_COOKIE_REASON_LS,
-		);
-		const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as Partial<
-			Record<AdFreeCookieReasons, string>
-		>;
-
+		const adFreeReason = getAdFreeCookieReason();
 		adFreeReason[reason] = timeInDaysFromNow(daysToLive);
 
 		localStorage.setItem(
@@ -63,10 +64,7 @@ const setAdFreeCookie = (reason: AdFreeCookieReasons, daysToLive = 1): void => {
  * Removes the cookie that causes server-side ad-freeness
  */
 const maybeUnsetAdFreeCookie = (reason: AdFreeCookieReasons): void => {
-	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
-	const adFreeReason = JSON.parse(adFreeReasonString ?? '{}') as Partial<
-		Record<AdFreeCookieReasons, string>
-	>;
+	const adFreeReason = getAdFreeCookieReason();
 
 	delete adFreeReason[reason];
 
