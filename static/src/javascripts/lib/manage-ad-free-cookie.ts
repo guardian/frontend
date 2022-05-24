@@ -4,13 +4,28 @@ import {
 	timeInDaysFromNow,
 } from 'common/modules/commercial/utils';
 
+// cookie to trigger server-side ad-freeness
 const AD_FREE_USER_COOKIE = 'GU_AF1';
-const AD_FREE_COOKIE_REASON_LS = 'gu.ad_free_cookie_reason';
+
+/*
+ * The ad free cookie can be set for a few different reasons:
+ * 1. The users is signed in and is a subscriber
+ * 2. The user has opted out of targeted advertising
+ * 3. The url parameter noadsaf is set so ads are temporarily disabled
+ */
 export enum AdFreeCookieReasons {
 	ConsentOptOut = 'consent_opt_out',
 	Subscriber = 'subscriber',
 	ForceAdFree = 'force_ad_free',
 }
+/*
+ * Since the cookie is shared between these different use cases, we need to be careful to
+ * only unset it when it's needed for none of the cases.
+ * We keep track of the reasons for setting the ad cookie in an object in local storage
+ * mapping reasons to expiry times.
+ */
+const AD_FREE_COOKIE_REASON_LS = 'gu.ad_free_cookie_reason';
+type AdFreeCookieReasonExpiries = Partial<Record<AdFreeCookieReasons, string>>;
 
 const getAdFreeCookie = (): string | null =>
 	getCookie({ name: AD_FREE_USER_COOKIE });
@@ -31,13 +46,14 @@ const adFreeDataIsPresent = (): boolean => {
 
 const getAdFreeCookieReason = () => {
 	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
-	return JSON.parse(adFreeReasonString ?? '{}') as Partial<
-		Record<AdFreeCookieReasons, string>
-	>;
+	return JSON.parse(adFreeReasonString ?? '{}') as AdFreeCookieReasonExpiries;
 };
 
 /*
- * Sets a cookie to trigger server-side ad-freeness
+ * Set the ad free cookie and update ad free cookie reason.
+ * Don't set the reason for ForceAdFree as this is supposed to be overridden.
+ *
+ * @param reason
  * @param daysToLive - number of days the cookie should be valid
  */
 const setAdFreeCookie = (reason: AdFreeCookieReasons, daysToLive = 1): void => {
@@ -61,7 +77,9 @@ const setAdFreeCookie = (reason: AdFreeCookieReasons, daysToLive = 1): void => {
 };
 
 /*
- * Removes the cookie that causes server-side ad-freeness
+ * Remove the given ad free reason.
+ * If as a result, all ad free reasons are expired or null, unset the ad free cookie.
+ * @param reason - the reason for which we may want to unset the ad free cookie
  */
 const maybeUnsetAdFreeCookie = (reason: AdFreeCookieReasons): void => {
 	const adFreeReason = getAdFreeCookieReason();
