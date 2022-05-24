@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 
 import { getStage, getTestUrl } from '../lib/util';
-import { getIframeBody } from '../lib/iframe';
 
 // Don't fail tests when uncaught exceptions occur
 // This is because scripts loaded on the page and unrelated to these tests can cause this
@@ -36,7 +35,7 @@ describe('Slots and iframes load on pages', () => {
 				cy.visit(`${path}?adtest=${adTest}`);
 
 				// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-				getIframeBody('sp_message_iframe_597005')
+				cy.getIframeBody('sp_message_iframe_597005')
 					.find('.btn-primary')
 					.click();
 

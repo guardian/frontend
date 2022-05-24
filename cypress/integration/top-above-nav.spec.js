@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import { getIframeBody } from '../lib/iframe';
 import { pages } from '../fixtures/pages';
 
 // Don't fail tests when uncaught exceptions occur
@@ -15,7 +14,7 @@ describe('top-above-nav on pages', () => {
 			cy.visit(`${path}?adtest=${adTest}`);
 
 			// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-			getIframeBody('sp_message_iframe_').find('.btn-primary').click();
+			cy.getIframeBody('sp_message_iframe_').find('.btn-primary').click();
 
 			// Check that the top-above-nav ad slot is on the page
 			cy.get('#dfp-ad--top-above-nav').should('exist');
