@@ -40,7 +40,7 @@ const init = (register: RegisterListener): void => {
 			if (!source) {
 				log(
 					'commercial',
-					'Passback listener: message does not have source set',
+					'Passback: postMessage does not have source set',
 				);
 			}
 			/**
@@ -51,9 +51,11 @@ const init = (register: RegisterListener): void => {
 			if (!slotId) {
 				log(
 					'commercial',
-					'Passback listener: cannot determine the calling iFrame',
+					'Passback: cannot determine the calling iFrame',
 				);
 			}
+
+			log('commercial', `Passback: from ${source}`);
 
 			if (iframe) {
 				const iFrameContainer =
@@ -111,6 +113,12 @@ const init = (register: RegisterListener): void => {
 						['slot', ['inline']],
 					];
 
+					log(
+						'commercial',
+						'Passback: initial inline1 targeting map',
+						allTargeting,
+					);
+
 					/**
 					 * Create a new ad slot element
 					 */
@@ -157,7 +165,7 @@ const init = (register: RegisterListener): void => {
 							});
 							log(
 								'commercial',
-								'passback targeting',
+								'Passback: passback inline1 targeting map',
 								passbackSlot.getTargetingMap(),
 							);
 							googletag.display(passbackElement.id);
@@ -195,7 +203,7 @@ const init = (register: RegisterListener): void => {
 
 					log(
 						'commercial',
-						`Passback listener: passback from ${source} creating slot: ${passbackElement.id}`,
+						`Passback: from ${source} creating slot: ${passbackElement.id}`,
 					);
 				}
 			}
