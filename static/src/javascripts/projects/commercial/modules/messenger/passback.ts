@@ -179,16 +179,23 @@ const init = (register: RegisterListener): void => {
 					 */
 					googletag
 						.pubads()
-						.addEventListener('slotRenderEnded', function (event) {
-							const slotId = event.slot.getSlotElementId();
-							if (slotId === passbackElement.id) {
-								const size =
-									event.slot.getSizes()[0] as googletag.Size;
-								slotElement.style.height = `${
-									size.getHeight() + labelHeight
-								}px`;
-							}
-						});
+						.addEventListener(
+							'slotRenderEnded',
+							function (
+								event: googletag.events.SlotRenderEndedEvent,
+							) {
+								const slotId = event.slot.getSlotElementId();
+								if (slotId === passbackElement.id) {
+									const size = event.size;
+									if (Array.isArray(size)) {
+										const height = size[1];
+										slotElement.style.height = `${
+											height + labelHeight
+										}px`;
+									}
+								}
+							},
+						);
 
 					log(
 						'commercial',
