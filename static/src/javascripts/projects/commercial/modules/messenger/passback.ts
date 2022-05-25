@@ -139,22 +139,24 @@ const init = (register: RegisterListener): void => {
 							[mpu, outstreamMobile, outstreamDesktop],
 							passbackElement.id,
 						);
-						// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
-						passbackSlot?.defineSizeMapping([
-							[
-								[breakpoints.phablet, 0],
-								[mpu, outstreamDesktop],
-							],
-							[
-								[breakpoints.mobile, 0],
-								[mpu, outstreamMobile],
-							],
-						]);
-						passbackSlot?.addService(window.googletag.pubads());
-						allTargeting.forEach(([key, value]) => {
-							slot.setTargeting(key, value);
-						});
-						googletag.display(passbackElement.id);
+						if (passbackSlot) {
+							// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
+							passbackSlot.defineSizeMapping([
+								[
+									[breakpoints.phablet, 0],
+									[mpu, outstreamDesktop],
+								],
+								[
+									[breakpoints.mobile, 0],
+									[mpu, outstreamMobile],
+								],
+							]);
+							passbackSlot.addService(window.googletag.pubads());
+							allTargeting.forEach(([key, value]) => {
+								passbackSlot.setTargeting(key, value);
+							});
+							googletag.display(passbackElement.id);
+						}
 					});
 
 					/**
