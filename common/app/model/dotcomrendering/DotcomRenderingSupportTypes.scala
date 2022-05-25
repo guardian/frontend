@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
+import model.liveblog.{MembershipPlaceholder, BlockAttributes}
 import model.{ArticleDateTimes, ContentPage, GUDateTimeFormatNew}
 import navigation._
 import org.joda.time.DateTime
@@ -44,6 +45,7 @@ object Tag {
 case class Block(
     id: String,
     elements: List[PageElement],
+    attributes: BlockAttributes,
     blockCreatedOn: Option[Long],
     blockCreatedOnDisplay: Option[String],
     blockLastUpdated: Option[Long],
@@ -100,8 +102,20 @@ object Block {
         .map(tag => Contributor(tag.title, tag.bylineImageUrl, tag.bylineLargeImageUrl))
     }
 
+    val membershipPlaceholder = block.attributes.membershipPlaceholder map { placeholder =>
+      MembershipPlaceholder(placeholder.campaignCode)
+    }
+
+    val attributes = BlockAttributes(
+      block.attributes.pinned.getOrElse(false),
+      block.attributes.keyEvent.getOrElse(false),
+      block.attributes.summary.getOrElse(false),
+      membershipPlaceholder,
+    )
+
     Block(
       id = block.id,
+      attributes = attributes,
       elements = DotcomRenderingUtils.blockElementsToPageElements(
         block.elements,
         request,

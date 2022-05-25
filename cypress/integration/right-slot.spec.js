@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import { getIframeBody } from '../lib/iframe';
 import { articles, liveblogs } from '../fixtures/pages';
 
 // Don't fail tests when uncaught exceptions occur
@@ -18,7 +17,7 @@ describe('right slot on pages', () => {
 			cy.visit(`${path}?adtest=${adTest}`);
 
 			// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-			getIframeBody('sp_message_iframe_').find('.btn-primary').click();
+			cy.getIframeBody('sp_message_iframe_').find('.btn-primary').click();
 
 			// Check that the right ad slot is on the page
 			cy.get('#dfp-ad--right').should('exist');

@@ -24,6 +24,6 @@ object Inline1ContainerSizing
       name = "inline1-container-sizing",
       description = "Tests the impact on CLS of fixing the inline1 ad container to full width",
       owners = Seq(Owner.withGithub("arelra")),
-      sellByDate = LocalDate.of(2022, 5, 24),
+      sellByDate = LocalDate.of(2022, 5, 31),
       participationGroup = Perc20A,
     )

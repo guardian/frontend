@@ -2,7 +2,7 @@ package commercial.controllers
 
 import common.JsonComponent
 import common.dfp.DfpAgent
-import model.Cached
+import model.{Cached, Cors}
 import play.api.libs.json.Json
 import play.api.mvc._
 
@@ -16,8 +16,14 @@ class nonRefreshableLineItemsController(val controllerComponents: ControllerComp
     Action { implicit request =>
       val nonRefreshableLineItems: Seq[Long] = DfpAgent.nonRefreshableLineItemIds()
       val json = Json.toJson(nonRefreshableLineItems)
-      Cached(15.minutes) {
-        JsonComponent(json)
-      }
+
+      Cors(
+        Cached(15.minutes) {
+          JsonComponent(json)
+        },
+        None,
+        None,
+        Seq("localhost"),
+      )
     }
 }

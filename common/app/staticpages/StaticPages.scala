@@ -43,7 +43,10 @@ object StaticPages {
       MetaData.make(
         id = id,
         section = Option(SectionId(value = "newsletter-signup-page")),
-        webTitle = "Guardian newsletters: sign up",
+        webTitle = "Guardian newsletters: Sign up for our free newsletters",
+        description = Some(
+          "Scroll less and understand more about the subjects you care about with the Guardian's brilliant email newsletters, free to your inbox.",
+        ),
         contentType = Some(DotcomContentType.Signup),
         iosType = None,
         shouldGoogleIndex = true,

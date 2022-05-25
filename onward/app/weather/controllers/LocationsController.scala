@@ -34,44 +34,27 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
       def getEncodedHeader(key: String) =
         request.headers.get(key).map(java.net.URLDecoder.decode(_, "latin1"))
 
+      val maybeCountry = getEncodedHeader(CountryHeader).filter(_.nonEmpty)
       val maybeCity = getEncodedHeader(CityHeader).filter(_.nonEmpty)
       val maybeRegion = getEncodedHeader(RegionHeader).filter(_.nonEmpty)
-      val maybeCountry = getEncodedHeader(CountryHeader).filter(_.nonEmpty)
 
-      (maybeCity, maybeRegion, maybeCountry) match {
-        case (Some(city), Some(region), Some(country)) =>
-          CitiesLookUp.getLatitudeLongitude(CityRef.makeFixedCase(city, region, country)) match {
-            case Some(latitudeLongitude) =>
-              log.info(s"Matched $city, $region, $country to $latitudeLongitude")
-
-              weatherApi.getNearestCity(latitudeLongitude) map { location =>
-                Cached(1 hour)(
-                  JsonComponent(
-                    CityResponse
-                      .fromLocationResponse(location)
-                      .copy(
-                        // Prefer the city name in MaxMind - the one Accuweather returns is a bit more granular than we'd like,
-                        // given how fuzzy geolocation by IP is.
-                        city = city,
-                      ),
-                  ),
-                )
-              }
-
-            case None =>
-              log.warn(s"Could not find $city, $region, $country in database, trying text search")
-              weatherApi.searchForLocations(city) map { locations =>
-                val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
-
-                cities.headOption.fold {
-                  Cached(CacheTime.NotFound)(JsonNotFound())
-                } { weatherCity =>
-                  Cached(1 hour)(JsonComponent(weatherCity))
-                }
-              }
+      (maybeCountry, maybeCity) match {
+        case (Some(countryCode), Some(city)) =>
+          weatherApi.searchForCity(countryCode, city, maybeRegion) map { locations =>
+            val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == countryCode).toList)
+            cities.headOption.fold {
+              log.warn(s"Could not find $countryCode, $city")
+              Cached(CacheTime.NotFound)(JsonNotFound())
+            } { weatherCity =>
+              log.info(s"Matched $countryCode, $city, $maybeRegion to ${weatherCity.id}")
+              // We do this as AccuWeather writes "New York, New York" if no region is specified, where as we
+              // just get "New York" from Fastly.
+              val weatherCityWithoutRegion = weatherCity.copy(city = city)
+              Cached(1 hour)(JsonComponent(weatherCityWithoutRegion))
+            }
           }
 
-        case (_, _, _) =>
+        case (_, _) =>
           Future.successful(
             cityFromRequestEdition.fold {
               Cached(CacheTime.NotFound)(JsonNotFound())
