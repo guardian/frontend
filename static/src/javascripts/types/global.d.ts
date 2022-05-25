@@ -234,9 +234,13 @@ interface Window {
 		// /frontend/common/app/templates/inlineJS/blocking/enableStylesheets.scala.js
 		css: { onLoad: () => void; loaded: boolean };
 		articleCounts?: ArticleCounts;
+		isEnhanced: boolean;
 	};
 
 	confiant?: Confiant;
 	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];
+	// https://developer.apple.com/documentation/apple_pay_on_the_web/apple_pay_js_api/checking_for_apple_pay_availability
+	// We don't care what type this has, only whether it's present on the window
+	ApplePaySession?: unknown;
 }

@@ -44,11 +44,14 @@ const breakpoints = [
 		isTweakpoint: false,
 		width: 1300,
 	},
-];
+] as const;
 
-let currentBreakpoint;
-let currentTweakpoint;
-let supportsPushState;
+type Breakpoint = typeof breakpoints[number];
+type BreakpointName = Breakpoint['name'];
+
+let currentBreakpoint: BreakpointName | undefined;
+let currentTweakpoint: BreakpointName | undefined;
+let supportsPushState: boolean | undefined;
 // #?: Consider dropping support for vendor-specific implementations
 let pageVisibility =
 	document.visibilityState ||
@@ -57,9 +60,11 @@ let pageVisibility =
 	document.msVisibilityState ||
 	'visible';
 
-const breakpointNames = breakpoints.map((breakpoint) => breakpoint.name);
+const breakpointNames: BreakpointName[] = breakpoints.map(
+	(breakpoint) => breakpoint.name,
+);
 
-const findBreakpoint = (tweakpoint) => {
+const findBreakpoint = (tweakpoint: BreakpointName) => {
 	let breakpointIndex = breakpointNames.indexOf(tweakpoint);
 	let breakpoint = breakpoints[breakpointIndex];
 	while (breakpointIndex >= 0 && breakpoint.isTweakpoint) {
@@ -69,7 +74,7 @@ const findBreakpoint = (tweakpoint) => {
 	return breakpoint.name;
 };
 
-const updateBreakpoint = (breakpoint) => {
+const updateBreakpoint = (breakpoint: Breakpoint) => {
 	currentTweakpoint = breakpoint.name;
 
 	if (breakpoint.isTweakpoint) {
@@ -135,7 +140,7 @@ const initBreakpoints = () => {
 	}
 };
 
-const getViewport = () => {
+const getViewport = (): { width: number; height: number } => {
 	if (
 		!window.innerWidth ||
 		!(document && document.body && document.body.clientWidth)
@@ -152,10 +157,15 @@ const getViewport = () => {
 	};
 };
 
-const getBreakpoint = (includeTweakpoint) =>
+const getBreakpoint = (
+	includeTweakpoint?: boolean,
+): BreakpointName | undefined =>
 	includeTweakpoint ? currentTweakpoint : currentBreakpoint;
 
-const isBreakpoint = (criteria) => {
+const isBreakpoint = (criteria: {
+	min?: BreakpointName;
+	max?: BreakpointName;
+}): boolean => {
 	const indexMin = criteria.min ? breakpointNames.indexOf(criteria.min) : 0;
 	const indexMax = criteria.max
 		? breakpointNames.indexOf(criteria.max)
@@ -167,7 +177,14 @@ const isBreakpoint = (criteria) => {
 	return indexMin <= indexCur && indexCur <= indexMax;
 };
 
-const hasCrossedBreakpoint = (includeTweakpoint) => {
+const hasCrossedBreakpoint = (
+	includeTweakpoint?: boolean,
+): ((
+	callback: (
+		is: BreakpointName | undefined,
+		was: BreakpointName | undefined,
+	) => void,
+) => void) => {
 	let was = getBreakpoint(includeTweakpoint);
 
 	return (callback) => {
@@ -183,15 +200,16 @@ const hasCrossedBreakpoint = (includeTweakpoint) => {
 // https://developer.apple.com/documentation/apple_pay_on_the_web/apple_pay_js_api/checking_for_apple_pay_availability
 const applePayApiAvailable = !!window.ApplePaySession;
 
-const isIOS = () => /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
+const isIOS = (): boolean =>
+	/(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
 
-const isAndroid = () => /Android/i.test(navigator.userAgent);
+const isAndroid = (): boolean => /Android/i.test(navigator.userAgent);
 
-const hasTouchScreen = () =>
+const hasTouchScreen = (): boolean =>
 	'ontouchstart' in window ||
 	(window.DocumentTouch && document instanceof window.DocumentTouch);
 
-const hasPushStateSupport = () => {
+const hasPushStateSupport = (): boolean | undefined => {
 	if (supportsPushState !== undefined) {
 		return supportsPushState;
 	}
@@ -208,7 +226,7 @@ const hasPushStateSupport = () => {
 	return supportsPushState;
 };
 
-const initPageVisibility = () => {
+const initPageVisibility = (): void => {
 	const onchange = (evt = window.event) => {
 		const v = 'visible';
 		const evtMap = {
@@ -246,9 +264,9 @@ const initPageVisibility = () => {
 	}
 };
 
-const pageVisible = () => pageVisibility === 'visible';
+const pageVisible = (): boolean => pageVisibility === 'visible';
 
-const isEnhanced = () => window.guardian.isEnhanced;
+const isEnhanced = (): boolean => window.guardian.isEnhanced;
 
 const getAdblockInUse = () => {
 	if (window.guardian.config.isDotcomRendering) {
@@ -267,7 +285,7 @@ const getAdblockInUse = () => {
 
 const adblockInUse = getAdblockInUse();
 
-const getReferrer = () => document.referrer || '';
+const getReferrer = (): string => document.referrer || '';
 
 const getUserAgent = (() => {
 	if (!navigator && !navigator.userAgent) {
