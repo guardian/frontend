@@ -28,6 +28,8 @@ GET        /crosswords/lookup                                                   
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:parentComponent/$listId<[0-9]+>         controllers.EmailSignupController.renderFormWithParentComponent(emailType: String, listId: Int, parentComponent:String)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:parentComponent/:listName               controllers.EmailSignupController.renderFormFromNameWithParentComponent(emailType: String, listName: String, parentComponent: String)
 GET        /email/form/footer/:listName                                              controllers.EmailSignupController.renderFooterForm(listName: String)
 GET        /email/form/thrasher/$listId<[0-9]+>                                      controllers.EmailSignupController.renderThrasherForm(listId: Int)
 GET        /email/form/thrasher/:listName                                            controllers.EmailSignupController.renderThrasherFormFromName(listName: String)
