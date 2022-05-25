@@ -28,7 +28,7 @@ const outstreamMobile: [number, number] = [
 /**
  * A listener for 'passback' messages from ad slot iFrames
  * Ad providers will postMessage a 'passback' message to tell us they have not filled this slot
- * In which case we create a 'passback' slot with another ad
+ * In which case we create a 'passback' slot to fullfill the slot with another ad
  */
 const init = (register: RegisterListener): void => {
 	register('passback', (messagePayload, ret, iframe) => {
@@ -64,17 +64,10 @@ const init = (register: RegisterListener): void => {
 				if (iFrameContainer) {
 					/**
 					 * Keep the initial outstream iFrame so they can detect passbacks.
-					 * Maintain the iFrame initial size by setting visibility to prevent CLS.
-					 * In a full width column we only then need to resize height.
+					 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
+					 * In a full width column we then just need to resize the height.
 					 */
 					iFrameContainer.style.visibility = 'hidden';
-					/**
-					 * In lieu of https://github.com/guardian/dotcom-rendering/pull/4506
-					 * which changes inline1 to take the full width of the column, the ad
-					 * will float right. In which case we have to remove the initial
-					 * iFrame from document flow and set the width once known.
-					 */
-					// iFrameContainer.style.display = 'none';
 				}
 				if (slotElement) {
 					// TODO: this should be promoted to default styles for inline1
@@ -87,7 +80,7 @@ const init = (register: RegisterListener): void => {
 			if (slotId && source) {
 				const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
 				/**
-				 * Find the live slot object from googletag
+				 * Find the initial slot object from googletag
 				 */
 				const slot = window.googletag
 					.pubads()
@@ -96,7 +89,7 @@ const init = (register: RegisterListener): void => {
 
 				if (slot) {
 					/**
-					 * Copy the targeting from the previous slot
+					 * Copy the targeting from the initial slot
 					 */
 					const pageTargeting = getValuesForKeys(
 						window.googletag.pubads().getTargetingKeys(),
@@ -112,7 +105,6 @@ const init = (register: RegisterListener): void => {
 						['passback', [source]],
 						['slot', ['inline1']],
 					];
-
 					log(
 						'commercial',
 						'Passback: initial inline1 targeting map',
@@ -120,7 +112,7 @@ const init = (register: RegisterListener): void => {
 					);
 
 					/**
-					 * Create a new ad slot element
+					 * Create a new passback ad slot element
 					 */
 					const passbackElement = document.createElement('div');
 					passbackElement.id = `${slotIdWithPrefix}--passback`;
@@ -138,7 +130,7 @@ const init = (register: RegisterListener): void => {
 					);
 
 					/**
-					 * Define and display a new slot
+					 * Define and display the new passback slot
 					 */
 					window.googletag.cmd.push(() => {
 						// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
@@ -173,13 +165,13 @@ const init = (register: RegisterListener): void => {
 					});
 
 					/**
-					 * Resize the container height when the passback has loaded.
+					 * Resize the container height once the passback has loaded.
 					 * We need to do this because the passback ad is absolutely
-					 * positioned in order to not layout shift. Therefore it is
+					 * positioned in order to not add layout shift. So it is
 					 * taken out of normal document flow and the parent container
 					 * does not take the height of the child ad element as normal.
-					 * So we set this by hooking into the googletag slotRenderEnded
-					 * event to get the size of the ad loaded.
+					 * We set the height by hooking into the googletag slotRenderEnded
+					 * event which provides the size of the loaded ad.
 					 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
 					 */
 					googletag
@@ -192,12 +184,6 @@ const init = (register: RegisterListener): void => {
 								slotElement.style.height = `${
 									size.getHeight() + labelHeight
 								}px`;
-								/**
-								 * In lieu of https://github.com/guardian/dotcom-rendering/pull/4506
-								 * which changes inline1 to take the full width of the column, the ad
-								 * will float right so we have to set the ad width.
-								 */
-								// slotElement.style.width = `${size.getWidth()}px`;
 							}
 						});
 
