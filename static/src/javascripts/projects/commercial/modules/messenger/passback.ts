@@ -28,7 +28,7 @@ const outstreamMobile: [number, number] = [
 /**
  * A listener for 'passback' messages from ad slot iFrames
  * Ad providers will postMessage a 'passback' message to tell us they have not filled this slot
- * In which case we create a 'passback' slot with another ad
+ * In which case we create a 'passback' slot to fulfil the slot with another ad
  */
 const init = (register: RegisterListener): void => {
 	register('passback', (messagePayload, ret, iframe) => {
@@ -40,7 +40,7 @@ const init = (register: RegisterListener): void => {
 			if (!source) {
 				log(
 					'commercial',
-					'Passback listener: message does not have source set',
+					'Passback: postMessage does not have source set',
 				);
 			}
 			/**
@@ -51,9 +51,14 @@ const init = (register: RegisterListener): void => {
 			if (!slotId) {
 				log(
 					'commercial',
-					'Passback listener: cannot determine the calling iFrame',
+					'Passback: cannot determine the calling iFrame',
 				);
 			}
+
+			log(
+				'commercial',
+				`Passback: from ${source} for slot ${String(slotId)}`,
+			);
 
 			if (iframe) {
 				const iFrameContainer =
@@ -62,17 +67,10 @@ const init = (register: RegisterListener): void => {
 				if (iFrameContainer) {
 					/**
 					 * Keep the initial outstream iFrame so they can detect passbacks.
-					 * Maintain the iFrame initial size by setting visibility to prevent CLS.
-					 * In a full width column we only then need to resize height.
+					 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
+					 * In a full width column we then just need to resize the height.
 					 */
 					iFrameContainer.style.visibility = 'hidden';
-					/**
-					 * In lieu of https://github.com/guardian/dotcom-rendering/pull/4506
-					 * which changes inline1 to take the full width of the column, the ad
-					 * will float right. In which case we have to remove the initial
-					 * iFrame from document flow and set the width once known.
-					 */
-					// iFrameContainer.style.display = 'none';
 				}
 				if (slotElement) {
 					// TODO: this should be promoted to default styles for inline1
@@ -85,34 +83,46 @@ const init = (register: RegisterListener): void => {
 			if (slotId && source) {
 				const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
 				/**
-				 * Find the live slot object from googletag
+				 * Find the initial slot object from googletag
 				 */
-				const slot = window.googletag
+				const initialSlot = window.googletag
 					.pubads()
 					.getSlots()
 					.find((s) => s.getSlotElementId() === slotIdWithPrefix);
 
-				if (slot) {
+				if (initialSlot) {
 					/**
-					 * Copy the targeting from the previous slot
+					 * Copy the targeting from the initial slot
 					 */
 					const pageTargeting = getValuesForKeys(
 						window.googletag.pubads().getTargetingKeys(),
 						(key) => window.googletag.pubads().getTargeting(key),
 					);
 					const slotTargeting = getValuesForKeys(
-						slot.getTargetingKeys(),
-						(key) => slot.getTargeting(key),
+						initialSlot.getTargetingKeys(),
+						(key) => initialSlot.getTargeting(key),
 					);
-					const allTargeting: Array<[string, string[]]> = [
+					log(
+						'commercial',
+						'Passback: initial inline1 targeting',
+						Object.fromEntries([
+							...pageTargeting,
+							...slotTargeting,
+						]),
+					);
+
+					/**
+					 * Create the targeting for the new passback slot
+					 */
+					const passbackTargeting: Array<[string, string[]]> = [
 						...pageTargeting,
 						...slotTargeting,
 						['passback', [source]],
-						['slot', ['inline']],
+						['slot', ['inline1']],
 					];
 
 					/**
-					 * Create a new ad slot element
+					 * Create a new passback ad slot element
 					 */
 					const passbackElement = document.createElement('div');
 					passbackElement.id = `${slotIdWithPrefix}--passback`;
@@ -130,65 +140,73 @@ const init = (register: RegisterListener): void => {
 					);
 
 					/**
-					 * Define and display a new slot
+					 * Define and display the new passback slot
 					 */
 					window.googletag.cmd.push(() => {
 						// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
 						const passbackSlot = googletag.defineSlot(
-							slot.getAdUnitPath(),
+							initialSlot.getAdUnitPath(),
 							[mpu, outstreamMobile, outstreamDesktop],
 							passbackElement.id,
 						);
-						// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
-						passbackSlot?.defineSizeMapping([
-							[
-								[breakpoints.phablet, 0],
-								[mpu, outstreamDesktop],
-							],
-							[
-								[breakpoints.mobile, 0],
-								[mpu, outstreamMobile],
-							],
-						]);
-						passbackSlot?.addService(window.googletag.pubads());
-						allTargeting.forEach(([key, value]) => {
-							slot.setTargeting(key, value);
-						});
-						googletag.display(passbackElement.id);
+						if (passbackSlot) {
+							// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
+							passbackSlot.defineSizeMapping([
+								[
+									[breakpoints.phablet, 0],
+									[mpu, outstreamDesktop],
+								],
+								[
+									[breakpoints.mobile, 0],
+									[mpu, outstreamMobile],
+								],
+							]);
+							passbackSlot.addService(window.googletag.pubads());
+							passbackTargeting.forEach(([key, value]) => {
+								passbackSlot.setTargeting(key, value);
+							});
+							log(
+								'commercial',
+								'Passback: passback inline1 targeting map',
+								passbackSlot.getTargetingMap(),
+							);
+							googletag.display(passbackElement.id);
+						}
 					});
 
 					/**
-					 * Resize the container height when the passback has loaded.
+					 * Resize the container height once the passback has loaded.
 					 * We need to do this because the passback ad is absolutely
-					 * positioned in order to not layout shift. Therefore it is
+					 * positioned in order to not add layout shift. So it is
 					 * taken out of normal document flow and the parent container
 					 * does not take the height of the child ad element as normal.
-					 * So we set this by hooking into the googletag slotRenderEnded
-					 * event to get the size of the ad loaded.
+					 * We set the height by hooking into the googletag slotRenderEnded
+					 * event which provides the size of the loaded ad.
 					 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
 					 */
 					googletag
 						.pubads()
-						.addEventListener('slotRenderEnded', function (event) {
-							const slotId = event.slot.getSlotElementId();
-							if (slotId === passbackElement.id) {
-								const size =
-									event.slot.getSizes()[0] as googletag.Size;
-								slotElement.style.height = `${
-									size.getHeight() + labelHeight
-								}px`;
-								/**
-								 * In lieu of https://github.com/guardian/dotcom-rendering/pull/4506
-								 * which changes inline1 to take the full width of the column, the ad
-								 * will float right so we have to set the ad width.
-								 */
-								// slotElement.style.width = `${size.getWidth()}px`;
-							}
-						});
+						.addEventListener(
+							'slotRenderEnded',
+							function (
+								event: googletag.events.SlotRenderEndedEvent,
+							) {
+								const slotId = event.slot.getSlotElementId();
+								if (slotId === passbackElement.id) {
+									const size = event.size;
+									if (Array.isArray(size)) {
+										const height = size[1];
+										slotElement.style.height = `${
+											height + labelHeight
+										}px`;
+									}
+								}
+							},
+						);
 
 					log(
 						'commercial',
-						`Passback listener: passback from ${source} creating slot: ${passbackElement.id}`,
+						`Passback: from ${source} creating slot: ${passbackElement.id}`,
 					);
 				}
 			}
