@@ -191,9 +191,8 @@ class EmailSignupController(
     }
 
   def renderFormWithParentComponent (emailType: String, listId: Int, parentComponent: String): Action[AnyContent] =
-    csrfAddToken {
-      return renderForm(emailType,listId, Option(parentComponent))
-    }
+    return renderForm(emailType,listId, Option(parentComponent))
+
 
   def renderForm(emailType: String, listId: Int, iframeParentComponent: Option[String] = None): Action[AnyContent] =
     csrfAddToken {
@@ -232,9 +231,8 @@ class EmailSignupController(
 
 
   def renderFormFromNameWithParentComponent (emailType: String, listName: String, parentComponent: String): Action[AnyContent] =
-    csrfAddToken {
-      return renderFormFromName(emailType,listName, Option(parentComponent))
-    }
+    renderFormFromName(emailType,listName, Option(parentComponent))
+
 
   def renderFormFromName(emailType: String, listName: String, iframeParentComponent:Option[String] = None): Action[AnyContent] =
     csrfAddToken {
