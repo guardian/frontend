@@ -1,4 +1,3 @@
-import config from './config';
 import { mediator } from './mediator';
 
 // These should match those defined in:
@@ -252,7 +251,7 @@ const pageVisible = () => pageVisibility === 'visible';
 const isEnhanced = () => window.guardian.isEnhanced;
 
 const getAdblockInUse = () => {
-	if (config.get('isDotcomRendering', false)) {
+	if (window.guardian.config.isDotcomRendering) {
 		return Promise.resolve(false);
 	}
 	return new Promise((resolve) => {
