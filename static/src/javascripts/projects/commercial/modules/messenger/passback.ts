@@ -55,7 +55,10 @@ const init = (register: RegisterListener): void => {
 				);
 			}
 
-			log('commercial', `Passback: from ${source}`);
+			log(
+				'commercial',
+				`Passback: from ${source} for slot ${String(slotId)}`,
+			);
 
 			if (iframe) {
 				const iFrameContainer =
