@@ -28,7 +28,7 @@ const outstreamMobile: [number, number] = [
 /**
  * A listener for 'passback' messages from ad slot iFrames
  * Ad providers will postMessage a 'passback' message to tell us they have not filled this slot
- * In which case we create a 'passback' slot to fullfill the slot with another ad
+ * In which case we create a 'passback' slot to fulfil the slot with another ad
  */
 const init = (register: RegisterListener): void => {
 	register('passback', (messagePayload, ret, iframe) => {
