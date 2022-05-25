@@ -1,6 +1,6 @@
 import { log } from '@guardian/libs';
 import defaultConfig from '../../../../lib/config';
-import { getBreakpoint } from '../../../../lib/detect';
+import { getBreakpoint, getUserAgent } from '../../../../lib/detect';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
@@ -76,6 +76,11 @@ class CommercialFeatures {
 			config.get('page.showNewRecipeDesign') &&
 			config.get('tests.abNewRecipeDesign');
 
+		// Determine if running an unsupported browser
+		const isInternetExplorer =
+			typeof getUserAgent === 'string' && getUserAgent.startsWith('IE');
+		const isUnsupportedBrowser = isInternetExplorer;
+
 		this.isSecureContact = [
 			'help/ng-interactive/2017/mar/17/contact-the-guardian-securely',
 			'help/2016/sep/19/how-to-contact-the-guardian-securely',
@@ -95,6 +100,7 @@ class CommercialFeatures {
 			sensitiveContent,
 			isIdentityPage,
 			adFree: this.adFree,
+			isUnsupportedBrowser,
 		};
 
 		this.dfpAdvertising =
