@@ -102,17 +102,24 @@ const init = (register: RegisterListener): void => {
 						initialSlot.getTargetingKeys(),
 						(key) => initialSlot.getTargeting(key),
 					);
-					const allTargeting: Array<[string, string[]]> = [
+					log(
+						'commercial',
+						'Passback: initial inline1 targeting',
+						Object.fromEntries([
+							...pageTargeting,
+							...slotTargeting,
+						]),
+					);
+
+					/**
+					 * Create the targeting for the new passback slot
+					 */
+					const passbackTargeting: Array<[string, string[]]> = [
 						...pageTargeting,
 						...slotTargeting,
 						['passback', [source]],
 						['slot', ['inline1']],
 					];
-					log(
-						'commercial',
-						'Passback: initial inline1 targeting map',
-						allTargeting,
-					);
 
 					/**
 					 * Create a new passback ad slot element
@@ -155,7 +162,7 @@ const init = (register: RegisterListener): void => {
 								],
 							]);
 							passbackSlot.addService(window.googletag.pubads());
-							allTargeting.forEach(([key, value]) => {
+							passbackTargeting.forEach(([key, value]) => {
 								passbackSlot.setTargeting(key, value);
 							});
 							log(
