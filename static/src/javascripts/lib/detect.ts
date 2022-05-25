@@ -49,6 +49,9 @@ const breakpoints = [
 type Breakpoint = typeof breakpoints[number];
 type BreakpointName = Breakpoint['name'];
 
+const isBreakpointName = (name: string): name is BreakpointName =>
+	breakpoints.some((breakpoint) => name === breakpoint.name);
+
 let currentBreakpoint: BreakpointName | undefined;
 let currentTweakpoint: BreakpointName | undefined;
 let supportsPushState: boolean | undefined;
@@ -100,8 +103,10 @@ const updateBreakpoints = () => {
 		1,
 		bodyStyle.content.length - 1,
 	);
-	const breakpointIndex = breakpointNames.indexOf(breakpointName);
-	updateBreakpoint(breakpoints[breakpointIndex]);
+	if (isBreakpointName(breakpointName)) {
+		const breakpointIndex = breakpointNames.indexOf(breakpointName);
+		updateBreakpoint(breakpoints[breakpointIndex]);
+	}
 };
 
 const initMediaQueryListeners = () => {
