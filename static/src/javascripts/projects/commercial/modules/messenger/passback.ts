@@ -110,7 +110,7 @@ const init = (register: RegisterListener): void => {
 						...pageTargeting,
 						...slotTargeting,
 						['passback', [source]],
-						['slot', ['inline']],
+						['slot', ['inline1']],
 					];
 
 					log(
