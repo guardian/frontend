@@ -155,6 +155,11 @@ const init = (register: RegisterListener): void => {
 							allTargeting.forEach(([key, value]) => {
 								passbackSlot.setTargeting(key, value);
 							});
+							log(
+								'commercial',
+								'passback targeting',
+								passbackSlot.getTargetingMap(),
+							);
 							googletag.display(passbackElement.id);
 						}
 					});
