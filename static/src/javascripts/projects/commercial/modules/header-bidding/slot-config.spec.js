@@ -167,7 +167,6 @@ describe('getSlots', () => {
                 key: 'inline1',
                 sizes: [
                     [300, 250],
-                    [550, 310],
                     [620, 350]
                 ],
             },
@@ -195,7 +194,7 @@ describe('getSlots', () => {
 		});
         expect(desktopSlots).toContainEqual({
             key: 'inline1',
-            sizes: [[300, 250], [550, 310], [620, 350]],
+            sizes: [[300, 250], [620, 350]],
         });
 		expect(desktopSlots).not.toContainEqual({
 			key: 'inline',
