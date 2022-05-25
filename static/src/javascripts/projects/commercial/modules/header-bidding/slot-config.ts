@@ -77,7 +77,6 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 			sizes: isArticle
 				? [
 						[300, 250],
-						[550, 310],
 						[620, 350],
 				  ]
 				: isCrossword
@@ -128,7 +127,6 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 			sizes: isArticle
 				? [
 						[300, 250],
-						[550, 310],
 						[620, 350],
 				  ]
 				: isCrossword
