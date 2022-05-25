@@ -82,12 +82,12 @@ const init = (register: RegisterListener): void => {
 				/**
 				 * Find the initial slot object from googletag
 				 */
-				const slot = window.googletag
+				const initialSlot = window.googletag
 					.pubads()
 					.getSlots()
 					.find((s) => s.getSlotElementId() === slotIdWithPrefix);
 
-				if (slot) {
+				if (initialSlot) {
 					/**
 					 * Copy the targeting from the initial slot
 					 */
@@ -96,8 +96,8 @@ const init = (register: RegisterListener): void => {
 						(key) => window.googletag.pubads().getTargeting(key),
 					);
 					const slotTargeting = getValuesForKeys(
-						slot.getTargetingKeys(),
-						(key) => slot.getTargeting(key),
+						initialSlot.getTargetingKeys(),
+						(key) => initialSlot.getTargeting(key),
 					);
 					const allTargeting: Array<[string, string[]]> = [
 						...pageTargeting,
@@ -135,7 +135,7 @@ const init = (register: RegisterListener): void => {
 					window.googletag.cmd.push(() => {
 						// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
 						const passbackSlot = googletag.defineSlot(
-							slot.getAdUnitPath(),
+							initialSlot.getAdUnitPath(),
 							[mpu, outstreamMobile, outstreamDesktop],
 							passbackElement.id,
 						);
