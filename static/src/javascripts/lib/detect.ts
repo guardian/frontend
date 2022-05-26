@@ -1,9 +1,19 @@
+// TODO Avoid having to do this renaming
+import type { Breakpoint as BreakpointName } from '@guardian/source-foundations';
 import { mediator } from './mediator';
+
+type Breakpoint = {
+	name: BreakpointName;
+	isTweakpoint: boolean;
+	width: number;
+	listener?: (mql: MediaQueryList) => void;
+	mql?: MediaQueryList;
+};
 
 // These should match those defined in:
 //   stylesheets/_vars.scss
 //   common/app/layout/Breakpoint.scala
-const breakpoints = [
+const breakpoints: Breakpoint[] = [
 	{
 		name: 'mobile',
 		isTweakpoint: false,
@@ -44,10 +54,7 @@ const breakpoints = [
 		isTweakpoint: false,
 		width: 1300,
 	},
-] as const;
-
-type Breakpoint = typeof breakpoints[number];
-type BreakpointName = Breakpoint['name'];
+];
 
 const isBreakpointName = (name: string): name is BreakpointName =>
 	breakpoints.some((breakpoint) => name === breakpoint.name);
@@ -88,8 +95,8 @@ const updateBreakpoint = (breakpoint: Breakpoint) => {
 };
 
 // this function has a Breakpoint as context, so we can't use fat arrows
-const onMatchingBreakpoint = function (mql) {
-	if (mql && mql.matches) {
+const onMatchingBreakpoint = function (this: Breakpoint, mql?: MediaQueryList) {
+	if (mql?.matches) {
 		updateBreakpoint(this);
 	}
 };
