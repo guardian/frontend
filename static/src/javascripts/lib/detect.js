@@ -1,5 +1,6 @@
 import config from './config';
 import { mediator } from './mediator';
+import { isObject, isString } from '@guardian/libs';
 
 // These should match those defined in:
 //   stylesheets/_vars.scss
@@ -316,6 +317,20 @@ const getUserAgent = () => {
 
 const userAgent = getUserAgent();
 
+/**
+ * Determine whether current browser is a version of Internet Explorer
+ */
+const isInternetExplorer = () => {
+	const userAgent = getUserAgent();
+
+	return (
+		// IE 10 and IE 11
+		(isString(userAgent) && userAgent.startsWith('IE')) ||
+		// IE 9 and below
+		(isObject(userAgent) && userAgent.browser === 'MSIE')
+	);
+};
+
 const isGoogleProxy = () =>
 	!!(
 		navigator &&
@@ -333,6 +348,7 @@ export {
 	getBreakpoint,
 	getUserAgent,
 	userAgent,
+	isInternetExplorer,
 	getViewport,
 	isIOS,
 	applePayApiAvailable,

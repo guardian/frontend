@@ -1,6 +1,6 @@
 import { log } from '@guardian/libs';
 import defaultConfig from '../../../../lib/config';
-import { getBreakpoint, getUserAgent } from '../../../../lib/detect';
+import { getBreakpoint, isInternetExplorer } from '../../../../lib/detect';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
@@ -76,10 +76,8 @@ class CommercialFeatures {
 			config.get('page.showNewRecipeDesign') &&
 			config.get('tests.abNewRecipeDesign');
 
-		// Determine if running an unsupported browser
-		const isInternetExplorer =
-			typeof getUserAgent === 'string' && getUserAgent.startsWith('IE');
-		const isUnsupportedBrowser = isInternetExplorer;
+		// TODO Convert detect.js to TypeScript
+		const isUnsupportedBrowser = (isInternetExplorer as () => boolean)();
 
 		this.isSecureContact = [
 			'help/ng-interactive/2017/mar/17/contact-the-guardian-securely',
