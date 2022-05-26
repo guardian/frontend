@@ -240,6 +240,17 @@
     flex-shrink: 0;
 }
 
+.email-sub__form--thrasher-inside-saturday,
+.email-sub__form--thrasher-her-stage,
+.email-sub__form--thrasher-the-guide-staying-in,
+.email-sub__form--thrasher-tech-scape,
+.email-sub__form--thrasher-the-long-read {
+
+    .email-sub__thrasher-embed-label {
+        color: $brightness-7;
+    }
+}
+
 .email-sub__form--thrasher-us-morning-newsletter,
 .email-sub__form--thrasher-morning-mail,
 .email-sub__form--thrasher-first-edition,
