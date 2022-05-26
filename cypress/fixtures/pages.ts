@@ -41,4 +41,4 @@ const liveblogs = [
 
 const pages = [...fronts, ...articles, ...liveblogs];
 
-export { pages, articles, liveblogs };
+export { fronts, pages, articles, liveblogs };
