@@ -10,6 +10,7 @@
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts"
  ],
  "../lib/detect.js": [
+  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
   "../lib/config.js",
   "../lib/mediator.ts"
  ],
