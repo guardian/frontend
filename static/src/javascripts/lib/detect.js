@@ -270,7 +270,7 @@ const adblockInUse = getAdblockInUse();
 
 const getReferrer = () => document.referrer || '';
 
-const getUserAgent = (() => {
+const getUserAgent = () => {
 	if (!navigator && !navigator.userAgent) {
 		return '';
 	}
@@ -312,7 +312,9 @@ const getUserAgent = (() => {
 		browser: M[0],
 		version: M[1],
 	};
-})();
+};
+
+const userAgent = getUserAgent();
 
 const isGoogleProxy = () =>
 	!!(
@@ -330,6 +332,7 @@ export {
 	hasPushStateSupport,
 	getBreakpoint,
 	getUserAgent,
+	userAgent,
 	getViewport,
 	isIOS,
 	applePayApiAvailable,

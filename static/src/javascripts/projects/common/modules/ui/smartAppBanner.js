@@ -1,7 +1,7 @@
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { getCookie, addCookie } from 'lib/cookies';
-import { isIOS, isAndroid, getBreakpoint, getUserAgent } from 'lib/detect';
+import { isIOS, isAndroid, getBreakpoint, userAgent } from 'lib/detect';
 import template from 'lodash/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
@@ -54,7 +54,7 @@ const messageCode = isIOS() ? 'ios' : 'android';
 
 const canUseSmartBanner = () =>
     config.get('switches.smartAppBanner') &&
-    getUserAgent.browser === 'Safari' &&
+    userAgent.browser === 'Safari' &&
     isIOS();
 
 const canShow = () =>
