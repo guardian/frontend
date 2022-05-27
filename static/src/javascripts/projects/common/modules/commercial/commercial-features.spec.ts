@@ -41,6 +41,7 @@ jest.mock('./user-features', () => ({
 }));
 
 jest.mock('../../../../lib/detect', () => ({
+	...jest.requireActual('../../../../lib/detect'),
 	getBreakpoint: jest.fn(),
 }));
 
@@ -48,9 +49,28 @@ jest.mock('../identity/api', () => ({
 	isUserLoggedIn: jest.fn(),
 }));
 
+const originalUserAgent = navigator.userAgent;
+
+const clearUserAgent = () => {
+	Object.defineProperty(navigator, 'userAgent', {
+		value: originalUserAgent,
+		writable: true,
+	});
+};
+
+const mockUserAgent = (userAgent: string) => {
+	Object.defineProperty(navigator, 'userAgent', {
+		value: userAgent,
+		writable: true,
+	});
+};
+
 describe('Commercial features', () => {
 	beforeEach(() => {
 		jest.resetAllMocks();
+
+		// Restore user agent to jsdom default
+		clearUserAgent();
 
 		// Set up a happy path by default
 		config.set('page', {
@@ -116,6 +136,62 @@ describe('Commercial features', () => {
 			const features = new CommercialFeatures();
 			expect(features.adFree).toBe(true);
 			expect(features.dfpAdvertising).toBe(false);
+		});
+
+		describe('In browser', () => {
+			const unsupportedBrowsers = [
+				[
+					'Internet Explorer 11',
+					'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
+				],
+				[
+					'Internet Explorer 10',
+					'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
+				],
+				[
+					'Internet Explorer 9',
+					'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)',
+				],
+				[
+					'Internet Explorer 8',
+					'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
+				],
+				[
+					'Internet Explorer 7',
+					'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)',
+				],
+			];
+
+			it.each(unsupportedBrowsers)('%s is disabled', (_, userAgent) => {
+				mockUserAgent(userAgent);
+				const features = new CommercialFeatures();
+				expect(features.dfpAdvertising).toBe(false);
+			});
+
+			const someSupportedBrowsers = [
+				[
+					'Chrome - Mac',
+					'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+				],
+				[
+					'Chrome - Windows',
+					'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+				],
+				[
+					'Firefox - Windows',
+					'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:70.0) Gecko/20100101 Firefox/70.0',
+				],
+				[
+					'Safari - Mac',
+					'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Safari/605.1.15',
+				],
+			];
+
+			it.each(someSupportedBrowsers)('%s is enabled', (_, userAgent) => {
+				mockUserAgent(userAgent);
+				const features = new CommercialFeatures();
+				expect(features.dfpAdvertising).toBe(true);
+			});
 		});
 	});
 
