@@ -5,6 +5,7 @@ window.addEventListener('message', (event) => {
 	if (!allowedOrigins.includes(event.origin)) return;
 	if (event.data === 'resize') resizeToCurrentHeight();
 });
+trackClickEvent(document.querySelector("button[type=submit]"))
 setupSubmitListener();
 resizeToCurrentHeight();
 

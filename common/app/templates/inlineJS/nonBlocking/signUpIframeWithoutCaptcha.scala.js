@@ -5,4 +5,5 @@ function trackFormSubmit(formElement) {
     formElement.addEventListener('submit', sendTrackingForFormSubmission)
 }
 
+trackClickEvent(document.querySelector("button[type=submit]"))
 trackFormSubmit(document.querySelector('form'))

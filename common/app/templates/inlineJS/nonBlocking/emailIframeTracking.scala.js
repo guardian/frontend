@@ -65,4 +65,3 @@ function sendTrackingForCaptchaError() {
     sendEvent(componentEventData, 'component-event')
 }
 
-trackClickEvent(document.querySelector("button[type=submit]"))
