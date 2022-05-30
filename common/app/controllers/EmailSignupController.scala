@@ -190,9 +190,8 @@ class EmailSignupController(
       }
     }
 
-  def renderFormWithParentComponent (emailType: String, listId: Int, parentComponent: String): Action[AnyContent] =
-    renderForm(emailType,listId, Option(parentComponent))
-
+  def renderFormWithParentComponent(emailType: String, listId: Int, parentComponent: String): Action[AnyContent] =
+    renderForm(emailType, listId, Option(parentComponent))
 
   def renderForm(emailType: String, listId: Int, iframeParentComponent: Option[String] = None): Action[AnyContent] =
     csrfAddToken {
@@ -229,12 +228,18 @@ class EmailSignupController(
     log.error(s"Newsletter not found: Couldn't find $newsletterName")
   }
 
+  def renderFormFromNameWithParentComponent(
+      emailType: String,
+      listName: String,
+      parentComponent: String,
+  ): Action[AnyContent] =
+    renderFormFromName(emailType, listName, Option(parentComponent))
 
-  def renderFormFromNameWithParentComponent (emailType: String, listName: String, parentComponent: String): Action[AnyContent] =
-    renderFormFromName(emailType,listName, Option(parentComponent))
-
-
-  def renderFormFromName(emailType: String, listName: String, iframeParentComponent:Option[String] = None): Action[AnyContent] =
+  def renderFormFromName(
+      emailType: String,
+      listName: String,
+      iframeParentComponent: Option[String] = None,
+  ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
         val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
