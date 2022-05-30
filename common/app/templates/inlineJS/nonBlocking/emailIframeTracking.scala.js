@@ -50,7 +50,7 @@ function sendTrackingForFormSubmission() {
     sendEvent(componentEventData, 'component-event')
 }
 
-function sendTrackingForCaptchaLoad() {
+function sendTrackingForCaptchaOpen() {
     const componentEventData = getComponentEvent(document.querySelector('form'),"EXPAND", "open-captcha")
     sendEvent(componentEventData, 'component-event')
 }

@@ -9,6 +9,7 @@ trackClickEvent(document.querySelector("button[type=submit]"))
 setupSubmitListener();
 resizeToCurrentHeight();
 
+
 function resizeToCurrentHeight() {
 	iframeMessenger.resize();
 }
@@ -22,8 +23,10 @@ function sendResizeMessage(height) {
 	iframeMessenger.resize(height);
 }
 
-function resizeToFitCaptcha() {
-	sendResizeMessage(500);
+function openCaptcha() {
+    sendResizeMessage(500);
+    sendTrackingForCaptchaOpen()
+	grecaptcha.execute();
 }
 
 function setupSubmitListener() {
@@ -35,7 +38,9 @@ function setupSubmitListener() {
 function onSubmit(e) {
 	e.preventDefault();
 
-    if (!window.grecaptcha) { // grecaptcha has not yet been rendered
+    if (!window.grecaptcha) { // grecaptcha has not yet been loaded and rendered
+        // add recaptcha script to the document's head and configure it to run
+        // onRecaptchaScriptLoaded as the callback for when the script has loaded.
         (function (d, script) {
             script = d.createElement('script');
             script.type = 'text/javascript';
@@ -45,15 +50,12 @@ function onSubmit(e) {
                 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit';
             d.getElementsByTagName('head')[0].appendChild(script);
         })(document);
-    } else { // grecaptcha has already been rendered, but been dismissed or expired
-        resizeToFitCaptcha();
-        sendTrackingForCaptchaLoad();
-        grecaptcha.execute();
+    } else { // grecaptcha has already been loaded and rendered, but been dismissed or expired
+        openCaptcha()
     }
 }
 
 function onRecaptchaScriptLoaded() {
-	resizeToFitCaptcha();
 	const captchaContainer = document.querySelector('.grecaptcha_container');
 	grecaptcha.render(captchaContainer, {
 		sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
@@ -62,8 +64,7 @@ function onRecaptchaScriptLoaded() {
 		'expired-callback': onCaptchaExpired,
 		size: 'invisible',
 	});
-    sendTrackingForCaptchaLoad()
-	grecaptcha.execute();
+    openCaptcha()
 }
 
 function onCaptchaCompleted(token) {
