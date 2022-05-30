@@ -6,8 +6,6 @@ import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import type { PageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { prebidPriceGranularity } from 'common/modules/experiments/tests/prebid-price-granularity';
 import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
@@ -313,12 +311,9 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		});
 	}
 
-	if (
-		window.guardian.config.switches.prebidOzone &&
-		isInVariantSynchronous(prebidPriceGranularity, 'variant')
-	) {
-		// When in the variant of the test use a custom price granularity for Ozone
-		// The variant line items will have a separate structure
+	if (window.guardian.config.switches.prebidOzone) {
+		// Use a custom price granularity for Ozone
+		// This price granularity is based upon the size of the slot being auctioned
 		window.pbjs.setBidderConfig({
 			bidders: ['ozone'],
 			config: {
@@ -336,17 +331,6 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 				},
 			},
 		});
-
-		// Add key-value targeting to only match line items setup for variant of test
-		// Line items in control must negatively target this value
-		window.pbjs.bidderSettings.ozone = {
-			adserverTargeting: [
-				{
-					key: 'hb_ab_test',
-					val: () => 'variant',
-				},
-			],
-		};
 	}
 
 	window.pbjs.setConfig(pbjsConfig);
