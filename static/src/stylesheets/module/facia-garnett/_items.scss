@@ -71,7 +71,7 @@
     margin-bottom: $gs-baseline;
 
     @include mq(tablet) {
-        .has-flex &:not(.fc-slice__item--mpu-candidate) {
+        &:not(.fc-slice__item--mpu-candidate) {
             display: flex;
         }
     }

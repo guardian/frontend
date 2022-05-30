@@ -53,10 +53,6 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 						[300, 250],
 				  ],
 		},
-		{
-			key: 'inline1',
-			sizes: isCrossword ? [[728, 90]] : [[300, 250]],
-		},
 	];
 	const desktopSlots: HeaderBiddingSlot[] = [
 		{
@@ -74,6 +70,17 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 						[300, 600],
 						[300, 250],
 				  ]
+				: [[300, 250]],
+		},
+		{
+			key: 'inline1',
+			sizes: isArticle
+				? [
+						[300, 250],
+						[620, 350],
+				  ]
+				: isCrossword
+				? [[728, 90]]
 				: [[300, 250]],
 		},
 		{
@@ -116,6 +123,17 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 			sizes: [[300, 250]],
 		},
 		{
+			key: 'inline1',
+			sizes: isArticle
+				? [
+						[300, 250],
+						[620, 350],
+				  ]
+				: isCrossword
+				? [[728, 90]]
+				: [[300, 250]],
+		},
+		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
 				? [
@@ -134,6 +152,15 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 		{
 			key: 'inline',
 			sizes: [[300, 250]],
+		},
+		{
+			key: 'inline1',
+			sizes: isArticle
+				? [
+						[300, 197],
+						[300, 250],
+				  ]
+				: [[300, 250]],
 		},
 		{
 			key: 'mostpop',

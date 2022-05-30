@@ -5,7 +5,7 @@ import experiments.ParticipationGroups._
 import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
-  override val allExperiments: Set[Experiment] = Set(Inline1ContainerSizing)
+  override val allExperiments: Set[Experiment] = Set(Inline1ContainerSizing, InteractivesIdleLoading)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -24,6 +24,16 @@ object Inline1ContainerSizing
       name = "inline1-container-sizing",
       description = "Tests the impact on CLS of fixing the inline1 ad container to full width",
       owners = Seq(Owner.withGithub("arelra")),
-      sellByDate = LocalDate.of(2022, 5, 24),
+      sellByDate = LocalDate.of(2022, 5, 31),
       participationGroup = Perc20A,
+    )
+
+object InteractivesIdleLoading
+    extends Experiment(
+      name = "interactives-idle-loading",
+      description =
+        "Tests the impact of loading interactive embeds on page idle instead of when they become visible in the viewport",
+      owners = Seq(Owner.withGithub("simonbyford")),
+      sellByDate = LocalDate.of(2022, 7, 1),
+      participationGroup = Perc10A,
     )

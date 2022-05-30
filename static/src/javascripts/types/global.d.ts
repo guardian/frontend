@@ -79,34 +79,36 @@ interface Config {
 type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
 
 interface PageConfig extends CommercialPageConfig {
-	edition: Edition;
-	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
-	isSensitive: boolean;
-	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
-	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
-	hasPageSkin: boolean; //https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L48
 	assetsPath: string;
-	frontendAssetsFullURL?: string; // only in DCR
-	nonRefreshableLineItemIds?: number[];
-	section: string;
-	isPaidContent: boolean;
-	videoDuration: number;
-	source: string;
-	pageId: string;
 	authorIds: string;
 	blogIds: string;
 	contentType: string;
+	edition: Edition;
+	frontendAssetsFullURL?: string; // only in DCR
+	hasInlineMerchandise: boolean;
+	hasPageSkin: boolean; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L48
+	host: string;
+	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
+	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
+	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
+	isPaidContent: boolean;
+	isProd: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala
+	isSensitive: boolean;
 	keywordIds: string;
 	keywords: string;
-	toneIds: string;
+	nonRefreshableLineItemIds?: number[];
+	pageId: string;
 	publication: string;
-	seriesId: string;
+	section: string;
 	series: string;
-	sponsorshipType: string;
-	tones: string;
-	hasInlineMerchandise: boolean;
+	seriesId: string;
 	shouldHideReaderRevenue?: boolean;
+	source: string;
+	sponsorshipType: string;
+	toneIds: string;
+	tones: string;
+	videoDuration: number;
 }
 
 interface Ophan {

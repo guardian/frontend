@@ -267,6 +267,7 @@ private object NavLinks {
       science,
       tech,
       globalDevelopment,
+      obituaries,
     ),
   )
   val auNewsPillar = ukNewsPillar.copy(
@@ -399,6 +400,7 @@ private object NavLinks {
       MLS,
       NBA,
       NHL,
+      formulaOne,
     ),
   )
   val intSportPillar = ukSportPillar.copy(

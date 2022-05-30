@@ -131,6 +131,7 @@ object PressedContent {
     "/lifeandstyle/ng-interactive/2018/apr/21/great-lengths",
     "/technology/ng-interactive/2018/apr/24/bezoss-empire-how-amazon-became-the-worlds-biggest-retailer",
     "/world/2018/apr/26/lynchings-sadism-white-men-why-america-must-atone",
+    "/technology/ng-interactive/2018/may/15/the-guardian-app",
     "/world/ng-interactive/2018/jul/03/thailand-cave-rescue-where-were-the-boys-found-and-how-can-they-be-rescued",
     "/info/ng-interactive/2018/jul/24/working-report",
     "/us-news/2018/jul/30/black-panthers-prison-interviews-african-american-activism",
