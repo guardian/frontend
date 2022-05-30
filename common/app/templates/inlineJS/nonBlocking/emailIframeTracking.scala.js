@@ -1,12 +1,14 @@
 @()
 
+// Events without a type explictily supported in Ophan's iframe handler script
+// will be ignored.
 const sendEvent = (payload, eventType) => {
     const msg = {
         id: 'xxxxxxxxxx'.replace(/x/g, () =>
             // eslint-disable-next-line no-bitwise
             ((Math.random() * 36) | 0).toString(36)
         ),
-        type: `ophan-iframe-${eventType}`,
+        type: eventType,
         iframeId: window.frameElement ? window.frameElement.id : null,
         value: payload,
     };
@@ -36,7 +38,7 @@ const trackClickEvent = (buttonElement) => {
     if (!buttonElement) { return {} }
     buttonElement.addEventListener('click', (event) => {
         const clickEvent = getClickEvent(buttonElement)
-        sendEvent(clickEvent, 'click-event')
+        sendEvent(clickEvent, 'ophan-iframe-click-event')
     })
 }
 
@@ -46,22 +48,22 @@ function validateForm() {
 }
 
 function sendTrackingForFormSubmission() {
-    const componentEventData = getComponentEvent(document.querySelector('form'),"SUBSCRIBE", "form-submission")
-    sendEvent(componentEventData, 'component-event')
+    const componentEventData = getComponentEvent(document.querySelector('form'), "SUBSCRIBE", "form-submission")
+    sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaOpen() {
-    const componentEventData = getComponentEvent(document.querySelector('form'),"EXPAND", "open-captcha")
-    sendEvent(componentEventData, 'component-event')
+    const componentEventData = getComponentEvent(document.querySelector('form'), "EXPAND", "open-captcha")
+    sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaExpire() {
-    const componentEventData = getComponentEvent(document.querySelector('form'),"CLOSE", "captcha-expired")
-    sendEvent(componentEventData, 'component-event')
+    const componentEventData = getComponentEvent(document.querySelector('form'), "CLOSE", "captcha-expired")
+    sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaError() {
-    const componentEventData = getComponentEvent(document.querySelector('form'),"CLOSE", "captcha-error")
-    sendEvent(componentEventData, 'component-event')
+    const componentEventData = getComponentEvent(document.querySelector('form'), "CLOSE", "captcha-error")
+    sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
