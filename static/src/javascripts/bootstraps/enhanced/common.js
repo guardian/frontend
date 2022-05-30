@@ -33,7 +33,6 @@ import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
-import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
@@ -269,7 +268,6 @@ const initialiseBanner = () => {
         membershipBanner,
         puzzlesBanner,
         readerRevenueBanner,
-        smartAppBanner,
         adFreeBanner,
         brazeBanner,
     ];
