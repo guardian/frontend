@@ -46,6 +46,7 @@ function onSubmit(e) {
         })(document);
     } else { // grecaptcha has already been rendered, but been dismissed or expired
         resizeToFitCaptcha();
+        sendTrackingForCaptchaLoad();
         grecaptcha.execute();
     }
 }
@@ -60,6 +61,7 @@ function onRecaptchaScriptLoaded() {
 		'expired-callback': onCaptchaExpired,
 		size: 'invisible',
 	});
+    sendTrackingForCaptchaLoad()
 	grecaptcha.execute();
 }
 
@@ -70,9 +72,11 @@ function onCaptchaCompleted(token) {
 }
 
 function onCaptchaError() {
+    sendTrackingForCaptchaError();
 	resizeToOriginalHeight();
 }
 
 function onCaptchaExpired() {
+    sendTrackingForCaptchaExpire()
 	resizeToOriginalHeight();
 }

@@ -16,13 +16,19 @@ const sendEvent = (payload, eventType) => {
 
 const getClickEvent = (el) => {
     return {
-        clickComponent: el.getAttribute('data-component'), clickLinkNames: [el.getAttribute('data-link-name')]
+        clickComponent: el.getAttribute('data-component'),
+        clickLinkNames: [el.getAttribute('data-link-name')]
     }
 }
 
-const getSubmitEvent = (formElement) => {
+const getComponentEvent = (formElement, actionType, actionDescription) => {
     return {
-        clickComponent: formElement.getAttribute('data-component'), clickLinkNames: [formElement.getAttribute('data-link-name')]
+        component: {
+            componentType: 'NEWSLETTER_SUBSCRIPTION',
+            id: formElement.getAttribute('data-component'),
+        },
+        action: actionType,
+        value: [actionDescription,formElement.getAttribute('data-email-list-name')],
     }
 }
 
@@ -40,8 +46,23 @@ function validateForm() {
 }
 
 function sendTrackingForFormSubmission() {
-    const submitEventData = getSubmitEvent(document.querySelector('form'))
-    sendEvent(submitEventData, 'submit-event')
+    const componentEventData = getComponentEvent(document.querySelector('form'),"SUBSCRIBE", "form-submission")
+    sendEvent(componentEventData, 'component-event')
+}
+
+function sendTrackingForCaptchaLoad() {
+    const componentEventData = getComponentEvent(document.querySelector('form'),"EXPAND", "open-captcha")
+    sendEvent(componentEventData, 'component-event')
+}
+
+function sendTrackingForCaptchaExpire() {
+    const componentEventData = getComponentEvent(document.querySelector('form'),"CLOSE", "captcha-expired")
+    sendEvent(componentEventData, 'component-event')
+}
+
+function sendTrackingForCaptchaError() {
+    const componentEventData = getComponentEvent(document.querySelector('form'),"CLOSE", "captcha-error")
+    sendEvent(componentEventData, 'component-event')
 }
 
 trackClickEvent(document.querySelector("button[type=submit]"))
