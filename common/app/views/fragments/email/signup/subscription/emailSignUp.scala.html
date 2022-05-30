@@ -36,7 +36,7 @@
 @formClass = @{ "email-sub__form" + " email-sub__form--" + componentClass }
 @headerClass = @{"email-sub__header" + " email-sub__header--" + componentClass  }
 
-@parentSuffix = @{ if (iframeParentComponent.nonEmpty) " " + iframeParentComponent.getOrElse("") else "" }
+@parentSuffix = @{iframeParentComponent.map(" " + _).getOrElse("")}
 @buttonDataComponent = @{ "email-signup-button " + componentClass + "-" + listName + parentSuffix }
 
 @form = {
