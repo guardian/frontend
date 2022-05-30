@@ -191,7 +191,7 @@ class EmailSignupController(
     }
 
   def renderFormWithParentComponent (emailType: String, listId: Int, parentComponent: String): Action[AnyContent] =
-    return renderForm(emailType,listId, Option(parentComponent))
+    renderForm(emailType,listId, Option(parentComponent))
 
 
   def renderForm(emailType: String, listId: Int, iframeParentComponent: Option[String] = None): Action[AnyContent] =
