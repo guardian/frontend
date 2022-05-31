@@ -25,7 +25,7 @@
     "@guardian/source-foundations": "^4.0.3",
     "@guardian/source-react-components": "^4.0.2",
     "@guardian/source-react-components-development-kitchen": "^0.0.33",
-    "@guardian/support-dotcom-components": "^1.0.2",
+    "@guardian/support-dotcom-components": "^1.0.3",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "bootstrap-sass": "^3.4.1",
