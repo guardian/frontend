@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "lib": ["ES2020", "DOM"],
+      "module": "commonjs",
+      "noEmit": true,
+      "target": "ES2020",
+      "types": ["node", "cypress"],
+      "skipLibCheck": true,
+      "strict": true,
+    },
+    "include": ["**/*.ts"]
+}
