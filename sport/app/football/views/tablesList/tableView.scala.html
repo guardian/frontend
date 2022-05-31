@@ -19,6 +19,12 @@
             "table--striped" -> striped,
             "table--responsive-font" -> responsiveFont
         ))">
+
+        @heading.map{ h=>
+            <caption class="table__caption table__caption--top">
+                <a href="@headingLink.getOrElse(competition.url)" class="football-matches__heading">@h</a>
+            </caption>
+        }
         <thead>
             <tr>
                 <th class="table-column--sub"><abbr title="Position">P</abbr></th>
@@ -68,11 +74,6 @@
             }
         </tbody>
 
-        @heading.map{ h=>
-            <caption class="table__caption table__caption--top">
-                <a href="@headingLink.getOrElse(competition.url)" class="football-matches__heading">@h</a>
-            </caption>
-        }
         @if(linkToCompetition){
             <tfoot class="table__caption table__caption--bottom" >
                 <tr>
