@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 import { getStage, getTestUrl } from '../lib/util';
 
 // Don't fail tests when uncaught exceptions occur
@@ -51,8 +49,7 @@ describe('Slots and iframes load on pages', () => {
 					expectedMinTotalSlotsOnPage,
 				);
 
-				Array(expectedMinInlineSlotsOnPage)
-					.fill()
+				[...(Array(expectedMinInlineSlotsOnPage).keys())]
 					.forEach((item, i) => {
 						cy.get(`[data-name="inline${i + 1}"]`).should(
 							'have.length',

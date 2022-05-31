@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "lib": ["ES2019", "DOM"],
+      "module": "commonjs",
+      "noEmit": true,
+      // https://github.com/cypress-io/cypress/issues/9298
+      "target": "ES2019",
+      "types": ["node", "cypress"],
+      "skipLibCheck": true,
+      "strict": true,
+    },
+    "include": ["**/*.ts"]
+}
