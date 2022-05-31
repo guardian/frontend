@@ -10,9 +10,9 @@ export const commercialEndOfQuarter2Test: ABTest = {
 	audienceOffset: 0 / 100,
 	audienceCriteria: 'All pageviews',
 	successMeasure:
-		'Enabling all changes leads to an increase in inline programmatic revenue per 1000 pageviews',
+		'Enabling all changes leads to an increase in revenue per 1000 pageviews',
 	description:
-		'Check whether all changes made this quarter when combined lead to an increase in inline programmatic revenue per 1000 pageviews',
+		'Check whether all changes made this quarter when combined lead to an increase in revenue per 1000 pageviews',
 	variants: [
 		{ id: 'control', test: noop },
 		{ id: 'variant', test: noop },
