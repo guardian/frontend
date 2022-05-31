@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 /**
  * Generate a full URL for a given relative path and the desired stage
  *
