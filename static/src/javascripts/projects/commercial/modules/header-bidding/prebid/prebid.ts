@@ -323,8 +323,17 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			bidders: ['ozone'],
 			config: {
 				// Select the ozone granularity, use default if not defined for the size
-				guCustomPriceBucket: ({ width, height }) =>
-					ozonePriceGranularity(width, height) ?? priceGranularity,
+				guCustomPriceBucket: ({ width, height }) => {
+					const granularity =
+						ozonePriceGranularity(width, height) ??
+						priceGranularity;
+					log(
+						'commercial',
+						`Custom Ozone price bucket for size (${width},${height}):`,
+						granularity,
+					);
+					return granularity;
+				},
 			},
 		});
 
