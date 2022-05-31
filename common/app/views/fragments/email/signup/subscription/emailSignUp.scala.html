@@ -38,9 +38,10 @@
 
 @parentSuffix = @{iframeParentComponent.map(" " + _).getOrElse("")}
 @buttonDataComponent = @{ "email-signup-button " + componentClass + "-" + listName + parentSuffix }
+@formDataComponent = @{ "email-signup-form " + componentClass + "-" + listName + parentSuffix }
 
 @form = {
-    <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName" data-component="email-signup-form @componentClass-@listName" data-link-name="@componentClass | @listName">
+    <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName" data-component="@formDataComponent" data-link-name="@componentClass | @listName">
         @helper.CSRF.formField
         <div class="email-sub__form-wrapper" tabindex="-1">
             <div class="email-sub__inline-label">
