@@ -1,7 +1,7 @@
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
-import { getAdvertById as getAdvertById_ } from './get-advert-by-id';
+import { getAdvertById } from './get-advert-by-id';
 import { enableLazyLoad } from './lazy-load';
 import { loadAdvert } from './load-advert';
 
@@ -22,16 +22,11 @@ jest.mock('../../../../lib/config', () => ({
 
 jest.mock('./Advert', () => jest.fn(() => ({ advert: jest.fn() })));
 
-jest.mock('./get-advert-by-id', () => ({
-	getAdvertById: jest.fn(),
-}));
+jest.mock('./get-advert-by-id');
 
 jest.mock('./load-advert', () => ({
-	refreshAdvert: jest.fn(),
 	loadAdvert: jest.fn(),
 }));
-
-const getAdvertById = getAdvertById_;
 
 describe('enableLazyLoad', () => {
 	const windowIntersectionObserver = window.IntersectionObserver;
