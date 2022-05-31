@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
       "esModuleInterop": true,
-      "lib": ["ES2020", "DOM"],
+      "lib": ["ES2019", "DOM"],
       "module": "commonjs",
       "noEmit": true,
-      "target": "ES2020",
+      // https://github.com/cypress-io/cypress/issues/9298
+      "target": "ES2019",
       "types": ["node", "cypress"],
       "skipLibCheck": true,
       "strict": true,
