@@ -33,11 +33,6 @@ const buildHeaderLinksPayload = (): HeaderPayload => {
 			mvtId: getMvtValue() ?? 0,
 			lastOneOffContributionDate:
 				getLastOneOffContributionDate() ?? undefined,
-			// TODO: remove this once PR in support-dotcom-components is merged and released
-			// https://github.com/guardian/support-dotcom-components/pull/665
-			// eslint-disable-next-line -- see above
-			// @ts-ignore
-			// eslint-disable-next-line -- see above
 			purchaseInfo: getPurchaseInfo(),
 			isSignedIn: isUserLoggedIn(),
 		},
