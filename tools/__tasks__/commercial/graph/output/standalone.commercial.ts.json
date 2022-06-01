@@ -5,10 +5,6 @@
  "../lib/a9-apstag.js": [],
  "../lib/config.d.ts": [],
  "../lib/config.js": [],
- "../lib/cookies.js": [
-  "../lib/config.js",
-  "../lib/report-error.js"
- ],
  "../lib/detect-google-proxy.ts": [],
  "../lib/detect-viewport.ts": [
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts"
@@ -52,9 +48,6 @@
  ],
  "../lib/robust.js": [
   "../lib/report-error.js"
- ],
- "../lib/set-temp-ad-free.ts": [
-  "../lib/cookies.js"
  ],
  "../lib/time-utils.ts": [],
  "../lib/url.ts": [
@@ -437,14 +430,11 @@
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
- "../projects/commercial/modules/maybe-remove-ad-slot.ts": [
+ "../projects/commercial/modules/manage-ad-free-cookie-on-consent-change.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/$$.ts",
-  "../lib/fastdom-promise.js",
-  "../lib/set-temp-ad-free.ts",
-  "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/commercial/enhanced-consent.ts"
+  "../lib/manage-ad-free-cookie.ts",
+  "../projects/commercial/modules/remove-slots.ts"
  ],
  "../projects/commercial/modules/messenger.ts": [
   "../lib/report-error.js",
@@ -638,6 +628,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fetch-json.ts",
+  "../lib/manage-ad-free-cookie.ts",
   "../lib/noop.ts",
   "../lib/time-utils.ts",
   "../projects/common/modules/commercial/lib/cookie.ts",
@@ -755,7 +746,7 @@
   "../projects/commercial/modules/high-merch.ts",
   "../projects/commercial/modules/ipsos-mori.ts",
   "../projects/commercial/modules/liveblog-adverts.ts",
-  "../projects/commercial/modules/maybe-remove-ad-slot.ts",
+  "../projects/commercial/modules/manage-ad-free-cookie-on-consent-change.ts",
   "../projects/commercial/modules/mobile-sticky.ts",
   "../projects/commercial/modules/paid-containers.ts",
   "../projects/commercial/modules/paidfor-band.js",
