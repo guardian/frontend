@@ -12,9 +12,9 @@ import { removeSlots } from './remove-slots';
  * remove ad slots and set adFree cookie so the server won't render them on subsequent page loads
  * Otherwise if in tcfv2 but consent to targeting is later allowed, removes the adFree cookie
  */
-const manageAdFreeCookieOnConsentChange = once((): Promise<void> => {
+const _manageAdFreeCookieOnConsentChange = (): void => {
 	onConsentChange((consent) => {
-		if (consent.tcfv2) {
+		if (consent.framework === 'tcfv2') {
 			if (!consent.canTarget) {
 				setAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
 				void removeSlots();
@@ -23,7 +23,11 @@ const manageAdFreeCookieOnConsentChange = once((): Promise<void> => {
 			}
 		}
 	});
-	return Promise.resolve();
-});
+};
 
+const manageAdFreeCookieOnConsentChange = once(() =>
+	Promise.resolve(_manageAdFreeCookieOnConsentChange()),
+);
+
+export const _ = { _manageAdFreeCookieOnConsentChange };
 export { manageAdFreeCookieOnConsentChange };

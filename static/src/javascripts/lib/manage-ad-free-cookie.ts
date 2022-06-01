@@ -13,7 +13,7 @@ const AD_FREE_USER_COOKIE = 'GU_AF1';
  * 2. The user has opted out of targeted advertising
  * 3. The url parameter noadsaf is set so ads are temporarily disabled
  */
-export enum AdFreeCookieReasons {
+enum AdFreeCookieReasons {
 	ConsentOptOut = 'consent_opt_out',
 	Subscriber = 'subscriber',
 	ForceAdFree = 'force_ad_free',
@@ -114,4 +114,5 @@ export {
 	maybeUnsetAdFreeCookie,
 	adFreeDataIsOld,
 	adFreeDataIsPresent,
+	AdFreeCookieReasons,
 };
