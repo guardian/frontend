@@ -838,6 +838,9 @@ $comment-recommend-button-size: 19px;
         .d-comment__action-pick {
             display: none;
         }
+        .d-comment__action--share {
+            margin: 0;
+        }
     }
 }
 
@@ -906,6 +909,38 @@ $comment-recommend-button-size: 19px;
     .d-comment__action-separator {
         display: inline-block;
     }
+}
+
+.d-comment__action--share {
+    vertical-align: middle;
+    margin-left: $gs-gutter / 4;
+
+    &:hover {
+        .sharing-text span:nth-child(2) {
+            text-decoration: underline;
+        }
+
+        .comment-facebook-icon,
+        .comment-twitter-icon {
+            transform: scale(1);
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        .comment-facebook-icon {
+            transition: all .2s ease-in-out;
+        }
+
+        .comment-twitter-icon {
+            transition: all .2s .1s ease-in-out;
+        }
+    }
+}
+
+.sharing-text {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: $gs-gutter / 4;
 }
 
 .comment-share-icon {
