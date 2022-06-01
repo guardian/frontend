@@ -22,6 +22,10 @@ declare global {
 		 * @example cy.getIframeBody('sp_message_iframe_')
 		 */
 		 getIframeBody(selector: string): Chainable<Element>
+
+		 rejectAllConsent(): void
+
+		 allowAllConsent(): void
 	  }
 	}
   }

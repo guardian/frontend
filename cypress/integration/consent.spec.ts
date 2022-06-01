@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
 
 import { fronts } from '../fixtures/pages';
-import { getStage, getTestUrl, fakeLogOut, fakeLogin } from '../lib/util';
+import { getStage, fakeLogOut, fakeLogin } from '../lib/util';
+import { AdFreeCookieReasons } from 'lib/manage-ad-free-cookie';
 
 // Don't fail tests when uncaught exceptions occur
 // This is because scripts loaded on the page and unrelated to these tests can cause this
-Cypress.on('uncaught:exception', (err, runnable) => {
+Cypress.on('uncaught:exception', () => {
 	return false;
 });
 
@@ -39,7 +40,7 @@ const reconsent = () => {
 	cy.wait(1);
 };
 
-const expectAdFree = (reasons) => {
+const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
     // wait is an antipattern and unreliable, maybe import onConsentChange and cypressify it?
 	cy.wait(200);
 	cy.then(function expectAdFree() {
@@ -81,11 +82,11 @@ describe('tcfv2 consent', () => {
 
 			cy.getCookie('GU_AF1').should('not.be.empty');
 
-			expectAdFree(['consent_opt_out']);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
 			cy.reload();
 
-			expectAdFree(['consent_opt_out']);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
 			cy.get(`[data-name="top-above-nav"]`).should('not.exist');
 
@@ -125,13 +126,13 @@ describe('tcfv2 consent', () => {
 
 			cy.rejectAllConsent();
 
-			expectAdFree(['consent_opt_out', 'subscriber']);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut, AdFreeCookieReasons.Subscriber]);
 
 			fakeLogOut();
 
 			cy.reload();
 
-			expectAdFree(['consent_opt_out']);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
 			adsShouldNotShow();
 		});
@@ -143,11 +144,11 @@ describe('tcfv2 consent', () => {
 
 			cy.rejectAllConsent();
 
-			expectAdFree(['consent_opt_out']);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
 			fakeLogOut();
 
-			expectAdFree(['consent_opt_out']);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
 			adsShouldNotShow();
 		});
@@ -167,7 +168,7 @@ describe('tcfv2 consent', () => {
 
 			cy.reload();
 
-			expectAdFree(['consent_opt_out']);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
 			adsShouldNotShow();
 
@@ -187,7 +188,7 @@ describe('tcfv2 consent', () => {
 
             cy.allowAllConsent();
 
-            expectAdFree(['subscriber']);
+            expectAdFree([AdFreeCookieReasons.Subscriber]);
 
 
             cy.setCookie('gu_user_features_expiry', String(new Date().getTime() - 1000));
@@ -215,7 +216,7 @@ describe('tcfv2 consent', () => {
 
             cy.rejectAllConsent();
 
-            expectAdFree(['consent_opt_out', 'subscriber']);
+            expectAdFree([AdFreeCookieReasons.ConsentOptOut, AdFreeCookieReasons.Subscriber]);
 
             cy.setCookie('gu_user_features_expiry', String(new Date().getTime() - 1000));
 
@@ -226,7 +227,7 @@ describe('tcfv2 consent', () => {
 
             cy.reload();
 
-            expectAdFree(['consent_opt_out']);
+            expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
             // reload twice so server is not sent ad free cookie
             cy.reload();
@@ -239,7 +240,7 @@ describe('tcfv2 consent', () => {
 
             cy.rejectAllConsent();
 
-            expectAdFree(['consent_opt_out']);
+            expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
             const expiredTimestamp = new Date().getTime() - 1000;
 
@@ -249,11 +250,11 @@ describe('tcfv2 consent', () => {
 
             cy.reload();
 
-            expectAdFree(['consent_opt_out']);
+            expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
             // expiries should update
 
-            cy.then(() => expect(Number(JSON.parse(localStorage.getItem('gu.ad_free_cookie_reason')).consent_opt_out)).to.be.greaterThan(expiredTimestamp)
+            cy.then(() => expect(Number(JSON.parse(localStorage.getItem('gu.ad_free_cookie_reason') || '{}').consent_opt_out)).to.be.greaterThan(expiredTimestamp)
                 )
 
             cy.getCookie('GU_AF1').should('have.property', 'value').then(value => expect(Number(value)).to.be.greaterThan(expiredTimestamp));

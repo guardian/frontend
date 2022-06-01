@@ -1,3 +1,5 @@
+import type {UserFeaturesResponse} from '../../static/src/javascripts/types/membership';
+
 /**
  * Generate a full URL for a given relative path and the desired stage
  *
@@ -6,7 +8,7 @@
  * @param {{ isDcr?: boolean }} options
  * @returns {string} The full path
  */
-export const getTestUrl = (stage, path, { isDcr } = { isDcr: false }) => {
+export const getTestUrl = (stage: 'code' | 'prod' | 'dev', path: string, { isDcr } = { isDcr: false }) => {
 	switch (stage) {
 		case 'code': {
 			return `https://code.dev-theguardian.com${path}`;
@@ -39,7 +41,7 @@ export const getStage = () => {
 
 
 export const fakeLogin = (subscriber = true) => {
-	const response = {
+	const response: UserFeaturesResponse = {
 		userId: '107421393',
 		digitalSubscriptionExpiryDate: '2999-01-01',
 		showSupportMessaging: false,
@@ -50,7 +52,6 @@ export const fakeLogin = (subscriber = true) => {
 			digitalPack: true,
 			paperSubscriber: false,
 			guardianWeeklySubscriber: false,
-			guardianPatron: false,
 		},
 	};
 

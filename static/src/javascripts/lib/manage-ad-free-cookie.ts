@@ -18,6 +18,17 @@ enum AdFreeCookieReasons {
 	Subscriber = 'subscriber',
 	ForceAdFree = 'force_ad_free',
 }
+
+const a: {
+	foo?: {
+		bar?: string;
+	};
+} = {};
+
+if (a.foo?.bar) {
+	console.log(a.foo.bar);
+}
+
 /*
  * Since the cookie is shared between these different use cases, we need to be careful to
  * only unset it when it's needed for none of the cases.
