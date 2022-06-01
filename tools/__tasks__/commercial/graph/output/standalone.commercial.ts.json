@@ -33,6 +33,10 @@
   "../lib/report-error.js"
  ],
  "../lib/launchpad.js": [],
+ "../lib/manage-ad-free-cookie.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/common/modules/commercial/lib/cookie.ts"
+ ],
  "../lib/mediator.ts": [
   "../../../../node_modules/wolfy87-eventemitter/EventEmitter.d.ts"
  ],
@@ -624,6 +628,9 @@
  "../projects/common/modules/commercial/geo-utils.js": [
   "../lib/geolocation.ts"
  ],
+ "../projects/common/modules/commercial/lib/cookie.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/common/modules/commercial/support-utilities.js": [
   "../lib/geolocation.ts"
  ],
@@ -633,6 +640,7 @@
   "../lib/fetch-json.ts",
   "../lib/noop.ts",
   "../lib/time-utils.ts",
+  "../projects/common/modules/commercial/lib/cookie.ts",
   "../projects/common/modules/identity/api.ts",
   "../types/dates.ts",
   "../types/membership.ts"
