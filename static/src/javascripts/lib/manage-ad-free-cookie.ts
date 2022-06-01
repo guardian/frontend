@@ -2,7 +2,7 @@ import { getCookie, removeCookie, setCookie } from '@guardian/libs';
 import {
 	cookieIsExpiredOrMissing,
 	timeInDaysFromNow,
-} from 'common/modules/commercial/utils';
+} from 'common/modules/commercial/lib/cookie';
 
 // cookie to trigger server-side ad-freeness
 const AD_FREE_USER_COOKIE = 'GU_AF1';

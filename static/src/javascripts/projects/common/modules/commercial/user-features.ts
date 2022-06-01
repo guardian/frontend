@@ -15,7 +15,7 @@ import { getLocalDate } from '../../../../types/dates';
 import type { LocalDate } from '../../../../types/dates';
 import type { UserFeaturesResponse } from '../../../../types/membership';
 import { isUserLoggedIn } from '../identity/api';
-import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './utils';
+import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
 
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
