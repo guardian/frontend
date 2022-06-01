@@ -30,7 +30,7 @@ const buildComponentEvent = (formElement, actionType, actionDescription) => ({
             id: formElement.getAttribute('data-component'),
         },
         action: actionType,
-        value: [actionDescription,formElement.getAttribute('data-email-list-name')],
+        value: [actionDescription,formElement.getAttribute('data-email-list-name')].join(),
     }
 });
 
