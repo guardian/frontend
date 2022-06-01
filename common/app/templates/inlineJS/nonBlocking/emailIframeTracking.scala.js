@@ -23,8 +23,8 @@ const getClickEvent = (el) => {
     }
 }
 
-const getComponentEvent = (formElement, actionType, actionDescription) => {
-    return {
+const buildComponentEvent = (formElement, actionType, actionDescription) => ({
+    componentEvent: {
         component: {
             componentType: 'NEWSLETTER_SUBSCRIPTION',
             id: formElement.getAttribute('data-component'),
@@ -32,7 +32,7 @@ const getComponentEvent = (formElement, actionType, actionDescription) => {
         action: actionType,
         value: [actionDescription,formElement.getAttribute('data-email-list-name')],
     }
-}
+});
 
 const trackClickEvent = (buttonElement) => {
     if (!buttonElement) { return {} }
@@ -48,22 +48,22 @@ function validateForm() {
 }
 
 function sendTrackingForFormSubmission() {
-    const componentEventData = getComponentEvent(document.querySelector('form'), "SUBSCRIBE", "form-submission")
+    const componentEventData = buildComponentEvent(document.querySelector('form'), "SUBSCRIBE", "form-submission")
     sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaOpen() {
-    const componentEventData = getComponentEvent(document.querySelector('form'), "EXPAND", "open-captcha")
+    const componentEventData = buildComponentEvent(document.querySelector('form'), "EXPAND", "open-captcha")
     sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaExpire() {
-    const componentEventData = getComponentEvent(document.querySelector('form'), "CLOSE", "captcha-expired")
+    const componentEventData = buildComponentEvent(document.querySelector('form'), "CLOSE", "captcha-expired")
     sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaError() {
-    const componentEventData = getComponentEvent(document.querySelector('form'), "CLOSE", "captcha-error")
+    const componentEventData = buildComponentEvent(document.querySelector('form'), "CLOSE", "captcha-error")
     sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
