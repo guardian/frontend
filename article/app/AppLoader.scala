@@ -21,7 +21,7 @@ import play.api.routing.Router
 import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
-import jobs.StoreNavigationLifecycleComponent
+import jobs.{StoreNavigationLifecycleComponent, TopMentionsLifecycle}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -52,6 +52,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
+    wire[TopMentionsLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
