@@ -10,10 +10,7 @@ import { _ } from './comscore';
 
 const { setupComscore } = _;
 
-jest.mock('@guardian/consent-management-platform', () => ({
-	onConsent: jest.fn(),
-	getConsentFor: jest.fn(),
-}));
+jest.mock('@guardian/consent-management-platform');
 
 const SOURCEPOINT_ID = '5efefe25b8e05c06542b2a77';
 
@@ -80,12 +77,11 @@ const AusWithConsent = {
 	framework: 'aus',
 } as ConsentState;
 
-jest.mock('@guardian/libs', () => {
-	return {
-		...jest.requireActual('@guardian/libs'),
-		loadScript: jest.fn(() => Promise.resolve()),
-	};
-});
+jest.mock('@guardian/libs', () => ({
+	loadScript: jest.fn(() => Promise.resolve()),
+	log: jest.fn(),
+}));
+
 jest.mock('../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {
 		comscore: true,
