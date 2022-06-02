@@ -1,6 +1,8 @@
-import { getConsentFor } from '@guardian/consent-management-platform';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
-import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
@@ -28,15 +30,15 @@ export const init = (): Promise<void> => {
 	return getLocale()
 		.then((locale) => {
 			if (locale === 'GB' || locale === 'AU') {
-				return getInitialConsentState();
+				return onConsent();
 			} else {
 				throw Error('Skipping ipsos process outside GB or AU');
 			}
 		})
-		.then((state) => {
-			if (state.aus) {
+		.then((consentState) => {
+			if (consentState.aus) {
 				void loadIpsosScript('au');
-			} else if (getConsentFor('ipsos', state)) {
+			} else if (getConsentFor('ipsos', consentState)) {
 				void loadIpsosScript('uk');
 			} else {
 				throw Error('No consent for ipsos in GB');
