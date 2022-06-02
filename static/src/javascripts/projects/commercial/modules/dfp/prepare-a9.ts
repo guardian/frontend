@@ -1,7 +1,9 @@
-import { getConsentFor } from '@guardian/consent-management-platform';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
-import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect-google-proxy';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -45,9 +47,9 @@ const setupA9Once = once(setupA9);
  * https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/display.html
  */
 export const init = (): Promise<void | boolean> =>
-	getInitialConsentState()
-		.then((state) => {
-			if (getConsentFor('a9', state)) {
+	onConsent()
+		.then((consentState) => {
+			if (getConsentFor('a9', consentState)) {
 				return setupA9Once();
 			} else {
 				throw Error('No consent for a9');
