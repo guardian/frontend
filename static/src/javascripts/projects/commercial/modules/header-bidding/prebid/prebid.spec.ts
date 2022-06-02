@@ -23,7 +23,9 @@ jest.mock('../../../../common/modules/experiments/ab', () => ({
 }));
 
 const resetPrebid = () => {
-	delete window.pbjs;
+	// TODO why does deleting window.pbjs cause this test to fail since Prebid 6.26.0
+	// Investigate Jest node vs ES6 module caching
+	// delete window.pbjs;
 	jest.resetModules();
 	jest.requireActual('prebid.js/build/dist/prebid');
 };
@@ -101,7 +103,10 @@ describe('initialise', () => {
 			s2sConfig: {
 				adapter: 'prebidServer',
 				adapterOptions: {},
+				allowUnknownBidderCodes: false,
+				bidders: [],
 				maxBids: 1,
+				syncTimeout: 1000,
 				syncUrlModifier: {},
 				timeout: 1000,
 			},
