@@ -1,6 +1,6 @@
 import {
-	getConsentFor as getConsentFor_,
-	onConsentChange as onConsentChange_,
+	getConsentFor,
+	onConsent,
 } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { log as log_ } from '@guardian/libs';
@@ -13,23 +13,23 @@ jest.mock('lib/raven');
 
 const isInAuOrNz = isInAuOrNz_ as jest.MockedFunction<typeof isInAuOrNz_>;
 
-const AusWithConsentMock = (callback: (state: ConsentState) => void): void =>
-	callback({
-		aus: { personalisedAdvertising: true },
-		canTarget: true,
-		framework: 'aus',
-	});
+const AusWithConsent = {
+	aus: { personalisedAdvertising: true },
+	canTarget: true,
+	framework: 'aus',
+} as ConsentState;
 
-const AusWithoutConsentMock = (callback: (state: ConsentState) => void): void =>
-	callback({
-		aus: { personalisedAdvertising: true },
-		canTarget: false,
-		framework: 'aus',
-	});
+const AusWithoutConsent = {
+	aus: { personalisedAdvertising: true },
+	canTarget: false,
+	framework: 'aus',
+} as ConsentState;
 
-const onConsentChange = onConsentChange_ as jest.MockedFunction<
-	typeof onConsentChange_
->;
+const CcpaWithConsent = {
+	ccpa: { doNotSell: false },
+	canTarget: true,
+	framework: 'ccpa',
+} as ConsentState;
 
 const log = log_ as jest.MockedFunction<typeof log_>;
 
@@ -58,6 +58,7 @@ jest.mock('../../../common/modules/commercial/build-page-targeting', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
+	onConsent: jest.fn(),
 	onConsentChange: jest.fn(),
 	getConsentFor: jest.fn(),
 }));
@@ -70,18 +71,13 @@ jest.mock('@guardian/libs', () => ({
 	log: jest.fn(),
 }));
 
-const CcpaWithConsentMock = (callback: (state: ConsentState) => void): void =>
-	callback({
-		ccpa: { doNotSell: false },
-		canTarget: true,
-		framework: 'ccpa',
-	});
-
-const getConsentFor = getConsentFor_ as jest.MockedFunction<
-	typeof getConsentFor_
->;
-
 window.launchpad = jest.fn().mockImplementationOnce(() => jest.fn());
+
+const mockOnConsent = (consentState: ConsentState) =>
+	(onConsent as jest.Mock).mockReturnValueOnce(Promise.resolve(consentState));
+
+const mockGetConsentFor = (hasConsent: boolean) =>
+	(getConsentFor as jest.Mock).mockReturnValueOnce(hasConsent);
 
 describe('init', () => {
 	beforeEach(() => {
@@ -100,8 +96,8 @@ describe('init', () => {
 		config.set('page.section', 'uk');
 		config.set('page.sectionName', 'Politics');
 		config.set('page.contentType', 'Article');
-		onConsentChange.mockImplementation(AusWithConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(AusWithConsent);
+		mockGetConsentFor(true);
 
 		await init();
 
@@ -136,8 +132,8 @@ describe('init', () => {
 	it('should initialise redplanet when TCFv2 consent has been given', async () => {
 		commercialFeatures.launchpad = true;
 		isInAuOrNz.mockReturnValue(true);
-		onConsentChange.mockImplementation(AusWithConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(AusWithConsent);
+		mockGetConsentFor(true);
 		await init();
 		expect(window.launchpad).toBeCalled();
 	});
@@ -145,8 +141,8 @@ describe('init', () => {
 	it('should not initialise redplanet when TCFv2 consent has not been given', async () => {
 		commercialFeatures.launchpad = true;
 		isInAuOrNz.mockReturnValue(true);
-		onConsentChange.mockImplementation(AusWithoutConsentMock);
-		getConsentFor.mockReturnValue(false);
+		mockOnConsent(AusWithoutConsent);
+		mockGetConsentFor(false);
 		await init();
 		expect(log).toHaveBeenCalledWith(
 			'commercial',
@@ -159,8 +155,8 @@ describe('init', () => {
 	it('should throw an error when on CCPA mode', async () => {
 		commercialFeatures.launchpad = true;
 		isInAuOrNz.mockReturnValue(true);
-		onConsentChange.mockImplementation(CcpaWithConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(CcpaWithConsent);
+		mockGetConsentFor(true);
 		await init();
 		expect(log).toHaveBeenCalledWith(
 			'commercial',
@@ -175,8 +171,8 @@ describe('init', () => {
 	it('should not initialise redplanet when launchpad conditions are false', async () => {
 		commercialFeatures.launchpad = false;
 		isInAuOrNz.mockReturnValue(true);
-		onConsentChange.mockImplementation(AusWithConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(AusWithConsent);
+		mockGetConsentFor(true);
 		await init();
 		expect(window.launchpad).not.toBeCalled();
 	});
@@ -184,8 +180,8 @@ describe('init', () => {
 	it('should not initialise redplanet when user not in AUS regions', async () => {
 		commercialFeatures.launchpad = true;
 		isInAuOrNz.mockReturnValue(false);
-		onConsentChange.mockImplementation(AusWithConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(AusWithConsent);
+		mockGetConsentFor(true);
 		await init();
 		expect(window.launchpad).not.toBeCalled();
 	});
