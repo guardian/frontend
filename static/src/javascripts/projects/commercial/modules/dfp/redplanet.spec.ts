@@ -3,13 +3,11 @@ import {
 	onConsent,
 } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
-import { log as log_ } from '@guardian/libs';
+import { log } from '@guardian/libs';
 import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz as isInAuOrNz_ } from '../../../common/modules/commercial/geo-utils';
 import { init, resetModule } from './redplanet';
-
-jest.mock('lib/raven');
 
 const isInAuOrNz = isInAuOrNz_ as jest.MockedFunction<typeof isInAuOrNz_>;
 
@@ -31,45 +29,27 @@ const CcpaWithConsent = {
 	framework: 'ccpa',
 } as ConsentState;
 
-const log = log_ as jest.MockedFunction<typeof log_>;
+jest.mock('lib/raven');
 
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
 }));
 
-jest.mock('./Advert', () =>
-	jest.fn().mockImplementation(() => ({ advert: jest.fn() })),
-);
+jest.mock('./Advert');
 
 jest.mock('../../../common/modules/commercial/geo-utils');
 
-jest.mock('../../../common/modules/experiments/ab', () => ({
-	isInVariantSynchronous: jest.fn(),
-}));
+jest.mock('../../../common/modules/experiments/ab');
 
-jest.mock('../../../../lib/cookies', () => ({
-	getCookie: jest.fn(),
-}));
+jest.mock('../../../../lib/cookies');
 
-jest.mock('../../../../lib/launchpad', () => jest.fn());
+jest.mock('../../../../lib/launchpad');
 
-jest.mock('../../../common/modules/commercial/build-page-targeting', () => ({
-	buildPageTargeting: jest.fn(),
-}));
+jest.mock('../../../common/modules/commercial/build-page-targeting');
 
-jest.mock('@guardian/consent-management-platform', () => ({
-	onConsent: jest.fn(),
-	onConsentChange: jest.fn(),
-	getConsentFor: jest.fn(),
-}));
+jest.mock('@guardian/consent-management-platform');
 
-jest.mock('../../../common/modules/experiments/ab', () => ({
-	isInVariantSynchronous: jest.fn(),
-}));
-
-jest.mock('@guardian/libs', () => ({
-	log: jest.fn(),
-}));
+jest.mock('@guardian/libs');
 
 window.launchpad = jest.fn().mockImplementationOnce(() => jest.fn());
 
