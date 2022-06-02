@@ -24,25 +24,29 @@ const loadIpsosScript = (locale: 'au' | 'uk') => {
  * documentation on DCR: [link](https://github.com/guardian/dotcom-rendering/blob/150fc2d81e6a66d9c3336185e874fc8cd0288546/dotcom-rendering/docs/architecture/3rd%20party%20technical%20review/002-ipsos-mori.md)
  * @returns Promise
  */
-export const init = (): Promise<void> => {
-	return getLocale()
-		.then((locale) => {
-			if (locale === 'GB' || locale === 'AU') {
-				return getInitialConsentState();
-			} else {
-				throw Error('Skipping ipsos process outside GB or AU');
-			}
-		})
-		.then((state) => {
-			if (state.aus) {
-				void loadIpsosScript('au');
-			} else if (getConsentFor('ipsos', state)) {
+export const init = async (): Promise<void> => {
+	const locale = await getLocale();
+	const consentState = await getInitialConsentState();
+	const isAU = locale === 'AU' && consentState.aus;
+	const isUK = locale === 'GB' && consentState.tcfv2;
+
+	try {
+		if (!isAU && !isUK) {
+			throw Error('Skipping ipsos process outside GB or AU');
+			return;
+		}
+
+		if (isAU) {
+			void loadIpsosScript('au');
+		} else if (isUK) {
+			const hasConsent = getConsentFor('ipsos', consentState);
+			if (hasConsent) {
 				void loadIpsosScript('uk');
 			} else {
 				throw Error('No consent for ipsos in GB');
 			}
-		})
-		.catch((e) => {
-			log('commercial', '⚠️ Failed to execute ipsos', e);
-		});
+		}
+	} catch (e) {
+		log('commercial', '⚠️ Failed to execute ipsos', e);
+	}
 };
