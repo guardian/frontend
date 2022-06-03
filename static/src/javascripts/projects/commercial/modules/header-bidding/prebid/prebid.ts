@@ -1,11 +1,11 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
+import { onConsent } from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import type { PageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { prebidPriceGranularity } from 'common/modules/experiments/tests/prebid-price-granularity';
 import config from '../../../../../lib/config';
@@ -430,7 +430,7 @@ const requestBids = async (
 	}
 
 	// prepare-prebid already waits for consent so this should resolve immediately
-	const adUnits = await getEnhancedConsent()
+	const adUnits = await onConsent()
 		.then((consentState) => {
 			// calculate this once before mapping over
 			const pageTargeting = getPageTargeting(consentState);
@@ -440,7 +440,7 @@ const requestBids = async (
 		})
 		.catch((e) => {
 			// silently fail
-			log('commercial', 'Failed to execute prebid getEnhancedConsent', e);
+			log('commercial', 'Failed to execute prebid onConsent', e);
 			return [];
 		});
 
