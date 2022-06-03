@@ -3,6 +3,7 @@ import {
 	onConsent,
 } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import { loadScript } from '@guardian/libs';
 import _config from '../../../../lib/config';
 import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -146,6 +147,11 @@ jest.mock('@guardian/consent-management-platform', () => ({
 		hasInitialised: jest.fn(),
 		willShowPrivacySync: jest.fn(),
 	},
+}));
+jest.mock('./prepare-prebid', () => ({
+	setupPrebidOnce: jest
+		.fn()
+		.mockImplementation(() => Promise.resolve(undefined)),
 }));
 
 const mockOnConsent = (consentState: ConsentState) =>
@@ -645,6 +651,27 @@ describe('DFP', () => {
 			expect(pubAds.setPrivacySettings).toHaveBeenCalledWith({
 				restrictDataProcessing: true,
 			});
+		});
+	});
+	describe('load googletag', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
+		it('TCFV2 does load googletag when consent is given', async () => {
+			mockOnConsent(tcfv2WithConsent);
+			mockGetConsentFor(true);
+			await prepareGoogletag();
+			expect(loadScript).toHaveBeenCalledTimes(1);
+			expect(loadScript).toHaveBeenCalledWith(
+				'//www.googletagservices.com/tag/js/gpt.js',
+				{ async: false },
+			);
+		});
+		it('TCFV2 does NOT load when consent is NOT given', async () => {
+			mockOnConsent(tcfv2WithConsent);
+			mockGetConsentFor(false);
+			await prepareGoogletag();
+			expect(loadScript).toHaveBeenCalledTimes(0);
 		});
 	});
 });
