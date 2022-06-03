@@ -1,8 +1,16 @@
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
-import { getAdvertById as getAdvertById_ } from './get-advert-by-id';
+import { getAdvertById } from './get-advert-by-id';
 import { enableLazyLoad } from './lazy-load';
 import { loadAdvert } from './load-advert';
+
+jest.mock('lodash-es', () => ({
+	...jest.requireActual('lodash-es'),
+	// Mock `once` as the identity function so we can re-run `enableLazyLoad`
+	// and generate different intersection observers
+	once: jest.fn().mockImplementation(<T>(f: T) => f),
+}));
 
 jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(),
@@ -14,16 +22,11 @@ jest.mock('../../../../lib/config', () => ({
 
 jest.mock('./Advert', () => jest.fn(() => ({ advert: jest.fn() })));
 
-jest.mock('./get-advert-by-id', () => ({
-	getAdvertById: jest.fn(),
-}));
+jest.mock('./get-advert-by-id');
 
 jest.mock('./load-advert', () => ({
-	refreshAdvert: jest.fn(),
 	loadAdvert: jest.fn(),
 }));
-
-const getAdvertById = getAdvertById_;
 
 describe('enableLazyLoad', () => {
 	const windowIntersectionObserver = window.IntersectionObserver;
@@ -52,7 +55,22 @@ describe('enableLazyLoad', () => {
 		expect(windowIntersectionObserver).toBe(undefined);
 	});
 
-	it('should create an observer if lazyLoadObserve is true', () => {
+	it('should create a 20% observer if lazyLoadObserve is true and not in control of test', () => {
+		// Mock being in variant / not in test
+		(isInVariantSynchronous as jest.Mock).mockReturnValue(false);
+		dfpEnv.lazyLoadObserve = true;
+		enableLazyLoad(testAdvert as unknown as Advert);
+		expect(loadAdvert).not.toHaveBeenCalled();
+		expect(
+			window.IntersectionObserver as jest.Mock,
+		).toHaveBeenNthCalledWith(1, expect.anything(), {
+			rootMargin: '20% 0px',
+		});
+	});
+
+	it('should create a 200px observer if lazyLoadObserve is true and in control of test', () => {
+		// Mock being in control of test
+		(isInVariantSynchronous as jest.Mock).mockReturnValue(true);
 		dfpEnv.lazyLoadObserve = true;
 		enableLazyLoad(testAdvert as unknown as Advert);
 		expect(loadAdvert).not.toHaveBeenCalled();

@@ -1,0 +1,25 @@
+
+{
+    "root": true,
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "project": ""
+    },
+    "plugins": ["cypress"],
+    "env": {
+      "cypress/globals": true
+    },
+    "extends": ["plugin:cypress/recommended"],
+    "ignorePatterns": ["dist"],
+    "rules": {
+      "import/no-default-export": 0
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    }
+}

@@ -4,7 +4,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-Cypress.Commands.add('getIframeBody', (selector = '') => {
+Cypress.Commands.add('getIframeBody', (selector: string) => {
 	// get the iframe > document > body
 	// and retry until the body element is not empty
 	return (
@@ -15,6 +15,6 @@ Cypress.Commands.add('getIframeBody', (selector = '') => {
 			// wraps "body" DOM element to allow
 			// chaining more Cypress commands, like ".find(...)"
 			// https://on.cypress.io/wrap
-			.then(cy.wrap)
+			.then<HTMLElement>(cy.wrap)
 	);
 });

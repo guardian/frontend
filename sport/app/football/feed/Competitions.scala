@@ -177,13 +177,13 @@ object CompetitionsProvider {
     ),
     Competition(
       "700",
-      "/football/world-cup-2018",
-      "World Cup 2018",
-      "World Cup 2018",
+      "/football/world-cup-2022",
+      "World Cup 2022",
+      "World Cup 2022",
       "Internationals",
       showInTeamsList = true,
       tableDividers = List(2),
-      startDate = Some(LocalDate.of(2018, 6, 1)),
+      startDate = Some(LocalDate.of(2022, 11, 1)),
     ),
     Competition(
       "750",

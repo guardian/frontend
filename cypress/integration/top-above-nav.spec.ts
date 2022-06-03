@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 import { pages } from '../fixtures/pages';
 
 // Don't fail tests when uncaught exceptions occur
