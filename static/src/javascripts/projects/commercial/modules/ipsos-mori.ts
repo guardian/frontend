@@ -1,6 +1,8 @@
-import { getConsentFor } from '@guardian/consent-management-platform';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
-import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
@@ -26,9 +28,9 @@ const loadIpsosScript = (locale: 'au' | 'uk') => {
  */
 export const init = async (): Promise<void> => {
 	const locale = await getLocale();
-	const consentState = await getInitialConsentState();
-	const isAU = locale === 'AU' && consentState.aus;
-	const isUK = locale === 'GB' && consentState.tcfv2;
+	const consentState = await onConsent();
+	const isAU = locale === 'AU' && !!consentState.aus;
+	const isUK = locale === 'GB' && !!consentState.tcfv2;
 
 	try {
 		if (!isAU && !isUK) {
