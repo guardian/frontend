@@ -47,6 +47,6 @@ export const init = async (): Promise<void> => {
 			}
 		}
 	} catch (e) {
-		log('commercial', '⚠️ Failed to execute ipsos', e);
+		log('commercial', '⚠️ Failed to execute ipsos in GB or AU', e);
 	}
 };
