@@ -207,25 +207,7 @@ const tcfv2WithConsent: ConsentState = {
 	canTarget: true,
 	framework: 'tcfv2',
 };
-/*
-const tcfv2WithoutConsent: ConsentState = {
-	tcfv2: {
-		consents: {
-			'1': false,
-			'2': false,
-		},
-		vendorConsents: {
-			'5f1aada6b8e05c306c0597d7': true, // Googletag
-		},
-		eventStatus: 'tcloaded',
-		addtlConsent: 'unknown',
-		gdprApplies: true,
-		tcString: 'BOGUS.YAA',
-	},
-	canTarget: false,
-	framework: 'tcfv2',
-};
-*/
+
 const ausNotRejected: ConsentState = {
 	aus: { personalisedAdvertising: true },
 	canTarget: true,
