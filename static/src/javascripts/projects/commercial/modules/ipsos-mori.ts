@@ -32,23 +32,20 @@ export const init = async (): Promise<void> => {
 	const isAU = locale === 'AU' && !!consentState.aus;
 	const isUK = locale === 'GB' && !!consentState.tcfv2;
 
-	try {
-		if (!isAU && !isUK) {
-			throw Error('Skipping ipsos process outside GB or AU');
-			return;
-		}
+	if (!isAU && !isUK) {
+		log('commercial', 'Skipping ipsos process outside GB or AU');
+		throw Error('Skipping ipsos process outside GB or AU');
+	}
 
-		if (isAU) {
-			void loadIpsosScript('au');
-		} else if (isUK) {
-			const hasConsent = getConsentFor('ipsos', consentState);
-			if (hasConsent) {
-				void loadIpsosScript('uk');
-			} else {
-				throw Error('No consent for ipsos in GB');
-			}
+	if (isAU) {
+		void loadIpsosScript('au');
+	} else if (isUK) {
+		const hasConsent = getConsentFor('ipsos', consentState);
+		if (hasConsent) {
+			void loadIpsosScript('uk');
+		} else {
+			log('commercial', 'No consent for ipsos in GB');
+			throw Error('No consent for ipsos in GB');
 		}
-	} catch (e) {
-		log('commercial', '⚠️ Failed to execute ipsos in GB or AU', e);
 	}
 };
