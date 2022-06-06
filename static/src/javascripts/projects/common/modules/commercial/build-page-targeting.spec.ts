@@ -146,6 +146,11 @@ const tcfv2MixedConsentMock: ConsentState = {
 	framework: 'tcfv2',
 };
 
+const emptyConsent: ConsentState = {
+	canTarget: false,
+	framework: null,
+};
+
 describe('Build Page Targeting', () => {
 	beforeEach(() => {
 		window.guardian.config.page = {
@@ -223,7 +228,7 @@ describe('Build Page Targeting', () => {
 	});
 
 	it('should build correct page targeting', () => {
-		const pageTargeting = getPageTargeting();
+		const pageTargeting = getPageTargeting(emptyConsent);
 
 		expect(pageTargeting.sens).toBe('f');
 		expect(pageTargeting.edition).toBe('us');
@@ -281,15 +286,15 @@ describe('Build Page Targeting', () => {
 	});
 
 	it('should set correct edition param', () => {
-		expect(getPageTargeting().edition).toBe('us');
+		expect(getPageTargeting(emptyConsent).edition).toBe('us');
 	});
 
 	it('should set correct se param', () => {
-		expect(getPageTargeting().se).toEqual(['filmweekly']);
+		expect(getPageTargeting(emptyConsent).se).toEqual(['filmweekly']);
 	});
 
 	it('should set correct k param', () => {
-		expect(getPageTargeting().k).toEqual([
+		expect(getPageTargeting(emptyConsent).k).toEqual([
 			'prince-charles-letters',
 			'uk/uk',
 			'prince-charles',
@@ -297,19 +302,21 @@ describe('Build Page Targeting', () => {
 	});
 
 	it('should set correct ab param', () => {
-		expect(getPageTargeting().ab).toEqual(['MtMaster-variantName']);
+		expect(getPageTargeting(emptyConsent).ab).toEqual([
+			'MtMaster-variantName',
+		]);
 	});
 
 	it('should set Observer flag for Observer content', () => {
-		expect(getPageTargeting().ob).toEqual('t');
+		expect(getPageTargeting(emptyConsent).ob).toEqual('t');
 	});
 
 	it('should set correct branding param for paid content', () => {
-		expect(getPageTargeting().br).toEqual('p');
+		expect(getPageTargeting(emptyConsent).br).toEqual('p');
 	});
 
 	it('should not contain an ad-free targeting value', () => {
-		expect(getPageTargeting().af).toBeUndefined();
+		expect(getPageTargeting(emptyConsent).af).toBeUndefined();
 	});
 
 	it('should remove empty values', () => {
@@ -319,7 +326,7 @@ describe('Build Page Targeting', () => {
 		} as PageConfig;
 		window.guardian.config.ophan = { pageViewId: '123456' };
 
-		expect(getPageTargeting()).toEqual({
+		expect(getPageTargeting(emptyConsent)).toEqual({
 			ab: ['MtMaster-variantName'],
 			amtgrp: '7', // Because Math.random() is fixed to 0.5
 			at: 'ng101',
@@ -344,47 +351,47 @@ describe('Build Page Targeting', () => {
 	describe('Breakpoint targeting', () => {
 		it('should set correct breakpoint targeting for a mobile device', () => {
 			mockViewport(320, 0);
-			expect(getPageTargeting().bp).toEqual('mobile');
+			expect(getPageTargeting(emptyConsent).bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a medium mobile device', () => {
 			mockViewport(375, 0);
-			expect(getPageTargeting().bp).toEqual('mobile');
+			expect(getPageTargeting(emptyConsent).bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a mobile device in landscape mode', () => {
 			mockViewport(480, 0);
-			expect(getPageTargeting().bp).toEqual('mobile');
+			expect(getPageTargeting(emptyConsent).bp).toEqual('mobile');
 		});
 
 		it('should set correct breakpoint targeting for a phablet device', () => {
 			mockViewport(660, 0);
-			expect(getPageTargeting().bp).toEqual('tablet');
+			expect(getPageTargeting(emptyConsent).bp).toEqual('tablet');
 		});
 
 		it('should set correct breakpoint targeting for a tablet device', () => {
 			mockViewport(740, 0);
-			expect(getPageTargeting().bp).toEqual('tablet');
+			expect(getPageTargeting(emptyConsent).bp).toEqual('tablet');
 		});
 
 		it('should set correct breakpoint targeting for a desktop device', () => {
 			mockViewport(980, 0);
-			expect(getPageTargeting().bp).toEqual('desktop');
+			expect(getPageTargeting(emptyConsent).bp).toEqual('desktop');
 		});
 
 		it('should set correct breakpoint targeting for a leftCol device', () => {
 			mockViewport(1140, 0);
-			expect(getPageTargeting().bp).toEqual('desktop');
+			expect(getPageTargeting(emptyConsent).bp).toEqual('desktop');
 		});
 
 		it('should set correct breakpoint targeting for a wide device', () => {
 			mockViewport(1300, 0);
-			expect(getPageTargeting().bp).toEqual('desktop');
+			expect(getPageTargeting(emptyConsent).bp).toEqual('desktop');
 		});
 
 		it('should set appNexusPageTargeting as flatten string', () => {
 			mockViewport(1024, 0);
-			getPageTargeting();
+			getPageTargeting(emptyConsent);
 			expect(window.guardian.config.page.appNexusPageTargeting).toEqual(
 				'sens=f,pt1=/football/series/footballweekly,pt2=us,pt3=video,pt4=ng,pt5=prince-charles-letters,pt5=uk/uk,pt5=prince-charles,pt6=5,pt7=desktop,pt9=presetOphanPageViewId|gabrielle-chan|news',
 			);
@@ -394,34 +401,34 @@ describe('Build Page Targeting', () => {
 	describe('Build Page Targeting (ad-free)', () => {
 		it('should set the ad-free param to t when enabled', () => {
 			commercialFeatures.adFree = true;
-			expect(getPageTargeting().af).toBe('t');
+			expect(getPageTargeting(emptyConsent).af).toBe('t');
 		});
 	});
 
 	describe('Already visited frequency', () => {
 		it('can pass a value of five or less', () => {
 			storage.local.setRaw('gu.alreadyVisited', String(5));
-			expect(getPageTargeting().fr).toEqual('5');
+			expect(getPageTargeting(emptyConsent).fr).toEqual('5');
 		});
 
 		it('between five and thirty, includes it in a bucket in the form "x-y"', () => {
 			storage.local.setRaw('gu.alreadyVisited', String(18));
-			expect(getPageTargeting().fr).toEqual('16-19');
+			expect(getPageTargeting(emptyConsent).fr).toEqual('16-19');
 		});
 
 		it('over thirty, includes it in the bucket "30plus"', () => {
 			storage.local.setRaw('gu.alreadyVisited', String(300));
-			expect(getPageTargeting().fr).toEqual('30plus');
+			expect(getPageTargeting(emptyConsent).fr).toEqual('30plus');
 		});
 
 		it('passes a value of 0 if the value is not stored', () => {
 			storage.local.remove('gu.alreadyVisited');
-			expect(getPageTargeting().fr).toEqual('0');
+			expect(getPageTargeting(emptyConsent).fr).toEqual('0');
 		});
 
 		it('passes a value of 0 if the number is invalid', () => {
 			storage.local.setRaw('gu.alreadyVisited', 'not-a-number');
-			expect(getPageTargeting().fr).toEqual('0');
+			expect(getPageTargeting(emptyConsent).fr).toEqual('0');
 		});
 	});
 
@@ -430,45 +437,47 @@ describe('Build Page Targeting', () => {
 			getReferrer.mockReturnValue(
 				'https://www.facebook.com/feel-the-force',
 			);
-			expect(getPageTargeting().ref).toEqual('facebook');
+			expect(getPageTargeting(emptyConsent).ref).toEqual('facebook');
 		});
 
 		it('should set ref to Twitter', () => {
 			getReferrer.mockReturnValue(
 				'https://t.co/you-must-unlearn-what-you-have-learned',
 			);
-			expect(getPageTargeting().ref).toEqual('twitter');
+			expect(getPageTargeting(emptyConsent).ref).toEqual('twitter');
 		});
 
 		it('should set ref to reddit', () => {
 			getReferrer.mockReturnValue(
 				'https://www.reddit.com/its-not-my-fault',
 			);
-			expect(getPageTargeting().ref).toEqual('reddit');
+			expect(getPageTargeting(emptyConsent).ref).toEqual('reddit');
 		});
 
 		it('should set ref to google', () => {
 			getReferrer.mockReturnValue(
 				'https://www.google.com/i-find-your-lack-of-faith-distrubing',
 			);
-			expect(getPageTargeting().ref).toEqual('google');
+			expect(getPageTargeting(emptyConsent).ref).toEqual('google');
 		});
 
 		it('should set ref empty string if referrer does not match', () => {
 			getReferrer.mockReturnValue('https://theguardian.com');
-			expect(getPageTargeting().ref).toEqual(undefined);
+			expect(getPageTargeting(emptyConsent).ref).toEqual(undefined);
 		});
 	});
 
 	describe('URL Keywords', () => {
 		it('should return correct keywords from pageId', () => {
-			expect(getPageTargeting().urlkw).toEqual(['footballweekly']);
+			expect(getPageTargeting(emptyConsent).urlkw).toEqual([
+				'footballweekly',
+			]);
 		});
 
 		it('should extract multiple url keywords correctly', () => {
 			window.guardian.config.page.pageId =
 				'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london';
-			expect(getPageTargeting().urlkw).toEqual([
+			expect(getPageTargeting(emptyConsent).urlkw).toEqual([
 				'harry',
 				'potter',
 				'cursed',
@@ -483,7 +492,7 @@ describe('Build Page Targeting', () => {
 		it('should get correct keywords when trailing slash is present', () => {
 			window.guardian.config.page.pageId =
 				'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/';
-			expect(getPageTargeting().urlkw).toEqual([
+			expect(getPageTargeting(emptyConsent).urlkw).toEqual([
 				'harry',
 				'potter',
 				'cursed',
@@ -501,14 +510,14 @@ describe('Build Page Targeting', () => {
 			cmp.hasInitialised.mockReturnValue(false);
 			cmp.willShowPrivacyMessageSync.mockReturnValue(false);
 			mockViewport(1920, 1080);
-			expect(getPageTargeting().inskin).toBe('f');
+			expect(getPageTargeting(emptyConsent).inskin).toBe('f');
 		});
 
 		it('should not allow inskin if cmp will show a banner', () => {
 			cmp.hasInitialised.mockReturnValue(true);
 			cmp.willShowPrivacyMessageSync.mockReturnValue(true);
 			mockViewport(1920, 1080);
-			expect(getPageTargeting().inskin).toBe('f');
+			expect(getPageTargeting(emptyConsent).inskin).toBe('f');
 		});
 	});
 
@@ -525,12 +534,12 @@ describe('Build Page Targeting', () => {
 			cmp.hasInitialised.mockReturnValue(true);
 			cmp.willShowPrivacyMessageSync.mockReturnValue(false);
 			mockViewport(width, 800);
-			expect(getPageTargeting().skinsize).toBe(expected);
+			expect(getPageTargeting(emptyConsent).skinsize).toBe(expected);
 		});
 
 		it("should return 's' if vp does not have a width", () => {
 			mockViewport(0, 0);
-			expect(getPageTargeting().skinsize).toBe('s');
+			expect(getPageTargeting(emptyConsent).skinsize).toBe('s');
 		});
 	});
 
