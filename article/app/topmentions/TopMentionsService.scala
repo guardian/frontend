@@ -17,6 +17,9 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
         log.info("Refreshed top mentions successfully")
         val mapped = response.toMap
         topMentions send Some(mapped)
+
+        val test = getAll().get.map(_._1).toList.reduce((x, y) => x + ", " + y)
+        log.info(s"following keys are in memory: \n ${test}")
       }
       case Failure(error) =>
         log.error("Could not refresh top mentions", error)
@@ -25,6 +28,10 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
 
   def get(blogId: String): Option[TopMentionsDetails] = {
     topMentions.get().flatMap(_.get(blogId))
+  }
+
+  def getAll(): Option[Map[String, TopMentionsDetails]] = {
+    topMentions.get()
   }
 
   private def retrieveTopMention(key: String)(implicit executionContext: ExecutionContext) = {

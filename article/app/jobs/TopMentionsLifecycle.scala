@@ -26,7 +26,8 @@ class TopMentionsLifecycle(
   }
 
   private def scheduleJobs(): Unit = {
-    jobs.schedule("TopMentionsAgentRefreshJob", "0 0/1 * * * ?") {
+    val cron = "0 0/1 * * * ?"
+    jobs.schedule("TopMentionsAgentRefreshJob", "0/30 * * * * ? *") {
       topMentionService.refreshTopMentions()
     }
   }
