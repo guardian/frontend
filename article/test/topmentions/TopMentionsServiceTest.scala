@@ -23,9 +23,15 @@ class TopMentionsServiceTest
 
   val fakeClient = mock[TopMentionsS3Client]
   val topMentionResult =
-    TopMentionsResult(name = "name1", `type` = "type1", blocks = Seq("blockId1"), count = 1, percentage_blocks = 1.2f)
+    TopMentionsResult(
+      name = "name1",
+      `type` = TopMentionEntity.Org,
+      blocks = Seq("blockId1"),
+      count = 1,
+      percentage_blocks = 1.2f,
+    )
   val successResponse =
-    TopMentionsDetails(entity_types = Seq("test"), results = Seq(topMentionResult), model = "model")
+    TopMentionsDetails(entity_types = Seq(TopMentionEntity.Org), results = Seq(topMentionResult), model = "model")
 
   "refreshTopMentions" should "return successfull future given getListOfKeys s3 call fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))
