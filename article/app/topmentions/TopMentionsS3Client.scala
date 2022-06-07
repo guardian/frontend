@@ -12,7 +12,12 @@ import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 import TopMentionsResponse._
 
-class TopMentionsS3Client extends GuLogging {
+trait TopMentionsS3Client {
+  def getListOfKeys(): Future[List[String]]
+  def getObject(key: String): Future[TopMentionsDetails]
+}
+
+final class TopMentionsS3ClientImpl extends TopMentionsS3Client with GuLogging {
   lazy val bucket = Configuration.aws.topMentionsStoreBucket
 
   lazy val client: AmazonS3 =
@@ -50,7 +55,7 @@ class TopMentionsS3Client extends GuLogging {
     }
   }
 
-  def parse(s3Object: S3Object) = {
+  private def parse(s3Object: S3Object) = {
     val json = Json.parse(asString(s3Object))
 
     Json.fromJson[TopMentionsDetails](json) match {

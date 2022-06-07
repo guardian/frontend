@@ -3,34 +3,28 @@ package topmentions
 import common.{Box, GuLogging}
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
 
 class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
 
   private val topMentions = Box[Option[Map[String, TopMentionsDetails]]](None)
 
-  def refreshTopMentions()(implicit executionContext: ExecutionContext): Unit = {
+  def refreshTopMentions()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val retrievedTopMentions = topMentionsS3Client.getListOfKeys().map { key => key.map { retrieveTopMention(_) } }
 
-    retrievedTopMentions.flatMap(Future.sequence(_)) onComplete {
-      case Success(response) => {
-        log.info("Refreshed top mentions successfully")
-        val mapped = response.toMap
-        topMentions send Some(mapped)
-
-        val test = getAll().get.map(_._1).toList.reduce((x, y) => x + ", " + y)
-        log.info(s"following keys are in memory: \n ${test}")
+    retrievedTopMentions
+      .flatMap(Future.sequence(_))
+      .map(response => topMentions send Some(response.toMap))
+      .recover {
+        case e =>
+          log.error("Could not refresh top mentions", e)
       }
-      case Failure(error) =>
-        log.error("Could not refresh top mentions", error)
-    }
   }
 
-  def get(blogId: String): Option[TopMentionsDetails] = {
+  def getTopMention(blogId: String): Option[TopMentionsDetails] = {
     topMentions.get().flatMap(_.get(blogId))
   }
 
-  def getAll(): Option[Map[String, TopMentionsDetails]] = {
+  def getAllTopMentions(): Option[Map[String, TopMentionsDetails]] = {
     topMentions.get()
   }
 

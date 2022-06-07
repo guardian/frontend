@@ -22,7 +22,7 @@ import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import jobs.{StoreNavigationLifecycleComponent, TopMentionsLifecycle}
-import topmentions.{TopMentionsS3Client, TopMentionsService}
+import topmentions.{TopMentionsS3Client, TopMentionsS3ClientImpl, TopMentionsService}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -40,8 +40,8 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val topMentionsS3Client: TopMentionsS3Client = wire[TopMentionsS3ClientImpl]
   lazy val topMentionsService = wire[TopMentionsService]
-  lazy val topMentionsS3Client = wire[TopMentionsS3Client]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
