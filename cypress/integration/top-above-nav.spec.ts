@@ -1,11 +1,5 @@
 import { pages } from '../fixtures/pages';
 
-// Don't fail tests when uncaught exceptions occur
-// This is because scripts loaded on the page and unrelated to these tests can cause this
-Cypress.on('uncaught:exception', (err, runnable) => {
-	return false;
-});
-
 describe('top-above-nav on pages', () => {
 	pages.forEach(({ path, adTest }) => {
 		it(`Test ${path} has top-above-nav slot and iframe`, () => {
