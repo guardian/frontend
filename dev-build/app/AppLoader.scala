@@ -21,6 +21,7 @@ import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
+import jobs.TopMentionsLifecycle
 import model.{AdminLifecycle, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api._
@@ -70,7 +71,8 @@ trait AppComponents
     with DiscussionServices
     with OnwardServices
     with FapiServices
-    with ApplicationsServices {
+    with ApplicationsServices
+    with TopMentionsServices {
 
   //Overriding conflicting members
   override lazy val ophanApi = wire[OphanApi]
@@ -109,6 +111,7 @@ trait AppComponents
       wire[DiscussionExternalAssetsLifecycle],
       wire[StocksDataLifecycle],
       wire[NewsletterSignupLifecycle],
+      wire[TopMentionsLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters

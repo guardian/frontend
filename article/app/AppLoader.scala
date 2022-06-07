@@ -29,7 +29,12 @@ class AppLoader extends FrontendApplicationLoader {
     new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait AppComponents extends FrontendComponents with ArticleControllers {
+trait TopMentionsServices {
+  lazy val topMentionsS3Client: TopMentionsS3Client = wire[TopMentionsS3ClientImpl]
+  lazy val topMentionsService = wire[TopMentionsService]
+}
+
+trait AppComponents extends FrontendComponents with ArticleControllers with TopMentionsServices {
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
@@ -40,8 +45,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
-  lazy val topMentionsS3Client: TopMentionsS3Client = wire[TopMentionsS3ClientImpl]
-  lazy val topMentionsService = wire[TopMentionsService]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
