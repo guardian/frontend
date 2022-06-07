@@ -34,7 +34,6 @@ export const init = async (): Promise<void> => {
 
 	if (!isAU && !isUK) {
 		log('commercial', 'Skipping ipsos process outside GB or AU');
-		throw Error('Skipping ipsos process outside GB or AU');
 	}
 
 	if (isAU) {
@@ -45,7 +44,6 @@ export const init = async (): Promise<void> => {
 			void loadIpsosScript('uk');
 		} else {
 			log('commercial', 'No consent for ipsos in GB');
-			throw Error('No consent for ipsos in GB');
 		}
 	}
 };
