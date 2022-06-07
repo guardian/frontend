@@ -20,9 +20,10 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.{FaciaPicker, RemoteRender, TargetedCollections}
 import conf.Configuration
+import model.dotcomrendering.DotcomCardsRenderingDataModel.toJson
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
-import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
+import model.dotcomrendering.{DotcomCardsRenderingDataModel, DotcomFrontsRenderingDataModel, PageType}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -353,6 +354,12 @@ trait FaciaController
     Action.async { implicit request =>
       frontJsonFapi.get(path, fullRequestType).flatMap {
         case Some(pressedPage) =>
+          val matchedCollection = pressedPage.collections.filter(_.id == collectionId).head
+          val pressedContent = matchedCollection.curated
+
+          val model = DotcomCardsRenderingDataModel(pressedContent)
+          val json = DotcomCardsRenderingDataModel.toJson(model)
+
           val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
           val maybeResponse =
             for {

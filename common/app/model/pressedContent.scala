@@ -45,6 +45,8 @@ sealed trait PressedContent {
 }
 
 object PressedContent {
+  implicit val pressedContentFormat = PressedContentFormat.format
+
   def make(content: fapi.FaciaContent): PressedContent =
     content match {
       case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
