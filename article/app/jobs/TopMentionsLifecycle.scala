@@ -23,11 +23,15 @@ class TopMentionsLifecycle(
   override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
+
+    // refresh top mentions when app starts
+    akkaAsync.after1s {
+      topMentionService.refreshTopMentions()
+    }
   }
 
   private def scheduleJobs(): Unit = {
-    val cron = "0 0/1 * * * ?"
-    jobs.schedule("TopMentionsAgentRefreshJob", "0/30 * * * * ? *") {
+    jobs.schedule("TopMentionsAgentRefreshJob", "0 0/2 * * * ?") {
       topMentionService.refreshTopMentions()
     }
   }
