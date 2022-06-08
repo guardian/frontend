@@ -25,7 +25,7 @@ function sendResizeMessage(height) {
 
 function openCaptcha() {
     sendResizeMessage(500);
-    sendTrackingForCaptchaOpen()
+    sendTrackingForCaptchaOpen();
 	grecaptcha.execute();
 }
 
