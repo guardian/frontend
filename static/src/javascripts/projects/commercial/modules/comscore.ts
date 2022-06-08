@@ -1,7 +1,9 @@
-import { getConsentFor } from '@guardian/consent-management-platform';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import { loadScript, log } from '@guardian/libs';
 import { once } from 'lodash-es';
-import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../lib/config';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 
@@ -39,16 +41,17 @@ const setupComscore = async (): Promise<void> => {
 		return Promise.resolve();
 	}
 	try {
-		const state = await getInitialConsentState();
+		const consentState = await onConsent();
 		/* Rule is that comscore can run:
 		- in Tcfv2: Based on consent for comscore
 		- in Australia: Always
 		- in CCPA: If the user hasn't chosen Do Not Sell
 		TODO move this logic to getConsentFor
 		*/
-		const canRunTcfv2 = state.tcfv2 && getConsentFor('comscore', state);
-		const canRunAus = !!state.aus;
-		const canRunCcpa = !!state.ccpa && !state.ccpa.doNotSell;
+		const canRunTcfv2 =
+			consentState.tcfv2 && getConsentFor('comscore', consentState);
+		const canRunAus = !!consentState.aus;
+		const canRunCcpa = !!consentState.ccpa && !consentState.ccpa.doNotSell;
 
 		if (!(canRunTcfv2 || canRunAus || canRunCcpa)) {
 			throw Error('No consent for comscore');
