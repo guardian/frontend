@@ -79,6 +79,6 @@ function onCaptchaError() {
 }
 
 function onCaptchaExpired() {
-    sendTrackingForCaptchaExpire()
+    sendTrackingForCaptchaExpire();
 	resizeToOriginalHeight();
 }
