@@ -336,6 +336,7 @@ object CompetitionsProvider {
       showInTeamsList = true,
       tableDividers = List(2),
       startDate = Some(LocalDate.of(2022, 7, 1)),
+      finalMatchSVG = Some("womens_euros_2022_badge"),
     ),
   )
 }

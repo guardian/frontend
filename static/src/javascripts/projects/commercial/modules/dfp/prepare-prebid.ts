@@ -1,8 +1,10 @@
-import { getConsentFor } from '@guardian/consent-management-platform';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
-import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
 import { isGoogleProxy } from 'lib/detect-google-proxy';
 import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
@@ -34,7 +36,7 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 };
 
 const setupPrebid = (): Promise<void> =>
-	getEnhancedConsent()
+	onConsent()
 		.then((consentState) => {
 			if (!consentState.framework) {
 				return Promise.reject('Unknown framework');

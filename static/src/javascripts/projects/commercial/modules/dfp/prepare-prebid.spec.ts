@@ -1,8 +1,8 @@
 import {
-	getConsentFor as getConsentFor_,
-	onConsentChange as onConsentChange_,
+	getConsentFor,
+	onConsent,
 } from '@guardian/consent-management-platform';
-import type { Callback } from '@guardian/consent-management-platform/dist/types';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { log } from '@guardian/libs';
 import config from '../../../../lib/config';
@@ -12,12 +12,6 @@ import { dfpEnv } from './dfp-env';
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;
-const onConsentChange = onConsentChange_ as jest.MockedFunction<
-	typeof onConsentChange_
->;
-const getConsentFor = getConsentFor_ as jest.MockedFunction<
-	typeof getConsentFor_
->;
 
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
@@ -46,13 +40,19 @@ jest.mock('../header-bidding/utils', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
-	onConsentChange: jest.fn(),
+	onConsent: jest.fn(),
 	getConsentFor: jest.fn(),
 }));
 
 jest.mock('@guardian/libs', () => ({
 	log: jest.fn(),
 }));
+
+const mockOnConsent = (consentState: ConsentState) =>
+	(onConsent as jest.Mock).mockReturnValueOnce(Promise.resolve(consentState));
+
+const mockGetConsentFor = (hasConsent: boolean) =>
+	(getConsentFor as jest.Mock).mockReturnValueOnce(hasConsent);
 
 const defaultTCFv2State: TCFv2ConsentState = {
 	consents: { 1: false },
@@ -62,59 +62,53 @@ const defaultTCFv2State: TCFv2ConsentState = {
 	gdprApplies: true,
 	tcString: 'YAAA',
 };
-const tcfv2WithConsentMock = (callback: Callback) =>
-	callback({
-		tcfv2: {
-			...defaultTCFv2State,
-			vendorConsents: { '5f92a62aa22863685f4daa4c': true },
-		},
-		canTarget: true,
-		framework: 'tcfv2',
-	});
 
-const tcfv2WithoutConsentMock = (callback: Callback) =>
-	callback({
-		tcfv2: {
-			...defaultTCFv2State,
-			vendorConsents: { '5f92a62aa22863685f4daa4c': false },
-		},
-		canTarget: false,
-		framework: 'tcfv2',
-	});
+const tcfv2WithConsent = {
+	tcfv2: {
+		...defaultTCFv2State,
+		vendorConsents: { '5f92a62aa22863685f4daa4c': true },
+	},
+	canTarget: true,
+	framework: 'tcfv2',
+} as ConsentState;
 
-const ccpaWithConsentMock = (callback: Callback) =>
-	callback({
-		ccpa: { doNotSell: false },
-		canTarget: true,
-		framework: 'ccpa',
-	});
+const tcfv2WithoutConsent = {
+	tcfv2: {
+		...defaultTCFv2State,
+		vendorConsents: { '5f92a62aa22863685f4daa4c': false },
+	},
+	canTarget: false,
+	framework: 'tcfv2',
+} as ConsentState;
 
-const ccpaWithoutConsentMock = (callback: Callback) =>
-	callback({
-		ccpa: { doNotSell: true },
-		canTarget: false,
-		framework: 'ccpa',
-	});
+const ccpaWithConsent = {
+	ccpa: { doNotSell: false },
+	canTarget: true,
+	framework: 'ccpa',
+} as ConsentState;
 
-const ausWithConsentMock = (callback: Callback) =>
-	callback({
-		aus: { personalisedAdvertising: true },
-		canTarget: true,
-		framework: 'aus',
-	});
+const ccpaWithoutConsent = {
+	ccpa: { doNotSell: true },
+	canTarget: false,
+	framework: 'ccpa',
+} as ConsentState;
 
-const ausWithoutConsentMock = (callback: Callback) =>
-	callback({
-		aus: { personalisedAdvertising: false },
-		canTarget: false,
-		framework: 'aus',
-	});
+const ausWithConsent = {
+	aus: { personalisedAdvertising: true },
+	canTarget: true,
+	framework: 'aus',
+} as ConsentState;
 
-const invalidWithoutConsentMock = (callback: Callback) =>
-	callback({
-		canTarget: false,
-		framework: null,
-	});
+const ausWithoutConsent = {
+	aus: { personalisedAdvertising: false },
+	canTarget: false,
+	framework: 'aus',
+} as ConsentState;
+
+const invalidWithoutConsent = {
+	canTarget: false,
+	framework: null,
+} as ConsentState;
 
 const originalUA = navigator.userAgent;
 const fakeUserAgent = (userAgent?: string) => {
@@ -136,8 +130,9 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		onConsentChange.mockImplementation(tcfv2WithConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+
 		await setupPrebid();
 		expect(prebid.initialise).toBeCalled();
 	});
@@ -149,6 +144,9 @@ describe('init', () => {
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		fakeUserAgent('Google Web Preview');
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+
 		await setupPrebid();
 		expect(prebid.initialise).not.toBeCalled();
 	});
@@ -159,6 +157,9 @@ describe('init', () => {
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		dfpEnv.hbImpl = { prebid: false, a9: false };
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+
 		await setupPrebid();
 		expect(prebid.initialise).not.toBeCalled();
 	});
@@ -169,6 +170,9 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = false;
 		commercialFeatures.adFree = false;
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+
 		await setupPrebid();
 		expect(prebid.initialise).not.toBeCalled();
 	});
@@ -179,6 +183,9 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = true;
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+
 		await setupPrebid();
 		expect(prebid.initialise).not.toBeCalled();
 	});
@@ -190,6 +197,9 @@ describe('init', () => {
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		config.set('page.hasPageSkin', true);
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+
 		await setupPrebid();
 		expect(prebid.initialise).not.toBeCalled();
 	});
@@ -199,6 +209,9 @@ describe('init', () => {
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		config.set('page.hasPageSkin', false);
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+
 		await setupPrebid();
 		expect(prebid.initialise).toBeCalled();
 	});
@@ -208,8 +221,8 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		onConsentChange.mockImplementation(tcfv2WithConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
 		await setupPrebid();
 		expect(prebid.initialise).toBeCalled();
 	});
@@ -220,8 +233,8 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-		getConsentFor.mockReturnValue(false);
+		mockOnConsent(tcfv2WithoutConsent);
+		mockGetConsentFor(false);
 
 		await setupPrebid();
 		expect(log).toHaveBeenCalledWith(
@@ -239,8 +252,8 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		onConsentChange.mockImplementation(ccpaWithConsentMock);
-		getConsentFor.mockReturnValue(true); // TODO: Why do we need to mock this?
+		mockOnConsent(ccpaWithConsent);
+		mockGetConsentFor(true);
 		await setupPrebid();
 		expect(prebid.initialise).toBeCalled();
 	});
@@ -251,8 +264,8 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		onConsentChange.mockImplementation(ccpaWithoutConsentMock);
-		getConsentFor.mockReturnValue(false);
+		mockOnConsent(ccpaWithoutConsent);
+		mockGetConsentFor(false);
 
 		await setupPrebid();
 		expect(log).toHaveBeenCalledWith(
@@ -270,8 +283,8 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		onConsentChange.mockImplementation(ausWithConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(ausWithConsent);
+		mockGetConsentFor(true);
 		await setupPrebid();
 		expect(prebid.initialise).toBeCalled();
 	});
@@ -282,8 +295,8 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		onConsentChange.mockImplementation(ausWithoutConsentMock);
-		getConsentFor.mockReturnValue(false);
+		mockOnConsent(ausWithoutConsent);
+		mockGetConsentFor(false);
 
 		await setupPrebid();
 		expect(log).toHaveBeenCalledWith(
@@ -301,8 +314,8 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		onConsentChange.mockImplementation(invalidWithoutConsentMock);
-		getConsentFor.mockReturnValue(true);
+		mockOnConsent(invalidWithoutConsent);
+		mockGetConsentFor(true);
 
 		await setupPrebid();
 		expect(log).toHaveBeenCalledWith(

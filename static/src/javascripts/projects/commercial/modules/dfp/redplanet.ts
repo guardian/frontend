@@ -1,6 +1,8 @@
-import { getConsentFor } from '@guardian/consent-management-platform';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
-import { getInitialConsentState } from 'commercial/initial-consent-state';
 import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
@@ -36,7 +38,7 @@ const initialise = () => {
 };
 
 const setupRedplanet = () =>
-	getInitialConsentState()
+	onConsent()
 		.then((state) => {
 			if (!state.aus) {
 				return Promise.reject(

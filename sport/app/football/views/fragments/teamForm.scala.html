@@ -6,6 +6,7 @@
 @competition.teamResults(teamId).takeRight(5).map { result =>
     @if(result.won) {
         <span
+            tabindex="0"
             class="team-result team-result--won"
             data-foe="@cleanTeamName(result.foe.name)"
             data-score="@result.self.score.get"

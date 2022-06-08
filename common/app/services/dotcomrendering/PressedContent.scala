@@ -185,6 +185,7 @@ object PressedContent {
     "/artanddesign/ng-interactive/2020/jan/12/art-into-nature-nature-into-art-cesar-manrique-the-architect-of-lanzarote",
     "/fashion/ng-interactive/2020/jan/12/gran-designs-maximal-80s-style-in-dressing-and-decor",
     "/global-development/ng-interactive/2020/jan/15/environment-inequality-hunger-which-global-problems-would-you-fix-first",
+    "/business/2020/jan/30/how-has-brexit-vote-affected-uk-economy-january-verdict",
     "/politics/ng-interactive/2020/feb/01/britain-and-the-eu-a-timeline",
     "/food/ng-interactive/2020/feb/16/50-things-we-love-in-the-world-of-food-right-now",
     "/world/ng-interactive/2020/mar/02/europeans-one-right-answer-by-alice-zeniter-starring-sabrina-ouazani",

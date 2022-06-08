@@ -5,7 +5,7 @@ import experiments.ParticipationGroups._
 import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
-  override val allExperiments: Set[Experiment] = Set(InteractivesIdleLoading)
+  override val allExperiments: Set[Experiment] = Set(InteractivesIdleLoading, OfferHttp3)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -27,4 +27,13 @@ object InteractivesIdleLoading
       owners = Seq(Owner.withGithub("simonbyford")),
       sellByDate = LocalDate.of(2022, 7, 1),
       participationGroup = Perc10A,
+    )
+
+object OfferHttp3
+    extends Experiment(
+      name = "offer-http3",
+      description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
+      owners = Seq(Owner.withGithub("paulmr")),
+      sellByDate = LocalDate.of(2022, 12, 6),
+      participationGroup = Perc0B,
     )
