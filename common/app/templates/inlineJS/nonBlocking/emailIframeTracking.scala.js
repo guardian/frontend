@@ -48,7 +48,7 @@ function validateForm() {
 }
 
 function sendTrackingForFormSubmission() {
-    const componentEventData = buildComponentEvent(document.querySelector('form'), "SUBSCRIBE", "form-submission")
+    const componentEventData = buildComponentEvent(document.querySelector('form'), 'SUBSCRIBE', 'form-submission')
     sendEvent(componentEventData, 'ophan-iframe-component-event')
 }
 
