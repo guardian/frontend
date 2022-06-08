@@ -35,6 +35,10 @@ describe('manage-ad-free-cookie', () => {
 				[AdFreeCookieReasons.Subscriber]: EXPIRED_EXPIRY,
 			},
 		},
+		{
+			reason: AdFreeCookieReasons.Subscriber,
+			localStorageValue: undefined,
+		},
 	];
 
 	it.each(SHOULD_UNSET_COOKIE)(
@@ -46,10 +50,14 @@ describe('manage-ad-free-cookie', () => {
 				daysToLive: 1,
 			});
 
-			localStorage.setItem(
-				'gu.ad_free_cookie_reason',
-				JSON.stringify(localStorageValue),
-			);
+			if (localStorageValue) {
+				localStorage.setItem(
+					'gu.ad_free_cookie_reason',
+					JSON.stringify(localStorageValue),
+				);
+			} else {
+				localStorage.removeItem('gu.ad_free_cookie_reason');
+			}
 
 			maybeUnsetAdFreeCookie(reason);
 
@@ -86,6 +94,10 @@ describe('manage-ad-free-cookie', () => {
 				[AdFreeCookieReasons.ConsentOptOut]: EXPIRED_EXPIRY,
 			},
 		},
+		{
+			reason: AdFreeCookieReasons.ConsentOptOut,
+			localStorageValue: undefined,
+		},
 	];
 
 	it.each(SHOULD_NOT_UNSET_COOKIE)(
@@ -97,10 +109,14 @@ describe('manage-ad-free-cookie', () => {
 				daysToLive: 1,
 			});
 
-			localStorage.setItem(
-				'gu.ad_free_cookie_reason',
-				JSON.stringify(localStorageValue),
-			);
+			if (localStorageValue) {
+				localStorage.setItem(
+					'gu.ad_free_cookie_reason',
+					JSON.stringify(localStorageValue),
+				);
+			} else {
+				localStorage.removeItem('gu.ad_free_cookie_reason');
+			}
 
 			maybeUnsetAdFreeCookie(reason);
 
