@@ -235,7 +235,7 @@ describe('tcfv2 consent', () => {
             adsShouldNotShow();
         });
 
-        it(`Test ${path} reject all, cookie/reason expires, cookie should renew expiry and remain`, () => {
+		it(`Test ${path} reject all, cookie/reason expires, cookie should renew expiry and remain`, () => {
             cy.visit(`${path}?adtest=${adTest}`);
 
             cy.rejectAllConsent();
@@ -258,6 +258,26 @@ describe('tcfv2 consent', () => {
                 )
 
             cy.getCookie('GU_AF1').should('have.property', 'value').then(value => expect(Number(value)).to.be.greaterThan(expiredTimestamp));
+        });
+
+		it(`Test ${path} allow all, logged in, if localstorage reason is missing, keep ad free, don't show ads`, () => {
+			fakeLogin(true);
+
+			cy.setCookie('GU_AF1', String(new Date().getTime() + 100000));
+
+            cy.visit(`${path}?adtest=${adTest}`);
+
+            cy.allowAllConsent();
+
+			cy.wait('@userData');
+
+			cy.then(() => localStorage.removeItem('gu.ad_free_cookie_reason'));
+
+			cy.reload();
+
+			cy.getCookie('GU_AF1').should('exist');
+
+			cy.get('#dfp-ad--top-above-nav').should('not.exist');
         });
 	});
 });

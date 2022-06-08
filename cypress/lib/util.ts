@@ -68,7 +68,7 @@ export const fakeLogin = (subscriber = true) => {
 	cy.intercept(
 		'https://members-data-api.theguardian.com/user-attributes/me',
 		response,
-	);
+	).as('userData');
 }
 
  export const fakeLogOut = () => {
