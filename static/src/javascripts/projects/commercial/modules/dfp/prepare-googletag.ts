@@ -1,9 +1,10 @@
-import { getConsentFor } from '@guardian/consent-management-platform';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
-import type { ConsentStateEnhanced } from 'common/modules/commercial/enhanced-consent';
-import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
 import { removeSlots } from '../../../commercial/modules/remove-slots';
@@ -81,64 +82,62 @@ const setPublisherProvidedId = (): void =>
 
 export const init = (): Promise<void> => {
 	const setupAdvertising = (): Promise<void> => {
-		return getEnhancedConsent().then(
-			(consentState: ConsentStateEnhanced) => {
-				let canRun = true;
+		return onConsent().then((consentState: ConsentState) => {
+			let canRun = true;
 
-				if (consentState.canTarget) {
-					window.googletag.cmd.push(setPublisherProvidedId);
-				}
+			if (consentState.canTarget) {
+				window.googletag.cmd.push(setPublisherProvidedId);
+			}
 
-				if (consentState.ccpa) {
-					// CCPA mode
-					// canRun stays true, set RDP flag
-					window.googletag.cmd.push(() => {
-						window.googletag.pubads().setPrivacySettings({
-							restrictDataProcessing: !consentState.canTarget,
-						});
+			if (consentState.ccpa) {
+				// CCPA mode
+				// canRun stays true, set RDP flag
+				window.googletag.cmd.push(() => {
+					window.googletag.pubads().setPrivacySettings({
+						restrictDataProcessing: !consentState.canTarget,
 					});
-				} else if (consentState.tcfv2) {
-					// TCFv2 mode
-					canRun = getConsentFor('googletag', consentState);
-				} else if (consentState.aus) {
-					// AUS mode
-					// canRun stays true, set NPA flag
-					const npaFlag = !getConsentFor('googletag', consentState);
-					window.googletag.cmd.push(() => {
-						window.googletag
-							.pubads()
-							.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
-					});
-				}
+				});
+			} else if (consentState.tcfv2) {
+				// TCFv2 mode
+				canRun = getConsentFor('googletag', consentState);
+			} else if (consentState.aus) {
+				// AUS mode
+				// canRun stays true, set NPA flag
+				const npaFlag = !getConsentFor('googletag', consentState);
+				window.googletag.cmd.push(() => {
+					window.googletag
+						.pubads()
+						.setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
+				});
+			}
 
-				// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
-				// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-				if (canRun) {
-					// Note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
-					// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
-					// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
-					window.googletag.cmd.push(
-						setDfpListeners,
-						() => {
-							setPageTargeting(consentState);
-						},
-						refreshOnResize,
-						() => {
-							void fillAdvertSlots();
-						},
-					);
+			// Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
+			// Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
+			if (canRun) {
+				// Note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
+				// it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
+				// fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
+				window.googletag.cmd.push(
+					setDfpListeners,
+					() => {
+						setPageTargeting(consentState);
+					},
+					refreshOnResize,
+					() => {
+						void fillAdvertSlots();
+					},
+				);
 
-					void loadScript(
-						config.get<string>(
-							'libs.googletag',
-							'//www.googletagservices.com/tag/js/gpt.js',
-						),
-						{ async: false },
-					);
-				}
-				return Promise.resolve();
-			},
-		);
+				void loadScript(
+					config.get<string>(
+						'libs.googletag',
+						'//www.googletagservices.com/tag/js/gpt.js',
+					),
+					{ async: false },
+				);
+			}
+			return Promise.resolve();
+		});
 	};
 
 	if (commercialFeatures.dfpAdvertising) {

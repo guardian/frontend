@@ -1463,15 +1463,15 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-7.2.0.tgz#e5e7ba7c19484ebe0e405a93b1c389dae681acef"
   integrity sha512-Y2+XC0bP5mFacwtDlDqlQsbUyQwn4OSlpOTw3+u7t1RhJFw61SDYAER4gOpyJ4t+wQZFdk//LGJUjFqzDfEEuQ==
 
-"@guardian/commercial-core@^3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-3.4.0.tgz#30fa768df0ca77ae912a1d55c4de2427d8608654"
-  integrity sha512-r/JPn0MpUUOZ/gy0E0NJOBwGDM0fga1nXxXiwY60Ya8S2fOdqrtGJfcnfDOd55wDbQQ0VbRWnO3SO/J6ZA9icw==
+"@guardian/commercial-core@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-3.5.0.tgz#860d3bfd2ae078b21e09078a11a44783116e54c1"
+  integrity sha512-wmiJ+mjFTNE3pwYQTuRuZ0jce/GdzAj6HGp11qsQ6SMXuv4B6FW9oae5D24iYkEpjyF+vEjn3DS1/5dNVXEnHA==
 
-"@guardian/consent-management-platform@^10.5.0":
-  version "10.5.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.5.0.tgz#5195abd5cf6d940dbdfb7c27b05165913999ed0e"
-  integrity sha512-oxCcHLalyMMIMneolgX7d/n5NM+e7cVYhPwITmYdw2dyM6zpmsZsUENEVnno49HpU0MamD7YzNrhE4HT2w2YIA==
+"@guardian/consent-management-platform@^10.6.0":
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.6.0.tgz#18b13a1b6eebc2dcf0d708d12bcd6b93a2c407a3"
+  integrity sha512-U4JvXWV/gG5WwNsooVncYQSf5nroEinVnq2nCIrinQeMyhn6M2syxNnQVqIk/CE05Mh84OpR/ZWvGoz30b2/wA==
   dependencies:
     "@guardian/libs" "1.6.1 - 3.3.0"
 
@@ -10395,9 +10395,9 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.15.tgz#6df94d8afecf3f9e10a742fd8c362ddab464225f"
   integrity sha512-5chK29n6QcJc3m1lVrKQSQ+V7K1Gb8HeQY6FViQ5AxCAEGu3DaHffWNDkC9+miZgsLvbvU9rxbV1qinGHMHzqA==
 
-"prebid.js@https://github.com/guardian/Prebid.js#f434c6d":
+"prebid.js@https://github.com/guardian/Prebid.js#2e61e45":
   version "5.20.0"
-  resolved "https://github.com/guardian/Prebid.js#f434c6d14f65b4bd26baa7f9799ceca0a1bbaafb"
+  resolved "https://github.com/guardian/Prebid.js#2e61e459082036e7a1f82d28a9497979f6872cd8"
   dependencies:
     "@guardian/libs" "^3.1.0"
     babel-plugin-transform-object-assign "^6.22.0"

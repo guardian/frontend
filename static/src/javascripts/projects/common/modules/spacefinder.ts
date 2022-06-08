@@ -1,5 +1,6 @@
 // total_hours_spent_maintaining_this = 81.5
 
+import { log } from '@guardian/libs';
 import { memoize } from 'lodash-es';
 import { amIUsed } from 'commercial/sentinel';
 import fastdom from '../../../lib/fastdom-promise';
@@ -128,6 +129,28 @@ const onRichLinksUpgraded = memoize(
 	getFuncId,
 );
 
+const waitForSetHeightMessage = (
+	iframe: HTMLIFrameElement,
+	callback: () => void,
+) => {
+	window.addEventListener('message', (event) => {
+		if (event.source !== iframe.contentWindow) return;
+
+		try {
+			const message = JSON.parse(event.data) as Record<
+				string,
+				string | number
+			>;
+
+			if (message.type === 'set-height' && message.value > 0) {
+				callback();
+			}
+		} catch (ex) {
+			log('commercial', 'Unparsable message sent from iframe', ex);
+		}
+	});
+};
+
 const onInteractivesLoaded = memoize(async (rules: SpacefinderRules) => {
 	const notLoaded = query('.element-interactive', rules.body).filter(
 		(interactive) => {
@@ -142,6 +165,7 @@ const onInteractivesLoaded = memoize(async (rules: SpacefinderRules) => {
 	const mutations = notLoaded.map(
 		(interactive) =>
 			new Promise<void>((resolve) => {
+				// Listen for when iframes are added as children to interactives
 				new MutationObserver((records, instance) => {
 					if (
 						!records.length ||
@@ -152,15 +176,13 @@ const onInteractivesLoaded = memoize(async (rules: SpacefinderRules) => {
 					}
 
 					const iframe = records[0].addedNodes[0];
-					if (isIframeLoaded(iframe)) {
+
+					// Listen for when the iframes are resized
+					// This is a sign they have fully loaded and spacefinder can proceed
+					waitForSetHeightMessage(iframe, () => {
 						instance.disconnect();
 						resolve();
-					} else {
-						iframe.addEventListener('load', () => {
-							instance.disconnect();
-							resolve();
-						});
-					}
+					});
 				}).observe(interactive, {
 					childList: true,
 				});

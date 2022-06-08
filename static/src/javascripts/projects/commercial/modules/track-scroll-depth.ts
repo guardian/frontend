@@ -1,13 +1,13 @@
 import { initTrackScrollDepth } from '@guardian/commercial-core';
+import { onConsent } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
-import { getEnhancedConsent } from 'common/modules/commercial/enhanced-consent';
 
 /**
- * Initisalise scroll depth / velocity tracking if user has consented to relevant purposes.
+ * Initialise scroll depth / velocity tracking if user has consented to relevant purposes.
  * @returns Promise
  */
 export const init = async (): Promise<void> => {
-	const state = await getEnhancedConsent();
+	const state = await onConsent();
 	if (
 		// Purpose 8 - Measure content performance
 		(state.framework == 'tcfv2' && state.tcfv2?.consents[8]) ||
