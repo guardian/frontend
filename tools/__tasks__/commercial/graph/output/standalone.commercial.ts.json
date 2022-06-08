@@ -66,10 +66,6 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
  ],
- "../projects/commercial/initial-consent-state.ts": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
-  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
- ],
  "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -129,7 +125,6 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.d.ts",
-  "../projects/commercial/initial-consent-state.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
@@ -251,7 +246,6 @@
   "../lib/a9-apstag.js",
   "../lib/config.d.ts",
   "../lib/detect-google-proxy.ts",
-  "../projects/commercial/initial-consent-state.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/a9/a9.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
@@ -312,7 +306,6 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/launchpad.js",
-  "../projects/commercial/initial-consent-state.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
@@ -540,7 +533,6 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/initial-consent-state.ts",
   "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
   "../projects/commercial/modules/third-party-tags/imr-worldwide.js",
   "../projects/common/modules/commercial/commercial-features.ts"
@@ -716,6 +708,7 @@
  ],
  "../projects/common/modules/mark-candidates.js": [],
  "../projects/common/modules/spacefinder.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/sentinel.ts",
