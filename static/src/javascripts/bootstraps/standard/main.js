@@ -34,7 +34,6 @@ import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
 import { initEmbedResize } from "./emailEmbeds";
-import { setAdFreeCookie, AdFreeCookieReasons } from 'lib/manage-ad-free-cookie';
 
 const showHiringMessage = () => {
     try {
@@ -196,8 +195,19 @@ const bootStandard = () => {
     // if the user is genuinely ad-free, this one will be overwritten
     // in user-features
     if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
-        // Sets a short-lived cookie to trigger server-side ad-freeness
-        setAdFreeCookie(AdFreeCookieReasons.ForceAdFree, 1);
+        const daysToLive = 1;
+        const isCrossSubDomain = true;
+        const forcedAdFreeValidSeconds = 30;
+        const forcedAdFreeExpiryTime = new Date();
+        forcedAdFreeExpiryTime.setTime(
+            forcedAdFreeExpiryTime.getTime() + forcedAdFreeValidSeconds * 1000
+        );
+        addCookie(
+            'GU_AF1',
+            forcedAdFreeExpiryTime.getTime().toString(),
+            daysToLive,
+            isCrossSubDomain
+        );
     }
 
     // set local storage: gu.alreadyVisited
