@@ -1,4 +1,12 @@
 import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
+import {
+	AdFreeCookieReasons,
+	adFreeDataIsOld,
+	adFreeDataIsPresent,
+	getAdFreeCookie,
+	maybeUnsetAdFreeCookie,
+	setAdFreeCookie,
+} from 'lib/manage-ad-free-cookie';
 import { noop } from 'lib/noop';
 import config from '../../../../lib/config';
 import { fetchJson } from '../../../../lib/fetch-json';
@@ -7,11 +15,11 @@ import { getLocalDate } from '../../../../types/dates';
 import type { LocalDate } from '../../../../types/dates';
 import type { UserFeaturesResponse } from '../../../../types/membership';
 import { isUserLoggedIn } from '../identity/api';
+import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
 
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
-const AD_FREE_USER_COOKIE = 'GU_AF1';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
 const HIDE_SUPPORT_MESSAGING_COOKIE = 'gu_hide_support_messaging';
@@ -45,12 +53,12 @@ const forcedAdFreeMode = !!/[#&]noadsaf(&.*)?$/.exec(window.location.hash);
 
 const userHasData = () => {
 	const cookie =
+		getAdFreeCookie() ??
 		getCookie({ name: ACTION_REQUIRED_FOR_COOKIE }) ??
 		getCookie({ name: USER_FEATURES_EXPIRY_COOKIE }) ??
 		getCookie({ name: PAYING_MEMBER_COOKIE }) ??
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) ??
 		getCookie({ name: ONE_OFF_CONTRIBUTION_DATE_COOKIE }) ??
-		getCookie({ name: AD_FREE_USER_COOKIE }) ??
 		getCookie({ name: DIGITAL_SUBSCRIBER_COOKIE }) ??
 		getCookie({ name: HIDE_SUPPORT_MESSAGING_COOKIE });
 	return !!cookie;
@@ -58,18 +66,6 @@ const userHasData = () => {
 
 const accountDataUpdateWarning = (): string | null =>
 	getCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
-
-const adFreeDataIsPresent = (): boolean => {
-	const cookieVal = getCookie({ name: AD_FREE_USER_COOKIE });
-	if (!cookieVal) return false;
-	return !Number.isNaN(parseInt(cookieVal, 10));
-};
-
-const timeInDaysFromNow = (daysFromNow: number): string => {
-	const tmpDate = new Date();
-	tmpDate.setDate(tmpDate.getDate() + daysFromNow);
-	return tmpDate.getTime().toString();
-};
 
 /**
  * TODO: check that this validation is accurate
@@ -128,25 +124,19 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 		});
 	}
 
-	if (
-		adFreeDataIsPresent() &&
-		!forcedAdFreeMode &&
-		!JsonResponse.contentAccess.digitalPack
-	) {
-		removeCookie({ name: AD_FREE_USER_COOKIE });
-	}
-
 	if (JsonResponse.contentAccess.digitalPack) {
-		setCookie({ name: AD_FREE_USER_COOKIE, value: timeInDaysFromNow(2) });
+		setAdFreeCookie(AdFreeCookieReasons.Subscriber, 2);
+	} else if (adFreeDataIsPresent() && !forcedAdFreeMode) {
+		maybeUnsetAdFreeCookie(AdFreeCookieReasons.Subscriber);
 	}
 };
 
 const deleteOldData = (): void => {
 	// We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
+	maybeUnsetAdFreeCookie(AdFreeCookieReasons.Subscriber);
 	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
 	removeCookie({ name: PAYING_MEMBER_COOKIE });
 	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });
-	removeCookie({ name: AD_FREE_USER_COOKIE });
 	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
 	removeCookie({ name: DIGITAL_SUBSCRIBER_COOKIE });
 	removeCookie({ name: HIDE_SUPPORT_MESSAGING_COOKIE });
@@ -172,24 +162,8 @@ const requestNewData = () =>
 		.then(persistResponse)
 		.catch(noop);
 
-const cookieIsExpiredOrMissing = (cookieName: string): boolean => {
-	const expiryDateFromCookie = getCookie({ name: cookieName });
-	if (!expiryDateFromCookie) return true;
-	const expiryTime = parseInt(expiryDateFromCookie, 10);
-	const timeNow = new Date().getTime();
-	return timeNow >= expiryTime;
-};
-
 const featuresDataIsOld = () =>
 	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
-
-const adFreeDataIsOld = (): boolean => {
-	const { switches } = window.guardian.config;
-	return (
-		Boolean(switches.adFreeStrictExpiryEnforcement) &&
-		cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE)
-	);
-};
 
 const userNeedsNewFeatureData = (): boolean =>
 	featuresDataIsOld() || (adFreeDataIsPresent() && adFreeDataIsOld());
@@ -415,4 +389,5 @@ export {
 	ARTICLES_VIEWED_OPT_OUT_COOKIE,
 	CONTRIBUTIONS_REMINDER_SIGNED_UP,
 	canShowContributionsReminderFeature,
+	AdFreeCookieReasons,
 };

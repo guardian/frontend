@@ -9,7 +9,7 @@ Cypress.Commands.add('getIframeBody', (selector: string) => {
 	// and retry until the body element is not empty
 	return (
 		cy
-			.get(`iframe[id^="${selector}"`)
+			.get(selector.startsWith('iframe') ? selector : `iframe[id^="${selector}"`)
 			.its('0.contentDocument.body')
 			.should('not.be.empty')
 			// wraps "body" DOM element to allow
@@ -17,4 +17,22 @@ Cypress.Commands.add('getIframeBody', (selector: string) => {
 			// https://on.cypress.io/wrap
 			.then<HTMLElement>(cy.wrap)
 	);
+});
+
+const allowAll = "Yes, I’m happy";
+const manageConsent = "Manage my cookies";
+const rejectAll = "Reject all";
+
+Cypress.Commands.add('rejectAllConsent', () => {
+	cy
+		.getIframeBody('sp_message_iframe_').find(`button[title="${manageConsent}"]`)
+		.click();
+
+    cy.getIframeBody('iframe[title="SP Consent Message"]').find(`button[title="${rejectAll}"]`).click();
+
+
+});
+
+Cypress.Commands.add('allowAllConsent', () => {
+    cy.getIframeBody('sp_message_iframe_').find(`button[title="${allowAll}"]`).click();
 });

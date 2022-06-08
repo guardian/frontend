@@ -16,13 +16,17 @@
 // https://docs.cypress.io/guides/tooling/typescript-support#Types-for-custom-commands
 declare global {
 	namespace Cypress {
-		interface Chainable {
-			/**
-			 * Custom command to select DOM element by data-cy attribute.
-			 * @example cy.getIframeBody('sp_message_iframe_')
-			 */
-			getIframeBody(selector: string): Chainable<Element>;
-		}
+	  interface Chainable {
+		/**
+		 * Custom command to select DOM element by data-cy attribute.
+		 * @example cy.getIframeBody('sp_message_iframe_')
+		 */
+		 getIframeBody(selector: string): Chainable<Element>
+
+		 rejectAllConsent(): void
+
+		 allowAllConsent(): void
+	  }
 	}
 }
 

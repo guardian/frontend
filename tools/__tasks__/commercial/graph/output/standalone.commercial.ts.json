@@ -29,6 +29,10 @@
   "../lib/report-error.js"
  ],
  "../lib/launchpad.js": [],
+ "../lib/manage-ad-free-cookie.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/common/modules/commercial/lib/cookie.ts"
+ ],
  "../lib/mediator.ts": [
   "../../../../node_modules/wolfy87-eventemitter/EventEmitter.d.ts"
  ],
@@ -67,13 +71,6 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
- "../projects/commercial/modules/ad-free-slot-remove.ts": [
-  "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/$$.ts",
-  "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
- ],
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -266,7 +263,6 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/raven.js",
-  "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
   "../projects/commercial/modules/dfp/on-slot-load.ts",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
@@ -433,6 +429,12 @@
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
+ ],
+ "../projects/commercial/modules/manage-ad-free-cookie-on-consent-change.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
+  "../lib/manage-ad-free-cookie.ts",
+  "../projects/commercial/modules/remove-slots.ts"
  ],
  "../projects/commercial/modules/messenger.ts": [
   "../lib/report-error.js",
@@ -618,6 +620,9 @@
  "../projects/common/modules/commercial/geo-utils.js": [
   "../lib/geolocation.ts"
  ],
+ "../projects/common/modules/commercial/lib/cookie.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/common/modules/commercial/support-utilities.js": [
   "../lib/geolocation.ts"
  ],
@@ -625,8 +630,10 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fetch-json.ts",
+  "../lib/manage-ad-free-cookie.ts",
   "../lib/noop.ts",
   "../lib/time-utils.ts",
+  "../projects/common/modules/commercial/lib/cookie.ts",
   "../projects/common/modules/identity/api.ts",
   "../types/dates.ts",
   "../types/membership.ts"
@@ -732,7 +739,6 @@
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
   "../projects/commercial/commercial-metrics.ts",
-  "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
   "../projects/commercial/modules/article-aside-adverts.ts",
   "../projects/commercial/modules/article-body-adverts.ts",
@@ -747,6 +753,7 @@
   "../projects/commercial/modules/high-merch.ts",
   "../projects/commercial/modules/ipsos-mori.ts",
   "../projects/commercial/modules/liveblog-adverts.ts",
+  "../projects/commercial/modules/manage-ad-free-cookie-on-consent-change.ts",
   "../projects/commercial/modules/mobile-sticky.ts",
   "../projects/commercial/modules/paid-containers.ts",
   "../projects/commercial/modules/paidfor-band.js",

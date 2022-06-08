@@ -9,6 +9,14 @@
       "types": ["node", "cypress"],
       "skipLibCheck": true,
       "strict": true,
+      "paths": {
+        "common/*": [
+            "../static/src/javascripts/projects/common/*"
+          ],
+          "lib/*": [
+            "../static/src/javascripts/lib/*"
+          ],
+      }
     },
     "include": ["**/*.ts"]
 }
