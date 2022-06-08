@@ -13,7 +13,6 @@ import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.{ApplicationContext, CanonicalLiveBlog, _}
-import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -21,6 +20,8 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
+import topmentions.{TopMentionEntity, TopMentionsResult, TopMentionsService}
+import topmentions.TopMentionEntity.TopMentionEntity
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -32,6 +33,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    topMentionsService: TopMentionsService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -55,17 +57,59 @@ class LiveBlogController(
     }
   }
 
-  def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
+  private def getAutomaticFilter(filter: Option[String]): Option[(TopMentionEntity, String)] = {
+    filter.flatMap { f =>
+      val filterEntity = f.split(":")
+      if (filterEntity.length == 2) {
+        val entityType = TopMentionEntity.withNameOpt(filterEntity(0).toUpperCase)
+        if (entityType.isEmpty) {
+          println(s"automaticFilter query parameter entity ${filterEntity(0)} is invalid")
+          None
+        } else {
+          Some(entityType.get, filterEntity(1))
+        }
+      } else {
+        println("automaticFilter query parameter is invalid, the format is <type>:<name>")
+        None
+      }
+    }
+  }
+
+  private def getTopMentions(
+      blogId: String,
+      filterEntity: (TopMentionEntity, String),
+  ): Option[TopMentionsResult] = {
+
+    val topMentions = topMentionsService.getTopMention(blogId)
+    topMentions.flatMap { t =>
+      t.results.find(result => {
+        result.`type` == filterEntity._1 && result.name.toUpperCase == filterEntity._2.toUpperCase
+      })
+    }
+  }
+
+  def renderArticle(
+      path: String,
+      page: Option[String] = None,
+      filterKeyEvents: Option[Boolean],
+      automaticFilter: Option[String],
+  ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
+
+      val topMentionResult = for {
+        filterEntity <- getAutomaticFilter(automaticFilter)
+        topMentions <- getTopMentions(path, filterEntity)
+      } yield topMentions
+
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter, topMentionResult) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog, filter) // no page param
+        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentionResult) // no page param
       }
     }
   }
@@ -98,7 +142,12 @@ class LiveBlogController(
     }
   }
 
-  private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
+  private[this] def renderWithRange(
+      path: String,
+      range: BlockRange,
+      filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
+  )(implicit
       request: RequestHeader,
   ): Future[Result] = {
     mapModel(path, range, filterKeyEvents) { (page, blocks) =>

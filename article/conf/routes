@@ -19,7 +19,7 @@ GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.rend
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email/headline.txt controllers.ArticleController.renderHeadline(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt controllers.LiveBlogController.renderEmail(path)
-GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean], automaticFilter: Option[String])
 
 # articles, finished liveblogs
 

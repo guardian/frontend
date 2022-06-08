@@ -98,6 +98,7 @@ class CanonicalLink {
     "index",
     "page",
     "filterKeyEvents",
+    "automaticFilter",
   )
 
   def apply(implicit request: RequestHeader, webUrl: String): String = {
