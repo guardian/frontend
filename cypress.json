@@ -1,9 +1,7 @@
 {
     "chromeWebSecurity": false,
     "defaultCommandTimeout": 15000,
-    "retries": {
-        "runMode": 2,
-        "openMode": 0
-    },
-    "video": false
+    "retries": 2,
+    "video": false,
+    "pluginsFile": false
 }

@@ -37,7 +37,7 @@ describe('Slots and iframes load on pages', () => {
 				// Also, we are waiting *up to* 30 seconds here to give the ads time to load. In most
 				// cases this check will pass much faster
 				cy.get('.js-ad-slot:not([data-name="survey"]', {
-					timeout: 30000,
+					timeout: 30_000,
 				}).should(
 					'have.length.of.at.least',
 					expectedMinTotalSlotsOnPage,

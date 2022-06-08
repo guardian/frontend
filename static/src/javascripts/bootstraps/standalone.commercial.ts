@@ -3,6 +3,7 @@ import { log } from '@guardian/libs';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
+import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from '../projects/commercial/modules/ad-verification/prepare-ad-verification';
 import { init as initArticleAsideAdverts } from '../projects/commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
@@ -17,7 +18,6 @@ import { init as initRedplanet } from '../projects/commercial/modules/dfp/redpla
 import { init as initHighMerch } from '../projects/commercial/modules/high-merch';
 import { init as initIpsosMori } from '../projects/commercial/modules/ipsos-mori';
 import { init as initLiveblogAdverts } from '../projects/commercial/modules/liveblog-adverts';
-import { manageAdFreeCookieOnConsentChange } from '../projects/commercial/modules/manage-ad-free-cookie-on-consent-change';
 import { init as initMobileSticky } from '../projects/commercial/modules/mobile-sticky';
 import { paidContainers } from '../projects/commercial/modules/paid-containers';
 import { init as initPaidForBand } from '../projects/commercial/modules/paidfor-band';
@@ -46,7 +46,7 @@ const commercialBaseModules: Modules = [];
 
 // remaining modules not necessary to load an ad
 const commercialExtraModules: Modules = [
-	['cm-manageAdFreeCookieOnConsentChange', manageAdFreeCookieOnConsentChange],
+	['cm-adFreeSlotRemove', adFreeSlotRemove],
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
 	['cm-ipsosmori', initIpsosMori],
