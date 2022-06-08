@@ -17,6 +17,7 @@ case class Competition(
     leagueTable: Seq[LeagueTableEntry] = Nil,
     showInTeamsList: Boolean = false,
     tableDividers: List[Int] = Nil,
+    finalMatchSVG: Option[String] = None,
 ) extends implicits.Collections
     with implicits.Football {
 
