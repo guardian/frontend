@@ -166,7 +166,9 @@ const featuresDataIsOld = () =>
 	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
 
 const userNeedsNewFeatureData = (): boolean =>
-	featuresDataIsOld() || (adFreeDataIsPresent() && adFreeDataIsOld());
+	featuresDataIsOld() ||
+	(adFreeDataIsPresent() && adFreeDataIsOld()) ||
+	(isDigitalSubscriber() && !adFreeDataIsPresent());
 
 const userHasDataAfterSignout = (): boolean =>
 	!isUserLoggedIn() && userHasData();
