@@ -1,12 +1,4 @@
-/// <reference types="cypress" />
-
 import { getStage, getTestUrl } from '../lib/util';
-
-// Don't fail tests when uncaught exceptions occur
-// This is because scripts loaded on the page and unrelated to these tests can cause this
-Cypress.on('uncaught:exception', (err, runnable) => {
-	return false;
-});
 
 const stage = getStage();
 
@@ -51,14 +43,14 @@ describe('Slots and iframes load on pages', () => {
 					expectedMinTotalSlotsOnPage,
 				);
 
-				Array(expectedMinInlineSlotsOnPage)
-					.fill()
-					.forEach((item, i) => {
+				[...Array(expectedMinInlineSlotsOnPage).keys()].forEach(
+					(item, i) => {
 						cy.get(`[data-name="inline${i + 1}"]`).should(
 							'have.length',
 							1,
 						);
-					});
+					},
+				);
 
 				cy.get(`[data-name="right"]`).should('have.length', 1);
 

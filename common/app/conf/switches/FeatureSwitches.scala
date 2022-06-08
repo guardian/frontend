@@ -330,17 +330,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  // Owner: Maria Livia Chiorean
-  val SharingComments = Switch(
-    SwitchGroup.Feature,
-    "sharing-comments",
-    "When ON, the user will be able to share comments",
-    owners = Seq(Owner.withGithub("marialivia16")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   // Owner: Sam Cutler / Editorial Tools
   val Targeting = Switch(
     SwitchGroup.Feature,

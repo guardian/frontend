@@ -9,8 +9,10 @@ import {
 	twitter,
 } from '@guardian/commercial-core';
 import type { ThirdPartyTag } from '@guardian/commercial-core';
-import { getConsentFor } from '@guardian/consent-management-platform';
-import { getInitialConsentState } from 'commercial/initial-consent-state';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -69,11 +71,11 @@ const insertScripts = async (
 	performanceServices: ThirdPartyTag[], // performanceServices always run
 ): Promise<void> => {
 	await addScripts(performanceServices);
-	const state = await getInitialConsentState();
+	const consentState = await onConsent();
 	const consentedAdvertisingServices = advertisingServices.filter(
 		(script) => {
 			if (script.name === undefined) return false;
-			return getConsentFor(script.name, state);
+			return getConsentFor(script.name, consentState);
 		},
 	);
 

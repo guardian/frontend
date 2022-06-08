@@ -11,7 +11,7 @@
             data-score="@result.self.score.get"
             data-score-foe="@result.foe.score.get"
             title="Won @result.self.score.get-@result.foe.score.get against @cleanTeamName(result.foe.name)">
-            <span class="u-h">Won against @cleanTeamName(result.foe.name)</span>
+            <span class="u-h">Won @result.self.score.get-@result.foe.score.get against @cleanTeamName(result.foe.name)</span>
         </span>
     }
     @if(result.drew) {
@@ -21,7 +21,7 @@
             data-score="@result.self.score.get"
             data-score-foe="@result.foe.score.get"
             title="Drew @result.self.score.get-@result.foe.score.get with @cleanTeamName(result.foe.name)">
-            <span class="u-h">Drew with @cleanTeamName(result.foe.name)</span>
+            <span class="u-h">Drew @result.self.score.get-@result.foe.score.get with @cleanTeamName(result.foe.name)</span>
         </span>
     }
     @if(result.lost) {
@@ -31,7 +31,7 @@
             data-score="@result.self.score.get"
             data-score-foe="@result.foe.score.get"
             title="Lost @result.self.score.get-@result.foe.score.get to @cleanTeamName(result.foe.name)">
-            <span class="u-h">Lost to @cleanTeamName(result.foe.name)</span>
+            <span class="u-h">Lost @result.self.score.get-@result.foe.score.get to @cleanTeamName(result.foe.name)</span>
         </span>
     }
 }

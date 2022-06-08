@@ -205,11 +205,14 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/load-advert.ts"
+  "../projects/commercial/modules/dfp/load-advert.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts"
  ],
  "../projects/commercial/modules/dfp/load-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -285,7 +288,6 @@
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/commercial/enhanced-consent.ts",
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-permutive.js": [
@@ -303,8 +305,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/commercial/enhanced-consent.ts"
+  "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/queue-advert.ts": [
   "../projects/commercial/modules/dfp/Advert.ts",
@@ -379,6 +380,7 @@
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/esm/constants/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
@@ -391,7 +393,6 @@
   "../projects/commercial/modules/header-bidding/slot-config.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
-  "../projects/common/modules/commercial/enhanced-consent.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/prebid-price-granularity.ts"
  ],
@@ -422,7 +423,6 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
-  "../projects/commercial/initial-consent-state.ts",
   "../projects/commercial/modules/__vendor/ipsos-mori.js"
  ],
  "../projects/commercial/modules/liveblog-adverts.ts": [
@@ -551,10 +551,16 @@
   "../lib/config.js",
   "../projects/common/modules/commercial/geo-utils.js"
  ],
+ "../projects/commercial/modules/track-gpc-signal.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/commercial/modules/track-scroll-depth.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../projects/common/modules/commercial/enhanced-consent.ts"
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/commercial/sentinel.ts": [
   "../lib/config.d.ts"
@@ -571,6 +577,7 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
   "../projects/common/modules/experiments/tests/prebid-price-granularity.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
@@ -607,11 +614,6 @@
  "../projects/common/modules/commercial/contributions-utilities.js": [
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
   "../lib/config.js"
- ],
- "../projects/common/modules/commercial/enhanced-consent.ts": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
-  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
-  "../../../../node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts"
  ],
  "../projects/common/modules/commercial/geo-utils.js": [
   "../lib/geolocation.ts"
@@ -655,6 +657,7 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
   "../projects/common/modules/experiments/tests/prebid-price-granularity.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
@@ -681,6 +684,10 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
+ "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
@@ -747,6 +754,7 @@
   "../projects/commercial/modules/set-adtest-cookie.ts",
   "../projects/commercial/modules/sticky-top-banner.js",
   "../projects/commercial/modules/third-party-tags.ts",
+  "../projects/commercial/modules/track-gpc-signal.ts",
   "../projects/commercial/modules/track-scroll-depth.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-features.ts",

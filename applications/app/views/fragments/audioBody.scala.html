@@ -55,7 +55,7 @@
             ; image <- podcast.image
             ) {
                 <div class="podcast__cover">
-                    <a href="@LinkTo {/@series.id}"><img src="@ImgSrc(image, ImageProfile(width = Some(440)))" class="podcast__cover-image" alt></a>
+                    <a href="@LinkTo {/@series.id}"><img src="@ImgSrc(image, ImageProfile(width = Some(440)))" class="podcast__cover-image" alt="@series.name Series"></a>
                 </div>
             }
 
