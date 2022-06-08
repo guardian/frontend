@@ -55,9 +55,12 @@ const adFreeDataIsPresent = (): boolean => {
 	return !Number.isNaN(parseInt(cookieVal, 10));
 };
 
-const getAdFreeCookieReason = () => {
+const getAdFreeCookieReason = (): AdFreeCookieReasonExpiries | undefined => {
 	const adFreeReasonString = localStorage.getItem(AD_FREE_COOKIE_REASON_LS);
-	return JSON.parse(adFreeReasonString ?? '{}') as AdFreeCookieReasonExpiries;
+	if (!adFreeReasonString) {
+		return;
+	}
+	return JSON.parse(adFreeReasonString) as AdFreeCookieReasonExpiries;
 };
 
 /*
@@ -69,7 +72,7 @@ const getAdFreeCookieReason = () => {
  */
 const setAdFreeCookie = (reason: AdFreeCookieReasons, daysToLive = 1): void => {
 	if (reason !== AdFreeCookieReasons.ForceAdFree) {
-		const adFreeReason = getAdFreeCookieReason();
+		const adFreeReason = getAdFreeCookieReason() ?? {};
 		adFreeReason[reason] = timeInDaysFromNow(daysToLive);
 
 		localStorage.setItem(
@@ -93,7 +96,20 @@ const setAdFreeCookie = (reason: AdFreeCookieReasons, daysToLive = 1): void => {
  * @param reason - the reason for which we may want to unset the ad free cookie
  */
 const maybeUnsetAdFreeCookie = (reason: AdFreeCookieReasons): void => {
-	const adFreeReason = getAdFreeCookieReason();
+	const adFreeLocalStorageReason = getAdFreeCookieReason();
+
+	/**
+	 *  if consent is given but localStorage is missing, play it safe and assume the user should be ad free if they already are
+	 * */
+	if (
+		!adFreeLocalStorageReason &&
+		reason === AdFreeCookieReasons.ConsentOptOut &&
+		adFreeDataIsPresent()
+	) {
+		return;
+	}
+
+	const adFreeReason = adFreeLocalStorageReason ?? {};
 
 	delete adFreeReason[reason];
 
