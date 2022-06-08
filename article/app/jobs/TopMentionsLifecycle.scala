@@ -31,6 +31,7 @@ class TopMentionsLifecycle(
   }
 
   private def scheduleJobs(): Unit = {
+    // This job runs every 2 minutes
     jobs.schedule("TopMentionsAgentRefreshJob", "0 0/2 * * * ?") {
       topMentionService.refreshTopMentions()
     }
