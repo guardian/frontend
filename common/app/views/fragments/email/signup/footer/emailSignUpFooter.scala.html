@@ -20,7 +20,7 @@
         @helper.CSRF.formField
         <div class="email-sub__form-wrapper">
             <div class="email-sub__inline-label">
-                <input class="email-sub__text-input" required="" type="email" name="email" id="@inputId" />
+                <input class="email-sub__text-input" type="email" name="email" id="@inputId" required />
                 <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Email address</label>
                 <label aria-hidden="true">
                     <input tabindex="-1" class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" />

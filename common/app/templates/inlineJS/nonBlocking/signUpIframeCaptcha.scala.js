@@ -5,7 +5,7 @@ window.addEventListener('message', (event) => {
 	if (!allowedOrigins.includes(event.origin)) return;
 	if (event.data === 'resize') resizeToCurrentHeight();
 });
-trackClickEvent(document.querySelector("button[type=submit]"))
+trackClickEvent(document.querySelector('button[type=submit]'))
 setupSubmitListener();
 resizeToCurrentHeight();
 
@@ -25,7 +25,7 @@ function sendResizeMessage(height) {
 
 function openCaptcha() {
     sendResizeMessage(500);
-    sendTrackingForCaptchaOpen()
+    sendTrackingForCaptchaOpen();
 	grecaptcha.execute();
 }
 
@@ -64,12 +64,12 @@ function onRecaptchaScriptLoaded() {
 		'expired-callback': onCaptchaExpired,
 		size: 'invisible',
 	});
-    openCaptcha()
+    openCaptcha();
 }
 
 function onCaptchaCompleted(token) {
 	resizeToOriginalHeight();
-    sendTrackingForFormSubmission()
+    sendTrackingForFormSubmission();
 	document.querySelector('form').submit();
 }
 
@@ -79,6 +79,6 @@ function onCaptchaError() {
 }
 
 function onCaptchaExpired() {
-    sendTrackingForCaptchaExpire()
+    sendTrackingForCaptchaExpire();
 	resizeToOriginalHeight();
 }
