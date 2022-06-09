@@ -1,7 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.Parameter
-import com.gu.contentapi.client.model.SearchQueryBase
+import com.gu.contentapi.client.model.{Direction, FollowingSearchQuery, SearchQuery, SearchQueryBase}
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
@@ -53,11 +52,11 @@ class ImageContentController(
 
   def getNextLightboxJson(path: String, tag: String, direction: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val capiQuery: ContentApiNavQuery = ContentApiNavQuery(currentId = path, direction = direction)
-        .tag(tag)
-        .showTags("all")
-        .showElements("image")
-        .pageSize(contentApi.nextPreviousPageSize)
+      val capiQuery = FollowingSearchQuery(
+        SearchQuery().tag(tag).showTags("all").showElements("image").pageSize(contentApi.nextPreviousPageSize),
+        path,
+        Direction.forPathSegment(direction),
+      )
 
       contentApiClient.thriftClient.getResponse(capiQuery).map { response =>
         val lightboxJson = response.results.flatMap(result =>
@@ -69,11 +68,4 @@ class ImageContentController(
         Cached(CacheTime.Default)(JsonComponent(JsArray(lightboxJson)))
       }
     }
-}
-
-case class ContentApiNavQuery(parameterHolder: Map[String, Parameter] = Map.empty, currentId: String, direction: String)
-    extends SearchQueryBase[ContentApiNavQuery] {
-  def withParameters(parameterMap: Map[String, Parameter]): ContentApiNavQuery = copy(parameterMap)
-
-  override def pathSegment: String = s"content/$currentId/$direction"
 }
