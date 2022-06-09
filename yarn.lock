@@ -11092,9 +11092,9 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.15.tgz#6df94d8afecf3f9e10a742fd8c362ddab464225f"
   integrity sha512-5chK29n6QcJc3m1lVrKQSQ+V7K1Gb8HeQY6FViQ5AxCAEGu3DaHffWNDkC9+miZgsLvbvU9rxbV1qinGHMHzqA==
 
-"prebid.js@https://github.com/guardian/Prebid.js#08640d8":
+"prebid.js@https://github.com/guardian/Prebid.js#0e9f87a":
   version "6.26.0"
-  resolved "https://github.com/guardian/Prebid.js#08640d88c6b84e12e9b276daf07e5e01aa62ff7d"
+  resolved "https://github.com/guardian/Prebid.js#0e9f87a72d2bc248fc37f109954020d1e29414d2"
   dependencies:
     "@babel/core" "^7.16.7"
     "@babel/preset-env" "^7.16.8"
