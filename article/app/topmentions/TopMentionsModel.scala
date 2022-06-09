@@ -12,7 +12,7 @@ case class TopMentionsResult(
 )
 case class TopMentionsDetails(entity_types: Seq[TopMentionEntity], results: Seq[TopMentionsResult], model: String)
 
-case class TopMentionJsonParseException(message: String) extends Exception
+case class TopMentionJsonParseException(message: String) extends Exception(message)
 
 object TopMentionsResponse {
   implicit val TopMentionsResultJf: Format[TopMentionsResult] = Json.format[TopMentionsResult]

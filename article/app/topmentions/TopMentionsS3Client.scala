@@ -32,7 +32,7 @@ final class TopMentionsS3ClientImpl extends TopMentionsS3Client with S3 with GuL
           log.info(s"got list of ${value.length} top mentions from S3")
           Future.successful(value)
         case Failure(exception) =>
-          log.error(s"failed in getting the list of top mentions from S3 - ${exception.getMessage}")
+          log.error(s"failed in getting the list of top mentions from S3", exception)
           Future.failed(exception)
       }
     }
@@ -48,7 +48,7 @@ final class TopMentionsS3ClientImpl extends TopMentionsS3Client with S3 with GuL
           log.info(s"got topMentionResponse from S3 for key ${key}")
           Future.successful(value)
         case Failure(exception) =>
-          log.error(s"S3 retrieval failed for key ${key} - ${exception.getMessage}")
+          log.error(s"S3 retrieval failed for key ${key}", exception)
           Future.failed(exception)
       }
     }
@@ -74,14 +74,14 @@ object S3ObjectImplicits {
 
       Json.fromJson[TopMentionsDetails](json) match {
         case JsSuccess(topMentionResponse, __) =>
-          log.debug(s"Parsed topMentionResponse from S3 for key ${s3Object.getKey}")
+          log.debug(s"Parsed TopMentionsDetails from S3 for key ${s3Object.getKey}")
           Success(topMentionResponse)
         case JsError(errors) =>
           val errorPaths = errors.map { error => error._1.toString() }.mkString(",")
           log.error(s"Error parsing topMentionResponse from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
           Failure(
             TopMentionJsonParseException(
-              s"could not parse S3 topMentionResponse from json for key ${s3Object.getKey}. Errors paths(s): $errors",
+              s"could not parse S3 TopMentionsDetails json. Errors paths(s): $errors",
             ),
           )
       }
