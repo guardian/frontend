@@ -60,7 +60,7 @@ trait ABTestSwitches {
     "Test the commercial and performance impact of sticky ads in the right column",
     owners = Seq(Owner.withGithub("chrislomaxjones")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 7, 4)),
+    sellByDate = Some(LocalDate.of(2022, 8, 2)),
     exposeClientSide = true,
   )
 
