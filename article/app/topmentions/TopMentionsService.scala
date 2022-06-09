@@ -29,10 +29,6 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
   }
 
   private def retrieveTopMention(key: String)(implicit executionContext: ExecutionContext) = {
-    val response = topMentionsS3Client.getObject(key)
-
-    response.map { res =>
-      Future.successful(key -> res)
-    }.flatten
+    topMentionsS3Client.getObject(key).map { res => key -> res }
   }
 }
