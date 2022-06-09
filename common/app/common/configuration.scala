@@ -651,6 +651,8 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val frontendStoreBucket = configuration.getMandatoryStringProperty("aws.bucket")
+    lazy val topMentionsStoreBucket =
+      configuration.getStringProperty("aws.topMentions.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
     lazy val videoEncodingsSns: String =
       configuration.getMandatoryStringProperty("sns.missing_video_encodings.topic.arn")
