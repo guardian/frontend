@@ -24,8 +24,8 @@ jest.mock('../../../../common/modules/experiments/ab', () => ({
 
 const resetPrebid = () => {
 	jest.resetModules();
-	delete window.pbjs;
-	require('prebid.js/build/dist/prebid');
+	// delete window.pbjs;
+	jest.requireActual('prebid.js/build/dist/prebid');
 };
 
 describe('initialise', () => {
@@ -101,7 +101,10 @@ describe('initialise', () => {
 			s2sConfig: {
 				adapter: 'prebidServer',
 				adapterOptions: {},
+				allowUnknownBidderCodes: false,
+				bidders: [],
 				maxBids: 1,
+				syncTimeout: 1000,
 				syncUrlModifier: {},
 				timeout: 1000,
 			},
