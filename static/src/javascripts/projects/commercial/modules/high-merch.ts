@@ -1,7 +1,7 @@
+import { createAdSlot } from '@guardian/commercial-core';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { createAdSlot } from './dfp/create-slot';
 
 /**
  * Initialise high merch ad slot

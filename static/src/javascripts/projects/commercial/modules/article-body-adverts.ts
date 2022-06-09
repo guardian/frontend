@@ -1,4 +1,5 @@
-import { adSizes } from '@guardian/commercial-core';
+import type { SizeMapping } from '@guardian/commercial-core';
+import { adSizes, createAdSlot } from '@guardian/commercial-core';
 import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
@@ -11,11 +12,11 @@ import type {
 	SpacefinderRules,
 	SpacefinderWriter,
 } from '../../common/modules/spacefinder';
-import type { SizeMappings } from '../modules/dfp/create-slot';
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
-import { createAdSlot } from './dfp/create-slot';
 import { trackAdRender } from './dfp/track-ad-render';
+
+type SlotName = Parameters<typeof createAdSlot>[0];
 
 const sfdebug = getUrlVars().sfdebug;
 
@@ -29,9 +30,9 @@ const adSlotClassSelectorSizes = {
 const insertAdAtPara = (
 	para: Node,
 	name: string,
-	type: string,
+	type: SlotName,
 	classes?: string,
-	sizes?: SizeMappings,
+	sizes?: SizeMapping,
 	includeContainer?: boolean,
 ): Promise<void> => {
 	const ad = createAdSlot(type, {

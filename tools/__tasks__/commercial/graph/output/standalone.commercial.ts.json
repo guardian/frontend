@@ -83,6 +83,7 @@
  ],
  "../projects/commercial/modules/article-body-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
@@ -90,17 +91,16 @@
   "../lib/url.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
@@ -114,7 +114,6 @@
   "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
@@ -146,11 +145,6 @@
   "../projects/commercial/modules/dfp/queue-advert.ts"
  ],
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
- "../projects/commercial/modules/dfp/create-slot.ts": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../projects/commercial/modules/dfp/dfp-env-globals.ts"
- ],
  "../projects/commercial/modules/dfp/define-slot.js": [
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/config.js",
@@ -403,9 +397,9 @@
   "../projects/common/modules/commercial/geo-utils.js"
  ],
  "../projects/commercial/modules/high-merch.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/ipsos-mori.ts": [
@@ -415,10 +409,10 @@
   "../projects/commercial/modules/__vendor/ipsos-mori.js"
  ],
  "../projects/commercial/modules/liveblog-adverts.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
@@ -489,9 +483,9 @@
   "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/mobile-sticky.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/create-slot.ts",
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/paid-containers.ts": [

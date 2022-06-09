@@ -1,5 +1,5 @@
-import type { SizeKeys } from '@guardian/commercial-core';
-import { adSizes } from '@guardian/commercial-core';
+import type { SizeKeys, SizeMapping } from '@guardian/commercial-core';
+import { adSizes, createAdSlot } from '@guardian/commercial-core';
 import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
@@ -8,12 +8,11 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
 import { isUserLoggedIn } from '../../common/modules/identity/api';
 import { addSlot } from './dfp/add-slot';
 import type { Advert } from './dfp/Advert';
-import { createAdSlot } from './dfp/create-slot';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 
 const createCommentSlot = (canBeDmpu: boolean): HTMLElement => {
-	const sizes = canBeDmpu
+	const sizes: SizeMapping = canBeDmpu
 		? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
 		: {};
 	const adSlot = createAdSlot('comments', { sizes });

@@ -1,3 +1,4 @@
+import { createAdSlot } from '@guardian/commercial-core';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
@@ -7,7 +8,6 @@ import type {
 	SpacefinderWriter,
 } from '../../common/modules/spacefinder';
 import { addSlot } from './dfp/add-slot';
-import { createAdSlot } from './dfp/create-slot';
 
 const bodySelector = '.article-body-commercial-selector';
 
