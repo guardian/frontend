@@ -29,5 +29,7 @@ object TopMentionEntity extends Enumeration {
   val WorkOfArt = Value(5, "WORK_OF_ART")
   val Loc = Value(6, "LOC")
 
+  def withNameOpt(s: String): Option[Value] = values.find(_.toString == s)
+
   implicit val format: Format[TopMentionEntity] = Json.formatEnum(this)
 }
