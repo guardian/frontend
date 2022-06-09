@@ -49,7 +49,6 @@
 
 ### Does this change update the version of CAPI we're using?
 
-<!-- Changing CAPI versions renders the existing local database files useless -->
 <!-- Please see the notes linked below if you need further info. -->
 
 - [ ] No, all the existing database files are just fine
