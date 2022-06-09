@@ -1,8 +1,10 @@
 @()
 
-// Events without a type explictily supported in Ophan's iframe handler script
-// will be ignored.
-const sendEvent = (payload, eventType) => {
+// Posts message objects to the parent window to be handled
+// by Ophan's iframe-tracking module.
+// The "type" property must be a value explicitly handled
+// by iframe-tracking or the event will be ignored.
+function sendEventDataToParent (payload, eventType) {
     const msg = {
         id: 'xxxxxxxxxx'.replace(/x/g, () =>
             // eslint-disable-next-line no-bitwise
@@ -16,29 +18,31 @@ const sendEvent = (payload, eventType) => {
     return msg.id;
 };
 
-const getClickEvent = (el) => {
+function getClickEventData (element) {
     return {
-        clickComponent: el.getAttribute('data-component'),
-        clickLinkNames: [el.getAttribute('data-link-name')]
+        clickComponent: element.getAttribute('data-component'),
+        clickLinkNames: [element.getAttribute('data-link-name')]
     }
 }
 
-const buildComponentEvent = (formElement, actionType, actionDescription) => ({
-    componentEvent: {
-        component: {
-            componentType: 'NEWSLETTER_SUBSCRIPTION',
-            id: formElement.getAttribute('data-component'),
-        },
-        action: actionType,
-        value: [actionDescription,formElement.getAttribute('data-email-list-name')].join(),
+function buildComponentEventData (formElement, actionType, actionDescription) {
+    return {
+        componentEvent: {
+            component: {
+                componentType: 'NEWSLETTER_SUBSCRIPTION',
+                id: formElement.getAttribute('data-component'),
+            },
+            action: actionType,
+            value: [actionDescription,formElement.getAttribute('data-email-list-name')].join(),
+        }
     }
-});
+};
 
-const trackClickEvent = (buttonElement) => {
+function trackClickEvent (buttonElement) {
     if (!buttonElement) return;
-    buttonElement.addEventListener('click', (event) => {
-        const clickEvent = getClickEvent(buttonElement)
-        sendEvent(clickEvent, 'ophan-iframe-click-event')
+    buttonElement.addEventListener('click', function (event){
+        const clickEventData = getClickEventData(buttonElement)
+        sendEventDataToParent(clickEventData, 'ophan-iframe-click-event')
     })
 }
 
@@ -48,22 +52,22 @@ function validateForm() {
 }
 
 function sendTrackingForFormSubmission() {
-    const componentEventData = buildComponentEvent(document.querySelector('form'), 'SUBSCRIBE', 'form-submission')
-    sendEvent(componentEventData, 'ophan-iframe-component-event')
+    const componentEventData = buildComponentEventData(document.querySelector('form'), 'SUBSCRIBE', 'form-submission')
+    sendEventDataToParent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaOpen() {
-    const componentEventData = buildComponentEvent(document.querySelector('form'), "EXPAND", "open-captcha")
-    sendEvent(componentEventData, 'ophan-iframe-component-event')
+    const componentEventData = buildComponentEventData(document.querySelector('form'), "EXPAND", "open-captcha")
+    sendEventDataToParent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaExpire() {
-    const componentEventData = buildComponentEvent(document.querySelector('form'), "CLOSE", "captcha-expired")
-    sendEvent(componentEventData, 'ophan-iframe-component-event')
+    const componentEventData = buildComponentEventData(document.querySelector('form'), "CLOSE", "captcha-expired")
+    sendEventDataToParent(componentEventData, 'ophan-iframe-component-event')
 }
 
 function sendTrackingForCaptchaError() {
-    const componentEventData = buildComponentEvent(document.querySelector('form'), "CLOSE", "captcha-error")
-    sendEvent(componentEventData, 'ophan-iframe-component-event')
+    const componentEventData = buildComponentEventData(document.querySelector('form'), "CLOSE", "captcha-error")
+    sendEventDataToParent(componentEventData, 'ophan-iframe-component-event')
 }
 
