@@ -5,6 +5,7 @@ import common.{AkkaAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 import topmentions.TopMentionsService
 
+import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 class TopMentionsLifecycle(
@@ -32,7 +33,7 @@ class TopMentionsLifecycle(
 
   private def scheduleJobs(): Unit = {
     // This job runs every 2 minutes
-    jobs.schedule("TopMentionsAgentRefreshJob", "0 0/2 * * * ?") {
+    jobs.scheduleEvery("TopMentionsAgentRefreshJob", 2.minutes) {
       topMentionService.refreshTopMentions()
     }
   }
