@@ -335,13 +335,20 @@ class SpaceError extends Error {
  */
 const getReady = (rules: SpacefinderRules, options: SpacefinderOptions) =>
 	Promise.race([
-		new Promise((resolve) => window.setTimeout(resolve, LOADING_TIMEOUT)),
+		new Promise((resolve) =>
+			window.setTimeout(() => resolve('timeout'), LOADING_TIMEOUT),
+		),
 		Promise.all([
 			options.waitForImages ? onImagesLoaded(rules) : true,
 			options.waitForLinks ? onRichLinksUpgraded(rules) : true,
 			options.waitForInteractives ? onInteractivesLoaded(rules) : true,
 		]),
-	]);
+	]).then((value) => {
+		if (value === 'timeout') {
+			log('commercial', 'Spacefinder timeout hit');
+			amIUsed('spacefinder.ts', 'SpacefinderTimeoutHit');
+		}
+	});
 
 const getCandidates = (
 	rules: SpacefinderRules,
