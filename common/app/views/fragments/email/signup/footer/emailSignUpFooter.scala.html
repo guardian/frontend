@@ -16,11 +16,11 @@
 
 
 @form = {
-    <form action="@LinkTo("/email/footer")" method="post" id="@formId" class="@formClass" data-email-form-type="footer" data-email-list-name="@listName">
+    <form action="@LinkTo("/email/footer")" method="post" id="@formId" class="@formClass" data-email-form-type="footer" data-email-list-name="@listName" data-component="email-signup-form footer-@listName" data-link-name="footer | @listName">
         @helper.CSRF.formField
         <div class="email-sub__form-wrapper">
             <div class="email-sub__inline-label">
-                <input class="email-sub__text-input" type="email" name="email" id="@inputId" />
+                <input class="email-sub__text-input" type="email" name="email" id="@inputId" required />
                 <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Email address</label>
                 <label aria-hidden="true">
                     <input tabindex="-1" class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" />
@@ -49,7 +49,6 @@
 </div>
 
 <script>
-    trackClickEvent(document.getElementById("email-embed-signup-button"))
     document.getElementById("email-sub__ref-input").value = window.parent.location.href
     document.getElementById("email-sub__refviewid-input").value = window.parent.guardian.config.ophan.pageViewId
 </script>
