@@ -1,7 +1,7 @@
 @()
 
 function trackFormSubmit(formElement) {
-    if (!formElement) {return}
+    if (!formElement) return;
     formElement.addEventListener('submit', sendTrackingForFormSubmission);
 }
 
