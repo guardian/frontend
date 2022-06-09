@@ -64,7 +64,16 @@ object ContentWidths {
       tablet = Some(140.px),
     ) // desktop, leftCol and wide are also 140px
 
-    override val immersive = BodyMedia.inline
+    override val immersive = WidthsByBreakpoint(
+      mobile = Some(480.px),
+      mobileLandscape = Some(660.px),
+      phablet = Some(740.px),
+      tablet = Some(980.px),
+      desktop = Some(1140.px),
+      leftCol = Some(1300.px),
+      wide = Some(1900.px),
+    )
+
     override val halfwidth = BodyMedia.inline
   }
 
