@@ -43,7 +43,7 @@ final class TopMentionsS3ClientImpl extends TopMentionsS3Client with S3 with GuL
       Try {
         val request = new GetObjectRequest(getBucket, key)
         client.getObject(request).parseToTopMentionsDetails
-      } match {
+      }.flatten match {
         case Success(value) =>
           log.info(s"got topMentionResponse from S3 for key ${key}")
           Future.successful(value)
@@ -69,18 +69,20 @@ final class TopMentionsS3ClientImpl extends TopMentionsS3Client with S3 with GuL
 
 object S3ObjectImplicits {
   implicit class RichS3Object(s3Object: S3Object) extends GuLogging {
-    def parseToTopMentionsDetails: TopMentionsDetails = {
+    def parseToTopMentionsDetails: Try[TopMentionsDetails] = {
       val json = Json.parse(asString(s3Object))
 
       Json.fromJson[TopMentionsDetails](json) match {
         case JsSuccess(topMentionResponse, __) =>
           log.debug(s"Parsed topMentionResponse from S3 for key ${s3Object.getKey}")
-          topMentionResponse
+          Success(topMentionResponse)
         case JsError(errors) =>
           val errorPaths = errors.map { error => error._1.toString() }.mkString(",")
           log.error(s"Error parsing topMentionResponse from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
-          throw TopMentionJsonParseException(
-            s"could not parse S3 topMentionResponse from json for key ${s3Object.getKey}. Errors paths(s): $errors",
+          Failure(
+            TopMentionJsonParseException(
+              s"could not parse S3 topMentionResponse from json for key ${s3Object.getKey}. Errors paths(s): $errors",
+            ),
           )
       }
     }
