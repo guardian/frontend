@@ -35,7 +35,7 @@ const buildComponentEvent = (formElement, actionType, actionDescription) => ({
 });
 
 const trackClickEvent = (buttonElement) => {
-    if (!buttonElement) { return {} }
+    if (!buttonElement) return;
     buttonElement.addEventListener('click', (event) => {
         const clickEvent = getClickEvent(buttonElement)
         sendEvent(clickEvent, 'ophan-iframe-click-event')
