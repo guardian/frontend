@@ -138,7 +138,7 @@ trait WithTestContentApiClient extends WithTestExecutionContext {
 
   class recorderHttpClient(originalHttpClient: HttpClient) extends HttpClient {
     override def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
-      httpRecorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
+      httpRecorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap - "User-Agent") {
         originalHttpClient.GET(url, headers)
       }
     }
