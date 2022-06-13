@@ -23,8 +23,9 @@ jest.mock('../../../../common/modules/experiments/ab', () => ({
 }));
 
 const resetPrebid = () => {
-	jest.resetModules();
+	// TODO raise issue upstream - why does deleting window.pbjs between reimporting cause errors
 	// delete window.pbjs;
+	jest.resetModules();
 	jest.requireActual('prebid.js/build/dist/prebid');
 };
 
