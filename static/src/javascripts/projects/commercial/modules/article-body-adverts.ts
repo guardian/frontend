@@ -53,9 +53,8 @@ const wrapSlotInContainer = (
 	options: ContainerOptions = {},
 ) => {
 	const container = document.createElement('div');
-	container.className = `ad-slot-container ad-slot--offset-right ${
-		options.className ?? ''
-	}`;
+
+	container.className = `ad-slot-container ${options.className ?? ''}`;
 
 	if (options.sticky) {
 		ad.style.cssText += 'position: sticky; top: 0;';
@@ -75,18 +74,15 @@ const insertAdAtPara = (
 	type: SlotName,
 	classes?: string,
 	sizes?: SizeMapping,
-	includeContainer?: boolean,
 	containerOptions: ContainerOptions = {},
 ): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
-		classes: includeContainer ? '' : classes,
+		classes: '',
 		sizes,
 	});
 
-	const node = includeContainer
-		? wrapSlotInContainer(ad, containerOptions)
-		: ad;
+	const node = wrapSlotInContainer(ad, containerOptions);
 
 	return fastdom
 		.mutate(() => {
@@ -221,7 +217,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					para,
 					`inline${inlineId}`,
 					'inline',
-					`inline${isInline1 ? '' : ' offset-right'}`,
+					`inline${
+						isInline1 ? '' : ' offset-right ad-slot--offset-right'
+					}`,
 					isInline1
 						? {
 								phablet: [
@@ -234,7 +232,6 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 								],
 						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
-					includeContainer,
 					containerOptions,
 				);
 			});
