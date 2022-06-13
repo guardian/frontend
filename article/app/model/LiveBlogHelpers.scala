@@ -39,6 +39,7 @@ object LiveBlogHelpers {
       liveBlog: Article,
       range: BlockRange,
       filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -49,6 +50,7 @@ object LiveBlogHelpers {
         _,
         range,
         filterKeyEvents,
+        topMentionResult,
       ),
     )
 

@@ -19,6 +19,16 @@ case object CanonicalLiveBlog extends BlockRange {
   val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned))
 }
 
+case object FilterLiveBlog extends BlockRange {
+  val mainBlock = "main"
+  val oldestPage = "body:oldest:1"
+  val timeline = "body:key-events"
+  val summary = "body:summary"
+  val pinned = "body:pinned"
+  val body = "body" // supports Dotcom Rendering model which currently requires field body
+  val query = Some(Seq(mainBlock, oldestPage, timeline, summary, pinned, body))
+}
+
 // Created to handle ArticleController (for preview) specifically, where we may render an
 // article or a liveblog (that doesn't get caught by the liveblog specific routes, which may
 // or may not actually happen in the wild) so we request both specific blocks and the whole body

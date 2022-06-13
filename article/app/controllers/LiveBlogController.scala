@@ -19,7 +19,7 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
-import topmentions.{TopMentionsResult, TopMentionsService}
+import topmentions.TopMentionsService
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -72,7 +72,13 @@ class LiveBlogController(
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentionResult) // no page param
+        case None => {
+          topMentionResult match {
+            case Some(value) =>
+              renderWithRange(path, FilterLiveBlog, filter, Some(value)) // no page param
+            case None => renderWithRange(path, CanonicalLiveBlog, filter, None) // no page param
+          }
+        }
       }
     }
   }
@@ -113,7 +119,7 @@ class LiveBlogController(
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
-    mapModel(path, range, filterKeyEvents) { (page, blocks) =>
+    mapModel(path, range, filterKeyEvents, topMentionResult) { (page, blocks) =>
       {
         val isAmpSupported = page.article.content.shouldAmplify
         val pageType: PageType = PageType(page, request, context)
@@ -292,12 +298,17 @@ class LiveBlogController(
     common.renderJson(json, blog).as("application/json")
   }
 
-  private[this] def mapModel(path: String, range: BlockRange, filterKeyEvents: Boolean = false)(
+  private[this] def mapModel(
+      path: String,
+      range: BlockRange,
+      filterKeyEvents: Boolean = false,
+      topMentionResult: Option[TopMentionsResult],
+  )(
       render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
-      .map(responseToModelOrResult(range, filterKeyEvents))
+      .map(responseToModelOrResult(range, filterKeyEvents, topMentionResult))
       .recover(convertApiExceptions)
       .flatMap {
         case Left((model, blocks)) => render(model, blocks)
@@ -308,6 +319,7 @@ class LiveBlogController(
   private[this] def responseToModelOrResult(
       range: BlockRange,
       filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
   )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
@@ -324,6 +336,7 @@ class LiveBlogController(
           response,
           range,
           filterKeyEvents,
+          topMentionResult,
         ).left
           .map(_ -> blocks)
       case unknown =>

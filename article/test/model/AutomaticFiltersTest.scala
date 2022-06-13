@@ -3,8 +3,7 @@ package model
 import model.ParseBlockId.ParsedBlockId
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import topmentions.TopMentionEntity
-import topmentions.TopMentionEntity.TopMentionEntity
+import TopMentionEntity.TopMentionEntity
 
 import java.time.Duration
 

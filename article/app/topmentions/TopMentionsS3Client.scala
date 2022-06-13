@@ -5,10 +5,11 @@ import com.amazonaws.services.s3.model.{GetObjectRequest, S3Object}
 import com.amazonaws.util.IOUtils
 import common.GuLogging
 import conf.Configuration
+import model.{TopMentionJsonParseException, TopMentionsDetails}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import services.S3
 import topmentions.S3ObjectImplicits.RichS3Object
-import topmentions.TopMentionsResponse._
+import model.TopMentionsResponse._
 
 import scala.collection.JavaConverters._
 import scala.concurrent.Future

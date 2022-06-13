@@ -18,9 +18,11 @@ object LiveBlogCurrentPage {
       blocks: Blocks,
       range: BlockRange,
       filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
     range match {
-      case CanonicalLiveBlog => firstPage(pageSize, blocks, filterKeyEvents)
+      case CanonicalLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, None)
+      case FilterLiveBlog    => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
       case PageWithBlock(isRequestedBlock) =>
         findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents)
       case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents)
@@ -45,28 +47,18 @@ object LiveBlogCurrentPage {
   }
 
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
-  def firstPage(pageSize: Int, blocks: Blocks, filterKeyEvents: Boolean): Option[LiveBlogCurrentPage] = {
+  def firstPage(
+      pageSize: Int,
+      blocks: Blocks,
+      filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
+  ): Option[LiveBlogCurrentPage] = {
     val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = if (filterKeyEvents) {
-
-      val keyEventsAndSummaries = for {
-        keyEvents <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
-        summaries <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.summary)
-      } yield {
-        (keyEvents ++ summaries).sortBy(_.publishedCreatedTimestamp).reverse
-      }
-
-      val keyEventsAndSummariesCount = keyEventsAndSummaries.getOrElse(Seq.empty).size
-
-      val oldestPageBlockId = keyEventsAndSummaries.flatMap(_.lastOption map (_.id))
-
-      (keyEventsAndSummaries, keyEventsAndSummariesCount, oldestPageBlockId)
-
+      getKeyEventsBlocks(blocks)
+    } else if (topMentionResult.isDefined) {
+      getTopMentionsBlocks(blocks, topMentionResult.get)
     } else {
-      val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
-      val oldestPageBlockId =
-        blocks.requestedBodyBlocks.get(CanonicalLiveBlog.oldestPage) flatMap (_.headOption.map(_.id))
-
-      (firstPageBlocks, blocks.totalBodyBlocks, oldestPageBlockId)
+      getStandardBlocks(blocks)
     }
 
     val remainder = blockCount % pageSize
@@ -104,6 +96,41 @@ object LiveBlogCurrentPage {
 
       LiveBlogCurrentPage(FirstPage(blocksToDisplay, filterKeyEvents), pagination, pinnedBlockRenamed)
     }
+  }
+
+  private def isTopMentionBlock(topMentionsResult: TopMentionsResult)(bodyBlock: BodyBlock): Boolean = {}
+
+  private def getTopMentionsBlocks(
+      blocks: Blocks,
+      topMentionsResult: TopMentionsResult,
+  ): (Option[Seq[BodyBlock]], Int, Option[String]) = {
+    val bodyBlocks = blocks.body
+
+    val filteredBodyBlocks = bodyBlocks.filter(isTopMentionBlock(topMentionsResult))
+    ()
+  }
+
+  private def getStandardBlocks(blocks: Blocks): (Option[Seq[BodyBlock]], Int, Option[String]) = {
+    val firstPageBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage)
+    val oldestPageBlockId =
+      blocks.requestedBodyBlocks.get(CanonicalLiveBlog.oldestPage) flatMap (_.headOption.map(_.id))
+
+    (firstPageBlocks, blocks.totalBodyBlocks, oldestPageBlockId)
+  }
+
+  private def getKeyEventsBlocks(blocks: Blocks) = {
+    val keyEventsAndSummaries = for {
+      keyEvents <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
+      summaries <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.summary)
+    } yield {
+      (keyEvents ++ summaries).sortBy(_.publishedCreatedTimestamp).reverse
+    }
+
+    val keyEventsAndSummariesCount = keyEventsAndSummaries.getOrElse(Seq.empty).size
+
+    val oldestPageBlockId = keyEventsAndSummaries.flatMap(_.lastOption map (_.id))
+
+    (keyEventsAndSummaries, keyEventsAndSummariesCount, oldestPageBlockId)
   }
 
   private def removeFirstBlockIfPinned(firstPageBlocks: Seq[BodyBlock], pinnedBlock: Option[BodyBlock]) = {

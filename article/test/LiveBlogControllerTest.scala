@@ -9,8 +9,9 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import topmentions.TopMentionEntity.TopMentionEntity
-import topmentions.{TopMentionEntity, TopMentionsResult, TopMentionsS3Client, TopMentionsService}
+import model.TopMentionEntity.TopMentionEntity
+import model.{TopMentionEntity, TopMentionsResult}
+import topmentions.{TopMentionsS3Client, TopMentionsService}
 
 import scala.concurrent.Future
 
