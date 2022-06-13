@@ -1,0 +1,67 @@
+flowchart LR
+    subgraph Platform
+        Router    
+    end
+
+    Reader{{Reader}} <--> Fastly
+    Staff{{Guardian Staff}} <--> Router
+
+    Fastly((Fastly)) <--> Router
+
+    
+    Router <--> Article & Facia & Diagnostics & Identity
+    Router <--> Sport & Rss & Admin & Archive & Preview
+    Router <--> Applications & Onward & Discussion & Commercial
+
+
+
+    subgraph frontend[Frontend Apps]
+        Article
+
+        %% https://github.com/guardian/frontend/blob/main/docs/02-architecture/images/fronts-archirecture.jpg
+        Facia
+        FaciaPress
+    
+        Applications %% https://github.com/guardian/frontend/blob/main/docs/02-architecture/01-applications-architecture.md#applications
+
+        Onward %% https://github.com/guardian/frontend/blob/main/docs/02-architecture/01-applications-architecture.md#onward
+        
+        Discussion %% https://github.com/guardian/frontend/blob/main/docs/02-architecture/01-applications-architecture.md#discussion
+        
+        Commercial %% https://github.com/guardian/frontend/blob/main/docs/02-architecture/01-applications-architecture.md#commercial
+
+        Diagnostics
+
+        Identity
+
+        Sport
+
+        Rss
+
+        Admin
+
+        Archive
+
+        Preview
+
+        Article <--> ArticleTemplates[Article Twirl templates]
+        Facia <--> FrontsTemplates[Fronts Twirl templates]
+        Facia <--> S3[(S3)]
+
+        FaciaPress --> S3
+    end
+
+
+    Article <--->|POST JSON| Express
+    Facia <--->|POST JSON| Express
+
+    subgraph DCR[DCR dotcom-rendering]
+        Express <--> DCRArticle & DCRFront & DCRAmp
+
+        DCRArticle
+        DCRFront
+        DCRAmp
+    end
+
+
+    
