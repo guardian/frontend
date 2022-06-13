@@ -41,7 +41,7 @@ object OfferHttp3
 object KeyEventsCarousel
     extends Experiment(
       name = "key-events-carousel",
-      description = "Displays key events carousel on live blogs and hides old key events container",
+      description = "When ON, live blog key events are displayed in a carousel",
       owners = Seq(Owner.withGithub("abeddow91")),
       sellByDate = LocalDate.of(2022, 9, 13),
       participationGroup = Perc0C,
