@@ -70,4 +70,52 @@ class TopMentionsServiceTest
     results.isDefined should be(true)
     results.get.get("key1") should equal(Some(successResponse))
   }
+
+  "getEntityTopMentions" should "return the correct top mention result given correct blog id, filter entity and filter value" in {
+    when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
+    when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
+
+    val topMentionService = new TopMentionsService(fakeClient)
+    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+
+    val result = topMentionService.getEntityTopMentions("key1", TopMentionEntity.Org, "name1")
+
+    result.get should equal(topMentionResult)
+  }
+
+  "getEntityTopMentions" should "return none given a blog id that doesn't exist in cache" in {
+    when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
+    when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
+
+    val topMentionService = new TopMentionsService(fakeClient)
+    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+
+    val result = topMentionService.getEntityTopMentions("key2", TopMentionEntity.Org, "name1")
+
+    result should equal(None)
+  }
+
+  "getEntityTopMentions" should "return none given a filter entity type that doesn't exist in cache for the relevant blog" in {
+    when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
+    when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
+
+    val topMentionService = new TopMentionsService(fakeClient)
+    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+
+    val result = topMentionService.getEntityTopMentions("key1", TopMentionEntity.Person, "Boris")
+
+    result should equal(None)
+  }
+
+  "getEntityTopMentions" should "return none given a filter entity value that doesn't exist in cache for the relevant blog" in {
+    when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
+    when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
+
+    val topMentionService = new TopMentionsService(fakeClient)
+    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+
+    val result = topMentionService.getEntityTopMentions("key1", TopMentionEntity.Org, "someRandomOrg")
+
+    result should equal(None)
+  }
 }

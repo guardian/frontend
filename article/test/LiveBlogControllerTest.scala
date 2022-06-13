@@ -1,11 +1,18 @@
 package test
 
 import controllers.LiveBlogController
+import org.mockito.Mockito._
+import org.mockito.Matchers.any
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatestplus.mockito.MockitoSugar
+import topmentions.TopMentionEntity.TopMentionEntity
+import topmentions.{TopMentionsS3Client, TopMentionsService}
+
+import scala.concurrent.Future
 
 @DoNotDiscover class LiveBlogControllerTest
     extends AnyFlatSpec
@@ -15,15 +22,20 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with MockitoSugar {
 
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
+
+  val fakeTopMentionsService = mock[TopMentionsService]
+  when(fakeTopMentionsService.getEntityTopMentions(any[String], any[TopMentionEntity], any[String])) thenReturn None
 
   lazy val liveBlogController = new LiveBlogController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new DCRFake(),
+    fakeTopMentionsService,
   )
 
   it should "return the latest blocks of a live blog" in {

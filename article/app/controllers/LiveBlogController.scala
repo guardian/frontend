@@ -19,8 +19,7 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
-import topmentions.TopMentionEntity.TopMentionEntity
-import topmentions.{TopMentionEntity, TopMentionsResult, TopMentionsService}
+import topmentions.{TopMentionsResult, TopMentionsService}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -66,7 +65,7 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
 
       val topMentionResult = for {
-        filterEntity <- getAutomaticFilter(automaticFilter)
+        filterEntity <- AutomaticFilters.getAutomaticFilter(automaticFilter)
         topMentions <- topMentionsService.getEntityTopMentions(path, filterEntity._1, filterEntity._2)
       } yield topMentions
 
@@ -341,23 +340,5 @@ class LiveBlogController(
 
   def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
     filterKeyEvents.getOrElse(false)
-  }
-
-  private[this] def getAutomaticFilter(filter: Option[String]): Option[(TopMentionEntity, String)] = {
-    filter.flatMap { f =>
-      val filterEntity = f.split(":")
-      if (filterEntity.length == 2) {
-        val entityType = TopMentionEntity.withNameOpt(filterEntity(0).toUpperCase)
-        if (entityType.isEmpty) {
-          println(s"automaticFilter query parameter entity ${filterEntity(0)} is invalid")
-          None
-        } else {
-          Some(entityType.get, filterEntity(1))
-        }
-      } else {
-        println("automaticFilter query parameter is invalid, the format is <type>:<name>")
-        None
-      }
-    }
   }
 }
