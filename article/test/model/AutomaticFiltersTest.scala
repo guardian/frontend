@@ -29,7 +29,7 @@ class AutomaticFiltersTest extends AnyFlatSpec with Matchers {
     result should be(None)
   }
 
-  it should "return a some given an correct filter entity format" in {
+  it should "return a some given an correct filter entity format, no matter if entyuty type is lowercase or uppercase" in {
     val filters = Seq(
       TestCase("ORG:someEntityValue", (TopMentionEntity.Org, "someEntityValue")),
       TestCase("Org:someEntityValue", (TopMentionEntity.Org, "someEntityValue")),

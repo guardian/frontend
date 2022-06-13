@@ -83,6 +83,18 @@ class TopMentionsServiceTest
     result.get should equal(topMentionResult)
   }
 
+  "getEntityTopMentions" should "return none given correct blog id, filter entity and with same filter value but different case" in {
+    when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
+    when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
+
+    val topMentionService = new TopMentionsService(fakeClient)
+    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+
+    val result = topMentionService.getEntityTopMentions("key1", TopMentionEntity.Org, "NAME1")
+
+    result should equal(None)
+  }
+
   "getEntityTopMentions" should "return none given a blog id that doesn't exist in cache" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
