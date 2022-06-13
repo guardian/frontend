@@ -227,15 +227,15 @@ import scala.concurrent.Future
     liveBlogController.shouldFilter(None) should be(false)
   }
 
-  it should "return none given no automatic filter query parameter" in {
+  "getTopMentionsForFilters" should "return none given no automatic filter query parameter" in {
     liveBlogController.getTopMentionsForFilters(path, None) should be(None)
   }
 
-  it should "return none given an incorrect automatic filter query parameter" in {
+  "getTopMentionsForFilters" should "return none given an incorrect automatic filter query parameter" in {
     liveBlogController.getTopMentionsForFilters(path, Some("orgnhs")) should be(None)
   }
 
-  it should "return correct topMentionResult given a correct automatic filter query parameter" in {
+  "getTopMentionsForFilters" should "return correct topMentionResult given a correct automatic filter query parameter" in {
     liveBlogController.getTopMentionsForFilters(path, Some("org:nhs")) should be(Some(topMentionResult))
   }
 }
