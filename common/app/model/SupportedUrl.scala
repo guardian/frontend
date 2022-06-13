@@ -13,28 +13,16 @@ object SupportedUrl {
 
   def fromFaciaContent(fc: PressedContent): String =
     fc match {
-      case curatedContent: CuratedContent =>
-        s"/${curatedContent.properties.webUrl
-          .map(webUrl => webUrl.replaceFirst("^[a-zA-Z]+://www.theguardian.com/", ""))
-          .orElse(curatedContent.properties.href)
-          .getOrElse(fc.card.id)}"
+      case curatedContent: CuratedContent => s"/${curatedContent.properties.href.getOrElse(fc.card.id)}"
       case supportingCuratedContent: SupportingCuratedContent =>
         s"/${supportingCuratedContent.properties.webUrl
           .map(webUrl => webUrl.replaceFirst("^[a-zA-Z]+://www.theguardian.com/", ""))
           .orElse(supportingCuratedContent.properties.href)
           .getOrElse(fc.card.id)}"
-      case linkSnap: LinkSnap =>
-        linkSnap.properties.webUrl
-          .map(webUrl => webUrl.replaceFirst("^[a-zA-Z]+://www.theguardian.com/", ""))
-          .orElse(linkSnap.properties.href)
-          .getOrElse(linkSnap.card.id)
+      case linkSnap: LinkSnap => linkSnap.properties.href.getOrElse(linkSnap.card.id)
       case latestSnap: LatestSnap =>
         latestSnap.properties.maybeContent
           .map(content => s"/${content.metadata.id}")
-          .orElse(
-            latestSnap.properties.webUrl
-              .map(webUrl => webUrl.replaceFirst("^[a-zA-Z]+://www.theguardian.com/", "")),
-          )
           .orElse(latestSnap.properties.href)
           .getOrElse(s"/${latestSnap.card.id}")
     }
