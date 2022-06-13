@@ -375,9 +375,7 @@
   "../projects/commercial/modules/header-bidding/prebid/pubmatic.js",
   "../projects/commercial/modules/header-bidding/slot-config.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/build-page-targeting.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts"
+  "../projects/common/modules/commercial/build-page-targeting.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
@@ -565,8 +563,7 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
-  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts"
+  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
@@ -651,7 +648,6 @@
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
-  "../projects/common/modules/experiments/tests/prebid-price-granularity.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -678,10 +674,6 @@
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
- "../projects/common/modules/experiments/tests/prebid-price-granularity.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
