@@ -10,7 +10,7 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import topmentions.TopMentionEntity.TopMentionEntity
-import topmentions.{TopMentionsS3Client, TopMentionsService}
+import topmentions.{TopMentionEntity, TopMentionsResult, TopMentionsS3Client, TopMentionsService}
 
 import scala.concurrent.Future
 
@@ -26,9 +26,19 @@ import scala.concurrent.Future
     with MockitoSugar {
 
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
+  val path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live"
 
   val fakeTopMentionsService = mock[TopMentionsService]
-  when(fakeTopMentionsService.getEntityTopMentions(any[String], any[TopMentionEntity], any[String])) thenReturn None
+  val topMentionResult = TopMentionsResult(
+    name = "nhs",
+    `type` = TopMentionEntity.Org,
+    blocks = Seq("blockId1"),
+    count = 1,
+    percentage_blocks = 1.2f,
+  )
+  when(fakeTopMentionsService.getEntityTopMentions(path, TopMentionEntity.Org, "nhs")) thenReturn Some(
+    topMentionResult,
+  )
 
   lazy val liveBlogController = new LiveBlogController(
     testContentApiClient,
@@ -42,11 +52,11 @@ import scala.concurrent.Future
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock",
+      s"${path}.json?lastUpdate=$lastUpdateBlock",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = None,
       lastUpdate = Some(lastUpdateBlock),
       rendered = None,
@@ -74,11 +84,11 @@ import scala.concurrent.Future
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock&dcr=true",
+      s"${path}.json?lastUpdate=$lastUpdateBlock&dcr=true",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = None,
       lastUpdate = Some(lastUpdateBlock),
       rendered = None,
@@ -96,11 +106,11 @@ import scala.concurrent.Future
   it should "return the full CAPI response if DCR is true but lastUpdate is empty" in {
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?dcr=true",
+      s"${path}.json?dcr=true",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = None,
       lastUpdate = None,
       rendered = None,
@@ -119,11 +129,11 @@ import scala.concurrent.Future
   it should "return only the key event blocks of a live blog, when switch is on" in {
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json",
+      s"${path}.json",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = None,
       lastUpdate = None,
       rendered = None,
@@ -164,11 +174,11 @@ import scala.concurrent.Future
   it should "return the requested page for DCR" in {
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?dcr=true&page=with:block-56d071d2e4b0bd5a0524cc66",
+      s"${path}.json?dcr=true&page=with:block-56d071d2e4b0bd5a0524cc66",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = Some("with:block-56d071d2e4b0bd5a0524cc66"),
       lastUpdate = None,
       rendered = None,
@@ -215,5 +225,17 @@ import scala.concurrent.Future
 
   it should "not filter when the filter parameter is not provided" in {
     liveBlogController.shouldFilter(None) should be(false)
+  }
+
+  it should "return none given no automatic filter query parameter" in {
+    liveBlogController.getTopMentionsForFilters(path, None) should be(None)
+  }
+
+  it should "return none given an incorrect automatic filter query parameter" in {
+    liveBlogController.getTopMentionsForFilters(path, Some("orgnhs")) should be(None)
+  }
+
+  it should "return correct topMentionResult given a correct automatic filter query parameter" in {
+    liveBlogController.getTopMentionsForFilters(path, Some("org:nhs")) should be(Some(topMentionResult))
   }
 }

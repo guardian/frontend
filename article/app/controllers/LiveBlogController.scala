@@ -63,11 +63,7 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-
-      val topMentionResult = for {
-        filterEntity <- AutomaticFilters.getAutomaticFilter(automaticFilter)
-        topMentions <- topMentionsService.getEntityTopMentions(path, filterEntity._1, filterEntity._2)
-      } yield topMentions
+      val topMentionResult = getTopMentionsForFilters(path, automaticFilter)
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -340,5 +336,14 @@ class LiveBlogController(
 
   def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
     filterKeyEvents.getOrElse(false)
+  }
+
+  def getTopMentionsForFilters(blogId: String, automaticFilter: Option[String]) = {
+    val topMentionResult = for {
+      filterEntity <- AutomaticFilters.getAutomaticFilter(automaticFilter)
+      topMentions <- topMentionsService.getEntityTopMentions(blogId, filterEntity._1, filterEntity._2)
+    } yield topMentions
+
+    topMentionResult
   }
 }
