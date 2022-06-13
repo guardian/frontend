@@ -41,8 +41,8 @@ object OfferHttp3
 object KeyEventsCarousel
     extends Experiment(
       name = "key-events-carousel",
-      description = "Displays key events inside a carousel",
+      description = "Displays key events carousel on live blogs and hides old key events container",
       owners = Seq(Owner.withGithub("abeddow91")),
-      sellByDate = LocalDate.of(2022, 7, 13),
+      sellByDate = LocalDate.of(2022, 9, 13),
       participationGroup = Perc0C,
     )
