@@ -98,7 +98,9 @@ object LiveBlogCurrentPage {
     }
   }
 
-  private def isTopMentionBlock(topMentionsResult: TopMentionsResult)(bodyBlock: BodyBlock): Boolean = {}
+  private def isTopMentionBlock(topMentionsResult: TopMentionsResult)(bodyBlock: BodyBlock): Boolean = {
+    topMentionsResult.blocks.contains(bodyBlock.id)
+  }
 
   private def getTopMentionsBlocks(
       blocks: Blocks,
@@ -106,8 +108,12 @@ object LiveBlogCurrentPage {
   ): (Option[Seq[BodyBlock]], Int, Option[String]) = {
     val bodyBlocks = blocks.body
 
-    val filteredBodyBlocks = bodyBlocks.filter(isTopMentionBlock(topMentionsResult))
-    ()
+    val filteredBodyBlocks =
+      bodyBlocks.filter(isTopMentionBlock(topMentionsResult)).sortBy(_.publishedCreatedTimestamp).reverse
+
+    filteredBodyBlocks.foreach(block => println(s"${block.id}"))
+
+    (Some(filteredBodyBlocks), filteredBodyBlocks.length, filteredBodyBlocks.headOption.map(_.id))
   }
 
   private def getStandardBlocks(blocks: Blocks): (Option[Seq[BodyBlock]], Int, Option[String]) = {

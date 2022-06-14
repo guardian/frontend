@@ -19,7 +19,7 @@ object LiveBlogHelpers {
   ): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
-      LiveBlogHelpers.createLiveBlogModel(article, range, filterKeyEvents)
+      LiveBlogHelpers.createLiveBlogModel(article, range, filterKeyEvents, None)
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
@@ -63,6 +63,7 @@ object LiveBlogHelpers {
       response: ItemResponse,
       range: BlockRange,
       filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
   ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -74,6 +75,7 @@ object LiveBlogHelpers {
           blocks,
           range,
           filterKeyEvents,
+          topMentionResult,
         )
       } getOrElse None
 

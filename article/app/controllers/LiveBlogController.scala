@@ -46,7 +46,7 @@ class LiveBlogController(
 
   def renderEmail(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks) {
+      mapModel(path, ArticleBlocks, topMentionResult = None) {
         case (minute: MinutePage, _) =>
           Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
         case (blog: LiveBlogPage, _) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
@@ -95,7 +95,7 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate, page)
 
-      mapModel(path, range, filter) {
+      mapModel(path, range, filter, None) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
           Future.successful(renderGuuiJson(blog, blocks, filter))
