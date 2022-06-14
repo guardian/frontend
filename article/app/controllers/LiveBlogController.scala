@@ -356,7 +356,7 @@ class LiveBlogController(
       filterEntity <- AutomaticFilters.getAutomaticFilter(automaticFilter)
       topMentions <- topMentionsService.getEntityTopMentions(blogId, filterEntity._1, filterEntity._2)
     } yield topMentions
-
+    println()
     topMentionResult
   }
 }
