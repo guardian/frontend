@@ -625,6 +625,7 @@
  ],
  "../projects/common/modules/commercial/user-features.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@guardian/support-dotcom-components/dist/dotcom/src/types.d.ts",
   "../lib/config.d.ts",
   "../lib/fetch-json.ts",
   "../lib/manage-ad-free-cookie.ts",
