@@ -335,13 +335,24 @@ class SpaceError extends Error {
  */
 const getReady = (rules: SpacefinderRules, options: SpacefinderOptions) =>
 	Promise.race([
-		new Promise((resolve) => window.setTimeout(resolve, LOADING_TIMEOUT)),
+		new Promise((resolve) =>
+			window.setTimeout(() => resolve('timeout'), LOADING_TIMEOUT),
+		),
 		Promise.all([
 			options.waitForImages ? onImagesLoaded(rules) : true,
 			options.waitForLinks ? onRichLinksUpgraded(rules) : true,
 			options.waitForInteractives ? onInteractivesLoaded(rules) : true,
 		]),
-	]);
+	]).then((value) => {
+		// TODO: remove this conditional once idle loading becomes the default behaviour
+		const isInIdleLoadingVariant =
+			window.guardian.config.tests?.interactivesIdleLoadingVariant;
+
+		if (value === 'timeout' && isInIdleLoadingVariant) {
+			log('commercial', 'Spacefinder timeout hit');
+			amIUsed('spacefinder.ts', 'SpacefinderTimeoutHit');
+		}
+	});
 
 const getCandidates = (
 	rules: SpacefinderRules,

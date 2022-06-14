@@ -447,7 +447,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
                 margin-bottom: 0;
 
                 @include mq($from: tablet) {
-                    background-color: rgba(0, 0, 0, .8);
                     border-left: 0;
                     border-bottom: 0;
                     max-width: 33%;
@@ -456,7 +455,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
             .fc-sublink__title,
             &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
-                color: #ffffff;
                 font-weight: 800;
 
                 &:before {
