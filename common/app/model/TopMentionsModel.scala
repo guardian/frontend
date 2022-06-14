@@ -1,7 +1,7 @@
-package topmentions
+package model
 
+import model.TopMentionEntity.TopMentionEntity
 import play.api.libs.json.{Format, Json}
-import topmentions.TopMentionEntity.TopMentionEntity
 
 case class TopMentionsResult(
     name: String,
