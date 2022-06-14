@@ -66,8 +66,8 @@ class LiveBlogController(
       val topMentionResult = getTopMentionsForFilters(path, automaticFilter)
 
       topMentionResult match {
-        case Some(_) => log.info(s"top mention result was successfully retrieved for ${automaticFilter.get}")
-        case None    => log.info(s"top mention result couldn't be retrieved for ${automaticFilter}")
+        case Some(_) => println(s"top mention result was successfully retrieved for ${automaticFilter.get}")
+        case None    => println(s"top mention result couldn't be retrieved for ${automaticFilter}")
       }
 
       page.map(ParseBlockId.fromPageParam) match {

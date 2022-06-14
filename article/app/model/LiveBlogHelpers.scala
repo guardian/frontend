@@ -58,6 +58,33 @@ object LiveBlogHelpers {
 
   }
 
+  def printCurrentPage(page: Option[LiveBlogCurrentPage]) = {
+    if (page.isDefined) {
+      println("current pages: ")
+      page.get.currentPage.blocks.foreach(block => println(s"block: ${block.id}"))
+
+      if (page.get.pagination.isDefined) {
+        if (page.get.pagination.get.older.isDefined) {
+          println("older pages: ")
+          page.get.pagination.get.older.get.blocks.foreach(block => println(s"block: ${block.id}"))
+        }
+        if (page.get.pagination.get.oldest.isDefined) {
+          println("oldest pages: ")
+          page.get.pagination.get.oldest.get.blocks.foreach(block => println(s"block: ${block.id}"))
+        }
+        if (page.get.pagination.get.newer.isDefined) {
+          println("newer pages: ")
+          page.get.pagination.get.newer.get.blocks.foreach(block => println(s"block: ${block.id}"))
+        }
+
+        if (page.get.pagination.get.newest.isDefined) {
+          println("newest pages: ")
+          page.get.pagination.get.newest.get.blocks.foreach(block => println(s"block: ${block.id}"))
+        }
+      }
+    }
+  }
+
   def createLiveBlogModel(
       liveBlog: Article,
       response: ItemResponse,
@@ -78,6 +105,8 @@ object LiveBlogHelpers {
           topMentionResult,
         )
       } getOrElse None
+
+    printCurrentPage(liveBlogPageModel)
 
     liveBlogPageModel
       .map { pageModel =>

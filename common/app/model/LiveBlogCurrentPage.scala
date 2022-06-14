@@ -24,8 +24,8 @@ object LiveBlogCurrentPage {
       case CanonicalLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, None)
       case FilterLiveBlog    => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
       case PageWithBlock(isRequestedBlock) =>
-        findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents)
-      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents)
+        findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents, topMentionResult)
+      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents, topMentionResult)
       case ArticleBlocks         => None
       case GenericFallback       => None
       case _                     => None
@@ -37,9 +37,10 @@ object LiveBlogCurrentPage {
       blocks: Blocks,
       sinceBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
+      topMentionsResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
     val bodyBlocks = blocks.requestedBodyBlocks.get(sinceBlockId.around).toSeq.flatMap { bodyBlocks =>
-      applyFilters(bodyBlocks, filterKeyEvents).takeWhile(_.id != sinceBlockId.lastUpdate)
+      applyFilters(bodyBlocks, filterKeyEvents, topMentionsResult).takeWhile(_.id != sinceBlockId.lastUpdate)
     }
     Some(
       LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None, None),
@@ -102,16 +103,17 @@ object LiveBlogCurrentPage {
     topMentionsResult.blocks.contains(bodyBlock.id)
   }
 
+  private def filterBlocksByTopMentions(blocks: Seq[BodyBlock], topMentionsResult: TopMentionsResult) = {
+    blocks.filter(isTopMentionBlock(topMentionsResult)).sortBy(_.publishedCreatedTimestamp).reverse
+  }
+
   private def getTopMentionsBlocks(
       blocks: Blocks,
       topMentionsResult: TopMentionsResult,
   ): (Option[Seq[BodyBlock]], Int, Option[String]) = {
     val bodyBlocks = blocks.body
 
-    val filteredBodyBlocks =
-      bodyBlocks.filter(isTopMentionBlock(topMentionsResult)).sortBy(_.publishedCreatedTimestamp).reverse
-
-    filteredBodyBlocks.foreach(block => println(s"${block.id}"))
+    val filteredBodyBlocks = filterBlocksByTopMentions(bodyBlocks, topMentionsResult)
 
     (Some(filteredBodyBlocks), filteredBodyBlocks.length, filteredBodyBlocks.headOption.map(_.id))
   }
@@ -152,9 +154,10 @@ object LiveBlogCurrentPage {
       blocks: Seq[BodyBlock],
       isRequestedBlock: String,
       filterKeyEvents: Boolean,
+      topMentionsResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
     val pinnedBlock = blocks.find(_.attributes.pinned).map(renamePinnedBlock)
-    val filteredBlocks = applyFilters(blocks, filterKeyEvents)
+    val filteredBlocks = applyFilters(blocks, filterKeyEvents, topMentionsResult)
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, filteredBlocks)
     val newestPage = FirstPage(mainPageBlocks, filterKeyEvents)
     val pages = newestPage :: restPagesBlocks.zipWithIndex
@@ -201,9 +204,15 @@ object LiveBlogCurrentPage {
     pinnedBlock.copy(id = s"${pinnedBlock.id}-pinned")
   }
 
-  private def applyFilters(blocks: Seq[BodyBlock], filterKeyEvents: Boolean) = {
+  private def applyFilters(
+      blocks: Seq[BodyBlock],
+      filterKeyEvents: Boolean,
+      topMentionsResult: Option[TopMentionsResult],
+  ) = {
     if (filterKeyEvents) {
       blocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
+    } else if (topMentionsResult.isDefined) {
+      filterBlocksByTopMentions(blocks, topMentionsResult.get)
     } else {
       blocks
     }
