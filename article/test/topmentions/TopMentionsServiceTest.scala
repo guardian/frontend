@@ -2,6 +2,7 @@ package topmentions
 
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ItemResponse
+import model.{TopMentionEntity, TopMentionsDetails, TopMentionsResult}
 import org.scalatest.{BeforeAndAfterAll, GivenWhenThen}
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.flatspec.AnyFlatSpec
@@ -9,9 +10,9 @@ import org.scalatest.matchers.should.Matchers
 import test.{ConfiguredTestSuite, WithTestExecutionContext}
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
+
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
-
 import scala.concurrent.{Await, Future}
 
 class TopMentionsServiceTest
