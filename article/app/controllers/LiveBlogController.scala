@@ -65,11 +65,6 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val topMentionResult = getTopMentionsForFilters(path, automaticFilter)
 
-      topMentionResult match {
-        case Some(_) => log.info(s"top mention result was successfully retrieved for ${automaticFilter.get}")
-        case None    => log.info(s"top mention result couldn't be retrieved for ${automaticFilter}")
-      }
-
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
           renderWithRange(path, PageWithBlock(id), filter, topMentionResult) // we know the id of a block
@@ -348,6 +343,11 @@ class LiveBlogController(
       filterEntity <- AutomaticFilters.getAutomaticFilter(automaticFilter)
       topMentions <- topMentionsService.getEntityTopMentions(blogId, filterEntity._1, filterEntity._2)
     } yield topMentions
+
+    topMentionResult match {
+      case Some(_) => log.info(s"top mention result was successfully retrieved for ${automaticFilter.get}")
+      case None    => log.error(s"top mention result couldn't be retrieved for ${automaticFilter}")
+    }
 
     topMentionResult
   }
