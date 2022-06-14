@@ -1,8 +1,7 @@
 package model
 
 import common.GuLogging
-import topmentions.TopMentionEntity
-import topmentions.TopMentionEntity.TopMentionEntity
+import model.TopMentionEntity.TopMentionEntity
 
 object AutomaticFilters extends GuLogging {
 

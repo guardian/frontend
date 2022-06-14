@@ -19,7 +19,7 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
-import topmentions.{TopMentionsResult, TopMentionsService}
+import topmentions.{TopMentionsService}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -64,11 +64,6 @@ class LiveBlogController(
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
       val topMentionResult = getTopMentionsForFilters(path, automaticFilter)
-
-      topMentionResult match {
-        case Some(_) => log.info(s"top mention result was successfully retrieved for ${automaticFilter.get}")
-        case None    => log.error(s"top mention result couldn't be retrieved for ${automaticFilter}")
-      }
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
