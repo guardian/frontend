@@ -14,7 +14,7 @@ object AutomaticFilters extends GuLogging {
           log.error(s"automaticFilter query parameter entity ${filterEntity(0)} is invalid")
           None
         } else {
-          log.info(s"valid automaticFilter query parameter - ${f}")
+          log.debug(s"valid automaticFilter query parameter - ${f}")
           Some(entityType.get, filterEntity(1))
         }
       } else {
