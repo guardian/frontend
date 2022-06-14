@@ -203,7 +203,8 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts"
+  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts"
  ],
  "../projects/commercial/modules/dfp/load-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -653,6 +654,7 @@
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -679,6 +681,10 @@
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
