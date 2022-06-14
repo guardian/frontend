@@ -12,9 +12,10 @@ object AutomaticFilters extends GuLogging {
       if (filterEntity.length == 2) {
         val entityType = TopMentionEntity.withNameOpt(filterEntity(0).toUpperCase)
         if (entityType.isEmpty) {
-          log.info(s"automaticFilter query parameter entity ${filterEntity(0)} is invalid")
+          log.error(s"automaticFilter query parameter entity ${filterEntity(0)} is invalid")
           None
         } else {
+          log.info(s"valid automaticFilter query parameter - ${f}")
           Some(entityType.get, filterEntity(1))
         }
       } else {
