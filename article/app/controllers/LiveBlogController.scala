@@ -22,7 +22,6 @@ import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
 import views.support.RenderOtherStatus
-
 import scala.concurrent.Future
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -81,7 +80,6 @@ class LiveBlogController(
     Action.async { implicit request: Request[AnyContent] =>
       val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate, page)
-
       mapModel(path, range, filter) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
@@ -275,7 +273,14 @@ class LiveBlogController(
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
     val model =
-      DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, filterKeyEvents, request.forceLive)
+      DotcomRenderingDataModel.forLiveblog(
+        blog,
+        blocks,
+        request,
+        pageType,
+        filterKeyEvents,
+        request.forceLive,
+      )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }
