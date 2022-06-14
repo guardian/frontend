@@ -86,21 +86,26 @@
             @defining(
                 if(image.width >= image.height) {"--landscape"} else {"--portrait"}
             ) { orientation =>
-                <a class="gallery__img-container gallery__img-container@orientation js-gallerythumbs"
+                <div class="gallery__img-container gallery__img-container@orientation"
                     @*
                      * This ensures that the image height never goes above 96vh
                      *@
-                    style="max-width: calc(@image.ratioDouble * 96vh)"
-                    href="@LinkTo{@page.item.metadata.url#img-@rowInfo.rowNum}"
-                    data-link-name="Launch Gallery Lightbox" data-is-ajax>
+                    style="max-width: calc(@image.ratioDouble * 96vh)">
                     @fragments.image(
                         imageElement.images,
                         Seq("gallery__img", s"gallery__img$orientation"),
                         GalleryMedia.inline,
                         image.altText.getOrElse("")
                     )
-                    @fragments.inlineSvg("expand-image", "icon", List("centered-icon", "rounded-icon", "gallery__fullscreen", "modern-visible", "hide-until-tablet"))
-                </a>
+                    <a href="@LinkTo{@page.item.metadata.url#img-@rowInfo.rowNum}"
+                        class="js-gallerythumbs gallery__fullscreen-container"
+                        tabindex="0"
+                        data-link-name="Launch Gallery Lightbox" data-is-ajax
+                        aria-label="Expand image to fullscreen"
+                    >
+                        @fragments.inlineSvg("expand-image", "icon", List("centered-icon", "rounded-icon", "gallery__fullscreen", "modern-visible"))
+                    </a>
+                </div>
             }
         </figure>
     </li>
