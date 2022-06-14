@@ -67,6 +67,11 @@
   "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
  ],
  "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
+ "../projects/commercial/modules/ad-free-slot-remove.ts": [
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
+  "../projects/commercial/modules/remove-slots.ts",
+  "../projects/common/modules/commercial/commercial-features.ts"
+ ],
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -718,6 +723,7 @@
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
   "../projects/commercial/commercial-metrics.ts",
+  "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
   "../projects/commercial/modules/article-aside-adverts.ts",
   "../projects/commercial/modules/article-body-adverts.ts",
