@@ -4,6 +4,7 @@ import model.ParseBlockId.ParsedBlockId
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import TopMentionEntity.TopMentionEntity
+import model.TopMentionEntity.TopMentionEntity
 
 import java.time.Duration
 
@@ -28,7 +29,7 @@ class AutomaticFiltersTest extends AnyFlatSpec with Matchers {
     result should be(None)
   }
 
-  it should "return a some given an correct filter entity format, no matter if entyuty type is lowercase or uppercase" in {
+  it should "return a some given an correct filter entity format, no matter if entity type is lowercase or uppercase" in {
     val filters = Seq(
       TestCase("ORG:someEntityValue", (TopMentionEntity.Org, "someEntityValue")),
       TestCase("Org:someEntityValue", (TopMentionEntity.Org, "someEntityValue")),

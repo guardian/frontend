@@ -23,7 +23,8 @@ jest.mock('../../../../common/modules/experiments/ab', () => ({
 }));
 
 const resetPrebid = () => {
-	delete window.pbjs;
+	// TODO raise issue upstream - why does deleting window.pbjs between reimporting cause errors
+	// delete window.pbjs;
 	jest.resetModules();
 	jest.requireActual('prebid.js/build/dist/prebid');
 };
@@ -101,7 +102,10 @@ describe('initialise', () => {
 			s2sConfig: {
 				adapter: 'prebidServer',
 				adapterOptions: {},
+				allowUnknownBidderCodes: false,
+				bidders: [],
 				maxBids: 1,
+				syncTimeout: 1000,
 				syncUrlModifier: {},
 				timeout: 1000,
 			},
