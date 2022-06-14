@@ -3,6 +3,12 @@ package model
 import model.TopMentionEntity.TopMentionEntity
 import play.api.libs.json.{Format, Json}
 
+case class TopMention(
+    name: String,
+    `type`: TopMentionEntity,
+    count: Int,
+)
+
 case class TopMentionsResult(
     name: String,
     `type`: TopMentionEntity,
