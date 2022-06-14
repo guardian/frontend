@@ -1,6 +1,7 @@
 package topmentions
 
 import common.{Box, GuLogging}
+import model.TopMentionsDetails
 
 import scala.concurrent.{ExecutionContext, Future}
 
