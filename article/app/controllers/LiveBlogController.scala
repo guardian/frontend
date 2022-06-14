@@ -21,6 +21,7 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
+import topmentions.{TopMentionsService}
 import views.support.RenderOtherStatus
 import scala.concurrent.Future
 
@@ -31,6 +32,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    topMentionsService: TopMentionsService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -125,9 +127,19 @@ class LiveBlogController(
             val remoteRendering = !request.forceDCROff
 
             if (remoteRendering) {
-              DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
+              DotcomponentsLogger.logger
+                .logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
-              remoteRenderer.getArticle(ws, blog, blocks, pageType, filterKeyEvents, request.forceLive)
+              val topMentionFilters = topMentionsService.getTopMentionFilters(path)
+              remoteRenderer.getArticle(
+                ws,
+                blog,
+                blocks,
+                pageType,
+                filterKeyEvents,
+                request.forceLive,
+                topMentionFilters,
+              )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))

@@ -20,7 +20,7 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
-  TopMentionFilters,
+  TopMentionFilter,
 }
 import navigation._
 import play.api.libs.json._
@@ -38,7 +38,7 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     filterKeyEvents: Boolean,
-    topMentionFilters: Option[Seq[TopMentionFilters]],
+    topMentionFilters: Option[Seq[TopMentionFilter]],
     pinnedPost: Option[Block],
     keyEvents: List[Block],
     mostRecentBlockId: Option[String],
@@ -242,7 +242,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
-      topMentions: Option[Seq[TopMentionFilters]] = None,
+      topMentionFilters: Option[Seq[TopMentionFilter]] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -294,7 +294,7 @@ object DotcomRenderingDataModel {
       pinnedPost,
       timelineBlocks,
       filterKeyEvents,
-      topMentions,
+      topMentionFilters,
       mostRecentBlockId,
       forceLive,
     )
@@ -312,7 +312,7 @@ object DotcomRenderingDataModel {
       pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
-      topMentionFilters: Option[Seq[TopMentionFilters]],
+      topMentionFilters: Option[Seq[TopMentionFilter]],
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
   ): DotcomRenderingDataModel = {
