@@ -26,8 +26,9 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
   }
 
   def getTopMentionList(blogId: String): Option[Seq[TopMention]] = {
-    val topMention = getTopMention(blogId)
-    topMention.map(x => x.results.map(x => TopMention(x.name, x.`type`, x.count)))
+    getTopMention(blogId).map(mentions =>
+      mentions.results.map(mention => TopMention(mention.name, mention.`type`, mention.count)),
+    )
   }
 
   def getAllTopMentions(): Option[Map[String, TopMentionsDetails]] = {
