@@ -20,12 +20,12 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
+  TopMention,
 }
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
-
 // -----------------------------------------------------------------
 // DCR DataModel
 // -----------------------------------------------------------------
@@ -38,6 +38,7 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     filterKeyEvents: Boolean,
+    topMentions: Option[Seq[TopMention]],
     pinnedPost: Option[Block],
     keyEvents: List[Block],
     mostRecentBlockId: Option[String],
@@ -106,6 +107,7 @@ object DotcomRenderingDataModel {
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
+        "topMentions" -> model.topMentions,
         "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
         "mostRecentBlockId" -> model.mostRecentBlockId,
@@ -190,6 +192,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
+      topMentions = None,
     )
   }
 
@@ -216,6 +219,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
+      topMentions = None,
     )
   }
 
@@ -238,6 +242,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
+      topMentions: Option[Seq[TopMention]] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -289,6 +294,7 @@ object DotcomRenderingDataModel {
       pinnedPost,
       timelineBlocks,
       filterKeyEvents,
+      topMentions,
       mostRecentBlockId,
       forceLive,
     )
@@ -306,6 +312,7 @@ object DotcomRenderingDataModel {
       pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
+      topMentions: Option[Seq[TopMention]],
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
   ): DotcomRenderingDataModel = {
@@ -434,6 +441,7 @@ object DotcomRenderingDataModel {
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = isSpecialReport(page),
       filterKeyEvents = filterKeyEvents,
+      topMentions = topMentions,
       pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
       mostRecentBlockId = mostRecentBlockId,

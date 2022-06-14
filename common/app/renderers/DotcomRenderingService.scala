@@ -12,11 +12,9 @@ import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
   DotcomRenderingDataModel,
-  DotcomRenderingUtils,
   PageType,
 }
-import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage, PressedPage}
-import play.api.libs.json.Json
+import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, PageWithStoryPackage, PressedPage}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -138,7 +136,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
-        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive)
+        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive, None)
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
 
