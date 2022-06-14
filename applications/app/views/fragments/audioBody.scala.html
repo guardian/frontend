@@ -59,25 +59,6 @@
                 </div>
             }
 
-            @if(audio.fields.standfirst.isDefined) {
-                <div class="podcast__standfirst">
-                    @fragments.standfirst(audio)
-                </div>
-            }
-
-            <div class="podcast__byline">
-                @fragments.contentMeta(audio, page, false)
-            </div>
-
-            <div class="from-content-api podcast__body">
-                @if(audio.fields.body.nonEmpty) {
-                    @Html(audio.fields.body)
-                }
-                @audio.elements.images.map{ img =>
-                    @fragments.imageFigure(img.images)
-                }
-            </div>
-
             <div class="podcast__meta podcast__section">
                 <div class="podcast__meta-heading podcast__section-heading">More ways to listen</div>
                 <ul class="podcast__meta-items">
@@ -137,6 +118,26 @@
                         </li>
                     }
                 </ul>
+            </div>
+
+            <div class="podcast__byline">
+                @fragments.contentMeta(audio, page, false)
+            </div>
+
+            @if(audio.fields.standfirst.isDefined) {
+                <div class="podcast__standfirst">
+                    @fragments.standfirst(audio)
+                </div>
+            }
+
+
+            <div class="from-content-api podcast__body">
+                @if(audio.fields.body.nonEmpty) {
+                    @Html(audio.fields.body)
+                }
+                @audio.elements.images.map{ img =>
+                    @fragments.imageFigure(img.images)
+                }
             </div>
 
             <div class="podcast__secondary podcast__section">
