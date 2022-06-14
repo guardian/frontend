@@ -15,7 +15,7 @@ object SupportedUrl {
     fc match {
       case curatedContent: CuratedContent =>
         s"/${curatedContent.properties.webUrl
-          .map(webUrl => webUrl.replaceFirst("^[a-zA-Z]+://www.theguardian.com/", ""))
+          .map(_.replaceFirst("^https?://www.theguardian.com/", ""))
           .orElse(curatedContent.properties.href)
           .getOrElse(fc.card.id)}"
       case supportingCuratedContent: SupportingCuratedContent =>
