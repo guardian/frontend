@@ -9,6 +9,10 @@ case class TopMention(
     count: Int,
 )
 
+object TopMention {
+  implicit val TopMentionJf: Format[TopMention] = Json.format[TopMention]
+}
+
 case class TopMentionsResult(
     name: String,
     `type`: TopMentionEntity,
