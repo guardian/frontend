@@ -3,14 +3,14 @@ package model
 import model.TopMentionEntity.TopMentionEntity
 import play.api.libs.json.{Format, Json}
 
-case class TopMention(
+case class TopMentionFilters(
     name: String,
     `type`: TopMentionEntity,
     count: Int,
 )
 
-object TopMention {
-  implicit val TopMentionJf: Format[TopMention] = Json.format[TopMention]
+object TopMentionFilters {
+  implicit val TopMentionJf: Format[TopMentionFilters] = Json.format[TopMentionFilters]
 }
 
 case class TopMentionsResult(

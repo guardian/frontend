@@ -20,7 +20,7 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
-  TopMention,
+  TopMentionFilters,
 }
 import navigation._
 import play.api.libs.json._
@@ -38,7 +38,7 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     filterKeyEvents: Boolean,
-    topMentions: Option[Seq[TopMention]],
+    topMentionFilters: Option[Seq[TopMentionFilters]],
     pinnedPost: Option[Block],
     keyEvents: List[Block],
     mostRecentBlockId: Option[String],
@@ -107,7 +107,7 @@ object DotcomRenderingDataModel {
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
-        "topMentions" -> model.topMentions,
+        "topMentionFilters" -> model.topMentionFilters,
         "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
         "mostRecentBlockId" -> model.mostRecentBlockId,
@@ -192,7 +192,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
-      topMentions = None,
+      topMentionFilters = None,
     )
   }
 
@@ -219,7 +219,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
-      topMentions = None,
+      topMentionFilters = None,
     )
   }
 
@@ -242,7 +242,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
-      topMentions: Option[Seq[TopMention]] = None,
+      topMentions: Option[Seq[TopMentionFilters]] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -312,7 +312,7 @@ object DotcomRenderingDataModel {
       pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
-      topMentions: Option[Seq[TopMention]],
+      topMentionFilters: Option[Seq[TopMentionFilters]],
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
   ): DotcomRenderingDataModel = {
@@ -441,7 +441,7 @@ object DotcomRenderingDataModel {
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = isSpecialReport(page),
       filterKeyEvents = filterKeyEvents,
-      topMentions = topMentions,
+      topMentionFilters = topMentionFilters,
       pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
       mostRecentBlockId = mostRecentBlockId,
