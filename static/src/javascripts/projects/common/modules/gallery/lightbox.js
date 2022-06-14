@@ -56,7 +56,7 @@ class GalleryLightbox {
             });
         };
 
-        const galleryLightboxHtml = `<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">
+        const galleryLightboxHtml = `<dialog class="overlay gallery-lightbox gallery-lightbox--hover">
                 <div class="gallery-lightbox__sidebar">
                     ${generateButtonHTML('close')}
                     <div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">
@@ -71,7 +71,7 @@ class GalleryLightbox {
                 <div class="js-gallery-swipe gallery-lightbox__swipe-container">
                     <ul class="gallery-lightbox__content js-gallery-content"></ul>
                 </div>
-            </div>`;
+            </dialog>`;
 
         // ELEMENT BINDINGS
         this.lightboxEl = bonzo.create(galleryLightboxHtml);
@@ -357,6 +357,11 @@ class GalleryLightbox {
     }
 
     show() {
+        // `showModal` ensures that we focus trap the user within the `dialogue` container
+        // visually show/hide functionality is still controlled via css and classnames
+        // in the `this.hide` method, we close the modal
+        this.$lightboxEl.get(0).showModal();
+
         const $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
@@ -385,6 +390,7 @@ class GalleryLightbox {
                 $body.scrollTop(this.bodyScrollPosition);
             }
             this.$lightboxEl.removeClass('gallery-lightbox--open');
+            this.$lightboxEl.get(0).close();
             mediator.emit('ui:images:vh');
         }, 1);
     }
