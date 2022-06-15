@@ -169,6 +169,37 @@ const init = (register: RegisterListener): void => {
 					})
 					.then(() => {
 						/**
+						 * Register a listener to adjust the container height once the
+						 * passback has loaded. We need to do this because the passback
+						 * ad is absolutely positioned in order to not cause layout shift.
+						 * So it is taken out of normal document flow and the parent container
+						 * does not take the height of the child ad element as normal.
+						 * We set the container height by adding a listener to the googletag
+						 * slotRenderEnded event which provides the size of the loaded ad.
+						 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
+						 */
+						googletag
+							.pubads()
+							.addEventListener(
+								'slotRenderEnded',
+								function (
+									event: googletag.events.SlotRenderEndedEvent,
+								) {
+									const slotId =
+										event.slot.getSlotElementId();
+									if (slotId === passbackElement.id) {
+										const size = event.size;
+										if (Array.isArray(size)) {
+											const height = size[1];
+											slotElement.style.height = `${
+												height + labelHeight
+											}px`;
+										}
+									}
+								},
+							);
+
+						/**
 						 * Define and display the new passback slot
 						 */
 						window.googletag.cmd.push(() => {
@@ -204,37 +235,6 @@ const init = (register: RegisterListener): void => {
 								googletag.display(passbackElement.id);
 							}
 						});
-
-						/**
-						 * Resize the container height once the passback has loaded.
-						 * We need to do this because the passback ad is absolutely
-						 * positioned in order to not add layout shift. So it is
-						 * taken out of normal document flow and the parent container
-						 * does not take the height of the child ad element as normal.
-						 * We set the height by hooking into the googletag slotRenderEnded
-						 * event which provides the size of the loaded ad.
-						 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
-						 */
-						googletag
-							.pubads()
-							.addEventListener(
-								'slotRenderEnded',
-								function (
-									event: googletag.events.SlotRenderEndedEvent,
-								) {
-									const slotId =
-										event.slot.getSlotElementId();
-									if (slotId === passbackElement.id) {
-										const size = event.size;
-										if (Array.isArray(size)) {
-											const height = size[1];
-											slotElement.style.height = `${
-												height + labelHeight
-											}px`;
-										}
-									}
-								},
-							);
 
 						log(
 							'commercial',
