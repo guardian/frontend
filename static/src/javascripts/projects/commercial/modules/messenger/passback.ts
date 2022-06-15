@@ -49,15 +49,16 @@ const init = (register: RegisterListener): void => {
 				);
 			}
 			/**
-			 * Get the slotId from the calling iFrame as provided by messenger
+			 * Determine the slot from the calling iFrame as provided by messenger
 			 */
 			const slotElement = iframe?.closest<HTMLDivElement>('.ad-slot');
 			const slotId = slotElement?.dataset.name;
 			if (!slotId) {
 				log(
 					'commercial',
-					'Passback: cannot determine the calling iFrame',
+					'Passback: cannot determine the slot from the calling iFrame',
 				);
+				return;
 			}
 
 			log(
@@ -77,12 +78,11 @@ const init = (register: RegisterListener): void => {
 					 */
 					iFrameContainer.style.visibility = 'hidden';
 				}
-				if (slotElement) {
-					// TODO: this should be promoted to default styles for inline1
-					slotElement.style.position = 'relative';
-					// Remove any outstream styling for this slot
-					slotElement.classList.remove('ad-slot--outstream');
-				}
+
+				// TODO: this should be promoted to default styles for inline1
+				slotElement.style.position = 'relative';
+				// Remove any outstream styling for this slot
+				slotElement.classList.remove('ad-slot--outstream');
 			}
 
 			if (slotId && source) {
