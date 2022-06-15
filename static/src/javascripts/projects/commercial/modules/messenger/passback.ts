@@ -47,7 +47,9 @@ const init = (register: RegisterListener): void => {
 					'commercial',
 					'Passback: postMessage does not have source set',
 				);
+				return;
 			}
+
 			/**
 			 * Determine the slot from the calling iFrame as provided by messenger
 			 */
