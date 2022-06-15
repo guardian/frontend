@@ -155,80 +155,93 @@ const init = (register: RegisterListener): void => {
 					passbackElement.style.top = `${labelHeight}px`;
 					// take the full width so it will center horizontally
 					passbackElement.style.width = '100%';
-					slotElement.insertAdjacentElement(
-						'beforeend',
-						passbackElement,
-					);
 
-					/**
-					 * Define and display the new passback slot
-					 */
-					window.googletag.cmd.push(() => {
-						// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
-						const passbackSlot = googletag.defineSlot(
-							initialSlot.getAdUnitPath(),
-							[mpu, outstreamMobile, outstreamDesktop],
-							passbackElement.id,
-						);
-						if (passbackSlot) {
-							// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
-							passbackSlot.defineSizeMapping([
-								[
-									[breakpoints.phablet, 0],
-									[mpu, outstreamDesktop],
-								],
-								[
-									[breakpoints.mobile, 0],
-									[mpu, outstreamMobile],
-								],
-							]);
-							passbackSlot.addService(window.googletag.pubads());
-							passbackTargeting.forEach(([key, value]) => {
-								passbackSlot.setTargeting(key, value);
+					void fastdom
+						.mutate(() => {
+							slotElement.insertAdjacentElement(
+								'beforeend',
+								passbackElement,
+							);
+						})
+						.then(() => {
+							/**
+							 * Define and display the new passback slot
+							 */
+							window.googletag.cmd.push(() => {
+								// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
+								const passbackSlot = googletag.defineSlot(
+									initialSlot.getAdUnitPath(),
+									[mpu, outstreamMobile, outstreamDesktop],
+									passbackElement.id,
+								);
+								if (passbackSlot) {
+									// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
+									passbackSlot.defineSizeMapping([
+										[
+											[breakpoints.phablet, 0],
+											[mpu, outstreamDesktop],
+										],
+										[
+											[breakpoints.mobile, 0],
+											[mpu, outstreamMobile],
+										],
+									]);
+									passbackSlot.addService(
+										window.googletag.pubads(),
+									);
+									passbackTargeting.forEach(
+										([key, value]) => {
+											passbackSlot.setTargeting(
+												key,
+												value,
+											);
+										},
+									);
+									log(
+										'commercial',
+										'Passback: passback inline1 targeting map',
+										passbackSlot.getTargetingMap(),
+									);
+									googletag.display(passbackElement.id);
+								}
 							});
+
+							/**
+							 * Resize the container height once the passback has loaded.
+							 * We need to do this because the passback ad is absolutely
+							 * positioned in order to not add layout shift. So it is
+							 * taken out of normal document flow and the parent container
+							 * does not take the height of the child ad element as normal.
+							 * We set the height by hooking into the googletag slotRenderEnded
+							 * event which provides the size of the loaded ad.
+							 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
+							 */
+							googletag
+								.pubads()
+								.addEventListener(
+									'slotRenderEnded',
+									function (
+										event: googletag.events.SlotRenderEndedEvent,
+									) {
+										const slotId =
+											event.slot.getSlotElementId();
+										if (slotId === passbackElement.id) {
+											const size = event.size;
+											if (Array.isArray(size)) {
+												const height = size[1];
+												slotElement.style.height = `${
+													height + labelHeight
+												}px`;
+											}
+										}
+									},
+								);
+
 							log(
 								'commercial',
-								'Passback: passback inline1 targeting map',
-								passbackSlot.getTargetingMap(),
+								`Passback: from ${source} creating slot: ${passbackElement.id}`,
 							);
-							googletag.display(passbackElement.id);
-						}
-					});
-
-					/**
-					 * Resize the container height once the passback has loaded.
-					 * We need to do this because the passback ad is absolutely
-					 * positioned in order to not add layout shift. So it is
-					 * taken out of normal document flow and the parent container
-					 * does not take the height of the child ad element as normal.
-					 * We set the height by hooking into the googletag slotRenderEnded
-					 * event which provides the size of the loaded ad.
-					 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
-					 */
-					googletag
-						.pubads()
-						.addEventListener(
-							'slotRenderEnded',
-							function (
-								event: googletag.events.SlotRenderEndedEvent,
-							) {
-								const slotId = event.slot.getSlotElementId();
-								if (slotId === passbackElement.id) {
-									const size = event.size;
-									if (Array.isArray(size)) {
-										const height = size[1];
-										slotElement.style.height = `${
-											height + labelHeight
-										}px`;
-									}
-								}
-							},
-						);
-
-					log(
-						'commercial',
-						`Passback: from ${source} creating slot: ${passbackElement.id}`,
-					);
+						});
 				}
 			});
 		});
