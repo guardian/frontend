@@ -5,20 +5,7 @@ import { getBreakpoint } from 'lib/detect';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
 
-type PassbackMessagePayload = {
-	source: string;
-};
-
-const getValuesForKeys = (
-	keys: string[],
-	valueFn: (key: string) => string[],
-): Array<[string, string[]]> => keys.map((key) => [key, valueFn(key)]);
-
-const getPassbackValue = (source: string): string => {
-	const isMobile = (getBreakpoint() as string).startsWith('mobile');
-	// e.g. 'teadsdesktop' or 'teadsmobile';
-	return `${source}${isMobile ? 'mobile' : 'desktop'}`;
-};
+type PassbackMessagePayload = { source: string };
 
 const labelHeight = 24;
 
@@ -31,6 +18,17 @@ const outstreamMobile: [number, number] = [
 	adSizes.outstreamMobile.width,
 	adSizes.outstreamMobile.height,
 ];
+
+const getValuesForKeys = (
+	keys: string[],
+	valueFn: (key: string) => string[],
+): Array<[string, string[]]> => keys.map((key) => [key, valueFn(key)]);
+
+const getPassbackValue = (source: string): string => {
+	const isMobile = (getBreakpoint() as string).startsWith('mobile');
+	// e.g. 'teadsdesktop' or 'teadsmobile';
+	return `${source}${isMobile ? 'mobile' : 'desktop'}`;
+};
 
 /**
  * A listener for 'passback' messages from ad slot iFrames
