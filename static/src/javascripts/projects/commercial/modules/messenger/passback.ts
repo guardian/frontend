@@ -79,14 +79,20 @@ const init = (register: RegisterListener): void => {
 			const iFrameContainer =
 				iframe.closest<HTMLDivElement>('.ad-slot__content');
 
-			if (iFrameContainer) {
-				/**
-				 * Keep the initial outstream iFrame so they can detect passbacks.
-				 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
-				 * In a full width column we then just need to resize the height.
-				 */
-				iFrameContainer.style.visibility = 'hidden';
+			if (!iFrameContainer) {
+				log(
+					'commercial',
+					'Passback: cannot determine the iFrameContainer from the calling iFrame',
+				);
+				return;
 			}
+
+			/**
+			 * Keep the initial outstream iFrame so they can detect passbacks.
+			 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
+			 * In a full width column we then just need to resize the height.
+			 */
+			iFrameContainer.style.visibility = 'hidden';
 
 			// TODO: this should be promoted to default styles for inline1
 			slotElement.style.position = 'relative';
