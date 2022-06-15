@@ -50,10 +50,18 @@ const init = (register: RegisterListener): void => {
 				return;
 			}
 
+			if (!iframe) {
+				log(
+					'commercial',
+					'Passback: iframe has not been passed by messenger',
+				);
+				return;
+			}
+
 			/**
 			 * Determine the slot from the calling iFrame as provided by messenger
 			 */
-			const slotElement = iframe?.closest<HTMLDivElement>('.ad-slot');
+			const slotElement = iframe.closest<HTMLDivElement>('.ad-slot');
 			const slotId = slotElement?.dataset.name;
 			if (!slotId) {
 				log(
@@ -68,24 +76,22 @@ const init = (register: RegisterListener): void => {
 				`Passback: from ${source} for slot ${String(slotId)}`,
 			);
 
-			if (iframe) {
-				const iFrameContainer =
-					iframe.closest<HTMLDivElement>('.ad-slot__content');
+			const iFrameContainer =
+				iframe.closest<HTMLDivElement>('.ad-slot__content');
 
-				if (iFrameContainer) {
-					/**
-					 * Keep the initial outstream iFrame so they can detect passbacks.
-					 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
-					 * In a full width column we then just need to resize the height.
-					 */
-					iFrameContainer.style.visibility = 'hidden';
-				}
-
-				// TODO: this should be promoted to default styles for inline1
-				slotElement.style.position = 'relative';
-				// Remove any outstream styling for this slot
-				slotElement.classList.remove('ad-slot--outstream');
+			if (iFrameContainer) {
+				/**
+				 * Keep the initial outstream iFrame so they can detect passbacks.
+				 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
+				 * In a full width column we then just need to resize the height.
+				 */
+				iFrameContainer.style.visibility = 'hidden';
 			}
+
+			// TODO: this should be promoted to default styles for inline1
+			slotElement.style.position = 'relative';
+			// Remove any outstream styling for this slot
+			slotElement.classList.remove('ad-slot--outstream');
 
 			if (slotId && source) {
 				const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
