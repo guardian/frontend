@@ -191,9 +191,11 @@ const init = (register: RegisterListener): void => {
 										const size = event.size;
 										if (Array.isArray(size)) {
 											const height = size[1];
-											slotElement.style.height = `${
-												height + labelHeight
-											}px`;
+											void fastdom.mutate(() => {
+												slotElement.style.height = `${
+													height + labelHeight
+												}px`;
+											});
 										}
 									}
 								},
