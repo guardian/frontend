@@ -232,14 +232,13 @@ const init = (register: RegisterListener): void => {
 									'Passback: passback inline1 targeting map',
 									passbackSlot.getTargetingMap(),
 								);
+								log(
+									'commercial',
+									`Passback: from ${source} displaying slot: ${passbackElement.id}`,
+								);
 								googletag.display(passbackElement.id);
 							}
 						});
-
-						log(
-							'commercial',
-							`Passback: from ${source} creating slot: ${passbackElement.id}`,
-						);
 					});
 			});
 		});
