@@ -2,6 +2,7 @@ import { adSizes } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { breakpoints } from '@guardian/source-foundations';
 import { getBreakpoint } from 'lib/detect';
+import fastdom from '../../../../lib/fastdom-promise';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
 
@@ -87,19 +88,20 @@ const init = (register: RegisterListener): void => {
 				return;
 			}
 
-			/**
-			 * Keep the initial outstream iFrame so they can detect passbacks.
-			 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
-			 * In a full width column we then just need to resize the height.
-			 */
-			iFrameContainer.style.visibility = 'hidden';
+			const updatePreviousSlotPromise = fastdom.mutate(() => {
+				/**
+				 * Keep the initial outstream iFrame so they can detect passbacks.
+				 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
+				 * In a full width column we then just need to resize the height.
+				 */
+				iFrameContainer.style.visibility = 'hidden';
+				// TODO: this should be promoted to default styles for inline1
+				slotElement.style.position = 'relative';
+				// Remove any outstream styling for this slot
+				slotElement.classList.remove('ad-slot--outstream');
+			});
 
-			// TODO: this should be promoted to default styles for inline1
-			slotElement.style.position = 'relative';
-			// Remove any outstream styling for this slot
-			slotElement.classList.remove('ad-slot--outstream');
-
-			if (slotId && source) {
+			void updatePreviousSlotPromise.then(() => {
 				const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
 				/**
 				 * Find the initial slot object from googletag
@@ -228,7 +230,7 @@ const init = (register: RegisterListener): void => {
 						`Passback: from ${source} creating slot: ${passbackElement.id}`,
 					);
 				}
-			}
+			});
 		});
 	});
 };
