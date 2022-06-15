@@ -1,6 +1,7 @@
 import { adSizes } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { breakpoints } from '@guardian/source-foundations';
+import { getBreakpoint } from 'lib/detect';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
 
@@ -12,6 +13,12 @@ const getValuesForKeys = (
 	keys: string[],
 	valueFn: (key: string) => string[],
 ): Array<[string, string[]]> => keys.map((key) => [key, valueFn(key)]);
+
+const getPassbackValue = (source: string): string => {
+	const isMobile = (getBreakpoint() as string).startsWith('mobile');
+	// e.g. 'teadsdesktop' or 'teadsmobile';
+	return `${source}${isMobile ? 'mobile' : 'desktop'}`;
+};
 
 const labelHeight = 24;
 
@@ -117,7 +124,7 @@ const init = (register: RegisterListener): void => {
 					const passbackTargeting: Array<[string, string[]]> = [
 						...pageTargeting,
 						...slotTargeting,
-						['passback', [source]],
+						['passback', [getPassbackValue(source)]],
 						['slot', ['inline1']],
 					];
 
