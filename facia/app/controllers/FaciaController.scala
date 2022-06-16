@@ -352,16 +352,31 @@ trait FaciaController
 
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] =
     Action.async { implicit request =>
-      frontJsonFapi.get(path, fullRequestType).flatMap {
+      frontJsonFapi.get(path, fullDCRRequestType).flatMap {
         case Some(pressedPage) =>
           if (request.forceDCR) {
             // TODO: Use Option?
-            //  TODO: Concatenate curated with backfill
             // TODO: Do we need to add anything else?
-            // TODO: Work out the actual startIndex
+
             val matchedCollection = pressedPage.collections.filter(_.id == collectionId).head
-            val pressedContent = matchedCollection.curated
-            remoteRenderer.getCards(ws, pressedContent, 2)
+
+            // TODO: length is Option because not all types oof pressedCollection have the property, but
+            //  pressedCollections coming from *DCR* pressedPages *should* have the length prop. If they don't
+            //  then something has gone wrong. How should we surface this? (Default value of 0 avoids a crash
+            //  but it covers over the bug.)
+            val liteCuratedLength = matchedCollection.liteCuratedLength match {
+              case Some(n: Int) => n
+              case None => 0
+            }
+            val liteBackfillLength = matchedCollection.liteBackfillLength match {
+              case Some(n: Int) => n
+              case None => 0
+            }
+            val pressedContent = matchedCollection.curated.takeRight(matchedCollection.curated.length - liteCuratedLength) ++ matchedCollection.backfill.takeRight(matchedCollection.backfill.length - liteBackfillLength)
+            val startIndex = liteCuratedLength + liteBackfillLength
+
+            // todo: Is this the right return value already, or do we need to process it?
+            remoteRenderer.getCards(ws=ws, cards=pressedContent, startIndex=startIndex)
           }
 
           val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
@@ -470,6 +485,10 @@ trait FaciaController
     if (request.isAdFree) FullAdFreeType else FullType
   def liteRequestType(implicit request: RequestHeader): PressedPageType =
     if (request.isAdFree) LiteAdFreeType else LiteType
+  def fullDCRRequestType(implicit request: RequestHeader): PressedPageType = {
+    // currently we don't support ad free for DCR
+    if (request.isAdFree) FullDCRType else FullDCRType
+  }
 
   def ampRsaPublicKey: Action[AnyContent] = {
     Action {
