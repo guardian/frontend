@@ -3,7 +3,7 @@ package test
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.PageType
-import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage}
+import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage, TopMentionFilter}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
@@ -19,6 +19,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
+      topMentionFilters: Option[Seq[TopMentionFilter]],
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     Future(

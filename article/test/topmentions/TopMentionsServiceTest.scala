@@ -30,7 +30,7 @@ class TopMentionsServiceTest
   val successResponse =
     TopMentionsDetails(entity_types = Seq(TopMentionEntity.Org), results = Seq(topMentionResult), model = "model")
 
-  "refreshTopMentions" should "return successfull future given getListOfKeys s3 call fails" in {
+  "refreshTopMentions" should "return successful future given getListOfKeys s3 call fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))
     val topMentionService = new TopMentionsService(fakeClient)
 
@@ -40,7 +40,7 @@ class TopMentionsServiceTest
     results should be(None)
   }
 
-  "refreshTopMentions" should "return successfull future given one of the S3 object calls fails" in {
+  "refreshTopMentions" should "return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1", "key2"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
     when(fakeClient.getObject("key2")) thenReturn Future.failed(new Throwable("error happend"))
@@ -54,7 +54,7 @@ class TopMentionsServiceTest
     results should be(None)
   }
 
-  "refreshTopMentions" should "update in memory top mentions and return successfull future given one of the S3 object calls fails" in {
+  "refreshTopMentions" should "update in memory top mentions and return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
