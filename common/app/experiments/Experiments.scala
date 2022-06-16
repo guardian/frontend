@@ -5,7 +5,8 @@ import experiments.ParticipationGroups._
 import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
-  override val allExperiments: Set[Experiment] = Set(InteractivesIdleLoading, OfferHttp3, KeyEventsCarousel)
+  override val allExperiments: Set[Experiment] =
+    Set(InteractivesIdleLoading, OfferHttp3, KeyEventsCarousel, AutomaticFilters)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -45,4 +46,13 @@ object KeyEventsCarousel
       owners = Seq(Owner.withGithub("abeddow91")),
       sellByDate = LocalDate.of(2022, 9, 13),
       participationGroup = Perc0C,
+    )
+
+object AutomaticFilters
+    extends Experiment(
+      name = "automatic-filters",
+      description = "When ON, tests automatic filters on business live blogs only",
+      owners = Seq(Owner.withGithub("joecowton1")),
+      sellByDate = LocalDate.of(2022, 12, 6),
+      participationGroup = Perc0D,
     )
