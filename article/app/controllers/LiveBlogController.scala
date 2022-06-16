@@ -75,7 +75,7 @@ class LiveBlogController(
         case None => {
           topMentionResult match {
             case Some(value) =>
-              renderWithRange(path, FilterLiveBlog, filter, Some(value)) // no page param
+              renderWithRange(path, AutomaticFilterLiveBlog, filter, Some(value)) // no page param
             case None => renderWithRange(path, CanonicalLiveBlog, filter, None) // no page param
           }
         }
