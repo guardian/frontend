@@ -1,8 +1,7 @@
 package topmentions
 
 import common.{Box, GuLogging}
-import model.{TopMentionsDetails, TopMentionsResult}
-import model.TopMentionEntity.TopMentionEntity
+import model.{TopMentionsDetails, TopMentionsResult, TopMentionsTopic}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -30,14 +29,13 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
     topMentions.get()
   }
 
-  def getEntityTopMentions(
+  def getTopMentionsByTopic(
       blogId: String,
-      filterEntityType: TopMentionEntity,
-      filterEntityName: String,
+      topMentionEntity: TopMentionsTopic,
   ): Option[TopMentionsResult] = {
 
     getBlogTopMentions(blogId).flatMap(_.results.find(result => {
-      result.`type` == filterEntityType && result.name == filterEntityName
+      result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value
     }))
   }
 

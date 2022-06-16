@@ -59,20 +59,20 @@ class LiveBlogController(
       path: String,
       page: Option[String] = None,
       filterKeyEvents: Option[Boolean],
-      automaticFilter: Option[String],
+      topics: Option[String],
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentionResult = getTopMentionsForFilters(path, automaticFilter)
+      val topMentions = getTopMentionsByTopics(path, topics)
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter, topMentionResult) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter, topMentions) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentionResult) // no page param
+        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentions) // no page param
       }
     }
   }
@@ -338,17 +338,17 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopMentionsForFilters(blogId: String, automaticFilter: Option[String]) = {
-    val topMentionResult = for {
-      filterEntity <- AutomaticFilters.getAutomaticFilter(automaticFilter)
-      topMentions <- topMentionsService.getEntityTopMentions(blogId, filterEntity._1, filterEntity._2)
+  def getTopMentionsByTopics(blogId: String, topics: Option[String]) = {
+    val topMentionsResult = for {
+      topMentionTopic <- TopMentionsTopic.fromString(topics)
+      topMentions <- topMentionsService.getTopMentionsByTopic(blogId, topMentionTopic)
     } yield topMentions
 
-    topMentionResult match {
-      case Some(_) => log.info(s"top mention result was successfully retrieved for ${automaticFilter.get}")
-      case None    => log.error(s"top mention result couldn't be retrieved for ${automaticFilter}")
+    topMentionsResult match {
+      case Some(_) => log.info(s"top mention result was successfully retrieved for ${topics.get}")
+      case None    => log.warn(s"top mention result couldn't be retrieved for ${topics}")
     }
 
-    topMentionResult
+    topMentionsResult
   }
 }
