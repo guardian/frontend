@@ -12,8 +12,8 @@ const serverSideTests: ServerSideABTest[] = [];
 /**
  * Function to check whether metrics should be captured for the current page
  * @param tests - optional array of ABTest to check against.
- * @returns {boolean} whether the user is in a one of a set of client or server-side tests
- * for which we want to always capture metrics.
+ * @returns {boolean} whether the user is in one of a set of client or server-side tests
+ * for which we want to always capture metrics or if we should force metrics.
  */
 const shouldCaptureMetrics = (tests = defaultClientSideTests): boolean => {
 	const userInClientSideTest = tests.some((test) =>
@@ -25,7 +25,10 @@ const shouldCaptureMetrics = (tests = defaultClientSideTests): boolean => {
 		Object.keys(window.guardian.config.tests).some((test) =>
 			String(serverSideTests).includes(test),
 		);
-	return userInClientSideTest || userInServerSideTest;
+
+	const forceSendMetrics = window.location.hash === '#forceSendMetrics';
+
+	return userInClientSideTest || userInServerSideTest || forceSendMetrics;
 };
 
 export { shouldCaptureMetrics };

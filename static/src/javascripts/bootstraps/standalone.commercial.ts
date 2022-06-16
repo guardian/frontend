@@ -93,9 +93,10 @@ const loadFrontendBundle = async (): Promise<void> => {
 		'commercial/commercial-metrics'
 	);
 
-	commercialExtraModules.push(
-		['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
-	);
+	commercialExtraModules.push([
+		'cm-commercial-metrics',
+		commercialMetrics.init,
+	]);
 
 	return;
 };
