@@ -8,7 +8,7 @@ import model.TopMentionEntity.TopMentionEntity
 import java.time.Duration
 
 class AutomaticFiltersTest extends AnyFlatSpec with Matchers {
-  "getAutomaticFilter" should "return none given a none filter" in {
+  "getAutomaticFilter" should "return none when no filter is provided" in {
     val result = AutomaticFilters.getAutomaticFilter(None)
 
     result should be(None)
