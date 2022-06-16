@@ -357,9 +357,12 @@ class GalleryLightbox {
     }
 
     show() {
-        // `showModal` ensures that we focus trap the user within the `dialogue` container
-        // visually show/hide functionality is still controlled via css and classnames
-        // in the `this.hide` method, we close the modal
+        /**
+         * Using `showModal` ensures that we trap focus inside the modal `dialogue`
+         * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal}
+         *
+         * Visually, show/hide functionality is still controlled via css and classnames in the `this.hide` method
+         */
         this.$lightboxEl.get(0).showModal();
 
         const $body = bonzo(document.body);
