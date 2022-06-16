@@ -21,7 +21,7 @@ class AutomaticFiltersTest extends AnyFlatSpec with Matchers {
     result should be(None)
   }
 
-  it should "return none given an incorrect filter entity" in {
+  it should "return none when a filter that does not exist is provided" in {
     val filter = Some("organization:nhs")
     val result = AutomaticFilters.getAutomaticFilter(filter)
 
