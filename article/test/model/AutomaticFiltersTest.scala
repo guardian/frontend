@@ -14,7 +14,7 @@ class AutomaticFiltersTest extends AnyFlatSpec with Matchers {
     result should be(None)
   }
 
-  it should "return none given a random string" in {
+  it should "return none when an invalid string is provided" in {
     val filter = Some("random string")
     val result = AutomaticFilters.getAutomaticFilter(filter)
 
