@@ -83,25 +83,6 @@ if (!commercialFeatures.adFree) {
 }
 
 /**
- * Load modules that are specific to `frontend`.
- */
-const loadFrontendBundle = async (): Promise<void> => {
-	if (isDotcomRendering) return;
-
-	const commercialMetrics = await import(
-		/* webpackChunkName: "frontend" */
-		'commercial/commercial-metrics'
-	);
-
-	commercialExtraModules.push([
-		'cm-commercial-metrics',
-		commercialMetrics.init,
-	]);
-
-	return;
-};
-
-/**
  * Load modules specific to `dotcom-rendering`.
  * Not sure if this is needed. Currently no separate chunk is created
  * Introduced by @tomrf1
@@ -184,7 +165,6 @@ const bootCommercial = async (): Promise<void> => {
 	};
 
 	try {
-		await loadFrontendBundle();
 		await loadDcrBundle();
 
 		const allModules: Array<Parameters<typeof loadModules>> = [
