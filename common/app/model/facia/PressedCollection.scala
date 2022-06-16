@@ -30,6 +30,8 @@ case class PressedCollection(
     config: CollectionConfig,
     hasMore: Boolean,
     targetedTerritory: Option[TargetedTerritory],
+    liteCuratedLength: Option[Int],
+    liteBackfillLength: Option[Int],
 ) {
 
   lazy val isEmpty: Boolean = curated.isEmpty && backfill.isEmpty && treats.isEmpty
@@ -62,6 +64,13 @@ case class PressedCollection(
   def full(visible: Int): PressedCollection = {
     val hasMore = curatedPlusBackfillDeduplicated.length > visible
     copy(hasMore = hasMore)
+  }
+
+  def fullDCR(visible: Int): PressedCollection = {
+    val liteCurated = curated.take(visible)
+    val liteBackfill = backfill.take(visible - liteCurated.length)
+    val hasMore = curatedPlusBackfillDeduplicated.length > visible
+    copy(hasMore = hasMore, liteCuratedLength = Some(liteCurated.length), liteBackfillLength = Some(liteBackfill.length))
   }
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)

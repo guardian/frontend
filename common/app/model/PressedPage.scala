@@ -85,14 +85,19 @@ case object LiteAdFreeType extends PressedPageType {
   override def suffix = ".lite.adfree"
 }
 
+case object FullDCRType extends PressedPageType {
+  override def suffix = ".full.dcr"
+}
+
 case class PressedCollectionVersions(
     lite: PressedCollection,
     full: PressedCollection,
     liteAdFree: PressedCollection,
     fullAdFree: PressedCollection,
+    fullDCR: PressedCollection,
 )
 
-case class PressedPageVersions(lite: PressedPage, full: PressedPage, liteAdFree: PressedPage, fullAdFree: PressedPage)
+case class PressedPageVersions(lite: PressedPage, full: PressedPage, liteAdFree: PressedPage, fullAdFree: PressedPage, fullDCR: PressedPage)
 
 object PressedPageVersions {
   def fromPressedCollections(
@@ -102,10 +107,11 @@ object PressedPageVersions {
       pressedCollections: List[PressedCollectionVersions],
   ): PressedPageVersions = {
     PressedPageVersions(
-      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.lite)).filterEmpty,
-      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.full)).filterEmpty,
-      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.liteAdFree)).filterEmpty,
-      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.fullAdFree)).filterEmpty,
+      lite = PressedPage(id, seoData, frontProperties, pressedCollections.map(_.lite)).filterEmpty,
+      full = PressedPage(id, seoData, frontProperties, pressedCollections.map(_.full)).filterEmpty,
+      liteAdFree = PressedPage(id, seoData, frontProperties, pressedCollections.map(_.liteAdFree)).filterEmpty,
+      fullAdFree = PressedPage(id, seoData, frontProperties, pressedCollections.map(_.fullAdFree)).filterEmpty,
+      fullDCR = PressedPage(id, seoData, frontProperties, pressedCollections.map(_.fullDCR)).filterEmpty,
     )
   }
 }
