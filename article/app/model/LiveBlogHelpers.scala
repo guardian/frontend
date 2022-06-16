@@ -64,24 +64,46 @@ object LiveBlogHelpers {
       page.get.currentPage.blocks.foreach(block => println(s"block: ${block.id}"))
 
       if (page.get.pagination.isDefined) {
-        if (page.get.pagination.get.older.isDefined) {
-          println("older pages: ")
-          page.get.pagination.get.older.get.blocks.foreach(block => println(s"block: ${block.id}"))
-        }
-        if (page.get.pagination.get.oldest.isDefined) {
-          println("oldest pages: ")
-          page.get.pagination.get.oldest.get.blocks.foreach(block => println(s"block: ${block.id}"))
-        }
-        if (page.get.pagination.get.newer.isDefined) {
-          println("newer pages: ")
-          page.get.pagination.get.newer.get.blocks.foreach(block => println(s"block: ${block.id}"))
-        }
 
-        if (page.get.pagination.get.newest.isDefined) {
-          println("newest pages: ")
-          page.get.pagination.get.newest.get.blocks.foreach(block => println(s"block: ${block.id}"))
-        }
-      }
+        val older = page.get.pagination.get.older
+        val oldest = page.get.pagination.get.oldest
+        val newer = page.get.pagination.get.newer
+        val newest = page.get.pagination.get.newest
+
+        if (older.isDefined) {
+          println(s"older pages: length: ${older.get.blocks.length}")
+          older.get match {
+            case BlockPage(_, blockId, _, _) => println(s"block id: ${blockId}")
+            case _                           => older.get.blocks.foreach(block => println(s"block: ${block.id}"))
+          }
+
+        } else println("older pages: None")
+
+        if (oldest.isDefined) {
+          println(s"oldest pages: length: ${oldest.get.blocks.length}")
+          oldest.get match {
+            case BlockPage(_, blockId, _, _) => println(s"block id: ${blockId}")
+            case _                           => oldest.get.blocks.foreach(block => println(s"block: ${block.id}"))
+          }
+        } else println("oldest pages: None")
+
+        if (newer.isDefined) {
+          println(s"newer pages: length: ${newer.get.blocks.length}")
+
+          newer.get match {
+            case BlockPage(_, blockId, _, _) => println(s"block id: ${blockId}")
+            case _                           => newer.get.blocks.foreach(block => println(s"block: ${block.id}"))
+          }
+        } else println("newer pages: None")
+
+        if (newest.isDefined) {
+          println(s"newest pages: length: ${newest.get.blocks.length}")
+          newest.get match {
+            case BlockPage(_, blockId, _, _) => println(s"block id: ${blockId}")
+            case _                           => newest.get.blocks.foreach(block => println(s"block: ${block.id}"))
+          }
+        } else println("newest pages: None")
+      } else println("pagination pages: None")
     }
   }
 
@@ -106,6 +128,7 @@ object LiveBlogHelpers {
         )
       } getOrElse None
 
+    if (topMentionResult.isDefined) println(s"topMentionResult count: ${topMentionResult.get.count}")
     printCurrentPage(liveBlogPageModel)
 
     liveBlogPageModel
