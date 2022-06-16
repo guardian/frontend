@@ -56,7 +56,7 @@ class GalleryLightbox {
             });
         };
 
-        const galleryLightboxHtml = `<dialog class="overlay gallery-lightbox gallery-lightbox--hover">
+        const galleryLightboxHtml = `<dialog class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">
                 <div class="gallery-lightbox__sidebar">
                     ${generateButtonHTML('close')}
                     <div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">
