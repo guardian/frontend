@@ -18,10 +18,6 @@ export const commercialLazyLoadMarginReloaded: ABTest = {
 	canRun: () => true,
 	variants: [
 		{
-			id: 'control',
-			test: noop,
-		},
-		{
 			id: 'variant-1',
 			test: noop,
 		},
