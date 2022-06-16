@@ -346,7 +346,7 @@ class LiveBlogController(
 
     topMentionsResult match {
       case Some(_) => log.info(s"top mention result was successfully retrieved for ${topics.get}")
-      case None    => log.warn(s"top mention result couldn't be retrieved for ${topics}")
+      case None    => if (topics.isDefined) log.warn(s"top mention result couldn't be retrieved for ${topics.get}")
     }
 
     topMentionsResult
