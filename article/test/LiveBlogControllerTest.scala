@@ -6,7 +6,8 @@ import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
-
+import org.scalatestplus.mockito.MockitoSugar.mock
+import topmentions.{TopMentionsS3Client, TopMentionsService}
 @DoNotDiscover class LiveBlogControllerTest
     extends AnyFlatSpec
     with Matchers
@@ -18,12 +19,13 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
     with WithTestContentApiClient {
 
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
-
+  val fakeTopMentionsService = mock[TopMentionsService]
   lazy val liveBlogController = new LiveBlogController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new DCRFake(),
+    fakeTopMentionsService,
   )
 
   it should "return the latest blocks of a live blog" in {
