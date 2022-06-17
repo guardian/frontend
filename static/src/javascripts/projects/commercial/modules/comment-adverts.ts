@@ -1,5 +1,5 @@
 import type { SizeKeys, SizeMapping } from '@guardian/commercial-core';
-import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { adSizes, createAdSize, createAdSlot } from '@guardian/commercial-core';
 import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
@@ -47,24 +47,29 @@ const insertCommentAd = (
 };
 
 const containsDMPU = (ad: Advert): boolean =>
-	ad.sizes.desktop.some(
+	!!ad.sizes.desktop?.some(
 		(el) =>
 			(el[0] === 300 && el[1] === 600) ||
 			(el[0] === 160 && el[1] === 600),
 	);
 
 const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
-	if (!containsDMPU(ad)) {
+	if (!containsDMPU(ad) && ad.sizes.desktop) {
 		const extraSizes: SizeKeys[] = ['halfPage', 'skyscraper'];
 		ad.sizes.desktop.push(
 			// TODO: add getTuple method to commercial-core
 			...extraSizes.map((size) => {
 				const { width, height } = adSizes[size];
-				const tuple: AdSizeTuple = [width, height];
+				const tuple = createAdSize(width, height);
 				return tuple;
 			}),
 		);
-		ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
+		const sizeMapping = ad.sizes.desktop.map((size) =>
+			!size.width && !size.width
+				? 'fluid'
+				: (size as googletag.SingleSize),
+		);
+		ad.slot.defineSizeMapping([[[0, 0], sizeMapping]]);
 		void fastdom.mutate(() => {
 			adSlot.setAttribute(
 				'data-desktop',
