@@ -265,6 +265,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         putPressedPage(path, pressedFronts.lite, LiteType)
         putPressedPage(path, pressedFronts.fullAdFree, FullAdFreeType)
         putPressedPage(path, pressedFronts.liteAdFree, LiteAdFreeType)
+        putPressedPage(path, pressedFronts.fullDCR, FullDCRType)
       }
       .fold(
         e => {
@@ -306,6 +307,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       case LiteType       => FaciaPressMetrics.FrontPressContentSizeLite
       case LiteAdFreeType => FaciaPressMetrics.FrontPressContentSizeLite
       case FullAdFreeType => FaciaPressMetrics.FrontPressContentSize
+      case FullDCRType    => FaciaPressMetrics.FrontPressContentSize
     }
 
     metric.recordSample(json.getBytes.length, new DateTime())
