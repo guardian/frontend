@@ -88,7 +88,7 @@ const init = (register: RegisterListener): void => {
 				return;
 			}
 
-			const updatePreviousSlotPromise = fastdom.mutate(() => {
+			const updateInitialSlotPromise = fastdom.mutate(() => {
 				/**
 				 * Keep the initial outstream iFrame so they can detect passbacks.
 				 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
@@ -101,7 +101,7 @@ const init = (register: RegisterListener): void => {
 				slotElement.classList.remove('ad-slot--outstream');
 			});
 
-			void updatePreviousSlotPromise.then(() => {
+			void updateInitialSlotPromise.then(() => {
 				const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
 				/**
 				 * Find the initial slot object from googletag
