@@ -76,7 +76,12 @@ export const refreshAdvert = (advert: Advert): void => {
 				// force the slot sizes to be the same as advert.size (current)
 				// only when advert.size is an array (forget 'fluid' and other specials)
 				if (Array.isArray(advert.size)) {
-					advert.slot.defineSizeMapping([[[0, 0], [advert.size]]]);
+					const mapping = window.googletag.sizeMapping();
+					mapping.addSize(
+						[0, 0],
+						advert.size as googletag.GeneralSize,
+					);
+					advert.slot.defineSizeMapping(mapping.build());
 				}
 			}
 			window.googletag.pubads().refresh([advert.slot]);

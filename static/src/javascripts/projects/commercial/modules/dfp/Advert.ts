@@ -29,7 +29,7 @@ class Advert {
 	id: string;
 	node: HTMLElement;
 	sizes: SizeMapping;
-	size: AdSize | null = null;
+	size: AdSize | 'fluid' | null = null;
 	slot: googletag.Slot;
 	isEmpty: boolean | null = null;
 	isLoading = false;
