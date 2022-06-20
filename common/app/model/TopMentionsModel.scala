@@ -25,20 +25,20 @@ object TopMentionsTopic extends GuLogging {
 
   implicit val TopMentionsTopicJf: Format[TopMentionsTopic] = Json.format[TopMentionsTopic]
 
-  def fromString(filter: Option[String]): Option[TopMentionsTopic] = {
-    filter.flatMap { f =>
+  def fromString(topic: Option[String]): Option[TopMentionsTopic] = {
+    topic.flatMap { f =>
       val filterEntity = f.split(":")
       if (filterEntity.length == 2) {
         val entityType = TopMentionsTopicType.withNameOpt(filterEntity(0))
         if (entityType.isEmpty) {
-          log.warn(s"automaticFilter query parameter entity ${filterEntity(0)} is invalid")
+          log.warn(s"topics query parameter entity ${filterEntity(0)} is invalid")
           None
         } else {
-          log.debug(s"valid automaticFilter query parameter - ${f}")
+          log.debug(s"valid topics query parameter - ${f}")
           Some(TopMentionsTopic(entityType.get, filterEntity(1)))
         }
       } else {
-        log.warn(s"automaticFilter query parameter is invalid for ${f}, the format is <type>:<name>")
+        log.warn(s"topics query parameter is invalid for ${f}, the format is <type>:<name>")
         None
       }
     }
