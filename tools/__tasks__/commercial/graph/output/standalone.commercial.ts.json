@@ -137,8 +137,8 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/Advert.ts": [
-  "../lib/detect.js",
-  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/define-slot.js"
  ],
  "../projects/commercial/modules/dfp/add-slot.ts": [
