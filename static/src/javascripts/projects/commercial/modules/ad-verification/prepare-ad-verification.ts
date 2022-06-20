@@ -3,7 +3,6 @@ import {
 	bypassCommercialMetricsSampling as switchOffSampling,
 } from '@guardian/commercial-core';
 import { loadScript, log } from '@guardian/libs';
-import { setForceSendMetrics } from '../../../common/modules/analytics/forceSendMetrics';
 import { getAdvertById } from '../dfp/get-advert-by-id';
 import { refreshAdvert } from '../dfp/load-advert';
 import { stripDfpAdPrefixFrom } from '../header-bidding/utils';
@@ -49,7 +48,6 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
 	const eventTimer = EventTimer.get();
 	eventTimer.trigger(`${stripDfpAdPrefixFrom(advert.id)}-blockedByConfiant`);
 
-	setForceSendMetrics(true);
 	void switchOffSampling();
 
 	advert.slot.setTargeting('confiant', String(blockingType));

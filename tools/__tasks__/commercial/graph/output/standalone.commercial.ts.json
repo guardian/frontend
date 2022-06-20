@@ -77,8 +77,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
-  "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/analytics/forceSendMetrics.ts"
+  "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/article-aside-adverts.ts": [
   "../lib/$$.ts",
@@ -556,7 +555,6 @@
  "../projects/commercial/sentinel.ts": [
   "../lib/config.d.ts"
  ],
- "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
   "../lib/config.d.ts",
