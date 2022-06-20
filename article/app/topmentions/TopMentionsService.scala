@@ -14,7 +14,10 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
 
     retrievedTopMentions
       .flatMap(Future.sequence(_))
-      .map(response => topMentions send Some(response.toMap))
+      .map(response => {
+        topMentions send Some(response.toMap)
+        log.info("successfully refreshed top mentions")
+      })
       .recover {
         case e =>
           log.error("Could not refresh top mentions", e)
