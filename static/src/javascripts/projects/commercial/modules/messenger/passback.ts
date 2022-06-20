@@ -98,7 +98,7 @@ const init = (register: RegisterListener): void => {
 			 */
 			const updateInitialSlotPromise = fastdom.mutate(() => {
 				iFrameContainer.style.visibility = 'hidden';
-				// TODO: this should be promoted to default styles for inline1
+				// TODO: this should be promoted to default styles for the initial slot
 				slotElement.style.position = 'relative';
 				// Remove any outstream styling for this slot
 				slotElement.classList.remove('ad-slot--outstream');
@@ -164,7 +164,7 @@ const init = (register: RegisterListener): void => {
 				);
 				log(
 					'commercial',
-					'Passback: initial inline1 targeting',
+					'Passback: initial slot targeting',
 					Object.fromEntries([...pageTargeting, ...slotTargeting]),
 				);
 
@@ -175,7 +175,7 @@ const init = (register: RegisterListener): void => {
 					...pageTargeting,
 					...slotTargeting,
 					['passback', [getPassbackValue(source)]],
-					['slot', ['inline1']],
+					['slot', [slotId]],
 				];
 
 				/**
@@ -238,7 +238,7 @@ const init = (register: RegisterListener): void => {
 						});
 						log(
 							'commercial',
-							'Passback: passback inline1 targeting map',
+							'Passback: passback slot targeting map',
 							passbackSlot.getTargetingMap(),
 						);
 						log(
