@@ -90,12 +90,14 @@ class LiveBlogController(
       rendered: Option[Boolean],
       isLivePage: Option[Boolean],
       filterKeyEvents: Option[Boolean],
+      automaticFilter: Option[String],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
       val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate, page)
+      val topMentionResult = getTopMentionsForFilters(path, automaticFilter)
 
-      mapModel(path, range, filter, None) {
+      mapModel(path, range, filter, topMentionResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
           Future.successful(renderGuuiJson(blog, blocks, filter))

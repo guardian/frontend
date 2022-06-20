@@ -440,7 +440,7 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                         
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Live Blogs
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json                                                                                      controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json                                                                                      controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean], automaticFilters: Option[String])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email                                                                                     controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email/headline.txt                                                                        controllers.ArticleController.renderHeadline(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson                                                                           controllers.LiveBlogController.renderEmail(path)
