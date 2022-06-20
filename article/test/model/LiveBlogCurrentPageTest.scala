@@ -61,6 +61,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         2,
         Blocks(1, Nil, None, Map(CanonicalLiveBlog.firstPage -> Seq(fakeBlock(1)))),
         false,
+        None,
       )
     }
 
@@ -103,6 +104,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         ),
       ),
       false,
+      None,
     )
     result.get.pinnedBlock should be(Some(latestPinnedBlock))
     result.get.pinnedBlock should not be (Some(olderPinnedBlock))
@@ -128,6 +130,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         ),
       ),
       false,
+      None,
     )
 
     result.get.pinnedBlock should be(Some(expectedPinnedBlock))
@@ -153,6 +156,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         requestedBodyBlocks,
       ),
       true,
+      None,
     )
 
     result.get.pinnedBlock should be(Some(expectedPinnedBlock))
@@ -175,6 +179,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         requestedBodyBlocks,
       ),
       true,
+      None,
     )
 
     result should be(None)
@@ -197,6 +202,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         requestedBodyBlocks,
       ),
       true,
+      None,
     )
 
     result should be(None)
@@ -220,6 +226,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         requestedBodyBlocks,
       ),
       true,
+      None,
     )
 
     should(result, currentPage = FirstPage(List(), true), pagination = None)
@@ -237,6 +244,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
       ),
       false,
+      None,
     )
 
     should(result, FirstPage(blocks, filterKeyEvents = false), None)
@@ -253,6 +261,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
       ),
       false,
+      None,
     )
 
     val expected = blocks.take(2)
@@ -282,6 +291,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
       ),
       false,
+      None,
     )
 
     val expectedCurrentPage = FirstPage(blocks = blocks.take(3), filterKeyEvents = false)
@@ -318,6 +328,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         ),
       ),
       true,
+      None,
     )
 
     val expectedCurrentPage = FirstPage(blocks = keyBlocks.take(3), filterKeyEvents = true)
@@ -338,7 +349,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   "findPageWithBlock" should "put 4 blocks on two pages - older page link" in {
     val blocks = fakeBlocks(4)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false, None)
 
     val expectedCurrentPage =
       BlockPage(blocks = blocks.takeRight(2), blockId = "2", pageNumber = 2, filterKeyEvents = false)
@@ -358,7 +369,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "put 4 blocks on two pages - link to another block on the page" in {
     val blocks = fakeBlocks(4)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "1", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "1", false, None)
 
     val expectedCurrentPage =
       BlockPage(blocks = blocks.takeRight(2), blockId = "2", pageNumber = 2, filterKeyEvents = false)
@@ -378,7 +389,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "put 5 blocks on two pages (block 3 from oldest page)" in {
     val blocks = fakeBlocks(5)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false, None)
 
     val expectedCurrentPage =
       BlockPage(blocks = blocks.takeRight(2), blockId = "2", pageNumber = 2, filterKeyEvents = false)
@@ -407,6 +418,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
       ),
       false,
+      None,
     )
 
     val expectedCurrentPage = FirstPage(blocks = blocks.take(2), filterKeyEvents = false)
@@ -427,7 +439,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "put 6 blocks on 3 pages (middle page)" in {
     val blocks = fakeBlocks(6)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "4", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "4", false, None)
 
     val expectedCurrentPage =
       BlockPage(blocks = blocks.slice(2, 4), blockId = "4", pageNumber = 2, filterKeyEvents = false)
@@ -449,7 +461,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "put 6 blocks on 3 pages (oldest page)" in {
     val blocks = fakeBlocks(6)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false, None)
 
     val expectedCurrentPage =
       BlockPage(blocks = blocks.takeRight(2), blockId = "2", pageNumber = 3, filterKeyEvents = false)
@@ -472,7 +484,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
   it should "display only key events and summaries when the filter is on" in {
     val blocks = fakeBlocks(12, 4, 0, 2)
     val keyAndSummaryBlocks = blocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", true)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", true, None)
 
     val expectedCurrentPage = {
       BlockPage(blocks = keyAndSummaryBlocks.takeRight(2), blockId = "2", pageNumber = 3, filterKeyEvents = true)
@@ -495,7 +507,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "display nothing when no key events exist and the filter is on" in {
     val blocks = fakeBlocks(6, 0)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", true)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", true, None)
 
     result should be(None)
   }
