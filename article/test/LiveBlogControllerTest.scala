@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{TopMentionsResult, TopMentionsTopic, TopMentionsTopicType}
+import model.{LiveBlogPage, TopMentionsResult, TopMentionsTopic, TopMentionsTopicType, TopicsLiveBlog}
 import topmentions.{TopMentionsS3Client, TopMentionsService}
 
 import scala.concurrent.Future
@@ -32,7 +32,7 @@ import scala.concurrent.Future
   val topMentionResult = TopMentionsResult(
     name = "nhs",
     `type` = TopMentionsTopicType.Org,
-    blocks = Seq("blockId1"),
+    blocks = Seq("56d02bd2e4b0d38537b1f5fa"),
     count = 1,
     percentage_blocks = 1.2f,
   )
@@ -42,13 +42,20 @@ import scala.concurrent.Future
     topMentionResult,
   )
 
+  var fakeDcr = new DCRFake()
   lazy val liveBlogController = new LiveBlogController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
-    new DCRFake(),
+    fakeDcr,
     fakeTopMentionsService,
   )
+
+  override def beforeAll(): Unit = {
+    // This is to assure on every test we have a fresh instance of DCR
+    // and requestedBlogs is only having the calls for the relevant test
+    fakeDcr = new DCRFake()
+  }
 
   it should "return the latest blocks of a live blog" in {
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
@@ -82,7 +89,7 @@ import scala.concurrent.Future
 
   }
 
-  it should "return the latest blocks of a live blog using DCR" in {
+  "renderJson" should "return the latest blocks of a live blog using DCR" in {
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
     val fakeRequest = FakeRequest(
       GET,
@@ -239,5 +246,33 @@ import scala.concurrent.Future
 
   "getTopMentionsForFilters" should "return correct topMentionResult given a correct automatic filter query parameter" in {
     liveBlogController.getTopMentionsByTopics(path, Some("org:nhs")) should be(Some(topMentionResult))
+  }
+
+  "renderArticle" should "return the first page of filtered blog by topics" in {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"${path}",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderArticle(
+      path,
+      page = None,
+      filterKeyEvents = Some(false),
+      topics = Some("org:nhs"),
+    )(fakeRequest)
+
+    status(result) should be(200)
+    assertDcrCalledForLiveBlogWithBlocks(expectedBlocks = Seq("56d02bd2e4b0d38537b1f5fa"))
+  }
+
+  private def assertDcrCalledForLiveBlogWithBlocks(expectedBlocks: Seq[String]) = {
+    val liveblog = fakeDcr.requestedBlogs.dequeue()
+
+    liveblog match {
+      case LiveBlogPage(_, currentPage, _, _) => {
+        currentPage.currentPage.blocks.map(_.id) should be(expectedBlocks)
+      }
+      case _ => fail("DCR was not called with a LiveBlogPage")
+    }
   }
 }
