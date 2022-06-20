@@ -8,7 +8,7 @@ export const commercialLazyLoadMarginReloaded: ABTest = {
 	author: 'Simon Byford',
 	description:
 		'Once again test various margins at which ads are lazily-loaded in order to find the optimal one, this time using values between 0% and 70% of the viewport height',
-	audience: 10 / 100,
+	audience: 20 / 100,
 	audienceOffset: 10 / 100,
 	successMeasure: 'Ad ratio, viewability, and CLS remain constant or improve',
 	audienceCriteria: 'n/a',
