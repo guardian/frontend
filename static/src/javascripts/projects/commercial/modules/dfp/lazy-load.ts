@@ -9,14 +9,14 @@ import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert, refreshAdvert } from './load-advert';
 
 const lazyLoadMargins = {
+	control: '20%',
 	'variant-1': '0%',
 	'variant-2': '10%',
-	'variant-3': '20%',
-	'variant-4': '30%',
-	'variant-5': '40%',
-	'variant-6': '50%',
-	'variant-7': '60%',
-	'variant-8': '70%',
+	'variant-3': '30%',
+	'variant-4': '40%',
+	'variant-5': '50%',
+	'variant-6': '60%',
+	'variant-7': '70%',
 } as const;
 
 type LazyLoadMarginTestVariant = keyof typeof lazyLoadMargins;
