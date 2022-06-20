@@ -53,13 +53,8 @@ object LiveBlogCurrentPage {
       filterKeyEvents: Boolean,
       topMentionResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
-    val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = if (filterKeyEvents) {
-      getKeyEventsBlocks(blocks)
-    } else if (topMentionResult.isDefined) {
-      getTopMentionsBlocks(blocks, topMentionResult.get)
-    } else {
-      getStandardBlocks(blocks)
-    }
+    val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) =
+      extractFirstPageBlocks(blocks, filterKeyEvents, topMentionResult)
 
     val remainder = blockCount % pageSize
     val numPages = blockCount / pageSize
@@ -98,6 +93,20 @@ object LiveBlogCurrentPage {
     }
   }
 
+  private def extractFirstPageBlocks(
+      blocks: Blocks,
+      filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
+  ) = {
+    if (filterKeyEvents) {
+      getKeyEventsBlocks(blocks)
+    } else if (topMentionResult.isDefined) {
+      getTopMentionsBlocks(blocks, topMentionResult.get)
+    } else {
+      getStandardBlocks(blocks)
+    }
+  }
+
   private def isTopMentionBlock(topMentionsResult: TopMentionsResult)(bodyBlock: BodyBlock): Boolean = {
     topMentionsResult.blocks.contains(bodyBlock.id)
   }
@@ -114,7 +123,7 @@ object LiveBlogCurrentPage {
 
     val filteredBodyBlocks = filterBlocksByTopMentions(bodyBlocks, topMentionsResult)
 
-    (Some(filteredBodyBlocks), filteredBodyBlocks.length, filteredBodyBlocks.headOption.map(_.id))
+    (Some(filteredBodyBlocks), filteredBodyBlocks.length, filteredBodyBlocks.lastOption.map(_.id))
   }
 
   private def getStandardBlocks(blocks: Blocks): (Option[Seq[BodyBlock]], Int, Option[String]) = {
