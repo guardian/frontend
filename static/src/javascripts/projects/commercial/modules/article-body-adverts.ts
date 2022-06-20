@@ -61,7 +61,7 @@ const insertAdAtPara = (
 		})
 		.then(() => {
 			const shouldForceDisplay = ['im', 'carrot'].includes(name);
-			addSlot(ad, shouldForceDisplay);
+			addSlot(ad, shouldForceDisplay, sizes);
 		});
 };
 

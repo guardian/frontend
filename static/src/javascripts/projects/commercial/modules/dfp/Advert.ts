@@ -1,5 +1,5 @@
 import { slotSizeMappings } from '@guardian/commercial-core';
-import type { SizeMapping, SlotName } from '@guardian/commercial-core';
+import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
 import { defineSlot } from './define-slot';
 
 type Resolver = (x: boolean) => void;
@@ -55,8 +55,21 @@ class Advert {
 	hasPrebidSize = false;
 	lineItemId: number | null = null;
 
-	constructor(adSlotNode: HTMLElement) {
+	constructor(adSlotNode: HTMLElement, additionalSizes?: SizeMapping) {
 		const sizes = getAdSizeMapping(adSlotNode.dataset.name ?? '') ?? {};
+
+		if (additionalSizes) {
+			(
+				Object.entries(additionalSizes) as Array<
+					[keyof SizeMapping, AdSize[]]
+				>
+			).forEach(([breakpoint, breakPointSizes]) => {
+				sizes[breakpoint] = sizes[breakpoint] ?? [];
+
+				sizes[breakpoint]?.push(...breakPointSizes);
+			});
+		}
+
 		const slotDefinition = defineSlot(adSlotNode, sizes);
 
 		this.id = adSlotNode.id;
