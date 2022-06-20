@@ -90,12 +90,12 @@ class LiveBlogController(
       rendered: Option[Boolean],
       isLivePage: Option[Boolean],
       filterKeyEvents: Option[Boolean],
-      automaticFilter: Option[String],
+      topics: Option[String],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
       val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate, page)
-      val topMentionResult = getTopMentionsForFilters(path, automaticFilter)
+      val topMentionResult = getTopMentionsByTopics(path, topics)
 
       mapModel(path, range, filter, topMentionResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)

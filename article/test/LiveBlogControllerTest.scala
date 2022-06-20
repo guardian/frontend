@@ -64,7 +64,7 @@ import scala.concurrent.Future
       rendered = None,
       isLivePage = Some(true),
       filterKeyEvents = None,
-      automaticFilter = None,
+      topics = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -97,7 +97,7 @@ import scala.concurrent.Future
       rendered = None,
       isLivePage = Some(true),
       filterKeyEvents = None,
-      automaticFilter = None,
+      topics = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -120,7 +120,7 @@ import scala.concurrent.Future
       rendered = None,
       isLivePage = Some(true),
       filterKeyEvents = None,
-      automaticFilter = None,
+      topics = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -144,7 +144,7 @@ import scala.concurrent.Future
       rendered = None,
       isLivePage = Some(true),
       filterKeyEvents = Some(true),
-      automaticFilter = None,
+      topics = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -167,7 +167,7 @@ import scala.concurrent.Future
       rendered = None,
       isLivePage = Some(true),
       filterKeyEvents = Some(true),
-      automaticFilter = None,
+      topics = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -191,7 +191,7 @@ import scala.concurrent.Future
       rendered = None,
       isLivePage = Some(true),
       filterKeyEvents = Some(false),
-      automaticFilter = None,
+      topics = None,
     )(fakeRequest)
     status(result) should be(200)
 
