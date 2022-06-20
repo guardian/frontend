@@ -9,8 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.TopMentionEntity.TopMentionEntity
-import model.{TopMentionEntity, TopMentionsResult}
+import model.{TopMentionsResult, TopMentionsTopic, TopMentionsTopicType}
 import topmentions.{TopMentionsS3Client, TopMentionsService}
 
 import scala.concurrent.Future
@@ -32,12 +31,14 @@ import scala.concurrent.Future
   val fakeTopMentionsService = mock[TopMentionsService]
   val topMentionResult = TopMentionsResult(
     name = "nhs",
-    `type` = TopMentionEntity.Org,
+    `type` = TopMentionsTopicType.Org,
     blocks = Seq("blockId1"),
     count = 1,
     percentage_blocks = 1.2f,
   )
-  when(fakeTopMentionsService.getEntityTopMentions(path, TopMentionEntity.Org, "nhs")) thenReturn Some(
+  when(
+    fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "nhs")),
+  ) thenReturn Some(
     topMentionResult,
   )
 
@@ -229,14 +230,14 @@ import scala.concurrent.Future
   }
 
   "getTopMentionsForFilters" should "return none given no automatic filter query parameter" in {
-    liveBlogController.getTopMentionsForFilters(path, None) should be(None)
+    liveBlogController.getTopMentionsByTopics(path, None) should be(None)
   }
 
   "getTopMentionsForFilters" should "return none given an incorrect automatic filter query parameter" in {
-    liveBlogController.getTopMentionsForFilters(path, Some("orgnhs")) should be(None)
+    liveBlogController.getTopMentionsByTopics(path, Some("orgnhs")) should be(None)
   }
 
   "getTopMentionsForFilters" should "return correct topMentionResult given a correct automatic filter query parameter" in {
-    liveBlogController.getTopMentionsForFilters(path, Some("org:nhs")) should be(Some(topMentionResult))
+    liveBlogController.getTopMentionsByTopics(path, Some("org:nhs")) should be(Some(topMentionResult))
   }
 }
