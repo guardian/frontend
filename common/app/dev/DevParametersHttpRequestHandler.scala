@@ -54,7 +54,7 @@ class DevParametersHttpRequestHandler(
     "amzn_debug_mode", // set to `1` to enable A9 debugging
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
     "dcr",
-    "automaticFilter", // used for filtering the liveblog blocks
+    "topics", // used for filtering the liveblog blocks
   )
 
   val commercialParams = Seq(

@@ -19,7 +19,7 @@ case object CanonicalLiveBlog extends BlockRange {
   val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned))
 }
 
-case object FilterLiveBlog extends BlockRange {
+case object AutomaticFilterLiveBlog extends BlockRange {
   val mainBlock = "main"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"

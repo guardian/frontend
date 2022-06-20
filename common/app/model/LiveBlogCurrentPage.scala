@@ -21,8 +21,7 @@ object LiveBlogCurrentPage {
       topMentionResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
     range match {
-      case CanonicalLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, None)
-      case FilterLiveBlog    => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
+      case CanonicalLiveBlog | AutomaticFilterLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
       case PageWithBlock(isRequestedBlock) =>
         findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents, topMentionResult)
       case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents, topMentionResult)
