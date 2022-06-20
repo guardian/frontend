@@ -1,4 +1,4 @@
-import type { SizeKeys, SizeMapping } from '@guardian/commercial-core';
+import type { SizeKeys } from '@guardian/commercial-core';
 import { adSizes, createAdSize, createAdSlot } from '@guardian/commercial-core';
 import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
@@ -12,10 +12,25 @@ import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 
 const createCommentSlot = (canBeDmpu: boolean): HTMLElement => {
-	const sizes: SizeMapping = canBeDmpu
-		? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
-		: {};
-	const adSlot = createAdSlot('comments', { sizes });
+	const adSlot = createAdSlot('comments');
+
+	if (!canBeDmpu) {
+		adSlot.setAttribute(
+			'data-desktop',
+			(adSlot.getAttribute('data-desktop') ?? '')
+				.split('|')
+				.filter((size) => !['300,600', '160,600'].includes(size))
+				.join('|'),
+		);
+	}
+
+	adSlot.setAttribute(
+		'data-mobile',
+		(adSlot.getAttribute('data-mobile') ?? '')
+			.split('|')
+			.filter((size) => !['300,600', '160,600'].includes(size))
+			.join('|'),
+	);
 
 	adSlot.classList.add('js-sticky-mpu');
 	return adSlot;
