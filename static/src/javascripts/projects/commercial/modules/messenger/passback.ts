@@ -64,6 +64,7 @@ const init = (register: RegisterListener): void => {
 			 */
 			const slotElement = iframe.closest<HTMLDivElement>('.ad-slot');
 			const slotId = slotElement?.dataset.name;
+
 			if (!slotId) {
 				log(
 					'commercial',
@@ -72,9 +73,11 @@ const init = (register: RegisterListener): void => {
 				return;
 			}
 
+			const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
+
 			log(
 				'commercial',
-				`Passback: from ${source} for slot ${String(slotId)}`,
+				`Passback: from ${source} for slot ${slotIdWithPrefix}`,
 			);
 
 			const iFrameContainer =
@@ -88,12 +91,12 @@ const init = (register: RegisterListener): void => {
 				return;
 			}
 
+			/**
+			 * Keep the initial outstream iFrame so they can detect passbacks.
+			 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
+			 * In a full width column we then just need to resize the height.
+			 */
 			const updateInitialSlotPromise = fastdom.mutate(() => {
-				/**
-				 * Keep the initial outstream iFrame so they can detect passbacks.
-				 * Maintain the iFrame initial size by setting visibility hidden to prevent CLS.
-				 * In a full width column we then just need to resize the height.
-				 */
 				iFrameContainer.style.visibility = 'hidden';
 				// TODO: this should be promoted to default styles for inline1
 				slotElement.style.position = 'relative';
@@ -101,8 +104,37 @@ const init = (register: RegisterListener): void => {
 				slotElement.classList.remove('ad-slot--outstream');
 			});
 
-			void updateInitialSlotPromise.then(() => {
-				const slotIdWithPrefix = `${adSlotIdPrefix}${slotId}`;
+			/**
+			 * Create a new passback ad slot element
+			 */
+			const createNewSlotElementPromise = updateInitialSlotPromise.then(
+				() => {
+					const passbackElement = document.createElement('div');
+					passbackElement.id = `${slotIdWithPrefix}--passback`;
+					passbackElement.classList.add('ad-slot', 'js-ad-slot');
+					passbackElement.setAttribute('aria-hidden', 'true');
+					// position absolute to position over the container slot
+					passbackElement.style.position = 'absolute';
+					// account for the ad label
+					passbackElement.style.top = `${labelHeight}px`;
+					// take the full width so it will center horizontally
+					passbackElement.style.width = '100%';
+
+					return fastdom
+						.mutate(() => {
+							slotElement.insertAdjacentElement(
+								'beforeend',
+								passbackElement,
+							);
+						})
+						.then(() => passbackElement);
+				},
+			);
+
+			/**
+			 * Create and display the new passback slot
+			 */
+			void createNewSlotElementPromise.then((passbackElement) => {
 				/**
 				 * Find the initial slot object from googletag
 				 */
@@ -147,101 +179,75 @@ const init = (register: RegisterListener): void => {
 				];
 
 				/**
-				 * Create a new passback ad slot element
+				 * Register a listener to adjust the container height once the
+				 * passback has loaded. We need to do this because the passback
+				 * ad is absolutely positioned in order to not cause layout shift.
+				 * So it is taken out of normal document flow and the parent container
+				 * does not take the height of the child ad element as normal.
+				 * We set the container height by adding a listener to the googletag
+				 * slotRenderEnded event which provides the size of the loaded ad.
+				 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
 				 */
-				const passbackElement = document.createElement('div');
-				passbackElement.id = `${slotIdWithPrefix}--passback`;
-				passbackElement.classList.add('ad-slot', 'js-ad-slot');
-				passbackElement.setAttribute('aria-hidden', 'true');
-				// position absolute to position over the container slot
-				passbackElement.style.position = 'absolute';
-				// account for the ad label
-				passbackElement.style.top = `${labelHeight}px`;
-				// take the full width so it will center horizontally
-				passbackElement.style.width = '100%';
-
-				void fastdom
-					.mutate(() => {
-						slotElement.insertAdjacentElement(
-							'beforeend',
-							passbackElement,
-						);
-					})
-					.then(() => {
-						/**
-						 * Register a listener to adjust the container height once the
-						 * passback has loaded. We need to do this because the passback
-						 * ad is absolutely positioned in order to not cause layout shift.
-						 * So it is taken out of normal document flow and the parent container
-						 * does not take the height of the child ad element as normal.
-						 * We set the container height by adding a listener to the googletag
-						 * slotRenderEnded event which provides the size of the loaded ad.
-						 * https://developers.google.com/publisher-tag/reference#googletag.events.slotrenderendedevent
-						 */
-						googletag
-							.pubads()
-							.addEventListener(
-								'slotRenderEnded',
-								function (
-									event: googletag.events.SlotRenderEndedEvent,
-								) {
-									const slotId =
-										event.slot.getSlotElementId();
-									if (slotId === passbackElement.id) {
-										const size = event.size;
-										if (Array.isArray(size)) {
-											const height = size[1];
-											void fastdom.mutate(() => {
-												slotElement.style.height = `${
-													height + labelHeight
-												}px`;
-											});
-										}
-									}
-								},
-							);
-
-						/**
-						 * Define and display the new passback slot
-						 */
-						window.googletag.cmd.push(() => {
-							// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
-							const passbackSlot = googletag.defineSlot(
-								initialSlot.getAdUnitPath(),
-								[mpu, outstreamMobile, outstreamDesktop],
-								passbackElement.id,
-							);
-							if (passbackSlot) {
-								// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
-								passbackSlot.defineSizeMapping([
-									[
-										[breakpoints.phablet, 0],
-										[mpu, outstreamDesktop],
-									],
-									[
-										[breakpoints.mobile, 0],
-										[mpu, outstreamMobile],
-									],
-								]);
-								passbackSlot.addService(
-									window.googletag.pubads(),
-								);
-								passbackTargeting.forEach(([key, value]) => {
-									passbackSlot.setTargeting(key, value);
-								});
-								log(
-									'commercial',
-									'Passback: passback inline1 targeting map',
-									passbackSlot.getTargetingMap(),
-								);
-								log(
-									'commercial',
-									`Passback: from ${source} displaying slot: ${passbackElement.id}`,
-								);
-								googletag.display(passbackElement.id);
+				googletag
+					.pubads()
+					.addEventListener(
+						'slotRenderEnded',
+						function (
+							event: googletag.events.SlotRenderEndedEvent,
+						) {
+							const slotId = event.slot.getSlotElementId();
+							if (slotId === passbackElement.id) {
+								const size = event.size;
+								if (Array.isArray(size)) {
+									const height = size[1];
+									void fastdom.mutate(() => {
+										slotElement.style.height = `${
+											height + labelHeight
+										}px`;
+									});
+								}
 							}
+						},
+					);
+
+				/**
+				 * Define and display the new passback slot
+				 */
+				window.googletag.cmd.push(() => {
+					// https://developers.google.com/publisher-tag/reference#googletag.defineSlot
+					const passbackSlot = googletag.defineSlot(
+						initialSlot.getAdUnitPath(),
+						[mpu, outstreamMobile, outstreamDesktop],
+						passbackElement.id,
+					);
+					if (passbackSlot) {
+						// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
+						passbackSlot.defineSizeMapping([
+							[
+								[breakpoints.phablet, 0],
+								[mpu, outstreamDesktop],
+							],
+							[
+								[breakpoints.mobile, 0],
+								[mpu, outstreamMobile],
+							],
+						]);
+						passbackSlot.addService(window.googletag.pubads());
+						passbackTargeting.forEach(([key, value]) => {
+							passbackSlot.setTargeting(key, value);
 						});
-					});
+						log(
+							'commercial',
+							'Passback: passback inline1 targeting map',
+							passbackSlot.getTargetingMap(),
+						);
+						log(
+							'commercial',
+							`Passback: from ${source} displaying slot: ${passbackElement.id}`,
+						);
+						googletag.display(passbackElement.id);
+					}
+				});
 			});
 		});
 	});
