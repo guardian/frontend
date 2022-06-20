@@ -30,7 +30,7 @@ const buildSizeMapping = (sizes) => {
 	breakpoints
 		.filter((_) => _.name in sizes)
 		.forEach((_) => {
-			mapping.addSize([_.width, 0], sizes[_.name]);
+			mapping.addSize([_.width, 0], sizes[_.name].map((size) => ((!size[0] && !size[1]) ? 'fluid' : size)));
 		});
 
 	return mapping.build();
