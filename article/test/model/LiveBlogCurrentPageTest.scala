@@ -55,6 +55,27 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
     regular ++ keyEvents ++ pinnedBlocks ++ summaries
   }
 
+  "LiveBlogCurrentPage.apply" should "create first page given a block range of TopicsLiveBlog" in {
+    val range = TopicsLiveBlog
+    val result = LiveBlogCurrentPage.apply(
+      pageSize = 10,
+      blocks = Blocks(1, Seq(), None, Map()),
+      range,
+      filterKeyEvents = false,
+      topMentionResult = Some(
+        TopMentionsResult(
+          `type` = TopMentionsTopicType.Org,
+          name = "someName",
+          blocks = Seq(),
+          count = 0,
+          percentage_blocks = 0,
+        ),
+      ),
+    )
+
+    result.get.currentPage shouldBe (a[FirstPage])
+  }
+
   "firstPage" should "allow 1 block on one page" in {
     val result = {
       LiveBlogCurrentPage.firstPage(

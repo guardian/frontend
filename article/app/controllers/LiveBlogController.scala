@@ -63,7 +63,7 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = getTopMentionsByTopics(path, topics)
+      val topMentions = if (filter) None else getTopMentionsByTopics(path, topics)
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -75,7 +75,7 @@ class LiveBlogController(
         case None => {
           topMentions match {
             case Some(value) =>
-              renderWithRange(path, AutomaticFilterLiveBlog, filter, Some(value)) // no page param
+              renderWithRange(path, TopicsLiveBlog, filter, Some(value)) // no page param
             case None => renderWithRange(path, CanonicalLiveBlog, filter, None) // no page param
           }
         }
