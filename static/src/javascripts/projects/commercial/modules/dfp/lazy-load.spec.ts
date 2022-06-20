@@ -85,6 +85,7 @@ describe('enableLazyLoad', () => {
 		// Mock being in variant / not in test
 		(isInVariantSynchronous as jest.Mock)
 			.mockReturnValueOnce(false)
+			.mockReturnValueOnce(false)
 			.mockReturnValueOnce(true);
 		dfpEnv.lazyLoadObserve = true;
 		enableLazyLoad(testAdvert as unknown as Advert);
