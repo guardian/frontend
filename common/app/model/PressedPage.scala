@@ -97,7 +97,13 @@ case class PressedCollectionVersions(
     fullDCR: PressedCollection,
 )
 
-case class PressedPageVersions(lite: PressedPage, full: PressedPage, liteAdFree: PressedPage, fullAdFree: PressedPage, fullDCR: PressedPage)
+case class PressedPageVersions(
+    lite: PressedPage,
+    full: PressedPage,
+    liteAdFree: PressedPage,
+    fullAdFree: PressedPage,
+    fullDCR: PressedPage,
+)
 
 object PressedPageVersions {
   def fromPressedCollections(

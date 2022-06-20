@@ -366,17 +366,19 @@ trait FaciaController
             //  but it covers over the bug.)
             val liteCuratedLength = matchedCollection.liteCuratedLength match {
               case Some(n: Int) => n
-              case None => 0
+              case None         => 0
             }
             val liteBackfillLength = matchedCollection.liteBackfillLength match {
               case Some(n: Int) => n
-              case None => 0
+              case None         => 0
             }
-            val pressedContent = matchedCollection.curated.takeRight(matchedCollection.curated.length - liteCuratedLength) ++ matchedCollection.backfill.takeRight(matchedCollection.backfill.length - liteBackfillLength)
+            val pressedContent = matchedCollection.curated.takeRight(
+              matchedCollection.curated.length - liteCuratedLength,
+            ) ++ matchedCollection.backfill.takeRight(matchedCollection.backfill.length - liteBackfillLength)
             val startIndex = liteCuratedLength + liteBackfillLength
 
             // todo: Is this the right return value already, or do we need to process it?
-            remoteRenderer.getCards(ws=ws, cards=pressedContent, startIndex=startIndex)
+            remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex)
           }
 
           val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
