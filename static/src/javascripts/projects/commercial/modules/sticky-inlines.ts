@@ -1,4 +1,5 @@
 import { isUndefined } from '@guardian/libs';
+import fastdom from 'lib/fastdom-promise';
 
 /**
  * Represents an element that has some presence in the right column that we need to account for
@@ -33,10 +34,10 @@ const articleBottomBufferPx = 100;
  * Compute the distance between each winning paragraph and subsequent paragraph,
  * taking into account elements that extend into the right column
  */
-const computeStickyHeight = (
+const computeStickyHeight = async (
 	winners: HTMLElement[],
 	articleBodySelector: string,
-): number[] => {
+): Promise<number[]> => {
 	// Immersive figures can extend into the right column
 	// Therefore we have to take them into account when we can compute how far an ad can be sticky for
 	const immersiveFigures = [
@@ -45,17 +46,27 @@ const computeStickyHeight = (
 		),
 	];
 
-	const figures: RightColItem[] = immersiveFigures.map((element) => ({
-		kind: 'figure',
-		top: element.getBoundingClientRect().top,
-		element,
-	}));
+	const { figures, winningParas, articleBodyElementHeightBottom } =
+		await fastdom.measure(() => {
+			const figures: RightColItem[] = immersiveFigures.map((element) => ({
+				kind: 'figure',
+				top: element.getBoundingClientRect().top,
+				element,
+			}));
 
-	const winningParas: RightColItem[] = winners.map((element) => ({
-		kind: 'winningPara',
-		top: element.getBoundingClientRect().top,
-		element,
-	}));
+			const winningParas: RightColItem[] = winners.map((element) => ({
+				kind: 'winningPara',
+				top: element.getBoundingClientRect().top,
+				element,
+			}));
+
+			const articleBodyElementHeightBottom =
+				document
+					.querySelector<HTMLElement>(articleBodySelector)
+					?.getBoundingClientRect().bottom ?? 0;
+
+			return { figures, winningParas, articleBodyElementHeightBottom };
+		});
 
 	return (
 		// Concat the set of figures and winning paragraphs in the article
@@ -78,14 +89,6 @@ const computeStickyHeight = (
 				// In this case we want to make the sticky distance extend until the bottom of the article body,
 				// minus a small constant buffer
 				if (next === undefined) {
-					const articleBodyElement =
-						document.querySelector<HTMLElement>(
-							articleBodySelector,
-						);
-
-					const articleBodyElementHeightBottom =
-						articleBodyElement?.getBoundingClientRect().bottom ?? 0;
-
 					return (
 						articleBodyElementHeightBottom -
 						current.top -

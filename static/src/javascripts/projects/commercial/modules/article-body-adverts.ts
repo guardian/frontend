@@ -172,7 +172,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		const stickyContainerHeights =
 			includeContainer &&
 			isInVariantSynchronous(multiStickyRightAds, 'variant')
-				? computeStickyHeight(paras, articleBodySelector)
+				? await computeStickyHeight(paras, articleBodySelector)
 				: undefined;
 
 		const slots = paras
