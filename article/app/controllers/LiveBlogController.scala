@@ -63,7 +63,7 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = getTopMentionsByTopics(path, topics, filter)
+      val topMentions = getTopMentionsByTopicsAndPath(path, topics, filter)
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -351,7 +351,7 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopMentionsByTopics(blogId: String, topics: Option[String], filterKeyEvent: Boolean) = {
+  def getTopMentionsByTopicsAndPath(blogId: String, topics: Option[String], filterKeyEvent: Boolean) = {
     if (filterKeyEvent) None
     else {
       val topMentionsResult = for {

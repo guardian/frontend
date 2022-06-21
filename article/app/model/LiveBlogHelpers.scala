@@ -59,59 +59,6 @@ object LiveBlogHelpers extends GuLogging {
 
   }
 
-  def printCurrentPage(page: Option[LiveBlogCurrentPage]) = {
-    val stringBuilder = StringBuilder.newBuilder
-    if (page.isDefined) {
-      stringBuilder.append("current pages: \n")
-
-      page.get.currentPage.blocks.foreach(block => stringBuilder.append(s"block: ${block.id} \n"))
-
-      if (page.get.pagination.isDefined) {
-
-        val older = page.get.pagination.get.older
-        val oldest = page.get.pagination.get.oldest
-        val newer = page.get.pagination.get.newer
-        val newest = page.get.pagination.get.newest
-
-        if (older.isDefined) {
-          stringBuilder.append(s"older pages: length: ${older.get.blocks.length} \n")
-          older.get match {
-            case BlockPage(_, blockId, _, _) => stringBuilder.append(s"block id: ${blockId} \n")
-            case _                           => older.get.blocks.foreach(block => stringBuilder.append(s"block: ${block.id} \n"))
-          }
-
-        } else stringBuilder.append("older pages: None \n")
-
-        if (oldest.isDefined) {
-          stringBuilder.append(s"oldest pages: length: ${oldest.get.blocks.length} \n")
-          oldest.get match {
-            case BlockPage(_, blockId, _, _) => stringBuilder.append(s"block id: ${blockId} \n")
-            case _                           => oldest.get.blocks.foreach(block => stringBuilder.append(s"block: ${block.id} \n"))
-          }
-        } else stringBuilder.append("oldest pages: None \n")
-
-        if (newer.isDefined) {
-          stringBuilder.append(s"newer pages: length: ${newer.get.blocks.length} \n")
-
-          newer.get match {
-            case BlockPage(_, blockId, _, _) => stringBuilder.append(s"block id: ${blockId} \n")
-            case _                           => newer.get.blocks.foreach(block => stringBuilder.append(s"block: ${block.id} \n"))
-          }
-        } else stringBuilder.append("newer pages: None \n")
-
-        if (newest.isDefined) {
-          stringBuilder.append(s"newest pages: length: ${newest.get.blocks.length} \n")
-          newest.get match {
-            case BlockPage(_, blockId, _, _) => stringBuilder.append(s"block id: ${blockId} \n")
-            case _                           => newest.get.blocks.foreach(block => stringBuilder.append(s"block: ${block.id} \n"))
-          }
-        } else stringBuilder.append("newest pages: None \n")
-      } else stringBuilder.append("pagination pages: None \n")
-    }
-
-    log.info(stringBuilder.toString())
-  }
-
   def createLiveBlogModel(
       liveBlog: Article,
       response: ItemResponse,
@@ -132,9 +79,6 @@ object LiveBlogHelpers extends GuLogging {
           topMentionResult,
         )
       } getOrElse None
-
-    if (topMentionResult.isDefined) log.info(s"topMentionResult count: ${topMentionResult.get.count}")
-    printCurrentPage(liveBlogPageModel)
 
     liveBlogPageModel
       .map { pageModel =>
