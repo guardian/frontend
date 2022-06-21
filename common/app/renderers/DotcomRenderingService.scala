@@ -22,7 +22,7 @@ import model.{
   NoCache,
   PageWithStoryPackage,
   PressedPage,
-  TopMentionFilter,
+  TopicWithCount,
 }
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -141,7 +141,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
-      topMentionFilters: Option[Seq[TopMentionFilter]] = None,
+      topicList: Option[Seq[TopicWithCount]] = None,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
@@ -152,7 +152,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           pageType,
           filterKeyEvents,
           forceLive,
-          topMentionFilters,
+          topicList,
         )
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
