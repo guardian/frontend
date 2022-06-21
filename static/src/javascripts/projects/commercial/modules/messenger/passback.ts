@@ -127,14 +127,14 @@ const init = (register: RegisterListener): void => {
 								passbackElement,
 							);
 						})
-						.then(() => passbackElement);
+						.then(() => passbackElement.id);
 				},
 			);
 
 			/**
 			 * Create and display the new passback slot
 			 */
-			void createNewSlotElementPromise.then((passbackElement) => {
+			void createNewSlotElementPromise.then((passbackElementId) => {
 				/**
 				 * Find the initial slot object from googletag
 				 */
@@ -196,7 +196,7 @@ const init = (register: RegisterListener): void => {
 							event: googletag.events.SlotRenderEndedEvent,
 						) {
 							const slotId = event.slot.getSlotElementId();
-							if (slotId === passbackElement.id) {
+							if (slotId === passbackElementId) {
 								const size = event.size;
 								if (Array.isArray(size)) {
 									const height = size[1];
@@ -218,7 +218,7 @@ const init = (register: RegisterListener): void => {
 					const passbackSlot = googletag.defineSlot(
 						initialSlot.getAdUnitPath(),
 						[mpu, outstreamMobile, outstreamDesktop],
-						passbackElement.id,
+						passbackElementId,
 					);
 					if (passbackSlot) {
 						// https://developers.google.com/publisher-tag/guides/ad-sizes#responsive_ads
@@ -243,9 +243,9 @@ const init = (register: RegisterListener): void => {
 						);
 						log(
 							'commercial',
-							`Passback: from ${source} displaying slot: ${passbackElement.id}`,
+							`Passback: from ${source} displaying slot: ${passbackElementId}`,
 						);
-						googletag.display(passbackElement.id);
+						googletag.display(passbackElementId);
 					}
 				});
 			});
