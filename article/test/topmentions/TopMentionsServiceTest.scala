@@ -2,7 +2,7 @@ package topmentions
 
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ItemResponse
-import model.{TopicsDetails, TopMentionsResult, TopMentionsTopic, TopMentionsTopicType}
+import model.{TopicsDetails, TopicResult, TopMentionsTopic, TopMentionsTopicType}
 import model.TopMentionsTopicType.TopMentionsTopicType
 import org.scalatest.{BeforeAndAfterAll, GivenWhenThen}
 import org.scalatest.featurespec.AnyFeatureSpec
@@ -24,7 +24,7 @@ class TopMentionsServiceTest
 
   val fakeClient = mock[TopMentionsS3Client]
   val topMentionResult =
-    TopMentionsResult(
+    TopicResult(
       name = "name1",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("blockId1"),

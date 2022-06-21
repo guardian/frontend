@@ -40,7 +40,7 @@ object LiveBlogHelpers extends GuLogging {
       liveBlog: Article,
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -64,7 +64,7 @@ object LiveBlogHelpers extends GuLogging {
       response: ItemResponse,
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[TopicResult],
   ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10

@@ -18,7 +18,7 @@ object LiveBlogCurrentPage {
       blocks: Blocks,
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
     range match {
       case CanonicalLiveBlog | TopicsLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
@@ -50,7 +50,7 @@ object LiveBlogCurrentPage {
       pageSize: Int,
       blocks: Blocks,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
     val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) =
       extractFirstPageBlocks(blocks, filterKeyEvents, topMentionResult)
@@ -95,7 +95,7 @@ object LiveBlogCurrentPage {
   private def extractFirstPageBlocks(
       blocks: Blocks,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[TopicResult],
   ) = {
     if (filterKeyEvents) {
       getKeyEventsBlocks(blocks)
@@ -106,17 +106,17 @@ object LiveBlogCurrentPage {
     }
   }
 
-  private def isTopMentionBlock(topMentionsResult: TopMentionsResult)(bodyBlock: BodyBlock): Boolean = {
+  private def isTopMentionBlock(topMentionsResult: TopicResult)(bodyBlock: BodyBlock): Boolean = {
     topMentionsResult.blocks.contains(bodyBlock.id)
   }
 
-  private def filterBlocksByTopMentions(blocks: Seq[BodyBlock], topMentionsResult: TopMentionsResult) = {
+  private def filterBlocksByTopMentions(blocks: Seq[BodyBlock], topMentionsResult: TopicResult) = {
     blocks.filter(isTopMentionBlock(topMentionsResult)).sortBy(_.publishedCreatedTimestamp).reverse
   }
 
   private def getTopMentionsBlocks(
       blocks: Blocks,
-      topMentionsResult: TopMentionsResult,
+      topMentionsResult: TopicResult,
   ): (Option[Seq[BodyBlock]], Int, Option[String]) = {
     val bodyBlocks = blocks.body
 
@@ -161,7 +161,7 @@ object LiveBlogCurrentPage {
       blocks: Seq[BodyBlock],
       isRequestedBlock: String,
       filterKeyEvents: Boolean,
-      topMentionsResult: Option[TopMentionsResult],
+      topMentionsResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
     val pinnedBlock = blocks.find(_.attributes.pinned).map(renamePinnedBlock)
     val filteredBlocks = applyFilters(blocks, filterKeyEvents, topMentionsResult)
@@ -214,7 +214,7 @@ object LiveBlogCurrentPage {
   private def applyFilters(
       blocks: Seq[BodyBlock],
       filterKeyEvents: Boolean,
-      topMentionsResult: Option[TopMentionsResult],
+      topMentionsResult: Option[TopicResult],
   ) = {
     if (filterKeyEvents) {
       blocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)

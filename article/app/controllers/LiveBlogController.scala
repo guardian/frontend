@@ -114,7 +114,7 @@ class LiveBlogController(
       path: String,
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[TopicResult],
       topics: Option[Seq[TopicWithCount]],
   )(implicit
       request: RequestHeader,
@@ -318,7 +318,7 @@ class LiveBlogController(
       path: String,
       range: BlockRange,
       filterKeyEvents: Boolean = false,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[TopicResult],
   )(
       render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
@@ -335,7 +335,7 @@ class LiveBlogController(
   private[this] def responseToModelOrResult(
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[TopicResult],
   )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
