@@ -28,7 +28,7 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
     topMentions.get().flatMap(_.get(blogId))
   }
 
-  def getTopicList(blogId: String): Option[Seq[TopicWithCount]] = {
+  def getTopics(blogId: String): Option[Seq[TopicWithCount]] = {
     getBlogTopMentions(blogId).map(mentions =>
       mentions.results.map(mention => TopicWithCount(mention.`type`, mention.name, mention.count)),
     )

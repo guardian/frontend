@@ -58,20 +58,20 @@ class LiveBlogController(
       path: String,
       page: Option[String] = None,
       filterKeyEvents: Option[Boolean],
-      topics: Option[String],
+      topicsQuery: Option[String],
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = getTopMentionsByTopics(path, topics)
-
+      val topMentions = getTopMentionsByTopics(path, topicsQuery)
+      val topics = topMentionsService.getTopics(path)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter, topMentions) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter, topMentions, topics) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentions) // no page param
+        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentions, topics) // no page param
       }
     }
   }
@@ -108,6 +108,7 @@ class LiveBlogController(
       range: BlockRange,
       filterKeyEvents: Boolean,
       topMentionResult: Option[TopMentionsResult],
+      topics: Option[Seq[TopicWithCount]],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -140,7 +141,6 @@ class LiveBlogController(
               DotcomponentsLogger.logger
                 .logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
-              val topicList = topMentionsService.getTopicList(path)
               remoteRenderer.getArticle(
                 ws,
                 blog,
@@ -148,7 +148,7 @@ class LiveBlogController(
                 pageType,
                 filterKeyEvents,
                 request.forceLive,
-                topicList,
+                topics,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)

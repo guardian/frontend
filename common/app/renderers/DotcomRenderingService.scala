@@ -141,7 +141,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
-      topicList: Option[Seq[TopicWithCount]] = None,
+      topics: Option[Seq[TopicWithCount]] = None,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
@@ -152,7 +152,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           pageType,
           filterKeyEvents,
           forceLive,
-          topicList,
+          topics,
         )
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
