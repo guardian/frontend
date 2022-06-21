@@ -30,14 +30,14 @@ import scala.concurrent.Future
 
   val fakeTopMentionsService = mock[TopMentionsService]
   val topMentionResult = TopMentionsResult(
-    name = "nhs",
+    name = "Fifa",
     `type` = TopMentionsTopicType.Org,
     blocks = Seq("56d02bd2e4b0d38537b1f5fa"),
     count = 1,
     percentage_blocks = 1.2f,
   )
   when(
-    fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "nhs")),
+    fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "Fifa")),
   ) thenReturn Some(
     topMentionResult,
   )
@@ -236,19 +236,23 @@ import scala.concurrent.Future
     liveBlogController.shouldFilter(None) should be(false)
   }
 
-  "getTopMentionsForFilters" should "return none given no automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopics(path, None) should be(None)
+  "getTopMentionsForFilters" should "returns none given key event filter is switched on" in {
+    liveBlogController.getTopMentionsByTopics(path, Some("org:Fifa"), true) should be(None)
   }
 
-  "getTopMentionsForFilters" should "return none given an incorrect automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopics(path, Some("orgnhs")) should be(None)
+  "getTopMentionsForFilters" should "returns none given no automatic filter query parameter" in {
+    liveBlogController.getTopMentionsByTopics(path, None, false) should be(None)
   }
 
-  "getTopMentionsForFilters" should "return correct topMentionResult given a correct automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopics(path, Some("org:nhs")) should be(Some(topMentionResult))
+  "getTopMentionsForFilters" should "returns none given an incorrect automatic filter query parameter" in {
+    liveBlogController.getTopMentionsByTopics(path, Some("orgFifa"), false) should be(None)
   }
 
-  "renderArticle" should "return the first page of filtered blog by topics" in {
+  "getTopMentionsForFilters" should "returns correct topMentionResult given a correct automatic filter query parameter" in {
+    liveBlogController.getTopMentionsByTopics(path, Some("org:Fifa"), false) should be(Some(topMentionResult))
+  }
+
+  "renderArticle" should "returns the first page of filtered blog by topics" in {
     val fakeRequest = FakeRequest(
       GET,
       s"${path}",
@@ -258,7 +262,7 @@ import scala.concurrent.Future
       path,
       page = None,
       filterKeyEvents = Some(false),
-      topics = Some("org:nhs"),
+      topics = Some("org:Fifa"),
     )(fakeRequest)
 
     status(result) should be(200)
