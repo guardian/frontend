@@ -3,6 +3,7 @@ import { log } from '@guardian/libs';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
+import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from '../projects/commercial/modules/ad-verification/prepare-ad-verification';
 import { init as initArticleAsideAdverts } from '../projects/commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
@@ -46,6 +47,7 @@ const commercialBaseModules: Modules = [];
 
 // remaining modules not necessary to load an ad
 const commercialExtraModules: Modules = [
+	['cm-adFreeSlotRemoveFronts', adFreeSlotRemove],
 	['cm-manageAdFreeCookieOnConsentChange', manageAdFreeCookieOnConsentChange],
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
@@ -91,9 +93,10 @@ const loadFrontendBundle = async (): Promise<void> => {
 		'commercial/commercial-metrics'
 	);
 
-	commercialExtraModules.push(
-		['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
-	);
+	commercialExtraModules.push([
+		'cm-commercial-metrics',
+		commercialMetrics.init,
+	]);
 
 	return;
 };

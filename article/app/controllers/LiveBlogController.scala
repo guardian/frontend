@@ -1,7 +1,6 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
-import com.gu.contentapi.client.utils.format.{CulturePillar, LifestylePillar, NewsPillar, SportPillar}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
@@ -13,7 +12,6 @@ import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.{ApplicationContext, CanonicalLiveBlog, _}
-import org.joda.time.{DateTime, DateTimeZone}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -56,17 +54,24 @@ class LiveBlogController(
     }
   }
 
-  def renderArticle(path: String, page: Option[String] = None, filterKeyEvents: Option[Boolean]): Action[AnyContent] = {
+  def renderArticle(
+      path: String,
+      page: Option[String] = None,
+      filterKeyEvents: Option[Boolean],
+      topics: Option[String],
+  ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
+      val topMentions = getTopMentionsByTopics(path, topics)
+
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter, topMentions) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog, filter) // no page param
+        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentions) // no page param
       }
     }
   }
@@ -98,7 +103,12 @@ class LiveBlogController(
     }
   }
 
-  private[this] def renderWithRange(path: String, range: BlockRange, filterKeyEvents: Boolean)(implicit
+  private[this] def renderWithRange(
+      path: String,
+      range: BlockRange,
+      filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
+  )(implicit
       request: RequestHeader,
   ): Future[Result] = {
     mapModel(path, range, filterKeyEvents) { (page, blocks) =>
@@ -341,5 +351,19 @@ class LiveBlogController(
 
   def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
     filterKeyEvents.getOrElse(false)
+  }
+
+  def getTopMentionsByTopics(blogId: String, topics: Option[String]) = {
+    val topMentionsResult = for {
+      topMentionTopic <- TopMentionsTopic.fromString(topics)
+      topMentions <- topMentionsService.getTopMentionsByTopic(blogId, topMentionTopic)
+    } yield topMentions
+
+    topMentionsResult match {
+      case Some(_) => log.info(s"top mention result was successfully retrieved for ${topics.get}")
+      case None    => if (topics.isDefined) log.warn(s"top mention result couldn't be retrieved for ${topics.get}")
+    }
+
+    topMentionsResult
   }
 }

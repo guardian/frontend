@@ -34,4 +34,13 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  Switch(
+    ABTests,
+    "ab-commercial-lazy-load-margin-reloaded",
+    "Test various margins at which ads are lazily-loaded in order to find the optimal one",
+    owners = Seq(Owner.withGithub("simonbyford")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 7, 11)),
+    exposeClientSide = true,
+  )
 }

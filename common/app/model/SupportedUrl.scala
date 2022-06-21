@@ -13,7 +13,11 @@ object SupportedUrl {
 
   def fromFaciaContent(fc: PressedContent): String =
     fc match {
-      case curatedContent: CuratedContent => s"/${curatedContent.properties.href.getOrElse(fc.card.id)}"
+      case curatedContent: CuratedContent =>
+        s"/${curatedContent.properties.webUrl
+          .map(_.replaceFirst("^https?://www.theguardian.com/", ""))
+          .orElse(curatedContent.properties.href)
+          .getOrElse(fc.card.id)}"
       case supportingCuratedContent: SupportingCuratedContent =>
         s"/${supportingCuratedContent.properties.href.getOrElse(fc.card.id)}"
       case linkSnap: LinkSnap => linkSnap.properties.href.getOrElse(linkSnap.card.id)

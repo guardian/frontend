@@ -67,13 +67,17 @@
   "../projects/common/modules/analytics/shouldCaptureMetrics.ts"
  ],
  "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
+ "../projects/commercial/modules/ad-free-slot-remove.ts": [
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
+  "../projects/commercial/modules/remove-slots.ts",
+  "../projects/common/modules/commercial/commercial-features.ts"
+ ],
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
-  "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/analytics/forceSendMetrics.ts"
+  "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/article-aside-adverts.ts": [
   "../lib/$$.ts",
@@ -198,7 +202,8 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts"
+  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts"
  ],
  "../projects/commercial/modules/dfp/load-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -551,7 +556,6 @@
  "../projects/commercial/sentinel.ts": [
   "../lib/config.d.ts"
  ],
- "../projects/common/modules/analytics/forceSendMetrics.ts": [],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
   "../lib/config.d.ts",
@@ -563,7 +567,8 @@
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts"
+  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
@@ -648,6 +653,7 @@
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -674,6 +680,10 @@
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
  "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
@@ -718,6 +728,7 @@
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
   "../projects/commercial/commercial-metrics.ts",
+  "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
   "../projects/commercial/modules/article-aside-adverts.ts",
   "../projects/commercial/modules/article-body-adverts.ts",
