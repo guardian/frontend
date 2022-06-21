@@ -26,11 +26,11 @@ class TopMentionsModelTest extends AnyFlatSpec with Matchers {
 
   it should "be case insensitive on topic type" in {
     val topics = Seq(
-      TestCase("ORG:someEntityValue", TopMentionsTopic(TopMentionsTopicType.Org, "someEntityValue")),
-      TestCase("Org:someEntityValue", TopMentionsTopic(TopMentionsTopicType.Org, "someEntityValue")),
-      TestCase("Product:someEntityValue", TopMentionsTopic(TopMentionsTopicType.Product, "someEntityValue")),
-      TestCase("PRODUCT:someEntityValue", TopMentionsTopic(TopMentionsTopicType.Product, "someEntityValue")),
-      TestCase("person:someEntityValue", TopMentionsTopic(TopMentionsTopicType.Person, "someEntityValue")),
+      TestCase("ORG:someEntityValue", TopMentionsTopic(TopicType.Org, "someEntityValue")),
+      TestCase("Org:someEntityValue", TopMentionsTopic(TopicType.Org, "someEntityValue")),
+      TestCase("Product:someEntityValue", TopMentionsTopic(TopicType.Product, "someEntityValue")),
+      TestCase("PRODUCT:someEntityValue", TopMentionsTopic(TopicType.Product, "someEntityValue")),
+      TestCase("person:someEntityValue", TopMentionsTopic(TopicType.Person, "someEntityValue")),
     )
     topics foreach { topic =>
       val result = TopMentionsTopic.fromString(Some(topic.topic))
