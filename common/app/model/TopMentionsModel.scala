@@ -4,16 +4,6 @@ import common.GuLogging
 import model.TopMentionsTopicType.TopMentionsTopicType
 import play.api.libs.json.{Format, Json}
 
-case class TopicWithCount(
-    name: String,
-    `type`: TopMentionEntity,
-    count: Int,
-)
-
-object TopicWithCount {
-  implicit val TopicWithCountJf: Format[TopicWithCount] = Json.format[TopicWithCount]
-}
-
 case class TopMentionsResult(
     name: String,
     `type`: TopMentionsTopicType,
@@ -30,7 +20,23 @@ object TopMentionsResponse {
   implicit val TopMentionsDetailsJf: Format[TopMentionsDetails] = Json.format[TopMentionsDetails]
 }
 
-case class TopMentionsTopic(`type`: TopMentionsTopicType, value: String)
+trait Topic {
+  def `type`: TopMentionsTopicType
+  def value: String
+}
+
+case class TopicWithCount(
+    `type`: TopMentionsTopicType,
+    value: String,
+    count: Int,
+) extends Topic
+
+object TopicWithCount {
+  implicit val TopicWithCountJf: Format[TopicWithCount] = Json.format[TopicWithCount]
+}
+
+case class TopMentionsTopic(`type`: TopMentionsTopicType, value: String) extends Topic
+
 object TopMentionsTopic extends GuLogging {
 
   implicit val TopMentionsTopicJf: Format[TopMentionsTopic] = Json.format[TopMentionsTopic]
