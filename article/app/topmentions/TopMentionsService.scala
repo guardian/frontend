@@ -1,7 +1,7 @@
 package topmentions
 
 import common.{Box, GuLogging}
-import model.{TopMentionFilter, TopMentionsDetails}
+import model.{TopicWithCount, TopMentionsDetails}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -25,9 +25,9 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
     topMentions.get().flatMap(_.get(blogId))
   }
 
-  def getTopMentionFilters(blogId: String): Option[Seq[TopMentionFilter]] = {
+  def getTopicList(blogId: String): Option[Seq[TopicWithCount]] = {
     getTopMention(blogId).map(mentions =>
-      mentions.results.map(mention => TopMentionFilter(mention.name, mention.`type`, mention.count)),
+      mentions.results.map(mention => TopicWithCount(mention.name, mention.`type`, mention.count)),
     )
   }
 

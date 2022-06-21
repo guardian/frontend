@@ -130,7 +130,7 @@ class LiveBlogController(
               DotcomponentsLogger.logger
                 .logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
-              val topMentionFilters = topMentionsService.getTopMentionFilters(path)
+              val topicList = topMentionsService.getTopicList(path)
               remoteRenderer.getArticle(
                 ws,
                 blog,
@@ -138,7 +138,7 @@ class LiveBlogController(
                 pageType,
                 filterKeyEvents,
                 request.forceLive,
-                topMentionFilters,
+                topicList,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
