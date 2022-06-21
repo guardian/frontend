@@ -8,7 +8,7 @@ import type { RegisterListener } from '../messenger';
 
 type PassbackMessagePayload = { source: string };
 
-const labelHeight = 24;
+const adLabelHeight = 24;
 
 const mpu: [number, number] = [adSizes.mpu.width, adSizes.mpu.height];
 const outstreamDesktop: [number, number] = [
@@ -116,7 +116,7 @@ const init = (register: RegisterListener): void => {
 					// position absolute to position over the container slot
 					passbackElement.style.position = 'absolute';
 					// account for the ad label
-					passbackElement.style.top = `${labelHeight}px`;
+					passbackElement.style.top = `${adLabelHeight}px`;
 					// take the full width so it will center horizontally
 					passbackElement.style.width = '100%';
 
@@ -199,11 +199,20 @@ const init = (register: RegisterListener): void => {
 							if (slotId === passbackElementId) {
 								const size = event.size;
 								if (Array.isArray(size)) {
-									const height = size[1];
+									const adHeight = size[1];
+									log(
+										'commercial',
+										`Passback: ad height is ${adHeight}`,
+									);
 									void fastdom.mutate(() => {
-										slotElement.style.height = `${
-											height + labelHeight
+										const slotHeight = `${
+											adHeight + adLabelHeight
 										}px`;
+										log(
+											'commercial',
+											`Passback: setting height of passback slot to ${slotHeight}`,
+										);
+										slotElement.style.height = slotHeight;
 									});
 								}
 							}
