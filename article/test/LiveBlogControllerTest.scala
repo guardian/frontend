@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopicResult, TopMentionsTopic, TopicType, TopicsLiveBlog}
+import model.{LiveBlogPage, TopicResult, Topic, TopicType, TopicsLiveBlog}
 import topmentions.{TopMentionsS3Client, TopMentionsService}
 
 import scala.concurrent.Future
@@ -37,7 +37,7 @@ import scala.concurrent.Future
     percentage_blocks = 1.2f,
   )
   when(
-    fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopicType.Org, "Fifa")),
+    fakeTopMentionsService.getTopMentionsByTopic(path, Topic(TopicType.Org, "Fifa")),
   ) thenReturn Some(
     topMentionResult,
   )

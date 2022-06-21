@@ -371,7 +371,7 @@ class LiveBlogController(
     if (filterKeyEvent) None
     else {
       val topMentionsResult = for {
-        topMentionTopic <- TopMentionsTopic.fromString(topics)
+        topMentionTopic <- Topic.fromString(topics)
         topMentions <- topMentionsService.getTopMentionsByTopic(blogId, topMentionTopic)
       } yield topMentions
 

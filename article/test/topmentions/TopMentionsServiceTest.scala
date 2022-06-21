@@ -2,7 +2,7 @@ package topmentions
 
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ItemResponse
-import model.{TopicsDetails, TopicResult, TopMentionsTopic, TopicType}
+import model.{TopicsDetails, TopicResult, Topic, TopicType}
 import model.TopicType.TopicType
 import org.scalatest.{BeforeAndAfterAll, GivenWhenThen}
 import org.scalatest.featurespec.AnyFeatureSpec
@@ -79,7 +79,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopMentionsService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
 
-    val result = topMentionService.getTopMentionsByTopic("key1", TopMentionsTopic(TopicType.Org, "name1"))
+    val result = topMentionService.getTopMentionsByTopic("key1", Topic(TopicType.Org, "name1"))
 
     result.get should equal(topMentionResult)
   }
@@ -91,7 +91,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopMentionsService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
 
-    val result = topMentionService.getTopMentionsByTopic("key1", TopMentionsTopic(TopicType.Org, "NAME1"))
+    val result = topMentionService.getTopMentionsByTopic("key1", Topic(TopicType.Org, "NAME1"))
 
     result should equal(None)
   }
@@ -103,7 +103,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopMentionsService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
 
-    val result = topMentionService.getTopMentionsByTopic("key2", TopMentionsTopic(TopicType.Org, "name1"))
+    val result = topMentionService.getTopMentionsByTopic("key2", Topic(TopicType.Org, "name1"))
 
     result should equal(None)
   }
@@ -115,7 +115,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopMentionsService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
 
-    val result = topMentionService.getTopMentionsByTopic("key1", TopMentionsTopic(TopicType.Person, "Boris"))
+    val result = topMentionService.getTopMentionsByTopic("key1", Topic(TopicType.Person, "Boris"))
 
     result should equal(None)
   }
@@ -128,7 +128,7 @@ class TopMentionsServiceTest
     val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
 
     val result =
-      topMentionService.getTopMentionsByTopic("key1", TopMentionsTopic(TopicType.Org, "someRandomOrg"))
+      topMentionService.getTopMentionsByTopic("key1", Topic(TopicType.Org, "someRandomOrg"))
 
     result should equal(None)
   }
