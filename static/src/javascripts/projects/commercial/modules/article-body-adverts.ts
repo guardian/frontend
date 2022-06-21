@@ -23,8 +23,8 @@ type SlotName = Parameters<typeof createAdSlot>[0];
 
 type ContainerOptions = {
 	sticky?: boolean;
-	heightPx?: number;
 	enableDebug?: boolean;
+	className?: string;
 };
 
 const sfdebug = getUrlVars().sfdebug;
@@ -41,14 +41,12 @@ const wrapSlotInContainer = (
 	options: ContainerOptions = {},
 ) => {
 	const container = document.createElement('div');
-	container.className = 'ad-slot-container ad-slot--offset-right';
+	container.className = `ad-slot-container ad-slot--offset-right ${
+		options.className ?? ''
+	}`;
 
 	if (options.sticky) {
 		ad.style.cssText += 'position: sticky; top: 0;';
-	}
-
-	if (options.heightPx) {
-		container.style.cssText += `height: ${options.heightPx}px;`;
 	}
 
 	if (options.enableDebug) {
@@ -187,7 +185,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				const containerOptions = stickyContainerHeights
 					? {
 							sticky: true,
-							heightPx: Math.max(stickyContainerHeights[i], 0),
+							className: `ad-slot-container--${i}`,
 							enableDebug,
 					  }
 					: undefined;
