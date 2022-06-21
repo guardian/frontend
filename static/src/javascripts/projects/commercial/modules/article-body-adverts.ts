@@ -17,7 +17,7 @@ import type {
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
 import { trackAdRender } from './dfp/track-ad-render';
-import { computeStickyHeights } from './sticky-inlines';
+import { computeStickyHeights, insertHeightStyles } from './sticky-inlines';
 
 type SlotName = Parameters<typeof createAdSlot>[0];
 
@@ -35,6 +35,18 @@ const adSlotClassSelectorSizes = {
 	minAbove: 500,
 	minBelow: 500,
 };
+
+/**
+ * Get the classname for an ad slot container
+ *
+ * We add 2 to the index because these are always ads added in the second pass.
+ *
+ * e.g. the 0th container inserted in pass 2 becomes `ad-slot-container--2` to match `inline2`
+ *
+ * @param i Index of winning paragraph
+ * @returns The classname for container
+ */
+const getContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
 
 const wrapSlotInContainer = (
 	ad: HTMLElement,
@@ -167,11 +179,24 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 		// Make ads sticky in containers if using containers and in sticky test variant
 		// Compute the height of containers in which ads will remain sticky
-		const stickyContainerHeights =
+		const includeStickyContainers =
 			includeContainer &&
-			isInVariantSynchronous(multiStickyRightAds, 'variant')
-				? await computeStickyHeights(paras, articleBodySelector)
-				: undefined;
+			isInVariantSynchronous(multiStickyRightAds, 'variant');
+
+		if (includeStickyContainers) {
+			const stickyContainerHeights = await computeStickyHeights(
+				paras,
+				articleBodySelector,
+			);
+
+			const heightMapping: Array<[string, number]> =
+				stickyContainerHeights.map((height, i) => [
+					getContainerClassname(i),
+					height,
+				]);
+
+			insertHeightStyles(heightMapping);
+		}
 
 		const slots = paras
 			.slice(0, isInline1 ? 1 : paras.length)
@@ -182,10 +207,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					para.style.cssText += 'border: thick solid green;';
 				}
 
-				const containerOptions = stickyContainerHeights
+				const containerOptions = includeStickyContainers
 					? {
 							sticky: true,
-							className: `ad-slot-container--${i}`,
+							className: getContainerClassname(i),
 							enableDebug,
 					  }
 					: undefined;
