@@ -77,7 +77,7 @@ const init = (register: RegisterListener): void => {
 
 			log(
 				'commercial',
-				`Passback: from ${source} for slot ${slotIdWithPrefix}`,
+				`Passback: from source '${source}' for slot '${slotIdWithPrefix}'`,
 			);
 
 			const iFrameContainer =
@@ -252,7 +252,7 @@ const init = (register: RegisterListener): void => {
 						);
 						log(
 							'commercial',
-							`Passback: from ${source} displaying slot: ${passbackElementId}`,
+							`Passback: displaying slot '${passbackElementId}'`,
 						);
 						googletag.display(passbackElementId);
 					}
