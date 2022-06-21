@@ -13,10 +13,10 @@ case class TopicResult(
 )
 case class TopicsDetails(entity_types: Seq[TopicType], results: Seq[TopicResult], model: String)
 
-case class TopMentionJsonParseException(message: String) extends Exception(message)
+case class TopicJsonParseException(message: String) extends Exception(message)
 
 object TopicsDetails {
-  implicit val TopMentionsResultJf: Format[TopicResult] = Json.format[TopicResult]
+  implicit val TopicResultJf: Format[TopicResult] = Json.format[TopicResult]
   implicit val TopicsDetailsJf: Format[TopicsDetails] = Json.format[TopicsDetails]
 }
 
@@ -39,7 +39,7 @@ case class Topic(`type`: TopicType, value: String) extends TopicBase
 
 object Topic extends GuLogging {
 
-  implicit val TopMentionsTopicJf: Format[Topic] = Json.format[Topic]
+  implicit val TopicJf: Format[Topic] = Json.format[Topic]
 
   def fromString(topic: Option[String]): Option[Topic] = {
     topic.flatMap { f =>

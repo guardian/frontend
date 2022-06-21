@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.model.{GetObjectRequest, S3Object}
 import com.amazonaws.util.IOUtils
 import common.GuLogging
 import conf.Configuration
-import model.{TopMentionJsonParseException, TopicsDetails}
+import model.{TopicJsonParseException, TopicsDetails}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import services.S3
 import topmentions.S3ObjectImplicits.RichS3Object
@@ -81,7 +81,7 @@ object S3ObjectImplicits {
           val errorPaths = errors.map { error => error._1.toString() }.mkString(",")
           log.error(s"Error parsing topMentionResponse from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
           Failure(
-            TopMentionJsonParseException(
+            TopicJsonParseException(
               s"could not parse S3 TopMentionsDetails json. Errors paths(s): $errors",
             ),
           )
