@@ -72,7 +72,6 @@ const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
 	if (!containsDMPU(ad) && ad.sizes.desktop) {
 		const extraSizes: SizeKeys[] = ['halfPage', 'skyscraper'];
 		ad.sizes.desktop.push(
-			// TODO: add getTuple method to commercial-core
 			...extraSizes.map((size) => {
 				const { width, height } = adSizes[size];
 				const tuple = createAdSize(width, height);
@@ -80,7 +79,7 @@ const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
 			}),
 		);
 		const sizeMapping = ad.sizes.desktop.map((size) =>
-			!size.width && !size.width
+			!size.width && !size.height
 				? 'fluid'
 				: (size as googletag.SingleSize),
 		);

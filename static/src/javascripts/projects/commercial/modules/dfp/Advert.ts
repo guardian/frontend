@@ -15,7 +15,7 @@ type Timings = {
 };
 
 const isSlotName = (slotName: string): slotName is SlotName => {
-	return !!(slotName in slotSizeMappings);
+	return slotName in slotSizeMappings;
 };
 
 const getAdSizeMapping = (name: string): SizeMapping | undefined => {
