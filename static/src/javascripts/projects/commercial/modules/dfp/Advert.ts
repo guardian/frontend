@@ -36,7 +36,7 @@ class Advert {
 	isRendering = false;
 	isLoaded = false;
 	isRendered = false;
-	shouldRefresh = true;
+	shouldRefresh = false;
 	whenLoaded: Promise<boolean>;
 	whenLoadedResolver: Resolver | null = null;
 	whenRendered: Promise<boolean>;
