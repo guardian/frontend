@@ -1,7 +1,7 @@
 import { adSizes } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { breakpoints } from '@guardian/source-foundations';
-import { getBreakpoint } from 'lib/detect';
+import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import fastdom from '../../../../lib/fastdom-promise';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
 import type { RegisterListener } from '../messenger';
@@ -26,7 +26,7 @@ const getValuesForKeys = (
 ): Array<[string, string[]]> => keys.map((key) => [key, valueFn(key)]);
 
 const getPassbackValue = (source: string): string => {
-	const isMobile = (getBreakpoint() as string).startsWith('mobile');
+	const isMobile = getBreakpoint(getViewport().width) === 'mobile';
 	// e.g. 'teadsdesktop' or 'teadsmobile';
 	return `${source}${isMobile ? 'mobile' : 'desktop'}`;
 };
