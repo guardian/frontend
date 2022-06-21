@@ -352,9 +352,9 @@ trait FaciaController
 
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] =
     Action.async { implicit request =>
-      frontJsonFapi.get(path, fullDCRRequestType).flatMap {
-        case Some(pressedPage) =>
-          if (request.forceDCR) {
+      if (request.forceDCR) {
+        frontJsonFapi.get(path, fullDCRRequestType).flatMap {
+          case Some(pressedPage) =>
             // TODO: Use Option?
             // TODO: Do we need to add anything else?
 
@@ -364,14 +364,9 @@ trait FaciaController
             //  pressedCollections coming from *DCR* pressedPages *should* have the length prop. If they don't
             //  then something has gone wrong. How should we surface this? (Default value of 0 avoids a crash
             //  but it covers over the bug.)
-            val liteCuratedLength = matchedCollection.liteCuratedLength match {
-              case Some(n: Int) => n
-              case None         => 0
-            }
-            val liteBackfillLength = matchedCollection.liteBackfillLength match {
-              case Some(n: Int) => n
-              case None         => 0
-            }
+            val liteCuratedLength = matchedCollection.liteCuratedLength.getOrElse(0)
+            val liteBackfillLength = matchedCollection.liteBackfillLength.getOrElse(0)
+
             val pressedContent = matchedCollection.curated.takeRight(
               matchedCollection.curated.length - liteCuratedLength,
             ) ++ matchedCollection.backfill.takeRight(matchedCollection.backfill.length - liteBackfillLength)
@@ -379,27 +374,33 @@ trait FaciaController
 
             // todo: Is this the right return value already, or do we need to process it?
             remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex)
-          }
 
-          val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
-          val maybeResponse =
-            for {
-              (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
-              containerLayout <- container.containerLayout
-            } yield {
-              val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
-              val adFreeFilteredCards: Seq[FaciaCardAndIndex] = if (request.isAdFree) {
-                remainingCards.filter(c => !checkIfPaid(c.item))
-              } else {
-                remainingCards
+          case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+        }
+      } else {
+        frontJsonFapi.get(path, fullRequestType).flatMap {
+          case Some(pressedPage) =>
+            val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
+            val maybeResponse =
+              for {
+                (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
+                containerLayout <- container.containerLayout
+              } yield {
+                val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
+                val adFreeFilteredCards: Seq[FaciaCardAndIndex] = if (request.isAdFree) {
+                  remainingCards.filter(c => !checkIfPaid(c.item))
+                } else {
+                  remainingCards
+                }
+                successful(Cached(CacheTime.Facia) {
+                  JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
+                })
               }
-              successful(Cached(CacheTime.Facia) {
-                JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
-              })
-            }
 
-          maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-        case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+            maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+
+          case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+        }
       }
     }
 
