@@ -58,20 +58,20 @@ class LiveBlogController(
       path: String,
       page: Option[String] = None,
       filterKeyEvents: Option[Boolean],
-      topicsQuery: Option[String],
+      topics: Option[String],
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = getTopMentionsByTopics(path, topicsQuery)
-      val topics = topMentionsService.getTopics(path)
+      val topMentions = getTopMentionsByTopics(path, topics)
+      val topicList = topMentionsService.getTopics(path)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter, topMentions, topics) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter, topMentions, topicList) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentions, topics) // no page param
+        case None => renderWithRange(path, CanonicalLiveBlog, filter, topMentions, topicList) // no page param
       }
     }
   }
