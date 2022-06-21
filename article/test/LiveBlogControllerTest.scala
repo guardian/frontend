@@ -1,11 +1,18 @@
 package test
 
 import controllers.LiveBlogController
+import org.mockito.Mockito._
+import org.mockito.Matchers.any
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatestplus.mockito.MockitoSugar
+import model.{TopMentionsResult, TopMentionsTopic, TopMentionsTopicType}
+import topmentions.{TopMentionsS3Client, TopMentionsService}
+
+import scala.concurrent.Future
 
 @DoNotDiscover class LiveBlogControllerTest
     extends AnyFlatSpec
@@ -15,26 +22,43 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with MockitoSugar {
 
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
+  val path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live"
+
+  val fakeTopMentionsService = mock[TopMentionsService]
+  val topMentionResult = TopMentionsResult(
+    name = "nhs",
+    `type` = TopMentionsTopicType.Org,
+    blocks = Seq("blockId1"),
+    count = 1,
+    percentage_blocks = 1.2f,
+  )
+  when(
+    fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "nhs")),
+  ) thenReturn Some(
+    topMentionResult,
+  )
 
   lazy val liveBlogController = new LiveBlogController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new DCRFake(),
+    fakeTopMentionsService,
   )
 
   it should "return the latest blocks of a live blog" in {
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock",
+      s"${path}.json?lastUpdate=$lastUpdateBlock",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = None,
       lastUpdate = Some(lastUpdateBlock),
       rendered = None,
@@ -62,11 +86,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock&dcr=true",
+      s"${path}.json?lastUpdate=$lastUpdateBlock&dcr=true",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = None,
       lastUpdate = Some(lastUpdateBlock),
       rendered = None,
@@ -84,11 +108,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
   it should "return the full CAPI response if DCR is true but lastUpdate is empty" in {
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?dcr=true",
+      s"${path}.json?dcr=true",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = None,
       lastUpdate = None,
       rendered = None,
@@ -107,11 +131,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
   it should "return only the key event blocks of a live blog, when switch is on" in {
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json",
+      s"${path}.json",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = None,
       lastUpdate = None,
       rendered = None,
@@ -152,11 +176,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
   it should "return the requested page for DCR" in {
     val fakeRequest = FakeRequest(
       GET,
-      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?dcr=true&page=with:block-56d071d2e4b0bd5a0524cc66",
+      s"${path}.json?dcr=true&page=with:block-56d071d2e4b0bd5a0524cc66",
     ).withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderJson(
-      path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      path,
       page = Some("with:block-56d071d2e4b0bd5a0524cc66"),
       lastUpdate = None,
       rendered = None,
@@ -203,5 +227,17 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 
   it should "not filter when the filter parameter is not provided" in {
     liveBlogController.shouldFilter(None) should be(false)
+  }
+
+  "getTopMentionsForFilters" should "return none given no automatic filter query parameter" in {
+    liveBlogController.getTopMentionsByTopics(path, None) should be(None)
+  }
+
+  "getTopMentionsForFilters" should "return none given an incorrect automatic filter query parameter" in {
+    liveBlogController.getTopMentionsByTopics(path, Some("orgnhs")) should be(None)
+  }
+
+  "getTopMentionsForFilters" should "return correct topMentionResult given a correct automatic filter query parameter" in {
+    liveBlogController.getTopMentionsByTopics(path, Some("org:nhs")) should be(Some(topMentionResult))
   }
 }
