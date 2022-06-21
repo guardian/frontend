@@ -44,7 +44,7 @@ const wrapSlotInContainer = (
 	container.className = 'ad-slot-container ad-slot--offset-right';
 
 	if (options.sticky) {
-		ad.style.cssText += 'position: sticky; top: 10px;';
+		ad.style.cssText += 'position: sticky; top: 0;';
 	}
 
 	if (options.heightPx) {
