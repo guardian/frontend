@@ -18,12 +18,12 @@ object LiveBlogCurrentPage {
       blocks: Blocks,
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopicResult],
+      topicResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
     range match {
-      case CanonicalLiveBlog | TopicsLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
+      case CanonicalLiveBlog | TopicsLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, topicResult)
       case PageWithBlock(isRequestedBlock) =>
-        findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents, topMentionResult)
+        findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents, topicResult)
       case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents)
       case ArticleBlocks         => None
       case GenericFallback       => None
@@ -50,10 +50,10 @@ object LiveBlogCurrentPage {
       pageSize: Int,
       blocks: Blocks,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopicResult],
+      topicResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
     val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) =
-      extractFirstPageBlocks(blocks, filterKeyEvents, topMentionResult)
+      extractFirstPageBlocks(blocks, filterKeyEvents, topicResult)
 
     val remainder = blockCount % pageSize
     val numPages = blockCount / pageSize
@@ -95,32 +95,32 @@ object LiveBlogCurrentPage {
   private def extractFirstPageBlocks(
       blocks: Blocks,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopicResult],
+      topicResult: Option[TopicResult],
   ) = {
     if (filterKeyEvents) {
       getKeyEventsBlocks(blocks)
-    } else if (topMentionResult.isDefined) {
-      getTopMentionsBlocks(blocks, topMentionResult.get)
+    } else if (topicResult.isDefined) {
+      getTopicFilteredBlocks(blocks, topicResult.get)
     } else {
       getStandardBlocks(blocks)
     }
   }
 
-  private def isTopMentionBlock(topMentionsResult: TopicResult)(bodyBlock: BodyBlock): Boolean = {
-    topMentionsResult.blocks.contains(bodyBlock.id)
+  private def isBlockWithTopic(topicResult: TopicResult)(bodyBlock: BodyBlock): Boolean = {
+    topicResult.blocks.contains(bodyBlock.id)
   }
 
-  private def filterBlocksByTopMentions(blocks: Seq[BodyBlock], topMentionsResult: TopicResult) = {
-    blocks.filter(isTopMentionBlock(topMentionsResult)).sortBy(_.publishedCreatedTimestamp).reverse
+  private def filterBlocksByTopic(blocks: Seq[BodyBlock], topicResult: TopicResult) = {
+    blocks.filter(isBlockWithTopic(topicResult)).sortBy(_.publishedCreatedTimestamp).reverse
   }
 
-  private def getTopMentionsBlocks(
+  private def getTopicFilteredBlocks(
       blocks: Blocks,
-      topMentionsResult: TopicResult,
+      topicResult: TopicResult,
   ): (Option[Seq[BodyBlock]], Int, Option[String]) = {
     val bodyBlocks = blocks.body
 
-    val filteredBodyBlocks = filterBlocksByTopMentions(bodyBlocks, topMentionsResult)
+    val filteredBodyBlocks = filterBlocksByTopic(bodyBlocks, topicResult)
 
     (Some(filteredBodyBlocks), filteredBodyBlocks.length, filteredBodyBlocks.lastOption.map(_.id))
   }
@@ -161,10 +161,10 @@ object LiveBlogCurrentPage {
       blocks: Seq[BodyBlock],
       isRequestedBlock: String,
       filterKeyEvents: Boolean,
-      topMentionsResult: Option[TopicResult],
+      topicResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
     val pinnedBlock = blocks.find(_.attributes.pinned).map(renamePinnedBlock)
-    val filteredBlocks = applyFilters(blocks, filterKeyEvents, topMentionsResult)
+    val filteredBlocks = applyFilters(blocks, filterKeyEvents, topicResult)
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, filteredBlocks)
     val newestPage = FirstPage(mainPageBlocks, filterKeyEvents)
     val pages = newestPage :: restPagesBlocks.zipWithIndex
@@ -214,12 +214,12 @@ object LiveBlogCurrentPage {
   private def applyFilters(
       blocks: Seq[BodyBlock],
       filterKeyEvents: Boolean,
-      topMentionsResult: Option[TopicResult],
+      topicResult: Option[TopicResult],
   ) = {
     if (filterKeyEvents) {
       blocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
-    } else if (topMentionsResult.isDefined) {
-      filterBlocksByTopMentions(blocks, topMentionsResult.get)
+    } else if (topicResult.isDefined) {
+      filterBlocksByTopic(blocks, topicResult.get)
     } else {
       blocks
     }
