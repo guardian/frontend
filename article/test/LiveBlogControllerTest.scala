@@ -237,19 +237,19 @@ import scala.concurrent.Future
   }
 
   "getTopMentionsForFilters" should "returns none given key event filter is switched on" in {
-    liveBlogController.getTopMentionsByTopicsAndPath(path, Some("org:Fifa"), true) should be(None)
+    liveBlogController.getTopicResult(path, Some("org:Fifa"), true) should be(None)
   }
 
   "getTopMentionsForFilters" should "returns none given no automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopicsAndPath(path, None, false) should be(None)
+    liveBlogController.getTopicResult(path, None, false) should be(None)
   }
 
   "getTopMentionsForFilters" should "returns none given an incorrect automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopicsAndPath(path, Some("orgFifa"), false) should be(None)
+    liveBlogController.getTopicResult(path, Some("orgFifa"), false) should be(None)
   }
 
   "getTopMentionsForFilters" should "returns correct topMentionResult given a correct automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopicsAndPath(path, Some("org:Fifa"), false) should be(Some(topMentionResult))
+    liveBlogController.getTopicResult(path, Some("org:Fifa"), false) should be(Some(topMentionResult))
   }
 
   "renderArticle" should "returns the first page of filtered blog by topics" in {

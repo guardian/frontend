@@ -30,7 +30,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
-    topMentionsService: TopMentionsService,
+    topicService: TopMentionsService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -45,7 +45,7 @@ class LiveBlogController(
 
   def renderEmail(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks, topMentionResult = None) {
+      mapModel(path, ArticleBlocks, topicResult = None) {
         case (minute: MinutePage, _) =>
           Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
         case (blog: LiveBlogPage, _) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
@@ -62,20 +62,20 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = getTopMentionsByTopicsAndPath(path, topics, filter)
-      val topicList = topMentionsService.getTopics(path)
+      val topicResult = getTopicResult(path, topics, filter)
+      val allTopics = topicService.getTopics(path)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter, topMentions, topicList) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter, topicResult, allTopics) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
         case None => {
-          topMentions match {
+          topicResult match {
             case Some(value) =>
-              renderWithRange(path, TopicsLiveBlog, filter, Some(value), topicList) // no page param
-            case None => renderWithRange(path, CanonicalLiveBlog, filter, None, topicList) // no page param
+              renderWithRange(path, TopicsLiveBlog, filter, Some(value), allTopics) // no page param
+            case None => renderWithRange(path, CanonicalLiveBlog, filter, None, allTopics) // no page param
           }
         }
       }
@@ -114,12 +114,12 @@ class LiveBlogController(
       path: String,
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopicResult],
+      topicResult: Option[TopicResult],
       topics: Option[Seq[TopicWithCount]],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
-    mapModel(path, range, filterKeyEvents, topMentionResult) { (page, blocks) =>
+    mapModel(path, range, filterKeyEvents, topicResult) { (page, blocks) =>
       {
         val isAmpSupported = page.article.content.shouldAmplify
         val pageType: PageType = PageType(page, request, context)
@@ -318,13 +318,13 @@ class LiveBlogController(
       path: String,
       range: BlockRange,
       filterKeyEvents: Boolean = false,
-      topMentionResult: Option[TopicResult],
+      topicResult: Option[TopicResult],
   )(
       render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
-      .map(responseToModelOrResult(range, filterKeyEvents, topMentionResult))
+      .map(responseToModelOrResult(range, filterKeyEvents, topicResult))
       .recover(convertApiExceptions)
       .flatMap {
         case Left((model, blocks)) => render(model, blocks)
@@ -335,7 +335,7 @@ class LiveBlogController(
   private[this] def responseToModelOrResult(
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopicResult],
+      topicResult: Option[TopicResult],
   )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
@@ -352,7 +352,7 @@ class LiveBlogController(
           response,
           range,
           filterKeyEvents,
-          topMentionResult,
+          topicResult,
         ).left
           .map(_ -> blocks)
       case unknown =>
@@ -367,20 +367,20 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopMentionsByTopicsAndPath(blogId: String, topics: Option[String], filterKeyEvent: Boolean) = {
+  def getTopicResult(blogId: String, topics: Option[String], filterKeyEvent: Boolean) = {
     if (filterKeyEvent) None
     else {
-      val topMentionsResult = for {
-        topMentionTopic <- Topic.fromString(topics)
-        topMentions <- topMentionsService.getTopMentionsByTopic(blogId, topMentionTopic)
-      } yield topMentions
+      val topicResult = for {
+        topic <- Topic.fromString(topics)
+        topicResult <- topicService.getTopMentionsByTopic(blogId, topic)
+      } yield topicResult
 
-      topMentionsResult match {
-        case Some(_) => log.info(s"top mention result was successfully retrieved for ${topics.get}")
-        case None    => if (topics.isDefined) log.warn(s"top mention result couldn't be retrieved for ${topics.get}")
+      topicResult match {
+        case Some(_) => println(s"topic result was successfully retrieved for ${topics.get}")
+        case None    => if (topics.isDefined) println(s"topic result couldn't be retrieved for ${topics.get}")
       }
 
-      topMentionsResult
+      topicResult
     }
   }
 }
