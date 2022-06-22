@@ -8,12 +8,11 @@ import org.scalatest.{BeforeAndAfterAll, GivenWhenThen}
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import test.{ConfiguredTestSuite, WithTestExecutionContext}
+import test.WithTestExecutionContext
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
 
 import scala.concurrent.duration._
-import scala.util.{Failure, Success}
 import scala.concurrent.{Await, Future}
 
 class TopMentionsServiceTest
@@ -35,17 +34,17 @@ class TopMentionsServiceTest
   val successResponse =
     TopMentionsDetails(entity_types = Seq(TopMentionsTopicType.Org), results = Seq(topMentionResult), model = "model")
 
-  "refreshTopMentions" should "return successfull future given getListOfKeys s3 call fails" in {
+  "refreshTopMentions" should "return successful future given getListOfKeys s3 call fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))
     val topMentionService = new TopMentionsService(fakeClient)
 
     Await.result(topMentionService.refreshTopMentions(), 1.second)
-    val results = topMentionService.getAllTopMentions()
+    val results = topMentionService.getAllTopMentions
 
     results should be(None)
   }
 
-  "refreshTopMentions" should "return successfull future given one of the S3 object calls fails" in {
+  "refreshTopMentions" should "return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1", "key2"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
     when(fakeClient.getObject("key2")) thenReturn Future.failed(new Throwable("error happend"))
@@ -53,20 +52,20 @@ class TopMentionsServiceTest
     val topMentionService = new TopMentionsService(fakeClient)
 
     val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
-    val results = topMentionService.getAllTopMentions()
+    val results = topMentionService.getAllTopMentions
 
     refreshJob shouldBe a[Unit]
     results should be(None)
   }
 
-  "refreshTopMentions" should "update in memory top mentions and return successfull future given one of the S3 object calls fails" in {
+  "refreshTopMentions" should "update in memory top mentions and return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
     val topMentionService = new TopMentionsService(fakeClient)
 
     val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
-    val results = topMentionService.getAllTopMentions()
+    val results = topMentionService.getAllTopMentions
 
     refreshJob shouldBe a[Unit]
     results.isDefined should be(true)

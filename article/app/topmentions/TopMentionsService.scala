@@ -1,7 +1,7 @@
 package topmentions
 
 import common.{Box, GuLogging}
-import model.{TopMentionsDetails, TopMentionsResult, TopMentionsTopic}
+import model.{TopMentionsDetails, TopMentionsResult, TopMentionsTopic, TopicWithCount}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,7 +28,13 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
     topMentions.get().flatMap(_.get(blogId))
   }
 
-  def getAllTopMentions(): Option[Map[String, TopMentionsDetails]] = {
+  def getTopics(blogId: String): Option[Seq[TopicWithCount]] = {
+    getBlogTopMentions(blogId).map(mentions =>
+      mentions.results.map(mention => TopicWithCount(mention.`type`, mention.name, mention.count)),
+    )
+  }
+
+  def getAllTopMentions: Option[Map[String, TopMentionsDetails]] = {
     topMentions.get()
   }
 

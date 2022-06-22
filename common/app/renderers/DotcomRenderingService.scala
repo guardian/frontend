@@ -12,18 +12,25 @@ import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
   DotcomRenderingDataModel,
-  DotcomRenderingUtils,
   PageType,
 }
-import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage, PressedPage}
-import play.api.libs.json.Json
+import model.{
+  CacheTime,
+  Cached,
+  InteractivePage,
+  LiveBlogPage,
+  NoCache,
+  PageWithStoryPackage,
+  PressedPage,
+  TopicWithCount,
+}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-
 import java.net.ConnectException
 import java.util.concurrent.TimeoutException
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -134,11 +141,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
+      topics: Option[Seq[TopicWithCount]] = None,
   )(implicit request: RequestHeader): Future[Result] = {
-
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
-        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive)
+        DotcomRenderingDataModel.forLiveblog(
+          liveblog,
+          blocks,
+          request,
+          pageType,
+          filterKeyEvents,
+          forceLive,
+          topics,
+        )
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
     }
 
