@@ -18,11 +18,36 @@ const isSlotName = (slotName: string): slotName is SlotName => {
 	return slotName in slotSizeMappings;
 };
 
-const getAdSizeMapping = (name: string): SizeMapping | undefined => {
-	const slotName = /inline\d+/.test(name) ? 'inline' : name;
+const getSlotSizeMapping = (name: string): SizeMapping => {
+	const slotName = name.includes('inline') ? 'inline' : name;
 	if (isSlotName(slotName)) {
 		return slotSizeMappings[slotName];
 	}
+	return {};
+};
+
+const mergeSizeMappings = (
+	sizeMapping: SizeMapping,
+	additionalSizeMapping: SizeMapping,
+): SizeMapping => {
+	const mergedSizeMapping = sizeMapping;
+	(
+		Object.entries(additionalSizeMapping) as Array<
+			[keyof SizeMapping, AdSize[]]
+		>
+	).forEach(([breakpoint, breakPointSizes]) => {
+		mergedSizeMapping[breakpoint] = mergedSizeMapping[breakpoint] ?? [];
+
+		mergedSizeMapping[breakpoint]?.push(...breakPointSizes);
+	});
+	return mergedSizeMapping;
+};
+
+const isSizeMappingEmpty = (sizeMapping: SizeMapping): boolean => {
+	return (
+		Object.keys(sizeMapping).length === 0 ||
+		Object.entries(sizeMapping).every(([, mapping]) => mapping.length === 0)
+	);
 };
 
 class Advert {
@@ -55,26 +80,32 @@ class Advert {
 	hasPrebidSize = false;
 	lineItemId: number | null = null;
 
-	constructor(adSlotNode: HTMLElement, additionalSizes?: SizeMapping) {
-		const sizes = adSlotNode.dataset.name ? getAdSizeMapping(adSlotNode.dataset.name) : {};
+	constructor(
+		adSlotNode: HTMLElement,
+		additionalSizeMapping: SizeMapping = {},
+	) {
+		const defaultSizeMappingForSlot = adSlotNode.dataset.name
+			? getSlotSizeMapping(adSlotNode.dataset.name)
+			: {};
 
-		if (additionalSizes) {
-			(
-				Object.entries(additionalSizes) as Array<
-					[keyof SizeMapping, AdSize[]]
-				>
-			).forEach(([breakpoint, breakPointSizes]) => {
-				sizes[breakpoint] = sizes[breakpoint] ?? [];
+		const sizeMapping = mergeSizeMappings(
+			defaultSizeMappingForSlot,
+			additionalSizeMapping,
+		);
 
-				sizes[breakpoint]?.push(...breakPointSizes);
-			});
+		if (isSizeMappingEmpty(sizeMapping)) {
+			throw new Error(
+				`Tried to render ad slot '${
+					adSlotNode.dataset.name ?? ''
+				}' without any size mappings`,
+			);
 		}
 
-		const slotDefinition = defineSlot(adSlotNode, sizes);
+		const slotDefinition = defineSlot(adSlotNode, sizeMapping);
 
 		this.id = adSlotNode.id;
 		this.node = adSlotNode;
-		this.sizes = sizes;
+		this.sizes = sizeMapping;
 		this.slot = slotDefinition.slot;
 
 		this.whenSlotReady = slotDefinition.slotReady;
@@ -141,5 +172,5 @@ export { Advert };
 
 export const _ = {
 	filterClasses: Advert.filterClasses,
-	getAdSizeMapping,
+	getSlotSizeMapping,
 };

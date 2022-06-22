@@ -26,7 +26,7 @@ type MockCommercialCore = {
 	slotSizeMappings: Record<string, unknown>;
 };
 
-const { filterClasses, getAdSizeMapping } = _;
+const { filterClasses, getSlotSizeMapping } = _;
 
 jest.mock('../../../../lib/raven');
 jest.mock('ophan/ng', () => null);
@@ -144,13 +144,22 @@ describe('Advert', () => {
 		expect(ad).toBeDefined();
 		expect(googleSlot.setSafeFrameConfig).not.toBeCalled();
 	});
+
+	it('should throw an error if no size mappings are found or passed in', () => {
+		const slot = document.createElement('div');
+		slot.setAttribute('data-name', 'bad-slot');
+		const createAd = () => new Advert(slot);
+		expect(createAd).toThrow(
+			`Tried to render ad slot 'bad-slot' without any size mappings`,
+		);
+	});
 });
 
 describe('getAdSizeMapping', () => {
 	it.each(['slot', 'mobile-only-slot'])(
 		'getAdSizeMapping(%s) should get the size mapping',
 		(slotName) => {
-			expect(getAdSizeMapping(slotName)).toEqual(
+			expect(getSlotSizeMapping(slotName)).toEqual(
 				slots[slotName as keyof typeof slots],
 			);
 		},
@@ -162,7 +171,9 @@ describe('getAdSizeMapping', () => {
 			const slotName = /inline\d+/.test(value)
 				? 'inline'
 				: (value as CommercialCore.SlotName);
-			expect(getAdSizeMapping(value)).toEqual(slotSizeMappings[slotName]);
+			expect(getSlotSizeMapping(value)).toEqual(
+				slotSizeMappings[slotName],
+			);
 		},
 	);
 });
