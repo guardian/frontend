@@ -63,7 +63,7 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topicResult = getTopicResult(path, topics, filter)
+      val topicResult = if (filter) None else getTopicResult(path, topics)
       val allTopics = topicService.getTopics(path)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -368,20 +368,17 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopicResult(blogId: String, topics: Option[String], filterKeyEvent: Boolean) = {
-    if (filterKeyEvent) None
-    else {
-      val topicResult = for {
-        topic <- Topic.fromString(topics)
-        topicResult <- topicService.getTopicResult(blogId, topic)
-      } yield topicResult
+  def getTopicResult(blogId: String, topics: Option[String]) = {
+    val topicResult = for {
+      topic <- Topic.fromString(topics)
+      topicResult <- topicService.getTopicResult(blogId, topic)
+    } yield topicResult
 
-      topicResult match {
-        case Some(_) => println(s"topic result was successfully retrieved for ${topics.get}")
-        case None    => if (topics.isDefined) println(s"topic result couldn't be retrieved for ${topics.get}")
-      }
-
-      topicResult
+    topicResult match {
+      case Some(_) => println(s"top mention result was successfully retrieved for ${topics.get}")
+      case None    => if (topics.isDefined) println(s"top mention result couldn't be retrieved for ${topics.get}")
     }
+
+    topicResult
   }
 }

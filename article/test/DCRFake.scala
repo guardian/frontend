@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // It is always a mistake to rely on actual DCR output for tests.
 class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRenderingService {
 
-  val requestedBlogs: scala.collection.mutable.Queue[PageWithStoryPackage] = new Queue[PageWithStoryPackage]()
+  val requestedBlogs: Queue[PageWithStoryPackage] = new Queue[PageWithStoryPackage]()
 
   override def getArticle(
       ws: WSClient,

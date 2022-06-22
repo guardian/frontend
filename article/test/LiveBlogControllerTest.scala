@@ -2,7 +2,7 @@ package test
 
 import controllers.LiveBlogController
 import org.mockito.Mockito._
-import org.mockito.Matchers.any
+import org.mockito.Matchers.{any, anyObject, anyString}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test._
@@ -28,18 +28,13 @@ import scala.concurrent.Future
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live"
 
-  val fakeTopMentionsService = mock[TopicService]
-  val topMentionResult = TopicResult(
+  var fakeTopicService = mock[TopicService]
+  val topicResult = TopicResult(
     name = "Fifa",
     `type` = TopicType.Org,
     blocks = Seq("56d02bd2e4b0d38537b1f5fa"),
     count = 1,
     percentage_blocks = 1.2f,
-  )
-  when(
-    fakeTopMentionsService.getTopicResult(path, Topic(TopicType.Org, "Fifa")),
-  ) thenReturn Some(
-    topMentionResult,
   )
 
   var fakeDcr = new DCRFake()
@@ -48,13 +43,21 @@ import scala.concurrent.Future
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     fakeDcr,
-    fakeTopMentionsService,
+    fakeTopicService,
   )
 
   override def beforeAll(): Unit = {
     // This is to assure on every test we have a fresh instance of DCR
     // and requestedBlogs is only having the calls for the relevant test
     fakeDcr = new DCRFake()
+
+    // This is to assure on every test we have a fresh instance of TopicService
+    fakeTopicService = mock[TopicService]
+    when(
+      fakeTopicService.getTopicResult(path, Topic(TopicType.Org, "Fifa")),
+    ) thenReturn Some(
+      topicResult,
+    )
   }
 
   it should "return the latest blocks of a live blog" in {
@@ -236,20 +239,16 @@ import scala.concurrent.Future
     liveBlogController.shouldFilter(None) should be(false)
   }
 
-  "getTopMentionsForFilters" should "returns none given key event filter is switched on" in {
-    liveBlogController.getTopicResult(path, Some("org:Fifa"), true) should be(None)
-  }
-
   "getTopMentionsForFilters" should "returns none given no automatic filter query parameter" in {
-    liveBlogController.getTopicResult(path, None, false) should be(None)
+    liveBlogController.getTopicResult(path, None) should be(None)
   }
 
   "getTopMentionsForFilters" should "returns none given an incorrect automatic filter query parameter" in {
-    liveBlogController.getTopicResult(path, Some("orgFifa"), false) should be(None)
+    liveBlogController.getTopicResult(path, Some("orgFifa")) should be(None)
   }
 
-  "getTopMentionsForFilters" should "returns correct topMentionResult given a correct automatic filter query parameter" in {
-    liveBlogController.getTopicResult(path, Some("org:Fifa"), false) should be(Some(topMentionResult))
+  "getTopMentionsForFilters" should "returns correct topicResult given a correct automatic filter query parameter" in {
+    liveBlogController.getTopicResult(path, Some("org:Fifa")) should be(Some(topicResult))
   }
 
   "renderArticle" should "returns the first page of filtered blog by topics" in {
@@ -267,6 +266,21 @@ import scala.concurrent.Future
 
     status(result) should be(200)
     assertDcrCalledForLiveBlogWithBlocks(expectedBlocks = Seq("56d02bd2e4b0d38537b1f5fa"))
+  }
+
+  "renderArticle" should "doesn't call getTopMentionsByTopic given filterKeyEvents and topics query params are provided" in {
+    reset(fakeTopicService)
+    val fakeRequest = FakeRequest(GET, s"${path}").withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderArticle(
+      path,
+      page = None,
+      filterKeyEvents = Some(true),
+      topics = Some("org:Fifa"),
+    )(fakeRequest)
+
+    verify(fakeTopicService, times(0)).getTopicResult(anyString(), anyObject())
+    status(result) should be(200)
   }
 
   private def assertDcrCalledForLiveBlogWithBlocks(expectedBlocks: Seq[String]) = {
