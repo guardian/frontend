@@ -19,8 +19,9 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
-import topmentions.TopicService
+import services.topics.TopicService
 import views.support.RenderOtherStatus
+
 import scala.concurrent.Future
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage

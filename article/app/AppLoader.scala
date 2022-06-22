@@ -22,7 +22,7 @@ import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
-import topmentions.{TopicS3Client, TopicS3ClientImpl, TopicService}
+import services.topics.{TopicS3Client, TopicS3ClientImpl, TopicService}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =

@@ -1,15 +1,15 @@
-package topmentions
+package services.topics
 
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.{GetObjectRequest, S3Object}
 import com.amazonaws.util.IOUtils
 import common.GuLogging
 import conf.Configuration
+import model.TopicsDetails._
 import model.{TopicJsonParseException, TopicsDetails}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import services.S3
-import topmentions.S3ObjectImplicits.RichS3Object
-import model.TopicsDetails._
+import services.topics.S3ObjectImplicits.RichS3Object
 
 import scala.collection.JavaConverters._
 import scala.concurrent.Future

@@ -3,7 +3,7 @@ package jobs
 import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
-import topmentions.TopicService
+import services.topics.TopicService
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}

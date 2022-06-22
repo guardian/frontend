@@ -1,7 +1,7 @@
-package topmentions
+package services.topics
 
 import common.{Box, GuLogging}
-import model.{TopicsDetails, TopicResult, Topic, TopicWithCount}
+import model.{Topic, TopicResult, TopicWithCount, TopicsDetails}
 
 import scala.concurrent.{ExecutionContext, Future}
 

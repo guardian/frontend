@@ -1,16 +1,12 @@
-package topmentions
+package services.topics
 
-import com.gu.contentapi.client.model.ContentApiError
-import com.gu.contentapi.client.model.v1.ItemResponse
-import model.{TopicsDetails, TopicResult, Topic, TopicType}
-import model.TopicType.TopicType
-import org.scalatest.{BeforeAndAfterAll, GivenWhenThen}
-import org.scalatest.featurespec.AnyFeatureSpec
+import model.{Topic, TopicResult, TopicType, TopicsDetails}
+import org.mockito.Mockito._
+import org.scalatest.BeforeAndAfterAll
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import test.WithTestExecutionContext
-import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
+import test.WithTestExecutionContext
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
