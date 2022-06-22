@@ -6,6 +6,7 @@ import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { breakpoints } from '../../../../lib/detect';
 import { getUrlVars } from '../../../../lib/url';
+import {toGoogleTagSize} from '../../../common/modules/commercial/lib/googletag-ad-size';
 
 const adUnit = once(() => {
 	const urlVars = getUrlVars();
@@ -30,7 +31,7 @@ const buildSizeMapping = (sizes) => {
 	breakpoints
 		.filter((_) => _.name in sizes)
 		.forEach((_) => {
-			mapping.addSize([_.width, 0], sizes[_.name].map((size) => ((!size[0] && !size[1]) ? 'fluid' : size)));
+			mapping.addSize([_.width, 0], sizes[_.name].map(toGoogleTagSize));
 		});
 
 	return mapping.build();
@@ -218,4 +219,4 @@ const defineSlot = (adSlotNode, sizes) => {
 	};
 };
 
-export { defineSlot, getSizeOpts };
+export { defineSlot, getSizeOpts, toGoogleTagSize };

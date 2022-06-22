@@ -1,5 +1,6 @@
 import type { SizeKeys } from '@guardian/commercial-core';
 import { adSizes, createAdSize, createAdSlot } from '@guardian/commercial-core';
+import { toGoogleTagSize } from 'common/modules/commercial/lib/googletag-ad-size';
 import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
@@ -78,11 +79,10 @@ const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
 				return tuple;
 			}),
 		);
-		const sizeMapping = ad.sizes.desktop.map((size) =>
-			!size.width && !size.height
-				? 'fluid'
-				: (size as googletag.SingleSize),
-		);
+		const sizeMapping = ad.sizes.desktop.map(
+			toGoogleTagSize,
+		) as googletag.MultiSize;
+
 		ad.slot.defineSizeMapping([[[0, 0], sizeMapping]]);
 		void fastdom.mutate(() => {
 			adSlot.setAttribute(
