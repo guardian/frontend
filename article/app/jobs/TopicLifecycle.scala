@@ -8,7 +8,7 @@ import topmentions.TopicService
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
-class TopMentionsLifecycle(
+class TopicLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
     akkaAsync: AkkaAsync,
