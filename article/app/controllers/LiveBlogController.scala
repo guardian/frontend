@@ -21,7 +21,6 @@ import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
 import topmentions.TopMentionsService
 import views.support.RenderOtherStatus
-
 import scala.concurrent.Future
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -63,11 +62,11 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = getTopMentionsByTopics(path, topics)
-
+      val topMentions = if (filter) None else getTopMentions(path, topics)
+      val topicList = topMentionsService.getTopics(path)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter, topMentions) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter, topMentions, topicList) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
@@ -75,8 +74,8 @@ class LiveBlogController(
         case None => {
           topMentions match {
             case Some(value) =>
-              renderWithRange(path, AutomaticFilterLiveBlog, filter, Some(value)) // no page param
-            case None => renderWithRange(path, CanonicalLiveBlog, filter, None) // no page param
+              renderWithRange(path, TopicsLiveBlog, filter, Some(value), topicList) // no page param
+            case None => renderWithRange(path, CanonicalLiveBlog, filter, None, topicList) // no page param
           }
         }
       }
@@ -118,6 +117,7 @@ class LiveBlogController(
       range: BlockRange,
       filterKeyEvents: Boolean,
       topMentionResult: Option[TopMentionsResult],
+      topics: Option[Seq[TopicWithCount]],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -147,9 +147,18 @@ class LiveBlogController(
             val remoteRendering = !request.forceDCROff
 
             if (remoteRendering) {
-              DotcomponentsLogger.logger.logRequest(s"liveblog executing in dotcomponents", properties, page)
+              DotcomponentsLogger.logger
+                .logRequest(s"liveblog executing in dotcomponents", properties, page)
               val pageType: PageType = PageType(blog, request, context)
-              remoteRenderer.getArticle(ws, blog, blocks, pageType, filterKeyEvents, request.forceLive)
+              remoteRenderer.getArticle(
+                ws,
+                blog,
+                blocks,
+                pageType,
+                filterKeyEvents,
+                request.forceLive,
+                topics,
+              )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
@@ -295,7 +304,14 @@ class LiveBlogController(
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
     val model =
-      DotcomRenderingDataModel.forLiveblog(blog, blocks, request, pageType, filterKeyEvents, request.forceLive)
+      DotcomRenderingDataModel.forLiveblog(
+        blog,
+        blocks,
+        request,
+        pageType,
+        filterKeyEvents,
+        request.forceLive,
+      )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }
@@ -353,7 +369,7 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopMentionsByTopics(blogId: String, topics: Option[String]) = {
+  def getTopMentions(blogId: String, topics: Option[String]) = {
     val topMentionsResult = for {
       topMentionTopic <- TopMentionsTopic.fromString(topics)
       topMentions <- topMentionsService.getTopMentionsByTopic(blogId, topMentionTopic)

@@ -20,12 +20,12 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
+  TopicWithCount,
 }
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
-
 // -----------------------------------------------------------------
 // DCR DataModel
 // -----------------------------------------------------------------
@@ -38,6 +38,7 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     filterKeyEvents: Boolean,
+    topics: Option[Seq[TopicWithCount]],
     pinnedPost: Option[Block],
     keyEvents: List[Block],
     mostRecentBlockId: Option[String],
@@ -106,6 +107,7 @@ object DotcomRenderingDataModel {
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
+        "topics" -> model.topics,
         "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
         "mostRecentBlockId" -> model.mostRecentBlockId,
@@ -190,6 +192,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
+      topics = None,
     )
   }
 
@@ -216,6 +219,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
+      topics = None,
     )
   }
 
@@ -238,6 +242,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
+      topics: Option[Seq[TopicWithCount]] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -289,6 +294,7 @@ object DotcomRenderingDataModel {
       pinnedPost,
       timelineBlocks,
       filterKeyEvents,
+      topics,
       mostRecentBlockId,
       forceLive,
     )
@@ -306,6 +312,7 @@ object DotcomRenderingDataModel {
       pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
+      topics: Option[Seq[TopicWithCount]],
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
   ): DotcomRenderingDataModel = {
@@ -434,6 +441,7 @@ object DotcomRenderingDataModel {
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = isSpecialReport(page),
       filterKeyEvents = filterKeyEvents,
+      topics = topics,
       pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
       mostRecentBlockId = mostRecentBlockId,

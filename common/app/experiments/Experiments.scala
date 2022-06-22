@@ -5,7 +5,8 @@ import experiments.ParticipationGroups._
 import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
-  override val allExperiments: Set[Experiment] = Set(InteractivesIdleLoading, OfferHttp3, KeyEventsCarousel)
+  override val allExperiments: Set[Experiment] =
+    Set(InteractivesIdleLoading, OfferHttp3, KeyEventsCarousel)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }

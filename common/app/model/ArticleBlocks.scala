@@ -19,13 +19,13 @@ case object CanonicalLiveBlog extends BlockRange {
   val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned))
 }
 
-case object AutomaticFilterLiveBlog extends BlockRange {
+case object TopicsLiveBlog extends BlockRange {
   val mainBlock = "main"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
   val summary = "body:summary"
   val pinned = "body:pinned"
-  val body = "body" // supports Dotcom Rendering model which currently requires field body
+  val body = "body" // this gets all blocks that's needed for filtering blog by topics
   val query = Some(Seq(mainBlock, oldestPage, timeline, summary, pinned, body))
 }
 

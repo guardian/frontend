@@ -21,10 +21,10 @@ object LiveBlogCurrentPage {
       topMentionResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
     range match {
-      case CanonicalLiveBlog | AutomaticFilterLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
+      case CanonicalLiveBlog | TopicsLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
       case PageWithBlock(isRequestedBlock) =>
         findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents, topMentionResult)
-      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents, topMentionResult)
+      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents)
       case ArticleBlocks         => None
       case GenericFallback       => None
       case _                     => None
@@ -36,10 +36,9 @@ object LiveBlogCurrentPage {
       blocks: Blocks,
       sinceBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
-      topMentionsResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
     val bodyBlocks = blocks.requestedBodyBlocks.get(sinceBlockId.around).toSeq.flatMap { bodyBlocks =>
-      applyFilters(bodyBlocks, filterKeyEvents, topMentionsResult).takeWhile(_.id != sinceBlockId.lastUpdate)
+      applyFilters(bodyBlocks, filterKeyEvents, None).takeWhile(_.id != sinceBlockId.lastUpdate)
     }
     Some(
       LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None, None),
@@ -53,13 +52,8 @@ object LiveBlogCurrentPage {
       filterKeyEvents: Boolean,
       topMentionResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
-    val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) = if (filterKeyEvents) {
-      getKeyEventsBlocks(blocks)
-    } else if (topMentionResult.isDefined) {
-      getTopMentionsBlocks(blocks, topMentionResult.get)
-    } else {
-      getStandardBlocks(blocks)
-    }
+    val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) =
+      extractFirstPageBlocks(blocks, filterKeyEvents, topMentionResult)
 
     val remainder = blockCount % pageSize
     val numPages = blockCount / pageSize
@@ -98,6 +92,20 @@ object LiveBlogCurrentPage {
     }
   }
 
+  private def extractFirstPageBlocks(
+      blocks: Blocks,
+      filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
+  ) = {
+    if (filterKeyEvents) {
+      getKeyEventsBlocks(blocks)
+    } else if (topMentionResult.isDefined) {
+      getTopMentionsBlocks(blocks, topMentionResult.get)
+    } else {
+      getStandardBlocks(blocks)
+    }
+  }
+
   private def isTopMentionBlock(topMentionsResult: TopMentionsResult)(bodyBlock: BodyBlock): Boolean = {
     topMentionsResult.blocks.contains(bodyBlock.id)
   }
@@ -114,7 +122,7 @@ object LiveBlogCurrentPage {
 
     val filteredBodyBlocks = filterBlocksByTopMentions(bodyBlocks, topMentionsResult)
 
-    (Some(filteredBodyBlocks), filteredBodyBlocks.length, filteredBodyBlocks.headOption.map(_.id))
+    (Some(filteredBodyBlocks), filteredBodyBlocks.length, filteredBodyBlocks.lastOption.map(_.id))
   }
 
   private def getStandardBlocks(blocks: Blocks): (Option[Seq[BodyBlock]], Int, Option[String]) = {

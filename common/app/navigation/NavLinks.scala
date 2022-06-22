@@ -296,7 +296,7 @@ private object NavLinks {
       usBusiness,
       tech,
       science,
-      newsletters.copy(url = s"${newsletters.url}?INTCMP=DOTCOM_NAV_NEWSLETTER_US"),
+      newsletters.copy(url = s"${newsletters.url}"),
       fightToVote,
     ),
   )

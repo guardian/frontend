@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.v1.ItemResponse
+import common.GuLogging
 import common.`package`._
 import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
@@ -8,7 +9,7 @@ import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{JsValue, Json, _}
 
-object LiveBlogHelpers {
+object LiveBlogHelpers extends GuLogging {
 
   // Get a Seq[BodyBlock] given an article and the "page" request parameter on live-blog pages.
 
@@ -58,55 +59,6 @@ object LiveBlogHelpers {
 
   }
 
-  def printCurrentPage(page: Option[LiveBlogCurrentPage]) = {
-    if (page.isDefined) {
-      println("current pages: ")
-      page.get.currentPage.blocks.foreach(block => println(s"block: ${block.id}"))
-
-      if (page.get.pagination.isDefined) {
-
-        val older = page.get.pagination.get.older
-        val oldest = page.get.pagination.get.oldest
-        val newer = page.get.pagination.get.newer
-        val newest = page.get.pagination.get.newest
-
-        if (older.isDefined) {
-          println(s"older pages: length: ${older.get.blocks.length}")
-          older.get match {
-            case BlockPage(_, blockId, _, _) => println(s"block id: ${blockId}")
-            case _                           => older.get.blocks.foreach(block => println(s"block: ${block.id}"))
-          }
-
-        } else println("older pages: None")
-
-        if (oldest.isDefined) {
-          println(s"oldest pages: length: ${oldest.get.blocks.length}")
-          oldest.get match {
-            case BlockPage(_, blockId, _, _) => println(s"block id: ${blockId}")
-            case _                           => oldest.get.blocks.foreach(block => println(s"block: ${block.id}"))
-          }
-        } else println("oldest pages: None")
-
-        if (newer.isDefined) {
-          println(s"newer pages: length: ${newer.get.blocks.length}")
-
-          newer.get match {
-            case BlockPage(_, blockId, _, _) => println(s"block id: ${blockId}")
-            case _                           => newer.get.blocks.foreach(block => println(s"block: ${block.id}"))
-          }
-        } else println("newer pages: None")
-
-        if (newest.isDefined) {
-          println(s"newest pages: length: ${newest.get.blocks.length}")
-          newest.get match {
-            case BlockPage(_, blockId, _, _) => println(s"block id: ${blockId}")
-            case _                           => newest.get.blocks.foreach(block => println(s"block: ${block.id}"))
-          }
-        } else println("newest pages: None")
-      } else println("pagination pages: None")
-    }
-  }
-
   def createLiveBlogModel(
       liveBlog: Article,
       response: ItemResponse,
@@ -127,9 +79,6 @@ object LiveBlogHelpers {
           topMentionResult,
         )
       } getOrElse None
-
-    if (topMentionResult.isDefined) println(s"topMentionResult count: ${topMentionResult.get.count}")
-    printCurrentPage(liveBlogPageModel)
 
     liveBlogPageModel
       .map { pageModel =>
