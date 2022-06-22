@@ -2,9 +2,17 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import { fetchJson } from 'lib/fetch-json';
-import { mediator } from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+
+const richLinkTag = ({ href }) =>
+    `<aside class=" element element-rich-link element-rich-link--tag
+                    element--thumbnail element-rich-link--not-upgraded"
+            data-component="rich-link-tag"
+            data-link-name="rich-link-tag"
+            >
+        <p><a href="${href}">${href}</a></p>
+    </aside>`;
 
 const hideIfPaidForAndAdFree = (el) => {
     if (!commercialFeatures.adFree) {
@@ -83,15 +91,6 @@ const upgradeRichLink = (el) => {
 
     return Promise.resolve();
 };
-
-const richLinkTag = ({ href }) =>
-    `<aside class=" element element-rich-link element-rich-link--tag
-                    element--thumbnail element-rich-link--not-upgraded"
-            data-component="rich-link-tag"
-            data-link-name="rich-link-tag"
-            >
-        <p><a href="${href}">${href}</a></p>
-    </aside>`;
 
 const upgradeRichLinks = () => {
     Array.from(
