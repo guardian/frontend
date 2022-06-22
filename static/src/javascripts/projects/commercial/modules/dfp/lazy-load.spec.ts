@@ -55,7 +55,7 @@ describe('enableLazyLoad', () => {
 		expect(windowIntersectionObserver).toBe(undefined);
 	});
 
-	it('should create a 20% observer if lazyLoadObserve is true and not in control of test', () => {
+	it('should create a 20% observer if lazyLoadObserve is true and not in control of commercialEndOfQuarter2Test', () => {
 		// Mock being in variant / not in test
 		(isInVariantSynchronous as jest.Mock).mockReturnValue(false);
 		dfpEnv.lazyLoadObserve = true;
@@ -68,9 +68,9 @@ describe('enableLazyLoad', () => {
 		});
 	});
 
-	it('should create a 200px observer if lazyLoadObserve is true and in control of test', () => {
+	it('should create a 200px observer if lazyLoadObserve is true and in control of commercialEndOfQuarter2Test', () => {
 		// Mock being in control of test
-		(isInVariantSynchronous as jest.Mock).mockReturnValue(true);
+		(isInVariantSynchronous as jest.Mock).mockReturnValueOnce(true);
 		dfpEnv.lazyLoadObserve = true;
 		enableLazyLoad(testAdvert as unknown as Advert);
 		expect(loadAdvert).not.toHaveBeenCalled();
@@ -78,6 +78,22 @@ describe('enableLazyLoad', () => {
 			window.IntersectionObserver as jest.Mock,
 		).toHaveBeenNthCalledWith(1, expect.anything(), {
 			rootMargin: '200px 0px',
+		});
+	});
+
+	it('should create a 0% observer if lazyLoadObserve is true and not in control of commercialEndOfQuarter2Test and in variant-1 of commercialLazyLoadMarginReloaded', () => {
+		// Mock being in variant / not in test
+		(isInVariantSynchronous as jest.Mock)
+			.mockReturnValueOnce(false)
+			.mockReturnValueOnce(false)
+			.mockReturnValueOnce(true);
+		dfpEnv.lazyLoadObserve = true;
+		enableLazyLoad(testAdvert as unknown as Advert);
+		expect(loadAdvert).not.toHaveBeenCalled();
+		expect(
+			window.IntersectionObserver as jest.Mock,
+		).toHaveBeenNthCalledWith(1, expect.anything(), {
+			rootMargin: '0% 0px',
 		});
 	});
 
