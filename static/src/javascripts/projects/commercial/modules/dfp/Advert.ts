@@ -56,7 +56,7 @@ class Advert {
 	lineItemId: number | null = null;
 
 	constructor(adSlotNode: HTMLElement, additionalSizes?: SizeMapping) {
-		const sizes = getAdSizeMapping(adSlotNode.dataset.name ?? '') ?? {};
+		const sizes = adSlotNode.dataset.name ? getAdSizeMapping(adSlotNode.dataset.name) : {};
 
 		if (additionalSizes) {
 			(
