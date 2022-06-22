@@ -15,7 +15,7 @@ trait ArticleControllers {
   def wsClient: WSClient
   def remoteRender: DotcomRenderingService
   def topMentionsS3Client: TopMentionsS3Client
-  def topMentionsService: TopicService
+  def topicService: TopicService
   implicit def appContext: ApplicationContext
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]
   lazy val bookSectionAgent: NewspaperBookSectionTagAgent = wire[NewspaperBookSectionTagAgent]

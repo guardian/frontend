@@ -29,12 +29,12 @@ class AppLoader extends FrontendApplicationLoader {
     new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait TopMentionsServices {
+trait TopicServices {
   lazy val topMentionsS3Client: TopMentionsS3Client = wire[TopMentionsS3ClientImpl]
-  lazy val topMentionsService = wire[TopicService]
+  lazy val topicService = wire[TopicService]
 }
 
-trait AppComponents extends FrontendComponents with ArticleControllers with TopMentionsServices {
+trait AppComponents extends FrontendComponents with ArticleControllers with TopicServices {
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]

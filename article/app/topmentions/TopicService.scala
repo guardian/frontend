@@ -7,7 +7,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
 
-  private val topMentions = Box[Option[Map[String, TopicsDetails]]](None)
+  private val blogsTopicsDetails = Box[Option[Map[String, TopicsDetails]]](None)
 
   def refreshTopicsDetails()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val retrievedTopicsDetails =
@@ -16,7 +16,7 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
     retrievedTopicsDetails
       .flatMap(Future.sequence(_))
       .map(response => {
-        topMentions send Some(response.toMap)
+        blogsTopicsDetails send Some(response.toMap)
         log.info("successfully refreshed top mentions")
       })
       .recover {
@@ -26,7 +26,7 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
   }
 
   def getBlogTopicsDetails(blogId: String): Option[TopicsDetails] = {
-    topMentions.get().flatMap(_.get(blogId))
+    blogsTopicsDetails.get().flatMap(_.get(blogId))
   }
 
   def getTopics(blogId: String): Option[Seq[TopicWithCount]] = {
@@ -36,16 +36,16 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
   }
 
   def getAllTopicsDetails: Option[Map[String, TopicsDetails]] = {
-    topMentions.get()
+    blogsTopicsDetails.get()
   }
 
   def getTopicResult(
       blogId: String,
-      topMentionEntity: Topic,
+      topic: Topic,
   ): Option[TopicResult] = {
 
     getBlogTopicsDetails(blogId).flatMap(_.results.find(result => {
-      result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value
+      result.`type` == topic.`type` && result.name == topic.value
     }))
   }
 

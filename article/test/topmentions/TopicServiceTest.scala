@@ -15,7 +15,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-class TopMentionsServiceTest
+class TopicServiceTest
     extends AnyFlatSpec
     with Matchers
     with BeforeAndAfterAll

@@ -12,7 +12,7 @@ class TopMentionsLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
     akkaAsync: AkkaAsync,
-    topMentionService: TopicService,
+    topicService: TopicService,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
 
@@ -27,18 +27,18 @@ class TopMentionsLifecycle(
 
     // refresh top mentions when app starts
     akkaAsync.after1s {
-      topMentionService.refreshTopicsDetails()
+      topicService.refreshTopicsDetails()
     }
   }
 
   private def scheduleJobs(): Unit = {
     // This job runs every 2 minutes
-    jobs.scheduleEvery("TopMentionsAgentRefreshJob", 2.minutes) {
-      topMentionService.refreshTopicsDetails()
+    jobs.scheduleEvery("BlogsTopicsDetailsAgentRefreshJob", 2.minutes) {
+      topicService.refreshTopicsDetails()
     }
   }
 
   private def descheduleJobs(): Unit = {
-    jobs.deschedule("TopMentionsAgentRefreshJob")
+    jobs.deschedule("BlogsTopicsDetailsAgentRefreshJob")
   }
 }
