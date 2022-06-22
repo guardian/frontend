@@ -38,8 +38,8 @@ class TopMentionsServiceTest
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))
     val topMentionService = new TopicService(fakeClient)
 
-    Await.result(topMentionService.refreshTopMentions(), 1.second)
-    val results = topMentionService.getAllTopMentions
+    Await.result(topMentionService.refreshTopicsDetails(), 1.second)
+    val results = topMentionService.getAllTopicsDetails
 
     results should be(None)
   }
@@ -51,8 +51,8 @@ class TopMentionsServiceTest
 
     val topMentionService = new TopicService(fakeClient)
 
-    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
-    val results = topMentionService.getAllTopMentions
+    val refreshJob = Await.result(topMentionService.refreshTopicsDetails(), 1.second)
+    val results = topMentionService.getAllTopicsDetails
 
     refreshJob shouldBe a[Unit]
     results should be(None)
@@ -64,8 +64,8 @@ class TopMentionsServiceTest
 
     val topMentionService = new TopicService(fakeClient)
 
-    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
-    val results = topMentionService.getAllTopMentions
+    val refreshJob = Await.result(topMentionService.refreshTopicsDetails(), 1.second)
+    val results = topMentionService.getAllTopicsDetails
 
     refreshJob shouldBe a[Unit]
     results.isDefined should be(true)
@@ -77,9 +77,9 @@ class TopMentionsServiceTest
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
     val topMentionService = new TopicService(fakeClient)
-    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+    val refreshJob = Await.result(topMentionService.refreshTopicsDetails(), 1.second)
 
-    val result = topMentionService.getTopMentionsByTopic("key1", Topic(TopicType.Org, "name1"))
+    val result = topMentionService.getTopicResult("key1", Topic(TopicType.Org, "name1"))
 
     result.get should equal(topMentionResult)
   }
@@ -89,9 +89,9 @@ class TopMentionsServiceTest
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
     val topMentionService = new TopicService(fakeClient)
-    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+    val refreshJob = Await.result(topMentionService.refreshTopicsDetails(), 1.second)
 
-    val result = topMentionService.getTopMentionsByTopic("key1", Topic(TopicType.Org, "NAME1"))
+    val result = topMentionService.getTopicResult("key1", Topic(TopicType.Org, "NAME1"))
 
     result should equal(None)
   }
@@ -101,9 +101,9 @@ class TopMentionsServiceTest
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
     val topMentionService = new TopicService(fakeClient)
-    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+    val refreshJob = Await.result(topMentionService.refreshTopicsDetails(), 1.second)
 
-    val result = topMentionService.getTopMentionsByTopic("key2", Topic(TopicType.Org, "name1"))
+    val result = topMentionService.getTopicResult("key2", Topic(TopicType.Org, "name1"))
 
     result should equal(None)
   }
@@ -113,9 +113,9 @@ class TopMentionsServiceTest
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
     val topMentionService = new TopicService(fakeClient)
-    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+    val refreshJob = Await.result(topMentionService.refreshTopicsDetails(), 1.second)
 
-    val result = topMentionService.getTopMentionsByTopic("key1", Topic(TopicType.Person, "Boris"))
+    val result = topMentionService.getTopicResult("key1", Topic(TopicType.Person, "Boris"))
 
     result should equal(None)
   }
@@ -125,10 +125,10 @@ class TopMentionsServiceTest
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
     val topMentionService = new TopicService(fakeClient)
-    val refreshJob = Await.result(topMentionService.refreshTopMentions(), 1.second)
+    val refreshJob = Await.result(topMentionService.refreshTopicsDetails(), 1.second)
 
     val result =
-      topMentionService.getTopMentionsByTopic("key1", Topic(TopicType.Org, "someRandomOrg"))
+      topMentionService.getTopicResult("key1", Topic(TopicType.Org, "someRandomOrg"))
 
     result should equal(None)
   }

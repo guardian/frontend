@@ -372,7 +372,7 @@ class LiveBlogController(
     else {
       val topicResult = for {
         topic <- Topic.fromString(topics)
-        topicResult <- topicService.getTopMentionsByTopic(blogId, topic)
+        topicResult <- topicService.getTopicResult(blogId, topic)
       } yield topicResult
 
       topicResult match {

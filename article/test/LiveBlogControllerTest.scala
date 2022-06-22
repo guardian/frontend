@@ -37,7 +37,7 @@ import scala.concurrent.Future
     percentage_blocks = 1.2f,
   )
   when(
-    fakeTopMentionsService.getTopMentionsByTopic(path, Topic(TopicType.Org, "Fifa")),
+    fakeTopMentionsService.getTopicResult(path, Topic(TopicType.Org, "Fifa")),
   ) thenReturn Some(
     topMentionResult,
   )

@@ -27,14 +27,14 @@ class TopMentionsLifecycle(
 
     // refresh top mentions when app starts
     akkaAsync.after1s {
-      topMentionService.refreshTopMentions()
+      topMentionService.refreshTopicsDetails()
     }
   }
 
   private def scheduleJobs(): Unit = {
     // This job runs every 2 minutes
     jobs.scheduleEvery("TopMentionsAgentRefreshJob", 2.minutes) {
-      topMentionService.refreshTopMentions()
+      topMentionService.refreshTopicsDetails()
     }
   }
 
