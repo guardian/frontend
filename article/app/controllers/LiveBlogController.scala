@@ -62,7 +62,7 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = getTopMentionsByTopicsAndPath(path, topics, filter)
+      val topMentions = if (filter) None else getTopMentions(path, topics)
       val topicList = topMentionsService.getTopics(path)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -367,20 +367,17 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopMentionsByTopicsAndPath(blogId: String, topics: Option[String], filterKeyEvent: Boolean) = {
-    if (filterKeyEvent) None
-    else {
-      val topMentionsResult = for {
-        topMentionTopic <- TopMentionsTopic.fromString(topics)
-        topMentions <- topMentionsService.getTopMentionsByTopic(blogId, topMentionTopic)
-      } yield topMentions
+  def getTopMentions(blogId: String, topics: Option[String]) = {
+    val topMentionsResult = for {
+      topMentionTopic <- TopMentionsTopic.fromString(topics)
+      topMentions <- topMentionsService.getTopMentionsByTopic(blogId, topMentionTopic)
+    } yield topMentions
 
-      topMentionsResult match {
-        case Some(_) => log.info(s"top mention result was successfully retrieved for ${topics.get}")
-        case None    => if (topics.isDefined) log.warn(s"top mention result couldn't be retrieved for ${topics.get}")
-      }
-
-      topMentionsResult
+    topMentionsResult match {
+      case Some(_) => log.info(s"top mention result was successfully retrieved for ${topics.get}")
+      case None    => if (topics.isDefined) log.warn(s"top mention result couldn't be retrieved for ${topics.get}")
     }
+
+    topMentionsResult
   }
 }
