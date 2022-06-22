@@ -2,14 +2,14 @@ package test
 
 import controllers.LiveBlogController
 import org.mockito.Mockito._
-import org.mockito.Matchers.any
+import org.mockito.Matchers.{any, anyObject, anyString}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{TopMentionsResult, TopMentionsTopic, TopMentionsTopicType}
+import model.{LiveBlogPage, TopMentionsResult, TopMentionsTopic, TopMentionsTopicType, TopicsLiveBlog}
 import topmentions.{TopMentionsS3Client, TopMentionsService}
 
 import scala.concurrent.Future
@@ -28,27 +28,37 @@ import scala.concurrent.Future
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live"
 
-  val fakeTopMentionsService = mock[TopMentionsService]
+  var fakeTopMentionsService = mock[TopMentionsService]
   val topMentionResult = TopMentionsResult(
-    name = "nhs",
+    name = "Fifa",
     `type` = TopMentionsTopicType.Org,
-    blocks = Seq("blockId1"),
+    blocks = Seq("56d02bd2e4b0d38537b1f5fa"),
     count = 1,
     percentage_blocks = 1.2f,
   )
-  when(
-    fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "nhs")),
-  ) thenReturn Some(
-    topMentionResult,
-  )
 
+  var fakeDcr = new DCRFake()
   lazy val liveBlogController = new LiveBlogController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
-    new DCRFake(),
+    fakeDcr,
     fakeTopMentionsService,
   )
+
+  override def beforeAll(): Unit = {
+    // This is to assure on every test we have a fresh instance of DCR
+    // and requestedBlogs is only having the calls for the relevant test
+    fakeDcr = new DCRFake()
+
+    // This is to assure on every test we have a fresh instance of TopicService
+    fakeTopMentionsService = mock[TopMentionsService]
+    when(
+      fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "Fifa")),
+    ) thenReturn Some(
+      topMentionResult,
+    )
+  }
 
   it should "return the latest blocks of a live blog" in {
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
@@ -82,7 +92,7 @@ import scala.concurrent.Future
 
   }
 
-  it should "return the latest blocks of a live blog using DCR" in {
+  "renderJson" should "return the latest blocks of a live blog using DCR" in {
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
     val fakeRequest = FakeRequest(
       GET,
@@ -229,15 +239,58 @@ import scala.concurrent.Future
     liveBlogController.shouldFilter(None) should be(false)
   }
 
-  "getTopMentionsForFilters" should "return none given no automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopics(path, None) should be(None)
+  "getTopMentionsForFilters" should "returns none given no automatic filter query parameter" in {
+    liveBlogController.getTopMentions(path, None) should be(None)
   }
 
-  "getTopMentionsForFilters" should "return none given an incorrect automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopics(path, Some("orgnhs")) should be(None)
+  "getTopMentionsForFilters" should "returns none given an incorrect automatic filter query parameter" in {
+    liveBlogController.getTopMentions(path, Some("orgFifa")) should be(None)
   }
 
-  "getTopMentionsForFilters" should "return correct topMentionResult given a correct automatic filter query parameter" in {
-    liveBlogController.getTopMentionsByTopics(path, Some("org:nhs")) should be(Some(topMentionResult))
+  "getTopMentionsForFilters" should "returns correct topMentionResult given a correct automatic filter query parameter" in {
+    liveBlogController.getTopMentions(path, Some("org:Fifa")) should be(Some(topMentionResult))
+  }
+
+  "renderArticle" should "returns the first page of filtered blog by topics" in {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"${path}",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderArticle(
+      path,
+      page = None,
+      filterKeyEvents = Some(false),
+      topics = Some("org:Fifa"),
+    )(fakeRequest)
+
+    status(result) should be(200)
+    assertDcrCalledForLiveBlogWithBlocks(expectedBlocks = Seq("56d02bd2e4b0d38537b1f5fa"))
+  }
+
+  "renderArticle" should "doesn't call getTopMentionsByTopic given filterKeyEvents and topics query params are provided" in {
+    reset(fakeTopMentionsService)
+    val fakeRequest = FakeRequest(GET, s"${path}").withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderArticle(
+      path,
+      page = None,
+      filterKeyEvents = Some(true),
+      topics = Some("org:Fifa"),
+    )(fakeRequest)
+
+    verify(fakeTopMentionsService, times(0)).getTopMentionsByTopic(anyString(), anyObject())
+    status(result) should be(200)
+  }
+
+  private def assertDcrCalledForLiveBlogWithBlocks(expectedBlocks: Seq[String]) = {
+    val liveblog = fakeDcr.requestedBlogs.dequeue()
+
+    liveblog match {
+      case LiveBlogPage(_, currentPage, _, _) => {
+        currentPage.currentPage.blocks.map(_.id) should be(expectedBlocks)
+      }
+      case _ => fail("DCR was not called with a LiveBlogPage")
+    }
   }
 }

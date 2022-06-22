@@ -8,10 +8,15 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 
+import scala.collection.mutable
+import scala.collection.mutable.Queue
 import scala.concurrent.{ExecutionContext, Future}
 
 // It is always a mistake to rely on actual DCR output for tests.
 class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRenderingService {
+
+  val requestedBlogs: Queue[PageWithStoryPackage] = new Queue[PageWithStoryPackage]()
+
   override def getArticle(
       ws: WSClient,
       article: PageWithStoryPackage,
@@ -22,6 +27,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       topics: Option[Seq[TopicWithCount]],
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
+    requestedBlogs.enqueue(article)
     Future(
       Cached(article)(RevalidatableResult.Ok(Html("FakeRemoteRender has found you out if you rely on this markup!"))),
     )
