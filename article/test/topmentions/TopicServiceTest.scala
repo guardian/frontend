@@ -22,7 +22,7 @@ class TopicServiceTest
     with WithTestExecutionContext
     with MockitoSugar {
 
-  val fakeClient = mock[TopMentionsS3Client]
+  val fakeClient = mock[TopicS3Client]
   val topMentionResult =
     TopicResult(
       name = "name1",

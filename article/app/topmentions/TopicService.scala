@@ -5,13 +5,13 @@ import model.{TopicsDetails, TopicResult, Topic, TopicWithCount}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
+class TopicService(topicsS3Client: TopicS3Client) extends GuLogging {
 
   private val blogsTopicsDetails = Box[Option[Map[String, TopicsDetails]]](None)
 
   def refreshTopicsDetails()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val retrievedTopicsDetails =
-      topMentionsS3Client.getListOfKeys().map { key => key.map { retrieveAllTopicsDetails(_) } }
+      topicsS3Client.getListOfKeys().map { key => key.map { retrieveAllTopicsDetails(_) } }
 
     retrievedTopicsDetails
       .flatMap(Future.sequence(_))
@@ -50,6 +50,6 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
   }
 
   private def retrieveAllTopicsDetails(key: String)(implicit executionContext: ExecutionContext) = {
-    topMentionsS3Client.getObject(key).map { res => key -> res }
+    topicsS3Client.getObject(key).map { res => key -> res }
   }
 }
