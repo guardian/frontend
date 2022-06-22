@@ -5,7 +5,7 @@ import model.{TopicsDetails, TopicResult, Topic, TopicWithCount}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
+class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
 
   private val topMentions = Box[Option[Map[String, TopicsDetails]]](None)
 
