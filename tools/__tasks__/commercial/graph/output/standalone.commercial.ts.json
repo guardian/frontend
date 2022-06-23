@@ -574,6 +574,7 @@
  ],
  "../projects/common/modules/analytics/shouldCaptureMetrics.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/url.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts"
