@@ -114,7 +114,7 @@ object Badges {
   val newsletters =
     Badge("tone/newsletter-tone", Static("images/badges/newsletter-badge.svg"))
   val womenseuros2022 =
-    Badge("football/women-s-euros-2022", Static("images/badges/womens_euros_2022_badge.svg"))
+    Badge("football/women-s-euro-2022", Static("images/badges/womens_euros_2022_badge.svg"))
 
   val allBadges = Seq(
     newArrivals,
