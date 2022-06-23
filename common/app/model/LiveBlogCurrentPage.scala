@@ -248,9 +248,10 @@ sealed trait PageReference {
   def isArchivePage: Boolean
 
   def getTopicsQueryParam(topMentionResult: Option[TopMentionsResult]) = {
-    if (topMentionResult.isDefined)
-      s"&topics=${topMentionResult.get.`type`}:${topMentionResult.get.name}"
-    else ""
+    topMentionResult match {
+      case Some(value) => s"&topics=${topMentionResult.get.`type`}:${value.name}"
+      case None        => ""
+    }
   }
 }
 
