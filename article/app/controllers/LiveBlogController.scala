@@ -156,6 +156,7 @@ class LiveBlogController(
                 filterKeyEvents,
                 request.forceLive,
                 topics,
+                topMentionResult,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
