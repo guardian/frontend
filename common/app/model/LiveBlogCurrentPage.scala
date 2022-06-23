@@ -24,7 +24,7 @@ object LiveBlogCurrentPage {
       case CanonicalLiveBlog | TopicsLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, topMentionResult)
       case PageWithBlock(isRequestedBlock) =>
         findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents, topMentionResult)
-      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents)
+      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents, topMentionResult)
       case ArticleBlocks         => None
       case GenericFallback       => None
       case _                     => None
@@ -36,9 +36,12 @@ object LiveBlogCurrentPage {
       blocks: Blocks,
       sinceBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
   ): Option[LiveBlogCurrentPage] = {
+
     val bodyBlocks = blocks.requestedBodyBlocks.get(sinceBlockId.around).toSeq.flatMap { bodyBlocks =>
-      applyFilters(bodyBlocks, filterKeyEvents, None).takeWhile(_.id != sinceBlockId.lastUpdate)
+      val onlyBlocksAfterLastUpdated = bodyBlocks.takeWhile(_.id != sinceBlockId.lastUpdate)
+      applyFilters(onlyBlocksAfterLastUpdated, filterKeyEvents, topMentionResult)
     }
     Some(
       LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None, None),
