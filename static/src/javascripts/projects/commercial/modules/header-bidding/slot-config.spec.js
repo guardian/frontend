@@ -1,3 +1,4 @@
+import { adSizes } from '@guardian/commercial-core';
 import config from '../../../../lib/config';
 import { Advert } from '../dfp/Advert';
 
@@ -47,6 +48,7 @@ const slotPrototype = {
 	defineSizeMapping: () => slotPrototype,
 	addService: () => slotPrototype,
 	setTargeting: () => slotPrototype,
+    setSafeFrameConfig: () => slotPrototype
 };
 
 // Mock window.googletag
@@ -58,10 +60,11 @@ window.googletag = {
 	pubads: () => ({}),
 };
 
-const buildAdvert = (id) => {
+const buildAdvert = (id, sizes) => {
 	const elt = document.createElement('div');
 	elt.setAttribute('id', id);
-	return new Advert(elt);
+    elt.setAttribute('data-name', id);
+	return new Advert(elt, sizes);
 };
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
@@ -248,7 +251,7 @@ describe('getPrebidAdSlots', () => {
 
 	test('should return the correct interactive banner slot at breakpoint D', () => {
 		getBreakpointKey.mockReturnValue('D');
-		const dfpAdvert = buildAdvert('dfp-ad--1');
+		const dfpAdvert = buildAdvert('dfp-ad--1', {mobile: [adSizes.mpu]});
 		dfpAdvert.node.setAttribute(
 			'class',
 			'js-ad-slot ad-slot ad-slot--banner-ad ad-slot--banner-ad-desktop ad-slot--rendered',
@@ -286,7 +289,7 @@ describe('getPrebidAdSlots', () => {
 		config.set('switches.mobileStickyPrebid', true);
 		shouldIncludeMobileSticky.mockReturnValue(true);
 		expect(
-			getHeaderBiddingAdSlots(buildAdvert('dfp-ad-mobile-sticky')),
+			getHeaderBiddingAdSlots(buildAdvert('dfp-ad-mobile-sticky', {mobile: [adSizes.mpu]})),
 		).toEqual([
 			{
 				key: 'mobile-sticky',

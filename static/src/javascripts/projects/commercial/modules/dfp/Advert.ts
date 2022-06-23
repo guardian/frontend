@@ -1,5 +1,5 @@
-import { breakpoints } from '../../../../lib/detect';
-import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
+import { slotSizeMappings } from '@guardian/commercial-core';
+import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
 import { defineSlot } from './define-slot';
 
 type Resolver = (x: boolean) => void;
@@ -14,48 +14,47 @@ type Timings = {
 	lazyWaitComplete: number | null;
 };
 
-const stringToTuple = (size: string): AdSizeTuple => {
-	const dimensions = size.split(',', 2).map(Number);
-
-	// Return an outOfPage tuple if the string is not `{number},{number}`
-	if (dimensions.length !== 2 || dimensions.some((n) => isNaN(n)))
-		return [0, 0]; // adSizes.outOfPage
-
-	return [dimensions[0], dimensions[1]];
+const isSlotName = (slotName: string): slotName is SlotName => {
+	return slotName in slotSizeMappings;
 };
 
-/** A breakpoint can have various sizes assigned to it. You can assign either on
- * set of sizes or multiple.
- *
- * One size       - `data-mobile="300,50"`
- * Multiple sizes - `data-mobile="300,50|320,50"`
- */
-const createSizeMapping = (attr: string): AdSize[] =>
-	attr
-		.split('|')
-		.map((size) => (size === 'fluid' ? 'fluid' : stringToTuple(size)));
+const getSlotSizeMapping = (name: string): SizeMapping => {
+	const slotName = name.includes('inline') ? 'inline' : name;
+	if (isSlotName(slotName)) {
+		return slotSizeMappings[slotName];
+	}
+	return {};
+};
 
-/** Extract the ad sizes from the breakpoint data attributes of an ad slot
- *
- * @param advertNode The ad slot HTML element that contains the breakpoint attributes
- * @returns A mapping from the breakpoints supported by the slot to an array of ad sizes
- */
-const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
-	breakpoints.reduce<Record<string, AdSize[]>>((sizes, breakpoint) => {
-		const data = advertNode.getAttribute(
-			`data-${breakpointNameToAttribute(breakpoint.name)}`,
-		);
-		if (data) {
-			sizes[breakpoint.name] = createSizeMapping(data);
-		}
-		return sizes;
-	}, {});
+const mergeSizeMappings = (
+	sizeMapping: SizeMapping,
+	additionalSizeMapping: SizeMapping,
+): SizeMapping => {
+	const mergedSizeMapping = sizeMapping;
+	(
+		Object.entries(additionalSizeMapping) as Array<
+			[keyof SizeMapping, AdSize[]]
+		>
+	).forEach(([breakpoint, breakPointSizes]) => {
+		mergedSizeMapping[breakpoint] = mergedSizeMapping[breakpoint] ?? [];
+
+		mergedSizeMapping[breakpoint]?.push(...breakPointSizes);
+	});
+	return mergedSizeMapping;
+};
+
+const isSizeMappingEmpty = (sizeMapping: SizeMapping): boolean => {
+	return (
+		Object.keys(sizeMapping).length === 0 ||
+		Object.entries(sizeMapping).every(([, mapping]) => mapping.length === 0)
+	);
+};
 
 class Advert {
 	id: string;
 	node: HTMLElement;
-	sizes: AdSizes;
-	size: AdSize | null = null;
+	sizes: SizeMapping;
+	size: AdSize | 'fluid' | null = null;
 	slot: googletag.Slot;
 	isEmpty: boolean | null = null;
 	isLoading = false;
@@ -81,13 +80,32 @@ class Advert {
 	hasPrebidSize = false;
 	lineItemId: number | null = null;
 
-	constructor(adSlotNode: HTMLElement) {
-		const sizes = getAdBreakpointSizes(adSlotNode);
-		const slotDefinition = defineSlot(adSlotNode, sizes);
+	constructor(
+		adSlotNode: HTMLElement,
+		additionalSizeMapping: SizeMapping = {},
+	) {
+		const defaultSizeMappingForSlot = adSlotNode.dataset.name
+			? getSlotSizeMapping(adSlotNode.dataset.name)
+			: {};
+
+		const sizeMapping = mergeSizeMappings(
+			defaultSizeMappingForSlot,
+			additionalSizeMapping,
+		);
+
+		if (isSizeMappingEmpty(sizeMapping)) {
+			throw new Error(
+				`Tried to render ad slot '${
+					adSlotNode.dataset.name ?? ''
+				}' without any size mappings`,
+			);
+		}
+
+		const slotDefinition = defineSlot(adSlotNode, sizeMapping);
 
 		this.id = adSlotNode.id;
 		this.node = adSlotNode;
-		this.sizes = sizes;
+		this.sizes = sizeMapping;
 		this.slot = slotDefinition.slot;
 
 		this.whenSlotReady = slotDefinition.slotReady;
@@ -154,6 +172,5 @@ export { Advert };
 
 export const _ = {
 	filterClasses: Advert.filterClasses,
-	createSizeMapping,
-	getAdBreakpointSizes,
+	getSlotSizeMapping,
 };

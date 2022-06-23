@@ -1,4 +1,5 @@
-import { EventTimer } from '@guardian/commercial-core';
+import type { AdSize } from '@guardian/commercial-core';
+import { createAdSize, EventTimer } from '@guardian/commercial-core';
 import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import { onConsent } from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
@@ -392,7 +393,7 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			return;
 		}
 
-		const size: AdSizeTuple = [width, height]; // eg. [300, 250]
+		const size: AdSize = createAdSize(width, height); // eg. [300, 250]
 		const advert = getAdvertById(adUnitCode);
 
 		if (!advert) {

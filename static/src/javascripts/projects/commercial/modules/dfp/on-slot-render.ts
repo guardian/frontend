@@ -1,3 +1,5 @@
+import type { AdSize } from '@guardian/commercial-core';
+import { createAdSize } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
 import { mediator } from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
@@ -35,9 +37,9 @@ const reportEmptyResponse = (
 	}
 };
 
-const sizeEventToAdSize = (size: string | number[]): AdSize => {
+const sizeEventToAdSize = (size: string | number[]): AdSize | 'fluid' => {
 	if (isString(size)) return 'fluid';
-	return [size[0], size[1]];
+	return createAdSize(size[0], size[1]);
 };
 
 export const onSlotRender = (

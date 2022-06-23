@@ -436,6 +436,10 @@
         margin-left: 1px;
     }
 
+    .bigfatfinal__image__svg {
+        height: 80px;
+    }
+
     @include mq(desktop) {
         display: block;
     }
