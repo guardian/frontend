@@ -1,5 +1,4 @@
 package controllers
-
 import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
@@ -62,7 +61,8 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = if (filter) None else getTopMentions(path, topics)
+      val blogId = path.split("\\?")(0)
+      val topMentions = if (filter) None else getTopMentions(blogId, topics)
       val topicList = topMentionsService.getTopics(path)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
