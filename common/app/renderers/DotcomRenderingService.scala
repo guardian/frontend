@@ -22,7 +22,6 @@ import model.{
   NoCache,
   PageWithStoryPackage,
   PressedPage,
-  TopMentionsResult,
   TopicWithCount,
 }
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -143,7 +142,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
       topics: Option[Seq[TopicWithCount]] = None,
-      activeTopic: Option[TopMentionsResult] = None,
+      activeTopic: Option[String] = None,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
       case liveblog: LiveBlogPage =>

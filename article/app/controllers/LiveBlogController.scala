@@ -66,7 +66,7 @@ class LiveBlogController(
       val topicList = topMentionsService.getTopics(path)
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter, topMentions, topicList) // we know the id of a block
+          renderWithRange(path, PageWithBlock(id), filter, topMentions, topicList, topics) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
@@ -74,8 +74,8 @@ class LiveBlogController(
         case None => {
           topMentions match {
             case Some(value) =>
-              renderWithRange(path, TopicsLiveBlog, filter, Some(value), topicList) // no page param
-            case None => renderWithRange(path, CanonicalLiveBlog, filter, None, topicList) // no page param
+              renderWithRange(path, TopicsLiveBlog, filter, Some(value), topicList, topics) // no page param
+            case None => renderWithRange(path, CanonicalLiveBlog, filter, None, topicList, topics) // no page param
           }
         }
       }
@@ -116,6 +116,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       topMentionResult: Option[TopMentionsResult],
       topics: Option[Seq[TopicWithCount]],
+      activeTopic: Option[String],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -156,7 +157,7 @@ class LiveBlogController(
                 filterKeyEvents,
                 request.forceLive,
                 topics,
-                topMentionResult,
+                activeTopic,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)

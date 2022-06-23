@@ -38,7 +38,7 @@ case class DotcomRenderingDataModel(
     webTitle: String,
     mainMediaElements: List[PageElement],
     main: String,
-    activeTopic: Option[TopMentionsResult],
+    activeTopic: Option[String],
     filterKeyEvents: Boolean,
     topics: Option[Seq[TopicWithCount]],
     pinnedPost: Option[Block],
@@ -102,7 +102,7 @@ object DotcomRenderingDataModel {
   implicit val writes = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
       val obj = Json.obj(
-        "activeTopic" -> None,
+        "activeTopic" -> model.activeTopic,
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
@@ -246,7 +246,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean,
       forceLive: Boolean,
       topics: Option[Seq[TopicWithCount]] = None,
-      activeTopic: Option[TopMentionsResult] = None,
+      activeTopic: Option[String] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -320,7 +320,7 @@ object DotcomRenderingDataModel {
       topics: Option[Seq[TopicWithCount]],
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
-      activeTopic: Option[TopMentionsResult] = None,
+      activeTopic: Option[String] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -424,10 +424,8 @@ object DotcomRenderingDataModel {
 
     val matchData = makeMatchData(page)
 
-    val newActiveTopic = activeTopic.map(x => println(x))
-
     DotcomRenderingDataModel(
-      activeTopic = None,
+      activeTopic = activeTopic,
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
