@@ -246,9 +246,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       topMentionResult: Option[TopMentionsResult],
   ): Seq[Block] = {
-    val blocksAround = requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty)
-
-    blocksAround.takeWhile { block =>
+    val blocksAround = requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty).takeWhile { block =>
       block.id != lastUpdateBlockId.lastUpdate
     }
 
