@@ -13,9 +13,9 @@
         "common/*": [
             "../static/src/javascripts/projects/common/*"
           ],
-          "lib/*": [
+        "lib/*": [
             "../static/src/javascripts/lib/*"
-          ],
+        ],
       }
     },
     "include": ["**/*.ts"]
