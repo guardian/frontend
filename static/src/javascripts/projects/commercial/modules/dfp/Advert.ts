@@ -40,7 +40,9 @@ const createSizeMapping = (attr: string): AdSize[] =>
  * @param advertNode The ad slot HTML element that contains the breakpoint attributes
  * @returns A mapping from the breakpoints supported by the slot to an array of ad sizes
  */
-const getAdBreakpointSizes = (advertNode: HTMLElement): SizeMapping =>
+const getSlotSizeMappingsFromDataAttrs = (
+	advertNode: HTMLElement,
+): SizeMapping =>
 	breakpoints.reduce<Record<string, AdSize[]>>((sizes, breakpoint) => {
 		const data = advertNode.getAttribute(
 			`data-${breakpointNameToAttribute(breakpoint.name)}`,
@@ -131,9 +133,11 @@ class Advert {
 			additionalSizeMapping,
 		);
 
-		// If the size mapping is empty, use the data attributes to create a size mapping, this is used on some interactives
+		/** If the size mapping is empty, use the data attributes to create a size mapping,
+		 * this is used on some interactives e.g. https://www.theguardian.com/education/ng-interactive/2021/sep/11/the-best-uk-universities-2022-rankings
+		 **/
 		if (isSizeMappingEmpty(sizeMapping)) {
-			sizeMapping = getAdBreakpointSizes(adSlotNode);
+			sizeMapping = getSlotSizeMappingsFromDataAttrs(adSlotNode);
 
 			// If the size mapping is still empty, throw an error as this should never happen
 			if (isSizeMappingEmpty(sizeMapping)) {
