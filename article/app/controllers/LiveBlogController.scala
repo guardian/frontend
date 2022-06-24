@@ -63,10 +63,18 @@ class LiveBlogController(
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
       val topMentions = if (filter) None else getTopMentions(path, topics)
-      val topicList = topMentionsService.getTopics(path)
+      val availableTopics = topMentionsService.getTopics(path)
+
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
-          renderWithRange(path, PageWithBlock(id), filter, topMentions, topicList) // we know the id of a block
+          renderWithRange(
+            path,
+            PageWithBlock(id),
+            filter,
+            topMentions,
+            availableTopics,
+            selectedTopics = topics,
+          ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
@@ -74,8 +82,23 @@ class LiveBlogController(
         case None => {
           topMentions match {
             case Some(value) =>
-              renderWithRange(path, TopicsLiveBlog, filter, Some(value), topicList) // no page param
-            case None => renderWithRange(path, CanonicalLiveBlog, filter, None, topicList) // no page param
+              renderWithRange(
+                path,
+                TopicsLiveBlog,
+                filter,
+                Some(value),
+                availableTopics,
+                selectedTopics = topics,
+              ) // no page param
+            case None =>
+              renderWithRange(
+                path,
+                CanonicalLiveBlog,
+                filter,
+                None,
+                availableTopics,
+                selectedTopics = topics,
+              ) // no page param
           }
         }
       }
@@ -115,7 +138,8 @@ class LiveBlogController(
       range: BlockRange,
       filterKeyEvents: Boolean,
       topMentionResult: Option[TopMentionsResult],
-      topics: Option[Seq[TopicWithCount]],
+      availableTopics: Option[Seq[TopicWithCount]],
+      selectedTopics: Option[String],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -155,7 +179,8 @@ class LiveBlogController(
                 pageType,
                 filterKeyEvents,
                 request.forceLive,
-                topics,
+                availableTopics,
+                selectedTopics,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
