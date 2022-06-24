@@ -67,7 +67,6 @@
     "@cypress/webpack-preprocessor": "^5.12.0",
     "@guardian/eslint-config-typescript": "^0.7.0",
     "@guardian/prettier": "^1.0.0",
-    "@types/cypress": "^1.1.3",
     "@types/google.analytics": "^0.0.42",
     "@types/googletag": "^1.1.3",
     "@types/jest": "^26.0.20",
