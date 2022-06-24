@@ -261,7 +261,7 @@ import scala.concurrent.Future
       path,
       page = None,
       filterKeyEvents = Some(false),
-      selectedTopics = Some("org:Fifa"),
+      topics = Some("org:Fifa"),
     )(fakeRequest)
 
     status(result) should be(200)
@@ -276,7 +276,7 @@ import scala.concurrent.Future
       path,
       page = None,
       filterKeyEvents = Some(true),
-      selectedTopics = Some("org:Fifa"),
+      topics = Some("org:Fifa"),
     )(fakeRequest)
 
     verify(fakeTopMentionsService, times(0)).getTopMentionsByTopic(anyString(), anyObject())

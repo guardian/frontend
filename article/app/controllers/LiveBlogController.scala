@@ -58,11 +58,11 @@ class LiveBlogController(
       path: String,
       page: Option[String] = None,
       filterKeyEvents: Option[Boolean],
-      selectedTopics: Option[String],
+      topics: Option[String],
   ): Action[AnyContent] = {
     Action.async { implicit request =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentions = if (filter) None else getTopMentions(path, selectedTopics)
+      val topMentions = if (filter) None else getTopMentions(path, topics)
       val availableTopics = topMentionsService.getTopics(path)
 
       page.map(ParseBlockId.fromPageParam) match {
@@ -73,7 +73,7 @@ class LiveBlogController(
             filter,
             topMentions,
             availableTopics,
-            selectedTopics,
+            selectedTopics = topics,
           ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
@@ -88,10 +88,17 @@ class LiveBlogController(
                 filter,
                 Some(value),
                 availableTopics,
-                selectedTopics,
+                selectedTopics = topics,
               ) // no page param
             case None =>
-              renderWithRange(path, CanonicalLiveBlog, filter, None, availableTopics, selectedTopics) // no page param
+              renderWithRange(
+                path,
+                CanonicalLiveBlog,
+                filter,
+                None,
+                availableTopics,
+                selectedTopics = topics,
+              ) // no page param
           }
         }
       }
