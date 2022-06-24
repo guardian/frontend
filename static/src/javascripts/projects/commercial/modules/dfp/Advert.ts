@@ -1,5 +1,7 @@
-import { slotSizeMappings } from '@guardian/commercial-core';
+import { createAdSize, slotSizeMappings } from '@guardian/commercial-core';
 import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
+import { breakpoints } from '../../../../lib/detect';
+import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { defineSlot } from './define-slot';
 
 type Resolver = (x: boolean) => void;
@@ -13,6 +15,43 @@ type Timings = {
 	loadingMethod: number | null;
 	lazyWaitComplete: number | null;
 };
+
+const stringToTuple = (size: string): AdSizeTuple => {
+	const dimensions = size.split(',', 2).map(Number);
+
+	// Return an outOfPage tuple if the string is not `{number},{number}`
+	if (dimensions.length !== 2 || dimensions.some((n) => isNaN(n)))
+		return [0, 0]; // adSizes.outOfPage
+
+	return [dimensions[0], dimensions[1]];
+};
+
+/** A breakpoint can have various sizes assigned to it. You can assign either on
+ * set of sizes or multiple.
+ *
+ * One size       - `data-mobile="300,50"`
+ * Multiple sizes - `data-mobile="300,50|320,50"`
+ */
+const createSizeMapping = (attr: string): AdSize[] =>
+	attr.split('|').map((size) => createAdSize(...stringToTuple(size)));
+
+/** Extract the ad sizes from the breakpoint data attributes of an ad slot
+ *
+ * @param advertNode The ad slot HTML element that contains the breakpoint attributes
+ * @returns A mapping from the breakpoints supported by the slot to an array of ad sizes
+ */
+const getSlotSizeMappingsFromDataAttrs = (
+	advertNode: HTMLElement,
+): SizeMapping =>
+	breakpoints.reduce<Record<string, AdSize[]>>((sizes, breakpoint) => {
+		const data = advertNode.getAttribute(
+			`data-${breakpointNameToAttribute(breakpoint.name)}`,
+		);
+		if (data) {
+			sizes[breakpoint.name] = createSizeMapping(data);
+		}
+		return sizes;
+	}, {});
 
 const isSlotName = (slotName: string): slotName is SlotName => {
 	return slotName in slotSizeMappings;
@@ -84,21 +123,30 @@ class Advert {
 		adSlotNode: HTMLElement,
 		additionalSizeMapping: SizeMapping = {},
 	) {
+		// Try to used size mappings if available
 		const defaultSizeMappingForSlot = adSlotNode.dataset.name
 			? getSlotSizeMapping(adSlotNode.dataset.name)
 			: {};
 
-		const sizeMapping = mergeSizeMappings(
+		let sizeMapping = mergeSizeMappings(
 			defaultSizeMappingForSlot,
 			additionalSizeMapping,
 		);
 
+		/** If the size mapping is empty, use the data attributes to create a size mapping,
+		 * this is used on some interactives e.g. https://www.theguardian.com/education/ng-interactive/2021/sep/11/the-best-uk-universities-2022-rankings
+		 **/
 		if (isSizeMappingEmpty(sizeMapping)) {
-			throw new Error(
-				`Tried to render ad slot '${
-					adSlotNode.dataset.name ?? ''
-				}' without any size mappings`,
-			);
+			sizeMapping = getSlotSizeMappingsFromDataAttrs(adSlotNode);
+
+			// If the size mapping is still empty, throw an error as this should never happen
+			if (isSizeMappingEmpty(sizeMapping)) {
+				throw new Error(
+					`Tried to render ad slot '${
+						adSlotNode.dataset.name ?? ''
+					}' without any size mappings`,
+				);
+			}
 		}
 
 		const slotDefinition = defineSlot(adSlotNode, sizeMapping);
