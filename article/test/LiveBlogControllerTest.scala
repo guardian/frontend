@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopMentionsResult, TopMentionsTopic, TopMentionsTopicType, TopicsLiveBlog}
+import model.{LiveBlogPage, TopMentions, TopMentionsTopic, TopMentionsTopicType, TopicsLiveBlog}
 import topmentions.{TopMentionsS3Client, TopMentionsService}
 
 import scala.concurrent.Future
@@ -31,7 +31,7 @@ import scala.concurrent.Future
   trait Setup {
     var fakeTopMentionsService = mock[TopMentionsService]
     var fakeDcr = new DCRFake()
-    val topMentionResult = TopMentionsResult(
+    val topMentions = TopMentions(
       name = "Fifa",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("56d08042e4b0d38537b1f70b"),
@@ -41,7 +41,7 @@ import scala.concurrent.Future
     when(
       fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "Fifa")),
     ) thenReturn Some(
-      topMentionResult,
+      topMentions,
     )
     lazy val liveBlogController = new LiveBlogController(
       testContentApiClient,
@@ -272,8 +272,8 @@ import scala.concurrent.Future
     liveBlogController.getTopMentions(path, Some("orgFifa")) should be(None)
   }
 
-  "getTopMentionsForFilters" should "returns correct topMentionResult given a correct automatic filter query parameter" in new Setup {
-    liveBlogController.getTopMentions(path, Some("org:Fifa")) should be(Some(topMentionResult))
+  "getTopMentionsForFilters" should "returns correct topMentions given a correct automatic filter query parameter" in new Setup {
+    liveBlogController.getTopMentions(path, Some("org:Fifa")) should be(Some(topMentions))
   }
 
   "renderArticle" should "returns the first page of filtered blog by topics" in new Setup {

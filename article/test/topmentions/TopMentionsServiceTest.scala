@@ -2,7 +2,7 @@ package topmentions
 
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ItemResponse
-import model.{TopMentionsDetails, TopMentionsResult, TopMentionsTopic, TopMentionsTopicType}
+import model.{TopMentionsDetails, TopMentions, TopMentionsTopic, TopMentionsTopicType}
 import model.TopMentionsTopicType.TopMentionsTopicType
 import org.scalatest.{BeforeAndAfterAll, GivenWhenThen}
 import org.scalatest.featurespec.AnyFeatureSpec
@@ -23,8 +23,8 @@ class TopMentionsServiceTest
     with MockitoSugar {
 
   val fakeClient = mock[TopMentionsS3Client]
-  val topMentionResult =
-    TopMentionsResult(
+  val topMentions =
+    TopMentions(
       name = "name1",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("blockId1"),
@@ -32,7 +32,7 @@ class TopMentionsServiceTest
       percentage_blocks = 1.2f,
     )
   val successResponse =
-    TopMentionsDetails(entity_types = Seq(TopMentionsTopicType.Org), results = Seq(topMentionResult), model = "model")
+    TopMentionsDetails(entity_types = Seq(TopMentionsTopicType.Org), results = Seq(topMentions), model = "model")
 
   "refreshTopMentions" should "return successful future given getListOfKeys s3 call fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))
@@ -81,7 +81,7 @@ class TopMentionsServiceTest
 
     val result = topMentionService.getTopMentionsByTopic("key1", TopMentionsTopic(TopMentionsTopicType.Org, "name1"))
 
-    result.get should equal(topMentionResult)
+    result.get should equal(topMentions)
   }
 
   "getTopMentionsByTopic" should "return none given correct blog id, filter entity and with same filter value but different case" in {

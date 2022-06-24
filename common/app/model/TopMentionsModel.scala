@@ -4,19 +4,19 @@ import common.GuLogging
 import model.TopMentionsTopicType.TopMentionsTopicType
 import play.api.libs.json.{Format, Json}
 
-case class TopMentionsResult(
+case class TopMentions(
     name: String,
     `type`: TopMentionsTopicType,
     blocks: Seq[String],
     count: Int,
     percentage_blocks: Float,
 )
-case class TopMentionsDetails(entity_types: Seq[TopMentionsTopicType], results: Seq[TopMentionsResult], model: String)
+case class TopMentionsDetails(entity_types: Seq[TopMentionsTopicType], results: Seq[TopMentions], model: String)
 
 case class TopMentionJsonParseException(message: String) extends Exception(message)
 
 object TopMentionsResponse {
-  implicit val TopMentionsResultJf: Format[TopMentionsResult] = Json.format[TopMentionsResult]
+  implicit val TopMentionsJf: Format[TopMentions] = Json.format[TopMentions]
   implicit val TopMentionsDetailsJf: Format[TopMentionsDetails] = Json.format[TopMentionsDetails]
 }
 
