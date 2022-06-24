@@ -20,7 +20,6 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
-  TopMentionsResult,
   TopicWithCount,
 }
 import navigation._
@@ -38,9 +37,9 @@ case class DotcomRenderingDataModel(
     webTitle: String,
     mainMediaElements: List[PageElement],
     main: String,
-    activeTopic: Option[String],
+    availableTopics: Option[Seq[TopicWithCount]],
+    selectedTopics: Option[String],
     filterKeyEvents: Boolean,
-    topics: Option[Seq[TopicWithCount]],
     pinnedPost: Option[Block],
     keyEvents: List[Block],
     mostRecentBlockId: Option[String],
@@ -102,7 +101,8 @@ object DotcomRenderingDataModel {
   implicit val writes = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
       val obj = Json.obj(
-        "activeTopic" -> model.activeTopic,
+        "availableTopics" -> model.availableTopics,
+        "selectedTopics" -> model.selectedTopics,
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
@@ -110,7 +110,6 @@ object DotcomRenderingDataModel {
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
-        "topics" -> model.topics,
         "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
         "mostRecentBlockId" -> model.mostRecentBlockId,
@@ -195,7 +194,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
-      topics = None,
+      availableTopics = None,
     )
   }
 
@@ -222,7 +221,7 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
-      topics = None,
+      availableTopics = None,
     )
   }
 
@@ -245,8 +244,8 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
-      topics: Option[Seq[TopicWithCount]] = None,
-      activeTopic: Option[String] = None,
+      availableTopics: Option[Seq[TopicWithCount]] = None,
+      selectedTopics: Option[String] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -298,10 +297,10 @@ object DotcomRenderingDataModel {
       pinnedPost,
       timelineBlocks,
       filterKeyEvents,
-      topics,
       mostRecentBlockId,
       forceLive,
-      activeTopic,
+      availableTopics,
+      selectedTopics,
     )
   }
 
@@ -317,10 +316,10 @@ object DotcomRenderingDataModel {
       pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
-      topics: Option[Seq[TopicWithCount]],
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
-      activeTopic: Option[String] = None,
+      availableTopics: Option[Seq[TopicWithCount]],
+      selectedTopics: Option[String] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -425,7 +424,6 @@ object DotcomRenderingDataModel {
     val matchData = makeMatchData(page)
 
     DotcomRenderingDataModel(
-      activeTopic = activeTopic,
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
@@ -448,7 +446,6 @@ object DotcomRenderingDataModel {
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = isSpecialReport(page),
       filterKeyEvents = filterKeyEvents,
-      topics = topics,
       pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
       mostRecentBlockId = mostRecentBlockId,
@@ -468,6 +465,8 @@ object DotcomRenderingDataModel {
       sectionLabel = Localisation(content.content.sectionLabelName.getOrElse(""))(request),
       sectionName = content.metadata.section.map(_.value),
       sectionUrl = content.content.sectionLabelLink.getOrElse(""),
+      availableTopics = availableTopics,
+      selectedTopics = selectedTopics,
       shouldHideAds = content.content.shouldHideAdverts,
       shouldHideReaderRevenue = content.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(content),

@@ -24,8 +24,8 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
-      topics: Option[Seq[TopicWithCount]],
-      activeTopic: Option[String],
+      availableTopics: Option[Seq[TopicWithCount]],
+      selectedTopics: Option[String],
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     requestedBlogs.enqueue(article)
