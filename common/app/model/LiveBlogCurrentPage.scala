@@ -265,7 +265,7 @@ case class N1Pagination(
 
 case class FirstPage(blocks: Seq[BodyBlock], filterKeyEvents: Boolean, topMentionResult: Option[TopMentionsResult])
     extends PageReference {
-  val suffix = s"?filterKeyEvents=$filterKeyEvents${getTopicsQueryParam(topMentionResult)}"
+  val suffix = s"?filterKeyEvents=$filterKeyEvents${buildQueryParam(topMentionResult)}"
   val pageNumber = 1
   val isArchivePage = false
 }
@@ -277,7 +277,7 @@ case class BlockPage(
     filterKeyEvents: Boolean,
     topMentionResult: Option[TopMentionsResult],
 ) extends PageReference {
-  val suffix = s"?page=with:block-$blockId&filterKeyEvents=$filterKeyEvents${getTopicsQueryParam(topMentionResult)}"
+  val suffix = s"?page=with:block-$blockId&filterKeyEvents=$filterKeyEvents${buildQueryParam(topMentionResult)}"
   val isArchivePage = true
 }
 
