@@ -42,7 +42,6 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
       blogId: String,
       topMentionEntity: TopMentionsTopic,
   ): Option[TopMentionsResult] = {
-
     getBlogTopMentions(blogId).flatMap(_.results.find(result => {
       result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value
     }))
