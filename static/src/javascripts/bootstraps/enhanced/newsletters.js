@@ -122,15 +122,15 @@ const submitForm = (form, buttonEl) => {
 		formQueryString += `&g-recaptcha-response=${googleRecaptchaResponse}`;
 	}
 
-    const cardElement = findContainingCard(form);
+	const cardElement = findContainingCard(form);
 	if (cardElement) {
 		const eventData = buildComponentEventData(
 			cardElement,
-			'SUBSCRIBE',
+			'ANSWER',
 			'form-submission',
 		);
 		ophan.record(eventData);
-		console.log(eventData);
+		console.log(eventData.componentEvent);
 	}
 
 	return fetch(`${config.get('page.ajaxUrl')}/email`, {
@@ -143,6 +143,42 @@ const submitForm = (form, buttonEl) => {
 	}).then((response) => {
 		if (response.ok) {
 			addSubscriptionMessage(buttonEl);
+            if (cardElement) {
+                const confirmEventData = buildComponentEventData(
+                    cardElement,
+                    'SUBSCRIBE',
+                    'submission-confirmed',
+                );
+                ophan.record(confirmEventData);
+                console.log(confirmEventData.componentEvent);
+            }
+		} else {
+			//TO DO - USER FEEDBACK!!!
+			response
+				.text()
+				.then((errorText) => {
+					if (cardElement) {
+						const failEventData = buildComponentEventData(
+							cardElement,
+							'CLOSE',
+							'submission-failed,' + errorText,
+						);
+						ophan.record(failEventData);
+						console.log(failEventData.componentEvent);
+					}
+				})
+				.catch((e) => {
+					console.warn(e);
+                    if (cardElement) {
+						const failEventData = buildComponentEventData(
+							cardElement,
+							'CLOSE',
+							'submission-failed,[no error text]',
+						);
+						ophan.record(failEventData);
+						console.log(failEventData.componentEvent);
+					}
+				});
 		}
 	});
 };
