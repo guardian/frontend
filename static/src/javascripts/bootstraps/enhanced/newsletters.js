@@ -1,4 +1,3 @@
-import bean from 'bean';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import config from 'lib/config';
@@ -22,6 +21,7 @@ const trackingEvents = {
 	confirm: 'submission-confirmed',
 	fail: 'submission-failed',
 	openCaptcha: 'open-captcha',
+	loadError: 'captcha-load-error',
 };
 
 const inputs = {
@@ -82,6 +82,9 @@ const sendTracking = (element, action, extraValues) => {
 			actionType = 'SUBSCRIBE';
 			break;
 		case trackingEvents.fail:
+			actionType = 'CLOSE';
+			break;
+		case trackingEvents.loadError:
 			actionType = 'CLOSE';
 			break;
 		case trackingEvents.openCaptcha:
@@ -198,12 +201,19 @@ const submitForm = (form, buttonEl) => {
 };
 
 const createSubscriptionFormEventHandlers = (buttonEl) => {
-	bean.on(buttonEl, 'click', (event) => {
+	buttonEl.addEventListener('click', (event) => {
 		event.preventDefault();
 		const form = buttonEl.form;
 		if (validate(form)) {
 			if (window.guardian.config.switches.emailSignupRecaptcha) {
-				showCaptcha(form, () => submitForm(form, buttonEl));
+				showCaptcha(
+					form,
+					() => submitForm(form, buttonEl),
+					() => {
+						sendTracking(form, trackingEvents.loadError);
+						addConfirmationMessage(buttonEl, false);
+					},
+				);
 			} else {
 				submitForm(form, buttonEl);
 			}
@@ -211,7 +221,7 @@ const createSubscriptionFormEventHandlers = (buttonEl) => {
 	});
 };
 
-const showCaptcha = (form, callback) => {
+const showCaptcha = (form, callback, loadErrorCallback) => {
 	const captchaContainer = $('.grecaptcha_container', form).get(0);
 
 	// The first captcha id will be "0" (falsy in js) so check for type
@@ -219,6 +229,7 @@ const showCaptcha = (form, callback) => {
 		form.captchaId = grecaptcha.render(captchaContainer, {
 			sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
 			callback: callback,
+			'data-error-callback': loadErrorCallback,
 			size: 'invisible',
 		});
 	}
