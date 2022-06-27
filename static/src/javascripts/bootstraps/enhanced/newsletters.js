@@ -17,6 +17,13 @@ const classes = {
 	card: 'newsletter-card',
 };
 
+const trackingEvents = {
+	submit: 'form-submission',
+	confirm: 'submission-confirmed',
+	fail: 'submission-failed',
+	openCaptcha: 'open-captcha',
+};
+
 const inputs = {
 	email: 'email',
 	dummy: 'name',
@@ -57,6 +64,42 @@ const findContainingCard = (originalElement) => {
 		element = element.parentElement;
 	}
 	return undefined;
+};
+
+const sendTracking = (element, action, extraValues) => {
+	const cardElement = findContainingCard(element);
+	if (!cardElement) {
+		return;
+	}
+
+	let actionType = 'CLICK';
+
+	switch (action) {
+		case trackingEvents.submit:
+			actionType = 'ANSWER';
+			break;
+		case trackingEvents.confirm:
+			actionType = 'SUBSCRIBE';
+			break;
+		case trackingEvents.fail:
+			actionType = 'CLOSE';
+			break;
+		case trackingEvents.openCaptcha:
+			actionType = 'EXPAND';
+			break;
+	}
+
+	const actionDescription = extraValues
+		? [action, extraValues].join(',')
+		: action;
+
+	const eventData = buildComponentEventData(
+		cardElement,
+		actionType,
+		actionDescription,
+	);
+	ophan.record(eventData);
+	console.log(eventData.componentEvent);
 };
 
 const hideInputAndShowPreview = (el) => {
@@ -126,16 +169,7 @@ const submitForm = (form, buttonEl) => {
 		formQueryString += `&g-recaptcha-response=${googleRecaptchaResponse}`;
 	}
 
-	const cardElement = findContainingCard(form);
-	if (cardElement) {
-		const eventData = buildComponentEventData(
-			cardElement,
-			'ANSWER',
-			'form-submission',
-		);
-		ophan.record(eventData);
-		console.log(eventData.componentEvent);
-	}
+	sendTracking(form, trackingEvents.submit);
 
 	return fetch(`${config.get('page.ajaxUrl')}/email`, {
 		method: 'POST',
@@ -147,41 +181,17 @@ const submitForm = (form, buttonEl) => {
 	}).then((response) => {
 		if (response.ok) {
 			addConfirmationMessage(buttonEl, true);
-			if (cardElement) {
-				const confirmEventData = buildComponentEventData(
-					cardElement,
-					'SUBSCRIBE',
-					'submission-confirmed',
-				);
-				ophan.record(confirmEventData);
-				console.log(confirmEventData.componentEvent);
-			}
+			sendTracking(form, trackingEvents.confirm);
 		} else {
 			addConfirmationMessage(buttonEl, false);
 			response
 				.text()
 				.then((errorText) => {
-					if (cardElement) {
-						const failEventData = buildComponentEventData(
-							cardElement,
-							'CLOSE',
-							'submission-failed,' + errorText,
-						);
-						ophan.record(failEventData);
-						console.log(failEventData.componentEvent);
-					}
+					sendTracking(form, trackingEvents.fail, errorText);
 				})
 				.catch((e) => {
 					console.warn(e);
-					if (cardElement) {
-						const failEventData = buildComponentEventData(
-							cardElement,
-							'CLOSE',
-							'submission-failed,[no error text]',
-						);
-						ophan.record(failEventData);
-						console.log(failEventData.componentEvent);
-					}
+					sendTracking(form, trackingEvents.fail, '[no error text]');
 				});
 		}
 	});
@@ -214,17 +224,7 @@ const showCaptcha = (form, callback) => {
 	}
 
 	grecaptcha.execute(form.captchaId);
-
-	const cardElement = findContainingCard(form);
-	if (cardElement) {
-		const eventData = buildComponentEventData(
-			cardElement,
-			'EXPAND',
-			'open-captcha',
-		);
-		ophan.record(eventData);
-		console.log(eventData.componentEvent);
-	}
+	sendTracking(form, trackingEvents.openCaptcha);
 };
 
 const modifyFormForSignedIn = (el) => {
