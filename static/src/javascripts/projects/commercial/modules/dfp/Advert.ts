@@ -216,7 +216,7 @@ class Advert {
 	}
 }
 
-export { Advert };
+export { Advert, isSlotName };
 
 export const _ = {
 	filterClasses: Advert.filterClasses,

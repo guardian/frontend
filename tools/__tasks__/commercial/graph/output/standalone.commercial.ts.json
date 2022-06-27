@@ -142,7 +142,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
-  "../projects/commercial/modules/dfp/define-slot.js"
+  "../projects/commercial/modules/dfp/define-slot.ts"
  ],
  "../projects/commercial/modules/dfp/add-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -153,12 +153,13 @@
   "../projects/commercial/modules/dfp/queue-advert.ts"
  ],
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
- "../projects/commercial/modules/dfp/define-slot.js": [
-  "../../../../node_modules/lodash-es/lodash.js",
-  "../lib/config.js",
+ "../projects/commercial/modules/dfp/define-slot.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/detect.js",
   "../lib/url.ts",
-  "../projects/common/modules/commercial/lib/googletag-ad-size.ts"
+  "../projects/common/modules/commercial/lib/googletag-ad-size.ts",
+  "../types/ias.d.ts"
  ],
  "../projects/commercial/modules/dfp/dfp-env-globals.ts": [],
  "../projects/commercial/modules/dfp/dfp-env.ts": [
@@ -732,6 +733,7 @@
   "../../../../node_modules/@guardian/libs/dist/cjs/index.js"
  ],
  "../types/dates.ts": [],
+ "../types/ias.d.ts": [],
  "../types/membership.ts": [
   "../types/dates.ts"
  ],

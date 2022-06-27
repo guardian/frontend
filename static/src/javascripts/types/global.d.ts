@@ -110,6 +110,7 @@ interface PageConfig extends CommercialPageConfig {
 	toneIds: string;
 	tones: string;
 	videoDuration: number;
+	isbn?: string;
 }
 
 interface Ophan {
@@ -223,6 +224,14 @@ interface ArticleCounts {
 	dailyArticleHistory: DailyArticleHistory;
 }
 
+interface IasPET {
+	queue?: Array<{
+		adSlots: IasPETSlot[];
+		dataHandler: (targetingJSON: string) => void;
+	}>;
+	pubId?: string;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -240,4 +249,5 @@ interface Window {
 	confiant?: Confiant;
 	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];
+	__iasPET?: IasPET;
 }

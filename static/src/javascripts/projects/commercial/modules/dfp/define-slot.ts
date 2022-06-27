@@ -1,14 +1,11 @@
-/**
- * @typedef {import('@guardian/commercial-core').AdSize} AdSize
- * @typedef {import('@guardian/commercial-core').SizeMapping} SizeMapping
- */
+import type { SizeMapping, SlotName } from '@guardian/commercial-core';
 import { once } from 'lodash-es';
-import config from '../../../../lib/config';
+import type { IasPETSlot, IasTargeting } from 'types/ias';
 import { breakpoints } from '../../../../lib/detect';
 import { getUrlVars } from '../../../../lib/url';
 import { toGoogleTagSize } from '../../../common/modules/commercial/lib/googletag-ad-size';
 
-const adUnit = once((): string | undefined => {
+const adUnit = once((): string => {
 	const urlVars = getUrlVars();
 	return urlVars['ad-unit']
 		? `/${window.guardian.config.page.dfpAccountId}/${String(
@@ -16,6 +13,11 @@ const adUnit = once((): string | undefined => {
 		  )}`
 		: window.guardian.config.page.adUnit;
 });
+
+const isBreakpointInSizes = (
+	breakpoint: string,
+	sizes: SizeMapping,
+): breakpoint is keyof SizeMapping => breakpoint in sizes;
 
 /**
  * Builds and assigns the correct size map for a slot based on the breakpoints and sizes from
@@ -27,41 +29,55 @@ const adUnit = once((): string | undefined => {
  * If it has been defined, then we add that size to the size mapping.
  *
  */
-const buildSizeMapping = (sizes: AdSizes): googletag.SizeMappingArray => {
+const buildSizeMapping = (
+	sizeMapping: SizeMapping,
+): googletag.SizeMappingArray => {
 	const mapping = window.googletag.sizeMapping();
 
 	breakpoints
-		.filter((_) => _.name in sizes)
-		.forEach((_) => {
-			mapping.addSize([_.width, 0], sizes[_.name].map(toGoogleTagSize));
+		.filter(({ name }) => name in sizeMapping)
+		.forEach(({ width, name }) => {
+			if (isBreakpointInSizes(name, sizeMapping)) {
+				const sizes = sizeMapping[name];
+				if (sizes) {
+					mapping.addSize([width, 0], sizes.map(toGoogleTagSize));
+				}
+			}
 		});
 
 	return mapping.build();
 };
 
-/**
- * Convert our size mappings to googletag compatible ones
- *
- * @param {SizeMapping} sizesByBreakpoint
- * @returns {{ sizeMapping: googletag.SizeMappingArray, sizes: AdSize[] }}
- */
-const getSizeOpts = (sizesByBreakpoint) => {
+const isMultiSize = (
+	size: googletag.GeneralSize,
+): size is googletag.MultiSize => {
+	return !!size.length;
+};
+
+const getSizeOpts = (
+	sizesByBreakpoint: SizeMapping,
+): {
+	sizeMapping: googletag.SizeMappingArray;
+	sizes: googletag.SingleSize[];
+} => {
 	const sizeMapping = buildSizeMapping(sizesByBreakpoint);
 	// as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
 	const flattenSizeMappings = sizeMapping
 		.map((size) => size[1])
-		.reduce((acc, current) => {
-			if (!current.length) {
+		.reduce<googletag.SingleSize[]>((acc, current) => {
+			if (!isMultiSize(current)) {
 				return [...acc, current];
 			}
 			return [...acc, ...current];
 		}, []);
 
-	const sizes = [];
+	const sizes: googletag.SingleSize[] = [];
 	flattenSizeMappings.forEach((arr) => {
 		if (
 			!sizes.some(
-				(size) => `${size[0]}-${size[1]}` === `${arr[0]}-${arr[1]}`,
+				(size) =>
+					`${size[0]}-${String(size[1])}` ===
+					`${arr[0]}-${String(arr[1])}`,
 			)
 		) {
 			sizes.push(arr);
@@ -74,11 +90,11 @@ const getSizeOpts = (sizesByBreakpoint) => {
 	};
 };
 
-const isEligibleForOutstream = (slotTarget) =>
+const isEligibleForOutstream = (slotTarget: string) =>
 	typeof slotTarget === 'string' &&
 	(slotTarget === 'inline1' || slotTarget === 'top-above-nav');
 
-const allowSafeFrameToExpand = (slot) => {
+const allowSafeFrameToExpand = (slot: googletag.Slot) => {
 	slot.setSafeFrameConfig({
 		allowOverlayExpansion: false,
 		allowPushExpansion: true,
@@ -87,21 +103,30 @@ const allowSafeFrameToExpand = (slot) => {
 	return slot;
 };
 
-const defineSlot = (adSlotNode, sizes) => {
-	const slotTarget = adSlotNode.getAttribute('data-name');
-	const sizeOpts = getSizeOpts(sizes);
+const defineSlot = (
+	adSlotNode: HTMLElement,
+	sizeMapping: SizeMapping,
+): { slot: googletag.Slot; slotReady: Promise<void> } => {
+	const slotTarget = adSlotNode.getAttribute('data-name') as SlotName;
+	const sizeOpts = getSizeOpts(sizeMapping);
 	const id = adSlotNode.id;
-	let slot;
+	let slot: googletag.Slot | null;
 	let slotReady = Promise.resolve();
 
 	if (adSlotNode.getAttribute('data-out-of-page')) {
-		slot = window.googletag
-			.defineOutOfPageSlot(adUnit(), id)
-			.defineSizeMapping(sizeOpts.sizeMapping);
+		slot = window.googletag.defineOutOfPageSlot(
+			adUnit(),
+			id,
+		) as googletag.Slot;
+		slot.defineSizeMapping(sizeOpts.sizeMapping);
 	} else {
-		slot = window.googletag
-			.defineSlot(adUnit(), sizeOpts.sizes, id)
-			.defineSizeMapping(sizeOpts.sizeMapping);
+		slot = window.googletag.defineSlot(
+			adUnit(),
+			sizeOpts.sizes,
+			id,
+		) as googletag.Slot;
+		slot.defineSizeMapping(sizeOpts.sizeMapping);
+
 		if (isEligibleForOutstream(slotTarget)) {
 			allowSafeFrameToExpand(slot);
 		}
@@ -118,36 +143,42 @@ const defineSlot = (adSlotNode, sizes) => {
 
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
-	if (config.get('switches.iasAdTargeting', false)) {
+	if (window.guardian.config.switches.iasAdTargeting === true) {
 		// this should all have been instantiated by commercial/modules/third-party-tags/ias.js
-		window.__iasPET = window.__iasPET || {};
+		window.__iasPET = window.__iasPET ?? {};
 		const iasPET = window.__iasPET;
 
-		iasPET.queue = iasPET.queue || [];
+		iasPET.queue = iasPET.queue ?? [];
 		iasPET.pubId = '10249';
 
+		// need to reorganize the type due to https://github.com/microsoft/TypeScript/issues/33591
+		const slotSizes: Array<googletag.Size | 'fluid'> = slot.getSizes();
+
 		// IAS Optimization Targeting
-		const iasPETSlots = [
+		const iasPETSlots: IasPETSlot[] = [
 			{
 				adSlotId: id,
-				size: slot
-					.getSizes()
-					.filter((size) => size !== 'fluid')
+				size: slotSizes
+					.filter(
+						(
+							size: 'fluid' | googletag.Size,
+						): size is googletag.Size => size !== 'fluid',
+					)
 					.map((size) => [size.getWidth(), size.getHeight()]),
 				adUnitPath: adUnit(), // why do we have this method and not just slot.getAdUnitPath()?
 			},
 		];
 
 		// this is stored so that the timeout can be cancelled in the event of IAS not timing out
-		let timeoutId;
+		let timeoutId: NodeJS.Timeout;
 
 		// this is resolved by either the iasTimeout or iasDataCallback, defined below
-		let loadedResolve;
-		const iasDataPromise = new Promise((resolve) => {
+		let loadedResolve: () => void;
+		const iasDataPromise = new Promise<void>((resolve) => {
 			loadedResolve = resolve;
 		});
 
-		const iasDataCallback = (targetingJSON) => {
+		const iasDataCallback = (targetingJSON: string) => {
 			clearTimeout(timeoutId);
 
 			/*  There is a name-clash with the `fr` targeting returned by IAS
@@ -155,7 +186,7 @@ const defineSlot = (adSlotNode, sizes) => {
                 we apply the targeting to the slot ourselves and rename the IAS
                 fr parameter to `fra` (given that, here, it relates to fraud).
             */
-			const targeting = JSON.parse(targetingJSON);
+			const targeting = JSON.parse(targetingJSON) as IasTargeting;
 
 			// brand safety is on a page level
 			Object.keys(targeting.brandSafety).forEach((key) =>
@@ -166,7 +197,7 @@ const defineSlot = (adSlotNode, sizes) => {
 			if (targeting.fr) {
 				window.googletag.pubads().setTargeting('fra', targeting.fr);
 			}
-			if (targeting.custom && targeting.custom['ias-kw']) {
+			if (targeting.custom?.['ias-kw']) {
 				window.googletag
 					.pubads()
 					.setTargeting('ias-kw', targeting.custom['ias-kw']);
@@ -177,7 +208,7 @@ const defineSlot = (adSlotNode, sizes) => {
 			Object.keys(targeting.slots[id])
 				.filter((x) => !ignoredKeys.includes(x))
 				.forEach((key) =>
-					slot.setTargeting(key, targeting.slots[id][key]),
+					slot?.setTargeting(key, targeting.slots[id][key]),
 				);
 
 			loadedResolve();
@@ -191,26 +222,28 @@ const defineSlot = (adSlotNode, sizes) => {
 		const iasTimeoutDuration = 1000;
 
 		const iasTimeout = () =>
-			new Promise((resolve) => {
+			new Promise<void>((resolve) => {
 				timeoutId = setTimeout(resolve, iasTimeoutDuration);
 			});
 
 		slotReady = Promise.race([iasTimeout(), iasDataPromise]);
 	}
-	const isBn = config.get('page.isbn');
+	const isbn = window.guardian.config.page.isbn;
 
-	if (slotTarget === 'im' && isBn) {
-		slot.setTargeting('isbn', isBn);
+	if (slotTarget === 'im' && isbn) {
+		slot.setTargeting('isbn', isbn);
 	}
 
-	const fabricKeyValues = new Map([
+	const fabricKeyValues = new Map<SlotName, string>([
 		['top-above-nav', 'fabric1'],
 		['merchandising-high', 'fabric2'],
 		['merchandising', 'fabric3'],
 	]);
 
-	if (fabricKeyValues.has(slotTarget)) {
-		slot.setTargeting('slot-fabric', fabricKeyValues.get(slotTarget));
+	const slotFabric = fabricKeyValues.get(slotTarget);
+
+	if (slotFabric) {
+		slot.setTargeting('slot-fabric', slotFabric);
 	}
 
 	slot.addService(window.googletag.pubads()).setTargeting('slot', slotTarget);
@@ -221,4 +254,8 @@ const defineSlot = (adSlotNode, sizes) => {
 	};
 };
 
-export { defineSlot, getSizeOpts, toGoogleTagSize };
+export { defineSlot, getSizeOpts };
+
+export const _ = {
+	buildSizeMapping,
+};
