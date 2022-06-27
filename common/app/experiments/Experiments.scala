@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(InteractivesIdleLoading, OfferHttp3, KeyEventsCarousel)
+    Set(OfferHttp3, KeyEventsCarousel)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -18,16 +18,6 @@ object FrontRendering
       owners = Seq(Owner.withGithub("dotcom")),
       sellByDate = LocalDate.of(2023, 6, 2),
       participationGroup = Perc0A,
-    )
-
-object InteractivesIdleLoading
-    extends Experiment(
-      name = "interactives-idle-loading",
-      description =
-        "Tests the impact of loading interactive embeds on page idle instead of when they become visible in the viewport",
-      owners = Seq(Owner.withGithub("simonbyford")),
-      sellByDate = LocalDate.of(2022, 7, 1),
-      participationGroup = Perc10A,
     )
 
 object OfferHttp3
