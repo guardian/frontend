@@ -122,6 +122,17 @@ const submitForm = (form, buttonEl) => {
 		formQueryString += `&g-recaptcha-response=${googleRecaptchaResponse}`;
 	}
 
+    const cardElement = findContainingCard(form);
+	if (cardElement) {
+		const eventData = buildComponentEventData(
+			cardElement,
+			'SUBSCRIBE',
+			'form-submission',
+		);
+		ophan.record(eventData);
+		console.log(eventData);
+	}
+
 	return fetch(`${config.get('page.ajaxUrl')}/email`, {
 		method: 'POST',
 		body: formQueryString,
