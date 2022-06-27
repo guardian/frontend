@@ -164,6 +164,17 @@ const createSubscriptionFormEventHandlers = (buttonEl) => {
 const showCaptcha = (form, callback) => {
 	const captchaContainer = $('.grecaptcha_container', form).get(0);
 
+	// The first captcha id will be "0" (falsy in js) so check for type
+	if (typeof form.captchaId === 'undefined') {
+		form.captchaId = grecaptcha.render(captchaContainer, {
+			sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
+			callback: callback,
+			size: 'invisible',
+		});
+	}
+
+	grecaptcha.execute(form.captchaId);
+
 	const cardElement = findContainingCard(form);
 	if (cardElement) {
 		const eventData = buildComponentEventData(
@@ -172,15 +183,8 @@ const showCaptcha = (form, callback) => {
 			'open-captcha',
 		);
 		ophan.record(eventData);
-		console.log(eventData);
+		console.log(eventData.componentEvent);
 	}
-
-	const captchaId = grecaptcha.render(captchaContainer, {
-		sitekey: window.guardian.config.page.googleRecaptchaSiteKey,
-		callback: callback,
-		size: 'invisible',
-	});
-	grecaptcha.execute(captchaId);
 };
 
 const modifyFormForSignedIn = (el) => {
