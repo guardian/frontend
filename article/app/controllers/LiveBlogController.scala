@@ -112,17 +112,19 @@ class LiveBlogController(
       rendered: Option[Boolean],
       isLivePage: Option[Boolean],
       filterKeyEvents: Option[Boolean],
+      topics: Option[String],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
       val filter = shouldFilter(filterKeyEvents)
-      val range = getRange(lastUpdate, page)
+      val topMentionResult = getTopMentions(path, topics)
+      val range = getRange(lastUpdate, page, topMentionResult)
 
-      mapModel(path, range, filter, None) {
+      mapModel(path, range, filter, topMentionResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
           Future.successful(renderGuuiJson(blog, blocks, filter))
         case (blog: LiveBlogPage, blocks) =>
-          getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty))
+          getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty), topMentionResult)
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
@@ -197,11 +199,16 @@ class LiveBlogController(
     }
   }
 
-  private[this] def getRange(lastUpdate: Option[String], page: Option[String]): BlockRange = {
-    (lastUpdate.map(ParseBlockId.fromBlockId), page.map(ParseBlockId.fromPageParam)) match {
-      case (Some(ParsedBlockId(id)), _) => SinceBlockId(id)
-      case (_, Some(ParsedBlockId(id))) => PageWithBlock(id)
-      case _                            => CanonicalLiveBlog
+  private[this] def getRange(
+      lastUpdate: Option[String],
+      page: Option[String],
+      topMentionResult: Option[TopMentionsResult],
+  ): BlockRange = {
+    (lastUpdate.map(ParseBlockId.fromBlockId), page.map(ParseBlockId.fromPageParam), topMentionResult) match {
+      case (Some(ParsedBlockId(id)), _, _) => SinceBlockId(id)
+      case (_, Some(ParsedBlockId(id)), _) => PageWithBlock(id)
+      case (_, _, Some(_))                 => TopicsLiveBlog
+      case _                               => CanonicalLiveBlog
     }
   }
 
@@ -217,6 +224,7 @@ class LiveBlogController(
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]] = Map.empty,
+      topMentionResult: Option[TopMentionsResult],
   )(implicit request: RequestHeader): Future[Result] = {
     val remoteRender = !request.forceDCROff
 
@@ -229,6 +237,7 @@ class LiveBlogController(
           filterKeyEvents,
           remoteRender,
           requestedBodyBlocks,
+          topMentionResult,
         )
       case _ => Future.successful(common.renderJson(views.html.liveblog.liveBlogBody(liveblog), liveblog))
     }
@@ -238,6 +247,7 @@ class LiveBlogController(
       page: PageWithStoryPackage,
       lastUpdateBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
   ): Seq[BodyBlock] = {
     val requestedBlocks = page.article.fields.blocks.toSeq.flatMap {
       _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
@@ -249,6 +259,8 @@ class LiveBlogController(
 
     if (filterKeyEvents) {
       latestBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
+    } else if (topMentionResult.isDefined) {
+      latestBlocks.filter(block => topMentionResult.get.blocks.contains(block.id))
     } else latestBlocks
 
   }
@@ -257,18 +269,19 @@ class LiveBlogController(
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
       lastUpdateBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
+      topMentionResult: Option[TopMentionsResult],
   ): Seq[Block] = {
-    val blocksAround = requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty)
+    val blocksAround = requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty).takeWhile { block =>
+      block.id != lastUpdateBlockId.lastUpdate
+    }
 
-    val filteredBlocks = if (filterKeyEvents) {
+    if (filterKeyEvents) {
       blocksAround.filter(block =>
         block.attributes.keyEvent.getOrElse(false) || block.attributes.summary.getOrElse(false),
       )
+    } else if (topMentionResult.isDefined) {
+      blocksAround.filter(block => topMentionResult.get.blocks.contains(block.id))
     } else blocksAround
-
-    filteredBlocks.takeWhile { block =>
-      block.id != lastUpdateBlockId.lastUpdate
-    }
   }
 
   private def getDCRBlocksHTML(page: LiveBlogPage, blocks: Seq[Block])(implicit
@@ -286,10 +299,10 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       remoteRender: Boolean,
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
+      topMentionResult: Option[TopMentionsResult],
   )(implicit request: RequestHeader): Future[Result] = {
-
-    val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
-    val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents)
+    val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents, topMentionResult)
+    val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents, topMentionResult)
 
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
