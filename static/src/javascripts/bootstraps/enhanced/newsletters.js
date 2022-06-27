@@ -210,9 +210,13 @@ const updatePageForLoggedIn = (emailAddress, el) => {
 const showSecondStageSignup = (buttonEl) => {
 	fastdom.mutate(() => {
 		buttonEl.setAttribute('type', 'button');
-		bean.on(buttonEl, 'click', () => {
-			showSignupForm(buttonEl);
-		});
+		buttonEl.addEventListener(
+			'click',
+			() => {
+				showSignupForm(buttonEl);
+			},
+			{ once: true },
+		);
 	});
 };
 
