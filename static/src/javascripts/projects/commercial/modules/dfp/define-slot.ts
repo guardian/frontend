@@ -51,9 +51,29 @@ const buildSizeMapping = (
 const isMultiSize = (
 	size: googletag.GeneralSize,
 ): size is googletag.MultiSize => {
-	return !!size.length;
+	return Array.isArray(size) && !!size.length;
 };
 
+const isSizeInArray = (
+	size: googletag.SingleSize,
+	sizes: googletag.SingleSize[],
+) => {
+	if (size === 'fluid') {
+		return sizes.includes('fluid');
+	} else if (Array.isArray(size)) {
+		return !!sizes.find(
+			(item) => item[0] === size[0] && item[1] === size[1],
+		);
+	}
+	return false;
+};
+
+/**
+ * Take size mapping and return a google tag size mapping and all the sizes that were present for use in `defineSlot`
+ *
+ * @param sizesByBreakpoint size mapping
+ * @returns the google tag size mapping and all the sizes that were present
+ */
 const getSizeOpts = (
 	sizesByBreakpoint: SizeMapping,
 ): {
@@ -61,26 +81,16 @@ const getSizeOpts = (
 	sizes: googletag.SingleSize[];
 } => {
 	const sizeMapping = buildSizeMapping(sizesByBreakpoint);
-	// as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-	const flattenSizeMappings = sizeMapping
-		.map((size) => size[1])
-		.reduce<googletag.SingleSize[]>((acc, current) => {
-			if (!isMultiSize(current)) {
-				return [...acc, current];
-			}
-			return [...acc, ...current];
-		}, []);
-
 	const sizes: googletag.SingleSize[] = [];
-	flattenSizeMappings.forEach((arr) => {
-		if (
-			!sizes.some(
-				(size) =>
-					`${size[0]}-${String(size[1])}` ===
-					`${arr[0]}-${String(arr[1])}`,
-			)
-		) {
-			sizes.push(arr);
+
+	// as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+	sizeMapping.forEach(([, sizesForBreakpoint]) => {
+		if (isMultiSize(sizesForBreakpoint)) {
+			sizesForBreakpoint.forEach((size) => {
+				if (!isSizeInArray(size, sizes)) {
+					sizes.push(size);
+				}
+			});
 		}
 	});
 
