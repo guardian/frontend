@@ -118,11 +118,12 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val topMentionResult = getTopMentions(path, topics)
       val range = getRange(lastUpdate, page, topMentionResult)
+      val availableTopics = topMentionsService.getTopics(path)
 
       mapModel(path, range, filter, topMentionResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderGuuiJson(blog, blocks, filter))
+          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, selectedTopics = topics))
         case (blog: LiveBlogPage, blocks) =>
           getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty), topMentionResult)
         case (minute: MinutePage, _) =>
@@ -337,6 +338,8 @@ class LiveBlogController(
       blog: LiveBlogPage,
       blocks: Blocks,
       filterKeyEvents: Boolean,
+      availableTopics: Option[Seq[TopicWithCount]],
+      selectedTopics: Option[String],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
     val model =
@@ -347,6 +350,8 @@ class LiveBlogController(
         pageType,
         filterKeyEvents,
         request.forceLive,
+        availableTopics,
+        selectedTopics,
       )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")

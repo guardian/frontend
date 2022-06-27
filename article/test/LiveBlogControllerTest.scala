@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopMentionsResult, TopMentionsTopic, TopMentionsTopicType, TopicsLiveBlog}
+import model.{LiveBlogPage, TopMentionsResult, TopMentionsTopic, TopMentionsTopicType, TopicWithCount, TopicsLiveBlog}
 import topmentions.{TopMentionsS3Client, TopMentionsService}
 
 import scala.concurrent.Future
@@ -38,11 +38,32 @@ import scala.concurrent.Future
       count = 1,
       percentage_blocks = 1.2f,
     )
+
+    val topics = Vector(
+      TopicWithCount(TopMentionsTopicType.Gpe, "United Kingdom", 6),
+      TopicWithCount(TopMentionsTopicType.Gpe, "Russia", 4),
+      TopicWithCount(TopMentionsTopicType.Org, "KPMG", 4),
+      TopicWithCount(TopMentionsTopicType.Gpe, "Ukraine", 3),
+      TopicWithCount(TopMentionsTopicType.Gpe, "China", 2),
+      TopicWithCount(TopMentionsTopicType.Gpe, "United States", 2),
+      TopicWithCount(TopMentionsTopicType.Loc, "Europe", 2),
+      TopicWithCount(TopMentionsTopicType.Gpe, "Moscow", 2),
+      TopicWithCount(TopMentionsTopicType.Org, "PZ Cussons", 2),
+      TopicWithCount(TopMentionsTopicType.Person, "Emmanuel Macron", 1),
+    );
+
     when(
       fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "Fifa")),
     ) thenReturn Some(
       topMentionResult,
     )
+
+    when(
+      fakeTopMentionsService.getTopics(path),
+    ) thenReturn Some(
+      topics,
+    )
+
     lazy val liveBlogController = new LiveBlogController(
       testContentApiClient,
       play.api.test.Helpers.stubControllerComponents(),
