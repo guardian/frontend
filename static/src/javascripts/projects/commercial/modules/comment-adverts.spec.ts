@@ -1,3 +1,4 @@
+import { createAdSize } from '@guardian/commercial-core';
 import { mocked } from 'ts-jest/utils';
 import { getBreakpoint as getBreakpoint_ } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
@@ -140,16 +141,16 @@ describe('maybeUpgradeSlot', () => {
 
 	it('should upgrade the MPU to a DMPU where necessary', () => {
 		const advert = createTestAdvert({
-			sizes: { desktop: [[300, 250]] },
+			sizes: { desktop: [createAdSize(300, 250)] },
 			slot: { defineSizeMapping: jest.fn() },
 		});
-		expect(advert.sizes.desktop).toEqual([[300, 250]]);
+		expect(advert.sizes.desktop).toEqual([createAdSize(300, 250)]);
 
 		maybeUpgradeSlot(advert, getElement('.js-discussion__ad-slot'));
 		expect(advert.sizes.desktop).toEqual([
-			[300, 250],
-			[300, 600],
-			[160, 600],
+			createAdSize(300, 250),
+			createAdSize(300, 600),
+			createAdSize(160, 600),
 		]);
 		expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
 	});
@@ -158,24 +159,24 @@ describe('maybeUpgradeSlot', () => {
 		const advert = createTestAdvert({
 			sizes: {
 				desktop: [
-					[160, 600],
-					[300, 250],
-					[300, 600],
+					createAdSize(160, 600),
+					createAdSize(300, 250),
+					createAdSize(300, 600),
 				],
 			},
 			slot: { defineSizeMapping: jest.fn() },
 		});
 		expect(advert.sizes.desktop).toEqual([
-			[160, 600],
-			[300, 250],
-			[300, 600],
+			createAdSize(160, 600),
+			createAdSize(300, 250),
+			createAdSize(300, 600),
 		]);
 
 		maybeUpgradeSlot(advert, getElement('.js-discussion__ad-slot'));
 		expect(advert.sizes.desktop).toEqual([
-			[160, 600],
-			[300, 250],
-			[300, 600],
+			createAdSize(160, 600),
+			createAdSize(300, 250),
+			createAdSize(300, 600),
 		]);
 		expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(0);
 	});
@@ -197,7 +198,7 @@ describe('runSecondStage', () => {
 			'.js-comments .content__main-column',
 		);
 		const advert = createTestAdvert({
-			sizes: { desktop: [[300, 250]] },
+			sizes: { desktop: [createAdSize(300, 250)] },
 			slot: { defineSizeMapping: jest.fn() },
 		});
 		mocked(getAdvertById).mockReturnValue(advert);
@@ -216,7 +217,7 @@ describe('runSecondStage', () => {
 			'.js-comments .content__main-column',
 		);
 		const advert = createTestAdvert({
-			sizes: { desktop: [[300, 250]] },
+			sizes: { desktop: [createAdSize(300, 250)] },
 			slot: { defineSizeMapping: jest.fn() },
 		});
 		mocked(getAdvertById).mockReturnValue(advert);

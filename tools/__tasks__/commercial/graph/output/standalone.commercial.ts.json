@@ -121,6 +121,7 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/commercial/lib/googletag-ad-size.ts",
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/commercial/modules/comscore.ts": [
@@ -137,11 +138,14 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/Advert.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
   "../projects/commercial/modules/dfp/define-slot.js"
  ],
  "../projects/commercial/modules/dfp/add-slot.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts",
@@ -153,7 +157,8 @@
   "../../../../node_modules/lodash-es/lodash.js",
   "../lib/config.js",
   "../lib/detect.js",
-  "../lib/url.ts"
+  "../lib/url.ts",
+  "../projects/common/modules/commercial/lib/googletag-ad-size.ts"
  ],
  "../projects/commercial/modules/dfp/dfp-env-globals.ts": [],
  "../projects/commercial/modules/dfp/dfp-env.ts": [
@@ -221,6 +226,8 @@
   "../projects/commercial/modules/messenger/post-message.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-render.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/mediator.ts",
   "../lib/report-error.js",
@@ -366,6 +373,7 @@
   "../projects/common/modules/commercial/geo-utils.js"
  ],
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/esm/constants/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
@@ -613,6 +621,9 @@
  ],
  "../projects/common/modules/commercial/lib/cookie.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
+ "../projects/common/modules/commercial/lib/googletag-ad-size.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
  "../projects/common/modules/commercial/support-utilities.js": [
   "../lib/geolocation.ts"

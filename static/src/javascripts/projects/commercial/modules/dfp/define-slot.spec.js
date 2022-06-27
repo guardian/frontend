@@ -1,4 +1,5 @@
 import { defineSlot } from './define-slot';
+import { createAdSize } from '@guardian/commercial-core';
 
 beforeEach(() => {
 	const pubAds = {
@@ -35,6 +36,7 @@ describe('Define Slot', () => {
 	it('should call defineSlot with correct params', () => {
 		const slotDiv = document.createElement('div');
 		slotDiv.id = 'dfp-ad--top-above-nav';
+        slotDiv.setAttribute('name', 'top-above-nav');
 		slotDiv.setAttribute('data-tablet', '1,1|2,2|728,90|88,71|fluid');
 		slotDiv.setAttribute(
 			'data-desktop',
@@ -42,16 +44,16 @@ describe('Define Slot', () => {
 		);
 
 		const topAboveNavSizes = {
-			tablet: [[1, 1], [2, 2], [728, 90], [88, 71], 'fluid'],
+			tablet: [createAdSize(1, 1), createAdSize(2, 2), createAdSize(728, 90), createAdSize(88, 71), createAdSize(0,0)],
 			desktop: [
-				[1, 1],
-				[2, 2],
-				[728, 90],
-				[940, 230],
-				[900, 250],
-				[970, 250],
-				[88, 71],
-				'fluid',
+				createAdSize(1, 1),
+				createAdSize(2, 2),
+				createAdSize(728, 90),
+				createAdSize(940, 230),
+				createAdSize(900, 250),
+				createAdSize(970, 250),
+				createAdSize(88, 71),
+				createAdSize(0, 0),
 			],
 		};
 
@@ -60,13 +62,13 @@ describe('Define Slot', () => {
 		expect(window.googletag.defineSlot).toHaveBeenCalledWith(
 			undefined,
 			[
-				[1, 1],
-				[2, 2],
-				[728, 90],
-				[940, 230],
-				[900, 250],
-				[970, 250],
-				[88, 71],
+				createAdSize(1, 1),
+				createAdSize(2, 2),
+				createAdSize(728, 90),
+				createAdSize(940, 230),
+				createAdSize(900, 250),
+				createAdSize(970, 250),
+				createAdSize(88, 71),
 				'fluid',
 			],
 			'dfp-ad--top-above-nav',

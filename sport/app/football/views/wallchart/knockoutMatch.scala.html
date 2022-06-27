@@ -1,5 +1,5 @@
 @import java.time.format.DateTimeFormatter
-@(fm: pa.FootballMatch, round: pa.Round)
+@(fm: pa.FootballMatch, round: pa.Round, competition: model.Competition)
 
 @import implicits.Football._
 @import conf.Configuration
@@ -17,9 +17,9 @@
             }
         </div>
         <div class="football-match__details">
-            @if(round.name.exists(_ == "Final")) {
+            @if(round.name.contains("Final")) {
                 <div class="bigfatfinal">
-                    @fragments.inlineSvg("euro_2020_badge", "badges", List("world__cup-svg", "world__cup-badge", "bigfatfinal__image"))
+                    @fragments.inlineSvg(competition.finalMatchSVG.getOrElse("euro_2020_badge"), "badges", List("world__cup-svg", "world__cup-badge", "bigfatfinal__image"))
                     <div class="football-match__name"><b>Final</b></div>
                 </div>
             }

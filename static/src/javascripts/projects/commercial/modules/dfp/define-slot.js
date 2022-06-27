@@ -1,7 +1,12 @@
+/**
+ * @typedef {import('@guardian/commercial-core').AdSize} AdSize
+ * @typedef {import('@guardian/commercial-core').SizeMapping} SizeMapping
+ */
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
 import { breakpoints } from '../../../../lib/detect';
 import { getUrlVars } from '../../../../lib/url';
+import {toGoogleTagSize} from '../../../common/modules/commercial/lib/googletag-ad-size';
 
 const adUnit = once(() => {
 	const urlVars = getUrlVars();
@@ -11,11 +16,11 @@ const adUnit = once(() => {
 });
 
 /**
- * Builds and assigns the correct size map for a slot based on the breakpoints
- * attached to the element via data attributes.
+ * Builds and assigns the correct size map for a slot based on the breakpoints and sizes from
+ * the size mapping in commercial-core.
  *
  * A new size map is created for a given slot. We then loop through each breakpoint
- * defined in the config, checking if that breakpoint has been set on the slot.
+ * defined in the config, checking if that breakpoint has been defined in the mapping.
  *
  * If it has been defined, then we add that size to the size mapping.
  *
@@ -26,12 +31,18 @@ const buildSizeMapping = (sizes) => {
 	breakpoints
 		.filter((_) => _.name in sizes)
 		.forEach((_) => {
-			mapping.addSize([_.width, 0], sizes[_.name]);
+			mapping.addSize([_.width, 0], sizes[_.name].map(toGoogleTagSize));
 		});
 
 	return mapping.build();
 };
 
+/**
+ * Convert our size mappings to googletag compatible ones
+ *
+ * @param {SizeMapping} sizesByBreakpoint
+ * @returns {{ sizeMapping: googletag.SizeMappingArray, sizes: AdSize[] }}
+ */
 const getSizeOpts = (sizesByBreakpoint) => {
 	const sizeMapping = buildSizeMapping(sizesByBreakpoint);
 	// as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
@@ -208,4 +219,4 @@ const defineSlot = (adSlotNode, sizes) => {
 	};
 };
 
-export { defineSlot };
+export { defineSlot, getSizeOpts, toGoogleTagSize };

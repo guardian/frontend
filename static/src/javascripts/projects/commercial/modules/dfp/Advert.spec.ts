@@ -1,10 +1,48 @@
-import { _, Advert } from './Advert';
+/* eslint-disable import/first -- variables must be available to be used when the mock is hoisted before the imports by jest */
+const slots = {
+	'mobile-only-slot': {
+		mobile: [[300, 50]],
+	},
+	slot: {
+		mobile: [
+			[300, 50],
+			[320, 50],
+		],
+		tablet: [[728, 90]],
+		desktop: [
+			[728, 90],
+			[900, 250],
+			[970, 250],
+		],
+	},
+};
 
-const { filterClasses, createSizeMapping, getAdBreakpointSizes } = _;
+import { slotSizeMappings } from '@guardian/commercial-core';
+import type * as CommercialCore from '@guardian/commercial-core';
+import { _, Advert } from './Advert';
+/* eslint-enable import/first */
+
+type MockCommercialCore = {
+	slotSizeMappings: Record<string, unknown>;
+};
+
+const { filterClasses, getSlotSizeMapping } = _;
 
 jest.mock('../../../../lib/raven');
 jest.mock('ophan/ng', () => null);
 
+jest.mock('@guardian/commercial-core', (): MockCommercialCore => {
+	const commercialCore: typeof CommercialCore = jest.requireActual(
+		'@guardian/commercial-core',
+	);
+	return {
+		...commercialCore,
+		slotSizeMappings: {
+			...commercialCore.slotSizeMappings,
+			...slots,
+		},
+	};
+});
 describe('Filter classes', () => {
 	it('should return nil for empty class lists', () => {
 		const result = filterClasses([], []);
@@ -37,9 +75,19 @@ describe('Advert', () => {
 	let googleSlot: googletag.Slot;
 
 	beforeEach(() => {
-		const sizeMapping: Partial<googletag.SizeMappingBuilder> = {
-			build: jest.fn(() => []),
-		};
+		let sizesArray: googletag.SizeMappingArray = [];
+
+		const sizeMapping = {
+			sizes: sizesArray,
+			addSize: jest.fn((width, sizes) => {
+				sizesArray.unshift([width, sizes]);
+			}),
+			build: jest.fn(() => {
+				const tmp = sizesArray;
+				sizesArray = [];
+				return tmp;
+			}),
+		} as unknown as googletag.SizeMappingBuilder;
 
 		//@ts-expect-error - it is a partial mock
 		googleSlot = {
@@ -54,7 +102,7 @@ describe('Advert', () => {
 				return {} as googletag.PubAdsService;
 			},
 			sizeMapping() {
-				return sizeMapping as googletag.SizeMappingBuilder;
+				return sizeMapping;
 			},
 			defineSlot() {
 				return googleSlot;
@@ -96,64 +144,36 @@ describe('Advert', () => {
 		expect(ad).toBeDefined();
 		expect(googleSlot.setSafeFrameConfig).not.toBeCalled();
 	});
-});
 
-describe('createSizeMapping', () => {
-	it('one size', () => {
-		expect(createSizeMapping('300,50')).toEqual([[300, 50]]);
-	});
-	it('multiple sizes', () => {
-		expect(createSizeMapping('300,50|320,50')).toEqual([
-			[300, 50],
-			[320, 50],
-		]);
-		expect(createSizeMapping('300,50|320,50|fluid')).toEqual([
-			[300, 50],
-			[320, 50],
-			'fluid',
-		]);
+	it('should throw an error if no size mappings are found or passed in', () => {
+		const slot = document.createElement('div');
+		slot.setAttribute('data-name', 'bad-slot');
+		const createAd = () => new Advert(slot);
+		expect(createAd).toThrow(
+			`Tried to render ad slot 'bad-slot' without any size mappings`,
+		);
 	});
 });
 
-describe('getAdBreakpointSizes', () => {
-	it('none', () => {
-		const advertNode = document.createElement('div', {});
-		advertNode.setAttribute('data-name', 'name');
-		advertNode.setAttribute('data-something', 'something-else');
-		expect(getAdBreakpointSizes(advertNode)).toEqual({});
-	});
+describe('getAdSizeMapping', () => {
+	it.each(['slot', 'mobile-only-slot'])(
+		'getAdSizeMapping(%s) should get the size mapping',
+		(slotName) => {
+			expect(getSlotSizeMapping(slotName)).toEqual(
+				slots[slotName as keyof typeof slots],
+			);
+		},
+	);
 
-	it('one breakpoint, one size', () => {
-		const advertNode = document.createElement('div', {});
-		advertNode.setAttribute('data-mobile', '300,50');
-		expect(getAdBreakpointSizes(advertNode)).toEqual({
-			mobile: [[300, 50]],
-		});
-	});
-
-	it('one breakpoint, multi-size', () => {
-		const advertNode = document.createElement('div', {});
-		advertNode.setAttribute('data-mobile', '300,50|320,50');
-		expect(getAdBreakpointSizes(advertNode)).toEqual({
-			mobile: [
-				[300, 50],
-				[320, 50],
-			],
-		});
-	});
-
-	it('multiple breakpoints, multi-size', () => {
-		const advertNode = document.createElement('div', {});
-		advertNode.setAttribute('data-mobile', '300,50|320,50');
-		advertNode.setAttribute('data-phablet', '200,200');
-		advertNode.setAttribute('data-desktop', '250,250|fluid');
-		expect(getAdBreakpointSizes(advertNode)).toEqual({
-			mobile: [
-				[300, 50],
-				[320, 50],
-			],
-			phablet: [[200, 200]],
-			desktop: [[250, 250], 'fluid'],
-		});
-	});
+	it.each(['inline1', 'inline10', ...Object.keys(slotSizeMappings)])(
+		'getAdSizeMapping(%s) should get the size mapping for real slots',
+		(value) => {
+			const slotName = /inline\d+/.test(value)
+				? 'inline'
+				: (value as CommercialCore.SlotName);
+			expect(getSlotSizeMapping(value)).toEqual(
+				slotSizeMappings[slotName],
+			);
+		},
+	);
 });
