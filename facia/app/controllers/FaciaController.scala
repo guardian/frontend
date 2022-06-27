@@ -360,7 +360,7 @@ trait FaciaController
 
             val matchedCollection = pressedPage.collections.filter(_.id == collectionId).head
 
-            // TODO: length is Option because not all types oof pressedCollection have the property, but
+            // TODO: length is Option because not all types of pressedCollection have the property, but
             //  pressedCollections coming from *DCR* pressedPages *should* have the length prop. If they don't
             //  then something has gone wrong. How should we surface this? (Default value of 0 avoids a crash
             //  but it covers over the bug.)
@@ -372,7 +372,6 @@ trait FaciaController
             ) ++ matchedCollection.backfill.takeRight(matchedCollection.backfill.length - liteBackfillLength)
             val startIndex = liteCuratedLength + liteBackfillLength
 
-            // todo: Is this the right return value already, or do we need to process it?
             remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex)
 
           case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
