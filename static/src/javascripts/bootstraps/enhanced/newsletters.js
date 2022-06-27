@@ -12,6 +12,7 @@ const classes = {
 	signupButton: 'js-newsletter-signup-button',
 	styleSignup: 'newsletter-card__lozenge--submit',
 	signupConfirm: 'js-signup-confirmation',
+	failureMessage: 'js-signup-fail-message',
 	previewButton: 'js-newsletter-preview',
 	card: 'newsletter-card',
 };
@@ -72,12 +73,15 @@ const validate = (form) => {
 	return typeof emailAddress === 'string' && emailAddress.indexOf('@') > -1;
 };
 
-const addSubscriptionMessage = (buttonEl) => {
+const addConfirmationMessage = (buttonEl, isSuccess) => {
 	const meta = $.ancestor(buttonEl, classes.wrapper);
 	fastdom.mutate(() => {
 		$(buttonEl.form).addClass('is-hidden');
 		$(`.${classes.previewButton}`, meta).addClass('is-hidden');
-		$(`.${classes.signupConfirm}`, meta).removeClass('is-hidden');
+		$(
+			`.${isSuccess ? classes.signupConfirm : classes.failureMessage}`,
+			meta,
+		).removeClass('is-hidden');
 	});
 };
 
@@ -142,18 +146,18 @@ const submitForm = (form, buttonEl) => {
 		},
 	}).then((response) => {
 		if (response.ok) {
-			addSubscriptionMessage(buttonEl);
-            if (cardElement) {
-                const confirmEventData = buildComponentEventData(
-                    cardElement,
-                    'SUBSCRIBE',
-                    'submission-confirmed',
-                );
-                ophan.record(confirmEventData);
-                console.log(confirmEventData.componentEvent);
-            }
+			addConfirmationMessage(buttonEl, true);
+			if (cardElement) {
+				const confirmEventData = buildComponentEventData(
+					cardElement,
+					'SUBSCRIBE',
+					'submission-confirmed',
+				);
+				ophan.record(confirmEventData);
+				console.log(confirmEventData.componentEvent);
+			}
 		} else {
-			//TO DO - USER FEEDBACK!!!
+			addConfirmationMessage(buttonEl, false);
 			response
 				.text()
 				.then((errorText) => {
@@ -169,7 +173,7 @@ const submitForm = (form, buttonEl) => {
 				})
 				.catch((e) => {
 					console.warn(e);
-                    if (cardElement) {
+					if (cardElement) {
 						const failEventData = buildComponentEventData(
 							cardElement,
 							'CLOSE',
