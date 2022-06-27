@@ -116,8 +116,8 @@ class LiveBlogController(
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
       val filter = shouldFilter(filterKeyEvents)
-      val topMentionResult = getTopMentions(path, topics)
-      val range = getRange(lastUpdate, page, topMentionResult)
+      val topMentions = getTopMentions(path, topics)
+      val range = getRange(lastUpdate, page, topMentions)
       val availableTopics = topMentionsService.getTopics(path)
 
       mapModel(path, range, filter, topMentions) {
