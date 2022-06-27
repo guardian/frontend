@@ -439,6 +439,15 @@ object QuizAtomBlockElement {
   implicit val QuizAtomBlockElementWrites: Writes[QuizAtomBlockElement] = Json.writes[QuizAtomBlockElement]
 }
 
+case class RecipeSchemaAtomBlockElement(
+    id: String,
+    json: String,
+) extends PageElement
+object RecipeSchemaAtomBlockElement {
+  implicit val RecipeSchemaAtomBlockElementWrites: Writes[RecipeSchemaAtomBlockElement] =
+    Json.writes[RecipeSchemaAtomBlockElement]
+}
+
 case class RichLinkBlockElement(
     url: Option[String],
     text: Option[String],
