@@ -1,4 +1,4 @@
-type SlotTargeting = Record<string, string[]>;
+type IasSlotTargeting = Record<string, string[]>;
 
 export interface IasTargeting {
 	brandSafety: Record<string, string>;
@@ -6,7 +6,7 @@ export interface IasTargeting {
 		'ias-kw'?: string[];
 	};
 	fr?: 'true' | 'false';
-	slots: Record<string, SlotTargeting>;
+	slots: Record<string, IasSlotTargeting>;
 }
 
 export interface IasPETSlot {
