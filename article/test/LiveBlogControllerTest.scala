@@ -10,7 +10,7 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import model.{LiveBlogPage, TopMentionsResult, TopMentionsTopic, TopMentionsTopicType, TopicWithCount, TopicsLiveBlog}
-import topmentions.{TopMentionsS3Client, TopMentionsService}
+import topmentions.{TopMentionsS3Client, TopicService}
 
 import scala.concurrent.Future
 
@@ -29,7 +29,7 @@ import scala.concurrent.Future
   val path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live"
 
   trait Setup {
-    var fakeTopMentionsService = mock[TopMentionsService]
+    var fakeTopMentionsService = mock[TopicService]
     var fakeDcr = new DCRFake()
     val topMentionResult = TopMentionsResult(
       name = "Fifa",
