@@ -22,7 +22,7 @@ import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
-import topmentions.{TopMentionsS3Client, TopMentionsS3ClientImpl, TopMentionsService}
+import topmentions.{TopicS3Client, TopMentionsS3ClientImpl, TopMentionsService}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -30,7 +30,7 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait TopMentionsServices {
-  lazy val topMentionsS3Client: TopMentionsS3Client = wire[TopMentionsS3ClientImpl]
+  lazy val topicS3Client: TopicS3Client = wire[TopMentionsS3ClientImpl]
   lazy val topMentionsService = wire[TopMentionsService]
 }
 

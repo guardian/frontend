@@ -5,12 +5,12 @@ import model.{TopMentionsDetails, TopMentionsResult, TopMentionsTopic, TopicWith
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
+class TopMentionsService(topicS3Client: TopicS3Client) extends GuLogging {
 
   private val topMentions = Box[Option[Map[String, TopMentionsDetails]]](None)
 
   def refreshTopMentions()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    val retrievedTopMentions = topMentionsS3Client.getListOfKeys().map { key => key.map { retrieveTopMention(_) } }
+    val retrievedTopMentions = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopMention(_) } }
 
     retrievedTopMentions
       .flatMap(Future.sequence(_))
@@ -48,6 +48,6 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
   }
 
   private def retrieveTopMention(key: String)(implicit executionContext: ExecutionContext) = {
-    topMentionsS3Client.getObject(key).map { res => key -> res }
+    topicS3Client.getObject(key).map { res => key -> res }
   }
 }
