@@ -189,13 +189,12 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				articleBodySelector,
 			);
 
-			const heightMapping: Array<[string, number]> =
-				stickyContainerHeights.map((height, i) => [
-					getContainerClassname(i),
+			insertHeightStyles(
+				stickyContainerHeights.map((height, index) => [
+					getContainerClassname(index),
 					height,
-				]);
-
-			insertHeightStyles(heightMapping);
+				]),
+			);
 		}
 
 		const slots = paras
