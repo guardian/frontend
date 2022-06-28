@@ -9,7 +9,7 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
 
   private val topMentions = Box[Option[Map[String, TopMentionsDetails]]](None)
 
-  def refreshTopMentions()(implicit executionContext: ExecutionContext): Future[Unit] = {
+  def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val retrievedTopMentions = topMentionsS3Client.getListOfKeys().map { key => key.map { retrieveTopMention(_) } }
 
     retrievedTopMentions
