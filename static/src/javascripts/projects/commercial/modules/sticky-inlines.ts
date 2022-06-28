@@ -1,4 +1,5 @@
 import { isUndefined } from '@guardian/libs';
+import { breakpoints } from '@guardian/source-foundations';
 import fastdom from 'lib/fastdom-promise';
 
 /**
@@ -29,6 +30,35 @@ const immersiveBufferPx = 100;
  * The minimum buffer between a right column advert and the bottom of the article body
  */
 const articleBottomBufferPx = 100;
+
+/**
+ * Add a stylesheet to the document that adds height properties for a given set of class names
+ *
+ * Note these are only above on desktop and above
+ *
+ * @param heightMapping The mapping from class name to height value in pixels
+ */
+const insertHeightStyles = (
+	heightMapping: Array<[string, number]>,
+): Promise<void> => {
+	const heightClasses = heightMapping.reduce(
+		(css, [name, height]) => `${css} .${name} { height: ${height}px; }`,
+		'',
+	);
+
+	const css = `
+        @media (min-width: ${breakpoints.desktop}px) {
+            ${heightClasses}
+        }
+    `;
+
+	const style = document.createElement('style');
+	style.appendChild(document.createTextNode(css));
+
+	return fastdom.mutate(() => {
+		document.head.appendChild(style);
+	});
+};
 
 /**
  * Compute the distance between each winning paragraph and subsequent paragraph,
@@ -111,4 +141,4 @@ const computeStickyHeights = async (
 	);
 };
 
-export { computeStickyHeights };
+export { computeStickyHeights, insertHeightStyles };

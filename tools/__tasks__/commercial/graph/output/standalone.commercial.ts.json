@@ -523,6 +523,7 @@
  ],
  "../projects/commercial/modules/sticky-inlines.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/sticky-mpu.js": [

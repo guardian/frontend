@@ -17,14 +17,14 @@ import type {
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
 import { trackAdRender } from './dfp/track-ad-render';
-import { computeStickyHeights } from './sticky-inlines';
+import { computeStickyHeights, insertHeightStyles } from './sticky-inlines';
 
 type SlotName = Parameters<typeof createAdSlot>[0];
 
 type ContainerOptions = {
 	sticky?: boolean;
-	heightPx?: number;
 	enableDebug?: boolean;
+	className?: string;
 };
 
 const sfdebug = getUrlVars().sfdebug;
@@ -36,19 +36,29 @@ const adSlotClassSelectorSizes = {
 	minBelow: 500,
 };
 
+/**
+ * Get the classname for an ad slot container
+ *
+ * We add 2 to the index because these are always ads added in the second pass.
+ *
+ * e.g. the 0th container inserted in pass 2 becomes `ad-slot-container--2` to match `inline2`
+ *
+ * @param i Index of winning paragraph
+ * @returns The classname for container
+ */
+const getContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
+
 const wrapSlotInContainer = (
 	ad: HTMLElement,
 	options: ContainerOptions = {},
 ) => {
 	const container = document.createElement('div');
-	container.className = 'ad-slot-container ad-slot--offset-right';
+	container.className = `ad-slot-container ad-slot--offset-right ${
+		options.className ?? ''
+	}`;
 
 	if (options.sticky) {
 		ad.style.cssText += 'position: sticky; top: 0;';
-	}
-
-	if (options.heightPx) {
-		container.style.cssText += `height: ${options.heightPx}px;`;
 	}
 
 	if (options.enableDebug) {
@@ -169,11 +179,23 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 		// Make ads sticky in containers if using containers and in sticky test variant
 		// Compute the height of containers in which ads will remain sticky
-		const stickyContainerHeights =
+		const includeStickyContainers =
 			includeContainer &&
-			isInVariantSynchronous(multiStickyRightAds, 'variant')
-				? await computeStickyHeights(paras, articleBodySelector)
-				: undefined;
+			isInVariantSynchronous(multiStickyRightAds, 'variant');
+
+		if (includeStickyContainers) {
+			const stickyContainerHeights = await computeStickyHeights(
+				paras,
+				articleBodySelector,
+			);
+
+			void insertHeightStyles(
+				stickyContainerHeights.map((height, index) => [
+					getContainerClassname(index),
+					height,
+				]),
+			);
+		}
 
 		const slots = paras
 			.slice(0, isInline1 ? 1 : paras.length)
@@ -184,10 +206,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					para.style.cssText += 'border: thick solid green;';
 				}
 
-				const containerOptions = stickyContainerHeights
+				const containerOptions = includeStickyContainers
 					? {
 							sticky: true,
-							heightPx: Math.max(stickyContainerHeights[i], 0),
+							className: getContainerClassname(i),
 							enableDebug,
 					  }
 					: undefined;
