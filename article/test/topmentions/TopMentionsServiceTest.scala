@@ -95,7 +95,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopicService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopics(), 1.second)
 
-    val result = topMentionService.getBlogSelectedTopic("key1", TopMentionsTopic(TopMentionsTopicType.Org, "name1"))
+    val result = topMentionService.getSelectedTopicDetails("key1", TopMentionsTopic(TopMentionsTopicType.Org, "name1"))
 
     result.get should equal(topMentionResult)
   }
@@ -107,7 +107,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopicService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopics(), 1.second)
 
-    val result = topMentionService.getBlogSelectedTopic("key1", TopMentionsTopic(TopMentionsTopicType.Org, "NAME1"))
+    val result = topMentionService.getSelectedTopicDetails("key1", TopMentionsTopic(TopMentionsTopicType.Org, "NAME1"))
 
     result should equal(None)
   }
@@ -119,7 +119,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopicService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopics(), 1.second)
 
-    val result = topMentionService.getBlogSelectedTopic("key2", TopMentionsTopic(TopMentionsTopicType.Org, "name1"))
+    val result = topMentionService.getSelectedTopicDetails("key2", TopMentionsTopic(TopMentionsTopicType.Org, "name1"))
 
     result should equal(None)
   }
@@ -131,7 +131,8 @@ class TopMentionsServiceTest
     val topMentionService = new TopicService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopics(), 1.second)
 
-    val result = topMentionService.getBlogSelectedTopic("key1", TopMentionsTopic(TopMentionsTopicType.Person, "Boris"))
+    val result =
+      topMentionService.getSelectedTopicDetails("key1", TopMentionsTopic(TopMentionsTopicType.Person, "Boris"))
 
     result should equal(None)
   }
@@ -144,7 +145,7 @@ class TopMentionsServiceTest
     val refreshJob = Await.result(topMentionService.refreshTopics(), 1.second)
 
     val result =
-      topMentionService.getBlogSelectedTopic("key1", TopMentionsTopic(TopMentionsTopicType.Org, "someRandomOrg"))
+      topMentionService.getSelectedTopicDetails("key1", TopMentionsTopic(TopMentionsTopicType.Org, "someRandomOrg"))
 
     result should equal(None)
   }

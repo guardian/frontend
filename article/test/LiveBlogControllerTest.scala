@@ -53,7 +53,7 @@ import scala.concurrent.Future
     );
 
     when(
-      fakeTopMentionsService.getBlogSelectedTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "Fifa")),
+      fakeTopMentionsService.getSelectedTopicDetails(path, TopMentionsTopic(TopMentionsTopicType.Org, "Fifa")),
     ) thenReturn Some(
       topMentionResult,
     )
@@ -324,7 +324,7 @@ import scala.concurrent.Future
       topics = Some("org:Fifa"),
     )(fakeRequest)
 
-    verify(fakeTopMentionsService, times(0)).getBlogSelectedTopic(anyString(), anyObject())
+    verify(fakeTopMentionsService, times(0)).getSelectedTopicDetails(anyString(), anyObject())
     status(result) should be(200)
   }
 

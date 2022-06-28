@@ -38,7 +38,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
     topMentions.get()
   }
 
-  def getBlogSelectedTopic(
+  def getSelectedTopicDetails(
       blogId: String,
       topMentionEntity: TopMentionsTopic,
   ): Option[TopMentionsResult] = {

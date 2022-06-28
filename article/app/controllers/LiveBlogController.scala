@@ -413,7 +413,7 @@ class LiveBlogController(
   def getTopMentions(blogId: String, topics: Option[String]) = {
     val topMentionsResult = for {
       topMentionTopic <- TopMentionsTopic.fromString(topics)
-      topMentions <- topMentionsService.getBlogSelectedTopic(blogId, topMentionTopic)
+      topMentions <- topMentionsService.getSelectedTopicDetails(blogId, topMentionTopic)
     } yield topMentions
 
     topMentionsResult match {
