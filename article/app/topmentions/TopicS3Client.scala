@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.model.{GetObjectRequest, S3Object}
 import com.amazonaws.util.IOUtils
 import common.GuLogging
 import conf.Configuration
-import model.{TopMentionJsonParseException, TopMentionsDetails}
+import model.{TopMentionJsonParseException, TopicsDetails}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import services.S3
 import topmentions.S3ObjectImplicits.RichS3Object
@@ -17,7 +17,7 @@ import scala.util.{Failure, Success, Try}
 
 trait TopicS3Client {
   def getListOfKeys(): Future[List[String]]
-  def getObject(key: String): Future[TopMentionsDetails]
+  def getObject(key: String): Future[TopicsDetails]
 }
 
 final class TopMentionsS3ClientImpl extends TopicS3Client with S3 with GuLogging {
@@ -39,7 +39,7 @@ final class TopMentionsS3ClientImpl extends TopicS3Client with S3 with GuLogging
     }
   }
 
-  def getObject(key: String): Future[TopMentionsDetails] = {
+  def getObject(key: String): Future[TopicsDetails] = {
     getClient { client =>
       Try {
         val request = new GetObjectRequest(getBucket, key)
@@ -70,10 +70,10 @@ final class TopMentionsS3ClientImpl extends TopicS3Client with S3 with GuLogging
 
 object S3ObjectImplicits {
   implicit class RichS3Object(s3Object: S3Object) extends GuLogging {
-    def parseToTopMentionsDetails: Try[TopMentionsDetails] = {
+    def parseToTopMentionsDetails: Try[TopicsDetails] = {
       val json = Json.parse(asString(s3Object))
 
-      Json.fromJson[TopMentionsDetails](json) match {
+      Json.fromJson[TopicsDetails](json) match {
         case JsSuccess(topMentionResponse, __) =>
           log.debug(s"Parsed TopMentionsDetails from S3 for key ${s3Object.getKey}")
           Success(topMentionResponse)

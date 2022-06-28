@@ -1,13 +1,13 @@
 package topmentions
 
 import common.{Box, GuLogging}
-import model.{TopMentionsDetails, TopMentionsResult, TopMentionsTopic, TopicWithCount}
+import model.{TopicsDetails, TopMentionsResult, TopMentionsTopic, TopicWithCount}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
 
-  private val topMentions = Box[Option[Map[String, TopMentionsDetails]]](None)
+  private val topMentions = Box[Option[Map[String, TopicsDetails]]](None)
 
   def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val retrievedTopMentions = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
@@ -24,7 +24,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
       }
   }
 
-  def getBlogTopicsDetails(blogId: String): Option[TopMentionsDetails] = {
+  def getBlogTopicsDetails(blogId: String): Option[TopicsDetails] = {
     topMentions.get().flatMap(_.get(blogId))
   }
 
@@ -34,7 +34,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
     )
   }
 
-  def getAllTopics: Option[Map[String, TopMentionsDetails]] = {
+  def getAllTopics: Option[Map[String, TopicsDetails]] = {
     topMentions.get()
   }
 
