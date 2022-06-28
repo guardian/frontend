@@ -34,7 +34,7 @@ case class SelectedTopic(`type`: TopMentionsTopicType, value: String)
 
 object SelectedTopic extends GuLogging {
 
-  implicit val TopicJf: Format[SelectedTopic] = Json.format[SelectedTopic]
+  implicit val SelectedTopicJf: Format[SelectedTopic] = Json.format[SelectedTopic]
 
   def fromString(topic: Option[String]): Option[SelectedTopic] = {
     topic.flatMap { f =>
