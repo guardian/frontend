@@ -42,8 +42,7 @@ const insertHeightStyles = (
 	heightMapping: Array<[string, number]>,
 ): Promise<void> => {
 	const heightClasses = heightMapping.reduce(
-		(css, [name, height]) =>
-			css.concat(`.${name} { height: ${height}px; }`),
+		(css, [name, height]) => `${css} .${name} { height: ${height}px; }`,
 		'',
 	);
 
