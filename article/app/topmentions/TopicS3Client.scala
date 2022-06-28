@@ -43,7 +43,7 @@ final class TopMentionsS3ClientImpl extends TopicS3Client with S3 with GuLogging
     getClient { client =>
       Try {
         val request = new GetObjectRequest(getBucket, key)
-        client.getObject(request).parseToTopMentionsDetails
+        client.getObject(request).parseToTopicsDetails
       }.flatten match {
         case Success(value) =>
           log.info(s"got topMentionResponse from S3 for key ${key}")
@@ -70,7 +70,7 @@ final class TopMentionsS3ClientImpl extends TopicS3Client with S3 with GuLogging
 
 object S3ObjectImplicits {
   implicit class RichS3Object(s3Object: S3Object) extends GuLogging {
-    def parseToTopMentionsDetails: Try[TopicsDetails] = {
+    def parseToTopicsDetails: Try[TopicsDetails] = {
       val json = Json.parse(asString(s3Object))
 
       Json.fromJson[TopicsDetails](json) match {
