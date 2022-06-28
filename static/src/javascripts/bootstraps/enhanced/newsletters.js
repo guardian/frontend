@@ -144,6 +144,8 @@ const modifyLinkNamesForSignedInUser = (el) =>
 	modifyDataLinkName('-signed-in')(el);
 
 const submitForm = (form, buttonEl) => {
+	buttonEl.setAttribute('disabled', 'true');
+
 	const dummyEmail = encodeURIComponent(
 		$(`input[name="${inputs.dummy}"]`, form).val(),
 	); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
@@ -203,6 +205,11 @@ const submitForm = (form, buttonEl) => {
 const createSubscriptionFormEventHandlers = (buttonEl) => {
 	buttonEl.addEventListener('click', (event) => {
 		event.preventDefault();
+
+		if (buttonEl.getAttribute('disabled') === true) {
+			return;
+		}
+
 		const form = buttonEl.form;
 		if (validate(form)) {
 			if (window.guardian.config.switches.emailSignupRecaptcha) {
