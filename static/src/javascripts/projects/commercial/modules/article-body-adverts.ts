@@ -189,7 +189,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				articleBodySelector,
 			);
 
-			insertHeightStyles(
+			void insertHeightStyles(
 				stickyContainerHeights.map((height, index) => [
 					getContainerClassname(index),
 					height,

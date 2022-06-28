@@ -38,7 +38,9 @@ const articleBottomBufferPx = 100;
  *
  * @param heightMapping The mapping from class name to height value in pixels
  */
-const insertHeightStyles = (heightMapping: Array<[string, number]>): void => {
+const insertHeightStyles = (
+	heightMapping: Array<[string, number]>,
+): Promise<void> => {
 	const heightClasses = heightMapping.reduce(
 		(css, [name, height]) =>
 			css.concat(`.${name} { height: ${height}px; }`),
@@ -52,8 +54,11 @@ const insertHeightStyles = (heightMapping: Array<[string, number]>): void => {
     `;
 
 	const style = document.createElement('style');
-	document.head.appendChild(style);
 	style.appendChild(document.createTextNode(css));
+
+	return fastdom.mutate(() => {
+		document.head.appendChild(style);
+	});
 };
 
 /**
