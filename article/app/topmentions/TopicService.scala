@@ -24,12 +24,12 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
       }
   }
 
-  def getBlogTopics(blogId: String): Option[TopMentionsDetails] = {
+  def getBlogTopicsDetails(blogId: String): Option[TopMentionsDetails] = {
     topMentions.get().flatMap(_.get(blogId))
   }
 
   def getTopics(blogId: String): Option[Seq[TopicWithCount]] = {
-    getBlogTopics(blogId).map(mentions =>
+    getBlogTopicsDetails(blogId).map(mentions =>
       mentions.results.map(mention => TopicWithCount(mention.`type`, mention.name, mention.count)),
     )
   }
@@ -42,7 +42,7 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
       blogId: String,
       topMentionEntity: TopMentionsTopic,
   ): Option[TopMentionsResult] = {
-    getBlogTopics(blogId).flatMap(_.results.find(result => {
+    getBlogTopicsDetails(blogId).flatMap(_.results.find(result => {
       result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value
     }))
   }
