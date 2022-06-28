@@ -19,7 +19,7 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
-import topmentions.TopMentionsService
+import topmentions.TopicService
 import views.support.RenderOtherStatus
 import scala.concurrent.Future
 
@@ -30,7 +30,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
-    topMentionsService: TopMentionsService,
+    topMentionsService: TopicService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
