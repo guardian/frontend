@@ -1,8 +1,9 @@
 import type { SizeMapping } from '@guardian/commercial-core';
 import { adSizes } from '@guardian/commercial-core';
-import { _, defineSlot, getSizeOpts } from './define-slot';
+import { toGoogleTagSize } from 'common/modules/commercial/lib/googletag-ad-size';
+import { _, defineSlot } from './define-slot';
 
-const { buildSizeMapping } = _;
+const { buildGoogletagSizeMapping, collectSizes } = _;
 
 beforeEach(() => {
 	const pubAds = {
@@ -42,7 +43,7 @@ beforeEach(() => {
 	};
 });
 
-describe('buildSizeMapping', () => {
+describe('buildGoogletagSizeMapping', () => {
 	it('should return googletag size mappings', () => {
 		const sizeMapping = {
 			mobile: [
@@ -58,92 +59,73 @@ describe('buildSizeMapping', () => {
 				adSizes.halfPage,
 			],
 		};
-		const result = buildSizeMapping(sizeMapping);
+		const result = buildGoogletagSizeMapping(sizeMapping as SizeMapping);
 
 		expect(result).toEqual([
 			[
 				[980, 0],
-				[adSizes.mpu, 'fluid', adSizes.googleCard, adSizes.halfPage],
+				[
+					toGoogleTagSize(adSizes.mpu),
+					'fluid',
+					toGoogleTagSize(adSizes.googleCard),
+					toGoogleTagSize(adSizes.halfPage),
+				],
 			],
 			[
 				[0, 0],
-				[adSizes.mpu, 'fluid', adSizes.googleCard, adSizes.halfPage],
+				[
+					toGoogleTagSize(adSizes.mpu),
+					'fluid',
+					toGoogleTagSize(adSizes.googleCard),
+					toGoogleTagSize(adSizes.halfPage),
+				],
 			],
 		]);
 	});
 });
 
-describe('getSizeOpts', () => {
-	it.each([
+describe('collectSizes', () => {
+	const tests: Array<{
+		sizeMapping: googletag.SizeMappingArray;
+		output: googletag.SingleSize[];
+	}> = [
 		{
-			sizeMapping: {
-				mobile: [[728, 90]],
-				desktop: ['fluid'],
-			},
-			output: {
-				sizeMapping: [
-					[[980, 0], ['fluid']],
-					[[0, 0], [[728, 90]]],
-				],
-				sizes: ['fluid', [728, 90]],
-			},
+			sizeMapping: [
+				[[980, 0], ['fluid']],
+				[[0, 0], [[728, 90]]],
+			],
+			output: ['fluid', [728, 90]],
 		},
 		{
-			sizeMapping: {
-				mobile: [
-					[1, 1],
-					[2, 2],
-					[728, 90],
+			sizeMapping: [
+				[
 					[0, 0],
+					[[1, 1], [2, 2], [728, 90], 'fluid'],
 				],
-			},
-			output: {
-				sizeMapping: [
-					[
-						[0, 0],
-						[[1, 1], [2, 2], [728, 90], 'fluid'],
-					],
-				],
-				sizes: [[1, 1], [2, 2], [728, 90], 'fluid'],
-			},
+			],
+			output: [[1, 1], [2, 2], [728, 90], 'fluid'],
 		},
 		{
-			sizeMapping: {
-				mobile: [
-					[1, 1],
-					[2, 2],
-					[728, 90],
+			sizeMapping: [
+				[
+					[980, 0],
+					[[1, 1], [2, 2], [728, 90], [88, 71], 'fluid'],
+				],
+				[
 					[0, 0],
+					[[1, 1], [2, 2], [728, 90], 'fluid'],
 				],
-				desktop: [
-					[1, 1],
-					[2, 2],
-					[728, 90],
-					[88, 71],
-					[0, 0],
-				],
-			},
-			output: {
-				sizeMapping: [
-					[
-						[980, 0],
-						[[1, 1], [2, 2], [728, 90], [88, 71], 'fluid'],
-					],
-					[
-						[0, 0],
-						[[1, 1], [2, 2], [728, 90], 'fluid'],
-					],
-				],
-				sizes: [[1, 1], [2, 2], [728, 90], [88, 71], 'fluid'],
-			},
+			],
+			output: [[1, 1], [2, 2], [728, 90], [88, 71], 'fluid'],
 		},
-	])(
-		'should return googletag size mappings and sizes',
-		({ sizeMapping, output }) => {
-			const result = getSizeOpts(sizeMapping as SizeMapping);
-			expect(result.sizeMapping).toEqual(output.sizeMapping);
+	];
 
-			expect(result.sizes).toEqual(output.sizes);
+	it.each(tests)(
+		'should return array of sizes',
+		({ sizeMapping, output }) => {
+			const result = collectSizes(sizeMapping);
+
+			expect(result).toEqual(output);
 		},
 	);
 });

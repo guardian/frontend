@@ -20,16 +20,16 @@ const isBreakpointInSizes = (
 ): breakpoint is keyof SizeMapping => breakpoint in sizes;
 
 /**
- * Builds and assigns the correct size map for a slot based on the breakpoints and sizes from
+ * Builds a googletag size mapping based on the breakpoints and sizes from
  * the size mapping in commercial-core.
  *
- * A new size map is created for a given slot. We then loop through each breakpoint
- * defined in the config, checking if that breakpoint has been defined in the mapping.
+ * We loop through each breakpoint defined in the config, checking if that breakpoint
+ * has been defined in the config's mapping.
  *
- * If it has been defined, then we add that size to the size mapping.
+ * If it has been defined, then we add that size to the googletag size mapping.
  *
  */
-const buildSizeMapping = (
+const buildGoogletagSizeMapping = (
 	sizeMapping: SizeMapping,
 ): googletag.SizeMappingArray => {
 	const mapping = window.googletag.sizeMapping();
@@ -69,18 +69,14 @@ const isSizeInArray = (
 };
 
 /**
- * Take size mapping and return a google tag size mapping and all the sizes that were present for use in `defineSlot`
+ * Take all the sizes in a breakpoint and reduce to a single array of sizes, for use in `defineSlot`
  *
- * @param sizesByBreakpoint size mapping
- * @returns the google tag size mapping and all the sizes that were present
+ * @param sizeMapping googletag size mapping
+ * @returns all the sizes that were present in the size mapping
  */
-const getSizeOpts = (
-	sizesByBreakpoint: SizeMapping,
-): {
-	sizeMapping: googletag.SizeMappingArray;
-	sizes: googletag.SingleSize[];
-} => {
-	const sizeMapping = buildSizeMapping(sizesByBreakpoint);
+const collectSizes = (
+	sizeMapping: googletag.SizeMappingArray,
+): googletag.SingleSize[] => {
 	const sizes: googletag.SingleSize[] = [];
 
 	// as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
@@ -94,10 +90,7 @@ const getSizeOpts = (
 		}
 	});
 
-	return {
-		sizeMapping,
-		sizes,
-	};
+	return sizes;
 };
 
 const isEligibleForOutstream = (slotTarget: string) =>
@@ -118,30 +111,29 @@ const defineSlot = (
 	sizeMapping: SizeMapping,
 ): { slot: googletag.Slot; slotReady: Promise<void> } => {
 	const slotTarget = adSlotNode.getAttribute('data-name') as SlotName;
-	const sizeOpts = getSizeOpts(sizeMapping);
+
+	const googletagSizeMapping = buildGoogletagSizeMapping(sizeMapping);
+	const sizes = collectSizes(googletagSizeMapping);
+
 	const id = adSlotNode.id;
 	let slot: googletag.Slot | null;
 	let slotReady = Promise.resolve();
 
 	if (adSlotNode.getAttribute('data-out-of-page')) {
-		slot = window.googletag.defineOutOfPageSlot(
-			adUnit(),
-			id,
-		) as googletag.Slot;
-		slot.defineSizeMapping(sizeOpts.sizeMapping);
+		slot = window.googletag.defineOutOfPageSlot(adUnit(), id);
+		slot?.defineSizeMapping(googletagSizeMapping);
 	} else {
-		slot = window.googletag.defineSlot(
-			adUnit(),
-			sizeOpts.sizes,
-			id,
-		) as googletag.Slot;
-		slot.defineSizeMapping(sizeOpts.sizeMapping);
+		slot = window.googletag.defineSlot(adUnit(), sizes, id);
+		slot?.defineSizeMapping(googletagSizeMapping);
 
-		if (isEligibleForOutstream(slotTarget)) {
+		if (slot && isEligibleForOutstream(slotTarget)) {
 			allowSafeFrameToExpand(slot);
 		}
 	}
 
+	if (!slot) {
+		throw new Error(`Could not define slot for ${id}`);
+	}
 	/*
         For each ad slot defined, we request information from IAS, based
         on slot name, ad unit and sizes. We then add this targeting to the
@@ -153,7 +145,7 @@ const defineSlot = (
 
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
-	if (window.guardian.config.switches.iasAdTargeting === true) {
+	if (window.guardian.config.switches.iasAdTargeting) {
 		// this should all have been instantiated by commercial/modules/third-party-tags/ias.js
 		window.__iasPET = window.__iasPET ?? {};
 		const iasPET = window.__iasPET;
@@ -264,8 +256,9 @@ const defineSlot = (
 	};
 };
 
-export { defineSlot, getSizeOpts };
+export { defineSlot };
 
 export const _ = {
-	buildSizeMapping,
+	buildGoogletagSizeMapping,
+	collectSizes,
 };
