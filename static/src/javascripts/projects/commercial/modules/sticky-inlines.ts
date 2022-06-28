@@ -34,7 +34,7 @@ const articleBottomBufferPx = 100;
  * Compute the distance between each winning paragraph and subsequent paragraph,
  * taking into account elements that extend into the right column
  */
-const computeStickyHeight = async (
+const computeStickyHeights = async (
 	winners: HTMLElement[],
 	articleBodySelector: string,
 ): Promise<number[]> => {
@@ -111,4 +111,4 @@ const computeStickyHeight = async (
 	);
 };
 
-export { computeStickyHeight };
+export { computeStickyHeights };

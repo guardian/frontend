@@ -17,7 +17,7 @@ import type {
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
 import { trackAdRender } from './dfp/track-ad-render';
-import { computeStickyHeight } from './sticky-inlines';
+import { computeStickyHeights } from './sticky-inlines';
 
 type SlotName = Parameters<typeof createAdSlot>[0];
 
@@ -172,7 +172,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		const stickyContainerHeights =
 			includeContainer &&
 			isInVariantSynchronous(multiStickyRightAds, 'variant')
-				? await computeStickyHeight(paras, articleBodySelector)
+				? await computeStickyHeights(paras, articleBodySelector)
 				: undefined;
 
 		const slots = paras
