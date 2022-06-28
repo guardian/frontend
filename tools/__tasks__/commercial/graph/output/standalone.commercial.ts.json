@@ -96,8 +96,11 @@
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/track-ad-render.ts",
+  "../projects/commercial/modules/sticky-inlines.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
@@ -518,6 +521,10 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/url.ts"
  ],
+ "../projects/commercial/modules/sticky-inlines.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/fastdom-promise.js"
+ ],
  "../projects/commercial/modules/sticky-mpu.js": [
   "../lib/config.js",
   "../lib/fastdom-promise.js",
@@ -579,7 +586,8 @@
   "../lib/url.ts",
   "../projects/common/modules/experiments/ab.ts",
   "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
-  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts"
+  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts",
+  "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.js",
@@ -668,6 +676,7 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/commercial-end-of-quarter-2-test.ts",
   "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts",
+  "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -698,6 +707,10 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/commercial-lazy-load-margin-reloaded.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
+ "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
