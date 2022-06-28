@@ -1,7 +1,7 @@
 package topmentions
 
 import common.{Box, GuLogging}
-import model.{TopicsDetails, TopMentionsResult, Topic, TopicWithCount}
+import model.{TopicsDetails, TopMentionsResult, SelectedTopic, TopicWithCount}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -40,7 +40,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
 
   def getSelectedTopic(
       blogId: String,
-      topMentionEntity: Topic,
+      topMentionEntity: SelectedTopic,
   ): Option[TopMentionsResult] = {
     getBlogTopicsDetails(blogId).flatMap(_.results.find(result => {
       result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value

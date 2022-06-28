@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopMentionsResult, Topic, TopMentionsTopicType, TopicWithCount, TopicsLiveBlog}
+import model.{LiveBlogPage, TopMentionsResult, SelectedTopic, TopMentionsTopicType, TopicWithCount, TopicsLiveBlog}
 import topmentions.{TopicS3Client, TopicService}
 
 import scala.concurrent.Future
@@ -53,7 +53,7 @@ import scala.concurrent.Future
     );
 
     when(
-      fakeTopMentionsService.getSelectedTopic(path, Topic(TopMentionsTopicType.Org, "Fifa")),
+      fakeTopMentionsService.getSelectedTopic(path, SelectedTopic(TopMentionsTopicType.Org, "Fifa")),
     ) thenReturn Some(
       topMentionResult,
     )

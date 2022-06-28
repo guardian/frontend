@@ -20,28 +20,23 @@ object TopMentionsResponse {
   implicit val TopMentionsDetailsJf: Format[TopicsDetails] = Json.format[TopicsDetails]
 }
 
-trait TopicBase {
-  def `type`: TopMentionsTopicType
-  def value: String
-}
-
 case class TopicWithCount(
     `type`: TopMentionsTopicType,
     value: String,
     count: Int,
-) extends TopicBase
+)
 
 object TopicWithCount {
   implicit val TopicWithCountJf: Format[TopicWithCount] = Json.format[TopicWithCount]
 }
 
-case class Topic(`type`: TopMentionsTopicType, value: String) extends TopicBase
+case class SelectedTopic(`type`: TopMentionsTopicType, value: String)
 
-object Topic extends GuLogging {
+object SelectedTopic extends GuLogging {
 
-  implicit val TopicJf: Format[Topic] = Json.format[Topic]
+  implicit val TopicJf: Format[SelectedTopic] = Json.format[SelectedTopic]
 
-  def fromString(topic: Option[String]): Option[Topic] = {
+  def fromString(topic: Option[String]): Option[SelectedTopic] = {
     topic.flatMap { f =>
       val filterEntity = f.split(":")
       if (filterEntity.length == 2) {
@@ -51,7 +46,7 @@ object Topic extends GuLogging {
           None
         } else {
           log.debug(s"valid topics query parameter - ${f}")
-          Some(Topic(entityType.get, filterEntity(1)))
+          Some(SelectedTopic(entityType.get, filterEntity(1)))
         }
       } else {
         log.warn(s"topics query parameter is invalid for ${f}, the format is <type>:<name>")
