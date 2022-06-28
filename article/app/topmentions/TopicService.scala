@@ -1,13 +1,13 @@
 package topmentions
 
 import common.{Box, GuLogging}
-import model.{TopMentionsDetails, TopMentionsResult, TopMentionsTopic, TopicWithCount}
+import model.{TopicsDetails, TopMentionsResult, TopMentionsTopic, TopicWithCount}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
 
-  private val topMentions = Box[Option[Map[String, TopMentionsDetails]]](None)
+  private val topicsDetails = Box[Option[Map[String, TopicsDetails]]](None)
 
   def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val retrievedTopMentions = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
@@ -15,7 +15,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
     retrievedTopMentions
       .flatMap(Future.sequence(_))
       .map(response => {
-        topMentions send Some(response.toMap)
+        topicsDetails send Some(response.toMap)
         log.info("successfully refreshed top mentions")
       })
       .recover {
@@ -24,8 +24,8 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
       }
   }
 
-  def getBlogTopicsDetails(blogId: String): Option[TopMentionsDetails] = {
-    topMentions.get().flatMap(_.get(blogId))
+  def getBlogTopicsDetails(blogId: String): Option[TopicsDetails] = {
+    topicsDetails.get().flatMap(_.get(blogId))
   }
 
   def getTopics(blogId: String): Option[Seq[TopicWithCount]] = {
@@ -34,8 +34,8 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
     )
   }
 
-  def getAllTopics: Option[Map[String, TopMentionsDetails]] = {
-    topMentions.get()
+  def getAllTopics: Option[Map[String, TopicsDetails]] = {
+    topicsDetails.get()
   }
 
   def getSelectedTopic(
