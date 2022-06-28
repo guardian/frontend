@@ -20,7 +20,7 @@ trait TopicS3Client {
   def getObject(key: String): Future[TopicsDetails]
 }
 
-final class TopMentionsS3ClientImpl extends TopicS3Client with S3 with GuLogging {
+final class TopicS3ClientImpl extends TopicS3Client with S3 with GuLogging {
   lazy val optionalBucket: Option[String] = Configuration.aws.topMentionsStoreBucket
 
   def getListOfKeys(): Future[List[String]] = {
