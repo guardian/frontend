@@ -21,7 +21,7 @@ import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
-import jobs.TopMentionsLifecycle
+import jobs.TopicLifecycle
 import model.{AdminLifecycle, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api._
@@ -111,7 +111,7 @@ trait AppComponents
       wire[DiscussionExternalAssetsLifecycle],
       wire[StocksDataLifecycle],
       wire[NewsletterSignupLifecycle],
-      wire[TopMentionsLifecycle],
+      wire[TopicLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters
