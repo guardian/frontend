@@ -55,7 +55,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopicService(fakeClient)
 
     Await.result(topMentionService.refreshTopics(), 1.second)
-    val results = topMentionService.getAllTopMentions
+    val results = topMentionService.getAllTopics
 
     results should be(None)
   }
@@ -68,7 +68,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopicService(fakeClient)
 
     val refreshJob = Await.result(topMentionService.refreshTopics(), 1.second)
-    val results = topMentionService.getAllTopMentions
+    val results = topMentionService.getAllTopics
 
     refreshJob shouldBe a[Unit]
     results should be(None)
@@ -81,7 +81,7 @@ class TopMentionsServiceTest
     val topMentionService = new TopicService(fakeClient)
 
     val refreshJob = Await.result(topMentionService.refreshTopics(), 1.second)
-    val results = topMentionService.getAllTopMentions
+    val results = topMentionService.getAllTopics
 
     refreshJob shouldBe a[Unit]
     results.isDefined should be(true)

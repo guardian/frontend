@@ -34,7 +34,7 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
     )
   }
 
-  def getAllTopMentions: Option[Map[String, TopMentionsDetails]] = {
+  def getAllTopics: Option[Map[String, TopMentionsDetails]] = {
     topMentions.get()
   }
 
