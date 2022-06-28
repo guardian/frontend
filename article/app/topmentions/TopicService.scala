@@ -5,12 +5,12 @@ import model.{TopMentionsDetails, TopMentions, TopMentionsTopic, TopicWithCount}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
+class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
 
   private val topMentions = Box[Option[Map[String, TopMentionsDetails]]](None)
 
-  def refreshTopMentions()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    val retrievedTopMentions = topMentionsS3Client.getListOfKeys().map { key => key.map { retrieveTopMention(_) } }
+  def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
+    val retrievedTopMentions = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
 
     retrievedTopMentions
       .flatMap(Future.sequence(_))
@@ -24,30 +24,30 @@ class TopMentionsService(topMentionsS3Client: TopMentionsS3Client) extends GuLog
       }
   }
 
-  def getBlogTopMentions(blogId: String): Option[TopMentionsDetails] = {
+  def getBlogTopicsDetails(blogId: String): Option[TopMentionsDetails] = {
     topMentions.get().flatMap(_.get(blogId))
   }
 
   def getTopics(blogId: String): Option[Seq[TopicWithCount]] = {
-    getBlogTopMentions(blogId).map(mentions =>
+    getBlogTopicsDetails(blogId).map(mentions =>
       mentions.results.map(mention => TopicWithCount(mention.`type`, mention.name, mention.count)),
     )
   }
 
-  def getAllTopMentions: Option[Map[String, TopMentionsDetails]] = {
+  def getAllTopics: Option[Map[String, TopMentionsDetails]] = {
     topMentions.get()
   }
 
-  def getTopMentionsByTopic(
+  def getSelectedTopic(
       blogId: String,
       topMentionEntity: TopMentionsTopic,
-  ): Option[TopMentions] = {
-    getBlogTopMentions(blogId).flatMap(_.results.find(result => {
+  ): Option[TopMentionsResult] = {
+    getBlogTopicsDetails(blogId).flatMap(_.results.find(result => {
       result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value
     }))
   }
 
-  private def retrieveTopMention(key: String)(implicit executionContext: ExecutionContext) = {
-    topMentionsS3Client.getObject(key).map { res => key -> res }
+  private def retrieveTopicsDetails(key: String)(implicit executionContext: ExecutionContext) = {
+    topicS3Client.getObject(key).map { res => key -> res }
   }
 }

@@ -10,7 +10,7 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import model.{LiveBlogPage, TopMentions, TopMentionsTopic, TopMentionsTopicType, TopicWithCount, TopicsLiveBlog}
-import topmentions.{TopMentionsS3Client, TopMentionsService}
+import topmentions.{TopicS3Client, TopicService}
 
 import scala.concurrent.Future
 
@@ -29,7 +29,7 @@ import scala.concurrent.Future
   val path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live"
 
   trait Setup {
-    var fakeTopMentionsService = mock[TopMentionsService]
+    var fakeTopMentionsService = mock[TopicService]
     var fakeDcr = new DCRFake()
     val topMentions = TopMentions(
       name = "Fifa",
@@ -53,7 +53,7 @@ import scala.concurrent.Future
     );
 
     when(
-      fakeTopMentionsService.getTopMentionsByTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "Fifa")),
+      fakeTopMentionsService.getSelectedTopic(path, TopMentionsTopic(TopMentionsTopicType.Org, "Fifa")),
     ) thenReturn Some(
       topMentions,
     )
@@ -324,7 +324,7 @@ import scala.concurrent.Future
       topics = Some("org:Fifa"),
     )(fakeRequest)
 
-    verify(fakeTopMentionsService, times(0)).getTopMentionsByTopic(anyString(), anyObject())
+    verify(fakeTopMentionsService, times(0)).getSelectedTopic(anyString(), anyObject())
     status(result) should be(200)
   }
 

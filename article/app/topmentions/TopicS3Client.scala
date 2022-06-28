@@ -15,12 +15,12 @@ import scala.collection.JavaConverters._
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
-trait TopMentionsS3Client {
+trait TopicS3Client {
   def getListOfKeys(): Future[List[String]]
   def getObject(key: String): Future[TopMentionsDetails]
 }
 
-final class TopMentionsS3ClientImpl extends TopMentionsS3Client with S3 with GuLogging {
+final class TopMentionsS3ClientImpl extends TopicS3Client with S3 with GuLogging {
   lazy val optionalBucket: Option[String] = Configuration.aws.topMentionsStoreBucket
 
   def getListOfKeys(): Future[List[String]] = {
@@ -64,7 +64,7 @@ final class TopMentionsS3ClientImpl extends TopMentionsS3Client with S3 with GuL
   private def getClient[T](callS3: AmazonS3 => Future[T]) = {
     client
       .map { callS3(_) }
-      .getOrElse(Future.failed(new RuntimeException("No client exist for TopMentionsS3Client")))
+      .getOrElse(Future.failed(new RuntimeException("No client exist for TopicS3Client")))
   }
 }
 

@@ -19,7 +19,7 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.DotcomponentsLogger
-import topmentions.TopMentionsService
+import topmentions.TopicService
 import views.support.RenderOtherStatus
 import scala.concurrent.Future
 
@@ -30,7 +30,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
-    topMentionsService: TopMentionsService,
+    topMentionsService: TopicService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -410,10 +410,10 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopMentions(blogId: String, selectedTopics: Option[String]) = {
-    val topMentions = for {
-      topMentionTopic <- TopMentionsTopic.fromString(selectedTopics)
-      topMentions <- topMentionsService.getTopMentionsByTopic(blogId, topMentionTopic)
+  def getTopMentions(blogId: String, topics: Option[String]) = {
+    val topMentionsResult = for {
+      topMentionTopic <- TopMentionsTopic.fromString(topics)
+      topMentions <- topMentionsService.getSelectedTopic(blogId, topMentionTopic)
     } yield topMentions
 
     topMentions match {

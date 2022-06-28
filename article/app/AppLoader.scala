@@ -21,8 +21,8 @@ import play.api.routing.Router
 import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
-import jobs.{StoreNavigationLifecycleComponent, TopMentionsLifecycle}
-import topmentions.{TopMentionsS3Client, TopMentionsS3ClientImpl, TopMentionsService}
+import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
+import topmentions.{TopicS3Client, TopMentionsS3ClientImpl, TopicService}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -30,8 +30,8 @@ class AppLoader extends FrontendApplicationLoader {
 }
 
 trait TopMentionsServices {
-  lazy val topMentionsS3Client: TopMentionsS3Client = wire[TopMentionsS3ClientImpl]
-  lazy val topMentionsService = wire[TopMentionsService]
+  lazy val topicS3Client: TopicS3Client = wire[TopMentionsS3ClientImpl]
+  lazy val topMentionsService = wire[TopicService]
 }
 
 trait AppComponents extends FrontendComponents with ArticleControllers with TopMentionsServices {
@@ -58,7 +58,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers with TopM
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
-    wire[TopMentionsLifecycle],
+    wire[TopicLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
