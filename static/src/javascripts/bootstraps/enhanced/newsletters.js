@@ -66,6 +66,9 @@ const findContainingCard = (originalElement) => {
 	return undefined;
 };
 
+let lastEventDataSent = undefined;
+let lastEventDataSentTimestamp = 0;
+
 const sendTracking = (element, action, extraValues) => {
 	const cardElement = findContainingCard(element);
 	if (!cardElement) {
@@ -101,7 +104,29 @@ const sendTracking = (element, action, extraValues) => {
 		actionType,
 		actionDescription,
 	);
+
+    // The user can click the submit button multiple times while the grecaptcha.execute
+    // is happening, triggering the listener created at createSubscriptionFormEventHandlers
+    // which triggers 'showCaptcha' multiple times.
+    // There is no 'onReady' callback or hook on the grecaptcha.execute function that could
+    // be used to disable and re-enable the submit button, so to limit multiple events for the
+    // same 'openCaptcha', events are not sent if they happen wihin 1 second of an identical
+    // event that was reported.
+    // 1 second is an approximation - how long it take grecaptcha.execute to finish will depend
+    // on network and client conditions.
+    const now = Date.now();
+	if (
+		lastEventDataSent &&
+		lastEventDataSent.componentEvent.component.id === eventData.componentEvent.component.id &&
+		lastEventDataSent.componentEvent.value === eventData.componentEvent.value &&
+        now - lastEventDataSentTimestamp < 1000
+	) {
+        return
+	}
+
 	ophan.record(eventData);
+	lastEventDataSent = eventData;
+	lastEventDataSentTimestamp = now;
 	console.log(eventData.componentEvent);
 };
 
