@@ -18,7 +18,7 @@ class TopMentionsServiceTest
     with WithTestExecutionContext
     with MockitoSugar {
 
-  val fakeClient = mock[TopMentionsS3Client]
+  val fakeClient = mock[TopicS3Client]
   val topMentionResult =
     TopMentionsResult(
       name = "name1",
