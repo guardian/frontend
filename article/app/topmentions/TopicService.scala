@@ -10,7 +10,7 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
   private val topMentions = Box[Option[Map[String, TopMentionsDetails]]](None)
 
   def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    val retrievedTopMentions = topMentionsS3Client.getListOfKeys().map { key => key.map { retrieveTopMention(_) } }
+    val retrievedTopMentions = topMentionsS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
 
     retrievedTopMentions
       .flatMap(Future.sequence(_))
@@ -38,7 +38,7 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
     topMentions.get()
   }
 
-  def getTopMentionsByTopic(
+  def getBlogSelectedTopic(
       blogId: String,
       topMentionEntity: TopMentionsTopic,
   ): Option[TopMentionsResult] = {
@@ -47,7 +47,7 @@ class TopicService(topMentionsS3Client: TopMentionsS3Client) extends GuLogging {
     }))
   }
 
-  private def retrieveTopMention(key: String)(implicit executionContext: ExecutionContext) = {
+  private def retrieveTopicsDetails(key: String)(implicit executionContext: ExecutionContext) = {
     topMentionsS3Client.getObject(key).map { res => key -> res }
   }
 }
