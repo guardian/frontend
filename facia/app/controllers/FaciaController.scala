@@ -355,9 +355,12 @@ trait FaciaController
       if (request.forceDCR) {
         frontJsonFapi.get(path, fullDCRRequestType).flatMap {
           case Some(pressedPage) =>
-            // TODO: Use Option?
             // TODO: Do we need to add anything else?
 
+            // TODO: The issue here is that .head will throw an error if the collection isn't found
+            //  I can't work out how to extend the 'for' structure below to this, though.
+            //  If the collection isn't found, will we need a new 'path', or will one of the other return
+            //  values cover this already?
             val matchedCollection = pressedPage.collections.filter(_.id == collectionId).head
 
             // TODO: length is Option because not all types of pressedCollection have the property, but
@@ -372,6 +375,9 @@ trait FaciaController
             ) ++ matchedCollection.backfill.takeRight(matchedCollection.backfill.length - liteBackfillLength)
             val startIndex = liteCuratedLength + liteBackfillLength
 
+            // TODO we also need to handle the case where this doesn't work
+            //  - Are there importantly different failure cases to handle, or can we return a generic fallback response,
+            //    given that DCR doesn't really do anything with the response in the case of failure?)
             remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex)
 
           case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
