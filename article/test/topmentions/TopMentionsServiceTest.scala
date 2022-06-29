@@ -1,6 +1,6 @@
 package topmentions
 
-import model.{TopicsApiResponse, TopMentionsResult, SelectedTopic, TopMentionsTopicType, AvailableTopic}
+import model.{TopicsApiResponse, Topic, SelectedTopic, TopMentionsTopicType, AvailableTopic}
 import org.scalatest.{BeforeAndAfterAll}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -20,7 +20,7 @@ class TopMentionsServiceTest
 
   val fakeClient = mock[TopicS3Client]
   val topMentionResult =
-    TopMentionsResult(
+    Topic(
       name = "name1",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("blockId1"),
@@ -29,14 +29,14 @@ class TopMentionsServiceTest
     )
 
   val topMentionResults = Seq(
-    TopMentionsResult(
+    Topic(
       name = "name1",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("blockId1"),
       count = 1,
       percentage_blocks = 1.2f,
     ),
-    TopMentionsResult(
+    Topic(
       name = "name2",
       `type` = TopMentionsTopicType.Person,
       blocks = Seq("blockId1"),

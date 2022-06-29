@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopMentionsResult, SelectedTopic, TopMentionsTopicType, AvailableTopic, TopicsLiveBlog}
+import model.{LiveBlogPage, Topic, SelectedTopic, TopMentionsTopicType, AvailableTopic, TopicsLiveBlog}
 import topmentions.{TopicS3Client, TopicService}
 
 import scala.concurrent.Future
@@ -31,7 +31,7 @@ import scala.concurrent.Future
   trait Setup {
     var fakeTopMentionsService = mock[TopicService]
     var fakeDcr = new DCRFake()
-    val topMentionResult = TopMentionsResult(
+    val topMentionResult = Topic(
       name = "Fifa",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("56d08042e4b0d38537b1f70b"),

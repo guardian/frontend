@@ -140,7 +140,7 @@ class LiveBlogController(
       path: String,
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[Topic],
       availableTopics: Option[Seq[AvailableTopic]],
       selectedTopics: Option[String],
   )(implicit
@@ -203,7 +203,7 @@ class LiveBlogController(
   private[this] def getRange(
       lastUpdate: Option[String],
       page: Option[String],
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[Topic],
   ): BlockRange = {
     (lastUpdate.map(ParseBlockId.fromBlockId), page.map(ParseBlockId.fromPageParam), topMentionResult) match {
       case (Some(ParsedBlockId(id)), _, _) => SinceBlockId(id)
@@ -225,7 +225,7 @@ class LiveBlogController(
       isLivePage: Option[Boolean],
       filterKeyEvents: Boolean,
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]] = Map.empty,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[Topic],
   )(implicit request: RequestHeader): Future[Result] = {
     val remoteRender = !request.forceDCROff
 
@@ -248,7 +248,7 @@ class LiveBlogController(
       page: PageWithStoryPackage,
       lastUpdateBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[Topic],
   ): Seq[BodyBlock] = {
     val requestedBlocks = page.article.fields.blocks.toSeq.flatMap {
       _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
@@ -270,7 +270,7 @@ class LiveBlogController(
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
       lastUpdateBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[Topic],
   ): Seq[Block] = {
     val blocksAround = requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty).takeWhile { block =>
       block.id != lastUpdateBlockId.lastUpdate
@@ -300,7 +300,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       remoteRender: Boolean,
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[Topic],
   )(implicit request: RequestHeader): Future[Result] = {
     val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents, topMentionResult)
     val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents, topMentionResult)
@@ -361,7 +361,7 @@ class LiveBlogController(
       path: String,
       range: BlockRange,
       filterKeyEvents: Boolean = false,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[Topic],
   )(
       render: (PageWithStoryPackage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
@@ -378,7 +378,7 @@ class LiveBlogController(
   private[this] def responseToModelOrResult(
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topMentionResult: Option[TopMentionsResult],
+      topMentionResult: Option[Topic],
   )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)

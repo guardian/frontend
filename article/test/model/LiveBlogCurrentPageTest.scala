@@ -64,7 +64,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
       range,
       filterKeyEvents = false,
       topMentionResult = Some(
-        TopMentionsResult(
+        Topic(
           `type` = TopMentionsTopicType.Org,
           name = "someName",
           blocks = Seq(),
@@ -744,7 +744,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
       topicName: String,
       blocks: Seq[String],
   ) = {
-    TopMentionsResult(
+    Topic(
       `type` = tpoicType,
       name = topicName,
       blocks = blocks,
