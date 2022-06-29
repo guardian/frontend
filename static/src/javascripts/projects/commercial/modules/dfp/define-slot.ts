@@ -69,8 +69,9 @@ const isSizeInArray = (
 };
 
 /**
- * Take all the sizes in a breakpoint and reduce to a single array of sizes, for use in `defineSlot`
+ * Take all the sizes in a size mapping and reduce to a single array of sizes, for use in `defineSlot`
  *
+ * @todo this is possibly redundant as these are only used if a size mapping is not defined which we always provide.
  * @param sizeMapping googletag size mapping
  * @returns all the sizes that were present in the size mapping
  */
