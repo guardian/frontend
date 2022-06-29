@@ -1,9 +1,16 @@
 import type { SizeMapping, SlotName } from '@guardian/commercial-core';
+import { breakpoints as sourceBreakpoints } from '@guardian/source-foundations';
 import { once } from 'lodash-es';
 import type { IasPETSlot, IasTargeting } from 'types/ias';
-import { breakpoints } from '../../../../lib/detect';
 import { getUrlVars } from '../../../../lib/url';
 import { toGoogleTagSize } from '../../../common/modules/commercial/lib/googletag-ad-size';
+
+const breakpointViewports: Record<keyof SizeMapping, [number, number]> = {
+	mobile: [0, 0], // this is width 0 to cover all widths until the next breakpoint if any
+	phablet: [sourceBreakpoints.phablet, 0],
+	tablet: [sourceBreakpoints.tablet, 0],
+	desktop: [sourceBreakpoints.desktop, 0],
+};
 
 const adUnit = once((): string => {
 	const urlVars = getUrlVars();
@@ -14,19 +21,14 @@ const adUnit = once((): string => {
 		: window.guardian.config.page.adUnit;
 });
 
-const isBreakpointInSizes = (
+const isBreakpoint = (
 	breakpoint: string,
-	sizes: SizeMapping,
-): breakpoint is keyof SizeMapping => breakpoint in sizes;
+): breakpoint is keyof typeof breakpointViewports =>
+	breakpoint in breakpointViewports;
 
 /**
- * Builds a googletag size mapping based on the breakpoints and sizes from
- * the size mapping in commercial-core.
- *
- * We loop through each breakpoint defined in the config, checking if that breakpoint
- * has been defined in the config's mapping.
- *
- * If it has been defined, then we add that size to the googletag size mapping.
+ * Builds a googletag size mapping based on the breakpoints and ad sizes from
+ * the size mapping in commercial-core and the viewport sizes from source-foundations.
  *
  */
 const buildGoogletagSizeMapping = (
@@ -34,16 +36,14 @@ const buildGoogletagSizeMapping = (
 ): googletag.SizeMappingArray => {
 	const mapping = window.googletag.sizeMapping();
 
-	breakpoints
-		.filter(({ name }) => name in sizeMapping)
-		.forEach(({ width, name }) => {
-			if (isBreakpointInSizes(name, sizeMapping)) {
-				const sizes = sizeMapping[name];
-				if (sizes) {
-					mapping.addSize([width, 0], sizes.map(toGoogleTagSize));
-				}
-			}
-		});
+	Object.entries(sizeMapping).forEach(([breakpoint, sizes]) => {
+		if (isBreakpoint(breakpoint)) {
+			mapping.addSize(
+				breakpointViewports[breakpoint],
+				sizes.map(toGoogleTagSize),
+			);
+		}
+	});
 
 	return mapping.build();
 };
