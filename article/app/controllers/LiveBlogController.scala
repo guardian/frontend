@@ -141,7 +141,7 @@ class LiveBlogController(
       range: BlockRange,
       filterKeyEvents: Boolean,
       topMentionResult: Option[TopMentionsResult],
-      availableTopics: Option[Seq[TopicWithCount]],
+      availableTopics: Option[Seq[AvailableTopic]],
       selectedTopics: Option[String],
   )(implicit
       request: RequestHeader,
@@ -338,7 +338,7 @@ class LiveBlogController(
       blog: LiveBlogPage,
       blocks: Blocks,
       filterKeyEvents: Boolean,
-      availableTopics: Option[Seq[TopicWithCount]],
+      availableTopics: Option[Seq[AvailableTopic]],
       selectedTopics: Option[String],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)

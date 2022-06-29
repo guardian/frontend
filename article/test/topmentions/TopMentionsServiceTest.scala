@@ -1,6 +1,6 @@
 package topmentions
 
-import model.{TopicsApiResponse, TopMentionsResult, SelectedTopic, TopMentionsTopicType, TopicWithCount}
+import model.{TopicsApiResponse, TopMentionsResult, SelectedTopic, TopMentionsTopicType, AvailableTopic}
 import org.scalatest.{BeforeAndAfterAll}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -156,8 +156,8 @@ class TopMentionsServiceTest
     val expectedTopics =
       Some(
         List(
-          TopicWithCount(TopMentionsTopicType.Org, "name1", 1),
-          TopicWithCount(TopMentionsTopicType.Person, "name2", 10),
+          AvailableTopic(TopMentionsTopicType.Org, "name1", 1),
+          AvailableTopic(TopMentionsTopicType.Person, "name2", 10),
         ),
       )
 
