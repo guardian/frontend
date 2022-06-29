@@ -155,8 +155,8 @@
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
  "../projects/commercial/modules/dfp/define-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/detect.js",
   "../lib/url.ts",
   "../projects/common/modules/commercial/lib/googletag-ad-size.ts",
   "../types/ias.d.ts"
