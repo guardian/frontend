@@ -11,13 +11,13 @@ case class TopMentionsResult(
     count: Int,
     percentage_blocks: Float,
 )
-case class TopicsDetails(entity_types: Seq[TopMentionsTopicType], results: Seq[TopMentionsResult], model: String)
+case class TopicsApiResponse(entity_types: Seq[TopMentionsTopicType], results: Seq[TopMentionsResult], model: String)
 
 case class TopMentionJsonParseException(message: String) extends Exception(message)
 
-object TopMentionsResponse {
+object TopicsApiResponse {
   implicit val TopMentionsResultJf: Format[TopMentionsResult] = Json.format[TopMentionsResult]
-  implicit val TopMentionsDetailsJf: Format[TopicsDetails] = Json.format[TopicsDetails]
+  implicit val TopicsApiResponseJf: Format[TopicsApiResponse] = Json.format[TopicsApiResponse]
 }
 
 case class TopicWithCount(

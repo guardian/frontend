@@ -1,6 +1,6 @@
 package topmentions
 
-import model.{TopicsDetails, TopMentionsResult, SelectedTopic, TopMentionsTopicType, TopicWithCount}
+import model.{TopicsApiResponse, TopMentionsResult, SelectedTopic, TopMentionsTopicType, TopicWithCount}
 import org.scalatest.{BeforeAndAfterAll}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -45,10 +45,10 @@ class TopMentionsServiceTest
     ),
   )
   val successResponse =
-    TopicsDetails(entity_types = Seq(TopMentionsTopicType.Org), results = Seq(topMentionResult), model = "model")
+    TopicsApiResponse(entity_types = Seq(TopMentionsTopicType.Org), results = Seq(topMentionResult), model = "model")
 
   val successMultiResponse =
-    TopicsDetails(entity_types = Seq(TopMentionsTopicType.Org), results = topMentionResults, model = "model")
+    TopicsApiResponse(entity_types = Seq(TopMentionsTopicType.Org), results = topMentionResults, model = "model")
 
   "refreshTopMentions" should "return successful future given getListOfKeys s3 call fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))

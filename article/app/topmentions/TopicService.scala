@@ -1,13 +1,13 @@
 package topmentions
 
 import common.{Box, GuLogging}
-import model.{TopicsDetails, TopMentionsResult, SelectedTopic, TopicWithCount}
+import model.{TopicsApiResponse, TopMentionsResult, SelectedTopic, TopicWithCount}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
 
-  private val topicsDetails = Box[Option[Map[String, TopicsDetails]]](None)
+  private val topicsDetails = Box[Option[Map[String, TopicsApiResponse]]](None)
 
   def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val retrievedTopMentions = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
@@ -24,17 +24,17 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
       }
   }
 
-  def getBlogTopicsDetails(blogId: String): Option[TopicsDetails] = {
+  def getBlogTopicsApiResponse(blogId: String): Option[TopicsApiResponse] = {
     topicsDetails.get().flatMap(_.get(blogId))
   }
 
   def getTopics(blogId: String): Option[Seq[TopicWithCount]] = {
-    getBlogTopicsDetails(blogId).map(mentions =>
+    getBlogTopicsApiResponse(blogId).map(mentions =>
       mentions.results.map(mention => TopicWithCount(mention.`type`, mention.name, mention.count)),
     )
   }
 
-  def getAllTopics: Option[Map[String, TopicsDetails]] = {
+  def getAllTopics: Option[Map[String, TopicsApiResponse]] = {
     topicsDetails.get()
   }
 
@@ -42,7 +42,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
       blogId: String,
       topMentionEntity: SelectedTopic,
   ): Option[TopMentionsResult] = {
-    getBlogTopicsDetails(blogId).flatMap(_.results.find(result => {
+    getBlogTopicsApiResponse(blogId).flatMap(_.results.find(result => {
       result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value
     }))
   }
