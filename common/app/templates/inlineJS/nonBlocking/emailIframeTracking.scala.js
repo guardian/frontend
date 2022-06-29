@@ -25,6 +25,38 @@ function getClickEventData (element) {
     }
 }
 
+ function toNDigits (value, requiredLength) {
+	const valueString = value.toString();
+
+	if (valueString.length < requiredLength) {
+		return `${'0'.repeat(
+			requiredLength - valueString.length
+		)}${valueString}`;
+	}
+	return valueString;
+};
+
+function to2Digits (v) {return toNDigits(v, 2)}
+
+function formatTimestampToUTC (inputDate) {
+	const utc = {
+		year: inputDate.getUTCFullYear(),
+		month: inputDate.getUTCMonth(),
+		date: inputDate.getUTCDate(),
+		hours: inputDate.getUTCHours(),
+		minutes: inputDate.getUTCMinutes(),
+		seconds: inputDate.getUTCSeconds(),
+		milliseconds: inputDate.getUTCMilliseconds(),
+	};
+
+	const date = `${utc.year}-${to2Digits(utc.month)}-${to2Digits(utc.date)}`;
+	const time = `${to2Digits(utc.hours)}:${to2Digits(utc.minutes)}:${to2Digits(utc.seconds)}`;
+	const microSeconds = toNDigits(utc.milliseconds * 1000, 6);
+
+	return `${date} ${time}.${microSeconds} UTC`;
+};
+
+
 function buildComponentEventData (formElement, actionType, actionDescription) {
     return {
         componentEvent: {
@@ -33,7 +65,7 @@ function buildComponentEventData (formElement, actionType, actionDescription) {
                 id: formElement.getAttribute('data-component'),
             },
             action: actionType,
-            value: [actionDescription,formElement.getAttribute('data-email-list-name')].join(),
+            value: [actionDescription,formElement.getAttribute('data-email-list-name'), formatTimestampToUTC(new Date())].join(),
         }
     }
 };
