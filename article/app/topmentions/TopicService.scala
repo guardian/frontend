@@ -28,7 +28,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
     topicsDetails.get().flatMap(_.get(blogId))
   }
 
-  def getTopics(blogId: String): Option[Seq[AvailableTopic]] = {
+  def getAvailableTopics(blogId: String): Option[Seq[AvailableTopic]] = {
     getBlogTopicsApiResponse(blogId).map(mentions =>
       mentions.results.map(mention => AvailableTopic(mention.`type`, mention.name, mention.count)),
     )
