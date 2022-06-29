@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopMentionsResult, SelectedTopic, TopMentionsTopicType, TopicWithCount, TopicsLiveBlog}
+import model.{LiveBlogPage, TopMentionsResult, SelectedTopic, TopMentionsTopicType, AvailableTopic, TopicsLiveBlog}
 import topmentions.{TopicS3Client, TopicService}
 
 import scala.concurrent.Future
@@ -40,16 +40,16 @@ import scala.concurrent.Future
     )
 
     val topics = Vector(
-      TopicWithCount(TopMentionsTopicType.Gpe, "United Kingdom", 6),
-      TopicWithCount(TopMentionsTopicType.Gpe, "Russia", 4),
-      TopicWithCount(TopMentionsTopicType.Org, "KPMG", 4),
-      TopicWithCount(TopMentionsTopicType.Gpe, "Ukraine", 3),
-      TopicWithCount(TopMentionsTopicType.Gpe, "China", 2),
-      TopicWithCount(TopMentionsTopicType.Gpe, "United States", 2),
-      TopicWithCount(TopMentionsTopicType.Loc, "Europe", 2),
-      TopicWithCount(TopMentionsTopicType.Gpe, "Moscow", 2),
-      TopicWithCount(TopMentionsTopicType.Org, "PZ Cussons", 2),
-      TopicWithCount(TopMentionsTopicType.Person, "Emmanuel Macron", 1),
+      AvailableTopic(TopMentionsTopicType.Gpe, "United Kingdom", 6),
+      AvailableTopic(TopMentionsTopicType.Gpe, "Russia", 4),
+      AvailableTopic(TopMentionsTopicType.Org, "KPMG", 4),
+      AvailableTopic(TopMentionsTopicType.Gpe, "Ukraine", 3),
+      AvailableTopic(TopMentionsTopicType.Gpe, "China", 2),
+      AvailableTopic(TopMentionsTopicType.Gpe, "United States", 2),
+      AvailableTopic(TopMentionsTopicType.Loc, "Europe", 2),
+      AvailableTopic(TopMentionsTopicType.Gpe, "Moscow", 2),
+      AvailableTopic(TopMentionsTopicType.Org, "PZ Cussons", 2),
+      AvailableTopic(TopMentionsTopicType.Person, "Emmanuel Macron", 1),
     );
 
     when(

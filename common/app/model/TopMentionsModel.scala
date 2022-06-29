@@ -20,14 +20,14 @@ object TopicsApiResponse {
   implicit val TopicsApiResponseJf: Format[TopicsApiResponse] = Json.format[TopicsApiResponse]
 }
 
-case class TopicWithCount(
+case class AvailableTopic(
     `type`: TopMentionsTopicType,
     value: String,
     count: Int,
 )
 
-object TopicWithCount {
-  implicit val TopicWithCountJf: Format[TopicWithCount] = Json.format[TopicWithCount]
+object AvailableTopic {
+  implicit val AvailableTopicJf: Format[AvailableTopic] = Json.format[AvailableTopic]
 }
 
 case class SelectedTopic(`type`: TopMentionsTopicType, value: String)
