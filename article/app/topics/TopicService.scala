@@ -1,4 +1,4 @@
-package topmentions
+package topics
 
 import common.{Box, GuLogging}
 import model.{TopicsApiResponse, TopicResult, SelectedTopic, AvailableTopic}

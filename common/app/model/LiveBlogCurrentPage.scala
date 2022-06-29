@@ -103,7 +103,7 @@ object LiveBlogCurrentPage {
     if (filterKeyEvents) {
       getKeyEventsBlocks(blocks)
     } else if (topicResult.isDefined) {
-      getTopMentionsBlocks(blocks, topicResult.get)
+      getTopicBlocks(blocks, topicResult.get)
     } else {
       getStandardBlocks(blocks)
     }
@@ -117,7 +117,7 @@ object LiveBlogCurrentPage {
     blocks.filter(isTopicBlock(topic)).sortBy(_.publishedCreatedTimestamp).reverse
   }
 
-  private def getTopMentionsBlocks(
+  private def getTopicBlocks(
       blocks: Blocks,
       topic: TopicResult,
   ): (Option[Seq[BodyBlock]], Int, Option[String]) = {
