@@ -29,6 +29,53 @@ const inputs = {
 	dummy: 'name',
 };
 
+/**
+ * Pads a number with the required number of leading
+ * zeros to be of a required length in string form
+ * @param {number} v an integer value below 10**n
+ * @param {number} n the required length of the string
+ * @returns a string of the required length representing the number
+ */
+const toNDigits = (v, n) => {
+	const s = v.toString();
+
+	if (s.length < n) {
+		return `${'0'.repeat(n - s.length)}${s}`;
+	}
+	return s;
+};
+
+const to2Digits = (v) => toNDigits(v, 2);
+
+/**
+ * Converts a Date to a string in the format used by the data team
+ * IE yyy-MM-dd hh:mm:ss.ssssss UTC
+ *
+ * There **should** be a better way to do this.
+ *
+ * @param {Date} inputDate
+ * @returns {string} The formatted date string
+ */
+const formatTimestampToUTC = (inputDate) => {
+	const utc = {
+		year: inputDate.getUTCFullYear(),
+		month: inputDate.getUTCMonth(),
+		date: inputDate.getUTCDate(),
+		hours: inputDate.getUTCHours(),
+		minutes: inputDate.getUTCMinutes(),
+		seconds: inputDate.getUTCSeconds(),
+		milliseconds: inputDate.getUTCMilliseconds(),
+	};
+
+	const date = `${utc.year}-${to2Digits(utc.month)}-${to2Digits(utc.date)}`;
+	const time = `${to2Digits(utc.hours)}:${to2Digits(utc.minutes)}:${to2Digits(
+		utc.seconds,
+	)}`;
+	const microSeconds = toNDigits(utc.milliseconds * 1000, 6);
+
+	return `${date} ${time}.${microSeconds} UTC`;
+};
+
 const buildComponentEventData = (
 	cardElement,
 	actionType,
@@ -46,7 +93,7 @@ const buildComponentEventData = (
 				id: cardElement.getAttribute('data-component'),
 			},
 			action: actionType,
-			value: [actionDescription, listName].join(),
+			value: [actionDescription, listName, formatTimestampToUTC(new Date())].join(),
 		},
 	};
 };
@@ -96,7 +143,7 @@ const sendTracking = (element, action, extraValues) => {
 	}
 
 	const actionDescription = extraValues
-		? [action, extraValues].join(',')
+		? [action, extraValues].join('|')
 		: action;
 
 	const eventData = buildComponentEventData(
@@ -105,23 +152,25 @@ const sendTracking = (element, action, extraValues) => {
 		actionDescription,
 	);
 
-    // The user can click the submit button multiple times while the grecaptcha.execute
-    // is happening, triggering the listener created at createSubscriptionFormEventHandlers
-    // which triggers 'showCaptcha' multiple times.
-    // There is no 'onReady' callback or hook on the grecaptcha.execute function that could
-    // be used to disable and re-enable the submit button, so to limit multiple events for the
-    // same 'openCaptcha', events are not sent if they happen wihin 1 second of an identical
-    // event that was reported.
-    // 1 second is an approximation - how long it take grecaptcha.execute to finish will depend
-    // on network and client conditions.
-    const now = Date.now();
+	// The user can click the submit button multiple times while the grecaptcha.execute
+	// is happening, triggering the listener created at createSubscriptionFormEventHandlers
+	// which triggers 'showCaptcha' multiple times.
+	// There is no 'onReady' callback or hook on the grecaptcha.execute function that could
+	// be used to disable and re-enable the submit button, so to limit multiple events for the
+	// same 'openCaptcha', events are not sent if they happen wihin 1 second of an identical
+	// event that was reported.
+	// 1 second is an approximation - how long it take grecaptcha.execute to finish will depend
+	// on network and client conditions.
+	const now = Date.now();
 	if (
 		lastEventDataSent &&
-		lastEventDataSent.componentEvent.component.id === eventData.componentEvent.component.id &&
-		lastEventDataSent.componentEvent.value === eventData.componentEvent.value &&
-        now - lastEventDataSentTimestamp < 1000
+		lastEventDataSent.componentEvent.component.id ===
+			eventData.componentEvent.component.id &&
+		lastEventDataSent.componentEvent.value ===
+			eventData.componentEvent.value &&
+		now - lastEventDataSentTimestamp < 1000
 	) {
-        return
+		return;
 	}
 
 	ophan.record(eventData);
