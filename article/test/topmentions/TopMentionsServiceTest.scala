@@ -1,6 +1,6 @@
 package topmentions
 
-import model.{TopicsApiResponse, Topic, SelectedTopic, TopMentionsTopicType, AvailableTopic}
+import model.{TopicsApiResponse, TopicResult, SelectedTopic, TopMentionsTopicType, AvailableTopic}
 import org.scalatest.{BeforeAndAfterAll}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -19,8 +19,8 @@ class TopMentionsServiceTest
     with MockitoSugar {
 
   val fakeClient = mock[TopicS3Client]
-  val topMentionResult =
-    Topic(
+  val topicResult =
+    TopicResult(
       name = "name1",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("blockId1"),
@@ -28,15 +28,15 @@ class TopMentionsServiceTest
       percentage_blocks = 1.2f,
     )
 
-  val topMentionResults = Seq(
-    Topic(
+  val topicResults = Seq(
+    TopicResult(
       name = "name1",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("blockId1"),
       count = 1,
       percentage_blocks = 1.2f,
     ),
-    Topic(
+    TopicResult(
       name = "name2",
       `type` = TopMentionsTopicType.Person,
       blocks = Seq("blockId1"),
@@ -45,12 +45,12 @@ class TopMentionsServiceTest
     ),
   )
   val successResponse =
-    TopicsApiResponse(entity_types = Seq(TopMentionsTopicType.Org), results = Seq(topMentionResult), model = "model")
+    TopicsApiResponse(entity_types = Seq(TopMentionsTopicType.Org), results = Seq(topicResult), model = "model")
 
   val successMultiResponse =
-    TopicsApiResponse(entity_types = Seq(TopMentionsTopicType.Org), results = topMentionResults, model = "model")
+    TopicsApiResponse(entity_types = Seq(TopMentionsTopicType.Org), results = topicResults, model = "model")
 
-  "refreshTopMentions" should "return successful future given getListOfKeys s3 call fails" in {
+  "refreshTopics" should "return successful future given getListOfKeys s3 call fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))
     val topMentionService = new TopicService(fakeClient)
 
@@ -60,7 +60,7 @@ class TopMentionsServiceTest
     results should be(None)
   }
 
-  "refreshTopMentions" should "return successful future given one of the S3 object calls fails" in {
+  "refreshTopics" should "return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1", "key2"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
     when(fakeClient.getObject("key2")) thenReturn Future.failed(new Throwable("error happend"))
@@ -74,7 +74,7 @@ class TopMentionsServiceTest
     results should be(None)
   }
 
-  "refreshTopMentions" should "update in memory top mentions and return successful future given one of the S3 object calls fails" in {
+  "refreshTopics" should "update in memory topics and return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
@@ -88,7 +88,7 @@ class TopMentionsServiceTest
     results.get.get("key1") should equal(Some(successResponse))
   }
 
-  "getTopMentionsByTopic" should "return the correct top mention result given correct blog id, filter entity and filter value" in {
+  "getSelectedTopic" should "return the correct topic result given correct blog id, filter entity and filter value" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
@@ -97,10 +97,10 @@ class TopMentionsServiceTest
 
     val result = topMentionService.getSelectedTopic("key1", SelectedTopic(TopMentionsTopicType.Org, "name1"))
 
-    result.get should equal(topMentionResult)
+    result.get should equal(topicResult)
   }
 
-  "getTopMentionsByTopic" should "return none given correct blog id, filter entity and with same filter value but different case" in {
+  "getSelectedTopic" should "return none given correct blog id, filter entity and with same filter value but different case" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
@@ -112,7 +112,7 @@ class TopMentionsServiceTest
     result should equal(None)
   }
 
-  "getTopMentionsByTopic" should "return none given a blog id that doesn't exist in cache" in {
+  "getSelectedTopic" should "return none given a blog id that doesn't exist in cache" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
@@ -124,7 +124,7 @@ class TopMentionsServiceTest
     result should equal(None)
   }
 
-  "getTopMentionsByTopic" should "return none given a filter entity type that doesn't exist in cache for the relevant blog" in {
+  "getSelectedTopic" should "return none given a filter entity type that doesn't exist in cache for the relevant blog" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
@@ -137,7 +137,7 @@ class TopMentionsServiceTest
     result should equal(None)
   }
 
-  "getTopMentionsByTopic" should "return none given a filter entity value that doesn't exist in cache for the relevant blog" in {
+  "getSelectedTopic" should "return none given a filter entity value that doesn't exist in cache for the relevant blog" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
 
@@ -150,7 +150,7 @@ class TopMentionsServiceTest
     result should equal(None)
   }
 
-  "getTopics" should "return a list of topics given a blog id" in {
+  "getAvailableTopics" should "return a list of available topics given a blog id" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successMultiResponse)
     val expectedTopics =
@@ -164,18 +164,18 @@ class TopMentionsServiceTest
     val topMentionService = new TopicService(fakeClient)
     val refreshJob = Await.result(topMentionService.refreshTopics(), 1.second)
     val topicList =
-      topMentionService.getTopics("key1")
+      topMentionService.getAvailableTopics("key1")
 
     topicList should equal(expectedTopics)
   }
 
-  "getTopics" should "return none given a blog id that doesn't exist in cache" in {
+  "getAvailableTopics" should "return none given a blog id that doesn't exist in cache" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successMultiResponse)
     val topMentionService = new TopicService(fakeClient)
 
     val topicList =
-      topMentionService.getTopics("key1")
+      topMentionService.getAvailableTopics("key1")
 
     topicList should equal(None)
   }
