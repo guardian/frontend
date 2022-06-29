@@ -2,6 +2,7 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
+import { formatTimestampToUTC } from 'common/modules/tracking/utc-date-format';
 import ophan from 'ophan/ng';
 
 const classes = {
@@ -29,53 +30,6 @@ const inputs = {
 	dummy: 'name',
 };
 
-/**
- * Pads a number with the required number of leading
- * zeros to be of a required length in string form
- * @param {number} v an integer value below 10**n
- * @param {number} n the required length of the string
- * @returns a string of the required length representing the number
- */
-const toNDigits = (v, n) => {
-	const s = v.toString();
-
-	if (s.length < n) {
-		return `${'0'.repeat(n - s.length)}${s}`;
-	}
-	return s;
-};
-
-const to2Digits = (v) => toNDigits(v, 2);
-
-/**
- * Converts a Date to a string in the format used by the data team
- * IE yyy-MM-dd hh:mm:ss.ssssss UTC
- *
- * There **should** be a better way to do this.
- *
- * @param {Date} inputDate
- * @returns {string} The formatted date string
- */
-const formatTimestampToUTC = (inputDate) => {
-	const utc = {
-		year: inputDate.getUTCFullYear(),
-		month: inputDate.getUTCMonth(),
-		date: inputDate.getUTCDate(),
-		hours: inputDate.getUTCHours(),
-		minutes: inputDate.getUTCMinutes(),
-		seconds: inputDate.getUTCSeconds(),
-		milliseconds: inputDate.getUTCMilliseconds(),
-	};
-
-	const date = `${utc.year}-${to2Digits(utc.month)}-${to2Digits(utc.date)}`;
-	const time = `${to2Digits(utc.hours)}:${to2Digits(utc.minutes)}:${to2Digits(
-		utc.seconds,
-	)}`;
-	const microSeconds = toNDigits(utc.milliseconds * 1000, 6);
-
-	return `${date} ${time}.${microSeconds} UTC`;
-};
-
 const buildComponentEventData = (
 	cardElement,
 	actionType,
@@ -93,7 +47,11 @@ const buildComponentEventData = (
 				id: cardElement.getAttribute('data-component'),
 			},
 			action: actionType,
-			value: [actionDescription, listName, formatTimestampToUTC(new Date())].join(),
+			value: [
+				actionDescription,
+				listName,
+				formatTimestampToUTC(new Date()),
+			].join(),
 		},
 	};
 };
