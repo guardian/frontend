@@ -410,15 +410,15 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopMentions(blogId: String, topics: Option[String]) = {
+  def getTopMentions(blogId: String, maybeTopic: Option[String]) = {
     val topMentionsResult = for {
-      topMentionTopic <- TopMentionsTopic.fromString(topics)
-      topMentions <- topMentionsService.getSelectedTopic(blogId, topMentionTopic)
+      selectedTopic <- SelectedTopic.fromString(maybeTopic)
+      topMentions <- topMentionsService.getSelectedTopic(blogId, selectedTopic)
     } yield topMentions
 
     topMentionsResult match {
-      case Some(_) => log.info(s"top mention result was successfully retrieved for ${topics.get}")
-      case None    => if (topics.isDefined) log.warn(s"top mention result couldn't be retrieved for ${topics.get}")
+      case Some(_) => log.info(s"top mention result was successfully retrieved for ${maybeTopic.get}")
+      case None    => if (maybeTopic.isDefined) log.warn(s"top mention result couldn't be retrieved for ${maybeTopic.get}")
     }
 
     topMentionsResult
