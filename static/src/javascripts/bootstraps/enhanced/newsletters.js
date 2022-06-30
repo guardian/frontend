@@ -30,6 +30,9 @@ const inputs = {
 	dummy: 'name',
 };
 
+let lastEventDataSent = undefined;
+let lastEventDataSentTimestamp = 0;
+
 const buildComponentEventData = (cardElement, action, eventDescription) => {
 	const listNameInput = cardElement.querySelector('input[name=listName]');
 	const newsletterId = listNameInput
@@ -69,8 +72,6 @@ const findContainingCard = (originalElement) => {
 	return undefined;
 };
 
-let lastEventDataSent = undefined;
-let lastEventDataSentTimestamp = 0;
 
 const sendTracking = (element, eventType, eventExtraDetail) => {
 	const cardElement = findContainingCard(element);
@@ -132,7 +133,6 @@ const sendTracking = (element, eventType, eventExtraDetail) => {
 	ophan.record(eventData);
 	lastEventDataSent = eventData;
 	lastEventDataSentTimestamp = now;
-	console.log(eventData.componentEvent);
 };
 
 const hideInputAndShowPreview = (el) => {
@@ -225,7 +225,6 @@ const submitForm = (form, buttonEl) => {
 					sendTracking(form, trackingEvents.fail, errorText);
 				})
 				.catch((e) => {
-					console.warn(e);
 					sendTracking(form, trackingEvents.fail, '[no error text]');
 				});
 		}
