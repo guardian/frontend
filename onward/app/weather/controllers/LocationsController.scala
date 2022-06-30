@@ -43,7 +43,7 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
           weatherApi.searchForCity(countryCode, city, maybeRegion) map { locations =>
             val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == countryCode).toList)
             cities.headOption.fold {
-              log.warn(s"Could not find $countryCode, $city")
+              log.warn(s"Could not find $countryCode, $city, $maybeRegion")
               Cached(CacheTime.NotFound)(JsonNotFound())
             } { weatherCity =>
               log.info(s"Matched $countryCode, $city, $maybeRegion to ${weatherCity.id}")
