@@ -1,7 +1,6 @@
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import { mediator } from 'lib/mediator';
-import { upgradeRichLinks } from 'common/modules/article/rich-links';
 import { Affix } from 'common/modules/experiments/affix';
 import { autoUpdate } from 'common/modules/ui/autoupdate';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
@@ -154,7 +153,6 @@ const init = () => {
 		['lb-autoupdate', createAutoUpdate],
 		['lb-timeline', affixTimeline],
 		['lb-timestamp', keepTimestampsCurrent],
-		['lb-richlinks', upgradeRichLinks],
 		['lb-tracking', initTracking],
 	]);
 	initTrails();
