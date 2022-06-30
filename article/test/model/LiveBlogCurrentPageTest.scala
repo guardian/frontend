@@ -375,7 +375,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
     should(result, currentPage = expectedCurrentPage, pagination = expectedPagination)
   }
 
-  it should "only filters blocks by key events given both key events and top mentions are provided" in {
+  it should "only filters blocks by key events given both key events and topicResult are provided" in {
     val topicResult = getFakeTopicResult(TopicType.Org, "tfl", Seq("1", "3"))
     val testFakeBlocks = TestFakeBlocks(numberOfBlocks = 5, numberOfKeyEventsBlocks = 2, None)
     val result =
