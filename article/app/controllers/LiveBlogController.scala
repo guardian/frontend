@@ -64,7 +64,7 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val topMentions = if (filter) None else getTopMentions(path, topics)
       val availableTopics = topMentionsService.getTopics(path)
-
+      val selectedTopics = if (topMentions.isDefined) topics else None
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
           renderWithRange(
@@ -73,7 +73,7 @@ class LiveBlogController(
             filter,
             topMentions,
             availableTopics,
-            selectedTopics = topics,
+            selectedTopics,
           ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
@@ -88,7 +88,7 @@ class LiveBlogController(
                 filter,
                 Some(value),
                 availableTopics,
-                selectedTopics = topics,
+                selectedTopics,
               ) // no page param
             case None =>
               renderWithRange(
@@ -97,7 +97,7 @@ class LiveBlogController(
                 filter,
                 None,
                 availableTopics,
-                selectedTopics = topics,
+                selectedTopics,
               ) // no page param
           }
         }
@@ -119,11 +119,12 @@ class LiveBlogController(
       val topMentionResult = getTopMentions(path, topics)
       val range = getRange(lastUpdate, page, topMentionResult)
       val availableTopics = topMentionsService.getTopics(path)
+      val selectedTopics = if (topMentionResult.isDefined) topics else None
 
       mapModel(path, range, filter, topMentionResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, selectedTopics = topics))
+          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, selectedTopics))
         case (blog: LiveBlogPage, blocks) =>
           getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty), topMentionResult)
         case (minute: MinutePage, _) =>
