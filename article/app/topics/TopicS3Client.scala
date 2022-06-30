@@ -46,7 +46,7 @@ final class TopicS3ClientImpl extends TopicS3Client with S3 with GuLogging {
         client.getObject(request).parseToTopicsApiResponse
       }.flatten match {
         case Success(value) =>
-          log.info(s"got topicApiResponse from S3 for key ${key}")
+          log.info(s"got TopicsApiResponse from S3 for key ${key}")
           Future.successful(value)
         case Failure(exception) =>
           log.error(s"S3 retrieval failed for key ${key}", exception)
@@ -75,14 +75,14 @@ object S3ObjectImplicits {
 
       Json.fromJson[TopicsApiResponse](json) match {
         case JsSuccess(topicsApiResponse, __) =>
-          log.debug(s"Parsed TopicDetails from S3 for key ${s3Object.getKey}")
+          log.debug(s"Parsed TopicsApiResponse from S3 for key ${s3Object.getKey}")
           Success(topicsApiResponse)
         case JsError(errors) =>
           val errorPaths = errors.map { error => error._1.toString() }.mkString(",")
-          log.error(s"Error parsing topicApiResponse from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
+          log.error(s"Error parsing TopicsApiResponse from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
           Failure(
             TopicsJsonParseException(
-              s"could not parse S3 TopicDetails json. Errors paths(s): $errors",
+              s"could not parse S3 TopicsApiResponse json. Errors paths(s): $errors",
             ),
           )
       }
