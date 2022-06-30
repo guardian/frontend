@@ -9,8 +9,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopicResult, SelectedTopic, TopicType, AvailableTopic, TopicsLiveBlog}
-import topics.{TopicS3Client, TopicService}
+import model.{AvailableTopic, LiveBlogPage, SelectedTopic, TopicResult, TopicType, TopicsLiveBlog}
+import topics.TopicService
 
 import scala.concurrent.Future
 

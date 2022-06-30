@@ -114,7 +114,7 @@ class ArticleController(
       case AmpFormat if isAmpSupported =>
         remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
       case HtmlFormat | AmpFormat if tier == RemoteRender =>
-        remoteRenderer.getArticle(ws, article, blocks, pageType, filterKeyEvents = false)
+        remoteRenderer.getArticle(ws, article, blocks, pageType, filterKeyEvents = false, topicResult = None)
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
