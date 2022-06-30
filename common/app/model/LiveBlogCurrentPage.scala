@@ -249,7 +249,7 @@ sealed trait PageReference {
 
   def buildQueryParam(topicResult: Option[TopicResult]) = {
     topicResult match {
-      case Some(value) => s"&topics=${topicResult.get.`type`}:${value.name}"
+      case Some(value) => s"&topics=${value.`type`}:${value.name}"
       case None        => ""
     }
   }
