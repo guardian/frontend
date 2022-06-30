@@ -52,7 +52,7 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
 
   private def searchForCityUrl(countryCode: String, city: String, regionCode: Option[String]): String = {
     val regionPath = regionCode.map(code => s"/$code").getOrElse("")
-    s"$accuWeatherApiUri/locations/v1/cities/$countryCode$regionPath/search.json?q=$city&apikey=$weatherApiKey"
+    s"$accuWeatherApiUri/locations/v1/cities/$countryCode$regionPath/search.json?q=$city&alias=Always&apikey=$weatherApiKey"
   }
 
   private def getJson(url: String): Future[JsValue] = {
