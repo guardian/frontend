@@ -1,7 +1,7 @@
-package topmentions
+package topics
 
 import common.{Box, GuLogging}
-import model.{TopicsApiResponse, TopMentionsResult, SelectedTopic, AvailableTopic}
+import model.{TopicsApiResponse, TopicResult, SelectedTopic, AvailableTopic}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,7 +28,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
     topicsDetails.get().flatMap(_.get(blogId))
   }
 
-  def getTopics(blogId: String): Option[Seq[AvailableTopic]] = {
+  def getAvailableTopics(blogId: String): Option[Seq[AvailableTopic]] = {
     getBlogTopicsApiResponse(blogId).map(mentions =>
       mentions.results.map(mention => AvailableTopic(mention.`type`, mention.name, mention.count)),
     )
@@ -41,7 +41,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
   def getSelectedTopic(
       blogId: String,
       topMentionEntity: SelectedTopic,
-  ): Option[TopMentionsResult] = {
+  ): Option[TopicResult] = {
     getBlogTopicsApiResponse(blogId).flatMap(_.results.find(result => {
       result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value
     }))

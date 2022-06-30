@@ -1,4 +1,4 @@
-package topmentions
+package topics
 
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.{GetObjectRequest, S3Object}
@@ -8,7 +8,7 @@ import conf.Configuration
 import model.{TopMentionJsonParseException, TopicsApiResponse}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import services.S3
-import topmentions.S3ObjectImplicits.RichS3Object
+import topics.S3ObjectImplicits.RichS3Object
 import model.TopicsApiResponse._
 
 import scala.collection.JavaConverters._

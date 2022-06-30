@@ -22,19 +22,19 @@ import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
-import topmentions.{TopicS3Client, TopicS3ClientImpl, TopicService}
+import topics.{TopicS3Client, TopicS3ClientImpl, TopicService}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
     new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait TopMentionsServices {
+trait TopicServices {
   lazy val topicS3Client: TopicS3Client = wire[TopicS3ClientImpl]
-  lazy val topMentionsService = wire[TopicService]
+  lazy val topicService = wire[TopicService]
 }
 
-trait AppComponents extends FrontendComponents with ArticleControllers with TopMentionsServices {
+trait AppComponents extends FrontendComponents with ArticleControllers with TopicServices {
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]

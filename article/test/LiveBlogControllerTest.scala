@@ -9,8 +9,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopMentionsResult, SelectedTopic, TopMentionsTopicType, AvailableTopic, TopicsLiveBlog}
-import topmentions.{TopicS3Client, TopicService}
+import model.{LiveBlogPage, TopicResult, SelectedTopic, TopMentionsTopicType, AvailableTopic, TopicsLiveBlog}
+import topics.{TopicS3Client, TopicService}
 
 import scala.concurrent.Future
 
@@ -29,9 +29,9 @@ import scala.concurrent.Future
   val path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live"
 
   trait Setup {
-    var fakeTopMentionsService = mock[TopicService]
+    var fakeTopicService = mock[TopicService]
     var fakeDcr = new DCRFake()
-    val topMentionResult = TopMentionsResult(
+    val topicResult = TopicResult(
       name = "Fifa",
       `type` = TopMentionsTopicType.Org,
       blocks = Seq("56d08042e4b0d38537b1f70b"),
@@ -39,7 +39,7 @@ import scala.concurrent.Future
       percentage_blocks = 1.2f,
     )
 
-    val topics = Vector(
+    val fakeAvailableTopics = Vector(
       AvailableTopic(TopMentionsTopicType.Gpe, "United Kingdom", 6),
       AvailableTopic(TopMentionsTopicType.Gpe, "Russia", 4),
       AvailableTopic(TopMentionsTopicType.Org, "KPMG", 4),
@@ -53,15 +53,15 @@ import scala.concurrent.Future
     );
 
     when(
-      fakeTopMentionsService.getSelectedTopic(path, SelectedTopic(TopMentionsTopicType.Org, "Fifa")),
+      fakeTopicService.getSelectedTopic(path, SelectedTopic(TopMentionsTopicType.Org, "Fifa")),
     ) thenReturn Some(
-      topMentionResult,
+      topicResult,
     )
 
     when(
-      fakeTopMentionsService.getTopics(path),
+      fakeTopicService.getAvailableTopics(path),
     ) thenReturn Some(
-      topics,
+      fakeAvailableTopics,
     )
 
     lazy val liveBlogController = new LiveBlogController(
@@ -69,7 +69,7 @@ import scala.concurrent.Future
       play.api.test.Helpers.stubControllerComponents(),
       wsClient,
       fakeDcr,
-      fakeTopMentionsService,
+      fakeTopicService,
     )
   }
 
@@ -285,16 +285,16 @@ import scala.concurrent.Future
     liveBlogController.shouldFilter(None) should be(false)
   }
 
-  "getTopMentionsForFilters" should "returns none given no automatic filter query parameter" in new Setup {
-    liveBlogController.getTopMentions(path, None) should be(None)
+  "getTopicResult" should "returns none given no automatic filter query parameter" in new Setup {
+    liveBlogController.getTopicResult(path, None) should be(None)
   }
 
-  "getTopMentionsForFilters" should "returns none given an incorrect automatic filter query parameter" in new Setup {
-    liveBlogController.getTopMentions(path, Some("orgFifa")) should be(None)
+  "getTopicResult" should "returns none given an incorrect automatic filter query parameter" in new Setup {
+    liveBlogController.getTopicResult(path, Some("orgFifa")) should be(None)
   }
 
-  "getTopMentionsForFilters" should "returns correct topMentionResult given a correct automatic filter query parameter" in new Setup {
-    liveBlogController.getTopMentions(path, Some("org:Fifa")) should be(Some(topMentionResult))
+  "getTopicResult" should "returns correct topicResult given a correct automatic filter query parameter" in new Setup {
+    liveBlogController.getTopicResult(path, Some("org:Fifa")) should be(Some(topicResult))
   }
 
   "renderArticle" should "returns the first page of filtered blog by topics" in new Setup {
@@ -324,7 +324,7 @@ import scala.concurrent.Future
       topics = Some("org:Fifa"),
     )(fakeRequest)
 
-    verify(fakeTopMentionsService, times(0)).getSelectedTopic(anyString(), anyObject())
+    verify(fakeTopicService, times(0)).getSelectedTopic(anyString(), anyObject())
     status(result) should be(200)
   }
 
