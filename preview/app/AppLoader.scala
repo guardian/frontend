@@ -38,7 +38,7 @@ trait PreviewLifecycleComponents
     with FapiServices
     with OnwardServices
     with ApplicationsServices
-    with TopMentionsServices {
+    with TopicServices {
   self: FrontendComponents =>
 
   //Override conflicting members

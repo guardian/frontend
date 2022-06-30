@@ -22,7 +22,7 @@ import model.{
   NoCache,
   PageWithStoryPackage,
   PressedPage,
-  TopicWithCount,
+  AvailableTopic,
 }
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -141,7 +141,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
-      availableTopics: Option[Seq[TopicWithCount]] = None,
+      availableTopics: Option[Seq[AvailableTopic]] = None,
       selectedTopics: Option[String] = None,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
