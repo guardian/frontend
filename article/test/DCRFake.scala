@@ -3,12 +3,11 @@ package test
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.PageType
-import model.{ApplicationContext, AvailableTopic, Cached, LiveBlogPage, PageWithStoryPackage, TopicResult}
+import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage, Topic, TopicResult}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 
-import scala.collection.mutable
 import scala.collection.mutable.{ArrayBuffer, Queue}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -25,7 +24,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
-      availableTopics: Option[Seq[AvailableTopic]],
+      availableTopics: Option[Seq[Topic]],
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global

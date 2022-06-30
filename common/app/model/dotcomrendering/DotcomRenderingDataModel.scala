@@ -12,7 +12,6 @@ import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
-  AvailableTopic,
   Badges,
   CanonicalLiveBlog,
   ContentFormat,
@@ -21,7 +20,7 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
-  SelectedTopic,
+  Topic,
   TopicResult,
 }
 import navigation._
@@ -39,8 +38,8 @@ case class DotcomRenderingDataModel(
     webTitle: String,
     mainMediaElements: List[PageElement],
     main: String,
-    availableTopics: Option[Seq[AvailableTopic]],
-    selectedTopics: Option[Seq[SelectedTopic]],
+    availableTopics: Option[Seq[Topic]],
+    selectedTopics: Option[Seq[Topic]],
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
@@ -248,7 +247,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
-      availableTopics: Option[Seq[AvailableTopic]] = None,
+      availableTopics: Option[Seq[Topic]] = None,
       topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
@@ -322,7 +321,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
-      availableTopics: Option[Seq[AvailableTopic]],
+      availableTopics: Option[Seq[Topic]],
       topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
 
@@ -427,7 +426,7 @@ object DotcomRenderingDataModel {
 
     val matchData = makeMatchData(page)
 
-    val selectedTopics = topicResult.map(x => Seq(SelectedTopic(x.`type`, x.name)))
+    val selectedTopics = topicResult.map(x => Seq(Topic(x.`type`, x.name)))
 
     DotcomRenderingDataModel(
       author = author,

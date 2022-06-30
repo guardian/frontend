@@ -15,7 +15,6 @@ import model.dotcomrendering.{
   PageType,
 }
 import model.{
-  AvailableTopic,
   CacheTime,
   Cached,
   InteractivePage,
@@ -23,6 +22,7 @@ import model.{
   NoCache,
   PageWithStoryPackage,
   PressedPage,
+  Topic,
   TopicResult,
 }
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -150,7 +150,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
-      availableTopics: Option[Seq[AvailableTopic]] = None,
+      availableTopics: Option[Seq[Topic]] = None,
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {

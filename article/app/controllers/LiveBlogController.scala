@@ -138,7 +138,7 @@ class LiveBlogController(
       range: BlockRange,
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
-      availableTopics: Option[Seq[AvailableTopic]],
+      availableTopics: Option[Seq[Topic]],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -334,7 +334,7 @@ class LiveBlogController(
       blog: LiveBlogPage,
       blocks: Blocks,
       filterKeyEvents: Boolean,
-      availableTopics: Option[Seq[AvailableTopic]],
+      availableTopics: Option[Seq[Topic]],
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
@@ -408,7 +408,7 @@ class LiveBlogController(
 
   def getTopicResult(blogId: String, topic: Option[String]) = {
     val topicResult = for {
-      selectedTopic <- SelectedTopic.fromString(topic)
+      selectedTopic <- Topic.fromString(topic)
       topicResult <- topicService.getSelectedTopic(blogId, selectedTopic)
     } yield topicResult
 
