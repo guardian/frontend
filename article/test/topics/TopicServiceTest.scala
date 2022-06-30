@@ -1,6 +1,6 @@
 package topics
 
-import model.{TopicsApiResponse, TopicResult, SelectedTopic, TopicType, AvailableTopic}
+import model.{TopicsApiResponse, TopicResult, Topic, TopicType}
 import org.scalatest.{BeforeAndAfterAll}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -95,7 +95,7 @@ class TopicServiceTest
     val topicService = new TopicService(fakeClient)
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
-    val result = topicService.getSelectedTopic("key1", SelectedTopic(TopicType.Org, "name1"))
+    val result = topicService.getSelectedTopic("key1", Topic(TopicType.Org, "name1"))
 
     result.get should equal(topicResult)
   }
@@ -107,7 +107,7 @@ class TopicServiceTest
     val topicService = new TopicService(fakeClient)
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
-    val result = topicService.getSelectedTopic("key1", SelectedTopic(TopicType.Org, "NAME1"))
+    val result = topicService.getSelectedTopic("key1", Topic(TopicType.Org, "NAME1"))
 
     result should equal(None)
   }
@@ -119,7 +119,7 @@ class TopicServiceTest
     val topicService = new TopicService(fakeClient)
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
-    val result = topicService.getSelectedTopic("key2", SelectedTopic(TopicType.Org, "name1"))
+    val result = topicService.getSelectedTopic("key2", Topic(TopicType.Org, "name1"))
 
     result should equal(None)
   }
@@ -132,7 +132,7 @@ class TopicServiceTest
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
     val result =
-      topicService.getSelectedTopic("key1", SelectedTopic(TopicType.Person, "Boris"))
+      topicService.getSelectedTopic("key1", Topic(TopicType.Person, "Boris"))
 
     result should equal(None)
   }
@@ -145,7 +145,7 @@ class TopicServiceTest
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
     val result =
-      topicService.getSelectedTopic("key1", SelectedTopic(TopicType.Org, "someRandomOrg"))
+      topicService.getSelectedTopic("key1", Topic(TopicType.Org, "someRandomOrg"))
 
     result should equal(None)
   }
@@ -156,8 +156,8 @@ class TopicServiceTest
     val expectedTopics =
       Some(
         List(
-          AvailableTopic(TopicType.Org, "name1", 1),
-          AvailableTopic(TopicType.Person, "name2", 10),
+          Topic(TopicType.Org, "name1", Some(1)),
+          Topic(TopicType.Person, "name2", Some(10)),
         ),
       )
 

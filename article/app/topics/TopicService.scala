@@ -1,7 +1,7 @@
 package topics
 
 import common.{Box, GuLogging}
-import model.{TopicsApiResponse, TopicResult, SelectedTopic, AvailableTopic}
+import model.{TopicsApiResponse, TopicResult, Topic}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,9 +28,9 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
     topicsDetails.get().flatMap(_.get(blogId))
   }
 
-  def getAvailableTopics(blogId: String): Option[Seq[AvailableTopic]] = {
+  def getAvailableTopics(blogId: String): Option[Seq[Topic]] = {
     getBlogTopicsApiResponse(blogId).map(topicsApiResponse =>
-      topicsApiResponse.results.map(topic => AvailableTopic(topic.`type`, topic.name, topic.count)),
+      topicsApiResponse.results.map(topic => Topic(topic.`type`, topic.name, Some(topic.count))),
     )
   }
 
@@ -40,7 +40,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
 
   def getSelectedTopic(
       blogId: String,
-      topicEntity: SelectedTopic,
+      topicEntity: Topic,
   ): Option[TopicResult] = {
     getBlogTopicsApiResponse(blogId).flatMap(_.results.find(result => {
       result.`type` == topicEntity.`type` && result.name == topicEntity.value
