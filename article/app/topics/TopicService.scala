@@ -10,9 +10,9 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
   private val topicsDetails = Box[Option[Map[String, TopicsApiResponse]]](None)
 
   def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    val retrievedTopMentions = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
+    val retrievedTopics = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
 
-    retrievedTopMentions
+    retrievedTopics
       .flatMap(Future.sequence(_))
       .map(response => {
         topicsDetails send Some(response.toMap)

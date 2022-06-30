@@ -1,6 +1,6 @@
 package topics
 
-import model.{TopicsApiResponse, TopicResult, SelectedTopic, TopMentionsTopicType, AvailableTopic}
+import model.{TopicsApiResponse, TopicResult, SelectedTopic, TopicType, AvailableTopic}
 import org.scalatest.{BeforeAndAfterAll}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -22,7 +22,7 @@ class TopicServiceTest
   val topicResult =
     TopicResult(
       name = "name1",
-      `type` = TopMentionsTopicType.Org,
+      `type` = TopicType.Org,
       blocks = Seq("blockId1"),
       count = 1,
       percentage_blocks = 1.2f,
@@ -31,24 +31,24 @@ class TopicServiceTest
   val topicResults = Seq(
     TopicResult(
       name = "name1",
-      `type` = TopMentionsTopicType.Org,
+      `type` = TopicType.Org,
       blocks = Seq("blockId1"),
       count = 1,
       percentage_blocks = 1.2f,
     ),
     TopicResult(
       name = "name2",
-      `type` = TopMentionsTopicType.Person,
+      `type` = TopicType.Person,
       blocks = Seq("blockId1"),
       count = 10,
       percentage_blocks = 1.2f,
     ),
   )
   val successResponse =
-    TopicsApiResponse(entity_types = Seq(TopMentionsTopicType.Org), results = Seq(topicResult), model = "model")
+    TopicsApiResponse(entity_types = Seq(TopicType.Org), results = Seq(topicResult), model = "model")
 
   val successMultiResponse =
-    TopicsApiResponse(entity_types = Seq(TopMentionsTopicType.Org), results = topicResults, model = "model")
+    TopicsApiResponse(entity_types = Seq(TopicType.Org), results = topicResults, model = "model")
 
   "refreshTopics" should "return successful future given getListOfKeys s3 call fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))
@@ -95,7 +95,7 @@ class TopicServiceTest
     val topicService = new TopicService(fakeClient)
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
-    val result = topicService.getSelectedTopic("key1", SelectedTopic(TopMentionsTopicType.Org, "name1"))
+    val result = topicService.getSelectedTopic("key1", SelectedTopic(TopicType.Org, "name1"))
 
     result.get should equal(topicResult)
   }
@@ -107,7 +107,7 @@ class TopicServiceTest
     val topicService = new TopicService(fakeClient)
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
-    val result = topicService.getSelectedTopic("key1", SelectedTopic(TopMentionsTopicType.Org, "NAME1"))
+    val result = topicService.getSelectedTopic("key1", SelectedTopic(TopicType.Org, "NAME1"))
 
     result should equal(None)
   }
@@ -119,7 +119,7 @@ class TopicServiceTest
     val topicService = new TopicService(fakeClient)
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
-    val result = topicService.getSelectedTopic("key2", SelectedTopic(TopMentionsTopicType.Org, "name1"))
+    val result = topicService.getSelectedTopic("key2", SelectedTopic(TopicType.Org, "name1"))
 
     result should equal(None)
   }
@@ -132,7 +132,7 @@ class TopicServiceTest
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
     val result =
-      topicService.getSelectedTopic("key1", SelectedTopic(TopMentionsTopicType.Person, "Boris"))
+      topicService.getSelectedTopic("key1", SelectedTopic(TopicType.Person, "Boris"))
 
     result should equal(None)
   }
@@ -145,7 +145,7 @@ class TopicServiceTest
     val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
 
     val result =
-      topicService.getSelectedTopic("key1", SelectedTopic(TopMentionsTopicType.Org, "someRandomOrg"))
+      topicService.getSelectedTopic("key1", SelectedTopic(TopicType.Org, "someRandomOrg"))
 
     result should equal(None)
   }
@@ -156,8 +156,8 @@ class TopicServiceTest
     val expectedTopics =
       Some(
         List(
-          AvailableTopic(TopMentionsTopicType.Org, "name1", 1),
-          AvailableTopic(TopMentionsTopicType.Person, "name2", 10),
+          AvailableTopic(TopicType.Org, "name1", 1),
+          AvailableTopic(TopicType.Person, "name2", 10),
         ),
       )
 

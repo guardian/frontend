@@ -1,19 +1,19 @@
 package model
 
 import common.GuLogging
-import model.TopMentionsTopicType.TopMentionsTopicType
+import model.TopicType.TopicType
 import play.api.libs.json.{Format, Json}
 
 case class TopicResult(
     name: String,
-    `type`: TopMentionsTopicType,
+    `type`: TopicType,
     blocks: Seq[String],
     count: Int,
     percentage_blocks: Float,
 )
-case class TopicsApiResponse(entity_types: Seq[TopMentionsTopicType], results: Seq[TopicResult], model: String)
+case class TopicsApiResponse(entity_types: Seq[TopicType], results: Seq[TopicResult], model: String)
 
-case class TopMentionJsonParseException(message: String) extends Exception(message)
+case class TopicsJsonParseException(message: String) extends Exception(message)
 
 object TopicsApiResponse {
   implicit val TopicResultJf: Format[TopicResult] = Json.format[TopicResult]
@@ -21,7 +21,7 @@ object TopicsApiResponse {
 }
 
 case class AvailableTopic(
-    `type`: TopMentionsTopicType,
+    `type`: TopicType,
     value: String,
     count: Int,
 )
@@ -30,7 +30,7 @@ object AvailableTopic {
   implicit val AvailableTopicJf: Format[AvailableTopic] = Json.format[AvailableTopic]
 }
 
-case class SelectedTopic(`type`: TopMentionsTopicType, value: String)
+case class SelectedTopic(`type`: TopicType, value: String)
 
 object SelectedTopic extends GuLogging {
 
@@ -40,7 +40,7 @@ object SelectedTopic extends GuLogging {
     topic.flatMap { f =>
       val filterEntity = f.split(":")
       if (filterEntity.length == 2) {
-        val entityType = TopMentionsTopicType.withNameOpt(filterEntity(0))
+        val entityType = TopicType.withNameOpt(filterEntity(0))
         if (entityType.isEmpty) {
           log.warn(s"topics query parameter entity ${filterEntity(0)} is invalid")
           None
@@ -56,8 +56,8 @@ object SelectedTopic extends GuLogging {
   }
 }
 
-object TopMentionsTopicType extends Enumeration {
-  type TopMentionsTopicType = Value
+object TopicType extends Enumeration {
+  type TopicType = Value
 
   val Org = Value(1, "ORG")
   val Product = Value(2, "PRODUCT")
@@ -68,5 +68,5 @@ object TopMentionsTopicType extends Enumeration {
 
   def withNameOpt(s: String): Option[Value] = values.find(_.toString == s.toUpperCase)
 
-  implicit val format: Format[TopMentionsTopicType] = Json.formatEnum(this)
+  implicit val format: Format[TopicType] = Json.formatEnum(this)
 }

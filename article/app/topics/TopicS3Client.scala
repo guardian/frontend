@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.model.{GetObjectRequest, S3Object}
 import com.amazonaws.util.IOUtils
 import common.GuLogging
 import conf.Configuration
-import model.{TopMentionJsonParseException, TopicsApiResponse}
+import model.{TopicsJsonParseException, TopicsApiResponse}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import services.S3
 import topics.S3ObjectImplicits.RichS3Object
@@ -46,7 +46,7 @@ final class TopicS3ClientImpl extends TopicS3Client with S3 with GuLogging {
         client.getObject(request).parseToTopicsApiResponse
       }.flatten match {
         case Success(value) =>
-          log.info(s"got topMentionResponse from S3 for key ${key}")
+          log.info(s"got topicApiResponse from S3 for key ${key}")
           Future.successful(value)
         case Failure(exception) =>
           log.error(s"S3 retrieval failed for key ${key}", exception)
@@ -75,14 +75,14 @@ object S3ObjectImplicits {
 
       Json.fromJson[TopicsApiResponse](json) match {
         case JsSuccess(topMentionResponse, __) =>
-          log.debug(s"Parsed TopMentionsDetails from S3 for key ${s3Object.getKey}")
+          log.debug(s"Parsed TopicDetails from S3 for key ${s3Object.getKey}")
           Success(topMentionResponse)
         case JsError(errors) =>
           val errorPaths = errors.map { error => error._1.toString() }.mkString(",")
-          log.error(s"Error parsing topMentionResponse from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
+          log.error(s"Error parsing topicApiResponse from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
           Failure(
-            TopMentionJsonParseException(
-              s"could not parse S3 TopMentionsDetails json. Errors paths(s): $errors",
+            TopicsJsonParseException(
+              s"could not parse S3 TopicDetails json. Errors paths(s): $errors",
             ),
           )
       }
