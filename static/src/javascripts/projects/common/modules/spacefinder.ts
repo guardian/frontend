@@ -52,7 +52,6 @@ type SpacefinderRules = {
 type SpacefinderWriter = (paras: HTMLElement[]) => Promise<void>;
 
 type SpacefinderOptions = {
-	waitForLinks?: boolean;
 	waitForImages?: boolean;
 	waitForInteractives?: boolean;
 	debug?: boolean;
@@ -76,13 +75,11 @@ const query = (selector: string, context?: HTMLElement | Document) => [
 	...(context ?? document).querySelectorAll<HTMLElement>(selector),
 ];
 
-// maximum time (in ms) to wait for images to be loaded and rich links
-// to be upgraded
+// maximum time (in ms) to wait for images to be loaded
 const LOADING_TIMEOUT = 5_000;
 
 const defaultOptions: SpacefinderOptions = {
 	waitForImages: true,
-	waitForLinks: true,
 	waitForInteractives: false,
 	debug: false,
 };
@@ -116,18 +113,8 @@ const onImagesLoaded = memoize((rules: SpacefinderRules) => {
 				img.addEventListener('load', resolve);
 			}),
 	);
-	return Promise.all(imgPromises);
+	return Promise.all(imgPromises).then(() => Promise.resolve());
 }, getFuncId);
-
-const onRichLinksUpgraded = memoize(
-	(rules: SpacefinderRules) =>
-		query('.element-rich-link--not-upgraded', rules.body).length === 0
-			? Promise.resolve()
-			: new Promise((resolve) =>
-					document.addEventListener('rich-link:loaded', resolve),
-			  ),
-	getFuncId,
-);
 
 const waitForSetHeightMessage = (
 	iframe: HTMLIFrameElement,
@@ -328,7 +315,7 @@ class SpaceError extends Error {
 	}
 }
 /**
- * Wait for the page to be ready (images loaded, rich links upgraded, interactives loaded)
+ * Wait for the page to be ready (images loaded, interactives loaded)
  * or for LOADING_TIMEOUT to elapse, whichever comes first.
  * @param  {SpacefinderRules} rules
  * @param  {SpacefinderOptions} options
@@ -339,9 +326,10 @@ const getReady = (rules: SpacefinderRules, options: SpacefinderOptions) =>
 			window.setTimeout(() => resolve('timeout'), LOADING_TIMEOUT),
 		),
 		Promise.all([
-			options.waitForImages ? onImagesLoaded(rules) : true,
-			options.waitForLinks ? onRichLinksUpgraded(rules) : true,
-			options.waitForInteractives ? onInteractivesLoaded(rules) : true,
+			options.waitForImages ? onImagesLoaded(rules) : Promise.resolve(),
+			options.waitForInteractives
+				? onInteractivesLoaded(rules)
+				: Promise.resolve(),
 		]),
 	]).then((value) => {
 		if (value === 'timeout') {
