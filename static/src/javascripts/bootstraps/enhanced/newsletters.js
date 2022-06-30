@@ -30,15 +30,17 @@ const inputs = {
 	dummy: 'name',
 };
 
-const buildComponentEventData = (
-	cardElement,
-	actionType,
-	actionDescription,
-) => {
+const buildComponentEventData = (cardElement, action, eventDescription) => {
 	const listNameInput = cardElement.querySelector('input[name=listName]');
-	const listName = listNameInput
+	const newsletterId = listNameInput
 		? listNameInput.value
 		: '[unknown list name]';
+
+	const value = JSON.stringify({
+		eventDescription,
+		newsletterId,
+		timestamp: formatTimestampToUTC(new Date()),
+	});
 
 	return {
 		componentEvent: {
@@ -46,12 +48,8 @@ const buildComponentEventData = (
 				componentType: 'NEWSLETTER_SUBSCRIPTION',
 				id: cardElement.getAttribute('data-component'),
 			},
-			action: actionType,
-			value: [
-				actionDescription,
-				listName,
-				formatTimestampToUTC(new Date()),
-			].join(),
+			action,
+			value,
 		},
 	};
 };
@@ -74,40 +72,40 @@ const findContainingCard = (originalElement) => {
 let lastEventDataSent = undefined;
 let lastEventDataSentTimestamp = 0;
 
-const sendTracking = (element, action, extraValues) => {
+const sendTracking = (element, eventType, eventExtraDetail) => {
 	const cardElement = findContainingCard(element);
 	if (!cardElement) {
 		return;
 	}
 
-	let actionType = 'CLICK';
+	let action = 'CLICK';
 
-	switch (action) {
+	switch (eventType) {
 		case trackingEvents.submit:
-			actionType = 'ANSWER';
+			action = 'ANSWER';
 			break;
 		case trackingEvents.confirm:
-			actionType = 'SUBSCRIBE';
+			action = 'SUBSCRIBE';
 			break;
 		case trackingEvents.fail:
-			actionType = 'CLOSE';
+			action = 'CLOSE';
 			break;
 		case trackingEvents.loadError:
-			actionType = 'CLOSE';
+			action = 'CLOSE';
 			break;
 		case trackingEvents.openCaptcha:
-			actionType = 'EXPAND';
+			action = 'EXPAND';
 			break;
 	}
 
-	const actionDescription = extraValues
-		? [action, extraValues].join('|')
-		: action;
+	const eventDescription = eventExtraDetail
+		? [eventType, eventExtraDetail].join('|')
+		: eventType;
 
 	const eventData = buildComponentEventData(
 		cardElement,
-		actionType,
-		actionDescription,
+		action,
+		eventDescription,
 	);
 
 	// The user can click the submit button multiple times while the grecaptcha.execute

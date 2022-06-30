@@ -57,15 +57,21 @@ function formatTimestampToUTC (inputDate) {
 };
 
 
-function buildComponentEventData (formElement, actionType, actionDescription) {
+function buildComponentEventData (formElement, action, eventDescription) {
+    const value = JSON.stringify({
+		eventDescription,
+		newsletterId: formElement.getAttribute('data-email-list-name'),
+		timestamp: formatTimestampToUTC(new Date()),
+	});
+
     return {
         componentEvent: {
             component: {
                 componentType: 'NEWSLETTER_SUBSCRIPTION',
                 id: formElement.getAttribute('data-component'),
             },
-            action: actionType,
-            value: [actionDescription,formElement.getAttribute('data-email-list-name'), formatTimestampToUTC(new Date())].join(),
+            action,
+            value,
         }
     }
 };
