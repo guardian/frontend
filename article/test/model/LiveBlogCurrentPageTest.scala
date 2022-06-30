@@ -2,7 +2,7 @@ package model
 
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.liveblog._
-import model.TopMentionsTopicType.TopMentionsTopicType
+import model.TopicType.TopicType
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -65,7 +65,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
       filterKeyEvents = false,
       topicResult = Some(
         TopicResult(
-          `type` = TopMentionsTopicType.Org,
+          `type` = TopicType.Org,
           name = "someName",
           blocks = Seq(),
           count = 0,
@@ -375,8 +375,8 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
     should(result, currentPage = expectedCurrentPage, pagination = expectedPagination)
   }
 
-  it should "only filters blocks by key events given both key events and top mentions are provided" in {
-    val topicResult = getFakeTopicResult(TopMentionsTopicType.Org, "tfl", Seq("1", "3"))
+  it should "only filters blocks by key events given both key events and topicResult are provided" in {
+    val topicResult = getFakeTopicResult(TopicType.Org, "tfl", Seq("1", "3"))
     val testFakeBlocks = TestFakeBlocks(numberOfBlocks = 5, numberOfKeyEventsBlocks = 2, None)
     val result =
       LiveBlogCurrentPage.firstPage(
@@ -400,7 +400,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
   }
 
   it should "returns the 1st page of the topic filtered blocks" in {
-    val topicResult = getFakeTopicResult(TopMentionsTopicType.Org, "tfl", Seq("1", "2", "3", "4"))
+    val topicResult = getFakeTopicResult(TopicType.Org, "tfl", Seq("1", "2", "3", "4"))
     val testFakeBlocks = TestFakeBlocks(numberOfBlocks = 5, numberOfKeyEventsBlocks = 2, None)
     val result =
       LiveBlogCurrentPage.firstPage(
@@ -670,7 +670,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
   }
 
   it should "returns the correct 2nd page of the topic filtered blocks" in {
-    val topicResult = getFakeTopicResult(TopMentionsTopicType.Org, "tfl", Seq("2", "3", "4", "5", "6"))
+    val topicResult = getFakeTopicResult(TopicType.Org, "tfl", Seq("2", "3", "4", "5", "6"))
     val testFakeBlocks = TestFakeBlocks(numberOfBlocks = 8, numberOfKeyEventsBlocks = 2, None)
 
     val expectedFirstPage = FirstPage(
@@ -707,7 +707,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
   }
 
   "updates" should "return only the topic filtered blocks after the lastUpdated block given lastUpdated is also a topic block" in {
-    val topicResult = getFakeTopicResult(TopMentionsTopicType.Org, "tfl", Seq("2", "3", "4", "5", "6"))
+    val topicResult = getFakeTopicResult(TopicType.Org, "tfl", Seq("2", "3", "4", "5", "6"))
     val sinceBlock = SinceBlockId("5")
     val testFakeBlocks = TestFakeBlocks(numberOfBlocks = 8, numberOfKeyEventsBlocks = 2, Some("5"))
 
@@ -723,7 +723,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
   }
 
   "updates" should "return only the topic filtered blocks after the lastUpdated block given lastUpdated is NOT a topic block" in {
-    val topicResult = getFakeTopicResult(TopMentionsTopicType.Org, "tfl", Seq("2", "3", "5", "6"))
+    val topicResult = getFakeTopicResult(TopicType.Org, "tfl", Seq("2", "3", "5", "6"))
     val sinceBlockId = "4"
     val testFakeBlocks = TestFakeBlocks(numberOfBlocks = 8, numberOfKeyEventsBlocks = 2, Some(sinceBlockId))
 
@@ -740,7 +740,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
   }
 
   private def getFakeTopicResult(
-      topicType: TopMentionsTopicType,
+      topicType: TopicType,
       topicName: String,
       blocks: Seq[String],
   ) = {

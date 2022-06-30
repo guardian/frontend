@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopicResult, SelectedTopic, TopMentionsTopicType, AvailableTopic, TopicsLiveBlog}
+import model.{LiveBlogPage, TopicResult, SelectedTopic, TopicType, AvailableTopic, TopicsLiveBlog}
 import topics.{TopicS3Client, TopicService}
 
 import scala.concurrent.Future
@@ -33,27 +33,27 @@ import scala.concurrent.Future
     var fakeDcr = new DCRFake()
     val topicResult = TopicResult(
       name = "Fifa",
-      `type` = TopMentionsTopicType.Org,
+      `type` = TopicType.Org,
       blocks = Seq("56d08042e4b0d38537b1f70b"),
       count = 1,
       percentage_blocks = 1.2f,
     )
 
     val fakeAvailableTopics = Vector(
-      AvailableTopic(TopMentionsTopicType.Gpe, "United Kingdom", 6),
-      AvailableTopic(TopMentionsTopicType.Gpe, "Russia", 4),
-      AvailableTopic(TopMentionsTopicType.Org, "KPMG", 4),
-      AvailableTopic(TopMentionsTopicType.Gpe, "Ukraine", 3),
-      AvailableTopic(TopMentionsTopicType.Gpe, "China", 2),
-      AvailableTopic(TopMentionsTopicType.Gpe, "United States", 2),
-      AvailableTopic(TopMentionsTopicType.Loc, "Europe", 2),
-      AvailableTopic(TopMentionsTopicType.Gpe, "Moscow", 2),
-      AvailableTopic(TopMentionsTopicType.Org, "PZ Cussons", 2),
-      AvailableTopic(TopMentionsTopicType.Person, "Emmanuel Macron", 1),
+      AvailableTopic(TopicType.Gpe, "United Kingdom", 6),
+      AvailableTopic(TopicType.Gpe, "Russia", 4),
+      AvailableTopic(TopicType.Org, "KPMG", 4),
+      AvailableTopic(TopicType.Gpe, "Ukraine", 3),
+      AvailableTopic(TopicType.Gpe, "China", 2),
+      AvailableTopic(TopicType.Gpe, "United States", 2),
+      AvailableTopic(TopicType.Loc, "Europe", 2),
+      AvailableTopic(TopicType.Gpe, "Moscow", 2),
+      AvailableTopic(TopicType.Org, "PZ Cussons", 2),
+      AvailableTopic(TopicType.Person, "Emmanuel Macron", 1),
     );
 
     when(
-      fakeTopicService.getSelectedTopic(path, SelectedTopic(TopMentionsTopicType.Org, "Fifa")),
+      fakeTopicService.getSelectedTopic(path, SelectedTopic(TopicType.Org, "Fifa")),
     ) thenReturn Some(
       topicResult,
     )
@@ -314,7 +314,7 @@ import scala.concurrent.Future
     assertDcrCalledForLiveBlogWithBlocks(fakeDcr, expectedBlocks = Seq("56d08042e4b0d38537b1f70b"))
   }
 
-  "renderArticle" should "doesn't call getTopMentionsByTopic given filterKeyEvents and topics query params are provided" in new Setup {
+  "renderArticle" should "doesn't call getSelectedTopic given filterKeyEvents and topics query params are provided" in new Setup {
     val fakeRequest = FakeRequest(GET, s"${path}").withHeaders("host" -> "localhost:9000")
 
     val result = liveBlogController.renderArticle(
