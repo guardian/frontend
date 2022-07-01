@@ -54,6 +54,7 @@ const slotPrototype = {
 // Mock window.googletag
 window.googletag = {
 	sizeMapping: () => ({
+        addSize: () => {},
 		build: () => [],
 	}),
 	defineSlot: () => ({ ...slotPrototype }),

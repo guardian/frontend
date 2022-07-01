@@ -21,7 +21,7 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
-  TopicWithCount,
+  Topic,
 }
 import navigation._
 import play.api.libs.json._
@@ -38,7 +38,7 @@ case class DotcomRenderingDataModel(
     webTitle: String,
     mainMediaElements: List[PageElement],
     main: String,
-    availableTopics: Option[Seq[TopicWithCount]],
+    availableTopics: Option[Seq[Topic]],
     selectedTopics: Option[String],
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
@@ -246,7 +246,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
-      availableTopics: Option[Seq[TopicWithCount]] = None,
+      availableTopics: Option[Seq[Topic]] = None,
       selectedTopics: Option[String] = None,
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
@@ -320,7 +320,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
-      availableTopics: Option[Seq[TopicWithCount]],
+      availableTopics: Option[Seq[Topic]],
       selectedTopics: Option[String] = None,
   ): DotcomRenderingDataModel = {
 
