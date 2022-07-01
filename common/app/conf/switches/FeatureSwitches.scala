@@ -447,7 +447,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "email-signup-recaptcha",
     "Enables showing reCAPTCHA when signing up to email newsletters",
-    owners = Seq(Owner.withGithub("georgeblahblah")),
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = LocalDate.of(2022, 10, 5),
     exposeClientSide = true,
