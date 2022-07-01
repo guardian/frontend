@@ -173,7 +173,6 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
-		waitForLinks: true,
 		waitForInteractives: true,
 		debug: enableDebug,
 	});
@@ -215,7 +214,6 @@ const addMobileInlineAds = (): Promise<boolean> => {
 
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
-		waitForLinks: true,
 		waitForInteractives: true,
 		debug: enableDebug,
 	});
@@ -268,7 +266,6 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
-		waitForLinks: true,
 		waitForInteractives: true,
 	});
 };
