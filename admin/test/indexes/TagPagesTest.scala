@@ -7,7 +7,6 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.DoNotDiscover
-import play.api.libs.iteratee.Enumerator
 import test.WithTestExecutionContext
 
 import scala.language.postfixOps
@@ -78,14 +77,10 @@ import scala.concurrent.duration._
     val advertisingTag = tagFixture("Advertising")
     val otherDigitalSolutionsTag = tagFixture("Other digital solutions")
 
+    val tags = Set(activateTag, archivedSpeakersTag, blogTag, advertisingTag, otherDigitalSolutionsTag)
+
     tagPages.toPages(
-      Enumerator(
-        activateTag,
-        archivedSpeakersTag,
-        blogTag,
-        advertisingTag,
-        otherDigitalSolutionsTag,
-      ).run(tagPages.byWebTitle).futureValue(Timeout(1 second)),
+      tagPages.byWebTitle(tags),
     )(_.toUpperCase, tagPages.asciiLowerWebTitle) shouldEqual Seq(
       TagIndex(
         "a",

@@ -47,7 +47,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
     } yield {
       val tags = (keywords ++ series).toSet
       val tagsBySection: Map[String, Set[Tag]] = tags.filter(tagPages.invalidSectionsFilter).groupBy(_.sectionId.get)
-      val tagsByWebTitle: Map[String, Set[Tag]] = tags.groupBy(tag => tagPages.alphaIndexKey(tag.webTitle))
+      val tagsByWebTitle: Map[String, Set[Tag]] = tagPages.byWebTitle(tags)
 
       blocking {
         saveToS3("keywords", tagPages.toPages(tagsByWebTitle)(alphaTitle, tagPages.asciiLowerWebTitle))
