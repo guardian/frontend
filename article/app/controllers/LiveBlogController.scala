@@ -184,13 +184,14 @@ class LiveBlogController(
                 request.forceLive,
                 availableTopics,
                 selectedTopics,
+                None,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, filterKeyEvents)
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, None, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case _ => Future.successful(NotFound)

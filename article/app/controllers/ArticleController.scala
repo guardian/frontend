@@ -12,7 +12,7 @@ import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
-import services.CAPILookup
+import services.{CAPILookup, NewsletterService}
 import services.dotcomponents.{ArticlePicker, _}
 import views.support._
 
@@ -91,9 +91,10 @@ class ArticleController(
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
+    val newsletter = newsletterService.getNewsletterForArticle(article)
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel
-        .forArticle(article, blocks, request, pageType),
+        .forArticle(article, blocks, request, pageType, newsletter),
     )
   }
 
@@ -116,9 +117,9 @@ class ArticleController(
       case HtmlFormat | AmpFormat if tier == PressedArticle =>
         servePressedPage(path)
       case AmpFormat if isAmpSupported =>
-        remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
+        remoteRenderer.getAMPArticle(ws, article, blocks, pageType, newsletter)
       case HtmlFormat | AmpFormat if tier == RemoteRender =>
-        remoteRenderer.getArticle(ws, article, blocks, pageType, filterKeyEvents = false)
+        remoteRenderer.getArticle(ws, article, blocks, pageType, filterKeyEvents = false, false, None, None, newsletter)
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
