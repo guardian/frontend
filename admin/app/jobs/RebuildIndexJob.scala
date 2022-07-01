@@ -1,10 +1,10 @@
 package jobs
 
+import com.gu.contentapi.client.model.v1.Tag
 import common.{GuLogging, StopWatch}
 import contentapi.ContentApiClient
 import indexes.{ContentApiTagsEnumerator, TagPages}
-import model.{TagIndexListings, TagIndex}
-import play.api.libs.iteratee.Enumeratee
+import model.{TagIndex, TagIndexListings}
 import services.TagIndexesS3
 
 import scala.concurrent.{ExecutionContext, Future, blocking}
@@ -40,45 +40,67 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
   private def alphaTitle(key: String) = key.toUpperCase.replace("-", "–")
 
   def rebuildKeywordIndexes(): Future[Unit] = {
-    val keywords = contentApiTagsEnumerator.enumerateTagTypeFiltered("keyword")
-    val series = contentApiTagsEnumerator.enumerateTagTypeFiltered("series")
 
-    /** Subjects are indexed both alphabetically and by their parent section */
-    (keywords andThen series).run(Enumeratee.zip(tagPages.bySection, tagPages.byWebTitle)) map {
-      case (sectionMap, alphaMap) =>
-        blocking {
-          saveToS3("keywords", tagPages.toPages(alphaMap)(alphaTitle, tagPages.asciiLowerWebTitle))
-          saveToS3(
-            "keywords_by_section",
-            tagPages.toPages(sectionMap)(TagPages.validSections(_), tagPages.asciiLowerWebTitle),
-          )
-        }
+    for {
+      keywords <- contentApiTagsEnumerator.enumerateTagType("keyword")
+      series <- contentApiTagsEnumerator.enumerateTagType("series")
+    } yield {
+      val tags = (keywords ++ series).toSet
+      val tagsBySection: Map[String, Set[Tag]] = tags.filter(tagPages.invalidSectionsFilter).groupBy(_.sectionId.get)
+      val tagsByWebTitle: Map[String, Set[Tag]] = tags.groupBy(tag => tagPages.alphaIndexKey(tag.webTitle))
+
+      blocking {
+        saveToS3("keywords", tagPages.toPages(tagsByWebTitle)(alphaTitle, tagPages.asciiLowerWebTitle))
+        saveToS3(
+          "keywords_by_section",
+          tagPages.toPages(tagsBySection)(TagPages.validSections(_), tagPages.asciiLowerWebTitle),
+        )
+      }
     }
   }
 
+  private def tagsByPublication(tags: Seq[Tag]) = {
+    tags.toSet
+      .filter(tagPages.publicationsFilter)
+      .groupBy(tag => tagPages.tagHeadKey(tag.id).getOrElse("publication"))
+  }
+
   def rebuildNewspaperBooks(): Future[Unit] = {
-    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book").run(tagPages.byPublication) map { booksMap =>
+    for {
+      newspaperBooks <- contentApiTagsEnumerator.enumerateTagType("newspaper-book")
+    } yield {
+      val booksByPublication: Map[String, Set[Tag]] = tagsByPublication(newspaperBooks)
+
       blocking {
-        saveToS3("newspaper_books", tagPages.toPages(booksMap)(alphaTitle, tagPages.asciiLowerWebTitle))
+        saveToS3("newspaper_books", tagPages.toPages(booksByPublication)(alphaTitle, tagPages.asciiLowerWebTitle))
       }
     }
   }
 
   def rebuildNewspaperBookSections(): Future[Unit] = {
-    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(tagPages.byPublication) map {
-      bookSectionMap =>
-        blocking {
-          saveToS3("newspaper_book_sections", tagPages.toPages(bookSectionMap)(alphaTitle, tagPages.asciiLowerWebTitle))
-        }
+    for {
+      newspaperBookSections <- contentApiTagsEnumerator.enumerateTagType("newspaper-book-section")
+    } yield {
+      val bookSectionsByPublication: Map[String, Set[Tag]] = tagsByPublication(newspaperBookSections)
+      blocking {
+        saveToS3(
+          "newspaper_book_sections",
+          tagPages.toPages(bookSectionsByPublication)(alphaTitle, tagPages.asciiLowerWebTitle),
+        )
+      }
     }
   }
 
   def rebuildContributorIndex(): Future[Unit] = {
-    contentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(tagPages.byContributorNameOrder) map {
-      alphaMap =>
-        blocking {
-          saveToS3("contributors", tagPages.toPages(alphaMap)(alphaTitle, tagPages.nameOrder))
-        }
+    for {
+      contributors <- contentApiTagsEnumerator.enumerateTagType("contributor")
+    } yield {
+      val contributorsByNameOrder: Map[String, Set[Tag]] = contributors.toSet
+        .groupBy(tag => tagPages.alphaIndexKey(tag.lastName orElse tag.firstName getOrElse tag.webTitle))
+
+      blocking {
+        saveToS3("contributors", tagPages.toPages(contributorsByNameOrder)(alphaTitle, tagPages.nameOrder))
+      }
     }
   }
 
@@ -103,5 +125,4 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
         }
     }
   }
-
 }
