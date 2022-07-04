@@ -449,7 +449,7 @@ trait FeatureSwitches {
     "Enables showing reCAPTCHA when signing up to email newsletters",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = On,
-    sellByDate = LocalDate.of(2022, 10, 5),
+    sellByDate = never,
     exposeClientSide = true,
   )
 
@@ -459,7 +459,7 @@ trait FeatureSwitches {
     "Remove confirmation step when user sign up to a newsletter",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = On,
-    sellByDate = LocalDate.of(2022, 10, 5),
+    sellByDate = never,
     exposeClientSide = false,
   )
 
@@ -469,7 +469,7 @@ trait FeatureSwitches {
     "Show new privacy wording on email signup embeds",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = On,
-    sellByDate = LocalDate.of(2022, 10, 5),
+    sellByDate = never,
     exposeClientSide = true,
   )
 
@@ -479,7 +479,7 @@ trait FeatureSwitches {
     "Enables validation of reCAPTCHA tokens on email signup submissions",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = On,
-    sellByDate = LocalDate.of(2022, 10, 5),
+    sellByDate = never,
     exposeClientSide = false,
   )
 
