@@ -136,4 +136,10 @@
             transform: translate(3px, -50%);
         }
     }
+
+    &--neutral {
+        font-weight: 400;
+        color: $brightness-7;
+        background-color: $brightness-100;
+    }
 }

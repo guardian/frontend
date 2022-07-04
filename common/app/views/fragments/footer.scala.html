@@ -53,19 +53,19 @@
         <div class="colophon u-cf">
             @defining(Edition(request)) { currentEdition =>
                 @if(EmailInlineInFooterSwitch.isSwitchedOn && !page.metadata.isFoundation) {
-                    <div class="footer__email-container js-footer__email-container">
+                    <div class="footer__email-container">
                     @currentEdition match {
                         case Uk => {
-                            @fragments.email.signup.emailIframe("today-uk", "footer-daily-email-uk")
+                            @fragments.email.signup.emailFooterLink("today-uk", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
                         }
                         case Us => {
-                            @fragments.email.signup.emailIframe("today-us", "footer-daily-email-us")
+                            @fragments.email.signup.emailFooterLink("today-us", "/info/2018/sep/17/guardian-us-morning-briefing-sign-up-to-stay-informed")
                         }
                         case Au => {
-                            @fragments.email.signup.emailIframe("today-au", "footer-daily-email-au")
+                            @fragments.email.signup.emailFooterLink("today-au", "/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
                         }
                         case International => {
-                            @fragments.email.signup.emailIframe("today-uk", "footer-daily-email-int")
+                            @fragments.email.signup.emailFooterLink("today-uk", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
                         }
                     }
                     </div>
