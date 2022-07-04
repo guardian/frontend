@@ -355,32 +355,32 @@ trait FaciaController
       if (request.forceDCR) {
         frontJsonFapi.get(path, fullDCRRequestType).flatMap {
           case Some(pressedPage) =>
-            // TODO: Do we need to add anything else?
-
-            // TODO: The issue here is that .head will throw an error if the collection isn't found
-            //  I can't work out how to extend the 'for' structure below to this, though.
-            //  If the collection isn't found, will we need a new 'path', or will one of the other return
-            //  values cover this already?
-            val matchedCollection = pressedPage.collections.filter(_.id == collectionId).head
+            val matchedCollection = pressedPage.collections.find(_.id == collectionId)
 
             // TODO: length is Option because not all types of pressedCollection have the property, but
             //  pressedCollections coming from *DCR* pressedPages *should* have the length prop. If they don't
             //  then something has gone wrong. How should we surface this? (Default value of 0 avoids a crash
             //  but it covers over the bug.)
-            val liteCuratedLength = matchedCollection.liteCuratedLength.getOrElse(0)
-            val liteBackfillLength = matchedCollection.liteBackfillLength.getOrElse(0)
+            matchedCollection
+              .map(collection => {
 
-            val pressedContent = matchedCollection.curated.takeRight(
-              matchedCollection.curated.length - liteCuratedLength,
-            ) ++ matchedCollection.backfill.takeRight(matchedCollection.backfill.length - liteBackfillLength)
-            val startIndex = liteCuratedLength + liteBackfillLength
+                val liteCuratedLength = collection.liteCuratedLength.getOrElse(0)
+                val liteBackfillLength = collection.liteBackfillLength.getOrElse(0)
 
-            val config = matchedCollection.config
+                val pressedContent = collection.curated.takeRight(
+                  collection.curated.length - liteCuratedLength,
+                ) ++ collection.backfill.takeRight(collection.backfill.length - liteBackfillLength)
+                val startIndex = liteCuratedLength + liteBackfillLength
 
-            // TODO we also need to handle the case where this doesn't work
-            //  - Are there importantly different failure cases to handle, or can we return a generic fallback response,
-            //    given that DCR doesn't really do anything with the response in the case of failure?)
-            remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex, config = config)
+                val config = collection.config
+
+                remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex, config = config)
+
+              }) getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+
+          // TODO we also need to handle the case where this doesn't work
+          //  - Are there importantly different failure cases to handle, or can we return a generic fallback response,
+          //    given that DCR doesn't really do anything with the response in the case of failure?)
 
           case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
         }
