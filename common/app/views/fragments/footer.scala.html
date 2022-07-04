@@ -168,8 +168,8 @@
 }
 
 @emailSignUpLink(currentEdition: Edition) = {
-    <div class="footer__email-container">
-        <div class="colophon__list">
+    <section class="footer__email-container">
+        <div class="colophon__section">
         @currentEdition match {
             case Uk => {
                 @fragments.email.signup.emailFooterLink("today-uk", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
@@ -185,5 +185,5 @@
             }
         }
         </div>
-    </div>
+    </section>
 }

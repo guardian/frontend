@@ -22,6 +22,15 @@
     }
 }
 
+.colophon__section {
+    @include clearfix();
+    position: relative;
+    margin: 0;
+    padding-right: $gs-gutter / 2;
+    width: calc(100% - #{$gs-gutter / 2});
+    display: inline-block;
+}
+
 .colophon__list {
     @include clearfix();
     list-style: none;

@@ -138,8 +138,12 @@
     }
 
     &--neutral {
-        font-weight: 400;
         color: $brightness-7;
         background-color: $brightness-100;
+    }
+
+    &--no-float {
+        float: none;
+        display: inline-block;
     }
 }

@@ -1,11 +1,17 @@
 .footer__email-container {
     border-bottom: 1px solid $footer-line-colour;
+    padding-top: 8px;
+    padding-bottom: 12px;
 
     @include mq(leftCol) {
         float: left;
         padding-top: $gs-baseline / 4;
         border: 0;
         width: gs-span(4);
+    }
+
+    @include mq(wide) {
+        width: gs-span(6);
     }
 
     .button {
