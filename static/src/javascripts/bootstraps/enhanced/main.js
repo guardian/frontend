@@ -13,6 +13,7 @@ import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercia
 import { fetchAndRenderHeaderLinks } from "common/modules/support/header";
 import { fetchAndRenderEpic } from "common/modules/support/epic";
 import { coreVitals } from 'common/modules/analytics/coreVitals';
+import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 
 const bootEnhanced = () => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -41,9 +42,12 @@ const bootEnhanced = () => {
             },
         ],
 
-        //
+        ['core-web-vitals', coreVitals],
+
+        ['commercial-metrics', initCommercialMetrics],
+
         // A/B tests
-                [
+        [
             'ab-tests',
             () => {
                 catchErrorsWithContext([
@@ -56,8 +60,6 @@ const bootEnhanced = () => {
                 ]);
             },
         ],
-
-        ['core-web-vitals', coreVitals],
 
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
 
