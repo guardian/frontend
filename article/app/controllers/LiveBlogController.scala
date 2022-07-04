@@ -17,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
-import services.CAPILookup
+import services.{CAPILookup, NewsletterService}
 import services.dotcomponents.DotcomponentsLogger
 import topics.TopicService
 import views.support.RenderOtherStatus
@@ -30,6 +30,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    newsletterService: NewsletterService,
     topicService: TopicService,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -343,6 +344,8 @@ class LiveBlogController(
       selectedTopics: Option[String],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
+    val newsletter = newsletterService.getNewsletterForLiveBlog(blog)
+
     val model =
       DotcomRenderingDataModel.forLiveblog(
         blog,
@@ -353,6 +356,7 @@ class LiveBlogController(
         request.forceLive,
         availableTopics,
         selectedTopics,
+        newsletter = newsletter,
       )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")

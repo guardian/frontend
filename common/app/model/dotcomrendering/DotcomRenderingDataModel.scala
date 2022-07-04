@@ -93,6 +93,7 @@ case class DotcomRenderingDataModel(
     matchUrl: Option[String], // Optional url used for match data
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
+    newsletterToEmbed: Option[NewsletterResponse],
 )
 
 object DotcomRenderingDataModel {
@@ -163,6 +164,7 @@ object DotcomRenderingDataModel {
         "matchUrl" -> model.matchUrl,
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
+        "newsletterToEmbed" -> model.newsletterToEmbed,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -196,6 +198,7 @@ object DotcomRenderingDataModel {
       pinnedPost = None,
       keyEvents = Nil,
       availableTopics = None,
+      newsletter = None,
     )
   }
 
@@ -224,6 +227,7 @@ object DotcomRenderingDataModel {
       pinnedPost = None,
       keyEvents = Nil,
       availableTopics = None,
+      newsletter = newsletter,
     )
   }
 
@@ -248,6 +252,7 @@ object DotcomRenderingDataModel {
       forceLive: Boolean,
       availableTopics: Option[Seq[Topic]] = None,
       selectedTopics: Option[String] = None,
+      newsletter: Option[NewsletterResponse],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -303,6 +308,7 @@ object DotcomRenderingDataModel {
       forceLive,
       availableTopics,
       selectedTopics,
+      newsletter,
     )
   }
 
@@ -322,6 +328,7 @@ object DotcomRenderingDataModel {
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]],
       selectedTopics: Option[String] = None,
+      newsletter: Option[NewsletterResponse],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -488,6 +495,7 @@ object DotcomRenderingDataModel {
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
+      newsletterToEmbed = newsletter,
     )
   }
 }
