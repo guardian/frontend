@@ -18,7 +18,7 @@ import dev.DevAssetsController
 import feed.OnwardJourneyLifecycle
 import football.controllers.FootballControllers
 import http.PreviewFilters
-import jobs.TopMentionsLifecycle
+import jobs.TopicLifecycle
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
@@ -38,7 +38,7 @@ trait PreviewLifecycleComponents
     with FapiServices
     with OnwardServices
     with ApplicationsServices
-    with TopMentionsServices {
+    with TopicServices {
   self: FrontendComponents =>
 
   //Override conflicting members
@@ -62,7 +62,7 @@ trait PreviewLifecycleComponents
       wire[SkimLinksCacheLifeCycle],
       wire[CloudWatchMetricsLifecycle],
       wire[NewsletterSignupLifecycle],
-      wire[TopMentionsLifecycle],
+      wire[TopicLifecycle],
     )
 
   def actorSystem: ActorSystem

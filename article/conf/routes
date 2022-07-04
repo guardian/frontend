@@ -14,7 +14,7 @@ GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 # See https://github.com/guardian/fastly-cache-purger/blob/master/src/main/scala/com/gu/fastly/Lambda.scala
 # and https://github.com/guardian/fastly-cache-purger/pull/14 for details
 
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean], topics: Option[String])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email/headline.txt controllers.ArticleController.renderHeadline(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
