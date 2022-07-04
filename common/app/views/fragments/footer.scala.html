@@ -53,22 +53,7 @@
         <div class="colophon u-cf">
             @defining(Edition(request)) { currentEdition =>
                 @if(EmailInlineInFooterSwitch.isSwitchedOn && !page.metadata.isFoundation) {
-                    <div class="footer__email-container">
-                    @currentEdition match {
-                        case Uk => {
-                            @fragments.email.signup.emailFooterLink("today-uk", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
-                        }
-                        case Us => {
-                            @fragments.email.signup.emailFooterLink("today-us", "/info/2018/sep/17/guardian-us-morning-briefing-sign-up-to-stay-informed")
-                        }
-                        case Au => {
-                            @fragments.email.signup.emailFooterLink("today-au", "/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
-                        }
-                        case International => {
-                            @fragments.email.signup.emailFooterLink("today-uk", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
-                        }
-                    }
-                    </div>
+                    @emailSignUpLink(currentEdition)
                 }
 
                 <div class="@RenderClasses(Map(
@@ -179,5 +164,26 @@
             Subscribe
             @fragments.inlineSvg("arrow-right", "icon")
         </a>
+    </div>
+}
+
+@emailSignUpLink(currentEdition: Edition) = {
+    <div class="footer__email-container">
+        <div class="colophon__list">
+        @currentEdition match {
+            case Uk => {
+                @fragments.email.signup.emailFooterLink("today-uk", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
+            }
+            case Us => {
+                @fragments.email.signup.emailFooterLink("today-us", "/info/2018/sep/17/guardian-us-morning-briefing-sign-up-to-stay-informed")
+            }
+            case Au => {
+                @fragments.email.signup.emailFooterLink("today-au", "/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
+            }
+            case International => {
+                @fragments.email.signup.emailFooterLink("today-uk", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
+            }
+        }
+        </div>
     </div>
 }

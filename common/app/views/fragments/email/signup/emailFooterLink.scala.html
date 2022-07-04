@@ -1,18 +1,16 @@
 @( listName: String, signupPage: String)
 
-<div class="colophon__list">
-	<div class="cta-bar__text">
-		<div class="cta-bar__subheading">
-			All the day's headlines and highlights from the Guardian, direct to
-			you every morning
-		</div>
+<div class="cta-bar__text">
+	<div class="cta-bar__subheading">
+		All the day's headlines and highlights from the Guardian, direct to you
+		every morning
 	</div>
-
-	<a
-		class="cta-bar__cta cta-bar__cta--neutral"
-		data-link-name="footer : @listName"
-		href="@signupPage"
-	>
-		Sign up for our email @fragments.inlineSvg("arrow-right", "icon")
-	</a>
 </div>
+
+<a
+	class="cta-bar__cta cta-bar__cta--neutral"
+	data-link-name="footer : @listName"
+	href="@signupPage"
+>
+	Sign up for our email @fragments.inlineSvg("arrow-right", "icon")
+</a>
