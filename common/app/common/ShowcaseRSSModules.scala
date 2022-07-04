@@ -16,7 +16,7 @@ import scala.collection.JavaConverters._
 trait RssAtomModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
   override def getUri: String = RssAtomModule.URI
   def getUpdated: Option[DateTime]
-  def setUpdated(updated: Option[DateTime])
+  def setUpdated(updated: Option[DateTime]): Unit
 }
 
 class RssAtomModuleImpl extends RssAtomModule {
@@ -54,23 +54,23 @@ trait GModule extends com.sun.syndication.feed.module.Module with Serializable w
 
   def getPanel: Option[GPanel]
 
-  def setPanel(panel: Option[GPanel])
+  def setPanel(panel: Option[GPanel]): Unit
 
   def getPanelTitle: Option[String]
 
-  def setPanelTitle(panelTitle: Option[String])
+  def setPanelTitle(panelTitle: Option[String]): Unit
 
   def getOverline: Option[String]
 
-  def setOverline(overline: Option[String])
+  def setOverline(overline: Option[String]): Unit
 
   def getArticleGroup: Option[GArticleGroup]
 
-  def setArticleGroup(articleGroup: Option[GArticleGroup])
+  def setArticleGroup(articleGroup: Option[GArticleGroup]): Unit
 
   def getBulletList: Option[GBulletList]
 
-  def setBulletList(bulletList: Option[GBulletList])
+  def setBulletList(bulletList: Option[GBulletList]): Unit
 }
 
 class GModuleImpl() extends GModule {

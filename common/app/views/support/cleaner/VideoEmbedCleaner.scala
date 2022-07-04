@@ -148,12 +148,12 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
     document
   }
 
-  private def addVimeoDntFlag(iframe: Element) {
+  private def addVimeoDntFlag(iframe: Element): Unit = {
     val src = iframe.attr("src")
     iframe.attr("src", src ++ (if (src.contains("?")) "&" else "?") ++ "dnt=true")
   }
 
-  private def wrapIframe(container: Element, iframe: Element) {
+  private def wrapIframe(container: Element, iframe: Element): Unit = {
     // Has no id to get data from capi so try and get from iframe
     val videoWidth = iframe.attr("width")
     val videoHeight = iframe.attr("height")
@@ -167,7 +167,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
     }
   }
 
-  private def wrapCustom(container: Element, width: Float, height: Float) {
+  private def wrapCustom(container: Element, width: Float, height: Float): Unit = {
     val aspectRatio = width / height
     val maxWidth = maxEmbedHeight * aspectRatio
     val paddingBottom = (1 / aspectRatio) * 100
@@ -176,8 +176,8 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
     )
   }
 
-  private def wrapHD(container: Element) {
-    container.wrap(s"""<div class="embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd"></div>""")
+  private def wrapHD(container: Element): Unit = {
+    container.wrap("""<div class="embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd"></div>""")
   }
 
   def findVideoApiElement(id: String): Option[VideoElement] = article.elements.bodyVideos.find(_.properties.id == id)

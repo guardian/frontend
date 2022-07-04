@@ -26,10 +26,10 @@ object StatusNotification {
   lazy val partitionKey: String = "facia-tool-updates"
 
   object KinesisLoggingAsyncHandler extends AsyncHandler[PutRecordRequest, PutRecordResult] {
-    def onError(exception: Exception) {
+    def onError(exception: Exception): Unit = {
       log.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
     }
-    def onSuccess(request: PutRecordRequest, result: PutRecordResult) {
+    def onSuccess(request: PutRecordRequest, result: PutRecordResult): Unit = {
       log.info(s"Kinesis status notification sent to stream:${request.getStreamName}")
     }
   }
