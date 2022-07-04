@@ -20,7 +20,8 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
+import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle, NewsletterService}
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
 import topics.{TopicS3Client, TopicS3ClientImpl, TopicService}
 
@@ -36,6 +37,8 @@ trait TopicServices {
 
 trait AppComponents extends FrontendComponents with ArticleControllers with TopicServices {
 
+  lazy val newsletterApi = wire[NewsletterApi]
+  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]

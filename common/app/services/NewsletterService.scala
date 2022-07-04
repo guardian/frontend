@@ -4,11 +4,11 @@ import services.newsletters.model.NewsletterResponse
 import common._
 import model.{ArticlePage, PageWithStoryPackage}
 
-class NewsletterService(
-  agent: NewsletterSignupAgent
-) {
+import scala.concurrent.ExecutionContext.Implicits.global
 
-  def getNewsletterForArticle(article: ArticlePage):Option[NewsletterResponse] = {
+class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
+
+  def getNewsletterForArticle(article: ArticlePage): Option[NewsletterResponse] = {
     None
   }
 }
