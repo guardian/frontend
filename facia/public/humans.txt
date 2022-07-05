@@ -164,6 +164,9 @@ Developer: Emma Imber
 From: Worcester, UK
 Location: Newbury, UK
 
+Developer: Charlotte Emms
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
