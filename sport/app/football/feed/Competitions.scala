@@ -122,6 +122,17 @@ object Competitions {
 object CompetitionsProvider {
   val allCompetitions: Seq[Competition] = Seq(
     Competition(
+      "423",
+      "/football/women-s-euro-2022",
+      "Women's Euro 2022",
+      "Women's Euro 2022",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2022, 7, 1)),
+      finalMatchSVG = Some("womens_euros_2022_badge"),
+    ),
+    Competition(
       "100",
       "/football/premierleague",
       "Premier League",
@@ -327,17 +338,6 @@ object CompetitionsProvider {
       "European",
     ),
     Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
-    Competition(
-      "423",
-      "/football/women-s-euro-2022",
-      "Women's Euro 2022",
-      "Women's Euro 2022",
-      "Internationals",
-      showInTeamsList = true,
-      tableDividers = List(2),
-      startDate = Some(LocalDate.of(2022, 7, 1)),
-      finalMatchSVG = Some("womens_euros_2022_badge"),
-    ),
   )
 }
 
