@@ -119,6 +119,8 @@ object Competitions {
 // https://github.com/guardian/mobile-apps-api
 // common-pa-feeds/src/main/scala/com/gu/mobile/football/data/pa/PaCompetitions.scala
 
+// Ordering is important! Competitions at the top of this list will be shown before competitions on the bottom
+// on pages such as /football/fixtures
 object CompetitionsProvider {
   val allCompetitions: Seq[Competition] = Seq(
     Competition(
