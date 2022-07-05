@@ -267,8 +267,7 @@ object PrebidIndexSite {
       "world" -> PrebidIndexSite(Desktop, 204985),
       "world" -> PrebidIndexSite(Mobile, 213473),
       "world" -> PrebidIndexSite(Tablet, 215408),
-    ).groupBy { case (section, _) => section }
-      .mapValues { _.map { case (_, site) => site }.toSet }
+    ).groupBy { case (section, _) => section }.view.mapValues { _.map { case (_, site) => site }.toSet }.toMap
 
   private def fromSectionId(sectionId: String): Option[Set[PrebidIndexSite]] = {
     val firstPart = {

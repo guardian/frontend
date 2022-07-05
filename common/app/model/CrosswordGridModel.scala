@@ -15,7 +15,7 @@ trait CrosswordGridDataOrdering {
 
 trait CrosswordGridColumnNotation {
   val columnsByLetters =
-    (('A' to 'Z').toList.zip(Stream from 0) map { case (letter, number) => (number, letter) }).toMap
+    (('A' to 'Z').toList.zip(LazyList from 0) map { case (letter, number) => (number, letter) }).toMap
 }
 
 case class Cell(number: Option[Int])

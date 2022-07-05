@@ -14,7 +14,7 @@ import play.api.mvc.RequestHeader
 
 import java.io.StringWriter
 import java.util.Date
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.collection.immutable.WrappedString
 
 object TrailsToShowcase {
@@ -109,8 +109,10 @@ object TrailsToShowcase {
       .flatMap(_.curated)
       .map(_.card.id)
       .groupBy(identity)
+      .view
       .mapValues(_.size)
       .filter(_._2 > 1)
+      .toMap
 
     val singleStoryPanelsOutcome = if (singleStoryCollections.nonEmpty) {
       // Attempt to map all trails from all single story collections to panels
@@ -316,7 +318,7 @@ object TrailsToShowcase {
         title <- proposedArticleTitle.toOption
         guid <- guidFor(contentItem)
         webUrl <- webUrl(contentItem)
-        imageUrl <- proposedArticleImage.right.toOption
+        imageUrl <- proposedArticleImage.toOption
         maybeOverline <- proposedOverline.toOption
       } yield {
         val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
@@ -505,7 +507,7 @@ object TrailsToShowcase {
   }
 
   private def extractBulletsFrom(trailText: String): Either[Seq[String], BulletList] = {
-    val lines = new WrappedString(trailText).lines.toSeq
+    val lines = new WrappedString(trailText).inits.map(_.toString()).toSeq
 
     val proposedBulletTexts = lines
       .map(_.stripLeading)

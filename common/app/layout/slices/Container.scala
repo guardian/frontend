@@ -30,7 +30,7 @@ object Container extends GuLogging {
       ("nav/list", NavList),
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),
-    ) ++ FixedContainers.all.mapValues(Fixed.apply) ++ EmailLayouts.all.mapValues(Email.apply)
+    ) ++ FixedContainers.all.view.mapValues(Fixed.apply).toMap ++ EmailLayouts.all.view.mapValues(Email.apply).toMap
 
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)

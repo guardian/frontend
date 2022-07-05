@@ -94,7 +94,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testArticle)),
-      ).right.get
+      ).toOption.get
     }
 
     status(notFound) should be(200)
@@ -106,7 +106,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testVideo)),
-      ).right.get
+      ).toOption.get
     }
 
     status(notFound) should be(200)
@@ -118,7 +118,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testGallery)),
-      ).right.get
+      ).toOption.get
     }
 
     status(notFound) should be(200)
@@ -130,7 +130,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testAudio)),
-      ).right.get
+      ).toOption.get
     }
 
     status(notFound) should be(200)
@@ -142,7 +142,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testContent)),
-      ).right.get
+      ).toOption.get
     }
 
     status(notFound) should be(404)
@@ -153,7 +153,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(tag = Some(articleTag)),
-      ).right.get
+      ).toOption.get
     }
 
     status(notFound) should be(200)
@@ -167,7 +167,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(section = Some(testSection)),
-      ).right.get
+      ).toOption.get
     }
 
     status(notFound) should be(200)

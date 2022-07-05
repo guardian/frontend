@@ -339,13 +339,13 @@ object QuizAtom extends common.GuLogging {
       parseResult match {
         case parsed: JsSuccess[Image] =>
           val image = parsed.get
-          val typeData = image.fields.mapValues(value => value.toString) - "caption"
+          val typeData = image.fields.view.mapValues(value => value.toString).toMap - "caption"
 
           val assets = for {
             plainAsset <- image.assets
           } yield {
             ImageAsset(
-              fields = typeData ++ plainAsset.fields.mapValues(value => value.toString),
+              fields = typeData ++ plainAsset.fields.view.mapValues(value => value.toString).toMap,
               mediaType = plainAsset.assetType,
               mimeType = plainAsset.mimeType,
               url = plainAsset.secureUrl.orElse(plainAsset.url),

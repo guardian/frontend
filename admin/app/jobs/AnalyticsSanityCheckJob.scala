@@ -9,7 +9,7 @@ import model.diagnostics.CloudWatch
 import java.time.{LocalDateTime, ZoneId}
 import services.{CloudWatchStats, OphanApi}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
 class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {

@@ -27,4 +27,4 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.0")
 
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.9.0")
 
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.10.1")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.9.34")

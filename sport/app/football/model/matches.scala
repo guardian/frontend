@@ -60,6 +60,7 @@ trait MatchesList extends Football with RichList {
       case (d, ms) =>
         val competitionsWithMatches = ms
           .groupBy(_._2)
+          .view
           .mapValues(_.map {
             case (matches, _) => matches
           })

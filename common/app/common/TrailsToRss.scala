@@ -17,7 +17,7 @@ import java.io.StringWriter
 import java.text.SimpleDateFormat
 import java.util.regex.Pattern
 import java.util.{Date, TimeZone}
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 object RssDates {
   def getYear(date: Date): String = {

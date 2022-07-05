@@ -11,7 +11,7 @@ import services.S3
 import topics.S3ObjectImplicits.RichS3Object
 import model.TopicsApiResponse._
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 

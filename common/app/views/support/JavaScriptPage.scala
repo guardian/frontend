@@ -26,7 +26,7 @@ object JavaScriptPage {
       CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
     }
 
-    val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
+    val config = (Configuration.javascript.config ++ pageData).view.mapValues(JsString.apply).toMap
     val sponsorshipType = for {
       commercial <- page.metadata.commercial
       branding <- commercial.branding(edition)
@@ -100,5 +100,5 @@ object JavaScriptPage {
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
     ) ++ commercialBundleUrl
-  }
+  }.toMap
 }

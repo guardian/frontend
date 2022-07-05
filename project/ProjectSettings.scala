@@ -10,6 +10,7 @@ import com.gu.Dependencies._
 import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
+import scalafix.sbt.ScalafixPlugin.autoImport.{scalafixDependencies, scalafixSemanticdb}
 
 object ProjectSettings {
 
@@ -33,6 +34,11 @@ object ProjectSettings {
     Compile / doc / sources := Seq.empty,
     Compile / doc := target.map(_ / "none").value,
     scalaVersion := "2.13.8",
+    semanticdbEnabled := true,
+    semanticdbVersion := scalafixSemanticdb.revision,
+    ThisBuild / scalafixDependencies += "org.scala-lang.modules" %% "scala-collection-migrations" % "2.7.0",
+    addCompilerPlugin(scalafixSemanticdb),
+    scalacOptions ++= List("-Yrangepos", "-P:semanticdb:synthetics:on"),
     initialize := {
       val _ = initialize.value
       assert(

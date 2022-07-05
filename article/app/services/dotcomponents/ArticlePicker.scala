@@ -63,7 +63,7 @@ object ArticlePicker {
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
     // include features that we wish to log but not allow-list against
-    val features = checks.mapValues(_.toString) +
+    val features = checks.view.mapValues(_.toString).toMap +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
       ("dcrCouldRender" -> dcrCanRender.toString) +
       ("pageTones" -> pageTones)

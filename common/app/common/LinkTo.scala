@@ -6,7 +6,7 @@ import model.Trail
 import org.jsoup.Jsoup
 import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
 import play.twirl.api.Html
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)

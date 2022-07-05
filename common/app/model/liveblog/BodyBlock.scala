@@ -23,7 +23,7 @@ object Blocks {
     val bodyBlocks: Seq[BodyBlock] = orderBlocks(blocks.body.toSeq.flatMap(blocks => BodyBlock.make(blocks.toSeq)))
     val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks
       .map { map =>
-        map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
+        map.toMap.view.mapValues(blocks => orderBlocks(BodyBlock.make(blocks.toSeq))).toMap
       }
       .getOrElse(Map())
     Blocks(

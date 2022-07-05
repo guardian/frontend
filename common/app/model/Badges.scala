@@ -3,6 +3,7 @@ package model
 import conf.Static
 import layout.FaciaContainer
 import org.apache.commons.codec.digest.DigestUtils
+import scala.Iterable
 
 trait BaseBadge {
   def maybeThisBadge(tag: String): Option[Badge]
@@ -170,7 +171,7 @@ object Badges {
     badgeForTags(c.tags.tags.map(_.id))
   }
 
-  def badgeForTags(tags: Traversable[String]): Option[Badge] = {
+  def badgeForTags(tags: Iterable[String]): Option[Badge] = {
 
     val badgesForTags =
       for {

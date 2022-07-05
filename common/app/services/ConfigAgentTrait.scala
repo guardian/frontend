@@ -68,7 +68,7 @@ object ConfigAgent extends GuLogging {
 
   def getConfigCollectionMap: Map[String, Seq[String]] = {
     val config = configAgent.get()
-    config.map(_.fronts.mapValues(_.collections)).getOrElse(Map.empty)
+    config.map(_.fronts.view.mapValues(_.collections)).getOrElse(Map.empty).toMap
   }
 
   def getConfigsUsingCollectionId(id: String): Seq[String] = {
@@ -80,7 +80,10 @@ object ConfigAgent extends GuLogging {
   def getCanonicalIdForFront(frontId: String): Option[String] = {
     val config = configAgent.get()
     val canonicalCollectionMap =
-      config.map(_.fronts.mapValues(front => front.canonical.orElse(front.collections.headOption))).getOrElse(Map.empty)
+      config
+        .map(_.fronts.view.mapValues(front => front.canonical.orElse(front.collections.headOption)))
+        .getOrElse(Map.empty)
+        .toMap
 
     canonicalCollectionMap.get(frontId).flatten
   }

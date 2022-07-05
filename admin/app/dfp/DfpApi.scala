@@ -31,7 +31,9 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
     // item, potentially making one API call per lineitem.
     val validatedLineItems = lineItems
       .groupBy(Function.tupled(dataValidation.isGuLineItemValid))
+      .view
       .mapValues(_.map(_._1))
+      .toMap
 
     DfpLineItems(
       validItems = validatedLineItems.getOrElse(true, Nil),

@@ -2,7 +2,7 @@ package common
 
 object Seqs {
   implicit class RichSeq[A](as: Seq[A]) {
-    def frequencies: Map[A, Int] = as.groupBy(identity).mapValues(_.length)
+    def frequencies: Map[A, Int] = as.groupBy(identity).view.mapValues(_.length).toMap
 
     def isDescending(implicit ordering: Ordering[A]): Boolean = as == reverseSorted
 

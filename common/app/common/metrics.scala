@@ -12,7 +12,7 @@ import model.ApplicationIdentity
 import model.diagnostics.CloudWatch
 import play.api.inject.ApplicationLifecycle
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -26,12 +26,12 @@ object SystemMetrics extends implicits.Numbers {
 
     def gcCount: Double = {
       val totalGcCount = bean.getCollectionCount
-      totalGcCount - lastGcCount.getAndSet(totalGcCount)
+      totalGcCount - lastGcCount.getAndSet(totalGcCount).toDouble
     }
 
     def gcTime: Double = {
       val totalGcTime = bean.getCollectionTime
-      totalGcTime - lastGcTime.getAndSet(totalGcTime)
+      totalGcTime - lastGcTime.getAndSet(totalGcTime).toDouble
     }
   }
 
@@ -41,31 +41,31 @@ object SystemMetrics extends implicits.Numbers {
   val MaxHeapMemoryMetric = GaugeMetric(
     name = "max-heap-memory",
     description = "Max heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax),
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax).toDouble,
   )
 
   val UsedHeapMemoryMetric = GaugeMetric(
     name = "used-heap-memory",
     description = "Used heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed),
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed).toDouble,
   )
 
   val MaxNonHeapMemoryMetric = GaugeMetric(
     name = "max-non-heap-memory",
     description = "Max non heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax),
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax).toDouble,
   )
 
   val UsedNonHeapMemoryMetric = GaugeMetric(
     name = "used-non-heap-memory",
     description = "Used non heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed),
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed).toDouble,
   )
 
   val FreeDiskSpaceMetric = GaugeMetric(
     name = "free-disk-space",
     description = "Free disk space (MB)",
-    get = () => bytesAsMb(new File("/").getUsableSpace),
+    get = () => bytesAsMb(new File("/").getUsableSpace).toDouble,
   )
 
   val ThreadCountMetric = GaugeMetric(
@@ -81,7 +81,7 @@ object SystemMetrics extends implicits.Numbers {
     description = "Total physical memory",
     get = () =>
       ManagementFactory.getOperatingSystemMXBean match {
-        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getTotalPhysicalMemorySize)
+        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getTotalPhysicalMemorySize).toDouble
         case _                                           => -1
       },
   )
@@ -91,7 +91,7 @@ object SystemMetrics extends implicits.Numbers {
     description = "Free physical memory",
     get = () =>
       ManagementFactory.getOperatingSystemMXBean match {
-        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getFreePhysicalMemorySize)
+        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getFreePhysicalMemorySize).toDouble
         case _                                           => -1
       },
   )
@@ -221,9 +221,14 @@ class CloudWatchMetricsLifecycle(
           s"${gc.name}-gc-count-per-min",
           "Used heap memory (MB)",
           StandardUnit.Count,
-          () => gc.gcCount.toLong,
+          () => gc.gcCount.toLong.toDouble,
         ),
-        GaugeMetric(s"${gc.name}-gc-time-per-min", "Used heap memory (MB)", StandardUnit.Count, () => gc.gcTime.toLong),
+        GaugeMetric(
+          s"${gc.name}-gc-time-per-min",
+          "Used heap memory (MB)",
+          StandardUnit.Count,
+          () => gc.gcTime.toLong.toDouble,
+        ),
       )
     }
 

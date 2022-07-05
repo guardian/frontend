@@ -1,7 +1,7 @@
 package pagepresser
 
 import org.jsoup.nodes.Document
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.io.Source
 
 object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {

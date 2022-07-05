@@ -106,7 +106,7 @@ object DiscussionAssetsMap {
   private lazy val agent = Box[Map[String, String]](Map.empty)
 
   def alter(map: Map[String, String], baseURI: URI): Future[Map[String, String]] = {
-    agent.alter(map.mapValues(value => baseURI.resolve(value).toString))
+    agent.alter(map.view.mapValues(value => baseURI.resolve(value).toString).toMap)
   }
 
   def getURL(assetName: String): String = {
