@@ -1,6 +1,6 @@
 import { liveblogs, articles } from '../fixtures/pages';
 
-const pages = [articles[2], ...liveblogs];
+const pages = [...articles, ...liveblogs].filter(a => 'expectedMinInlineSlotsOnPage' in a);
 
 describe('Slots and iframes load on pages', () => {
 	pages.forEach(({ path, adTest, expectedMinInlineSlotsOnPage }) => {
