@@ -72,7 +72,7 @@ trait AppComponents
     with OnwardServices
     with FapiServices
     with ApplicationsServices
-    with TopMentionsServices {
+    with TopicServices {
 
   //Overriding conflicting members
   override lazy val ophanApi = wire[OphanApi]

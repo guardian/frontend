@@ -291,7 +291,7 @@ trait CommercialSwitches {
   val MerchandisingHighSection: Switch = Switch(
     group = Commercial,
     name = "merchandising-high-section",
-    description = "Move merchandising high section one section lower",
+    description = "Move merchandising high section one section lower. This switch is only applied in the UK.",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

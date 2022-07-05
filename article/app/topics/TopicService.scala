@@ -1,7 +1,7 @@
-package topmentions
+package topics
 
 import common.{Box, GuLogging}
-import model.{TopicsApiResponse, TopMentionsResult, SelectedTopic, TopicWithCount}
+import model.{TopicsApiResponse, TopicResult, Topic}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -10,17 +10,17 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
   private val topicsDetails = Box[Option[Map[String, TopicsApiResponse]]](None)
 
   def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    val retrievedTopMentions = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
+    val retrievedTopics = topicS3Client.getListOfKeys().map { key => key.map { retrieveTopicsDetails(_) } }
 
-    retrievedTopMentions
+    retrievedTopics
       .flatMap(Future.sequence(_))
       .map(response => {
         topicsDetails send Some(response.toMap)
-        log.info("successfully refreshed top mentions")
+        log.info("successfully refreshed topics")
       })
       .recover {
         case e =>
-          log.error("Could not refresh top mentions", e)
+          log.error("Could not refresh topics", e)
       }
   }
 
@@ -28,9 +28,9 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
     topicsDetails.get().flatMap(_.get(blogId))
   }
 
-  def getTopics(blogId: String): Option[Seq[TopicWithCount]] = {
-    getBlogTopicsApiResponse(blogId).map(mentions =>
-      mentions.results.map(mention => TopicWithCount(mention.`type`, mention.name, mention.count)),
+  def getAvailableTopics(blogId: String): Option[Seq[Topic]] = {
+    getBlogTopicsApiResponse(blogId).map(topicsApiResponse =>
+      topicsApiResponse.results.map(topic => Topic(topic.`type`, topic.name, Some(topic.count))),
     )
   }
 
@@ -40,10 +40,10 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
 
   def getSelectedTopic(
       blogId: String,
-      topMentionEntity: SelectedTopic,
-  ): Option[TopMentionsResult] = {
+      topicEntity: Topic,
+  ): Option[TopicResult] = {
     getBlogTopicsApiResponse(blogId).flatMap(_.results.find(result => {
-      result.`type` == topMentionEntity.`type` && result.name == topMentionEntity.value
+      result.`type` == topicEntity.`type` && result.name == topicEntity.value
     }))
   }
 

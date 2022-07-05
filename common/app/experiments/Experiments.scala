@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(InteractivesIdleLoading, OfferHttp3, KeyEventsCarousel)
+    Set(OfferHttp3)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -20,16 +20,6 @@ object FrontRendering
       participationGroup = Perc0A,
     )
 
-object InteractivesIdleLoading
-    extends Experiment(
-      name = "interactives-idle-loading",
-      description =
-        "Tests the impact of loading interactive embeds on page idle instead of when they become visible in the viewport",
-      owners = Seq(Owner.withGithub("simonbyford")),
-      sellByDate = LocalDate.of(2022, 7, 1),
-      participationGroup = Perc10A,
-    )
-
 object OfferHttp3
     extends Experiment(
       name = "offer-http3",
@@ -37,13 +27,4 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2022, 12, 6),
       participationGroup = Perc0B,
-    )
-
-object KeyEventsCarousel
-    extends Experiment(
-      name = "key-events-carousel",
-      description = "When ON, live blog key events are displayed in a carousel",
-      owners = Seq(Owner.withGithub("abeddow91")),
-      sellByDate = LocalDate.of(2022, 9, 13),
-      participationGroup = Perc0C,
     )

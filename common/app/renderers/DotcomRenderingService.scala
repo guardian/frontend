@@ -14,16 +14,7 @@ import model.dotcomrendering.{
   DotcomRenderingDataModel,
   PageType,
 }
-import model.{
-  CacheTime,
-  Cached,
-  InteractivePage,
-  LiveBlogPage,
-  NoCache,
-  PageWithStoryPackage,
-  PressedPage,
-  TopicWithCount,
-}
+import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, PageWithStoryPackage, PressedPage, Topic}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -141,7 +132,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
-      availableTopics: Option[Seq[TopicWithCount]] = None,
+      availableTopics: Option[Seq[Topic]] = None,
       selectedTopics: Option[String] = None,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {

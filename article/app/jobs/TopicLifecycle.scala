@@ -3,7 +3,7 @@ package jobs
 import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
-import topmentions.TopicService
+import topics.TopicService
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
@@ -12,7 +12,7 @@ class TopicLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
     akkaAsync: AkkaAsync,
-    topMentionService: TopicService,
+    topicService: TopicService,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
 
@@ -27,14 +27,14 @@ class TopicLifecycle(
 
     // refresh top mentions when app starts
     akkaAsync.after1s {
-      topMentionService.refreshTopics()
+      topicService.refreshTopics()
     }
   }
 
   private def scheduleJobs(): Unit = {
     // This job runs every 2 minutes
     jobs.scheduleEvery("TopMentionsAgentRefreshJob", 2.minutes) {
-      topMentionService.refreshTopics()
+      topicService.refreshTopics()
     }
   }
 
