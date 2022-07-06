@@ -11,7 +11,7 @@ class FlagshipFrontContainerSpec extends AnyFlatSpec with Matchers with BeforeAn
   private val formatter =
     DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm").withZone(FlagshipFrontContainer.londonTimezone)
 
-  override def beforeAll {
+  override def beforeAll: Unit = {
     FlagshipFrontContainerSwitch.switchOn()
   }
 

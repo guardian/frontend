@@ -19,7 +19,7 @@ trait FootballTestData {
   }
 
   implicit class TestCompetitionsService(competitionsService: CompetitionsService) {
-    def loadTestData() {
+    def loadTestData(): Unit = {
       if (competitionsService.matches.isEmpty) {
         competitionsService.competitionAgents.foreach { agent =>
           FootballTestData.competitions.filter(_.id == agent.competition.id).map { comp =>

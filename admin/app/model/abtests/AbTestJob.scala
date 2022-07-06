@@ -8,7 +8,7 @@ import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
 
 object AbTestJob extends GuLogging {
-  def run()(implicit executionContext: ExecutionContext) {
+  def run()(implicit executionContext: ExecutionContext): Unit = {
 
     log.info("Downloading abtests info from CloudWatch")
 

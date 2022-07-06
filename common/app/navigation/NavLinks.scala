@@ -104,6 +104,7 @@ private object NavLinks {
     "Football",
     "/football",
     children = List(
+      NavLink("Women's Euro 2022", "/football/women-s-euro-2022", Some("football/women-s-euro-2022")),
       NavLink("Live scores", "/football/live", Some("football/live")),
       NavLink("Tables", "/football/tables", Some("football/tables")),
       NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),

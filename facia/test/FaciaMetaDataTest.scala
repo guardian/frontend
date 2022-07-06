@@ -32,7 +32,7 @@ import test._
   lazy val blockingOperations = new BlockingOperations(actorSystem)
   lazy val fapi = new TestFrontJsonFapi(blockingOperations)
 
-  override def beforeAll() {
+  override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts =
