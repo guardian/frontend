@@ -97,7 +97,7 @@ const getSlotName = (isMobile: boolean, slotCounter: number): string => {
 const insertAdAtPara = (para: Node): Promise<void> => {
 	const isMobile = getBreakpoint() === 'mobile';
 	const container: HTMLElement = document.createElement('div');
-	container.className = `ad-slot-container ad-slot--liveblog-inline`;
+	container.className = `ad-slot-container--liveblog`;
 
 	const ad = createAdSlot('inline', {
 		name: getSlotName(isMobile, AD_COUNTER),
