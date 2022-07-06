@@ -11,7 +11,6 @@ import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.XML
-import java.util.TimeZone
 
 case class CricketFeedException(message: String) extends RuntimeException(message)
 

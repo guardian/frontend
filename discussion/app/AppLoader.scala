@@ -18,8 +18,6 @@ import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import router.Routes
 
-import scala.concurrent.ExecutionContext
-
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
     new BuiltInComponentsFromContext(context) with AppComponents

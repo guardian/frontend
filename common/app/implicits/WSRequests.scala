@@ -1,8 +1,7 @@
 package implicits
 
 import common.HttpStatusException
-import conf.Configuration
-import play.api.libs.ws.{WSAuthScheme, WSRequest, WSResponse}
+import play.api.libs.ws.{WSRequest, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 

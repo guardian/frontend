@@ -1,6 +1,5 @@
 package pages
 
-import common.Edition
 import conf.switches.Switches.WeAreHiring
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
@@ -14,7 +13,6 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
 import html.HtmlPageHelpers.{ContentCSSFile}
-import views.html.stacked
 
 object GalleryHtmlPage extends HtmlPage[GalleryPage] {
 

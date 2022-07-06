@@ -1,6 +1,5 @@
 package pages
 
-import common.Edition
 import conf.switches.Switches.WeAreHiring
 import model.InteractivePage
 import html.{HtmlPage, Styles}

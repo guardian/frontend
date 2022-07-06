@@ -8,7 +8,7 @@ import model.{Competition, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.DateTimeComparator
 import pa.{FootballMatch, _}
 
-import java.time.{Clock, LocalDate, ZoneOffset, ZonedDateTime}
+import java.time.{Clock, LocalDate, ZonedDateTime}
 import java.util.Comparator
 import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}

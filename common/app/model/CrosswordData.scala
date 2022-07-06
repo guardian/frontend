@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{CapiDateTime, Crossword, CrosswordEntry}
+import com.gu.contentapi.client.model.v1.{Crossword, CrosswordEntry}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.DateTime

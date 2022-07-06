@@ -2,7 +2,7 @@ package navigation
 
 import common.Edition
 import model.Page
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportGifting, SupportSubscribe, SupporterCTA}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupporterCTA}
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, Writes}
 

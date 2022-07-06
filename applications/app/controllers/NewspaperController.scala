@@ -4,7 +4,7 @@ import common.{ImplicitControllerExecutionContext, GuLogging}
 import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{ApplicationContext, Cached, MetaData, SectionId, SimplePage, StandalonePage}
+import model.{ApplicationContext, Cached, MetaData, SectionId, StandalonePage}
 import pages.ContentHtmlPage
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services.NewspaperQuery

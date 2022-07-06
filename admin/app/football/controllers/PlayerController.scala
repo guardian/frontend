@@ -13,7 +13,6 @@ import football.model.PA
 import scala.concurrent.Future
 import model.{ApplicationContext, Cached, Cors, NoCache}
 import play.api.libs.json.{JsArray, JsObject, JsString}
-import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 import play.api.libs.ws.WSClient
 

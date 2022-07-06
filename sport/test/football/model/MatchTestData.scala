@@ -1,6 +1,6 @@
 package football.model
 
-import java.time.{ZonedDateTime, ZoneId, LocalDate}
+import java.time.{ZonedDateTime, ZoneId}
 import pa._
 import feed.Competitions
 import model.Competition

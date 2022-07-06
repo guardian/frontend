@@ -1,7 +1,6 @@
 package test
 
 import org.scalatest.{Suites, Tag}
-import org.scalatestplus.play.PortNumber
 import services.dotcomponents.ArticlePickerTest
 object ArticleComponents extends Tag("article components")
 

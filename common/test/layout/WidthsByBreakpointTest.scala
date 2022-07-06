@@ -1,7 +1,6 @@
 package layout
 
 import layout.ContentWidths._
-import org.scalatest._
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 

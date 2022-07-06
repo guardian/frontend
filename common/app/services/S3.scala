@@ -2,10 +2,7 @@ package services
 
 import java.io._
 import java.util.zip.{GZIPInputStream, GZIPOutputStream}
-import javax.crypto.Mac
-import javax.crypto.spec.SecretKeySpec
 
-import com.amazonaws.auth.AWSSessionCredentials
 import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.services.s3.model._
@@ -13,8 +10,7 @@ import com.amazonaws.util.StringInputStream
 import common.GuLogging
 import conf.Configuration
 import model.PressedPageType
-import org.joda.time.{DateTime, DateTimeZone}
-import play.api.libs.ws.{WSClient, WSRequest}
+import org.joda.time.DateTime
 
 import scala.io.{Codec, Source}
 

@@ -2,7 +2,6 @@ package layout
 
 import cards._
 import BrowserWidth._
-import views.support.ImageProfile
 
 object FaciaWidths {
   private val MediaMobile = Map[CardType, BrowserWidth](

@@ -1,7 +1,6 @@
 package conf
 
 import common.GuardianConfiguration
-import pa.PaClientConfig
 
 object SportConfiguration {
 

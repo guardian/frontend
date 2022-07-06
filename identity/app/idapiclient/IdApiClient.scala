@@ -6,9 +6,6 @@ import scala.concurrent.{ExecutionContext, Future}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
 import conf.IdConfig
 import idapiclient.parser.IdApiJsonBodyParser
-import net.liftweb.json.JsonDSL._
-import net.liftweb.json.compactRender
-import net.liftweb.json.JsonAST.JObject
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.{AutoSignInToken, DeletionBody}

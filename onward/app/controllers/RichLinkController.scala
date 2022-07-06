@@ -4,7 +4,7 @@ import common.`package`.convertApiExceptionsWithoutEither
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import contentapi.ContentApiClient
 import implicits.Requests
-import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType, ImageAsset}
+import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType}
 import models.dotcomponents.{RichLink, RichLinkTag}
 import model.dotcomrendering.OnwardsUtils
 import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
