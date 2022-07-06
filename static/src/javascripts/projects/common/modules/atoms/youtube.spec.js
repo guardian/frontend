@@ -3,7 +3,7 @@ import { isAndroid as _isAndroid, isIOS as _isIOS } from 'lib/detect';
 import { isOn as _isOn } from 'common/modules/accessibility/main';
 import config from 'lib/config';
 
-const { muteIFrame, getIFrameBehaviour, getIFrameBehaviourConfig } = _;
+const { getIFrameBehaviour, getIFrameBehaviourConfig } = _;
 
 const isAndroid = _isAndroid;
 const isIOS = _isIOS;
@@ -74,69 +74,6 @@ describe('youtube', () => {
         if (document.body) {
             expect(document.body.innerHTML).toBe(div);
         }
-    });
-
-    describe('muting iframes to trigger autoplay', () => {
-        it('mutes an iframe by amending the src property if no other URL parameters', () => {
-            const docSrc = 'http://www.example.com/q';
-
-            const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
-
-            if (document.body) {
-                document.body.innerHTML = div;
-            }
-
-            const iframe = ((document.getElementById(
-                'iframeId'
-            )));
-
-            muteIFrame(iframe);
-
-            if (document.body) {
-                expect(iframe.src).toBe('http://www.example.com/q?mute=1');
-            }
-        });
-
-        it('adds a new parameter to mute iframe if parameters already exist', () => {
-            const docSrc = 'http://www.example.com/q?randomParam=abc';
-
-            const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
-
-            if (document.body) {
-                document.body.innerHTML = div;
-            }
-
-            const iframe = ((document.getElementById(
-                'iframeId'
-            )));
-
-            muteIFrame(iframe);
-            if (document.body) {
-                expect(iframe.src).toBe(
-                    'http://www.example.com/q?randomParam=abc&mute=1'
-                );
-            }
-        });
-
-        it("doesn't amend iframe src property if already muted", () => {
-            const docSrc = 'http://www.example.com/q?mute=1';
-
-            const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
-
-            if (document.body) {
-                document.body.innerHTML = div;
-            }
-
-            const iframe = ((document.getElementById(
-                'iframeId'
-            )));
-
-            muteIFrame(iframe);
-
-            if (document.body) {
-                expect(iframe.src).toBe('http://www.example.com/q?mute=1');
-            }
-        });
     });
 
     describe(`determining correct youtube iframe behaviour`, () => {
@@ -229,7 +166,7 @@ describe('youtube', () => {
                 },
             });
 
-            docSrc = 'http://www.example.com/q?mute=1';
+            docSrc = 'http://www.example.com/q';
             div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
             if (document.body) {
                 document.body.innerHTML = div;
