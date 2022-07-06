@@ -602,7 +602,7 @@ object TrailsToShowcase {
 
     setEntryDates(singleStoryPanel, entry)
 
-    val gModule = new GModuleImpl()
+    val gModule = new GModule()
     gModule.setPanel(Some(GPanel(singleStoryPanel.`type`, singleStoryPanel.title)))
     gModule.setPanelTitle(singleStoryPanel.panelTitle)
     gModule.setOverline(singleStoryPanel.overline)
@@ -631,7 +631,7 @@ object TrailsToShowcase {
 
     setEntryDates(rundownPanel, entry)
 
-    val gModule = new GModuleImpl()
+    val gModule = new GModule()
     gModule.setPanel(Some(GPanel(rundownPanel.`type`, rundownPanel.panelTitle)))
     gModule.setPanelTitle(Some(rundownPanel.panelTitle))
     gModule.setArticleGroup(Some(asGArticleGroup(rundownPanel.articleGroup)))
@@ -656,8 +656,8 @@ object TrailsToShowcase {
   }
 
   private def setEntryDates(panel: Panel, entry: SyndEntryImpl): Unit = {
-    def atomDatesModuleFor(updated: Option[DateTime]): RssAtomModuleImpl = {
-      val atomModule = new RssAtomModuleImpl
+    def atomDatesModuleFor(updated: Option[DateTime]): RssAtomModule = {
+      val atomModule = new RssAtomModule
       atomModule.setUpdated(updated)
       atomModule
     }
