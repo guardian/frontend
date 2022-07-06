@@ -426,7 +426,8 @@ object DotcomRenderingDataModel {
 
     val matchData = makeMatchData(page)
 
-    val selectedTopics = topicResult.map(_ => Seq(Topic(_.`type`, _.name)))
+    val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
