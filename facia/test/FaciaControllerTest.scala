@@ -63,7 +63,7 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
     wsClient
   }
 
-  override def beforeAll() {
+  override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts = Map(

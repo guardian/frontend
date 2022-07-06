@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 import scala.io.Source
 
 trait Switchable {
-  def switchOn()
-  def switchOff()
+  def switchOn(): Unit
+  def switchOff(): Unit
   def isSwitchedOn: Boolean
   def isSwitchedOff: Boolean = !isSwitchedOn
 

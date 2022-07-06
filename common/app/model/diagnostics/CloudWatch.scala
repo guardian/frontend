@@ -23,10 +23,10 @@ trait CloudWatch extends GuLogging {
   }
 
   trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, PutMetricDataResult] with GuLogging {
-    def onError(exception: Exception) {
+    def onError(exception: Exception): Unit = {
       log.info(s"CloudWatch PutMetricDataRequest error: ${exception.getMessage}}")
     }
-    def onSuccess(request: PutMetricDataRequest, result: PutMetricDataResult) {
+    def onSuccess(request: PutMetricDataRequest, result: PutMetricDataResult): Unit = {
       log.info("CloudWatch PutMetricDataRequest - success")
     }
   }
