@@ -24,7 +24,7 @@ class ChartTable(private val labels: Seq[String]) {
   def column(label: String): ChartColumn = datapoints(label)
   def allColumns: Seq[ChartColumn] = datapoints.values.toSeq
 
-  def addColumn(label: String, data: ChartColumn) {
+  def addColumn(label: String, data: ChartColumn): Unit = {
     datapoints += ((label, data))
   }
 

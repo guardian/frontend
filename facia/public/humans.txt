@@ -160,6 +160,13 @@ Developer: Jake Lee Kennedy
 GitHub: Jakeii
 From: London, UK
 
+Developer: Emma Imber
+From: Worcester, UK
+Location: Newbury, UK
+
+Developer: Charlotte Emms
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */

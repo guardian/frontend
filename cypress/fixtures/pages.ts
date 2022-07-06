@@ -26,6 +26,15 @@ const articles = [
 		),
 		adTest: 'fixed-puppies',
 	},
+	{
+		path: getTestUrl(
+			stage,
+			'/environment/2020/oct/13/maverick-rewilders-endangered-species-extinction-conservation-uk-wildlife',
+			{ isDcr: true },
+		),
+		expectedMinInlineSlotsOnPage: 10,
+		adTest: 'fixed-puppies',
+	},
 ];
 
 const liveblogs = [
@@ -35,6 +44,7 @@ const liveblogs = [
 			'/politics/live/2022/jan/31/uk-politics-live-omicron-nhs-workers-coronavirus-vaccines-no-10-sue-gray-report',
 			{ isDcr: true },
 		),
+		expectedMinInlineSlotsOnPage: 4,
 		adTest: 'fixed-puppies',
 	},
 ];

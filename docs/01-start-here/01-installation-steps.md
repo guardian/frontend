@@ -69,7 +69,7 @@ We present you with two setup types: _automatic_ and _manual_. They are equivale
 
 1. Run ```./setup.sh``` to install dependencies and compile assets. (If you get a _EACCES error_ see [here](04-troubleshooting.md#npm-eacces)).
 
-1. All being well, you should be able to [run the app](#running-the-app)
+1. All being well, you should be able to [run the app](#running-frontend)
 
 ### Manual Setup
 
@@ -89,14 +89,14 @@ region = eu-west-1
 Java 11 is required - on Mac OS this can be installed using [sdkman](https://sdkman.io/):
 
 ```bash
-$ sdk list java | grep -m 1 "11.*.hs-adpt"
-$ sdk install java 11.0.11.hs-adpt # Choose latest of 11.*.hs-adpt
+$ sdk list java | grep -m 1 "11.*.1-amzn"
+$ sdk install java 11.0.15.9.1-amzn # Choose latest of 11.*.1-amzn
 $ sdk current java
-Using java version 11.0.11.hs-adpt
+Using java version 11.0.15.9.1-amzn
 $ java -version
-openjdk version "11.0.11" 2021-04-20
-$ sdk use java 11.0.11.hs-adpt
-Using java version 11.0.11.hs-adpt in this shell.
+openjdk version "11.0.15" 2022-04-19 LTS
+$ sdk use java 11.0.15.9.1-amzn
+Using java version 11.0.15.9.1-amzn in this shell.
 ```
 
 ### Node.js

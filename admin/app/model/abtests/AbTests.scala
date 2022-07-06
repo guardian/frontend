@@ -15,7 +15,7 @@ object AbTests {
     abTests.get()
   }
 
-  def update(testVariants: Map[String, Seq[String]]) {
+  def update(testVariants: Map[String, Seq[String]]): Unit = {
     abTests.send(testVariants)
   }
 
