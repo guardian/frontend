@@ -1,15 +1,14 @@
+# This action is just a test
 name: Snyk
-on:
-    schedule:
-        - cron: '0 6 * * *'
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+
+on: push
+
 jobs:
-    security:
-        uses: guardian/.github/.github/workflows/sbt-node-snyk.yml@main
-        with:
-            ORG: guardian-dotcom-n2y
-        secrets:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  security:
+    uses: guardian/.github/.github/workflows/sbt-node-snyk.yml@main
+    with:
+      DEBUG: true
+      ORG: guardian-test
+      SKIP_NODE: false
+    secrets:
+       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
