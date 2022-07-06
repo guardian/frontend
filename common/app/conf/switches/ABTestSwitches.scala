@@ -46,16 +46,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-scroll-depth",
-    "Send scroll depth tracking data",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 7, 5)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-multi-sticky-right-ads",
     "Test the commercial and performance impact of sticky ads in the right column",
     owners = Seq(Owner.withGithub("chrislomaxjones")),
