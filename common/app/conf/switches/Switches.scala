@@ -35,11 +35,12 @@ object SwitchGroup {
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
+  val Journalism = SwitchGroup("Journalism")
   val Monitoring = SwitchGroup("Monitoring")
   val Performance = SwitchGroup("Performance")
   val ServerSideExperiments = SwitchGroup("Server-side Experiments")
   val Membership = SwitchGroup("Membership")
-  val Journalism = SwitchGroup("Journalism")
+  val Newsletters = SwitchGroup("Newsletters")
   val Privacy = SwitchGroup("Privacy")
   val TX = SwitchGroup("TX")
 }
@@ -177,6 +178,7 @@ object Switches
     with MonitoringSwitches
     with IdentitySwitches
     with JournalismSwitches
+    with NewslettersSwitches
     with TXSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches

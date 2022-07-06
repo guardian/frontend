@@ -443,46 +443,6 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val EmailSignupRecaptcha = Switch(
-    SwitchGroup.Feature,
-    "email-signup-recaptcha",
-    "Enables showing reCAPTCHA when signing up to email newsletters",
-    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val NewslettersRemoveConfirmationStep = Switch(
-    SwitchGroup.Feature,
-    "newsletters-remove-confirmation-step",
-    "Remove confirmation step when user sign up to a newsletter",
-    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val ShowNewPrivacyWordingOnEmailSignupEmbeds = Switch(
-    SwitchGroup.Feature,
-    "show-new-privacy-wording-on-email-signup-embeds",
-    "Show new privacy wording on email signup embeds",
-    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val ValidateEmailSignupRecaptchaTokens = Switch(
-    SwitchGroup.Feature,
-    "validate-email-signup-recaptcha-tokens",
-    "Enables validation of reCAPTCHA tokens on email signup submissions",
-    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
   val FrontsSlideshowMobileSupport = Switch(
     SwitchGroup.Feature,
     "fronts-slideshow-mobile-support",
