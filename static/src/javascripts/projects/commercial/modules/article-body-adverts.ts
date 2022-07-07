@@ -80,7 +80,7 @@ const insertAdAtPara = (
 ): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
-		classes: '',
+		classes,
 		sizes,
 	});
 
@@ -225,9 +225,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					para,
 					`inline${inlineId}`,
 					'inline',
-					`inline${
-						isInline1 ? '' : ' offset-right ad-slot--offset-right'
-					}`,
+					`inline`,
 					isInline1
 						? {
 								phablet: [
