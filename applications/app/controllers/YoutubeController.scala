@@ -1,13 +1,11 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
 import contentapi.ContentApiClient
 import model.{CacheTime, Cached}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
-import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 class YoutubeController(

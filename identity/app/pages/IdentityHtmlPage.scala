@@ -2,7 +2,7 @@ package pages
 
 import conf.switches.Switches.WeAreHiring
 import html.HtmlPageHelpers._
-import html.{HtmlPage, Styles}
+import html.Styles
 import model.{ApplicationContext, IdentityPage}
 import play.api.mvc.RequestHeader
 import play.twirl.api.{Html, HtmlFormat}
@@ -12,7 +12,6 @@ import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
 import html.HtmlPageHelpers.ContentCSSFile
-import views.html.stacked
 
 object IdentityHtmlPage {
 

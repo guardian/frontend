@@ -6,7 +6,7 @@ import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
 import implicits.FakeRequests
 import concurrent.BlockingOperations
-import play.api.libs.json.{JsArray, JsValue}
+import play.api.libs.json.JsArray
 import play.api.test._
 import play.api.test.Helpers._
 import services.ConfigAgent

@@ -6,7 +6,6 @@ import controllers.front.FrontJsonFapiLive
 import model.{PressedPage, PressedPageType}
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
-import org.scalatestplus.play.PortNumber
 import play.api.libs.json.Json
 import recorder.HttpRecorder
 import utils.FaciaPickerTest

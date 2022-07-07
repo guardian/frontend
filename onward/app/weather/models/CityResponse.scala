@@ -5,8 +5,6 @@ import common.editions.{Au, Uk, Us}
 import weather.models.accuweather.LocationResponse
 import play.api.libs.json.Json
 
-import scala.collection.immutable
-
 object CityResponse {
   implicit val jsonWrites = Json.writes[CityResponse]
 

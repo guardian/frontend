@@ -2,7 +2,6 @@ package model
 
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc.RequestHeader
-import play.twirl.api.Html
 import views.{BodyProcessor, MainCleaner}
 
 case class ContentFields(fields: Fields, cleanedMainBlockHtml: String, cleanedBodyHtml: String)

@@ -7,7 +7,7 @@ import implicits.Requests
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, Competition, TeamMap}
 
-import java.time.{LocalDate, LocalDateTime}
+import java.time.LocalDate
 import pa.FootballTeam
 import play.api.mvc.{BaseController, RequestHeader}
 import play.twirl.api.Html

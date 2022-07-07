@@ -1,6 +1,5 @@
 package pages
 
-import common.Edition
 import conf.switches.Switches.WeAreHiring
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
@@ -22,7 +21,6 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import html.HtmlPageHelpers.ContentCSSFile
-import views.html.stacked
 import views.html.fragments.commercial.survey
 
 object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {

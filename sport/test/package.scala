@@ -6,7 +6,6 @@ import football.collections.RichListTest
 import football.containers.FixturesAndResultsTest
 import football.model._
 import org.scalatest.Suites
-import org.scalatestplus.play.PortNumber
 import pa.{Http, Response => PaResponse}
 import play.api.libs.ws.WSClient
 import recorder.{DefaultHttpRecorder, HttpRecorder}

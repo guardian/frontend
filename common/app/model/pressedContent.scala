@@ -1,32 +1,9 @@
 package model.pressed
 
 import com.gu.commercial.branding.Branding
-import com.gu.contentapi.client.model.v1.{Content, ElementType}
-import com.gu.contentapi.client.utils.DesignType
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
-import com.gu.facia.api.utils.FaciaContentUtils
-import com.gu.facia.api.{models => fapi, utils => fapiutils}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson, CollectionPlatform, Metadata}
-import common.{Edition, HTML}
-import common.commercial.EditionBranding
-import model.content.{Atoms, MediaAtom}
-import model.{
-  CardStylePicker,
-  Commercial,
-  ContentFormat,
-  DotcomContentType,
-  Elements,
-  Fields,
-  ImageMedia,
-  MetaData,
-  Pillar,
-  SectionId,
-  SupportedUrl,
-  Tags,
-  Trail,
-  VideoElement,
-}
-import org.joda.time.DateTime
+import com.gu.facia.api.{models => fapi}
+import common.Edition
+import model.{ContentFormat, Pillar}
 import views.support.ContentOldAgeDescriber
 
 sealed trait PressedContent {
