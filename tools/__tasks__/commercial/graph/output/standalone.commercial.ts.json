@@ -614,6 +614,7 @@
   "../lib/config.js"
  ],
  "../projects/common/modules/commercial/geo-utils.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/geolocation.ts"
  ],
  "../projects/common/modules/commercial/lib/cookie.ts": [
