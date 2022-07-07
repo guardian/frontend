@@ -46,7 +46,7 @@ const adSlotClassSelectorSizes = {
  * @param i Index of winning paragraph
  * @returns The classname for container
  */
-const getContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
+const getStickyContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
 
 const wrapSlotInContainer = (
 	ad: HTMLElement,
@@ -54,7 +54,9 @@ const wrapSlotInContainer = (
 ) => {
 	const container = document.createElement('div');
 
-	container.className = `ad-slot-container ${options.className ?? ''}`;
+	container.className = `ad-slot-container--article ${
+		options.className ?? ''
+	}`;
 
 	if (options.sticky) {
 		ad.style.cssText += 'position: sticky; top: 0;';
@@ -190,7 +192,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 			void insertHeightStyles(
 				stickyContainerHeights.map((height, index) => [
-					getContainerClassname(index),
+					getStickyContainerClassname(index),
 					height,
 				]),
 			);
@@ -208,10 +210,16 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				const containerOptions = includeStickyContainers
 					? {
 							sticky: true,
-							className: getContainerClassname(i),
+							className: getStickyContainerClassname(i),
 							enableDebug,
 					  }
-					: undefined;
+					: {
+							sticky: false,
+							className: isInline1
+								? ''
+								: ' offset-right ad-slot--offset-right',
+							enableDebug,
+					  };
 
 				return insertAdAtPara(
 					para,
