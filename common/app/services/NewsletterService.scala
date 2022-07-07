@@ -34,7 +34,21 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     tag.properties.id.stripPrefix(EMBED_TAG_PREFIX.+("-"))
   }
 
-  private def responseToData(response: NewsletterResponse): NewsletterData = {
+  private def getNewsletterResponse(tags: List[Tag]): Option[NewsletterResponse] = {
+    for {
+      tag <- getNewsletterTag(tags)
+      newsletterName = getNewsletterName(tag)
+      newsletterEither = newsletterSignupAgent.getNewsletterByName(newsletterName)
+      newsletter <- newsletterEither match {
+        case Left(value)  => None
+        case Right(value) => value
+      }
+    } yield {
+      newsletter
+    }
+  }
+
+  private def newsletterResponseToData(response: NewsletterResponse): NewsletterData = {
     new NewsletterData(
       response.identityName,
       response.name,
@@ -47,32 +61,23 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     )
   }
 
-  def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
-
-    for {
-      tag <- getNewsletterTag((articlePage.article.tags.tags))
-      newsletterName = getNewsletterName(tag)
-      newsletterEither = newsletterSignupAgent.getNewsletterByName(newsletterName)
-      newsletter <- newsletterEither match {
-        case Left(value)  => None
-        case Right(value) => value
-      }
-    } yield {
-      responseToData(newsletter)
-    }
-
+  private def shouldInclude(response: NewsletterResponse): Boolean = {
+    !response.paused && !response.restricted
   }
-  def getNewsletterForLiveBlog(blogPage: LiveBlogPage): Option[NewsletterData] = {
-    for {
-      tag <- getNewsletterTag((blogPage.article.tags.tags))
-      newsletterName = getNewsletterName(tag)
-      newsletterEither = newsletterSignupAgent.getNewsletterByName(newsletterName)
-      newsletter <- newsletterEither match {
-        case Left(value)  => None
-        case Right(value) => value
-      }
-    } yield {
-      responseToData(newsletter)
+
+  def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
+    val response = getNewsletterResponse(articlePage.article.tags.tags)
+    if (response.isEmpty || !shouldInclude(response.get)) {
+      None
     }
+    Option.apply(newsletterResponseToData(response.get))
+  }
+
+  def getNewsletterForLiveBlog(blogPage: LiveBlogPage): Option[NewsletterData] = {
+    val response = getNewsletterResponse(blogPage.article.tags.tags)
+    if (response.isEmpty || !shouldInclude(response.get)) {
+      None
+    }
+    Option.apply(newsletterResponseToData(response.get))
   }
 }
