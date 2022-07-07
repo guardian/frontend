@@ -16,25 +16,12 @@ jest.mock('../../../../lib/geolocation', () => ({
 	getCountryCode: jest.fn(() => mockCountryCode),
 }));
 
-type TestCase = {
-	fnName: string;
-	mockCountryCode: CountryCode;
-	expectedUKValue: boolean;
-	expectedUsaValue: boolean;
-	expectedCaValue: boolean;
-	expectedAuValue: boolean;
-	expectedNzValue: boolean;
-	expectedUsOrCaValue: boolean;
-	expectedAuOrNzValue: boolean;
-	expectedRowValue: boolean;
-};
-
 describe('Geolocation Utils', () => {
 	beforeEach(() => {
 		_.resetModule();
 	});
 
-	const testCases: TestCase[] = [
+	const testCases = [
 		{
 			fnName: 'isInUk()',
 			mockCountryCode: 'GB',
@@ -107,7 +94,7 @@ describe('Geolocation Utils', () => {
 			expectedAuOrNzValue: false,
 			expectedRowValue: true,
 		},
-	];
+	] as const;
 
 	testCases.forEach((testCase) => {
 		it(`Only ${testCase.fnName} return true for geolocation '${testCase.mockCountryCode}'`, () => {
