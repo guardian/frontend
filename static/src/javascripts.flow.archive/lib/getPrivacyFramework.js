@@ -11,7 +11,7 @@
  */
 
 // @flow strict
-import { isInUsa } from 'projects/common/modules/commercial/geo-utils';
+import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
 
 let frameworks: { [key: string]: boolean };
 
