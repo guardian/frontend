@@ -365,10 +365,10 @@ const onPlayerReady = (
     const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
     const iFrameBehaviour = getIFrameBehaviour(iFrameBehaviourConfig);
     if (iFrameBehaviour.mutedOnStart) {
-        event.target.mute();
+        youtubePlayer.mute();
     }
     if (iFrameBehaviour.autoplay) {
-        event.target.playVideo();
+        youtubePlayer.playVideo();
     }
 
     if (overlay) {
