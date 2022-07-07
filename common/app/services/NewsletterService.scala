@@ -5,6 +5,23 @@ import common._
 import model.{ArticlePage, PageWithStoryPackage, LiveBlogPage, Tag}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import play.api.libs.json.Json
+
+case class NewsletterData(
+    identityName: String,
+    name: String,
+    theme: String,
+    description: String,
+    frequency: String,
+    listId: Int,
+    group: String,
+    successDescription: String,
+)
+
+object NewsletterData {
+  implicit val newsletterDataReads = Json.reads[NewsletterData]
+  implicit val newsletterDataWrites = Json.writes[NewsletterData]
+}
 
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   private val EMBED_TAG_PREFIX = "newsletter-embed"
@@ -17,7 +34,20 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     tag.properties.id.stripPrefix(EMBED_TAG_PREFIX.+("-"))
   }
 
-  def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterResponse] = {
+  private def responseToData(response: NewsletterResponse): NewsletterData = {
+    new NewsletterData(
+      response.identityName,
+      response.name,
+      response.theme,
+      response.description,
+      response.frequency,
+      response.listId,
+      response.group,
+      response.emailEmbed.successDescription,
+    )
+  }
+
+  def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
 
     for {
       tag <- getNewsletterTag((articlePage.article.tags.tags))
@@ -28,11 +58,11 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
         case Right(value) => value
       }
     } yield {
-      newsletter
+      responseToData(newsletter)
     }
 
   }
-  def getNewsletterForLiveBlog(blogPage: LiveBlogPage): Option[NewsletterResponse] = {
+  def getNewsletterForLiveBlog(blogPage: LiveBlogPage): Option[NewsletterData] = {
     for {
       tag <- getNewsletterTag((blogPage.article.tags.tags))
       newsletterName = getNewsletterName(tag)
@@ -42,7 +72,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
         case Right(value) => value
       }
     } yield {
-      newsletter
+      responseToData(newsletter)
     }
   }
 }

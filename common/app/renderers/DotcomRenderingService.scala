@@ -15,7 +15,7 @@ import model.dotcomrendering.{
   PageType,
 }
 import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, PageWithStoryPackage, PressedPage, Topic}
-import services.newsletters.model.NewsletterResponse
+import services.NewsletterData
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -113,7 +113,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: PageWithStoryPackage,
       blocks: Blocks,
       pageType: PageType,
-      newsletter: Option[NewsletterResponse],
+      newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] = {
 
@@ -144,7 +144,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]] = None,
       selectedTopics: Option[String] = None,
-      newsletter: Option[NewsletterResponse],
+      newsletter: Option[NewsletterData],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
       case liveblog: LiveBlogPage =>

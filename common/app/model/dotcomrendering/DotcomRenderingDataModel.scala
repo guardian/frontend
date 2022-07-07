@@ -3,7 +3,7 @@ package model.dotcomrendering
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
-import services.newsletters.model.NewsletterResponse
+import services.NewsletterData
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Chronos, Edition, Localisation, RichRequestHeader}
@@ -93,7 +93,7 @@ case class DotcomRenderingDataModel(
     matchUrl: Option[String], // Optional url used for match data
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
-    newsletterToEmbed: Option[NewsletterResponse],
+    newsletterToEmbed: Option[NewsletterData],
 )
 
 object DotcomRenderingDataModel {
@@ -207,7 +207,7 @@ object DotcomRenderingDataModel {
       blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
-      newsletter: Option[NewsletterResponse],
+      newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = page.article,
@@ -252,7 +252,7 @@ object DotcomRenderingDataModel {
       forceLive: Boolean,
       availableTopics: Option[Seq[Topic]] = None,
       selectedTopics: Option[String] = None,
-      newsletter: Option[NewsletterResponse],
+      newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -328,7 +328,7 @@ object DotcomRenderingDataModel {
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]],
       selectedTopics: Option[String] = None,
-      newsletter: Option[NewsletterResponse],
+      newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
