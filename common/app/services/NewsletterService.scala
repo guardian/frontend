@@ -68,7 +68,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
     val response = getNewsletterResponse(articlePage.article.tags.tags)
     if (response.isEmpty || !shouldInclude(response.get)) {
-      None
+      return None
     }
     Option.apply(newsletterResponseToData(response.get))
   }
@@ -76,7 +76,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   def getNewsletterForLiveBlog(blogPage: LiveBlogPage): Option[NewsletterData] = {
     val response = getNewsletterResponse(blogPage.article.tags.tags)
     if (response.isEmpty || !shouldInclude(response.get)) {
-      None
+      return None
     }
     Option.apply(newsletterResponseToData(response.get))
   }
