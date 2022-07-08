@@ -4,6 +4,11 @@ import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.gu.Dependencies._
 import com.gu.ProjectSettings._
 
+ThisBuild / scalafixDependencies += "org.scala-lang.modules" %% "scala-collection-migrations" % "2.7.0"
+libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.7.0"
+addCompilerPlugin(scalafixSemanticdb)
+scalacOptions ++= List("-Yrangepos", "-P:semanticdb:synthetics:on")
+
 val common = library("common")
   .settings(
     Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
