@@ -52,23 +52,7 @@ const addVideoStartedClass = (el: HTMLElement | null) => {
 	}
 };
 
-const canTarget = (state: ConsentState): boolean => {
-	if (state.ccpa) {
-		return !state.ccpa.doNotSell;
-	}
-	if (state.aus) {
-		return state.aus.personalisedAdvertising;
-	}
-	if (state.tcfv2) {
-		return (
-			Object.values(state.tcfv2.consents).length > 0 &&
-			Object.values(state.tcfv2.consents).every(Boolean)
-		);
-	}
-	return false;
-};
-
-let resolveInitialConsent: (state: ConsentState) => void;
+let resolveInitialConsent: (consentState: ConsentState) => void;
 const initialConsent = new Promise<ConsentState>((resolve) => {
 	// We don’t need to wait for consent if Ad-Free
 	if (commercialFeatures.adFree) {
@@ -80,8 +64,8 @@ const initialConsent = new Promise<ConsentState>((resolve) => {
 
 	resolveInitialConsent = resolve;
 });
-onConsentChange((state) => {
-	resolveInitialConsent(state);
+onConsentChange((consentState) => {
+	resolveInitialConsent(consentState);
 });
 
 interface YTPlayerEvent extends Omit<Event, 'target'> {
@@ -109,9 +93,9 @@ const onPlayerStateChangeEvent = (
 ) => {
 	if (el) {
 		if (config.get('page.isDev')) {
-			const state = window.YT.PlayerState[event.data];
-			if (state) {
-				console.log(`Player ${el.id} is ${state}`);
+			const playerState = window.YT.PlayerState[event.data];
+			if (playerState) {
+				console.log(`Player ${el.id} is ${playerState}`);
 			}
 		}
 
@@ -191,7 +175,7 @@ const createAdsConfigEnabled = (
 				cmpVcd: consentState.tcfv2.tcString,
 				cmpGvcd: consentState.tcfv2.addtlConsent,
 			},
-			nonPersonalizedAd: !canTarget(consentState),
+			nonPersonalizedAd: !consentState.canTarget,
 		};
 		log('commercial', 'YouTube Ads Config TCFv2', adsConfigTCFv2);
 		return adsConfigTCFv2;
@@ -200,7 +184,7 @@ const createAdsConfigEnabled = (
 	if (consentState.ccpa || consentState.aus) {
 		const adsConfigCCPA: AdsConfigCCPAorAus = {
 			...adsConfigBasic,
-			restrictedDataProcessor: !canTarget(consentState),
+			restrictedDataProcessor: !consentState.canTarget,
 		};
 		log('commercial', 'YouTube Ads Config CCPA/AUS', adsConfigCCPA);
 		return adsConfigCCPA;
@@ -212,16 +196,16 @@ const createAdsConfigEnabled = (
 /*eslint curly: ["error", "multi-line"] -- it’s safer to update */
 type YTHost = 'https://www.youtube.com' | 'https://www.youtube-nocookie.com';
 const getHost = ({
-	state,
+	consentState,
 	classes,
 	adFree,
 }: {
-	state: ConsentState;
+	consentState: ConsentState;
 	classes: string[];
 	adFree: boolean;
 }): YTHost => {
 	if (
-		canTarget(state) &&
+		consentState.canTarget &&
 		!adFree &&
 		classes.includes('youtube-media-atom__iframe')
 	) {
@@ -264,7 +248,7 @@ const setupPlayer = (
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
 		host: getHost({
-			state: consentState,
+			consentState,
 			classes: [...el.classList.values()],
 			adFree: commercialFeatures.adFree,
 		}),
