@@ -30,7 +30,7 @@ trait ABTestSwitches {
     "Check whether all changes made this quarter when combined lead to revenue uplift",
     owners = Seq(Owner.withGithub("chrislomaxjones")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 7, 7)),
+    sellByDate = Some(LocalDate.of(2022, 7, 13)),
     exposeClientSide = true,
   )
 
