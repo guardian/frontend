@@ -76,7 +76,7 @@ const canTargetCCPA = (canTarget: boolean): ConsentState => ({
 	ccpa: {
 		doNotSell: !canTarget,
 	},
-	canTarget: canTarget,
+	canTarget,
 	framework: 'ccpa',
 });
 
@@ -84,7 +84,7 @@ const canTargetAUS = (canTarget: boolean): ConsentState => ({
 	aus: {
 		personalisedAdvertising: canTarget,
 	},
-	canTarget: canTarget,
+	canTarget,
 	framework: 'aus',
 });
 
