@@ -52,22 +52,6 @@ const addVideoStartedClass = (el: HTMLElement | null) => {
 	}
 };
 
-const canTarget = (state: ConsentState): boolean => {
-	if (state.ccpa) {
-		return !state.ccpa.doNotSell;
-	}
-	if (state.aus) {
-		return state.aus.personalisedAdvertising;
-	}
-	if (state.tcfv2) {
-		return (
-			Object.values(state.tcfv2.consents).length > 0 &&
-			Object.values(state.tcfv2.consents).every(Boolean)
-		);
-	}
-	return false;
-};
-
 let resolveInitialConsent: (state: ConsentState) => void;
 const initialConsent = new Promise<ConsentState>((resolve) => {
 	// We don’t need to wait for consent if Ad-Free
@@ -191,7 +175,7 @@ const createAdsConfigEnabled = (
 				cmpVcd: consentState.tcfv2.tcString,
 				cmpGvcd: consentState.tcfv2.addtlConsent,
 			},
-			nonPersonalizedAd: !canTarget(consentState),
+			nonPersonalizedAd: !consentState.canTarget,
 		};
 		log('commercial', 'YouTube Ads Config TCFv2', adsConfigTCFv2);
 		return adsConfigTCFv2;
@@ -200,7 +184,7 @@ const createAdsConfigEnabled = (
 	if (consentState.ccpa || consentState.aus) {
 		const adsConfigCCPA: AdsConfigCCPAorAus = {
 			...adsConfigBasic,
-			restrictedDataProcessor: !canTarget(consentState),
+			restrictedDataProcessor: !consentState.canTarget,
 		};
 		log('commercial', 'YouTube Ads Config CCPA/AUS', adsConfigCCPA);
 		return adsConfigCCPA;
@@ -221,7 +205,7 @@ const getHost = ({
 	adFree: boolean;
 }): YTHost => {
 	if (
-		canTarget(state) &&
+		state.canTarget &&
 		!adFree &&
 		classes.includes('youtube-media-atom__iframe')
 	) {
