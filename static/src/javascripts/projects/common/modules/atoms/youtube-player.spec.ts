@@ -68,7 +68,7 @@ const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
 		tcString: 'testTcString',
 		addtlConsent: 'testaddtlConsent',
 	},
-	canTarget: true,
+	canTarget,
 	framework: 'tcfv2',
 });
 
