@@ -179,7 +179,7 @@ describe('create ads config', () => {
 describe('Get Host (no-cookie)', () => {
 	test('`youtube-nocookie.com` with an empty state', () => {
 		const host = youtubePlayer.getHost({
-			state: {
+			consentState: {
 				canTarget: false,
 				framework: null,
 			},
@@ -192,7 +192,7 @@ describe('Get Host (no-cookie)', () => {
 
 	test('`youtube-nocookie.com` with an ad-free', () => {
 		const host = youtubePlayer.getHost({
-			state: {
+			consentState: {
 				aus: { personalisedAdvertising: true },
 				canTarget: true,
 				framework: 'aus',
@@ -206,7 +206,7 @@ describe('Get Host (no-cookie)', () => {
 
 	test('`youtube-nocookie.com` with for other than youtube-media-atom__iframe', () => {
 		const host = youtubePlayer.getHost({
-			state: {
+			consentState: {
 				aus: { personalisedAdvertising: true },
 				canTarget: true,
 				framework: 'aus',
@@ -220,7 +220,7 @@ describe('Get Host (no-cookie)', () => {
 
 	test('`youtube.com` when all three conditions met', () => {
 		const host = youtubePlayer.getHost({
-			state: {
+			consentState: {
 				aus: { personalisedAdvertising: true },
 				canTarget: true,
 				framework: 'aus',
