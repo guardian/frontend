@@ -93,9 +93,9 @@ const onPlayerStateChangeEvent = (
 ) => {
 	if (el) {
 		if (config.get('page.isDev')) {
-			const state = window.YT.PlayerState[event.data];
-			if (state) {
-				console.log(`Player ${el.id} is ${state}`);
+			const playerState = window.YT.PlayerState[event.data];
+			if (playerState) {
+				console.log(`Player ${el.id} is ${playerState}`);
 			}
 		}
 
