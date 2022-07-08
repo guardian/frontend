@@ -52,7 +52,7 @@ const addVideoStartedClass = (el: HTMLElement | null) => {
 	}
 };
 
-let resolveInitialConsent: (state: ConsentState) => void;
+let resolveInitialConsent: (consentState: ConsentState) => void;
 const initialConsent = new Promise<ConsentState>((resolve) => {
 	// We don’t need to wait for consent if Ad-Free
 	if (commercialFeatures.adFree) {
@@ -64,8 +64,8 @@ const initialConsent = new Promise<ConsentState>((resolve) => {
 
 	resolveInitialConsent = resolve;
 });
-onConsentChange((state) => {
-	resolveInitialConsent(state);
+onConsentChange((consentState) => {
+	resolveInitialConsent(consentState);
 });
 
 interface YTPlayerEvent extends Omit<Event, 'target'> {
@@ -196,16 +196,16 @@ const createAdsConfigEnabled = (
 /*eslint curly: ["error", "multi-line"] -- it’s safer to update */
 type YTHost = 'https://www.youtube.com' | 'https://www.youtube-nocookie.com';
 const getHost = ({
-	state,
+	consentState,
 	classes,
 	adFree,
 }: {
-	state: ConsentState;
+	consentState: ConsentState;
 	classes: string[];
 	adFree: boolean;
 }): YTHost => {
 	if (
-		state.canTarget &&
+		consentState.canTarget &&
 		!adFree &&
 		classes.includes('youtube-media-atom__iframe')
 	) {
@@ -248,7 +248,7 @@ const setupPlayer = (
 	// @ts-expect-error -- ts is confused by multiple constructors
 	return new window.YT.Player(el.id, {
 		host: getHost({
-			state: consentState,
+			consentState,
 			classes: [...el.classList.values()],
 			adFree: commercialFeatures.adFree,
 		}),
