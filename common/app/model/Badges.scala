@@ -2,9 +2,7 @@ package model
 
 import conf.Static
 import layout.FaciaContainer
-import java.security.MessageDigest
-import java.math.BigInteger
-import scala.util.control.NonFatal
+import org.apache.commons.codec.digest.DigestUtils
 
 trait BaseBadge {
   def maybeThisBadge(tag: String): Option[Badge]
@@ -22,16 +20,8 @@ case class SpecialBadge(salt: String, hashedTag: String, imageUrl: String) exten
       Some(Badge(tag, imageUrl))
     } else None
 
-  private val digest = MessageDigest.getInstance("MD5")
-
   private def md5(input: String): Option[String] = {
-    try {
-      digest.update(input.getBytes(), 0, input.length)
-
-      Option(new BigInteger(1, digest.digest()).toString(16))
-    } catch {
-      case NonFatal(_) => None
-    }
+    Some(DigestUtils.md5Hex(input))
   }
 }
 
