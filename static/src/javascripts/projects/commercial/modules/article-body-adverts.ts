@@ -181,7 +181,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		// Compute the height of containers in which ads will remain sticky
 		const includeStickyContainers =
 			includeContainer &&
-			isInVariantSynchronous(multiStickyRightAds, 'variant');
+			// Check if query parameter required for qualitative testing has been passed
+			(getUrlVars().multiSticky ||
+				// Otherwise check for participation in AB test
+				isInVariantSynchronous(multiStickyRightAds, 'variant'));
 
 		if (includeStickyContainers) {
 			const stickyContainerHeights = await computeStickyHeights(
