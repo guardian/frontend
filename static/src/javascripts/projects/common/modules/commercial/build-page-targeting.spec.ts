@@ -328,7 +328,6 @@ describe('Build Page Targeting', () => {
 
 		expect(getPageTargeting(emptyConsent)).toEqual({
 			ab: ['MtMaster-variantName'],
-			amtgrp: '7', // Because Math.random() is fixed to 0.5
 			at: 'ng101',
 			bp: 'mobile',
 			cc: 'US',
