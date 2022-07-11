@@ -5,7 +5,7 @@ import { _, shouldRefresh } from './should-refresh';
 
 const { outstreamSizes } = _;
 
-export const toAdSizeString = (size: AdSize): AdSize | 'fluid' => {
+const toAdSizeString = (size: AdSize): AdSize | 'fluid' => {
 	return size[0] === 0 && size[1] === 0 ? (size.toString() as 'fluid') : size;
 };
 
