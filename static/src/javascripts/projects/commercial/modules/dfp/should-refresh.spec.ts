@@ -1,5 +1,5 @@
 import { adSizes, createAdSize } from '@guardian/commercial-core';
-import type { AdSize, AdSizeString } from '@guardian/commercial-core';
+import type { AdSize } from '@guardian/commercial-core';
 import { Advert } from './Advert';
 import { _, shouldRefresh } from './should-refresh';
 

@@ -338,7 +338,6 @@
  "../projects/commercial/modules/dfp/should-refresh.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../lib/config.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts"
  ],
  "../projects/commercial/modules/dfp/track-ad-render.ts": [
