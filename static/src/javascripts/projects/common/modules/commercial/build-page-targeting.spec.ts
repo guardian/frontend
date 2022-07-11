@@ -407,26 +407,36 @@ describe('Build Page Targeting', () => {
 	describe('Already visited frequency', () => {
 		it('can pass a value of five or less', () => {
 			storage.local.setRaw('gu.alreadyVisited', String(5));
-			expect(getPageTargeting(emptyConsent).fr).toEqual('5');
+			expect(getPageTargeting(ccpaWithConsentMock).fr).toEqual('5');
 		});
 
 		it('between five and thirty, includes it in a bucket in the form "x-y"', () => {
 			storage.local.setRaw('gu.alreadyVisited', String(18));
-			expect(getPageTargeting(emptyConsent).fr).toEqual('16-19');
+			expect(getPageTargeting(ccpaWithConsentMock).fr).toEqual('16-19');
 		});
 
 		it('over thirty, includes it in the bucket "30plus"', () => {
 			storage.local.setRaw('gu.alreadyVisited', String(300));
-			expect(getPageTargeting(emptyConsent).fr).toEqual('30plus');
+			expect(getPageTargeting(ccpaWithConsentMock).fr).toEqual('30plus');
 		});
 
 		it('passes a value of 0 if the value is not stored', () => {
 			storage.local.remove('gu.alreadyVisited');
-			expect(getPageTargeting(emptyConsent).fr).toEqual('0');
+			expect(getPageTargeting(ccpaWithConsentMock).fr).toEqual('0');
 		});
 
 		it('passes a value of 0 if the number is invalid', () => {
 			storage.local.setRaw('gu.alreadyVisited', 'not-a-number');
+			expect(getPageTargeting(ccpaWithConsentMock).fr).toEqual('0');
+		});
+
+		it('passes a value of 0 if consent is not given', () => {
+			storage.local.setRaw('gu.alreadyVisited', String(5));
+			expect(getPageTargeting(ccpaWithoutConsentMock).fr).toEqual('0');
+		});
+
+		it('passes a value of 0 if empty consent', () => {
+			storage.local.setRaw('gu.alreadyVisited', String(5));
 			expect(getPageTargeting(emptyConsent).fr).toEqual('0');
 		});
 	});
