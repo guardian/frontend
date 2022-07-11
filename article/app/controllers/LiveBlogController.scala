@@ -300,7 +300,7 @@ class LiveBlogController(
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Future[Result] = {
-    val (lastNewBlock, newBlocks) = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents, topicResult)
+    val (newestBlock, newBlocks) = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents, topicResult)
     val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents, topicResult)
 
     val timelineHtml = views.html.liveblog.keyEvents(
@@ -324,7 +324,7 @@ class LiveBlogController(
       val livePageJson = isLivePage.filter(_ == true).map { _ =>
         "html" -> blocksHtml
       }
-      val mostRecent = lastNewBlock.map { block =>
+      val mostRecent = newestBlock.map { block =>
         "mostRecentBlockId" -> s"block-${block.id}"
       }
 
