@@ -5,7 +5,6 @@ import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition.defaultEdition
-import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import model._
 import model.pressed._

@@ -4,12 +4,10 @@ import common.{Edition, LinkTo}
 import conf.Configuration.{affiliateLinks => affiliateLinksConfig}
 import model.{Tag, Tags}
 import org.jsoup.Jsoup
-import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
 
 import scala.collection.JavaConverters._
 import scala.util.matching.Regex
-import scala.util.matching.Regex.Match
 
 object TextCleaner {
 

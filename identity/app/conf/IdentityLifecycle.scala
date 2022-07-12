@@ -21,13 +21,13 @@ class IdentityLifecycle(
     }
   }
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
     jobs.schedule("TorExitNodeRefeshJob", "0 0/30 * * * ?") {
       TorExitNodeList.run()
     }
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     jobs.deschedule("TorExitNodeRefeshJob")
   }
 

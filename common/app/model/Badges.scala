@@ -2,9 +2,7 @@ package model
 
 import conf.Static
 import layout.FaciaContainer
-import java.security.MessageDigest
-import java.math.BigInteger
-import scala.util.control.NonFatal
+import org.apache.commons.codec.digest.DigestUtils
 
 trait BaseBadge {
   def maybeThisBadge(tag: String): Option[Badge]
@@ -22,16 +20,8 @@ case class SpecialBadge(salt: String, hashedTag: String, imageUrl: String) exten
       Some(Badge(tag, imageUrl))
     } else None
 
-  private val digest = MessageDigest.getInstance("MD5")
-
   private def md5(input: String): Option[String] = {
-    try {
-      digest.update(input.getBytes(), 0, input.length)
-
-      Option(new BigInteger(1, digest.digest()).toString(16))
-    } catch {
-      case NonFatal(_) => None
-    }
+    Some(DigestUtils.md5Hex(input))
   }
 }
 
@@ -51,6 +41,7 @@ object Badges {
   val paradisePapers = Badge("news/series/paradise-papers", Static("images/badges/pp_web.svg"))
   val cambridgeAnalytica = Badge("news/series/cambridge-analytica-files", Static("images/badges/calock.svg"))
   val pegasusProject = Badge("news/series/pegasus-project", Static("images/badges/SpecialReportJul21.svg"))
+  val suisseSecretsProject = Badge("news/series/suisse-secrets", Static("images/badges/18_feb_2022_Badge.svg"))
   val specialReport = SpecialBadge(
     "06966783c5b5413394df723f2ca58030953",
     "feb78187bd4de427603a164d0a69f19f",
@@ -58,8 +49,8 @@ object Badges {
   )
   val specialReport2 = SpecialBadge(
     "a-public-salt3W#ywHav!p+?r+W2$E6=",
-    "45a016bed6c06c2b0ff7076ada8c8a97",
-    Static("images/badges/18_feb_2022_Badge.svg"),
+    "0d18e8413ab7cdf377e1202d24452e63",
+    Static("images/badges/05_july_2022_Badge.svg"),
   )
   val pandoraPapers = Badge("news/series/pandora-papers", Static("images/badges/SpecialReportSep21.svg"))
   val nhs70 = Badge("society/series/nhs-at-70", Static("images/badges/nhs-70.svg"))
@@ -129,6 +120,7 @@ object Badges {
     paradisePapers,
     cambridgeAnalytica,
     pegasusProject,
+    suisseSecretsProject,
     specialReport,
     pandoraPapers,
     nhs70,

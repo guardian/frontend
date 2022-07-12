@@ -6,7 +6,7 @@ import common.CloudWatchMetricsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf._
 import conf.switches.SwitchboardLifecycle
-import controllers.{Assets, HealthCheck, IdentityControllers}
+import controllers.{HealthCheck, IdentityControllers}
 import dev.DevAssetsController
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
@@ -16,7 +16,7 @@ import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFComponents}
+import play.filters.csrf.CSRFComponents
 import router.Routes
 import services.newsletters.NewsletterSignupLifecycle
 

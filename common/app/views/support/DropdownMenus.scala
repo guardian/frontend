@@ -1,7 +1,6 @@
 package views.support
 
 import conf.Configuration
-import play.twirl.api.Html
 
 object DropdownMenus {
 

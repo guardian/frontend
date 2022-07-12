@@ -24,7 +24,7 @@ class CricketLifecycle(
     }
   }
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
     jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 5.minutes) {
       Future(cricketStatsJob.run(fromDate = LocalDate.now, matchesToFetch = 1))
     }
@@ -33,12 +33,12 @@ class CricketLifecycle(
     }
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     jobs.deschedule("CricketAgentRefreshCurrentMatches")
     jobs.deschedule("CricketAgentRefreshHistoricalMatches")
   }
 
-  override def start() {
+  override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 

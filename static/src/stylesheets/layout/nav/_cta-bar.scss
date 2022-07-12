@@ -54,6 +54,10 @@
     }
 }
 
+.cta-bar__text--no-border {
+    border-top: 0;
+}
+
 .cta-bar__heading {
     @include fs-headline(3);
     color: $highlight-main;
@@ -136,4 +140,11 @@
             transform: translate(3px, -50%);
         }
     }
+}
+
+.cta-bar__cta--white-inline {
+    color: $brightness-7;
+    background-color: $brightness-100;
+    float: none;
+    display: inline-block;
 }

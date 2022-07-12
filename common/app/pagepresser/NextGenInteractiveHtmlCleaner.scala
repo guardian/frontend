@@ -1,6 +1,5 @@
 package pagepresser
 
-import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 object NextGenInteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {

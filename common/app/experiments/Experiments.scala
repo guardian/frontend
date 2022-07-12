@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(OfferHttp3)
+    Set(OfferHttp3, LiveBlogMainMediaPosition)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -27,4 +27,13 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2022, 12, 6),
       participationGroup = Perc0B,
+    )
+
+object LiveBlogMainMediaPosition
+    extends Experiment(
+      name = "live-blog-main-media-position",
+      description = "When ON, main media will be positioned between the kicker and headline on liveblogs",
+      owners = Seq(Owner.withGithub("abeddow91")),
+      sellByDate = LocalDate.of(2022, 10, 7),
+      participationGroup = Perc50,
     )

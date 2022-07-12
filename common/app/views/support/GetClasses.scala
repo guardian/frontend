@@ -13,7 +13,6 @@ import com.gu.facia.client.models.{
 }
 import layout._
 import layout.slices._
-import layout.cards
 import model.pressed.{Audio, Gallery, SpecialReport, Video}
 import slices.{Dynamic, DynamicSlowMPU}
 import play.api.mvc.RequestHeader

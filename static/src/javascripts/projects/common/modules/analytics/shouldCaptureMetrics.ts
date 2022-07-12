@@ -1,12 +1,10 @@
 import type { ABTest } from '@guardian/ab-core';
 import { getUrlVars } from 'lib/url';
 import { isInABTestSynchronous } from '../experiments/ab';
-import { commercialLazyLoadMarginReloaded } from '../experiments/tests/commercial-lazy-load-margin-reloaded';
 import { multiStickyRightAds } from '../experiments/tests/multi-sticky-right-ads';
 
 const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
-	commercialLazyLoadMarginReloaded,
 	multiStickyRightAds,
 ];
 

@@ -4,7 +4,6 @@ import com.typesafe.scalalogging.LazyLogging
 import conf.Configuration
 import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.mvc.{AnyContent, Request}
 import utils.RemoteAddress
 
 import scala.concurrent.Future

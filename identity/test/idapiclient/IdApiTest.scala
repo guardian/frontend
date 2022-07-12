@@ -11,7 +11,6 @@ import org.mockito.Mockito._
 import org.mockito.Matchers.any
 import org.scalatestplus.mockito.MockitoSugar
 
-import scala.language.postfixOps
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import test.{SingleServerSuite, WithTestExecutionContext, WithTestIdConfig}
 

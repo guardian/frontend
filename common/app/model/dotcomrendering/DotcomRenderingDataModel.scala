@@ -22,6 +22,7 @@ import model.{
   LiveBlogPage,
   PageWithStoryPackage,
   Topic,
+  TopicResult,
 }
 import navigation._
 import play.api.libs.json._
@@ -39,7 +40,7 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     availableTopics: Option[Seq[Topic]],
-    selectedTopics: Option[String],
+    selectedTopics: Option[Seq[Topic]],
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
@@ -199,6 +200,7 @@ object DotcomRenderingDataModel {
       keyEvents = Nil,
       availableTopics = None,
       newsletter = None,
+      topicResult = None,
     )
   }
 
@@ -228,6 +230,7 @@ object DotcomRenderingDataModel {
       keyEvents = Nil,
       availableTopics = None,
       newsletter = newsletter,
+      topicResult = None,
     )
   }
 
@@ -253,6 +256,7 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]] = None,
       selectedTopics: Option[String] = None,
       newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -309,6 +313,7 @@ object DotcomRenderingDataModel {
       availableTopics,
       selectedTopics,
       newsletter,
+      topicResult,
     )
   }
 
@@ -329,6 +334,7 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       selectedTopics: Option[String] = None,
       newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -431,6 +437,8 @@ object DotcomRenderingDataModel {
         .isBefore(Chronos.javaTimeLocalDateTimeToJodaDateTime(InteractiveSwitchOver.date))
 
     val matchData = makeMatchData(page)
+
+    val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
 
     DotcomRenderingDataModel(
       author = author,

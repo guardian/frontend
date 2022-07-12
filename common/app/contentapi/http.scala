@@ -3,9 +3,6 @@ package contentapi
 import java.net.{InetAddress, URI}
 import java.util.concurrent.TimeoutException
 
-import com.amazonaws.DefaultRequest
-import com.amazonaws.auth.{AWS4Signer, AWSCredentials}
-import com.amazonaws.http.HttpMethodName
 import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric, ContentApiRequestsMetric}
 import common.{ContentApiMetrics, GuLogging}
 import conf.Configuration

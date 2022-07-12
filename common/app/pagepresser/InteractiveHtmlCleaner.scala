@@ -1,6 +1,6 @@
 package pagepresser
 
-import org.jsoup.nodes.{Element, Document}
+import org.jsoup.nodes.Document
 import scala.collection.JavaConverters._
 import scala.io.Source
 

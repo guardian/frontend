@@ -1,7 +1,6 @@
 package weather.controllers
 
 import common._
-import weather.geo._
 import model.{CacheTime, Cached}
 import weather.models.CityResponse
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}

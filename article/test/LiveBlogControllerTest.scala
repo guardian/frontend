@@ -2,7 +2,7 @@ package test
 
 import controllers.LiveBlogController
 import org.mockito.Mockito._
-import org.mockito.Matchers.{any, anyObject, anyString}
+import org.mockito.Matchers.{anyObject, anyString}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test._
@@ -11,8 +11,6 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import model.{LiveBlogPage, TopicResult, Topic, TopicType}
 import topics.{TopicService}
-
-import scala.concurrent.Future
 
 @DoNotDiscover class LiveBlogControllerTest
     extends AnyFlatSpec
