@@ -34,21 +34,14 @@ class NewspaperController(
 
     }
 
-  def latestObserverNewspaper(): Action[AnyContent] =
-    Action.async { implicit request =>
-      val metadata = MetaData.make(
-        "theobserver",
-        Some(SectionId.fromId("theobserver")),
-        "Main section | From the Observer | The Guardian",
-      )
-
-      val todaysPaper = newspaperQuery
-        .fetchLatestObserverNewspaper()
-        .map(frontContainers => TodayNewspaper(metadata, frontContainers))
-
-      for (tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
-
+  def latestObserverNewspaper(): Action[AnyContent] = {
+    // A request was made by Central Production on the 12th July 2022 to redirect this page to
+    // /observer rather than create a generated page here.
+    // Issue: https://github.com/guardian/frontend/issues/25223
+    Action { implicit request =>
+      Cached(300)(WithoutRevalidationResult(MovedPermanently("/observer")))
     }
+  }
 
   def newspaperForDate(path: String, day: String, month: String, year: String): Action[AnyContent] =
     Action.async { implicit request =>
