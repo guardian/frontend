@@ -429,8 +429,9 @@ const getMeasurements = (
 			result[selector] = selectedElements.map(getDimensions);
 			return result;
 		}, {});
+
 		return {
-			bodyTop: bodyDims?.top ?? 0,
+			bodyTop: bodyDims?.top ? bodyDims.top + window.scrollY : 0,
 			bodyHeight: bodyDims?.height ?? 0,
 			candidates: candidatesWithDims,
 			contentMeta: contentMetaWithDims,
