@@ -14,7 +14,7 @@ case class Front(
     containers: Seq[FaciaContainer],
 )
 
-object Front extends implicits.Collections {
+object Front {
   type TrailUrl = String
 
   def itemsVisible(containerDefinition: ContainerDefinition): Int =
