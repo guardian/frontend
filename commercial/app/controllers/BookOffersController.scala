@@ -17,7 +17,6 @@ class BookOffersController(
 ) extends BaseController
     with ImplicitControllerExecutionContext
     with GuLogging
-    with implicits.Collections
     with implicits.Requests {
 
   private def booksSample(isbns: Seq[String], segment: Segment): Seq[Book] =

@@ -5,14 +5,13 @@ import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
 import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLookUp}
-import implicits.Collections
 import model._
 import org.joda.time.DateTime
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
 
-trait Index extends ConciergeRepository with Collections {
+trait Index extends ConciergeRepository {
 
   implicit val context: ApplicationContext
 

@@ -5,7 +5,6 @@ import com.gu.facia.api.{models => fapi}
 import com.gu.facia.api.utils.ContainerBrandingFinder
 import com.gu.facia.client.models.{Branded, TargetedTerritory}
 import common.Edition
-import implicits.CollectionsOps._
 import model.pressed._
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
