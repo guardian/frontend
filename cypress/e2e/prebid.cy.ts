@@ -1,7 +1,7 @@
 import { pages } from '../fixtures/pages';
 import { bidderURLs, wins } from '../fixtures/prebid';
 
-const interseptGamRequest = () =>
+const interceptGamRequest = () =>
 	cy.intercept(
 		{
 			url: 'https://securepubads.g.doubleclick.net/gampad/ads?**',
