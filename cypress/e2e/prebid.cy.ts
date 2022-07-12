@@ -41,7 +41,7 @@ describe('targeting', () => {
 	it(`prebid winner should display ad and send targeting to GAM`, () => {
 		const { path } = pages[0];
 
-		interseptGamRequest();
+		interceptGamRequest();
 
 		cy.visit(`${path}?adrefresh=false`);
 
