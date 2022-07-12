@@ -1,7 +1,7 @@
 package model
 
 import conf.Static
-import views.support.{Video640, VideoProfile}
+import views.support.VideoProfile
 import layout.FaciaCardHeader
 
 case class VideoFaciaProperties(

@@ -2,10 +2,7 @@ package services
 
 import java.io._
 import java.util.zip.{GZIPInputStream, GZIPOutputStream}
-import javax.crypto.Mac
-import javax.crypto.spec.SecretKeySpec
 
-import com.amazonaws.auth.AWSSessionCredentials
 import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.services.s3.model._
@@ -13,8 +10,7 @@ import com.amazonaws.util.StringInputStream
 import common.GuLogging
 import conf.Configuration
 import model.PressedPageType
-import org.joda.time.{DateTime, DateTimeZone}
-import play.api.libs.ws.{WSClient, WSRequest}
+import org.joda.time.DateTime
 
 import scala.io.{Codec, Source}
 
@@ -78,7 +74,7 @@ trait S3 extends GuLogging {
       new DateTime(result.getObjectMetadata.getLastModified)
     }
 
-  def putPublic(key: String, value: String, contentType: String) {
+  def putPublic(key: String, value: String, contentType: String): Unit = {
     put(key: String, value: String, contentType: String, PublicRead)
   }
 
@@ -87,11 +83,11 @@ trait S3 extends GuLogging {
     client.foreach(_.putObject(request))
   }
 
-  def putPrivate(key: String, value: String, contentType: String) {
+  def putPrivate(key: String, value: String, contentType: String): Unit = {
     put(key: String, value: String, contentType: String, Private)
   }
 
-  def putPrivateGzipped(key: String, value: String, contentType: String) {
+  def putPrivateGzipped(key: String, value: String, contentType: String): Unit = {
     putGzipped(key, value, contentType, Private)
   }
 
@@ -100,7 +96,12 @@ trait S3 extends GuLogging {
       Source.fromInputStream(new GZIPInputStream(result.getObjectContent)).mkString
     }
 
-  private def putGzipped(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
+  private def putGzipped(
+      key: String,
+      value: String,
+      contentType: String,
+      accessControlList: CannedAccessControlList,
+  ): Unit = {
     lazy val request = {
       val metadata = new ObjectMetadata()
 
@@ -129,7 +130,7 @@ trait S3 extends GuLogging {
     }
   }
 
-  private def put(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
+  private def put(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList): Unit = {
     val metadata = new ObjectMetadata()
     metadata.setCacheControl("no-cache,no-store")
     metadata.setContentType(contentType)

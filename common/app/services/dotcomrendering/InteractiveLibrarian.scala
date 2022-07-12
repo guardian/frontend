@@ -1,7 +1,6 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import conf.Configuration
 import play.api.libs.ws.WSClient
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document

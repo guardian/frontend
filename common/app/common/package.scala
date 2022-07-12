@@ -10,7 +10,6 @@ import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
 import model.CacheTime.RecentlyUpdated
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
-import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.Logger
 import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.{RequestHeader, Result}

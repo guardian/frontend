@@ -50,9 +50,8 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
     s"$accuWeatherApiUri/locations/v1/cities/geoposition/search.json?q=$latitudeLongitude&apikey=$weatherApiKey"
   }
 
-  private def searchForCityUrl(countryCode: String, city: String, regionCode: Option[String]): String = {
-    val regionPath = regionCode.map(code => s"/$code").getOrElse("")
-    s"$accuWeatherApiUri/locations/v1/cities/$countryCode$regionPath/search.json?q=$city&apikey=$weatherApiKey"
+  private def searchForCityUrl(countryCode: String, city: String): String = {
+    s"$accuWeatherApiUri/locations/v1/cities/$countryCode/search.json?q=$city&alias=Always&apikey=$weatherApiKey"
   }
 
   private def getJson(url: String): Future[JsValue] = {
@@ -99,8 +98,8 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
       Json.fromJson[Seq[LocationResponse]](r).get
     })
 
-  def searchForCity(countryCode: String, city: String, regionCode: Option[String]) =
-    getJson(searchForCityUrl(countryCode, city, regionCode)).map({ r =>
+  def searchForCity(countryCode: String, city: String) =
+    getJson(searchForCityUrl(countryCode, city)).map({ r =>
       Json.fromJson[Seq[LocationResponse]](r).get
     })
 

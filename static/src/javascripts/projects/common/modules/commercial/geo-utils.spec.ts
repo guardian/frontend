@@ -1,16 +1,17 @@
+import type { CountryCode } from '@guardian/libs';
 import {
+	_,
+	isInAuOrNz,
+	isInAustralia,
+	isInCanada,
+	isInNewZealand,
+	isInRow,
 	isInUk,
 	isInUsa,
-	isInCanada,
-	isInAustralia,
-	isInNewZealand,
 	isInUsOrCa,
-	isInAuOrNz,
-	isInRow,
-	_,
 } from 'common/modules/commercial/geo-utils';
 
-let mockCountryCode;
+let mockCountryCode: CountryCode;
 jest.mock('../../../../lib/geolocation', () => ({
 	getCountryCode: jest.fn(() => mockCountryCode),
 }));
@@ -83,7 +84,7 @@ describe('Geolocation Utils', () => {
 		},
 		{
 			fnName: 'isInRow()',
-			mockCountryCode: 'NONE_OF_THE_ABOVE',
+			mockCountryCode: 'FR',
 			expectedUKValue: false,
 			expectedUsaValue: false,
 			expectedCaValue: false,
@@ -93,7 +94,7 @@ describe('Geolocation Utils', () => {
 			expectedAuOrNzValue: false,
 			expectedRowValue: true,
 		},
-	];
+	] as const;
 
 	testCases.forEach((testCase) => {
 		it(`Only ${testCase.fnName} return true for geolocation '${testCase.mockCountryCode}'`, () => {

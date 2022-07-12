@@ -6,7 +6,6 @@ import model.pressed.{CollectionConfig, PressedContent}
 import com.gu.commercial.branding.ContainerBranding
 import commercial.campaigns.EmailAdvertisements._
 import common.Edition
-import conf.audio.FlagshipEmailContainer
 
 import PartialFunction.condOpt
 

@@ -1,5 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { commercialEndOfQuarter2Test } from './tests/commercial-end-of-quarter-2-test';
+import { multiStickyRightAds } from './tests/multi-sticky-right-ads';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
@@ -11,4 +12,5 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateMainControl,
 	remoteRRHeaderLinksTest,
 	commercialEndOfQuarter2Test,
+	multiStickyRightAds,
 ];

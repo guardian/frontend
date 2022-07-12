@@ -2084,15 +2084,15 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-7.2.0.tgz#e5e7ba7c19484ebe0e405a93b1c389dae681acef"
   integrity sha512-Y2+XC0bP5mFacwtDlDqlQsbUyQwn4OSlpOTw3+u7t1RhJFw61SDYAER4gOpyJ4t+wQZFdk//LGJUjFqzDfEEuQ==
 
-"@guardian/commercial-core@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-4.1.1.tgz#eb569c941d0c179c1b206d8da92f9d2c94ef82cf"
-  integrity sha512-1PwhyYVzRp63Ge1/3XH1pbLf4TYXZg6NKh2hA1I0gmPRAXE0E2/jjSmFQ6cl986rbRP8qn8QdendepinX8Zr/A==
+"@guardian/commercial-core@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-4.3.0.tgz#f04bc56d4eedef9feb2a4c844142a7b11082d9bd"
+  integrity sha512-T7aE9kqc0JCNaASh7iHof6+MMOTnoEwinYiIjbJSjMoNRfuMSKIfLpWjZfZ8w58uvOygIx6MJDFTRdyT5J5Fvw==
 
-"@guardian/consent-management-platform@^10.6.0":
-  version "10.6.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.6.0.tgz#18b13a1b6eebc2dcf0d708d12bcd6b93a2c407a3"
-  integrity sha512-U4JvXWV/gG5WwNsooVncYQSf5nroEinVnq2nCIrinQeMyhn6M2syxNnQVqIk/CE05Mh84OpR/ZWvGoz30b2/wA==
+"@guardian/consent-management-platform@^10.7.1":
+  version "10.7.1"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.7.1.tgz#ed672e1a7cc0e177d820dc7b2ebbfd26531a2d86"
+  integrity sha512-9wN4Bu0VMfpDg0p1/PjO/hAuPN7pJrBm24YXLWmAnfvHci0Wr+WMSF5ZOwhbMA01jl5IP3Hr1TKpFbkg3NhGdg==
   dependencies:
     "@guardian/libs" "1.6.1 - 3.3.0"
 
@@ -2512,13 +2512,6 @@
   integrity sha512-K2waXdXBi2302XUdcHcR1jCeU0LL4TD9HRs/gk0N2Xvrht+G/BfJa4QObBQZfhMdxiCpV3COl5Nfq4uKTeTnJA==
   dependencies:
     "@babel/types" "^7.3.0"
-
-"@types/cypress@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@types/cypress/-/cypress-1.1.3.tgz#0a700c040d53e9e12b5af98e41d4a88c39f39b6a"
-  integrity sha512-OXe0Gw8LeCflkG1oPgFpyrYWJmEKqYncBsD/J0r17r0ETx/TnIGDNLwXt/pFYSYuYTpzcq1q3g62M9DrfsBL4g==
-  dependencies:
-    cypress "*"
 
 "@types/glob@^7.1.1":
   version "7.2.0"
@@ -4318,15 +4311,10 @@ camelcase@^6.0.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.2.0.tgz#924af881c9d525ac9d87f40d964e5cea982a1809"
   integrity sha512-c7wVvbw3f37nuobQNtgsgG9POC9qMbNuMQmTCqZv23b6MIz0fcYpBiOlv9gEN/hdLdnZTDQhg6e9Dq5M1vKvfg==
 
-caniuse-lite@^1.0.30000998, caniuse-lite@^1.0.30001272, caniuse-lite@^1.0.30001274:
-  version "1.0.30001279"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001279.tgz#eb06818da481ef5096a3b3760f43e5382ed6b0ce"
-  integrity sha512-VfEHpzHEXj6/CxggTwSFoZBBYGQfQv9Cf42KPlO79sWXCD1QNKWKsKzFeWL7QpZHJQYAvocqV6Rty1yJMkqWLQ==
-
-caniuse-lite@^1.0.30001332:
-  version "1.0.30001344"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001344.tgz#8a1e7fdc4db9c2ec79a05e9fd68eb93a761888bb"
-  integrity sha512-0ZFjnlCaXNOAYcV7i+TtdKBp0L/3XEU2MF/x6Du1lrh+SRX4IfzIVL4HNJg5pB2PmFb8rszIGyOvsZnqqRoc2g==
+caniuse-lite@^1.0.30000998, caniuse-lite@^1.0.30001272, caniuse-lite@^1.0.30001274, caniuse-lite@^1.0.30001332:
+  version "1.0.30001355"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001355.tgz"
+  integrity sha512-Sd6pjJHF27LzCB7pT7qs+kuX2ndurzCzkpJl6Qct7LPSZ9jn0bkOA8mdgMgmqnQAWLVOOGjLpc+66V57eLtb1g==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -5216,10 +5204,10 @@ cyclist@^1.0.1:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
-cypress@*:
-  version "9.7.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-9.7.0.tgz#bf55b2afd481f7a113ef5604aa8b693564b5e744"
-  integrity sha512-+1EE1nuuuwIt/N1KXRR2iWHU+OiIt7H28jJDyyI4tiUftId/DrXYEwoDa5+kH2pki1zxnA0r6HrUGHV5eLbF5Q==
+cypress@^10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.3.0.tgz#fae8d32f0822fcfb938e79c7c31ef344794336ae"
+  integrity sha512-txkQWKzvBVnWdCuKs5Xc08gjpO89W2Dom2wpZgT9zWZT5jXxqPIxqP/NC1YArtkpmp3fN5HW8aDjYBizHLUFvg==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
@@ -5254,54 +5242,6 @@ cypress@*:
     lodash "^4.17.21"
     log-symbols "^4.0.0"
     minimist "^1.2.6"
-    ospath "^1.2.2"
-    pretty-bytes "^5.6.0"
-    proxy-from-env "1.0.0"
-    request-progress "^3.0.0"
-    semver "^7.3.2"
-    supports-color "^8.1.1"
-    tmp "~0.2.1"
-    untildify "^4.0.0"
-    yauzl "^2.10.0"
-
-cypress@^9.4.1:
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-9.4.1.tgz#1a4ba706435829c24b7edf350c2b059e05da9084"
-  integrity sha512-+JgMG9uT+QFx97JU9kOHE3jO3+0UdkQ9H1oCBiC7A74qme7Jkdy2sYDBCPjjGczutnWnGUTMRlwiNMP/Uq6LrQ==
-  dependencies:
-    "@cypress/request" "^2.88.10"
-    "@cypress/xvfb" "^1.2.4"
-    "@types/node" "^14.14.31"
-    "@types/sinonjs__fake-timers" "8.1.1"
-    "@types/sizzle" "^2.3.2"
-    arch "^2.2.0"
-    blob-util "^2.0.2"
-    bluebird "^3.7.2"
-    buffer "^5.6.0"
-    cachedir "^2.3.0"
-    chalk "^4.1.0"
-    check-more-types "^2.24.0"
-    cli-cursor "^3.1.0"
-    cli-table3 "~0.6.1"
-    commander "^5.1.0"
-    common-tags "^1.8.0"
-    dayjs "^1.10.4"
-    debug "^4.3.2"
-    enquirer "^2.3.6"
-    eventemitter2 "^6.4.3"
-    execa "4.1.0"
-    executable "^4.1.1"
-    extract-zip "2.0.1"
-    figures "^3.2.0"
-    fs-extra "^9.1.0"
-    getos "^3.2.1"
-    is-ci "^3.0.0"
-    is-installed-globally "~0.4.0"
-    lazy-ass "^1.6.0"
-    listr2 "^3.8.3"
-    lodash "^4.17.21"
-    log-symbols "^4.0.0"
-    minimist "^1.2.5"
     ospath "^1.2.2"
     pretty-bytes "^5.6.0"
     proxy-from-env "1.0.0"

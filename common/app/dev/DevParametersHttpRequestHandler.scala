@@ -54,6 +54,7 @@ class DevParametersHttpRequestHandler(
     "amzn_debug_mode", // set to `1` to enable A9 debugging
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
     "dcr",
+    "topics", // used for filtering the liveblog blocks
   )
 
   val commercialParams = Seq(
@@ -77,6 +78,8 @@ class DevParametersHttpRequestHandler(
     "utm_term", // Google Analytics term
     "sfdebug", // enable spacefinder visualiser. '1' = first pass, '2' = second pass
     "rikerdebug", // enable debug logging for Canadian ad setup managed by the Globe and Mail
+    "forceSendMetrics", // enable force sending of commercial metrics
+    "multiSticky", // enable multiple sticky ads in the right column, for the purpose of qualitative testing
   )
 
   val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty

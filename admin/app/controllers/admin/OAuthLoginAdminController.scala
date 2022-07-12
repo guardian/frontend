@@ -1,7 +1,7 @@
 package controllers.admin
 
 import com.gu.googleauth.GoogleAuthConfig
-import conf.{AdminConfiguration, Configuration}
+import conf.AdminConfiguration
 import googleAuth.OAuthLoginController
 import model.ApplicationContext
 import play.api.http.HttpConfiguration

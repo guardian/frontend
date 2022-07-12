@@ -2,7 +2,6 @@ package football.model
 
 import pa.{Season, Team}
 import implicits.Collections
-import org.joda.time.DateTime
 
 import java.time.ZoneId
 

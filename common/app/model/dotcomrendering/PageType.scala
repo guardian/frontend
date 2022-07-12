@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
 import common.Edition
-import model.{ApplicationContext, Content, ContentPage, Page, PageWithStoryPackage}
+import model.{ApplicationContext, Page}
 import play.api.libs.json.{JsBoolean, Json}
 import play.api.mvc.RequestHeader
 import views.support.JavaScriptPage.getMap

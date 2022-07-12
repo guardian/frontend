@@ -14,6 +14,7 @@ const decideLazyLoadMargin = () => {
 	);
 
 	const lazyLoadMargin = enableNewLazyLoadMargin ? '20%' : '200px';
+
 	log('commercial', `Using lazy load margin of ${lazyLoadMargin}`);
 
 	return lazyLoadMargin;

@@ -344,11 +344,7 @@ const getReady = (rules: SpacefinderRules, options: SpacefinderOptions) =>
 			options.waitForInteractives ? onInteractivesLoaded(rules) : true,
 		]),
 	]).then((value) => {
-		// TODO: remove this conditional once idle loading becomes the default behaviour
-		const isInIdleLoadingVariant =
-			window.guardian.config.tests?.interactivesIdleLoadingVariant;
-
-		if (value === 'timeout' && isInIdleLoadingVariant) {
+		if (value === 'timeout') {
 			log('commercial', 'Spacefinder timeout hit');
 			amIUsed('spacefinder.ts', 'SpacefinderTimeoutHit');
 		}

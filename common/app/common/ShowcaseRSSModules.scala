@@ -13,23 +13,19 @@ import org.joda.time.format.ISODateTimeFormat
 import java.util
 import scala.collection.JavaConverters._
 
-trait RssAtomModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
+class RssAtomModule extends com.sun.syndication.feed.module.Module with Serializable {
   override def getUri: String = RssAtomModule.URI
-  def getUpdated: Option[DateTime]
-  def setUpdated(updated: Option[DateTime])
-}
 
-class RssAtomModuleImpl extends RssAtomModule {
   private var updated: Option[DateTime] = None
 
-  override def getUpdated: Option[DateTime] = updated
+  def getUpdated: Option[DateTime] = updated
 
-  override def setUpdated(updated: Option[DateTime]): Unit = this.updated = updated
+  def setUpdated(updated: Option[DateTime]): Unit = this.updated = updated
 
   override def getInterface: Class[_] = classOf[RssAtomModule]
 
-  override def clone: Object = {
-    val module = new RssAtomModuleImpl
+  override def clone(): Object = {
+    val module = new RssAtomModule
     module.copyFrom(this)
     module
   }
@@ -49,61 +45,39 @@ case class GPanel(
     content: String,
 )
 
-trait GModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
+class GModule extends com.sun.syndication.feed.module.Module with Serializable with Cloneable {
   override def getUri: String = GModule.URI
 
-  def getPanel: Option[GPanel]
-
-  def setPanel(panel: Option[GPanel])
-
-  def getPanelTitle: Option[String]
-
-  def setPanelTitle(panelTitle: Option[String])
-
-  def getOverline: Option[String]
-
-  def setOverline(overline: Option[String])
-
-  def getArticleGroup: Option[GArticleGroup]
-
-  def setArticleGroup(articleGroup: Option[GArticleGroup])
-
-  def getBulletList: Option[GBulletList]
-
-  def setBulletList(bulletList: Option[GBulletList])
-}
-
-class GModuleImpl() extends GModule {
   private var panel: Option[GPanel] = None
   private var panelTitle: Option[String] = None
   private var overline: Option[String] = None
   private var articleGroup: Option[GArticleGroup] = None
   private var bulletList: Option[GBulletList] = None
 
-  override def getPanel: Option[GPanel] = panel
+  def getPanel: Option[GPanel] = panel
 
-  override def setPanel(panel: Option[GPanel]): Unit = this.panel = panel
+  def setPanel(panel: Option[GPanel]): Unit = this.panel = panel
 
-  override def getPanelTitle: Option[String] = panelTitle
+  def getPanelTitle: Option[String] = panelTitle
 
-  override def setPanelTitle(panelTitle: Option[String]): Unit = this.panelTitle = panelTitle
+  def setPanelTitle(panelTitle: Option[String]): Unit = this.panelTitle = panelTitle
 
-  override def getOverline: Option[String] = overline
+  def getOverline: Option[String] = overline
 
-  override def setOverline(overline: Option[String]): Unit = this.overline = overline
+  def setOverline(overline: Option[String]): Unit = this.overline = overline
 
-  override def getArticleGroup: Option[GArticleGroup] = articleGroup
+  def getArticleGroup: Option[GArticleGroup] = articleGroup
 
-  override def setArticleGroup(articleGroup: Option[GArticleGroup]): Unit = this.articleGroup = articleGroup
+  def setArticleGroup(articleGroup: Option[GArticleGroup]): Unit = this.articleGroup = articleGroup
 
-  override def getBulletList: Option[GBulletList] = bulletList
+  def getBulletList: Option[GBulletList] = bulletList
 
-  override def setBulletList(bulletList: Option[GBulletList]): Unit = this.bulletList = bulletList
+  def setBulletList(bulletList: Option[GBulletList]): Unit = this.bulletList = bulletList
 
   override def getInterface: Class[_] = classOf[GModule]
 
   override def clone: Object = {
-    val gModule = new GModuleImpl
+    val gModule = new GModule
     gModule.copyFrom(this)
     gModule
   }
@@ -240,7 +214,7 @@ class GModuleGenerator extends ModuleGenerator {
             pubDateElement.addContent(DateParser.formatRFC822(article.published.toDate))
             articleElement.addContent(pubDateElement)
 
-            val rssAtomModule = new RssAtomModuleImpl()
+            val rssAtomModule = new RssAtomModule()
             rssAtomModule.setUpdated(Some(article.updated))
             rssAtomModuleGenerator.generate(rssAtomModule, articleElement)
 

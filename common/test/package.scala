@@ -5,7 +5,7 @@ import java.net.URL
 
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
-import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient, WebResponse}
+import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient}
 import common.Lazy
 import contentapi._
 import model.{ApplicationContext, ApplicationIdentity}

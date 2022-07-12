@@ -1,6 +1,5 @@
 package views
 
-import pa.{LineUpPlayer, Team}
 import common.GuLogging
 import play.twirl.api.Html
 

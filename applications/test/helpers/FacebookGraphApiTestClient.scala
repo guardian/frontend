@@ -6,7 +6,6 @@ import java.net.URLEncoder
 import play.api.libs.ws.{WSClient, WSResponse}
 import recorder.DefaultHttpRecorder
 import services.FacebookGraphApiClient
-import test.WithTestExecutionContext
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration

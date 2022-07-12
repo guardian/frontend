@@ -439,47 +439,7 @@ trait FeatureSwitches {
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 6, 30),
-    exposeClientSide = false,
-  )
-
-  val EmailSignupRecaptcha = Switch(
-    SwitchGroup.Feature,
-    "email-signup-recaptcha",
-    "Enables showing reCAPTCHA when signing up to email newsletters",
-    owners = Seq(Owner.withGithub("georgeblahblah")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2022, 7, 5),
-    exposeClientSide = true,
-  )
-
-  val NewslettersRemoveConfirmationStep = Switch(
-    SwitchGroup.Feature,
-    "newsletters-remove-confirmation-step",
-    "Remove confirmation step when user sign up to a newsletter",
-    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2022, 7, 5),
-    exposeClientSide = false,
-  )
-
-  val ShowNewPrivacyWordingOnEmailSignupEmbeds = Switch(
-    SwitchGroup.Feature,
-    "show-new-privacy-wording-on-email-signup-embeds",
-    "Show new privacy wording on email signup embeds",
-    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2022, 7, 5),
-    exposeClientSide = true,
-  )
-
-  val ValidateEmailSignupRecaptchaTokens = Switch(
-    SwitchGroup.Feature,
-    "validate-email-signup-recaptcha-tokens",
-    "Enables validation of reCAPTCHA tokens on email signup submissions",
-    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2022, 7, 5),
+    sellByDate = LocalDate.of(2022, 7, 25),
     exposeClientSide = false,
   )
 
@@ -507,6 +467,26 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "newsletter-onwards",
     "When ON, we replace the standard related stories onwards container with a dedicated one for Newsletters",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val AutomaticFilters = Switch(
+    SwitchGroup.Feature,
+    "automatic-filters",
+    "When ON, displays automatic filters and corresponding UI changes on business live blogs only",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val KeyEventsCarousel = Switch(
+    SwitchGroup.Feature,
+    "key-events-carousel",
+    "When ON, shows the new key events timeline carousel and hides the old key events timeline",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,

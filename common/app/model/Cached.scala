@@ -2,10 +2,9 @@ package model
 
 import conf.switches.Switches.LongCacheSwitch
 import org.joda.time.DateTime
-import com.github.nscala_time.time.Implicits._
 import play.api.http.Writeable
 import play.api.mvc._
-import scala.math.{max, min}
+import scala.math.max
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 

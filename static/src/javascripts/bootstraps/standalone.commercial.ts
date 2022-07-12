@@ -1,3 +1,17 @@
+/*
+ * This standalone bundle is so called because it “stands alone”,
+ * meaning it is not part of another webpack build process, and
+ * can be imported as a JS <script>.
+ *
+ * See PR https://github.com/guardian/frontend/pull/24058
+ *
+ * The standalone commercial bundle is bundled from source files
+ * here in Frontend, but is served from https://assets.guim.co.uk
+ * in production DCR and Frontend.
+ *
+ * Changes here will be served on DCR & Frontend rendered pages.
+ */
+
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import reportError from '../lib/report-error';
@@ -83,24 +97,6 @@ if (!commercialFeatures.adFree) {
 }
 
 /**
- * Load modules that are specific to `frontend`.
- */
-const loadFrontendBundle = async (): Promise<void> => {
-	if (isDotcomRendering) return;
-
-	const commercialMetrics = await import(
-		/* webpackChunkName: "frontend" */
-		'commercial/commercial-metrics'
-	);
-
-	commercialExtraModules.push(
-		['cm-commercial-metrics', commercialMetrics.init], // In DCR, see App.tsx
-	);
-
-	return;
-};
-
-/**
  * Load modules specific to `dotcom-rendering`.
  * Not sure if this is needed. Currently no separate chunk is created
  * Introduced by @tomrf1
@@ -183,7 +179,6 @@ const bootCommercial = async (): Promise<void> => {
 	};
 
 	try {
-		await loadFrontendBundle();
 		await loadDcrBundle();
 
 		const allModules: Array<Parameters<typeof loadModules>> = [

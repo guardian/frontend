@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(InteractivesIdleLoading, OfferHttp3, KeyEventsCarousel, AutomaticFilters)
+    Set(OfferHttp3, LiveBlogMainMediaPosition)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -20,16 +20,6 @@ object FrontRendering
       participationGroup = Perc0A,
     )
 
-object InteractivesIdleLoading
-    extends Experiment(
-      name = "interactives-idle-loading",
-      description =
-        "Tests the impact of loading interactive embeds on page idle instead of when they become visible in the viewport",
-      owners = Seq(Owner.withGithub("simonbyford")),
-      sellByDate = LocalDate.of(2022, 7, 1),
-      participationGroup = Perc10A,
-    )
-
 object OfferHttp3
     extends Experiment(
       name = "offer-http3",
@@ -39,20 +29,11 @@ object OfferHttp3
       participationGroup = Perc0B,
     )
 
-object KeyEventsCarousel
+object LiveBlogMainMediaPosition
     extends Experiment(
-      name = "key-events-carousel",
-      description = "When ON, live blog key events are displayed in a carousel",
+      name = "live-blog-main-media-position",
+      description = "When ON, main media will be positioned between the kicker and headline on liveblogs",
       owners = Seq(Owner.withGithub("abeddow91")),
-      sellByDate = LocalDate.of(2022, 9, 13),
-      participationGroup = Perc0C,
-    )
-
-object AutomaticFilters
-    extends Experiment(
-      name = "automatic-filters",
-      description = "When ON, tests automatic filters on business live blogs only",
-      owners = Seq(Owner.withGithub("joecowton1")),
-      sellByDate = LocalDate.of(2022, 12, 6),
-      participationGroup = Perc0D,
+      sellByDate = LocalDate.of(2022, 10, 7),
+      participationGroup = Perc50,
     )

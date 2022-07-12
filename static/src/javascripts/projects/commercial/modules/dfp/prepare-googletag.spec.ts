@@ -1,3 +1,4 @@
+import type * as CommercialCore from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,
@@ -13,6 +14,10 @@ import { fillAdvertSlots } from './fill-advert-slots';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert } from './load-advert';
 import { init as prepareGoogletag } from './prepare-googletag';
+
+type MockCommercialCore = {
+	slotSizeMappings: Record<string, unknown>;
+};
 
 const config = _config as {
 	get: (k: string) => string;
@@ -110,6 +115,45 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 		dfpAdvertising: true,
 	},
 }));
+jest.mock('@guardian/commercial-core', (): MockCommercialCore => {
+	const commercialCore: typeof CommercialCore = jest.requireActual(
+		'@guardian/commercial-core',
+	);
+	const { createAdSize } = commercialCore;
+	return {
+		...commercialCore,
+		slotSizeMappings: {
+			'html-slot': {
+				mobile: [Array.from(createAdSize(300, 50))],
+			},
+			'script-slot': {
+				mobile: [
+					Array.from(createAdSize(300, 50)),
+					Array.from(createAdSize(320, 50)),
+				],
+			},
+			'already-labelled': {
+				mobile: [
+					Array.from(createAdSize(300, 50)),
+					Array.from(createAdSize(320, 50)),
+				],
+				tablet: [Array.from(createAdSize(728, 90))],
+			},
+			'dont-label': {
+				mobile: [
+					Array.from(createAdSize(300, 50)),
+					Array.from(createAdSize(320, 50)),
+				],
+				tablet: [Array.from(createAdSize(728, 90))],
+				desktop: [
+					Array.from(createAdSize(728, 90)),
+					Array.from(createAdSize(900, 250)),
+					Array.from(createAdSize(970, 250)),
+				],
+			},
+		},
+	};
+});
 jest.mock('@guardian/libs', () => {
 	return {
 		// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
@@ -508,14 +552,12 @@ describe('DFP', () => {
 			);
 			expect(googleSlot.addService).toHaveBeenCalledWith(pubAds);
 			if (Array.isArray(data[2])) {
-				data[2].forEach(
-					(size: number[] | Array<number[] | number[][]>) => {
-						expect(sizeMapping.addSize).toHaveBeenCalledWith(
-							size[0],
-							size[1],
-						);
-					},
-				);
+				data[2].forEach((size) => {
+					expect(sizeMapping.addSize).toHaveBeenCalledWith(
+						size[0],
+						size[1],
+					);
+				});
 			}
 			expect(googleSlot.defineSizeMapping).toHaveBeenCalledWith(data[2]);
 			expect(googleSlot.setTargeting).toHaveBeenCalledWith(

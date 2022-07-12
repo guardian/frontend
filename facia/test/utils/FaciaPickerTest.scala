@@ -1,14 +1,9 @@
 package utils
 
 import common.facia.{FixtureBuilder, PressedCollectionBuilder}
-import model.PressedPage
-import model.facia.PressedCollection
-import experiments.{ExperimentsDefinition, FrontRendering}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.DoNotDiscover
-import org.mockito.Mockito.when
-import test.TestRequest
 
 @DoNotDiscover class FaciaPickerTest extends AnyFlatSpec with Matchers {
 
