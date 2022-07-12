@@ -5,7 +5,6 @@ import pa.{Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 
 import java.time.ZonedDateTime
-import implicits.Collections
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import test._
@@ -15,7 +14,6 @@ import test._
     with Matchers
     with OptionValues
     with CompetitionTestData
-    with Collections
     with FootballTestData
     with WithTestFootballClient
     with BeforeAndAfterAll

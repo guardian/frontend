@@ -31,7 +31,6 @@ trait FaciaController
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext
-    with implicits.Collections
     with implicits.Requests {
 
   val frontJsonFapi: FrontJsonFapi
