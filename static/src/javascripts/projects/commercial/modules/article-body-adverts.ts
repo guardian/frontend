@@ -54,9 +54,7 @@ const wrapSlotInContainer = (
 ) => {
 	const container = document.createElement('div');
 
-	container.className = `ad-slot-container--article ${
-		options.className ?? ''
-	}`;
+	container.className = `ad-slot-container ${options.className ?? ''}`;
 
 	if (options.sticky) {
 		ad.style.cssText += 'position: sticky; top: 0;';
@@ -217,7 +215,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 							sticky: false,
 							className: isInline1
 								? ''
-								: ' offset-right ad-slot--offset-right',
+								: ' offset-right ad-slot-container--offset-right',
 							enableDebug,
 					  };
 
