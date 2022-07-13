@@ -109,7 +109,7 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 	return fastdom
 		.mutate(() => {
 			if (para.parentNode) {
-				para.parentNode.insertBefore(container, para);
+				para.parentNode.insertBefore(container, para.nextSibling);
 			}
 		})
 		.then(() => {
