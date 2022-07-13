@@ -414,10 +414,14 @@ const getMeasurements = (
 		: [];
 
 	return fastdom.measure((): Measurements => {
-		const bodyDims =
-			rules.body instanceof Element
-				? rules.body.getBoundingClientRect()
-				: undefined;
+		let bodyDistanceToTopOfPage = 0;
+		let bodyHeight = 0;
+		if (rules.body instanceof Element) {
+			const bodyElement = rules.body.getBoundingClientRect();
+			// bodyElement is relative to the viewport, so we need to add scroll position to get the distance
+			bodyDistanceToTopOfPage = bodyElement.top + window.scrollY;
+			bodyHeight = bodyElement.height;
+		}
 		const candidatesWithDims = candidates.map(getDimensions);
 		const contentMetaWithDims =
 			rules.clearContentMeta && contentMeta
@@ -429,9 +433,10 @@ const getMeasurements = (
 			result[selector] = selectedElements.map(getDimensions);
 			return result;
 		}, {});
+
 		return {
-			bodyTop: bodyDims?.top ?? 0,
-			bodyHeight: bodyDims?.height ?? 0,
+			bodyTop: bodyDistanceToTopOfPage,
+			bodyHeight,
 			candidates: candidatesWithDims,
 			contentMeta: contentMetaWithDims,
 			opponents: opponentsWithDims,
