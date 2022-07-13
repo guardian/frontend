@@ -9,7 +9,7 @@ import pa.{FootballMatch, Round}
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, ZonedDateTime}
 
-trait MatchesList extends Football with RichList with implicits.Collections {
+trait MatchesList extends Football with RichList {
 
   val competitions: Seq[Competition]
 
@@ -48,7 +48,7 @@ trait MatchesList extends Football with RichList with implicits.Collections {
   lazy val relevantMatches: List[(FootballMatch, Competition)] = {
     val startDate = date
     val matchDates = allRelevantMatches.map { case (fMatch, _) => fMatch.date.toLocalDate }.distinct
-    val eligibleDates = matchDates.safeDropWhile(dateComesFirstInList(_, startDate)).take(daysToDisplay)
+    val eligibleDates = matchDates.dropWhile(dateComesFirstInList(_, startDate)).take(daysToDisplay)
     allRelevantMatches.filter {
       case (fMatch, _) =>
         eligibleDates.contains(fMatch.date.toLocalDate)
@@ -75,7 +75,7 @@ trait MatchesList extends Football with RichList with implicits.Collections {
     }
 
   lazy val nextPage: Option[String] = {
-    val nextMatchDate = matchDates.safeDropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
+    val nextMatchDate = matchDates.dropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
     nextMatchDate.map(s"$baseUrl/more/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
   }
   lazy val previousPage: Option[String] = {
