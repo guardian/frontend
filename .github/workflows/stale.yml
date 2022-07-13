@@ -2,7 +2,7 @@ name: "Stale PR Handler"
 
 on:
   schedule:
-    - cron: "0 6 MON-THU * *"
+    - cron: "0 6 * * 1-5"
 
 permissions:
   pull-requests: write
