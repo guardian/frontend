@@ -481,6 +481,7 @@ export const _ = {
 
 export {
 	findSpace,
+	defaultOptions as defaultSpacefinderOptions,
 	SpaceError,
 	SpacefinderRules,
 	SpacefinderWriter,

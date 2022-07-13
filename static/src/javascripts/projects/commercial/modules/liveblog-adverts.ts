@@ -1,4 +1,5 @@
 import { createAdSlot } from '@guardian/commercial-core';
+import { getUrlVars } from 'lib/url';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
@@ -8,14 +9,25 @@ import type {
 	SpacefinderRules,
 	SpacefinderWriter,
 } from '../../common/modules/spacefinder';
+import { defaultSpacefinderOptions } from '../../common/modules/spacefinder';
 import { addSlot } from './dfp/add-slot';
 
-const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
-const MAX_ADS = 8; // maximum number of ads to display
+// We do not want ads to load too high up on the screen. We use this
+// multiplier of screen height to decide where we can load ads from.
+const GAP_BETWEEN_TOP_OF_PAGE_AND_HIGHEST_AD_MULTIPLIER = 1.5;
+
+// We do not want ads to load to close together. We use this multiplier
+// of screen height to ensure the minimum gap in which ads can load.
+const SPACE_BETWEEN_ADS_MULTIPLIER = 2;
+
+// maximum number of ads to display
+const MAX_ADS = 8;
 
 let AD_COUNTER = 0;
 let WINDOWHEIGHT: number;
 let firstSlot: HTMLElement | undefined;
+
+const sfdebug = getUrlVars().sfdebug;
 
 const startListening = () => {
 	document.addEventListener('liveblog:blocks-updated', onUpdate);
@@ -38,12 +50,18 @@ const getSpaceFillerRules = (
 ): SpacefinderRules => {
 	let prevSlot: SpacefinderItem | undefined;
 
-	// Only use a slot if it is double the window height from the previous slot.
+	const isEnoughSpaceBetweenSlots = (
+		prevSlot: SpacefinderItem,
+		slot: SpacefinderItem,
+	) =>
+		Math.abs(slot.top - prevSlot.top) >
+		windowHeight * SPACE_BETWEEN_ADS_MULTIPLIER;
+
 	const filterSlot = (slot: SpacefinderItem) => {
 		if (!prevSlot) {
 			prevSlot = slot;
 			return !shouldUpdate;
-		} else if (Math.abs(slot.top - prevSlot.top) > windowHeight * 2) {
+		} else if (isEnoughSpaceBetweenSlots(prevSlot, slot)) {
 			prevSlot = slot;
 			return true;
 		}
@@ -55,7 +73,9 @@ const getSpaceFillerRules = (
 		slotSelector: ' > .block',
 		fromBottom: shouldUpdate,
 		startAt: shouldUpdate ? firstSlot : undefined,
-		absoluteMinAbove: shouldUpdate ? 0 : WINDOWHEIGHT * OFFSET,
+		absoluteMinAbove: shouldUpdate
+			? 0
+			: WINDOWHEIGHT * GAP_BETWEEN_TOP_OF_PAGE_AND_HIGHEST_AD_MULTIPLIER,
 		minAbove: 0,
 		minBelow: 0,
 		clearContentMeta: 0,
@@ -96,8 +116,10 @@ const insertAds: SpacefinderWriter = async (paras) => {
 	await Promise.all(fastdomPromises);
 };
 
-const fill = (rules: SpacefinderRules) =>
-	spaceFiller.fillSpace(rules, insertAds).then(() => {
+const fill = (rules: SpacefinderRules) => {
+	const options = { ...defaultSpacefinderOptions, debug: sfdebug === '1' };
+
+	return spaceFiller.fillSpace(rules, insertAds, options).then(() => {
 		if (AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
 				`${rules.bodySelector} > .ad-slot`,
@@ -112,6 +134,7 @@ const fill = (rules: SpacefinderRules) =>
 			firstSlot = undefined;
 		}
 	});
+};
 
 const onUpdate = () => {
 	stopListening();
