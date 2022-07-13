@@ -14,11 +14,11 @@ import { addSlot } from './dfp/add-slot';
 
 // We do not want ads to load too high up on the screen. We use this
 // multiplier of screen height to decide where we can load ads from.
-const GAP_BETWEEN_TOP_OF_PAGE_AND_HIGHEST_AD_MULTIPLIER = 1.5;
+const MIN_GAP_FROM_PAGE_TOP_MULTIPLIER = 1.5;
 
-// We do not want ads to load to close together. We use this multiplier
+// We do not want ads to load too close together. We use this multiplier
 // of screen height to ensure the minimum gap in which ads can load.
-const SPACE_BETWEEN_ADS_MULTIPLIER = 2;
+const MIN_SPACE_BETWEEN_ADS_MULTIPLIER = 2;
 
 // maximum number of ads to display
 const MAX_ADS = 8;
@@ -55,7 +55,7 @@ const getSpaceFillerRules = (
 		slot: SpacefinderItem,
 	) =>
 		Math.abs(slot.top - prevSlot.top) >
-		windowHeight * SPACE_BETWEEN_ADS_MULTIPLIER;
+		windowHeight * MIN_SPACE_BETWEEN_ADS_MULTIPLIER;
 
 	const filterSlot = (slot: SpacefinderItem) => {
 		if (!prevSlot) {
@@ -75,7 +75,7 @@ const getSpaceFillerRules = (
 		startAt: shouldUpdate ? firstSlot : undefined,
 		absoluteMinAbove: shouldUpdate
 			? 0
-			: WINDOWHEIGHT * GAP_BETWEEN_TOP_OF_PAGE_AND_HIGHEST_AD_MULTIPLIER,
+			: WINDOWHEIGHT * MIN_GAP_FROM_PAGE_TOP_MULTIPLIER,
 		minAbove: 0,
 		minBelow: 0,
 		clearContentMeta: 0,
