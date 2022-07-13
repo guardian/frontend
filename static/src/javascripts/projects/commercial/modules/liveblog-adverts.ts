@@ -6,22 +6,27 @@ import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import type {
 	SpacefinderItem,
+	SpacefinderOptions,
 	SpacefinderRules,
 	SpacefinderWriter,
 } from '../../common/modules/spacefinder';
-import { defaultSpacefinderOptions } from '../../common/modules/spacefinder';
 import { addSlot } from './dfp/add-slot';
 
-// We do not want ads to load too high up on the screen. We use this
-// multiplier of screen height to decide where we can load ads from.
-const MIN_GAP_FROM_PAGE_TOP_MULTIPLIER = 1.5;
-
-// We do not want ads to load too close together. We use this multiplier
-// of screen height to ensure the minimum gap in which ads can load.
-const MIN_SPACE_BETWEEN_ADS_MULTIPLIER = 2;
-
-// maximum number of ads to display
+/**
+ * Maximum number of inline ads to display on the page.
+ */
 const MAX_ADS = 8;
+
+/**
+ * Multiplier of screen height that determines the distance from
+ * the top of the page that we can start placing ads.
+ */
+const PAGE_TOP_MULTIPLIER = 1.5;
+
+/**
+ * Multiplier of screen height that sets the minimum distance that two ads can be placed.
+ */
+const AD_SPACE_MULTIPLIER = 2;
 
 let AD_COUNTER = 0;
 let WINDOWHEIGHT: number;
@@ -53,9 +58,7 @@ const getSpaceFillerRules = (
 	const isEnoughSpaceBetweenSlots = (
 		prevSlot: SpacefinderItem,
 		slot: SpacefinderItem,
-	) =>
-		Math.abs(slot.top - prevSlot.top) >
-		windowHeight * MIN_SPACE_BETWEEN_ADS_MULTIPLIER;
+	) => Math.abs(slot.top - prevSlot.top) > windowHeight * AD_SPACE_MULTIPLIER;
 
 	const filterSlot = (slot: SpacefinderItem) => {
 		if (!prevSlot) {
@@ -73,9 +76,7 @@ const getSpaceFillerRules = (
 		slotSelector: ' > .block',
 		fromBottom: shouldUpdate,
 		startAt: shouldUpdate ? firstSlot : undefined,
-		absoluteMinAbove: shouldUpdate
-			? 0
-			: WINDOWHEIGHT * MIN_GAP_FROM_PAGE_TOP_MULTIPLIER,
+		absoluteMinAbove: shouldUpdate ? 0 : WINDOWHEIGHT * PAGE_TOP_MULTIPLIER,
 		minAbove: 0,
 		minBelow: 0,
 		clearContentMeta: 0,
@@ -117,7 +118,7 @@ const insertAds: SpacefinderWriter = async (paras) => {
 };
 
 const fill = (rules: SpacefinderRules) => {
-	const options = { ...defaultSpacefinderOptions, debug: sfdebug === '1' };
+	const options: SpacefinderOptions = { debug: sfdebug === '1' };
 
 	return spaceFiller.fillSpace(rules, insertAds, options).then(() => {
 		if (AD_COUNTER < MAX_ADS) {

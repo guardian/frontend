@@ -52,9 +52,9 @@ type SpacefinderRules = {
 type SpacefinderWriter = (paras: HTMLElement[]) => Promise<void>;
 
 type SpacefinderOptions = {
-	waitForLinks: boolean;
-	waitForImages: boolean;
-	waitForInteractives: boolean;
+	waitForLinks?: boolean;
+	waitForImages?: boolean;
+	waitForInteractives?: boolean;
 	debug?: boolean;
 };
 
@@ -80,7 +80,7 @@ const query = (selector: string, context?: HTMLElement | Document) => [
 // to be upgraded
 const LOADING_TIMEOUT = 5_000;
 
-const defaultOptions = {
+const defaultOptions: SpacefinderOptions = {
 	waitForImages: true,
 	waitForLinks: true,
 	waitForInteractives: false,
@@ -448,9 +448,10 @@ const getMeasurements = (
 // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
 const findSpace = async (
 	rules: SpacefinderRules,
-	options: SpacefinderOptions = defaultOptions,
+	options?: SpacefinderOptions,
 	exclusions: SpacefinderExclusions = {},
 ): Promise<HTMLElement[]> => {
+	options = { ...defaultOptions, ...options };
 	rules.body =
 		(rules.bodySelector &&
 			document.querySelector<HTMLElement>(rules.bodySelector)) ||
@@ -481,7 +482,6 @@ export const _ = {
 
 export {
 	findSpace,
-	defaultOptions as defaultSpacefinderOptions,
 	SpaceError,
 	SpacefinderRules,
 	SpacefinderWriter,
