@@ -23,11 +23,9 @@ object NewsletterData {
   implicit val newsletterDataWrites = Json.writes[NewsletterData]
 }
 
-// TO DO - the new tag type is not created yet. The functions for parsing Tags
-// may need to change if we cannot have tags in the requested format
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
-  private val EMBED_TAG_PREFIX = "include-sign-up/"
-  private val EMBED_TAG_TYPE = "newsletter"
+  private val EMBED_TAG_PREFIX = "campaign/callout/"
+  private val EMBED_TAG_TYPE = "campaign"
 
   private def findNewsletterTag(tags: List[Tag]) = {
     tags.find(t => t.properties.tagType.equals(EMBED_TAG_TYPE) && t.properties.id.startsWith(EMBED_TAG_PREFIX))
