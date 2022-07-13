@@ -127,7 +127,7 @@ class ArticleController(
           filterKeyEvents = false,
           false,
           newsletter = newsletter,
-          topicResult = None
+          topicResult = None,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
