@@ -8,6 +8,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test._
+import services.NewsletterService
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class ArticleControllerTest
     extends AnyFlatSpec
@@ -28,6 +30,7 @@ import play.api.test._
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new DCRFake(),
+    new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
   )
 
   "Article Controller" should "200 when content type is article" in {
