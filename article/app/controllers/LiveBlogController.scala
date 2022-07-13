@@ -74,7 +74,6 @@ class LiveBlogController(
             filter,
             topicResult,
             availableTopics,
-            selectedTopics = topics,
           ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
@@ -89,7 +88,6 @@ class LiveBlogController(
                 filter,
                 Some(value),
                 availableTopics,
-                selectedTopics = topics,
               ) // no page param
             case None =>
               renderWithRange(
@@ -98,7 +96,6 @@ class LiveBlogController(
                 filter,
                 None,
                 availableTopics,
-                selectedTopics = topics,
               ) // no page param
           }
         }
@@ -124,9 +121,7 @@ class LiveBlogController(
       mapModel(path, range, filter, topicResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(
-            renderGuuiJson(blog, blocks, filter, availableTopics, selectedTopics = topics, topicResult = topicResult),
-          )
+          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult))
         case (blog: LiveBlogPage, blocks) =>
           getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty), topicResult)
         case (minute: MinutePage, _) =>
@@ -145,7 +140,6 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
       availableTopics: Option[Seq[Topic]],
-      selectedTopics: Option[String],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -186,8 +180,7 @@ class LiveBlogController(
                 filterKeyEvents,
                 request.forceLive,
                 availableTopics,
-                selectedTopics,
-                None,
+                newsletter = None,
                 topicResult,
               )
             } else {
@@ -195,7 +188,7 @@ class LiveBlogController(
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, None, filterKeyEvents)
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, newsletter = None, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case _ => Future.successful(NotFound)
@@ -346,7 +339,6 @@ class LiveBlogController(
       blocks: Blocks,
       filterKeyEvents: Boolean,
       availableTopics: Option[Seq[Topic]],
-      selectedTopics: Option[String],
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
@@ -361,8 +353,7 @@ class LiveBlogController(
         filterKeyEvents,
         request.forceLive,
         availableTopics,
-        selectedTopics,
-        newsletter = newsletter,
+        newsletter,
         topicResult,
       )
     val json = DotcomRenderingDataModel.toJson(model)

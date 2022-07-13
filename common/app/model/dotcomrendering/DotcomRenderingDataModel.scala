@@ -254,7 +254,6 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean,
       forceLive: Boolean,
       availableTopics: Option[Seq[Topic]] = None,
-      selectedTopics: Option[String] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
@@ -311,7 +310,6 @@ object DotcomRenderingDataModel {
       mostRecentBlockId,
       forceLive,
       availableTopics,
-      selectedTopics,
       newsletter,
       topicResult,
     )
@@ -332,7 +330,6 @@ object DotcomRenderingDataModel {
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]],
-      selectedTopics: Option[String] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {

@@ -155,7 +155,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]] = None,
-      selectedTopics: Option[String] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Future[Result] = {
@@ -169,8 +168,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           filterKeyEvents,
           forceLive,
           availableTopics,
-          selectedTopics,
-          newsletter = newsletter,
+          newsletter,
           topicResult,
         )
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter)
