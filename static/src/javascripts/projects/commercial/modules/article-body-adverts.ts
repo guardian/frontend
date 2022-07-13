@@ -178,9 +178,11 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		const includeStickyContainers =
 			includeContainer &&
 			// Check if query parameter required for qualitative testing has been provided
-			(getUrlVars().multiSticky ||
+			!!(
+				getUrlVars().multiSticky ??
 				// Otherwise check for participation in AB test
-				isInVariantSynchronous(multiStickyRightAds, 'variant'));
+				isInVariantSynchronous(multiStickyRightAds, 'variant')
+			);
 
 		if (includeStickyContainers) {
 			const stickyContainerHeights = await computeStickyHeights(
@@ -205,19 +207,22 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					para.style.cssText += 'border: thick solid green;';
 				}
 
-				const containerOptions = includeStickyContainers
-					? {
-							sticky: true,
-							className: getStickyContainerClassname(i),
-							enableDebug,
-					  }
-					: {
-							sticky: false,
-							className: isInline1
-								? ''
-								: ' offset-right ad-slot-container--offset-right',
-							enableDebug,
-					  };
+				let containerClasses = '';
+
+				if (includeStickyContainers) {
+					containerClasses += getStickyContainerClassname(i);
+				}
+
+				if (!isInline1) {
+					containerClasses +=
+						' offset-right ad-slot-container--offset-right';
+				}
+
+				const containerOptions = {
+					sticky: includeStickyContainers,
+					className: containerClasses,
+					enableDebug,
+				};
 
 				return insertAdAtPara(
 					para,
