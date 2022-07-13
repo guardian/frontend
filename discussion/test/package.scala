@@ -8,7 +8,6 @@ import play.api.libs.ws.WSClient
 import java.io.File
 import scala.concurrent.duration._
 import discussion.api.DiscussionApiLike
-import org.scalatestplus.play.PortNumber
 
 import scala.concurrent.ExecutionContext
 

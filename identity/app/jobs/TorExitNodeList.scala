@@ -2,8 +2,7 @@ package jobs
 
 import common.{Box, GuLogging}
 
-import scala.collection.JavaConverters._
-import java.net.{InetAddress, URL}
+import java.net.InetAddress
 
 import scala.io.Source
 
@@ -12,7 +11,7 @@ object TorExitNodeList extends GuLogging {
   private val torExitNodeAgent = Box[Set[String]](Set.empty)
   private val torNodeListUrl = "https://check.torproject.org/cgi-bin/TorBulkExitList.py"
 
-  def run() {
+  def run(): Unit = {
     log.info("Updating tor list for current list for %s".format("profile.theguardian.com"))
     val addresses = InetAddress.getAllByName("profile.theguardian.com")
 

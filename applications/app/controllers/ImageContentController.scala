@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Direction, FollowingSearchQuery, SearchQuery, SearchQueryBase}
+import com.gu.contentapi.client.model.{Direction, FollowingSearchQuery, SearchQuery}
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches

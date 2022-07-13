@@ -25,6 +25,9 @@ case class NewsletterResponse(
 
 object NewsletterResponse {
   implicit val emailEmbedReads = Json.reads[EmailEmbed]
+  implicit val emailEmbedWrites = Json.writes[EmailEmbed]
   implicit val newsletterIllustrationReads = Json.reads[NewsletterIllustration]
+  implicit val newsletterIllustrationWrites = Json.writes[NewsletterIllustration]
   implicit val newsletterResponseReads = Json.reads[NewsletterResponse]
+  implicit val newsletterResponseWrites = Json.writes[NewsletterResponse]
 }

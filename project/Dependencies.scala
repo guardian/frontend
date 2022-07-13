@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.254"
   val awsVersion = "1.12.205"
-  val capiVersion = "19.0.0"
-  val faciaVersion = "4.0.0"
+  val capiVersion = "19.0.3"
+  val faciaVersion = "4.0.1"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -76,7 +76,6 @@ object Dependencies {
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
-  val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"

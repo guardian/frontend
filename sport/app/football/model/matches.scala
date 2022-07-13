@@ -7,7 +7,7 @@ import model.Competition
 import pa.{FootballMatch, Round}
 
 import java.time.format.DateTimeFormatter
-import java.time.{LocalDate, ZoneId, ZonedDateTime}
+import java.time.{LocalDate, ZonedDateTime}
 
 trait MatchesList extends Football with RichList with implicits.Collections {
 

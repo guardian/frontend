@@ -1,6 +1,5 @@
 import type { AdSizeString } from '@guardian/commercial-core';
 import { adSizes } from '@guardian/commercial-core';
-import config from '../../../../lib/config';
 import type { Advert } from './Advert';
 
 const outstreamSizes = [
@@ -34,7 +33,7 @@ export const shouldRefresh = (
 	const sizeString = advert.size?.toString();
 
 	// Fluid adverts should not refresh
-	const isFluid = sizeString === '0,0';
+	const isFluid = sizeString === 'fluid';
 	if (isFluid) return false;
 
 	// Outstream adverts should not refresh
@@ -49,8 +48,12 @@ export const shouldRefresh = (
 	if (isNonRefreshableLineItem) return false;
 
 	// If we have a pageskin then don't refresh
-	if (config.get('page.hasPageSkin')) return false;
+	if (window.guardian.config.page.hasPageSkin) return false;
 
 	// If none of the other conditions are met then the advert should refresh
 	return true;
+};
+
+export const _ = {
+	outstreamSizes,
 };

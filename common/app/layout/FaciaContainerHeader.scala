@@ -2,8 +2,6 @@ package layout
 
 import common.Pagination
 import model.{ApplicationContext, Page, Section, Tag}
-import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
 import services.ConfigAgent
 
 sealed trait FaciaContainerHeader

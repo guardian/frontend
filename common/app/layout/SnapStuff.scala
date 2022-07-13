@@ -3,8 +3,6 @@ package layout
 import model.pressed._
 import views.support._
 
-import scala.Function.const
-
 case class SnapStuff(
     dataAttributes: String,
     snapCss: Option[String],

@@ -5,7 +5,6 @@ import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{ExecutionContext, Future}
-import scala.concurrent.duration._
 
 class OnwardJourneyLifecycle(
     appLifecycle: ApplicationLifecycle,

@@ -6,23 +6,14 @@ import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
 import services.{GoogleBotMetric, RedirectService}
 import java.net.URLDecoder
-import java.util.concurrent.atomic.AtomicReference
 import javax.ws.rs.core.UriBuilder
 
-import conf.Configuration
-import experiments._
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
-import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
-import play.twirl.api.Html
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
-import java.lang.System.currentTimeMillis
-
-import metrics.TimingMetric
+import scala.concurrent.Future
 
 class ArchiveController(redirects: RedirectService, val controllerComponents: ControllerComponents, ws: WSClient)
     extends BaseController

@@ -2,7 +2,6 @@ package test
 
 import java.util.{List => JList}
 import org.scalatest.Suites
-import org.scalatestplus.play.PortNumber
 import services.{FacebookGraphApiTest, IndexPageTest, InteractivePickerTest, NewspaperControllerTest}
 
 import collection.JavaConverters._

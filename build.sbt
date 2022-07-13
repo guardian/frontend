@@ -124,7 +124,6 @@ val admin = application("admin")
       awsElasticloadbalancing,
       awsSes,
       scalaUri,
-      playIteratees,
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",

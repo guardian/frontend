@@ -81,22 +81,6 @@ describe('enableLazyLoad', () => {
 		});
 	});
 
-	it('should create a 0% observer if lazyLoadObserve is true and not in control of commercialEndOfQuarter2Test and in variant-1 of commercialLazyLoadMarginReloaded', () => {
-		// Mock being in variant / not in test
-		(isInVariantSynchronous as jest.Mock)
-			.mockReturnValueOnce(false)
-			.mockReturnValueOnce(false)
-			.mockReturnValueOnce(true);
-		dfpEnv.lazyLoadObserve = true;
-		enableLazyLoad(testAdvert as unknown as Advert);
-		expect(loadAdvert).not.toHaveBeenCalled();
-		expect(
-			window.IntersectionObserver as jest.Mock,
-		).toHaveBeenNthCalledWith(1, expect.anything(), {
-			rootMargin: '0% 0px',
-		});
-	});
-
 	it('should still display the adverts if lazyLoadObserve is false', () => {
 		dfpEnv.lazyLoadObserve = false;
 		(getAdvertById as jest.Mock).mockReturnValue(testAdvert);

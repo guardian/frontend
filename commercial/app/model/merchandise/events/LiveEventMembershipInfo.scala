@@ -1,6 +1,5 @@
 package commercial.model.merchandise.events
 
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
 case class LiveEventMembershipInfo(id: String, url: String, mainImageUrl: String)

@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(OfferHttp3, KeyEventsCarousel)
+    Set(OfferHttp3, LiveBlogMainMediaPosition)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -29,11 +29,11 @@ object OfferHttp3
       participationGroup = Perc0B,
     )
 
-object KeyEventsCarousel
+object LiveBlogMainMediaPosition
     extends Experiment(
-      name = "key-events-carousel",
-      description = "When ON, live blog key events are displayed in a carousel",
+      name = "live-blog-main-media-position",
+      description = "When ON, main media will be positioned between the kicker and headline on liveblogs",
       owners = Seq(Owner.withGithub("abeddow91")),
-      sellByDate = LocalDate.of(2022, 9, 13),
-      participationGroup = Perc0C,
+      sellByDate = LocalDate.of(2022, 10, 7),
+      participationGroup = Perc50,
     )

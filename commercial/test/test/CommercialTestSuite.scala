@@ -3,7 +3,6 @@ package commercial.test
 import commercial.model.capi.LookupTest
 import commercial.model.merchandise.{books, events, jobs}
 import org.scalatest.Suites
-import org.scalatestplus.play.PortNumber
 import test.SingleServerSuite
 
 class CommercialTestSuite

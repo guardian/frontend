@@ -3,7 +3,6 @@ package common
 import java.util.concurrent.atomic.AtomicReference
 
 import scala.concurrent.Future
-import scala.util.{Try, Success, Failure}
 
 abstract class Box[T] {
   def get(): T

@@ -2,7 +2,7 @@ import { articles, liveblogs } from '../fixtures/pages';
 
 describe('right slot on pages', () => {
 	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
-		it(`Test ${path} has right slot and iframe`, () => {
+		it(`Test ${path} has correct slot and iframe`, () => {
 			// width has to be > 1300px in order for the right column to appear on liveblogs
 			cy.viewport(1301, 1000);
 

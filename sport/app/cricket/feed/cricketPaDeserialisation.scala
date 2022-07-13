@@ -4,12 +4,10 @@ import common.Chronos
 
 import xml.{NodeSeq, XML}
 import scala.language.postfixOps
-import java.time
-import java.text.SimpleDateFormat
 import cricketModel._
 
-import java.time.{LocalDate, LocalDateTime, ZoneId}
-import java.util.{Date, TimeZone}
+import java.time.LocalDateTime
+import java.util.TimeZone
 
 object Parser {
 

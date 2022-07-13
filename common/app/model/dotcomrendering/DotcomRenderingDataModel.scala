@@ -3,7 +3,7 @@ package model.dotcomrendering
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
-import services.newsletters.model.NewsletterResponse
+import services.NewsletterData
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Chronos, Edition, Localisation, RichRequestHeader}
@@ -22,6 +22,7 @@ import model.{
   LiveBlogPage,
   PageWithStoryPackage,
   Topic,
+  TopicResult,
 }
 import navigation._
 import play.api.libs.json._
@@ -39,7 +40,7 @@ case class DotcomRenderingDataModel(
     mainMediaElements: List[PageElement],
     main: String,
     availableTopics: Option[Seq[Topic]],
-    selectedTopics: Option[String],
+    selectedTopics: Option[Seq[Topic]],
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
@@ -93,6 +94,7 @@ case class DotcomRenderingDataModel(
     matchUrl: Option[String], // Optional url used for match data
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
+    newsletterToEmbed: Option[NewsletterData],
 )
 
 object DotcomRenderingDataModel {
@@ -163,6 +165,7 @@ object DotcomRenderingDataModel {
         "matchUrl" -> model.matchUrl,
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
+        "newsletterToEmbed" -> model.newsletterToEmbed,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -196,6 +199,8 @@ object DotcomRenderingDataModel {
       pinnedPost = None,
       keyEvents = Nil,
       availableTopics = None,
+      newsletter = None,
+      topicResult = None,
     )
   }
 
@@ -204,7 +209,7 @@ object DotcomRenderingDataModel {
       blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
-      newsletter: Option[NewsletterResponse],
+      newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = page.article,
@@ -224,6 +229,8 @@ object DotcomRenderingDataModel {
       pinnedPost = None,
       keyEvents = Nil,
       availableTopics = None,
+      newsletter = newsletter,
+      topicResult = None,
     )
   }
 
@@ -247,7 +254,8 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean,
       forceLive: Boolean,
       availableTopics: Option[Seq[Topic]] = None,
-      selectedTopics: Option[String] = None,
+      newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -302,7 +310,8 @@ object DotcomRenderingDataModel {
       mostRecentBlockId,
       forceLive,
       availableTopics,
-      selectedTopics,
+      newsletter,
+      topicResult,
     )
   }
 
@@ -321,7 +330,8 @@ object DotcomRenderingDataModel {
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]],
-      selectedTopics: Option[String] = None,
+      newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -425,6 +435,8 @@ object DotcomRenderingDataModel {
 
     val matchData = makeMatchData(page)
 
+    val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
@@ -488,6 +500,7 @@ object DotcomRenderingDataModel {
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
+      newsletterToEmbed = newsletter,
     )
   }
 }

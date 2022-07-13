@@ -5,7 +5,7 @@ import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils, PageType}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.{ContentType, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
@@ -119,7 +119,16 @@ class ArticleController(
       case AmpFormat if isAmpSupported =>
         remoteRenderer.getAMPArticle(ws, article, blocks, pageType, newsletter)
       case HtmlFormat | AmpFormat if tier == RemoteRender =>
-        remoteRenderer.getArticle(ws, article, blocks, pageType, filterKeyEvents = false, false, None, None, newsletter)
+        remoteRenderer.getArticle(
+          ws,
+          article,
+          blocks,
+          pageType,
+          filterKeyEvents = false,
+          false,
+          newsletter = newsletter,
+          topicResult = None
+        )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }

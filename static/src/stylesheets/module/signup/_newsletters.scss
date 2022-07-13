@@ -288,7 +288,7 @@
         align-items: center;
     }
 
-    .signup-confirmation--success {
+    .signup-confirmation--heading {
         @include fs-textSans(3);
         margin-bottom: 0;
         font-weight: 700;
@@ -296,7 +296,7 @@
         display: inline;
     }
 
-    .signup-confirmation--success-description {
+    .signup-confirmation--description {
         @include fs-textSans(3);
         color: $brightness-7;
         display: inline;

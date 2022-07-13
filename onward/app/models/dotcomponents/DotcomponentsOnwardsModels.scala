@@ -1,7 +1,6 @@
 package models.dotcomponents
 
-import com.gu.contentapi.client.utils.DesignType
-import model.{ContentFormat, DotcomContentType, Pillar, ImageAsset}
+import model.{ContentFormat, DotcomContentType, ImageAsset}
 import play.api.libs.json.Json
 
 // duplicated in dotcomponentsdatamodel

@@ -38,10 +38,20 @@
                 <div class="signup-confirmation is-hidden js-signup-confirmation">
                     <div class="signup-confirmation__success-headline-container">
                         @fragments.inlineSvg("envelope", "icon")
-                        <h3 class="signup-confirmation--success">@Html(emailListing.emailEmbed.successHeadline)</h3>
+                        <h3 class="signup-confirmation--heading">@Html(emailListing.emailEmbed.successHeadline)</h3>
                     </div>
                     <div class="newsletter-card__content">
-                        <p class="signup-confirmation--success-description">@Html(emailListing.emailEmbed.successDescription)</p>
+                        <p class="signup-confirmation--description">@Html(emailListing.emailEmbed.successDescription)</p>
+                    </div>
+                </div>
+
+                <div class="signup-confirmation is-hidden js-signup-fail-message">
+                    <div class="signup-confirmation__success-headline-container">
+                        @fragments.inlineSvg("cross", "icon")
+                        <h3 class="signup-confirmation--heading">Sign up failed</h3>
+                    </div>
+                    <div class="newsletter-card__content">
+                        <p class="signup-confirmation--description">Please try again or contact <a href="mailto:customer.help@@theguardian.com" target="_blank">customer.help@@theguardian.com</a></p>
                     </div>
                 </div>
 

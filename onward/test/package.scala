@@ -1,7 +1,6 @@
 package test
 
 import org.scalatest.Suites
-import org.scalatestplus.play.PortNumber
 
 class OnwardTestSuite
     extends Suites(

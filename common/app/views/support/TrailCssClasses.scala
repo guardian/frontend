@@ -1,6 +1,5 @@
 package views.support
 
-import model.Content
 import model.pressed.{CardStyle, DeadBlog, PressedContent}
 
 object TrailCssClasses {

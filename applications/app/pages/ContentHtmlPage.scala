@@ -4,7 +4,7 @@ import common.Edition
 import controllers.{ImageContentPage, MediaPage, QuizAnswersPage, TodayNewspaper}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
-import model.{ApplicationContext, Audio, AudioAsset, Page}
+import model.{ApplicationContext, Audio, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
@@ -16,7 +16,6 @@ import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.{newspaperContent, quizAnswerContent}
 import html.HtmlPageHelpers.ContentCSSFile
 import conf.switches.Switches.WeAreHiring
-import views.html.stacked
 
 object ContentHtmlPage extends HtmlPage[Page] {
 

@@ -17,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
-import services.CAPILookup
+import services.{CAPILookup, NewsletterService}
 import services.dotcomponents.DotcomponentsLogger
 import topics.TopicService
 import views.support.RenderOtherStatus
@@ -30,6 +30,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    newsletterService: NewsletterService,
     topicService: TopicService,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -73,7 +74,6 @@ class LiveBlogController(
             filter,
             topicResult,
             availableTopics,
-            selectedTopics = topics,
           ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
@@ -88,7 +88,6 @@ class LiveBlogController(
                 filter,
                 Some(value),
                 availableTopics,
-                selectedTopics = topics,
               ) // no page param
             case None =>
               renderWithRange(
@@ -97,7 +96,6 @@ class LiveBlogController(
                 filter,
                 None,
                 availableTopics,
-                selectedTopics = topics,
               ) // no page param
           }
         }
@@ -123,7 +121,7 @@ class LiveBlogController(
       mapModel(path, range, filter, topicResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, selectedTopics = topics))
+          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult))
         case (blog: LiveBlogPage, blocks) =>
           getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty), topicResult)
         case (minute: MinutePage, _) =>
@@ -142,7 +140,6 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
       availableTopics: Option[Seq[Topic]],
-      selectedTopics: Option[String],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -183,15 +180,15 @@ class LiveBlogController(
                 filterKeyEvents,
                 request.forceLive,
                 availableTopics,
-                selectedTopics,
-                None,
+                newsletter = None,
+                topicResult,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, None, filterKeyEvents)
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, newsletter = None, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case _ => Future.successful(NotFound)
@@ -250,7 +247,7 @@ class LiveBlogController(
       lastUpdateBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
-  ): Seq[BodyBlock] = {
+  ): (Option[BodyBlock], Seq[BodyBlock]) = {
     val requestedBlocks = page.article.fields.blocks.toSeq.flatMap {
       _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
     }
@@ -259,12 +256,14 @@ class LiveBlogController(
       block.id != lastUpdateBlockId.lastUpdate
     }
 
-    if (filterKeyEvents) {
+    val filteredBlocks = if (filterKeyEvents) {
       latestBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
     } else if (topicResult.isDefined) {
       latestBlocks.filter(block => topicResult.get.blocks.contains(block.id))
     } else latestBlocks
 
+    // the last block is picked from the unfiltered list
+    (latestBlocks.headOption, filteredBlocks)
   }
 
   private[this] def getNewBlocks(
@@ -303,7 +302,7 @@ class LiveBlogController(
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Future[Result] = {
-    val newBlocks = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents, topicResult)
+    val (newestBlock, newBlocks) = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents, topicResult)
     val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents, topicResult)
 
     val timelineHtml = views.html.liveblog.keyEvents(
@@ -327,7 +326,7 @@ class LiveBlogController(
       val livePageJson = isLivePage.filter(_ == true).map { _ =>
         "html" -> blocksHtml
       }
-      val mostRecent = newBlocks.headOption.map { block =>
+      val mostRecent = newestBlock.map { block =>
         "mostRecentBlockId" -> s"block-${block.id}"
       }
 
@@ -340,9 +339,11 @@ class LiveBlogController(
       blocks: Blocks,
       filterKeyEvents: Boolean,
       availableTopics: Option[Seq[Topic]],
-      selectedTopics: Option[String],
+      topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
+    val newsletter = newsletterService.getNewsletterForLiveBlog(blog)
+
     val model =
       DotcomRenderingDataModel.forLiveblog(
         blog,
@@ -352,7 +353,8 @@ class LiveBlogController(
         filterKeyEvents,
         request.forceLive,
         availableTopics,
-        selectedTopics,
+        newsletter,
+        topicResult,
       )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")

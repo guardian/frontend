@@ -1,0 +1,31 @@
+name: "Stale PR Handler"
+
+on:
+  schedule:
+    - cron: "0 6 MON-THU * *"
+
+permissions:
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v5
+        id: stale
+        # Read about options here: https://github.com/actions/stale#all-options
+        with:
+          # never automatically mark issues as stale
+          days-before-issue-stale: -1
+          
+          days-before-stale: 30
+          stale-pr-message: >
+            "This PR is stale because it has been open 30 days with no activity.
+            Unless a comment is added or the “stale” label removed, this will be closed in 3 days"
+          
+          days-before-close: 3
+          close-pr-message: 'This PR was closed because it has been stalled for 3 days with no activity.'
+          
+          delete-branch: true
+          
+          exempt-pr-labels: "dependencies"

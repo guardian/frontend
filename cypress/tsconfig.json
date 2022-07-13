@@ -11,8 +11,9 @@
     "strict": true,
     "paths": {
       "common/*": ["../static/src/javascripts/projects/common/*"],
-      "lib/*": ["../static/src/javascripts/lib/*"]
+      "lib/*": ["../static/src/javascripts/lib/*"],
+      "types/*": ["../static/src/javascripts/types/*"]
     }
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../static/src/javascripts/types/global.d.ts"]
 }

@@ -11,7 +11,7 @@ import play.twirl.api.Html
 import slices.{Fixed, FixedContainers}
 import common.Seqs._
 
-import java.time.{LocalDate, ZoneId}
+import java.time.LocalDate
 import football.views.html.matchList.matchesComponent
 import football.views.html.tablesList.tablesComponent
 import implicits.Requests._
