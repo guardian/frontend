@@ -10,6 +10,7 @@ import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
+  DotcomCardsRenderingDataModel,
   DotcomFrontsRenderingDataModel,
   DotcomRenderingDataModel,
   PageType,
@@ -20,11 +21,14 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   NoCache,
+  Page,
   PageWithStoryPackage,
   PressedPage,
   Topic,
   TopicResult,
 }
+import model.pressed.PressedContent
+import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -200,6 +204,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)
+  }
+
+  def getCards(
+      ws: WSClient,
+      cards: List[PressedContent],
+      startIndex: Int,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomCardsRenderingDataModel(cards, startIndex)
+
+    val json = DotcomCardsRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Cards", CacheTime.Facia)
   }
 
   def getInteractive(
