@@ -375,10 +375,12 @@ trait FaciaController
             ) ++ matchedCollection.backfill.takeRight(matchedCollection.backfill.length - liteBackfillLength)
             val startIndex = liteCuratedLength + liteBackfillLength
 
+            val config = matchedCollection.config
+
             // TODO we also need to handle the case where this doesn't work
             //  - Are there importantly different failure cases to handle, or can we return a generic fallback response,
             //    given that DCR doesn't really do anything with the response in the case of failure?)
-            remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex)
+            remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex, config = config)
 
           case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
         }

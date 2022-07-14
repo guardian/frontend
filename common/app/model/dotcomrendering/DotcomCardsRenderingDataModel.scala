@@ -1,9 +1,9 @@
 package model.dotcomrendering
 
-import model.pressed.PressedContent
+import model.pressed.{CollectionConfig, PressedContent}
 import play.api.libs.json.Json
 
-case class DotcomCardsRenderingDataModel(cards: List[PressedContent], startIndex: Int)
+case class DotcomCardsRenderingDataModel(cards: List[PressedContent], startIndex: Int, config: CollectionConfig)
 
 object DotcomCardsRenderingDataModel {
   implicit val writes = Json.writes[DotcomCardsRenderingDataModel]

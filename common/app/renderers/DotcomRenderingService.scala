@@ -27,7 +27,7 @@ import model.{
   Topic,
   TopicResult,
 }
-import model.pressed.PressedContent
+import model.pressed.{CollectionConfig, PressedContent}
 import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -210,8 +210,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       cards: List[PressedContent],
       startIndex: Int,
+      config: CollectionConfig,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomCardsRenderingDataModel(cards, startIndex)
+    val dataModel = DotcomCardsRenderingDataModel(cards, startIndex, config)
 
     val json = DotcomCardsRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Cards", CacheTime.Facia)

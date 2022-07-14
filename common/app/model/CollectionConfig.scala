@@ -1,7 +1,8 @@
 package model.pressed
 
 import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson, CollectionPlatform, Metadata}
+import model.PressedCollectionFormat
 
 final case class CollectionConfig(
     displayName: Option[String],
@@ -25,6 +26,8 @@ final case class CollectionConfig(
 )
 
 object CollectionConfig {
+  implicit val collectionConfigFormat = PressedCollectionFormat.collectionConfigFormat
+
   def make(config: fapi.CollectionConfig): CollectionConfig = {
     CollectionConfig(
       displayName = config.displayName,
