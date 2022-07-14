@@ -41,7 +41,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
       newsletterName = getNewsletterName(tag)
       newsletterEither = newsletterSignupAgent.getNewsletterByName(newsletterName)
       newsletter <- newsletterEither match {
-        case Left(value)  => None
+        case Left(_)  => None
         case Right(value) => value
       }
     } yield {
@@ -50,7 +50,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   }
 
   private def convertNewsletterResponseToData(response: NewsletterResponse): NewsletterData = {
-    new NewsletterData(
+    NewsletterData(
       response.identityName,
       response.name,
       response.theme,
@@ -71,7 +71,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     if (response.isEmpty || !shouldInclude(response.get)) {
       return None
     }
-    Option.apply(convertNewsletterResponseToData(response.get))
+    Option(convertNewsletterResponseToData(response.get))
   }
 
   def getNewsletterForLiveBlog(blogPage: LiveBlogPage): Option[NewsletterData] = {
@@ -79,6 +79,6 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     if (response.isEmpty || !shouldInclude(response.get)) {
       return None
     }
-    Option.apply(convertNewsletterResponseToData(response.get))
+    Option(convertNewsletterResponseToData(response.get))
   }
 }
