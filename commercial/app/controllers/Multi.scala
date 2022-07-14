@@ -18,7 +18,6 @@ class Multi(
     jobsAgent: JobsAgent,
     val controllerComponents: ControllerComponents,
 ) extends BaseController
-    with implicits.Collections
     with implicits.Requests {
 
   private def multiSample(

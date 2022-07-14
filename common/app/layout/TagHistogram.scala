@@ -1,6 +1,5 @@
 package layout
 
-import implicits.Collections
 import model.Trail
 import model.pressed.PressedContent
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
@@ -13,7 +12,7 @@ case class TagHistogram(frequencyById: Map[String, Int], numberOfItems: Int) {
       frequencyById.get(id) map { _.toDouble / numberOfItems } getOrElse 0d
 }
 
-object TagHistogram extends Collections {
+object TagHistogram {
   def fromTrails(trails: Seq[Trail]): TagHistogram =
     TagHistogram(
       trails.foldLeft(Map.empty[String, Int]) {

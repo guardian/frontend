@@ -48,6 +48,7 @@ case class DotcomRenderingDataModel(
     blocks: List[Block],
     pagination: Option[Pagination],
     author: Author,
+    byline: Option[String],
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
     webPublicationSecondaryDateDisplay: String,
@@ -119,6 +120,7 @@ object DotcomRenderingDataModel {
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
         "author" -> model.author,
+        "byline" -> model.byline,
         "webPublicationDate" -> model.webPublicationDate,
         "webPublicationDateDeprecated" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
@@ -339,6 +341,7 @@ object DotcomRenderingDataModel {
     val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
     val isPaidContent = content.metadata.designType.contains(AdvertisementFeature)
 
+    /** @deprecated – Use byline instead */
     val author: Author = Author(
       byline = content.trail.byline,
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
@@ -442,6 +445,7 @@ object DotcomRenderingDataModel {
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
       blocks = bodyBlocksDCR,
+      byline = content.trail.byline,
       commercialProperties = commercial.editionCommercialProperties,
       config = combinedConfig,
       contentType = content.metadata.contentType.map(_.name).getOrElse(""),

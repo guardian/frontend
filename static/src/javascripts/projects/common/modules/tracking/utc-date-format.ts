@@ -27,7 +27,7 @@ const to2Digits = (v: number): string => toNDigits(v, 2);
 export const formatTimestampToUTC = (inputDate: Date): string => {
 	const utc = {
 		year: inputDate.getUTCFullYear(),
-		month: inputDate.getUTCMonth(),
+		month: inputDate.getUTCMonth() + 1,
 		date: inputDate.getUTCDate(),
 		hours: inputDate.getUTCHours(),
 		minutes: inputDate.getUTCMinutes(),
