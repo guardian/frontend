@@ -69,6 +69,9 @@ type PbjsConfig = {
 	criteo?: {
 		fastBidVersion: 'latest' | 'none' | `${number}`;
 	};
+	improvedigital?: {
+		usePrebidSizes?: boolean;
+	};
 };
 
 type PbjsEvent = 'bidWon';
@@ -334,8 +337,6 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		});
 	}
 
-	window.pbjs.setConfig(pbjsConfig);
-
 	if (config.get<boolean>('switches.prebidAnalytics', false)) {
 		window.pbjs.enableAnalytics([
 			{
@@ -383,7 +384,13 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			],
 			suppressEmptyKeys: true,
 		};
+
+		pbjsConfig.improvedigital = {
+			usePrebidSizes: true,
+		};
 	}
+
+	window.pbjs.setConfig(pbjsConfig);
 
 	// Adjust slot size when prebid ad loads
 	window.pbjs.onEvent('bidWon', (data) => {
