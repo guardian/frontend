@@ -356,11 +356,11 @@ trait FaciaController
         frontJsonFapi.get(path, fullDCRRequestType).flatMap {
           case Some(pressedPage) =>
             val matchedCollection = pressedPage.collections.find(_.id == collectionId)
-
-            // TODO: length is Option because not all types of pressedCollection have the property, but
-            //  pressedCollections coming from *DCR* pressedPages *should* have the length prop. If they don't
-            //  then something has gone wrong. How should we surface this? (Default value of 0 avoids a crash
-            //  but it covers over the bug.)
+            // nb: length is an Option because not all types of pressedCollection have the property, but
+            //  pressedCollections coming from 'fullDCR' pressedPages *should* have the length prop. If they don't
+            //  then something has gone wrong. Narrowing the types and parsing the Collection
+            //  might be preferable to setting a default, but was deemed too time-consuming for
+            //  the time being.
             matchedCollection
               .map(collection => {
 
@@ -377,10 +377,6 @@ trait FaciaController
                 remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex, config = config)
 
               }) getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-
-          // TODO we also need to handle the case where this doesn't work
-          //  - Are there importantly different failure cases to handle, or can we return a generic fallback response,
-          //    given that DCR doesn't really do anything with the response in the case of failure?)
 
           case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
         }
