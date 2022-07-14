@@ -41,7 +41,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
       newsletterName = getNewsletterName(tag)
       newsletterEither = newsletterSignupAgent.getNewsletterByName(newsletterName)
       newsletter <- newsletterEither match {
-        case Left(_)  => None
+        case Left(_)      => None
         case Right(value) => value
       }
     } yield {
