@@ -228,7 +228,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					para,
 					`inline${inlineId}`,
 					'inline',
-					`inline`,
+					'inline',
 					isInline1
 						? {
 								phablet: [
