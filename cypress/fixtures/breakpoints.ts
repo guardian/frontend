@@ -1,10 +1,6 @@
 import { breakpoints } from '@guardian/source-foundations'
 
-const breakpointsToTest = ['mobile', 'tablet', 'desktop', 'wide']
-const breakpointsWidths = Object.fromEntries(
-	Object.entries(breakpoints).filter(
-		([key, _]) => breakpointsToTest.includes(key)
-	)
- );
+const breakpointsToTest: Array<keyof typeof breakpoints> = ['mobile', 'tablet', 'desktop', 'wide']
+const breakpointWidths = breakpointsToTest.map(b => breakpoints[b])
 
-export { breakpointsWidths as breakpoints }
+export { breakpointWidths as breakpoints }
