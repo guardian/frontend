@@ -215,7 +215,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 				if (!isInline1) {
 					containerClasses +=
-						' offset-right ad-slot-container--offset-right';
+						' offset-right ad-slot--offset-right ad-slot-container--offset-right';
 				}
 
 				const containerOptions = {
