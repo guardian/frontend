@@ -95,7 +95,7 @@ case class DotcomRenderingDataModel(
     matchUrl: Option[String], // Optional url used for match data
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
-    newsletterToEmbed: Option[NewsletterData],
+    promotedNewsletter: Option[NewsletterData],
 )
 
 object DotcomRenderingDataModel {
@@ -167,7 +167,7 @@ object DotcomRenderingDataModel {
         "matchUrl" -> model.matchUrl,
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
-        "newsletterToEmbed" -> model.newsletterToEmbed,
+        "promotedNewsletter" -> model.promotedNewsletter,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -504,7 +504,7 @@ object DotcomRenderingDataModel {
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
-      newsletterToEmbed = newsletter,
+      promotedNewsletter = newsletter,
     )
   }
 }
