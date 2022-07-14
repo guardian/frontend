@@ -3,7 +3,7 @@ package model.pressed
 import com.gu.commercial.branding.Branding
 import com.gu.facia.api.{models => fapi}
 import common.Edition
-import model.{ContentFormat, Pillar}
+import model.{ContentFormat, Pillar, PressedContentFormat}
 import views.support.ContentOldAgeDescriber
 
 sealed trait PressedContent {
