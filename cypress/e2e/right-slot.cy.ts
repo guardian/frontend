@@ -1,4 +1,4 @@
-import { breakpoints } from '../fixtures/breakpoints';
+import { breakpoints } from '@guardian/source-foundations';
 import { articles, liveblogs } from '../fixtures/pages';
 
 describe('right slot on pages', () => {
