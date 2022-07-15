@@ -9,7 +9,11 @@ Cypress.Commands.add('getIframeBody', (selector: string) => {
 	// and retry until the body element is not empty
 	return (
 		cy
-			.get(selector.startsWith('iframe') ? selector : `iframe[id^="${selector}"`)
+			.get(
+				selector.startsWith('iframe')
+					? selector
+					: `iframe[id^="${selector}"`,
+			)
 			.its('0.contentDocument.body')
 			.should('not.be.empty')
 			// wraps "body" DOM element to allow
@@ -19,20 +23,22 @@ Cypress.Commands.add('getIframeBody', (selector: string) => {
 	);
 });
 
-const allowAll = "Yes, I’m happy";
-const manageConsent = "Manage my cookies";
-const rejectAll = "Reject all";
+const allowAll = 'Yes, I’m happy';
+const manageConsent = 'Manage my cookies';
+const rejectAll = 'Reject all';
 
 Cypress.Commands.add('rejectAllConsent', () => {
-	cy
-		.getIframeBody('sp_message_iframe_').find(`button[title="${manageConsent}"]`)
+	cy.getIframeBody('sp_message_iframe_')
+		.find(`button[title="${manageConsent}"]`)
 		.click();
 
-    cy.getIframeBody('iframe[title="SP Consent Message"]').find(`button[title="${rejectAll}"]`).click();
-
-
+	cy.getIframeBody('iframe[title="SP Consent Message"]')
+		.find(`button[title="${rejectAll}"]`, { timeout: 30000 })
+		.click();
 });
 
 Cypress.Commands.add('allowAllConsent', () => {
-    cy.getIframeBody('sp_message_iframe_').find(`button[title="${allowAll}"]`).click();
+	cy.getIframeBody('sp_message_iframe_')
+		.find(`button[title="${allowAll}"]`, { timeout: 30000 })
+		.click();
 });

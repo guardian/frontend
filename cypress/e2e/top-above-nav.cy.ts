@@ -5,8 +5,7 @@ describe('top-above-nav on pages', () => {
 		it(`Test ${path} has top-above-nav slot and iframe`, () => {
 			cy.visit(`${path}?adtest=${adTest}`);
 
-			// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-			cy.getIframeBody('sp_message_iframe_').find('.btn-primary').click();
+			cy.allowAllConsent();
 
 			cy.window().then((window) => {
 				const { isImmersive } = window.guardian.config.page;

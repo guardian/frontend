@@ -1,12 +1,12 @@
-import { articles, liveblogs } from '../fixtures/pages';
+import { articles } from '../fixtures/pages/articles';
+import { liveblogs } from '../fixtures/pages/liveblogs';
 
 describe('mostpop slot on pages', () => {
 	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
 		it(`Test ${path} has correct slot and iframe`, () => {
 			cy.visit(`${path}?adtest=${adTest}`);
 
-			// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-			cy.getIframeBody('sp_message_iframe_').find('.btn-primary').click();
+			cy.allowAllConsent();
 
 			// Check that the mostpop ad slot is on the page
 			cy.get('#dfp-ad--mostpop').should('exist');
