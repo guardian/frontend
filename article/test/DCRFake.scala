@@ -10,6 +10,7 @@ import play.twirl.api.Html
 
 import scala.collection.mutable.{ArrayBuffer, Queue}
 import scala.concurrent.{ExecutionContext, Future}
+import services.NewsletterData
 
 // It is always a mistake to rely on actual DCR output for tests.
 class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRenderingService {
@@ -25,6 +26,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       filterKeyEvents: Boolean,
       forceLive: Boolean,
       availableTopics: Option[Seq[Topic]],
+      newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
