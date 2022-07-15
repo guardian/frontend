@@ -23,7 +23,7 @@ case class ContainerLayout(
   def hasShowMore: Boolean = hasDesktopShowMore || hasMobileShowMore
 }
 
-object ContainerLayout extends implicits.Collections {
+object ContainerLayout {
   def apply(
       sliceDefinitions: Seq[Slice],
       items: Seq[PressedContent],

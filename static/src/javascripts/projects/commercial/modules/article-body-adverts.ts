@@ -46,16 +46,15 @@ const adSlotClassSelectorSizes = {
  * @param i Index of winning paragraph
  * @returns The classname for container
  */
-const getContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
+const getStickyContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
 
 const wrapSlotInContainer = (
 	ad: HTMLElement,
 	options: ContainerOptions = {},
 ) => {
 	const container = document.createElement('div');
-	container.className = `ad-slot-container ad-slot--offset-right ${
-		options.className ?? ''
-	}`;
+
+	container.className = `ad-slot-container ${options.className ?? ''}`;
 
 	if (options.sticky) {
 		ad.style.cssText += 'position: sticky; top: 0;';
@@ -75,18 +74,15 @@ const insertAdAtPara = (
 	type: SlotName,
 	classes?: string,
 	sizes?: SizeMapping,
-	includeContainer?: boolean,
 	containerOptions: ContainerOptions = {},
 ): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
-		classes: includeContainer ? '' : classes,
+		classes,
 		sizes,
 	});
 
-	const node = includeContainer
-		? wrapSlotInContainer(ad, containerOptions)
-		: ad;
+	const node = wrapSlotInContainer(ad, containerOptions);
 
 	return fastdom
 		.mutate(() => {
@@ -181,7 +177,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		// Compute the height of containers in which ads will remain sticky
 		const includeStickyContainers =
 			includeContainer &&
-			isInVariantSynchronous(multiStickyRightAds, 'variant');
+			// Check if query parameter required for qualitative testing has been provided
+			(!!getUrlVars().multiSticky ||
+				// Otherwise check for participation in AB test
+				isInVariantSynchronous(multiStickyRightAds, 'variant'));
 
 		if (includeStickyContainers) {
 			const stickyContainerHeights = await computeStickyHeights(
@@ -191,7 +190,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 			void insertHeightStyles(
 				stickyContainerHeights.map((height, index) => [
-					getContainerClassname(index),
+					getStickyContainerClassname(index),
 					height,
 				]),
 			);
@@ -206,19 +205,28 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					para.style.cssText += 'border: thick solid green;';
 				}
 
-				const containerOptions = includeStickyContainers
-					? {
-							sticky: true,
-							className: getContainerClassname(i),
-							enableDebug,
-					  }
-					: undefined;
+				let containerClasses = '';
+
+				if (includeStickyContainers) {
+					containerClasses += getStickyContainerClassname(i);
+				}
+
+				if (!isInline1) {
+					containerClasses +=
+						' offset-right ad-slot--offset-right ad-slot-container--offset-right';
+				}
+
+				const containerOptions = {
+					sticky: includeStickyContainers,
+					className: containerClasses,
+					enableDebug,
+				};
 
 				return insertAdAtPara(
 					para,
 					`inline${inlineId}`,
 					'inline',
-					`inline${isInline1 ? '' : ' offset-right'}`,
+					'inline',
 					isInline1
 						? {
 								phablet: [
@@ -231,7 +239,6 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 								],
 						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
-					includeContainer,
 					containerOptions,
 				);
 			});

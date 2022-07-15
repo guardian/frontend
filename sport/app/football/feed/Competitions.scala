@@ -348,7 +348,6 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     with LiveMatches
     with Lineups
     with GuLogging
-    with implicits.Collections
     with implicits.Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
