@@ -94,23 +94,37 @@ const getSlotName = (isMobile: boolean, slotCounter: number): string => {
 	return `inline${slotCounter + 1}`;
 };
 
-const insertAds: SpacefinderWriter = async (paras) => {
+const insertAdAtPara = (para: Node): Promise<void> => {
 	const isMobile = getBreakpoint() === 'mobile';
+	const container: HTMLElement = document.createElement('div');
+	container.className = `ad-slot-container`;
+
+	const ad = createAdSlot('inline', {
+		name: getSlotName(isMobile, AD_COUNTER),
+		classes: 'liveblog-inline',
+	});
+
+	container.appendChild(ad);
+
+	return fastdom
+		.mutate(() => {
+			if (para.parentNode) {
+				/* ads are inserted after the block on liveblogs */
+				para.parentNode.insertBefore(container, para.nextSibling);
+			}
+		})
+		.then(() => {
+			addSlot(ad, false);
+		});
+};
+
+const insertAds: SpacefinderWriter = async (paras) => {
 	const fastdomPromises = [];
 	for (let i = 0; i < paras.length && AD_COUNTER < MAX_ADS; i += 1) {
 		const para = paras[i];
 		if (para.parentNode) {
-			const adSlot = createAdSlot('inline', {
-				name: getSlotName(isMobile, AD_COUNTER),
-				classes: 'liveblog-inline',
-			});
-			// insert the ad slot container into the DOM
-			const result = fastdom.mutate(() => {
-				para.parentNode?.insertBefore(adSlot, para.nextSibling);
-			});
+			const result = insertAdAtPara(para);
 			fastdomPromises.push(result);
-			// load and display the advert via GAM
-			addSlot(adSlot, false);
 			AD_COUNTER += 1;
 		}
 	}

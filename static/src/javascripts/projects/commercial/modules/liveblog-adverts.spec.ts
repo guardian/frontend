@@ -89,10 +89,12 @@ describe('Liveblog Dynamic Adverts', () => {
 		);
 		return init().then(() => {
 			expect(
-				document.querySelector('.x1')?.nextElementSibling?.id,
+				document.querySelector('.x1')?.nextElementSibling
+					?.firstElementChild?.id,
 			).toEqual('dfp-ad--inline1');
 			expect(
-				document.querySelector('.x12')?.nextElementSibling?.id,
+				document.querySelector('.x12')?.nextElementSibling
+					?.firstElementChild?.id,
 			).toEqual('dfp-ad--inline2');
 			expect(
 				document.querySelector('.js-liveblog-body')?.children.length,
