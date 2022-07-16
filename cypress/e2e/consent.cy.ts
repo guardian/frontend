@@ -1,8 +1,6 @@
 /// <reference types="cypress" />
 
 import { fronts } from '../fixtures/pages/fronts';
-import { articles } from '../fixtures/pages/articles';
-import { liveblogs } from '../fixtures/pages/liveblogs';
 import { fakeLogOut, fakeLogin } from '../lib/util';
 import { AdFreeCookieReasons } from 'lib/manage-ad-free-cookie';
 
@@ -70,7 +68,7 @@ describe('tcfv2 consent', () => {
 		cy.clearLocalStorage();
 	});
 
-	[fronts[0], articles[0], liveblogs[0]].forEach(({ path, adTest }) => {
+	[fronts[0]].forEach(({ path, adTest }) => {
 		it(`Test ${path} hides slots when consent is denied`, () => {
 			cy.visit(`${path}?adtest=${adTest}`);
 
