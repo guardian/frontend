@@ -45,8 +45,7 @@ describe('targeting', () => {
 
 		cy.visit(`${path}?adrefresh=false`);
 
-		// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-		cy.getIframeBody('sp_message_iframe_').find('.btn-primary').click();
+		cy.allowAllConsent();
 
 		cy.getIframeBody('google_ads_iframe_')
 			.find('[data-cy="test-creative"]')

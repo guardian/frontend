@@ -8,10 +8,7 @@ describe('mostpop slot on pages', () => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
 				cy.visit(`${path}?adtest=${adTest}`);
 
-				// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-				cy.getIframeBody('sp_message_iframe_')
-					.find('.btn-primary')
-					.click();
+				cy.allowAllConsent();
 
 				// Check that the mostpop ad slot is on the page
 				cy.get('#dfp-ad--mostpop').should('exist');

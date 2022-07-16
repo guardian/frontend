@@ -10,10 +10,7 @@ describe('merchandising slot on pages', () => {
 
 				cy.visit(`${path}?adtest=${adTest}`);
 
-				// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-				cy.getIframeBody('sp_message_iframe_')
-					.find('.btn-primary')
-					.click();
+				cy.allowAllConsent();
 
 				// Check that the merchandising ad slot is on the page
 				cy.get('#dfp-ad--merchandising').should('exist');
