@@ -22,7 +22,7 @@ describe('merchandising slot on pages', () => {
 
 				// Check that an iframe is placed inside the merchandising ad slot
 				cy.get('#dfp-ad--merchandising')
-					.find('iframe', { timeout: 10000 })
+					.find('iframe', { timeout: 30000 })
 					.should('exist');
 			});
 		});
