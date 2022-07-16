@@ -1,15 +1,9 @@
-import { getStage, getTestUrl } from '../lib/util';
+import { getStage, getTestUrl } from '../../lib/util';
+import { Page } from './Page';
 
 const stage = getStage();
 
-const fronts = [
-	{
-		path: getTestUrl(stage, '/uk'),
-		adTest: 'fixed-puppies',
-	},
-];
-
-const articles = [
+const articles: Page[] = [
 	{
 		path: getTestUrl(
 			stage,
@@ -32,23 +26,18 @@ const articles = [
 			'/environment/2020/oct/13/maverick-rewilders-endangered-species-extinction-conservation-uk-wildlife',
 			{ isDcr: true },
 		),
-		expectedMinInlineSlotsOnPage: 10,
 		adTest: 'fixed-puppies',
+		expectedMinInlineSlotsOnPage: 10,
 	},
-];
-
-const liveblogs = [
 	{
 		path: getTestUrl(
 			stage,
-			'/politics/live/2022/jan/31/uk-politics-live-omicron-nhs-workers-coronavirus-vaccines-no-10-sue-gray-report',
+			'/society/2020/aug/13/disabled-wont-receive-critical-care-covid-terrifying',
 			{ isDcr: true },
 		),
-		expectedMinInlineSlotsOnPage: 4,
 		adTest: 'fixed-puppies',
+		name: 'sensitive-content',
 	},
 ];
 
-const pages = [...fronts, ...articles, ...liveblogs];
-
-export { fronts, pages, articles, liveblogs };
+export { articles };

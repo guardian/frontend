@@ -1,4 +1,4 @@
-import { pages } from '../fixtures/pages';
+import { fronts } from '../fixtures/pages/fronts';
 import { bidderURLs, wins } from '../fixtures/prebid';
 
 const interceptGamRequest = () =>
@@ -39,7 +39,7 @@ describe('targeting', () => {
 	});
 
 	it(`prebid winner should display ad and send targeting to GAM`, () => {
-		const { path } = pages[0];
+		const { path } = fronts[0];
 
 		interceptGamRequest();
 

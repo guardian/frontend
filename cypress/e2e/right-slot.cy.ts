@@ -1,5 +1,6 @@
 import { breakpoints } from '@guardian/source-foundations';
-import { articles, liveblogs } from '../fixtures/pages';
+import { articles } from '../fixtures/pages/articles';
+import { liveblogs } from '../fixtures/pages/liveblogs';
 
 describe('right slot on pages', () => {
 	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
