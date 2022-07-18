@@ -1,6 +1,5 @@
 import { breakpoints } from '../fixtures/breakpoints';
-import { articles } from '../fixtures/pages/articles';
-import { liveblogs } from '../fixtures/pages/liveblogs';
+import { articles, liveblogs } from '../fixtures/pages';
 
 const pages = [...articles, ...liveblogs].filter(
 	(page) => 'expectedMinInlineSlotsOnPage' in page,

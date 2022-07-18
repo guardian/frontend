@@ -1,5 +1,4 @@
-import { pages } from '../fixtures/pages';
-import { fronts } from '../fixtures/pages/fronts';
+import { allPages, fronts } from '../fixtures/pages';
 import { bidderURLs, wins } from '../fixtures/prebid';
 
 describe('GAM targeting', () => {
@@ -55,7 +54,7 @@ describe('GAM targeting', () => {
 	});
 
 	it(`checks sensitive content is marked as sensitive`, () => {
-		const sensitivePage = pages.find(
+		const sensitivePage = allPages.find(
 			(page) => page?.name === 'sensitive-content',
 		);
 		if (!sensitivePage)

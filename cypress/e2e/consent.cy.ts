@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { fronts } from '../fixtures/pages/fronts';
+import { fronts } from '../fixtures/pages';
 import { fakeLogOut, fakeLogin } from '../lib/util';
 import { AdFreeCookieReasons } from 'lib/manage-ad-free-cookie';
 

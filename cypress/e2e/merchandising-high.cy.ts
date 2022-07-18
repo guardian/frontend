@@ -1,6 +1,5 @@
 import { breakpoints } from '../fixtures/breakpoints';
-import { articles } from '../fixtures/pages/articles';
-import { liveblogs } from '../fixtures/pages/liveblogs';
+import { articles, liveblogs } from '../fixtures/pages';
 
 describe('merchandising-high slot on pages', () => {
 	[...articles, ...liveblogs].forEach(({ path, adTest }) => {

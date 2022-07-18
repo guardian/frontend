@@ -2,6 +2,6 @@ import { fronts } from './fronts';
 import { articles } from './articles';
 import { liveblogs } from './liveblogs';
 
-const pages = [...fronts, ...articles, ...liveblogs];
+const allPages = [...fronts, ...articles, ...liveblogs];
 
-export { pages };
+export { articles, fronts, liveblogs, allPages };
