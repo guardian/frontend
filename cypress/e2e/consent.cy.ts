@@ -14,7 +14,7 @@ const adsShouldShow = () => {
 	cy.get('#dfp-ad--top-above-nav').should('exist');
 
 	// Check that an iframe is placed inside the ad slot
-	cy.get('#dfp-ad--top-above-nav').find('iframe').should('exist');
+	cy.findAdSlotIframeBySlotId('dfp-ad--top-above-nav').should('exist');
 };
 
 const adsShouldNotShow = () => {

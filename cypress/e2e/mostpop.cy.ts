@@ -16,7 +16,7 @@ describe('mostpop slot on pages', () => {
 				cy.get('#dfp-ad--mostpop').scrollIntoView();
 
 				// Check that an iframe is placed inside the ad slot
-				cy.get('#dfp-ad--mostpop').find('iframe').should('exist');
+				cy.findAdSlotIframeBySlotId('dfp-ad--mostpop').should('exist');
 			});
 		});
 	});

@@ -18,7 +18,7 @@ describe('right slot on pages', () => {
 			cy.get('#dfp-ad--right').scrollIntoView();
 
 			// Check that an iframe is placed inside the ad slot
-			cy.get('#dfp-ad--right').find('iframe').should('exist');
+			cy.findAdSlotIframeBySlotId('dfp-ad--right').should('exist');
 		});
 	});
 });

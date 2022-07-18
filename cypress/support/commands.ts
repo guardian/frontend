@@ -23,6 +23,10 @@ Cypress.Commands.add('getIframeBody', (selector: string) => {
 	);
 });
 
+Cypress.Commands.add('findAdSlotIframeBySlotId', (adSlotId: string) => {
+	cy.get(`#${adSlotId}`).find('iframe', { timeout: 30000 });
+});
+
 const allowAll = 'Yes, I’m happy';
 const manageConsent = 'Manage my cookies';
 const rejectAll = 'Reject all';

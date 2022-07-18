@@ -20,9 +20,9 @@ describe('merchandising-high slot on pages', () => {
 				});
 
 				// Check that an iframe is placed inside the merchandising-high ad slot
-				cy.get('#dfp-ad--merchandising-high')
-					.find('iframe')
-					.should('exist');
+				cy.findAdSlotIframeBySlotId(
+					'dfp-ad--merchandising-high',
+				).should('exist');
 			});
 		});
 	});
