@@ -1,5 +1,5 @@
 import { getStage, getTestUrl } from '../../lib/util';
-import { Page } from './Page';
+import type { Page } from './Page';
 
 type Front = Page & {
 	section: string;
