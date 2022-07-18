@@ -1,9 +1,9 @@
 import { allPages, fronts } from '../fixtures/pages';
 import { bidderURLs, wins } from '../fixtures/prebid';
 
-describe('GAM targeting', () => {
-	const gamUrl = 'https://securepubads.g.doubleclick.net/gampad/ads?**';
+const gamUrl = 'https://securepubads.g.doubleclick.net/gampad/ads?**';
 
+describe('GAM targeting', () => {
 	it(`checks that a request is made`, () => {
 		const { path, adTest } = fronts[0];
 		cy.visit(`${path}?adtest=${adTest}`);
@@ -83,7 +83,7 @@ describe('Prebid targeting', () => {
 	const interceptGamRequest = () =>
 		cy.intercept(
 			{
-				url: 'https://securepubads.g.doubleclick.net/gampad/ads?**',
+				url: gamUrl,
 			},
 			function (req) {
 				const url = new URL(req.url);
