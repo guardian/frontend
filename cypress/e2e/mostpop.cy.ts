@@ -3,7 +3,7 @@ import { articles, liveblogs } from '../fixtures/pages';
 
 describe('mostpop slot on pages', () => {
 	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
-		Object.entries(breakpoints).forEach(([breakpoint, width]) => {
+		breakpoints.forEach(({ breakpoint }) => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
 				cy.visit(`${path}?adtest=${adTest}`);
 

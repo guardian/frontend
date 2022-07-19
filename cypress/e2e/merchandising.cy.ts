@@ -3,7 +3,7 @@ import { articles, liveblogs } from '../fixtures/pages';
 
 describe('merchandising slot on pages', () => {
 	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
-		Object.entries(breakpoints).forEach(([breakpoint, width]) => {
+		breakpoints.forEach(({ breakpoint, width }) => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
 				cy.viewport(width, 800);
 
@@ -16,7 +16,7 @@ describe('merchandising slot on pages', () => {
 
 				// creative isn't loaded unless slot is in view
 				cy.get('#dfp-ad--merchandising').scrollIntoView({
-					duration: 4000,
+					duration: 3000,
 				});
 
 				// Check that an iframe is placed inside the merchandising ad slot

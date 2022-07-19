@@ -1,6 +1,21 @@
-import { breakpoints } from '@guardian/source-foundations'
+import { breakpoints } from '@guardian/source-foundations';
 
-const breakpointsToTest: Array<keyof typeof breakpoints> = ['mobile', 'tablet', 'desktop', 'wide']
-const breakpointWidths = breakpointsToTest.map(b => breakpoints[b])
+type BreakpointKeys = keyof typeof breakpoints;
+type BreakpointSizes = {
+	breakpoint: BreakpointKeys;
+	width: typeof breakpoints[BreakpointKeys];
+};
 
-export { breakpointWidths as breakpoints }
+const breakpointsToTest: Array<keyof typeof breakpoints> = [
+	'mobile',
+	'tablet',
+	'desktop',
+	'wide',
+];
+
+const breakpointSizes: BreakpointSizes[] = breakpointsToTest.map((b) => ({
+	breakpoint: b,
+	width: breakpoints[b],
+}));
+
+export { breakpointSizes as breakpoints };
