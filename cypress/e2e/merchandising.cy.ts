@@ -14,6 +14,9 @@ describe('merchandising slot on pages', () => {
 				// Check that the merchandising ad slot is on the page
 				cy.get('#dfp-ad--merchandising').should('exist');
 
+				// Ensure all lazy loaded items are loaded
+				cy.scrollTo('bottom', { duration: 3000 });
+
 				// creative isn't loaded unless slot is in view
 				cy.get('#dfp-ad--merchandising').scrollIntoView({
 					duration: 3000,
