@@ -1,12 +1,11 @@
-import { pages } from '../fixtures/pages';
+import { allPages } from '../fixtures/pages';
 
 describe('top-above-nav on pages', () => {
-	pages.forEach(({ path, adTest }) => {
+	allPages.forEach(({ path, adTest }) => {
 		it(`Test ${path} has top-above-nav slot and iframe`, () => {
 			cy.visit(`${path}?adtest=${adTest}`);
 
-			// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-			cy.getIframeBody('sp_message_iframe_').find('.btn-primary').click();
+			cy.allowAllConsent();
 
 			cy.window().then((window) => {
 				const { isImmersive } = window.guardian.config.page;
@@ -15,9 +14,9 @@ describe('top-above-nav on pages', () => {
 					cy.get('#dfp-ad--top-above-nav').should('exist');
 
 					// Check that an iframe is placed inside the ad slot
-					cy.get('#dfp-ad--top-above-nav')
-						.find('iframe')
-						.should('exist');
+					cy.findAdSlotIframeBySlotId('dfp-ad--top-above-nav').should(
+						'exist',
+					);
 				} else {
 					// Check that the top-above-nav ad slot is not on the page
 					cy.get('#dfp-ad--top-above-nav').should('not.exist');

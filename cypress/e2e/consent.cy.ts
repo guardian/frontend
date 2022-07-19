@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import { fronts } from '../fixtures/pages';
-import { getStage, fakeLogOut, fakeLogin } from '../lib/util';
+import { fakeLogOut, fakeLogin } from '../lib/util';
 import { AdFreeCookieReasons } from 'lib/manage-ad-free-cookie';
 
 // Don't fail tests when uncaught exceptions occur
@@ -10,15 +10,11 @@ Cypress.on('uncaught:exception', () => {
 	return false;
 });
 
-const stage = getStage();
-
-const pages = fronts;
-
 const adsShouldShow = () => {
 	cy.get('#dfp-ad--top-above-nav').should('exist');
 
 	// Check that an iframe is placed inside the ad slot
-	cy.get('#dfp-ad--top-above-nav').find('iframe').should('exist');
+	cy.findAdSlotIframeBySlotId('dfp-ad--top-above-nav').should('exist');
 };
 
 const adsShouldNotShow = () => {
@@ -41,7 +37,7 @@ const reconsent = () => {
 };
 
 const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
-    // wait is an antipattern and unreliable, maybe import onConsentChange and cypressify it?
+	// wait is an antipattern and unreliable, maybe import onConsentChange and cypressify it?
 	cy.wait(200);
 	cy.then(function expectAdFree() {
 		cy.getCookie('GU_AF1').should(
@@ -67,12 +63,12 @@ const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
 };
 
 describe('tcfv2 consent', () => {
-    beforeEach(() => {
-        cy.clearCookies();
-        cy.clearLocalStorage();
-    });
+	beforeEach(() => {
+		cy.clearCookies();
+		cy.clearLocalStorage();
+	});
 
-	pages.forEach(({ path, adTest }) => {
+	[fronts[0]].forEach(({ path, adTest }) => {
 		it(`Test ${path} hides slots when consent is denied`, () => {
 			cy.visit(`${path}?adtest=${adTest}`);
 
@@ -126,7 +122,10 @@ describe('tcfv2 consent', () => {
 
 			cy.rejectAllConsent();
 
-			expectAdFree([AdFreeCookieReasons.ConsentOptOut, AdFreeCookieReasons.Subscriber]);
+			expectAdFree([
+				AdFreeCookieReasons.ConsentOptOut,
+				AdFreeCookieReasons.Subscriber,
+			]);
 
 			fakeLogOut();
 
@@ -181,93 +180,121 @@ describe('tcfv2 consent', () => {
 			adsShouldShow();
 		});
 
-        it(`Test ${path} accept all, login as subscriber, subscription expires, should show ads`, () => {
-            fakeLogin(true);
+		it(`Test ${path} accept all, login as subscriber, subscription expires, should show ads`, () => {
+			fakeLogin(true);
 
 			cy.visit(`${path}?adtest=${adTest}`);
 
-            cy.allowAllConsent();
+			cy.allowAllConsent();
 
-            expectAdFree([AdFreeCookieReasons.Subscriber]);
+			expectAdFree([AdFreeCookieReasons.Subscriber]);
 
+			cy.setCookie(
+				'gu_user_features_expiry',
+				String(new Date().getTime() - 1000),
+			);
 
-            cy.setCookie('gu_user_features_expiry', String(new Date().getTime() - 1000));
+			localStorage.setItem(
+				'gu.ad_free_cookie_reason',
+				`{"subscriber": ${new Date().getTime() - 1000}}`,
+			);
 
-            localStorage.setItem('gu.ad_free_cookie_reason', `{"subscriber": ${new Date().getTime() - 1000}}`);
+			// to intercept response
+			fakeLogin(false);
 
-            // to intercept response
-            fakeLogin(false);
+			cy.reload();
 
-            cy.reload();
+			expectAdFree([]);
 
-            expectAdFree([]);
+			// reload twice so server is not sent ad free cookie
+			cy.reload();
 
-            // reload twice so server is not sent ad free cookie
-            cy.reload();
+			adsShouldShow();
+		});
 
-            adsShouldShow();
-
-        });
-
-        it(`Test ${path} reject all, login as subscriber, subscription expires, should not show ads`, () => {
-            fakeLogin(true);
+		it(`Test ${path} reject all, login as subscriber, subscription expires, should not show ads`, () => {
+			fakeLogin(true);
 
 			cy.visit(`${path}?adtest=${adTest}`);
 
-            cy.rejectAllConsent();
+			cy.rejectAllConsent();
 
-            expectAdFree([AdFreeCookieReasons.ConsentOptOut, AdFreeCookieReasons.Subscriber]);
+			expectAdFree([
+				AdFreeCookieReasons.ConsentOptOut,
+				AdFreeCookieReasons.Subscriber,
+			]);
 
-            cy.setCookie('gu_user_features_expiry', String(new Date().getTime() - 1000));
+			cy.setCookie(
+				'gu_user_features_expiry',
+				String(new Date().getTime() - 1000),
+			);
 
-            localStorage.setItem('gu.ad_free_cookie_reason', `{"subscriber": ${new Date().getTime() - 1000}}`);
+			localStorage.setItem(
+				'gu.ad_free_cookie_reason',
+				`{"subscriber": ${new Date().getTime() - 1000}}`,
+			);
 
-            // to intercept response
-            fakeLogin(false);
+			// to intercept response
+			fakeLogin(false);
 
-            cy.reload();
+			cy.reload();
 
-            expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
-            // reload twice so server is not sent ad free cookie
-            cy.reload();
+			// reload twice so server is not sent ad free cookie
+			cy.reload();
 
-            adsShouldNotShow();
-        });
+			adsShouldNotShow();
+		});
 
 		it(`Test ${path} reject all, cookie/reason expires, cookie should renew expiry and remain`, () => {
-            cy.visit(`${path}?adtest=${adTest}`);
+			cy.visit(`${path}?adtest=${adTest}`);
 
-            cy.rejectAllConsent();
+			cy.rejectAllConsent();
 
-            expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
-            const expiredTimestamp = new Date().getTime() - 1000;
+			const expiredTimestamp = new Date().getTime() - 1000;
 
-            cy.setCookie('GU_AF1', String(expiredTimestamp));
+			cy.setCookie('GU_AF1', String(expiredTimestamp));
 
-            localStorage.setItem('gu.ad_free_cookie_reason', `{"consent_opt_out": ${expiredTimestamp}}`);
+			localStorage.setItem(
+				'gu.ad_free_cookie_reason',
+				`{"consent_opt_out": ${expiredTimestamp}}`,
+			);
 
-            cy.reload();
+			cy.reload();
 
-            expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
+			expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
-            // expiries should update
+			// expiries should update
 
-            cy.then(() => expect(Number(JSON.parse(localStorage.getItem('gu.ad_free_cookie_reason') || '{}').consent_opt_out)).to.be.greaterThan(expiredTimestamp)
-                )
+			cy.then(() =>
+				expect(
+					Number(
+						JSON.parse(
+							localStorage.getItem('gu.ad_free_cookie_reason') ||
+								'{}',
+						).consent_opt_out,
+					),
+				).to.be.greaterThan(expiredTimestamp),
+			);
 
-            cy.getCookie('GU_AF1').should('have.property', 'value').then(value => expect(Number(value)).to.be.greaterThan(expiredTimestamp));
-        });
+			cy.getCookie('GU_AF1')
+				.should('have.property', 'value')
+				.then((value) =>
+					expect(Number(value)).to.be.greaterThan(expiredTimestamp),
+				);
+		});
 
 		it(`Test ${path} allow all, logged in, if localstorage reason is missing, keep ad free, don't show ads`, () => {
 			fakeLogin(true);
 
 			cy.setCookie('GU_AF1', String(new Date().getTime() + 100000));
 
-            cy.visit(`${path}?adtest=${adTest}`);
+			cy.visit(`${path}?adtest=${adTest}`);
 
-            cy.allowAllConsent();
+			cy.allowAllConsent();
 
 			cy.wait('@userData');
 
@@ -278,6 +305,6 @@ describe('tcfv2 consent', () => {
 			cy.getCookie('GU_AF1').should('exist');
 
 			cy.get('#dfp-ad--top-above-nav').should('not.exist');
-        });
+		});
 	});
 });

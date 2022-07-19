@@ -76,20 +76,32 @@ type ContentType =
 
 export type PageTargeting = PartialWithNulls<{
 	ab: string[];
+	af: 't'; // Ad Free
+	amtgrp: AdManagerGroup;
 	at: string; // Ad Test
 	bl: string[]; // BLog tags
 	bp: 'mobile' | 'tablet' | 'desktop'; // BreakPoint
+	br: 's' | 'p' | 'f'; // BRanding
 	cc: CountryCode; // Country Code
+	cmp_interaction: string;
 	co: string; // COntributor
+	consent_tcfv2: string;
 	ct: ContentType;
 	dcre: TrueOrFalse; // DotCom-Rendering Eligible
 	edition: 'uk' | 'us' | 'au' | 'int';
+	fr: Frequency; // FRequency
+	inskin: TrueOrFalse; // InSkin
 	k: string[]; // Keywords
+	ob: 't'; // OBserver content
 	p: 'r2' | 'ng' | 'app' | 'amp'; // Platform (web)
 	pa: TrueOrFalse; // Personalised Ads consent
 	permutive: string[]; // predefined segment values
 	pv: string; // ophan Page View id
+	rdp: string;
+	ref: string; // REFerrer
 	rp: 'dotcom-rendering' | 'dotcom-platform'; // Rendering Platform
+	s: string; // site Section
+	se: string; // SEries
 	sens: TrueOrFalse; // SenSitive
 	si: TrueOrFalse; // Signed In
 	skinsize: 'l' | 's';
@@ -98,18 +110,6 @@ export type PageTargeting = PartialWithNulls<{
 	url: string;
 	urlkw: string[]; // URL KeyWords
 	vl: string; // Video Length
-	rdp: string;
-	consent_tcfv2: string;
-	cmp_interaction: string;
-	se: string; // SEries
-	ob: 't'; // OBserver content
-	br: 's' | 'p' | 'f'; // BRanding
-	af: 't'; // Ad Free
-	fr: Frequency; // FRequency
-	ref: string; // REFerrer
-	inskin: TrueOrFalse; // InSkin
-	amtgrp: AdManagerGroup;
-	s: string; // site Section
 
 	// And more
 	[_: string]: string | string[];
