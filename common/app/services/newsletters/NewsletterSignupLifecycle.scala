@@ -30,8 +30,6 @@ class NewsletterSignupLifecycle(
     newsletterSignupAgent.refresh()
     jobs.scheduleEveryNMinutes("NewsletterSignupAgentLowFrequencyRefreshJob", 60) {
       newsletterSignupAgent.refresh()
-      Future.successful(())
     }
   }
-
 }

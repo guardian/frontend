@@ -4,7 +4,7 @@ import common.{Box, GuLogging}
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.model.NewsletterResponse
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
@@ -34,29 +34,28 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
   def getNewsletters(): Either[String, List[NewsletterResponse]] = newslettersAgent.get()
 
-  def refresh()(implicit ec: ExecutionContext): Unit = {
-    refreshNewsletters()
-  }
-
-  def refreshNewsletters()(implicit ec: ExecutionContext): Unit = {
-    log.info("Refreshing newsletters and Grouped Newsletters for newsletter signup embeds.")
-
-    val newslettersQuery = newsletterApi.getNewsletters()
-    newslettersQuery.flatMap { newsletters =>
-      newslettersAgent.alter(newsletters match {
-        case Right(response) =>
-          log.info("Successfully refreshed Newsletters and Grouped Newsletters embed cache.")
-          groupedNewslettersAgent.alter(Right(buildGroupedNewsletters(response)))
-          Right(response)
-        case Left(err) =>
-          log.error(s"Failed to refresh Newsletters and Grouped Newsletters embed cache: $err")
-          Left(err)
-      })
-    } recover {
+  def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
+    refreshNewsletters() recover {
       case e =>
         val errMessage = s"Call to Newsletter API failed: ${e.getMessage}"
         log.error(errMessage)
-        Left(errMessage)
+    }
+  }
+
+  private def refreshNewsletters()(implicit ec: ExecutionContext): Future[Unit] = {
+    log.info("Refreshing newsletters and Grouped Newsletters for newsletter signup embeds.")
+
+    newsletterApi.getNewsletters() map {
+      case Right(allNewsletters) =>
+
+        val supportedNewsletters = allNewsletters.filterNot(_.cancelled)
+
+        newslettersAgent.alter(Right(supportedNewsletters))
+        groupedNewslettersAgent.alter(Right(buildGroupedNewsletters(supportedNewsletters)))
+
+        log.info("Successfully refreshed Newsletters and Grouped Newsletters embed cache.")
+      case Left(err) =>
+        log.error(s"Failed to refresh Newsletters and Grouped Newsletters embed cache: $err")
     }
 
   }
