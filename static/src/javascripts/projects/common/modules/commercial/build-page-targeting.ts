@@ -1,6 +1,7 @@
 import type {
 	ContentTargeting,
 	SessionTargeting,
+	SharedTargeting,
 	ViewportTargeting,
 } from '@guardian/commercial-core';
 import {
@@ -8,6 +9,7 @@ import {
 	getContentTargeting,
 	getPermutiveSegments,
 	getSessionTargeting,
+	getSharedTargeting,
 	getViewportTargeting,
 } from '@guardian/commercial-core';
 import { cmp } from '@guardian/consent-management-platform';
@@ -62,58 +64,37 @@ const adManagerGroups = [
 
 type Frequency = typeof frequency[number];
 type AdManagerGroup = typeof adManagerGroups[number];
-type ContentType =
-	| 'video'
-	| 'tag'
-	| 'section'
-	| 'network-front'
-	| 'liveblog'
-	| 'interactive'
-	| 'gallery'
-	| 'crossword'
-	| 'audio'
-	| 'article';
 
-export type PageTargeting = PartialWithNulls<{
-	ab: string[];
-	af: 't'; // Ad Free
-	amtgrp: AdManagerGroup;
-	at: string; // Ad Test
-	bl: string[]; // BLog tags
-	bp: 'mobile' | 'tablet' | 'desktop'; // BreakPoint
-	br: 's' | 'p' | 'f'; // BRanding
-	cc: CountryCode; // Country Code
-	cmp_interaction: string;
-	co: string; // COntributor
-	consent_tcfv2: string;
-	ct: ContentType;
-	dcre: TrueOrFalse; // DotCom-Rendering Eligible
-	edition: 'uk' | 'us' | 'au' | 'int';
-	fr: Frequency; // FRequency
-	inskin: TrueOrFalse; // InSkin
-	k: string[]; // Keywords
-	ob: 't'; // OBserver content
-	p: 'r2' | 'ng' | 'app' | 'amp'; // Platform (web)
-	pa: TrueOrFalse; // Personalised Ads consent
-	permutive: string[]; // predefined segment values
-	pv: string; // ophan Page View id
-	rdp: string;
-	ref: string; // REFerrer
-	rp: 'dotcom-rendering' | 'dotcom-platform'; // Rendering Platform
-	s: string; // site Section
-	se: string; // SEries
-	sens: TrueOrFalse; // SenSitive
-	si: TrueOrFalse; // Signed In
-	skinsize: 'l' | 's';
-	su: string; // SUrging article
-	tn: string; // ToNe
-	url: string;
-	urlkw: string[]; // URL KeyWords
-	vl: string; // Video Length
+export type PageTargeting = PartialWithNulls<
+	{
+		ab: string[];
+		af: 't'; // Ad Free
+		amtgrp: AdManagerGroup;
+		at: string; // Ad Test
+		bp: 'mobile' | 'tablet' | 'desktop'; // BreakPoint
+		cc: CountryCode; // Country Code
+		cmp_interaction: string;
+		consent_tcfv2: string;
+		dcre: TrueOrFalse; // DotCom-Rendering Eligible
+		fr: Frequency; // FRequency
+		inskin: TrueOrFalse; // InSkin
+		pa: TrueOrFalse; // Personalised Ads consent
+		permutive: string[]; // predefined segment values
+		pv: string; // ophan Page View id
+		rdp: string;
+		ref: string; // REFerrer
+		rp: 'dotcom-rendering' | 'dotcom-platform'; // Rendering Platform
+		s: string; // site Section
+		sens: TrueOrFalse; // SenSitive
+		si: TrueOrFalse; // Signed In
+		skinsize: 'l' | 's';
+		urlkw: string[]; // URL KeyWords
+		vl: string; // Video Length
 
-	// And more
-	[_: string]: string | string[];
-}>;
+		// And more
+		[_: string]: string | string[];
+	} & SharedTargeting
+>;
 
 const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
@@ -313,11 +294,16 @@ const getPageTargeting = (consentState?: ConsentState): PageTargeting => {
 			!cmp.hasInitialised() || cmp.willShowPrivacyMessageSync(),
 	});
 
+	const sharedAdTargeting = page.sharedAdTargeting
+		? // asserting here as we can't import the type into global.d.ts
+		  getSharedTargeting(page.sharedAdTargeting as Partial<SharedTargeting>)
+		: {};
+
 	const pageTargets: PageTargeting = {
 		fr: getFrequencyValue(),
 		permutive: getPermutiveSegments(),
 		...consentRelatedTargeting,
-		...page.sharedAdTargeting,
+		...sharedAdTargeting,
 		...adFreeTargeting,
 		...contentTargeting,
 		...sessionTargeting,
