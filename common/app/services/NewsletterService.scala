@@ -24,7 +24,7 @@ object NewsletterData {
 }
 
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
-  private val EMBED_TAG_PREFIX = "campaign/callout/"
+  private val EMBED_TAG_PREFIX = "campaign/email/"
   private val EMBED_TAG_TYPE = "campaign"
 
   private def findNewsletterTag(tags: List[Tag]) = {
