@@ -106,7 +106,7 @@ object FooterLinks {
     allWriters("uk"),
     FooterLink(
       "Modern Slavery Act",
-      "https://uploads.guim.co.uk/2021/07/27/STL_&_GMG_Modern_Slavery_Act_Statement_2021.pdf",
+      "https://uploads.guim.co.uk/2022/07/20/STL_Modern_Slavery_Statement_2022.pdf",
       "uk : footer : modern slavery act statement",
     ),
     digitalNewspaperArchive,
