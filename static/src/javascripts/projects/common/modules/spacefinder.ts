@@ -100,7 +100,7 @@ const debugMinAbove = (body: HTMLElement, minAbove: number): void => {
 		height: 5px;
 	`;
 
-	minAboveIndicator.innerHTML = `<div style="position: absolute; right: 0px; background-color: rgba(255, 255, 255, 0.97); padding: 10px; border-radius: 0px 0px 0px 10px; font-family: sans-serif; font-size: 0.8rem;">minAbove: ${minAbove}px</div>`;
+	minAboveIndicator.innerHTML = `<div style="position: absolute; right: 0px; background-color: rgba(255, 255, 255, 0.97); padding: 10px; border-radius: 0px 0px 0px 10px; font-family: sans-serif; font-size: 0.7rem;">Threshold for slot to be too close to top (minAbove: ${minAbove}px)</div>`;
 
 	body.appendChild(minAboveIndicator);
 };
