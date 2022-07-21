@@ -47,7 +47,6 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
     newsletterApi.getNewsletters() map {
       case Right(allNewsletters) =>
-
         val supportedNewsletters = allNewsletters.filterNot(_.cancelled)
 
         newslettersAgent.alter(Right(supportedNewsletters))
