@@ -103,6 +103,7 @@ interface PageConfig extends CommercialPageConfig {
 	pageId: string;
 	publication: string;
 	section: string;
+	sectionName: string;
 	series: string;
 	seriesId: string;
 	shouldHideReaderRevenue?: boolean;
