@@ -4,7 +4,7 @@ import { log } from '@guardian/libs';
 import { memoize } from 'lodash-es';
 import { amIUsed } from 'commercial/sentinel';
 import fastdom from '../../../lib/fastdom-promise';
-import { markCandidates } from './mark-candidates';
+import { debugMinAbove, markCandidates } from './spacefinder-debug-tools';
 
 type RuleSpacing = {
 	minAbove: number;
@@ -85,24 +85,6 @@ const defaultOptions: SpacefinderOptions = {
 	waitForLinks: true,
 	waitForInteractives: false,
 	debug: false,
-};
-
-const debugMinAbove = (body: HTMLElement, minAbove: number): void => {
-	body.style.position = 'relative';
-
-	const minAboveIndicator = document.createElement('div');
-
-	minAboveIndicator.style.cssText = `
-		position: absolute;
-		top: ${minAbove}px;
-		width: 100%;
-		background-color: red;
-		height: 5px;
-	`;
-
-	minAboveIndicator.innerHTML = `<div style="position: absolute; right: 0px; background-color: rgba(255, 255, 255, 0.97); padding: 10px; border-radius: 0px 0px 0px 10px; font-family: sans-serif; font-size: 0.7rem;">Threshold for slot to be too close to top (minAbove: ${minAbove}px)</div>`;
-
-	body.appendChild(minAboveIndicator);
 };
 
 const isIframe = (node: Node): node is HTMLIFrameElement =>
