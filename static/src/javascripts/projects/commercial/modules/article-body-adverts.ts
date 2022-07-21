@@ -31,6 +31,11 @@ const sfdebug = getUrlVars().sfdebug;
 
 const isPaidContent = config.get<boolean>('page.isPaidContent', false);
 
+const hasImages = !!window.guardian.config.page.lightboxImages?.images.length;
+
+const hasShowcaseMainElement =
+	window.guardian.config.page.hasShowcaseMainElement;
+
 const adSlotClassSelectorSizes = {
 	minAbove: 500,
 	minBelow: 500,
@@ -147,11 +152,22 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		filter: filterNearbyCandidates(adSizes.mpu.height),
 	};
 
+	let minAbove = 1000;
+
+	if (isPaidContent) {
+		minAbove += 600;
+	}
+
+	/* On old articles without a main image or articles with a showcase main image, inline2 can sometimes overlap the most viewed articles */
+	if (!hasImages || hasShowcaseMainElement) {
+		minAbove += 100;
+	}
+
 	// For any other inline
 	const relaxedRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
-		minAbove: isPaidContent ? 1600 : 1000,
+		minAbove,
 		minBelow: 300,
 		selectors: {
 			' .ad-slot': adSlotClassSelectorSizes,
