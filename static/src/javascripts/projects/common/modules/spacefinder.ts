@@ -4,7 +4,7 @@ import { log } from '@guardian/libs';
 import { memoize } from 'lodash-es';
 import { amIUsed } from 'commercial/sentinel';
 import fastdom from '../../../lib/fastdom-promise';
-import { markCandidates } from './mark-candidates';
+import { debugMinAbove, markCandidates } from './spacefinder-debug-tools';
 
 type RuleSpacing = {
 	minAbove: number;
@@ -456,6 +456,10 @@ const findSpace = async (
 		(rules.bodySelector &&
 			document.querySelector<HTMLElement>(rules.bodySelector)) ||
 		document;
+
+	if (options.debug && rules.minAbove && rules.body instanceof HTMLElement) {
+		debugMinAbove(rules.body, rules.minAbove);
+	}
 
 	await getReady(rules, options);
 

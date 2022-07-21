@@ -1,4 +1,4 @@
-export const markCandidates = (exclusions, winners, options) => {
+const markCandidates = (exclusions, winners, options) => {
 	if (!options?.debug) return winners;
 
 	const colours = {
@@ -105,3 +105,23 @@ export const markCandidates = (exclusions, winners, options) => {
 
 	return winners;
 };
+
+const debugMinAbove = (body, minAbove) => {
+	body.style.position = 'relative';
+
+	const minAboveIndicator = document.createElement('div');
+
+	minAboveIndicator.style.cssText = `
+		position: absolute;
+		top: ${minAbove}px;
+		width: 100%;
+		background-color: red;
+		height: 5px;
+	`;
+
+	minAboveIndicator.innerHTML = `<div style="position: absolute; right: 0px; background-color: rgba(255, 255, 255, 0.97); padding: 10px; border-radius: 0px 0px 0px 10px; font-family: sans-serif; font-size: 0.7rem;">Threshold for slot to be too close to top (minAbove: ${minAbove}px)</div>`;
+
+	body.appendChild(minAboveIndicator);
+};
+
+export { markCandidates, debugMinAbove };
