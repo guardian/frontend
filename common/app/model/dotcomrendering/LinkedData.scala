@@ -48,7 +48,7 @@ object LinkedData {
 
     List(
       LiveBlogPosting(
-        `@id` = baseURL + article.metadata.id,
+        `@id` = baseURL + "/" + article.metadata.id,
         image = getImagesForArticle(article, fallbackLogo),
         author = authors,
         datePublished = article.trail.webPublicationDate.toString(),
