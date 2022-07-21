@@ -1,11 +1,11 @@
-import { allPages, fronts } from '../fixtures/pages';
+import { allPages, articles } from '../fixtures/pages';
 import { bidderURLs, wins } from '../fixtures/prebid';
 
 const gamUrl = 'https://securepubads.g.doubleclick.net/gampad/ads?**';
 
 describe('GAM targeting', () => {
 	it(`checks that a request is made`, () => {
-		const { path, adTest } = fronts[0];
+		const { path, adTest } = articles[0];
 		cy.visit(`${path}?adtest=${adTest}`);
 
 		cy.allowAllConsent();
@@ -16,7 +16,7 @@ describe('GAM targeting', () => {
 	});
 
 	it(`checks the gdpr_consent param`, () => {
-		const { path, adTest } = fronts[0];
+		const { path, adTest } = articles[0];
 		cy.visit(`${path}?adtest=${adTest}`);
 
 		cy.allowAllConsent();
@@ -30,28 +30,29 @@ describe('GAM targeting', () => {
 		cy.wait('@gamRequest', { timeout: 30000 });
 	});
 
-	fronts.forEach(({ path, section, adTest }) => {
-		it(`checks custom params on the ${section} front`, () => {
-			cy.visit(`${path}?adtest=${adTest}`);
+	// front tests are disabled for the moment
+	// fronts.forEach(({ path, section, adTest }) => {
+	// 	it.skip(`checks custom params on the ${section} front`, () => {
+	// 		cy.visit(`${path}?adtest=${adTest}`);
 
-			cy.allowAllConsent();
+	// 		cy.allowAllConsent();
 
-			cy.intercept({ url: gamUrl }, function (req) {
-				const url = new URL(req.url);
+	// 		cy.intercept({ url: gamUrl }, function (req) {
+	// 			const url = new URL(req.url);
 
-				const custParams = decodeURIComponent(
-					url.searchParams.get('cust_params') || '',
-				);
-				const decodedCustParams = new URLSearchParams(custParams);
+	// 			const custParams = decodeURIComponent(
+	// 				url.searchParams.get('cust_params') || '',
+	// 			);
+	// 			const decodedCustParams = new URLSearchParams(custParams);
 
-				expect(decodedCustParams.get('s')).to.equal(section); // s: section
-				expect(decodedCustParams.get('urlkw')).to.contain(section); // urlkw: url keywords. urlkw is an array.
-				expect(decodedCustParams.get('sens')).to.equal('f'); // not sensitive content
-			}).as('gamRequest');
+	// 			expect(decodedCustParams.get('s')).to.equal(section); // s: section
+	// 			expect(decodedCustParams.get('urlkw')).to.contain(section); // urlkw: url keywords. urlkw is an array.
+	// 			expect(decodedCustParams.get('sens')).to.equal('f'); // not sensitive content
+	// 		}).as('gamRequest');
 
-			cy.wait('@gamRequest', { timeout: 30000 });
-		});
-	});
+	// 		cy.wait('@gamRequest', { timeout: 30000 });
+	// 	});
+	// });
 
 	it(`checks sensitive content is marked as sensitive`, () => {
 		const sensitivePage = allPages.find(
@@ -117,7 +118,7 @@ describe('Prebid targeting', () => {
 	});
 
 	it(`prebid winner should display ad and send targeting to GAM`, () => {
-		const { path } = fronts[0];
+		const { path } = articles[0];
 
 		interceptGamRequest();
 
