@@ -210,7 +210,7 @@ describe('getSlots', () => {
 		getBreakpointKey.mockReturnValue('T');
 		const tabletSlots = getSlots('Crossword');
 		expect(tabletSlots).toContainEqual({
-			key: 'inline1',
+			key: 'crossword-banner',
 			sizes: [[728, 90]],
 		});
 	});
