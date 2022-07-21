@@ -25,43 +25,12 @@ function getClickEventData (element) {
     }
 }
 
- function toNDigits (value, requiredLength) {
-	const valueString = value.toString();
-
-	if (valueString.length < requiredLength) {
-		return `${'0'.repeat(
-			requiredLength - valueString.length
-		)}${valueString}`;
-	}
-	return valueString;
-};
-
-function to2Digits (v) {return toNDigits(v, 2)}
-
-function formatTimestampToUTC (inputDate) {
-	const utc = {
-		year: inputDate.getUTCFullYear(),
-		month: inputDate.getUTCMonth() +1,
-		date: inputDate.getUTCDate(),
-		hours: inputDate.getUTCHours(),
-		minutes: inputDate.getUTCMinutes(),
-		seconds: inputDate.getUTCSeconds(),
-		milliseconds: inputDate.getUTCMilliseconds(),
-	};
-
-	const date = `${utc.year}-${to2Digits(utc.month)}-${to2Digits(utc.date)}`;
-	const time = `${to2Digits(utc.hours)}:${to2Digits(utc.minutes)}:${to2Digits(utc.seconds)}`;
-	const microSeconds = toNDigits(utc.milliseconds * 1000, 6);
-
-	return `${date} ${time}.${microSeconds} UTC`;
-};
-
 
 function buildComponentEventData (formElement, action, eventDescription) {
     const value = JSON.stringify({
 		eventDescription,
 		newsletterId: formElement.getAttribute('data-email-list-name'),
-		timestamp: formatTimestampToUTC(new Date()),
+		timestamp: new Date().getTime,
 	});
 
     return {
