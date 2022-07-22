@@ -10,7 +10,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
-import model.pressed.SpecialReport
+import model.pressed.{PressedContent, SpecialReport}
 import model.{
   ArticleDateTimes,
   CanonicalLiveBlog,
@@ -288,6 +288,23 @@ object DotcomRenderingUtils {
     if (block.attributes.summary.contains(true) && block.title.isEmpty) {
       block.copy(title = Some("Summary"))
     } else block
+  }
+
+  def getStoryPackage(
+      faciaItems: Seq[PressedContent],
+      requestHeader: RequestHeader,
+  ): Option[OnwardCollectionResponse] = {
+    faciaItems match {
+      case Nil => None
+      case _ =>
+        Some(
+          OnwardCollectionResponse(
+            heading = "More on this story",
+            trails =
+              faciaItems.map(faciaItem => OnwardItem.pressedContentToOnwardItem(faciaItem)(requestHeader)).take(10),
+          ),
+        )
+    }
   }
 
 }

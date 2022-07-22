@@ -3,7 +3,6 @@ package model.dotcomrendering
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
-import services.NewsletterData
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Chronos, Edition, Localisation, RichRequestHeader}
@@ -11,22 +10,11 @@ import conf.Configuration
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
-import model.{
-  ArticleDateTimes,
-  Badges,
-  CanonicalLiveBlog,
-  ContentFormat,
-  ContentPage,
-  GUDateTimeFormatNew,
-  InteractivePage,
-  LiveBlogPage,
-  PageWithStoryPackage,
-  Topic,
-  TopicResult,
-}
+import model.{ArticleDateTimes, Badges, CanonicalLiveBlog, ContentFormat, ContentPage, GUDateTimeFormatNew, InteractivePage, LiveBlogPage, PageWithStoryPackage, Topic, TopicResult}
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
+import services.NewsletterData
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -78,6 +66,7 @@ case class DotcomRenderingDataModel(
     contentType: String,
     hasRelated: Boolean,
     hasStoryPackage: Boolean,
+    storyPackage: Option[OnwardCollectionResponse],
     beaconURL: String,
     isCommentable: Boolean,
     commercialProperties: Map[String, EditionCommercialProperties],
@@ -150,6 +139,7 @@ object DotcomRenderingDataModel {
         "contentType" -> model.contentType,
         "hasRelated" -> model.hasRelated,
         "hasStoryPackage" -> model.hasStoryPackage,
+        "storyPackage" -> model.storyPackage,
         "beaconURL" -> model.beaconURL,
         "isCommentable" -> model.isCommentable,
         "commercialProperties" -> model.commercialProperties,
@@ -198,6 +188,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
+      storyPackage = getStoryPackage(page.related.faciaItems, request),
       pinnedPost = None,
       keyEvents = Nil,
       availableTopics = None,
@@ -228,6 +219,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
+      storyPackage = getStoryPackage(page.related.faciaItems, request),
       pinnedPost = None,
       keyEvents = Nil,
       availableTopics = None,
@@ -306,6 +298,7 @@ object DotcomRenderingDataModel {
       bodyBlocks,
       pageType,
       page.related.hasStoryPackage,
+      getStoryPackage(page.related.faciaItems, request), //todo
       pinnedPost,
       timelineBlocks,
       filterKeyEvents,
@@ -326,6 +319,7 @@ object DotcomRenderingDataModel {
       bodyBlocks: Seq[APIBlock],
       pageType: PageType, // TODO remove as format is better
       hasStoryPackage: Boolean,
+      storyPackage: Option[OnwardCollectionResponse],
       pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
@@ -457,6 +451,7 @@ object DotcomRenderingDataModel {
       guardianBaseURL = Configuration.site.host,
       hasRelated = content.content.showInRelated,
       hasStoryPackage = hasStoryPackage,
+      storyPackage = storyPackage,
       headline = content.trail.headline,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       isCommentable = content.trail.isCommentable,
