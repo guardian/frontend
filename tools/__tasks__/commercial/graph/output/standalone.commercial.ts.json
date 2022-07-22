@@ -707,13 +707,13 @@
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
  ],
- "../projects/common/modules/mark-candidates.js": [],
+ "../projects/common/modules/spacefinder-debug-tools.js": [],
  "../projects/common/modules/spacefinder.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/sentinel.ts",
-  "../projects/common/modules/mark-candidates.js"
+  "../projects/common/modules/spacefinder-debug-tools.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
