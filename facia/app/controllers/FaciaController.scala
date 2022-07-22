@@ -74,6 +74,10 @@ trait FaciaController
     Action.async { implicit request =>
       getPressedCollection(id).map {
         case Some(collection) =>
+
+
+
+
           val onwardItems = OnwardCollection.pressedCollectionToOnwardCollection(collection)
 
           Cached(CacheTime.Facia) {

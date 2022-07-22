@@ -178,6 +178,18 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(ws, json, Configuration.rendering.baseURL + "/Article", page.metadata.cacheTime)
   }
 
+  def getOnwards(
+                  ws: WSClient,
+                  onwardsCollection: OnwardsCollection,
+                ) = {
+
+    val capiOnwardsType = {
+
+    };
+
+    post(ws, json, Configuration.rendering.baseURL + "/Onwards", page.metadata.cacheTime)
+  }
+
   def getBlocks(
       ws: WSClient,
       page: LiveBlogPage,
