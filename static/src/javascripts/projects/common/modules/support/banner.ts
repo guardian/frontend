@@ -147,8 +147,6 @@ const buildBannerPayload = async (
 		subscriptionBannerLastClosedAt:
 			(userPrefs.get('subscriptionBannerLastClosedAt') as string) ||
 			undefined,
-		// eslint-disable-next-line -- waiting for guardian/support-dotcom-components#723 to be merged
-		// @ts-ignore
 		signInBannerLastClosedAt:
 			(userPrefs.get('signInBannerLastClosedAt') as string) || undefined,
 		mvtId: getMvtValue() ?? 0,
@@ -162,7 +160,7 @@ const buildBannerPayload = async (
 		contentType,
 		browserId: (await hasCmpConsentForBrowserId()) ? browserId : undefined,
 		purchaseInfo,
-		isSignedIn,
+		isSignedIn: !!isSignedIn,
 	};
 
 	return {
@@ -218,8 +216,6 @@ export const fetchBannerData = async (): Promise<ModuleDataResponse | null> => {
 	const showSignInPrompt =
 		purchaseInfo &&
 		!isSignedIn &&
-		// eslint-disable-next-line -- waiting for guardian/support-dotcom-components#723 to be merged
-		// @ts-ignore
 		!payload.targeting.signInBannerLastClosedAt;
 
 	if (
