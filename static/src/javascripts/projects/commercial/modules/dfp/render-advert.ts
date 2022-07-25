@@ -2,7 +2,6 @@ import { adSizes } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
-import { stickyCommentsMpu, stickyMpu } from '../sticky-mpu';
 import type { Advert } from './Advert';
 import { getAdIframe } from './get-ad-iframe';
 import { renderAdvertLabel } from './render-advert-label';
@@ -71,49 +70,6 @@ sizeCallbacks[adSizes.fluid.toString()] = (advert: Advert) =>
 		removeStyleFromAdIframe(advert, 'vertical-align'),
 	);
 
-/**
- * Trigger sticky scrolling for MPUs in the right-hand article column
- */
-sizeCallbacks[adSizes.mpu.toString()] = (advert: Advert): Promise<void> =>
-	fastdom.measure(() => {
-		if (advert.node.classList.contains('js-sticky-mpu')) {
-			if (advert.node.classList.contains('ad-slot--right')) {
-				stickyMpu(advert.node);
-			}
-			if (advert.node.classList.contains('ad-slot--comments')) {
-				stickyCommentsMpu(advert.node);
-			}
-		}
-		void fastdom.mutate(() => advert.updateExtraSlotClasses());
-	});
-
-/**
- * Resolve the stickyMpu.whenRendered promise
- */
-sizeCallbacks[adSizes.halfPage.toString()] = (advert: Advert) =>
-	fastdom.measure(() => {
-		if (advert.node.classList.contains('ad-slot--right')) {
-			stickyMpu(advert.node);
-		}
-		if (advert.node.classList.contains('ad-slot--comments')) {
-			stickyCommentsMpu(advert.node);
-		}
-		void fastdom.mutate(() => advert.updateExtraSlotClasses());
-	});
-
-sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
-	fastdom.measure(() => {
-		if (advert.node.classList.contains('ad-slot--right')) {
-			stickyMpu(advert.node);
-		}
-		if (advert.node.classList.contains('ad-slot--comments')) {
-			stickyCommentsMpu(advert.node);
-		}
-		void fastdom.mutate(() =>
-			advert.updateExtraSlotClasses('ad-slot--sky'),
-		);
-	});
-
 sizeCallbacks[adSizes.outstreamDesktop.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
@@ -132,6 +88,11 @@ sizeCallbacks[adSizes.outstreamMobile.toString()] = (advert: Advert) =>
 sizeCallbacks[adSizes.googleCard.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--gc');
+	});
+
+sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
+	fastdom.mutate(() => {
+		advert.updateExtraSlotClasses('ad-slot--sky');
 	});
 
 /**
