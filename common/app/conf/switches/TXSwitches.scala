@@ -12,4 +12,14 @@ trait TXSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val contentCardsSwitch = Switch(
+    group = SwitchGroup.TX,
+    "braze-content-cards",
+    "Enables Braze content cards (which power header notifications)",
+    owners = Owner.group(SwitchGroup.TX),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }

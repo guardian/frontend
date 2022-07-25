@@ -26,6 +26,7 @@ import model.{
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
+import services.NewsletterData
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -47,6 +48,7 @@ case class DotcomRenderingDataModel(
     blocks: List[Block],
     pagination: Option[Pagination],
     author: Author,
+    byline: Option[String],
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
     webPublicationSecondaryDateDisplay: String,
@@ -76,6 +78,7 @@ case class DotcomRenderingDataModel(
     contentType: String,
     hasRelated: Boolean,
     hasStoryPackage: Boolean,
+    storyPackage: Option[OnwardCollectionResponse],
     beaconURL: String,
     isCommentable: Boolean,
     commercialProperties: Map[String, EditionCommercialProperties],
@@ -93,6 +96,7 @@ case class DotcomRenderingDataModel(
     matchUrl: Option[String], // Optional url used for match data
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
+    promotedNewsletter: Option[NewsletterData],
 )
 
 object DotcomRenderingDataModel {
@@ -117,6 +121,7 @@ object DotcomRenderingDataModel {
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
         "author" -> model.author,
+        "byline" -> model.byline,
         "webPublicationDate" -> model.webPublicationDate,
         "webPublicationDateDeprecated" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
@@ -146,6 +151,7 @@ object DotcomRenderingDataModel {
         "contentType" -> model.contentType,
         "hasRelated" -> model.hasRelated,
         "hasStoryPackage" -> model.hasStoryPackage,
+        "storyPackage" -> model.storyPackage,
         "beaconURL" -> model.beaconURL,
         "isCommentable" -> model.isCommentable,
         "commercialProperties" -> model.commercialProperties,
@@ -163,6 +169,7 @@ object DotcomRenderingDataModel {
         "matchUrl" -> model.matchUrl,
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
+        "promotedNewsletter" -> model.promotedNewsletter,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -193,9 +200,11 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
+      storyPackage = getStoryPackage(page.related.faciaItems, request),
       pinnedPost = None,
       keyEvents = Nil,
       availableTopics = None,
+      newsletter = None,
       topicResult = None,
     )
   }
@@ -205,6 +214,7 @@ object DotcomRenderingDataModel {
       blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
+      newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = page.article,
@@ -221,9 +231,11 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
+      storyPackage = getStoryPackage(page.related.faciaItems, request),
       pinnedPost = None,
       keyEvents = Nil,
       availableTopics = None,
+      newsletter = newsletter,
       topicResult = None,
     )
   }
@@ -248,6 +260,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean,
       forceLive: Boolean,
       availableTopics: Option[Seq[Topic]] = None,
+      newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
@@ -297,12 +310,14 @@ object DotcomRenderingDataModel {
       bodyBlocks,
       pageType,
       page.related.hasStoryPackage,
+      getStoryPackage(page.related.faciaItems, request), //todo
       pinnedPost,
       timelineBlocks,
       filterKeyEvents,
       mostRecentBlockId,
       forceLive,
       availableTopics,
+      newsletter,
       topicResult,
     )
   }
@@ -316,12 +331,14 @@ object DotcomRenderingDataModel {
       bodyBlocks: Seq[APIBlock],
       pageType: PageType, // TODO remove as format is better
       hasStoryPackage: Boolean,
+      storyPackage: Option[OnwardCollectionResponse],
       pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]],
+      newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
 
@@ -330,6 +347,7 @@ object DotcomRenderingDataModel {
     val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
     val isPaidContent = content.metadata.designType.contains(AdvertisementFeature)
 
+    /** @deprecated – Use byline instead */
     val author: Author = Author(
       byline = content.trail.byline,
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
@@ -433,6 +451,7 @@ object DotcomRenderingDataModel {
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
       blocks = bodyBlocksDCR,
+      byline = content.trail.byline,
       commercialProperties = commercial.editionCommercialProperties,
       config = combinedConfig,
       contentType = content.metadata.contentType.map(_.name).getOrElse(""),
@@ -444,6 +463,7 @@ object DotcomRenderingDataModel {
       guardianBaseURL = Configuration.site.host,
       hasRelated = content.content.showInRelated,
       hasStoryPackage = hasStoryPackage,
+      storyPackage = storyPackage,
       headline = content.trail.headline,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       isCommentable = content.trail.isCommentable,
@@ -491,6 +511,7 @@ object DotcomRenderingDataModel {
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
+      promotedNewsletter = newsletter,
     )
   }
 }

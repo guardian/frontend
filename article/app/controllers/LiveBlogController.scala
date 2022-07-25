@@ -17,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
-import services.CAPILookup
+import services.{CAPILookup, NewsletterService}
 import services.dotcomponents.DotcomponentsLogger
 import topics.TopicService
 import views.support.RenderOtherStatus
@@ -30,6 +30,7 @@ class LiveBlogController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    newsletterService: NewsletterService,
     topicService: TopicService,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -179,6 +180,7 @@ class LiveBlogController(
                 filterKeyEvents,
                 request.forceLive,
                 availableTopics,
+                newsletter = None,
                 topicResult,
               )
             } else {
@@ -186,7 +188,7 @@ class LiveBlogController(
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, filterKeyEvents)
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, newsletter = None, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case _ => Future.successful(NotFound)
@@ -340,6 +342,8 @@ class LiveBlogController(
       topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
+    val newsletter = newsletterService.getNewsletterForLiveBlog(blog)
+
     val model =
       DotcomRenderingDataModel.forLiveblog(
         blog,
@@ -349,6 +353,7 @@ class LiveBlogController(
         filterKeyEvents,
         request.forceLive,
         availableTopics,
+        newsletter,
         topicResult,
       )
     val json = DotcomRenderingDataModel.toJson(model)

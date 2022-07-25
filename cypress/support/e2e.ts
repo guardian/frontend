@@ -23,9 +23,11 @@ declare global {
 			 */
 			getIframeBody(selector: string): Chainable<Element>;
 
-			rejectAllConsent(): void;
+			findAdSlotIframeBySlotId(adSlotId: string): Chainable<Element>;
 
 			allowAllConsent(): void;
+
+			rejectAllConsent(): void;
 		}
 
 		/**

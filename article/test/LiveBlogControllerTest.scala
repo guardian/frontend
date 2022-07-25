@@ -11,6 +11,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import model.{LiveBlogPage, TopicResult, Topic, TopicType}
 import topics.{TopicService}
+import services.NewsletterService
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class LiveBlogControllerTest
     extends AnyFlatSpec
@@ -67,6 +69,7 @@ import topics.{TopicService}
       play.api.test.Helpers.stubControllerComponents(),
       wsClient,
       fakeDcr,
+      new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
       fakeTopicService,
     )
   }
