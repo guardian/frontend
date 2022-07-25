@@ -42,6 +42,7 @@ describe('Sticky MPU', () => {
 	it('should resize the parent container', (done) => {
 		mockHeight(8000);
 		const targetSlot = document.querySelector<HTMLElement>('.js-ad-slot');
+		expect(targetSlot).not.toBeNull();
 		if (targetSlot) {
 			mediator.once('page:commercial:sticky-mpu', () => {
 				const container = document.querySelector<HTMLElement>(
@@ -81,6 +82,7 @@ describe('Sticky Comments MPU', () => {
 	it('should resize the parent container', (done) => {
 		mockHeight(10000);
 		const targetSlot = document.querySelector<HTMLElement>('.js-ad-slot');
+		expect(targetSlot).not.toBeNull();
 		if (targetSlot) {
 			mediator.once('page:commercial:sticky-comments-mpu', () => {
 				const container = document.querySelector<HTMLElement>(
