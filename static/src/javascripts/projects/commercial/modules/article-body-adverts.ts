@@ -1,4 +1,4 @@
-import type { SizeMapping } from '@guardian/commercial-core';
+import type { AdSize, SizeMapping } from '@guardian/commercial-core';
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { multiStickyRightAds } from 'common/modules/experiments/tests/multi-sticky-right-ads';
@@ -114,6 +114,42 @@ const filterNearbyCandidates =
 		);
 	};
 
+/**
+ * Decide whether we have enough space to add additional sizes for a given advert.
+ * This function ensures we don't insert large height ads at the bottom of articles,
+ * when there's not enough room.
+ *
+ * This is a hotfix to prevent adverts at the bottom of articles pushing down content.
+ * Nudge @chrislomaxjones if you're reading this in 2023
+ */
+const decideAdditionalSizes = async (
+	winningPara: HTMLElement,
+	sizes: AdSize[],
+	isLastInline: boolean,
+): Promise<AdSize[]> => {
+	// If this ad isn't the last inline then return all additional sizes
+	if (!isLastInline) {
+		return sizes;
+	}
+
+	// Compute the vertical distance from the TOP of the winning para to the BOTTOM of the article body
+	const distanceFromBottom = await fastdom.measure(() => {
+		const paraTop = winningPara.getBoundingClientRect().top;
+		const articleBodyBottom = document
+			.querySelector<HTMLElement>(articleBodySelector)
+			?.getBoundingClientRect().bottom;
+
+		return articleBodyBottom
+			? Math.abs(paraTop - articleBodyBottom)
+			: undefined;
+	});
+
+	// Return all of the sizes that will fit in the distance to bottom
+	return sizes.filter((adSize) =>
+		distanceFromBottom ? distanceFromBottom >= adSize.height : false,
+	);
+};
+
 const articleBodySelector = '.article-body-commercial-selector';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
@@ -214,8 +250,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 		const slots = paras
 			.slice(0, isInline1 ? 1 : paras.length)
-			.map((para, i) => {
+			.map(async (para, i) => {
 				const inlineId = i + (isInline1 ? 1 : 2);
+				const isLastInline = i === paras.length - 1;
 
 				if (sfdebug == '1' || sfdebug == '2') {
 					para.style.cssText += 'border: thick solid green;';
@@ -254,7 +291,13 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 									adSizes.outstreamGoogleDesktop,
 								],
 						  }
-						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
+						: {
+								desktop: await decideAdditionalSizes(
+									para,
+									[adSizes.halfPage, adSizes.skyscraper],
+									isLastInline,
+								),
+						  },
 					containerOptions,
 				);
 			});
