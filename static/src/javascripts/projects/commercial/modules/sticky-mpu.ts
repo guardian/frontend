@@ -9,7 +9,7 @@ const noSticky = document.documentElement.classList.contains('has-no-sticky');
 let stickyElement: Sticky;
 let stickySlot: HTMLElement;
 
-const onResize = (specs: unknown, _: unknown, iframe?: HTMLElement) => {
+const onResize = (_specs: unknown, _ret: unknown, iframe?: HTMLElement) => {
 	if (iframe && stickySlot.contains(iframe)) {
 		unregister('resize', onResize);
 		stickyElement.updatePosition();
