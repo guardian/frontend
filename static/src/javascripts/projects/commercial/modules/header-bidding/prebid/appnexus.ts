@@ -1,26 +1,32 @@
 import config from '../../../../../lib/config';
+import type { PageTargeting } from '../../../../common/modules/commercial/build-page-targeting';
 import { buildAppNexusTargetingObject } from '../../../../common/modules/commercial/build-page-targeting';
-
+import { isInAuOrNz } from '../../../../common/modules/commercial/geo-utils';
 import {
-	isInUsOrCa,
-	isInAuOrNz,
-} from '../../../../common/modules/commercial/geo-utils';
-
-import {
-	getLargestSize,
 	containsLeaderboard,
 	containsLeaderboardOrBillboard,
 	containsMpu,
 	containsMpuOrDmpu,
 	getBreakpointKey,
+	getLargestSize,
 } from '../utils';
 
-const getAppNexusInvCode = (sizes) => {
+type AppNexusDirectBidParams =
+	| {
+			invCode: string;
+			member: string;
+			keywords: {
+				invc: [string];
+			} & PageTargeting;
+	  }
+	| { placementId: string; keywords: PageTargeting };
+
+const getAppNexusInvCode = (sizes: HeaderBiddingSize[]): string | undefined => {
 	const device = getBreakpointKey() === 'M' ? 'M' : 'D';
 	// section is optional and makes it through to the config object as an empty string... OTL
 	const sectionName =
-		config.get('page.section', '') ||
-		config.get('page.sectionName', '').replace(/ /g, '-');
+		window.guardian.config.page.section ||
+		window.guardian.config.page.sectionName.replace(/ /g, '-');
 
 	const slotSize = getLargestSize(sizes);
 	if (slotSize) {
@@ -28,7 +34,9 @@ const getAppNexusInvCode = (sizes) => {
 	}
 };
 
-export const getAppNexusDirectPlacementId = (sizes) => {
+export const getAppNexusDirectPlacementId = (
+	sizes: HeaderBiddingSize[],
+): string => {
 	if (isInAuOrNz()) {
 		return '11016434';
 	}
@@ -61,10 +69,12 @@ export const getAppNexusDirectPlacementId = (sizes) => {
 	}
 };
 
-export const getAppNexusDirectBidParams = (sizes, pageTargeting) => {
+export const getAppNexusDirectBidParams = (
+	sizes: HeaderBiddingSize[],
+	pageTargeting: PageTargeting,
+): AppNexusDirectBidParams => {
 	if (isInAuOrNz() && config.get('switches.prebidAppnexusInvcode')) {
 		const invCode = getAppNexusInvCode(sizes);
-		// flowlint sketchy-null-string:warn
 		if (invCode) {
 			return {
 				invCode,
