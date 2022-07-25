@@ -135,6 +135,7 @@ object DotcomRenderingUtils {
       .map { pillar =>
         if (designType.contains(AdvertisementFeature)) "labs"
         else if (pillar.toString.toLowerCase == "arts") "culture"
+        else if (pillar.toString.toLowerCase == "code test") "news"
         else pillar.toString.toLowerCase()
       }
       .getOrElse("news")
