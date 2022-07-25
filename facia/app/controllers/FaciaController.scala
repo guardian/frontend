@@ -76,17 +76,24 @@ trait FaciaController
         case Some(collection: PressedCollection) =>
           val onwardItems = OnwardCollection.pressedCollectionToOnwardCollection(collection)
 
-          val onwardsResult = remoteRenderer.getOnwards(
-            ws,
-            onwardItems.heading,
-            onwardItems.trails,
-            "curated-content",
-            true,
-          ) map { result => new Html(result) }
+          if (request.renderHTML) {
+            val onwardsHTML = remoteRenderer.getOnwards(
+              ws,
+              onwardItems.heading,
+              onwardItems.trails,
+              "curated-content",
+              true,
+            ) map { result => new Html(result) }
 
-          Cached(CacheTime.Facia) {
-            JsonComponent(onwardItems)
+            Cached(CacheTime.Facia) {
+              JsonComponent("html" -> onwardsHTML)
+            }
+          } else {
+            Cached(CacheTime.Facia) {
+              JsonComponent(onwardItems)
+            }
           }
+
         case None =>
           Cached(CacheTime.NotFound)(
             WithoutRevalidationResult(NotFound(s"collection id $id does not exist")),
