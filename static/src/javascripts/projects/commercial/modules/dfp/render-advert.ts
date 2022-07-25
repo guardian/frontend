@@ -78,10 +78,10 @@ sizeCallbacks[adSizes.mpu.toString()] = (advert: Advert): Promise<void> =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('js-sticky-mpu')) {
 			if (advert.node.classList.contains('ad-slot--right')) {
-				stickyMpu(advert.node);
+				void stickyMpu(advert.node);
 			}
 			if (advert.node.classList.contains('ad-slot--comments')) {
-				stickyCommentsMpu(advert.node);
+				void stickyCommentsMpu(advert.node);
 			}
 		}
 		void fastdom.mutate(() => advert.updateExtraSlotClasses());
@@ -93,10 +93,10 @@ sizeCallbacks[adSizes.mpu.toString()] = (advert: Advert): Promise<void> =>
 sizeCallbacks[adSizes.halfPage.toString()] = (advert: Advert) =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('ad-slot--right')) {
-			stickyMpu(advert.node);
+			void stickyMpu(advert.node);
 		}
 		if (advert.node.classList.contains('ad-slot--comments')) {
-			stickyCommentsMpu(advert.node);
+			void stickyCommentsMpu(advert.node);
 		}
 		void fastdom.mutate(() => advert.updateExtraSlotClasses());
 	});
@@ -104,10 +104,10 @@ sizeCallbacks[adSizes.halfPage.toString()] = (advert: Advert) =>
 sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
 	fastdom.measure(() => {
 		if (advert.node.classList.contains('ad-slot--right')) {
-			stickyMpu(advert.node);
+			void stickyMpu(advert.node);
 		}
 		if (advert.node.classList.contains('ad-slot--comments')) {
-			stickyCommentsMpu(advert.node);
+			void stickyCommentsMpu(advert.node);
 		}
 		void fastdom.mutate(() =>
 			advert.updateExtraSlotClasses('ad-slot--sky'),

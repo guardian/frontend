@@ -1,6 +1,6 @@
-import { mediator } from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
-import { stickyMpu, stickyCommentsMpu } from './sticky-mpu';
+import { mediator } from '../../../lib/mediator';
+import { stickyCommentsMpu, stickyMpu } from './sticky-mpu';
 
 jest.mock('../../../lib/raven');
 
@@ -11,7 +11,8 @@ Object.defineProperty(HTMLElement.prototype, 'dataset', {
 	value: {},
 });
 
-const mockHeight = (height) => {
+const mockHeight = (height: number) => {
+	// @ts-expect-error -- fastdom.measure should be void, but we're using the return value in the next then()
 	jest.spyOn(fastdom, 'measure').mockReturnValue(Promise.resolve(height));
 };
 
@@ -26,15 +27,11 @@ describe('Sticky MPU', () => {
 	beforeEach(() => {
 		jest.resetAllMocks();
 
-		if (document.body) {
-			document.body.innerHTML = `${domSnippet}<div class="aside-slot-container" aria-hidden="true">${adSlotRight}</div>`;
-		}
+		document.body.innerHTML = `${domSnippet}<div class="aside-slot-container" aria-hidden="true">${adSlotRight}</div>`;
 	});
 
 	afterEach(() => {
-		if (document.body) {
-			document.body.innerHTML = '';
-		}
+		document.body.innerHTML = '';
 	});
 
 	it('should exist', () => {
@@ -44,16 +41,19 @@ describe('Sticky MPU', () => {
 
 	it('should resize the parent container', (done) => {
 		mockHeight(8000);
-		const targetSlot = document.querySelector('.js-ad-slot');
-		targetSlot.dataset = {
-			name: targetSlot.getAttribute('data-name') || '',
-		};
-		mediator.once('page:commercial:sticky-mpu', () => {
-			const container = document.querySelector('.aside-slot-container');
-			expect(container.style.height).toBe('8000px');
-			done();
-		});
-		stickyMpu(targetSlot);
+		const targetSlot = document.querySelector<HTMLElement>('.js-ad-slot');
+		if (targetSlot) {
+			targetSlot.dataset.name =
+				targetSlot.getAttribute('data-name') ?? '';
+			mediator.once('page:commercial:sticky-mpu', () => {
+				const container = document.querySelector<HTMLElement>(
+					'.aside-slot-container',
+				);
+				expect(container?.style.height).toBe('8000px');
+				done();
+			});
+			void stickyMpu(targetSlot);
+		}
 	});
 });
 
@@ -68,15 +68,11 @@ describe('Sticky Comments MPU', () => {
 	beforeEach(() => {
 		jest.resetAllMocks();
 
-		if (document.body) {
-			document.body.innerHTML = `${domSnippet}<div class="aside-slot-container" aria-hidden="true">${adSlotComments}</div>`;
-		}
+		document.body.innerHTML = `${domSnippet}<div class="aside-slot-container" aria-hidden="true">${adSlotComments}</div>`;
 	});
 
 	afterEach(() => {
-		if (document.body) {
-			document.body.innerHTML = '';
-		}
+		document.body.innerHTML = '';
 	});
 
 	it('should exist', () => {
@@ -86,15 +82,18 @@ describe('Sticky Comments MPU', () => {
 
 	it('should resize the parent container', (done) => {
 		mockHeight(10000);
-		const targetSlot = document.querySelector('.js-ad-slot');
-		targetSlot.dataset = {
-			name: targetSlot.getAttribute('data-name') || '',
-		};
-		mediator.once('page:commercial:sticky-comments-mpu', () => {
-			const container = document.querySelector('.aside-slot-container');
-			expect(container.style.height).toBe('10000px');
-			done();
-		});
-		stickyCommentsMpu(targetSlot);
+		const targetSlot = document.querySelector<HTMLElement>('.js-ad-slot');
+		if (targetSlot) {
+			targetSlot.dataset.name =
+				targetSlot.getAttribute('data-name') ?? '';
+			mediator.once('page:commercial:sticky-comments-mpu', () => {
+				const container = document.querySelector<HTMLElement>(
+					'.aside-slot-container',
+				);
+				expect(container?.style.height).toBe('10000px');
+				done();
+			});
+			void stickyCommentsMpu(targetSlot);
+		}
 	});
 });

@@ -1,44 +1,45 @@
 import config from '../../../lib/config';
-import { mediator } from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
+import { mediator } from '../../../lib/mediator';
 import { Sticky } from '../../common/modules/ui/sticky';
 import { register, unregister } from './messenger';
 
-const noSticky = !!(
-	document.documentElement &&
-	document.documentElement.classList.contains('has-no-sticky')
-);
-let stickyElement;
-let stickySlot;
+const noSticky = document.documentElement.classList.contains('has-no-sticky');
 
-const onResize = (specs, _, iframe) => {
-	if (stickySlot.contains(iframe)) {
+let stickyElement: Sticky;
+let stickySlot: HTMLElement;
+
+const onResize = (specs: unknown, _: unknown, iframe?: HTMLElement) => {
+	if (iframe && stickySlot.contains(iframe)) {
 		unregister('resize', onResize);
 		stickyElement.updatePosition();
 	}
 };
 
-const isStickyMpuSlot = (adSlot) => {
+const isStickyMpuSlot = (adSlot: HTMLElement) => {
 	const dataName = adSlot.dataset.name;
 	return dataName === 'comments' || dataName === 'right';
 };
 
-const stickyCommentsMpu = (adSlot) => {
+const stickyCommentsMpu = (adSlot: HTMLElement): Promise<void> => {
 	if (isStickyMpuSlot(adSlot)) {
 		stickySlot = adSlot;
 	}
 
-	const referenceElement = document.querySelector('.js-comments');
+	const referenceElement =
+		document.querySelector<HTMLElement>('.js-comments');
 
-	if (!referenceElement || !adSlot) {
-		return;
+	if (!referenceElement) {
+		return Promise.resolve();
 	}
 
-	fastdom
+	return fastdom
 		.measure(() => referenceElement.offsetHeight - 600)
 		.then((newHeight) =>
 			fastdom.mutate(() => {
-				adSlot.parentNode.style.height = `${newHeight}px`;
+				if (adSlot.parentElement) {
+					adSlot.parentElement.style.height = `${newHeight}px`;
+				}
 			}),
 		)
 		.then(() => {
@@ -55,12 +56,12 @@ stickyCommentsMpu.whenRendered = new Promise((resolve) => {
 	mediator.on('page:commercial:sticky-comments-mpu', resolve);
 });
 
-const stickyMpu = (adSlot) => {
+const stickyMpu = (adSlot: HTMLElement): Promise<void> => {
 	if (isStickyMpuSlot(adSlot)) {
 		stickySlot = adSlot;
 	}
 
-	const referenceElement = document.querySelector(
+	const referenceElement = document.querySelector<HTMLElement>(
 		[
 			'.js-article__body:not([style*="display: none;"])',
 			'.js-liveblog-body-content:not([style*="display: none;"])',
@@ -72,17 +73,18 @@ const stickyMpu = (adSlot) => {
 
 	if (
 		!referenceElement ||
-		!adSlot ||
-		config.get('page.hasShowcaseMainElement')
+		window.guardian.config.page.hasShowcaseMainElement
 	) {
-		return;
+		return Promise.resolve();
 	}
 
-	fastdom
+	return fastdom
 		.measure(() => referenceElement.offsetTop + stickyPixelBoundary)
 		.then((newHeight) =>
 			fastdom.mutate(() => {
-				adSlot.parentNode.style.height = `${newHeight}px`;
+				if (adSlot.parentElement) {
+					adSlot.parentElement.style.height = `${newHeight}px`;
+				}
 			}),
 		)
 		.then(() => {
