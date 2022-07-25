@@ -1,7 +1,8 @@
 package topics
 
-import model.{TopicsApiResponse, TopicResult, Topic, TopicType}
-import org.scalatest.{BeforeAndAfterAll}
+import model.{Topic, TopicResult, TopicType, TopicsApiResponse}
+import org.mockito.Matchers.anyString
+import org.scalatest.BeforeAndAfterAll
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import test.WithTestExecutionContext
@@ -86,6 +87,20 @@ class TopicServiceTest
     refreshJob shouldBe a[Unit]
     results.isDefined should be(true)
     results.get.get("key1") should equal(Some(successResponse))
+  }
+
+  "refreshTopics" should "update in memory topics with only the first 50 items given 60 records in S3" in {
+    val keys = (1 until 60).map(key => s"key${key}").toList
+    when(fakeClient.getListOfKeys()) thenReturn Future.successful(keys)
+    when(fakeClient.getObject(anyString())) thenReturn Future.successful(successResponse)
+
+    val topicService = new TopicService(fakeClient)
+
+    val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
+    val results = topicService.getAllTopics
+
+    refreshJob shouldBe a[Unit]
+    results.get.size should equal(50)
   }
 
   "getSelectedTopic" should "return the correct topic result given correct blog id, filter entity and filter value" in {
