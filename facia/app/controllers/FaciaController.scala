@@ -374,7 +374,7 @@ trait FaciaController
 
                 val config = collection.config
 
-                remoteRenderer.getCards(ws = ws, cards = pressedContent, startIndex = startIndex, config = config)
+                remoteRenderer.getCards(ws = ws, cards = pressedContent, config = config)
 
               }) getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
 

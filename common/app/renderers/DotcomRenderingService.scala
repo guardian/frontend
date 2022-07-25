@@ -209,13 +209,12 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getCards(
       ws: WSClient,
       cards: List[PressedContent],
-      startIndex: Int,
       config: CollectionConfig,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomCardsRenderingDataModel(cards, startIndex, config)
+    val dataModel = DotcomCardsRenderingDataModel(cards, config)
 
     val json = DotcomCardsRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Cards", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.baseURL + "/ShowMore", CacheTime.Facia)
   }
 
   def getInteractive(
