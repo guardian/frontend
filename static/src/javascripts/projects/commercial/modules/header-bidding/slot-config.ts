@@ -79,8 +79,6 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 						[300, 250],
 						[620, 350],
 				  ]
-				: isCrossword
-				? [[728, 90]]
 				: [[300, 250]],
 		},
 		{
@@ -129,8 +127,6 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 						[300, 250],
 						[620, 350],
 				  ]
-				: isCrossword
-				? [[728, 90]]
 				: [[300, 250]],
 		},
 		{
@@ -172,6 +168,13 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 		sizes: [[320, 50]],
 	};
 
+	const crosswordBannerSlot: HeaderBiddingSlot = {
+		key: 'crossword-banner',
+		sizes: [[728, 90]],
+	};
+
+	const crosswordSlots = isCrossword ? [crosswordBannerSlot] : [];
+
 	switch (getBreakpointKey()) {
 		case 'M':
 			return shouldIncludeMobileSticky() &&
@@ -179,9 +182,9 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 				? commonSlots.concat([...mobileSlots, mobileStickySlot])
 				: commonSlots.concat(mobileSlots);
 		case 'T':
-			return commonSlots.concat(tabletSlots);
+			return commonSlots.concat(tabletSlots, crosswordSlots);
 		default:
-			return commonSlots.concat(desktopSlots);
+			return commonSlots.concat(desktopSlots, crosswordSlots);
 	}
 };
 
