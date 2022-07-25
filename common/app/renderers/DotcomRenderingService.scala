@@ -8,17 +8,11 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{
-  DotcomBlocksRenderingDataModel,
-  DotcomFrontsRenderingDataModel,
-  DotcomRenderingDataModel,
-  PageType,
-}
-
-import services.NewsletterData
+import model.dotcomrendering._
 import model.{
   CacheTime,
   Cached,
+  ContentFormat,
   InteractivePage,
   LiveBlogPage,
   NoCache,
@@ -31,6 +25,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import services.NewsletterData
 
 import java.net.ConnectException
 import java.util.concurrent.TimeoutException
@@ -179,15 +174,23 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   }
 
   def getOnwards(
-                  ws: WSClient,
-                  onwardsCollection: OnwardsCollection,
-                ) = {
+      ws: WSClient,
+      heading: String,
+      trails: Seq[OnwardItem],
+      ophanComponentName: String,
+      isCuratedContent: Boolean,
+  )(implicit request: RequestHeader): Future[String] = {
 
-    val capiOnwardsType = {
+    val dataModel = DotcomOnwardsRenderingDataModel(
+      heading,
+      trails,
+      ophanComponentName,
+      isCuratedContent,
+    )
 
-    };
+    val json = DotcomOnwardsRenderingDataModel.toJson(dataModel)
 
-    post(ws, json, Configuration.rendering.baseURL + "/Onwards", page.metadata.cacheTime)
+    postWithoutHandler(ws, json, Configuration.rendering.baseURL + "/Onwards") map (_.body)
   }
 
   def getBlocks(

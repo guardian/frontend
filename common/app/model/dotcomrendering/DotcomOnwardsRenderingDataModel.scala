@@ -11,7 +11,6 @@ import play.api.libs.json.{Json, Writes}
 case class DotcomOnwardsRenderingDataModel(
     heading: String,
     trails: Seq[OnwardItem],
-    format: ContentFormat,
     ophanComponentName: String,
     isCuratedContent: Boolean,
 )
@@ -25,7 +24,6 @@ object DotcomOnwardsRenderingDataModel {
       Json.obj(
         "heading" -> model.heading,
         "trails" -> model.trails,
-        "format" -> model.format,
         "ophanComponentName" -> model.ophanComponentName,
         "isCuratedContent" -> model.isCuratedContent,
       )
@@ -37,16 +35,16 @@ object DotcomOnwardsRenderingDataModel {
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }
 
-  def apply(
-      ophanComponentName: String,
-  ): DotcomOnwardsRenderingDataModel = {
-
-    DotcomOnwardsRenderingDataModel(
-      heading = ???,
-      trails = ???,
-      format = ???,
-      ophanComponentName = ophanComponentName,
-      isCuratedContent = ???,
-    )
-  }
+//  def apply(
+//      ophanComponentName: String,
+//  ): DotcomOnwardsRenderingDataModel = {
+//
+//    DotcomOnwardsRenderingDataModel(
+//      heading = ???,
+//      trails = ???,
+//      format = ???,
+//      ophanComponentName = ophanComponentName,
+//      isCuratedContent = ???,
+//    )
+//  }
 }

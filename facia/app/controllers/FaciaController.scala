@@ -73,12 +73,16 @@ trait FaciaController
   def renderContainerDataJson(id: String): Action[AnyContent] =
     Action.async { implicit request =>
       getPressedCollection(id).map {
-        case Some(collection) =>
-
-
-
-
+        case Some(collection: PressedCollection) =>
           val onwardItems = OnwardCollection.pressedCollectionToOnwardCollection(collection)
+
+          val onwardsResult = remoteRenderer.getOnwards(
+            ws,
+            onwardItems.heading,
+            onwardItems.trails,
+            "curated-content",
+            true,
+          ) map { result => new Html(result) }
 
           Cached(CacheTime.Facia) {
             JsonComponent(onwardItems)
