@@ -19,6 +19,7 @@ case class NewsletterResponse(
     signupPage: Option[String],
     restricted: Boolean,
     paused: Boolean,
+    cancelled: Boolean,
     emailConfirmation: Boolean,
     group: String,
 )
