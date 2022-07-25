@@ -43,8 +43,6 @@ describe('Sticky MPU', () => {
 		mockHeight(8000);
 		const targetSlot = document.querySelector<HTMLElement>('.js-ad-slot');
 		if (targetSlot) {
-			targetSlot.dataset.name =
-				targetSlot.getAttribute('data-name') ?? '';
 			mediator.once('page:commercial:sticky-mpu', () => {
 				const container = document.querySelector<HTMLElement>(
 					'.aside-slot-container',
@@ -84,8 +82,6 @@ describe('Sticky Comments MPU', () => {
 		mockHeight(10000);
 		const targetSlot = document.querySelector<HTMLElement>('.js-ad-slot');
 		if (targetSlot) {
-			targetSlot.dataset.name =
-				targetSlot.getAttribute('data-name') ?? '';
 			mediator.once('page:commercial:sticky-comments-mpu', () => {
 				const container = document.querySelector<HTMLElement>(
 					'.aside-slot-container',
