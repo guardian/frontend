@@ -30,7 +30,7 @@ function buildComponentEventData (formElement, action, eventDescription) {
     const value = JSON.stringify({
 		eventDescription,
 		newsletterId: formElement.getAttribute('data-email-list-name'),
-		timestamp: new Date().getTime,
+		timestamp: new Date().getTime(),
 	});
 
     return {
