@@ -7,13 +7,14 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
 
+  private val MAX_LIVEBLOGS_WITH_TOPICS = 50
   private val topicsDetails = Box[Option[Map[String, TopicsApiResponse]]](None)
 
   def refreshTopics()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val listOfKeys = topicS3Client
       .getListOfKeys()
       .map(keys => {
-        if (keys.length > 50)
+        if (keys.length > MAX_LIVEBLOGS_WITH_TOPICS)
           log.warn(s"Over 50 live blogs are stored in S3, only caching the first 50 and ignoring the rest!")
         keys.take(50)
       })
