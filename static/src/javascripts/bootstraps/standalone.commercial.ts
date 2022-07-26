@@ -38,7 +38,6 @@ import { paidContainers } from '../projects/commercial/modules/paid-containers';
 import { init as initPaidForBand } from '../projects/commercial/modules/paidfor-band';
 import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercial/modules/remove-slots';
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
-import { init as initStickyTopBanner } from '../projects/commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
 import { init as initTrackGpcSignal } from '../projects/commercial/modules/track-gpc-signal';
 import { init as initTrackScrollDepth } from '../projects/commercial/modules/track-scroll-depth';
@@ -88,7 +87,6 @@ if (!commercialFeatures.adFree) {
 		['cm-liveblogAdverts', initLiveblogAdverts],
 		['cm-thirdPartyTags', initThirdPartyTags],
 		['cm-redplanet', initRedplanet],
-		['cm-stickyTopBanner', initStickyTopBanner],
 		['cm-paidContainers', paidContainers],
 		['cm-paidforBand', initPaidForBand],
 		['cm-commentAdverts', initCommentAdverts],
