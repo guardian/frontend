@@ -175,9 +175,6 @@ jest.mock('./refresh-on-resize', () => ({
 jest.mock('../../../common/modules/analytics/beacon', () => ({
 	fire: jest.fn(),
 }));
-jest.mock('../sticky-mpu', () => ({
-	stickyMpu: jest.fn(),
-}));
 jest.mock('../../../common/modules/onward/geo-most-popular', () => ({
 	geoMostPopular: { render: jest.fn() },
 }));
