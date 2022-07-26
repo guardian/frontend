@@ -9,8 +9,7 @@ describe('right slot on pages', () => {
 
 			cy.visit(`${path}?adtest=${adTest}`);
 
-			// Click "Yes, I'm happy" on the sourcepoint banner to obtain consent
-			cy.getIframeBody('sp_message_iframe_').find('.btn-primary').click();
+			cy.allowAllConsent();
 
 			// Check that the right ad slot is on the page
 			cy.get('#dfp-ad--right').should('exist');
@@ -19,7 +18,7 @@ describe('right slot on pages', () => {
 			cy.get('#dfp-ad--right').scrollIntoView();
 
 			// Check that an iframe is placed inside the ad slot
-			cy.get('#dfp-ad--right').find('iframe').should('exist');
+			cy.findAdSlotIframeBySlotId('dfp-ad--right').should('exist');
 		});
 	});
 });

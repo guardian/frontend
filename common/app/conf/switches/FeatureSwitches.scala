@@ -476,7 +476,7 @@ trait FeatureSwitches {
   val AutomaticFilters = Switch(
     SwitchGroup.Feature,
     "automatic-filters",
-    "When ON, displays automatic filters and corresponding UI changes on business live blogs only",
+    "When ON, displays automatic filters (Topics) on live blogs",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
