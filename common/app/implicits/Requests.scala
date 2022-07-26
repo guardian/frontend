@@ -116,8 +116,8 @@ trait Requests {
     // slot machine
     lazy val slotMachineFlags = r.getQueryString("slot-machine-flags").getOrElse("")
 
-    lazy val renderHTMLOff =  r.getQueryString("html").contains("false")
-    lazy val renderHTML =  r.getQueryString("html").isDefined && !renderHTMLOff
+    lazy val renderHTMLOff = r.getQueryString("html").contains("false")
+    lazy val renderHTML = r.getQueryString("html").isDefined && !renderHTMLOff
   }
 
 }
