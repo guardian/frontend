@@ -6,7 +6,7 @@ import common.Edition
 import common.commercial.EditionAdTargeting.adTargetParamValueWrites
 import conf.Configuration
 import model.dotcomrendering.pageElements.PageElement
-import model.{ContentFormat, ContentPage, LiveBlogPage}
+import model.{ContentFormat, ContentPage}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.CamelCase

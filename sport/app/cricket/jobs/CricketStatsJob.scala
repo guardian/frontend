@@ -1,7 +1,6 @@
 package jobs
 
 import common.{Box, GuLogging}
-import common.Chronos
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
 

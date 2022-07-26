@@ -416,7 +416,7 @@ case class GuCreativeTemplate(
   lazy val isForApps: Boolean = name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
 }
 
-object GuCreativeTemplate extends implicits.Collections {
+object GuCreativeTemplate {
 
   implicit val guCreativeTemplateFormats: Format[GuCreativeTemplate] = Json.format[GuCreativeTemplate]
 }

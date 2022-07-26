@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader}
 import views.support.CamelCase
 import experiments.ActiveExperiments

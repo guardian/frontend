@@ -13,7 +13,7 @@ import com.gu.contentapi.client.model.v1.{
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import common.{Chronos, Edition}
 import conf.Configuration
-import layout.ContentWidths.{BodyMedia, ImageRoleWidthsByBreakpointMapping, ImmersiveMedia, MainMedia}
+import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}

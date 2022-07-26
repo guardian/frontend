@@ -10,7 +10,7 @@ import football.model.{FootballMatchTrail, GuTeamCodes}
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
-import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam, TeamCodes}
+import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html

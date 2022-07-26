@@ -12,7 +12,6 @@ import com.gu.facia.client.models.{
 }
 import model.PressedPage
 import model.facia.PressedCollection
-import model.pressed.CollectionConfig
 
 object TargetedCollections {
   // remove all collections with a targeted territory that is not allowed

@@ -1,7 +1,7 @@
 package model.structuredData
 
 import common.LinkTo
-import model.{Article, Cached}
+import model.Article
 import model.liveblog._
 import org.joda.time.DateTime
 import play.api.libs.json._

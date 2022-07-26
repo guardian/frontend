@@ -52,8 +52,8 @@ type SpacefinderRules = {
 type SpacefinderWriter = (paras: HTMLElement[]) => Promise<void>;
 
 type SpacefinderOptions = {
-	waitForImages: boolean;
-	waitForInteractives: boolean;
+	waitForImages?: boolean;
+	waitForInteractives?: boolean;
 	debug?: boolean;
 };
 
@@ -78,7 +78,7 @@ const query = (selector: string, context?: HTMLElement | Document) => [
 // maximum time (in ms) to wait for images to be loaded
 const LOADING_TIMEOUT = 5_000;
 
-const defaultOptions = {
+const defaultOptions: SpacefinderOptions = {
 	waitForImages: true,
 	waitForInteractives: false,
 	debug: false,
@@ -113,7 +113,7 @@ const onImagesLoaded = memoize((rules: SpacefinderRules) => {
 				img.addEventListener('load', resolve);
 			}),
 	);
-	return Promise.all(imgPromises);
+	return Promise.all(imgPromises).then(() => Promise.resolve());
 }, getFuncId);
 
 const waitForSetHeightMessage = (
@@ -326,15 +326,13 @@ const getReady = (rules: SpacefinderRules, options: SpacefinderOptions) =>
 			window.setTimeout(() => resolve('timeout'), LOADING_TIMEOUT),
 		),
 		Promise.all([
-			options.waitForImages ? onImagesLoaded(rules) : true,
-			options.waitForInteractives ? onInteractivesLoaded(rules) : true,
+			options.waitForImages ? onImagesLoaded(rules) : Promise.resolve(),
+			options.waitForInteractives
+				? onInteractivesLoaded(rules)
+				: Promise.resolve(),
 		]),
 	]).then((value) => {
-		// TODO: remove this conditional once idle loading becomes the default behaviour
-		const isInIdleLoadingVariant =
-			window.guardian.config.tests?.interactivesIdleLoadingVariant;
-
-		if (value === 'timeout' && isInIdleLoadingVariant) {
+		if (value === 'timeout') {
 			log('commercial', 'Spacefinder timeout hit');
 			amIUsed('spacefinder.ts', 'SpacefinderTimeoutHit');
 		}
@@ -404,10 +402,14 @@ const getMeasurements = (
 		: [];
 
 	return fastdom.measure((): Measurements => {
-		const bodyDims =
-			rules.body instanceof Element
-				? rules.body.getBoundingClientRect()
-				: undefined;
+		let bodyDistanceToTopOfPage = 0;
+		let bodyHeight = 0;
+		if (rules.body instanceof Element) {
+			const bodyElement = rules.body.getBoundingClientRect();
+			// bodyElement is relative to the viewport, so we need to add scroll position to get the distance
+			bodyDistanceToTopOfPage = bodyElement.top + window.scrollY;
+			bodyHeight = bodyElement.height;
+		}
 		const candidatesWithDims = candidates.map(getDimensions);
 		const contentMetaWithDims =
 			rules.clearContentMeta && contentMeta
@@ -419,9 +421,10 @@ const getMeasurements = (
 			result[selector] = selectedElements.map(getDimensions);
 			return result;
 		}, {});
+
 		return {
-			bodyTop: bodyDims?.top ?? 0,
-			bodyHeight: bodyDims?.height ?? 0,
+			bodyTop: bodyDistanceToTopOfPage,
+			bodyHeight,
 			candidates: candidatesWithDims,
 			contentMeta: contentMetaWithDims,
 			opponents: opponentsWithDims,
@@ -433,9 +436,10 @@ const getMeasurements = (
 // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
 const findSpace = async (
 	rules: SpacefinderRules,
-	options: SpacefinderOptions = defaultOptions,
+	options?: SpacefinderOptions,
 	exclusions: SpacefinderExclusions = {},
 ): Promise<HTMLElement[]> => {
+	options = { ...defaultOptions, ...options };
 	rules.body =
 		(rules.bodySelector &&
 			document.querySelector<HTMLElement>(rules.bodySelector)) ||

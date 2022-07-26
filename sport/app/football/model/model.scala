@@ -17,8 +17,8 @@ case class Competition(
     leagueTable: Seq[LeagueTableEntry] = Nil,
     showInTeamsList: Boolean = false,
     tableDividers: List[Int] = Nil,
-) extends implicits.Collections
-    with implicits.Football {
+    finalMatchSVG: Option[String] = None,
+) extends implicits.Football {
 
   lazy val hasMatches = matches.nonEmpty
   lazy val hasLiveMatches = matches.exists(_.isLive)

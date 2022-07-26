@@ -10,7 +10,7 @@ import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{Breaking, Canonical, ConfigJson, Metadata, Special}
 import common.LoggingField.LogFieldString
-import common.{LoggingField, _}
+import common._
 import common.commercial.CommercialProperties
 import conf.Configuration
 import conf.switches.Switches

@@ -1,6 +1,6 @@
 package football.model
 
-import java.time.{ZonedDateTime, LocalDate}
+import java.time.ZonedDateTime
 import pa._
 import model.Competition
 import java.time.temporal.ChronoUnit

@@ -36,7 +36,7 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {
     },
   )
 
-  def run()(implicit executionContext: ExecutionContext) {
+  def run()(implicit executionContext: ExecutionContext): Unit = {
 
     val fRawPageViews: Future[GetMetricStatisticsResult] = CloudWatchStats.rawPageViews()
     val fGooglePageViews = CloudWatchStats.googleAnalyticsPageViews()

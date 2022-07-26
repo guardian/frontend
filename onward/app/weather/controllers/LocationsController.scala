@@ -1,7 +1,6 @@
 package weather.controllers
 
 import common._
-import weather.geo._
 import model.{CacheTime, Cached}
 import weather.models.CityResponse
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
@@ -40,10 +39,19 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
 
       (maybeCountry, maybeCity) match {
         case (Some(countryCode), Some(city)) =>
-          weatherApi.searchForCity(countryCode, city, maybeRegion) map { locations =>
-            val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == countryCode).toList)
+          weatherApi.searchForCity(countryCode, city) map { locations =>
+            val cities = CityResponse.fromLocationResponses(
+              locations
+                .filter(_.Country.ID == countryCode)
+                .sortBy(_.AdministrativeArea.ID match {
+                  // We want to get cities within a matching region to come up first
+                  case region if maybeRegion.contains(region) => 0
+                  case _                                      => 1
+                })
+                .toList,
+            )
             cities.headOption.fold {
-              log.warn(s"Could not find $countryCode, $city")
+              log.warn(s"Could not find $countryCode, $city, $maybeRegion")
               Cached(CacheTime.NotFound)(JsonNotFound())
             } { weatherCity =>
               log.info(s"Matched $countryCode, $city, $maybeRegion to ${weatherCity.id}")

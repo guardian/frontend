@@ -1,22 +1,19 @@
 {
-    "compilerOptions": {
-      "esModuleInterop": true,
-      "lib": ["ES2019", "DOM"],
-      "module": "commonjs",
-      "noEmit": true,
-      // https://github.com/cypress-io/cypress/issues/9298
-      "target": "ES2019",
-      "types": ["node", "cypress"],
-      "skipLibCheck": true,
-      "strict": true,
-      "paths": {
-        "common/*": [
-            "../static/src/javascripts/projects/common/*"
-          ],
-          "lib/*": [
-            "../static/src/javascripts/lib/*"
-          ],
-      }
-    },
-    "include": ["**/*.ts"]
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "lib": ["ES2019", "DOM"],
+    "module": "commonjs",
+    "noEmit": true,
+    // https://github.com/cypress-io/cypress/issues/9298
+    "target": "ES2019",
+    "types": ["node", "cypress"],
+    "skipLibCheck": true,
+    "strict": true,
+    "paths": {
+      "common/*": ["../static/src/javascripts/projects/common/*"],
+      "lib/*": ["../static/src/javascripts/lib/*"],
+      "types/*": ["../static/src/javascripts/types/*"]
+    }
+  },
+  "include": ["**/*.ts", "../static/src/javascripts/types/global.d.ts"]
 }

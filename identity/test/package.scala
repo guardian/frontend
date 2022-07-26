@@ -1,16 +1,12 @@
 package test
 
 import java.io.File
-import common.GuardianConfiguration
-import conf.{IdConfig, IdentityConfiguration}
+import conf.IdConfig
 import controllers.EditProfileControllerTest
 import controllers.ConsentsJourneyControllerTest
 import filters.StrictTransportSecurityHeaderFilterTest
 import org.scalatest.Suites
-import org.scalatestplus.play.PortNumber
-import play.api.i18n.I18nComponents
 import play.api._
-import play.api.http.HttpConfiguration
 import play.api.test.Helpers._
 
 /**

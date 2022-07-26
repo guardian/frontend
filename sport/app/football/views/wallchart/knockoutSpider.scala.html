@@ -13,7 +13,7 @@
                         @defining(matches.length/2) { half =>
                             <div class="football-round__matches">
                                 @matches.take(half).map{ m =>
-                                    @football.views.html.wallchart.knockoutMatch(m, round)
+                                    @football.views.html.wallchart.knockoutMatch(m, round, competition)
                                 }
                             </div>
                         }
@@ -32,7 +32,7 @@
                             @defining(matches.length/2) { half =>
                                 <div class="football-round__matches">
                                     @matches.drop(half).map{ m =>
-                                        @football.views.html.wallchart.knockoutMatch(m, round)
+                                        @football.views.html.wallchart.knockoutMatch(m, round, competition)
                                     }
                                 </div>
                             }
@@ -54,7 +54,7 @@
                         <div class="football-round__name">@round.name.getOrElse("")</div>
                         <div class="football-round__matches">
                             @matches.map{ m =>
-                                @football.views.html.wallchart.knockoutMatch(m, round)
+                                @football.views.html.wallchart.knockoutMatch(m, round, competition)
                             }
                         </div>
                     </div>

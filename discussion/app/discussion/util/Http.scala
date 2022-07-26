@@ -2,7 +2,7 @@ package discussion.util
 
 import common.LoggingField.LogField
 import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.JsValue
 import common.{GuLogging, StopWatch}
 import discussion.api.{NotFoundException, OtherException}
 

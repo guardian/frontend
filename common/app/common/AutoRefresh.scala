@@ -24,7 +24,7 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
     } yield Future.successful(a)).getOrElse(refresh())
 
   class Task(implicit executionContext: ExecutionContext) extends Runnable {
-    def run() {
+    def run(): Unit = {
       refresh().onComplete {
         case Success(a) =>
           log.debug(s"Updated AutoRefresh: $a")

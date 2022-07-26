@@ -12,11 +12,21 @@ import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
   DotcomRenderingDataModel,
-  DotcomRenderingUtils,
   PageType,
 }
-import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, Page, PageWithStoryPackage, PressedPage}
-import play.api.libs.json.Json
+
+import services.NewsletterData
+import model.{
+  CacheTime,
+  Cached,
+  InteractivePage,
+  LiveBlogPage,
+  NoCache,
+  PageWithStoryPackage,
+  PressedPage,
+  Topic,
+  TopicResult,
+}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -114,13 +124,23 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: PageWithStoryPackage,
       blocks: Blocks,
       pageType: PageType,
+      newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] = {
 
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
-        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive = false)
-      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
+        DotcomRenderingDataModel.forLiveblog(
+          liveblog,
+          blocks,
+          request,
+          pageType,
+          filterKeyEvents,
+          forceLive = false,
+          newsletter = newsletter,
+          topicResult = None,
+        )
+      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter)
     }
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
@@ -134,12 +154,24 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
+      availableTopics: Option[Seq[Topic]] = None,
+      newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   )(implicit request: RequestHeader): Future[Result] = {
-
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
-        DotcomRenderingDataModel.forLiveblog(liveblog, blocks, request, pageType, filterKeyEvents, forceLive)
-      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType)
+        DotcomRenderingDataModel.forLiveblog(
+          liveblog,
+          blocks,
+          request,
+          pageType,
+          filterKeyEvents,
+          forceLive,
+          availableTopics,
+          newsletter,
+          topicResult,
+        )
+      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter)
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)

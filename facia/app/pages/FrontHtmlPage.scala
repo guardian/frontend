@@ -1,6 +1,5 @@
 package pages
 
-import common.Edition
 import conf.switches.Switches.WeAreHiring
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
@@ -13,7 +12,6 @@ import views.html.fragments.page.body.{bodyTag, mainContent, skipToMainContent}
 import views.html.fragments.page.head._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
-import views.html.stacked
 import html.HtmlPageHelpers.{ContentCSSFile, FaciaCSSFile}
 
 object FrontHtmlPage extends HtmlPage[PressedPage] {

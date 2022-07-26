@@ -50,6 +50,7 @@ class LeagueTableController(
     "Scottish Cup",
     "Scottish League Cup",
     "Women's FA Cup",
+    "Women's Euro 2022",
     "World Cup 2022 qualifying",
     "Nations League",
   )

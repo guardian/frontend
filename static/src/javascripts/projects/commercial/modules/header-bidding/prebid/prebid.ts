@@ -1,4 +1,5 @@
-import { EventTimer } from '@guardian/commercial-core';
+import type { AdSize } from '@guardian/commercial-core';
+import { createAdSize, EventTimer } from '@guardian/commercial-core';
 import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import { onConsent } from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
@@ -67,6 +68,9 @@ type PbjsConfig = {
 	realTimeData?: unknown;
 	criteo?: {
 		fastBidVersion: 'latest' | 'none' | `${number}`;
+	};
+	improvedigital?: {
+		usePrebidSizes?: boolean;
 	};
 };
 
@@ -333,8 +337,6 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		});
 	}
 
-	window.pbjs.setConfig(pbjsConfig);
-
 	if (config.get<boolean>('switches.prebidAnalytics', false)) {
 		window.pbjs.enableAnalytics([
 			{
@@ -382,7 +384,13 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			],
 			suppressEmptyKeys: true,
 		};
+
+		pbjsConfig.improvedigital = {
+			usePrebidSizes: true,
+		};
 	}
+
+	window.pbjs.setConfig(pbjsConfig);
 
 	// Adjust slot size when prebid ad loads
 	window.pbjs.onEvent('bidWon', (data) => {
@@ -392,7 +400,7 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			return;
 		}
 
-		const size: AdSizeTuple = [width, height]; // eg. [300, 250]
+		const size: AdSize = createAdSize(width, height); // eg. [300, 250]
 		const advert = getAdvertById(adUnitCode);
 
 		if (!advert) {

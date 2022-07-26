@@ -8,7 +8,6 @@ import model.Cached.RevalidatableResult
 import model.{ApplicationContext, PressedPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import renderers.DotcomRenderingService
 import services.ConfigAgent
 
 import scala.concurrent.Future

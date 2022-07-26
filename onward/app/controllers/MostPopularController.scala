@@ -1,7 +1,5 @@
 package controllers
 
-import com.github.nscala_time.time.Imports.DateTimeZone
-
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import common._
@@ -11,7 +9,6 @@ import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import model.pressed.PressedContent
 import model.dotcomrendering.{
   MostPopularGeoResponse,
   MostPopularNx2,
@@ -19,11 +16,9 @@ import model.dotcomrendering.{
   OnwardCollectionResponseDCR,
   OnwardItem,
 }
-import implicits.FaciaContentFrontendHelpers._
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
-import views.support.{ImgSrc, RemoveOuterParaHtml}
 
 import scala.concurrent.Future
 

@@ -1,5 +1,7 @@
 import type { SizeMapping } from '@guardian/commercial-core';
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { multiStickyRightAds } from 'common/modules/experiments/tests/multi-sticky-right-ads';
 import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
@@ -15,8 +17,15 @@ import type {
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
 import { trackAdRender } from './dfp/track-ad-render';
+import { computeStickyHeights, insertHeightStyles } from './sticky-inlines';
 
 type SlotName = Parameters<typeof createAdSlot>[0];
+
+type ContainerOptions = {
+	sticky?: boolean;
+	enableDebug?: boolean;
+	className?: string;
+};
 
 const sfdebug = getUrlVars().sfdebug;
 
@@ -27,31 +36,53 @@ const adSlotClassSelectorSizes = {
 	minBelow: 500,
 };
 
+/**
+ * Get the classname for an ad slot container
+ *
+ * We add 2 to the index because these are always ads added in the second pass.
+ *
+ * e.g. the 0th container inserted in pass 2 becomes `ad-slot-container--2` to match `inline2`
+ *
+ * @param i Index of winning paragraph
+ * @returns The classname for container
+ */
+const getStickyContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
+
+const wrapSlotInContainer = (
+	ad: HTMLElement,
+	options: ContainerOptions = {},
+) => {
+	const container = document.createElement('div');
+
+	container.className = `ad-slot-container ${options.className ?? ''}`;
+
+	if (options.sticky) {
+		ad.style.cssText += 'position: sticky; top: 0;';
+	}
+
+	if (options.enableDebug) {
+		container.style.cssText += 'outline: 2px solid red;';
+	}
+
+	container.appendChild(ad);
+	return container;
+};
+
 const insertAdAtPara = (
 	para: Node,
 	name: string,
 	type: SlotName,
 	classes?: string,
 	sizes?: SizeMapping,
-	includeContainer?: boolean,
+	containerOptions: ContainerOptions = {},
 ): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
-		classes: includeContainer ? '' : classes,
+		classes,
 		sizes,
 	});
 
-	let node: HTMLElement;
-
-	if (includeContainer) {
-		const container = document.createElement('div');
-		container.className = `ad-slot-container ad-slot--offset-right`;
-		container.appendChild(ad);
-
-		node = container;
-	} else {
-		node = ad;
-	}
+	const node = wrapSlotInContainer(ad, containerOptions);
 
 	return fastdom
 		.mutate(() => {
@@ -61,7 +92,7 @@ const insertAdAtPara = (
 		})
 		.then(() => {
 			const shouldForceDisplay = ['im', 'carrot'].includes(name);
-			addSlot(ad, shouldForceDisplay);
+			addSlot(ad, shouldForceDisplay, sizes);
 		});
 };
 
@@ -134,22 +165,68 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 	const rules = isInline1 ? defaultRules : relaxedRules;
 
+	const enableDebug =
+		(sfdebug === '1' && isInline1) || (sfdebug === '2' && !isInline1);
+
 	const insertAds: SpacefinderWriter = async (paras) => {
+		// Include containers on the non-inline1 pass
+		// i.e. inline2, inline3, etc...
+		const includeContainer = !isInline1;
+
+		// Make ads sticky in containers if using containers and in sticky test variant
+		// Compute the height of containers in which ads will remain sticky
+		const includeStickyContainers =
+			includeContainer &&
+			// Check if query parameter required for qualitative testing has been provided
+			(!!getUrlVars().multiSticky ||
+				// Otherwise check for participation in AB test
+				isInVariantSynchronous(multiStickyRightAds, 'variant'));
+
+		if (includeStickyContainers) {
+			const stickyContainerHeights = await computeStickyHeights(
+				paras,
+				articleBodySelector,
+			);
+
+			void insertHeightStyles(
+				stickyContainerHeights.map((height, index) => [
+					getStickyContainerClassname(index),
+					height,
+				]),
+			);
+		}
+
 		const slots = paras
 			.slice(0, isInline1 ? 1 : paras.length)
 			.map((para, i) => {
 				const inlineId = i + (isInline1 ? 1 : 2);
-				const includeContainer = !isInline1;
 
 				if (sfdebug) {
 					para.style.cssText += 'border: thick solid green;';
 				}
 
+				let containerClasses = '';
+
+				if (includeStickyContainers) {
+					containerClasses += getStickyContainerClassname(i);
+				}
+
+				if (!isInline1) {
+					containerClasses +=
+						' offset-right ad-slot--offset-right ad-slot-container--offset-right';
+				}
+
+				const containerOptions = {
+					sticky: includeStickyContainers,
+					className: containerClasses,
+					enableDebug,
+				};
+
 				return insertAdAtPara(
 					para,
 					`inline${inlineId}`,
 					'inline',
-					`inline${isInline1 ? '' : ' offset-right'}`,
+					'inline',
 					isInline1
 						? {
 								phablet: [
@@ -162,14 +239,11 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 								],
 						  }
 						: { desktop: [adSizes.halfPage, adSizes.skyscraper] },
-					includeContainer,
+					containerOptions,
 				);
 			});
 		await Promise.all(slots);
 	};
-
-	const enableDebug =
-		(sfdebug === '1' && isInline1) || (sfdebug === '2' && !isInline1);
 
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,

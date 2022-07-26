@@ -13,7 +13,7 @@ import layout.ContentWidths
 import layout.ContentWidths._
 import model._
 import model.content._
-import model.dotcomrendering.pageElements.{PageElement, TextBlockElement}
+import model.dotcomrendering.pageElements.TextBlockElement
 import navigation.ReaderRevenueSite
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -834,15 +834,14 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 
     if (containers.length >= minContainers) {
 
-      val containerIndex = if (containers.length >= 4) {
-        if (isNetworkFront) {
-          if (MerchandisingHighSection.isSwitchedOn && edition.id.equals(Uk.id)) {
-            4
-          } else {
-            3
-          }
-        } else 2
-      } else 0
+      val merchHighCanBeMoved = MerchandisingHighSection.isSwitchedOn && edition.id.equals(Uk.id)
+
+      val containerIndex = (containers.length >= 4, isNetworkFront, merchHighCanBeMoved) match {
+        case (false, _, _)       => 0
+        case (true, false, _)    => 2
+        case (true, true, false) => 3
+        case (true, true, true)  => 4
+      }
 
       val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isPaidContent, hasPageSkin)
 

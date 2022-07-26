@@ -59,6 +59,7 @@ interface CommercialPageConfig {
 	appNexusPageTargeting?: string;
 	sharedAdTargeting?: Record<string, string | string[]>;
 	pageAdTargeting?: Record<string, string | string[]>;
+	dfpAccountId: string;
 }
 
 interface Config {
@@ -92,6 +93,7 @@ interface PageConfig extends CommercialPageConfig {
 	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
+	isImmersive?: boolean;
 	isPaidContent: boolean;
 	isProd: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala
 	isSensitive: boolean;
@@ -109,6 +111,7 @@ interface PageConfig extends CommercialPageConfig {
 	toneIds: string;
 	tones: string;
 	videoDuration: number;
+	isbn?: string;
 }
 
 interface Ophan {
@@ -222,6 +225,14 @@ interface ArticleCounts {
 	dailyArticleHistory: DailyArticleHistory;
 }
 
+interface IasPET {
+	queue?: Array<{
+		adSlots: IasPETSlot[];
+		dataHandler: (targetingJSON: string) => void;
+	}>;
+	pubId?: string;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -239,4 +250,5 @@ interface Window {
 	confiant?: Confiant;
 	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];
+	__iasPET?: IasPET;
 }

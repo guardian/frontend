@@ -1,12 +1,7 @@
 package model
 
-import com.github.nscala_time.time.Imports.DateTimeZone
-import common.{Edition, LinkTo}
 import model.facia.PressedCollection
-import model.pressed.PressedContent
 import play.api.libs.json.Json
-import views.support.{ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
-import implicits.FaciaContentFrontendHelpers._
 import play.api.mvc.RequestHeader
 import model.dotcomrendering.OnwardItem
 

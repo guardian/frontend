@@ -6,7 +6,7 @@ import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
 import implicits.FakeRequests
 import concurrent.BlockingOperations
-import play.api.libs.json.{JsArray, JsValue}
+import play.api.libs.json.JsArray
 import play.api.test._
 import play.api.test.Helpers._
 import services.ConfigAgent
@@ -63,7 +63,7 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
     wsClient
   }
 
-  override def beforeAll() {
+  override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts = Map(

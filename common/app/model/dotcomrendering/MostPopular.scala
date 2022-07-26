@@ -1,10 +1,10 @@
 package model.dotcomrendering
 
 import com.github.nscala_time.time.Imports.DateTimeZone
-import com.gu.commercial.branding.{Branding, BrandingType, Sponsored, Logo => CommercialLogo, Dimensions}
+import com.gu.commercial.branding.{Branding, BrandingType, Logo => CommercialLogo, Dimensions}
 import common.{Edition, LinkTo}
 import play.api.mvc.RequestHeader
-import views.support.{ContentOldAgeDescriber, ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
+import views.support.{ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard

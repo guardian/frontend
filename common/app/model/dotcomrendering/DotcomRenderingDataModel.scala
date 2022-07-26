@@ -3,6 +3,7 @@ package model.dotcomrendering
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
+import services.NewsletterData
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Chronos, Edition, Localisation, RichRequestHeader}
@@ -20,12 +21,13 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
+  Topic,
+  TopicResult,
 }
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
-
 // -----------------------------------------------------------------
 // DCR DataModel
 // -----------------------------------------------------------------
@@ -37,6 +39,8 @@ case class DotcomRenderingDataModel(
     webTitle: String,
     mainMediaElements: List[PageElement],
     main: String,
+    availableTopics: Option[Seq[Topic]],
+    selectedTopics: Option[Seq[Topic]],
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
@@ -44,6 +48,7 @@ case class DotcomRenderingDataModel(
     blocks: List[Block],
     pagination: Option[Pagination],
     author: Author,
+    byline: Option[String],
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
     webPublicationSecondaryDateDisplay: String,
@@ -90,6 +95,7 @@ case class DotcomRenderingDataModel(
     matchUrl: Option[String], // Optional url used for match data
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
+    promotedNewsletter: Option[NewsletterData],
 )
 
 object DotcomRenderingDataModel {
@@ -99,6 +105,8 @@ object DotcomRenderingDataModel {
   implicit val writes = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
       val obj = Json.obj(
+        "availableTopics" -> model.availableTopics,
+        "selectedTopics" -> model.selectedTopics,
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
@@ -112,6 +120,7 @@ object DotcomRenderingDataModel {
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
         "author" -> model.author,
+        "byline" -> model.byline,
         "webPublicationDate" -> model.webPublicationDate,
         "webPublicationDateDeprecated" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
@@ -158,6 +167,7 @@ object DotcomRenderingDataModel {
         "matchUrl" -> model.matchUrl,
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
+        "promotedNewsletter" -> model.promotedNewsletter,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -190,6 +200,9 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
+      availableTopics = None,
+      newsletter = None,
+      topicResult = None,
     )
   }
 
@@ -198,6 +211,7 @@ object DotcomRenderingDataModel {
       blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
+      newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = page.article,
@@ -216,6 +230,9 @@ object DotcomRenderingDataModel {
       hasStoryPackage = page.related.hasStoryPackage,
       pinnedPost = None,
       keyEvents = Nil,
+      availableTopics = None,
+      newsletter = newsletter,
+      topicResult = None,
     )
   }
 
@@ -238,6 +255,9 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
+      availableTopics: Option[Seq[Topic]] = None,
+      newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -291,6 +311,9 @@ object DotcomRenderingDataModel {
       filterKeyEvents,
       mostRecentBlockId,
       forceLive,
+      availableTopics,
+      newsletter,
+      topicResult,
     )
   }
 
@@ -308,6 +331,9 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
+      availableTopics: Option[Seq[Topic]],
+      newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -315,6 +341,7 @@ object DotcomRenderingDataModel {
     val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
     val isPaidContent = content.metadata.designType.contains(AdvertisementFeature)
 
+    /** @deprecated – Use byline instead */
     val author: Author = Author(
       byline = content.trail.byline,
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
@@ -411,11 +438,14 @@ object DotcomRenderingDataModel {
 
     val matchData = makeMatchData(page)
 
+    val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
       blocks = bodyBlocksDCR,
+      byline = content.trail.byline,
       commercialProperties = commercial.editionCommercialProperties,
       config = combinedConfig,
       contentType = content.metadata.contentType.map(_.name).getOrElse(""),
@@ -453,6 +483,8 @@ object DotcomRenderingDataModel {
       sectionLabel = Localisation(content.content.sectionLabelName.getOrElse(""))(request),
       sectionName = content.metadata.section.map(_.value),
       sectionUrl = content.content.sectionLabelLink.getOrElse(""),
+      availableTopics = availableTopics,
+      selectedTopics = selectedTopics,
       shouldHideAds = content.content.shouldHideAdverts,
       shouldHideReaderRevenue = content.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(content),
@@ -472,6 +504,7 @@ object DotcomRenderingDataModel {
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
+      promotedNewsletter = newsletter,
     )
   }
 }

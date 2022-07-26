@@ -4,7 +4,7 @@ import play.api.mvc.{RequestHeader, Result}
 import common.LoggingField._
 import play.api.routing.Router
 
-import scala.util.{Random, Try}
+import scala.util.Random
 
 case class RequestLoggerFields(request: Option[RequestHeader], response: Option[Result], stopWatch: Option[StopWatch]) {
 
