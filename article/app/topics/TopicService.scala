@@ -16,7 +16,7 @@ class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
       .map(keys => {
         if (keys.length > MAX_LIVEBLOGS_WITH_TOPICS)
           log.warn(s"Over 50 live blogs are stored in S3, only caching the first 50 and ignoring the rest!")
-        keys.take(50)
+        keys.take(MAX_LIVEBLOGS_WITH_TOPICS)
       })
     val retrievedTopics = listOfKeys.map { key => key.map { retrieveTopicsDetails(_) } }
 
