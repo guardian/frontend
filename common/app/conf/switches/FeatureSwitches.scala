@@ -439,7 +439,7 @@ trait FeatureSwitches {
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 7, 25),
+    sellByDate = LocalDate.of(2022, 8, 25),
     exposeClientSide = false,
   )
 
