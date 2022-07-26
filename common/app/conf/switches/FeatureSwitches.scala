@@ -439,7 +439,7 @@ trait FeatureSwitches {
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 7, 25),
+    sellByDate = LocalDate.of(2022, 8, 25),
     exposeClientSide = false,
   )
 
@@ -476,7 +476,7 @@ trait FeatureSwitches {
   val AutomaticFilters = Switch(
     SwitchGroup.Feature,
     "automatic-filters",
-    "When ON, displays automatic filters and corresponding UI changes on business live blogs only",
+    "When ON, displays automatic filters (Topics) on live blogs",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,

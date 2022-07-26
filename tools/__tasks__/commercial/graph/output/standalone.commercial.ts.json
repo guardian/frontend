@@ -329,8 +329,7 @@
   "../lib/report-error.js",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-ad-iframe.ts",
-  "../projects/commercial/modules/dfp/render-advert-label.ts",
-  "../projects/commercial/modules/sticky-mpu.js"
+  "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
  "../projects/commercial/modules/dfp/should-refresh.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -352,8 +351,8 @@
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/slot-config.ts"
  ],
- "../projects/commercial/modules/header-bidding/prebid/appnexus.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/header-bidding/prebid/appnexus.ts": [
+  "../lib/config.d.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/geo-utils.ts"
@@ -362,7 +361,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/url.ts",
-  "../projects/commercial/modules/header-bidding/prebid/appnexus.js",
+  "../projects/commercial/modules/header-bidding/prebid/appnexus.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/geo-utils.ts"
@@ -518,22 +517,6 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
   "../lib/fastdom-promise.js"
- ],
- "../projects/commercial/modules/sticky-mpu.js": [
-  "../lib/config.js",
-  "../lib/fastdom-promise.js",
-  "../lib/mediator.ts",
-  "../projects/commercial/modules/messenger.ts",
-  "../projects/common/modules/ui/sticky.js"
- ],
- "../projects/commercial/modules/sticky-top-banner.js": [
-  "../lib/detect.js",
-  "../lib/events.ts",
-  "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/dfp/track-ad-render.ts",
-  "../projects/commercial/modules/messenger.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/third-party-tags.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -706,13 +689,13 @@
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
  ],
- "../projects/common/modules/mark-candidates.js": [],
+ "../projects/common/modules/spacefinder-debug-tools.js": [],
  "../projects/common/modules/spacefinder.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/sentinel.ts",
-  "../projects/common/modules/mark-candidates.js"
+  "../projects/common/modules/spacefinder-debug-tools.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
@@ -753,7 +736,6 @@
   "../projects/commercial/modules/paidfor-band.js",
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/commercial/modules/set-adtest-cookie.ts",
-  "../projects/commercial/modules/sticky-top-banner.js",
   "../projects/commercial/modules/third-party-tags.ts",
   "../projects/commercial/modules/track-gpc-signal.ts",
   "../projects/commercial/modules/track-scroll-depth.ts",

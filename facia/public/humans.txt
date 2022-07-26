@@ -2,6 +2,9 @@
 /* CURRENT                                              */
 /* ---------------------------------------------------- */
 
+Developer: Daniel Clifton
+From: Ipswich UK
+
 Product Manager: Stephan Fowler
 Twitter: @stephanfowler
 From: London, UK

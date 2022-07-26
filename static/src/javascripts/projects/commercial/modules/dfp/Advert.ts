@@ -1,4 +1,8 @@
-import { createAdSize, slotSizeMappings } from '@guardian/commercial-core';
+import {
+	concatSizeMappings,
+	createAdSize,
+	slotSizeMappings,
+} from '@guardian/commercial-core';
 import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
 import { breakpoints } from '../../../../lib/detect';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
@@ -65,23 +69,6 @@ const getSlotSizeMapping = (name: string): SizeMapping => {
 	return {};
 };
 
-const mergeSizeMappings = (
-	sizeMapping: SizeMapping,
-	additionalSizeMapping: SizeMapping,
-): SizeMapping => {
-	const mergedSizeMapping = sizeMapping;
-	(
-		Object.entries(additionalSizeMapping) as Array<
-			[keyof SizeMapping, AdSize[]]
-		>
-	).forEach(([breakpoint, breakPointSizes]) => {
-		mergedSizeMapping[breakpoint] = mergedSizeMapping[breakpoint] ?? [];
-
-		mergedSizeMapping[breakpoint]?.push(...breakPointSizes);
-	});
-	return mergedSizeMapping;
-};
-
 const isSizeMappingEmpty = (sizeMapping: SizeMapping): boolean => {
 	return (
 		Object.keys(sizeMapping).length === 0 ||
@@ -128,7 +115,7 @@ class Advert {
 			? getSlotSizeMapping(adSlotNode.dataset.name)
 			: {};
 
-		let sizeMapping = mergeSizeMappings(
+		let sizeMapping = concatSizeMappings(
 			defaultSizeMappingForSlot,
 			additionalSizeMapping,
 		);

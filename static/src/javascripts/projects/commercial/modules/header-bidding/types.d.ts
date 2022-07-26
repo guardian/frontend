@@ -9,7 +9,8 @@ type HeaderBiddingSlot = {
 		| 'mostpop'
 		| 'comments'
 		| 'mobile-sticky'
-		| 'banner';
+		| 'banner'
+		| 'crossword-banner';
 	sizes: HeaderBiddingSize[];
 };
 
