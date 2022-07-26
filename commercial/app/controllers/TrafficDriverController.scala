@@ -44,7 +44,7 @@ class TrafficDriverController(
         case None => Cached(componentNilMaxAge) { jsonFormat.nilResult }
         case Some(content) =>
           Cached(60.seconds) {
-            JsonComponent(TrafficDriver.fromContent(content, Edition(request)))
+            JsonComponent.fromWritable(TrafficDriver.fromContent(content, Edition(request)))
           }
       }
 

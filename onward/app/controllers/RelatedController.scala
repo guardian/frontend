@@ -62,7 +62,7 @@ class RelatedController(
           trails = trails.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(10),
         )
 
-        JsonComponent(data)
+        JsonComponent.fromWritable(data)
       } else if (request.isJson) {
         val html = views.html.fragments.containers.facia_cards.container(
           onwardContainer(containerTitle, relatedTrails.map(_.faciaContent)),

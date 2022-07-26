@@ -152,7 +152,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
             ),
           ),
         )
-        Cached(600)(JsonComponent(responseJson))
+        Cached(600)(JsonComponent.fromWritable(responseJson))
       }
     }
 }

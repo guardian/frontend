@@ -170,7 +170,7 @@ class MatchController(
         page map { page =>
           if (request.forceDCR) {
             Cached(30) {
-              JsonComponent(Json.toJson(NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)))
+              JsonComponent.fromWritable(NsAnswer.makeFromFootballMatch(theMatch, page.lineUp))
             }
           } else {
             val htmlResponse = () =>

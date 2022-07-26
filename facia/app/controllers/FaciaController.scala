@@ -77,7 +77,7 @@ trait FaciaController
           val onwardItems = OnwardCollection.pressedCollectionToOnwardCollection(collection)
 
           Cached(CacheTime.Facia) {
-            JsonComponent(onwardItems)
+            JsonComponent.fromWritable(onwardItems)
           }
         case None =>
           Cached(CacheTime.NotFound)(
@@ -156,9 +156,11 @@ trait FaciaController
 
   def renderFrontJsonLite(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      frontJsonFapi.get(path, liteRequestType).map {
-        case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
-        case None              => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))
+      frontJsonFapi.get(path, liteRequestType).map { resp =>
+        Cached(CacheTime.Facia)(JsonComponent.fromWritable(resp match {
+          case Some(pressedPage) => FapiFrontJsonLite.get(pressedPage)
+          case None              => JsObject(Nil)
+        }))
       }
     }
 
@@ -211,7 +213,7 @@ trait FaciaController
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             } else if (request.isJson) {
               if (request.forceDCR) {
-                JsonComponent(
+                JsonComponent.fromWritable(
                   DotcomFrontsRenderingDataModel(
                     page = faciaPage,
                     request = request,

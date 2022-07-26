@@ -32,7 +32,9 @@ class SeriesController(
     Action.async { implicit request =>
       if (request.forceDCR) {
         lookup(Edition(request), seriesId).map { mseries =>
-          mseries.map { series => JsonComponent(SeriesStoriesDCR.fromSeries(series)).result }.getOrElse(NotFound)
+          mseries
+            .map { series => JsonComponent.fromWritable(SeriesStoriesDCR.fromSeries(series)).result }
+            .getOrElse(NotFound)
         }
       } else {
         lookup(Edition(request), seriesId) map { series =>

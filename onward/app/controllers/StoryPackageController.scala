@@ -30,7 +30,7 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
   def render(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       getRelatedContent(path).map(items => {
-        val json = JsonComponent(
+        val json = JsonComponent.fromWritable(
           OnwardCollectionResponse(
             heading = "More on this story",
             trails = items.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(10),

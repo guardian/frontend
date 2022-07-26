@@ -62,11 +62,11 @@ class ContentApiOffersController(
         case Nil => Cached(componentNilMaxAge) { jsonFormat.nilResult }
         case content if isMulti =>
           Cached(1.hour) {
-            JsonComponent(CapiMultiple.fromContent(content, Edition(request)))
+            JsonComponent.fromWritable(CapiMultiple.fromContent(content, Edition(request)))
           }
         case first :: _ =>
           Cached(1.hour) {
-            JsonComponent(CapiSingle.fromContent(first, Edition(request)))
+            JsonComponent.fromWritable(CapiSingle.fromContent(first, Edition(request)))
           }
       }
 

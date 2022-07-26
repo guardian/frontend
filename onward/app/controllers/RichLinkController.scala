@@ -40,7 +40,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
             pillar = OnwardsUtils.normalisePillar(content.metadata.pillar),
             format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
           )
-          Cached(900)(JsonComponent(richLink)(request, RichLink.writes))
+          Cached(900)(JsonComponent.fromWritable(richLink)(request, RichLink.writes))
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
         case None          => NotFound
       }
