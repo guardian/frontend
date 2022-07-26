@@ -34,17 +34,4 @@ object DotcomOnwardsRenderingDataModel {
     val jsValue = Json.toJson(model)
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }
-
-//  def apply(
-//      ophanComponentName: String,
-//  ): DotcomOnwardsRenderingDataModel = {
-//
-//    DotcomOnwardsRenderingDataModel(
-//      heading = ???,
-//      trails = ???,
-//      format = ???,
-//      ophanComponentName = ophanComponentName,
-//      isCuratedContent = ???,
-//    )
-//  }
 }
