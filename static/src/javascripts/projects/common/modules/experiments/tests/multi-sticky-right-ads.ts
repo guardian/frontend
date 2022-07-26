@@ -6,7 +6,7 @@ export const multiStickyRightAds: ABTest = {
 	author: 'Chris Jones (@chrislomaxjones)',
 	start: '2022-06-9',
 	expiry: '2022-08-02',
-	audience: 30 / 100,
+	audience: 0 / 100,
 	audienceOffset: 50 / 100,
 	audienceCriteria: 'All pageviews',
 	successMeasure:
