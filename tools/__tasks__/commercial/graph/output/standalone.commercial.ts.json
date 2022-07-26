@@ -352,8 +352,8 @@
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/slot-config.ts"
  ],
- "../projects/commercial/modules/header-bidding/prebid/appnexus.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/header-bidding/prebid/appnexus.ts": [
+  "../lib/config.d.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/geo-utils.ts"
@@ -362,7 +362,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/url.ts",
-  "../projects/commercial/modules/header-bidding/prebid/appnexus.js",
+  "../projects/commercial/modules/header-bidding/prebid/appnexus.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/geo-utils.ts"
@@ -706,13 +706,13 @@
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
  ],
- "../projects/common/modules/mark-candidates.js": [],
+ "../projects/common/modules/spacefinder-debug-tools.js": [],
  "../projects/common/modules/spacefinder.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/sentinel.ts",
-  "../projects/common/modules/mark-candidates.js"
+  "../projects/common/modules/spacefinder-debug-tools.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
