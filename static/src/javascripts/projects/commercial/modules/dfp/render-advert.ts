@@ -70,6 +70,21 @@ sizeCallbacks[adSizes.fluid.toString()] = (advert: Advert) =>
 		removeStyleFromAdIframe(advert, 'vertical-align'),
 	);
 
+sizeCallbacks[adSizes.mpu.toString()] = (advert: Advert): Promise<void> =>
+	fastdom.mutate(() => {
+		advert.updateExtraSlotClasses();
+	});
+
+sizeCallbacks[adSizes.halfPage.toString()] = (advert: Advert) =>
+	fastdom.mutate(() => {
+		advert.updateExtraSlotClasses();
+	});
+
+sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
+	fastdom.mutate(() => {
+		advert.updateExtraSlotClasses('ad-slot--sky');
+	});
+
 sizeCallbacks[adSizes.outstreamDesktop.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
@@ -88,11 +103,6 @@ sizeCallbacks[adSizes.outstreamMobile.toString()] = (advert: Advert) =>
 sizeCallbacks[adSizes.googleCard.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--gc');
-	});
-
-sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--sky');
 	});
 
 /**
