@@ -4,14 +4,14 @@ import config from '../../../../lib/config';
 import { Advert } from '../dfp/Advert';
 import { _, getHeaderBiddingAdSlots } from './slot-config';
 import { getBreakpointKey, shouldIncludeMobileSticky } from './utils';
+import type * as Utils from './utils';
 
 jest.mock('lib/raven');
 
 const { getSlots } = _;
 
 jest.mock('./utils', () => {
-	// eslint-disable-next-line -- Eslint doesn't understand jest.requireActual
-	const original = jest.requireActual<typeof import('./utils')>('./utils');
+	const original: typeof Utils = jest.requireActual('./utils');
 	return {
 		...original,
 		getBreakpointKey: jest.fn(),
