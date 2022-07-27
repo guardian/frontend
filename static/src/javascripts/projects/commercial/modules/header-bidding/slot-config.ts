@@ -165,11 +165,11 @@ export const getHeaderBiddingAdSlots = (
 ): HeaderBiddingSlot[] => {
 	const effectiveSlotFlatMap = slotFlatMap ?? ((s) => [s]); // default to identity
 
-	const adSlots = filterByAdvert(
+	const headerBiddingSlots = filterByAdvert(
 		ad,
 		getSlots(config.get('page.contentType', '')),
 	);
-	return adSlots
+	return headerBiddingSlots
 		.map(effectiveSlotFlatMap)
 		.reduce((acc, elt) => acc.concat(elt), []); // the "flat" in "flatMap"
 };
