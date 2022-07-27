@@ -72,32 +72,31 @@ trait FaciaController
 
   def renderContainerDataJson(id: String): Action[AnyContent] =
     Action.async { implicit request =>
-      getPressedCollection(id).map {
+      getPressedCollection(id) flatMap {
         case Some(collection) =>
           val onwardItems = OnwardCollection.pressedCollectionToOnwardCollection(collection)
 
           if (request.renderHTML) {
-            val onwardsHTML = remoteRenderer.getOnwards(
+            remoteRenderer.getOnwards(
               ws,
               onwardItems.heading,
               onwardItems.trails,
               "curated-content",
               true,
-            ) map { result => new Html(result) }
-
-            Cached(CacheTime.Facia) {
-              JsonComponent("html" -> onwardsHTML)
+            ) map { onwardsHTML =>
+              Cached(CacheTime.Facia) {
+                JsonComponent("html" -> new Html(onwardsHTML))
+              }
             }
           } else {
-            Cached(CacheTime.Facia) {
+            Future.successful(Cached(CacheTime.Facia) {
               JsonComponent(onwardItems)
-            }
+            })
           }
-
         case None =>
-          Cached(CacheTime.NotFound)(
-            WithoutRevalidationResult(NotFound(s"collection id $id does not exist")),
-          )
+          Future.successful(Cached(CacheTime.NotFound) {
+            WithoutRevalidationResult(NotFound(s"collection id $id does not exist"))
+          })
       }
     }
 
