@@ -73,7 +73,7 @@ trait FaciaController
   def renderContainerDataJson(id: String): Action[AnyContent] =
     Action.async { implicit request =>
       getPressedCollection(id).map {
-        case Some(collection: PressedCollection) =>
+        case Some(collection) =>
           val onwardItems = OnwardCollection.pressedCollectionToOnwardCollection(collection)
 
           if (request.renderHTML) {
