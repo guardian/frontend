@@ -1,3 +1,4 @@
+import { adSizes } from '@guardian/commercial-core';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import config from '../../../../lib/config';
 import {
@@ -47,10 +48,10 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 		{
 			key: 'right',
 			sizes: hasShowcase
-				? [[300, 250]]
+				? [[adSizes.mpu.width, adSizes.mpu.height]]
 				: [
-						[300, 600],
-						[300, 250],
+						[adSizes.halfPage.width, adSizes.halfPage.height],
+						[adSizes.mpu.width, adSizes.mpu.height],
 				  ],
 		},
 	];
@@ -58,44 +59,47 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 		{
 			key: 'top-above-nav',
 			sizes: [
-				[970, 250],
-				[728, 90],
+				[adSizes.billboard.width, adSizes.billboard.height],
+				[adSizes.leaderboard.width, adSizes.leaderboard.height],
 			],
 		},
 		{
 			key: 'inline',
 			sizes: isArticle
 				? [
-						[160, 600],
-						[300, 600],
-						[300, 250],
+						[adSizes.skyscraper.width, adSizes.skyscraper.height],
+						[adSizes.halfPage.width, adSizes.halfPage.height],
+						[adSizes.mpu.width, adSizes.mpu.height],
 				  ]
-				: [[300, 250]],
+				: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
 				? [
-						[300, 250],
-						[620, 350],
+						[adSizes.mpu.width, adSizes.mpu.height],
+						[
+							adSizes.outstreamDesktop.width,
+							adSizes.outstreamDesktop.height,
+						],
 				  ]
-				: [[300, 250]],
+				: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
 				? [
-						[300, 600],
-						[300, 250],
+						[adSizes.halfPage.width, adSizes.halfPage.height],
+						[adSizes.mpu.width, adSizes.mpu.height],
 				  ]
-				: [[300, 250]],
+				: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 		{
 			key: 'comments',
 			sizes: [
-				[160, 600],
-				[300, 250],
-				[300, 600],
+				[adSizes.skyscraper.width, adSizes.skyscraper.height],
+				[adSizes.mpu.width, adSizes.mpu.height],
+				[adSizes.halfPage.width, adSizes.halfPage.height],
 			],
 		},
 		// Banner slots appear on interactives, like on
@@ -104,73 +108,79 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 			key: 'banner',
 			sizes: [
 				[88, 70],
-				[728, 90],
+				[adSizes.leaderboard.width, adSizes.leaderboard.height],
 				[940, 230],
 				[900, 250],
-				[970, 250],
+				[adSizes.billboard.width, adSizes.billboard.height],
 			],
 		},
 	];
 	const tabletSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'top-above-nav',
-			sizes: [[728, 90]],
+			sizes: [[adSizes.leaderboard.width, adSizes.leaderboard.height]],
 		},
 		{
 			key: 'inline',
-			sizes: [[300, 250]],
+			sizes: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
 				? [
-						[300, 250],
-						[620, 350],
+						[adSizes.mpu.width, adSizes.mpu.height],
+						[
+							adSizes.outstreamDesktop.width,
+							adSizes.outstreamDesktop.height,
+						],
 				  ]
-				: [[300, 250]],
+				: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
 				? [
-						[300, 600],
-						[300, 250],
-						[728, 90],
+						[adSizes.halfPage.width, adSizes.halfPage.height],
+						[adSizes.mpu.width, adSizes.mpu.height],
+						[adSizes.leaderboard.width, adSizes.leaderboard.height],
 				  ]
-				: [[300, 250]],
+				: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 	];
 	const mobileSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'top-above-nav',
-			sizes: [[300, 250]],
+			sizes: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 		{
 			key: 'inline',
-			sizes: [[300, 250]],
+			sizes: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
 				? [
-						[300, 197],
-						[300, 250],
+						[
+							adSizes.outstreamMobile.width,
+							adSizes.outstreamMobile.height,
+						],
+						[adSizes.mpu.width, adSizes.mpu.height],
 				  ]
-				: [[300, 250]],
+				: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 		{
 			key: 'mostpop',
-			sizes: [[300, 250]],
+			sizes: [[adSizes.mpu.width, adSizes.mpu.height]],
 		},
 	];
 	const mobileStickySlot: HeaderBiddingSlot = {
 		key: 'mobile-sticky',
-		sizes: [[320, 50]],
+		sizes: [[adSizes.mobilesticky.width, adSizes.mobilesticky.height]],
 	};
 
 	const crosswordBannerSlot: HeaderBiddingSlot = {
 		key: 'crossword-banner',
-		sizes: [[728, 90]],
+		sizes: [[adSizes.leaderboard.width, adSizes.leaderboard.height]],
 	};
 
 	const crosswordSlots = isCrossword ? [crosswordBannerSlot] : [];
