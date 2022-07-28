@@ -81,7 +81,7 @@ object TagLinker {
 
   def keywordRegex(tagName: String): Regex = {
     // whitespace or start of line, then tag name, then whitespace, comma, end of line, full stop or question mark.
-    s"""( |^)($tagName)([ ,$$.?])""".r("start", "tag", "end")
+    s"""(?<start> |^)(?<tag>$tagName)(?<end>[ ,$$.?])""".r
   }
 
   def addLink(
@@ -100,8 +100,7 @@ object TagLinker {
       val keyword = keywords.find(tag => el.html.contains(tag.name))
 
       keyword.map(tag => {
-        // $1 and $3 here are 'start' and 'end' regex match groups.
-        val updatedHtml = keywordRegex(tag.name).replaceFirstIn(el.html, "$1" + link(tag, edition) + "$3")
+        val updatedHtml = keywordRegex(tag.name).replaceFirstIn(el.html, "${start}" + link(tag, edition) + "${end}")
         (TextBlockElement(updatedHtml), terms + tag.name)
       }) getOrElse (el, terms)
     } else {
