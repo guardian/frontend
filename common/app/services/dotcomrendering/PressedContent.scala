@@ -243,6 +243,7 @@ object PressedContent {
     "/global-development/ng-interactive/2021/jul/28/countdown-to-demolition-the-story-of-al-jalaa-tower-gaza-israel-palestine",
     "/news/datablog/ng-interactive/2021/aug/17/which-parts-australia-have-highest-vaccination-rates-by-state-nsw-sydney-victoria-melbourne-lga-suburb-check-your-area-vaccine-number-coverage-percentage-percent-population-look-up-interactive-map",
     "/news/datablog/ng-interactive/2021/aug/31/which-parts-australia-have-highest-vaccination-rate-by-state-nsw-sydney-victoria-melbourne-lga-suburb-check-your-area-vaccine-rates-number-coverage-percentage-percent-population-look-up-interactive-map",
+    "/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend",
     // 2022
     "/cities/ng-interactive/2019/jan/30/high-street-crisis-town-centres-lose-8-of-shops-in-five-years",
     "/us-news/ng-interactive/2018/aug/07/mendocino-fire-california-biggest-state-history-mapped-explained",
