@@ -22,7 +22,7 @@ final private[frontpress] class ConsecutiveErrorsRecorder {
     errorCount.set(0)
   }
 
-  def recordError() {
+  def recordError(): Unit = {
     errorCount.addAndGet(1)
   }
 
@@ -39,7 +39,7 @@ object DateTimeRecorder {
 final private[frontpress] class DateTimeRecorder {
   @volatile private var lastTime: Option[DateTime] = None
 
-  def refresh() {
+  def refresh(): Unit = {
     lastTime = Some(DateTime.now())
   }
 
@@ -118,7 +118,8 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
     getRequest.failed.foreach {
       case error: ContentApiError =>
         log.error(
-          s"Encountered content api error receiving message from queue: ${error.httpMessage} status: ${error.httpStatus}",
+          s"Encountered content api error receiving message from queue: httpMessage: ${error.httpMessage}; status: ${error.httpStatus}; response: ${error.errorResponse
+            .getOrElse("")}.",
           error,
         )
       case error: Throwable => log.error("Encountered error receiving message from queue", error)
@@ -127,7 +128,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
     getRequest.map(_ => ())
   }
 
-  final private def next() {
+  final private def next(): Unit = {
     getAndProcess onComplete {
       case _ if started => next()
       case _            => log.info("Stopping worker...")
@@ -136,7 +137,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
 
   final private var started = false
 
-  final def start() {
+  final def start(): Unit = {
     synchronized {
       if (started) {
         log.warn("Attempted to start queue worker but queue worker is already started")

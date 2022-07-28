@@ -1,14 +1,26 @@
 package model.dotcomrendering
 
+import com.github.nscala_time.time.Imports.DateTime
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
+import com.gu.contentapi.client.utils.format.LiveBlogDesign
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
+import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
-import model.{CanonicalLiveBlog, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
-import org.joda.time.DateTime
+import model.pressed.{PressedContent, SpecialReport}
+import model.{
+  ArticleDateTimes,
+  CanonicalLiveBlog,
+  ContentFormat,
+  ContentPage,
+  ContentType,
+  GUDateTimeFormatNew,
+  LiveBlogPage,
+  Pillar,
+}
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -17,9 +29,42 @@ import views.support.AffiliateLinksCleaner
 
 import java.net.URLEncoder
 
-object DotcomRenderingUtils {
+sealed trait DotcomRenderingMatchType
 
-  def makeMatchUrl(articlePage: ContentPage): Option[String] = {
+object DotcomRenderingMatchType {
+  implicit val matchTypesWrites = new Writes[DotcomRenderingMatchType] {
+    def writes(matchType: DotcomRenderingMatchType) =
+      JsString(matchType.toString)
+  }
+}
+
+case object CricketMatchType extends DotcomRenderingMatchType
+case object FootballMatchType extends DotcomRenderingMatchType
+
+case class DotcomRenderingMatchData(matchUrl: String, matchType: DotcomRenderingMatchType)
+
+object DotcomRenderingUtils {
+  def makeMatchData(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
+    makeFootballMatch(articlePage).orElse(makeCricketMatch(articlePage))
+  }
+
+  def makeCricketMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
+    val cricketDate = articlePage.item.content.cricketMatchDate
+    val cricketTeam = articlePage.item.content.cricketTeam
+
+    (cricketDate, cricketTeam) match {
+      case (Some(date), Some(team)) =>
+        Some(
+          DotcomRenderingMatchData(
+            s"${Configuration.ajax.url}/sport/cricket/match/$date/${team}.json?dcr=true",
+            CricketMatchType,
+          ),
+        )
+      case _ => None
+    }
+  }
+
+  def makeFootballMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
 
     def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
       val sequence = references match {
@@ -51,29 +96,27 @@ object DotcomRenderingUtils {
       entries1 <- extraction1(references)
       entries2 =
         entries1
-          .map(entryToDataPair(_))
+          .map(entryToDataPair)
           .filter(_.isDefined)
           .map(_.get) // .get is fundamentally dangerous but fine in this case because we filtered the Nones out.
           .filter(_._1 == "pa-football-team")
     } yield {
       val pageId = URLEncoder.encode(articlePage.metadata.id, "UTF-8")
       entries2.toList match {
-        case e1 :: e2 :: _ => {
+        case e1 :: e2 :: _ =>
           val year = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("yyy"))
           val month = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("MM"))
           val day = articlePage.item.trail.webPublicationDate.toString(DateTimeFormat.forPattern("dd"))
-          s"${Configuration.ajax.url}/football/api/match-nav/${year}/${month}/${day}/${e1._2}/${e2._2}.json?dcr=true&page=${pageId}"
-        }
+          s"${Configuration.ajax.url}/football/api/match-nav/$year/$month/$day/${e1._2}/${e2._2}.json?dcr=true&page=$pageId"
         case _ => ""
       }
     }
 
     // We need one more transformation because we could have a Some(""), which we don't want
 
-    if (optionalUrl.getOrElse("").size > 0) {
-      optionalUrl
-    } else {
-      None
+    optionalUrl match {
+      case Some(url) if url.nonEmpty => Some(DotcomRenderingMatchData(url, FootballMatchType))
+      case _                         => None
     }
   }
 
@@ -90,14 +133,17 @@ object DotcomRenderingUtils {
   def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
     pillar
       .map { pillar =>
-        if (designType == AdvertisementFeature) "labs"
+        if (designType.contains(AdvertisementFeature)) "labs"
         else if (pillar.toString.toLowerCase == "arts") "culture"
         else pillar.toString.toLowerCase()
       }
       .getOrElse("news")
   }
 
-  def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
+  def blocksForLiveblogPage(
+      liveblog: LiveBlogPage,
+      blocks: APIBlocks,
+  ): Seq[APIBlock] = {
     val last60 = blocks.requestedBodyBlocks
       .getOrElse(Map.empty[String, Seq[APIBlock]])
       .getOrElse(CanonicalLiveBlog.firstPage, Seq.empty[APIBlock])
@@ -120,10 +166,9 @@ object DotcomRenderingUtils {
     if (affiliateLinks) {
       val hasLinks = capiElems.exists(elem =>
         elem.`type` match {
-          case Text => {
+          case Text =>
             val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
             AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
-          }
           case _ => false
         },
       )
@@ -163,6 +208,7 @@ object DotcomRenderingUtils {
           calloutsUrl,
           article.elements.thumbnail,
           edition,
+          article.trail.webPublicationDate,
         ),
       )
       .filter(PageElement.isSupported)
@@ -171,25 +217,8 @@ object DotcomRenderingUtils {
     addDisclaimer(withTagLinks, capiElems, affiliateLinks)
   }
 
-  val specialReportTags: Set[String] = Set(
-    "business/series/undercover-in-the-chicken-industry",
-    "business/series/britains-debt-timebomb",
-    "world/series/this-is-europe",
-    "environment/series/the-polluters",
-    "news/series/hsbc-files",
-    "news/series/panama-papers",
-    "us-news/homan-square",
-    "uk-news/series/the-new-world-of-work",
-    "world/series/the-new-arrivals",
-    "news/series/nauru-files",
-    "us-news/series/counted-us-police-killings",
-    "australia-news/series/healthcare-in-detention",
-    "society/series/this-is-the-nhs",
-  )
-
-  def isSpecialReport(page: ContentPage): Boolean = {
-    page.item.tags.tags.exists(t => specialReportTags(t.id))
-  }
+  def isSpecialReport(page: ContentPage): Boolean =
+    page.item.content.cardStyle == SpecialReport
 
   def secondaryDateString(content: ContentType, request: RequestHeader): String = {
     def format(dt: DateTime, req: RequestHeader): String = GUDateTimeFormatNew.formatDateTimeForDisplay(dt, req)
@@ -202,6 +231,79 @@ object DotcomRenderingUtils {
       "First published on " + format(firstPublicationDate.getOrElse(webPublicationDate), request)
     } else {
       "Last modified on " + format(content.fields.lastModified, request)
+    }
+  }
+
+  def withoutNull(json: JsValue): JsValue = {
+    json match {
+      case JsObject(fields) => JsObject(fields.filterNot { case (_, value) => value == JsNull })
+      case other            => other
+    }
+  }
+
+  def shouldAddAffiliateLinks(content: ContentType): Boolean = {
+    AffiliateLinksCleaner.shouldAddAffiliateLinks(
+      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+      section = content.metadata.sectionId,
+      showAffiliateLinks = content.content.fields.showAffiliateLinks,
+      supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
+      defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
+      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+      tagPaths = content.content.tags.tags.map(_.id),
+      firstPublishedDate = content.content.fields.firstPublicationDate,
+    )
+  }
+
+  def contentDateTimes(content: ContentType): ArticleDateTimes = {
+    ArticleDateTimes(
+      webPublicationDate = content.trail.webPublicationDate,
+      firstPublicationDate = content.fields.firstPublicationDate,
+      hasBeenModified = content.content.hasBeenModified,
+      lastModificationDate = content.fields.lastModified,
+    )
+  }
+
+  def getModifiedContent(content: ContentType, forceLive: Boolean): ContentFormat = {
+    val originalFormat = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
+
+    if (forceLive) {
+      originalFormat.copy(design = LiveBlogDesign)
+    } else {
+      originalFormat
+    }
+  }
+
+  def getMostRecentBlockId(blocks: APIBlocks): Option[String] = {
+    blocks.requestedBodyBlocks
+      .flatMap(_.get(CanonicalLiveBlog.firstPage))
+      .getOrElse(blocks.body.getOrElse(Seq.empty))
+      .headOption
+      .map(block => s"block-${block.id}")
+  }
+
+  def orderBlocks(blocks: Seq[APIBlock]): Seq[APIBlock] =
+    blocks.sortBy(block => block.firstPublishedDate.orElse(block.createdDate).map(_.dateTime)).reverse
+
+  def ensureSummaryTitle(block: APIBlock): APIBlock = {
+    if (block.attributes.summary.contains(true) && block.title.isEmpty) {
+      block.copy(title = Some("Summary"))
+    } else block
+  }
+
+  def getStoryPackage(
+      faciaItems: Seq[PressedContent],
+      requestHeader: RequestHeader,
+  ): Option[OnwardCollectionResponse] = {
+    faciaItems match {
+      case Nil => None
+      case _ =>
+        Some(
+          OnwardCollectionResponse(
+            heading = "More on this story",
+            trails =
+              faciaItems.map(faciaItem => OnwardItem.pressedContentToOnwardItem(faciaItem)(requestHeader)).take(10),
+          ),
+        )
     }
   }
 

@@ -1,6 +1,6 @@
 export default {
-    wrap(fn) {
-        return fn;
-    },
-    captureException() {},
+	wrap(fn) {
+		return fn;
+	},
+	captureException() {},
 };

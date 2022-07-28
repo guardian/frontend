@@ -2,7 +2,8 @@ package discussion
 
 import discussion.api.{DiscussionApiLike, DiscussionParams}
 import discussion.model.DiscussionKey
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Headers
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
@@ -12,7 +13,7 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 @DoNotDiscover class DiscussionApiTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with ConfiguredTestSuite
     with BeforeAndAfterAll
     with WithMaterializer

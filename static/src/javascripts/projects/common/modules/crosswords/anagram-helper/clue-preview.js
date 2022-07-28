@@ -62,7 +62,7 @@ class CluePreview extends Component {
                             {this.props.clue.direction}
                         </span>
                     </strong>{' '}
-                    {this.props.clue.clue}
+                    <span dangerouslySetInnerHTML={{ __html: this.props.clue.clue }} />
                 </div>
                 {entries.map((entry, i) => {
                     const classNames = checkIfLetterHasSeparator(

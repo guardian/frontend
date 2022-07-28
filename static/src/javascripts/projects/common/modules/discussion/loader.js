@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import raven from 'lib/raven';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { scrollToElement } from 'lib/scroller';
 import fastdom from 'lib/fastdom-promise';
 import { fetchJson } from 'lib/fetch-json';
@@ -40,14 +40,8 @@ class Loader extends Component {
         if (getUserFromCookie()) {
             getUser().then(resp => {
                 this.user = resp.userProfile;
-
-                getUserFromApi(user => {
-                    if (user && user.publicFields.username) {
-                        this.username = user.publicFields.username;
-                    }
-
-                    this.emit('user:loaded');
-                });
+                this.username = this.user?.displayName;
+                this.emit('user:loaded');
             });
         } else {
             this.emit('user:loaded');

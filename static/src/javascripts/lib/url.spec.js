@@ -16,19 +16,21 @@ jest.mock('lib/detect', () => ({
     },
 }));
 
-const originalAssign = window.location.assign;
+const originalLocation = window.location;
 
 describe('url', () => {
     beforeEach(() => {
-        window.location.assign = (url) => {
-            jsdom.reconfigure({
-                url,
-            });
-        };
-    });
-
-    afterEach(() => {
-        window.location.assign = originalAssign;
+        delete window.location;
+        window.location = Object.defineProperties(
+            {},
+            {
+                ...Object.getOwnPropertyDescriptors(originalLocation),
+                assign: {
+                    configurable: true,
+                    value: (url) => jsdom.reconfigure({ url }),
+                },
+            },
+        );
     });
 
     test('getUrlVars() - should get url vars', () => {
@@ -143,7 +145,7 @@ describe('url', () => {
         const state = { foo: 'bar' };
 
         window.history[historyMethod] = jest.fn();
-        window.title = title;
+        document.title = title;
 
         moduleMethod({ state, querystring, title });
         expect(window.history[historyMethod]).toHaveBeenCalledWith(

@@ -1,6 +1,5 @@
 package test
 
-import controllers._
 import org.scalatest.Suites
 
 class OnwardTestSuite
@@ -18,6 +17,4 @@ class OnwardTestSuite
       new RichLinkControllerTest,
       new NavigationControllerTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19011
-}
+    with SingleServerSuite {}

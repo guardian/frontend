@@ -1,16 +1,10 @@
-import { storage } from '@guardian/libs';
+import { getCookie, storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
-import { createAuthenticationComponentEventParams } from 'common/modules/identity/auth-component-event-params';
-import config_ from 'lib/config';
-import { getCookie as getCookieByName } from 'lib/cookies';
-import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
-import { getUrlVars } from 'lib/url';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string) => string;
-};
+import config from '../../../../lib/config';
+import { fetchJson } from '../../../../lib/fetch-json';
+import { mediator } from '../../../../lib/mediator';
+import { getUrlVars } from '../../../../lib/url';
+import { createAuthenticationComponentEventParams } from './auth-component-event-params';
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
 
@@ -54,7 +48,6 @@ export type IdentityUser = {
 	};
 	statusFields: {
 		userEmailValidated: boolean;
-		hasRepermissioned: boolean;
 	};
 	privateFields: {
 		brazeUuid: string;
@@ -64,8 +57,9 @@ export type IdentityUser = {
 		legacyProducts: string;
 	};
 	primaryEmailAddress: string;
-	id: string;
+	id: number;
 	hasPassword: boolean;
+	adData: Record<string, unknown>;
 };
 
 type IdentityUserFromCache = {
@@ -77,7 +71,7 @@ type IdentityUserFromCache = {
 		userEmailValidated: boolean;
 	};
 	primaryEmailAddress: string;
-	id: string;
+	id: number;
 	rawResponse: string;
 } | null;
 
@@ -87,14 +81,27 @@ type IdentityResponse = {
 	errors?: UserNameError[];
 };
 
+export type IdentityUserIdentifiers = {
+	id: string;
+	brazeUuid: string;
+	puzzleId: string;
+	googleTagId: string;
+};
+
 let userFromCookieCache: IdentityUserFromCache = null;
 
 const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 
-const idApiRoot = config.get('page.idApiUrl');
-const profileRoot = config.get('page.idUrl');
+const idApiRoot = config.get<string>(
+	'page.idApiUrl',
+	'/ID_API_ROOT_URL_NOT_FOUND',
+);
+const profileRoot = config.get<string>(
+	'page.idUrl',
+	'/PROFILE_ROOT_ID_URL_NOT_FOUND',
+);
 mediator.emit('module:identity:api:loaded');
 
 export const decodeBase64 = (str: string): string =>
@@ -108,18 +115,18 @@ export const decodeBase64 = (str: string): string =>
 
 export const getUserFromCookie = (): IdentityUserFromCache => {
 	if (userFromCookieCache === null) {
-		const cookieData = getCookieByName(cookieName) as string;
-		let userData = null;
+		const cookieData = getUserCookie();
+		let userData: string[] | null = null;
 
 		if (cookieData) {
 			userData = JSON.parse(
 				decodeBase64(cookieData.split('.')[0]),
 			) as string[];
 		}
-		if (userData) {
+		if (userData && cookieData) {
 			const displayName = decodeURIComponent(userData[2]);
 			userFromCookieCache = {
-				id: userData[0],
+				id: parseInt(userData[0], 10),
 				primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
 				publicFields: {
 					displayName,
@@ -170,10 +177,12 @@ export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
 		if (isUserLoggedIn()) {
 			const url = `${idApiRoot}/user/me`;
-			void (fetchJson(url, {
-				mode: 'cors',
-				credentials: 'include',
-			}) as Promise<IdentityResponse>) // assert unknown -> IdentityResponse
+			void (
+				fetchJson(url, {
+					mode: 'cors',
+					credentials: 'include',
+				}) as Promise<IdentityResponse>
+			) // assert unknown -> IdentityResponse
 				.then((data: IdentityResponse) => {
 					if (data.status === 'ok') {
 						mergingCallback(data.user);
@@ -187,19 +196,53 @@ export const getUserFromApi = mergeCalls(
 	},
 );
 
+const fetchUserIdentifiers = () => {
+	const url = `${idApiRoot}/user/me/identifiers`;
+	return fetch(url, {
+		mode: 'cors',
+		credentials: 'include',
+	})
+		.then((resp) => {
+			if (resp.status === 200) {
+				return resp.json();
+			} else {
+				console.log(
+					'failed to get Identity user identifiers',
+					resp.status,
+				);
+				return null;
+			}
+		})
+		.catch((e) => {
+			console.log('failed to get Identity user identifiers', e);
+			return null;
+		});
+};
+
+export const getUserIdentifiersFromApi = mergeCalls(
+	(mergingCallback: (u: IdentityUserIdentifiers | null) => void) => {
+		if (isUserLoggedIn()) {
+			void fetchUserIdentifiers().then((result) =>
+				mergingCallback(result),
+			);
+		} else {
+			mergingCallback(null);
+		}
+	},
+);
+
 export const reset = (): void => {
 	getUserFromApi.reset();
+	getUserIdentifiersFromApi.reset();
 	userFromCookieCache = null;
 };
 
-export const getCookie = (): string | null =>
-	getCookieByName(cookieName) as string | null;
+const getUserCookie = (): string | null => getCookie({ name: cookieName });
 
 export const getUrl = (): string => profileRoot;
 
 export const getUserFromApiWithRefreshedCookie = (): Promise<unknown> => {
 	const endpoint = `${idApiRoot}/user/me?refreshCookie=true`;
-
 	return fetch(endpoint, {
 		mode: 'cors',
 		credentials: 'include',
@@ -240,7 +283,9 @@ export const getUserOrSignIn = (
 };
 
 export const hasUserSignedOutInTheLast24Hours = (): boolean => {
-	const cookieData = getCookieByName(signOutCookieName) as string;
+	const cookieData = getCookie({
+		name: signOutCookieName,
+	});
 
 	if (cookieData) {
 		return (
@@ -252,38 +297,22 @@ export const hasUserSignedOutInTheLast24Hours = (): boolean => {
 };
 
 export const shouldAutoSigninInUser = (): boolean => {
-	const signedInUser = !!getCookieByName(cookieName);
+	const signedInUser = !!getUserCookie();
 	const checkFacebook = !!storage.local.get(fbCheckKey);
 	return (
 		!signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
 	);
 };
 
-export const getUserEmailSignUps = (): Promise<unknown> => {
-	const user = getUserFromCookie();
-
-	if (user) {
-		const endpoint = `${idApiRoot}/useremails/${user.id}`;
-		const request = fetch(endpoint, {
-			mode: 'cors',
-			credentials: 'include',
-		}).then((resp) => resp.json());
-
-		return request;
-	}
-
-	return Promise.resolve(null);
-};
-
 export const sendValidationEmail = (): unknown => {
 	const defaultReturnEndpoint = '/email-prefs';
 	const endpoint = `${idApiRoot}/user/send-validation-email`;
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- it will evaluate to false if undefined
-	const returnUrl = getUrlVars().returnUrl
-		? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- same as above
-		  decodeURIComponent(getUrlVars()?.returnUrl)
-		: profileRoot + defaultReturnEndpoint;
+	const returnUrlVar = getUrlVars().returnUrl;
+	const returnUrl =
+		typeof returnUrlVar === 'string'
+			? decodeURIComponent(returnUrlVar)
+			: profileRoot + defaultReturnEndpoint;
 
 	const params = new URLSearchParams();
 	params.append('returnUrl', returnUrl);
@@ -315,60 +344,6 @@ export const updateUsername = (username: string): unknown => {
 	return request;
 };
 
-export const getAllConsents = (): Promise<unknown> => {
-	const endpoint = '/consents';
-	const url = idApiRoot + endpoint;
-	return fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-	});
-};
-
-export const getAllNewsletters = (): Promise<unknown> => {
-	const endpoint = '/newsletters';
-	const url = idApiRoot + endpoint;
-	return fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-	});
-};
-
-export const getSubscribedNewsletters = (): Promise<string[]> => {
-	const endpoint = '/users/me/newsletters';
-	const url = idApiRoot + endpoint;
-
-	type Subscriptions = {
-		listId: string;
-	};
-
-	type NewslettersResponse =
-		| {
-				result?: {
-					globalSubscriptionStatus?: string;
-					htmlPreference?: string;
-					subscriptions?: Subscriptions[];
-					status?: 'ok' | string;
-				};
-		  }
-		| undefined;
-
-	return (fetchJson(url, {
-		mode: 'cors',
-		method: 'GET',
-		headers: { Accept: 'application/json' },
-		credentials: 'include',
-	}) as Promise<NewslettersResponse>) // assert unknown -> NewslettersResponse
-		.then((json: NewslettersResponse) => {
-			if (json?.result?.subscriptions) {
-				return json.result.subscriptions.map((sub) => sub.listId);
-			}
-			return [];
-		})
-		.catch(() => []);
-};
-
 export const setConsent = (consents: SettableConsent): Promise<void> =>
 	fetch(`${idApiRoot}/users/me/consents`, {
 		method: 'PATCH',
@@ -380,9 +355,4 @@ export const setConsent = (consents: SettableConsent): Promise<void> =>
 		return Promise.reject();
 	});
 
-export const getUserData = (): Promise<unknown> =>
-	fetchJson(`${idApiRoot}/user/me`, {
-		method: 'GET',
-		mode: 'cors',
-		credentials: 'include',
-	});
+export { getUserCookie as getCookie };

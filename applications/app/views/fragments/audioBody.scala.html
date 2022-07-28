@@ -55,28 +55,9 @@
             ; image <- podcast.image
             ) {
                 <div class="podcast__cover">
-                    <a href="@LinkTo {/@series.id}"><img src="@ImgSrc(image, ImageProfile(width = Some(440)))" class="podcast__cover-image" alt></a>
+                    <a href="@LinkTo {/@series.id}"><img src="@ImgSrc(image, ImageProfile(width = Some(440)))" class="podcast__cover-image" alt="@series.name Series"></a>
                 </div>
             }
-
-            @if(audio.fields.standfirst.isDefined) {
-                <div class="podcast__standfirst">
-                    @fragments.standfirst(audio)
-                </div>
-            }
-
-            <div class="podcast__byline">
-                @fragments.contentMeta(audio, page, false)
-            </div>
-
-            <div class="from-content-api podcast__body">
-                @if(audio.fields.body.nonEmpty) {
-                    @Html(audio.fields.body)
-                }
-                @audio.elements.images.map{ img =>
-                    @fragments.imageFigure(img.images)
-                }
-            </div>
 
             <div class="podcast__meta podcast__section">
                 <div class="podcast__meta-heading podcast__section-heading">More ways to listen</div>
@@ -137,6 +118,26 @@
                         </li>
                     }
                 </ul>
+            </div>
+
+            <div class="podcast__byline">
+                @fragments.contentMeta(audio, page, false)
+            </div>
+
+            @if(audio.fields.standfirst.isDefined) {
+                <div class="podcast__standfirst">
+                    @fragments.standfirst(audio)
+                </div>
+            }
+
+
+            <div class="from-content-api podcast__body">
+                @if(audio.fields.body.nonEmpty) {
+                    @Html(audio.fields.body)
+                }
+                @audio.elements.images.map{ img =>
+                    @fragments.imageFigure(img.images)
+                }
             </div>
 
             <div class="podcast__secondary podcast__section">

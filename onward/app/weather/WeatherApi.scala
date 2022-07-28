@@ -50,6 +50,10 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
     s"$accuWeatherApiUri/locations/v1/cities/geoposition/search.json?q=$latitudeLongitude&apikey=$weatherApiKey"
   }
 
+  private def searchForCityUrl(countryCode: String, city: String): String = {
+    s"$accuWeatherApiUri/locations/v1/cities/$countryCode/search.json?q=$city&alias=Always&apikey=$weatherApiKey"
+  }
+
   private def getJson(url: String): Future[JsValue] = {
     if (context.environment.mode == Mode.Test) {
       Future(Json.parse(slurpOrDie(new URI(url).getPath.stripPrefix("/"))))
@@ -91,6 +95,11 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
 
   def searchForLocations(query: String): Future[Seq[LocationResponse]] =
     getJson(autocompleteUrl(query)).map({ r =>
+      Json.fromJson[Seq[LocationResponse]](r).get
+    })
+
+  def searchForCity(countryCode: String, city: String) =
+    getJson(searchForCityUrl(countryCode, city)).map({ r =>
       Json.fromJson[Seq[LocationResponse]](r).get
     })
 

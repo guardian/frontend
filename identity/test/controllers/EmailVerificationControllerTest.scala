@@ -2,16 +2,15 @@ package controllers
 
 import actions.AuthenticatedActions
 import com.gu.identity.model.{StatusFields, User}
-import idapiclient.responses.{CookieResponse, CookiesResponse, Error}
-import idapiclient.{Auth, IdApiClient, ScGuU, TrackingData}
+import idapiclient.{IdApiClient, ScGuU, TrackingData}
 import model.PhoneNumbers
-import org.joda.time.DateTime
 import org.mockito.AdditionalAnswers.returnsFirstArg
-import org.mockito.Matchers.{any, anyString, anyVararg, eq => eql}
+import org.mockito.Matchers.{any, anyString, anyVararg}
 import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{Matchers, path}
-import play.api.mvc.{ControllerComponents, Cookie, Request, RequestHeader}
+import org.scalatest.freespec.PathAnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
+import play.api.mvc.{ControllerComponents, Request, RequestHeader}
 import play.api.test.Helpers._
 import services._
 import test._
@@ -19,7 +18,7 @@ import test._
 import scala.concurrent.Future
 
 class EmailVerificationControllerTest
-    extends path.FreeSpec
+    extends PathAnyFreeSpec
     with Matchers
     with WithTestExecutionContext
     with WithTestApplicationContext
@@ -38,7 +37,7 @@ class EmailVerificationControllerTest
   val idRequest = mock[IdentityRequest]
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val signinService = mock[PlaySigninService]
-  val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+  val newsletterService = spy(new NewsletterService(api))
 
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
@@ -61,7 +60,6 @@ class EmailVerificationControllerTest
   val EmailValidatedMessage = "Your email address has been validated."
   when(identityUrlBuilder.buildUrl(anyString(), anyVararg[(String, String)]())) thenAnswer returnsFirstArg()
   when(idRequestParser.apply(any[Request[_]])) thenReturn idRequest
-  when(authenticationService.userIsFullyAuthenticated(any[Request[_]])) thenReturn true
   when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
   val controller = new EmailVerificationController(

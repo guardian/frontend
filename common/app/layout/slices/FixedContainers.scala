@@ -1,7 +1,6 @@
 package layout.slices
 
 import conf.Configuration
-import model.pressed.PressedContent
 
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
@@ -36,6 +35,8 @@ object FixedContainers {
 
   val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher", "flashing-image"))
 
+  val showcaseSingleStories = slices(ShowcaseSingleStories)
+
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(FullMedia75)),
     ("fixed/small/slow-III", slices(HalfQQ)),
@@ -51,6 +52,7 @@ object FixedContainers {
     ("fixed/medium/fast-XII", fixedMediumFastXII),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/thrasher", thrasher),
+    ("fixed/showcase", showcaseSingleStories),
   ) ++ (if (Configuration.faciatool.showTestContainers)
           Map(
             (

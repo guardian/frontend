@@ -2,16 +2,13 @@ package indexes
 
 import com.gu.contentapi.client.model.v1.{TagType, Tag => ApiTag}
 import model.{TagDefinition, TagIndex}
-import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
-import play.api.libs.iteratee.Enumerator
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.DoNotDiscover
 import test.WithTestExecutionContext
 
-import scala.language.postfixOps
-import scala.concurrent.duration._
-
-@DoNotDiscover class TagPagesTest extends FlatSpec with Matchers with WithTestExecutionContext with ScalaFutures {
+@DoNotDiscover class TagPagesTest extends AnyFlatSpec with Matchers with WithTestExecutionContext with ScalaFutures {
 
   val tagPages = new TagPages
 
@@ -76,14 +73,10 @@ import scala.concurrent.duration._
     val advertisingTag = tagFixture("Advertising")
     val otherDigitalSolutionsTag = tagFixture("Other digital solutions")
 
+    val tags = Set(activateTag, archivedSpeakersTag, blogTag, advertisingTag, otherDigitalSolutionsTag)
+
     tagPages.toPages(
-      Enumerator(
-        activateTag,
-        archivedSpeakersTag,
-        blogTag,
-        advertisingTag,
-        otherDigitalSolutionsTag,
-      ).run(tagPages.byWebTitle).futureValue(Timeout(1 second)),
+      tagPages.byWebTitle(tags),
     )(_.toUpperCase, tagPages.asciiLowerWebTitle) shouldEqual Seq(
       TagIndex(
         "a",

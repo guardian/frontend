@@ -52,6 +52,7 @@ object FooterLinks {
   val auListOne = List(
     FooterLink("About us", "/info/about-guardian-australia", "au : footer : about us"),
     FooterLink("Information", "/info", "au : footer : information"),
+    complaintsAndCorrections,
     FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),
     secureDrop,
     FooterLink(
@@ -60,7 +61,6 @@ object FooterLinks {
       "au : footer : vacancies",
     ),
     privacyPolicy,
-    cookiePolicy,
     termsAndConditions,
     help("au"),
   )
@@ -106,7 +106,7 @@ object FooterLinks {
     allWriters("uk"),
     FooterLink(
       "Modern Slavery Act",
-      "/info/2016/jul/27/modern-slavery-and-our-supply-chains?INTCMP=NGW_FOOTER_UK_GU_MODERN_SLAVERY_ACT",
+      "https://uploads.guim.co.uk/2022/07/20/STL_Modern_Slavery_Statement_2022.pdf",
       "uk : footer : modern slavery act statement",
     ),
     digitalNewspaperArchive,
@@ -177,7 +177,7 @@ object FooterLinks {
   val auListThree = List(
     FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
     FooterLink("Advertise with us", "https://advertising.theguardian.com/", "au : footer : advertise with us"),
-    FooterLink("Search UK jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_AU_GU_JOBS", "au : footer : uk-jobs"),
+    cookiePolicy,
   )
 
   val intListThree = List(

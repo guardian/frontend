@@ -6,13 +6,14 @@ import com.gu.ProjectSettings._
 
 val common = library("common")
   .settings(
-    javaOptions in Test += "-Dconfig.file=common/conf/test.conf",
+    Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
     libraryDependencies ++= Seq(
-      guBox,
       apacheCommonsLang,
       awsCore,
       awsCloudwatch,
       awsDynamodb,
+      awsEc2,
+      awsKinesis,
       awsS3,
       awsSns,
       awsSts,
@@ -25,9 +26,10 @@ val common = library("common")
       jodaConvert,
       jodaTime,
       jSoup,
-      liftJson,
       json4s,
       playGoogleAuth,
+      playSecretRotation,
+      playSecretRotationAwsSdk,
       quartzScheduler,
       redisClient,
       rome,
@@ -59,7 +61,7 @@ val common = library("common")
     ) ++ jackson,
   )
   .settings(
-    mappings in TestAssets ~= filterAssets,
+    TestAssets / mappings ~= filterAssets,
   )
 
 val commonWithTests = withTests(common)
@@ -122,7 +124,6 @@ val admin = application("admin")
       awsElasticloadbalancing,
       awsSes,
       scalaUri,
-      playIteratees,
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",
@@ -143,11 +144,12 @@ val identity = application("identity")
     libraryDependencies ++= Seq(
       filters,
       identityAuthPlay,
-      liftJson,
       slf4jExt,
       libPhoneNumber,
       supportInternationalisation,
     ),
+    PlayKeys.playDefaultPort := 9009,
+    Test / testOptions += Tests.Argument("-oF"),
   )
 
 val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
@@ -172,7 +174,7 @@ val dev = application("dev-build")
   )
   .settings(
     RoutesKeys.routesImport += "bindables._",
-    javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf",
+    Runtime / javaOptions += "-Dconfig.file=dev-build/conf/dev-build.application.conf",
   )
 
 val preview = application("preview")
@@ -219,20 +221,20 @@ val main = root()
     ),
     riffRaffManifestProjectName := s"dotcom:all",
     riffRaffArtifactResources := Seq(
-      (packageBin in Universal in admin).value -> s"${(name in admin).value}/${(packageBin in Universal in admin).value.getName}",
-      (packageBin in Universal in applications).value -> s"${(name in applications).value}/${(packageBin in Universal in applications).value.getName}",
-      (packageBin in Universal in archive).value -> s"${(name in archive).value}/${(packageBin in Universal in archive).value.getName}",
-      (packageBin in Universal in article).value -> s"${(name in article).value}/${(packageBin in Universal in article).value.getName}",
-      (packageBin in Universal in commercial).value -> s"${(name in commercial).value}/${(packageBin in Universal in commercial).value.getName}",
-      (packageBin in Universal in diagnostics).value -> s"${(name in diagnostics).value}/${(packageBin in Universal in diagnostics).value.getName}",
-      (packageBin in Universal in discussion).value -> s"${(name in discussion).value}/${(packageBin in Universal in discussion).value.getName}",
-      (packageBin in Universal in identity).value -> s"${(name in identity).value}/${(packageBin in Universal in identity).value.getName}",
-      (packageBin in Universal in facia).value -> s"${(name in facia).value}/${(packageBin in Universal in facia).value.getName}",
-      (packageBin in Universal in faciaPress).value -> s"${(name in faciaPress).value}/${(packageBin in Universal in faciaPress).value.getName}",
-      (packageBin in Universal in onward).value -> s"${(name in onward).value}/${(packageBin in Universal in onward).value.getName}",
-      (packageBin in Universal in preview).value -> s"${(name in preview).value}/${(packageBin in Universal in preview).value.getName}",
-      (packageBin in Universal in rss).value -> s"${(name in rss).value}/${(packageBin in Universal in rss).value.getName}",
-      (packageBin in Universal in sport).value -> s"${(name in sport).value}/${(packageBin in Universal in sport).value.getName}",
+      (admin / Universal / packageBin).value -> s"${(admin / name).value}/${(admin / Universal / packageBin).value.getName}",
+      (applications / Universal / packageBin).value -> s"${(applications / name).value}/${(applications / Universal / packageBin).value.getName}",
+      (archive / Universal / packageBin).value -> s"${(archive / name).value}/${(archive / Universal / packageBin).value.getName}",
+      (article / Universal / packageBin).value -> s"${(article / name).value}/${(article / Universal / packageBin).value.getName}",
+      (commercial / Universal / packageBin).value -> s"${(commercial / name).value}/${(commercial / Universal / packageBin).value.getName}",
+      (diagnostics / Universal / packageBin).value -> s"${(diagnostics / name).value}/${(diagnostics / Universal / packageBin).value.getName}",
+      (discussion / Universal / packageBin).value -> s"${(discussion / name).value}/${(discussion / Universal / packageBin).value.getName}",
+      (identity / Universal / packageBin).value -> s"${(identity / name).value}/${(identity / Universal / packageBin).value.getName}",
+      (facia / Universal / packageBin).value -> s"${(facia / name).value}/${(facia / Universal / packageBin).value.getName}",
+      (faciaPress / Universal / packageBin).value -> s"${(faciaPress / name).value}/${(faciaPress / Universal / packageBin).value.getName}",
+      (onward / Universal / packageBin).value -> s"${(onward / name).value}/${(onward / Universal / packageBin).value.getName}",
+      (preview / Universal / packageBin).value -> s"${(preview / name).value}/${(preview / Universal / packageBin).value.getName}",
+      (rss / Universal / packageBin).value -> s"${(rss / name).value}/${(rss / Universal / packageBin).value.getName}",
+      (sport / Universal / packageBin).value -> s"${(sport / name).value}/${(sport / Universal / packageBin).value.getName}",
       baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml",
     ),
   )

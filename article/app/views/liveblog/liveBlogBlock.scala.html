@@ -1,0 +1,72 @@
+@import org.joda.time.DateTimeZone
+@import model.Article
+@import model.liveblog.{LiveBlogDate, BodyBlock}
+@import views.BodyProcessor
+@import model.DotcomContentType
+@import model.liveblog.BodyBlock.SummaryEvent
+@(block: BodyBlock, article: Article, timezone: DateTimeZone, isPinnedBlock: Boolean = false, isOriginalPinnedBlock: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@*
+* This template is for individual blocks
+*@
+<div
+id="block-@block.id"
+data-sort-time="@block.publishedCreatedTimestamp()"
+class=" @if(!isPinnedBlock) {block block--content@block.eventClass@block.attributes.membershipPlaceholder.map { _ => js-insert-epic-after }}"
+itemprop="liveBlogUpdate"
+itemscope
+itemtype="http://schema.org/BlogPosting"
+>
+
+    <meta itemprop="headline" content="@block.title.getOrElse[String](article.trail.headline)" />
+
+    <span itemprop="author" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="https://www.theguardian.com#publisher" />
+    </span>
+
+    <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="https://www.theguardian.com#publisher" />
+        <span itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+            <meta itemprop="url" content="https://uploads.guim.co.uk/2018/01/31/TheGuardian_AMP.png" />
+            <meta itemprop="width" content="190" />
+            <meta itemprop="height" content="60" />
+        </span>
+    </span>
+
+    <p class="block-time published-time">
+        <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
+        @views.html.liveblog.dateBlock(block.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), !isPinnedBlock, true, isOriginalPinnedBlock)
+        </a>
+    </p>
+    
+    @if(block.title.isDefined) {
+        @block.title.map { title =>
+            <h2 class="block-title">@title</h2>
+        }
+    } else {
+      @if(block.eventType == SummaryEvent) {
+          <h2 class="block-title">Summary</h2>
+      }
+    }
+
+    @block.contributors.map { contributorId =>
+        @article.tags.tags.find(_.id == s"profile/$contributorId").map { contributorTag =>
+            @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
+        }
+    }
+
+    <div class="block-elements@if(block.contributors.isEmpty) { block-elements--no-byline}" itemprop="articleBody">
+    @BodyProcessor(article, block.bodyHtml)
+    </div>
+    @block.republishedDate(timezone).map { date =>
+        <p class="block-time updated-time">Updated
+            <time datetime="@date.fullDate">at @date.ampm @date.gmt</time>
+        </p>
+    }
+    @views.html.fragments.share.blockLevelSharing(
+        s"block-${block.id.stripSuffix("-pinned")}",
+        article.sharelinks.elementShares(s"block-${block.id.stripSuffix("-pinned")}", None),
+        article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
+        false
+    )
+
+</div>

@@ -1,21 +1,32 @@
 package conf.switches
 
-import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
-import org.joda.time.LocalDate
-import org.scalatest.{AppendedClues, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
 
-class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
+import java.time.DayOfWeek.{SATURDAY, SUNDAY}
+import java.time.LocalDate
+import org.scalatest.AppendedClues
+import org.scalatest.matchers.should.Matchers
+
+class SwitchesTest extends AnyFlatSpec with Matchers with AppendedClues {
 
   private val SwitchNamePattern = """([a-z\d-]+)""".r
 
-  private def forAllSwitches(test: Switch => Unit): Unit = {
-    Switches.all foreach { switch => test(switch) withClue s"(switch: '${switch.name}')" }
+  private val abSwitchNamePattern = """ab-([a-z\d-]+)""".r
+
+  private def forAllSwitches(test: Switch => Unit, switches: Iterable[Switch] = Switches.all): Unit = {
+    switches foreach { switch => test(switch) withClue s"(switch: '${switch.name}')" }
+  }
+
+  private def forAllABTestSwitches(test: Switch => Unit): Unit = {
+    Switches.grouped.find(_._1.name == "A/B Tests") foreach {
+      case (_, switches) => forAllSwitches(test, switches)
+    }
   }
 
   private val testSwitchGroup = new SwitchGroup("category")
 
   private val switchExpiryDate = {
-    val today = new LocalDate()
+    val today = LocalDate.now()
     if (today.getDayOfWeek == SATURDAY) today.plusDays(2)
     else if (today.getDayOfWeek == SUNDAY) today.plusDays(1)
     else today
@@ -28,7 +39,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
       "exciting switch",
       owners = Seq(Owner.withGithub("FakeOwner")),
       safeState = Off,
-      sellByDate = switchExpiryDate,
+      sellByDate = Some(switchExpiryDate),
       exposeClientSide = true,
     )
 
@@ -86,5 +97,9 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
       day == SATURDAY || day == SUNDAY
     }
     forAllSwitches(switch => switch.sellByDate.exists(isWeekend) shouldBe false)
+  }
+
+  "AB test switches" should "begin with ab-" in {
+    forAllABTestSwitches(switch => switch.name should fullyMatch regex abSwitchNamePattern)
   }
 }

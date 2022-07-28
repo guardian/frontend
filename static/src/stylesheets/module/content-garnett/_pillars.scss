@@ -18,9 +18,21 @@
         color: $pillarColor;
     }
 
+    .pinned-block__header,
+    .pinned-block__label,
+    .pinned-block-original__icon,
     .button--primary,
     .content__labels--splash:hover {
         background: $pillarColor;
+    }
+    .pinned-block__collapsible-content {
+        border: solid $pillarColor;
+    }
+
+    .pinned-block__label {
+        &:hover {
+            background-color: $kickerColor;
+        }
     }
 
     .byline,
@@ -118,6 +130,7 @@
         }
     }
 }
+
 //////** Discussion (comment) styling **//////////
 //d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link
 // #? temporary fix: this class is in the comment.js template (line 139)
@@ -131,6 +144,7 @@
     .js-discussion-author-link {
         color: $kickerColor;
     }
+
 
     ._underline_1lj47_3:focus,
     ._underline_1lj47_3:hover {
@@ -218,6 +232,7 @@
         }
     }
 }
+
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
 
@@ -264,6 +279,7 @@
         padding-right: .375em;
     }
 }
+
 @mixin mediaPalatte($mediaColor, $pillarColor, $pillar) {
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
@@ -305,6 +321,7 @@
 .content--pillar-news:not(.paid-content) {
     @include colorPalatte($news-main, $news-dark, $news-bright);
 }
+
 // #? There is a lot of :not(.paid-content) to avoid having to override
 // after the fact.
 // - should the pillar and type classes be added on the condition that isPaidContent is false?
@@ -371,7 +388,7 @@
 
 .content--media:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts
-.immersive-main-media__headline-container--gallery.content--pillar-arts  {
+.immersive-main-media__headline-container--gallery.content--pillar-arts {
     @include mediaPalatte($culture-bright, $culture-main, culture);
 }
 

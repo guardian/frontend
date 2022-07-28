@@ -3,7 +3,7 @@
 import fastdom from 'fastdom';
 import config from 'lib/config';
 import { getBreakpoint, getViewport } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import debounce from 'lodash/debounce';
 
 const body = document.querySelector(

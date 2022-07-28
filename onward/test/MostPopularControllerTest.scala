@@ -2,13 +2,15 @@ package test
 
 import controllers.MostPopularController
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.test._
 import play.api.test.Helpers._
 import services.OphanApi
 
 @DoNotDiscover class MostPopularControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

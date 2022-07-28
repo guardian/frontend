@@ -1,0 +1,15 @@
+@(filterKeyEvents: Boolean)
+
+@*
+* This template is used for the liveblog filter switch
+*@
+
+<div class="live-blog__filter-switch">
+    <label class="live-blog__filter-switch-label" for="filter-switch">
+        @defining(if(filterKeyEvents) "off" else "on") { case nextSwitchState =>
+            <input type="checkbox" id="filter-switch" value="@(filterKeyEvents)" data-component="filter-key-events" data-link-name="filter-key-events-@(nextSwitchState)">
+        }
+        <span class="live-blog__filter-switch-slider round"></span>
+        <span class="live-blog__filter-switch-text">Show key events only</span>
+    </label>
+</div>

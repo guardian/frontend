@@ -21,7 +21,7 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
   val authCookie = new AuthCookie(httpConfiguration)
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
-  val ANTI_FORGERY_KEY = "antiForgeryToken"
+  val ANTI_FORGERY_KEY = "play-googleauth-session-id"
   val forbiddenNoCredentials = Forbidden("Invalid OAuth credentials set")
   lazy val validRedirectDomain = """^(\w+:\/\/[^/]+\.(?:dev-)?gutools\.co\.uk\/.*)$""".r
 
@@ -33,11 +33,8 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
       googleAuthConfig(request)
         .flatMap(overrideRedirectUrl)
         .map { config =>
-          val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
-          GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
-            _.withSession {
-              request.session + (ANTI_FORGERY_KEY -> antiForgeryToken)
-            }
+          config.antiForgeryChecker.ensureUserHasSessionId { sessionId =>
+            GoogleAuth.redirectToGoogle(config, sessionId)
           }
         }
         .getOrElse(Future.successful(forbiddenNoCredentials))
@@ -70,7 +67,7 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
               )
             case Some(token) =>
               GoogleAuth
-                .validatedUserIdentity(config, token)
+                .validatedUserIdentity(config)
                 // drop the avatarUrl as it can be very large and we don't use it anywhere
                 .map(_.copy(avatarUrl = None))
                 .map { userIdentity: UserIdentity =>

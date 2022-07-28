@@ -1,6 +1,6 @@
 package common.dfp
 
-import com.gu.Box
+import common.Box
 import conf.Configuration.commercial._
 import conf.Configuration.environment
 import play.api.libs.json.Json
@@ -36,13 +36,13 @@ object DfpAgent
 
   private def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 
-  private def update[T](agent: Box[Seq[T]])(freshData: => Seq[T]) {
+  private def update[T](agent: Box[Seq[T]])(freshData: => Seq[T]): Unit = {
     if (freshData.nonEmpty) {
       agent send freshData
     }
   }
 
-  def refresh()(implicit executionContext: ExecutionContext) {
+  def refresh()(implicit executionContext: ExecutionContext): Unit = {
 
     def grabPageSkinSponsorshipsFromStore(key: String): Seq[PageSkinSponsorship] = {
       val reportOption: Option[PageSkinSponsorshipReport] = for {
@@ -76,7 +76,7 @@ object DfpAgent
       } yield lineItems
     }
 
-    def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet) {
+    def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet): Unit = {
       inlineMerchandisingTagsAgent send { oldData =>
         if (freshData.nonEmpty) freshData else oldData
       }

@@ -9,7 +9,6 @@ import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.typesafe.config.{ConfigException, ConfigFactory}
 import common.Environment.{app, awsRegion, stage}
-import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import services.ParameterStore
@@ -150,8 +149,7 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object rendering {
-    lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
-    lazy val AMPArticleEndpoint = configuration.getMandatoryStringProperty("rendering.AMPArticleEndpoint")
+    lazy val baseURL = configuration.getMandatoryStringProperty("rendering.baseURL")
     lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
     lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
     lazy val timeout = 2.seconds
@@ -170,8 +168,10 @@ class GuardianConfiguration extends GuLogging {
     lazy val tagIndexesBucket =
       configuration.getMandatoryStringProperty("tag_indexes.bucket")
 
+    // This shouldn't be > 60 as it's in the context of `0/$adminRebuildIndexRateInMinutes` and `0/60` is invalid
+    // see: https://support.hcltechsw.com/csm?id=kb_article&sysparm_article=KB0091722
     lazy val adminRebuildIndexRateInMinutes =
-      configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(60)
+      configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(59)
   }
 
   object environment {
@@ -270,6 +270,8 @@ class GuardianConfiguration extends GuLogging {
   object google {
     lazy val subscribeWithGoogleApiUrl =
       configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
+    lazy val googleRecaptchaSiteKey = configuration.getMandatoryStringProperty("guardian.page.googleRecaptchaSiteKey")
+    lazy val googleRecaptchaSecret = configuration.getMandatoryStringProperty("google.googleRecaptchaSecret")
   }
 
   object affiliateLinks {
@@ -443,7 +445,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
-    lazy val frontendAssetsVersion = "v1.5.0"
+    lazy val frontendAssetsVersion = "v1.6.0"
   }
 
   object readerRevenue {
@@ -648,6 +650,8 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val frontendStoreBucket = configuration.getMandatoryStringProperty("aws.bucket")
+    lazy val topMentionsStoreBucket =
+      configuration.getStringProperty("aws.topMentions.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
     lazy val videoEncodingsSns: String =
       configuration.getMandatoryStringProperty("sns.missing_video_encodings.topic.arn")
@@ -696,6 +700,10 @@ class GuardianConfiguration extends GuLogging {
           .orElse(configuration.getStringProperty("preview.oauth.secret"))
       oauthCallback <- configuration.getStringProperty("standalone.oauth.callback")
     } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  }
+
+  object googleOAuth {
+    lazy val playAppSecretParameterName = s"/frontend/${stage.toLowerCase()}/${app.toLowerCase()}/playAppSecret"
   }
 
   object pngResizer {

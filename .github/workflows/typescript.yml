@@ -15,5 +15,11 @@ jobs:
             - name: Install
               run: yarn
 
+            - name: Lint files
+              run: yarn eslint static/src/javascripts --ext=ts,tsx
+
             - name: Check typescript
               run: yarn tsc
+
+            - name: Check commercial JS is formatted with Prettier
+              run: yarn prettier -c static/src/javascripts/**/commercial/**/*.js

@@ -8,7 +8,7 @@
         <div>
             <strong>@{switch.name}</strong>
             - @showOwners(switch.owners)
-            @if(showExpirationDate) { - <span style="color:grey;font-style: italic;">expires @{switch.sellByDate.get.toString("E dd MMM")} at 23:59 (London time)</span>}
+            @if(showExpirationDate) { - <span style="color:grey;font-style: italic;">@{Switch.expiryAsUserFriendlyString(switch)}</span>}
         </div>
         <div>@{switch.description}</div>
     </li>

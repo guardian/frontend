@@ -5,7 +5,7 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupporterCTA}
-@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch, AnniversaryLogoHeader}
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -18,105 +18,27 @@
         role="navigation"
             aria-label="Guardian sections">
 
-            <a href="@LinkTo {/}"
-            class="@{if(AnniversaryLogoHeader.isSwitchedOn) {"new-header__logo news-header__logo-anniversary"} else {
-              "new-header__logo"
-            }}"
-            data-link-name="nav2 : logo">
-
-                <span class="u-h">The Guardian - Back to home</span>
-
-                @if(page.metadata.hasSlimHeader) {
-                    @fragments.inlineSvg("the-guardian-roundel", "logo")
-                } else {
-                    @if(AnniversaryLogoHeader.isSwitchedOn) {
-                        @fragments.inlineSvg("guardian-anniversary-logo", "logo")
-                    } else {
-                        @fragments.inlineSvg("the-guardian-logo", "logo")
-                    }
-                }
-            </a>
-
             @defining(Edition(request).id.toLowerCase()) { editionId =>
-                <div class="new-header__cta-bar-thankyou hide-until-mobile">
-                    <div class="cta-bar__text hide-until-tablet">
-                        <div class="cta-bar__heading">Thank you</div>
-                        <div class="cta-bar__subheading">Your support powers our independent journalism</div>
-                    </div>
-                </div>
+                <a href="@LinkTo {/}"
+                class="@{if(editionId == "uk") {"new-header__logo news-header__logo-best-website"} else {
+                  "new-header__logo"
+                }}"
+                data-link-name="nav2 : logo">
 
-                <div class="new-header__cta-bar hide-until-mobile">
-                    @if(!page.metadata.hasSlimHeader) {
-                        <div class="cta-bar__text hide-until-tablet">
-                            <div class="cta-bar__heading">Support the Guardian</div>
-                            <div class="cta-bar__subheading">Available for everyone, funded by readers</div>
-                        </div>
+                    <span class="u-h">The Guardian - Back to home</span>
+
+                    @{
+                        if(page.metadata.hasSlimHeader) {
+                            fragments.inlineSvg("the-guardian-roundel", "logo")
+                        } else if(editionId == "uk") {
+                            fragments.inlineSvg("guardian-best-website-logo", "logo")
+                        } else {
+                            fragments.inlineSvg("the-guardian-logo", "logo")
+                        }
                     }
-
-                    @if(editionId == "uk") {
-                        <a class="cta-bar__cta hide-until-tablet js-subscribe js-acquisition-link"
-                        data-link-name="nav2 : subscribe-cta"
-                        data-edition="@{
-                            editionId
-                        }"
-                        href="@getReaderRevenueUrl(SupportSubscribe, Header)">
-                            Subscribe
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </a>
-
-                        <a class="cta-bar__cta hide-until-tablet js-change-become-member-link js-acquisition-link"
-                        data-link-name="nav2 : contribute-cta"
-                        data-edition="@{
-                            editionId
-                        }"
-                        href="@getReaderRevenueUrl(SupportContribute, Header)">
-                            Contribute
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </a>
-
-                        <a class="cta-bar__cta hide-from-tablet js-change-become-member-link js-acquisition-link"
-                        data-link-name="nav2 : support-cta"
-                        data-edition="@{
-                            editionId
-                        }"
-                        href="@getReaderRevenueUrl(SupportSubscribe, Header)">
-                            Subscribe
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </a>
-                    } else {
-                        <a class="cta-bar__cta hide-until-tablet js-change-become-member-link js-acquisition-link"
-                        data-link-name="nav2 : contribute-cta"
-                        data-edition="@{
-                            editionId
-                        }"
-                        href="@getReaderRevenueUrl(SupportContribute, Header)">
-                            Contribute
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </a>
-
-                        <a class="cta-bar__cta hide-until-tablet js-subscribe js-acquisition-link"
-                        data-link-name="nav2 : subscribe-cta"
-                        data-edition="@{
-                            editionId
-                        }"
-                        href="@getReaderRevenueUrl(SupportSubscribe, Header)">
-                            Subscribe
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </a>
-
-                        <a class="cta-bar__cta hide-from-tablet js-change-become-member-link js-acquisition-link"
-                        data-link-name="nav2 : contribute-cta"
-                        data-edition="@{
-                            editionId
-                        }"
-                        href="@getReaderRevenueUrl(SupportContribute, Header)">
-                            Contribute
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </a>
-                    }
-                </div>
+                </a>
             }
-
+            <div class="new-header__cta-bar" ></div>
 
             <div class="new-header__top-bar hide-until-mobile">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
@@ -124,9 +46,9 @@
                 <div class="top-bar__commercial-items js-supporter-cta is-hidden">
                     <span class="top-bar__item__seperator hide-until-desktop"></span>
                     <a class="top-bar__item hide-until-desktop"
-                       data-link-name="nav2 : supporter-cta"
-                       data-edition="@{editionId}"
-                       href="@getReaderRevenueUrl(SupporterCTA, Header)">
+                        data-link-name="nav2 : supporter-cta"
+                        data-edition="@{editionId}"
+                        href="@getReaderRevenueUrl(SupporterCTA, Header)">
                         Subscriptions
                     </a>
                 </div>

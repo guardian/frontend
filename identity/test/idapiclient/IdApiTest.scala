@@ -1,6 +1,5 @@
 package idapiclient
 
-import org.scalatest.mockito.MockitoSugar
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play.PlaySpec
 
@@ -10,8 +9,8 @@ import idapiclient.parser.IdApiJsonBodyParser
 import idapiclient.responses.Error
 import org.mockito.Mockito._
 import org.mockito.Matchers.any
+import org.scalatestplus.mockito.MockitoSugar
 
-import scala.language.postfixOps
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import test.{SingleServerSuite, WithTestExecutionContext, WithTestIdConfig}
 
@@ -79,7 +78,6 @@ class IdApiTest
       |        "publicFields": {
       |            "username": "testUsername",
       |            "displayName": "testUsername",
-      |            "vanityUrl": "testVanityUrl",
       |            "usernameLowerCase": "testusername"
       |        },
       |        "statusFields": {

@@ -1,6 +1,4 @@
 @import model.AtomPage
-@import templates.inlineJS.blocking.js.loadFonts
-@import common.InlineJs
 
 @(page: AtomPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -11,6 +9,7 @@
         <meta charset="utf-8">
         <title>@page.metadata.webTitle</title>
         <base target="_top">
+        @fragments.fontFaces()
         @fragments.atomPageHead(page)
         <script>
                 // Interactive Atoms expect window.resize to exist. In the context of Amp we want to let the parent know that
@@ -25,12 +24,6 @@
                             '*'
                     );
                 }
-        </script>
-
-        @fragments.fontDefinitions()
-
-        <script>
-            @InlineJs(loadFonts(true).body, "loadFonts.js")
         </script>
 
     </head>

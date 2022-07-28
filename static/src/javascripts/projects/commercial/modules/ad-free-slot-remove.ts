@@ -1,66 +1,17 @@
-import once from 'lodash/once';
-import { $$ } from '../../../lib/$$';
-import fastdom from '../../../lib/fastdom-promise';
+import { once } from 'lodash-es';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { dfpEnv } from './dfp/dfp-env';
+import { removeSlots } from './remove-slots';
 
-const mpuCandidateClass = 'fc-slice__item--mpu-candidate';
-const mpuCandidateSelector = `.${mpuCandidateClass}`;
-
-const shouldRemoveMpuWhenAdFree = (mpuCandidate: HTMLElement) =>
-	mpuCandidate.className.toLowerCase().includes(mpuCandidateClass);
-
-const shouldRemoveFaciaContainerWhenAdFree = (faciaContainer: HTMLElement) => {
-	const dataComponentAttribute = faciaContainer.getAttribute(
-		'data-component',
-	);
-	return dataComponentAttribute?.includes('commercial-container');
-};
-
+/**
+ * If the user is ad-free, remove all ad slots on the page,
+ * as the ad slots are still left on the page on fronts, and mostpop on articles
+ */
 const adFreeSlotRemove = once(() => {
 	if (!commercialFeatures.adFree) {
 		return Promise.resolve();
 	}
 
-	const bodyEl = document.body;
-
-	const $adSlotsToRemove = $$(dfpEnv.adSlotSelector);
-
-	const mpusToRemove = $$(mpuCandidateSelector)
-		.get()
-		.filter(shouldRemoveMpuWhenAdFree);
-
-	const commercialFaciaContainersToRemove = $$('.fc-container')
-		.get()
-		.filter(shouldRemoveFaciaContainerWhenAdFree);
-
-	const commercialThrashers = $$('.commercial-thrasher');
-
-	return fastdom.mutate(() => {
-		if (bodyEl.classList.toString().includes('has-page-skin')) {
-			bodyEl.classList.remove('has-page-skin');
-		}
-		if (bodyEl.classList.toString().includes('has-active-pageskin')) {
-			bodyEl.classList.remove('has-active-pageskin');
-		}
-
-		$adSlotsToRemove.remove();
-		mpusToRemove.forEach((mpu: HTMLElement) =>
-			mpu.classList.add('fc-slice__item--no-mpu'),
-		);
-
-		commercialFaciaContainersToRemove.forEach((faciaContainer) =>
-			faciaContainer.classList.add('u-h'),
-		);
-		commercialThrashers.get().forEach((thrasher) => {
-			const closestFaciaContainer = thrasher.closest(
-				'.fc-container--thrasher',
-			);
-			if (closestFaciaContainer) {
-				closestFaciaContainer.remove();
-			}
-		});
-	});
+	return removeSlots();
 });
 
 export { adFreeSlotRemove };

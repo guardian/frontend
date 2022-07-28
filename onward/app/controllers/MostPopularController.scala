@@ -1,7 +1,5 @@
 package controllers
 
-import com.github.nscala_time.time.Imports.DateTimeZone
-
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import common._
@@ -11,19 +9,16 @@ import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import model.pressed.PressedContent
-import models.{
+import model.dotcomrendering.{
   MostPopularGeoResponse,
   MostPopularNx2,
   OnwardCollectionResponse,
   OnwardCollectionResponseDCR,
-  OnwardItemNx2,
+  OnwardItem,
 }
-import implicits.FaciaContentFrontendHelpers._
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
-import views.support.{ImgSrc, RemoveOuterParaHtml}
 
 import scala.concurrent.Future
 
@@ -133,14 +128,14 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = section.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
+        trails = section.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
@@ -153,10 +148,10 @@ class MostPopularController(
       OnwardCollectionResponse(nx2.heading, nx2.trails)
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+      OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
@@ -166,7 +161,7 @@ class MostPopularController(
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = mostPopular.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
+      trails = mostPopular.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
     )
     Cached(900)(JsonComponent(data))
   }

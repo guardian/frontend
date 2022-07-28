@@ -1,13 +1,12 @@
 package model
 
 import common.Edition
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 import org.joda.time.DateTime
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.github.nscala_time.time.Imports._
+import org.scalatest.flatspec.AnyFlatSpec
 
-class DateTimeTest extends FlatSpec with Matchers with implicits.Dates {
+class DateTimeTest extends AnyFlatSpec with Matchers with implicits.Dates {
 
   //http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
 

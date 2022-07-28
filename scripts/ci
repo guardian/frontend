@@ -2,13 +2,10 @@
 
 # Main Continuous Integration Script
 
-# Explicitly clean sbt targets to prevent cross-branch conflicts
-./sbt clean
-
-echo "##teamcity[progressMessage 'sbt compile assets scalafmtCheckAll test riffRaffUpload']"
-
-export JDK_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export JDK_HOME=${JDK_11}
 export JAVA_HOME=${JDK_HOME}
+
+echo "##teamcity[progressMessage 'sbt clean compile assets scalafmtCheckAll test riffRaffUpload']"
 
 echo "********** Java version **********"
 ${JAVA_HOME}/bin/java -version
@@ -21,7 +18,7 @@ cat /dev/null | ${JDK_HOME}/bin/java \
     -XX:+UseParallelGC \
     -DAPP_SECRET="fake_secret" \
     -Duser.timezone=Australia/Sydney \
-    -jar ./bin/sbt-launch.jar compile assets scalafmtCheckAll test riffRaffUpload
+    -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test riffRaffUpload
 
 SBT_EXIT=$?
 

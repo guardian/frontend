@@ -1,19 +1,21 @@
 package conf
 
 import org.joda.time.DateTime
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatest.matchers.should.Matchers
 import play.api.mvc.{ControllerComponents, Result}
 import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.wordspec.AnyWordSpec
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.Random
 
 @DoNotDiscover class CachedHealthCheckTest
-    extends WordSpec
+    extends AnyWordSpec
     with Matchers
     with ConfiguredTestSuite
     with ScalaFutures

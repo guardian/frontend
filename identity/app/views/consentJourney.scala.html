@@ -1,18 +1,11 @@
-@import conf.Static
-@import conf.Configuration
-@import views.support.RenderClasses
-@import model.{ApplicationContext, IdentityPage}
+
 @import services.EmailPrefsData
-@import form.IdFormHelpers.nonInputFields
-@import views.support.`package`.Seq2zipWithRowInfo
-@import views.support.fragment.Switch._
 @import views.support.fragment.ConsentBlock._
 @import views.support.fragment.ConsentChannel._
-@import common.LinkTo
 @import controllers.editprofile.ProfileForms
 @import _root_.utils.ConsentsJourneyType._
 
-@import com.gu.identity.model.EmailNewsletter
+@import services.newsletters.model.NewsletterResponse
 @(
     user: com.gu.identity.model.User,
     forms: ProfileForms,
@@ -22,7 +15,7 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
-    availableLists: List[EmailNewsletter],
+    availableLists: List[NewsletterResponse],
     consentHint: Option[String] = None,
     skin: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
@@ -30,7 +23,7 @@
     <div class="manage-account__switches">
         <ul>
             <li>
-                <label class="manage-account__switch @skin.map(s => s"manage-account__switch--$s") manage-account__switch--no-box manage-account__switch--no-padding js-manage-account__check-allCheckbox" style="visibility:hidden;pointer-events:none;" data-link-name-template="mma switch : (consents - all) : [action]" data-wrapper="body">
+                <label class="manage-account__switch @skin.map(s => s"manage-account__switch--$s") manage-account__switch--no-box manage-account__switch--no-padding js-manage-account__check-allCheckbox" style="visibility:hidden;pointer-events:none;" data-link-name-template="mma switch : (consents - all) : [action]" data-wrapper="body"/>
                     <div class="manage-account__switch-content">
                         <input type="checkbox"/>
                         <div class="manage-account__switch-checkbox"></div>
@@ -42,44 +35,6 @@
     </div>
 }
 
-@smsStepContent = {
-    @views.html.profile.smsConsent(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
-}
-
-@smsStep = @{
-    ConsentStep(
-        name = "sms",
-        title = "SMS updates",
-        content = smsStepContent,
-        show = true
-    )
-}
-
-@nonElectronicContactContent = {
-    @views.html.profile.nonElectronicContact(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
-}
-
-@nonElectronicContactStep = @{
-    ConsentStep(
-        name = "nonElectronicContact",
-        title = "How else can we get in touch with you?",
-        content = nonElectronicContactContent,
-        show = true
-    )
-}
-
-@profilingConsentOptOutContent = {
-    @views.html.profile.profilingConsent(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
-}
-
-@profilingConsentOptOutStep = @{
-    ConsentStep(
-        name="profilingConsentOptOut",
-        title ="Using your data for marketing analysis",
-        content = profilingConsentOptOutContent,
-        show = true
-    )
-}
 
 @marketingStepContent = {
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" method="post">
@@ -143,15 +98,11 @@
 
 @defaultJourney = @{List(
     marketingConsentStep,
-    smsStep,
-    nonElectronicContactStep,
-    profilingConsentOptOutStep
 )}
 
 @displayJourney = {
     <div class="
         identity-consent-journey
-        @{if (!user.statusFields.hasRepermissioned.getOrElse(false)){"identity-consent-journey--with-alert"}}
         @{skin.map(s => s"identity-consent-journey--$s" )}
         u-h
     " data-journey="@journey" data-component="identity-consent-journey-@journey">

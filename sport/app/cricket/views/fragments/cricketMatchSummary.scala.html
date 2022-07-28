@@ -1,12 +1,17 @@
-@(theMatch: cricketModel.Match, matchUrl: String)(implicit request: RequestHeader)
+@import java.time.format.DateTimeFormatter
+@import java.time.ZoneId
 @import common.LinkTo
+@import common.Chronos
 @import views.support.GuDateFormatLegacy
+
+
+@(theMatch: cricketModel.Match, matchUrl: String)(implicit request: RequestHeader)
 
 <div class="sport-summary sport-summary--cricket" itemscope itemtype="http://schema.org/SportsEvent">
 
     <h2 class="u-h">
-        <time class="u-h" datetime="@theMatch.gameDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@theMatch.gameDate.getMillis">
-        @GuDateFormatLegacy(theMatch.gameDate, "d MMM y")
+        <time class="u-h" datetime="@theMatch.gameDate.format(DateTimeFormatter.ISO_DATE)" data-timestamp="@Chronos.toMilliSeconds(theMatch.gameDate)">
+        @GuDateFormatLegacy(Chronos.javaTimeLocalDateTimeToJodaDateTime(theMatch.gameDate), "d MMM y")
         </time>
         @theMatch.competitionName, @theMatch.venueName
     </h2>
@@ -71,6 +76,7 @@
         case _ if (innings.declared) => { @innings.runsScored - @innings.wickets declared }
         case _ if (innings.forfeited) => { @innings.runsScored - @innings.wickets forfeited }
         case _ if (innings.allOut) => { @innings.runsScored }
+        case _ => { @innings.runsScored - @innings.wickets }
     }
 }
 

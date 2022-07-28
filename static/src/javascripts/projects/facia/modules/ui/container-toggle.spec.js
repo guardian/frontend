@@ -1,7 +1,7 @@
 import $ from 'lib/$';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 import { ContainerToggle } from 'facia/modules/ui/container-toggle';
 

@@ -2,9 +2,8 @@ package metrics
 
 import java.util.concurrent.atomic.AtomicLong
 
-import com.gu.Box
 import com.amazonaws.services.cloudwatch.model.StandardUnit
-import common.{FaciaPressMetrics, StopWatch}
+import common.{Box, StopWatch}
 import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
 import scala.concurrent.Future

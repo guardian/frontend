@@ -9,7 +9,7 @@
 @import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 @import views.support.Commercial.glabsLink
 
-<div data-id="@containerModel.id" class="fc-container" data-component="labs-container-@containerIndex">
+<div data-id="@containerModel.id" class="fc-container" data-component="container-@{containerIndex + 1} | labs">
     @containerWrapper(
         Seq("legacy", "capi", "paidfor", "tone-paidfor"),
         optKicker = Some(fragments.commercial.paidForMeta(Some(containerModel.id))),
@@ -52,7 +52,7 @@
                 </summary>
                 <div class="dumathoin__row dumathoin__row--wrap dumathoin__3cols">
                     @containerModel.content.showMoreCards.map(card => views.html.fragments.commercial.cards.itemSmallCard(
-                                            card,
+                                            item = card,
                                             optAdvertClassNames = Some(Seq("paidfor")),
                                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
                                             useCardBranding = !containerModel.isSingleSponsorContainer))

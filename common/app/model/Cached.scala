@@ -2,10 +2,9 @@ package model
 
 import conf.switches.Switches.LongCacheSwitch
 import org.joda.time.DateTime
-import com.github.nscala_time.time.Implicits._
 import play.api.http.Writeable
 import play.api.mvc._
-import scala.math.{max, min}
+import scala.math.max
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 
@@ -26,8 +25,6 @@ object CacheTime {
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
   object DiscussionDefault extends CacheTime(60)
   object DiscussionClosed extends CacheTime(60, Some(longCacheTime))
-  object ServiceWorker extends CacheTime(60, Some(600))
-  object WebAppManifest extends CacheTime(60, Some(longCacheTime))
 
   def LastDayUpdated: CacheTime = CacheTime(60, Some(longCacheTime))
   def NotRecentlyUpdated: CacheTime = CacheTime(60, Some(longCacheTime))

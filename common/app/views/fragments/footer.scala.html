@@ -1,18 +1,13 @@
 @(showNav: Boolean = true)(implicit page: model.Page, request: RequestHeader)
 
+@import common.editions.{Au, International, Uk, Us}
+@import common.{Edition, LinkTo}
+@import conf.switches.Switches.EmailInlineInFooterSwitch
+@import navigation.ReaderRevenueSite.{SupportContribute, SupportSubscribe}
+@import navigation.UrlHelpers.{Footer, getReaderRevenueUrl}
+@import navigation.{FooterLink, FooterLinks, NavMenu}
 @import org.joda.time.DateTime
-@import common.Edition
-@import common.LinkTo
-@import navigation.NavMenu
-@import navigation.{FooterLinks, FooterLink}
-@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
-@import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, AmpFooter}
-@import common.editions.{Au, Uk, Us, International}
-@import model.Page
-@import conf.switches.Switches.{ EmailInlineInFooterSwitch }
-@import com.gu.identity.model.EmailNewsletters
-@import model.NoCache
-@import views.support.{RenderClasses}
+@import views.support.RenderClasses
 
 @footerListItem(link: FooterLink) = {
     <li class="colophon__item">
@@ -50,6 +45,7 @@
                             </a>
                         </li>
                     }
+                </ul>
             }
         </div>
 
@@ -57,22 +53,7 @@
         <div class="colophon u-cf">
             @defining(Edition(request)) { currentEdition =>
                 @if(EmailInlineInFooterSwitch.isSwitchedOn && !page.metadata.isFoundation) {
-                    <div class="footer__email-container js-footer__email-container">
-                    @currentEdition match {
-                        case Uk => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.identityName, "footer-daily-email-uk")
-                        }
-                        case Us => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUs.identityName, "footer-daily-email-us")
-                        }
-                        case Au => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayAu.identityName, "footer-daily-email-au")
-                        }
-                        case International => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.identityName, "footer-daily-email-int")
-                        }
-                    }
-                    </div>
+                    @emailSignUpLink(currentEdition)
                 }
 
                 <div class="@RenderClasses(Map(
@@ -184,4 +165,25 @@
             @fragments.inlineSvg("arrow-right", "icon")
         </a>
     </div>
+}
+
+@emailSignUpLink(currentEdition: Edition) = {
+    <section class="footer__email-container">
+        <div class="colophon__section">
+        @currentEdition match {
+            case Uk => {
+                @fragments.email.signup.emailFooterLink("morning-briefing", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
+            }
+            case Us => {
+                @fragments.email.signup.emailFooterLink("us-morning-newsletter", "/info/2018/sep/17/guardian-us-morning-briefing-sign-up-to-stay-informed")
+            }
+            case Au => {
+                @fragments.email.signup.emailFooterLink("morning-mail", "/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
+            }
+            case International => {
+                @fragments.email.signup.emailFooterLink("morning-briefing", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
+            }
+        }
+        </div>
+    </section>
 }

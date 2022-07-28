@@ -4,22 +4,22 @@ import qwery from 'qwery';
 
 import $ from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
-import { fetchJson } from 'lib/fetch-json';
-import { isBreakpoint, pageVisible, initPageVisibility } from 'lib/detect';
-import mediator from 'lib/mediator';
-import { enhanceTweets } from 'common/modules/article/twitter';
-import { Sticky } from 'common/modules/ui/sticky';
-import { scrollToElement } from 'lib/scroller';
-import { init as initRelativeDates } from 'common/modules/ui/relativedates';
-import { initNotificationCounter } from 'common/modules/ui/notification-counter';
-import { checkElemsForVideos } from 'common/modules/atoms/youtube';
+import {fetchJson} from 'lib/fetch-json';
+import {initPageVisibility, isBreakpoint, pageVisible} from 'lib/detect';
+import { mediator } from 'lib/mediator';
+import {enhanceTweets} from 'common/modules/article/twitter';
+import {Sticky} from 'common/modules/ui/sticky';
+import {scrollToElement} from 'lib/scroller';
+import {init as initRelativeDates} from 'common/modules/ui/relativedates';
+import {initNotificationCounter} from 'common/modules/ui/notification-counter';
+import {checkElemsForVideos} from 'common/modules/atoms/youtube';
 
 
 const autoUpdate = (opts) => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
-            minUpdateDelay: (isBreakpoint({ min: 'desktop' }) ? 10 : 30) * 1000,
+            minUpdateDelay: (isBreakpoint({min: 'desktop'}) ? 10 : 30) * 1000,
             maxUpdateDelay: 20 * 60 * 1000, // 20 mins
             backoffMultiplier: 0.75, // increase or decrease the back off rate by modifying this
         },
@@ -32,7 +32,8 @@ const autoUpdate = (opts) => {
     const $toastText = $('.toast__text', $toastButton);
     const toastContainer = qwery('.toast__container')[0];
     let currentUpdateDelay = options.minUpdateDelay;
-    let latestBlockId = $liveblogBody.data('most-recent-block');
+    let latestBlockId = $liveblogBody.data('most-recent-block') || 'block-0';
+    let latestKeyBlockId = $liveblogBody.data('most-recent-key-block') || 'block-0';
     let unreadBlocksNo = 0;
     let updateTimeoutId;
 
@@ -51,7 +52,8 @@ const autoUpdate = (opts) => {
     const scrolledPastTopBlock = () =>
         $liveblogBody.offset().top < window.pageYOffset;
 
-    const isLivePage = !window.location.search.includes('?page=');
+    const isLivePage = !window.location.search.includes('page=');
+    const filterKeyEvents = window.location.search.includes('filterKeyEvents=true');
 
     const revealInjectedElements = () => {
         fastdom.mutate(() => {
@@ -93,6 +95,9 @@ const autoUpdate = (opts) => {
 
             mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
 
+            const blockUpdated = new Event('liveblog:blocks-updated');
+            document.dispatchEvent(blockUpdated);
+
             initRelativeDates();
             enhanceTweets();
             checkElemsForVideos(elementsToAdd);
@@ -114,11 +119,11 @@ const autoUpdate = (opts) => {
         }
 
         let count = 0;
-        const shouldFetchBlocks = `&isLivePage=${
-            isLivePage ? 'true' : 'false'
-        }`;
-        const latestBlockIdToUse = latestBlockId || 'block-0';
-        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}`;
+        const filterKeyEventsParam = `&filterKeyEvents=${filterKeyEvents ? 'true' : 'false'}`;
+        const shouldFetchBlocks = `&isLivePage=${isLivePage ? 'true' : 'false'}`;
+        const latestBlockIdToUse = filterKeyEvents ? latestKeyBlockId : latestBlockId;
+
+        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterKeyEventsParam}`;
         const endpoint = `${window.location.pathname}.json${params}`;
 
         // #? One day this should be in Promise.finally()
@@ -149,6 +154,7 @@ const autoUpdate = (opts) => {
                     mediator.emit('modules:autoupdate:unread', unreadBlocksNo);
 
                     latestBlockId = resp.mostRecentBlockId;
+                    latestKeyBlockId = resp.mostRecentBlockId;
 
                     if (isLivePage) {
                         injectNewBlocks(resp.html);
@@ -185,7 +191,10 @@ const autoUpdate = (opts) => {
                         });
                 });
             } else {
-                window.location.assign(window.location.pathname);
+                const param = window.location.search.includes('filterKeyEvents=true') ? `?filterKeyEvents=true` : '';
+                const url = window.location.pathname + param;
+
+                window.location.assign(url);
             }
         });
 
@@ -230,4 +239,4 @@ const autoUpdate = (opts) => {
     });
 };
 
-export { autoUpdate };
+export {autoUpdate};

@@ -11,11 +11,13 @@ import com.gu.contentapi.client.model.v1.{
   Sponsorship => ApiSponsorship,
 }
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
-import common.Edition
+import common.{Chronos, Edition}
 import conf.Configuration
-import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
+import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
 import model.content._
+import model.dotcomrendering.InteractiveSwitchOver
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
+import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
@@ -203,6 +205,7 @@ case class EmbedBlockElement(
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
+    caption: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object EmbedBlockElement {
@@ -470,6 +473,7 @@ case class SpotifyBlockElement(
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
+    role: Role,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object SpotifyBlockElement {
@@ -791,6 +795,7 @@ object PageElement {
       calloutsUrl: Option[String],
       overrideImage: Option[ImageElement],
       edition: Edition,
+      webPublicationDate: DateTime,
   ): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
@@ -862,18 +867,23 @@ object PageElement {
         val imageAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
-        val imageSources: Seq[ImageSource] = DotcomRenderingImageRoleWidthByBreakpointMapping.all.map {
+        val imageRoleWidthsByBreakpoint =
+          if (isMainBlock) MainMedia
+          else if (isImmersive) ImmersiveMedia
+          else BodyMedia
+
+        val imageSources = imageRoleWidthsByBreakpoint.all.map {
           case (weighting, widths) =>
             val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
               Seq(
                 ImgSrc.srcsetForBreakpoint(
                   b,
-                  DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
+                  imageRoleWidthsByBreakpoint.immersive.breakpoints,
                   maybeImageMedia = Some(ImageMedia(imageAssets)),
                 ),
                 ImgSrc.srcsetForBreakpoint(
                   b,
-                  DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
+                  imageRoleWidthsByBreakpoint.immersive.breakpoints,
                   maybeImageMedia = Some(ImageMedia(imageAssets)),
                   hidpi = true,
                 ),
@@ -1060,12 +1070,20 @@ object PageElement {
           }
 
           case Some(interactive: InteractiveAtom) => {
+            val isLegacy =
+              InteractiveSwitchOver.date.isAfter(Chronos.jodaDateTimeToJavaTimeDateTime(webPublicationDate))
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(
               InteractiveAtomBlockElement(
                 id = interactive.id,
                 url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId",
-                html = Some(interactive.html),
+                // Note, we parse legacy interactives to do minimal cleaning of
+                // the HTML (e.g. to ensure all tags are closed). Some break
+                // without this. E.g.
+                // https://www.theguardian.com/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend.
+                html =
+                  if (isLegacy) Some(Jsoup.parseBodyFragment(interactive.html).outerHtml)
+                  else Some(interactive.html),
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
@@ -1237,7 +1255,9 @@ object PageElement {
           .toList
       case Interactive =>
         element.interactiveTypeData
-          .map(d => InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl, d.role, d.isMandatory, d.caption))
+          .map(d =>
+            InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl.map(ensureHTTPS), d.role, d.isMandatory, d.caption),
+          )
           .toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => {
@@ -1313,6 +1333,14 @@ object PageElement {
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
+  }
+
+  private[this] def ensureHTTPS(url: String): String = {
+    val http = "http://"
+
+    if (url.startsWith(http)) {
+      "https://" + url.stripPrefix(http)
+    } else url
   }
 
   private def makeWitnessAssets(element: ApiBlockElement): Seq[WitnessBlockElementAssetsElement] = {
@@ -1464,13 +1492,14 @@ object PageElement {
       thirdPartyTracking: Boolean,
       source: Option[String],
       sourceDomain: Option[String],
+      caption: Option[String],
   ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
       src <- getIframeSrc(html)
       if src.contains("charts-datawrapper.s3.amazonaws.com")
     } yield {
-      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain)
+      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain, caption)
     }
   }
 
@@ -1480,12 +1509,13 @@ object PageElement {
       thirdPartyTracking: Boolean,
       source: Option[String],
       sourceDomain: Option[String],
+      caption: Option[String],
   ): Option[EmbedBlockElement] = {
     // This returns a EmbedBlockELement to handle any iframe that wasn't captured by extractChartDatawrapperEmbedBlockElement
     for {
       src <- getIframeSrc(html)
     } yield {
-      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain)
+      EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain, caption)
     }
   }
 
@@ -1511,6 +1541,7 @@ object PageElement {
         thirdPartyTracking,
         d.source,
         d.sourceDomain,
+        Role(d.role),
       )
     }
   }
@@ -1543,21 +1574,29 @@ object PageElement {
         payload. It was decided that handling those as they come up will be an ongoing health task of the dotcom team,
         and not part of the original DCR migration.
        */
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
-        extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
-          extractChartDatawrapperEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain)
-            .getOrElse {
-              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
-                // This version of AudioBlockElement is not currently supported in DCR
-                // AudioBlockElement(element.assets.map(AudioAsset.make))
+      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
+        .getOrElse {
+          extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
+            extractChartDatawrapperEmbedBlockElement(
+              html,
+              d.role,
+              thirdPartyTracking,
+              d.source,
+              d.sourceDomain,
+              d.caption,
+            ).getOrElse {
+              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
+                .getOrElse {
+                  // This version of AudioBlockElement is not currently supported in DCR
+                  // AudioBlockElement(element.assets.map(AudioAsset.make))
 
-                // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
-                // incorrect payload.
-                AudioBlockElement("This audio element cannot be displayed at this time")
-              }
+                  // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
+                  // incorrect payload.
+                  AudioBlockElement("This audio element cannot be displayed at this time")
+                }
             }
+          }
         }
-      }
     }
   }
 
@@ -1583,6 +1622,7 @@ object PageElement {
             thirdPartyTracking,
             d.source,
             d.sourceDomain,
+            d.caption,
           )
         }
       }

@@ -1,7 +1,7 @@
 import bean from 'bean';
 import $ from 'lib/$';
 import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import reportError from 'lib/report-error';
 
 

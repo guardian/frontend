@@ -276,19 +276,31 @@ final case class Content(
       ("contributorBio", JsString(contributorBio.getOrElse(""))),
     )
 
+  def cricketTeam: Option[String] = {
+    if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
+      CricketTeams.teamFor(this).map(_.wordsForUrl)
+    } else None
+  }
+
+  def cricketMatchDate: Option[String] = {
+    if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
+      Some(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))
+    } else None
+  }
+
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
   def conditionalConfig: Map[String, JsValue] = {
     val rugbyMeta = if (tags.isRugbyMatch && conf.switches.Switches.RugbyScoresSwitch.isSwitchedOn) {
       val teamIds = tags.keywords.map(_.id).collect(RugbyContent.teamNameIds)
       val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
-      val date = RugbyContent.timeFormatter.withZoneUTC().print(trail.webPublicationDate)
+      val date = RugbyContent.timeFormatter.format(Chronos.jodaDateTimeToJavaTimeDateTime(trail.webPublicationDate))
       Some(("rugbyMatch", JsString(s"/sport/rugby/api/score/$date/$team1/$team2")))
     } else None
 
     val cricketMeta = if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
       List(
-        CricketTeams.teamFor(this).map(_.wordsForUrl).map(wordsForUrl => "cricketTeam" -> JsString(wordsForUrl)),
-        Some(("cricketMatchDate", JsString(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd")))),
+        cricketTeam.map(team => "cricketTeam" -> JsString(team)),
+        cricketMatchDate.map(date => "cricketMatchDate" -> JsString(date)),
       )
     } else Nil
 

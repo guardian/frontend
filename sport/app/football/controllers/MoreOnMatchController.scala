@@ -6,19 +6,18 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.datetime.DateHelpers
-import football.model.FootballMatchTrail
+import football.model.{FootballMatchTrail, GuTeamCodes}
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
-import org.joda.time.DateTime
 import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
+import model.CompetitionDisplayHelpers.cleanTeamNameNextGenApi
 
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
-import java.time.{Instant, ZoneId, ZonedDateTime}
+import java.time.ZonedDateTime
 import scala.concurrent.Future
 
 // TODO import java.time.LocalDate and do not import DateHelpers.
@@ -65,6 +64,7 @@ case class NxPlayer(
 case class NxTeam(
     id: String,
     name: String,
+    codename: String,
     players: Seq[NxPlayer],
     score: Int,
     scorers: List[String],
@@ -87,6 +87,7 @@ case class NxMatchData(
     venue: String,
     comments: String,
     minByMinUrl: Option[String],
+    reportUrl: Option[String],
 ) extends NxAnswer
 
 object NxAnswer {
@@ -112,7 +113,8 @@ object NxAnswer {
     val players = makePlayers(teamV2)
     NxTeam(
       teamV1.id,
-      teamV1.name,
+      cleanTeamNameNextGenApi(teamV1.name),
+      codename = GuTeamCodes.codeFor(teamV1),
       players = players,
       score = teamV1.score.getOrElse(0),
       scorers = teamV1.scorers.fold(Nil: List[String])(
@@ -141,6 +143,15 @@ object NxAnswer {
     minByMin.map(x => LinkTo(x.url))
   }
 
+  def makeMatchReportUrl(implicit
+      request: RequestHeader,
+      theMatch: FootballMatch,
+      related: Seq[ContentType],
+  ): Option[String] = {
+    val (matchReport, _, _, _) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
+    matchReport.map(x => LinkTo(x.url))
+  }
+
   def makeFromFootballMatch(
       request: RequestHeader,
       theMatch: FootballMatch,
@@ -161,6 +172,7 @@ object NxAnswer {
       venue = theMatch.venue.map(_.name).getOrElse(""),
       comments = theMatch.comments.getOrElse(""),
       minByMinUrl = makeMinByMinUrl(request, theMatch, related),
+      reportUrl = makeMatchReportUrl(request, theMatch, related),
     )
   }
 

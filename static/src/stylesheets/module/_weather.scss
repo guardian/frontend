@@ -141,9 +141,14 @@ $weather-large-size: 50px;
 
 .weather__location {
     box-sizing: border-box;
-    order: -1;
     position: relative;
     width: 100%;
+    border-top: 1px solid $brightness-86;
+
+    @include mq($from: phablet) {
+        width: 70%;
+        border-top: 0;
+    }
 
     @include mq($until: tablet) {
         display: none;
@@ -154,9 +159,14 @@ $weather-large-size: 50px;
         }
     }
 
+    @include mq($from: phablet) {
+        padding-top: 3px;
+    }
+
     @include mq(tablet, leftCol) {
         margin: ($gs-baseline / 4) ($gs-gutter / 2) 0 0;
         width: gs-span(2);
+        min-width: 140px;
     }
 
     @include mq(leftCol) {
@@ -265,6 +275,62 @@ $weather-large-size: 50px;
     fill: $brightness-7;
 }
 
+.weather__link-to-full {
+    padding-bottom: 4px;
+
+    a {
+        color: inherit;
+        font-size: 15px;
+    }
+
+    @include mq(phablet, tablet) {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    @include mq($from: tablet) {
+        margin-top: ($gs-baseline - 4);
+        margin-left: ($gs-baseline - 2);
+    }
+
+    @include mq(desktop, leftCol) {
+        display: block;
+        min-width: 145px;
+    }
+
+    @include mq($from: leftCol) {
+        margin-top: $gs-gutter;
+        margin-left: 0;
+    }
+
+    @include mq($until: tablet) {
+        display: none;
+
+        .is-expanded & {
+            display: block;
+        }
+    }
+
+    @include mq($until: desktop) {
+        padding-left: 2px;
+        min-width: gs-span(2);
+    }
+}
+
+.weather__icon--external-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $brightness-7;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    svg {
+        fill: $brightness-100;
+    }
+}
+
 .forecast {
     display: flex;
     margin: 0;
@@ -275,7 +341,6 @@ $weather-large-size: 50px;
         display: none;
 
         .is-expanded & {
-            border-bottom: 1px solid $brightness-86;
             border-top: 1px solid $brightness-86;
             padding: 0 0 ($gs-baseline / 2);
             display: flex;
@@ -283,6 +348,10 @@ $weather-large-size: 50px;
             position: relative;
             width: 100%;
         }
+    }
+
+    @include mq(phablet, tablet) {
+        border-bottom: 1px solid $brightness-86;
     }
 
     @include mq(tablet, leftCol) {
@@ -344,6 +413,7 @@ $weather-large-size: 50px;
         @include mq($until: tablet) {
             &:before {
                 content: none;
+                border-left: 0;
             }
         }
 

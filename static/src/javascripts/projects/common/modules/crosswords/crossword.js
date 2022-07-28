@@ -1,7 +1,7 @@
 import React, { Component, findDOMNode } from 'preact/compat';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { isIOS, isBreakpoint } from 'lib/detect';
 import { scrollTo } from 'lib/scroller';
 import { AnagramHelper } from 'common/modules/crosswords/anagram-helper/main';
@@ -772,10 +772,10 @@ class Crossword extends Component {
                                         <strong>
                                             {focused.number}{' '}
                                             <span className="crossword__sticky-clue__direction">
-                                                {focused.direction}
+                                                {focused.direction}{' '}
                                             </span>
-                                        </strong>{' '}
-                                        {focused.clue}
+                                        </strong>
+                                        <span dangerouslySetInnerHTML={{ __html: focused.clue }} />
                                     </div>
                                 </div>
                             )}

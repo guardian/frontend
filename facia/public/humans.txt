@@ -1,4 +1,9 @@
-/* CURRENT TEAM */
+/* ---------------------------------------------------- */
+/* CURRENT                                              */
+/* ---------------------------------------------------- */
+
+Developer: Daniel Clifton
+From: Ipswich UK
 
 Product Manager: Stephan Fowler
 Twitter: @stephanfowler
@@ -12,23 +17,15 @@ Agile Programme Manager: Nichola Johnson
 linkedin: nicholajohnson
 Location: London, UK
 
-Developer Manager: Natalia Baltazar
-Twitter: @NataliaLKB
-From: Halifax, Canada
-
 Developer: Justin Pinner
 Twitter: @_JustinPinner
 
 Developer: John Duffell
 
-Client-Side Developer: Gareth Trufitt
-Location: London, UK (snaps.digit.nails)
-Twitter: @gtrufitt
-Website: trufitt.com
-
-Developer: Régis Kuckaertz
-Twitter: @regiskuckaertz
-From: Luxembourg, Luxembourg
+Client-side Developer: Max Duval
+Twitter: @mxdvl
+From: Montréal, CA
+Location: London, UK
 
 Developer: Jon Soul
 Twitter: @jon_soul
@@ -41,27 +38,13 @@ Location: London, UK
 Developer: Jamie Byers
 Location: London, UK
 
-Digital Designer: Frank Hulley-Jones
-Twitter: @tobefrankj
-From: Ludlow, UK
-Location: London, UK
-
 Digital Designer / Unicorn: Ben Longden
 Twitter: @benlongden
 From: Europe
 Location: London, UK
 
-Developer: Kate Whalen
-Twitter: @KateAWhalen
-Location: London, UK
-
 Developer: Joseph Smith
 Twitter: @joelochlann
-Location: London, UK
-
-Developer: Thomas Bonnin
-Twitter: @tbonnin
-From: France
 Location: London, UK
 
 Client-Side Developer: Simon Adcock
@@ -78,10 +61,6 @@ Location: London, UK
 Developer: Calum Campbell
 From: Malvern, UK
 
-Product Manager: Scott Painter
-Twitter: @scottp719
-Location: London, UK
-
 Developer: Mariot Chauvin
 Twitter: @mchv
 
@@ -95,7 +74,8 @@ From: London, UK
 Senior Developer: Adam Fisher
 Twitter: @adamnfish
 
-Developer: Pascal Honoré
+Pascal Honoré
+https://github.com/shtukas
 
 Development Manager: Dominic Kendrick
 Twitter: @dominickendrick
@@ -105,14 +85,9 @@ Development Manager: Mark Butler
 Twitter: @mark_j_butler
 Location: London, UK
 
-Developer: Lauren Emms
-From: London, UK
-
 Associate Developer: Rhys Mills
 Website: rhysmills.com
 From: Tonbridge, UK
-
-/* CONTENT PRODUCTION */
 
 Editorial Systems: Luke Hoyland
 Twitter:@lukehoyland
@@ -123,11 +98,84 @@ Twitter:@twistedsweeter
 From: Narobi, Kenya
 Location: London, UK
 
+Developer: Oliver Barnwell
+Twitter: @olliethinks
+From: Norfolk, UK
+Location: London, UK
+
 Engineer: Oliver Lloyd
 From: London, UK
+Location: London, UK
 
+Engineer: Oliver Namey
+Location: London, UK
+Github: OllysCoding
 
-/* FORMER MEMBERS */
+Engineer: Ashleigh (Ash) Carr
+Location: Brighton, UK
+Github: AshCorr
+
+Developer: Fred O'Brien
+Twitter: @yagayagafred
+From: London, UK
+
+Engineer: Tom Pretty
+From: Nottingham, UK
+Location: London, UK
+
+Engineer: Mahesh Makani
+Twitter: @coldlink_
+From: London, UK
+
+Engineer: Mario Savarese
+Twitter: @mar_savar
+From: 40.8518° N, 14.2681° E
+
+Developer: Aditya Bhaskar
+Website: https://c306.net/now/
+Location: Guildford, Uk
+
+Engineer: Chris Jones
+Location: London, UK
+Github: chrislomaxjones
+
+Client-Side Developer: Lucy Monie Hall
+Location: Flinders, Victoria, Australia
+Seconded from: London UK
+
+Developer: Zeke Hunter-Green
+From: Spokane, WA
+Location: London, UK
+
+Developer: Silvija Blaslov
+From: Samobor, Croatia
+Location: London, UK
+
+Developer: Simon Byford
+From: Ipswich, UK
+Location: London, UK
+
+Engineer: Pete Faulconbridge
+From: Nottinghamshire, UK
+Location: Nottinghamshire, UK
+
+Developer: Jake Lee Kennedy
+GitHub: Jakeii
+From: London, UK
+
+Developer: Emma Imber
+From: Worcester, UK
+Location: Newbury, UK
+
+Developer: Charlotte Emms
+Location: London, UK
+
+Developer: Rachel Miles
+Location: Birmingham, UK
+
+/* ---------------------------------------------------- */
+/* FORMER                                               */
+/* ---------------------------------------------------- */
 
 Editor-in-chief: C.P.Scott
 From: Bath, Somerset
@@ -334,3 +382,37 @@ Location: London, UK
 SETI (Tools & Infra): Matthew Walls
 GitHub: MatthewJWalls
 Location: Essex, UK
+
+Developer Manager: Natalia Baltazar
+Twitter: @NataliaLKB
+From: Halifax, Canada
+
+Client-Side Developer: Gareth Trufitt
+Location: London, UK (snaps.digit.nails)
+Twitter: @gtrufitt
+Website: trufitt.com
+
+Developer: Régis Kuckaertz
+Twitter: @regiskuckaertz
+From: Luxembourg, Luxembourg
+
+Digital Designer: Frank Hulley-Jones
+Twitter: @tobefrankj
+From: Ludlow, UK
+Location: London, UK
+
+Developer: Kate Whalen
+Twitter: @KateAWhalen
+Location: London, UK
+
+Developer: Thomas Bonnin
+Twitter: @tbonnin
+From: France
+Location: London, UK
+
+Product Manager: Scott Painter
+Twitter: @scottp719
+Location: London, UK
+
+Developer: Lauren Emms
+From: London, UK

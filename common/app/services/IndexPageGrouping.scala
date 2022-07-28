@@ -1,8 +1,8 @@
 package services
 
+import common.Chronos
 import common.JodaTime._
 import common.Maps.RichMapSeq
-import implicits.Collections
 import implicits.Dates._
 import layout.{DateHeadline, DayHeadline, MonthHeadline}
 import model.Content
@@ -10,7 +10,7 @@ import org.joda.time.{DateTimeZone, LocalDate}
 
 case class TrailAndDate(trail: Content, date: LocalDate)
 
-object IndexPageGrouping extends Collections {
+object IndexPageGrouping {
   val MinimumPerDayPopOutFrequency = 2
 
   def fromContent(trails: Seq[Content], timezone: DateTimeZone): Seq[IndexPageGrouping] = {
@@ -53,9 +53,9 @@ sealed trait IndexPageGrouping {
 }
 
 case class Day(day: LocalDate, items: Seq[Content]) extends IndexPageGrouping {
-  override def dateHeadline: DateHeadline = DayHeadline(day)
+  override def dateHeadline: DateHeadline = DayHeadline(Chronos.jodaLocalDateToJavaTimeLocalDate(day))
 }
 
 case class Month(day: LocalDate, items: Seq[Content]) extends IndexPageGrouping {
-  override def dateHeadline: DateHeadline = MonthHeadline(day)
+  override def dateHeadline: DateHeadline = MonthHeadline(Chronos.jodaLocalDateToJavaTimeLocalDate(day))
 }

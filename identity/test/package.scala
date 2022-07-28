@@ -1,16 +1,12 @@
 package test
 
 import java.io.File
-
-import common.GuardianConfiguration
-import conf.{IdConfig, IdentityConfiguration}
+import conf.IdConfig
 import controllers.EditProfileControllerTest
 import controllers.ConsentsJourneyControllerTest
 import filters.StrictTransportSecurityHeaderFilterTest
 import org.scalatest.Suites
-import play.api.i18n.I18nComponents
 import play.api._
-import play.api.http.HttpConfiguration
 import play.api.test.Helpers._
 
 /**
@@ -39,9 +35,7 @@ class IdentityTestSuite
       new StrictTransportSecurityHeaderFilterTest,
       new ConsentsJourneyControllerTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19010
-}
+    with SingleServerSuite {}
 
 trait WithTestIdConfig {
   class IdentityConfigurationStub extends IdConfig {

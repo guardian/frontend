@@ -2,7 +2,7 @@ import $ from 'lib/$';
 import { noop } from 'lib/noop';
 import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { isBreakpoint } from 'lib/detect';
 import { begin } from 'common/modules/analytics/register';
 import uniq from 'lodash/uniq';

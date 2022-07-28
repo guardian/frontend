@@ -1,15 +1,17 @@
 @import conf.Configuration
 @import model.{Competition, Group, TeamUrl}
+@import common.LinkTo
 @import views.support.RenderClasses
 @import views.support.`package`.Seq2zipWithRowInfo
 @import model.CompetitionDisplayHelpers.cleanTeamName
 
+@import football.model.GuTeamCodes
 @(competition: Competition, group: Group,
     heading: Option[String] = None,
     headingLink: Option[String] = None,
     highlightTeamId: Option[String] = None, striped: Boolean = false,
     responsiveFont: Boolean = false, linkToCompetition: Boolean = false,
-    withCrests: Boolean = false)
+    withCrests: Boolean = false)(implicit request: RequestHeader)
 <div class="table__container">
     <table class="@RenderClasses(Map(
             "table" -> true,
@@ -18,6 +20,12 @@
             "table--striped" -> striped,
             "table--responsive-font" -> responsiveFont
         ))">
+
+        @heading.map{ h=>
+            <caption class="table__caption table__caption--top">
+                <a href="@LinkTo(headingLink.getOrElse(competition.url))" class="football-matches__heading">@h</a>
+            </caption>
+        }
         <thead>
             <tr>
                 <th class="table-column--sub"><abbr title="Position">P</abbr></th>
@@ -41,10 +49,10 @@
                         "table-row--divider" -> competition.tableDividers.contains(entry.team.rank-1)))">
                     <td class="table-column--sub">@entry.team.rank</td>
                     <td class="table-column--main">
-                        <span class="team-name" data-abbr="@pa.TeamCodes.codeFor(entry.team)">
+                        <span class="team-name" data-abbr="@GuTeamCodes.codeFor(entry.team)">
                             <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/60/@{entry.team.id}.png" />
                             @TeamUrl(entry.team).map{ url =>
-                                <a href="@TeamUrl(entry.team)" data-link-name="View team" class="team-name__long">
+                                <a href="@LinkTo(url)" data-link-name="View team" class="team-name__long">
                                     @cleanTeamName(entry.team.name)
                                 </a>
                             }.getOrElse{
@@ -67,16 +75,11 @@
             }
         </tbody>
 
-        @heading.map{ h=>
-            <caption class="table__caption table__caption--top">
-                <a href="@headingLink.getOrElse(competition.url)" class="football-matches__heading">@h</a>
-            </caption>
-        }
         @if(linkToCompetition){
             <tfoot class="table__caption table__caption--bottom" >
                 <tr>
                     <td colspan="11">
-                        <a href="@{competition.url + "/table"}" data-link-name="full table" class="full-table-link">View full <span class="competition-name">@competition.fullName</span> table</a>
+                        <a href="@LinkTo({competition.url + "/table"})" data-link-name="full table" class="full-table-link">View full <span class="competition-name">@competition.fullName</span> table</a>
                     </td>
                 </tr>
             </tfoot>

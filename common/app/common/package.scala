@@ -1,7 +1,6 @@
 package common
 
 import java.util.concurrent.TimeoutException
-
 import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
@@ -11,7 +10,6 @@ import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
 import model.CacheTime.RecentlyUpdated
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
-import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.Logger
 import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.{RequestHeader, Result}
@@ -19,6 +17,7 @@ import play.twirl.api.Html
 import model.ApplicationContext
 import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
+import renderers.{DCRLocalConnectException, DCRTimeoutException}
 
 object `package`
     extends implicits.Strings
@@ -59,9 +58,18 @@ object `package`
           log.info(s"Got a 410 while calling content api: $message, path: ${request.path}")
           NoCache(Gone)
       }
+
+    // Custom DCR exceptions to distinguish from CAPI/other backend errors.
+    case error: DCRLocalConnectException =>
+      throw error
+    case timeout: DCRTimeoutException =>
+      log.error(s"Got a timeout while calling DCR: ${timeout.getMessage}, path: ${request.path}", timeout)
+      NoCache(GatewayTimeout(timeout.getMessage))
+
     case timeout: TimeoutException =>
       log.error(s"Got a timeout while calling content api: ${timeout.getMessage}, path: ${request.path}", timeout)
       NoCache(GatewayTimeout(timeout.getMessage))
+
     case error =>
       log.error(s"Content api exception: ${error.getMessage}", error)
       Option(error.getCause).foreach { cause =>

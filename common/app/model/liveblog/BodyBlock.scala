@@ -91,10 +91,11 @@ case class BodyBlock(
     contributors: Seq[String],
     elements: Seq[BlockElement],
 ) {
-  lazy val eventType: EventType =
+  lazy val eventType: EventType = {
     if (attributes.keyEvent) KeyEvent
     else if (attributes.summary) SummaryEvent
     else UnclassifiedEvent
+  }
 
   lazy val eventClass = eventType match {
     case SummaryEvent      => " is-summary"
@@ -141,6 +142,7 @@ case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: Strin
 object BlockAttributes {
   def make(blockAttributes: ApiBlockAttributes): BlockAttributes =
     new BlockAttributes(
+      blockAttributes.pinned.getOrElse(false),
       blockAttributes.keyEvent.getOrElse(false),
       blockAttributes.summary.getOrElse(false),
       blockAttributes.membershipPlaceholder.map(mp => MembershipPlaceholder(mp.campaignCode)),
@@ -150,7 +152,12 @@ object BlockAttributes {
 
 }
 
-case class BlockAttributes(keyEvent: Boolean, summary: Boolean, membershipPlaceholder: Option[MembershipPlaceholder])
+case class BlockAttributes(
+    pinned: Boolean,
+    keyEvent: Boolean,
+    summary: Boolean,
+    membershipPlaceholder: Option[MembershipPlaceholder],
+)
 
 case class MembershipPlaceholder(campaignCode: Option[String])
 object MembershipPlaceholder {

@@ -1,9 +1,10 @@
 package layout
 
 import layout.ContentWidths._
-import org.scalatest._
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class WidthsByBreakpointTest extends FreeSpec with Matchers {
+class WidthsByBreakpointTest extends AnyFreeSpec with Matchers {
   "ContentWidths" - {
     "getWidthsFromContentElement" - {
       "inline" - {

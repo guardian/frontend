@@ -1,5 +1,5 @@
 import config from 'lib/config';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 
 class FormstackIframe {
 

@@ -1,10 +1,12 @@
 package discussion.model
 
-import org.scalatest.{DoNotDiscover, Matchers, FreeSpec}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.DoNotDiscover
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json._
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class CommentTest extends FreeSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class CommentTest extends AnyFreeSpec with Matchers with ConfiguredTestSuite {
 
   "A comment with Json" in {
     val json: JsValue = Json.parse(aCommentJson)

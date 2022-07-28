@@ -4,12 +4,12 @@ import play.api.mvc.{RequestHeader, Result}
 import common.LoggingField._
 import play.api.routing.Router
 
-import scala.util.{Random, Try}
+import scala.util.Random
 
 case class RequestLoggerFields(request: Option[RequestHeader], response: Option[Result], stopWatch: Option[StopWatch]) {
 
   private lazy val requestHeadersFields: List[LogField] = {
-    val whitelistedHeaderNames = Set(
+    val allowListedHeaderNames = Set(
       "Host",
       "From",
       "Origin",
@@ -23,7 +23,9 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       "Fastly-FF",
       "Fastly-SSL",
       "Fastly-Digest",
+      "Accept-Encoding", // TODO remove if seen after 2021/09/03
     )
+
     val allHeadersFields = request
       .map {
         _.headers.toMap.map {
@@ -32,9 +34,13 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       }
       .getOrElse(Map.empty[String, String])
 
-    val whitelistedHeaders = allHeadersFields.filterKeys(whitelistedHeaderNames.contains)
+    val allowListedHeaders = allHeadersFields.filterKeys(allowListedHeaderNames.contains)
     val guardianSpecificHeaders = allHeadersFields.filterKeys(_.toUpperCase.startsWith("X-GU-"))
-    (whitelistedHeaders ++ guardianSpecificHeaders).toList.map(t => LogFieldString(s"req.header.${t._1}", t._2))
+
+    (allowListedHeaders ++ guardianSpecificHeaders).toList.map {
+      case (headerName, headerValue) =>
+        LogFieldString(s"req.header.${headerName}", headerValue)
+    }
   }
   private lazy val customFields: List[LogField] = {
     val requestHeaders: List[LogField] = request
@@ -52,6 +58,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
         List[LogField](
           "resp.status" -> r.header.status,
           "resp.dotcomponents" -> r.header.headers.get("X-GU-Dotcomponents").isDefined,
+          "resp.Vary" -> r.header.headers.get("Vary").getOrElse(""), // TODO remove if seen after 2021/09/03
         )
       }
       .getOrElse(Nil)

@@ -1,9 +1,4 @@
-import config_ from 'lib/config';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string, d?: string) => string;
-};
+import config from './config';
 
 /**
  * Check that path is a path-absolute-URL string as described in https://url.spec.whatwg.org/#path-absolute-url-string
@@ -22,7 +17,7 @@ const fetchJson = async (
 
 	let path = resource;
 	if (isPathAbsoluteURL(path)) {
-		path = config.get('page.ajaxUrl', '') + resource;
+		path = config.get<string>('page.ajaxUrl', '') + resource;
 		init.mode = 'cors';
 	}
 

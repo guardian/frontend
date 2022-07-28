@@ -1,7 +1,6 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
 
 trait MonitoringSwitches {
   // Monitoring
@@ -33,16 +32,6 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("cb372")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val ScrollDepthSwitch = Switch(
-    SwitchGroup.Monitoring,
-    "scroll-depth",
-    "Enables tracking and measurement of scroll depth",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    never,
     exposeClientSide = true,
   )
 

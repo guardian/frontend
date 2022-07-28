@@ -1,5 +1,5 @@
 import bonzo from 'bonzo';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 
 const getPixels = (top) =>

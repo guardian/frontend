@@ -54,6 +54,7 @@ class DevParametersHttpRequestHandler(
     "amzn_debug_mode", // set to `1` to enable A9 debugging
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
     "dcr",
+    "topics", // used for filtering the liveblog blocks
   )
 
   val commercialParams = Seq(
@@ -68,7 +69,6 @@ class DevParametersHttpRequestHandler(
     "s", // section in commercial component requests
     "seg", // user segments in commercial component requests
     "t", // specific item targetting
-    "0p19G", // Google AMP AB test parameter
     "dll", // Disable lazy loading of ads
     "iasdebug", // IAS troubleshooting
     "cmpdebug", // CMP troubleshooting
@@ -76,6 +76,10 @@ class DevParametersHttpRequestHandler(
     "utm_medium", // Google Analytics medium
     "utm_campaign", // Google Analytics campaign
     "utm_term", // Google Analytics term
+    "sfdebug", // enable spacefinder visualiser. '1' = first pass, '2' = second pass
+    "rikerdebug", // enable debug logging for Canadian ad setup managed by the Globe and Mail
+    "forceSendMetrics", // enable force sending of commercial metrics
+    "multiSticky", // enable multiple sticky ads in the right column, for the purpose of qualitative testing
   )
 
   val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty
@@ -90,7 +94,6 @@ class DevParametersHttpRequestHandler(
       !request.forceDCR &&
       !request.isLazyLoad &&
       !request.uri.startsWith("/oauth2callback") &&
-      !request.uri.startsWith("/px.gif") && // diagnostics box
       !request.uri.startsWith("/crosswords/search") &&
       !request.uri.startsWith("/crosswords/lookup") &&
       !request.uri.startsWith(

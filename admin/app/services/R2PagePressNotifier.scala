@@ -12,7 +12,7 @@ object R2PagePressNotifier extends GuLogging {
   def enqueue(akkaAsync: AkkaAsync)(message: R2PressMessage)(implicit executionContext: ExecutionContext): String = {
     try {
       R2PressNotification.sendWithoutSubject(akkaAsync)(Json.toJson[R2PressMessage](message).toString())
-      val msg = s"Queued for pressing: ${message.url} (from preserved source: ${message.fromPreservedSrc})"
+      val msg = s"Queued for pressing: ${message.url}."
       log.info(msg)
       msg
     } catch {

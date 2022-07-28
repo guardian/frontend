@@ -5,13 +5,12 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.switches.Switches.prebidSwitch
-import conf.switches.Switches.a9Switch
-import model.IpsosTags.{getScriptTag}
+import conf.switches.Switches.fetchNonRefreshableLineItems
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
-import model.IpsosTags.{getScriptTag}
+import model.IpsosTags.getScriptTag
+import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
@@ -43,10 +42,17 @@ object JavaScriptPage {
       JsArray(ids map (id => JsNumber(id)))
     }
 
+    // Only attach the non-refreshable line items to the commercial config
+    // if the `fetchNonRefreshableLineItems` switch is off
+    val nonRefreshableConfig = if (fetchNonRefreshableLineItems.isSwitchedOff) {
+      Map("nonRefreshableLineItemIds" -> nonRefreshableLineItemIds)
+    } else {
+      Map()
+    }
+
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(request)),
-      "dfpNonRefreshableLineItemIds" -> nonRefreshableLineItemIds,
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
         case _: CommercialExpiryPage                            => true
@@ -54,14 +60,8 @@ object JavaScriptPage {
       }),
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
-      "hbImpl" -> JsObject(
-        Seq(
-          "prebid" -> JsBoolean(prebidSwitch.isSwitchedOn),
-          "a9" -> JsBoolean(a9Switch.isSwitchedOn),
-        ),
-      ),
       "isSensitive" -> JsBoolean(page.metadata.sensitive),
-    ) ++ sponsorshipType
+    ) ++ sponsorshipType ++ nonRefreshableConfig
 
     val journalismMetaData = Map(
       "calloutsUrl" -> JsString(Configuration.journalism.calloutsUrl),
@@ -74,6 +74,12 @@ object JavaScriptPage {
     }
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
+
+    val commercialBundleUrl: Map[String, JsString] =
+      if (conf.switches.Switches.StandaloneCommercialBundle.isSwitchedOn)
+        Map("commercialBundleUrl" -> JsString(assetURL("javascripts/commercial/graun.standalone.commercial.js")))
+      else
+        Map("commercialBundleUrl" -> JsString(assetURL("javascripts/graun.commercial.dcr.js")))
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
@@ -93,6 +99,6 @@ object JavaScriptPage {
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife"))),
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
-    )
+    ) ++ commercialBundleUrl
   }
 }

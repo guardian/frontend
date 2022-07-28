@@ -16,7 +16,6 @@
 <script>
 // non-blocking JS to improve the perceived rendering speed
 @InlineJs(getUserData().body, "getUserData.js")
-@InlineJs(detectAdblock().body, "detectAdblock.js")
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
     // Insert username in top bar on page load

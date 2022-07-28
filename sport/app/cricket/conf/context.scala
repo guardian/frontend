@@ -3,7 +3,8 @@ package cricket.conf
 import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
 import jobs.CricketStatsJob
-import org.joda.time.LocalDate
+
+import java.time.LocalDate
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.duration._
@@ -23,7 +24,7 @@ class CricketLifecycle(
     }
   }
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
     jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 5.minutes) {
       Future(cricketStatsJob.run(fromDate = LocalDate.now, matchesToFetch = 1))
     }
@@ -32,12 +33,12 @@ class CricketLifecycle(
     }
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     jobs.deschedule("CricketAgentRefreshCurrentMatches")
     jobs.deschedule("CricketAgentRefreshHistoricalMatches")
   }
 
-  override def start() {
+  override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 

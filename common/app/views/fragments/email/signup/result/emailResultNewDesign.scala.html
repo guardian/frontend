@@ -1,4 +1,4 @@
-@import services.newsletters.NewsletterResponse
+@import services.newsletters.model.NewsletterResponse
 @(listName: String, emailNewsletter: NewsletterResponse, resultHtml: Html)(implicit request: RequestHeader)
 
 @emailEmbedData = @{emailNewsletter.emailEmbed}
@@ -40,8 +40,4 @@
         </section>
     </div>
 </div>
-
-<script>
-    trackClickEvent(document.getElementById("email-embed-signup-button"))
-</script>
 

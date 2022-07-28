@@ -13,13 +13,19 @@ import services.ConfigAgent
 import org.scalatest._
 import controllers.FaciaControllerImpl
 import helpers.FaciaTestData
-import org.scalatest.mockito.MockitoSugar
+import org.mockito.Mockito.when
+import org.mockito.Matchers.any
+import org.mockito.Matchers.anyString
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 
 import scala.concurrent.duration._
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future}
+import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
 @DoNotDiscover class FaciaControllerTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with FaciaTestData
     with Matchers
     with ConfiguredTestSuite
@@ -28,21 +34,36 @@ import scala.concurrent.Await
     with BeforeAndAfterEach
     with WithMaterializer
     with WithTestApplicationContext
-    with WithTestWsClient
     with MockitoSugar {
 
   lazy val actorSystem = ActorSystem()
   lazy val blockingOperations = new BlockingOperations(actorSystem)
   lazy val fapi = new TestFrontJsonFapi(blockingOperations)
+  lazy val wsClient = mockWsResponse()
 
-  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents())
+  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient)
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
   val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
-  override def beforeAll() {
+  def mockWsResponse(): WSClient = {
+    val wsClient = mock[WSClient]
+    val mockResponse = mock[WSResponse]
+    val mockRequest = mock[WSRequest]
+
+    when(mockResponse.status).thenReturn(200)
+    when(mockResponse.body).thenReturn("")
+    when(mockRequest.withRequestTimeout(any())).thenReturn(mockRequest)
+    when(mockRequest.post(anyString())(any())).thenReturn(Future.successful(mockResponse))
+    when(mockRequest.addHttpHeaders("Content-Type" -> "application/json")).thenReturn(mockRequest)
+    when(wsClient.url("http://localhost:3030/Front")).thenReturn(mockRequest)
+
+    wsClient
+  }
+
+  override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts = Map(
@@ -231,5 +252,19 @@ import scala.concurrent.Await
     contentAsString(emailJsonResponse) should include("<!DOCTYPE html")
     val responseHeaders = headers(emailJsonResponse)
     responseHeaders("Surrogate-Control") should include("max-age=900")
+  }
+
+  it should "render using DCR if ?dcr" in {
+    val fakeRequest = FakeRequest("GET", "/uk?dcr")
+    val result = faciaController.renderFront("uk")(fakeRequest)
+    status(result) should be(200)
+    header("X-GU-Dotcomponents", result) should be(Some("true"))
+  }
+
+  it should "render using Frontend if ?dcr=false" in {
+    val fakeRequest = FakeRequest("GET", "/uk?dcr=false")
+    val result = faciaController.renderFront("uk")(fakeRequest)
+    status(result) should be(200)
+    header("X-GU-Dotcomponents", result) should be(None)
   }
 }

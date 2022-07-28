@@ -1,5 +1,10 @@
+import {
+	concatSizeMappings,
+	createAdSize,
+	slotSizeMappings,
+} from '@guardian/commercial-core';
+import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
 import { breakpoints } from '../../../../lib/detect';
-import { getCurrentTime } from '../../../../lib/user-timing';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { defineSlot } from './define-slot';
 
@@ -15,10 +20,14 @@ type Timings = {
 	lazyWaitComplete: number | null;
 };
 
-// Temporary definition until './define-slot' is converted to TypeScript
-type SlotDefinition = {
-	slot: Record<string, any>;
-	slotReady: Promise<void>;
+const stringToTuple = (size: string): AdSizeTuple => {
+	const dimensions = size.split(',', 2).map(Number);
+
+	// Return an outOfPage tuple if the string is not `{number},{number}`
+	if (dimensions.length !== 2 || dimensions.some((n) => isNaN(n)))
+		return [0, 0]; // adSizes.outOfPage
+
+	return [dimensions[0], dimensions[1]];
 };
 
 /** A breakpoint can have various sizes assigned to it. You can assign either on
@@ -28,13 +37,16 @@ type SlotDefinition = {
  * Multiple sizes - `data-mobile="300,50|320,50"`
  */
 const createSizeMapping = (attr: string): AdSize[] =>
-	attr
-		.split('|')
-		.map((size) =>
-			size === 'fluid' ? 'fluid' : size.split(',').map(Number),
-		);
+	attr.split('|').map((size) => createAdSize(...stringToTuple(size)));
 
-const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
+/** Extract the ad sizes from the breakpoint data attributes of an ad slot
+ *
+ * @param advertNode The ad slot HTML element that contains the breakpoint attributes
+ * @returns A mapping from the breakpoints supported by the slot to an array of ad sizes
+ */
+const getSlotSizeMappingsFromDataAttrs = (
+	advertNode: HTMLElement,
+): SizeMapping =>
 	breakpoints.reduce<Record<string, AdSize[]>>((sizes, breakpoint) => {
 		const data = advertNode.getAttribute(
 			`data-${breakpointNameToAttribute(breakpoint.name)}`,
@@ -45,19 +57,37 @@ const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
 		return sizes;
 	}, {});
 
+const isSlotName = (slotName: string): slotName is SlotName => {
+	return slotName in slotSizeMappings;
+};
+
+const getSlotSizeMapping = (name: string): SizeMapping => {
+	const slotName = name.includes('inline') ? 'inline' : name;
+	if (isSlotName(slotName)) {
+		return slotSizeMappings[slotName];
+	}
+	return {};
+};
+
+const isSizeMappingEmpty = (sizeMapping: SizeMapping): boolean => {
+	return (
+		Object.keys(sizeMapping).length === 0 ||
+		Object.entries(sizeMapping).every(([, mapping]) => mapping.length === 0)
+	);
+};
+
 class Advert {
 	id: string;
 	node: HTMLElement;
-	sizes: AdSizes;
-	size: AdSize | null = null;
-	slot: Record<string, unknown>;
+	sizes: SizeMapping;
+	size: AdSize | 'fluid' | null = null;
+	slot: googletag.Slot;
 	isEmpty: boolean | null = null;
 	isLoading = false;
 	isRendering = false;
 	isLoaded = false;
 	isRendered = false;
 	shouldRefresh = false;
-	maxViewPercentage = 0;
 	whenLoaded: Promise<boolean>;
 	whenLoadedResolver: Resolver | null = null;
 	whenRendered: Promise<boolean>;
@@ -74,14 +104,43 @@ class Advert {
 		lazyWaitComplete: null,
 	};
 	hasPrebidSize = false;
+	lineItemId: number | null = null;
 
-	constructor(adSlotNode: HTMLElement) {
-		const sizes = getAdBreakpointSizes(adSlotNode);
-		const slotDefinition = defineSlot(adSlotNode, sizes) as SlotDefinition;
+	constructor(
+		adSlotNode: HTMLElement,
+		additionalSizeMapping: SizeMapping = {},
+	) {
+		// Try to used size mappings if available
+		const defaultSizeMappingForSlot = adSlotNode.dataset.name
+			? getSlotSizeMapping(adSlotNode.dataset.name)
+			: {};
+
+		let sizeMapping = concatSizeMappings(
+			defaultSizeMappingForSlot,
+			additionalSizeMapping,
+		);
+
+		/** If the size mapping is empty, use the data attributes to create a size mapping,
+		 * this is used on some interactives e.g. https://www.theguardian.com/education/ng-interactive/2021/sep/11/the-best-uk-universities-2022-rankings
+		 **/
+		if (isSizeMappingEmpty(sizeMapping)) {
+			sizeMapping = getSlotSizeMappingsFromDataAttrs(adSlotNode);
+
+			// If the size mapping is still empty, throw an error as this should never happen
+			if (isSizeMappingEmpty(sizeMapping)) {
+				throw new Error(
+					`Tried to render ad slot '${
+						adSlotNode.dataset.name ?? ''
+					}' without any size mappings`,
+				);
+			}
+		}
+
+		const slotDefinition = defineSlot(adSlotNode, sizeMapping);
 
 		this.id = adSlotNode.id;
 		this.node = adSlotNode;
-		this.sizes = sizes;
+		this.sizes = sizeMapping;
 		this.slot = slotDefinition.slot;
 
 		this.whenSlotReady = slotDefinition.slotReady;
@@ -109,7 +168,7 @@ class Advert {
 
 	startLoading(): void {
 		this.isLoading = true;
-		this.timings.startLoading = getCurrentTime();
+		this.timings.startLoading = window.performance.now();
 	}
 
 	stopLoading(isLoaded: boolean): void {
@@ -117,12 +176,12 @@ class Advert {
 		if (this.whenLoadedResolver) {
 			this.whenLoadedResolver(isLoaded);
 		}
-		this.timings.stopLoading = getCurrentTime();
+		this.timings.stopLoading = window.performance.now();
 	}
 
 	startRendering(): void {
 		this.isRendering = true;
-		this.timings.startRendering = getCurrentTime();
+		this.timings.startRendering = window.performance.now();
 	}
 
 	stopRendering(isRendered: boolean): void {
@@ -148,4 +207,5 @@ export { Advert };
 
 export const _ = {
 	filterClasses: Advert.filterClasses,
+	getSlotSizeMapping,
 };

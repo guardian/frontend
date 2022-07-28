@@ -1,6 +1,11 @@
 # See https://help.github.com/articles/about-codeowners/
+# Global owners
+*   @guardian/dotcom-platform
 
 # Commercial Dev code
-/static/src/javascripts/projects/common/modules/commercial/ @guardian/commercial-dev @guardian/dotcom-platform
-/static/src/javascripts/projects/commercial/ @guardian/commercial-dev @guardian/dotcom-platform
-/commercial/ @guardian/commercial-dev @guardian/dotcom-platform
+/static/src/javascripts/projects/common/modules/commercial/ @guardian/commercial-dev
+/static/src/javascripts/projects/commercial/ @guardian/commercial-dev
+/commercial/ @guardian/commercial-dev
+
+# Targeted Experiences (TX)
+/static/src/javascripts/projects/common/modules/commercial/braze @guardian/tx-engineers

@@ -436,11 +436,20 @@
         margin-left: 1px;
     }
 
+    .bigfatfinal__image__svg {
+        height: 80px;
+    }
+
     @include mq(desktop) {
         display: block;
     }
 }
 
+.football-knockout-chart--3-rounds {
+    .football-round {
+        width: 20%; // 100/5 as there will be 5 columns in the chart
+    }
+}
 .football-knockout-chart--4-rounds,
 .football-knockout-chart--5-rounds {
     .football-round {

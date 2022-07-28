@@ -1,24 +1,12 @@
-@import services.newsletters.NewsletterResponse
-@(page: model.Page, emailType: String, emailNewsletter: NewsletterResponse)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@electionNewsletters = @{
-    List(
-        "minute-us", "us-morning-newsletter", "today-us", "green-light", "business-today",
-        "the-recap", "the-fiver", "the-spin", "the-breakdown", "sports-au"
-    )
-}
+@import services.newsletters.model.NewsletterResponse
+@(page: model.Page, emailType: String, emailNewsletter: NewsletterResponse, iframeParentComponent: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @emailEmbed(page) {
-    @if(electionNewsletters.contains(emailNewsletter.id)) {
-        @fragments.email.signup.subscription.emailSignUpNewDesign(
-            emailType,
-            emailNewsletter
-        )
-    }
     @fragments.email.signup.subscription.emailSignUp(
         emailType,
-        emailNewsletter.id,
-        emailNewsletter.emailEmbed
+        emailNewsletter.identityName,
+        emailNewsletter.emailEmbed,
+        iframeParentComponent,
     )
 }
 

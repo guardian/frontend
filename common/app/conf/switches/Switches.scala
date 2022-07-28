@@ -1,13 +1,13 @@
 package conf.switches
 
 import java.util.concurrent.TimeoutException
-
-import com.gu.Box
 import common._
-import org.joda.time.{DateTime, DateTimeZone, Days, LocalDate}
-
+import java.time.{LocalDate, ZoneId}
+import java.time.Duration
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
+import java.text.SimpleDateFormat
+import java.util.TimeZone
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -35,11 +35,12 @@ object SwitchGroup {
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
+  val Journalism = SwitchGroup("Journalism")
   val Monitoring = SwitchGroup("Monitoring")
   val Performance = SwitchGroup("Performance")
   val ServerSideExperiments = SwitchGroup("Server-side Experiments")
   val Membership = SwitchGroup("Membership")
-  val Journalism = SwitchGroup("Journalism")
+  val Newsletters = SwitchGroup("Newsletters")
   val Privacy = SwitchGroup("Privacy")
   val TX = SwitchGroup("TX")
 }
@@ -142,25 +143,25 @@ object Switch {
 
   def expiry(
       switch: Switch,
-      today: LocalDate = new DateTime(DateTimeZone.forID("Europe/London")).toLocalDate,
+      today: LocalDate = LocalDate.now(ZoneId.of("Europe/London")),
   ): Expiry = { // We assume expiration datetime is set to London time
-    val daysToExpiry = switch.sellByDate.map {
-      Days.daysBetween(today, _).getDays
-    }
-
+    val daysToExpiry = switch.sellByDate.map(d => Duration.between(today.atStartOfDay(), d.atStartOfDay()).toDays.toInt)
     val expiresSoon = daysToExpiry.exists(_ < 8)
-
     val hasExpired = daysToExpiry.exists(_ < 0)
-
     Expiry(daysToExpiry, expiresSoon, hasExpired)
   }
 
+  def expiryAsUserFriendlyString(switch: Switch): String = {
+    val timeFormatter = new SimpleDateFormat("E dd MMM")
+    timeFormatter.setTimeZone(TimeZone.getTimeZone("Europe/London"))
+    switch.sellByDate
+      .map(d => s"expires ${timeFormatter.format(d)} at 23:59 (London time)")
+      .getOrElse("expiry not specified")
+  }
 }
 
 object Expiry {
-
   lazy val never = None
-
 }
 
 // Switch names can be letters numbers and hyphens only
@@ -177,6 +178,7 @@ object Switches
     with MonitoringSwitches
     with IdentitySwitches
     with JournalismSwitches
+    with NewslettersSwitches
     with TXSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches
@@ -185,5 +187,4 @@ object Switches
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
     sortedSwitches.toList.sortBy(_._1.name)
   }
-
 }

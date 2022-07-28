@@ -1,6 +1,6 @@
 import $ from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { getBreakpoint } from 'lib/detect';
 
 // Helper for full height elements as 100vh on mobile Chrome and Safari

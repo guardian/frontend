@@ -12,6 +12,4 @@ class AdminTestSuite
       new pagepresser.InteractiveHtmlCleanerTest,
       new controllers.admin.DeploysControllerTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19015
-}
+    with SingleServerSuite {}

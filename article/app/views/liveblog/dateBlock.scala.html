@@ -1,9 +1,19 @@
 @import model.liveblog.LiveBlogDate
 
-@(date: Option[LiveBlogDate])
+@(date: Option[LiveBlogDate], showDate: Boolean = true, showTimestamp: Boolean = true, isPinned: Boolean = false)
+    @date.map { date =>
+        @if(showDate) {
+            <time datetime="@date.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@date.ampm <span class="timezone">@date.gmt</span></time>
+        }
 
-@date.map { date =>
-    <time datetime="@date.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@date.ampm <span class="timezone">@date.gmt</span></time>
-    <span class="block-time__absolute">@date.hhmm</span>
-}
+        <span class="block-time__absolute @if(isPinned) { block-time__pinned }">
+            @if(showTimestamp) {
+                <span class="block-time__absolute">@date.hhmm</span>
+            }
+
+            @if(isPinned){
+                @fragments.inlineSvg("pin", "icon", List("inline-icon", "pinned-block-original__icon"))
+            }
+        </span>
+    }
 

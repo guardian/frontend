@@ -5,27 +5,29 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import common.{Edition, Localisation, RichRequestHeader}
+import common.{Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
-import conf.switches.Switches
 import experiments.ActiveExperiments
+import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
   Badges,
+  CanonicalLiveBlog,
   ContentFormat,
   ContentPage,
-  DotcomContentType,
   GUDateTimeFormatNew,
   InteractivePage,
   LiveBlogPage,
   PageWithStoryPackage,
+  Topic,
+  TopicResult,
 }
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, JavaScriptPage}
-
+import services.NewsletterData
+import views.support.{CamelCase, ContentLayout, JavaScriptPage}
 // -----------------------------------------------------------------
 // DCR DataModel
 // -----------------------------------------------------------------
@@ -37,10 +39,16 @@ case class DotcomRenderingDataModel(
     webTitle: String,
     mainMediaElements: List[PageElement],
     main: String,
+    availableTopics: Option[Seq[Topic]],
+    selectedTopics: Option[Seq[Topic]],
+    filterKeyEvents: Boolean,
+    pinnedPost: Option[Block],
     keyEvents: List[Block],
+    mostRecentBlockId: Option[String],
     blocks: List[Block],
     pagination: Option[Pagination],
     author: Author,
+    byline: Option[String],
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
     webPublicationSecondaryDateDisplay: String,
@@ -53,6 +61,7 @@ case class DotcomRenderingDataModel(
     tags: List[Tag],
     pillar: String,
     isImmersive: Boolean,
+    isLegacyInteractive: Boolean,
     sectionLabel: String,
     sectionUrl: String,
     sectionName: Option[String],
@@ -69,6 +78,7 @@ case class DotcomRenderingDataModel(
     contentType: String,
     hasRelated: Boolean,
     hasStoryPackage: Boolean,
+    storyPackage: Option[OnwardCollectionResponse],
     beaconURL: String,
     isCommentable: Boolean,
     commercialProperties: Map[String, EditionCommercialProperties],
@@ -84,7 +94,9 @@ case class DotcomRenderingDataModel(
     contributionsServiceUrl: String,
     badge: Option[DCRBadge],
     matchUrl: Option[String], // Optional url used for match data
+    matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
+    promotedNewsletter: Option[NewsletterData],
 )
 
 object DotcomRenderingDataModel {
@@ -94,17 +106,24 @@ object DotcomRenderingDataModel {
   implicit val writes = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
       val obj = Json.obj(
+        "availableTopics" -> model.availableTopics,
+        "selectedTopics" -> model.selectedTopics,
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
         "webTitle" -> model.webTitle,
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
+        "filterKeyEvents" -> model.filterKeyEvents,
+        "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
+        "mostRecentBlockId" -> model.mostRecentBlockId,
         "blocks" -> model.blocks,
         "pagination" -> model.pagination,
         "author" -> model.author,
+        "byline" -> model.byline,
         "webPublicationDate" -> model.webPublicationDate,
+        "webPublicationDateDeprecated" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
         "webPublicationSecondaryDateDisplay" -> model.webPublicationSecondaryDateDisplay,
         "editionLongForm" -> model.editionLongForm,
@@ -114,6 +133,7 @@ object DotcomRenderingDataModel {
         "designType" -> model.designType,
         "tags" -> model.tags,
         "pillar" -> model.pillar,
+        "isLegacyInteractive" -> model.isLegacyInteractive,
         "isImmersive" -> model.isImmersive,
         "sectionLabel" -> model.sectionLabel,
         "sectionUrl" -> model.sectionUrl,
@@ -131,6 +151,7 @@ object DotcomRenderingDataModel {
         "contentType" -> model.contentType,
         "hasRelated" -> model.hasRelated,
         "hasStoryPackage" -> model.hasStoryPackage,
+        "storyPackage" -> model.storyPackage,
         "beaconURL" -> model.beaconURL,
         "isCommentable" -> model.isCommentable,
         "commercialProperties" -> model.commercialProperties,
@@ -146,7 +167,9 @@ object DotcomRenderingDataModel {
         "contributionsServiceUrl" -> model.contributionsServiceUrl,
         "badge" -> model.badge,
         "matchUrl" -> model.matchUrl,
+        "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
+        "promotedNewsletter" -> model.promotedNewsletter,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -154,11 +177,6 @@ object DotcomRenderingDataModel {
   }
 
   def toJson(model: DotcomRenderingDataModel): String = {
-    def withoutNull(json: JsValue): JsValue =
-      json match {
-        case JsObject(fields) => JsObject(fields.filterNot { case (_, value) => value == JsNull })
-        case other            => other
-      }
     val jsValue = Json.toJson(model)
     Json.stringify(withoutNull(jsValue))
   }
@@ -170,15 +188,24 @@ object DotcomRenderingDataModel {
       pageType: PageType,
   ): DotcomRenderingDataModel = {
     apply(
-      page,
-      request,
-      None,
-      linkedData = Nil, // TODO
+      page = page,
+      request = request,
+      pagination = None,
+      linkedData = LinkedData.forInteractive(
+        interactive = page.item,
+        baseURL = Configuration.amp.baseUrl,
+        fallbackLogo = Configuration.images.fallbackLogo,
+      ),
       mainBlock = blocks.main,
       bodyBlocks = blocks.body.getOrElse(Nil),
-      pageType,
-      page.related.hasStoryPackage,
+      pageType = pageType,
+      hasStoryPackage = page.related.hasStoryPackage,
+      storyPackage = getStoryPackage(page.related.faciaItems, request),
+      pinnedPost = None,
       keyEvents = Nil,
+      availableTopics = None,
+      newsletter = None,
+      topicResult = None,
     )
   }
 
@@ -187,6 +214,7 @@ object DotcomRenderingDataModel {
       blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
+      newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = page.article,
@@ -203,8 +231,25 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil),
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
+      storyPackage = getStoryPackage(page.related.faciaItems, request),
+      pinnedPost = None,
       keyEvents = Nil,
+      availableTopics = None,
+      newsletter = newsletter,
+      topicResult = None,
     )
+  }
+
+  def keyEventsFallback(
+      blocks: APIBlocks,
+  ): Seq[APIBlock] = {
+    blocks.requestedBodyBlocks match {
+      case Some(requestedBlocks) =>
+        val keyEvent = requestedBlocks.getOrElse(CanonicalLiveBlog.timeline, Seq.empty[APIBlock])
+        val summaryEvent = requestedBlocks.getOrElse(CanonicalLiveBlog.summary, Seq.empty[APIBlock])
+        keyEvent ++ summaryEvent
+      case None => Seq.empty[APIBlock]
+    }
   }
 
   def forLiveblog(
@@ -212,6 +257,11 @@ object DotcomRenderingDataModel {
       blocks: APIBlocks,
       request: RequestHeader,
       pageType: PageType,
+      filterKeyEvents: Boolean,
+      forceLive: Boolean,
+      availableTopics: Option[Seq[Topic]] = None,
+      newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -224,11 +274,16 @@ object DotcomRenderingDataModel {
       )
     })
 
-    val bodyBlocks = DotcomRenderingUtils.blocksForLiveblogPage(page, blocks)
-    val keyEvents =
-      blocks.requestedBodyBlocks
-        .flatMap(blocks => blocks.get("body:key-events"))
-        .getOrElse(Seq.empty[APIBlock])
+    val bodyBlocks = blocksForLiveblogPage(page, blocks).map(ensureSummaryTitle)
+
+    val allTimelineBlocks = blocks.body match {
+      case Some(allBlocks) if allBlocks.nonEmpty =>
+        allBlocks.filter(block => block.attributes.keyEvent.contains(true) || block.attributes.summary.contains(true))
+      case _ => keyEventsFallback(blocks)
+    }
+
+    val timelineBlocks =
+      orderBlocks(allTimelineBlocks).map(ensureSummaryTitle)
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,
@@ -236,6 +291,15 @@ object DotcomRenderingDataModel {
       baseURL = Configuration.amp.baseUrl,
       fallbackLogo = Configuration.images.fallbackLogo,
     )
+
+    val pinnedPost =
+      blocks.requestedBodyBlocks
+        .flatMap(_.get("body:pinned"))
+        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
+        .headOption
+        .map(ensureSummaryTitle)
+
+    val mostRecentBlockId = getMostRecentBlockId(blocks)
 
     apply(
       page,
@@ -246,7 +310,15 @@ object DotcomRenderingDataModel {
       bodyBlocks,
       pageType,
       page.related.hasStoryPackage,
-      keyEvents,
+      getStoryPackage(page.related.faciaItems, request), //todo
+      pinnedPost,
+      timelineBlocks,
+      filterKeyEvents,
+      mostRecentBlockId,
+      forceLive,
+      availableTopics,
+      newsletter,
+      topicResult,
     )
   }
 
@@ -259,7 +331,15 @@ object DotcomRenderingDataModel {
       bodyBlocks: Seq[APIBlock],
       pageType: PageType, // TODO remove as format is better
       hasStoryPackage: Boolean,
+      storyPackage: Option[OnwardCollectionResponse],
+      pinnedPost: Option[APIBlock],
       keyEvents: Seq[APIBlock],
+      filterKeyEvents: Boolean = false,
+      mostRecentBlockId: Option[String] = None,
+      forceLive: Boolean = false,
+      availableTopics: Option[Seq[Topic]],
+      newsletter: Option[NewsletterData],
+      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -267,21 +347,13 @@ object DotcomRenderingDataModel {
     val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
     val isPaidContent = content.metadata.designType.contains(AdvertisementFeature)
 
+    /** @deprecated – Use byline instead */
     val author: Author = Author(
       byline = content.trail.byline,
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
-      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-      section = content.metadata.sectionId,
-      showAffiliateLinks = content.content.fields.showAffiliateLinks,
-      supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
-      defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
-      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
-      tagPaths = content.content.tags.tags.map(_.id),
-      firstPublishedDate = content.content.fields.firstPublicationDate,
-    )
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -299,8 +371,7 @@ object DotcomRenderingDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl = DotcomRenderingUtils.assetURL("javascripts/graun.commercial.dcr.js"),
-      ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
+      ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
@@ -313,23 +384,39 @@ object DotcomRenderingDataModel {
     }
 
     val calloutsUrl: Option[String] = combinedConfig.fields.toList
-      .filter(entry => entry._1 == "calloutsUrl")
-      .headOption
+      .find(_._1 == "calloutsUrl")
       .flatMap(entry => entry._2.asOpt[String])
+
+    val dcrTags = content.tags.tags.map(Tag.apply)
+
+    def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
+      Block(
+        block = block,
+        page = page,
+        shouldAddAffiliateLinks = shouldAddAffiliateLinks,
+        request = request,
+        isMainBlock = isMainBlock,
+        calloutsUrl = calloutsUrl,
+        dateTimes = contentDateTimes,
+        tags = dcrTags,
+      )
+    }
 
     val mainMediaElements =
       mainBlock
-        .map(block => Block(block, page, shouldAddAffiliateLinks, request, true, calloutsUrl, contentDateTimes))
+        .map(toDCRBlock(isMainBlock = true))
         .toList
         .flatMap(_.elements)
 
-    val bodyBlocksDCR: List[model.dotcomrendering.Block] = bodyBlocks
-      .filter(_.published || pageType.isPreview) // TODO lift?
-      .map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
-      .toList
+    val bodyBlocksDCR =
+      bodyBlocks
+        .filter(_.published || pageType.isPreview) // TODO lift?
+        .map(toDCRBlock())
+        .toList
 
-    val keyEventsDCR =
-      keyEvents.map(block => Block(block, page, shouldAddAffiliateLinks, request, false, calloutsUrl, contentDateTimes))
+    val keyEventsDCR = keyEvents.map(toDCRBlock())
+
+    val pinnedPostDCR = pinnedPost.map(toDCRBlock())
 
     val commercial: Commercial = {
       val editionCommercialProperties = content.metadata.commercial
@@ -349,24 +436,22 @@ object DotcomRenderingDataModel {
       )
     }
 
-    val modifiedFormat = {
-      val originalFormat = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
+    val modifiedFormat = getModifiedContent(content, forceLive)
 
-      // TODO move to content-api-scala-client once confirmed as correct
-      // behaviour. At the moment we are seeing interactive articles with other
-      // design types due to CAPI format logic. But interactive design should
-      // always take precendent (or so we think).
-      content.metadata.contentType match {
-        case Some(DotcomContentType.Interactive) => originalFormat.copy(design = InteractiveDesign)
-        case _                                   => originalFormat
-      }
-    }
+    val isLegacyInteractive =
+      modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate
+        .isBefore(Chronos.javaTimeLocalDateTimeToJodaDateTime(InteractiveSwitchOver.date))
+
+    val matchData = makeMatchData(page)
+
+    val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
 
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
       blocks = bodyBlocksDCR,
+      byline = content.trail.byline,
       commercialProperties = commercial.editionCommercialProperties,
       config = combinedConfig,
       contentType = content.metadata.contentType.map(_.name).getOrElse(""),
@@ -378,27 +463,35 @@ object DotcomRenderingDataModel {
       guardianBaseURL = Configuration.site.host,
       hasRelated = content.content.showInRelated,
       hasStoryPackage = hasStoryPackage,
+      storyPackage = storyPackage,
       headline = content.trail.headline,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       isCommentable = content.trail.isCommentable,
       isImmersive = isImmersive,
-      isSpecialReport = DotcomRenderingUtils.isSpecialReport(page),
+      isLegacyInteractive = isLegacyInteractive,
+      isSpecialReport = isSpecialReport(page),
+      filterKeyEvents = filterKeyEvents,
+      pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
+      mostRecentBlockId = mostRecentBlockId,
       linkedData = linkedData,
       main = content.fields.main,
       mainMediaElements = mainMediaElements,
-      matchUrl = DotcomRenderingUtils.makeMatchUrl(page),
+      matchUrl = matchData.map(_.matchUrl),
+      matchType = matchData.map(_.matchType),
       nav = Nav(page, edition),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,
       pageType = pageType, // TODO this info duplicates what is already elsewhere in format?
       pagination = pagination,
-      pillar = DotcomRenderingUtils.findPillar(content.metadata.pillar, content.metadata.designType),
+      pillar = findPillar(content.metadata.pillar, content.metadata.designType),
       publication = content.content.publication,
       sectionLabel = Localisation(content.content.sectionLabelName.getOrElse(""))(request),
       sectionName = content.metadata.section.map(_.value),
       sectionUrl = content.content.sectionLabelLink.getOrElse(""),
+      availableTopics = availableTopics,
+      selectedTopics = selectedTopics,
       shouldHideAds = content.content.shouldHideAdverts,
       shouldHideReaderRevenue = content.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(content),
@@ -408,16 +501,17 @@ object DotcomRenderingDataModel {
       subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
       subMetaSectionLinks =
         content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
-      tags = content.tags.tags.map(Tag.apply),
+      tags = dcrTags,
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
       webPublicationDate = content.trail.webPublicationDate.toString,
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
-      webPublicationSecondaryDateDisplay = DotcomRenderingUtils.secondaryDateString(content, request),
+      webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
+      promotedNewsletter = newsletter,
     )
   }
 }

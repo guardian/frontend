@@ -20,7 +20,7 @@ Essentially, archiving parts of the website boils down to,
 
 This freezes the document in time and removes our ability to update it.
 
-## Procedure 
+## Procedure
 
 `wget` is a good tool to cache an HTML page locally,
 
@@ -36,13 +36,13 @@ target/
 │   └── www.theguardian.com
 │       └── artanddesign
 │           └── 2012
-│               └── sep 
+│               └── sep
 │                   └── 20
-│                       └── feature-photojournalist-emilio-morenatti 
+│                       └── feature-photojournalist-emilio-morenatti
 ```
 
 
-That can then be transfered to our S3 bucket, 
+That can then be transfered to our S3 bucket,
 
 ```
 s3cmd put -m text/html \
@@ -52,15 +52,15 @@ s3cmd put -m text/html \
   target/cache/www.theguardian.com/ s3://aws-frontend-archive/www.theguardian.com/
 ```
 
-## Testing 
+## Testing
 
-You can test a document is being served by S3 from the presence of `x-amz-*` headers in the HTTP response. 
+You can test a document is being served by S3 from the presence of `x-amz-*` headers in the HTTP response.
 
 ```
 # Through the frontend
 curl -I http://www.theguardian.com/sudoku/page/0,,2294974,00.html
 
-# Directly to S3 
+# Directly to S3
 curl -I http://aws-frontend-archive.s3.amazonaws.com/www.theguardian.com/media/page/2007/oct/02/6
 ```
 
@@ -88,26 +88,27 @@ The static asset servers can be archived at a later date, and the host names ret
 
 An archived document is frozen in time and can no longer be updated by a CMS.
 
-Should you receive a legal take down notice then the file can simply be deleted from S3.
+Should you receive a legal take down notice then you can use the frontend admin tool (Development tools > Press-a-page
+(R2) > Specify url and check 'Takedown').
 
 Should it be urgent you may wish to HTTP 410 the route (in Nginx or CDN) until the S3 cache expires (by default this appears to be about 3 days).
 
 # From beyond the grave
 
 Once traffic is redirected away from R2 it will no longer be publicly accessible. However, it's still possible to retrieve documents from
-the R2 DocRoot should the need arise. 
+the R2 DocRoot should the need arise.
 
-For example, 
+For example,
 
 ```
 wget -x -P target/cache --header='Host:www.theguardian.com' xxx.xxx.xxx.xxx/developmentcompetition/gsk/page/0,,2263431,00.html
 ```
 
-Where _xxx.xxx.xxx.xxx_ is the IP address of the R2 backend (available in our Varnish configuration) or via `dig`. 
+Where _xxx.xxx.xxx.xxx_ is the IP address of the R2 backend (available in our Varnish configuration) or via `dig`.
 
 ## S3
 
 - The archive bucket exists under the frontend AWS account.
 - The S3 bucket is called 'aws-frontend-archive'.
-- The default cache time of each resource in the bucket is 3 days. 
+- The default cache time of each resource in the bucket is 3 days.
 - It is not backed up but a copy of each document remains on the R2 DocRoot should it be needed.

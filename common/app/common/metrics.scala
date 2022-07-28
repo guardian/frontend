@@ -162,6 +162,11 @@ object EmailSubsciptionMetrics {
   val APIHTTPError = CountMetric("email-api-http-error", "Non-200/201 response from email subscription API")
   val APINetworkError = CountMetric("email-api-network-error", "Email subscription API network failure")
   val ListIDError = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
+  val RecaptchaMissingTokenError = CountMetric("email-recaptcha-missing-token-failure", "Recaptcha missing token error")
+  val RecaptchaValidationError = CountMetric("email-recaptcha-validation-failure", "Recaptcha validation error")
+  val RecaptchaAPIUnavailableError =
+    CountMetric("email-recaptcha-api-unavailable-failure", "Recaptcha API unavailable error")
+  val RecaptchaValidationSuccess = CountMetric("email-recaptcha-validation-success", "Recaptcha validation success")
 }
 
 case class ApplicationMetrics(metrics: List[FrontendMetric])
@@ -222,7 +227,7 @@ class CloudWatchMetricsLifecycle(
       )
     }
 
-  private def report() {
+  private def report(): Unit = {
     val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.appMetrics.metrics
 
     CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)

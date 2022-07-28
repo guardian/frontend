@@ -1,8 +1,8 @@
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
-import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
+import common.Assets.DiscussionExternalAssetsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common._
 import common.dfp.DfpAgentLifecycle
@@ -20,16 +20,25 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
-import jobs.StoreNavigationLifecycleComponent
+import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle, NewsletterService}
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
+import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
+import topics.{TopicS3Client, TopicS3ClientImpl, TopicService}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
     new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait AppComponents extends FrontendComponents with ArticleControllers {
+trait TopicServices {
+  lazy val topicS3Client: TopicS3Client = wire[TopicS3ClientImpl]
+  lazy val topicService = wire[TopicService]
+}
 
+trait AppComponents extends FrontendComponents with ArticleControllers with TopicServices {
+
+  lazy val newsletterApi = wire[NewsletterApi]
+  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
@@ -52,6 +61,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
+    wire[TopicLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

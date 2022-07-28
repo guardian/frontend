@@ -1,11 +1,9 @@
 package indexes
 
-import common.GuLogging
-import common.Maps._
 import com.gu.contentapi.client.model.v1.Tag
-import model.{TagDefinition, TagIndex}
+import common.GuLogging
 import common.StringEncodings.asAscii
-import play.api.libs.iteratee.{Enumeratee, Iteratee}
+import model.{TagDefinition, TagIndex}
 
 import scala.concurrent.ExecutionContext
 import scala.util.Try
@@ -103,11 +101,6 @@ class TagPages(implicit executionContext: ExecutionContext) extends GuLogging {
     id.split("/").headOption
   }
 
-  private def mappedByKey(key: Tag => String) =
-    Iteratee.fold[Tag, Map[String, Set[Tag]]](Map.empty) { (acc, tag) =>
-      insertWith(acc, key(tag), Set(tag))(_ union _)
-    }
-
   def asciiLowerWebTitle(tag: Tag): String =
     asAscii(tag.webTitle).toLowerCase
 
@@ -126,17 +119,8 @@ class TagPages(implicit executionContext: ExecutionContext) extends GuLogging {
         )
     }
 
-  val invalidSectionsFilter = Enumeratee.filter[Tag](_.sectionId.exists(TagPages.validSections.contains))
-  val publicationsFilter = Enumeratee.filter[Tag](t => tagHeadKey(t.id).exists(TagPages.publications.contains))
-
-  val byWebTitle = mappedByKey(tag => alphaIndexKey(tag.webTitle))
-
-  val byContributorNameOrder = mappedByKey { tag =>
-    alphaIndexKey(tag.lastName orElse tag.firstName getOrElse tag.webTitle)
-  }
-
-  val bySection = invalidSectionsFilter &>> mappedByKey(_.sectionId.get)
-
-  val byPublication = publicationsFilter &>> mappedByKey(tag => tagHeadKey(tag.id).getOrElse("publication"))
+  def invalidSectionsFilter(tag: Tag): Boolean = tag.sectionId.exists(TagPages.validSections.contains)
+  def publicationsFilter(tag: Tag): Boolean = tagHeadKey(tag.id).exists(TagPages.publications.contains)
+  def byWebTitle(tags: Set[Tag]): Map[String, Set[Tag]] = tags.groupBy(tag => alphaIndexKey(tag.webTitle))
 
 }

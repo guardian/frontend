@@ -1,10 +1,7 @@
+import { adSizes } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
-import config from '../../../../lib/config';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
-import { geoMostPopular } from '../../../common/modules/onward/geo-most-popular';
-import { adSizes } from '../ad-sizes';
-import { stickyCommentsMpu, stickyMpu } from '../sticky-mpu';
 import type { Advert } from './Advert';
 import { getAdIframe } from './get-ad-iframe';
 import { renderAdvertLabel } from './render-advert-label';
@@ -19,9 +16,13 @@ import { renderAdvertLabel } from './render-advert-label';
  *
  */
 
+/**
+ * Types of events that are returned when executing a size change callback
+ */
+
 const addClassIfHasClass = (newClassNames: string[]) =>
 	function hasClass(classNames: string[]) {
-		return function onAdvertRendered(_: any, advert: Advert) {
+		return function onAdvertRendered(advert: Advert) {
 			if (
 				classNames.some((className) =>
 					advert.node.classList.contains(className),
@@ -31,27 +32,6 @@ const addClassIfHasClass = (newClassNames: string[]) =>
 					newClassNames.forEach((className) => {
 						advert.node.classList.add(className);
 					});
-					// Add fluid styles from _adslot.scss
-					// mark: 9473ae05-a901-4a8d-a51d-1b9c894d6e1f
-					// Temporary typing until config.js is converted to TypeScript
-					const isDotcomRendering: boolean = (config as {
-						get: (arg: string, defaultValue: any) => boolean;
-					}).get('isDotcomRendering', false);
-					if (
-						isDotcomRendering &&
-						newClassNames.includes('ad-slot--fluid')
-					) {
-						advert.node.style.minHeight = '250px';
-						advert.node.style.lineHeight = '10px';
-						advert.node.style.padding = '0';
-						advert.node.style.margin = '0';
-						if (
-							!newClassNames.includes('ad-slot--im') &&
-							!newClassNames.includes('ad-slot--carrot') &&
-							!newClassNames.includes('ad-slot--offset-right')
-						)
-							advert.node.style.width = '100%';
-					}
 				});
 			}
 			return Promise.resolve();
@@ -61,7 +41,10 @@ const addClassIfHasClass = (newClassNames: string[]) =>
 const addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
 const addFluid = addClassIfHasClass(['ad-slot--fluid']);
 
-const removeStyleFromAdIframe = (advert: { node: HTMLElement }, style: any) => {
+const removeStyleFromAdIframe = (
+	advert: { node: HTMLElement },
+	style: string,
+) => {
 	const adIframe = advert.node.querySelector('iframe');
 
 	void fastdom.mutate(() => {
@@ -71,94 +54,53 @@ const removeStyleFromAdIframe = (advert: { node: HTMLElement }, style: any) => {
 	});
 };
 
-const sizeCallbacks: Record<
-	string,
-	undefined | ((arg1: any, arg2: Advert) => Promise<void>)
-> = {};
+type SizeCallback = (
+	arg0: Advert,
+	arg1?: googletag.events.SlotRenderEndedEvent,
+) => Promise<void>;
+const sizeCallbacks: Record<string, undefined | SizeCallback> = {};
 
 /**
  * DFP fluid ads should use existing fluid-250 styles in the top banner position
  * The vertical-align property found on DFP iframes affects the smoothness of
  * CSS transitions when expanding/collapsing various native style formats.
  */
-sizeCallbacks[adSizes.fluid.toString()] = (
-	renderSlotEvent: any,
-	advert: Advert,
-) =>
-	addFluid(['ad-slot'])(renderSlotEvent, advert).then(() =>
+sizeCallbacks[adSizes.fluid.toString()] = (advert: Advert) =>
+	addFluid(['ad-slot'])(advert).then(() =>
 		removeStyleFromAdIframe(advert, 'vertical-align'),
 	);
 
-/**
- * Trigger sticky scrolling for MPUs in the right-hand article column
- */
-sizeCallbacks[adSizes.mpu.toString()] = (
-	_: any,
-	advert: Advert,
-): Promise<any> =>
-	fastdom.measure(() => {
-		if (advert.node.classList.contains('js-sticky-mpu')) {
-			if (advert.node.classList.contains('ad-slot--right')) {
-				stickyMpu(advert.node);
-			}
-			if (advert.node.classList.contains('ad-slot--comments')) {
-				stickyCommentsMpu(advert.node);
-			}
-		}
-		void fastdom.mutate(() => advert.updateExtraSlotClasses());
-	});
-
-/**
- * Resolve the stickyMpu.whenRendered promise
- */
-sizeCallbacks[adSizes.halfPage.toString()] = (_: any, advert: Advert) =>
-	fastdom.measure(() => {
-		if (advert.node.classList.contains('ad-slot--right')) {
-			stickyMpu(advert.node);
-		}
-		if (advert.node.classList.contains('ad-slot--comments')) {
-			stickyCommentsMpu(advert.node);
-		}
-		void fastdom.mutate(() => advert.updateExtraSlotClasses());
-	});
-
-sizeCallbacks[adSizes.skyscraper.toString()] = (_: any, advert: Advert) =>
-	fastdom.measure(() => {
-		if (advert.node.classList.contains('ad-slot--right')) {
-			stickyMpu(advert.node);
-		}
-		if (advert.node.classList.contains('ad-slot--comments')) {
-			stickyCommentsMpu(advert.node);
-		}
-		void fastdom.mutate(() =>
-			advert.updateExtraSlotClasses('ad-slot--sky'),
-		);
-	});
-
-sizeCallbacks[adSizes.video.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.mpu.toString()] = (advert: Advert): Promise<void> =>
 	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('u-h');
+		advert.updateExtraSlotClasses();
 	});
 
-sizeCallbacks[adSizes.outstreamDesktop.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.halfPage.toString()] = (advert: Advert) =>
+	fastdom.mutate(() => {
+		advert.updateExtraSlotClasses();
+	});
+
+sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
+	fastdom.mutate(() => {
+		advert.updateExtraSlotClasses('ad-slot--sky');
+	});
+
+sizeCallbacks[adSizes.outstreamDesktop.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (
-	_: any,
-	advert: Advert,
-) =>
+sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.outstreamMobile.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.outstreamMobile.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--outstream');
 	});
 
-sizeCallbacks[adSizes.googleCard.toString()] = (_: any, advert: Advert) =>
+sizeCallbacks[adSizes.googleCard.toString()] = (advert: Advert) =>
 	fastdom.mutate(() => {
 		advert.updateExtraSlotClasses('ad-slot--gc');
 	});
@@ -167,49 +109,27 @@ sizeCallbacks[adSizes.googleCard.toString()] = (_: any, advert: Advert) =>
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
  * and their containers closed up.
  */
-const outOfPageCallback = (
-	event: {
-		slot: {
-			getOutOfPage: () => unknown;
-		};
-	},
-	advert: Advert,
-) => {
-	if (!event.slot.getOutOfPage()) {
-		const parent = advert.node.parentNode as HTMLElement;
-		return fastdom.mutate(() => {
-			advert.node.classList.add('u-h');
-			// if in a slice, add the 'no mpu' class
-			if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
-				parent.classList.add('fc-slice__item--no-mpu');
+const outOfPageCallback = (advert: Advert) => {
+	const parent = advert.node.parentNode as HTMLElement;
+	return fastdom.mutate(() => {
+		advert.node.classList.add('ad-slot--collapse');
+		// Special case for top-above-nav which has a container with its own height
+		if (advert.id.includes('top-above-nav')) {
+			const adContainer = advert.node.closest<HTMLElement>(
+				'.top-banner-ad-container',
+			);
+			if (adContainer) {
+				adContainer.style.display = 'none';
 			}
-		});
-	}
-	return Promise.resolve();
+		}
+		// if in a slice, add the 'no mpu' class
+		if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
+			parent.classList.add('fc-slice__item--no-mpu');
+		}
+	});
 };
 sizeCallbacks[adSizes.outOfPage.toString()] = outOfPageCallback;
 sizeCallbacks[adSizes.empty.toString()] = outOfPageCallback;
-
-/**
- * Portrait adverts exclude the locally-most-popular widget
- */
-// Temporary definition until 'geo-most-popular' is converted to TypeScript
-
-type WrappedElem = {
-	elem: HTMLElement | null;
-	remove: () => void;
-};
-sizeCallbacks[adSizes.portrait.toString()] = () =>
-	// remove geo most popular
-	geoMostPopular.whenRendered.then(
-		(popular: WrappedElem | undefined | null) =>
-			fastdom.mutate(() => {
-				if (popular?.elem) {
-					popular.elem.remove();
-					popular.elem = null;
-				}
-			}),
-	);
 
 /**
  * Commercial components with merch sizing get fluid-250 styling
@@ -238,13 +158,13 @@ const addContentClass = (adSlotNode: HTMLElement) => {
  */
 export const renderAdvert = (
 	advert: Advert,
-	slotRenderEndedEvent: Event,
-): Promise<any> => {
+	slotRenderEndedEvent: googletag.events.SlotRenderEndedEvent,
+): Promise<boolean> => {
 	addContentClass(advert.node);
 
 	return getAdIframe(advert.node)
 		.then((isRendered) => {
-			const callSizeCallback = (): Promise<any> => {
+			const callSizeCallback = () => {
 				if (advert.size) {
 					let size = advert.size.toString();
 
@@ -259,16 +179,16 @@ export const renderAdvert = (
 					 * */
 					advert.hasPrebidSize = false;
 
+					const sizeCallback = sizeCallbacks[size];
 					return Promise.resolve(
-						sizeCallbacks[size]
-							? // @ts-expect-error - We check if sizeCallbacks[size] is truthy above
-							  sizeCallbacks[size](slotRenderEndedEvent, advert)
+						sizeCallback !== undefined
+							? sizeCallback(advert, slotRenderEndedEvent)
 							: fastdom.mutate(() => {
 									advert.updateExtraSlotClasses();
 							  }),
 					);
 				}
-				return Promise.resolve(null);
+				return Promise.resolve();
 			};
 
 			const addRenderedClass = () =>

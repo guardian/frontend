@@ -15,7 +15,7 @@ module.exports = {
                     const errors = [];
                     const jsFiles = files.filter(
                         file =>
-                            file.endsWith('.js') ||
+                            (file.endsWith('.js') && !file.endsWith('.scala.js')) ||
                             file.endsWith('.jsx') ||
                             file.startsWith('git-hooks')
                     );

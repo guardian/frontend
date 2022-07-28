@@ -133,12 +133,7 @@ window.guardian.googleAnalytics.initialiseGa = function() {
 
     @defining(GoogleAnalyticsAccount.editorialTracker(context).trackerName) { trackerName =>
 
-        ga('@{trackerName}.send', 'pageview', {
-            hitCallback: function() {
-                var image = new Image();
-                image.src = "@{Configuration.debug.beaconUrl}/count/pvg.gif";
-            }
-        });
+        ga('@{trackerName}.send', 'pageview');
 
         @*
         If there is internal link click data in session storage, send a click event.?:
@@ -169,13 +164,3 @@ window.guardian.googleAnalytics.initialiseGa = function() {
 
 };
 </script>
-
-@*
-TODO For now we only include a confidence beacon in the noscript.
-If this brings our confidence up, we should also request a pixel
-from a Fastly/frontend endpoint that can make a server-side call to GA to record the pageview.
-*@
-<noscript id="googleNoScript">
-  <img id="googleConfidenceNoScriptImage" alt=""
-    src="@{Configuration.debug.beaconUrl}/count/pvg.gif" width="1" height="1" class="u-h" />
-</noscript>

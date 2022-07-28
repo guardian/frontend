@@ -12,6 +12,6 @@ trait AccountTab extends EditProfileControllerComponents {
     }
 
   /** GET /account/edit */
-  def redirectToAccountSettings: Action[AnyContent] = redirectToManage("account-settings")
+  def redirectToManageAccountSettings: Action[AnyContent] = redirectToManage("account-settings")
 
 }

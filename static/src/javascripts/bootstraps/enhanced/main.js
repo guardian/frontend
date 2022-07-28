@@ -10,7 +10,10 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
-import {fetchAndRenderEpic} from "common/modules/commercial/contributions-service";
+import { fetchAndRenderHeaderLinks } from "common/modules/support/header";
+import { fetchAndRenderEpic } from "common/modules/support/epic";
+import { coreVitals } from 'common/modules/analytics/coreVitals';
+import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 
 const bootEnhanced = () => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -39,9 +42,12 @@ const bootEnhanced = () => {
             },
         ],
 
-        //
+        ['core-web-vitals', coreVitals],
+
+        ['commercial-metrics', initCommercialMetrics],
+
         // A/B tests
-                [
+        [
             'ab-tests',
             () => {
                 catchErrorsWithContext([
@@ -57,7 +63,9 @@ const bootEnhanced = () => {
 
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
 
-        ['remote-epics', fetchAndRenderEpic ]
+        ['remote-epics', fetchAndRenderEpic ],
+
+        ['remote-header-links', fetchAndRenderHeaderLinks]
     ]);
 
     /** common sets up many things that subsequent modules may need.
@@ -155,6 +163,7 @@ const bootEnhanced = () => {
                 );
             }
 
+            // TODO: consider issues with double-loading bundles in hosted + standalone commercial (@mxdvl 2021-09-30)
             if (
                 config.get('page.contentType') === 'Audio' ||
                 config.get('page.contentType') === 'Video' ||
@@ -298,29 +307,6 @@ const bootEnhanced = () => {
                     },
                     'newsletters'
                 );
-            }
-
-            // use a #force-sw hash fragment to force service worker registration for local dev
-            if (
-                (window.location.protocol === 'https:' &&
-                    config.get('page.section') !== 'identity') ||
-                window.location.hash.indexOf('force-sw') > -1
-            ) {
-                const navigator = window.navigator;
-
-                if (navigator && navigator.serviceWorker) {
-                    if (config.get('switches.serviceWorkerEnabled')) {
-                        navigator.serviceWorker.register('/service-worker.js');
-                    } else {
-                        navigator.serviceWorker
-                            .getRegistrations()
-                            .then(registrations => {
-                                [...registrations].forEach(registration => {
-                                    registration.unregister();
-                                });
-                            });
-                    }
-                }
             }
 
             if (config.get('page.pageId') === 'help/accessibility-help') {

@@ -7,6 +7,7 @@ module.exports = {
         require('./webpack'),
         require('./webpack-atoms'),
         require('./webpack-dcr'),
+        require('../../commercial/compile/webpack-commercial'),
         require('./bundle-polyfills'),
     ],
 };

@@ -4,11 +4,36 @@
 			src="https://acdn.adnxs.com/prebid/amp/user-sync/load-cookie-with-consent.html"
 			height="0"
 			width="0"
+			sandbox="allow-scripts allow-same-origin"
 		></iframe>
 		<iframe
 			src="https://guardian.amp.permutive.com/amp-iframe.html?project=d6691a17-6fdb-4d26-85d6-b3dd27f55f08&key=359ba275-5edd-4756-84f8-21a24369ce0b"
 			height="0"
 			width="0"
+			sandbox="allow-scripts allow-same-origin"
+		></iframe>
+		<iframe
+			src="https://guardian-cdn.relevant-digital.com/static/tags/6214c1072d89bdff800f25f2_cookiesync.html?endpoint=relevant&max_sync_count=5"
+			height="0"
+			width="0"
+			sandbox="allow-scripts allow-same-origin"
 		></iframe>
 	</body>
+	<script>
+		const iframes = Array.from(document.getElementsByTagName('iframe'));
+
+		window.addEventListener(
+			'message',
+			(event) => {
+				if (event.data.type === 'send-consent-data') {
+					window.parent.postMessage(event.data, '*');
+				} else {
+					iframes.forEach((iframe) => {
+						iframe.contentWindow.postMessage(event.data, '*');
+					});
+				}
+			},
+			false,
+		);
+	</script>
 </html>

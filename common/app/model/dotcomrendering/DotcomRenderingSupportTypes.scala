@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
+import model.liveblog.{MembershipPlaceholder, BlockAttributes}
 import model.{ArticleDateTimes, ContentPage, GUDateTimeFormatNew}
 import navigation._
 import org.joda.time.DateTime
@@ -23,6 +24,7 @@ case class Tag(
     title: String,
     twitterHandle: Option[String],
     bylineImageUrl: Option[String],
+    bylineLargeImageUrl: Option[String],
 )
 
 object Tag {
@@ -34,6 +36,7 @@ object Tag {
       t.properties.tagType,
       t.properties.webTitle,
       t.properties.twitterHandle,
+      t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300)),
       t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
     )
   }
@@ -42,13 +45,16 @@ object Tag {
 case class Block(
     id: String,
     elements: List[PageElement],
+    attributes: BlockAttributes,
     blockCreatedOn: Option[Long],
     blockCreatedOnDisplay: Option[String],
     blockLastUpdated: Option[Long],
     blockLastUpdatedDisplay: Option[String],
     blockFirstPublished: Option[Long],
     blockFirstPublishedDisplay: Option[String],
+    blockFirstPublishedDisplayNoTimezone: Option[String],
     title: Option[String],
+    contributors: Seq[Contributor],
     primaryDateLine: String,
     secondaryDateLine: String,
 )
@@ -66,6 +72,7 @@ object Block {
       isMainBlock: Boolean,
       calloutsUrl: Option[String],
       dateTimes: ArticleDateTimes,
+      tags: Seq[Tag],
   ): Block = {
 
     val content = page.item
@@ -79,6 +86,8 @@ object Block {
     val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
     val blockFirstPublishedDisplay =
       blockFirstPublished.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+    val blockFirstPublishedDisplayNoTimezone =
+      blockFirstPublished.map(dt => GUDateTimeFormatNew.formatTimeForDisplayNoTimezone(new DateTime(dt), request))
 
     val blockLastUpdated = block.lastModifiedDate.map(_.dateTime)
     val blockLastUpdatedDisplay =
@@ -87,8 +96,26 @@ object Block {
     val displayedDateTimes = ArticleDateTimes.makeDisplayedDateTimesDCR(dateTimes, request)
     val campaigns = page.getJavascriptConfig.get("campaigns")
 
+    val contributors = block.contributors flatMap { contributorId =>
+      tags
+        .find(_.id == s"profile/$contributorId")
+        .map(tag => Contributor(tag.title, tag.bylineImageUrl, tag.bylineLargeImageUrl))
+    }
+
+    val membershipPlaceholder = block.attributes.membershipPlaceholder map { placeholder =>
+      MembershipPlaceholder(placeholder.campaignCode)
+    }
+
+    val attributes = BlockAttributes(
+      block.attributes.pinned.getOrElse(false),
+      block.attributes.keyEvent.getOrElse(false),
+      block.attributes.summary.getOrElse(false),
+      membershipPlaceholder,
+    )
+
     Block(
       id = block.id,
+      attributes = attributes,
       elements = DotcomRenderingUtils.blockElementsToPageElements(
         block.elements,
         request,
@@ -104,8 +131,10 @@ object Block {
       blockLastUpdated = blockLastUpdated,
       blockLastUpdatedDisplay = blockLastUpdatedDisplay,
       title = block.title,
+      contributors = contributors,
       blockFirstPublished = blockFirstPublished,
       blockFirstPublishedDisplay = blockFirstPublishedDisplay,
+      blockFirstPublishedDisplayNoTimezone = blockFirstPublishedDisplayNoTimezone,
       primaryDateLine = displayedDateTimes.primaryDateLine,
       secondaryDateLine = displayedDateTimes.secondaryDateLine,
     )
@@ -139,7 +168,6 @@ object Commercial {
 case class Config(
     switches: Map[String, Boolean],
     abTests: Map[String, String],
-    commercialBundleUrl: String,
     googletagUrl: String,
     stage: String,
     frontendAssetsFullURL: String,

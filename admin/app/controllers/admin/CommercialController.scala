@@ -121,13 +121,6 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.adTests(report.timestamp, sortedGroups)))
     }
 
-  def renderCommercialRadiator(): Action[AnyContent] =
-    Action.async { implicit request =>
-      for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph()) yield {
-        Ok(views.html.commercial.commercialRadiator(adResponseConfidenceGraph))
-      }
-    }
-
   def getLineItemsForOrder(orderId: String): Action[AnyContent] =
     Action { implicit request =>
       val lineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().lineItems filter (_.orderId.toString == orderId)

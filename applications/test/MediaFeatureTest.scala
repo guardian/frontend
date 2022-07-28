@@ -1,16 +1,18 @@
 package test
 
-import scala.collection.JavaConverters._
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
 
-@DoNotDiscover class MediaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
-  feature("Media (video)") {
+import org.scalatest.{DoNotDiscover, GivenWhenThen}
+
+@DoNotDiscover class MediaFeatureTest extends AnyFeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+  Feature("Media (video)") {
 
     info("In order to experience all the wonderful videos the Guardian publish")
     info("As a sighted Guardian reader")
     info("I want to view a version of the video optimised for my browser")
 
-    scenario("Load HTML5 video formats") {
+    Scenario("Load HTML5 video formats") {
       Given("I am on a video page")
       goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         import browser._
@@ -22,7 +24,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
-    scenario("Have correct canonical url when 410 encountered") {
+    Scenario("Have correct canonical url when 410 encountered") {
       Given("I am on a video page")
       goTo("/world/video/2008/dec/11/guantanamo-bay") { browser =>
         import browser._
@@ -30,7 +32,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
-    scenario("Include Guardian byline") {
+    Scenario("Include Guardian byline") {
       goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         import browser._
         el(".byline").html().toString should include("Ben Child")
@@ -39,7 +41,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
-    scenario("Include non Guardian byline") {
+    Scenario("Include non Guardian byline") {
       goTo("/lifeandstyle/australia-food-blog/video/2014/feb/03/chia-mango-sorbet-video-recipe") { browser =>
         browser.$(".byline").first().text() should be(
           "Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd",
@@ -47,7 +49,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
-    scenario("The content is marked up with the correct schema") {
+    Scenario("The content is marked up with the correct schema") {
       goTo("/uk-news/video/2014/aug/06/qatar-airlines-flight-escorted-raf-fighter-jet-bomb-hoax-video") { browser =>
         import browser._
 
@@ -64,7 +66,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       }
     }
 
-    scenario("Twitter cards should appear in video article meta data") {
+    Scenario("Twitter cards should appear in video article meta data") {
       goTo("/world/video/2014/nov/05/easyjet-flight-aborts-landing-last-minute-video") { browser =>
         import browser._
         el("meta[name='twitter:site']").attribute("content") should be("@guardian")

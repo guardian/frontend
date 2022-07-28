@@ -10,7 +10,7 @@ import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{Breaking, Canonical, ConfigJson, Metadata, Special}
 import common.LoggingField.LogFieldString
-import common.{LoggingField, _}
+import common._
 import common.commercial.CommercialProperties
 import conf.Configuration
 import conf.switches.Switches
@@ -208,7 +208,8 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   ): Response[List[PressedContent]]
 
   val showFields =
-    "body,displayHint,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalPageCode,main"
+    "displayHint,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalPageCode,main"
+  val showBlocks = TrailsToRss.BlocksToGenerateRssIntro
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
       .showSection(true)
@@ -217,6 +218,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       .showTags("all")
       .showReferences(QueryDefaults.references)
       .showAtoms("media")
+      .showBlocks(showBlocks)
 
   val itemApiQuery: AdjustItemQuery = (itemQuery: ItemQuery) =>
     itemQuery
@@ -226,6 +228,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       .showTags("all")
       .showReferences(QueryDefaults.references)
       .showAtoms("media")
+      .showBlocks(showBlocks)
 
   def pressByPathId(path: String, messageId: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
     def pressDependentPaths(paths: Seq[String]): Future[Unit] = {

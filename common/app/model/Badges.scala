@@ -2,9 +2,7 @@ package model
 
 import conf.Static
 import layout.FaciaContainer
-import java.security.MessageDigest
-import java.math.BigInteger
-import scala.util.control.NonFatal
+import org.apache.commons.codec.digest.DigestUtils
 
 trait BaseBadge {
   def maybeThisBadge(tag: String): Option[Badge]
@@ -22,16 +20,8 @@ case class SpecialBadge(salt: String, hashedTag: String, imageUrl: String) exten
       Some(Badge(tag, imageUrl))
     } else None
 
-  private val digest = MessageDigest.getInstance("MD5")
-
   private def md5(input: String): Option[String] = {
-    try {
-      digest.update(input.getBytes(), 0, input.length)
-
-      Option(new BigInteger(1, digest.digest()).toString(16))
-    } catch {
-      case NonFatal(_) => None
-    }
+    Some(DigestUtils.md5Hex(input))
   }
 }
 
@@ -50,11 +40,19 @@ object Badges {
   val euElection = Badge("politics/2019-european-parliamentary-elections", Static("images/badges/eu_election.svg"))
   val paradisePapers = Badge("news/series/paradise-papers", Static("images/badges/pp_web.svg"))
   val cambridgeAnalytica = Badge("news/series/cambridge-analytica-files", Static("images/badges/calock.svg"))
+  val pegasusProject = Badge("news/series/pegasus-project", Static("images/badges/SpecialReportJul21.svg"))
+  val suisseSecretsProject = Badge("news/series/suisse-secrets", Static("images/badges/18_feb_2022_Badge.svg"))
   val specialReport = SpecialBadge(
     "06966783c5b5413394df723f2ca58030953",
     "feb78187bd4de427603a164d0a69f19f",
     Static("images/badges/56738_Badge.svg"),
   )
+  val specialReport2 = SpecialBadge(
+    "a-public-salt3W#ywHav!p+?r+W2$E6=",
+    "0d18e8413ab7cdf377e1202d24452e63",
+    Static("images/badges/05_july_2022_Badge.svg"),
+  )
+  val pandoraPapers = Badge("news/series/pandora-papers", Static("images/badges/SpecialReportSep21.svg"))
   val nhs70 = Badge("society/series/nhs-at-70", Static("images/badges/nhs-70.svg"))
   val cricketWorldCup = Badge("sport/cricket-world-cup-2019", Static("images/badges/cricket-world-cup.svg"))
   val womensWorldCup = Badge("football/womens-world-cup-2019", Static("images/badges/womens-world-cup.svg"))
@@ -90,6 +88,24 @@ object Badges {
     Badge("australia-news/series/dreams-interrupted", Static("images/badges/dreams-interrupted.svg"))
   val anniversary200 =
     Badge("media/series/guardian-200", Static("images/badges/anniversary200.svg"))
+  val euro2020 =
+    Badge("football/euro-2020", Static("images/badges/euro-2020.svg"))
+  val tokyo2020 =
+    Badge("sport/olympic-games-2020", Static("images/badges/tokyo-2020.svg"))
+  val paralympics2020 =
+    Badge("sport/paralympic-games-2020", Static("images/badges/tokyo-2020.svg"))
+  val tokyoparalympics2020 =
+    Badge("sport/tokyo-paralympic-games-2020", Static("images/badges/tokyo-2020.svg"))
+  val cop26 =
+    Badge("environment/cop26-glasgow-climate-change-conference-2021", Static("images/badges/cop26-badge.svg"))
+  val winterOlympics2022 =
+    Badge("sport/winter-olympics-2022", Static("images/badges/winter-olympics-2022-badge.svg"))
+  val ausElection2022 =
+    Badge("australia-news/australian-election-2022", Static("images/badges/australian-election-2022.svg"))
+  val newsletters =
+    Badge("tone/newsletter-tone", Static("images/badges/newsletter-badge.svg"))
+  val womenseuros2022 =
+    Badge("football/women-s-euro-2022", Static("images/badges/womens_euros_2022_badge.svg"))
 
   val allBadges = Seq(
     newArrivals,
@@ -103,7 +119,10 @@ object Badges {
     euElection,
     paradisePapers,
     cambridgeAnalytica,
+    pegasusProject,
+    suisseSecretsProject,
     specialReport,
+    pandoraPapers,
     nhs70,
     cricketWorldCup,
     womensWorldCup,
@@ -134,6 +153,16 @@ object Badges {
     theLastChance,
     dreamsInterrupted,
     anniversary200,
+    euro2020,
+    tokyo2020,
+    paralympics2020,
+    tokyoparalympics2020,
+    cop26,
+    winterOlympics2022,
+    specialReport2,
+    ausElection2022,
+    newsletters,
+    womenseuros2022,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {

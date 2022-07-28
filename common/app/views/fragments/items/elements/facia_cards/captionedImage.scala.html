@@ -1,0 +1,30 @@
+@import layout.WidthsByBreakpoint
+@import model.ImageMedia
+@import implicits.Requests._
+@import conf.switches.Switches.FrontsSlideshowMobileSupport
+
+@(
+    classes: Seq[String],
+    widths: WidthsByBreakpoint,
+    maybeImageMedia: Option[ImageMedia] = None,
+    maybePath: Option[String] = None,
+    maybeSrc: Option[String] = None,
+    shouldLazyLoadIndex: Boolean = false,
+    caption: Option[String] = None
+)(implicit request: RequestHeader)
+
+<figure class="fc-item__captioned-image">
+    @image(
+        classes = classes,
+        widths = widths,
+        maybeImageMedia = maybeImageMedia,
+        maybePath = maybePath,
+        maybeSrc = maybeSrc,
+        shouldLazyLoadIndex = shouldLazyLoadIndex
+    )
+    @caption.map { captionText =>
+        <figcaption class="@if(FrontsSlideshowMobileSupport.isSwitchedOn) {fc-item__captioned-image-mobile-support}">
+            @captionText
+        </figcaption>
+    }
+</figure>

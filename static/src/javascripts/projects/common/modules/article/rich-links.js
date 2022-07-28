@@ -2,7 +2,7 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { isBreakpoint, getBreakpoint } from 'lib/detect';
 import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -50,7 +50,7 @@ const doUpgrade = (el, resp) =>
         ).forEach(sel => {
             sel.classList.remove('submeta-container--break');
         });
-        mediator.emit('rich-link:loaded', el);
+        document.dispatchEvent(new CustomEvent('rich-link:loaded'));
     });
 
 const upgradeRichLink = (el) => {
@@ -157,9 +157,10 @@ const insertTagRichLink = () => {
                 const html = richLinkTag({
                     href: config.get('page.richLink'),
                 });
-                paras[0].insertAdjacentHTML('beforebegin', html);
-                insertedEl = paras[0].previousElementSibling;
-                return insertedEl;
+                return fastdom.mutate(() => {
+                    paras[0].insertAdjacentHTML('beforebegin', html);
+                    insertedEl = paras[0].previousElementSibling;
+                });
             })
             .then(didInsert => {
                 if (didInsert && insertedEl) {

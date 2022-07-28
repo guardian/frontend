@@ -36,4 +36,5 @@ trait CommercialControllers {
   lazy val prebidAnalyticsController = wire[PrebidAnalyticsController]
   lazy val passbackController = wire[PassbackController]
   lazy val ampIframeHtmlController = wire[AmpIframeHtmlController]
+  lazy val nonRefreshableLineItemsController = wire[nonRefreshableLineItemsController]
 }

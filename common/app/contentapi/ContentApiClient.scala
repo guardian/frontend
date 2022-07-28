@@ -23,7 +23,7 @@ import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
-object QueryDefaults extends implicits.Collections {
+object QueryDefaults {
   // NOTE - do NOT add body to this list
   val trailFieldsList = List[String](
     "byline",

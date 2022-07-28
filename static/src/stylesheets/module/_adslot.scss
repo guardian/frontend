@@ -43,6 +43,7 @@
     @include font-size(12, 20);
     position: relative;
     height: $mpu-ad-label-height;
+    max-height: $mpu-ad-label-height;
     background-color: $brightness-97;
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $brightness-86;
@@ -82,8 +83,22 @@
  */
 
 .top-banner-ad-container {
-    background-color: $brightness-100;
+
+    // Don’t show below tablet
+    // On mobile, top-above-nav is inline
+    // See also .ad-slot--top-banner-ad-desktop
+    @include mq($until: tablet) {
+        display: none !important;
+    }
+
+    background-color: $brightness-97;
     border-bottom: 1px solid $brightness-86;
+
+    min-height: 90px + 24px; // https://github.com/guardian/commercial-core/blob/6736d3930be3989a63e5bc0240a4d5bb1c1d9164/src/constants/topAboveNavHeight.ts -- topAboveNavHeight.ts
+    padding-bottom: $gs-row-height / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     // Needed for compatibility with IE11/Edge.
     top: 0;
@@ -135,14 +150,14 @@
 .ad-slot--top-banner-ad-desktop {
     margin: 0 auto;
     min-height: 90px;
-    padding-bottom: $gs-row-height / 2;
+    padding-bottom: 0;
 
     @include mq($until: tablet) {
         display: none;
     }
 
     text-align: left;
-    display: table;
+    display: block;
 
     &.ad-slot--fabric {
         > .ad-slot__label {
@@ -430,14 +445,6 @@
         width: 100%;
     }
 
-    &.ad-slot--commercial-component-high {
-
-        &,
-        & > .ad-slot__content > iframe {
-            transition: height 1s;
-        }
-    }
-
     &.ad-slot--liveblog-inline {
         @include mq(mobile, $until: mobileLandscape) {
             margin-left: $gs-gutter / -2;
@@ -450,6 +457,8 @@
     }
 }
 
+// See implementation on DCR
+// mark: dca5c7dd-dda4-4922-9317-a55a3789fe4c
 .ad-slot--carrot {
     min-height: 0px;
     padding: 0;
@@ -590,4 +599,16 @@
     stroke-linecap: round;
     stroke-width: 2;
     text-align: center;
+}
+
+.ad-slot--collapse {
+    display: none;
+}
+
+/**
+ * Hides the top-above-nav ad-slot container when a
+ * Bonzai TrueSkin (Australian 3rd Party page skin) is shown
+ */
+.bz-custom-container ~ #bannerandheader > .top-banner-ad-container {
+    display: none;
 }

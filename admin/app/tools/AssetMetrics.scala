@@ -2,8 +2,7 @@ package tools
 
 import awswrappers.cloudwatch._
 import com.amazonaws.services.cloudwatch.model._
-import com.gu.Box
-import common.GuLogging
+import common.{Box, GuLogging}
 import org.joda.time.DateTime
 import tools.CloudWatch._
 

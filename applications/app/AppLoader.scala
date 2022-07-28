@@ -1,10 +1,10 @@
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
-import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
 import _root_.commercial.targeting.TargetingLifecycle
+import common.Assets.DiscussionExternalAssetsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
@@ -13,17 +13,17 @@ import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
 import jobs.{SiteMapJob, SiteMapLifecycle}
-import model.{ApplicationContext, ApplicationIdentity}
+import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
-import play.api.{BuiltInComponentsFromContext, OptionalDevContext}
+import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services._
 import router.Routes
-import services.newsletters.{NewsletterSignupLifecycle, NewsletterSignupAgent, NewsletterApi}
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 
 import scala.concurrent.ExecutionContext
 

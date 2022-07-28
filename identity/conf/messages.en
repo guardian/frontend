@@ -1,7 +1,5 @@
 error.email=Please enter a valid email address
 error.passwordLength=Please enter a password between 6 and 72 characters
-error.passwordsMustMatch=The passwords don't match, please try again
-error.passwordMustChange=The new password must be different from the current password.
 error.login=That email address/password combination doesn't match our records. Please try again
 error.wrongPassword=The password doesn't match our records. Please try again.
 error.passwordReset=We could not reset your password please request another password reset email

@@ -58,7 +58,8 @@
 
     @include mq(leftCol) {
         padding: $gs-baseline $gs-gutter / 5 * 2;
-        width: 160px;
+        // Extra 1px to line up with borders on sections above / below
+        width: 160px + $gs-gutter / 2 + 1px;
     }
 
     @include mq(tablet, desktop) {
@@ -67,7 +68,8 @@
 
     @include mq(wide) {
         padding: $gs-baseline $gs-gutter;
-        width: 240px;
+        // Extra 1px to line up with borders on sections above / below
+        width: 240px + $gs-gutter / 2 + 1px;
     }
 
     .button {
@@ -114,20 +116,18 @@
 
     @include mq(mobileLandscape) {
         box-sizing: border-box;
-        max-width: gs-span(8) + ($gs-gutter * 2);
     }
     @include mq(tablet) {
-        max-width: gs-span(9) + ($gs-gutter * 2);
         padding-bottom: $gs-baseline;
-    }
-    @include mq(desktop) {
-        max-width: gs-span(12) + ($gs-gutter * 2);
     }
     @include mq(leftCol) {
         flex: 1;
     }
     @include mq($until: tablet) {
         margin: auto;
+    }
+    @include mq(wide) {
+        margin-right: $gs-gutter + 70px + 1px;
     }
 }
 
@@ -184,7 +184,7 @@
     }
 
     .dumathoin__row {
-        padding: $gs-baseline / 2 0;
+        padding: $gs-baseline / 2 $gs-gutter / 2;
         display: flex;
 
         > * {
@@ -223,8 +223,6 @@
         }
 
         @include mq(tablet) {
-            padding: $gs-baseline $gs-gutter / 2;
-
             > * + * {
                 position: relative;
 
@@ -256,7 +254,10 @@
                 }
             }
         }
-
+        
+        @include mq(wide) {
+            padding: $gs-baseline 0;
+        }
     }
 
     .dumathoin__row--wrap {

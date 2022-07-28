@@ -1,16 +1,19 @@
 package test
 
-import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
+import org.scalatest.{DoNotDiscover, GivenWhenThen}
 import services.IndexPagePagination
+
 import collection.JavaConverters._
 import conf.switches.Switches
-import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
+import org.fluentlenium.core.domain.{FluentList, FluentWebElement}
+import org.scalatest.featurespec.AnyFeatureSpec
+import org.scalatest.matchers.should.Matchers
 
-@DoNotDiscover class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class TagFeatureTest extends AnyFeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
-  feature("Tag Series, Blogs and Contributors Pages trail size") {
+  Feature("Tag Series, Blogs and Contributors Pages trail size") {
 
-    scenario("Tag Series, Blogs and Contributors pages should show 50 trails (includes leadContent if present)") {
+    Scenario("Tag Series, Blogs and Contributors pages should show 50 trails (includes leadContent if present)") {
 
       Given("I visit a tag page")
 
@@ -21,9 +24,9 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
     }
   }
 
-  feature("Contributor pages") {
+  Feature("Contributor pages") {
 
-    scenario("Should display the profile images") {
+    Scenario("Should display the profile images") {
 
       Given("I visit the 'Jemima Kiss' contributor page")
       Switches.ImageServerSwitch.switchOn()
@@ -35,7 +38,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
       }
     }
 
-    scenario("Should not not display profiles where they don't exist") {
+    Scenario("Should not not display profiles where they don't exist") {
 
       Given("I visit the 'Sam Jones' contributor page")
       goTo("/profile/samjones") { browser =>
@@ -47,9 +50,9 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
     }
   }
 
-  feature("Tag Pages") {
+  Feature("Tag Pages") {
 
-    scenario("Pagination") {
+    Scenario("Pagination") {
 
       /*
       This test is consistently failing locally, and thus does not generate the required data/database/xxx file

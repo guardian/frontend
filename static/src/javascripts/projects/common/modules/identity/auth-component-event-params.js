@@ -1,17 +1,22 @@
-import {constructQuery} from "../../../../lib/url";
-
+import { constructQuery } from '../../../../lib/url';
 
 export const createAuthenticationComponentEvent = (componentId, pageViewId) => {
-    const params = {
-        componentType: 'identityauthentication',
-        componentId,
-    };
+	const params = {
+		componentType: 'identityauthentication',
+		componentId,
+	};
 
-    if (pageViewId) {
-        params.viewId = pageViewId;
-    }
+	if (pageViewId) {
+		params.viewId = pageViewId;
+	}
 
-    return constructQuery(params);
+	return constructQuery(params);
 };
 
-export const createAuthenticationComponentEventParams = (componentId, pageViewId) => `componentEventParams=${encodeURIComponent(createAuthenticationComponentEvent(componentId, pageViewId))}`;
+export const createAuthenticationComponentEventParams = (
+	componentId,
+	pageViewId,
+) =>
+	`componentEventParams=${encodeURIComponent(
+		createAuthenticationComponentEvent(componentId, pageViewId),
+	)}`;

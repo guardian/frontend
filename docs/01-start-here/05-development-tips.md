@@ -69,8 +69,4 @@ without having to configure the debugger yourself:
 
 ### Viewing AMP Pages
 
-When running frontend locally, the AMP version of pages can be viewed by adding the `?amp` querystring to the end of the URL. For example:
-
-```
-http://localhost:9000/world/2015/oct/15/obama-delay-withdrawal-us-troops-afghanistan?amp
-```
+[Use DCR](https://github.com/guardian/dotcom-rendering/blob/main/docs/architecture/amp/000-structure-for-initial-milestone.md)

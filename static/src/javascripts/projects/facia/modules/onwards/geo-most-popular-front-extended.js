@@ -5,7 +5,7 @@
 import qwery from 'qwery';
 import $ from 'lib/$';
 import config from 'lib/config';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { begin, end } from 'common/modules/analytics/register';
 import { Component } from 'common/modules/component';
 

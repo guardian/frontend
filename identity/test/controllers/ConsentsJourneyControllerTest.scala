@@ -1,30 +1,32 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.Consent.Supporter
-import com.gu.identity.model.{EmailNewsletters, _}
+import com.gu.identity.model._
 import controllers.editprofile.EditProfileController
 import form._
 import idapiclient.{Auth, TrackingData, _}
-import model.{Countries, PhoneNumbers}
+import model.PhoneNumbers
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
 import MockitoMatchers._
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mockito.MockitoSugar
 import org.scalatest._
 import org.scalatestplus.play.ConfiguredServer
 import _root_.play.api.http.HttpConfiguration
 import _root_.play.api.mvc._
 import _root_.play.api.test.Helpers._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.mockito.MockitoSugar
 import services._
+import services.newsletters.NewsletterSignupAgent
 import test._
 
 import scala.concurrent.Future
 
 @DoNotDiscover class ConsentsJourneyControllerTest
-    extends WordSpec
+    extends AnyWordSpec
     with WithTestExecutionContext
     with Matchers
     with MockitoSugar
@@ -44,8 +46,9 @@ import scala.concurrent.Future
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
     val returnUrlVerifier = mock[ReturnUrlVerifier]
-    val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+    val newsletterService = spy(new NewsletterService(api))
     val httpConfiguration = HttpConfiguration.createWithDefaults()
+    val newsletterSignupAgent = mock[NewsletterSignupAgent]
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
@@ -64,7 +67,6 @@ import scala.concurrent.Future
 
     val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
-      new AccountDetailsMapping,
       new PrivacyMapping,
     )
 
@@ -80,6 +82,7 @@ import scala.concurrent.Future
     when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(
       Right(Subscriber("Text", List(EmailList("37")), "subscribed")),
     )
+    when(newsletterSignupAgent.getNewsletters()) thenReturn Right(Nil)
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -91,6 +94,7 @@ import scala.concurrent.Future
       returnUrlVerifier,
       newsletterService,
       signinService,
+      newsletterSignupAgent,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
@@ -102,26 +106,20 @@ import scala.concurrent.Future
 
     "using any journey" should {
 
-      "set a repermission flag on submit" in new ConsentsJourneyFixture {
-        val updatedUser = user.copy(
-          statusFields = StatusFields(hasRepermissioned = Some(true)),
-        )
-
+      "update Identity user on submit" in new ConsentsJourneyFixture {
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             "returnUrl" -> returnUrlVerifier.defaultReturnUrl,
           )
 
         when(api.saveUser(any[String], any[UserUpdateDTO], any[Auth]))
-          .thenReturn(Future.successful(Right(updatedUser)))
+          .thenReturn(Future.successful(Right(user)))
 
-        val result = controller.submitRepermissionedFlag.apply(fakeRequest)
+        val result = controller.completeConsents.apply(fakeRequest)
         status(result) should be(303)
 
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
-        val userUpdate = userUpdateCapture.getValue
-        userUpdate.statusFields.get.hasRepermissioned should equal(Some(true))
       }
 
     }

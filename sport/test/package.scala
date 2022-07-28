@@ -1,7 +1,6 @@
 package test
 
 import java.io.File
-
 import conf.{FootballClient, SportConfiguration}
 import football.collections.RichListTest
 import football.containers.FixturesAndResultsTest
@@ -36,9 +35,7 @@ class SportTestSuite
       new ResultsFeatureTest,
       new FixturesAndResultsTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19013
-}
+    with SingleServerSuite {}
 
 trait WithTestFootballClient {
   self: WithTestExecutionContext =>

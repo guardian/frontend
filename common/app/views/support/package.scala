@@ -1,14 +1,13 @@
 package views.support
 
 import java.text.DecimalFormat
-import java.util.Locale
 
 import common._
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.PressedContent
 import org.apache.commons.lang.StringEscapeUtils
-import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
+import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -173,6 +172,7 @@ object `package` {
 }
 
 object GuDateFormatLegacy {
+
   def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit
       request: RequestHeader,
   ): String = {

@@ -1,7 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
+import java.time.LocalDate
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.Commercial
 
@@ -330,17 +330,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  // Owner: Maria Livia Chiorean
-  val SharingComments = Switch(
-    SwitchGroup.Feature,
-    "sharing-comments",
-    "When ON, the user will be able to share comments",
-    owners = Seq(Owner.withGithub("marialivia16")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   // Owner: Sam Cutler / Editorial Tools
   val Targeting = Switch(
     SwitchGroup.Feature,
@@ -417,10 +406,20 @@ trait FeatureSwitches {
   val remoteBanner = Switch(
     SwitchGroup.Feature,
     "remote-banner",
-    "Enables the banner fetched from contributions-service",
+    "Enables the banner fetched from support-dotcom-components",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 8, 3),
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val remoteHeader = Switch(
+    SwitchGroup.Feature,
+    "remote-header",
+    "Enables the header fetched from support-dotcom-components",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true,
   )
 
@@ -430,27 +429,67 @@ trait FeatureSwitches {
     "Enables the puzzles banner on puzzles pages",
     owners = Seq(Owner.withGithub("i-hardy")),
     safeState = Off,
-    sellByDate = new LocalDate(2022, 3, 31),
+    sellByDate = never,
     exposeClientSide = true,
   )
 
-  val AnniversaryArticleHeader = Switch(
+  val InteractivePickerFeature = Switch(
     SwitchGroup.Feature,
-    "anniversary-article-header",
-    "Enables the anniversary interactive atom in DCR",
-    owners = Seq(Owner.withGithub("gtrufitt")),
+    "interactive-picker",
+    "Activate the Interactive Picker (routing interactives between frontend and DCR)",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = new LocalDate(2022, 5, 11),
+    sellByDate = LocalDate.of(2022, 8, 25),
+    exposeClientSide = false,
+  )
+
+  val FrontsSlideshowMobileSupport = Switch(
+    SwitchGroup.Feature,
+    "fronts-slideshow-mobile-support",
+    "Enables using captions and slideshows on fronts mobile displays",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
+
+  val StickyVideos = Switch(
+    SwitchGroup.Feature,
+    "sticky-videos",
+    "When ON, videos in liveblogs will 'stick' on the screen as the reader scrolls up and down the blog",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true,
   )
 
-  val AnniversaryLogoHeader = Switch(
+  val NewsletterOnwards = Switch(
     SwitchGroup.Feature,
-    "anniversary-header-svg",
-    "Enables the anniversary logo SVG in the header",
-    owners = Seq(Owner.withGithub("buck06191")),
+    "newsletter-onwards",
+    "When ON, we replace the standard related stories onwards container with a dedicated one for Newsletters",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = new LocalDate(2022, 5, 11),
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val AutomaticFilters = Switch(
+    SwitchGroup.Feature,
+    "automatic-filters",
+    "When ON, displays automatic filters (Topics) on live blogs",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val KeyEventsCarousel = Switch(
+    SwitchGroup.Feature,
+    "key-events-carousel",
+    "When ON, shows the new key events timeline carousel and hides the old key events timeline",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true,
   )
 }

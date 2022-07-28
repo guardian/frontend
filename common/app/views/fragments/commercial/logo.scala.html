@@ -3,7 +3,11 @@
 @(branding: Branding, onDarkBackground: Boolean = false)(implicit request: RequestHeader)
 
 @standardLogo(logo: Logo) = {
-    <img src="@logo.src" alt="@branding.sponsorName" class="badge__logo">
+    <img src="@logo.src" alt="@branding.sponsorName" class="badge__logo"
+        @logo.dimensions.map { dim =>
+            height="@dim.height"
+        }
+    >
 }
 
 @ampLogo(logo: Logo) = {

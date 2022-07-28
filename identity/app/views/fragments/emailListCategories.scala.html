@@ -1,16 +1,16 @@
 @import _root_.form.IdFormHelpers.nonInputFields
-@import _root_.com.gu.identity.model.EmailNewsletter
 @import services.EmailPrefsData
 @import views.support.`package`.Seq2zipWithRowInfo
+@import services.newsletters.model.NewsletterResponse
 
 @(
     emailPrefsForm: Form[EmailPrefsData],
-    availableLists: List[EmailNewsletter],
+    availableLists: List[NewsletterResponse],
     emailSubscriptions: List[String],
     startsOpen: Boolean = false
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
-@emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
+@emailListCategoryList(theme: String, newsletters: List[NewsletterResponse], isActive: Boolean) = {
     @fragments.dropdown(theme.capitalize, modifier = Some("email-subscription"), isActive = isActive, isAnimated = true) {
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
@@ -29,16 +29,7 @@
 }
 
 <div class="email-subscriptions">
-    @List(
-        "news",
-        "features",
-        "sport",
-        "culture",
-        "lifestyle",
-        "comment",
-        "work",
-        "From the papers"
-    ).zipWithIndex.map { case (theme, index) =>
+    @availableLists.map(_.theme).distinct.zipWithIndex.map { case (theme, index) =>
         @emailListCategoryList(
             theme,
             availableLists.filter(_.theme == theme),

@@ -1,16 +1,15 @@
-import { getLocale, storage } from '@guardian/libs';
-import type { CountryCode } from '@guardian/libs/dist/cjs/types/countries';
-import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
-import reportError from 'lib/report-error';
+import { getCookie, getLocale, isString, storage } from '@guardian/libs';
+import type { CountryCode } from '@guardian/libs';
+import config from './config';
+import reportError from './report-error';
 
-const editionToGeolocationMap: Record<string, string> = {
+const editionToGeolocationMap: Record<string, CountryCode> = {
 	UK: 'GB',
 	US: 'US',
 	AU: 'AU',
 };
 
-const editionToGeolocation = (editionKey = 'UK'): string =>
+const editionToGeolocation = (editionKey = 'UK'): CountryCode =>
 	editionToGeolocationMap[editionKey];
 
 const countryCookieName = 'GU_geo_country';
@@ -24,15 +23,23 @@ let locale: CountryCode | null;
    of the cases but if a race condition happen or the cookie is not set,
    we keep fallbacks to cookie or geo from edition.
 */
-const getCountryCode = (): string => {
-	const pageEdition: string = (config as {
-		get: (arg: string) => string;
-	}).get('page.edition');
+const getCountryCode = (): CountryCode => {
+	const pageEdition = config.get<string>('page.edition');
+
+	const maybeCountryOverride = storage.local.get(
+		countryOverrideName,
+	) as unknown;
+	const countryOverride = isString(maybeCountryOverride)
+		? (maybeCountryOverride as CountryCode)
+		: null;
 
 	return (
 		locale ??
-		(storage.local.get(countryOverrideName) as string | null) ??
-		(getCookie(countryCookieName) as string | null) ??
+		countryOverride ??
+		(getCookie({
+			name: countryCookieName,
+			shouldMemoize: true,
+		}) as CountryCode | null) ??
 		editionToGeolocation(pageEdition)
 	);
 };
@@ -63,7 +70,10 @@ const init = (): void => {
 				{},
 				false,
 			);
-			locale = getCookie(countryCookieName) as CountryCode | null;
+			locale = getCookie({
+				name: countryCookieName,
+				shouldMemoize: true,
+			}) as CountryCode | null;
 		});
 };
 
@@ -74,7 +84,34 @@ const init = (): void => {
   should match the list in support-internationalisation.
  */
 
-const countryGroups: Record<string, Record<string, string | string[]>> = {
+type CountryGroupId =
+	| 'GBPCountries'
+	| 'UnitedStates'
+	| 'AUDCountries'
+	| 'EURCountries'
+	| 'NZDCountries'
+	| 'Canada'
+	| 'International';
+
+type SupportInternationalisationId =
+	| 'uk'
+	| 'us'
+	| 'au'
+	| 'eu'
+	| 'int'
+	| 'nz'
+	| 'ca';
+
+type IsoCurrency = 'GBP' | 'USD' | 'AUD' | 'EUR' | 'NZD' | 'CAD';
+
+type CountryGroup = {
+	name: string;
+	currency: IsoCurrency;
+	countries: string[];
+	supportInternationalisationId: SupportInternationalisationId;
+};
+
+const countryGroups: Record<CountryGroupId, CountryGroup> = {
 	GBPCountries: {
 		name: 'United Kingdom',
 		currency: 'GBP',
@@ -356,25 +393,25 @@ const countryGroups: Record<string, Record<string, string | string[]>> = {
 
 // These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
-const countryCodeToCountryGroupId = (countryCode: string): string => {
-	const availableCountryGroups = Object.keys(countryGroups);
-	let response = null;
-	availableCountryGroups.forEach((countryGroup) => {
-		if (countryGroups[countryGroup].countries.includes(countryCode)) {
-			response = countryGroup;
-		}
-	});
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- typescript thinks response is always null
+const countryCodeToCountryGroupId = (
+	countryCode: CountryCode,
+): CountryGroupId => {
+	const availableCountryGroups = Object.keys(
+		countryGroups,
+	) as CountryGroupId[];
+	const response = availableCountryGroups.find((countryGroup) =>
+		countryGroups[countryGroup].countries.includes(countryCode),
+	);
 	return response ?? 'International';
 };
 
 const countryCodeToSupportInternationalisationId = (
-	countryCode: string,
+	countryCode: CountryCode,
 ): string | string[] =>
 	countryGroups[countryCodeToCountryGroupId(countryCode)]
 		.supportInternationalisationId;
 
-const extendedCurrencySymbol: Record<string, string> = {
+const extendedCurrencySymbol: Record<CountryGroupId, string> = {
 	GBPCountries: '£',
 	UnitedStates: '$',
 	AUDCountries: '$',
@@ -390,11 +427,9 @@ const getLocalCurrencySymbolSync = (): string =>
 	extendedCurrencySymbol[countryCodeToCountryGroupId(getCountryCode())] ||
 	defaultCurrencySymbol;
 
-const getLocalCurrencySymbol = (geolocation: string): string =>
-	geolocation
-		? extendedCurrencySymbol[countryCodeToCountryGroupId(geolocation)] ||
-		  defaultCurrencySymbol
-		: defaultCurrencySymbol;
+const getLocalCurrencySymbol = (geolocation: CountryCode): string =>
+	extendedCurrencySymbol[countryCodeToCountryGroupId(geolocation)] ||
+	defaultCurrencySymbol;
 
 // A limited set of country names for the test to add country name in the epic copy
 const countryNames: Record<string, string> = {
@@ -470,4 +505,8 @@ export {
 	overrideGeolocation,
 	extendedCurrencySymbol,
 	getCountryName,
+};
+
+export const _ = {
+	countryCookieName,
 };

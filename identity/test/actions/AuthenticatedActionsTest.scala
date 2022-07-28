@@ -1,28 +1,25 @@
 package actions
 
 import java.net.URLEncoder
-
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{StatusFields, Subscriber, User}
-import conf.switches.Switches
+import com.gu.identity.model.{StatusFields, User}
 import idapiclient.{Auth, IdApiClient, ScGuRp, ScGuU}
 import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{Matchers, WordSpecLike}
 import org.mockito.Matchers.any
 import play.api.mvc.{AnyContent, _}
-import play.api.test.{FakeRequest, Helpers, Injecting}
+import play.api.test.{FakeRequest, Helpers}
 import services._
 import test.{WithTestExecutionContext, WithTestIdConfig}
 import idapiclient.Response
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.test.Helpers._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatestplus.mockito.MockitoSugar
 
 import scala.concurrent.Future
 
 class AuthenticatedActionsTest
-    extends WordSpecLike
+    extends AnyWordSpecLike
     with MockitoSugar
     with ScalaFutures
     with Matchers
@@ -40,7 +37,7 @@ class AuthenticatedActionsTest
     val user = User(
       "",
       "test@example.com",
-      statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)),
+      statusFields = new StatusFields(userEmailValidated = Some(true)),
     )
     val newsletterService: NewsletterService = mock[NewsletterService]
     val rpCookie = mock[ScGuRp]

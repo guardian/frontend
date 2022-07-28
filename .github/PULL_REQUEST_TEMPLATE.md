@@ -24,7 +24,7 @@
 
 ### Does this affect other platforms?
 
-- [ ] AMP <!-- AMP question? https://git.io/v9zIE -->
+- [ ] AMP <!-- AMP question? https://github.com/guardian/frontend/blob/main/docs/03-dev-howtos/16-working-with-amp.md -->
 - [ ] Apps
 - [ ] Other (please specify)
 
@@ -49,7 +49,6 @@
 
 ### Does this change update the version of CAPI we're using?
 
-<!-- Changing CAPI versions renders the existing local database files useless -->
 <!-- Please see the notes linked below if you need further info. -->
 
 - [ ] No, all the existing database files are just fine
@@ -68,7 +67,7 @@
 - [ ] Locally
 - [ ] On CODE (optional)
 
-<!-- AB test? https://git.io/v1V0x -->
-<!-- Does this PR meet the contributing guidelines? https://git.io/v1VEJ -->
+<!-- AB test? https://github.com/guardian/frontend/blob/main/docs/03-dev-howtos/01-ab-testing.md -->
+<!-- Does this PR meet the contributing guidelines? https://github.com/guardian/frontend/blob/main/.github/CONTRIBUTING.md -->
 
 <!-- Unsure who to ask for a review? Tag https://github.com/orgs/guardian/teams/guardian-frontend-team to reach the team -->

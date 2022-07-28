@@ -2,10 +2,12 @@ package services
 
 import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest._
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
 
 @DoNotDiscover class NewspaperQueryTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with ConfiguredTestSuite
     with implicits.Dates

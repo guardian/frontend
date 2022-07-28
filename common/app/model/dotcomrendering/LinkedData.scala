@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => CAPIBlock}
-import model.{Article, LiveBlogPage}
+import model.{Article, ImageMedia, Interactive, LiveBlogPage, Tags}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.functional.syntax._
@@ -44,13 +44,13 @@ object LinkedData {
       )
 
     val article = liveblog.article
-    val authors = getAuthors(article)
+    val authors = getAuthors(article.tags)
 
     List(
       LiveBlogPosting(
-        `@id` = baseURL + article.metadata.id,
-        image = getImages(article, fallbackLogo),
-        author = getAuthors(article),
+        `@id` = baseURL + "/" + article.metadata.id,
+        image = getImagesForArticle(article, fallbackLogo),
+        author = authors,
         datePublished = article.trail.webPublicationDate.toString(),
         dateModified = article.fields.lastModified.toString(),
         headline = article.trail.headline,
@@ -60,7 +60,7 @@ object LinkedData {
         liveBlogUpdate = blocks.map(block => {
           BlogPosting(
             `@id` = block.id,
-            image = getImages(article, fallbackLogo),
+            image = getImagesForArticle(article, fallbackLogo),
             author = authors,
             datePublished = article.trail.webPublicationDate.toString(),
             dateModified = article.fields.lastModified.toString(),
@@ -73,7 +73,7 @@ object LinkedData {
       WebPage(
         `@id` = article.metadata.webUrl,
         potentialAction =
-          PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+          Some(PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))),
       ),
     )
   }
@@ -84,7 +84,7 @@ object LinkedData {
       fallbackLogo: String,
   ): List[LinkedData] = {
 
-    val authors = getAuthors(article)
+    val authors = getAuthors(article.tags)
 
     article match {
       case filmReview if article.content.imdb.isDefined && article.tags.isReview => {
@@ -100,7 +100,7 @@ object LinkedData {
         List(
           NewsArticle(
             `@id` = baseURL + "/" + article.metadata.id,
-            image = getImages(article, fallbackLogo),
+            image = getImagesForArticle(article, fallbackLogo),
             author = authors,
             datePublished = article.trail.webPublicationDate.toString(),
             dateModified = article.fields.lastModified.toString(),
@@ -109,18 +109,59 @@ object LinkedData {
           ),
           WebPage(
             `@id` = article.metadata.webUrl,
-            potentialAction =
+            potentialAction = Some(
               PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+            ),
           ),
         )
       }
     }
   }
 
-  private[this] def getImages(article: Article, fallbackLogo: String): List[String] = {
+  def forInteractive(
+      interactive: Interactive,
+      baseURL: String,
+      fallbackLogo: String,
+  ): List[LinkedData] = {
+    val authors = getAuthors(interactive.tags)
+
+    List(
+      NewsArticle(
+        `@id` = baseURL + "/" + interactive.metadata.id,
+        image = getImagesForInteractive(interactive, fallbackLogo),
+        author = authors,
+        datePublished = interactive.trail.webPublicationDate.toString(),
+        dateModified = interactive.fields.lastModified.toString(),
+        headline = interactive.trail.headline,
+        mainEntityOfPage = interactive.metadata.webUrl,
+      ),
+      WebPage(
+        `@id` = interactive.metadata.webUrl,
+        potentialAction = Some(
+          PotentialAction(target = "android-app://com.guardian/" + interactive.metadata.webUrl.replace("://", "/")),
+        ),
+      ),
+    )
+  }
+
+  private[this] def getImagesForArticle(
+      article: Article,
+      fallbackLogo: String,
+  ): List[String] = getImages(article.trail.trailPicture, article.content.openGraphImage, fallbackLogo)
+
+  private[this] def getImagesForInteractive(
+      article: Interactive,
+      fallbackLogo: String,
+  ): List[String] = getImages(article.trail.trailPicture, article.content.openGraphImage, fallbackLogo)
+
+  private[this] def getImages(
+      trailPicture: Option[ImageMedia],
+      openGraphImage: String,
+      fallbackLogo: String,
+  ): List[String] = {
     val mainImageURL = {
       val main = for {
-        elem <- article.trail.trailPicture
+        elem <- trailPicture
         master <- elem.masterImage
         url <- master.url
       } yield url
@@ -132,22 +173,22 @@ object LinkedData {
     // gif images so we can't guarantee they will be large enough to pass Google
     // structured data requirements (1200px). This should affect very few
     // articles in practice.
-    val openGraphImage = {
-      val preferred = article.content.openGraphImage
+    val preferredOpenGraphImage = {
+      val preferred = openGraphImage
       if (preferred.endsWith(".gif")) ImgSrc(fallbackLogo, Item1200)
       else preferred
     }
 
     List(
-      openGraphImage,
+      preferredOpenGraphImage,
       ImgSrc(mainImageURL, OneByOne),
       ImgSrc(mainImageURL, FourByThree),
       ImgSrc(mainImageURL, Item1200),
     )
   }
 
-  def getAuthors(article: Article): List[Person] = {
-    val authors = article.tags.contributors.map(contributor => {
+  def getAuthors(tags: Tags): List[Person] = {
+    val authors = tags.contributors.map(contributor => {
       Person(
         name = contributor.name,
         sameAs = Some(contributor.metadata.webUrl),
@@ -200,7 +241,7 @@ case class WebPage(
     `@type`: String = "WebPage",
     `@context`: String = "https://schema.org",
     `@id`: String,
-    potentialAction: PotentialAction,
+    potentialAction: Option[PotentialAction] = None,
 ) extends LinkedData
 
 object WebPage {

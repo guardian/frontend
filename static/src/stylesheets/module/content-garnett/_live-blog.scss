@@ -58,7 +58,7 @@
     }
 
     &.toast__button--closed {
-        height: 0px;
+        height: 0;
     }
 
     .toast__text {
@@ -212,6 +212,7 @@
     svg {
         left: $gs-gutter / 2;
     }
+
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter / 2;
     }
@@ -224,6 +225,7 @@
     svg {
         right: $gs-gutter / 2;
     }
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / 2;
     }
@@ -251,3 +253,274 @@
         border-color: $brightness-93;
     }
 }
+
+/* Filter switch
+   ========================================================================== */
+
+/* The switch - the box around the slider */
+.live-blog__filter-switch {
+    display: flex;
+    align-items: center;
+    height: $gs-baseline;
+    margin: 18px 0;
+}
+
+.live-blog__filter-switch-label {
+    position: absolute;
+    display: inline-block;
+    width: 2.75rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+.live-blog__filter-switch-text {
+    @include f-textSans;
+    width: 9.75rem;
+    position: absolute;
+    padding-left: 3.25rem;
+    font-size: 15px;
+    line-height: 1.5rem;
+    font-weight: 400;
+    color: inherit;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+/* Hide default HTML checkbox */
+.live-blog__filter-switch-label input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.live-blog__filter-switch-slider {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $brightness-60;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.live-blog__filter-switch-slider:before {
+    position: absolute;
+    content: '';
+    height: 1.125rem;
+    width: 1.125rem;
+    left: .25rem;
+    background-color: $brightness-100;
+    -webkit-transition: .2s;
+    transition: .2s;
+    border-radius: 50%;
+}
+
+.live-blog__filter-switch-slider:after {
+    position: absolute;
+    content: '';
+    top: .375rem;
+    height: .5rem;
+    width: .25rem;
+    opacity: 0;
+    border-bottom: 2px solid #22874d;
+    border-right: 2px solid #22874d;
+    -webkit-transition: opacity .1s ease-in;
+    transition: opacity .1s ease-in;
+    z-index: -1;
+}
+
+input:checked + .live-blog__filter-switch-slider:after {
+    opacity: 1;
+    -webkit-transform: translateX(1.8rem) rotate(45deg);
+    -ms-transform: translateX(1.8rem) rotate(45deg);
+    transform: translateX(1.8rem) rotate(45deg);
+    z-index: 999;
+}
+
+input:checked + .live-blog__filter-switch-slider {
+    background-color: #58d08b;
+}
+
+input:focus-visible + .live-blog__filter-switch-slider {
+    outline: 1px auto -webkit-focus-ring-color;
+}
+
+input:checked + .live-blog__filter-switch-slider:before {
+    -webkit-transform: translateX(1.15rem);
+    -ms-transform: translateX(1.15rem);
+    transform: translateX(1.15rem);
+}
+
+/* No blocks
+   ========================================================================== */
+
+.live-blog__no-blocks-container {
+    padding: .625rem .5rem;
+    border: 1px solid $brightness-86;
+}
+
+.live-blog__no-blocks-text {
+    font-family: 'Guardian Text Sans', sans-serif;
+    color: $brightness-46;
+    font-size: 15px;
+}
+
+/*  Pinned Block
+   ========================================================================== */
+$pinned-post-bottom-offset: -$gs-gutter + 5;
+$pinned-post-left-margin: $gs-gutter/2;
+$block-padding-left: gs-span(1) + 4;
+
+.pinned-block {
+    position: relative;
+}
+
+.pinned-icon {
+    line-height: 1;
+    padding: 3px 0 1px 5px;
+}
+
+.pinned-block-original__icon {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: 18px;
+    max-width: 100%;
+    width: auto;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    box-sizing: content-box;
+    margin-left: 5px;
+
+    svg {
+        top: 2px;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        position: absolute;
+        height: 13.5px;
+        width: 7.76px;
+    }
+}
+
+.pinned-block__button {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: $pinned-post-bottom-offset;
+    margin-left: $pinned-post-left-margin;
+}
+
+input:focus-visible + .pinned-block__label {
+    outline: 1px auto -webkit-focus-ring-color;
+}
+
+.pinned-block__button + label::after {
+    content: 'Show more';
+}
+
+.pinned-block__button:checked + label::after {
+    content: 'Show less';
+}
+
+.pinned-block__label {
+    @include fs-textSans(2);
+    font-weight: bold;
+    font-size: 15px;
+    color: #ffffff;
+    position: absolute;
+    cursor: pointer;
+    margin-left: $pinned-post-left-margin;
+    height: 2rem;
+    padding-right: 16px;
+    bottom: $pinned-post-bottom-offset;
+    display: flex;
+    align-items: center;
+    border-radius: 1rem;
+    z-index: 2;
+
+    @include mq(tablet) {
+        margin-left: $block-padding-left;
+    }
+}
+
+
+.pinned-block__button:checked ~ .pinned-block__collapsible-content {
+    max-height: fit-content;
+}
+
+.pinned-block__button:checked ~ .pinned-block__collapsible-content .pinned-block__overlay {
+    display: none;
+}
+
+.pinned-block__label-icon--expand {
+    display: block;
+    margin: .25rem .625rem 0 .9375rem;
+}
+
+.pinned-block__button:checked + .pinned-block__label--expanded > .pinned-block__label-icon--expand {
+    display: none;
+}
+
+.pinned-block__label-icon--collapse {
+    margin: .25rem .25rem 0 .5rem;
+    display: none;
+}
+
+.pinned-block__button:checked + .pinned-block__label--collapsed > .pinned-block__label-icon--collapse {
+    display: block;
+}
+
+.pinned-block__collapsible-content {
+    position: relative;
+    padding-bottom: 1.75rem;
+    margin-bottom: 1.75rem;
+    border-top-width: 0;
+    max-height: 30vh;
+    overflow: hidden;
+    transition: max-height .25s ease-in-out;
+    background-color: #ffffff;
+}
+
+.pinned-block__header {
+    margin-bottom: $gs-baseline;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pinned-block__timestamp {
+    @include fs-textSans(2);
+    font-weight: bold;
+    font-size: 15px;
+    color: #ffffff;
+    margin-bottom: 0;
+    margin-left: 8px;
+    @include mq(tablet) {
+        position: absolute;
+        margin-left: 5rem;
+    }
+}
+
+.pinned-block__overlay {
+    background-image: linear-gradient(0deg, #ffffff, #ffffff 40%, rgba(255, 255, 255, 0));
+    height: 5rem;
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+

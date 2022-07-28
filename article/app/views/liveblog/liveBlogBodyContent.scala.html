@@ -1,5 +1,5 @@
 
-@import model.{LiveBlogPage, LatestBlock}
+@import model.{LiveBlogPage, LatestBlock, LatestKeyBlock}
 
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
@@ -16,6 +16,12 @@
             </div>
         </div>
 
+        @views.html.liveblog.filterButton(model.filterKeyEvents)
+
+        @if(model.currentPage.pinnedBlock){
+            @views.html.liveblog.pinnedBlock(model.currentPage.pinnedBlock.get, article, timezone)
+        }
+
         @if(model.currentPage.currentPage.isArchivePage) {
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
         }
@@ -23,14 +29,20 @@
         <div
             class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}"
             data-most-recent-block="block-@{LatestBlock(article.blocks)}"
+            data-most-recent-key-block="block-@{LatestKeyBlock(article.blocks)}"
             data-test-id="live-blog-blocks"
         >
 
+        @if(model.currentPage.currentPage.blocks.isEmpty) {
+            <div class="live-blog__no-blocks-container">
+                <span class="live-blog__no-blocks-text">
+                    There have not been any key events yet. Please wait for updates.
+                </span>
+            </div>
+        } else {
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)
-
+            @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
+        }
         </div>
-
-        @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
-
     </div>
 }

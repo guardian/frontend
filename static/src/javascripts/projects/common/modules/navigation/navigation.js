@@ -1,7 +1,7 @@
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
-import { isIOS, getUserAgent } from 'lib/detect';
+import { mediator } from 'lib/mediator';
+import { isIOS, userAgent } from 'lib/detect';
 import $ from 'lib/$';
 
 const jsEnableFooterNav = () =>
@@ -88,8 +88,8 @@ const initNavigation = () => {
 
     if (
         isIOS() &&
-        typeof getUserAgent === 'object' &&
-        parseInt(getUserAgent.version, 10) > 5
+        typeof userAgent === 'object' &&
+        parseInt(userAgent.version, 10) > 5
     ) {
         // crashes mobile safari < 6, so we add it here after detection
         modifications.push(addOverflowScrollTouch());

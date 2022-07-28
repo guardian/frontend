@@ -2,7 +2,6 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
-import com.gu.facia.client.models.TargetedTerritory
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
@@ -19,8 +18,11 @@ import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
 import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
-import utils.TargetedCollections
+import utils.{FaciaPicker, RemoteRender, TargetedCollections}
 import conf.Configuration
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -29,10 +31,11 @@ trait FaciaController
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext
-    with implicits.Collections
     with implicits.Requests {
 
   val frontJsonFapi: FrontJsonFapi
+  val ws: WSClient
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   implicit val context: ApplicationContext
 
@@ -162,6 +165,13 @@ trait FaciaController
   private def nonHtmlEmail(request: RequestHeader) =
     (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
 
+  // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
+  // only set it for fronts with targeted collections
+  private def withVaryHeader(result: Future[Result], targetedTerritories: Boolean) =
+    if (targetedTerritories) {
+      result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
+    } else result
+
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
@@ -188,6 +198,11 @@ trait FaciaController
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
+      case Some((faciaPage: PressedPage, targetedTerritories))
+          if FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender
+            && !request.isJson =>
+        val pageType = PageType(faciaPage, request, context)
+        withVaryHeader(remoteRenderer.getFront(ws, faciaPage, pageType)(request), targetedTerritories)
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(
           Cached(CacheTime.Facia)(
@@ -195,20 +210,29 @@ trait FaciaController
               val body = TrailsToRss.fromPressedPage(faciaPage)
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             } else if (request.isJson) {
-              JsonFront(faciaPage)
+              if (request.forceDCR) {
+                JsonComponent(
+                  DotcomFrontsRenderingDataModel(
+                    page = faciaPage,
+                    request = request,
+                    pageType = PageType(faciaPage, request, context),
+                  ),
+                )
+              } else JsonFront(faciaPage)
             } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
+            } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
+              renderShowcaseFront(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
             },
           ),
         )
-        // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
-        // only set it for fronts with targeted collections
-        if (targetedTerritories) {
-          result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
-        } else result
-      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+
+        withVaryHeader(result, targetedTerritories)
+      case None => {
+        successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      }
     }
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
@@ -238,6 +262,24 @@ trait FaciaController
     } else {
       RevalidatableResult.Ok(htmResponseInlined)
     }
+  }
+
+  protected def renderShowcaseFront(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
+    val (rundownPanelOutcome, singleStoryPanelOutcomes, duplicateMap) = TrailsToShowcase.generatePanelsFrom(faciaPage)
+    val showcase = TrailsToShowcase(
+      feedTitle = faciaPage.metadata.title,
+      url = Some(faciaPage.metadata.url),
+      description = faciaPage.metadata.description,
+      singleStoryPanels = singleStoryPanelOutcomes.flatMap(_.toOption),
+      maybeRundownPanel = rundownPanelOutcome.toOption,
+    )
+    // Google doesn't like <dc:date> elements in the showcase feed so we're going to remove them with a
+    // tightly-focussed regex replacement. The <dc:date> values are added in the depths of the Rome
+    // library which is not easy to intercept at that point. We can use this technique until we can figure
+    // out a better way. In the meantime it'll stop the validator from complaining at us.
+    val dcDateRegEx = """<dc:date>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d+Z</dc:date>""".r
+    val showcaseWithoutDcDates = dcDateRegEx.replaceAllIn(showcase, "")
+    RevalidatableResult(Ok(showcaseWithoutDcDates).as("text/xml; charset=utf-8"), showcaseWithoutDcDates)
   }
 
   def renderFrontPress(path: String): Action[AnyContent] =
@@ -345,6 +387,14 @@ trait FaciaController
       )
   }
 
+  /**
+    * Note, the way this method works is a bit circuitous. Firstly, it finds a
+    * front that contains the collection (via the ConfigAgent, which is
+    * basically a cache of configuration for Guardian Fronts). It then looks up
+    * that front in Frontend's S3 and extracts the full collection from it (with
+    * curated and backfill content etc.). It would be easier if collections were
+    * stored somewhere independently of Fronts.
+    */
   private def getPressedCollection(
       collectionId: String,
   )(implicit request: RequestHeader): Future[Option[PressedCollection]] =
@@ -421,5 +471,6 @@ trait FaciaController
 class FaciaControllerImpl(
     val frontJsonFapi: FrontJsonFapiLive,
     val controllerComponents: ControllerComponents,
+    val ws: WSClient,
 )(implicit val context: ApplicationContext)
     extends FaciaController

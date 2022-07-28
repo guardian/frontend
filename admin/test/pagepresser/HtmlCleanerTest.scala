@@ -1,11 +1,14 @@
 package pagepresser
 
 import org.jsoup.Jsoup
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.DoNotDiscover
 import test.ConfiguredTestSuite
+
 import scala.io.Source
 
-@DoNotDiscover class HtmlCleanerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class HtmlCleanerTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 
   "BasicHtmlCleaner" should "remove ad slots from a page that will be pressed" in {
     val originalSource =
@@ -21,21 +24,23 @@ import scala.io.Source
     actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
   }
 
-  it should "remove related links component" in {
-    val originalSource = Source.fromInputStream(
-      getClass.getClassLoader.getResourceAsStream("pagepresser/r2/pageWithRelatedComponent.html"),
-    )
-    val originalDoc = Jsoup.parse(originalSource.mkString)
+  // This removes the byline from datablog, I'm leaving this commented as it
+  // could be needed for some content- and represents the state of the pressed archive.
+  // it should "remove related links component" in {
+  //   val originalSource = Source.fromInputStream(
+  //     getClass.getClassLoader.getResourceAsStream("pagepresser/r2/pageWithRelatedComponent.html"),
+  //   )
+  //   val originalDoc = Jsoup.parse(originalSource.mkString)
 
-    val expectedCleanedDocFromSource = Source.fromInputStream(
-      getClass.getClassLoader.getResourceAsStream("pagepresser/r2/pageWithRelatedComponentRemoved.html"),
-    )
-    val expectedDoc = Jsoup.parse(expectedCleanedDocFromSource.mkString)
+  //   val expectedCleanedDocFromSource = Source.fromInputStream(
+  //     getClass.getClassLoader.getResourceAsStream("pagepresser/r2/pageWithRelatedComponentRemoved.html"),
+  //   )
+  //   val expectedDoc = Jsoup.parse(expectedCleanedDocFromSource.mkString)
 
-    val actualResult = SimpleHtmlCleaner.removeRelatedComponent(originalDoc)
+  //   val actualResult = SimpleHtmlCleaner.removeRelatedComponent(originalDoc)
 
-    actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
-  }
+  //   actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+  // }
 
   it should "change links to protocol relative urls to satisfy http and https requests" in {
     val html =

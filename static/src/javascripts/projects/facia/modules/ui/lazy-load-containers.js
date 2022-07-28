@@ -1,7 +1,7 @@
 import fastdom from 'fastdom';
 import qwery from 'qwery';
 import { getViewport } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import throttle from 'lodash/throttle';
 
 const distanceBeforeLoad = getViewport().height;

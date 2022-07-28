@@ -1,7 +1,7 @@
 package discussion
 package model
 
-import play.api.libs.json.{JsObject, JsValue}
+import play.api.libs.json.JsValue
 
 case class Switch(
     name: String,

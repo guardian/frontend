@@ -1,7 +1,7 @@
 import bonzo from 'bonzo';
 import debounce from 'lodash/debounce';
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 
 let items = [];
 const scroll = { top: 0, bottom: 0 };

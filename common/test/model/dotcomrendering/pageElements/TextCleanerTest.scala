@@ -6,9 +6,10 @@ import common.editions
 import common.editions.Uk
 import conf.Configuration
 import model.dotcomrendering.pageElements.{TagLinker, TextBlockElement, TextCleaner}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class TextCleanerTest extends FlatSpec with Matchers {
+class TextCleanerTest extends AnyFlatSpec with Matchers {
 
   val host = Configuration.site.host
 
@@ -67,7 +68,43 @@ class TextCleanerTest extends FlatSpec with Matchers {
     })
   }
 
-  "tagLinks" should "link only first occurrence of a tag" in {
+  "tagLinks" should "link only first occurrence of a tag within paragraph" in {
+    val elements = List(
+      TextBlockElement("Champions League first. Champions League second."),
+    )
+
+    val want = List(
+      TextBlockElement(
+        s"""<a href="${host}/championsleague" data-component="auto-linked-tag">Champions League</a> first. Champions League second.""",
+      ),
+    )
+
+    val tag = Tag(
+      TagProperties.make(
+        ApiTag(
+          id = "championsleague",
+          `type` = Keyword,
+          sectionId = Some("football"),
+          webTitle = "Champions League",
+          webUrl = "/football/championsleague",
+          apiUrl = "example",
+        ),
+      ),
+      None,
+      None,
+    )
+
+    val got = TextCleaner.tagLinks(
+      els = elements,
+      tags = Tags(List(tag)),
+      showInRelated = true,
+      edition = editions.Uk,
+    )
+
+    got shouldBe want
+  }
+
+  "tagLinks" should "link only first occurrence of a tag across multiple paragraphs" in {
     val elements = List(
       TextBlockElement("Champions League first"),
       TextBlockElement("Champions League repeat"),

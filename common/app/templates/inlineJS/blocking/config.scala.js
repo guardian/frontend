@@ -36,21 +36,14 @@ window.guardian = {
     config: @JavaScript(templates.js.javaScriptConfig(page).body)
 };
 
-// Check if a pre-made view id has been constructed through an esi.
-if (window.esi && window.esi.viewId) {
-    window.guardian.config.ophan = {
-        pageViewId: window.esi.viewId
-    };
-} else {
-    window.guardian.config.ophan = {
-        // This is duplicated from
-        // https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
-        // Please do not change this without talking to the Ophan project first.
-        pageViewId: new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function () {
-            return Math.floor(Math.random() * 36).toString(36);
-        })
-    };
-}
+window.guardian.config.ophan = {
+    // This is duplicated from
+    // https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
+    // Please do not change this without talking to the Ophan project first.
+    pageViewId: new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function () {
+        return Math.floor(Math.random() * 36).toString(36);
+    })
+};
 
 // http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
 /*@@cc_on

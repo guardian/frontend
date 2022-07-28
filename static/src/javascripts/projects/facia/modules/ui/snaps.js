@@ -3,7 +3,7 @@ import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { isIOS } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { addProximityLoader } from 'lib/proximity-loader';
 import reportError from 'lib/report-error';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';

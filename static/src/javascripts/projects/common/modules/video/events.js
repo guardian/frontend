@@ -1,5 +1,5 @@
 import bean from 'bean';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import reportError from 'lib/report-error';
 import $ from 'lib/$';
 import config from 'lib/config';

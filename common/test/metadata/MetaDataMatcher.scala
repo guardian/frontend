@@ -2,7 +2,7 @@ package metadata
 
 import model.meta.Logo
 import org.jsoup.Jsoup
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json._
 import play.api.mvc.Result
 import play.api.test.Helpers._
@@ -14,7 +14,7 @@ object MetaDataMatcher extends Matchers {
   lazy val appId = "409128287"
   val iosDomain = "ios-app://"
 
-  def ensureOrganisation(result: Future[Result]) {
+  def ensureOrganisation(result: Future[Result]): Unit = {
     status(result) should be(200)
     val stringResult = contentAsString(result)
     val body = Jsoup.parseBodyFragment(stringResult)
@@ -31,7 +31,7 @@ object MetaDataMatcher extends Matchers {
     socialNetworks.size should be(4)
   }
 
-  def ensureWebPage(result: Future[Result], articleUrl: String) {
+  def ensureWebPage(result: Future[Result], articleUrl: String): Unit = {
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 
@@ -43,14 +43,14 @@ object MetaDataMatcher extends Matchers {
     (appIndexer \ "potentialAction" \ "target").as[String] should include(articleUrl)
   }
 
-  def ensureDeepLink(result: Future[Result]) {
+  def ensureDeepLink(result: Future[Result]): Unit = {
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
     val script = body.getElementsByAttributeValueStarting("href", iosDomain)
     script.size() should be(1)
   }
 
-  def ensureNoDeepLink(result: Future[Result]) {
+  def ensureNoDeepLink(result: Future[Result]): Unit = {
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
     val script = body.getElementsByAttributeValueStarting("href", iosDomain)
@@ -65,7 +65,7 @@ object MetaDataMatcher extends Matchers {
     script.size() should be(0)
   }
 
-  def ensureOldArticleMessage(result: Future[Result], articleUrl: String) {
+  def ensureOldArticleMessage(result: Future[Result], articleUrl: String): Unit = {
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 
@@ -73,7 +73,7 @@ object MetaDataMatcher extends Matchers {
     elements.size() should be(2)
   }
 
-  def ensureNoOldArticleMessage(result: Future[Result], articleUrl: String) {
+  def ensureNoOldArticleMessage(result: Future[Result], articleUrl: String): Unit = {
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 

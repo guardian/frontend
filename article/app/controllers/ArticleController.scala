@@ -5,14 +5,14 @@ import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils, PageType}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.{ContentType, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
-import services.CAPILookup
+import services.{CAPILookup, NewsletterService}
 import services.dotcomponents.{ArticlePicker, _}
 import views.support._
 
@@ -23,6 +23,7 @@ class ArticleController(
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    newsletterService: NewsletterService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -90,27 +91,46 @@ class ArticleController(
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
+    val newsletter = newsletterService.getNewsletterForArticle(article)
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel
-        .forArticle(article, blocks, request, pageType),
+        .forArticle(article, blocks, request, pageType, newsletter),
     )
   }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit
       request: RequestHeader,
   ): Future[Result] = {
-    val tier = ArticlePicker.getTier(article)
+
+    val newsletter = newsletterService.getNewsletterForArticle(article)
+
+    val tier = ArticlePicker.getTier(article, path)
     val isAmpSupported = article.article.content.shouldAmplify
     val pageType: PageType = PageType(article, request, context)
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
         Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
-      case JsonFormat                         => Future.successful(common.renderJson(getJson(article), article))
-      case EmailFormat                        => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
-      case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, article, blocks, pageType)
-      case HtmlFormat                         => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
-      case AmpFormat if isAmpSupported        => remoteRenderer.getAMPArticle(ws, article, blocks, pageType)
-      case AmpFormat                          => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case JsonFormat =>
+        Future.successful(common.renderJson(getJson(article), article))
+      case EmailFormat =>
+        Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
+      case HtmlFormat | AmpFormat if tier == PressedArticle =>
+        servePressedPage(path)
+      case AmpFormat if isAmpSupported =>
+        remoteRenderer.getAMPArticle(ws, article, blocks, pageType, newsletter)
+      case HtmlFormat | AmpFormat if tier == RemoteRender =>
+        remoteRenderer.getArticle(
+          ws,
+          article,
+          blocks,
+          pageType,
+          filterKeyEvents = false,
+          false,
+          newsletter = newsletter,
+          topicResult = None,
+        )
+      case HtmlFormat | AmpFormat =>
+        Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
   }
 
@@ -138,6 +158,13 @@ class ArticleController(
       case Right(r)               => Right(r)
       case _                      => Right(NotFound)
     }
+  }
+
+  def servePressedPage(path: String)(implicit request: RequestHeader): Future[Result] = {
+    val cacheable = WithoutRevalidationResult(
+      Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/www.theguardian.com/$path"),
+    )
+    Future.successful(Cached(CacheTime.ArchiveRedirect)(cacheable))
   }
 
 }

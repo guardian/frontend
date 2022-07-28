@@ -1,0 +1,30 @@
+@(page: model.Page, signupPage: String, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import conf.Static
+@import conf.switches.Switches._
+@import play.api.Mode.Dev
+
+@wrapperClass = @{ "email-sub email-sub__link--footer" }
+@buttonText = @{"Sign up for the Guardian Headlines email"}
+@formDescription = @{"All the day's headlines and highlights from the Guardian, direct to you every morning"}
+<!doctype html>
+<head>
+    @if(FontSwitch.isSwitchedOn) {
+        @fragments.fontFaces()
+    }
+
+    @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.email-signup.css")" />
+    } else {
+        <style class="js-loggable">
+        @Html(common.Assets.css.head(Some("email-signup")))
+        </style>
+    }
+</head>
+<body>
+    <div class="@wrapperClass">
+        <div class="email-sub__description">@Html(formDescription)</div>
+        <a class="email-sub__link-button" href="@signupPage" target="_parent">@buttonText</a>
+    </div>
+</body>
+</html>

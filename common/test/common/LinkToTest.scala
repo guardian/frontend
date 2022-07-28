@@ -1,11 +1,12 @@
 package common
 
-import org.scalatest.{FlatSpec, Matchers}
-import common.editions.{Au, Us, International, Uk}
+import org.scalatest.matchers.should.Matchers
+import common.editions.{Au, International, Uk, Us}
+import org.scalatest.flatspec.AnyFlatSpec
 import test._
 import play.api.test.FakeRequest
 
-class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
+class LinkToTest extends AnyFlatSpec with Matchers with implicits.FakeRequests {
 
   implicit val edition = Uk
   implicit val editions = Seq(Uk, Us, Au)
@@ -128,7 +129,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
      */
 
-    TestCanonicalLink.significantParams should be(Seq("index", "page"))
+    TestCanonicalLink.significantParams should be(Seq("index", "page", "filterKeyEvents"))
 
   }
 

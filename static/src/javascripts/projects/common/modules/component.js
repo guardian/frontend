@@ -2,8 +2,7 @@
 
 import bean from 'bean';
 import bonzo from 'bonzo';
-import { fetchJson } from 'lib/fetch-json';
-import qwery from 'qwery';
+import { fetchJson } from '../../../lib/fetch-json';
 
 class ComponentError {
     constructor(message) {
@@ -237,7 +236,18 @@ class Component {
             return this.elems[elemName];
         }
 
-        const elem = qwery(this.getClass(elemName), this.elem)[0];
+        const selector = this.getClass(elemName);
+        // Previously we used the qwery library to select elements from the DOM
+        // The method signature of qwery is: `qwery(selector, context)`
+        // qwery defaults context to document
+        const context = this.elem ?? document;
+        // The previous code was: `const elem = qwery(selector, this.elem)[0];`
+        // qwery has a quirk in the case of an invalid selector it returns
+        // the children of the context node (i.e. this.elem)
+        // querySelectorAll will however throw an exception
+        // We kept the qwery behaviour to maintain backwards compatibility
+        const elem = selector ?
+            context.querySelectorAll(selector)[0] : context.children[0];
 
         if (elem && this.elems) {
             this.elems[elemName] = elem;
@@ -255,7 +265,9 @@ class Component {
             className = (this.classes && this.classes[elemName]) || '';
         }
 
-        return (sansDot ? '' : '.') + className;
+        const selector = (sansDot ? '' : '.') + className;
+        // An invalid selector is returned as undefined
+        return selector === '' || selector === '.' ? undefined : selector;
     }
 
     setState(state, elemName) {

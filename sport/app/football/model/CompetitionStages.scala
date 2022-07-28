@@ -1,6 +1,6 @@
 package football.model
 
-import football.datetime.{DateHelpers, Interval}
+import football.datetime.Interval
 
 import java.time.{ZoneId, ZonedDateTime}
 import model.Competition
@@ -119,6 +119,12 @@ case class KnockoutSpider(
 object KnockoutSpider {
   // Pay attention to the timezone for the orderings
   // If the dates of the matches don't line up with the ordering dates, the ordering will be ignored.
+
+  /*
+    How to find the line ordering ?
+    To avoid the same drama every two or so years, see this PR: https://github.com/guardian/frontend/pull/23929
+   */
+
   val orderings: Map[String, List[ZonedDateTime]] = Map(
     // world cup 2018
     "700" -> List(
@@ -158,23 +164,40 @@ object KnockoutSpider {
       ZonedDateTime.of(2019, 7, 6, 16, 0, 0, 0, ZoneId.of("Europe/London")), // 3rd/4th Play-Offs
       ZonedDateTime.of(2019, 7, 7, 16, 0, 0, 0, ZoneId.of("Europe/London")), // Final
     ),
-    // Euro©
+    // Euro 2020
     "750" -> List(
-      ZonedDateTime.of(2021, 6, 26, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2021, 6, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2021, 6, 27, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2021, 6, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2021, 6, 28, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2021, 6, 28, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2021, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2021, 6, 29, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2021, 7, 2, 0, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final
-      ZonedDateTime.of(2021, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final
-      ZonedDateTime.of(2021, 7, 3, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final
-      ZonedDateTime.of(2021, 7, 3, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final
-      ZonedDateTime.of(2021, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final
-      ZonedDateTime.of(2021, 7, 7, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final
-      ZonedDateTime.of(2021, 7, 11, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final
+      ZonedDateTime.of(2021, 6, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 40
+      ZonedDateTime.of(2021, 6, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 38
+      ZonedDateTime.of(2021, 6, 28, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 42
+      ZonedDateTime.of(2021, 6, 28, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 41
+      ZonedDateTime.of(2021, 6, 29, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 44
+      ZonedDateTime.of(2021, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 43
+      ZonedDateTime.of(2021, 6, 27, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 39
+      ZonedDateTime.of(2021, 6, 26, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 37
+      ZonedDateTime.of(2021, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 46
+      ZonedDateTime.of(2021, 7, 2, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 45
+      ZonedDateTime.of(2021, 7, 3, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 48
+      ZonedDateTime.of(2021, 7, 3, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 47
+      ZonedDateTime.of(2021, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 49
+      ZonedDateTime.of(2021, 7, 7, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 50
+      ZonedDateTime.of(2021, 7, 11, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final         // Match 51
+    ),
+    // Womens Euro 2022
+    "423" -> List(
+      // Group A Winner & Group B Runner Up
+      ZonedDateTime.of(2022, 7, 20, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 1  // 4287725
+      // Group C Winner & Group D Runner up
+      ZonedDateTime.of(2022, 7, 22, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 3  // 4287727
+      // Group B Winner & Group A Runner Up
+      ZonedDateTime.of(2022, 7, 21, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 2  // 4287726
+      // Group D Winner & Group C Runner up
+      ZonedDateTime.of(2022, 7, 23, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 4  // 4287728
+      // QF Winners 3 & 1
+      ZonedDateTime.of(2022, 7, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 1     // 4287730
+      // QF Winners 4 & 2
+      ZonedDateTime.of(2022, 7, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 2     // 4287731
+      // SM Winners 1 & 2
+      ZonedDateTime.of(2022, 7, 31, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final            // 4287732
     ),
   )
 

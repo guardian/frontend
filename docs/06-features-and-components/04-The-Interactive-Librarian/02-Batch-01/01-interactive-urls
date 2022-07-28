@@ -1,0 +1,32 @@
+#!/usr/bin/ruby
+
+# encoding: utf-8
+
+require "net/http"
+require "uri"
+
+require "json"
+
+def httpGet(url)
+    uri = URI(url)
+    res = Net::HTTP.get_response(uri)
+    res.body
+end
+
+def capiURL(pn)
+    "https://content.guardianapis.com/search?tag=type/interactive&api-key=[REMOVED]&page-size=100&page=#{pn}"
+end
+
+def capiObjectAtPageNumber(pn)
+    JSON.parse(httpGet(capiURL(pn)))
+end
+
+(1..40).each{|pn|
+    object = capiObjectAtPageNumber(pn)
+    object["response"]["results"].each{|result|
+        ## puts JSON.pretty_generate(result)
+        puts result["id"]
+    }
+    sleep 0.1
+}
+

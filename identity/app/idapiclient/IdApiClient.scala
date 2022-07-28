@@ -6,12 +6,9 @@ import scala.concurrent.{ExecutionContext, Future}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
 import conf.IdConfig
 import idapiclient.parser.IdApiJsonBodyParser
-import net.liftweb.json.JsonDSL._
-import net.liftweb.json.compactRender
-import net.liftweb.json.JsonAST.JObject
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
-import idapiclient.requests.{AutoSignInToken, DeletionBody, PasswordUpdate, TokenPassword}
+import idapiclient.requests.{AutoSignInToken, DeletionBody}
 import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient
 
@@ -58,17 +55,8 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
   }
 
   // USERS
-
   def user(userId: String, auth: Auth = Anonymous): Future[Response[User]] = {
     val apiPath = urlJoin("user", userId)
-    val params = buildParams(Some(auth))
-    val headers = buildHeaders(Some(auth))
-    val response = httpClient.GET(apiUrl(apiPath), None, params, headers)
-    response map extractUser
-  }
-
-  def userFromVanityUrl(vanityUrl: String, auth: Auth = Anonymous): Future[Response[User]] = {
-    val apiPath = urlJoin("user", "vanityurl", vanityUrl)
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
     val response = httpClient.GET(apiUrl(apiPath), None, params, headers)
@@ -93,27 +81,6 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     response map extractUser
   }
 
-  // PASSWORD RESET/UPDATE
-
-  def passwordExists(auth: Auth, trackingData: TrackingData): Future[Response[Boolean]] = {
-    val apiPath = urlJoin("user", "password-exists")
-    val headers = buildHeaders(Some(auth), extra = xForwardedForHeader(trackingData))
-    val response = httpClient.GET(apiUrl(apiPath), None, buildParams(Some(auth)), headers)
-    response map extract[Boolean](jsonField("passwordExists"))
-  }
-
-  def updatePassword(
-      pwdUpdate: PasswordUpdate,
-      auth: Auth,
-      trackingData: TrackingData,
-  ): Future[Response[CookiesResponse]] = {
-    val apiPath = urlJoin("user", "password")
-    val body = write(pwdUpdate)
-    val headers = buildHeaders(Some(auth), extra = xForwardedForHeader(trackingData))
-    val response = httpClient.POST(apiUrl(apiPath), Some(body), clientAuth.parameters, headers)
-    response map extract[CookiesResponse](jsonField("cookies"))
-  }
-
   def userForToken(token: String): Future[Response[User]] = {
     val apiPath = urlJoin("pwd-reset", "user-for-token")
     val params = buildParams(extra = Iterable("token" -> token))
@@ -121,20 +88,7 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     response map extractUser
   }
 
-  def resetPassword(
-      token: String,
-      newPassword: String,
-      trackingData: TrackingData,
-  ): Future[Response[CookiesResponse]] = {
-    val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
-    val postBody = write(TokenPassword(token, newPassword))
-    val headers = clientAuth.headers ++ buildHeaders(extra = xForwardedForHeader(trackingData))
-    val response = httpClient.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, headers)
-    response map extract(jsonField("cookies"))
-  }
-
   // EMAILS
-
   def userEmails(userId: String, trackingParameters: TrackingData): Future[Response[Subscriber]] = {
     val apiPath = urlJoin("useremails", userId)
     val params = buildParams(tracking = Some(trackingParameters))
@@ -173,26 +127,7 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     ) map extractUnit
   }
 
-  def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
-    val body: JObject = "password" -> password
-    put(
-      "guest/password",
-      None,
-      None,
-      Some(compactRender(body)),
-      List(
-        "X-Guest-Registration-Token" -> token,
-        "Content-Type" -> "application/json",
-        "X-GU-ID-Client-Access-Token" -> conf.apiClientToken,
-      ),
-      List("validate-email" -> "0"),
-    ).map(extract(jsonField("cookies")))
-  }
-
-  def deleteTelephone(auth: Auth): Future[Response[Unit]] =
-    delete("user/me/telephoneNumber", Some(auth)) map extractUnit
-
-  // THIRD PARTY SIGN-IN
+  // ACCOUNT DELETION
   def executeAccountDeletionStepFunction(
       userId: String,
       email: String,

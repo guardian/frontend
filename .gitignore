@@ -90,3 +90,5 @@ static/src/stylesheets/pasteup/.npmrc
 # Scala tooling
 .bloop
 metals.sbt
+
+.java-version

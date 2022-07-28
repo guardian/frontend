@@ -1,12 +1,12 @@
 package navigation.helpers
 
-import org.scalatest.{WordSpec, Matchers}
-import test.TestRequest
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupportGifting, SupporterCTA}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportGifting, SupportSubscribe, SupporterCTA}
 import navigation.UrlHelpers
 import navigation.UrlHelpers.{AmpFooter, AmpHeader, Footer, Header}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class UrlHelpersTest extends WordSpec with Matchers {
+class UrlHelpersTest extends AnyWordSpec with Matchers {
 
   "UrlHelpers" can {
     "getComponentId" should {
@@ -74,6 +74,12 @@ class UrlHelpersTest extends WordSpec with Matchers {
 
       "return ACQUISITIONS_FOOTER when called with AmpFooter" in {
         UrlHelpers.getComponentType(AmpFooter) should be("ACQUISITIONS_FOOTER")
+      }
+    }
+
+    "getReaderRevenueUrl" should {
+      "correctly parse urls with double quotes" in {
+        UrlHelpers.getReaderRevenueUrl(SupportSubscribe, Footer) should include("%22")
       }
     }
   }

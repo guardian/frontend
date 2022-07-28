@@ -12,7 +12,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import { isBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import events from 'common/modules/video/events';
 import videojsOptions from 'common/modules/video/videojs-options';
 import loadingTmpl from 'common/views/ui/loading.html';

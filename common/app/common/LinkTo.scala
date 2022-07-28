@@ -1,11 +1,9 @@
 package common
 
-import common.editions.{Au, International, Us}
 import conf.Configuration
 import layout.ContentCard
 import model.Trail
 import org.jsoup.Jsoup
-import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
 import play.twirl.api.Html
 import scala.collection.JavaConverters._
@@ -97,6 +95,7 @@ class CanonicalLink {
   val significantParams: Seq[String] = Seq(
     "index",
     "page",
+    "filterKeyEvents",
   )
 
   def apply(implicit request: RequestHeader, webUrl: String): String = {

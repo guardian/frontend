@@ -280,8 +280,8 @@ const getIFrameBehaviour = (
 
     if (isUsPaidContentVideo) {
         return {
-            autoplay: isUsPaidContentVideo,
-            mutedOnStart: isUsPaidContentVideo && isAndroid(),
+            autoplay: true,
+            mutedOnStart: isAndroid(),
         };
     }
     return {
@@ -330,14 +330,6 @@ const updateImmersiveButtonPos = () => {
     }
 };
 
-const muteIFrame = (iframe) => {
-    // Mute iFrame in order to autoplay on android mobile devices
-
-    const iframeSrc = new URL(iframe.src);
-    iframeSrc.searchParams.set('mute', '1');
-    iframe.setAttribute('src', iframeSrc.toString());
-};
-
 const onPlayerReady = (
     atomId,
     uniqueAtomId,
@@ -373,10 +365,10 @@ const onPlayerReady = (
     const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
     const iFrameBehaviour = getIFrameBehaviour(iFrameBehaviourConfig);
     if (iFrameBehaviour.mutedOnStart) {
-        muteIFrame(iframe);
+        youtubePlayer.mute();
     }
     if (iFrameBehaviour.autoplay) {
-        event.target.playVideo();
+        youtubePlayer.playVideo();
     }
 
     if (overlay) {
@@ -453,6 +445,11 @@ const initYoutubePlayerForElem = (el) => {
             return;
         }
 
+        /**
+         * Note:
+         * This element id must be unique!
+         * Ensured via the SSR render of youtube.scala.html
+         */
         const iframeId = iframe.id;
 
         const atomId = el.getAttribute('data-media-atom-id') || '';
@@ -527,7 +524,6 @@ export const onVideoContainerNavigation = (atomId) => {
 };
 
 export const _ = {
-    muteIFrame,
     getIFrameBehaviour,
     getIFrameBehaviourConfig,
 };

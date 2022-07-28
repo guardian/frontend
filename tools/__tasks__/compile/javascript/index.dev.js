@@ -6,6 +6,7 @@ module.exports = {
         require('./copy'),
         require('./webpack.dev'),
         require('./webpack-dcr.dev'),
+        require('../../commercial/compile/webpack-commercial.dev'),
         require('./bundle-polyfills'),
     ],
 };

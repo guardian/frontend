@@ -9,7 +9,8 @@ type HeaderBiddingSlot = {
 		| 'mostpop'
 		| 'comments'
 		| 'mobile-sticky'
-		| 'banner';
+		| 'banner'
+		| 'crossword-banner';
 	sizes: HeaderBiddingSize[];
 };
 
@@ -78,40 +79,56 @@ type PrebidAdYouLikeParams = {
 	placement: string;
 };
 
+type PrebidCriteoParams = {
+	networkId: number;
+};
+
+type PrebidSmartParams = {
+	siteId: number;
+	pageId: number;
+	formatId: number;
+};
+
+type BidderCode =
+	| 'adyoulike'
+	| 'and'
+	| 'appnexus'
+	| 'criteo'
+	| 'improvedigital'
+	| 'ix'
+	| 'oxd'
+	| 'ozone'
+	| 'pubmatic'
+	| 'smartadserver'
+	| 'sonobi'
+	| 'triplelift'
+	| 'trustx'
+	| 'xhb';
+
+type PrebidParams =
+	| PrebidAdYouLikeParams
+	| PrebidAppNexusParams
+	| PrebidCriteoParams
+	| PrebidImproveParams
+	| PrebidIndexExchangeParams
+	| PrebidOpenXParams
+	| PrebidOzoneParams
+	| PrebidPubmaticParams
+	| PrebidSmartParams
+	| PrebidSonobiParams
+	| PrebidTripleLiftParams
+	| PrebidTrustXParams
+	| PrebidXaxisParams;
+
 type PrebidBidder = {
-	name: string;
+	name: BidderCode;
 	switchName: string;
-	bidParams: (
-		slotId: string,
-		sizes: HeaderBiddingSize[],
-	) =>
-		| PrebidSonobiParams
-		| PrebidIndexExchangeParams
-		| PrebidTrustXParams
-		| PrebidTripleLiftParams
-		| PrebidImproveParams
-		| PrebidXaxisParams
-		| PrebidAppNexusParams
-		| PrebidOpenXParams
-		| PrebidOzoneParams
-		| PrebidAdYouLikeParams
-		| PrebidPubmaticParams;
+	bidParams: (slotId: string, sizes: HeaderBiddingSize[]) => PrebidParams;
 };
 
 type PrebidBid = {
 	bidder: string;
-	params:
-		| PrebidSonobiParams
-		| PrebidIndexExchangeParams
-		| PrebidTrustXParams
-		| PrebidTripleLiftParams
-		| PrebidImproveParams
-		| PrebidXaxisParams
-		| PrebidAppNexusParams
-		| PrebidOpenXParams
-		| PrebidOzoneParams
-		| PrebidAdYouLikeParams
-		| PrebidPubmaticParams;
+	params: PrebidParams;
 };
 
 type PrebidMediaTypes = {
@@ -119,3 +136,5 @@ type PrebidMediaTypes = {
 		sizes: HeaderBiddingSize[];
 	};
 };
+
+type SlotFlatMap = (slot: HeaderBiddingSlot) => HeaderBiddingSlot[];

@@ -10,6 +10,7 @@ They live in routes like this: `www.theguardian.com/email/form/<type>/<listID>`
 The form **type** can be article, footer, plain, plaintone, or plaindark:
 - [article](https://www.theguardian.com/email/form/article/37) >> Commonly used as embed in articles (example here). Button defaults to blue but tone overrides can be applied.
 - [footer](https://www.theguardian.com/email/form/footer/37) >> This is the one used in the footer on every page.
+- [thrasher](https://www.theguardian.com/email/form/thrasher/37) >> This is the one used within thrasher atoms. They don't include privacy wording or explanatory content as this should be included as part of the thrasher design.
 - [plain](https://www.theguardian.com/email/form/plain/37) >> No header or description. Button will always be guardian-brand blue
 - [plaintone](https://www.theguardian.com/email/form/plaintone/3743) >> No header or description. Submit button splits from input on widescreen. Button defaults to blue but tone overrides can be applied. Used in [email interactives](https://www.theguardian.com/info/ng-interactive/2016/dec/07/sign-up-for-the-flyer).
 - [plaindark](https://www.theguardian.com/email/form/plaindark/3745) Used by [Documentaries](https://www.theguardian.com/world/ng-interactive/2016/oct/14/desert-fire-the-world-cup-rebels-of-kurdistan-video). Deprecated in favour of plaintone (which has a [dark option](http://localhost:9000/email/form/plaintone/3745)) and potentially removable, however, only if all usages can be found.

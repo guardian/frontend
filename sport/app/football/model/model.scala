@@ -17,8 +17,8 @@ case class Competition(
     leagueTable: Seq[LeagueTableEntry] = Nil,
     showInTeamsList: Boolean = false,
     tableDividers: List[Int] = Nil,
-) extends implicits.Collections
-    with implicits.Football {
+    finalMatchSVG: Option[String] = None,
+) extends implicits.Football {
 
   lazy val hasMatches = matches.nonEmpty
   lazy val hasLiveMatches = matches.exists(_.isLive)
@@ -162,6 +162,18 @@ object CompetitionDisplayHelpers {
     teamName
       .replace("Ladies", "")
       .replace("Holland", "The Netherlands")
+  }
+
+  def cleanTeamNameNextGenApi(teamName: String): String = {
+    teamName
+      .replace("Ladies", "")
+      .replace("Holland", "Netherlands")
+  }
+
+  def cleanTeamNameSpider(teamName: String): String = {
+    teamName
+      .replace("Czech Republic", "Czech Rep.")
+      .replace("Holland", "Netherlands")
   }
 
   def cleanTeamCode(teamCode: String): String = {

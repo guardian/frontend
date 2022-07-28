@@ -1,19 +1,18 @@
-@import com.gu.identity.model.EmailNewsletter
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
 
 @* Editorial Newsletter switch/checkbox *@
-
+@import services.newsletters.model.NewsletterResponse
 @(
     emailPrefsForm: Form[_],
     emailSubscriptions: List[String],
-    newsletter: EmailNewsletter,
+    newsletter: NewsletterResponse,
     unchecked: Boolean = false,
     skin: Option[String] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader)
 
-@buildFooter(newsletter: EmailNewsletter) = {
+@buildFooter(newsletter: NewsletterResponse) = {
     <div class="manage-account__switch-footer-tidbit">
         @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
         @newsletter.frequency
@@ -33,7 +32,7 @@
     if (unchecked)
         None
     else {
-        Some(newsletter.subscribedTo(emailSubscriptions).toString)
+        Some(emailSubscriptions.contains(newsletter.listId.toString).toString)
     }
 }
 

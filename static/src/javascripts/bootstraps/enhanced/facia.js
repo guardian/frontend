@@ -1,7 +1,7 @@
 import $ from 'lib/$';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { catchErrorsWithContext } from 'lib/robust';
 import { shouldHideFlashingElements } from 'common/modules/accessibility/helpers';
 import stocks from 'common/modules/business/stocks';

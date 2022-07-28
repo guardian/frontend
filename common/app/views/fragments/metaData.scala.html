@@ -1,3 +1,4 @@
+@import views.support.StripHtmlTagsAndUnescapeEntities
 @()(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{AnalyticsHost, _}
@@ -5,7 +6,7 @@
 @import model.meta.LinkedData
 @import model.Page
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.{ComscoreSwitch, SmartAppBanner}
+@import conf.switches.Switches.SmartAppBanner
 @import play.api.Mode.{Dev, Prod}
 
 <meta charset="utf-8">
@@ -34,19 +35,12 @@
     <link rel="preconnect" href="https://sourcepoint.theguardian.com" />
 }
 
-@if(ComscoreSwitch.isSwitchedOn) {
-    <link rel="dns-prefetch" href="//sb.scorecardresearch.com" />
-}
-
 <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
 <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />
 <link rel="apple-touch-icon" sizes="120x120" href="@Static("images/favicons/120x120.png")" />
 <link rel="apple-touch-icon" sizes="114x114" href="@Static("images/favicons/114x114.png")" />
 <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
 <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
-
-<link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
-
 
 @Page.getContentPage(page).map { page =>
     @if(page.item.content.shouldAmplify) {
@@ -108,19 +102,20 @@
             <meta name="keywords" content="@c.item.tags.keywords.map(_.name).mkString(",")" />
             <meta name="news_keywords" content="@c.item.tags.keywords.take(10).map(_.name).mkString(",")" />
         }
+
         @c.getOpenGraphProperties.map { case (key, value) =>
-            <meta property="@key" content="@Html(value)" />
+            <meta property="@key" content="@StripHtmlTagsAndUnescapeEntities(value)" />
         }
         @c.getTwitterProperties.map{ case (key, value) =>
-            <meta name="@key" content="@value" />
+            <meta name="@key" content="@StripHtmlTagsAndUnescapeEntities(value)" />
         }
     }
     case s: model.StandalonePage => {
         @s.getOpenGraphProperties.map{ case (key, value) =>
-            <meta property="@key" content="@value" />
+            <meta property="@key" content="@StripHtmlTagsAndUnescapeEntities(value)" />
         }
         @s.getTwitterProperties.map{ case (key, value) =>
-            <meta name="@key" content="@value" />
+            <meta name="@key" content="@StripHtmlTagsAndUnescapeEntities(value)" />
         }
     }
     case _ => {}

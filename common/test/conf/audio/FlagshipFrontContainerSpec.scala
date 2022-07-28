@@ -1,14 +1,17 @@
 package conf.audio
 import conf.switches.Switches.FlagshipFrontContainerSwitch
-import java.time.{ZonedDateTime, DayOfWeek}
-import java.time.format.DateTimeFormatter
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class FlagshipFrontContainerSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
+import java.time.{DayOfWeek, ZonedDateTime}
+import java.time.format.DateTimeFormatter
+import org.scalatest.{BeforeAndAfterAll}
+
+class FlagshipFrontContainerSpec extends AnyFlatSpec with Matchers with BeforeAndAfterAll {
   private val formatter =
     DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm").withZone(FlagshipFrontContainer.londonTimezone)
 
-  override def beforeAll {
+  override def beforeAll: Unit = {
     FlagshipFrontContainerSwitch.switchOn()
   }
 

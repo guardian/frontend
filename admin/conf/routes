@@ -46,6 +46,14 @@ POST        /page/clear                                                         
 GET         /ajax/clear                                                                             controllers.cache.PageDecacheController.renderAjaxDecache()
 POST        /ajax/clear                                                                             controllers.cache.PageDecacheController.decacheAjax()
 
+# Interactive Pressing
+POST        /interactive-librarian/live-presser/*path                                               controllers.admin.InteractiveLibrarianController.liveContentsPress(path: String)
+POST        /interactive-librarian/read-clean-write/*path                                           controllers.admin.InteractiveLibrarianController.readCleanWrite(path: String)
+
+# Articles / Interactives Pressing
+GET         /press/content                                                                          controllers.admin.InteractiveLibrarianController.pressForm()
+POST        /press/content/*path                                                                    controllers.admin.InteractiveLibrarianController.press(path: String)
+
 # Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
 
@@ -54,13 +62,6 @@ POST        /dev/switchboard                                                    
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                controllers.admin.AnalyticsConfidenceController.renderConfidence()
-
-# Reader Revenue
-GET         /reader-revenue                                                                         controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
-GET         /reader-revenue/contributions-banner                                                    controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
-GET         /reader-revenue/subscriptions-banner                                                    controllers.admin.ReaderRevenueAdminController.renderSubscriptionsBannerAdmin()
-POST        /reader-revenue/redeploy-contributions-banner/$region<united-kingdom|united-states|australia|rest-of-world>                     controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner(region)
-POST        /reader-revenue/redeploy-subscriptions-banner/$region<united-kingdom|united-states|australia|rest-of-world|european-union>                     controllers.admin.ReaderRevenueAdminController.redeploySubscriptionsBanner(region)
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
@@ -76,7 +77,6 @@ GET         /commercial/keyvalues                                               
 GET         /commercial/keyvalues/csv/*key                                                          controllers.admin.CommercialController.renderKeyValuesCsv(key)
 GET         /commercial/dfp/flush/view                                                              controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /commercial/dfp/flush                                                                   controllers.admin.commercial.DfpDataController.flushCache()
-GET         /commercial/performance/radiator                                                        controllers.admin.CommercialController.renderCommercialRadiator()
 GET         /commercial/slot/:slotName                                                              controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET         /commercial/adops/takeovers-empty-mpus                                                  controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET         /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()

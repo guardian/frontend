@@ -5,7 +5,6 @@ module.exports = {
         require('./css'),
         require('./data'),
         require('./javascript'),
-        require('./fonts'),
         require('./hash'),
         require('./conf'),
     ],

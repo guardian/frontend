@@ -1,7 +1,7 @@
 package conf
 
 import common.GuardianConfiguration
-import conf.Configuration.OAuthCredentialsWithMultipleCallbacks
+import conf.Configuration.{OAuthCredentialsWithMultipleCallbacks, OAuthCredentials}
 import pa.PaClientConfig
 
 case class OmnitureCredentials(userName: String, secret: String)
@@ -19,7 +19,7 @@ object AdminConfiguration {
       .getOrElse(throw new RuntimeException("unable to load pa cricket api key"))
 
     lazy val footballHost = PaClientConfig.baseUrl
-    lazy val cricketHost = "http://cricket.api.press.net/v1"
+    lazy val cricketHost = "http://cricket-api.guardianapis.com/v1"
     lazy val apiExplorer = "http://developer.press.net/io-docs"
   }
 
@@ -54,6 +54,25 @@ object AdminConfiguration {
       oauthSecret,
       configuration.getStringPropertiesSplitByComma("admin.oauth.callbacks"),
     )
+
+  def oauthCredentialsWithSingleCallBack(currentHost: Option[String]): Option[OAuthCredentials] =
+    oauthCredentials.flatMap { cred =>
+      for {
+        callback <- cred.authorizedOauthCallbacks.collectFirst {
+          case defaultHost if currentHost.isEmpty =>
+            defaultHost // if oauthCallbackHost is NOT defined, return the first authorized host in the list
+          case host if host.startsWith(currentHost.get) =>
+            host // if an authorized callback starts with current host, return it
+          // otherwise None will be returned
+        }
+      } yield {
+        Configuration.OAuthCredentials(
+          cred.oauthClientId,
+          cred.oauthSecret,
+          callback,
+        )
+      }
+    }
 
   lazy val omnitureCredentials: Option[OmnitureCredentials] =
     for {

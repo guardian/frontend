@@ -8,7 +8,6 @@ const mkdirp = require('mkdirp');
 const pify = require('pify');
 
 const writeFile = pify(fs.writeFile);
-const mkdirpp = pify(mkdirp);
 
 const { hash, target } = require('../../config').paths;
 
@@ -103,13 +102,23 @@ module.exports = {
                                         )]: assetMap[webpackEntryBundle],
                                     }),
                                 {}
-                            )
+                            ),
+                            webpackEntryBundles.reduce(
+                                (map, webpackEntryBundle) =>
+                                    Object.assign(map, {
+                                        [webpackEntryBundle.replace(
+                                            /(javascripts\/commercial\/)(.+\/)/,
+                                            '$1'
+                                        )]: assetMap[webpackEntryBundle],
+                                    }),
+                                {}
+                            ),
                         );
                     })
                     .then((
                         normalisedAssetMap // save the asset map
                     ) =>
-                        mkdirpp(path.resolve(hash, 'assets')).then(() =>
+                        mkdirp(path.resolve(hash, 'assets')).then(() =>
                             writeFile(
                                 path.resolve(hash, 'assets', 'assets.map'),
                                 JSON.stringify(normalisedAssetMap, null, 4)

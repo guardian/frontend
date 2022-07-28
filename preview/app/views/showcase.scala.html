@@ -1,0 +1,141 @@
+@(rundownPanelOutcomes: Either[Seq[String], common.TrailsToShowcase.RundownPanel], singleStoryPanelOutcomes: Seq[Either[Seq[String], common.TrailsToShowcase.SingleStoryPanel]], duplicateMap: Map[String, Int])
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                font-family: 'Guardian Egyptian Text', Georgia, serif;
+                margin-top: 10%;
+                margin-left: 20%;
+                margin-right: 20%;
+                background: white;
+                color: rgb(51, 51, 51);
+            }
+
+            h1 {
+                font-weight: bold;
+            }
+
+            a, a:visited {
+                color: #005689;
+                text-decoration: none;
+            }
+            .panel {
+                border-radius: 8px;
+                overflow: hidden;
+                moz-border-radius: 8px;
+                border: 1px solid #dadce0;
+                padding: 10px;
+                width: 320px;
+                margin: 10px;
+            }
+
+            .errors {
+               color: red;
+            }
+
+            .panelTitle {
+                background-color: rgb(255, 229, 0);
+             }
+
+             .singleStory img {
+                width: 310px;
+                margin-left: auto;
+                border-radius: 5px;
+                object-fit: cover;
+             }
+
+            .articleGroup img {
+                margin-left: auto;
+                border-radius: 5px;
+                object-fit: cover;
+                width: 93px;
+                height: 70px;
+                float: right;
+            }
+
+            .overline {
+                font-size: 11px;
+                text-transform: uppercase;
+                color: rgb(95, 99, 104);
+            }
+
+            .author {
+                font-size: 12px;
+                color: rgb(95, 99, 104);
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Showcase</h1>
+
+        <ul>
+            @for(problems <- rundownPanelOutcomes.left.toOption) {
+                <li class="panel">
+                    <ul class="errors">
+                        @for(problem <- problems) {
+                        <li>@problem</li>
+                        }
+                    </ul>
+                </li>
+            }
+            @for(panel <- rundownPanelOutcomes.right.toOption) {
+                <li class="panel rundown">
+                    <h2 class="panelTitle">@panel.panelTitle</h2>
+                    @showcase_articlegroup(panel.articleGroup)
+                </li>
+            }
+
+            @for(panelOutcome <- singleStoryPanelOutcomes) {
+                @for(problems <- panelOutcome.left.toOption) {
+                    <li class="panel">
+                        <ul class="errors">
+                            @for(problem <- problems) {
+                            <li>@problem</li>
+                            }
+                        </ul>
+                    </li>
+                }
+                @for(panel <- panelOutcome.right.toOption) {
+                    <li class="panel singleStory">
+                        @for(panelTitle <- panel.panelTitle) {
+                            <h2 class="panelTitle">
+                                @panel.panelTitle
+                            </h2>
+                        }
+                        @for(dupe <- duplicateMap.find(d => panel.guid.endsWith(d._1))) {
+                            <h3 class="errors">
+                            @if(dupe._2 == 2) {
+                                used twice
+                            } else {
+                                used @dupe._2 times
+                            }
+                            </h3>
+                        }
+                        <a href="@panel.link" target="_blank"><img src="@panel.imageUrl"/></a>
+                        @for(overline <- panel.overline) {
+                            <p class="overline">@overline</p>
+                        }
+                        <a href="@panel.link" target="_blank"><h4>@panel.title</h4></a>
+                            @for(author <- panel.author) {
+                        <p class="author">@author</p>
+                        }
+                        @for(summary <- panel.summary) {
+                            <p>@summary</p>
+                        }
+                        @for(bulletList <- panel.bulletList) {
+                            <ul class="bulletList">
+                                @for(bullet <- bulletList.listItems) {
+                                <li>@bullet.text</li>
+                                }
+                            </ul>
+                        }
+                        @for(relatedArticles <- panel.articleGroup) {
+                            @showcase_articlegroup(relatedArticles)
+                        }
+                    </li>
+                }
+            }
+        </ul>
+    </body>
+</html>

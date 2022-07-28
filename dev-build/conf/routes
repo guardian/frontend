@@ -4,15 +4,6 @@
 
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
-# Reader Revenue
-GET            /reader-revenue                                                                                                   controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
-GET            /reader-revenue/contributions-banner                                                                              controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
-GET            /reader-revenue/subscriptions-banner                                                                              controllers.admin.ReaderRevenueAdminController.renderSubscriptionsBannerAdmin()
-POST           /reader-revenue/redeploy-contributions-banner/$region<united-kingdom|united-states|australia|rest-of-world>       controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner(region)
-POST           /reader-revenue/redeploy-subscriptions-banner/$region<united-kingdom|united-states|australia|rest-of-world|european-union>       controllers.admin.ReaderRevenueAdminController.redeploySubscriptionsBanner(region)
-GET            /reader-revenue/contributions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world>     controllers.ReaderRevenueAppController.contributionsBannerDeployLog(region: String)
-GET            /reader-revenue/subscriptions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world|european-union>     controllers.ReaderRevenueAppController.subscriptionsBannerDeployLog(region: String)
-
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
@@ -24,9 +15,6 @@ GET            /assets/admin/lib/*file                                          
 GET            /assets/admin/*file                                                                                               controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
-
-# Diagnostics
-GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -42,7 +30,11 @@ GET            /crosswords/lookup                                               
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:parentComponent/$listId<[0-9]+>         controllers.EmailSignupController.renderFormWithParentComponent(emailType: String, listId: Int, parentComponent:String)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:parentComponent/:listName               controllers.EmailSignupController.renderFormFromNameWithParentComponent(emailType: String, listName: String, parentComponent: String)
 GET        /email/form/footer/:listName                                              controllers.EmailSignupController.renderFooterForm(listName: String)
+GET        /email/form/thrasher/$listId<[0-9]+>                                      controllers.EmailSignupController.renderThrasherForm(listId: Int)
+GET        /email/form/thrasher/:listName                                            controllers.EmailSignupController.renderThrasherFormFromName(listName: String)
 ## Submission results (Only accessed server side)
 GET        /email/$result<success|invalid|error>/footer                         controllers.EmailSignupController.subscriptionResultFooter(result: String)
 GET        /email/success/:listName                                             controllers.EmailSignupController.subscriptionSuccessResult(listName: String)
@@ -279,6 +271,8 @@ GET            /commercial/anx/anxresize.js                                     
 GET            /commercial/cmp/vendorlist.json                                            commercial.controllers.CmpDataController.renderVendorlist()
 GET            /commercial/cmp/shortvendorlist.json                                      commercial.controllers.CmpDataController.renderShortVendorlist()
 GET            /commercial/amp-iframe.html                                                                                       commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
+GET            /commercial/non-refreshable-line-items.json                                                                       commercial.controllers.nonRefreshableLineItemsController.getIds
+
 
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
@@ -300,7 +294,6 @@ GET         /commercial/keyvalues                                               
 GET         /commercial/keyvalues/csv/*key                                                                                       controllers.admin.CommercialController.renderKeyValuesCsv(key)
 GET         /commercial/dfp/flush/view                                                                                           controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /commercial/dfp/flush                                                                                                controllers.admin.commercial.DfpDataController.flushCache()
-GET         /commercial/performance/radiator                                                                                     controllers.admin.CommercialController.renderCommercialRadiator()
 GET         /commercial/slot/:slotName                                                                                           controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET         /commercial/adops/takeovers-empty-mpus                                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET         /commercial/adops/takeovers-empty-mpus/create                                                                        controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
@@ -345,11 +338,9 @@ GET            /opt/reset                                                       
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
-GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 GET            /sharecount/*path.json                                                                                            controllers.ShareCountController.fetch(path)
 
-GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
 GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = false, inApp: Boolean = false)
@@ -369,7 +360,7 @@ POST           /atom/quiz/:id/*path                                             
 GET            /atom/youtube/:id.json                                                                                            controllers.YoutubeController.getAtomId(id: String)
 
 # Nx1Config
-# mark: 2QJfZo - keep these in sync with other instances https://git.io/JkRox
+# mark: 2QJfZo - keep these in sync with other instances https://github.com/search?q=org%3Aguardian+2QJfZo&type=code
 GET            /switches.json                                                       controllers.Nx1ConfigController.switches
 GET            /tests.json                                                          controllers.Nx1ConfigController.tests
 
@@ -449,12 +440,12 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                         
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Live Blogs
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json                                                                                      controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json                                                                                      controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean], topics: Option[String])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email                                                                                     controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email/headline.txt                                                                        controllers.ArticleController.renderHeadline(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson                                                                           controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt                                                                            controllers.LiveBlogController.renderEmail(path)
-GET     /$path<[^/]+/([^/]+/)?live/.*>                                                                                           controllers.LiveBlogController.renderArticle(path, page: Option[String], format: Option[String])
+GET     /$path<[^/]+/([^/]+/)?live/.*>                                                                                           controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean], topics: Option[String])
 
 # articles, finished liveblogs
 

@@ -2,37 +2,43 @@
 
 @import common.Edition
 
-
-<div class="weather js-weather">
-    <div class="u-unstyled forecast__item forecast__item--current js-weather-current">
-        <div class="weather__time">
-            <span class="u-h">The temperature</span>
-            <span class="weather__time-value">Now</span>
-        </div>
-        @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
-        <div class="weather__temp">
-            <span class="u-h">is</span>
-            @defining(weatherResponse.temperatureForEdition(Edition(request))) { temp =>
-                <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
-            }
-        </div>
-    </div>
-    <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
-    href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="weather__toggle-icon"></i>
-    </button>
-    <ul class="js-weather-forecast forecast"></ul>
-    <div class="weather__location">
-        <div class="search-tool js-search-tool">
-            <div class="search-tool__form u-cf">
-                <label class="u-h" for="editlocation">Edit your location</label>
-                <input id="editlocation" class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-edit-location" value="<%=city%>" aria-label="enter location" />
-                @fragments.inlineSvg("search-36", "icon", List("weather__search-icon", "weather__edit-location"))
-                <button class="search-tool__btn">@fragments.inlineSvg("search-36", "icon")<span class="u-h">Search for city</span></button>
+@defining(weatherResponse.temperatureForEdition(Edition(request))) { temp =>
+    <aside class="weather js-weather" aria-label="Today's weather forecast for <%=city%>">
+        <div class="weather__location">
+            <div class="search-tool js-search-tool">
+                <div class="search-tool__form u-cf">
+                    <label class="u-h" for="editlocation">Edit your location</label>
+                    <input id="editlocation" class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-edit-location" value="<%=city%>" aria-label="enter location" />
+                    @fragments.inlineSvg("search-36", "icon", List("weather__search-icon", "weather__edit-location"), None, true)
+                    <button class="search-tool__btn">@fragments.inlineSvg("search-36", "icon") <span class="u-h">
+                        Search for city</span></button>
+                </div>
+                <ul class="u-unstyled search-tool__list js-search-tool-list"></ul>
             </div>
-            <ul class="u-unstyled search-tool__list js-search-tool-list"></ul>
+            <button class="weather__close-location js-close-location meta-button u-h" data-link-name="weather-close-location"
+            href="#close-change-location" aria-label="stop editing location"><span class="u-h">
+                Close change location</span> @fragments.inlineSvg("close", "icon", List("weather__close-icon"))
+            </button>
         </div>
-        <button class="weather__close-location js-close-location meta-button u-h" data-link-name="weather-close-location"
-        href="#close-change-location" aria-label="stop editing location"><span class="u-h">Close change location</span> @fragments.inlineSvg("close", "icon", List("weather__close-icon"))
+        <div class="u-unstyled forecast__item forecast__item--current js-weather-current" aria-label="@(s"The weather now: ${math.round(temp.Value)}°${temp.Unit}, ${weatherResponse.WeatherText.toLowerCase()}")">
+            <div class="weather__time" aria-hidden="true">
+                <span class="weather__time-value">Now</span>
+            </div>
+            @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon", "js-weather-icon"), Some(weatherResponse.WeatherText), true)
+            <div class="weather__temp" aria-hidden="true">
+                <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
+            </div>
+        </div>
+        <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
+        href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="weather__toggle-icon"></i>
         </button>
-    </div>
-</div>
+        <ul class="js-weather-forecast forecast" aria-label="24 hour forecast"></ul>
+        <div class="weather__link-to-full" >
+            <div class="weather__icon--external-link">
+            @fragments.inlineSvg("external-link", "icon", List("weather__icon--external-link"), None, true)
+            </div>
+            <a href=@weatherResponse.Link&partner=web_guardian_adc
+            target=”_blank” data-link-name="weather-view-full-forecast">View full forecast</a>
+        </div>
+    </aside>
+}

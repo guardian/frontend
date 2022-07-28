@@ -92,6 +92,7 @@ object FixtureBuilder {
         id.toString,
         cardStyle = DefaultCardstyle,
         webPublicationDateOption = None,
+        lastModifiedOption = None,
         trailText = Some("trail text"),
         mediaType = None,
         starRating = None,

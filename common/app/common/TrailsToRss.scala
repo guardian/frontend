@@ -1,8 +1,5 @@
 package common
 
-import java.io.StringWriter
-import java.util.regex.Pattern
-
 import com.gu.facia.api.models.LinkSnap
 import com.sun.syndication.feed.module.DCModuleImpl
 import com.sun.syndication.feed.module.mediarss._
@@ -10,16 +7,30 @@ import com.sun.syndication.feed.module.mediarss.types.{Credit, MediaContent, Met
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import model._
+import model.liveblog.{Blocks, TextBlockElement}
 import model.pressed.PressedStory
-import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
-import views.support.{Item140, Item460, ImageProfile}
+import views.support.{ImageProfile, Item140, Item460}
 
+import java.io.StringWriter
+import java.text.SimpleDateFormat
+import java.util.regex.Pattern
+import java.util.{Date, TimeZone}
 import scala.collection.JavaConverters._
-import scala.collection.JavaConverters._
+
+object RssDates {
+  def getYear(date: Date): String = {
+    val formatter = new SimpleDateFormat("YYYY")
+    formatter.setTimeZone(TimeZone.getTimeZone("Europe/London"))
+    formatter.format(date)
+  }
+}
 
 object TrailsToRss extends implicits.Collections {
+
+  // The CAPI blocks we would like consumers to request to build our item intro text from
+  val BlocksToGenerateRssIntro = "body:oldest:10"
 
   /*
     This regex pattern matches all invalid XML characters (see https://www.w3.org/TR/xml/#charsets)
@@ -30,7 +41,7 @@ object TrailsToRss extends implicits.Collections {
     unchanged as the end result gives valid XML, although it may exclude supplementary characters.
    */
   val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
-  private def stripInvalidXMLCharacters(s: String) = {
+  def stripInvalidXMLCharacters(s: String) = {
     pattern.matcher(s).replaceAll("")
   }
 
@@ -45,11 +56,16 @@ object TrailsToRss extends implicits.Collections {
     image
   }
 
-  def apply(metaData: MetaData, trails: Seq[Trail])(implicit request: RequestHeader): String =
-    TrailsToRss(Some(metaData.webTitle), trails, Some(metaData.url), metaData.description)
+  def apply(metaData: MetaData, content: Seq[Content])(implicit request: RequestHeader): String =
+    TrailsToRss(Some(metaData.webTitle), content, Some(metaData.url), metaData.description)
 
-  def apply(title: Option[String], trails: Seq[Trail], url: Option[String] = None, description: Option[String] = None)(
-      implicit request: RequestHeader,
+  def apply(
+      title: Option[String],
+      content: Seq[Content],
+      url: Option[String] = None,
+      description: Option[String] = None,
+  )(implicit
+      request: RequestHeader,
   ): String = {
     val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
 
@@ -63,14 +79,17 @@ object TrailsToRss extends implicits.Collections {
     feed.setLink("https://www.theguardian.com" + url.getOrElse(""))
     feed.setLanguage("en-gb")
     feed.setCopyright(
-      s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}",
+      s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${RssDates
+        .getYear(new Date())}",
     )
     feed.setImage(image)
-    feed.setPublishedDate(DateTime.now.toDate)
+    feed.setPublishedDate(new Date())
     feed.setEncoding("utf-8")
 
     // Feed: entries
-    val entries = trails.map { trail =>
+    val entries = content.map { content =>
+      val trail = content.trail
+
       // Entry: categories
       val categories = trail.tags.keywords.map { tag =>
         val category = new SyndCategoryImpl
@@ -80,11 +99,9 @@ object TrailsToRss extends implicits.Collections {
       }.asJava
 
       // Entry: description
-      val description = new SyndContentImpl
       val standfirst = trail.fields.standfirst.getOrElse("")
-      val intro = Jsoup.parseBodyFragment(trail.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
-      val readMore = s""" <a href="${trail.metadata.webUrl}">Continue reading...</a>"""
-      description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
+      val intro = introFromContent(content)
+      val description = makeEntryDescriptionUsing(standfirst, intro, trail.metadata.webUrl)
 
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
         profile: ImageProfile <- List(Item140, Item460)
@@ -120,9 +137,6 @@ object TrailsToRss extends implicits.Collections {
       val entry = new SyndEntryImpl
       entry.setTitle(stripInvalidXMLCharacters(trail.fields.linkText))
       entry.setLink(trail.metadata.webUrl)
-      /* set http intentionally to not break existing guid */
-      entry.setUri("http://www.theguardian.com/" + trail.metadata.id)
-
       entry.setDescription(description)
       entry.setCategories(categories)
       entry.setModules(new java.util.ArrayList((mediaModules ++ Seq(dc)).asJava))
@@ -178,10 +192,10 @@ object TrailsToRss extends implicits.Collections {
     feed.setLink("https://www.theguardian.com" + url)
     feed.setLanguage("en-gb")
     feed.setCopyright(
-      s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}",
+      s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${RssDates.getYear(new Date())}",
     )
     feed.setImage(image)
-    feed.setPublishedDate(DateTime.now.toDate)
+    feed.setPublishedDate(new Date())
     feed.setEncoding("utf-8")
 
     // Feed: entries
@@ -195,14 +209,10 @@ object TrailsToRss extends implicits.Collections {
       }.asJava
 
       // Entry: description
-      val description = new SyndContentImpl
       val standfirst = faciaContent.fields.standfirst.getOrElse("")
-      val intro =
-        Jsoup.parseBodyFragment(faciaContent.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
-
+      val intro = faciaContent.fields.body
       val webUrl = faciaContent.metadata.webUrl
-      val readMore = s""" <a href="$webUrl">Continue reading...</a>"""
-      description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
+      val description = makeEntryDescriptionUsing(standfirst, intro, webUrl)
 
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
         profile: ImageProfile <- List(Item140, Item460)
@@ -254,4 +264,37 @@ object TrailsToRss extends implicits.Collections {
     writer.close()
     writer.toString
   }
+
+  def introFromContent(content: Content): String = {
+    content.fields.blocks
+      .map { blocks: Blocks =>
+        // Collect html from the body block text elements who have an html snippet to offer
+        // Then take the first 2 of them
+        val bodyBlocks = blocks.requestedBodyBlocks.getOrElse("body:oldest:10", Seq.empty)
+        val elementHtml = bodyBlocks
+          .flatMap { bodyBlock =>
+            bodyBlock.elements
+          }
+          .flatMap {
+            case TextBlockElement(html) => html
+            case _                      => None
+          }
+          .take(2)
+
+        // Then apply the long standing paragraph extraction as text elements can contain more than 1 paragraph
+        val sumOfFirstTextElements = elementHtml.mkString
+        Jsoup.parseBodyFragment(sumOfFirstTextElements).select("p:lt(2)").toArray.map(_.toString).mkString("")
+      }
+      .getOrElse("")
+  }
+
+  private def makeEntryDescriptionUsing(standfirst: String, intro: String, webUrl: String): SyndContentImpl = {
+    val descriptionComponents =
+      Seq(standfirst, intro, s""" <a href="$webUrl">Continue reading...</a>""").filter(_.size < 5000)
+
+    val description = new SyndContentImpl
+    description.setValue(stripInvalidXMLCharacters(descriptionComponents.mkString))
+    description
+  }
+
 }

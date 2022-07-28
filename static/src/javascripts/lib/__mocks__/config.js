@@ -1,19 +1,17 @@
 export default {
-    get(path, defaultValue) {
-        const value = path
-            .split('.')
-            .reduce((acc, prop) => {
-                if (acc[prop]) {
-                    return acc[prop];
-                }
+	get(path, defaultValue) {
+		const value = path.split('.').reduce((acc, prop) => {
+			if (acc[prop]) {
+				return acc[prop];
+			}
 
-                return defaultValue;
-            }, this);
+			return defaultValue;
+		}, this);
 
-        if (typeof value !== 'undefined') {
-            return value;
-        }
+		if (typeof value !== 'undefined') {
+			return value;
+		}
 
-        return defaultValue;
-    },
+		return defaultValue;
+	},
 };

@@ -3,11 +3,13 @@ package common
 import model.ApplicationIdentity
 import html.HtmlPageHelpers.ContentCSSFile
 import play.api.mvc.RequestHeader
-import experiments.ActiveExperiments
 
 object Preload {
 
-  def commercialBundleName(implicit request: RequestHeader): String = "graun.commercial.js"
+  def commercialBundleNameAsset(implicit request: RequestHeader): Seq[PreloadAsset] =
+    if (conf.switches.Switches.StandaloneCommercialBundle.isSwitchedOn)
+      Seq.empty
+    else Seq(JsPreloadAsset("javascripts/graun.commercial.js"))
 
   def isPolyFillIOFallbackMin: Seq[PreloadAsset] =
     if (conf.switches.Switches.PolyfillIOFallbackMin.isSwitchedOn)
@@ -23,8 +25,7 @@ object Preload {
         JsPreloadAsset("javascripts/vendor/polyfillio.fallback.js")
       },
       JsPreloadAsset("javascripts/graun.standard.js"),
-      JsPreloadAsset(s"javascripts/$commercialBundleName"),
-    ) ++ isPolyFillIOFallbackMin
+    ) ++ isPolyFillIOFallbackMin ++ commercialBundleNameAsset
 
   def faciaDefaultPreloads(implicit request: RequestHeader): Seq[PreloadAsset] =
     Seq(
@@ -35,8 +36,7 @@ object Preload {
         JsPreloadAsset("javascripts/vendor/polyfillio.fallback.js")
       },
       JsPreloadAsset("javascripts/graun.standard.js"),
-      JsPreloadAsset(s"javascripts/$commercialBundleName"),
-    ) ++ isPolyFillIOFallbackMin
+    ) ++ isPolyFillIOFallbackMin ++ commercialBundleNameAsset
 
   def config(implicit request: RequestHeader): Map[ApplicationIdentity, Seq[PreloadAsset]] =
     Map(

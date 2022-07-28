@@ -3,13 +3,15 @@ package navigation
 import common.editions._
 import NavLinks._
 import com.gu.contentapi.client.model.v1.ItemResponse
-import model.{Content, ContentPage, ContentType, Page, MetaData}
+import model.{Content, ContentPage, ContentType, MetaData, Page}
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
 
 @DoNotDiscover class NavigationTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

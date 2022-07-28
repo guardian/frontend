@@ -22,10 +22,11 @@ import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
 import navigation.GuardianFoundationHelper
-import services.newsletters.{NewsletterResponse}
 
 import scala.util.matching.Regex
 import utils.ShortUrls
+
+import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
 
 object Commercial {
 
@@ -129,6 +130,8 @@ final case class Fields(
 
 object MetaData {
 
+  val StartDateForHttpsFacebookUrls: OffsetDateTime = OffsetDateTime.of(2021, 9, 6, 13, 0, 0, 0, ZoneOffset.UTC)
+
   def make(
       id: String,
       section: Option[SectionId],
@@ -154,6 +157,7 @@ object MetaData {
       twitterPropertiesOverrides: Map[String, String] = Map(),
       commercial: Option[CommercialProperties] = None,
       isFoundation: Boolean = false,
+      firstPublicationDate: Option[DateTime] = None,
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -182,6 +186,8 @@ object MetaData {
       isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides,
       commercial = commercial,
+      isFoundation = isFoundation,
+      firstPublicationDate = firstPublicationDate,
     )
   }
 
@@ -215,6 +221,7 @@ object MetaData {
       commercial = Some(CommercialProperties.fromContent(apiContent)),
       sensitive = fields.sensitive.getOrElse(false),
       isFoundation = Tags.make(apiContent).isFoundation,
+      firstPublicationDate = fields.firstPublicationDate,
     )
   }
 }
@@ -242,37 +249,66 @@ object ContentFormat {
       )
   }
 
-  /*
-    Date: 03 March 2021
+  // TODO I am sure these should be in shared code, but not aware of any at time
+  //  of writing. Let's move it somewhere common in the future.
 
-    The only reason `contentFormatBuilder` exists is to define `contentFormatReads`, and the only
-    reason `contentFormatReads` exists is to help define `contentFormatFormat` in `object PressedMetadata`
-    (see PressedMetadata.scala) to make compilation possible.
+  def parseDesign(s: String): Design =
+    s match {
+      case "ArticleDesign"             => ArticleDesign
+      case "GalleryDesign"             => GalleryDesign
+      case "AudioDesign"               => AudioDesign
+      case "VideoDesign"               => VideoDesign
+      case "ReviewDesign"              => ReviewDesign
+      case "AnalysisDesign"            => AnalysisDesign
+      case "CommentDesign"             => CommentDesign
+      case "LetterDesign"              => LetterDesign
+      case "FeatureDesign"             => FeatureDesign
+      case "LiveBlogDesign"            => LiveBlogDesign
+      case "DeadBlogDesign"            => DeadBlogDesign
+      case "RecipeDesign"              => RecipeDesign
+      case "MatchReportDesign"         => MatchReportDesign
+      case "InterviewDesign"           => InterviewDesign
+      case "EditorialDesign"           => EditorialDesign
+      case "QuizDesign"                => QuizDesign
+      case "FullPageInteractiveDesign" => FullPageInteractiveDesign
+      case "InteractiveDesign"         => InteractiveDesign
+      case "PhotoEssayDesign"          => PhotoEssayDesign
+      case "PrintShopDesign"           => PrintShopDesign
+      case "ObituaryDesign"            => ObituaryDesign
+      case _                           => ArticleDesign
+    }
 
-    As such, the fact that contentFormatReads always return ContentFormat(ArticleDesign, NewsPillar, StandardDisplay)
-    is perfectly fine, because it's not actually used anywhere.
+  def parseTheme(s: String): Theme =
+    s match {
+      case "NewsPillar"         => NewsPillar
+      case "OpinionPillar"      => OpinionPillar
+      case "SportPillar"        => SportPillar
+      case "CulturePillar"      => CulturePillar
+      case "LifestylePillar"    => LifestylePillar
+      case "SpecialReportTheme" => SpecialReportTheme
+      case "Labs"               => Labs
+      case _                    => NewsPillar
+    }
 
-    If one day this changes, then it will be just enough to replace
+  def parseDisplay(s: String): Display =
+    s match {
+      case "StandardDisplay"     => StandardDisplay
+      case "ImmersiveDisplay"    => ImmersiveDisplay
+      case "ShowcaseDisplay"     => ShowcaseDisplay
+      case "NumberedListDisplay" => NumberedListDisplay
+      case "ColumnDisplay"       => ColumnDisplay
+      case _                     => StandardDisplay
+    }
 
-        v => ArticleDesign
-        v => NewsPillar
-        v => StandardDisplay
-
-      by the relevant functions:
-
-        String -> Design
-        String -> Pillar
-        String -> Display
-   */
-
-  val contentFormatBuilder = (JsPath \ "design").read[String].map(_ => ArticleDesign) and
-    (JsPath \ "theme").read[String].map(_ => NewsPillar) and
-    (JsPath \ "display").readNullable[String].map(_ => StandardDisplay)
+  val contentFormatBuilder =
+    (JsPath \ "design").read[String].map(parseDesign) and
+      (JsPath \ "theme").read[String].map(parseTheme) and
+      (JsPath \ "display").readNullable[String].map(_.map(parseDisplay).getOrElse(StandardDisplay))
 
   implicit val contentFormatReads = contentFormatBuilder.apply(ContentFormat.apply _)
 }
 
-final case class MetaData(
+case class MetaData(
     id: String,
     url: String,
     webUrl: String,
@@ -308,6 +344,7 @@ final case class MetaData(
     isNewRecipeDesign: Boolean = false,
     sensitive: Boolean = false,
     isFoundation: Boolean = false,
+    firstPublicationDate: Option[DateTime] = None,
 ) {
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
@@ -355,8 +392,22 @@ final case class MetaData(
     )
 
   def opengraphProperties: Map[String, String] = {
-    // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
-    def ogUrl = webUrl.replaceFirst("^https:", "http:")
+    val shouldAdvertiseHttpsUrlToFacebook = firstPublicationDate.exists { firstPublished =>
+      // When we migrated to https in 2016 we kept all og:urls as http to preserve engagement counts.
+      // In 2021 at Facebook's request we began advertising https urls for newly published content
+      // Any page which was able to supply a known first publication date with it's page meta data can benefit from this.
+      val firstPublishedLocalDateTime = firstPublished.date.toInstant.atZone(ZoneId.systemDefault()).toLocalDateTime
+      firstPublishedLocalDateTime.isAfter(MetaData.StartDateForHttpsFacebookUrls.toLocalDateTime)
+    }
+
+    val webUrlToAdvertise = if (shouldAdvertiseHttpsUrlToFacebook) {
+      webUrl
+    } else {
+      // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
+      webUrl.replaceFirst("^https:", "http:")
+    }
+
+    def ogUrl = webUrlToAdvertise
 
     Map(
       "og:site_name" -> "the Guardian",

@@ -5,7 +5,7 @@ import commercial.model.merchandise.books.BestsellersAgent
 import commercial.model.merchandise.events.MasterclassAgent
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
-import commercial.model.merchandise.{MemberPair, Merchandise}
+import commercial.model.merchandise.Merchandise
 import common.{JsonComponent}
 import model.Cached
 import play.api.libs.json.{JsArray, Json}
@@ -18,7 +18,6 @@ class Multi(
     jobsAgent: JobsAgent,
     val controllerComponents: ControllerComponents,
 ) extends BaseController
-    with implicits.Collections
     with implicits.Requests {
 
   private def multiSample(

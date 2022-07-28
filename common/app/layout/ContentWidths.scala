@@ -64,7 +64,16 @@ object ContentWidths {
       tablet = Some(140.px),
     ) // desktop, leftCol and wide are also 140px
 
-    override val immersive = BodyMedia.inline
+    override val immersive = WidthsByBreakpoint(
+      mobile = Some(480.px),
+      mobileLandscape = Some(660.px),
+      phablet = Some(740.px),
+      tablet = Some(980.px),
+      desktop = Some(1140.px),
+      leftCol = Some(1300.px),
+      wide = Some(1900.px),
+    )
+
     override val halfwidth = BodyMedia.inline
   }
 
@@ -170,15 +179,6 @@ object ContentWidths {
       leftCol = Some(780.px),
       wide = Some(620.px),
     )
-  }
-
-  object DotcomRenderingImageRoleWidthByBreakpointMapping extends ImageRoleWidthsByBreakpointMapping {
-    override val inline = BodyMedia.inline
-    override val supporting = BodyMedia.supporting
-    override val showcase = MainMedia.showcase
-    override val immersive = ImmersiveMedia.immersive
-    override val thumbnail = BodyMedia.thumbnail
-    override val halfwidth = BodyMedia.inline
   }
 
   object ImageContentMedia {

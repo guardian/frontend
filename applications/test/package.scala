@@ -1,9 +1,8 @@
 package test
 
 import java.util.{List => JList}
-
 import org.scalatest.Suites
-import services.{FacebookGraphApiTest, IndexPageTest, NewspaperControllerTest}
+import services.{FacebookGraphApiTest, IndexPageTest, InteractivePickerTest, NewspaperControllerTest}
 
 import collection.JavaConverters._
 
@@ -42,7 +41,6 @@ class ApplicationsTestSuite
       new NewspaperControllerTest,
       new IndexPageTest,
       new FacebookGraphApiTest,
+      new InteractivePickerTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19003
-}
+    with SingleServerSuite {}

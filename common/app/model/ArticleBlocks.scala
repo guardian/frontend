@@ -14,7 +14,19 @@ case object CanonicalLiveBlog extends BlockRange {
   val firstPage = "body:latest:60"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
-  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline))
+  val summary = "body:summary"
+  val pinned = "body:pinned"
+  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned))
+}
+
+case object TopicsLiveBlog extends BlockRange {
+  val mainBlock = "main"
+  val oldestPage = "body:oldest:1"
+  val timeline = "body:key-events"
+  val summary = "body:summary"
+  val pinned = "body:pinned"
+  val body = "body" // this gets all blocks that's needed for filtering blog by topics
+  val query = Some(Seq(mainBlock, oldestPage, timeline, summary, pinned, body))
 }
 
 // Created to handle ArticleController (for preview) specifically, where we may render an
@@ -25,8 +37,10 @@ case object GenericFallback extends BlockRange {
   val firstPage = "body:latest:60"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
+  val summary = "body:summary"
+  val pinned = "body:pinned"
   val body = "body" // supports Dotcom Rendering model which currently requires field body
-  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, body))
+  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned, body))
 }
 
 case class PageWithBlock(page: String) extends BlockRange {

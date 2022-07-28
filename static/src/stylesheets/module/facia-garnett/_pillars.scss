@@ -246,11 +246,9 @@ $pillars: (
         }
     }
 
-    &.fc-item--type-media,
-    &.fc-item--type-immersive {
-        .fc-sublink__kicker {
-            color: map-get($palette, invertedKicker);
-        }
+
+    &.fc-item--type-media .fc-sublink__kicker {
+        color: map-get($palette, invertedKicker);
     }
 
     .fc-item__media-meta {

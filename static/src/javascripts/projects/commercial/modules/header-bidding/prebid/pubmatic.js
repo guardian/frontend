@@ -10,11 +10,11 @@ export const pubmatic = function (bid, data, acEnabled, utils, defaultFn) {
 
 		// add all user segments
 		try {
-            const psegs = JSON.parse(localStorage._psegs || '[]').map(String);
-            const ppam = JSON.parse(localStorage._ppam || '[]');
-            const pcrprs = JSON.parse(localStorage._pcrprs || '[]');
+			const psegs = JSON.parse(localStorage._psegs || '[]').map(String);
+			const ppam = JSON.parse(localStorage._ppam || '[]');
+			const pcrprs = JSON.parse(localStorage._pcrprs || '[]');
 
-            segments = [...psegs, ...ppam, ...pcrprs];
+			segments = [...psegs, ...ppam, ...pcrprs];
 		} catch (e) {}
 
 		// add AC specific segments (these would typically go to a separate key-value, but not sure if we can have 2 lists of segments here?)

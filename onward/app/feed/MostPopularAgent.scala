@@ -1,14 +1,13 @@
 package feed
 
-import com.gu.Box
 import conf.Configuration
 import contentapi.ContentApiClient
-import com.gu.contentapi.client.model.v1.{Content, ContentFields, ContentType}
+import com.gu.contentapi.client.model.v1.Content
 import common._
 import services.{OphanApi}
 import model.RelatedContentItem
 import play.api.libs.json._
-import play.api.libs.ws.{WSClient, WSResponse}
+import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 

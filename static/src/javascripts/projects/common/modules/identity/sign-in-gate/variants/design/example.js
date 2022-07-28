@@ -1,4 +1,4 @@
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { withComponentId, componentName } from '../../component';
 import {
     addOpinionBgColour,

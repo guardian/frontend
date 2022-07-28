@@ -8,7 +8,6 @@ const pify = require('pify');
 
 const readFile = pify(fs.readFile);
 const writeFile = pify(fs.writeFile);
-const mkdirpp = pify(mkdirp);
 
 const { src, conf } = require('../../config').paths;
 
@@ -20,7 +19,7 @@ module.exports = {
         Promise.all(
             glob.sync('**/*.svg', { cwd: srcDir }).map(svgPath => {
                 const dest = path.resolve(conf, 'inline-svgs', svgPath);
-                return mkdirpp(path.dirname(dest))
+                return mkdirp(path.dirname(dest))
                     .then(() =>
                         readFile(path.resolve(srcDir, svgPath), 'utf-8')
                     )
@@ -28,23 +27,28 @@ module.exports = {
                         fileData =>
                             new Promise(resolve =>
                                 resolve(optimize(fileData, {
-                                    plugins: extendDefaultPlugins([
+                                    plugins: [
                                         {
-                                            name: 'removeXMLNS',
-                                            active: true,
+                                            name: 'preset-default',
+                                            params: {
+                                                overrides: {
+                                                    removeViewBox: false,
+                                                }
+                                            }
                                         },
-                                        {
-                                            name: 'removeViewBox',
-                                            active: false,
-                                        },
-                                    ]),
+                                        'removeXMLNS',
+                                    ],
                                 })
                             )
                         )
                     )
-                    .then(optimisedFileData =>
-                        writeFile(dest, optimisedFileData.data)
-                    );
+                    .then(optimisedFileData => {
+                        if (!optimisedFileData?.data) {
+                            console.error('error inlining:', srcDir, svgPath);
+                            return Promise.resolve();
+                        }
+                        return writeFile(dest, optimisedFileData.data);
+                    });
             })
         ),
 };

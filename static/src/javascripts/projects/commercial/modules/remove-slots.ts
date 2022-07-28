@@ -1,10 +1,14 @@
-import once from 'lodash/once';
+import { once } from 'lodash-es';
 import fastdom from '../../../lib/fastdom-promise';
 import { dfpEnv } from './dfp/dfp-env';
 
 // Remove ad slots
 // Remove toggled ad labels that sit outside of the ad slot
-const selectors: string[] = [dfpEnv.adSlotSelector, '.ad-slot__label--toggle'];
+const selectors: string[] = [
+	dfpEnv.adSlotSelector,
+	'.ad-slot__label--toggle',
+	'.top-banner-ad-container',
+];
 
 const selectNodes = () =>
 	selectors.reduce(
@@ -25,6 +29,9 @@ const removeNodes = (nodes: Element[]): Promise<void> =>
 
 const removeSlots = (): Promise<void> => removeNodes(selectNodes());
 
+/**
+ * Remove ad slot elements that have style display: none
+ */
 const removeDisabledSlots = once(() =>
 	removeNodes(filterDisabledNodes(selectNodes())),
 );

@@ -1,7 +1,6 @@
 package dfp
 
-import com.gu.Box
-import common.GuLogging
+import common.{Box, GuLogging}
 import concurrent.BlockingOperations
 
 import scala.concurrent.{ExecutionContext, Future}

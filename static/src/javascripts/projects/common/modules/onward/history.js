@@ -8,9 +8,6 @@ import { storage } from '@guardian/libs';
 import { getPath } from 'lib/url';
 import isObject from 'lodash/isObject';
 
-import {getCookie} from "lib/cookies";
-import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
-
 const editions = ['uk', 'us', 'au'];
 
 const editionalised = [
@@ -69,10 +66,8 @@ const historySize = 50;
 const storageKeyHistory = 'gu.history';
 const storageKeySummary = 'gu.history.summary';
 const storageKeyDailyArticleCount = 'gu.history.dailyArticleCount'; // Array containing an article count for each day
-const storageKeyWeeklyArticleCount = 'gu.history.weeklyArticleCount';
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
-const startOfThisWeek = getMondayFromDate(new Date());
 
 let historyCache;
 let summaryCache;
@@ -475,91 +470,6 @@ const showInMegaNavEnable = (bool) => {
     saveSummary(summary);
 };
 
-const incrementDailyArticleCount = (pageConfig) => {
-    if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
-        const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
-
-        if (dailyCount[0] && dailyCount[0].day && dailyCount[0].day === today) {
-            dailyCount[0].count += 1;
-        } else {
-            // New day
-            dailyCount.unshift({ day: today, count: 1 });
-
-            // Remove any days older than 60
-            const cutOff = today - 60;
-            const firstOldDayIndex = dailyCount.findIndex(
-                c => c.day && c.day < cutOff
-            );
-            if (firstOldDayIndex > 0) {
-                dailyCount.splice(firstOldDayIndex);
-            }
-        }
-
-        storage.local.set(storageKeyDailyArticleCount, dailyCount);
-    }
-};
-
-const incrementWeeklyArticleCount = (pageConfig) => {
-    if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
-        const weeklyArticleCount =
-            storage.local.get(storageKeyWeeklyArticleCount) || [];
-        if (
-            weeklyArticleCount[0] &&
-            weeklyArticleCount[0].week &&
-            weeklyArticleCount[0].week === startOfThisWeek
-        ) {
-            weeklyArticleCount[0].count += 1;
-        } else {
-            // New day
-            weeklyArticleCount.unshift({
-                week: startOfThisWeek,
-                count: 1,
-            });
-
-            // Remove any weeks older than a year
-            const cutOff = startOfThisWeek - 365;
-            const firstOldWeekIndex = weeklyArticleCount.findIndex(
-                c => c.week && c.week < cutOff
-            );
-            if (firstOldWeekIndex > 0) {
-                weeklyArticleCount.splice(firstOldWeekIndex);
-            }
-        }
-
-        storage.local.set(storageKeyWeeklyArticleCount, weeklyArticleCount);
-    }
-};
-
-const getArticleViewCountForDays = (days) => {
-    const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
-    const cutOff = today - days;
-
-    const firstOldDayIndex = dailyCount.findIndex(
-        c => c.day && c.day <= cutOff
-    );
-    const dailyCountWindow =
-        firstOldDayIndex >= 0
-            ? dailyCount.slice(0, firstOldDayIndex)
-            : dailyCount;
-
-    return dailyCountWindow.reduce((acc, current) => current.count + acc, 0);
-};
-
-const getArticleViewCountForWeeks = (weeks) => {
-    const weeklyCount = storage.local.get(storageKeyWeeklyArticleCount) || [];
-    const cutOff = startOfThisWeek - weeks * 7;
-
-    const firstOldWeekIndex = weeklyCount.findIndex(
-        c => c.week && c.week <= cutOff
-    );
-    const weeklyCountWindow =
-        firstOldWeekIndex >= 0
-            ? weeklyCount.slice(0, firstOldWeekIndex)
-            : weeklyCount;
-
-    return weeklyCountWindow.reduce((acc, current) => current.count + acc, 0);
-};
-
 export {
     logHistory,
     logSummary,
@@ -574,13 +484,8 @@ export {
     reset,
     seriesSummary,
     mostViewedSeries,
-    incrementDailyArticleCount,
-    incrementWeeklyArticleCount,
-    getArticleViewCountForDays,
-    getArticleViewCountForWeeks,
     getMondayFromDate,
     storageKeyDailyArticleCount,
-    storageKeyWeeklyArticleCount,
 };
 
 export const _ = {

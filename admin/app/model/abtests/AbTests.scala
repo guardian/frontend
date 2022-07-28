@@ -6,7 +6,7 @@ import org.joda.time.DateTime
 
 import scala.concurrent.{ExecutionContext, Future}
 import awswrappers.cloudwatch._
-import com.gu.Box
+import common.Box
 
 object AbTests {
   private val abTests = Box[Map[String, Seq[String]]](Map.empty)
@@ -15,7 +15,7 @@ object AbTests {
     abTests.get()
   }
 
-  def update(testVariants: Map[String, Seq[String]]) {
+  def update(testVariants: Map[String, Seq[String]]): Unit = {
     abTests.send(testVariants)
   }
 

@@ -15,6 +15,4 @@ class CommercialTestSuite
       new LookupTest,
       new books.BookTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19006
-}
+    with SingleServerSuite {}

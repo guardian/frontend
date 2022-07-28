@@ -1,4 +1,4 @@
-@(imageMedia: model.ImageMedia, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None)(implicit request: RequestHeader)
+@(imageMedia: model.ImageMedia, inlineImage: Boolean = false, widthsByBreakpoint: Option[layout.WidthsByBreakpoint] = None, shouldLazyLoad: Boolean = false)(implicit request: RequestHeader)
 
 @import views.support.ImgSrc
 @import views.html.fragments.items.elements.facia_cards.image
@@ -12,6 +12,7 @@
                     widths = widths,
                     maybeImageMedia = Some(imageMedia),
                     maybeSrc = if(inlineImage) ImgSrc.getFallbackUrl(imageMedia) else None,
+                    shouldLazyLoadIndex = shouldLazyLoad
                 )
             }
 

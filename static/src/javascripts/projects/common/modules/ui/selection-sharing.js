@@ -3,7 +3,7 @@ import Rangefix from 'rangefix';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { hasTouchScreen } from 'lib/detect';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { inlineSvg } from 'common/views/svgs';
 import debounce from 'lodash/debounce';
 

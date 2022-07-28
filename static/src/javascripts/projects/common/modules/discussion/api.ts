@@ -1,9 +1,4 @@
-import config_ from 'lib/config';
-
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string) => string;
-};
+import config from 'lib/config';
 
 /**
  * This information is partly inspired by the API in discussion-rendering
@@ -37,8 +32,11 @@ const defaultInitParams: RequestInit = {
 	mode: 'cors',
 	credentials: 'include',
 	headers: {
-		'D2-X-UID': config.get('page.discussionD2Uid'),
-		'GU-Client': config.get('page.discussionApiClientHeader'),
+		'D2-X-UID': config.get<string>('page.discussionD2Uid', 'NONE_FOUND'),
+		'GU-Client': config.get<string>(
+			'page.discussionApiClientHeader',
+			'NONE_FOUND',
+		),
 	},
 };
 
@@ -48,7 +46,11 @@ export const send = (
 	data?: Comment | AbuseReport,
 ): Promise<CommentResponse> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
-		const url = config.get('page.discussionApiUrl') + endpoint;
+		const apiUrl = config.get<string>(
+			'page.discussionApiUrl',
+			'/DISCUSSION_API_URL_NOT_FOUND',
+		);
+		const url = apiUrl + endpoint;
 
 		// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
 		if (method === 'POST') {
@@ -115,4 +117,4 @@ export const reportComment = (
 	send(`/comment/${id}/reportAbuse`, 'POST', report);
 
 export const getUser = (id: Id = 'me'): Promise<CommentResponse> =>
-	send(`/profile/${id}`, 'GET');
+	send(`/profile/${id}?strict_sanctions_check=false`, 'GET');

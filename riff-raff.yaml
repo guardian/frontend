@@ -2,7 +2,9 @@ stacks:
 - frontend
 regions:
 - eu-west-1
-
+allowedStages:
+  - CODE
+  - PROD
 templates:
   frontend:
     type: autoscaling
@@ -23,8 +25,6 @@ deployments:
   article:
     template: frontend
   commercial:
-    template: frontend
-  diagnostics:
     template: frontend
   discussion:
     template: frontend
@@ -48,6 +48,7 @@ deployments:
       bucket: aws-frontend-static
       cacheControl: public, max-age=315360000
       prefixStack: false
+      publicReadAcl: false
   update-ami:
     type: ami-cloudformation-parameter
     parameters:
@@ -56,5 +57,5 @@ deployments:
       cloudFormationStackName: frontend
       amiParametersToTags:
         AMI:
-          Recipe: frontend-base-ARM
+          Recipe: frontend-base-ARM-java11
           AmigoStage: PROD

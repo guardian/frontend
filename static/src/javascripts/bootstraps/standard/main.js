@@ -18,7 +18,7 @@ import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import { storage } from '@guardian/libs';
 import { fetchJson } from 'lib/fetch-json';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { addEventListener } from 'lib/events';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { addCookie } from 'lib/cookies';
@@ -34,6 +34,7 @@ import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
 import { initEmbedResize } from "./emailEmbeds";
+import { setAdFreeCookie, AdFreeCookieReasons } from 'lib/manage-ad-free-cookie';
 
 const showHiringMessage = () => {
     try {
@@ -155,6 +156,7 @@ const addErrorHandler = () => {
 };
 
 const bootStandard = () => {
+
     markTime('standard start');
 
     catchErrorsWithContext([
@@ -194,19 +196,8 @@ const bootStandard = () => {
     // if the user is genuinely ad-free, this one will be overwritten
     // in user-features
     if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
-        const daysToLive = 1;
-        const isCrossSubDomain = true;
-        const forcedAdFreeValidSeconds = 30;
-        const forcedAdFreeExpiryTime = new Date();
-        forcedAdFreeExpiryTime.setTime(
-            forcedAdFreeExpiryTime.getTime() + forcedAdFreeValidSeconds * 1000
-        );
-        addCookie(
-            'GU_AF1',
-            forcedAdFreeExpiryTime.getTime().toString(),
-            daysToLive,
-            isCrossSubDomain
-        );
+        // Sets a short-lived cookie to trigger server-side ad-freeness
+        setAdFreeCookie(AdFreeCookieReasons.ForceAdFree, 1);
     }
 
     // set local storage: gu.alreadyVisited
@@ -214,18 +205,6 @@ const bootStandard = () => {
         const key = 'gu.alreadyVisited';
         const alreadyVisited = parseInt(storage.local.getRaw(key), 10) || 0;
         storage.local.setRaw(key, alreadyVisited + 1);
-    }
-
-    if (
-        config.get('switches.blockIas') &&
-        config.get('switches.serviceWorkerEnabled') &&
-        navigator.serviceWorker
-    ) {
-        navigator.serviceWorker.ready.then(swreg => {
-            const sw = swreg.active;
-            const ias = window.location.hash.includes('noias');
-            sw.postMessage({ ias });
-        });
     }
 
     ophan.setEventEmitter(mediator);

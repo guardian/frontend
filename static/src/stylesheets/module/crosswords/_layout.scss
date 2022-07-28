@@ -65,7 +65,7 @@
     clear: both;
     margin-top: $gs-baseline;
     // 90px is the height of a leaderboard
-    height: 90px + $mpu-ad-label-height + $gs-row-height / 2;
+    min-height: 90px + $mpu-ad-label-height + $gs-row-height / 2;
 
     @include mq($until: desktop) {
         margin-left: -$gs-gutter;

@@ -5,10 +5,9 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.{Edition, LinkTo}
-@import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
-@import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
+@import views.support.Commercial.{articleAsideOptionalSizes, isPaidContent, shouldShowAds}
 @import views.support.TrailCssClasses._
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
@@ -18,7 +17,7 @@
     <article
         id="live-blog"
         data-test-id="live-blog"
-        class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase content--pillar-@article.metadata.pillar.nameOrDefault"
+        class="content content--liveblog tonal tonal--@toneClassForLiveblog(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase content--pillar-@article.metadata.pillar.nameOrDefault"
         role="main"
         itemscope
         itemtype="http://schema.org/LiveBlogPosting"
@@ -75,15 +74,17 @@
                         <div class="js-live-blog__sticky-components">
                             <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
                                 @if(article.hasKeyEvents) {
-                                    <div class="modern-visible js-updates-desktop">
-                                        <div data-component="timeline">
-                                                @fragments.dropdown("Key events", Some("key-events"), true) {
-                                                    <ul class="timeline js-live-blog__timeline u-unstyled">
-                                                    @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
-                                                    </ul>
-                                                }
+                                    @defining(KeyEventData(article.content.fields.blocks, timezone)) { case keyEventData =>
+                                        <div class="modern-visible js-updates-desktop">
+                                            <div data-component="timeline">
+                                            @fragments.dropdown("Key events", Some("key-events"), true) {
+                                                <ul class="timeline js-live-blog__timeline u-unstyled">
+                                                @views.html.liveblog.keyEvents("/" + article.metadata.id, keyEventData, model.filterKeyEvents)
+                                                </ul>
+                                            }
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
                                 <div class="js-live-notifications live-notifications" data-component="notifications"></div>
                             </div>
@@ -91,7 +92,7 @@
                         <div class="js-components-container"></div>
                     </div>
 
-                    <div class="js-liveblog-body-content">
+                    <div class="js-liveblog-body-content" id="liveblog-content">
                         @fragments.dropdown("Live feed", Some("live-feed"), true) {
                             @views.html.liveblog.liveBlogBodyContent(model)
                             @fragments.submeta(article)

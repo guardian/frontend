@@ -1,7 +1,6 @@
 package models.dotcomponents
 
-import com.gu.contentapi.client.utils.DesignType
-import model.{ContentFormat, DotcomContentType, Pillar}
+import model.{ContentFormat, DotcomContentType, ImageAsset}
 import play.api.libs.json.Json
 
 // duplicated in dotcomponentsdatamodel
@@ -19,6 +18,7 @@ case class RichLink(
     tags: List[RichLinkTag],
     cardStyle: String,
     thumbnailUrl: Option[String],
+    imageAsset: Option[ImageAsset],
     headline: String,
     contentType: Option[DotcomContentType],
     starRating: Option[Int],
@@ -31,20 +31,4 @@ case class RichLink(
 
 object RichLink {
   implicit val writes = Json.writes[RichLink]
-}
-
-object OnwardsUtils {
-
-  def determinePillar(pillar: Option[Pillar]): String = {
-    pillar.map { pillar => correctPillar(pillar.toString.toLowerCase()) }.getOrElse("news")
-  }
-
-  def correctPillar(pillar: String): String = {
-    if (pillar == "arts") {
-      "culture"
-    } else {
-      pillar
-    }
-  }
-
 }

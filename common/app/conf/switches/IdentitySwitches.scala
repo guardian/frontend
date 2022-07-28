@@ -1,7 +1,6 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
 
 trait IdentitySwitches {
 

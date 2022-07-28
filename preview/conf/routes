@@ -26,9 +26,6 @@ GET        /advertiser-content/:campaignName/:pageName                          
 GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET        /advertiser-content/:campaignName/:pageName/autoplay.json                           commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
-# Reader revenue
-GET        /reader-revenue/contributions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world>               controllers.ReaderRevenueAppController.contributionsBannerDeployLog(region: String)
-
 # Onward
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                                                               controllers.MostPopularController.render(path)
@@ -139,7 +136,6 @@ GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                       
 GET        /$path<.+>/lite.json                                                                controllers.FaciaDraftController.renderFrontJsonLite(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                       controllers.FaciaDraftController.renderFrontJson(path)
 
-
 GET        /container/*id.json                                                                 controllers.FaciaDraftController.renderContainerJson(id)
 
 # Newspaper pages
@@ -169,7 +165,6 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                               controllers.GalleryController.lightboxJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                        controllers.GalleryController.renderJson(path)
 
-GET        /service-worker.js                                                                  controllers.WebAppController.serviceWorker()
 GET        /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                      controllers.ImageContentController.renderJson(path)
@@ -181,7 +176,11 @@ GET        /sharecount/*path.json                                               
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:parentComponent/$listId<[0-9]+>         controllers.EmailSignupController.renderFormWithParentComponent(emailType: String, listId: Int, parentComponent:String)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:parentComponent/:listName               controllers.EmailSignupController.renderFormFromNameWithParentComponent(emailType: String, listName: String, parentComponent: String)
 GET        /email/form/footer/:listName                                              controllers.EmailSignupController.renderFooterForm(listName: String)
+GET        /email/form/thrasher/$listId<[0-9]+>                                      controllers.EmailSignupController.renderThrasherForm(listId: Int)
+GET        /email/form/thrasher/:listName                                            controllers.EmailSignupController.renderThrasherFormFromName(listName: String)
 ## Submission results (Only accessed server side)
 GET        /email/$result<success|invalid|error>/footer                         controllers.EmailSignupController.subscriptionResultFooter(result: String)
 GET        /email/success/:listName                                             controllers.EmailSignupController.subscriptionSuccessResult(listName: String)
@@ -202,11 +201,11 @@ GET        /weatherapi/city.json                                                
 GET        /weatherapi/locations                                                               weather.controllers.LocationsController.findCity(query: String)
 
 # Articles
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean], topics: Option[String])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt  controllers.LiveBlogController.renderEmail(path)
-GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], format: Option[String])
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean], topics: Option[String])
 GET     /*path.json                 controllers.ArticleController.renderJson(path)
 GET     /*path/email                controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)

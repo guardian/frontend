@@ -7,14 +7,8 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        controllers.HealthCheck.healthCheck()
 
-GET        /reader-revenue/contributions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world>                    controllers.ReaderRevenueAppController.contributionsBannerDeployLog(region: String)
-GET        /reader-revenue/subscriptions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world|european-union>                    controllers.ReaderRevenueAppController.subscriptionsBannerDeployLog(region: String)
-
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
-
-# FONT LOADER
-GET        /font-loader                                                         controllers.FontLoaderController.renderFontLoader()
 
 GET        /email-newsletters                                                   controllers.SignupPageController.renderNewslettersPage()
 
@@ -34,7 +28,11 @@ GET        /crosswords/lookup                                                   
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:parentComponent/$listId<[0-9]+>         controllers.EmailSignupController.renderFormWithParentComponent(emailType: String, listId: Int, parentComponent:String)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:parentComponent/:listName               controllers.EmailSignupController.renderFormFromNameWithParentComponent(emailType: String, listName: String, parentComponent: String)
 GET        /email/form/footer/:listName                                              controllers.EmailSignupController.renderFooterForm(listName: String)
+GET        /email/form/thrasher/$listId<[0-9]+>                                      controllers.EmailSignupController.renderThrasherForm(listId: Int)
+GET        /email/form/thrasher/:listName                                            controllers.EmailSignupController.renderThrasherFormFromName(listName: String)
 ## Submission results (Only accessed server side)
 GET        /email/$result<success|invalid|error>/footer                         controllers.EmailSignupController.subscriptionResultFooter(result: String)
 GET        /email/success/:listName                                             controllers.EmailSignupController.subscriptionSuccessResult(listName: String)
@@ -67,10 +65,6 @@ GET        /preferences                                                         
 GET        /opt/$choice<in|out|delete>/:feature                                 controllers.OptInController.handle(feature, choice)
 GET        /opt/reset                                                           controllers.OptInController.reset()
 
-# Web App paths
-GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
-GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
-
 GET        /getnext/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "next")
 GET        /getprev/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "prev")
 
@@ -85,7 +79,7 @@ POST       /atom/quiz/:id/*path                                                 
 GET        /atom/youtube/:id.json                                               controllers.YoutubeController.getAtomId(id: String)
 
 # Nx1Config
-# mark: 2QJfZo - keep these in sync with other instances https://git.io/JkRox
+# mark: 2QJfZo - keep these in sync with other instances https://github.com/search?q=org%3Aguardian+2QJfZo&type=code
 GET        /switches.json                                                       controllers.Nx1ConfigController.switches
 GET        /tests.json                                                          controllers.Nx1ConfigController.tests
 

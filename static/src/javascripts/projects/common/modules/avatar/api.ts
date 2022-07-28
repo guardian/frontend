@@ -1,12 +1,13 @@
-import config_ from 'lib/config';
+import config from 'lib/config';
 
-// This is really a hacky workaround ⚠️
-const config = config_ as {
-	get: (s: string) => string;
-};
-
-const apiUrl = `${config.get('page.avatarApiUrl')}/v1`;
-const staticUrl = `${config.get('page.avatarImagesUrl')}/user`;
+const apiUrl = `${config.get<string>(
+	'page.avatarApiUrl',
+	'/AVATAR_API_URL_NOT_FOUND',
+)}/v1`;
+const staticUrl = `${config.get<string>(
+	'page.avatarImagesUrl',
+	'/AVATAR_IMAGES_URL_NOT_FOUND',
+)}/user`;
 
 const request = (
 	method: string,

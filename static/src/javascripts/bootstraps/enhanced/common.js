@@ -3,15 +3,13 @@
 import bean from 'bean';
 import config from 'lib/config';
 import { cleanUp, addSessionCookie } from 'lib/cookies';
-import mediator from 'lib/mediator';
+import { mediator } from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
 import { storage } from '@guardian/libs';
 import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
-import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
-import { requestUserSegmentsFromId } from 'common/modules/commercial/user-ad-targeting';
 import {
     refresh as refreshUserFeatures,
     extendContribsCookieExpiry,
@@ -29,15 +27,12 @@ import {
     logHistory,
     logSummary,
     showInMegaNav,
-    incrementDailyArticleCount,
-    incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
-import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
@@ -52,10 +47,9 @@ import {
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
-import { brazeBanner } from 'commercial/modules/brazeBanner';
+import { brazeBanner } from 'common/modules/commercial/braze/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
-import { getArticleCountConsent } from 'common/modules/commercial/contributions-service';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 
 const initialiseTopNavItems = () => {
@@ -104,17 +98,6 @@ const initialiseClickstream = () => {
 
 const loadAnalytics = () => {
     interactionTracking.init();
-    if (config.get('switches.ophan')) {
-        if (config.get('switches.scrollDepth')) {
-            mediator.on('scrolldepth:data', ophan.record);
-
-            new ScrollDepth({
-                isContent: /Article|LiveBlog/.test(
-                    config.get('page.contentType')
-                ),
-            });
-        }
-    }
 };
 
 const loadGoogleAnalytics = () => {
@@ -166,16 +149,6 @@ const updateHistory = () => {
         }
 
         logHistory(page);
-    }
-};
-
-const updateArticleCounts = async () => {
-    const page = config.get('page');
-    const hasConsentedToArticleCounts = await getArticleCountConsent();
-
-    if (page && hasConsentedToArticleCounts) {
-        incrementDailyArticleCount(page);
-        incrementWeeklyArticleCount(page);
     }
 };
 
@@ -295,7 +268,6 @@ const initialiseBanner = () => {
         membershipBanner,
         puzzlesBanner,
         readerRevenueBanner,
-        smartAppBanner,
         adFreeBanner,
         brazeBanner,
     ];
@@ -312,7 +284,6 @@ const init = () => {
         ['c-analytics', loadAnalytics],
         ['c-consent-cookie-tracking', initialiseConsentCookieTracking],
         ['c-identity', initIdentity],
-        ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],
         ['c-test-cookie', testCookie],
         ['c-event-listeners', windowEventListeners],
@@ -339,7 +310,6 @@ const init = () => {
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-banner-picker', initialiseBanner],
-        ['c-increment-article-counts', updateArticleCounts],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
         ['c-load-google-analytics', loadGoogleAnalytics],

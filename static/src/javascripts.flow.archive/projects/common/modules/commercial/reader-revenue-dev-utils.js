@@ -109,7 +109,6 @@ const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
 };
 
 const showMeTheDoubleBanner = (asExistingSupporter: boolean = false): void => {
-    addCookie('GU_geo_continent', 'EU');
     showMeTheBanner(asExistingSupporter);
 };
 

@@ -1,8 +1,7 @@
 package tools
 
-import common.GuLogging
+import common.{Box, GuLogging}
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
-import com.gu.Box
 
 import scala.collection.JavaConverters._
 
@@ -33,14 +32,13 @@ object LoadBalancer extends GuLogging {
     LoadBalancer("frontend-PROD-sport-ELB", "Sport", "frontend-sport"),
     LoadBalancer("frontend-PROD-commercial-ELB", "Commercial", "frontend-commercial"),
     LoadBalancer("frontend-PROD-onward-ELB", "Onward", "frontend-onward"),
-    LoadBalancer("frontend-PROD-diagnostics-ELB", "Diagnostics", "frontend-diagnostics"),
     LoadBalancer("frontend-PROD-archive-ELB", "Archive", "frontend-archive"),
     LoadBalancer("frontend-PROD-rss-ELB", "Rss", "frontend-rss"),
   )
 
   private val agent = Box(loadBalancers)
 
-  def refresh() {
+  def refresh(): Unit = {
     log.info("starting refresh LoadBalancer ELB DNS names")
     credentials.foreach { credentials =>
       val client = AmazonElasticLoadBalancingClient

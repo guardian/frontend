@@ -1,5 +1,7 @@
 @(listName: String)(implicit request: RequestHeader)
 
+@import conf.switches.Switches.EmailSignupRecaptcha
+
 @import common.LinkTo
 @formId = @{"footer-email-sub-form"}
 @inputId = @{"footer-email-sub-input" }
@@ -9,22 +11,30 @@
 @formClass = @{ "email-sub__form email-sub__form--footer" }
 @headerClass = @{"email-sub__header email-sub__header--footer" }
 
-@formHeading = @{"Sign up for the Guardian Today email"}
+@formHeading = @{"Sign up for the Guardian Headlines email"}
 @formDescription = @{"All the day's headlines and highlights from the Guardian, direct to you every morning"}
 
 
 @form = {
-    <form action="@LinkTo("/email/footer")" method="post" id="@formId" class="@formClass" data-email-form-type="footer" data-email-list-name="@listName">
+    <form action="@LinkTo("/email/footer")" method="post" id="@formId" class="@formClass" data-email-form-type="footer" data-email-list-name="@listName" data-component="email-signup-form footer-@listName" data-link-name="footer | @listName">
         @helper.CSRF.formField
         <div class="email-sub__form-wrapper">
             <div class="email-sub__inline-label">
-                <input class="email-sub__text-input" type="email" name="email" id="@inputId" />
+                <input class="email-sub__text-input" type="email" name="email" id="@inputId" required />
                 <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Email address</label>
-                <input class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" />
+                <label aria-hidden="true">
+                    <input tabindex="-1" class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" />
+                </label>
                 <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
+                <input class="email-sub__ref-input" type="hidden" name="ref" id="email-sub__ref-input" value="" />
+                <input class="email-sub__refviewid-input" type="hidden" name="refViewId" id="email-sub__refviewid-input" value="" />
 
             </div>
             <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button" data-component="email-signup-button footer-@listName" data-link-name="footer | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
+            @if(EmailSignupRecaptcha.isSwitchedOn) {
+                @fragments.email.signup.recaptchaContainer()
+                @fragments.email.signup.recaptchaTerms()
+            }
         </div>
     </form>
 }
@@ -39,6 +49,7 @@
 </div>
 
 <script>
-    trackClickEvent(document.getElementById("email-embed-signup-button"))
+    document.getElementById("email-sub__ref-input").value = window.parent.location.href
+    document.getElementById("email-sub__refviewid-input").value = window.parent.guardian.config.ophan.pageViewId
 </script>
 

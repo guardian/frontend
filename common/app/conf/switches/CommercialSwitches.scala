@@ -16,6 +16,16 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
+  val StandaloneCommercialBundle = Switch(
+    Commercial,
+    "standalone-commercial-bundle",
+    "Serve the standalone commercial bundle on all platforms",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",
@@ -51,16 +61,6 @@ trait CommercialSwitches {
     "surveys",
     "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts",
     owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val HostedVideoAutoplay = Switch(
-    Commercial,
-    "hosted-video-autoplay",
-    "When ON, hosted video content may be allowed to autoplay",
-    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
@@ -106,20 +106,20 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val AdomikSwitch = Switch(
+  val PermutiveSwitch = Switch(
     Commercial,
-    "adomik",
-    "Enable Adomik traffic splitting.",
+    "permutive",
+    "Enable Permutive library loading",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
   )
 
-  val PermutiveSwitch = Switch(
+  val ampAmazon = Switch(
     Commercial,
-    "permutive",
-    "Enable Permutive library loading",
+    "amp-amazon",
+    "Amp inventory is being auctioned through Amazon",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -268,14 +268,14 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val a9Switch: Switch = Switch(
+  val a9HeaderBidding: Switch = Switch(
     group = CommercialPrebid,
     name = "a9-header-bidding",
     description = "Turn on A9 header bidding",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val redplanetForAUSSwitch: Switch = Switch(
@@ -291,7 +291,7 @@ trait CommercialSwitches {
   val MerchandisingHighSection: Switch = Switch(
     group = Commercial,
     name = "merchandising-high-section",
-    description = "Move merchandising high section one section lower",
+    description = "Move merchandising high section one section lower. This switch is only applied in the UK.",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -311,14 +311,14 @@ trait CommercialSwitches {
 
 trait PrebidSwitches {
 
-  val prebidSwitch: Switch = Switch(
+  val prebidHeaderBidding: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-header-bidding",
     description = "Turn on Prebid header bidding (takes priority over Sonobi)",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val prebidAnalytics: Switch = Switch(
@@ -471,6 +471,16 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val prebidImproveDigitalSkins: Switch = Switch(
+    group = CommercialPrebid,
+    "prebid-improve-digital-skins",
+    "Include Collective page skins via Improve Digital adapter in Prebid auctions",
+    owners = Seq(Owner.withGithub("mxdvl")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val prebidXaxis: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-xaxis",
@@ -485,6 +495,26 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-ad-you-like",
     description = "Include AdYouLike adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val prebidCriteo: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-criteo",
+    description = "Include Criteo adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val prebidSmart: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-smart",
+    description = "Include the Smart AdServer adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -507,6 +537,36 @@ trait PrebidSwitches {
     description = "Include Mobile Sticky leaderboard banner in Prebid",
     owners = group(Commercial),
     safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val sentinelLogger: Switch = Switch(
+    group = Commercial,
+    name = "sentinel-logger",
+    description = "Send logs to BigQuery allowing devs to discover from which pages legacy code is run",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val fetchNonRefreshableLineItems: Switch = Switch(
+    group = Commercial,
+    name = "fetch-non-refreshable-line-items",
+    description = "Lazily fetch non-refreshable line item ids from an endpoint",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val ampContentABTesting: Switch = Switch(
+    group = Commercial,
+    name = "amp-content-ab-testing",
+    description = "Enable content based testing on AMP",
+    owners = group(Commercial),
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
   )

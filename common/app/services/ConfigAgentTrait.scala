@@ -2,7 +2,6 @@ package services
 
 import akka.util.Timeout
 import app.LifecycleComponent
-import com.gu.Box
 import com.gu.facia.api.models.{Front, _}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
@@ -20,6 +19,19 @@ import scala.util.{Failure, Success}
 
 case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
+/**
+  * ConfigAgent is a cache for Fronts config.
+  *
+  * It is the metadata overview for all fronts on www.theguardian.com. It
+  * describes the fronts on website along with the collections they contain. The
+  * data is pulled from a single file in S3 in the CMS Fronts AWS account.
+  *
+  * Note, it is pre 'pressing', which means that collections do not contain CAPI
+  * article data for backfill etc. Instead, only the metadata is stored - e.g.
+  * if the backfill is CAPI-driven and, if so, the query to use. Full data can
+  * then be retrieved from the (pressed) Fronts API, which again is really a
+  * wrapper over an S3 bucket.
+  */
 object ConfigAgent extends GuLogging {
   implicit lazy val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = Box[Option[ConfigJson]](None)
@@ -126,6 +138,7 @@ object ConfigAgent extends GuLogging {
       isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
       editorialType = None, // value found in Content API
       commercial = None, // value found in Content API
+      priority = frontOption.flatMap(_.priority),
     )
   }
 

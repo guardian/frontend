@@ -29,15 +29,15 @@ object ProjectSettings {
       "-feature",
       "-Xfatal-warnings",
     ),
-    publishArtifact in (Compile, packageDoc) := false,
-    sources in (Compile, doc) := Seq.empty,
-    doc in Compile := target.map(_ / "none").value,
+    Compile / packageDoc / publishArtifact := false,
+    Compile / doc / sources := Seq.empty,
+    Compile / doc := target.map(_ / "none").value,
     scalaVersion := "2.12.13",
     initialize := {
       val _ = initialize.value
       assert(
-        Set("1.8", "11").contains(sys.props("java.specification.version")),
-        "Java 8 or 11 is required for this project.",
+        sys.props("java.specification.version") == "11",
+        "Java 11 is required for this project.",
       )
     },
     cleanAll := Def.taskDyn {
@@ -56,7 +56,7 @@ object ProjectSettings {
       Resolver.sonatypeRepo("releases"),
       "Spy" at "https://files.couchbase.com/maven2/",
     ),
-    evictionWarningOptions in update := EvictionWarningOptions.default
+    update / evictionWarningOptions := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)
       .withWarnDirectEvictions(false)
       .withWarnScalaVersionEviction(false),
@@ -64,24 +64,26 @@ object ProjectSettings {
 
   val frontendTestSettings = Seq(
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
-    testOptions in Test := Nil,
+    Test / testOptions := Nil,
     concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
-    unmanagedClasspath in Test += (baseDirectory map { bd => Attributed.blank(bd / "test") }).value,
+    Test / unmanagedClasspath += (baseDirectory map { bd => Attributed.blank(bd / "test") }).value,
     libraryDependencies ++= Seq(
       scalaTest,
       scalaTestPlus,
+      scalaTestPlusMockito,
+      scalaTestPlusScalacheck,
       mockito,
     ),
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
-    javaOptions in Test += "-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests",
-    javaOptions in Test += "-Xmx2048M",
-    javaOptions in Test += "-XX:+UseConcMarkSweepGC",
-    javaOptions in Test += "-XX:ReservedCodeCacheSize=128m",
-    baseDirectory in Test := file("."),
+    Test / javaOptions += "-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests",
+    Test / javaOptions += "-Xmx2048M",
+    Test / javaOptions += "-XX:+UseConcMarkSweepGC",
+    Test / javaOptions += "-XX:ReservedCodeCacheSize=128m",
+    Test / baseDirectory := file("."),
     // Set testResultLogger back to the default, fixes an issue with `sbt-teamcity-logger`
     //   See: https://github.com/JetBrains/sbt-tc-logger/issues/9
-    testResultLogger in (Test, test) := TestResultLogger.Default,
+    Test / test / testResultLogger := TestResultLogger.Default,
   )
 
   val testAll = taskKey[Unit]("test all aggregate projects")
@@ -91,10 +93,10 @@ object ProjectSettings {
 
   def frontendRootSettings: Seq[Def.Setting[Task[Unit]]] =
     List(
-      testAll := (test in Test)
+      testAll := (Test / test)
         .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))
         .value,
-      upload := riffRaffUpload.in(LocalRootProject).value,
+      upload := (LocalRootProject / riffRaffUpload).value,
       testThenUpload := Def
         .taskDyn({
           testAll.result.value match {
@@ -126,7 +128,7 @@ object ProjectSettings {
       .settings(frontendTestSettings)
       .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(macwire, commonsIo))
-      .settings(packageName in Universal := applicationName)
+      .settings(Universal / packageName := applicationName)
   }
 
   def library(applicationName: String): Project = {

@@ -6,10 +6,12 @@ import com.gu.facia.client.models.{
   TargetedTerritory,
   USEastCoastTerritory,
   USWestCoastTerritory,
+  AUVictoriaTerritory,
+  AUQueenslandTerritory,
+  AUNewSouthWalesTerritory,
 }
 import model.PressedPage
 import model.facia.PressedCollection
-import model.pressed.CollectionConfig
 
 object TargetedCollections {
   // remove all collections with a targeted territory that is not allowed
@@ -24,6 +26,9 @@ object TargetedCollections {
     EU27Territory -> "EU-27 Countries",
     USEastCoastTerritory -> "US East Coast",
     USWestCoastTerritory -> "US West Coast",
+    AUVictoriaTerritory -> "Australia - Victoria",
+    AUQueenslandTerritory -> "Australia - Queensland",
+    AUNewSouthWalesTerritory -> "Australia - New South Wales",
   )
 
   def markDisplayName(collection: PressedCollection): PressedCollection = {

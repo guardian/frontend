@@ -121,3 +121,20 @@ validate-a11y: install # PRIVATE
 # Take screenshots for a visual check.
 screenshots: install
 	@./tools/task-runner/runner screenshot
+
+# *********************** COMMERCIAL ***********************
+# Do all the commercial things
+commercial: install
+	@./tools/task-runner/runner commercial --verbose
+
+commercial-compile: install # PRIVATE
+	@./tools/task-runner/runner commercial/compile
+
+commercial-validate: install # PRIVATE
+	@./tools/task-runner/runner commercial/validate
+
+commercial-graph: install # PRIVATE
+	@./tools/task-runner/runner commercial/graph --verbose
+
+commercial-watch: commercial-compile
+	@./dev/commercial.watch.js

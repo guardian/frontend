@@ -3,7 +3,7 @@ package services
 import common.GuLogging
 import conf.AdminConfiguration.fastly
 import com.amazonaws.services.cloudwatch.model.{Dimension, MetricDatum}
-import org.joda.time.DateTime
+import java.util.Date
 import play.api.libs.ws.WSClient
 import play.api.libs.json.{JsValue, Json}
 
@@ -19,7 +19,7 @@ case class FastlyStatistic(service: String, region: String, timestamp: Long, nam
       new Dimension().withName("service").withValue(service),
       new Dimension().withName("region").withValue(region),
     )
-    .withTimestamp(new DateTime(timestamp).toDate)
+    .withTimestamp(new Date(timestamp))
     .withValue(value.toDouble)
 }
 

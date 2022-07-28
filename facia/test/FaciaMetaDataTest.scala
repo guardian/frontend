@@ -6,8 +6,10 @@ import concurrent.BlockingOperations
 import conf.Configuration
 import controllers.FaciaControllerImpl
 import org.jsoup.Jsoup
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json._
 import play.api.test.Helpers._
 import services.ConfigAgent
@@ -17,7 +19,7 @@ import scala.concurrent.Await
 import test._
 
 @DoNotDiscover class FaciaMetaDataTest
-    extends FlatSpec
+    extends AnyFlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
@@ -30,7 +32,7 @@ import test._
   lazy val blockingOperations = new BlockingOperations(actorSystem)
   lazy val fapi = new TestFrontJsonFapi(blockingOperations)
 
-  override def beforeAll() {
+  override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts =
@@ -41,7 +43,7 @@ import test._
     Await.result(refresh, 3.seconds)
   }
 
-  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents())
+  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient)
   val frontPath = "music"
 
   it should "Include organisation metadata" in {

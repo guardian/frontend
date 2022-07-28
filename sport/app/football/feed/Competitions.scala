@@ -6,14 +6,13 @@ import conf.FootballClient
 import football.controllers.Interval
 import model.{Competition, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.DateTimeComparator
-import pa._
+import pa.{FootballMatch, _}
 
-import java.time.LocalDate
+import java.time.{Clock, LocalDate, ZonedDateTime}
 import java.util.Comparator
 import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.Ordering.Implicits._
-import java.time.Clock
 
 trait Competitions extends implicits.Football {
 
@@ -101,6 +100,12 @@ trait Competitions extends implicits.Football {
 
   def matches: Seq[FootballMatch] = competitions.flatMap(_.matches)
 
+  def isMatchLiveOrAboutToStart(matches: Seq[FootballMatch], clock: Clock): Boolean =
+    matches.exists(game => {
+      val currentTime = ZonedDateTime.now(clock)
+      game.isLive ||
+      (game.date.minusMinutes(5).isBefore(currentTime) && game.date.plusMinutes(15).isAfter(currentTime))
+    })
 }
 
 object Competitions {
@@ -114,8 +119,21 @@ object Competitions {
 // https://github.com/guardian/mobile-apps-api
 // common-pa-feeds/src/main/scala/com/gu/mobile/football/data/pa/PaCompetitions.scala
 
+// Ordering is important! Competitions at the top of this list will be shown before competitions on the bottom
+// on pages such as /football/fixtures
 object CompetitionsProvider {
   val allCompetitions: Seq[Competition] = Seq(
+    Competition(
+      "423",
+      "/football/women-s-euro-2022",
+      "Women's Euro 2022",
+      "Women's Euro 2022",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2022, 7, 1)),
+      finalMatchSVG = Some("womens_euros_2022_badge"),
+    ),
     Competition(
       "100",
       "/football/premierleague",
@@ -172,13 +190,23 @@ object CompetitionsProvider {
     ),
     Competition(
       "700",
-      "/football/world-cup-2018",
-      "World Cup 2018",
-      "World Cup 2018",
+      "/football/world-cup-2022",
+      "World Cup 2022",
+      "World Cup 2022",
       "Internationals",
       showInTeamsList = true,
       tableDividers = List(2),
-      startDate = Some(LocalDate.of(2018, 6, 1)),
+      startDate = Some(LocalDate.of(2022, 11, 1)),
+    ),
+    Competition(
+      "750",
+      "/football/euro-2020",
+      "Euro 2020",
+      "Euro 2020",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2019, 11, 30)),
     ),
     Competition(
       "701",
@@ -312,16 +340,6 @@ object CompetitionsProvider {
       "European",
     ),
     Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
-    Competition(
-      "750",
-      "/football/euro-2020",
-      "Euro 2020",
-      "Euro 2020",
-      "Internationals",
-      showInTeamsList = true,
-      tableDividers = List(2),
-      startDate = Some(LocalDate.of(2019, 11, 30)),
-    ),
   )
 }
 
@@ -330,7 +348,6 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     with LiveMatches
     with Lineups
     with GuLogging
-    with implicits.Collections
     with implicits.Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
@@ -401,5 +418,17 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
         }
     })
     result.map(_.flatten).flatMap(Future.sequence(_))
+  }
+
+  def maybeRefreshLiveMatches(
+      clock: Clock,
+  )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
+    // matches is the list of all matches from all competitions
+    if (isMatchLiveOrAboutToStart(matches, clock)) {
+      log.info("Match is in Progress - refreshing match day data")
+      refreshMatchDay(clock)
+    } else {
+      Future.successful(immutable.Iterable[Competition]())
+    }
   }
 }

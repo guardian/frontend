@@ -1,16 +1,14 @@
 @import services.EmailPrefsData
 
-@import controllers.editprofile.GuestPasswordFormData
-@import com.gu.identity.model.EmailNewsletter
+@import services.newsletters.model.NewsletterResponse
 @(
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     returnUrl: String,
     email: String,
     emailPrefsForm: Form[EmailPrefsData],
-    setPasswordForm: Form[GuestPasswordFormData],
     emailSubscriptions: List[String],
-    availableLists: List[EmailNewsletter],
+    availableLists: List[NewsletterResponse],
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import common.LinkTo
@@ -25,7 +23,7 @@
     <section class="identity-forms-message">
         <h1 class="identity-title">Thank you! We've got your preferences</h1>
         <div class="identity-forms-message__body">
-            <p>You can change these anytime by going to My account > <a class="u-underline" data-link-name="complete-consents : to-email-prefs" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.redirectToEmailPrefs.url, idRequest)">
+            <p>You can change these anytime by going to My account > <a class="u-underline" data-link-name="complete-consents : to-email-prefs" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.redirectToManageEmailPrefs.url, idRequest)">
                 Email Preferences
             </a>.</p>
             <br/>
@@ -47,15 +45,6 @@
                     </p>
                 </div>
             </form>
-        }
-
-        @request.cookies.get("SC_GU_GUEST_PW_SET").map { passwordSetToken =>
-            <div
-                class="js-identity-upsell-account-creation"
-                data-email="@{email}"
-                data-account-token="@{passwordSetToken.value}"
-                data-csrf="@{play.filters.csrf.CSRF.getToken.map(_.value)}"
-            ></div>
         }
 
         <aside class="identity-forms-message__body">

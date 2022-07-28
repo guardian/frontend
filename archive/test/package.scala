@@ -16,6 +16,4 @@ class ArchiveTestSuite
     extends Suites(
       new ArchiveControllerTest,
     )
-    with SingleServerSuite {
-  override lazy val port: Int = 19004
-}
+    with SingleServerSuite {}

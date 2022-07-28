@@ -1,10 +1,13 @@
 package conf.cricketPa
 
+import common.Chronos
+
 import xml.{NodeSeq, XML}
 import scala.language.postfixOps
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.DateTime
 import cricketModel._
+
+import java.time.LocalDateTime
+import java.util.TimeZone
 
 object Parser {
 
@@ -31,14 +34,14 @@ object Parser {
       competitionName: String,
       venueName: String,
       result: String,
-      gameDate: DateTime,
+      gameDate: LocalDateTime,
       officials: List[String],
   )
 
   private object Date {
-    private val dateTimeParser = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")
-
-    def apply(dateTime: String): DateTime = dateTimeParser.parseDateTime(dateTime)
+    private val dateTimePattern = "yyyy-MM-dd'T'HH:mm:ss"
+    private val dateTimeParser = Chronos.dateFormatter(dateTimePattern, TimeZone.getTimeZone("Europe/London").toZoneId)
+    def apply(dateTime: String): LocalDateTime = LocalDateTime.parse(dateTime, dateTimeParser)
   }
 
   private def inningsDescription(inningsOrder: Int, battingTeam: String): String = {

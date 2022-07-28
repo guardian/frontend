@@ -2,11 +2,11 @@ package controllers.cache
 
 import java.net.URI
 import java.util.UUID
-
 import com.gu.googleauth.UserIdentity
-import common.{ImplicitControllerExecutionContext, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext}
 import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
+import play.api.http.HttpConfiguration
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
@@ -17,6 +17,7 @@ import scala.concurrent.Future.successful
 class ImageDecacheController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
+    val httpConfiguration: HttpConfiguration,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -33,7 +34,7 @@ class ImageDecacheController(
     }
 
   def decache(): Action[AnyContent] =
-    AdminAuthAction.async { implicit request =>
+    AdminAuthAction(httpConfiguration).async { implicit request =>
       getSubmittedImage(request)
         .map(new URI(_))
         .map { imageUri =>

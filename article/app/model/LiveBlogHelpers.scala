@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.v1.ItemResponse
+import common.GuLogging
 import common.`package`._
 import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
@@ -8,14 +9,18 @@ import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{JsValue, Json, _}
 
-object LiveBlogHelpers {
+object LiveBlogHelpers extends GuLogging {
 
   // Get a Seq[BodyBlock] given an article and the "page" request parameter on live-blog pages.
 
-  def blocksForLiveBlogRequest(article: Article, param: Option[String]): Seq[BodyBlock] = {
+  def blocksForLiveBlogRequest(
+      article: Article,
+      param: Option[String],
+      filterKeyEvents: Boolean,
+  ): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
-      LiveBlogHelpers.createLiveBlogModel(article, range)
+      LiveBlogHelpers.createLiveBlogModel(article, range, filterKeyEvents, None)
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
@@ -31,7 +36,12 @@ object LiveBlogHelpers {
 
   // Given a BlockRange and an article, return a combined LiveBlogCurrentPage instance
 
-  def createLiveBlogModel(liveBlog: Article, range: BlockRange): Option[LiveBlogCurrentPage] = {
+  def createLiveBlogModel(
+      liveBlog: Article,
+      range: BlockRange,
+      filterKeyEvents: Boolean,
+      topicResult: Option[TopicResult],
+  ): Option[LiveBlogCurrentPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
@@ -40,6 +50,8 @@ object LiveBlogHelpers {
         pageSize = pageSize,
         _,
         range,
+        filterKeyEvents,
+        topicResult,
       ),
     )
 
@@ -51,6 +63,8 @@ object LiveBlogHelpers {
       liveBlog: Article,
       response: ItemResponse,
       range: BlockRange,
+      filterKeyEvents: Boolean,
+      topicResult: Option[TopicResult],
   ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -61,6 +75,8 @@ object LiveBlogHelpers {
           pageSize = pageSize,
           blocks,
           range,
+          filterKeyEvents,
+          topicResult,
         )
       } getOrElse None
 
@@ -82,8 +98,15 @@ object LiveBlogHelpers {
         val liveBlogCache = liveBlog.copy(
           content = liveBlog.content.copy(metadata = liveBlog.content.metadata.copy(cacheTime = cacheTime)),
         )
-        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog.metadata.id, response)))
 
+        Left(
+          LiveBlogPage(
+            article = liveBlogCache,
+            currentPage = pageModel,
+            related = StoryPackages(liveBlog.metadata.id, response),
+            filterKeyEvents = filterKeyEvents,
+          ),
+        )
       }
       .getOrElse(Right(NotFound))
 

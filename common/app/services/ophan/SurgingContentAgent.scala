@@ -1,7 +1,6 @@
 package services.ophan
 
 import app.LifecycleComponent
-import com.gu.Box
 import com.gu.commercial.display.SurgeLookupService
 import common._
 import org.joda.time.DateTime

@@ -199,7 +199,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     .block-time__absolute {
         @include fs-textSans(1);
         display: inline-block;
-        margin-left: $gs-gutter/4;
         color: $brightness-46;
         font-weight: normal;
     }
@@ -213,6 +212,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         .block-time__absolute {
             display: block;
             margin-left: 0;
+
+            &.block-time__pinned {
+                display: flex;
+            }
         }
     }
 }
@@ -548,7 +551,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
         @include mq($until: desktop) {
             background-color: $brightness-97;
-            padding: $gs-baseline $content-gutter;
+            padding: 0 $content-gutter;
         }
 
         @include mq(desktop) {

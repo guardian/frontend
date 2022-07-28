@@ -16,14 +16,8 @@ import org.apache.commons.codec.digest.DigestUtils
 import scala.concurrent.{ExecutionContext, Future}
 
 class GzipperConfig() extends GzipFilterConfig {
-  // These paths are used as a whitelist that means the server's
-  // outgoing response for this request will be uncompressed.
-  val excludeFromGzip = List(
-    "/esi/ad-call",
-  )
-
   override val shouldGzip: (RequestHeader, Result) => Boolean = (request, result) => {
-    !result.header.isImage && !excludeFromGzip.contains(request.path)
+    !result.header.isImage
   }
 }
 class Gzipper(implicit val mat: Materializer) extends GzipFilter(new GzipperConfig)
@@ -121,8 +115,7 @@ class PanicSheddingFilter(implicit val mat: Materializer, executionContext: Exec
 }
 
 object Filters {
-  // NOTE - order is important here, Gzipper AFTER JsonVaryHeaders
-  // which effectively means "JsonVaryHeaders goes around Gzipper"
+  // NOTE: filters are executed in *reverse* order, and the order is important.
   def common(implicit
       materializer: Materializer,
       applicationContext: ApplicationContext,

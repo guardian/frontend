@@ -1,7 +1,4 @@
-@import conf.Configuration.site.host
-@import conf.Configuration.Media
 @import views.support.{RenderClasses, Video700}
-@import com.netaporter.uri.dsl._
 @import model.pressed.CardStyle
 
 @import model.ImageMedia
@@ -48,8 +45,12 @@
     }
 
         @for(asset <- activeAsset if playable && !expired) {
-
-            <div id="youtube-@asset.id" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
+            @*
+                Append a UUID to ensure a unqiue DOM id for all YouTube atoms
+                This fixes the scenario when there are muliple instances of the same assetId i.e. the same video on the page.
+                This is most likely to occur in a liveblog where the video can be in a main media position and in a block.
+            *@
+            <div id="youtube-@asset.id-@java.util.UUID.randomUUID.toString" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
 
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
                 <div class="video-overlay">

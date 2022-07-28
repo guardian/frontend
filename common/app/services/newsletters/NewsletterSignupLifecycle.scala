@@ -4,8 +4,7 @@ import app.LifecycleComponent
 import common.JobScheduler
 import play.api.inject.ApplicationLifecycle
 
-import java.util.concurrent.Executors
-import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
+import scala.concurrent.{ExecutionContext, Future}
 
 class NewsletterSignupLifecycle(
     appLifecycle: ApplicationLifecycle,
@@ -31,8 +30,6 @@ class NewsletterSignupLifecycle(
     newsletterSignupAgent.refresh()
     jobs.scheduleEveryNMinutes("NewsletterSignupAgentLowFrequencyRefreshJob", 60) {
       newsletterSignupAgent.refresh()
-      Future.successful(())
     }
   }
-
 }

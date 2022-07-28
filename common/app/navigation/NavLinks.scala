@@ -47,16 +47,21 @@ private object NavLinks {
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
   val smallBusiness = NavLink("Small business", "/business/us-small-business")
   val projectSyndicate = NavLink("Project Syndicate", "/business/series/project-syndicate-economists")
-  val climateChange = NavLink("Climate change", "/environment/climate-change")
+  val climateCrisis = NavLink("Climate crisis", "/environment/climate-crisis")
   val wildlife = NavLink("Wildlife", "/environment/wildlife")
   val energy = NavLink("Energy", "/environment/energy")
   val pollution = NavLink("Pollution", "/environment/pollution")
+  val biodiversity = NavLink("Biodiversity", "/environment/biodiversity")
+  val oceans = NavLink("Oceans", "/environment/oceans")
+  val greatBarrierReef = NavLink("Great Barrier Reef", "/environment/great-barrier-reef")
   val property = NavLink("Property", "/money/property")
   val pensions = NavLink("Pensions", "/money/pensions")
   val savings = NavLink("Savings", "/money/savings")
   val borrowing = NavLink("Borrowing", "/money/debt")
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/tone/obituaries")
+  val greenLight = NavLink("Green light", "/environment/series/green-light")
+  val fightToVote = NavLink("Fight to vote", "/us-news/series/the-fight-to-vote")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -70,8 +75,11 @@ private object NavLinks {
     children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, globalDevelopment),
   )
   val ukEnvironment =
-    NavLink("Environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
-  val auEnvironment = ukEnvironment.copy(children = List(globalDevelopment, ourWideBrownLand))
+    NavLink("Environment", "/environment", children = List(climateCrisis, wildlife, energy, pollution))
+  val auEnvironment = ukEnvironment.copy(children =
+    List(climateCrisis, energy, wildlife, biodiversity, oceans, pollution, greatBarrierReef),
+  )
+  val usEnvironment = ukEnvironment.copy(children = List(climateCrisis, wildlife, energy, pollution, greenLight))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
     "Business",
@@ -96,6 +104,7 @@ private object NavLinks {
     "Football",
     "/football",
     children = List(
+      NavLink("Women's Euro 2022", "/football/women-s-euro-2022", Some("football/women-s-euro-2022")),
       NavLink("Live scores", "/football/live", Some("football/live")),
       NavLink("Tables", "/football/tables", Some("football/tables")),
       NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
@@ -105,7 +114,6 @@ private object NavLinks {
     ),
   )
   val soccer = football.copy(title = "Soccer")
-
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -169,9 +177,7 @@ private object NavLinks {
       NavLink("Obituaries", "/tone/obituaries"),
       NavLink("G2", "/theguardian/g2"),
       NavLink("Journal", "/theguardian/journal"),
-      NavLink("Weekend", "/theguardian/weekend"),
-      NavLink("The Guide", "/theguardian/theguide"),
-      NavLink("Saturday review", "/theguardian/guardianreview"),
+      NavLink("Saturday", "/theguardian/saturday"),
     ),
   )
   val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/membership")
@@ -222,6 +228,7 @@ private object NavLinks {
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
   val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
   val guardianPuzzlesApp = NavLink("Guardian Puzzles app", s"https://puzzles.theguardian.com/download")
+  val guardianLicensing = NavLink("Guardian content licensing site", s"https://licensing.theguardian.com/")
   val jobsRecruiter = NavLink(
     "Hire with Guardian Jobs",
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
@@ -249,9 +256,11 @@ private object NavLinks {
     List(
       ukNews,
       world,
-      ukBusiness,
-      coronavirus,
+      climateCrisis,
+      newsletters,
       football,
+      coronavirus,
+      ukBusiness,
       ukEnvironment,
       politics,
       education,
@@ -282,20 +291,22 @@ private object NavLinks {
     List(
       usNews,
       world,
-      ukEnvironment,
+      usEnvironment,
       soccer,
       usPolitics,
       usBusiness,
       tech,
       science,
-      newsletters.copy(url = s"${newsletters.url}?INTCMP=DOTCOM_NAV_NEWSLETTER_US"),
+      newsletters.copy(url = s"${newsletters.url}"),
+      fightToVote,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
     children = List(
-      coronavirus,
       world,
       ukNews,
+      coronavirus,
+      climateCrisis,
       ukEnvironment,
       science,
       globalDevelopment,
@@ -390,6 +401,7 @@ private object NavLinks {
       MLS,
       NBA,
       NHL,
+      formulaOne,
     ),
   )
   val intSportPillar = ukSportPillar.copy(
@@ -575,23 +587,27 @@ private object NavLinks {
     printShop,
     ukPatrons,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
   val auBrandExtensions = List(
     auEvents,
     digitalNewspaperArchive,
     guardianPuzzlesApp,
     auWeekend,
+    guardianLicensing,
   )
   val usBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader_dropdown"),
     digitalNewspaperArchive,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader_dropdown"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     guardianPuzzlesApp,
+    guardianLicensing,
   )
 
   // Tertiary Navigation
@@ -620,6 +636,7 @@ private object NavLinks {
     "business/diversity-and-equality",
     "business/us-small-business",
     "environment/climate-change",
+    "environment/climate-crisis",
     "environment/wildlife",
     "environment/energy",
     "environment/pollution",

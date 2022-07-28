@@ -2,7 +2,6 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
-import common.`package`.Gone
 import model.Cached.WithoutRevalidationResult
 import model._
 import play.api.mvc._

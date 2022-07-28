@@ -27,29 +27,33 @@ object VersionInfo extends AutoPlugin {
 
   override val projectSettings = Seq(
     buildNumber := System.getenv().getOrDefault("BUILD_NUMBER", "DEV"),
-    branch := baseDirectory( baseDir => {
-      getRepo(baseDir).map( gitRepo => {
-        val branchName = gitRepo.build.getBranch
-        gitRepo.build.close()
-        branchName
-      }).getOrElse("DEV")
+    branch := baseDirectory(baseDir => {
+      getRepo(baseDir)
+        .map(gitRepo => {
+          val branchName = gitRepo.build.getBranch
+          gitRepo.build.close()
+          branchName
+        })
+        .getOrElse("DEV")
     }).value,
-    vcsNumber := baseDirectory( baseDir => {
-      getRepo(baseDir).map( gitRepo => {
-        val commitHash = gitRepo.build.resolve("HEAD").getName
-        gitRepo.build.close()
-        commitHash
-      }).getOrElse("DEV")
+    vcsNumber := baseDirectory(baseDir => {
+      getRepo(baseDir)
+        .map(gitRepo => {
+          val commitHash = gitRepo.build.resolve("HEAD").getName
+          gitRepo.build.close()
+          commitHash
+        })
+        .getOrElse("DEV")
     }).value,
-    resourceGenerators in Compile += Def.task {
+    Compile / resourceGenerators += Def.task {
       buildFile(
-        (resourceManaged in Compile).value,
+        (Compile / resourceManaged).value,
         branch.value,
         buildNumber.value,
         vcsNumber.value,
-        streams.value
+        streams.value,
       )
-    }
+    },
   )
 
   def buildFile(outDir: File, branch: String, buildNum: String, vcsNum: String, s: TaskStreams): Seq[File] = {
@@ -59,7 +63,8 @@ object VersionInfo extends AutoPlugin {
       "Build" -> buildNum.replace("\"", "").trim,
       "Date" -> new DateTime(DateTimeZone.UTC).toString(),
       "Built-By" -> System.getProperty("user.name", "<unknown>"),
-      "Built-On" -> InetAddress.getLocalHost.getHostName)
+      "Built-On" -> InetAddress.getLocalHost.getHostName,
+    )
 
     val versionFileContents = (versionInfo map { case (x, y) => x + ": " + y }).toList.sorted
 

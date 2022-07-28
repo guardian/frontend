@@ -1,9 +1,9 @@
 @import java.time.format.DateTimeFormatter
-@(fm: pa.FootballMatch, round: pa.Round)
+@(fm: pa.FootballMatch, round: pa.Round, competition: model.Competition)
 
 @import implicits.Football._
 @import conf.Configuration
-@import model.CompetitionDisplayHelpers.cleanTeamName
+@import model.CompetitionDisplayHelpers.cleanTeamNameSpider
 
 <div class="football-match" id="football-match-@fm.id">
     <div class="football-match__container">
@@ -11,15 +11,15 @@
             @if(!fm.homeTeam.isGhostTeam){
                 <img class="team-crest knockout--crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{fm.homeTeam.id}.png" />
             }
-            @cleanTeamName(fm.homeTeam.knockoutName)
+            @cleanTeamNameSpider(fm.homeTeam.knockoutName)
             @if(fm.hasStarted){
                 <span class="football-match__score">@fm.homeTeam.score</span>
             }
         </div>
         <div class="football-match__details">
-            @if(round.name.exists(_ == "Final")) {
+            @if(round.name.contains("Final")) {
                 <div class="bigfatfinal">
-                    @fragments.inlineSvg("world_cup_badge", "badges", List("world__cup-svg", "world__cup-badge", "bigfatfinal__image"))
+                    @fragments.inlineSvg(competition.finalMatchSVG.getOrElse("euro_2020_badge"), "badges", List("world__cup-svg", "world__cup-badge", "bigfatfinal__image"))
                     <div class="football-match__name"><b>Final</b></div>
                 </div>
             }
@@ -38,7 +38,7 @@
             @if(!fm.awayTeam.isGhostTeam){
                 <img class="team-crest knockout--crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{fm.awayTeam.id}.png" />
             }
-            @cleanTeamName(fm.awayTeam.knockoutName)
+            @cleanTeamNameSpider(fm.awayTeam.knockoutName)
             @if(fm.hasStarted){
                 <span class="football-match__score">@fm.awayTeam.score</span>
             }

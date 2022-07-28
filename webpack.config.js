@@ -43,7 +43,7 @@ module.exports = {
             'src',
             'javascripts',
             'bootstraps',
-            'youtube-embed.js'
+            'youtube-embed.ts'
         ),
     },
     output: {

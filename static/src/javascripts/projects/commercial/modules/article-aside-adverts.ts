@@ -1,13 +1,9 @@
 import { $$ } from '../../../lib/$$';
-import config_ from '../../../lib/config';
+import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
-import mediator from '../../../lib/mediator';
+import { mediator } from '../../../lib/mediator';
 
 const minArticleHeight = 1300;
-
-const config = config_ as {
-	get: (s: string, b?: boolean) => string;
-};
 
 const getAllowedSizesForImmersive = (availableSpace: number) => {
 	// filter ad slot sizes based on the available height
@@ -35,7 +31,7 @@ const getTopOffset = (element: HTMLElement | undefined): number => {
 	if (!element) return 0;
 	const docEl = element.ownerDocument.documentElement;
 	const clientRectTop = element.getBoundingClientRect().top;
-	const yScroll = window.pageYOffset || document.documentElement.scrollTop;
+	const yScroll = window.scrollY || document.documentElement.scrollTop;
 	return (
 		clientRectTop +
 		yScroll -
@@ -43,6 +39,10 @@ const getTopOffset = (element: HTMLElement | undefined): number => {
 	);
 };
 
+/**
+ * Initialise article aside ad slot
+ * @returns Promise
+ */
 export const init = (): Promise<void | boolean> => {
 	const col = $$('.js-secondary-column');
 
@@ -72,7 +72,7 @@ export const init = (): Promise<void | boolean> => {
 		})
 		.then(([mainColHeight, immersiveOffset]) => {
 			// we do all the adjustments server-side if the page has a ShowcaseMainElement!
-			if (config.get('page.hasShowcaseMainElement', false)) {
+			if (config.get<boolean>('page.hasShowcaseMainElement', false)) {
 				return adSlotsWithinRightCol[0];
 			}
 			// immersive articles may have an image that overlaps the aside ad so we need to remove

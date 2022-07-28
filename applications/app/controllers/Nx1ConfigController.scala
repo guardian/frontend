@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader}
 import views.support.CamelCase
 import experiments.ActiveExperiments
@@ -14,7 +14,7 @@ import experiments.ActiveExperiments._
 
     - https://www.theguardian.com/switches.json
     - https://www.theguardian.com/tests.json
-    - mark: 2QJfZo - keep these in sync with other instances https://git.io/JkRox
+    - mark: 2QJfZo - keep these in sync with other instances https://github.com/search?q=org%3Aguardian+2QJfZo&type=code
 
   If more metadata is required in the future then do add new routes instead of overloading existing public objects.
 

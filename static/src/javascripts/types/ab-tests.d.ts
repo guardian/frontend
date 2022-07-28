@@ -1,7 +1,6 @@
+import type { ABTest, Variant } from '@guardian/ab-core';
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
 import type { TickerSettings } from 'common/modules/commercial/ticker';
-
-type ListenerFunction = (f: () => void) => void;
 
 declare type EpicCta = { url: string; ctaText: string };
 
@@ -9,16 +8,6 @@ declare type EpicTemplate = (
 	arg0: EpicVariant,
 	arg1: AcquisitionsEpicTemplateCopy,
 ) => string;
-
-declare type Variant = {
-	id: string;
-	test: (x: Record<string, any>) => void;
-	campaignCode?: string;
-	canRun?: () => boolean;
-	impression?: ListenerFunction;
-	success?: ListenerFunction;
-	engagementBannerParams?: EngagementBannerTestParams;
-};
 
 declare type EpicVariant = Variant & {
 	// filters, where empty is taken to mean 'all', multiple entries are combined with OR
@@ -47,29 +36,6 @@ declare type EpicVariant = Variant & {
 	backgroundImageUrl?: string;
 };
 
-declare type ABTest = {
-	id: string;
-	start: string;
-	expiry: string;
-	author: string;
-	description: string;
-	audience: number;
-	audienceOffset: number;
-	successMeasure: string;
-	audienceCriteria: string;
-	showForSensitive: boolean;
-	idealOutcome?: string;
-	dataLinkNames?: string;
-	ophanComponentId?: string;
-	variants: readonly Variant[];
-	canRun: () => boolean;
-	notInTest?: () => void;
-};
-
-declare type Runnable<T extends ABTest> = T & {
-	variantToRun: Variant;
-};
-
 declare type AcquisitionsABTest = ABTest & {
 	campaignId: string;
 	componentType: OphanComponentType;
@@ -94,7 +60,7 @@ declare type EpicABTest = AcquisitionsABTest & {
 	campaignPrefix: string;
 	useLocalViewLog: boolean;
 	userCohort: AcquisitionsComponentUserCohort;
-	pageCheck: (page: Record<string, any>) => boolean;
+	pageCheck: (page: Record<string, unknown>) => boolean;
 	useTargetingTool: boolean;
 	insertEvent: string;
 	viewEvent: string;
@@ -156,7 +122,7 @@ declare type InitEpicABTest = {
 	useLocalViewLog?: boolean;
 	useTargetingTool?: boolean;
 	userCohort?: AcquisitionsComponentUserCohort;
-	pageCheck?: (page: Record<string, any>) => boolean;
+	pageCheck?: (page: Record<string, unknown>) => boolean;
 	template?: EpicTemplate;
 	deploymentRules?: DeploymentRules;
 	testHasCountryName?: boolean;
@@ -169,13 +135,3 @@ declare type Interaction = {
 	component: string;
 	value: string;
 };
-
-/**
- * the structure stored in localStorage
- */
-declare type Participations = Record<
-	string,
-	{
-		variant: string;
-	}
->;
