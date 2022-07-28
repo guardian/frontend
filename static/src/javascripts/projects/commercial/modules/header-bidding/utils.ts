@@ -1,3 +1,4 @@
+import { createAdSize } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
 import config from '../../../../lib/config';
@@ -68,22 +69,22 @@ export const stripDfpAdPrefixFrom = (s: string): string =>
 	stripPrefix(s, 'dfp-ad--');
 
 export const containsMpu = (sizes: HeaderBiddingSize[]): boolean =>
-	contains(sizes, [300, 250]);
+	contains(sizes, createAdSize(300, 250));
 
 export const containsDmpu = (sizes: HeaderBiddingSize[]): boolean =>
-	contains(sizes, [300, 600]);
+	contains(sizes, createAdSize(300, 600));
 
 export const containsLeaderboard = (sizes: HeaderBiddingSize[]): boolean =>
-	contains(sizes, [728, 90]);
+	contains(sizes, createAdSize(728, 90));
 
 export const containsBillboard = (sizes: HeaderBiddingSize[]): boolean =>
-	contains(sizes, [970, 250]);
+	contains(sizes, createAdSize(970, 250));
 
 export const containsMpuOrDmpu = (sizes: HeaderBiddingSize[]): boolean =>
 	containsMpu(sizes) || containsDmpu(sizes);
 
 export const containsMobileSticky = (sizes: HeaderBiddingSize[]): boolean =>
-	contains(sizes, [320, 50]);
+	contains(sizes, createAdSize(320, 50));
 
 export const containsLeaderboardOrBillboard = (
 	sizes: HeaderBiddingSize[],
@@ -196,6 +197,6 @@ export const stripTrailingNumbersAbove1 = (s: string): string =>
 	stripSuffix(s, '([2-9]|\\d{2,})');
 
 export const containsWS = (sizes: HeaderBiddingSize[]): boolean =>
-	contains(sizes, [160, 600]);
+	contains(sizes, createAdSize(160, 600));
 
 export const shouldIncludeOnlyA9 = window.location.hash.includes('#only-a9');
