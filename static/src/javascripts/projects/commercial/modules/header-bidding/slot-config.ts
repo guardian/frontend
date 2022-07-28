@@ -1,4 +1,5 @@
 import { adSizes, createAdSize } from '@guardian/commercial-core';
+import type { AdSize } from '@guardian/commercial-core';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import {
 	getBreakpointKey,
@@ -11,6 +12,46 @@ const slotKeyMatchesAd = (pbs: HeaderBiddingSlot, ad: Advert): boolean =>
 	stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(pbs.key);
 
 const REGEX_DFP_AD = /^dfp-ad--\d+/;
+
+const getHbBreakpoint = () => {
+	switch (getBreakpointKey()) {
+		case 'M':
+			return 'mobile';
+		case 'T':
+			return 'tablet';
+		default:
+			return 'desktop';
+	}
+};
+
+/**
+ * Remove any header bidding sizes that do not appear in the set
+ * of slot sizes for the current breakpoint
+ *
+ * NOTE we currently only perform this filtering on `inline` slots
+ * (this does not include inline1)
+ */
+const filterBySizeMapping =
+	(slotSizes: AdSize[] = []) =>
+	({ key, sizes }: HeaderBiddingSlot): HeaderBiddingSlot => {
+		// For now, only apply filtering to inline header bidding slots
+		// In the future we may want to expand this to all slots
+		if (key !== 'inline') {
+			return { key, sizes };
+		}
+
+		const filteredSizes = sizes.filter(([hbWidth, hbHeight]) =>
+			slotSizes.some(
+				(adSize) =>
+					hbWidth === adSize.width && hbHeight === adSize.height,
+			),
+		);
+
+		return {
+			key,
+			sizes: filteredSizes,
+		};
+	};
 
 const filterByAdvert = (
 	ad: Advert,
@@ -33,7 +74,9 @@ const filterByAdvert = (
 	return adUnits;
 };
 
-const getSlots = (): HeaderBiddingSlot[] => {
+const getSlots = (
+	breakpoint: 'mobile' | 'tablet' | 'desktop',
+): HeaderBiddingSlot[] => {
 	const { contentType, hasShowcaseMainElement } = window.guardian.config.page;
 	const isArticle = contentType === 'Article';
 	const isCrossword = contentType === 'Crossword';
@@ -142,13 +185,13 @@ const getSlots = (): HeaderBiddingSlot[] => {
 
 	const crosswordSlots = isCrossword ? [crosswordBannerSlot] : [];
 
-	switch (getBreakpointKey()) {
-		case 'M':
+	switch (breakpoint) {
+		case 'mobile':
 			return shouldIncludeMobileSticky() &&
 				window.guardian.config.switches.mobileStickyPrebid
 				? commonSlots.concat([...mobileSlots, mobileStickySlot])
 				: commonSlots.concat(mobileSlots);
-		case 'T':
+		case 'tablet':
 			return commonSlots.concat(tabletSlots, crosswordSlots);
 		default:
 			return commonSlots.concat(desktopSlots, crosswordSlots);
@@ -160,9 +203,10 @@ export const getHeaderBiddingAdSlots = (
 	slotFlatMap?: SlotFlatMap,
 ): HeaderBiddingSlot[] => {
 	const effectiveSlotFlatMap = slotFlatMap ?? ((s) => [s]); // default to identity
-
-	const headerBiddingSlots = filterByAdvert(ad, getSlots());
+	const breakpoint = getHbBreakpoint();
+	const headerBiddingSlots = filterByAdvert(ad, getSlots(breakpoint));
 	return headerBiddingSlots
+		.map(filterBySizeMapping(ad.sizes[breakpoint]))
 		.map(effectiveSlotFlatMap)
 		.reduce((acc, elt) => acc.concat(elt), []); // the "flat" in "flatMap"
 };
