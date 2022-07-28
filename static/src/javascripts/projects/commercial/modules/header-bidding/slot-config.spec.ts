@@ -80,7 +80,8 @@ describe('getSlots', () => {
 	test('should return the correct slots at breakpoint M without mobile sticky', () => {
 		(shouldIncludeMobileSticky as jest.Mock).mockReturnValue(false);
 		(getBreakpointKey as jest.Mock).mockReturnValue('M');
-		expect(getSlots('Article')).toEqual([
+		config.set('page.contentType', 'Article');
+		expect(getSlots()).toEqual([
 			{
 				key: 'right',
 				sizes: [
@@ -114,7 +115,8 @@ describe('getSlots', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('M');
 		config.set('switches.mobileStickyPrebid', true);
 		(shouldIncludeMobileSticky as jest.Mock).mockReturnValue(true);
-		expect(getSlots('Article')).toEqual([
+		config.set('page.contentType', 'Article');
+		expect(getSlots()).toEqual([
 			{
 				key: 'right',
 				sizes: [
@@ -150,7 +152,7 @@ describe('getSlots', () => {
 
 	test('should return the correct slots at breakpoint T', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('T');
-		expect(getSlots('Article')).toEqual([
+		expect(getSlots()).toEqual([
 			{
 				key: 'right',
 				sizes: [
@@ -186,7 +188,8 @@ describe('getSlots', () => {
 
 	test('should return the correct slots at breakpoint D on article pages', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('D');
-		const desktopSlots = getSlots('Article');
+		config.set('page.contentType', 'Article');
+		const desktopSlots = getSlots();
 		expect(desktopSlots).toContainEqual({
 			key: 'inline',
 			sizes: [
@@ -210,7 +213,8 @@ describe('getSlots', () => {
 
 	test('should return the correct slots at breakpoint T on crossword pages', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('T');
-		const tabletSlots = getSlots('Crossword');
+		config.set('page.contentType', 'Crossword');
+		const tabletSlots = getSlots();
 		expect(tabletSlots).toContainEqual({
 			key: 'crossword-banner',
 			sizes: [[728, 90]],
@@ -219,7 +223,8 @@ describe('getSlots', () => {
 
 	test('should return the correct slots at breakpoint D on other pages', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('D');
-		const desktopSlots = getSlots('');
+		config.set('page.contentType', '');
+		const desktopSlots = getSlots();
 		expect(desktopSlots).toContainEqual({
 			key: 'inline',
 			sizes: [[300, 250]],

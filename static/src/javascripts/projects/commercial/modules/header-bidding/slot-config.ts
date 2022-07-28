@@ -1,6 +1,5 @@
 import { adSizes, createAdSize } from '@guardian/commercial-core';
 import type { Advert } from 'commercial/modules/dfp/Advert';
-import config from '../../../../lib/config';
 import {
 	getBreakpointKey,
 	shouldIncludeMobileSticky,
@@ -34,20 +33,17 @@ const filterByAdvert = (
 	return adUnits;
 };
 
-const getSlots = (contentType: string): HeaderBiddingSlot[] => {
+const getSlots = (): HeaderBiddingSlot[] => {
+	const { contentType, hasShowcaseMainElement } = window.guardian.config.page;
 	const isArticle = contentType === 'Article';
 	const isCrossword = contentType === 'Crossword';
-	const hasShowcase = config.get(
-		'page.hasShowcaseMainElement',
-		false,
-	) as boolean; // TODO : remove type assertion
 	const hasExtendedMostPop =
 		isArticle && window.guardian.config.switches.extendedMostPopular;
 
 	const commonSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'right',
-			sizes: hasShowcase
+			sizes: hasShowcaseMainElement
 				? [adSizes.mpu]
 				: [adSizes.halfPage, adSizes.mpu],
 		},
@@ -165,10 +161,7 @@ export const getHeaderBiddingAdSlots = (
 ): HeaderBiddingSlot[] => {
 	const effectiveSlotFlatMap = slotFlatMap ?? ((s) => [s]); // default to identity
 
-	const headerBiddingSlots = filterByAdvert(
-		ad,
-		getSlots(config.get('page.contentType', '')),
-	);
+	const headerBiddingSlots = filterByAdvert(ad, getSlots());
 	return headerBiddingSlots
 		.map(effectiveSlotFlatMap)
 		.reduce((acc, elt) => acc.concat(elt), []); // the "flat" in "flatMap"
