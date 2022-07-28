@@ -20,7 +20,7 @@ interface DfpEnv {
 
 const { switches } = window.guardian.config;
 
-export const dfpEnv: DfpEnv = {
+const dfpEnv: DfpEnv = {
 	/* renderStartTime: integer. Point in time when DFP kicks in */
 	renderStartTime: -1,
 
@@ -67,3 +67,10 @@ export const dfpEnv: DfpEnv = {
 		);
 	},
 };
+
+window.guardian.commercial = window.guardian.commercial ?? {};
+
+// expose this on the window, for use by debugger tools
+window.guardian.commercial.dfpEnv = dfpEnv;
+
+export { dfpEnv };

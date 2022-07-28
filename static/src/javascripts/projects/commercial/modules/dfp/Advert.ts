@@ -80,6 +80,7 @@ class Advert {
 	id: string;
 	node: HTMLElement;
 	sizes: SizeMapping;
+	headerBiddingSizes: HeaderBiddingSize[] | null = null;
 	size: AdSize | 'fluid' | null = null;
 	slot: googletag.Slot;
 	isEmpty: boolean | null = null;
