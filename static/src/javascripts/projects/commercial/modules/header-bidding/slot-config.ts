@@ -1,4 +1,4 @@
-import { adSizes } from '@guardian/commercial-core';
+import { adSizes, createAdSize } from '@guardian/commercial-core';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import config from '../../../../lib/config';
 import {
@@ -48,139 +48,100 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 		{
 			key: 'right',
 			sizes: hasShowcase
-				? [[adSizes.mpu.width, adSizes.mpu.height]]
-				: [
-						[adSizes.halfPage.width, adSizes.halfPage.height],
-						[adSizes.mpu.width, adSizes.mpu.height],
-				  ],
+				? [adSizes.mpu]
+				: [adSizes.halfPage, adSizes.mpu],
 		},
 	];
 	const desktopSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'top-above-nav',
-			sizes: [
-				[adSizes.billboard.width, adSizes.billboard.height],
-				[adSizes.leaderboard.width, adSizes.leaderboard.height],
-			],
+			sizes: [adSizes.billboard, adSizes.leaderboard],
 		},
 		{
 			key: 'inline',
 			sizes: isArticle
-				? [
-						[adSizes.skyscraper.width, adSizes.skyscraper.height],
-						[adSizes.halfPage.width, adSizes.halfPage.height],
-						[adSizes.mpu.width, adSizes.mpu.height],
-				  ]
-				: [[adSizes.mpu.width, adSizes.mpu.height]],
+				? [adSizes.skyscraper, adSizes.halfPage, adSizes.mpu]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
-				? [
-						[adSizes.mpu.width, adSizes.mpu.height],
-						[
-							adSizes.outstreamDesktop.width,
-							adSizes.outstreamDesktop.height,
-						],
-				  ]
-				: [[adSizes.mpu.width, adSizes.mpu.height]],
+				? [adSizes.mpu, adSizes.outstreamDesktop]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
-				? [
-						[adSizes.halfPage.width, adSizes.halfPage.height],
-						[adSizes.mpu.width, adSizes.mpu.height],
-				  ]
-				: [[adSizes.mpu.width, adSizes.mpu.height]],
+				? [adSizes.halfPage, adSizes.mpu]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'comments',
-			sizes: [
-				[adSizes.skyscraper.width, adSizes.skyscraper.height],
-				[adSizes.mpu.width, adSizes.mpu.height],
-				[adSizes.halfPage.width, adSizes.halfPage.height],
-			],
+			sizes: [adSizes.skyscraper, adSizes.mpu, adSizes.halfPage],
 		},
 		// Banner slots appear on interactives, like on
 		// https://www.theguardian.com/us-news/ng-interactive/2018/nov/06/midterm-elections-2018-live-results-latest-winners-and-seats
 		{
 			key: 'banner',
 			sizes: [
-				[88, 70],
-				[adSizes.leaderboard.width, adSizes.leaderboard.height],
-				[adSizes.cascade.width, adSizes.cascade.height],
-				[900, 250],
-				[adSizes.billboard.width, adSizes.billboard.height],
+				createAdSize(88, 70),
+				adSizes.leaderboard,
+				adSizes.cascade,
+				createAdSize(900, 250),
+				adSizes.billboard,
 			],
 		},
 	];
 	const tabletSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'top-above-nav',
-			sizes: [[adSizes.leaderboard.width, adSizes.leaderboard.height]],
+			sizes: [adSizes.leaderboard],
 		},
 		{
 			key: 'inline',
-			sizes: [[adSizes.mpu.width, adSizes.mpu.height]],
+			sizes: [adSizes.mpu],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
-				? [
-						[adSizes.mpu.width, adSizes.mpu.height],
-						[
-							adSizes.outstreamDesktop.width,
-							adSizes.outstreamDesktop.height,
-						],
-				  ]
-				: [[adSizes.mpu.width, adSizes.mpu.height]],
+				? [adSizes.mpu, adSizes.outstreamDesktop]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
-				? [
-						[adSizes.halfPage.width, adSizes.halfPage.height],
-						[adSizes.mpu.width, adSizes.mpu.height],
-						[adSizes.leaderboard.width, adSizes.leaderboard.height],
-				  ]
-				: [[adSizes.mpu.width, adSizes.mpu.height]],
+				? [adSizes.halfPage, adSizes.mpu, adSizes.leaderboard]
+				: [adSizes.mpu],
 		},
 	];
 	const mobileSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'top-above-nav',
-			sizes: [[adSizes.mpu.width, adSizes.mpu.height]],
+			sizes: [adSizes.mpu],
 		},
 		{
 			key: 'inline',
-			sizes: [[adSizes.mpu.width, adSizes.mpu.height]],
+			sizes: [adSizes.mpu],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
-				? [
-						[
-							adSizes.outstreamMobile.width,
-							adSizes.outstreamMobile.height,
-						],
-						[adSizes.mpu.width, adSizes.mpu.height],
-				  ]
-				: [[adSizes.mpu.width, adSizes.mpu.height]],
+				? [adSizes.outstreamMobile, adSizes.mpu]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'mostpop',
-			sizes: [[adSizes.mpu.width, adSizes.mpu.height]],
+			sizes: [adSizes.mpu],
 		},
 	];
 	const mobileStickySlot: HeaderBiddingSlot = {
 		key: 'mobile-sticky',
-		sizes: [[adSizes.mobilesticky.width, adSizes.mobilesticky.height]],
+		sizes: [adSizes.mobilesticky],
 	};
 
 	const crosswordBannerSlot: HeaderBiddingSlot = {
 		key: 'crossword-banner',
-		sizes: [[adSizes.leaderboard.width, adSizes.leaderboard.height]],
+		sizes: [adSizes.leaderboard],
 	};
 
 	const crosswordSlots = isCrossword ? [crosswordBannerSlot] : [];
