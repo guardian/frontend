@@ -109,7 +109,7 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 			sizes: [
 				[88, 70],
 				[adSizes.leaderboard.width, adSizes.leaderboard.height],
-				[940, 230],
+				[adSizes.cascade.width, adSizes.cascade.height],
 				[900, 250],
 				[adSizes.billboard.width, adSizes.billboard.height],
 			],
