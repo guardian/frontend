@@ -170,12 +170,11 @@ object LiveBlogCurrentPage {
     val filteredBlocks = applyFilters(blocks, filterKeyEvents, topicResult)
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, filteredBlocks)
     val newestPage = FirstPage(mainPageBlocks, filterKeyEvents, topicResult)
-    val pages = newestPage :: restPagesBlocks.zipWithIndex
-      .map {
-        case (page, index) =>
-          // page number is index + 2 to account for first page and 0 based index
-          BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents, topicResult)
-      }
+    val pages = newestPage :: restPagesBlocks.zipWithIndex.map {
+      case (page, index) =>
+        // page number is index + 2 to account for first page and 0 based index
+        BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents, topicResult)
+    }
     val oldestPage = pages.lastOption.getOrElse(newestPage)
 
     val endedPages = None :: (pages.map(Some.apply) :+ None)
