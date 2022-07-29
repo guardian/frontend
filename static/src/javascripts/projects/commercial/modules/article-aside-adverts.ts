@@ -1,3 +1,4 @@
+import { amIUsed } from 'commercial/sentinel';
 import { $$ } from '../../../lib/$$';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
@@ -60,6 +61,9 @@ export const init = (): Promise<void | boolean> => {
 	if (!adSlotsWithinRightCol.length || !mainCol.get().length) {
 		return Promise.resolve(false);
 	}
+
+	// is this module needed?
+	amIUsed('article-aside-adverts.ts', 'init');
 
 	return fastdom
 		.measure(() => {
