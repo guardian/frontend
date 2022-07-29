@@ -78,8 +78,7 @@
   "../lib/$$.ts",
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
-  "../lib/mediator.ts",
-  "../projects/commercial/sentinel.ts"
+  "../lib/mediator.ts"
  ],
  "../projects/commercial/modules/article-body-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
