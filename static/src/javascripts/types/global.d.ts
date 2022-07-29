@@ -252,6 +252,9 @@ interface Window {
 		// /frontend/common/app/templates/inlineJS/blocking/enableStylesheets.scala.js
 		css: { onLoad: () => void; loaded: boolean };
 		articleCounts?: ArticleCounts;
+		commercial?: {
+			dfpEnv?: DfpEnv;
+		};
 	};
 
 	confiant?: Confiant;
