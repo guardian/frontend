@@ -334,7 +334,6 @@ const getReady = (rules: SpacefinderRules, options: SpacefinderOptions) =>
 	]).then((value) => {
 		if (value === 'timeout') {
 			log('commercial', 'Spacefinder timeout hit');
-			amIUsed('spacefinder.ts', 'SpacefinderTimeoutHit');
 		}
 	});
 
