@@ -17,7 +17,7 @@ class CommentCountController(val discussionApi: DiscussionApiLike, val controlle
       val counts = discussionApi.commentCounts(shortUrls)
       counts map { counts =>
         Cached(300) {
-          JsonComponent(
+          JsonComponent.fromWritable(
             JsObject(Seq("counts" -> JsArray(counts.map(_.toJson)))),
           )
         }

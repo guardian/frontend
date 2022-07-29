@@ -30,12 +30,12 @@ class BookOffersController(
   def getBook: Action[AnyContent] =
     Action { implicit request =>
       lazy val failedLookupResult: Result = Cached(30.seconds)(JsonNotFound())(request)
-      lazy val badRequestResponse: Result = Cached(1.day)(JsonComponent(JsNull))(request)
+      lazy val badRequestResponse: Result = Cached(1.day)(JsonComponent.fromWritable(JsNull))(request)
 
       specificId match {
         case Some(isbn) if isValidIsbn(isbn) =>
           bookFinder.findByIsbn(isbn) map { book: Book =>
-            Cached(1.hour)(JsonComponent(Json.toJson(book)))
+            Cached(1.hour)(JsonComponent.fromWritable(book))
           } getOrElse failedLookupResult
         case Some(invalidIsbn) =>
           log.error(s"Book lookup called with invalid ISBN '$invalidIsbn'. Returning empty response.")
@@ -49,9 +49,8 @@ class BookOffersController(
 
   def getBooks: Action[AnyContent] =
     Action { implicit request =>
-      val json: JsValue = Json.toJson(booksSample(specificIds, segment))
       Cached(60.seconds) {
-        JsonComponent(json)
+        JsonComponent.fromWritable(booksSample(specificIds, segment))
       }
     }
 }

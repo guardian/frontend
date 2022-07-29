@@ -19,9 +19,8 @@ class TravelOffersController(travelOffersAgent: TravelOffersAgent, val controlle
 
   def getTravel: Action[AnyContent] =
     Action { implicit request =>
-      val json = Json.toJson(travelSample(specificIds, segment))
       Cached(60.seconds) {
-        JsonComponent(json)
+        JsonComponent.fromWritable(travelSample(specificIds, segment))
       }
     }
 }

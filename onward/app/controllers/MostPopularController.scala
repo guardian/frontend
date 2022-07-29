@@ -138,7 +138,7 @@ class MostPopularController(
       OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
-    Cached(900)(JsonComponent(response))
+    Cached(900)(JsonComponent.fromWritable(response))
   }
 
   def jsonResponseNx2(mostPopulars: Seq[MostPopularNx2], mostCards: Map[String, Option[ContentCard]])(implicit
@@ -154,7 +154,7 @@ class MostPopularController(
       OnwardItem.contentCardToOnwardItem(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
-    Cached(900)(JsonComponent(response))
+    Cached(900)(JsonComponent.fromWritable(response))
   }
 
   def jsonResponse(mostPopular: MostPopular, countryCode: String)(implicit request: RequestHeader): Result = {
@@ -163,7 +163,7 @@ class MostPopularController(
       heading = mostPopular.heading,
       trails = mostPopular.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
     )
-    Cached(900)(JsonComponent(data))
+    Cached(900)(JsonComponent.fromWritable(data))
   }
 
   def renderPopularDay(countryCode: String): Action[AnyContent] =
