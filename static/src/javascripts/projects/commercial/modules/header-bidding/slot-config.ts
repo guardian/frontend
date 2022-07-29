@@ -1,3 +1,4 @@
+import { adSizes, createAdSize } from '@guardian/commercial-core';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import config from '../../../../lib/config';
 import {
@@ -47,130 +48,100 @@ const getSlots = (contentType: string): HeaderBiddingSlot[] => {
 		{
 			key: 'right',
 			sizes: hasShowcase
-				? [[300, 250]]
-				: [
-						[300, 600],
-						[300, 250],
-				  ],
+				? [adSizes.mpu]
+				: [adSizes.halfPage, adSizes.mpu],
 		},
 	];
 	const desktopSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'top-above-nav',
-			sizes: [
-				[970, 250],
-				[728, 90],
-			],
+			sizes: [adSizes.billboard, adSizes.leaderboard],
 		},
 		{
 			key: 'inline',
 			sizes: isArticle
-				? [
-						[160, 600],
-						[300, 600],
-						[300, 250],
-				  ]
-				: [[300, 250]],
+				? [adSizes.skyscraper, adSizes.halfPage, adSizes.mpu]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
-				? [
-						[300, 250],
-						[620, 350],
-				  ]
-				: [[300, 250]],
+				? [adSizes.mpu, adSizes.outstreamDesktop]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
-				? [
-						[300, 600],
-						[300, 250],
-				  ]
-				: [[300, 250]],
+				? [adSizes.halfPage, adSizes.mpu]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'comments',
-			sizes: [
-				[160, 600],
-				[300, 250],
-				[300, 600],
-			],
+			sizes: [adSizes.skyscraper, adSizes.mpu, adSizes.halfPage],
 		},
 		// Banner slots appear on interactives, like on
 		// https://www.theguardian.com/us-news/ng-interactive/2018/nov/06/midterm-elections-2018-live-results-latest-winners-and-seats
 		{
 			key: 'banner',
 			sizes: [
-				[88, 70],
-				[728, 90],
-				[940, 230],
-				[900, 250],
-				[970, 250],
+				createAdSize(88, 70),
+				adSizes.leaderboard,
+				adSizes.cascade,
+				createAdSize(900, 250),
+				adSizes.billboard,
 			],
 		},
 	];
 	const tabletSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'top-above-nav',
-			sizes: [[728, 90]],
+			sizes: [adSizes.leaderboard],
 		},
 		{
 			key: 'inline',
-			sizes: [[300, 250]],
+			sizes: [adSizes.mpu],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
-				? [
-						[300, 250],
-						[620, 350],
-				  ]
-				: [[300, 250]],
+				? [adSizes.mpu, adSizes.outstreamDesktop]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'mostpop',
 			sizes: hasExtendedMostPop
-				? [
-						[300, 600],
-						[300, 250],
-						[728, 90],
-				  ]
-				: [[300, 250]],
+				? [adSizes.halfPage, adSizes.mpu, adSizes.leaderboard]
+				: [adSizes.mpu],
 		},
 	];
 	const mobileSlots: HeaderBiddingSlot[] = [
 		{
 			key: 'top-above-nav',
-			sizes: [[300, 250]],
+			sizes: [adSizes.mpu],
 		},
 		{
 			key: 'inline',
-			sizes: [[300, 250]],
+			sizes: [adSizes.mpu],
 		},
 		{
 			key: 'inline1',
 			sizes: isArticle
-				? [
-						[300, 197],
-						[300, 250],
-				  ]
-				: [[300, 250]],
+				? [adSizes.outstreamMobile, adSizes.mpu]
+				: [adSizes.mpu],
 		},
 		{
 			key: 'mostpop',
-			sizes: [[300, 250]],
+			sizes: [adSizes.mpu],
 		},
 	];
 	const mobileStickySlot: HeaderBiddingSlot = {
 		key: 'mobile-sticky',
-		sizes: [[320, 50]],
+		sizes: [adSizes.mobilesticky],
 	};
 
 	const crosswordBannerSlot: HeaderBiddingSlot = {
 		key: 'crossword-banner',
-		sizes: [[728, 90]],
+		sizes: [adSizes.leaderboard],
 	};
 
 	const crosswordSlots = isCrossword ? [crosswordBannerSlot] : [];
