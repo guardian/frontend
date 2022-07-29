@@ -101,7 +101,6 @@ export const initCarrot = (): Promise<boolean> => {
 	if (commercialFeatures.carrotTrafficDriver) {
 		return spaceFiller.fillSpace(getRules(), insertSlot, {
 			waitForImages: true,
-			waitForLinks: true,
 			waitForInteractives: true,
 		});
 	}
