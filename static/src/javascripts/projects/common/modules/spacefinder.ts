@@ -75,7 +75,7 @@ const query = (selector: string, context?: HTMLElement | Document) => [
 	...(context ?? document).querySelectorAll<HTMLElement>(selector),
 ];
 
-// maximum time (in ms) to wait for images to be loaded
+/** maximum time (in ms) to wait for images to be loaded */
 const LOADING_TIMEOUT = 5_000;
 
 const defaultOptions: SpacefinderOptions = {
