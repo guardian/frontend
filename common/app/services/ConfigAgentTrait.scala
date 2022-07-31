@@ -2,16 +2,16 @@ package services
 
 import akka.util.Timeout
 import app.LifecycleComponent
-import com.gu.facia.api.models.{Front, _}
+import com.gu.facia.api.models._
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common._
 import conf.Configuration
-import fronts.FrontsApi
 import model.pressed.CollectionConfig
 import model.{ApplicationContext, FrontProperties, SeoDataJson}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.Json
+import services.fronts.FrontsApi
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
@@ -71,10 +71,16 @@ object ConfigAgent extends GuLogging {
     config.map(_.fronts.mapValues(_.collections)).getOrElse(Map.empty)
   }
 
-  def getConfigsUsingCollectionId(id: String): Seq[String] = {
+  def getConfigUsingCollectionId(id: String): Option[String] = {
     (getConfigCollectionMap collect {
       case (configId, collectionIds) if collectionIds.contains(id) => configId
-    }).toSeq
+    }).toSeq.headOption
+  }
+
+  def getConfigsUsingCollectionIds(ids: Seq[String]): List[String] = {
+    (getConfigCollectionMap collect {
+      case (configId, collectionIds) if collectionIds.intersect(ids).nonEmpty => configId
+    }).toList
   }
 
   def getCanonicalIdForFront(frontId: String): Option[String] = {

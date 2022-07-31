@@ -1,26 +1,26 @@
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
-import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
+import common._
 import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
-import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
+import conf.switches.SwitchboardLifecycle
 import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, PreloadFilters}
 import model.ApplicationIdentity
-import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.HttpRequestHandler
+import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api.libs.ws.WSClient
-import services._
 import router.Routes
+import services._
+import services.ophan.SurgingContentAgentLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -41,6 +41,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val ophanApi = wire[OphanApi]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val curatedContentAgent = wire[CuratedContentAgent]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -51,6 +52,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     wire[IndexListingsLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
+    wire[CuratedContentAgentLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

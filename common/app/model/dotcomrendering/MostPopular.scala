@@ -1,15 +1,15 @@
 package model.dotcomrendering
 
 import com.github.nscala_time.time.Imports.DateTimeZone
-import com.gu.commercial.branding.{Branding, BrandingType, Logo => CommercialLogo, Dimensions}
+import com.gu.commercial.branding.{Branding, BrandingType, Dimensions, Logo => CommercialLogo}
 import common.{Edition, LinkTo}
-import play.api.mvc.RequestHeader
-import views.support.{ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
-import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
 import model.pressed.PressedContent
+import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
+import play.api.libs.json._
+import play.api.mvc.RequestHeader
+import views.support.{ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
 
 case class OnwardItem(
     url: String,
@@ -123,9 +123,11 @@ object OnwardItem {
     )
   }
 
-  def pressedContentToOnwardItem(content: PressedContent)(implicit
-      request: RequestHeader,
-  ): OnwardItem = {
+  def pressedContentToOnwardItem(content: PressedContent)(implicit requestHeader: RequestHeader): OnwardItem = {
+    pressedContentToOnwardItem(content, Edition(requestHeader))
+  }
+
+  def pressedContentToOnwardItem(content: PressedContent, edition: Edition): OnwardItem = {
 
     def pillarToString(pillar: Pillar): String = {
       pillar.toString.toLowerCase() match {
@@ -134,7 +136,7 @@ object OnwardItem {
       }
     }
     OnwardItem(
-      url = LinkTo(content.header.url),
+      url = LinkTo(content.header.url, edition),
       linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
       showByline = content.properties.showByline,
       byline = content.properties.byline,
@@ -152,7 +154,7 @@ object OnwardItem {
       kickerText = content.header.kicker.flatMap(_.properties.kickerText),
       starRating = content.card.starRating,
       avatarUrl = None,
-      branding = content.branding(Edition(request)),
+      branding = content.branding(edition),
     )
   }
 }

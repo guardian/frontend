@@ -1,28 +1,28 @@
 package controllers
 
-import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
+import common._
+import conf.Configuration
+import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
-import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
+import implicits.GUHeaders
+import layout.slices._
+import layout.{Front, _}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
+import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
+import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import play.api.libs.json._
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
+import renderers.DotcomRenderingService
 import services.{CollectionConfigWithId, ConfigAgent}
-import layout.slices._
+import utils.{FaciaPicker, RemoteRender, TargetedCollections}
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
-import conf.switches.Switches.InlineEmailStyles
-import implicits.GUHeaders
-import pages.{FrontEmailHtmlPage, FrontHtmlPage}
-import utils.{FaciaPicker, RemoteRender, TargetedCollections}
-import conf.Configuration
-import play.api.libs.ws.WSClient
-import renderers.DotcomRenderingService
-import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -401,8 +401,7 @@ trait FaciaController
       collectionId: String,
   )(implicit request: RequestHeader): Future[Option[PressedCollection]] =
     ConfigAgent
-      .getConfigsUsingCollectionId(collectionId)
-      .headOption
+      .getConfigUsingCollectionId(collectionId)
       .map { path =>
         frontJsonFapi
           .get(path, fullRequestType)

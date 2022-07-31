@@ -91,6 +91,8 @@ trait AppComponents
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
 
+  lazy val curatedContentAgent = wire[CuratedContentAgent]
+
   override def lifecycleComponents: List[LifecycleComponent] =
     List(
       wire[LogstashLifecycle],
@@ -112,6 +114,7 @@ trait AppComponents
       wire[StocksDataLifecycle],
       wire[NewsletterSignupLifecycle],
       wire[TopicLifecycle],
+      wire[CuratedContentAgentLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters
