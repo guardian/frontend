@@ -284,6 +284,7 @@ $header-image-size-desktop: 100px;
         width: $left-column;
         float: left;
         margin-top: 0;
+        word-break: break-word;
     }
 
     @include mq(wide) {
