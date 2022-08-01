@@ -1,6 +1,4 @@
-import type { SizeKeys } from '@guardian/commercial-core';
-import { adSizes, createAdSize, createAdSlot } from '@guardian/commercial-core';
-import { toGoogleTagSize } from 'common/modules/commercial/lib/googletag-ad-size';
+import { adSizes, createAdSlot } from '@guardian/commercial-core';
 import config from '../../../lib/config';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
@@ -12,26 +10,8 @@ import type { Advert } from './dfp/Advert';
 import { getAdvertById } from './dfp/get-advert-by-id';
 import { refreshAdvert } from './dfp/load-advert';
 
-const createCommentSlot = (canBeDmpu: boolean): HTMLElement => {
+const createCommentSlot = (): HTMLElement => {
 	const adSlot = createAdSlot('comments');
-
-	if (!canBeDmpu) {
-		adSlot.setAttribute(
-			'data-desktop',
-			(adSlot.getAttribute('data-desktop') ?? '')
-				.split('|')
-				.filter((size) => !['300,600', '160,600'].includes(size))
-				.join('|'),
-		);
-	}
-
-	adSlot.setAttribute(
-		'data-mobile',
-		(adSlot.getAttribute('data-mobile') ?? '')
-			.split('|')
-			.filter((size) => !['300,600', '160,600'].includes(size))
-			.join('|'),
-	);
 
 	adSlot.classList.add('js-sticky-mpu');
 	return adSlot;
@@ -42,7 +22,7 @@ const insertCommentAd = (
 	adSlotContainer: Element,
 	canBeDmpu: boolean,
 ): Promise<void | EventEmitter> => {
-	const commentSlot = createCommentSlot(canBeDmpu);
+	const commentSlot = createCommentSlot();
 
 	return fastdom
 		.mutate(() => {
@@ -57,7 +37,13 @@ const insertCommentAd = (
 			return commentSlot;
 		})
 		.then((adSlot) => {
-			addSlot(adSlot, false);
+			addSlot(
+				adSlot,
+				false,
+				canBeDmpu
+					? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
+					: {},
+			);
 			void Promise.resolve(mediator.emit('page:commercial:comments'));
 		});
 };
@@ -69,26 +55,15 @@ const containsDMPU = (ad: Advert): boolean =>
 			(el[0] === 160 && el[1] === 600),
 	);
 
-const maybeUpgradeSlot = (ad: Advert, adSlot: Element): Advert => {
+const maybeUpgradeSlot = (ad: Advert): Advert => {
 	if (!containsDMPU(ad) && ad.sizes.desktop) {
-		const extraSizes: SizeKeys[] = ['halfPage', 'skyscraper'];
-		ad.sizes.desktop.push(
-			...extraSizes.map((size) => {
-				const { width, height } = adSizes[size];
-				const tuple = createAdSize(width, height);
-				return tuple;
-			}),
-		);
-		const sizeMapping = ad.sizes.desktop.map(
-			toGoogleTagSize,
-		) as googletag.MultiSize;
-
-		ad.slot.defineSizeMapping([[[0, 0], sizeMapping]]);
-		void fastdom.mutate(() => {
-			adSlot.setAttribute(
-				'data-desktop',
-				'1,1|2,2|300,250|300,274|fluid|300,600|160,600',
-			);
+		ad.updateSizeMapping({
+			...ad.sizes,
+			desktop: [
+				...ad.sizes.desktop,
+				adSizes.halfPage,
+				adSizes.skyscraper,
+			],
 		});
 	}
 	return ad;
@@ -104,7 +79,7 @@ const runSecondStage = (
 	if (commentAdvert && adSlot) {
 		// when we refresh the slot, the sticky behavior runs again
 		// this means the sticky-scroll height is corrected!
-		refreshAdvert(maybeUpgradeSlot(commentAdvert, adSlot));
+		refreshAdvert(maybeUpgradeSlot(commentAdvert));
 	}
 
 	if (!commentAdvert) {
