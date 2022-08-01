@@ -249,7 +249,7 @@ export const getUserFromApiWithRefreshedCookie = (): Promise<unknown> => {
 	}).then((resp) => resp.json());
 };
 
-export const refreshOktaSession = (returnUrl: string): Promise<unknown> => {
+export const refreshOktaSession = (returnUrl: string): void => {
 	const endpoint = `${profileRoot}/signin/refresh?useOkta=true&returnUrl=${returnUrl}`;
 	window.location.replace(endpoint);
 };
