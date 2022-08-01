@@ -23,7 +23,7 @@ object NewsletterData {
   implicit val newsletterDataWrites = Json.writes[NewsletterData]
 }
 
-class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
+class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) extends GuLogging {
   private val EMBED_TAG_PREFIX = "campaign/email/"
   private val EMBED_TAG_TYPE = "campaign"
 
@@ -69,6 +69,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   }
 
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
+    log.info(s"getNewsletterForArticle with tags: ${articlePage.article.tags.tags}")
     val response = getNewsletterResponseFromTags(articlePage.article.tags.tags)
     if (response.isEmpty || !shouldInclude(response.get)) {
       return None
