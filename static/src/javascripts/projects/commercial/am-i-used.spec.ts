@@ -10,7 +10,7 @@ const CODE_ENDPOINT = '//logs.code.dev-guardianapis.com/log';
 const PROD_ENDPOINT = '//logs.guardianapis.com/log';
 const TEST_URL = 'http://testurl.theguardian.com/';
 
-const owner = 'commercial.sentinel';
+const owner = 'commercial.amiused';
 const defaultEvent: AmIUsedLoggingEvent = {
 	label: owner,
 };
@@ -25,7 +25,7 @@ afterEach(() => {
 	jest.clearAllMocks();
 });
 
-describe('sentinel', () => {
+describe('amIUsed', () => {
 	test('should not send an event when switches.sentinelLogger is false', () => {
 		(config.get as jest.Mock).mockReturnValue(false);
 		amIUsed('moduleName', 'functionName');
@@ -120,7 +120,7 @@ describe('sentinel', () => {
 		]);
 	});
 
-	test('should correctly assign commercial.sentinel as a label', () => {
+	test('should correctly assign commercial.amiused as a label', () => {
 		(config.get as jest.Mock).mockReturnValue(true);
 		amIUsed('moduleName', 'functionName');
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
