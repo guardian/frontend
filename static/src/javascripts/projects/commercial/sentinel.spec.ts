@@ -1,5 +1,5 @@
 import config from '../../lib/config';
-import type { amIUsed as amIUsed_, SentinelLoggingEvent } from './sentinel';
+import type { amIUsed as amIUsed_, AmIUsedLoggingEvent } from './am-i-used';
 
 const { amIUsed }: { amIUsed: typeof amIUsed_ } =
 	jest.requireActual('./sentinel');
@@ -11,7 +11,7 @@ const PROD_ENDPOINT = '//logs.guardianapis.com/log';
 const TEST_URL = 'http://testurl.theguardian.com/';
 
 const owner = 'commercial.sentinel';
-const defaultEvent: SentinelLoggingEvent = {
+const defaultEvent: AmIUsedLoggingEvent = {
 	label: owner,
 };
 
