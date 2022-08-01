@@ -21,8 +21,8 @@ const init = () => {
 		const lastRefresh = storage.local.get(lastRefreshKey);
 		if (shouldRefreshCookie(lastRefresh, currentTime)) {
 			getUserFromApiWithRefreshedCookie();
-			refreshOktaSession(encodeURIComponent(document.location.href));
 			storage.local.set(lastRefreshKey, currentTime);
+			refreshOktaSession(encodeURIComponent(document.location.href));
 		}
 	}
 };
