@@ -61,6 +61,9 @@
   "../projects/common/modules/commercial/support-utilities.js",
   "../projects/common/modules/commercial/user-features.ts"
  ],
+ "../projects/commercial/am-i-used.ts": [
+  "../lib/config.d.ts"
+ ],
  "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
@@ -549,9 +552,6 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
- "../projects/commercial/sentinel.ts": [
-  "../lib/config.d.ts"
- ],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
   "../lib/config.d.ts",
@@ -696,7 +696,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/sentinel.ts",
+  "../projects/commercial/am-i-used.ts",
   "../projects/common/modules/spacefinder-debug-tools.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
