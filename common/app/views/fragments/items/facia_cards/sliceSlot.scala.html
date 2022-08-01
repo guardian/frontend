@@ -4,13 +4,13 @@
 
 @if(CommercialSwitch.isSwitchedOn) {
     @defining((isMobile, id) match {
-        case (true, 0) => ("top-above-nav", Seq("1,1", "2,2", "88,70", "88,71", "300,250", "300,274", "fluid"))
-        case _         => (s"inline$id", Seq("1,1", "2,2", "300,250", "300,274", "fluid"))
-    }) { case(slotName, sizes) =>
+        case (true, 0) => "top-above-nav"
+        case _         => s"inline$id"
+    }) { case(slotName) =>
         @fragments.commercial.adSlot(
             slotName,
             Seq("container-inline") ++ (if(isMobile) Some("mobile") else None),
-            Map("mobile" -> sizes),
+            Map(),
             optId = if(isMobile) Some(s"$slotName--mobile") else None,
             optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet")
         ){ }
