@@ -84,7 +84,6 @@ const insertAdAtPara = (
 	const ad = createAdSlot(type, {
 		name,
 		classes,
-		sizes,
 	});
 
 	const node = wrapSlotInContainer(ad, containerOptions);
