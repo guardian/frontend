@@ -101,9 +101,7 @@ class ArticleController(
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit
       request: RequestHeader,
   ): Future[Result] = {
-
     val newsletter = newsletterService.getNewsletterForArticle(article)
-
     val tier = ArticlePicker.getTier(article, path)
     val isAmpSupported = article.article.content.shouldAmplify
     val pageType: PageType = PageType(article, request, context)

@@ -25,10 +25,12 @@ object NewsletterData {
 
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   private val EMBED_TAG_PREFIX = "campaign/email/"
-  private val EMBED_TAG_TYPE = "Campaign"
+  private val EMBED_TAG_TYPE = "campaign"
 
   private def findNewsletterTag(tags: List[Tag]) = {
-    tags.find(t => t.properties.tagType.equals(EMBED_TAG_TYPE) && t.properties.id.startsWith(EMBED_TAG_PREFIX))
+    tags.find(t =>
+      t.properties.tagType.toLowerCase.equals(EMBED_TAG_TYPE) && t.properties.id.startsWith(EMBED_TAG_PREFIX),
+    )
   }
 
   private def getNewsletterName(tag: Tag) = {
