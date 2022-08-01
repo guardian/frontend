@@ -45,6 +45,7 @@ trait OnwardServices {
   lazy val dayMostPopularAgent = wire[DayMostPopularAgent]
   lazy val mostPopularAgent = wire[MostPopularAgent]
   lazy val mostReadAgent = wire[MostReadAgent]
+  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
   lazy val mostPopularSocialAutoRefresh = wire[MostPopularSocialAutoRefresh]
   lazy val mostViewedAudioAgent = wire[MostViewedAudioAgent]
   lazy val mostViewedGalleryAgent = wire[MostViewedGalleryAgent]

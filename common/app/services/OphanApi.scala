@@ -18,6 +18,11 @@ object OphanMostReadItem {
   implicit val jsonReads = Json.reads[OphanMostReadItem]
 }
 
+case class OphanDeeplyReadItem(path: String, benchmarkedAttentionTime: Int)
+object OphanDeeplyReadItem {
+  implicit val jsonReads = Json.reads[OphanDeeplyReadItem]
+}
+
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     extends GuLogging
     with implicits.WSRequests {
@@ -105,4 +110,7 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
       Map("hours" -> hours.toString, "count" -> count.toString, "publication-date-from" -> sixMonthsAgo),
     )
   }
+
+  def getDeeplyRead(): Future[Seq[OphanDeeplyReadItem]] =
+    getBody("deeplyread")().map(_.as[Seq[OphanDeeplyReadItem]])
 }

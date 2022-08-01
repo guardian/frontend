@@ -5,17 +5,11 @@ import java.time.temporal.ChronoUnit
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed.{DayMostPopularAgent, DeeplyReadAgent, GeoMostPopularAgent, MostPopularAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import model.dotcomrendering.{
-  MostPopularGeoResponse,
-  MostPopularNx2,
-  OnwardCollectionResponse,
-  OnwardCollectionResponseDCR,
-  OnwardItem,
-}
+import model.dotcomrendering.{MostPopularGeoResponse, MostPopularOnward, OnwardCollectionResponse, OnwardCollectionResponseDCR, OnwardItem}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
@@ -27,6 +21,7 @@ class MostPopularController(
     geoMostPopularAgent: GeoMostPopularAgent,
     dayMostPopularAgent: DayMostPopularAgent,
     mostPopularAgent: MostPopularAgent,
+    deeplyReadAgent: DeeplyReadAgent,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -122,6 +117,11 @@ class MostPopularController(
       }
     }
 
+  def renderDeeplyRead(): Action[AnyContent] =
+    Action.async { implicit request =>
+      Future.successful(Ok(Json.toJson(deeplyReadAgent.getReport())))
+    }
+
   def jsonResponse(mostPopulars: Seq[MostPopular], mostCards: Map[String, Option[ContentCard]])(implicit
       request: RequestHeader,
   ): Result = {
@@ -141,8 +141,8 @@ class MostPopularController(
     Cached(900)(JsonComponent.fromWritable(response))
   }
 
-  def jsonResponseNx2(mostPopulars: Seq[MostPopularNx2], mostCards: Map[String, Option[ContentCard]])(implicit
-      request: RequestHeader,
+  def jsonResponseNx2(mostPopulars: Seq[MostPopularOnward], mostCards: Map[String, Option[ContentCard]])(implicit
+                                                                                                         request: RequestHeader,
   ): Result = {
     val tabs = mostPopulars.map { nx2 =>
       OnwardCollectionResponse(nx2.heading, nx2.trails)

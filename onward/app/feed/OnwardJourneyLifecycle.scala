@@ -11,6 +11,7 @@ class OnwardJourneyLifecycle(
     jobs: JobScheduler,
     akkaAsync: AkkaAsync,
     mostReadAgent: MostReadAgent,
+    deeplyReadAgent: DeeplyReadAgent,
     geoMostPopularAgent: GeoMostPopularAgent,
     dayMostPopularAgent: DayMostPopularAgent,
     mostPopularAgent: MostPopularAgent,
@@ -40,6 +41,7 @@ class OnwardJourneyLifecycle(
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsHighFrequencyRefreshJob", 5) {
       mostPopularAgent.refresh()
       geoMostPopularAgent.refresh()
+      deeplyReadAgent.refresh()
     }
 
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsMediumFrequencyRefreshJob", 30) {

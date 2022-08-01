@@ -183,13 +183,14 @@ object MostPopularGeoResponse {
   implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
 }
 
-// MostPopularNx2 was introduced to replace the less flexible [common] MostPopular
-// which is heavily relying on pressed.PressedContent
-// because we want to be able to create MostPopularNx2 from trails coming from the DeeplyReadAgent
-case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardItem])
-
-object MostPopularNx2 {
-  implicit val mostPopularNx2Writes = Json.writes[MostPopularNx2]
+/**
+ * `MostPopularOnward** was introduced to replace the less flexible [common] `MostPopular`,
+ * which is heavily relying on `pressed.PressedContent`,
+ * because we want to be able to create MostPopularOnward from trails coming from the `DeeplyReadAgent`
+*/
+case class MostPopularOnward(heading: String, section: String, trails: Seq[OnwardItem])
+object MostPopularOnward {
+  implicit val mostPopularOnwardWrites = Json.writes[MostPopularOnward]
 }
 
 object OnwardsUtils {
