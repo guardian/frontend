@@ -74,8 +74,8 @@ class CuratedContentAgent(frontJsonFapiLive: FrontJsonFapiLive) extends GuLoggin
   def refresh: Future[Unit] = {
     val curatedContentFuture = getCuratedContent(FullAdFreeType)
     curatedContentFuture.onComplete {
-      case Success(s) => log.info(s"Successfully populated curated content: $s")
-      case Failure(t) => log.error(s"Failed to get curated content $t", t)
+      case Success(s) => log.info(s"Successfully populated the curated content cache.")
+      case Failure(t) => log.error(s"Failed to populate the curated content cache $t", t)
     }
     curatedContentFuture map curatedContentAddFreeAgent.send
     getCuratedContent(FullType) map curatedContentAgent.send
