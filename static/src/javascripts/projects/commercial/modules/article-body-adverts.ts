@@ -280,6 +280,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					`inline${inlineId}`,
 					'inline',
 					'inline',
+					// these are added here and not in size mappings because the inline[i] name is also used on fronts, where we don't want outstream or tall ads
 					isInline1
 						? {
 								phablet: [
