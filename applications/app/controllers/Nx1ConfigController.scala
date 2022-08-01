@@ -5,6 +5,7 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, R
 import views.support.CamelCase
 import experiments.ActiveExperiments
 import experiments.ActiveExperiments._
+import model.dotcomrendering.DotcomRenderingUtils
 
 /*
   Nx1Config (project name) was introduced to provide the client-side with metadata in places where the
@@ -34,11 +35,7 @@ object Nx1Config {
 class Nx1ConfigController(val controllerComponents: ControllerComponents) extends BaseController {
   def switches: Action[AnyContent] =
     Action { implicit request =>
-      val switches = conf.switches.Switches.all
-        .filter(_.exposeClientSide)
-        .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-          acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-        })
+      val switches = DotcomRenderingUtils.getSwitches
       Ok(Json.toJson(switches))
     }
 

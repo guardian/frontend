@@ -11,21 +11,12 @@ import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
 import model.pressed.{PressedContent, SpecialReport}
-import model.{
-  ArticleDateTimes,
-  CanonicalLiveBlog,
-  ContentFormat,
-  ContentPage,
-  ContentType,
-  GUDateTimeFormatNew,
-  LiveBlogPage,
-  Pillar,
-}
+import model.{ArticleDateTimes, CanonicalLiveBlog, ContentFormat, ContentPage, ContentType, GUDateTimeFormatNew, LiveBlogPage, Pillar}
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.AffiliateLinksCleaner
+import views.support.{AffiliateLinksCleaner, CamelCase}
 
 import java.net.URLEncoder
 
@@ -307,4 +298,11 @@ object DotcomRenderingUtils {
     }
   }
 
+  def getSwitches: Map[String, Boolean] = {
+    conf.switches.Switches.all
+      .filter(_.exposeClientSide)
+      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+      })
+  }
 }
