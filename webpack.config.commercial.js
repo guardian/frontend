@@ -14,7 +14,7 @@ config.entry = {
 		'src',
 		'javascripts',
 		'bootstraps',
-		'standalone.commercial.ts',
+		'commercial.ts',
 	),
 };
 
@@ -26,7 +26,7 @@ module.exports = webpackMerge.smart(config, {
 		 *
 		 * Typical errors were “Cannot read property `call` of undefined”
 		 *
-		 * **Wepback 4 only.** Renamed in Wepback 5 `chunkLoadingGlobal`
+		 * **Webpack 4 syntax only.** Update to `chunkLoadingGlobal` for Webpack 5
 		 */
 		jsonpFunction: 'commercialJsonp',
 		path: path.join(

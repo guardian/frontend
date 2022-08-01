@@ -192,8 +192,12 @@ const bootCommercial = async (): Promise<void> => {
 	}
 };
 
-if (window.guardian.mustardCut || window.guardian.polyfilled) {
-	void bootCommercial();
-} else {
-	window.guardian.queue.push(bootCommercial);
-}
+const init = (): void => {
+	if (window.guardian.mustardCut || window.guardian.polyfilled) {
+		void bootCommercial();
+	} else {
+		window.guardian.queue.push(bootCommercial);
+	}
+};
+
+export { init };
