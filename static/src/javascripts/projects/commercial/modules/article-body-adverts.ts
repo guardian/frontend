@@ -121,8 +121,8 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
 	const ignoreList = hasLeftCol
-		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not([data-spacefinder-role="richLink"])'
-		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)';
+		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])'
+		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)';
 
 	const isImmersive = config.get('page.isImmersive');
 	const defaultRules: SpacefinderRules = {
@@ -280,10 +280,11 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				minBelow: 250,
 			},
 			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)': {
-				minAbove: 35,
-				minBelow: 200,
-			},
+			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)':
+				{
+					minAbove: 35,
+					minBelow: 200,
+				},
 		},
 		filter: filterNearbyCandidates(adSizes.mpu.height),
 	};
@@ -344,10 +345,11 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 				minBelow: 250,
 			},
 			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate)': {
-				minAbove: 200,
-				minBelow: 400,
-			},
+			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)':
+				{
+					minAbove: 200,
+					minBelow: 400,
+				},
 		},
 	};
 
