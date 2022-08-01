@@ -6,7 +6,7 @@ import {
 import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
 import { breakpoints } from '../../../../lib/detect';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
-import { defineSlot } from './define-slot';
+import { buildGoogletagSizeMapping, defineSlot } from './define-slot';
 
 type Resolver = (x: boolean) => void;
 
@@ -111,37 +111,13 @@ class Advert {
 		adSlotNode: HTMLElement,
 		additionalSizeMapping: SizeMapping = {},
 	) {
-		// Try to used size mappings if available
-		const defaultSizeMappingForSlot = adSlotNode.dataset.name
-			? getSlotSizeMapping(adSlotNode.dataset.name)
-			: {};
-
-		let sizeMapping = concatSizeMappings(
-			defaultSizeMappingForSlot,
-			additionalSizeMapping,
-		);
-
-		/** If the size mapping is empty, use the data attributes to create a size mapping,
-		 * this is used on some interactives e.g. https://www.theguardian.com/education/ng-interactive/2021/sep/11/the-best-uk-universities-2022-rankings
-		 **/
-		if (isSizeMappingEmpty(sizeMapping)) {
-			sizeMapping = getSlotSizeMappingsFromDataAttrs(adSlotNode);
-
-			// If the size mapping is still empty, throw an error as this should never happen
-			if (isSizeMappingEmpty(sizeMapping)) {
-				throw new Error(
-					`Tried to render ad slot '${
-						adSlotNode.dataset.name ?? ''
-					}' without any size mappings`,
-				);
-			}
-		}
-
-		const slotDefinition = defineSlot(adSlotNode, sizeMapping);
-
 		this.id = adSlotNode.id;
 		this.node = adSlotNode;
-		this.sizes = sizeMapping;
+
+		this.sizes = this.generateSizeMapping(additionalSizeMapping);
+
+		const slotDefinition = defineSlot(adSlotNode, this.sizes);
+
 		this.slot = slotDefinition.slot;
 
 		this.whenSlotReady = slotDefinition.slotReady;
@@ -201,6 +177,58 @@ class Advert {
 		classesToRemove.forEach((cls) => this.node.classList.remove(cls));
 		newClasses.forEach((cls) => this.node.classList.add(cls));
 		this.extraNodeClasses = newClasses;
+	}
+
+	/**
+	 * Combine the size mapping from the mappings in commercial-core with
+	 * any additional size mappings, if none are found check data-attributes, if still
+	 * none are found throws an error
+	 *
+	 * @param additionalSizeMapping A mapping of breakpoints to ad sizes
+	 * @returns A mapping of breakpoints to ad sizes
+	 */
+	generateSizeMapping(additionalSizeMapping: SizeMapping): SizeMapping {
+		// Try to used size mappings if available
+		const defaultSizeMappingForSlot = this.node.dataset.name
+			? getSlotSizeMapping(this.node.dataset.name)
+			: {};
+
+		let sizeMapping = concatSizeMappings(
+			defaultSizeMappingForSlot,
+			additionalSizeMapping,
+		);
+
+		/** If the size mapping is empty, use the data attributes to create a size mapping,
+		 * this is used on some interactives e.g. https://www.theguardian.com/education/ng-interactive/2021/sep/11/the-best-uk-universities-2022-rankings
+		 **/
+		if (isSizeMappingEmpty(sizeMapping)) {
+			sizeMapping = getSlotSizeMappingsFromDataAttrs(this.node);
+
+			// If the size mapping is still empty, throw an error as this should never happen
+			if (isSizeMappingEmpty(sizeMapping)) {
+				throw new Error(
+					`Tried to render ad slot '${
+						this.node.dataset.name ?? ''
+					}' without any size mappings`,
+				);
+			}
+		}
+
+		return sizeMapping;
+	}
+
+	/**
+	 * Update the size mapping for this slot, you will need to call
+	 * refreshAdvert to update the ad immediately
+	 *
+	 * @param additionalSizeMapping A mapping of breakpoints to ad sizes
+	 **/
+	updateSizeMapping(additionalSizeMapping: SizeMapping): void {
+		const sizeMapping = this.generateSizeMapping(additionalSizeMapping);
+
+		this.sizes = sizeMapping;
+
+		this.slot.defineSizeMapping(buildGoogletagSizeMapping(sizeMapping));
 	}
 }
 
