@@ -1,5 +1,6 @@
 import 'lib/dotcom-rendering/public-path';
 import { EventTimer } from '@guardian/commercial-core';
+import { amIUsed } from 'commercial/am-i-used';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
@@ -20,7 +21,6 @@ import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { removeDisabledSlots as closeDisabledSlots } from 'commercial/modules/remove-slots';
 import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
-import { amIUsed } from 'commercial/sentinel';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
 import config from 'lib/config';
