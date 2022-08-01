@@ -2,7 +2,7 @@ import config from '../../lib/config';
 import type { amIUsed as amIUsed_, AmIUsedLoggingEvent } from './am-i-used';
 
 const { amIUsed }: { amIUsed: typeof amIUsed_ } =
-	jest.requireActual('./sentinel');
+	jest.requireActual('./am-i-used');
 
 jest.mock('../../lib/config');
 
