@@ -6,5 +6,6 @@ void onConsent().then((consentState) => {
 		initConsented();
 	} else {
 		// init opt-out-advertising
+		console.log('NO CONSENT!!');
 	}
 });
