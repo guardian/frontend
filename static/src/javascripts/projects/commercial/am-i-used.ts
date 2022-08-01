@@ -44,7 +44,7 @@ export const amIUsed = (
 		{ name: 'URL', value: window.location.href },
 	];
 	const event: AmIUsedLoggingEvent = {
-		label: 'commercial.sentinel',
+		label: 'commercial.amiused',
 		properties: parameters
 			? [
 					...properties,
