@@ -17,7 +17,6 @@ import { log } from '@guardian/libs';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
-import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from '../projects/commercial/modules/ad-verification/prepare-ad-verification';
 import { init as initArticleAsideAdverts } from '../projects/commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
@@ -36,8 +35,6 @@ import { manageAdFreeCookieOnConsentChange } from '../projects/commercial/module
 import { init as initMobileSticky } from '../projects/commercial/modules/mobile-sticky';
 import { paidContainers } from '../projects/commercial/modules/paid-containers';
 import { init as initPaidForBand } from '../projects/commercial/modules/paidfor-band';
-import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercial/modules/remove-slots';
-import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
 import { init as initTrackGpcSignal } from '../projects/commercial/modules/track-gpc-signal';
 import { init as initTrackScrollDepth } from '../projects/commercial/modules/track-scroll-depth';
@@ -60,9 +57,7 @@ const commercialBaseModules: Modules = [];
 
 // remaining modules not necessary to load an ad
 const commercialExtraModules: Modules = [
-	['cm-adFreeSlotRemoveFronts', adFreeSlotRemove],
 	['cm-manageAdFreeCookieOnConsentChange', manageAdFreeCookieOnConsentChange],
-	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
 	['cm-ipsosmori', initIpsosMori],
 	['cm-trackScrollDepth', initTrackScrollDepth],
@@ -71,7 +66,6 @@ const commercialExtraModules: Modules = [
 
 if (!commercialFeatures.adFree) {
 	commercialBaseModules.push(
-		['cm-setAdTestCookie', setAdTestCookie],
 		['cm-prepare-prebid', preparePrebid],
 		// Permutive init code must run before google tag enableServices()
 		// The permutive lib however is loaded async with the third party tags
