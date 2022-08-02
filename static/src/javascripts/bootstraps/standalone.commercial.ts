@@ -46,9 +46,20 @@ import type { Modules } from './types';
 
 const { isDotcomRendering, page } = window.guardian.config;
 
-const assetsPath = page.frontendAssetsFullURL ?? page.assetsPath;
+const decideAssetsPaths = () => {
+	const assetsPathPort: number | undefined = process.env.OVERRIDE_BUNDLE_PORT
+		? Number(process.env.OVERRIDE_BUNDLE_PORT)
+		: undefined;
 
-__webpack_public_path__ = `${assetsPath}javascripts/commercial/`;
+	const assetsPath = assetsPathPort
+		? `http://localhost:${assetsPathPort}/`
+		: `${
+				page.frontendAssetsFullURL ?? page.assetsPath
+		  }javascripts/commercial/`;
+	return assetsPath;
+};
+
+__webpack_public_path__ = decideAssetsPaths();
 
 const tags: Record<string, unknown> = {
 	feature: 'commercial',
