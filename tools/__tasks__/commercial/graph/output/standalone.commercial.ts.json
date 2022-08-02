@@ -105,6 +105,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
+  "../lib/url.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",

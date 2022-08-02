@@ -217,7 +217,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 			.map((para, i) => {
 				const inlineId = i + (isInline1 ? 1 : 2);
 
-				if (sfdebug) {
+				if (sfdebug == '1' || sfdebug == '2') {
 					para.style.cssText += 'border: thick solid green;';
 				}
 
@@ -353,12 +353,15 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 		},
 	};
 
+	const enableDebug = sfdebug === 'im';
+
 	const insertAds: SpacefinderWriter = (paras) =>
 		insertAdAtPara(paras[0], 'im', 'im');
 
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,
 		waitForInteractives: true,
+		debug: enableDebug,
 	});
 };
 
