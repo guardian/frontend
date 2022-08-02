@@ -71,7 +71,6 @@ object Badges {
   val theEmptyDoorway = Badge("cities/series/the-empty-doorway", Static("images/badges/the-empty-doorway.svg"))
   val yemenAtWar = Badge("world/series/yemen-at-war", Static("images/badges/yemen-at-war.svg"))
   val thePolluters = Badge("environment/series/the-polluters", Static("images/badges/the-polluters.svg"))
-  val youthJustice = Badge("society/youthjustice", Static("images/badges/childrenInTheDocks-Icon1.svg"))
   val lostInPolitics = Badge("politics/series/lost-in-politics", Static("images/badges/lost-in-politics-badge.svg"))
   val thisIsEurope = Badge("world/series/this-is-europe", Static("images/badges/this-is-europe.svg"))
   val coronavirus =
@@ -139,7 +138,6 @@ object Badges {
     theEmptyDoorway,
     yemenAtWar,
     thePolluters,
-    youthJustice,
     lostInPolitics,
     thisIsEurope,
     coronavirus,
