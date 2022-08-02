@@ -312,7 +312,7 @@ describe('getPrebidAdSlots', () => {
 		);
 	});
 
-	test('should return the correct inline slot at breakpoint D when inline is in size mappings', () => {
+	test('should return the correct inline slot at breakpoint D with no additional size mappings', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('D');
 		config.set('page.contentType', 'Article');
 
@@ -321,7 +321,7 @@ describe('getPrebidAdSlots', () => {
 		expect(hbSlots[0].sizes).toEqual([[300, 250]]);
 	});
 
-	test('should return the correct inline slot at breakpoint D when inline is in size mappings', () => {
+	test('should return the correct inline slot at breakpoint D with additional size mappings', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('D');
 		config.set('page.contentType', 'Article');
 
