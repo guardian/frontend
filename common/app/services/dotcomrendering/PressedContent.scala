@@ -257,6 +257,7 @@ object PressedContent {
     "/us-news/ng-interactive/2017/jul/25/us-healthcare-system-vs-other-countries",
     "/uk-news/ng-interactive/2017/feb/20/what-the-eu27-want-brexit-red-lines-from-the-other-side-of-the-table",
     "/sport/ng-interactive/2017/aug/02/usain-bolt-fastest-man-ever-lived",
+    "/culture/2022/jul/28/post-your-questions-for-hot-chip",
   )
 
   def isPressed(path: String): Boolean = content.contains(path)
