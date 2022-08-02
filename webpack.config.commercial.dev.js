@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const config = require('./webpack.config.commercial.js');
 
@@ -11,6 +12,11 @@ module.exports = webpackMerge.smart(config, {
 		filename: `graun.standalone.commercial.js`,
 		chunkFilename: `graun.[name].commercial.js`,
 	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.OVERRIDE_BUNDLE_PORT': JSON.stringify(port),
+		}),
+	],
 	devServer: {
 		port,
 		compress: false,
