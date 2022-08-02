@@ -12,6 +12,7 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{ArticleControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
+import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
@@ -19,10 +20,9 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle, NewsletterService}
-import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
-import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
+import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import topics.{TopicS3Client, TopicS3ClientImpl, TopicService}
 
 class AppLoader extends FrontendApplicationLoader {
@@ -62,6 +62,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
     wire[TopicLifecycle],
+    wire[NewsletterSignupLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
