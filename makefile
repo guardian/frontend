@@ -139,5 +139,5 @@ commercial-graph: install # PRIVATE
 commercial-watch: commercial-compile
 	@./dev/commercial.watch.js
 
-dev-commercial:
+commercial-dev:
 	@yarn webpack-dev-server -c ./webpack.config.commercial.dev.js
