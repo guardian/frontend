@@ -128,6 +128,13 @@ describe('collectSizes', () => {
 			expect(result).toEqual(output);
 		},
 	);
+
+	it('should return an empty array if sizeMappings is null', () => {
+		const sizeMapping = null;
+		const result = collectSizes(sizeMapping);
+
+		expect(result).toEqual([]);
+	});
 });
 
 describe('Define Slot', () => {
