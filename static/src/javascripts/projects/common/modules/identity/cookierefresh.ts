@@ -5,7 +5,10 @@ import {
 } from 'common/modules/identity/api';
 import { storage } from '@guardian/libs';
 
-const shouldRefreshCookie = (lastRefresh, currentTime) => {
+const shouldRefreshCookie = (
+	lastRefresh: string | null,
+	currentTime: number,
+) => {
 	const days30InSeconds = 1000 * 86400 * 30; // (as seconds)
 	return (
 		!lastRefresh ||
@@ -13,7 +16,7 @@ const shouldRefreshCookie = (lastRefresh, currentTime) => {
 	);
 };
 
-const init = () => {
+const init: () => void = () => {
 	const lastRefreshKey = 'identity.lastRefresh';
 
 	if (storage.local.isAvailable() && isUserLoggedIn()) {
