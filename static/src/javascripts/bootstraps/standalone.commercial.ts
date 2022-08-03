@@ -51,12 +51,12 @@ const decideAssetsPaths = () => {
 		? Number(process.env.OVERRIDE_BUNDLE_PORT)
 		: undefined;
 
-	const assetsPath = assetsPathPort
-		? `http://localhost:${assetsPathPort}/`
-		: `${
-				page.frontendAssetsFullURL ?? page.assetsPath
-		  }javascripts/commercial/`;
-	return assetsPath;
+	if (assetsPathPort !== undefined) {
+		return `http://localhost:${assetsPathPort}/`;
+	} else {
+		const assetsPath = page.frontendAssetsFullURL ?? page.assetsPath;
+		return `${assetsPath}javascripts/commercial/`;
+	}
 };
 
 __webpack_public_path__ = decideAssetsPaths();
