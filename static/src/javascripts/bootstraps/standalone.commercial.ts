@@ -46,7 +46,7 @@ import type { Modules } from './types';
 
 const { isDotcomRendering, page } = window.guardian.config;
 
-const decideAssetsPaths = () => {
+const decideAssetsPath = () => {
 	const assetsPathPort: number | undefined = process.env.OVERRIDE_BUNDLE_PORT
 		? Number(process.env.OVERRIDE_BUNDLE_PORT)
 		: undefined;
@@ -59,7 +59,7 @@ const decideAssetsPaths = () => {
 	}
 };
 
-__webpack_public_path__ = decideAssetsPaths();
+__webpack_public_path__ = decideAssetsPath();
 
 const tags: Record<string, unknown> = {
 	feature: 'commercial',
