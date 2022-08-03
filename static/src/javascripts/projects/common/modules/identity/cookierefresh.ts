@@ -5,14 +5,15 @@ import {
 } from 'common/modules/identity/api';
 import { storage } from '@guardian/libs';
 
-const shouldRefreshCookie = (
-	lastRefresh: string | null,
+const days30InMillis: number = 1000 * 60 * 60 * 24 * 30;
+
+const shouldRefreshCookie: (
+	lastRefresh: any,
 	currentTime: number,
-) => {
-	const days30InSeconds = 1000 * 86400 * 30; // (as seconds)
+) => boolean = (lastRefresh: any, currentTime: number) => {
+	// Cookies auto-refresh after 30 days
 	return (
-		!lastRefresh ||
-		currentTime > parseInt(lastRefresh, 10) + days30InSeconds
+		!lastRefresh || currentTime - parseInt(lastRefresh, 10) > days30InMillis
 	);
 };
 
