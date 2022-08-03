@@ -162,52 +162,50 @@ object LiveBlogCurrentPage {
   def findPageWithBlock(
       pageSize: Int,
       blocks: Seq[BodyBlock],
-      isRequestedBlock: String,
+      requestedBlockId: String,
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
-    val pinnedBlock = blocks.find(_.attributes.pinned).map(renamePinnedBlock)
-    val filteredBlocks = applyFilters(blocks, filterKeyEvents, topicResult)
-    val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, filteredBlocks)
-    val newestPage = FirstPage(mainPageBlocks, filterKeyEvents, topicResult)
-    val pages = newestPage :: restPagesBlocks.zipWithIndex
-      .map {
-        case (page, index) =>
-          // page number is index + 2 to account for first page and 0 based index
-          BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents, topicResult)
+    val pages: Seq[PageReference] = pagesFromBodyBlocks(pageSize, blocks, filterKeyEvents, topicResult)
+
+    val indexOfPageWithRequestedBlock = pages.indexWhere(_.blocks.exists(_.id == requestedBlockId))
+    if (indexOfPageWithRequestedBlock < 0) None
+    else
+      Some {
+        val currentPage = pages(indexOfPageWithRequestedBlock)
+        val isNewestPage = pages.head == currentPage
+
+        LiveBlogCurrentPage(
+          currentPage = currentPage,
+          pagination =
+            if (pages.size <= 1) None
+            else
+              Some(
+                N1Pagination(
+                  newest = if (isNewestPage) None else Some(pages.head),
+                  newer = pages.lift(indexOfPageWithRequestedBlock - 1),
+                  oldest = if (pages.last == currentPage) None else Some(pages.last),
+                  older = pages.lift(indexOfPageWithRequestedBlock + 1),
+                  numberOfPages = pages.size,
+                ),
+              ),
+          pinnedBlock = if (isNewestPage) blocks.find(_.attributes.pinned).map(renamePinnedBlock) else None,
+        )
       }
-    val oldestPage = pages.lastOption.getOrElse(newestPage)
+  }
 
-    val endedPages = None :: (pages.map(Some.apply) :+ None)
-
-    def hasRequestedBlock(page: LiveBlogCurrentPage): Boolean = {
-      page.currentPage.blocks.exists(_.id == isRequestedBlock)
+  private def pagesFromBodyBlocks(
+      pageSize: Int,
+      blocks: Seq[BodyBlock],
+      filterKeyEvents: Boolean,
+      topicResult: Option[TopicResult],
+  ): Seq[PageReference] = {
+    val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, applyFilters(blocks, filterKeyEvents, topicResult))
+    FirstPage(mainPageBlocks, filterKeyEvents, topicResult) :: restPagesBlocks.zipWithIndex.map {
+      case (page, index) =>
+        // page number is index + 2 to account for first page and 0-based index of `zipWithIndex`
+        BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents, topicResult)
     }
-
-    endedPages
-      .sliding(3)
-      .toList
-      .map {
-        case List(newerPage, Some(currentPage), olderPage) =>
-          val isNewestPage = newestPage.equals(currentPage)
-          LiveBlogCurrentPage(
-            currentPage = currentPage,
-            pagination =
-              if (pages.length > 1)
-                Some(
-                  N1Pagination(
-                    newest = if (isNewestPage) None else Some(newestPage),
-                    newer = newerPage,
-                    oldest = if (oldestPage.equals(currentPage)) None else Some(oldestPage),
-                    older = olderPage,
-                    numberOfPages = pages.length,
-                  ),
-                )
-              else None,
-            if (isNewestPage) pinnedBlock else None,
-          )
-      }
-      .find(hasRequestedBlock)
   }
 
   private def renamePinnedBlock(pinnedBlock: BodyBlock): BodyBlock = {
