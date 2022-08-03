@@ -61,7 +61,7 @@ class JsonComponentTest extends AnyFlatSpec with Matchers with WithTestExecution
 
     val result = Future {
       implicit val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent(JsonComponent.withRefreshStatus(obj("name" -> "foo"))).result
+      JsonComponent.fromWritable(JsonComponent.withRefreshStatus(obj("name" -> "foo"))).result
     }
 
     contentType(result) should be(Some("application/json"))

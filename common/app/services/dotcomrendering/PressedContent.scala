@@ -227,6 +227,7 @@ object PressedContent {
     "/world/ng-interactive/2021/jan/25/how-the-arab-spring-unfolded-a-visualisation",
     "/environment/ng-interactive/2021/feb/19/how-fires-have-spread-to-previously-untouched-parts-of-the-world",
     "/environment/ng-interactive/2021/feb/23/beneath-the-blue-dive-into-a-dazzling-ocean-under-threat-interactive",
+    "/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend",
     "/world/ng-interactive/2021/mar/19/revealed-the-data-that-shows-how-covid-bounced-back-after-the-uks-lockdowns",
     "/world/ng-interactive/2021/apr/21/how-vaccines-are-affecting-covid-19-outbreaks-globally",
     "/environment/ng-interactive/2021/apr/29/visualised-glaciers-now-and-then",

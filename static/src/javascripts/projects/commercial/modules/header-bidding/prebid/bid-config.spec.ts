@@ -1,3 +1,4 @@
+import { createAdSize } from '@guardian/commercial-core';
 import type { PageTargeting } from 'common/modules/commercial/build-page-targeting';
 import {
 	isInAuOrNz as isInAuOrNz_,
@@ -32,9 +33,11 @@ import { _, bids } from './bid-config';
 const mockPageTargeting = {} as unknown as PageTargeting;
 
 const getBidders = () =>
-	bids('dfp-ad--top-above-nav', [[728, 90]], mockPageTargeting).map(
-		(bid) => bid.bidder,
-	);
+	bids(
+		'dfp-ad--top-above-nav',
+		[createAdSize(728, 90)],
+		mockPageTargeting,
+	).map((bid) => bid.bidder);
 
 const {
 	getIndexSiteId,
@@ -129,17 +132,17 @@ describe('getImprovePlacementId', () => {
 
 	const generateTestIds = () => {
 		const prebidSizes: HeaderBiddingSize[][] = [
-			[[300, 250]],
-			[[300, 600]],
-			[[970, 250]],
-			[[728, 90]],
-			[[1, 2]],
+			[createAdSize(300, 250)],
+			[createAdSize(300, 600)],
+			[createAdSize(970, 250)],
+			[createAdSize(728, 90)],
+			[createAdSize(1, 2)],
 		];
 		return prebidSizes.map(getImprovePlacementId);
 	};
 
 	test('should return -1 if no cases match', () => {
-		expect(getImprovePlacementId([[1, 2]])).toBe(-1);
+		expect(getImprovePlacementId([createAdSize(1, 2)])).toBe(-1);
 	});
 
 	test('should return the expected values when geolocated in UK and on desktop device', () => {
@@ -331,8 +334,8 @@ describe('indexExchangeBidders', () => {
 
 	test('should return an IX bidder for every size that the slot can take', () => {
 		const slotSizes: HeaderBiddingSize[] = [
-			[300, 250],
-			[300, 600],
+			createAdSize(300, 250),
+			createAdSize(300, 600),
 		];
 		const bidders: PrebidBidder[] = indexExchangeBidders(slotSizes);
 		expect(bidders).toEqual([
@@ -351,15 +354,15 @@ describe('indexExchangeBidders', () => {
 
 	test('should include methods in the response that generate the correct bid params', () => {
 		const slotSizes: HeaderBiddingSize[] = [
-			[300, 250],
-			[300, 600],
+			createAdSize(300, 250),
+			createAdSize(300, 600),
 		];
 		const bidders: PrebidBidder[] = indexExchangeBidders(slotSizes);
-		expect(bidders[0].bidParams('type', [[1, 2]])).toEqual({
+		expect(bidders[0].bidParams('type', [createAdSize(1, 2)])).toEqual({
 			siteId: '123456',
 			size: [300, 250],
 		});
-		expect(bidders[1].bidParams('type', [[1, 2]])).toEqual({
+		expect(bidders[1].bidParams('type', [createAdSize(1, 2)])).toEqual({
 			siteId: '123456',
 			size: [300, 600],
 		});
@@ -469,10 +472,7 @@ describe('bids', () => {
 		const rightSlotBidders = () =>
 			bids(
 				'dfp-right',
-				[
-					[300, 600],
-					[300, 250],
-				],
+				[createAdSize(300, 600), createAdSize(300, 250)],
 				mockPageTargeting,
 			).map((bid) => bid.bidder);
 		expect(rightSlotBidders()).toEqual(['ix', 'ix', 'adyoulike']);
@@ -515,7 +515,7 @@ describe('bids', () => {
 		isInUk.mockReturnValue(true);
 		const openXBid = bids(
 			'dfp-ad--top-above-nav',
-			[[728, 90]],
+			[createAdSize(728, 90)],
 			mockPageTargeting,
 		)[2];
 		expect(openXBid.params).toEqual({
@@ -530,7 +530,7 @@ describe('bids', () => {
 		isInUsOrCa.mockReturnValue(true);
 		const openXBid = bids(
 			'dfp-ad--top-above-nav',
-			[[728, 90]],
+			[createAdSize(728, 90)],
 			mockPageTargeting,
 		)[2];
 		expect(openXBid.params).toEqual({
@@ -545,7 +545,7 @@ describe('bids', () => {
 		isInAuOrNz.mockReturnValue(true);
 		const openXBid = bids(
 			'dfp-ad--top-above-nav',
-			[[728, 90]],
+			[createAdSize(728, 90)],
 			mockPageTargeting,
 		)[2];
 		expect(openXBid.params).toEqual({
@@ -560,7 +560,7 @@ describe('bids', () => {
 		isInRow.mockReturnValue(true);
 		const openXBid = bids(
 			'dfp-ad--top-above-nav',
-			[[728, 90]],
+			[createAdSize(728, 90)],
 			mockPageTargeting,
 		)[2];
 		expect(openXBid.params).toEqual({
@@ -594,7 +594,7 @@ describe('triplelift adapter', () => {
 
 		const tripleLiftBids = bids(
 			'dfp-ad--top-above-nav',
-			[[728, 90]],
+			[createAdSize(728, 90)],
 			mockPageTargeting,
 		)[1].params;
 		expect(tripleLiftBids).toEqual({
@@ -610,7 +610,7 @@ describe('triplelift adapter', () => {
 
 		const tripleLiftBids = bids(
 			'dfp-ad--inline1',
-			[[300, 250]],
+			[createAdSize(300, 250)],
 			mockPageTargeting,
 		)[1].params;
 		expect(tripleLiftBids).toEqual({
@@ -626,7 +626,7 @@ describe('triplelift adapter', () => {
 
 		const tripleLiftBids = bids(
 			'dfp-ad--top-above-nav',
-			[[320, 50]],
+			[createAdSize(320, 50)],
 			mockPageTargeting,
 		)[1].params;
 		expect(tripleLiftBids).toEqual({
@@ -656,17 +656,17 @@ describe('getXaxisPlacementId', () => {
 
 	const generateTestIds = () => {
 		const prebidSizes: HeaderBiddingSize[][] = [
-			[[300, 250]],
-			[[300, 600]],
-			[[970, 250]],
-			[[728, 90]],
-			[[1, 2]],
+			[createAdSize(300, 250)],
+			[createAdSize(300, 600)],
+			[createAdSize(970, 250)],
+			[createAdSize(728, 90)],
+			[createAdSize(1, 2)],
 		];
 		return prebidSizes.map(getXaxisPlacementId);
 	};
 
 	test('should return -1 if no cases match', () => {
-		expect(getImprovePlacementId([[1, 2]])).toBe(-1);
+		expect(getImprovePlacementId([createAdSize(1, 2)])).toBe(-1);
 	});
 
 	test('should return the expected values for desktop device', () => {

@@ -13,12 +13,12 @@ class StocksController(stocksData: StocksData, val controllerComponents: Control
     Action { implicit request =>
       // Decommissioned, see marker: 7dde429f00b1
       if (false && StocksWidgetSwitch.isSwitchedOff) {
-        Cached(1.minute)(JsonComponent(Stocks(Seq.empty)))
+        Cached(1.minute)(JsonComponent.fromWritable(Stocks(Seq.empty)))
       } else {
         stocksData.get match {
           case None => InternalServerError("Business data not loaded")
           case Some(stocks) =>
-            Cached(1.minute)(JsonComponent(stocks))
+            Cached(1.minute)(JsonComponent.fromWritable(stocks))
         }
       }
     }

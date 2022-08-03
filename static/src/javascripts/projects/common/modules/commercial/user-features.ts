@@ -1,4 +1,5 @@
 import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
+import type { HeaderPayload } from '@guardian/support-dotcom-components/dist/dotcom/src/types';
 import {
 	AdFreeCookieReasons,
 	adFreeDataIsOld,
@@ -369,6 +370,25 @@ const canShowContributionsReminderFeature = (): boolean => {
 	return Boolean(switches.showContributionReminder) && !signedUpForReminder;
 };
 
+type PurchaseInfo = HeaderPayload['targeting']['purchaseInfo'];
+const getPurchaseInfo = (): PurchaseInfo => {
+	const purchaseInfoRaw = getCookie({ name: 'GU_CO_COMPLETE' });
+
+	if (!purchaseInfoRaw) {
+		return undefined;
+	}
+
+	let purchaseInfo: PurchaseInfo = undefined;
+
+	try {
+		purchaseInfo = JSON.parse(
+			decodeURIComponent(purchaseInfoRaw),
+		) as PurchaseInfo;
+	} catch {} // eslint-disable-line no-empty -- silently handle error
+
+	return purchaseInfo;
+};
+
 export {
 	accountDataUpdateWarning,
 	isAdFreeUser,
@@ -383,6 +403,7 @@ export {
 	getLastOneOffContributionDate,
 	getLastRecurringContributionDate,
 	getDaysSinceLastOneOffContribution,
+	getPurchaseInfo,
 	isPostAskPauseOneOffContributor,
 	readerRevenueRelevantCookies,
 	fakeOneOffContributor,

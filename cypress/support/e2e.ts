@@ -28,6 +28,8 @@ declare global {
 			allowAllConsent(): void;
 
 			rejectAllConsent(): void;
+
+			hydrate(): Chainable<JQuery<HTMLElement>>;
 		}
 
 		/**

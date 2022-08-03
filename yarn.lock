@@ -2084,10 +2084,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-7.3.0.tgz#9c4908fa5d439d85b2024735575435b0a5cd369f"
   integrity sha512-Py2FZ6aHi/inOIF4+4xZqNmbJur3cevtWRMQeFLjNjgN7zR7hMB6Dsd8uurEym6Qd3yxBAGPx/+rS3xVbTKz4w==
 
-"@guardian/commercial-core@4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-4.5.0.tgz#fdf9073b0e297b969478ea70108a39711ddbc155"
-  integrity sha512-2EuDL1e5HneoZds1UKhkOhXDOSn59+TBEhC0UGxT/oPHJv30ZSF2gbfpubmzd0ktscCT4NeCsb9IAJnitnKV/w==
+"@guardian/commercial-core@4.6.0":
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-4.6.0.tgz#3d0b08306812ee7ea09a3155ac5ae3b5853afcec"
+  integrity sha512-xRP7hypqAHeK70NAPOXnTkmZSdD6iY4s32212UdcacUGg7I8a0AmE6XYjO0qvkwI2CQqm2wVJqmiIrByffut8g==
 
 "@guardian/consent-management-platform@^10.7.1":
   version "10.7.1"
@@ -2164,10 +2164,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.12.0.tgz#52d11d2fff649e04934033473b3ed7c7bf4a1639"
   integrity sha512-JIFBybaCd69tf+zJZZ7KNLdqaVePOAc36wGFor0I60vc9Ib0jMuzYVffMjMhF6LHSXMdoOcqGwiPdFucObVYAA==
 
-"@guardian/support-dotcom-components@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.2.tgz#56bfb7cf7aef6d859b6f97b3986188af687f8a16"
-  integrity sha512-NqAxmegwQ1ltBH4EmfXwJHxRXGJzlZMSFDkK+5fkReL4XtACX3ZzR2rMbl7SN5RxSbeSzr5nGElRZ0TWkAYRJw==
+"@guardian/support-dotcom-components@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.4.tgz#1d09ce408bcfa435eb2411255688e22a2eede032"
+  integrity sha512-g23KJoJiJVIC75DZW87zyblmNMnjujCgCKntLVLblKoSxIzOBLhzkPUnJqzPtG3aztTPRbqmhLzqgzm6M56/qw==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"

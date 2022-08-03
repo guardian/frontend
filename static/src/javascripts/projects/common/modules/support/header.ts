@@ -6,8 +6,10 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import {
 	getLastOneOffContributionDate,
+	getPurchaseInfo,
 	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import {
 	dynamicImport,
 	ModulesVersion,
@@ -31,6 +33,8 @@ const buildHeaderLinksPayload = (): HeaderPayload => {
 			mvtId: getMvtValue() ?? 0,
 			lastOneOffContributionDate:
 				getLastOneOffContributionDate() ?? undefined,
+			purchaseInfo: getPurchaseInfo(),
+			isSignedIn: isUserLoggedIn(),
 		},
 	};
 };
@@ -53,7 +57,7 @@ export const fetchAndRenderHeaderLinks = async (): Promise<void> => {
 			return;
 		}
 		const { module } = response.data;
-		const Header = await dynamicImport(module.url, 'Header');
+		const Header = await dynamicImport(module.url, module.name);
 
 		const el = document.createElement('div');
 		const container = document.querySelector('.new-header__cta-bar');

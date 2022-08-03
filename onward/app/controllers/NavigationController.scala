@@ -24,7 +24,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
       Edition.byId(editionId) match {
         case Some(edition) =>
           val menu = SimpleMenu(edition)
-          Cached(900)(JsonComponent(menu))
+          Cached(900)(JsonComponent.fromWritable(menu))
         case None =>
           Cached(60) {
             val json = Json.toJson(ApiError("Invalid edition ID.", 400)).toString()

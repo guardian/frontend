@@ -1,6 +1,6 @@
 import config from '../../lib/config';
 
-export type SentinelLoggingEvent = {
+export type AmIUsedLoggingEvent = {
 	label: string;
 	properties?: Property[];
 };
@@ -43,8 +43,8 @@ export const amIUsed = (
 		{ name: 'function_name', value: functionName },
 		{ name: 'URL', value: window.location.href },
 	];
-	const event: SentinelLoggingEvent = {
-		label: 'commercial.sentinel',
+	const event: AmIUsedLoggingEvent = {
+		label: 'commercial.amiused',
 		properties: parameters
 			? [
 					...properties,

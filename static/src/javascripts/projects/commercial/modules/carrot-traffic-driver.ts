@@ -1,4 +1,5 @@
 import { createAdSlot } from '@guardian/commercial-core';
+import { getUrlVars } from 'lib/url';
 import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
@@ -8,6 +9,8 @@ import type {
 	SpacefinderWriter,
 } from '../../common/modules/spacefinder';
 import { addSlot } from './dfp/add-slot';
+
+const sfdebug = getUrlVars().sfdebug;
 
 const bodySelector = '.article-body-commercial-selector';
 
@@ -39,10 +42,11 @@ const wideRules: SpacefinderRules = {
 			minAbove: 50,
 			minBelow: 50,
 		},
-		' > *:not(p):not(h2):not(blockquote):not(#sign-in-gate)': {
-			minAbove: 50,
-			minBelow: 50,
-		},
+		' > *:not(p):not(h2):not(blockquote):not(#sign-in-gate):not(.sfdebug)':
+			{
+				minAbove: 50,
+				minBelow: 50,
+			},
 		' .ad-slot': {
 			minAbove: 100,
 			minBelow: 100,
@@ -98,11 +102,13 @@ const getRules = (): SpacefinderRules => {
 };
 
 export const initCarrot = (): Promise<boolean> => {
+	const enableDebug = sfdebug === 'carrot';
+
 	if (commercialFeatures.carrotTrafficDriver) {
 		return spaceFiller.fillSpace(getRules(), insertSlot, {
 			waitForImages: true,
-			waitForLinks: true,
 			waitForInteractives: true,
+			debug: enableDebug,
 		});
 	}
 	return Promise.resolve(false);
