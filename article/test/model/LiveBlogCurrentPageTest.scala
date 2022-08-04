@@ -698,7 +698,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
     val result = LiveBlogCurrentPage.findPageWithBlock(
       pageSize = 2,
       blocks = testFakeBlocks.blocksSequence,
-      isRequestedBlock = "3",
+      requestedBlockId = "3",
       filterKeyEvents = false,
       topicResult = Some(topicResult),
     )
