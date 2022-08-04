@@ -14,7 +14,7 @@ const init = async (): Promise<void> => {
 	} else {
 		// init opt-out-advertising
 		console.log('NO CONSENT!!');
-		void initConsentless();
+		// void initConsentless();
 	}
 };
 

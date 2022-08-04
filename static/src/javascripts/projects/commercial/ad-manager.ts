@@ -27,14 +27,28 @@ class OptOutAdManager extends AdManager {
 		window.ootag.queue.push(function () {
 			window.ootag.initializeOo({
 				publisher: 33,
-				noLogging: 0,
-				consentTimeOutMS: 5000,
-				onlyNoConsent: 1,
+				// noLogging: 0,
+				// consentTimeOutMS: 5000,
+				// onlyNoConsent: 1,
 			});
 			window.ootag.addParameter('test', 'yes');
 		});
 
-		void loadScript('//cdn.optoutadvertising.com/script/ooguardian.js', {
+		ootag.queue.push(function () {
+			ootag.defineSlot({
+				adSlot: 'homepage-lead',
+				targetId: 'dfp-ad--top-above-nav',
+				filledCallback: () => {
+					console.log('filled top-above-nav');
+				},
+				emptyCallback: () => {
+					console.log('empty top-above-nav');
+				},
+			});
+			// ootag.makeRequests();
+		});
+
+		void loadScript('//cdn.optoutadvertising.com/script/ootag.min.js', {
 			async: false,
 		});
 	}
