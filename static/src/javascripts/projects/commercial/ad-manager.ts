@@ -1,14 +1,30 @@
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import { loadScript } from '@guardian/libs';
 
-// do not use :)
-class AdManager {}
-
-class GoogleAdManager extends AdManager {
-	//
+interface AdManagerI {
+	prepare: () => void;
 }
 
+class AdManager implements AdManagerI {
+	prepare() {
+		//
+	}
+}
+
+class GoogleAdManager extends AdManager {}
+
 class OptOutAdManager extends AdManager {
-	//
+	prepare() {
+		// @ts-expect-error -- TODO
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO
+		window.ootag = window.ootag || {};
+		// @ts-expect-error -- TODO
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access -- TODO
+		window.ootag.queue = window.ootag.queue || [];
+		void loadScript('//cdn.optoutadvertising.com/script/ooguardian.js', {
+			async: false,
+		});
+	}
 }
 
 let adManager: AdManager | undefined;
@@ -32,9 +48,3 @@ function getAdManager(): AdManager {
 }
 
 export { getAdManager, createAdManager };
-
-/**
- * inherited by GoogleAdManager, OptOutAdManager
- *
- *
- */
