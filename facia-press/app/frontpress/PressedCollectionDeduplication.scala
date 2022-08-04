@@ -1,5 +1,7 @@
 package frontpress
 
+import model.pressed.PressedContent
+
 object PressedCollectionDeduplication {
 
   /*
@@ -38,6 +40,10 @@ object PressedCollectionDeduplication {
     !collectionIsMostPopular(collectionV: PressedCollectionVisibility)
   }
 
+  def getHeaderURLsFromTrailsList(pCVs: List[PressedContent]): Seq[String] = {
+    pCVs.map(pressedContent => pressedContent.header.url)
+  }
+
   def getHeaderURLsFromCuratedAndBackfilledAtDepth(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
     pCVs.flatMap { collection =>
       (collection.pressedCollection.curated ++ collection.pressedCollection.backfill)
@@ -51,7 +57,10 @@ object PressedCollectionDeduplication {
       collectionV: PressedCollectionVisibility,
   ): PressedCollectionVisibility = {
     // Essentially deduplicate the backfill of collectionV using header values values from accum's elements curated and backfill
-    val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, 10)
+    val accumulatedHeaderURLsForDeduplication: Seq[String] =
+      getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, 10) ++ getHeaderURLsFromTrailsList(
+        collectionV.pressedCollection.curated,
+      )
     val newBackfill = collectionV.pressedCollection.backfill.filter(pressedContent =>
       !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url),
     )
