@@ -19,7 +19,7 @@ module.exports = webpackMerge.smart(config, {
 	],
 	devServer: {
 		port,
-		compress: false,
+		compress: true,
 		hot: false,
 		liveReload: true,
 	},
