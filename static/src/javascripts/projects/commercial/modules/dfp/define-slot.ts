@@ -257,7 +257,7 @@ const defineSlot = (
 	};
 };
 
-export { defineSlot };
+export { defineSlot, buildGoogletagSizeMapping };
 
 export const _ = {
 	buildGoogletagSizeMapping,

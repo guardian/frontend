@@ -113,7 +113,6 @@
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
@@ -123,7 +122,6 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/commercial/lib/googletag-ad-size.ts",
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/commercial/modules/comscore.ts": [
@@ -186,6 +184,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/fill-advert-slots.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/Advert.ts",
