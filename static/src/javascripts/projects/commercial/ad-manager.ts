@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition -- ...????*/
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
+import { init as prepareGoogletag } from './modules/dfp/prepare-googletag';
+import { initPermutive } from './modules/dfp/prepare-permutive';
 
 interface AdManagerI {
 	prepare: () => void;
@@ -11,16 +14,26 @@ class AdManager implements AdManagerI {
 	}
 }
 
-class GoogleAdManager extends AdManager {}
+class GoogleAdManager extends AdManager {
+	prepare() {
+		void initPermutive().then(() => prepareGoogletag());
+	}
+}
 
 class OptOutAdManager extends AdManager {
 	prepare() {
-		// @ts-expect-error -- TODO
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO
 		window.ootag = window.ootag || {};
-		// @ts-expect-error -- TODO
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access -- TODO
 		window.ootag.queue = window.ootag.queue || [];
+		window.ootag.queue.push(function () {
+			window.ootag.initializeOo({
+				publisher: 33,
+				noLogging: 1,
+				consentTimeOutMS: 5000,
+				onlyNoConsent: 1,
+			});
+			window.ootag.addParameter('test', 'yes');
+		});
+
 		void loadScript('//cdn.optoutadvertising.com/script/ooguardian.js', {
 			async: false,
 		});
@@ -29,15 +42,16 @@ class OptOutAdManager extends AdManager {
 
 let adManager: AdManager | undefined;
 
-function createAdManager(consentState: ConsentState): void {
+function createAdManager(consentState: ConsentState): AdManager {
 	if (adManager) {
-		return;
+		return adManager;
 	}
 	if (consentState.canTarget) {
 		adManager = new GoogleAdManager();
 	} else {
 		adManager = new OptOutAdManager();
 	}
+	return adManager;
 }
 
 function getAdManager(): AdManager {

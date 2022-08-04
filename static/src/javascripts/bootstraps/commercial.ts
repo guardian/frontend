@@ -7,7 +7,7 @@ import { init as initConsentless } from './commercial.consentless';
 const init = async (): Promise<void> => {
 	await initCommon();
 	const consentState = await onConsent();
-	createAdManager(consentState);
+	createAdManager(consentState).prepare();
 
 	if (consentState.canTarget) {
 		initConsented();
