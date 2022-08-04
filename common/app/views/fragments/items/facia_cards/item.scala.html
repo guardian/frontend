@@ -43,7 +43,7 @@
         case content: ContentCard if isStoryPackage => {
             @dynamoContentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
         }
-            
+
         case content: ContentCard => {
             @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
 
@@ -52,6 +52,8 @@
         case htmlBlob: HtmlBlob => {
             <div class="@GetClasses.forHtmlBlob(htmlBlob)">@htmlBlob.html</div>
         }
+
+        case paidContent: PaidCard => { }
     }
 }
 </li>
