@@ -16,6 +16,7 @@ case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container
 case object Video extends Container
+case object DeeplyReadExperiment extends Container
 
 object Container extends GuLogging {
 

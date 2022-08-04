@@ -322,6 +322,10 @@ object DotcomRenderingDataModel {
     )
   }
 
+  def forDeeplyRead(): DotcomRenderingDataModel = {
+    apply()
+  }
+
   def apply(
       page: ContentPage,
       request: RequestHeader,

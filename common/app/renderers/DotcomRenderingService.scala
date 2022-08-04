@@ -8,25 +8,9 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{
-  DotcomBlocksRenderingDataModel,
-  DotcomFrontsRenderingDataModel,
-  DotcomRenderingDataModel,
-  PageType,
-}
-
+import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomDeeplyReadRenderingDataModel, DotcomFrontsRenderingDataModel, DotcomRenderingDataModel, PageType}
 import services.NewsletterData
-import model.{
-  CacheTime,
-  Cached,
-  InteractivePage,
-  LiveBlogPage,
-  NoCache,
-  PageWithStoryPackage,
-  PressedPage,
-  Topic,
-  TopicResult,
-}
+import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, NoCache, PageWithStoryPackage, PressedPage, Topic, TopicResult}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -234,6 +218,12 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page.metadata.cacheTime)
+  }
+
+  def getDeeplyRead(ws: WSClient)(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomDeeplyReadRenderingDataModel()
+    val json = DotcomDeeplyReadRenderingDataModel.toJson((dataModel))
+    post(ws, json, Configuration.rendering.baseURL + "/DeeplyRead", CacheTime.Facia)
   }
 
 }

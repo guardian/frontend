@@ -1,6 +1,6 @@
 @import common.commercial.ContainerModel
 @import layout.MetaDataHeader
-@import layout.slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
+@import layout.slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video, DeeplyReadExperiment}
 @import views.html.fragments.commercial.containers.paidContainer
 @import views.html.fragments.audio.containers.flagshipContainer
 @import views.html.fragments.containers.facia_cards._
@@ -100,6 +100,10 @@
                             @mostPopularContainer(containerDefinition, frontProperties)
                             </div>
                         }
+                    }
+
+                    case DeeplyReadExperiment => {
+                      @deeplyReadContainer
                     }
 
                     case _ => {}
