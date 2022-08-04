@@ -27,7 +27,7 @@ class OptOutAdManager extends AdManager {
 		window.ootag.queue.push(function () {
 			window.ootag.initializeOo({
 				publisher: 33,
-				noLogging: 1,
+				noLogging: 0,
 				consentTimeOutMS: 5000,
 				onlyNoConsent: 1,
 			});
