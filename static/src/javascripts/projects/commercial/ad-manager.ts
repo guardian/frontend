@@ -27,9 +27,9 @@ class OptOutAdManager extends AdManager {
 		window.ootag.queue.push(function () {
 			window.ootag.initializeOo({
 				publisher: 33,
-				// noLogging: 0,
+				noLogging: 0,
 				// consentTimeOutMS: 5000,
-				// onlyNoConsent: 1,
+				onlyNoConsent: 1,
 			});
 			window.ootag.addParameter('test', 'yes');
 		});
@@ -45,9 +45,9 @@ class OptOutAdManager extends AdManager {
 					console.log('empty top-above-nav');
 				},
 			});
-			// ootag.makeRequests();
 		});
 
+		// TODO this seems to be safeframeless version. Ask OptOut how we can use safeframes.
 		void loadScript('//cdn.optoutadvertising.com/script/ootag.min.js', {
 			async: false,
 		});

@@ -12,9 +12,7 @@ const init = async (): Promise<void> => {
 	if (consentState.canTarget) {
 		initConsented();
 	} else {
-		// init opt-out-advertising
-		console.log('NO CONSENT!!');
-		// void initConsentless();
+		void initConsentless();
 	}
 };
 
