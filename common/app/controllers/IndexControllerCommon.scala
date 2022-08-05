@@ -75,27 +75,26 @@ trait IndexControllerCommon
     path match {
       //if this is a section tag e.g. football/football
       case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss)))
-      case _ => {
+      case _ =>
         logGoogleBot(request)
         index(Edition(request), path, inferPage(request), request.isRss) map {
-          case Left(model) if model.contents.nonEmpty => renderFaciaFront(model)
           // if no content is returned (as often happens with old/expired/migrated microsites) return 404 rather than an empty page
-          case Left(model) if model.contents.isEmpty =>
-            Cached(60)(
-              WithoutRevalidationResult(
-                Gone(
-                  views.html.gone(
-                    gonePage,
-                    "Sorry - there is no content here",
-                    "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content.",
+          case Left(model) =>
+            if (model.contents.nonEmpty) renderFaciaFront(model)
+            else
+              Cached(60)(
+                WithoutRevalidationResult(
+                  Gone(
+                    views.html.gone(
+                      gonePage,
+                      "Sorry - there is no content here",
+                      "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content.",
+                    ),
                   ),
                 ),
-              ),
-            )
+              )
           case Right(other) => RenderOtherStatus(other)
         }
-      }
-
     }
 
   override def canRender(item: ItemResponse): Boolean = item.section.orElse(item.tag).isDefined
