@@ -37,7 +37,7 @@ object ArticlePicker {
 
   private[this] def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
     val allowListFeatures = dcrChecks(page, request)
-    val article100PercentPageFeatures = allowListFeatures.filterKeys(
+    val article100PercentPageFeatures = allowListFeatures.view.filterKeys(
       Set(
         "isSupportedType",
         "isNotAGallery",
