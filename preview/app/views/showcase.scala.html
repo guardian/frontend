@@ -79,7 +79,7 @@
                     </ul>
                 </li>
             }
-            @for(panel <- rundownPanelOutcomes.right.toOption) {
+            @for(panel <- rundownPanelOutcomes.toOption) {
                 <li class="panel rundown">
                     <h2 class="panelTitle">@panel.panelTitle</h2>
                     @showcase_articlegroup(panel.articleGroup)
@@ -96,7 +96,7 @@
                         </ul>
                     </li>
                 }
-                @for(panel <- panelOutcome.right.toOption) {
+                @for(panel <- panelOutcome.toOption) {
                     <li class="panel singleStory">
                         @for(panelTitle <- panel.panelTitle) {
                             <h2 class="panelTitle">
