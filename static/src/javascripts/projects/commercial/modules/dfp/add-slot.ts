@@ -10,14 +10,21 @@ const displayAd = (
 	forceDisplay: boolean,
 	additionalSizes?: SizeMapping,
 ) => {
-	const advert = new Advert(adSlot, additionalSizes);
+	try {
+		const advert = new Advert(adSlot, additionalSizes);
 
-	dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
-	if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
-		queueAdvert(advert);
-		enableLazyLoad(advert);
-	} else {
-		loadAdvert(advert);
+		dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
+		if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
+			queueAdvert(advert);
+			enableLazyLoad(advert);
+		} else {
+			loadAdvert(advert);
+		}
+	} catch {
+		// TODO: Log using Raven here?? Include slot id in report.
+		// Should we include the invalid mappings so that we can investigate?
+		console.log('Could not create advert');
+		return;
 	}
 };
 

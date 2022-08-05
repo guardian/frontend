@@ -61,8 +61,17 @@ const fillAdvertSlots = async (): Promise<void> => {
 					desktop: [adSizes.billboard, createAdSize(900, 250)],
 				};
 			}
-			return new Advert(adSlot, additionalSizes);
-		});
+
+			try {
+				const advert = new Advert(adSlot, additionalSizes);
+				return advert;
+			} catch {
+				return null;
+			}
+		})
+		.filter((advert) => advert !== null)
+		.map((advert) => advert as Advert);
+
 	const currentLength = dfpEnv.adverts.length;
 	dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
 	adverts.forEach((advert, index) => {

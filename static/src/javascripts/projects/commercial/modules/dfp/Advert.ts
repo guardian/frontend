@@ -116,11 +116,14 @@ class Advert {
 
 		this.sizes = this.generateSizeMapping(additionalSizeMapping);
 
-		const slotDefinition = defineSlot(adSlotNode, this.sizes);
+		try {
+			const slotDefinition = defineSlot(adSlotNode, this.sizes);
 
-		this.slot = slotDefinition.slot;
-
-		this.whenSlotReady = slotDefinition.slotReady;
+			this.slot = slotDefinition.slot;
+			this.whenSlotReady = slotDefinition.slotReady;
+		} catch {
+			throw new Error(`Could not define slot for ${this.id}`);
+		}
 
 		this.whenLoaded = new Promise((resolve: Resolver) => {
 			this.whenLoadedResolver = resolve;
@@ -228,7 +231,10 @@ class Advert {
 
 		this.sizes = sizeMapping;
 
-		this.slot.defineSizeMapping(buildGoogletagSizeMapping(sizeMapping));
+		const googleMapping = buildGoogletagSizeMapping(sizeMapping);
+		if (googleMapping) {
+			this.slot.defineSizeMapping(googleMapping);
+		}
 	}
 }
 
