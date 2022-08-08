@@ -612,3 +612,9 @@
 .bz-custom-container ~ #bannerandheader > .top-banner-ad-container {
     display: none;
 }
+
+.podcast__secondary .ad-slot--right {
+    @include mq($until: desktop) {
+        display: none;
+    }
+}
