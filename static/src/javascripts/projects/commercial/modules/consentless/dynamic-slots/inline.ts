@@ -10,10 +10,10 @@ const addInlineAds = (): Promise<void> =>
 		? addMobileInlineAds()
 		: addDesktopInlineAds();
 
-const initInline = async () => {
+const initInline = async (): Promise<void> => {
 	// do we need to rerun for the sign-in gate?
 	if (!commercialFeatures.articleBodyAdverts) {
-		return false;
+		return;
 	}
 
 	await addInlineAds();

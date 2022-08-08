@@ -1,10 +1,10 @@
 import { loadScript } from '@guardian/libs';
 
-function init(): Promise<void> {
+function initConsentless(): Promise<void> {
 	window.ootag = window.ootag || {};
 	window.ootag.queue = window.ootag.queue || [];
 	window.ootag.queue.push(function () {
-		window.ootag.initializeOo({
+		window.ootag.initConsentlessializeOo({
 			publisher: 33,
 			noLogging: 0,
 			// consentTimeOutMS: 5000,
@@ -18,4 +18,4 @@ function init(): Promise<void> {
 	return Promise.resolve();
 }
 
-export { init };
+export { initConsentless };
