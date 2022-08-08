@@ -6,14 +6,14 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(OfferHttp3, LiveBlogMainMediaPosition, MerchandisingMinHeight)
+    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition, MerchandisingMinHeight)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
-object FrontRendering
+object DCRFronts
     extends Experiment(
-      name = "front-rendering",
+      name = "dcr-fronts",
       description = "Use DCR for fronts",
       owners = Seq(Owner.withGithub("dotcom")),
       sellByDate = LocalDate.of(2023, 6, 2),
