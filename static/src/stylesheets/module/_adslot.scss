@@ -20,10 +20,6 @@
     margin-bottom: $gs-baseline * 2;
 }
 
-.ad-slot--dark {
-    background-color: lighten($brightness-7,  2.5%);
-}
-
 .ad-slot--right,
 .ad-slot--comments {
     position: sticky;
@@ -269,6 +265,10 @@
     @include mq(tablet, leftCol) {
         clear: left;
     }
+}
+
+.ad-slot--dark {
+    background-color: lighten($brightness-7,  2.5%);
 }
 
 .ad-slot--container-inline:not(.ad-slot--fluid):not(.ad-slot--gc):not(.ad-slot--mostpop) {
