@@ -125,7 +125,9 @@ class Advert {
 		} catch {
 			log(
 				'commercial',
-				`Could not create advert. Ad slot: ${adSlotNode.id}`,
+				`Could not create advert. Ad slot: ${
+					adSlotNode.id
+				}. Sizes: ${JSON.stringify(this.sizes)}`,
 			);
 			throw new Error(`Could not define slot for ${adSlotNode.id}`);
 		}
