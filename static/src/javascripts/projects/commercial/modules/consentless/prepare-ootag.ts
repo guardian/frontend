@@ -28,9 +28,7 @@ function init(): Promise<void> {
 	});
 
 	// TODO this seems to be safeframeless version. Ask OptOut how we can use safeframes.
-	void loadScript('//cdn.optoutadvertising.com/script/ootag.min.js', {
-		async: false,
-	});
+	void loadScript('//cdn.optoutadvertising.com/script/ootag.min.js');
 	return Promise.resolve();
 }
 

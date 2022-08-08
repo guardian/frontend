@@ -1,8 +1,7 @@
 import { init as initConsentless } from 'commercial/modules/consentless/prepare-ootag';
 
-const init = (): Promise<void> => {
-	initConsentless();
-	return Promise.resolve();
+const init = async (): Promise<void> => {
+	await Promise.all([initConsentless()]);
 };
 
 export { init };
