@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition -- ...????*/
 import { loadScript } from '@guardian/libs';
 
 function init(): Promise<void> {
@@ -12,19 +11,6 @@ function init(): Promise<void> {
 			onlyNoConsent: 1,
 		});
 		window.ootag.addParameter('test', 'yes');
-	});
-
-	window.ootag.queue.push(function () {
-		window.ootag.defineSlot({
-			adSlot: 'homepage-lead',
-			targetId: 'dfp-ad--top-above-nav',
-			filledCallback: () => {
-				console.log('filled top-above-nav');
-			},
-			emptyCallback: () => {
-				console.log('empty top-above-nav');
-			},
-		});
 	});
 
 	// TODO this seems to be safeframeless version. Ask OptOut how we can use safeframes.
