@@ -68,7 +68,9 @@ const fillAdvertSlots = async (): Promise<void> => {
 			} catch {
 				log(
 					'commercial',
-					`Could not create advert. Ad slot: ${adSlot.id}`,
+					`Could not create advert. Ad slot: ${
+						adSlot.id
+					}. Additional Sizes: ${JSON.stringify(additionalSizes)}`,
 				);
 				return null;
 			}

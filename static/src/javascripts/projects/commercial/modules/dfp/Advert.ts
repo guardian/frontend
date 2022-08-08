@@ -4,7 +4,7 @@ import {
 	slotSizeMappings,
 } from '@guardian/commercial-core';
 import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
-import reportError from 'lib/report-error';
+import { log } from '@guardian/libs';
 import { breakpoints } from '../../../../lib/detect';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { buildGoogletagSizeMapping, defineSlot } from './define-slot';
@@ -123,10 +123,9 @@ class Advert {
 			this.slot = slotDefinition.slot;
 			this.whenSlotReady = slotDefinition.slotReady;
 		} catch {
-			reportError(
-				new Error(`Could not create advert. Ad slot: ${adSlotNode.id}`),
-				{},
-				false,
+			log(
+				'commercial',
+				`Could not create advert. Ad slot: ${adSlotNode.id}`,
 			);
 			throw new Error(`Could not define slot for ${adSlotNode.id}`);
 		}

@@ -22,7 +22,12 @@ const displayAd = (
 			loadAdvert(advert);
 		}
 	} catch {
-		log('commercial', `Could not create advert. Ad slot: ${adSlot.id}`);
+		log(
+			'commercial',
+			`Could not create advert. Ad slot: ${
+				adSlot.id
+			}. Additional Sizes: ${JSON.stringify(additionalSizes)}`,
+		);
 	}
 };
 
