@@ -4,7 +4,7 @@ function initConsentless(): Promise<void> {
 	window.ootag = window.ootag || {};
 	window.ootag.queue = window.ootag.queue || [];
 	window.ootag.queue.push(function () {
-		window.ootag.initConsentlessializeOo({
+		window.ootag.initializeOo({
 			publisher: 33,
 			noLogging: 0,
 			// consentTimeOutMS: 5000,

@@ -6,15 +6,17 @@ const getOptOutSlotName = (dfpSlotName: string): string => {
 };
 
 const defineSlot = (slotId: string): void => {
-	window.ootag.defineSlot({
-		adSlot: getOptOutSlotName(slotId),
-		targetId: slotId,
-		filledCallback: () => {
-			console.log(`filled consentless ${slotId}`);
-		},
-		emptyCallback: () => {
-			console.log(`empty consentless ${slotId}`);
-		},
+	window.ootag.queue.push(() => {
+		window.ootag.defineSlot({
+			adSlot: getOptOutSlotName(slotId),
+			targetId: slotId,
+			filledCallback: () => {
+				console.log(`filled consentless ${slotId}`);
+			},
+			emptyCallback: () => {
+				console.log(`empty consentless ${slotId}`);
+			},
+		});
 	});
 };
 

@@ -13,6 +13,7 @@ import type {
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../../../lib/fastdom-promise';
+import { defineSlot } from '../define-slot';
 
 type SlotName = Parameters<typeof createAdSlot>[0];
 
@@ -84,7 +85,7 @@ const insertAdAtPara = (
 			}
 		})
 		.then(() => {
-			// TODO Call our opt out defineSlot function
+			defineSlot(ad.id);
 		});
 };
 
