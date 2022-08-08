@@ -1,4 +1,5 @@
 import type { SizeMapping } from '@guardian/commercial-core';
+import { log } from '@guardian/libs';
 import { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
 import { enableLazyLoad } from './lazy-load';
@@ -21,10 +22,7 @@ const displayAd = (
 			loadAdvert(advert);
 		}
 	} catch {
-		// TODO: Log using Raven here?? Include slot id in report.
-		// Should we include the invalid mappings so that we can investigate?
-		console.log('Could not create advert');
-		return;
+		log('commercial', `Could not create advert. Ad slot: ${adSlot.id}`);
 	}
 };
 

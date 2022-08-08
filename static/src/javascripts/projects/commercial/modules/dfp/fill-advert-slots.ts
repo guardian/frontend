@@ -66,11 +66,14 @@ const fillAdvertSlots = async (): Promise<void> => {
 				const advert = new Advert(adSlot, additionalSizes);
 				return advert;
 			} catch {
+				log(
+					'commercial',
+					`Could not create advert. Ad slot: ${adSlot.id}`,
+				);
 				return null;
 			}
 		})
-		.filter((advert) => advert !== null)
-		.map((advert) => advert as Advert);
+		.filter((advert): advert is Advert => advert !== null);
 
 	const currentLength = dfpEnv.adverts.length;
 	dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
