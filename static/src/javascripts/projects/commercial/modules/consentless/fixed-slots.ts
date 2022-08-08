@@ -1,10 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition -- ...????*/
-const getOptOutSlotName = (dfpSlotName: string): string => {
-	if (dfpSlotName.includes('top-above-nav')) {
-		return 'homepage-lead';
-	}
-	return 'homepage-rect';
-};
+import { defineSlot } from './define-slot';
 
 const initFixedSlots = (): Promise<void> => {
 	// get slots
@@ -12,16 +6,7 @@ const initFixedSlots = (): Promise<void> => {
 	// define slots
 	window.ootag.queue.push(() => {
 		adverts.forEach((slotElement) => {
-			window.ootag.defineSlot({
-				adSlot: getOptOutSlotName(slotElement.id),
-				targetId: slotElement.id,
-				filledCallback: () => {
-					console.log(`filled consentless ${slotElement.id}`);
-				},
-				emptyCallback: () => {
-					console.log(`empty consentless ${slotElement.id}`);
-				},
-			});
+			
 		});
 	});
 	return Promise.resolve();
