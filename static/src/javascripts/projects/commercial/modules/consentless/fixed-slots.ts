@@ -6,7 +6,7 @@ const getOptOutSlotName = (dfpSlotName: string): string => {
 	return 'homepage-rect';
 };
 
-const fillAdvertSlots = (): Promise<void> => {
+const initFixedSlots = (): Promise<void> => {
 	// get slots
 	const adverts = [...document.querySelectorAll<HTMLElement>('.js-ad-slot')];
 	// define slots
@@ -27,4 +27,4 @@ const fillAdvertSlots = (): Promise<void> => {
 	return Promise.resolve();
 };
 
-export { fillAdvertSlots };
+export { initFixedSlots };
