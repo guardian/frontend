@@ -261,6 +261,7 @@ interface Window {
 		queue: any[];
 		initializeOo: (x: any) => void;
 		addParameter: (x: string, y: string) => void;
+		defineSlot: (x: any) => void;
 	};
 	confiant?: Confiant;
 	apstag?: Apstag;
