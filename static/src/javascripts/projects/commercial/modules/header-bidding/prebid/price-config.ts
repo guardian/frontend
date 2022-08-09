@@ -72,7 +72,9 @@ export const ozonePriceGranularity = (
 	if (
 		sizeString === adSizes.leaderboard.toString() ||
 		sizeString === adSizes.billboard.toString() ||
-		sizeString === adSizes.mpu.toString()
+		sizeString === adSizes.mpu.toString() ||
+		sizeString === adSizes.outstreamDesktop.toString() ||
+		sizeString === adSizes.outstreamMobile.toString()
 	) {
 		return {
 			buckets: [
