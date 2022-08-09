@@ -1,4 +1,5 @@
 import _root_.commercial.targeting.TargetingLifecycle
+import agents.{DeeplyReadAgent, MostPopularLifecycle}
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
@@ -18,9 +19,8 @@ import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle, NewsletterService}
+import services.{NewsletterService, NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
 import topics.{TopicS3Client, TopicS3ClientImpl, TopicService}
@@ -48,6 +48,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -62,6 +63,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
     wire[TopicLifecycle],
+    wire[MostPopularLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

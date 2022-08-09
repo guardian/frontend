@@ -1,15 +1,23 @@
 package controllers
 
+import agents.DeeplyReadAgent
+
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, DeeplyReadAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import model.dotcomrendering.{MostPopularGeoResponse, MostPopularOnward, OnwardCollectionResponse, OnwardCollectionResponseDCR, OnwardItem}
+import model.dotcomrendering.{
+  MostPopularGeoResponse,
+  MostPopularOnward,
+  OnwardCollectionResponse,
+  OnwardCollectionResponseDCR,
+  OnwardItem,
+}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
@@ -142,7 +150,7 @@ class MostPopularController(
   }
 
   def jsonResponseNx2(mostPopulars: Seq[MostPopularOnward], mostCards: Map[String, Option[ContentCard]])(implicit
-                                                                                                         request: RequestHeader,
+      request: RequestHeader,
   ): Result = {
     val tabs = mostPopulars.map { nx2 =>
       OnwardCollectionResponse(nx2.heading, nx2.trails)

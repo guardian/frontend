@@ -1,19 +1,17 @@
-package feed
+package agents
 
-import contentapi.ContentApiClient
+import agents.DeeplyReadItem.deeplyReadItemToOnwardItem
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RenderingFormat
-import services.{OphanApi, OphanDeeplyReadItem}
-import play.api.libs.json._
 import common._
+import contentapi.ContentApiClient
 import model.ContentFormat
-import model.dotcomrendering.OnwardItem
-import models._
+import model.dotcomrendering.{OnwardCollectionResponse, OnwardItem}
+import play.api.libs.json._
+import services.{OphanApi, OphanDeeplyReadItem}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
 
 /*
   The class DeeplyReadItem is the one that define the answer to the deeply-read.json
@@ -171,7 +169,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     )
   }
 
-  def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
+  def getReport()(implicit ec: ExecutionContext): OnwardCollectionResponse = {
     if (deeplyReadItems().isEmpty) {
       // This helps improving the situation if the initial akka driven refresh failed (which happens way to often)
       // Note that is there was no data in ophanItems the report will be empty, but will at least return data at the next call
@@ -179,10 +177,12 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       refresh()
     }
 
-    deeplyReadItems()
-      .map(t => ophanItemToDeeplyReadItem(t._1, t._2))
-      .filter(_.isDefined)
-      .map(_.get)
+    val trails: Seq[OnwardItem] = deeplyReadItems()
+      .flatMap(t => ophanItemToDeeplyReadItem(t._1, t._2))
+      .map(deeplyReadItemToOnwardItem)
       .toSeq
+
+    OnwardCollectionResponse("Deeply read", trails)
+
   }
 }

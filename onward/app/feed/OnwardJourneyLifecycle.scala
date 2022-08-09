@@ -1,9 +1,12 @@
 package feed
 
+import agents.DeeplyReadAgent
+
 import java.util.concurrent.Executors
 import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class OnwardJourneyLifecycle(

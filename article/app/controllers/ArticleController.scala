@@ -1,5 +1,6 @@
 package controllers
 
+import agents.DeeplyReadAgent
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
@@ -24,6 +25,7 @@ class ArticleController(
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
+    deeplyReadAgent: DeeplyReadAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -128,6 +130,7 @@ class ArticleController(
           false,
           newsletter = newsletter,
           topicResult = None,
+          mostPopular = Seq(deeplyReadAgent.getReport()),
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))

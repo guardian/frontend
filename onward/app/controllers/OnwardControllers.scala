@@ -1,5 +1,6 @@
 package controllers
 
+import agents.DeeplyReadAgent
 import akka.actor.ActorSystem
 import com.softwaremill.macwire._
 import weather.controllers.{LocationsController, WeatherController}
