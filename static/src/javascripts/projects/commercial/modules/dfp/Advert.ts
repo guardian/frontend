@@ -4,7 +4,6 @@ import {
 	slotSizeMappings,
 } from '@guardian/commercial-core';
 import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
-import { log } from '@guardian/libs';
 import { breakpoints } from '../../../../lib/detect';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { buildGoogletagSizeMapping, defineSlot } from './define-slot';
@@ -114,23 +113,12 @@ class Advert {
 	) {
 		this.id = adSlotNode.id;
 		this.node = adSlotNode;
-
 		this.sizes = this.generateSizeMapping(additionalSizeMapping);
 
-		try {
-			const slotDefinition = defineSlot(adSlotNode, this.sizes);
+		const slotDefinition = defineSlot(adSlotNode, this.sizes);
 
-			this.slot = slotDefinition.slot;
-			this.whenSlotReady = slotDefinition.slotReady;
-		} catch {
-			log(
-				'commercial',
-				`Could not create advert. Ad slot: ${
-					adSlotNode.id
-				}. Sizes: ${JSON.stringify(this.sizes)}`,
-			);
-			throw new Error(`Could not define slot for ${adSlotNode.id}`);
-		}
+		this.slot = slotDefinition.slot;
+		this.whenSlotReady = slotDefinition.slotReady;
 
 		this.whenLoaded = new Promise((resolve: Resolver) => {
 			this.whenLoadedResolver = resolve;

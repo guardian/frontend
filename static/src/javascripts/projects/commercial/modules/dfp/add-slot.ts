@@ -6,21 +6,10 @@ import { enableLazyLoad } from './lazy-load';
 import { loadAdvert } from './load-advert';
 import { queueAdvert } from './queue-advert';
 
-const displayAd = (
-	adSlot: HTMLElement,
-	forceDisplay: boolean,
-	additionalSizes?: SizeMapping,
-) => {
+const createAdvert = (adSlot: HTMLElement, additionalSizes?: SizeMapping) => {
 	try {
 		const advert = new Advert(adSlot, additionalSizes);
-
-		dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
-		if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
-			queueAdvert(advert);
-			enableLazyLoad(advert);
-		} else {
-			loadAdvert(advert);
-		}
+		return advert;
 	} catch {
 		log(
 			'commercial',
@@ -28,6 +17,18 @@ const displayAd = (
 				adSlot.id
 			}. Additional Sizes: ${JSON.stringify(additionalSizes)}`,
 		);
+
+		return null;
+	}
+};
+
+const displayAd = (advert: Advert, forceDisplay: boolean) => {
+	dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
+	if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
+		queueAdvert(advert);
+		enableLazyLoad(advert);
+	} else {
+		loadAdvert(advert);
 	}
 };
 
@@ -38,8 +39,11 @@ const addSlot = (
 ): void => {
 	window.googletag.cmd.push(() => {
 		if (!(adSlot.id in dfpEnv.advertIds)) {
+			const advert = createAdvert(adSlot, additionalSizes);
+			if (advert === null) return;
+
 			// dynamically add ad slot
-			displayAd(adSlot, forceDisplay, additionalSizes);
+			displayAd(advert, forceDisplay);
 		}
 	});
 };
