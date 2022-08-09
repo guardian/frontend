@@ -34,4 +34,14 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  Switch(
+    ABTests,
+    "ab-deeply-read-article-footer",
+    "Test whether adding deeply read articles have negative impact on recirculation",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 10, 10)),
+    exposeClientSide = true,
+  )
+
 }
