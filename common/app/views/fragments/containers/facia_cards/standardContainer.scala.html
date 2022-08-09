@@ -36,7 +36,8 @@
         ("fc-show-more--mobile-only", containerDefinition.hasMobileOnlyShowMore)
     ))"
          data-title="@Localisation(containerDefinition.displayName getOrElse "")"
-         data-id="@containerDefinition.dataId">
+         data-id="@containerDefinition.dataId"
+         id="container-@containerDefinition.dataId">
 
         @for(sliceWithCards <- containerLayout.slices) {
             @slice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId, containerDefinition.isStoryPackage)

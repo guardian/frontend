@@ -25,7 +25,7 @@
                                 <img class="badge-slot__img" src="@badge.imageUrl" alt="" />
                             </div>
                         }
-                        <h2 class="fc-container__title__text">@Localisation(title)</h2>
+                        <h2 id="container-header-@containerDefinition.dataId" class="fc-container__title__text">@Localisation(title)</h2>
                     </a>
                     }.getOrElse {
                         <h2 tabindex="0">@Localisation(title)</h2>
