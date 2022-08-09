@@ -38,7 +38,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-deeply-read-article-footer",
     "Test whether adding deeply read articles have negative impact on recirculation",
-    owners = Seq(Owner.withGithub("jlieb10")),
+    owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2022, 10, 10)),
     exposeClientSide = true,
