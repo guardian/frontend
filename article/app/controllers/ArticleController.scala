@@ -1,5 +1,6 @@
 package controllers
 
+import agents.DeeplyReadAgent
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
@@ -24,6 +25,7 @@ class ArticleController(
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
+    deeplyReadAgent: DeeplyReadAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -31,6 +33,9 @@ class ArticleController(
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
+  val mostPopular = Seq(
+    deeplyReadAgent.onwardsJourneyResponse,
+  )
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -128,6 +133,7 @@ class ArticleController(
           false,
           newsletter = newsletter,
           topicResult = None,
+          mostPopular = mostPopular,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))

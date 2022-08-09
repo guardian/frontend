@@ -12,9 +12,9 @@ import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
   DotcomRenderingDataModel,
+  OnwardCollectionResponse,
   PageType,
 }
-
 import services.NewsletterData
 import model.{
   CacheTime,
@@ -157,6 +157,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       availableTopics: Option[Seq[Topic]] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
+      mostPopular: Seq[OnwardCollectionResponse],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
@@ -174,7 +175,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter)
     }
 
-    val json = DotcomRenderingDataModel.toJson(dataModel)
+    val modelWithAgentData = dataModel.copy(mostPopular = mostPopular)
+
+    val json = DotcomRenderingDataModel.toJson(modelWithAgentData)
     post(ws, json, Configuration.rendering.baseURL + "/Article", page.metadata.cacheTime)
   }
 

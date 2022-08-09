@@ -97,6 +97,7 @@ case class DotcomRenderingDataModel(
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
+    mostPopular: Seq[OnwardCollectionResponse],
 )
 
 object DotcomRenderingDataModel {
@@ -170,6 +171,7 @@ object DotcomRenderingDataModel {
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
         "promotedNewsletter" -> model.promotedNewsletter,
+        "mostPopular" -> model.mostPopular,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -340,6 +342,7 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
+      mostPopular: Seq[OnwardCollectionResponse] = Seq(),
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -512,6 +515,7 @@ object DotcomRenderingDataModel {
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
+      mostPopular = mostPopular,
     )
   }
 }
