@@ -4,6 +4,7 @@ import {
 	isUserLoggedIn,
 	refreshOktaSession,
 } from 'common/modules/identity/api';
+import reportError from 'lib/report-error';
 
 const days30InMillis: number = 1000 * 60 * 60 * 24 * 30;
 
@@ -11,32 +12,46 @@ const shouldRefreshCookie: (
 	lastRefresh: unknown | null,
 	currentTime: number,
 ) => boolean = (lastRefresh: unknown | null, currentTime: number) => {
-	// The cookie should be refreshed in two cases:
-	// 1) There is no last refresh value, or it's falsy
-	// 2) The last refresh value is older than 30 days.
-	// We cast the lastRefresh value to a string, then parse it as an integer
-	// because we don't know what type it might be.
-	return (
-		!lastRefresh ||
-		currentTime - parseInt(String(lastRefresh), 10) > days30InMillis
-	);
+	// !!Number() returns false for false, null, undefined, 0, and non-numeric strings.
+	// We do this because lastRefresh can be any type or value and we only want to proceed with
+	// the rest of the check if it's a number.
+	const lastRefreshIsValid = !!Number(lastRefresh);
+	if (!lastRefreshIsValid) {
+		// We should refresh if we don't have a valid lastRefresh value.
+		return true;
+	}
+
+	// We should refresh if the lastRefresh value is older than 30 days.
+	return currentTime - Number(lastRefresh) > days30InMillis;
 };
 
-const init: () => void = async () => {
+const init: () => void = () => {
 	const lastRefreshKey = 'identity.lastRefresh';
-
 	if (storage.local.isAvailable() && isUserLoggedIn()) {
 		const currentTime: number = new Date().getTime();
 		// The storage API could return any type handled by JSON.parse, so
-		// we will assume the type is 'any' and always parse the value into
-		// an integer.
-		// TODO: Rewrite this to make use of the storage API's built-in
-		// expiry mechanism: https://github.com/guardian/frontend/pull/25306#discussion_r937843037
+		// we will assume the type is 'unknown' and attempt to parse the value into
+		// a number in the shouldRefreshCookie function.
+		// storage.local.get will return null in two cases: if the key is missing,
+		// or if the value has expired.
 		const lastRefresh: unknown | null = storage.local.get(lastRefreshKey);
 		if (shouldRefreshCookie(lastRefresh, currentTime)) {
-			await getUserFromApiWithRefreshedCookie();
-			storage.local.set(lastRefreshKey, currentTime);
-			refreshOktaSession(encodeURIComponent(document.location.href));
+			getUserFromApiWithRefreshedCookie()
+				.then(() => {
+					// Set the value in localStorage to expire in 30 days.
+					const newExpiry = currentTime + days30InMillis;
+					storage.local.set(lastRefreshKey, currentTime, newExpiry);
+					refreshOktaSession(
+						encodeURIComponent(document.location.href),
+					);
+				})
+				.catch((error) =>
+					reportError(
+						`Error refreshing IDAPI cookies: ${String(error)}`,
+						{},
+						false,
+					),
+				);
 		}
 	}
 };
