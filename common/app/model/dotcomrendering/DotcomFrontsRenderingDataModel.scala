@@ -23,6 +23,7 @@ case class DotcomFrontsRenderingDataModel(
     config: JsObject,
     commercialProperties: Map[String, EditionCommercialProperties],
     pageFooter: PageFooter,
+    isAdFreeUser: Boolean,
 )
 
 object DotcomFrontsRenderingDataModel {
@@ -69,6 +70,7 @@ object DotcomFrontsRenderingDataModel {
       config = combinedConfig,
       commercialProperties = commercialProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
     )
   }
 
