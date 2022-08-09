@@ -25,36 +25,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><b>@theMatch.homeTeam.name</b></td>
-                    <td>@theMatch.homeTeamInnings match {
-                            case firstInnings :: Nil => {
-                                @score(firstInnings) (@firstInnings.overs overs)
-                            }
-                            case firstInnings :: secondInnings :: Nil => {
-                                @miniScore(firstInnings) & @score(secondInnings) (@secondInnings.overs overs)
-                            }
-                            case _ => {
-                                Yet to bat
-                            }
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>@theMatch.awayTeam.name</b></td>
-                    <td>@theMatch.awayTeamInnings match {
-                            case firstInnings :: Nil => {
-                                @score(firstInnings) (@firstInnings.overs overs)
-                            }
-                            case firstInnings :: secondInnings :: Nil => {
-                                @miniScore(firstInnings) & @score(secondInnings) (@secondInnings.overs overs)
-                            }
-                            case _ => {
-                                Yet to bat
-                            }
-                        }
-                    </td>
-                </tr>
+                @teamResults(theMatch.homeTeam, theMatch.homeTeamInnings)
+                @teamResults(theMatch.awayTeam, theMatch.awayTeamInnings)
             </tbody>
             <caption class="table__caption table__caption--top" itemprop="name">
                 @theMatch.competitionName, @theMatch.venueName
@@ -71,20 +43,29 @@
 
 </div>
 
-@miniScore(innings: cricketModel.Innings) = {
-    @innings match {
-        case _ if (innings.declared) => { @innings.runsScored - @innings.wickets declared }
-        case _ if (innings.forfeited) => { @innings.runsScored - @innings.wickets forfeited }
-        case _ if (innings.allOut) => { @innings.runsScored }
-        case _ => { @innings.runsScored - @innings.wickets }
-    }
+@teamResults(team: cricketModel.Team, teamInnings: List[cricketModel.Innings]) = {
+    <tr>
+        <td><b>@team.name</b></td>
+        <td>@teamInnings match {
+            case firstInnings :: Nil => {
+                @score(firstInnings) (@firstInnings.overs overs)
+            }
+            case firstInnings :: secondInnings :: Nil => {
+                @score(firstInnings) & @score(secondInnings) (@secondInnings.overs overs)
+            }
+            case _ => {
+                Yet to bat
+            }
+        }
+        </td>
+    </tr>
 }
 
 @score(innings: cricketModel.Innings) = {
-    @innings match {
-        case _ if (!innings.closed) => { @innings.runsScored - @innings.wickets }
-        case _ if (innings.declared) => { @innings.runsScored - @innings.wickets declared }
-        case _ if (innings.forfeited) => { @innings.runsScored - @innings.wickets forfeited }
-        case _ if (innings.allOut) => { @innings.runsScored all out }
+    @innings.runsScored @innings match {
+        case _ if innings.declared => { - @innings.wickets declared }
+        case _ if innings.forfeited => { - @innings.wickets forfeited }
+        case _ if innings.allOut => { all out }
+        case _ => { - @innings.wickets }
     }
 }
