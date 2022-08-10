@@ -47,8 +47,8 @@ import type { Modules } from './types';
 const { isDotcomRendering, page } = window.guardian.config;
 
 const decideAssetsPath = () => {
-	const assetsPathPort: number | undefined = process.env.OVERRIDE_BUNDLE_PORT
-		? Number(process.env.OVERRIDE_BUNDLE_PORT)
+	const assetsPathPort = process.env.OVERRIDE_BUNDLE_PORT
+		? process.env.OVERRIDE_BUNDLE_PORT
 		: undefined;
 
 	if (assetsPathPort !== undefined) {
