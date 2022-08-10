@@ -47,11 +47,9 @@ import type { Modules } from './types';
 const { isDotcomRendering, page } = window.guardian.config;
 
 const decideAssetsPath = () => {
-	const assetsPathPort = process.env.OVERRIDE_BUNDLE_PORT
-		? process.env.OVERRIDE_BUNDLE_PORT
-		: undefined;
+	const assetsPathPort = process.env.OVERRIDE_BUNDLE_PORT;
 
-	if (assetsPathPort !== undefined) {
+	if (assetsPathPort) {
 		return `http://localhost:${assetsPathPort}/`;
 	} else {
 		const assetsPath = page.frontendAssetsFullURL ?? page.assetsPath;
