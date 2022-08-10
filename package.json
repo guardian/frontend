@@ -156,6 +156,8 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
     "webshot": "^0.18.0",

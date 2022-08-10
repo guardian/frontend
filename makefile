@@ -138,3 +138,6 @@ commercial-graph: install # PRIVATE
 
 commercial-watch: commercial-compile
 	@./dev/commercial.watch.js
+
+commercial-dev:
+	@OVERRIDE_BUNDLE=true yarn webpack-dev-server -c ./webpack.config.commercial.dev.js
