@@ -50,6 +50,14 @@ case class FaciaContainer(
 
   def withTimeStamps: FaciaContainer = transformCards(_.withTimeStamp)
 
+  def isAusTargetedTerritory: Boolean =
+    targetedTerritory.exists(_.id match {
+      case "AU-VIC" => true
+      case "AU-QLD" => true
+      case "AU-NSW" => true
+      case _        => false
+    })
+
   def territoryName: Option[String] =
     targetedTerritory.flatMap(_.id match {
       case "AU-VIC" => Some("Victoria")

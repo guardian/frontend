@@ -57,7 +57,7 @@
             }
         }
 
-      @if(AusRegionSelector.isSwitchedOn && containerDefinition.targetedTerritory.isDefined) {
+      @if(AusRegionSelector.isSwitchedOn && containerDefinition.isAusTargetedTerritory) {
         @auTerritorySelector(containerDefinition)
       }
 
