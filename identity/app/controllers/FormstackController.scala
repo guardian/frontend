@@ -27,6 +27,9 @@ class FormstackController(
 
   val page = IdentityPage("/form", "Form")
 
+  def formstackFormEmbed(formReference: String): Action[AnyContent] =
+    formstackForm(formReference, true)
+
   def formstackForm(formReference: String, composer: Boolean): Action[AnyContent] =
     fullAuthAction.async { implicit request =>
       if (Switches.IdentityFormstackSwitch.isSwitchedOn) {

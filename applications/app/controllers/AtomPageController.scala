@@ -96,12 +96,15 @@ class AtomPageController(
       )
     }
 
+  def renderNoJs(atomType: String, id: String): Action[AnyContent] = render(atomType, id, false, false)
+
+  def renderNoJsVerticalScroll(atomType: String, id: String): Action[AnyContent] = render(atomType, id, false, true)
+
   def render(
       atomType: String,
       id: String,
       isJsEnabled: Boolean,
       hasVerticalScrollbar: Boolean,
-      inApp: Boolean,
   ): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(s"atom/$atomType/$id") map {

@@ -21,7 +21,7 @@ GET         /user/:vanityUrl/:activityType          controllers.PublicProfileCon
 ########################################################################################################################
 GET         /form/complete                          controllers.FormstackController.complete
 GET         /form/:formReference                    controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
-GET         /form/embed/:formReference              controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
+GET         /form/embed/:formReference              controllers.FormstackController.formstackFormEmbed(formReference: String)
 
 ########################################################################################################################
 # Account deletion
