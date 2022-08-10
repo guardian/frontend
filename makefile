@@ -140,4 +140,4 @@ commercial-watch: commercial-compile
 	@./dev/commercial.watch.js
 
 commercial-dev:
-	@yarn webpack-dev-server -c ./webpack.config.commercial.dev.js
+	@OVERRIDE_BUNDLE=true yarn webpack-dev-server -c ./webpack.config.commercial.dev.js
