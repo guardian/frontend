@@ -145,9 +145,8 @@ const defineSlot = (
         on slot name, ad unit and sizes. We then add this targeting to the
         slot prior to requesting it from DFP.
 
-        We race the request to IAS with a timeout of 1 second. If the
-        timeout resolves before the request to IAS then the slot is defined
-        without the additional IAS data.
+        We create a timer, such that if the timeout resolves before the request
+		to IAS returns, then the slot is defined without the additional IAS data.
 
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
