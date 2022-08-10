@@ -125,8 +125,8 @@ class IdApiTest
           )
           val cookies = cookiesResponse.values
           cookies.size must equal(1)
-          cookies(0) must have('key ("SC_GU_U"))
-          cookies(0) must have('value ("testCookieValue"))
+          cookies(0) must have(Symbol("key")("SC_GU_U"))
+          cookies(0) must have(Symbol("value")("testCookieValue"))
         }
       }
     }
@@ -154,8 +154,8 @@ class IdApiTest
       whenReady(idApi.user(testUserId)) {
         case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
         case Right(user) => {
-          user must have('id (testUserId))
-          user.publicFields must have('username (Some("testUsername")))
+          user must have(Symbol("id")(testUserId))
+          user.publicFields must have(Symbol("username")(Some("testUsername")))
           user.primaryEmailAddress mustEqual "test@example.com"
         }
       }

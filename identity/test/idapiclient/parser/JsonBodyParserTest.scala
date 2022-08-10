@@ -27,7 +27,7 @@ class JsonBodyParserTest extends PathAnyFreeSpec with Matchers {
     "returns a parse error if the JSON is not valid" in {
       TestJsonBodyParser.extract[TestType]()(Right(invalidJSONResponse)) match {
         case Right(result) => fail("extractJsonOrError did not return a Left, got %s".format(result.toString))
-        case Left(errors)  => errors(0) should have('message ("JSON parsing exception"))
+        case Left(errors)  => errors(0) should have(Symbol("message")("JSON parsing exception"))
       }
     }
 
@@ -41,7 +41,7 @@ class JsonBodyParserTest extends PathAnyFreeSpec with Matchers {
     "extracts the provided type from the JSON body of a successful response" in {
       TestJsonBodyParser.extract[TestType]()(Right(validJSONResponse)) match {
         case Left(result)                => fail("extract did not return a Right, got Left(%s)".format(result.toString()))
-        case Right(testObject: TestType) => testObject should have('test ("value"))
+        case Right(testObject: TestType) => testObject should have(Symbol("test")("value"))
         case Right(result) =>
           fail("extract did not return a Right of the required type, got a %s".format(result.getClass.getName))
       }
