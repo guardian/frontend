@@ -46,7 +46,7 @@
         <button class="@RenderClasses(Map(
                 ("u-button-reset", true),
                 ("fc-aus-territory__territory-button", true),
-                ("fc-aus-territory__territory-button--selected", containerDefinition.territoryName.contains("New South Wales")),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-NSW")),
             ))"
             data-link-name="AU-NSW"
         >
@@ -55,7 +55,7 @@
         <button class="@RenderClasses(Map(
                 ("u-button-reset", true),
                 ("fc-aus-territory__territory-button", true),
-                ("fc-aus-territory__territory-button--selected", containerDefinition.territoryName.contains("Queensland")),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-QLD")),
             ))"
             data-link-name="AU-QLD">
             <span class=''>Queensland</span>
@@ -63,7 +63,7 @@
         <button class="@RenderClasses(Map(
                 ("u-button-reset", true),
                 ("fc-aus-territory__territory-button", true),
-                ("fc-aus-territory__territory-button--selected", containerDefinition.territoryName.contains("Victoria")),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-VIC")),
             ))"
             data-link-name="AU-VIC">
             <span class=''>Victoria</span>
