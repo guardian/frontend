@@ -3,7 +3,7 @@ const webpackMerge = require('webpack-merge');
 const config = require('./webpack.config.commercial.js');
 
 const port = 3031;
-
+const overrideBundlePath = `http://localhost:${port}`;
 const shouldOverrideBundle = !!process.env.OVERRIDE_BUNDLE;
 
 module.exports = webpackMerge.smart(config, {
@@ -17,7 +17,8 @@ module.exports = webpackMerge.smart(config, {
 	plugins: shouldOverrideBundle
 		? [
 				new webpack.DefinePlugin({
-					'process.env.OVERRIDE_BUNDLE_PORT': JSON.stringify(port),
+					'process.env.OVERRIDE_BUNDLE_PATH':
+						JSON.stringify(overrideBundlePath),
 				}),
 		  ]
 		: [],
