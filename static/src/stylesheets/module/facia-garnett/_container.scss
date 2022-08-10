@@ -684,9 +684,9 @@ $header-image-size-desktop: 100px;
 
     &__body {
         &__accordion-body {
+            @include fs-textSans(5);
             margin-top: 6px;
             margin-bottom: 12px;
-            @include fs-textSans(5);
             &--bold {
                 font-weight: bold;
             }
@@ -703,7 +703,7 @@ $header-image-size-desktop: 100px;
         width: 100%;
         align-items: center;
         justify-content: center;
-        background-color: #fff;
+        background-color: #ffffff;
         border-radius: 5px;
         margin-top: 6px;
         height: 38px;
