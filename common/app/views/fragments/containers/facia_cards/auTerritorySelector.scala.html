@@ -1,0 +1,77 @@
+@import views.support.RenderClasses
+@(containerDefinition: layout.FaciaContainer)(implicit request: RequestHeader)
+
+<div class='fc-aus-territory__container'>
+    <button
+    class='fc-aus-territory__accordion-header'
+    data-link-name="AU-NSW-expand"
+    >
+        <div class='u-button-reset fc-aus-territory__accordion-header__headline'>
+                Not in&nbsp;@containerDefinition.territoryName?&nbsp;<span class='hide-on-mobile'>Change region</span>
+            </div>
+        <div class='fc-aus-territory__accordion-arrow'>
+            <svg
+            viewBox="0 0 30 20"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="20"
+            >
+                <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M4 9.95L14.45 20.4H15.45L25.8999 9.95L24.9249 9L14.95 17.4L4.975 9L4 9.95Z"
+                />
+            </svg>
+        </div>
+        <div class='fc-aus-territory__accordion-arrow' style="display: none">
+            <svg
+            viewBox="0 0 30 20"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="20"
+            >
+                <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M25.8999 19.45L15.45 9H14.45L4 19.45L4.975 20.4L14.95 12L24.9249 20.4L25.8999 19.45Z"
+                />
+            </svg>
+        </div>
+    </button>
+    <div class='fc-aus-territory__body' style="display: none;">
+        <div class='fc-aus-territory__body__accordion-body'>
+            <span class='fc-aus-territory__body__accordion-body--bold'>The articles above have been curated for you based on the state you are in.</span>
+            If we have your location wrong or you want to see coverage of a different state, please select from the links below. We hope to expand this service to other states in the future.
+        </div>
+        <button class="@RenderClasses(Map(
+                ("u-button-reset", true),
+                ("fc-aus-territory__territory-button", true),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.territoryName.contains("New South Wales")),
+            ))"
+            data-link-name="AU-NSW"
+        >
+            New South Wales
+        </button>
+        <button class="@RenderClasses(Map(
+                ("u-button-reset", true),
+                ("fc-aus-territory__territory-button", true),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.territoryName.contains("Queensland")),
+            ))"
+            data-link-name="AU-QLD">
+            <span class=''>Queensland</span>
+        </button>
+        <button class="@RenderClasses(Map(
+                ("u-button-reset", true),
+                ("fc-aus-territory__territory-button", true),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.territoryName.contains("Victoria")),
+            ))"
+            data-link-name="AU-VIC">
+            <span class=''>Victoria</span>
+        </button>
+        <button class='u-button-reset fc-aus-territory__territory-button fc-aus-territory__territory-button--secondary'
+            data-link-name="AU-other"
+        >
+            <span class=''>Hide local news</span>
+        </button>
+    </div>
+</div>

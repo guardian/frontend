@@ -55,5 +55,10 @@
                 )
             }
         }
+
+      @if(containerDefinition.targetedTerritory.isDefined) {
+        @auTerritorySelector(containerDefinition)
+      }
+
     </div>
 }

@@ -645,3 +645,92 @@ $header-image-size-desktop: 100px;
         display: none;
     }
 }
+
+.fc-aus-territory {
+    &__container {
+        padding: 0 10px 24px;
+        @include mq(phablet) {
+            justify-content: flex-start;
+        }
+        @include  mq(tablet) {
+            padding: 0 0 24px;
+        }
+    }
+
+    &__accordion-header {
+        display: inline-flex;
+        justify-content: space-between;
+        border: 0;
+        background-color: transparent;
+        padding: 0;
+        @include mq(phablet) {
+            justify-content: flex-start;
+        }
+
+        &__headline {
+            @include fs-headline(2);
+            line-height: 26px;
+            font-weight: bold;
+            display: inline-flex;
+        }
+    }
+
+    &__accordion-arrow {
+        display: inline-flex;
+        width: 25px;
+        height: 15px;
+        margin-left: 5px;
+    }
+
+    &__body {
+        &__accordion-body {
+            margin-top: 6px;
+            margin-bottom: 12px;
+            @include fs-textSans(5);
+            &--bold {
+                font-weight: bold;
+            }
+            @include mq(phablet) {
+                max-width: 495px;
+            }
+            @include mq(tablet) {
+                max-width: 660px
+            }
+        }
+    }
+    &__territory-button {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 5px;
+        margin-top: 6px;
+        height: 38px;
+        border: 2px solid #707070;
+        margin-right: 0;
+        @include mq(phablet) {
+            width: 165px;
+            display: inline-flex;
+            margin-top: 12px;
+            margin-right: 3px;
+        }
+
+        &--secondary {
+            border: 0;
+            padding: 0;
+            @include mq(phablet) {
+                width: auto;
+                margin-top: 6px;
+            }
+            @include mq(tablet) {
+                width: 165px;
+                margin-top: 12px;
+            }
+        }
+        &--selected {
+            background-color: #dcdcdc;
+            border: 4px solid #121212;
+        }
+    }
+}
