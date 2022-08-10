@@ -1,5 +1,6 @@
 package layout
 
+import com.gu.facia.client.models.TargetedTerritory
 import conf.switches.Switches
 import model.pressed.{CollectionConfig, PressedContent}
 import org.joda.time.DateTime
@@ -27,6 +28,7 @@ case class FaciaContainer(
     useShowMore: Boolean,
     hasShowMoreEnabled: Boolean,
     isThrasher: Boolean,
+    targetedTerritory: Option[TargetedTerritory],
 ) {
   def transformCards(f: ContentCard => ContentCard): FaciaContainer =
     copy(
@@ -47,6 +49,14 @@ case class FaciaContainer(
   def items: Seq[PressedContent] = collectionEssentials.items
 
   def withTimeStamps: FaciaContainer = transformCards(_.withTimeStamp)
+
+  def territoryName: Option[String] =
+    targetedTerritory.flatMap(_.id match {
+      case "AU-VIC" => Some("Victoria")
+      case "AU-QLD" => Some("Queensland")
+      case "AU-NSW" => Some("New South Wales")
+      case _        => None
+    })
 
   def dateLink: Option[String] = {
     val maybeDateHeadline = customHeader flatMap {
@@ -147,6 +157,7 @@ object FaciaContainer {
       componentId: Option[String],
       omitMPU: Boolean = false,
       adFree: Boolean = false,
+      targetedTerritory: Option[TargetedTerritory] = None,
   ): FaciaContainer =
     FaciaContainer(
       index,
@@ -173,6 +184,7 @@ object FaciaContainer {
       useShowMore = true,
       hasShowMoreEnabled = !config.config.hideShowMore,
       isThrasher = config.config.collectionType == "fixed/thrasher",
+      targetedTerritory = targetedTerritory,
     )
 
   def forStoryPackage(

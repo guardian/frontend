@@ -103,6 +103,7 @@ object Front extends implicits.Collections {
             None,
             omitMPU = if (containerLayoutMaybe.isDefined) false else omitMPU,
             adFree = adFree,
+            targetedTerritory = pressedCollection.targetedTerritory,
           )
 
           faciaContainers(
