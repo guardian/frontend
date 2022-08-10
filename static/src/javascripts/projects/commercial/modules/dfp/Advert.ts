@@ -226,9 +226,9 @@ class Advert {
 
 		this.sizes = sizeMapping;
 
-		const googleMapping = buildGoogletagSizeMapping(sizeMapping);
-		if (googleMapping) {
-			this.slot.defineSizeMapping(googleMapping);
+		const googletagSizeMapping = buildGoogletagSizeMapping(sizeMapping);
+		if (googletagSizeMapping) {
+			this.slot.defineSizeMapping(googletagSizeMapping);
 		}
 	}
 }
