@@ -24,7 +24,7 @@ import org.scalatest.matchers.should.Matchers
     }
 
     // Cache internal healthCheck results before to test endpoints
-    whenReady(controller.runChecks) { _ =>
+    whenReady(controller.runChecks()) { _ =>
       status(controller.healthCheck()(TestRequest("/_healthcheck"))) should be(200)
       status(controller.healthCheck()(TestRequest("/_cdn_healthcheck"))) should be(200)
     }

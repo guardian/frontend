@@ -114,7 +114,7 @@ object LiveBlogCurrentPage {
   }
 
   private def filterBlocksByTopic(blocks: Seq[BodyBlock], topic: TopicResult) = {
-    blocks.filter(isTopicBlock(topic)).sortBy(_.publishedCreatedTimestamp).reverse
+    blocks.filter(isTopicBlock(topic)).sortBy(_.publishedCreatedTimestamp()).reverse
   }
 
   private def getTopicBlocks(
@@ -141,7 +141,7 @@ object LiveBlogCurrentPage {
       keyEvents <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.timeline)
       summaries <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.summary)
     } yield {
-      (keyEvents ++ summaries).sortBy(_.publishedCreatedTimestamp).reverse
+      (keyEvents ++ summaries).sortBy(_.publishedCreatedTimestamp()).reverse
     }
 
     val keyEventsAndSummariesCount = keyEventsAndSummaries.getOrElse(Seq.empty).size

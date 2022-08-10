@@ -48,15 +48,15 @@ class RugbyStatsJob(feed: RugbyFeed) extends GuLogging {
       homeTeamId: String,
       awayTeamId: String,
   ): Option[Match] = {
-    fixturesAndResultsMatches.get.values.find { rugbyMatch =>
+    fixturesAndResultsMatches.get().values.find { rugbyMatch =>
       isValidMatch(year, month, day, homeTeamId, awayTeamId, rugbyMatch)
     }
   }
 
-  def getAllResults(): Seq[Match] = fixturesAndResultsMatches.get.values.toList.filter(_.status == Status.Result)
+  def getAllResults(): Seq[Match] = fixturesAndResultsMatches.get().values.toList.filter(_.status == Status.Result)
 
   def getMatchNavContent(rugbyMatch: Match): Option[MatchNavigation] = {
-    matchNavContent.get.get(rugbyMatch.key)
+    matchNavContent.get().get(rugbyMatch.key)
   }
 
   private def isValidMatch(

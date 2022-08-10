@@ -321,5 +321,5 @@ object Fixtures {
                                  |}""".stripMargin
 
   lazy val rawEventBriteFeed =
-    scala.io.Source.fromFile("commercial/test/model/events/masterclasses_full_page.json").getLines.mkString
+    scala.io.Source.fromFile("commercial/test/model/events/masterclasses_full_page.json").getLines().mkString
 }

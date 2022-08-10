@@ -115,7 +115,8 @@ object Cached extends implicits.Dates {
       cacheTime.surrogateSeconds.filter(_ => LongCacheSwitch.isSwitchedOn).getOrElse(cacheTime.cacheSeconds)
 
     val etagHeaderString: String = maybeEtag.getOrElse(
-      s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", // setting a random tag still helps
+      s""""guRandomEtag${scala.util.Random.nextInt()}${scala.util.Random
+        .nextInt()}"""", // setting a random tag still helps
     )
 
     result.withHeaders(

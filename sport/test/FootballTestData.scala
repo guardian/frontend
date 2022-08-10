@@ -28,7 +28,7 @@ trait FootballTestData {
           }
         }
       }
-      if (TeamMap.teamAgent.get.isEmpty) {
+      if (TeamMap.teamAgent.get().isEmpty) {
         TeamMap.teamAgent.send(old => old ++ FootballTestData.teamTags)
       }
     }

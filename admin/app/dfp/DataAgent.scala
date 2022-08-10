@@ -31,10 +31,10 @@ trait DataAgent[K, V] extends GuLogging with implicits.Strings {
         freshCache
       case Success(_) =>
         log.error("No fresh data loaded so keeping old data")
-        cache.get
+        cache.get()
       case Failure(e) =>
         log.error("Loading of fresh data has failed.", e)
-        cache.get
+        cache.get()
     }
   }
 

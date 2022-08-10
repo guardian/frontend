@@ -18,7 +18,7 @@ object TorExitNodeList extends GuLogging {
     val nodes = addresses map { address =>
       val ip = address.getHostAddress
       val url = s"$torNodeListUrl?ip=$ip&port=80"
-      Source.fromURL(url).getLines.toList.filterNot { line => line.startsWith("#") }
+      Source.fromURL(url).getLines().toList.filterNot { line => line.startsWith("#") }
     }
 
     val allNodes = nodes.toList.flatMap { x => x }.toSet

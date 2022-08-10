@@ -5,7 +5,7 @@ GET         /_healthcheck                           controllers.HealthCheck.heal
 
 GET         /google1ec7a89a27d60d47.html            controllers.Assets.at(path = "/public", file = "google1ec7a89a27d60d47.html")
 
-GET         /complete-registration                  controllers.EmailVerificationController.completeRegistration
+GET         /complete-registration                  controllers.EmailVerificationController.completeRegistration()
 POST        /complete-registration                  controllers.EmailVerificationController.resendValidationEmail(returnUrl: String)
 
 ########################################################################################################################
