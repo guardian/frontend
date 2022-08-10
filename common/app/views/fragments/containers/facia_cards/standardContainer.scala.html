@@ -3,6 +3,7 @@
 @import common.{Edition, Localisation}
 @import views.html.fragments.commercial.containerLogo
 @import views.support.RenderClasses
+@import conf.switches.Switches.AusRegionSelector
 
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties,
@@ -56,7 +57,7 @@
             }
         }
 
-      @if(containerDefinition.targetedTerritory.isDefined) {
+      @if(AusRegionSelector.isSwitchedOn && containerDefinition.targetedTerritory.isDefined) {
         @auTerritorySelector(containerDefinition)
       }
 
