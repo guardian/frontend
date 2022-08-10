@@ -3,7 +3,8 @@ import { log } from '@guardian/libs';
 import { getBreakpoint } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { removeDisabledSlots } from '../remove-slots';
-import { Advert } from './Advert';
+import type { Advert } from './Advert';
+import { createAdvert } from './create-advert';
 import { dfpEnv } from './dfp-env';
 import { displayAds } from './display-ads';
 import { displayLazyAds } from './display-lazy-ads';
@@ -62,18 +63,7 @@ const fillAdvertSlots = async (): Promise<void> => {
 				};
 			}
 
-			try {
-				const advert = new Advert(adSlot, additionalSizes);
-				return advert;
-			} catch {
-				log(
-					'commercial',
-					`Could not create advert. Ad slot: ${
-						adSlot.id
-					}. Additional Sizes: ${JSON.stringify(additionalSizes)}`,
-				);
-				return null;
-			}
+			return createAdvert(adSlot, additionalSizes);
 		})
 		.filter((advert): advert is Advert => advert !== null);
 

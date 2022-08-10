@@ -1,26 +1,10 @@
 import type { SizeMapping } from '@guardian/commercial-core';
-import { log } from '@guardian/libs';
-import { Advert } from './Advert';
+import type { Advert } from './Advert';
+import { createAdvert } from './create-advert';
 import { dfpEnv } from './dfp-env';
 import { enableLazyLoad } from './lazy-load';
 import { loadAdvert } from './load-advert';
 import { queueAdvert } from './queue-advert';
-
-const createAdvert = (adSlot: HTMLElement, additionalSizes?: SizeMapping) => {
-	try {
-		const advert = new Advert(adSlot, additionalSizes);
-		return advert;
-	} catch {
-		log(
-			'commercial',
-			`Could not create advert. Ad slot: ${
-				adSlot.id
-			}. Additional Sizes: ${JSON.stringify(additionalSizes)}`,
-		);
-
-		return null;
-	}
-};
 
 const displayAd = (advert: Advert, forceDisplay: boolean) => {
 	dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
