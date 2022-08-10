@@ -699,6 +699,7 @@ $header-image-size-desktop: 100px;
         }
     }
     &__territory-button {
+        @include fs-textSans(6);
         display: flex;
         width: 100%;
         align-items: center;
