@@ -1,5 +1,6 @@
 import type { SizeMapping } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import reportError from '../../../../lib/report-error';
 import { Advert } from './Advert';
 
 const createAdvert = (
@@ -10,11 +11,18 @@ const createAdvert = (
 		const advert = new Advert(adSlot, additionalSizes);
 		return advert;
 	} catch {
-		log(
-			'commercial',
-			`Could not create advert. Ad slot: ${
-				adSlot.id
-			}. Additional Sizes: ${JSON.stringify(additionalSizes)}`,
+		const errMsg = `Could not create advert. Ad slot: ${
+			adSlot.id
+		}. Additional Sizes: ${JSON.stringify(additionalSizes)}`;
+
+		log('commercial', errMsg);
+		reportError(
+			new Error(errMsg),
+			{
+				feature: 'commercial',
+			},
+			false,
+			1 / 10_000,
 		);
 
 		return null;
