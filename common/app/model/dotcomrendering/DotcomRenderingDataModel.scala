@@ -7,8 +7,9 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
-import experiments.ActiveExperiments
+import experiments.{ActiveExperiments, DCROnwardsData}
 import model.dotcomrendering.DotcomRenderingUtils._
+import model.dotcomrendering.OnwardItem.pressedContentToOnwardItem
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
@@ -97,6 +98,7 @@ case class DotcomRenderingDataModel(
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
+    onwards: Option[Seq[OnwardCollectionResponse]],
 )
 
 object DotcomRenderingDataModel {
@@ -216,6 +218,11 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
+    val onwardsRelated = OnwardCollectionResponse(
+      heading = "Related stories",
+      trails = page.related.faciaItems.map(pressedContentToOnwardItem(_)(request)),
+    )
+
     val linkedData = LinkedData.forArticle(
       article = page.article,
       baseURL = Configuration.amp.baseUrl,
@@ -237,6 +244,7 @@ object DotcomRenderingDataModel {
       availableTopics = None,
       newsletter = newsletter,
       topicResult = None,
+      onwards = Some(Seq(onwardsRelated)),
     )
   }
 
@@ -340,6 +348,7 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
+      onwards: Option[Seq[OnwardCollectionResponse]] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -446,6 +455,10 @@ object DotcomRenderingDataModel {
 
     val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
 
+    // We don't want to send this data down the pipes until we've got all the data as DCR will render it
+    // see: https://github.com/guardian/dotcom-rendering/blob/b649a00fc9e5d2ba158f82b7c4b152106579f6a9/dotcom-rendering/src/web/layouts/StandardLayout.tsx#L793-L798
+    val switchedOnwards = if (ActiveExperiments.isParticipating(DCROnwardsData)(request)) onwards else None
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
@@ -512,6 +525,7 @@ object DotcomRenderingDataModel {
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
+      onwards = switchedOnwards,
     )
   }
 }
