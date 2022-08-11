@@ -26,16 +26,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-multi-sticky-right-ads",
-    "Test the commercial and performance impact of sticky ads in the right column",
-    owners = Seq(Owner.withGithub("chrislomaxjones")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 10, 4)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-deeply-read-article-footer",
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),
