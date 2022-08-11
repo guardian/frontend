@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition, TableOfContents, CommercialEndOfQuarterMegaTest)
+    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition, TableOfContents, CommercialEndOfQuarterMegaTest, EuropeNetworkFront)
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
@@ -75,3 +75,12 @@ object DCROnwardsData
       sellByDate = LocalDate.of(2023, 6, 2),
       participationGroup = Perc0C,
     )
+
+object EuropeNetworkFront
+  extends Experiment(
+    name = "europe-network-front",
+    description = "Test new europe network front",
+    owners = Seq(Owner.withGithub("rowannekabalan")),
+    sellByDate = LocalDate.of(2022, 09, 30),
+    participationGroup = Perc0D,
+  )
