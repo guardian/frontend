@@ -2,6 +2,7 @@ package conf.switches
 
 import conf.switches.SwitchGroup.ABTests
 import java.time.LocalDate
+import conf.switches.Expiry.never
 
 trait ABTestSwitches {
   Switch(
@@ -41,6 +42,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2022, 10, 10)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-consentless-ads",
+    "Use consentless ad stack rather than consented / standalone",
+    owners = Seq(Owner.withName("commercial-dev")),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true,
   )
 
