@@ -97,7 +97,7 @@ case class DotcomRenderingDataModel(
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
-    mostPopular: Seq[OnwardCollectionResponse],
+    mostPopular: Option[Seq[OnwardCollectionResponse]],
 )
 
 object DotcomRenderingDataModel {
@@ -342,7 +342,7 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      mostPopular: Seq[OnwardCollectionResponse] = Seq(),
+      mostPopular: Option[Seq[OnwardCollectionResponse]] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)

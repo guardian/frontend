@@ -133,7 +133,7 @@ class ArticleController(
           false,
           newsletter = newsletter,
           topicResult = None,
-          mostPopular = mostPopular,
+          mostPopular = Some(mostPopular),
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
