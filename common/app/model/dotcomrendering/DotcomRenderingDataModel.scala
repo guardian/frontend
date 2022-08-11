@@ -15,7 +15,7 @@ import model.{
   Badges,
   CanonicalLiveBlog,
   ContentFormat,
-  ContentPage,
+  ContentPageWithRelated,
   GUDateTimeFormatNew,
   InteractivePage,
   LiveBlogPage,
@@ -323,7 +323,7 @@ object DotcomRenderingDataModel {
   }
 
   def apply(
-      page: ContentPage,
+      page: ContentPageWithRelated,
       request: RequestHeader,
       pagination: Option[Pagination],
       linkedData: List[LinkedData],
