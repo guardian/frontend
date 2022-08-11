@@ -14,6 +14,8 @@
 
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { consentlessAds } from 'common/modules/experiments/tests/consentlessAds';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
@@ -199,8 +201,14 @@ const bootCommercial = async (): Promise<void> => {
 	}
 };
 
-if (window.guardian.mustardCut || window.guardian.polyfilled) {
-	void bootCommercial();
+if (isInVariantSynchronous(consentlessAds, "variant")){
+	// opt out ads regardless of consent state?
 } else {
-	window.guardian.queue.push(bootCommercial);
+	if (window.guardian.mustardCut || window.guardian.polyfilled) {
+		void bootCommercial();
+	} else {
+		window.guardian.queue.push(bootCommercial);
+	}
 }
+
+
