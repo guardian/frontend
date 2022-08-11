@@ -2,7 +2,7 @@ package conf.switches
 
 import conf.switches.SwitchGroup.ABTests
 import java.time.LocalDate
-import conf.switches.Expirty.never
+import conf.switches.Expiry.never
 
 trait ABTestSwitches {
   Switch(
