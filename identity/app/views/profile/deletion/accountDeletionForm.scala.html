@@ -115,8 +115,8 @@
                 <div class="fieldset__fields">
                     <ul class="u-unstyled">
 
-                        @inputField(Password(accountDeletionForm("password"), '_label -> "Password", 'class -> "js-register-password js-password-strength",
-                            (Symbol("data-test-id"), "account-deletion-password"), 'required -> true))
+                        @inputField(Password(accountDeletionForm("password"), Symbol("_label") -> "Password", Symbol("class") -> "js-register-password js-password-strength",
+                            (Symbol("data-test-id"), "account-deletion-password"), Symbol("required") -> true))
 
                         <li>
                             <button id="deleteButton" type="submit" class="manage-account__button manage-account__button--center delete-input-warn" data-link-name="Delete Account" data-test-id="delete-account">Delete your account</button>
