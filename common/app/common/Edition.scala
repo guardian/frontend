@@ -50,6 +50,7 @@ object Edition {
     editions.Us,
     editions.Au,
     editions.International,
+    editions.Europe
   )
 
   lazy val editionFronts = Edition.all.map { e => "/" + e.id.toLowerCase }
