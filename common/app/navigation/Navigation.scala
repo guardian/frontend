@@ -105,7 +105,9 @@ object NavMenu {
    */
   private[navigation] def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
     // This shouldn't be a problem as Europe won't have special NavLinks
-    Edition.othersWithEurope(edition).flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
+    Edition
+      .othersWithEurope(edition)
+      .flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
   }
 
   @tailrec
@@ -196,7 +198,7 @@ object NavMenu {
       "type/cartoon",
       "cartoons/archive",
     )
-    val networkFronts = Seq("uk", "us", "au", "international")
+    val networkFronts = Seq("uk", "us", "au", "international", "europe")
     val tags = getTagsFromPage(page)
     val commonKeywords = tags.keywordIds
       .intersect(NavLinks.tagPages)
