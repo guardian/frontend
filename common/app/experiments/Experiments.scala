@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition, TableOfContents)
+    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition, TableOfContents, EuropeNetworkFront)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
