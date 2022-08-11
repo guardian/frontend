@@ -126,41 +126,43 @@ class CommentsController(
     csrfCheck {
       Action.async { implicit request =>
         val scGuU = request.cookies.get("SC_GU_U")
-        userForm.bindFromRequest.fold(
-          formWithErrors =>
-            Future.successful(
-              BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors)),
-            ),
-          userData => {
-            discussionApi
-              .postAbuseReport(userData, scGuU)
-              .map {
-                case success if success.status == 200 =>
-                  NoCache(Redirect(routes.CommentsController.reportAbuseThankYou(commentId)))
-                case error =>
-                  InternalServerError(
-                    views.html.discussionComments.reportComment(
-                      commentId,
-                      reportAbusePage,
-                      userForm.fill(userData),
-                      errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage),
-                    ),
-                  )
-              }
-              .recover({
-                case NonFatal(e) =>
-                  InternalServerError(
-                    views.html.discussionComments.reportComment(
-                      commentId,
-                      reportAbusePage,
-                      userForm.fill(userData),
-                      errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage),
-                    ),
-                  )
-              })
+        userForm
+          .bindFromRequest()
+          .fold(
+            formWithErrors =>
+              Future.successful(
+                BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors)),
+              ),
+            userData => {
+              discussionApi
+                .postAbuseReport(userData, scGuU)
+                .map {
+                  case success if success.status == 200 =>
+                    NoCache(Redirect(routes.CommentsController.reportAbuseThankYou(commentId)))
+                  case error =>
+                    InternalServerError(
+                      views.html.discussionComments.reportComment(
+                        commentId,
+                        reportAbusePage,
+                        userForm.fill(userData),
+                        errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage),
+                      ),
+                    )
+                }
+                .recover({
+                  case NonFatal(e) =>
+                    InternalServerError(
+                      views.html.discussionComments.reportComment(
+                        commentId,
+                        reportAbusePage,
+                        userForm.fill(userData),
+                        errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage),
+                      ),
+                    )
+                })
 
-          },
-        )
+            },
+          )
       }
     }
 

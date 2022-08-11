@@ -11,7 +11,7 @@ import org.scalatest.matchers.should.Matchers
     private[this] val interactives = Set[String](path)
     def isPressed(path: String): Boolean = interactives.contains(path)
   }
-  conf.switches.Switches.InteractivePickerFeature.switchOn
+  conf.switches.Switches.InteractivePickerFeature.switchOn()
 
   "Interactive Picker get rendering tier" should "return PressedInteractive if pressed and switched on" in {
     val testRequest = TestRequest(path)

@@ -49,15 +49,17 @@ class QuizController(
 
   def submit(quizId: String, path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      form.playForm.bindFromRequest.fold(
-        hasErrors = errors => {
-          val errorMessages = errors.errors.flatMap(_.messages.mkString(", ")).mkString(". ")
-          val serverError = s"Problem with quiz form request: $errorMessages"
-          log.error(serverError)
-          Future.successful(InternalServerError(serverError))
-        },
-        success = form => renderQuiz(quizId, path, form),
-      )
+      form.playForm
+        .bindFromRequest()
+        .fold(
+          hasErrors = errors => {
+            val errorMessages = errors.errors.flatMap(_.messages.mkString(", ")).mkString(". ")
+            val serverError = s"Problem with quiz form request: $errorMessages"
+            log.error(serverError)
+            Future.successful(InternalServerError(serverError))
+          },
+          success = form => renderQuiz(quizId, path, form),
+        )
     }
 
   private def renderQuiz(quizId: String, path: String, answers: form.Inputs)(implicit

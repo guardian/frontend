@@ -70,7 +70,7 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
       if (forceConfigUpdate.exists(identity)) {
         ConfigAgent.refreshAndReturn
       } else
-        Future.successful(Unit)
+        Future.successful(())
 
     for {
       _ <- forceConfigUpdateFuture

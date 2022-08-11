@@ -21,7 +21,7 @@ GET         /commercial/books/api/books.json                                comm
 GET         /commercial/api/liveevent.json                                  commercial.controllers.LiveEventsController.getLiveEvent
 
 # Multiple offer merchandising components
-GET         /commercial/api/multi.json                                      commercial.controllers.Multi.getMulti
+GET         /commercial/api/multi.json                                      commercial.controllers.Multi.getMulti()
 
 # Content API merchandising components
 # Attempting to remove ContentApiOffersController, discovered
@@ -30,10 +30,10 @@ GET         /commercial/api/multi.json                                      comm
 GET         /commercial/api/capi-single.json                                commercial.controllers.ContentApiOffersController.nativeJson
 GET         /commercial/api/capi-multiple.json                              commercial.controllers.ContentApiOffersController.nativeJsonMulti
 
-GET         /commercial/api/traffic-driver.json                             commercial.controllers.TrafficDriverController.renderJson
+GET         /commercial/api/traffic-driver.json                             commercial.controllers.TrafficDriverController.renderJson()
 
 # Piggyback pixel from AppNexus, used for resizing mpus
-GET         /commercial/anx/anxresize.js                                    commercial.controllers.PiggybackPixelController.resize
+GET         /commercial/anx/anxresize.js                                    commercial.controllers.PiggybackPixelController.resize()
 
 # Hosted content
 GET         /advertiser-content/:campaignName/:pageName                     commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)

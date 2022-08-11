@@ -33,7 +33,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
           wsClient
             .url(endpoint)
             .withHttpHeaders(header, xmlContentType)
-            .get
+            .get()
             .map { response =>
               response.status match {
                 case 200 => response.body
@@ -86,7 +86,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
             .url(endpoint)
             .withHttpHeaders(header, xmlContentType)
             .withQueryStringParameters(("startDate", start), ("endDate", end))
-            .get
+            .get()
             .map { response =>
               response.status match {
                 case 200 => XML.loadString(response.body) \\ "match" map (content => (content \ "@id").text)
