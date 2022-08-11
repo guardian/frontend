@@ -7,9 +7,9 @@ import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
 class DataMapper(
     adUnitService: AdUnitService,
-    placementService: PlacementService,
-    customTargetingService: CustomTargetingService,
-    customFieldService: CustomFieldService,
+    placementService: dfp.PlacementService,
+    customTargetingService: dfp.CustomTargetingService,
+    customFieldService: dfp.CustomFieldService,
 ) {
 
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
