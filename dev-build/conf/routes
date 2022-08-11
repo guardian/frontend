@@ -343,10 +343,9 @@ GET            /sharecount/*path.json                                           
 
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
-GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = false, inApp: Boolean = false)
-GET            /embed/atom/:atomType/:id/nojs                                                                                    controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false, hasVerticalScrollbar: Boolean = false, inApp: Boolean = false)
-GET            /embed/atom/:atomType/:id/nojs/scroll-y                                                                           controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false, hasVerticalScrollbar: Boolean = true, inApp: Boolean = false)
-GET            /embed/atom/:atomType/:id/inapp                                                                                   controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = true, inApp: Boolean = true)
+GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true, hasVerticalScrollbar: Boolean = false)
+GET            /embed/atom/:atomType/:id/nojs                                                                                    controllers.AtomPageController.renderNoJs(atomType: String, id: String)
+GET            /embed/atom/:atomType/:id/nojs/scroll-y                                                                           controllers.AtomPageController.renderNoJsVerticalScroll(atomType: String, id: String)
 POST           /story-questions/answers/signup                                                                                   controllers.AtomPageController.signup()
 OPTIONS        /story-questions/answers/signup                                                                                   controllers.AtomPageController.options()
 
