@@ -46,3 +46,12 @@ object MerchandisingMinHeight
       sellByDate = LocalDate.of(2022, 9, 2),
       participationGroup = Perc0C,
     )
+
+object DCROnwardsData
+    extends Experiment(
+      name = "dcr-onwards-data",
+      description = "Switch to iterate on adding onwards data to be sent to DCR to be server rendered",
+      owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 6, 2),
+      participationGroup = Perc0C,
+    )
