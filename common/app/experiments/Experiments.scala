@@ -46,3 +46,12 @@ object TableOfContents
       sellByDate = LocalDate.of(2022, 12, 7),
       participationGroup = Perc0C,
     )
+
+object EuropeNetworkFront
+  extends Experiment(
+    name = "europe-network-front",
+    description = "Test new europe network front",
+    owners = Seq(Owner.withGithub("rowannekabalan")),
+    sellByDate = LocalDate.of(2022, 09, 30),
+    participationGroup = Perc0D,
+  )
