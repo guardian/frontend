@@ -760,5 +760,15 @@ case class NavigationData(
       NavLinks.intOtherLinks,
       NavLinks.intBrandExtensions,
     ),
+  // Europe will have the same navigation links as International
+    europe: EditionNavLinks = EditionNavLinks(
+      NavLinks.intNewsPillar,
+      NavLinks.intOpinionPillar,
+      NavLinks.intSportPillar,
+      NavLinks.intCulturePillar,
+      NavLinks.intLifestylePillar,
+      NavLinks.intOtherLinks,
+      NavLinks.intBrandExtensions,
+    ),
     tagPages: List[String] = NavLinks.tagPages,
 )

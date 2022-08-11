@@ -170,6 +170,7 @@ object NavMenu {
       case editions.Us            => navigationData.us
       case editions.Au            => navigationData.au
       case editions.International => navigationData.international
+      case editions.Europe        => navigationData.europe
     }
 
     NavRoot(
@@ -202,7 +203,7 @@ object NavMenu {
       "type/cartoon",
       "cartoons/archive",
     )
-    val networkFronts = Seq("uk", "us", "au", "international")
+    val networkFronts = Seq("uk", "us", "au", "international", "europe")
     val tags = getTagsFromPage(page)
     val commonKeywords = tags.keywordIds
       .intersect(navigationData.tagPages)
