@@ -14,6 +14,9 @@
 
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { initArticleInline } from 'commercial/modules/consentless/dynamic/article-inline';
+import { initFixedSlots } from 'commercial/modules/consentless/init-fixed-slots';
+import { initConsentless } from 'commercial/modules/consentless/prepare-ootag';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { consentlessAds } from 'common/modules/experiments/tests/consentlessAds';
 import reportError from '../lib/report-error';
@@ -201,8 +204,21 @@ const bootCommercial = async (): Promise<void> => {
 	}
 };
 
-if (isInVariantSynchronous(consentlessAds, "variant")){
-	// opt out ads regardless of consent state?
+const bootConsentless = async (): Promise<void> => {
+	await Promise.all([
+		initConsentless(),
+		initFixedSlots(),
+		initArticleInline(),
+	]);
+};
+
+/* Provide consentless advertising in the variant of a zero-percent test,
+   regardless of consent state. This is currently just for testing purposes.
+
+   If not in the variant, get the usual commercial experience
+*/
+if (isInVariantSynchronous(consentlessAds, 'variant')) {
+	void bootConsentless();
 } else {
 	if (window.guardian.mustardCut || window.guardian.polyfilled) {
 		void bootCommercial();
@@ -210,5 +226,3 @@ if (isInVariantSynchronous(consentlessAds, "variant")){
 		window.guardian.queue.push(bootCommercial);
 	}
 }
-
-

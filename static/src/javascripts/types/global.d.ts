@@ -256,7 +256,13 @@ interface Window {
 			dfpEnv?: DfpEnv;
 		};
 	};
-
+	// TODO type this properly!
+	ootag: {
+		queue: Array<() => void>;
+		initializeOo: (o: Record<string, unknown>) => void;
+		addParameter: (key: string, value: string) => void;
+		defineSlot: (o: Record<string, unknown>) => void;
+	};
 	confiant?: Confiant;
 	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];
