@@ -9,8 +9,8 @@
 */
 import raven from './raven';
 
-const reportError = (err, tags, shouldThrow = true, sampleRate = 1) => {
-	raven.captureException(err, { tags, sampleRate });
+const reportError = (err, tags, shouldThrow = true) => {
+	raven.captureException(err, { tags });
 	if (shouldThrow) {
 		// Flag to ensure it is not reported to Sentry again via global handlers
 		const error = err;

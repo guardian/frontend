@@ -61,7 +61,7 @@ const sentryOptions = {
 			data?.tags?.tag === 'commercial-sentinel';
 
 		// isInSample is always true if the tag is commercial-sentinel.
-		// Otherwise, sample at .08%
+		// Otherwise, sample at a very small rate.
 		const isInSample = isSentinelLoggingEvent
 			? true
 			: Math.random() < 0.008;

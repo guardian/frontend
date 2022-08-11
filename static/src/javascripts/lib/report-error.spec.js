@@ -15,7 +15,7 @@ const fakeRaven = require('raven-js');
 describe('report-error', () => {
 	const error = new Error('Something broke.');
 	const metaData = { test: true };
-	const ravenMetaData = { tags: metaData, sampleRate: 1 };
+	const ravenMetaData = { tags: metaData };
 
 	test('Does not throw an error', () => {
 		expect(() => {
