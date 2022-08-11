@@ -15,7 +15,7 @@
 
   "itemReviewed": {
     "@@type": "Game",
-    @review.data.images.flatMap(ReviewAtom.getLargestImageUrl).map { img => "image": "@img", }
+    @review.data.images.map(_.toSeq).flatMap(ReviewAtom.getLargestImageUrl).map { img => "image": "@img", }
     "name": "@entity.title"
   },
 

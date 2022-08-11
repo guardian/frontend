@@ -12,7 +12,7 @@
       "@@type": "Recipe",
       "name": "@recipe.data.title",
       @for(category <- recipe.data.tags.category) {"recipeCategory": "@category",}
-      @ReviewAtom.getLargestImageUrl(recipe.data.images).map { img => "image": "@img", }
+      @ReviewAtom.getLargestImageUrl(recipe.data.images.toSeq).map { img => "image": "@img", }
       @recipe.data.credits.headOption.map { name => "author": @fragments.atoms.structureddata.contributor(name, contributors),}
       @recipe.atom.contentChangeDetails.created.map { created => "dateCreated": "@{new DateTime(created.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
       @recipe.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
@@ -42,7 +42,7 @@
        "fatContent": "20.2 g"
      },
      *@
-     "recipeIngredient": @Html(Json.stringify(Json.toJson(RecipeAtom.formatIngredientValues(recipe.data.ingredientsLists.flatMap(_.ingredients))))),
+     "recipeIngredient": @Html(Json.stringify(Json.toJson(RecipeAtom.formatIngredientValues(recipe.data.ingredientsLists.flatMap(_.ingredients).toSeq)))),
      "recipeInstructions": @Html(Json.stringify(Json.toJson(recipe.data.steps.zipWithIndex.map { case(step,index) => s"${index +1}. $step" })))
     }
 </script>

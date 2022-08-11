@@ -428,10 +428,11 @@ object Content {
       allowUserGeneratedContent = apifields.flatMap(_.allowUgc).getOrElse(false),
       isExpired = apiContent.isExpired.getOrElse(false),
       productionOffice = apifields.flatMap(_.productionOffice.map(_.name)),
-      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").map { tweet =>
+      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").toSeq.map { tweet =>
         val images = tweet.assets
           .filter(_.`type`.name == "Image")
           .flatMap(asset => asset.typeData.flatMap(_.secureFile).orElse(asset.file))
+          .toSeq
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
@@ -443,8 +444,9 @@ object Content {
       paFootballTeams = apiContent.references
         .filter(ref => ref.id.contains("pa-football-team"))
         .map(ref => ref.id.split("/").last)
+        .toSeq
         .distinct,
-      javascriptReferences = apiContent.references.map(ref => Reference.toJavaScript(ref.id)),
+      javascriptReferences = apiContent.references.toSeq.map(ref => Reference.toJavaScript(ref.id)),
       wordCount = Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").length,
       showByline =
         fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,

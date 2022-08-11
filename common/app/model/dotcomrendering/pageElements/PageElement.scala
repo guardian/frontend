@@ -879,12 +879,12 @@ object PageElement {
                 ImgSrc.srcsetForBreakpoint(
                   b,
                   imageRoleWidthsByBreakpoint.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(imageAssets)),
+                  maybeImageMedia = Some(ImageMedia(imageAssets.toSeq)),
                 ),
                 ImgSrc.srcsetForBreakpoint(
                   b,
                   imageRoleWidthsByBreakpoint.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(imageAssets)),
+                  maybeImageMedia = Some(ImageMedia(imageAssets.toSeq)),
                   hidpi = true,
                 ),
               )
@@ -905,7 +905,7 @@ object PageElement {
 
         List(
           ImageBlockElement(
-            ImageMedia(imageAssets),
+            ImageMedia(imageAssets.toSeq),
             imageDataFor(element),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
@@ -965,10 +965,16 @@ object PageElement {
         if (element.assets.nonEmpty) {
           List(
             GuVideoBlockElement(
-              element.assets.map(VideoAsset.make),
-              ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
-                case (a, i) => ImageAsset.make(a, i)
-              }),
+              element.assets.map(VideoAsset.make).toSeq,
+              ImageMedia(
+                element.assets
+                  .filter(_.mimeType.exists(_.startsWith("image")))
+                  .zipWithIndex
+                  .map {
+                    case (a, i) => ImageAsset.make(a, i)
+                  }
+                  .toSeq,
+              ),
               element.videoTypeData.flatMap(_.caption).getOrElse(""),
               element.videoTypeData.flatMap(_.url).getOrElse(""),
               element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
@@ -1164,16 +1170,18 @@ object PageElement {
                 id = timeline.id,
                 title = timeline.atom.title.getOrElse(""),
                 description = timeline.data.description,
-                events = timeline.data.events.map(event =>
-                  TimelineEvent(
-                    title = event.title,
-                    date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
-                    body = event.body,
-                    toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
-                    unixDate = event.date,
-                    toUnixDate = event.toDate,
-                  ),
-                ),
+                events = timeline.data.events
+                  .map(event =>
+                    TimelineEvent(
+                      title = event.title,
+                      date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
+                      body = event.body,
+                      toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
+                      unixDate = event.date,
+                      toUnixDate = event.toDate,
+                    ),
+                  )
+                  .toSeq,
               ),
             )
           }
@@ -1352,7 +1360,7 @@ object PageElement {
         i.typeData.map(x => WitnessBlockElementAssetsElementTypeData(x.name)),
       ),
     )
-  }
+  }.toSeq
 
   private def makeWitnessBlockElementImage(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
     WitnessBlockElement(

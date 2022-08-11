@@ -3,7 +3,7 @@ package common
 object QueryParams extends implicits.Strings {
   def get(enc: String): Map[String, Seq[String]] = {
     val params = enc.dropWhile(_ != '?').dropWhile(_ == '?')
-    val pairs: Seq[(String, String)] = params.split('&').flatMap {
+    val pairs: Seq[(String, String)] = params.split('&').toIndexedSeq.flatMap {
       _.split('=') match {
         case Array(key, value)       => List((key.stringDecoded, value.stringDecoded))
         case Array(key) if key != "" => List((key.stringDecoded, ""))

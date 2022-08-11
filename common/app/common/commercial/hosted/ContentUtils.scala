@@ -30,7 +30,7 @@ object ContentUtils {
       val assets = elements.zipWithIndex flatMap {
         case (element, i) => ModelElement(element, i).images.allImages
       }
-      ImageMedia(assets)
+      ImageMedia(assets.toSeq)
     } getOrElse ImageMedia(Nil)
 
   def thumbnailUrl(item: Content): String =

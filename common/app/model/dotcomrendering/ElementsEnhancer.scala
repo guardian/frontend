@@ -14,7 +14,7 @@ object ElementsEnhancer {
 
   def enhanceElements(elements: JsValue): IndexedSeq[JsValue] = {
     elements.as[JsArray].value.map(element => enhanceElement(element))
-  }
+  }.toIndexedSeq
 
   def enhanceObjectWithElementsAtDepth1(obj: JsValue): JsValue = {
     obj.asOpt[JsObject] match {
@@ -27,7 +27,7 @@ object ElementsEnhancer {
 
   def enhanceObjectsWithElementsAtDepth1(objs: JsValue): IndexedSeq[JsValue] = {
     objs.as[JsArray].value.map(obj => enhanceObjectWithElementsAtDepth1(obj))
-  }
+  }.toIndexedSeq
 
   def enhanceBlocks(obj: JsObject): JsObject = {
     obj ++

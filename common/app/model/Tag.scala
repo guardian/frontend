@@ -144,7 +144,7 @@ object TagProperties {
       contributorLargeImagePath = tag.bylineLargeImageUrl,
       bylineImageUrl = tag.bylineImageUrl,
       podcast = tag.podcast.map(Podcast.make),
-      references = tag.references.map(Reference.make),
+      references = tag.references.map(Reference.make).toSeq,
       paidContentType = tag.paidContentType,
       commercial = Some(CommercialProperties.fromTag(tag)),
     )

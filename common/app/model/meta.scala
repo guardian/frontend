@@ -600,7 +600,8 @@ object Elements {
     Elements(
       apiContent.elements
         .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
-        .getOrElse(Nil),
+        .getOrElse(Nil)
+        .toSeq,
     )
   }
 }

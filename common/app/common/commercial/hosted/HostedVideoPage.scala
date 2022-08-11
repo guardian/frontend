@@ -55,7 +55,8 @@ object HostedVideoPage extends GuLogging {
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
           youtubeId = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id),
-          sources = videoVariants.flatMap(asset => asset.mimeType map (mimeType => Encoding(asset.id, mimeType))).sorted,
+          sources =
+            videoVariants.flatMap(asset => asset.mimeType map (mimeType => Encoding(asset.id, mimeType))).toSeq.sorted,
         ),
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),

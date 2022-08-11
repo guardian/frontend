@@ -41,7 +41,7 @@ object SurgeUtils {
     } yield {
       (url, count)
     }
-  }
+  }.toSeq
 }
 
 class SurgingContentAgentLifecycle(

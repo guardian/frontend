@@ -27,7 +27,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
 
     ophanResponse.flatMap { result =>
       val paths: Seq[String] = for {
-        videoResult <- result.asOpt[JsArray].map(_.value).getOrElse(Nil)
+        videoResult <- result.asOpt[JsArray].map(_.value.toSeq).getOrElse(Nil)
         path <- videoResult.validate[QueryResult].asOpt.map(_.paths).getOrElse(Nil) if path.contains("/video/")
       } yield path
 
@@ -46,7 +46,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
             .pageSize(20),
         )
         .map { r =>
-          val videoContent: Seq[client.model.v1.Content] = r.results.filter(_.isVideo)
+          val videoContent: Seq[client.model.v1.Content] = r.results.filter(_.isVideo).toSeq
           log.info(s"Number of video content items from CAPI: ${videoContent.size}")
           videoContent.map(Content(_)).collect { case v: Video => v }
         }

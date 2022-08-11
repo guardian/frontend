@@ -33,7 +33,7 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
     if (shortUrls.nonEmpty) {
       val shortIds = shortUrls.map(ShortUrls.shortUrlToShortId).mkString(",")
       contentApiClient.getResponse(contentApiClient.search(defaultEdition).ids(shortIds)) map {
-        _.results map (Content(_))
+        _.results.toSeq map (Content(_))
       }
     } else Future.successful(Nil)
   }
@@ -48,7 +48,7 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
         .showTags("type,series,paid-content")
         .orderBy("newest"),
     ) map {
-      _.results.getOrElse(Nil) map (Content(_))
+      _.results.getOrElse(Nil).toSeq map (Content(_))
     } recover {
       case e: Exception => {
         log.info(s"CAPI search for item '${keywordId.stringDecoded}' failed: ${e.getMessage}")
@@ -67,7 +67,7 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
     val baseQuery = contentApiClient.tags.q(term).tagType("keyword").pageSize(50)
     val query = section.foldLeft(baseQuery)((acc, sectionName) => acc section sectionName)
 
-    val result = contentApiClient.getResponse(query).map(_.results) recover {
+    val result = contentApiClient.getResponse(query).map(_.results.toSeq) recover {
       case e =>
         log.warn(s"Failed to look up [$term]: ${e.getMessage}")
         Nil

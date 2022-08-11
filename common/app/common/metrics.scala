@@ -36,7 +36,7 @@ object SystemMetrics extends implicits.Numbers {
   }
 
   lazy val garbageCollectors: Seq[GcRateMetric] =
-    ManagementFactory.getGarbageCollectorMXBeans.asScala.map(new GcRateMetric(_))
+    ManagementFactory.getGarbageCollectorMXBeans.asScala.map(new GcRateMetric(_)).toSeq
 
   val MaxHeapMemoryMetric = GaugeMetric(
     name = "max-heap-memory",

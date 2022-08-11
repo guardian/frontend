@@ -81,7 +81,7 @@ object Comment extends implicits.Dates {
     (json \\ "responses").headOption map {
       _.asInstanceOf[JsArray].value map { Comment(_, None, discussionOpt) }
     } getOrElse Nil
-  }
+  }.toSeq
 }
 
 case class ResponseTo(displayName: String, commentId: String)

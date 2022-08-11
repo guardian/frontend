@@ -197,7 +197,7 @@ object DotcomRenderingDataModel {
         fallbackLogo = Configuration.images.fallbackLogo,
       ),
       mainBlock = blocks.main,
-      bodyBlocks = blocks.body.getOrElse(Nil),
+      bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
       storyPackage = getStoryPackage(page.related.faciaItems, request),
@@ -228,7 +228,7 @@ object DotcomRenderingDataModel {
       pagination = None,
       linkedData = linkedData,
       mainBlock = blocks.main,
-      bodyBlocks = blocks.body.getOrElse(Nil),
+      bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
       storyPackage = getStoryPackage(page.related.faciaItems, request),
@@ -247,7 +247,7 @@ object DotcomRenderingDataModel {
       case Some(requestedBlocks) =>
         val keyEvent = requestedBlocks.getOrElse(CanonicalLiveBlog.timeline, Seq.empty[APIBlock])
         val summaryEvent = requestedBlocks.getOrElse(CanonicalLiveBlog.summary, Seq.empty[APIBlock])
-        keyEvent ++ summaryEvent
+        keyEvent.toSeq ++ summaryEvent.toSeq
       case None => Seq.empty[APIBlock]
     }
   }
@@ -283,7 +283,7 @@ object DotcomRenderingDataModel {
     }
 
     val timelineBlocks =
-      orderBlocks(allTimelineBlocks).map(ensureSummaryTitle)
+      orderBlocks(allTimelineBlocks.toSeq).map(ensureSummaryTitle)
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,
@@ -295,7 +295,7 @@ object DotcomRenderingDataModel {
     val pinnedPost =
       blocks.requestedBodyBlocks
         .flatMap(_.get("body:pinned"))
-        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
+        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true)).toSeq))
         .headOption
         .map(ensureSummaryTitle)
 

@@ -31,7 +31,7 @@ object HtmlTextExtractor {
     if (children.exists(child => child.nodeName() == "img" && child.attr("class") == "full-width"))
       Nil
     else
-      node +: children.flatMap(filterImagesAndFlattenNodes)
+      node +: children.flatMap(filterImagesAndFlattenNodes).toSeq
   }
 
   private def removeWhitespace(text: String): String = {
