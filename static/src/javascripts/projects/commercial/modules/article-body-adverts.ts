@@ -1,7 +1,5 @@
 import type { AdSize, SizeMapping } from '@guardian/commercial-core';
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { multiStickyRightAds } from 'common/modules/experiments/tests/multi-sticky-right-ads';
 import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
@@ -224,16 +222,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		// i.e. inline2, inline3, etc...
 		const includeContainer = !isInline1;
 
-		// Make ads sticky in containers if using containers and in sticky test variant
-		// Compute the height of containers in which ads will remain sticky
-		const includeStickyContainers =
-			includeContainer &&
-			// Check if query parameter required for qualitative testing has been provided
-			(!!getUrlVars().multiSticky ||
-				// Otherwise check for participation in AB test
-				isInVariantSynchronous(multiStickyRightAds, 'variant'));
-
-		if (includeStickyContainers) {
+		if (includeContainer) {
 			const stickyContainerHeights = await computeStickyHeights(
 				paras,
 				articleBodySelector,
@@ -259,7 +248,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 				let containerClasses = '';
 
-				if (includeStickyContainers) {
+				if (includeContainer) {
 					containerClasses += getStickyContainerClassname(i);
 				}
 
@@ -269,7 +258,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				}
 
 				const containerOptions = {
-					sticky: includeStickyContainers,
+					sticky: includeContainer,
 					className: containerClasses,
 					enableDebug,
 				};
