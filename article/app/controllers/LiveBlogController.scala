@@ -123,7 +123,14 @@ class LiveBlogController(
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
           Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult))
         case (blog: LiveBlogPage, blocks) =>
-          getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty), topicResult)
+          getJson(
+            blog,
+            range,
+            isLivePage,
+            filter,
+            blocks.requestedBodyBlocks.getOrElse(Map.empty).map(entry => (entry._1, entry._2.toSeq)),
+            topicResult,
+          )
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>

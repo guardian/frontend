@@ -140,7 +140,7 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     options.setExportFormat(ExportFormat.CSV_DUMP)
     options.setUseGzipCompression(true)
     val charSource: CharSource = reportDownloader.getReportAsCharSource(options)
-    charSource.readLines().asScala
+    charSource.readLines().asScala.toSeq
   }
 
   object lineItemCreativeAssociations {
@@ -164,7 +164,7 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
 
     def create(licas: Seq[LineItemCreativeAssociation]): Seq[LineItemCreativeAssociation] = {
       logAroundCreate(typeName) {
-        licaService.createLineItemCreativeAssociations(licas.toArray)
+        licaService.createLineItemCreativeAssociations(licas.toArray).toIndexedSeq
       }
     }
 
@@ -193,7 +193,7 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
 
     def create(creatives: Seq[Creative]): Seq[Creative] = {
       logAroundCreate(typeName) {
-        creativeService.createCreatives(creatives.toArray)
+        creativeService.createCreatives(creatives.toArray).toIndexedSeq
       }
     }
   }

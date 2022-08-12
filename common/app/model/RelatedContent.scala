@@ -25,7 +25,7 @@ object StoryPackages {
 
     val storyPackagesContent: Seq[ApiContent] = response.packages
       .map { packages =>
-        val allContentsPerPackage: Seq[Seq[ApiContent]] = packages.map(_.articles.map(_.content))
+        val allContentsPerPackage: Seq[Seq[ApiContent]] = packages.map(_.articles.map(_.content).toSeq).toSeq
         if (packages.size > 1) { //intermix packages only if more than one
           allContentsPerPackage
             .flatMap(_.zipWithIndex) // zip content with its position

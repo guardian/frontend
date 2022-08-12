@@ -38,7 +38,10 @@ object CSSRule {
       selectors <- rule.headOption
       styles <- rule.lift(1)
     } yield {
-      selectors.split(",").map(selector => CSSRule(selector.trim, styleMapFromString(styles.stripSuffix("}").trim)))
+      selectors
+        .split(",")
+        .map(selector => CSSRule(selector.trim, styleMapFromString(styles.stripSuffix("}").trim)))
+        .toIndexedSeq
     }
   }
 

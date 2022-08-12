@@ -28,7 +28,7 @@ object DiscussionComments {
     val comments = (json \ "discussion" \ "comments").as[JsArray].value map { Comment(_, None, Some(discussion)) }
     DiscussionComments(
       discussion = discussion,
-      comments = comments,
+      comments = comments.toSeq,
       pagination = DiscussionPagination(json),
       commentCount = (json \ "discussion" \ "commentCount").asOpt[Int] getOrElse 0,
       topLevelCommentCount = (json \ "discussion" \ "topLevelCommentCount").asOpt[Int] getOrElse 0,
@@ -53,7 +53,7 @@ object ProfileComments {
     val comments = (json \ "comments").as[JsArray].value map { Comment(_, Some(profile), None) }
     ProfileComments(
       profile = profile,
-      comments = comments,
+      comments = comments.toSeq,
       pagination = DiscussionPagination(json),
     )
   }
@@ -65,7 +65,7 @@ object ProfileReplies {
     }
     ProfileComments(
       profile = Profile(json),
-      comments = comments,
+      comments = comments.toSeq,
       pagination = DiscussionPagination(json),
     )
   }
@@ -84,7 +84,7 @@ object ProfileDiscussions {
       val discussion = Discussion(d)
       DiscussionComments(
         discussion = discussion,
-        comments = (d \ "comments").as[JsArray].value.map { Comment(_, Some(profile), Some(discussion)) },
+        comments = (d \ "comments").as[JsArray].value.map { Comment(_, Some(profile), Some(discussion)) }.toSeq,
         pagination = DiscussionPagination(json),
         commentCount = 0,
         topLevelCommentCount = 0,
@@ -96,7 +96,7 @@ object ProfileDiscussions {
     }
     ProfileDiscussions(
       profile = profile,
-      discussions = discussions,
+      discussions = discussions.toIndexedSeq,
       DiscussionPagination(json),
     )
   }
