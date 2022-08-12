@@ -482,9 +482,9 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
 
     val outcome = TrailsToShowcase.asSingleStoryPanel(withInvalidSupportingContent)
 
-    outcome.swap.toOption.nonEmpty should be(true)
-    outcome.swap.contains(s"The headline '$longerThan54' is longer than 54 characters") should be(true)
-    outcome.swap.contains(s"Kicker text '$longerThan54' is longer than 42 characters") should be(true)
+    outcome.left.toOption.nonEmpty should be(true)
+    outcome.left.toString.contains(s"The headline '$longerThan54' is longer than 54 characters") should be(true)
+    outcome.left.toString.contains(s"Kicker text '$longerThan54' is longer than 42 characters") should be(true)
   }
 
   "TrailToShowcase" should "reject related articles panels with incorrect number of articles" in {
@@ -506,8 +506,8 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
 
     val outcome = TrailsToShowcase.asSingleStoryPanel(withoutEnoughSupportingContent)
 
-    outcome.swap.toOption.nonEmpty should be(true)
-    outcome.swap.contains("Could not find 2 valid related article trails") should be(true)
+    outcome.left.toOption.nonEmpty should be(true)
+    outcome.left.toString.contains("Could not find 2 valid related article trails") should be(true)
   }
 
   "TrailToShowcase" can "encode single story panel bullet lists from trailtext lines" in {
@@ -576,7 +576,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
 
     outcome.toOption should be(None)
-    outcome.swap.toOption.get.contains("Trail text is not formatted as a bullet list") shouldBe (true)
+    outcome.left.toString.contains("Trail text is not formatted as a bullet list") shouldBe (true)
   }
 
   "TrailToShowcase" should "reject bullet lists with less than 2 items" in {
@@ -596,7 +596,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(bulletedContent)
 
     outcome.toOption should be(None)
-    outcome.swap.contains("Need at least 2 valid bullet list items") shouldBe (true)
+    outcome.left.toString.contains("Need at least 2 valid bullet list items") shouldBe (true)
   }
 
   "TrailToShowcase" should "trim single story bullets to 3 at most" in {
@@ -875,7 +875,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
       .asRundownPanel(Seq(firstTrail, anotherTrail, anotherTrail), "rundown-container-id")
 
     outcome.toOption should be(None)
-    outcome.swap.contains(
+    outcome.left.toString.contains(
       "Could not find a panel title in the first trail headline 'My headline but I've forgotten the rundown panel title'",
     ) should be(true)
   }
@@ -982,7 +982,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
       .asRundownPanel(Seq(withKicker, withKicker, withAuthor), "rundown-container-id")
 
     rundownPanel.toOption should be(None)
-    rundownPanel.swap should be(Seq("Rundown trails need to have all Kickers or all Bylines"))
+    rundownPanel.left.toOption.get should be(Seq("Rundown trails need to have all Kickers or all Bylines"))
   }
 
   "TrailToShowcase" can "rundown panels articles should prefer replaced images over content trail image" in {
@@ -1049,7 +1049,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(content)
 
     outcome.toOption should be(None)
-    outcome.swap.contains(s"Kicker text '${longerThan30}' is longer than 30 characters") shouldBe (true)
+    outcome.left.toString.contains(s"Kicker text '${longerThan30}' is longer than 30 characters") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject single panels with titles longer than 86 characters" in {
@@ -1067,7 +1067,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withLongTitle)
 
     outcome.toOption should be(None)
-    outcome.swap.contains(s"The headline '$longerThan86' is longer than 86 characters") shouldBe (true)
+    outcome.left.toString.contains(s"The headline '$longerThan86' is longer than 86 characters") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "omit single panel author fields longer than 42 characters" in {
@@ -1097,7 +1097,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withNoImage)
 
     outcome.toOption should be(None)
-    outcome.swap.contains("No image available") shouldBe (true)
+    outcome.left.toString.contains("No image available") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject single panels with images smaller than 640x320" in {
@@ -1110,7 +1110,8 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withTooSmallImage)
 
     outcome.toOption should be(None)
-    outcome.swap.contains("Could not find image bigger than the minimum required size: 640x320") shouldBe (true)
+    outcome.left.toString
+      .contains("Could not find image bigger than the minimum required size: 640x320") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject rundown panels with less than 3 valid articles" in {
@@ -1170,7 +1171,8 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
     val rundownPanel = TrailsToShowcase.asRundownPanel(Seq(trail, anotherTrail), "rundown-container-id")
 
     rundownPanel.toOption shouldBe (None)
-    rundownPanel.swap.contains(s"The panel title '$longerThan74' is longer than 74 characters") shouldBe (true)
+    rundownPanel.left.toString
+      .contains(s"The panel title '$longerThan74' is longer than 74 characters") shouldBe (true)
   }
 
   "TrailToShowcase validation" should "reject rundown panel article kickers longer than 30 characters" in {
@@ -1188,7 +1190,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
       .asRundownPanel(Seq(withTooLongKicker, withTooLongKicker, withTooLongKicker), "rundown-container-id")
 
     outcome.toOption should be(None)
-    outcome.swap.contains(s"Kicker text '${longerThan30}' is longer than 30 characters") should be(true)
+    outcome.left.toString.contains(s"Kicker text '${longerThan30}' is longer than 30 characters") should be(true)
   }
 
   "TrailToShowcase validation" should "reject rundown panel articles with titles longer than 64 characters" in {
@@ -1208,7 +1210,9 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
     )
 
     rundownPanel.toOption should be(None)
-    rundownPanel.swap.contains(s"The headline '$longerThan64' is longer than 64 characters") should be(true)
+    rundownPanel.left.toString.contains(s"The headline '$longerThan64' is longer than 64 characters") should be(
+      true,
+    )
   }
 
   "TrailToShowcase validation" should "reject rundown articles with images smaller than 1200x900" in {
@@ -1222,7 +1226,8 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
       .asRundownPanel(Seq(withTooSmallImage, withTooSmallImage, withTooSmallImage), "rundown-container-id")
 
     rundownPanel.toOption should be(None)
-    rundownPanel.swap.contains("Could not find image bigger than the minimum required size: 1200x900") should be(
+    rundownPanel.left.toString
+      .contains("Could not find image bigger than the minimum required size: 1200x900") should be(
       true,
     )
   }
@@ -1270,7 +1275,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {
       .asRundownPanel(Seq(withAuthor, withAuthor, withoutAuthor), "rundown-container-id")
 
     outcome.toOption should be(None)
-    outcome.swap.contains("Rundown trails need to have all Kickers or all Bylines") should be(true)
+    outcome.left.toString.contains("Rundown trails need to have all Kickers or all Bylines") should be(true)
   }
 
   "TrailToShowcase validation" should "choose kickers over authors" in {
