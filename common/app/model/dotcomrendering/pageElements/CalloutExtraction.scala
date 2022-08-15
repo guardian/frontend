@@ -167,6 +167,11 @@ object CalloutExtraction {
     }
   }
 
+  def isCallout(html: String): Boolean = {
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.getElementsByTag("div").asScala.headOption.map(_.attr("data-callout-tagname")).map(_ => true).getOrElse(false)
+  }
+
   def extractCallout(
       html: String,
       campaigns: Option[JsValue],

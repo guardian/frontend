@@ -1641,28 +1641,35 @@ object PageElement {
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
   ): Option[PageElement] = {
-    for {
+    val pageElement = for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
       thirdPartyTracking = containsThirdPartyTracking(element.tracking)
+      isCallout = CalloutExtraction.isCallout(html)
     } yield {
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
-        CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
-          EmbedBlockElement(
-            html,
-            d.safeEmbedCode,
-            d.alt,
-            mandatory,
-            d.role,
-            thirdPartyTracking,
-            d.source,
-            d.sourceDomain,
-            d.caption,
-          )
-        }
+
+      if (isCallout) CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl)
+      else {
+        Some(
+          extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse(
+            EmbedBlockElement(
+              html,
+              d.safeEmbedCode,
+              d.alt,
+              mandatory,
+              d.role,
+              thirdPartyTracking,
+              d.source,
+              d.sourceDomain,
+              d.caption,
+            ),
+          ),
+        )
       }
     }
+
+    pageElement.flatten
   }
 
   private def imageDataFor(element: ApiBlockElement): Map[String, String] = {
