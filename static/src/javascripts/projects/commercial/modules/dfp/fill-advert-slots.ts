@@ -3,7 +3,8 @@ import { log } from '@guardian/libs';
 import { getBreakpoint } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { removeDisabledSlots } from '../remove-slots';
-import { Advert } from './Advert';
+import type { Advert } from './Advert';
+import { createAdvert } from './create-advert';
 import { dfpEnv } from './dfp-env';
 import { displayAds } from './display-ads';
 import { displayLazyAds } from './display-lazy-ads';
@@ -61,8 +62,11 @@ const fillAdvertSlots = async (): Promise<void> => {
 					desktop: [adSizes.billboard, createAdSize(900, 250)],
 				};
 			}
-			return new Advert(adSlot, additionalSizes);
-		});
+
+			return createAdvert(adSlot, additionalSizes);
+		})
+		.filter((advert): advert is Advert => advert !== null);
+
 	const currentLength = dfpEnv.adverts.length;
 	dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
 	adverts.forEach((advert, index) => {
