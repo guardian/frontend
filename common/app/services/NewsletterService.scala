@@ -26,6 +26,7 @@ object NewsletterData {
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   private val EMBED_TAG_PREFIX = "campaign/email/"
   private val EMBED_TAG_TYPE = "Campaign"
+  private val SIGN_UP_PAGE_TAG = "info/newsletter-sign-up"
 
   private def findNewsletterTag(tags: List[Tag]) = {
     tags.find(t => t.properties.tagType.equals(EMBED_TAG_TYPE) && t.properties.id.startsWith(EMBED_TAG_PREFIX))
@@ -49,6 +50,17 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     }
   }
 
+  private def getNewsletterResponseFromSignUpPage(articleId:String): Option[NewsletterResponse] = {
+    newsletterSignupAgent.getNewsletters() match {
+      case Left(_) => None
+      case Right(list) => list.find(response => response.signupPage.nonEmpty && response.signupPage.get == "/"+articleId)
+    }
+  }
+
+  private def isSignUpPage(articlePage: ArticlePage): Boolean = {
+    articlePage.article.tags.tags.exists(t => t.properties.id.equals(SIGN_UP_PAGE_TAG))
+  }
+
   private def convertNewsletterResponseToData(response: NewsletterResponse): NewsletterData = {
     NewsletterData(
       response.identityName,
@@ -67,7 +79,14 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   }
 
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
-    val response = getNewsletterResponseFromTags(articlePage.article.tags.tags)
+
+    var response: Option[NewsletterResponse] = None
+    if (isSignUpPage(articlePage)) {
+      response = getNewsletterResponseFromSignUpPage(articlePage.article.content.metadata.id)
+    } else {
+      response = getNewsletterResponseFromTags(articlePage.article.tags.tags)
+    }
+
     if (response.isEmpty || !shouldInclude(response.get)) {
       return None
     }
