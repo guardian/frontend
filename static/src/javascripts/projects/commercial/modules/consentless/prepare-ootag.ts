@@ -1,10 +1,11 @@
 import { loadScript } from '@guardian/libs';
 
 function initConsentless(): Promise<void> {
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- This isn't defined yet
-	window.ootag = window.ootag || {};
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- This isn't defined yet
-	window.ootag.queue = window.ootag.queue || [];
+	// Stub the command queue
+	// @ts-expect-error -- it’s a stub, not the whole OO tag object
+	window.ootag = {
+		queue: [],
+	};
 	window.ootag.queue.push(function () {
 		window.ootag.initializeOo({
 			publisher: 33,
