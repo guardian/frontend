@@ -16,6 +16,7 @@ case class NewsletterData(
     listId: Int,
     group: String,
     successDescription: String,
+    regionFocus: Option[String],
 )
 
 object NewsletterData {
@@ -71,6 +72,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
       response.listId,
       response.group,
       response.emailEmbed.successDescription,
+      response.regionFocus,
     )
   }
 
