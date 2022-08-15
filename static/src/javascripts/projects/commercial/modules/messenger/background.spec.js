@@ -1,6 +1,6 @@
 import { _ } from './background';
 
-const { setBackground, getStylesFromSpec } = _;
+const { setupBackground, getStylesFromSpec } = _;
 
 const adSpec = {
 	scrollType: 'fixed',
@@ -13,7 +13,7 @@ const adSpec = {
 	transform: 'translate3d(0,0,0)',
 };
 
-describe('Cross-frame messenger: setBackground', () => {
+describe('Cross-frame messenger: setupBackground', () => {
 	class IntersectionObserver {
 		constructor() {
 			return Object.freeze({
@@ -44,7 +44,7 @@ describe('Cross-frame messenger: setBackground', () => {
 		const fallback = document.createElement('div');
 		const fakeAdSlot = document.getElementById('slot01') || fallback;
 
-		return setBackground(adSpec, fakeAdSlot).then(() => {
+		return setupBackground(adSpec, fakeAdSlot).then(() => {
 			const creative =
 				document.querySelector('.creative__background') || {};
 			const parent =
