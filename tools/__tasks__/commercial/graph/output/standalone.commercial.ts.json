@@ -129,6 +129,24 @@
   "../lib/config.d.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
+ "../projects/commercial/modules/consentless/define-slot.ts": [],
+ "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/detect-viewport.ts",
+  "../lib/fastdom-promise.js",
+  "../lib/url.ts",
+  "../projects/commercial/modules/consentless/define-slot.ts",
+  "../projects/commercial/modules/sticky-inlines.ts",
+  "../projects/common/modules/article/space-filler.ts",
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder.ts"
+ ],
+ "../projects/commercial/modules/consentless/init-fixed-slots.ts": [
+  "../projects/commercial/modules/consentless/define-slot.ts"
+ ],
+ "../projects/commercial/modules/consentless/prepare-ootag.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
   "../lib/detect.js",
@@ -651,6 +669,7 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../projects/common/modules/experiments/tests/consentlessAds.ts",
   "../projects/common/modules/experiments/tests/deeply-read-article-footer.js",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
@@ -677,6 +696,10 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
+ "../projects/common/modules/experiments/tests/consentlessAds.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/experiments/tests/deeply-read-article-footer.js": [],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
@@ -725,6 +748,9 @@
   "../projects/commercial/modules/article-body-adverts.ts",
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
+  "../projects/commercial/modules/consentless/dynamic/article-inline.ts",
+  "../projects/commercial/modules/consentless/init-fixed-slots.ts",
+  "../projects/commercial/modules/consentless/prepare-ootag.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.ts",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
@@ -745,6 +771,8 @@
   "../projects/commercial/modules/track-scroll-depth.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-features.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/consentlessAds.ts",
   "types.ts"
  ],
  "types.ts": []
