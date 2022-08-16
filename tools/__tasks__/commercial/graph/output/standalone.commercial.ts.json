@@ -226,6 +226,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
