@@ -5,7 +5,7 @@
     <button
         id="container-@containerDefinition.dataId-aus-region-selector-button"
         class='fc-aus-territory__accordion-header'
-        data-link-name="AU-NSW-expand"
+        data-link-name="@containerDefinition.targetedTerritory.map(_.id).getOrElse("AU-unknown")-expand"
         aria-expanded="false"
         aria-controls="container-@containerDefinition.dataId-aus-region-selector-body"
 
