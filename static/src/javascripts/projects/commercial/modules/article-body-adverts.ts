@@ -218,9 +218,13 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		(sfdebug === '1' && isInline1) || (sfdebug === '2' && !isInline1);
 
 	const insertAds: SpacefinderWriter = async (paras) => {
+		const tests = window.guardian.config.tests;
+		const isInMegaTestControlGroup =
+			tests && !!tests['commercialEndOfQuarterMegaTestControl'];
+
 		// Make ads sticky on the non-inline1 pass
 		// i.e. inline2, inline3, etc...
-		const isSticky = !isInline1;
+		const isSticky = !isInline1 && !isInMegaTestControlGroup;
 
 		if (isSticky) {
 			const stickyContainerHeights = await computeStickyHeights(
