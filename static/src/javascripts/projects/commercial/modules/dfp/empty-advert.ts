@@ -15,10 +15,20 @@ const removeFromDfpEnv = (advert: Advert) => {
 	});
 };
 
+const removeAd = (advert: Advert) => {
+	const parent: HTMLElement | null = advert.node.parentElement;
+
+	if (parent?.classList.contains('ad-slot-container')) {
+		parent.remove();
+	} else {
+		advert.node.remove();
+	}
+};
+
 const emptyAdvert = (advert: Advert): void => {
 	fastdom.mutate(() => {
 		window.googletag.destroySlots([advert.slot]);
-		advert.node.remove();
+		removeAd(advert);
 		removeFromDfpEnv(advert);
 	});
 };
