@@ -218,11 +218,11 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		(sfdebug === '1' && isInline1) || (sfdebug === '2' && !isInline1);
 
 	const insertAds: SpacefinderWriter = async (paras) => {
-		// Include containers on the non-inline1 pass
+		// Make ads sticky on the non-inline1 pass
 		// i.e. inline2, inline3, etc...
-		const includeContainer = !isInline1;
+		const isSticky = !isInline1;
 
-		if (includeContainer) {
+		if (isSticky) {
 			const stickyContainerHeights = await computeStickyHeights(
 				paras,
 				articleBodySelector,
@@ -248,7 +248,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 				let containerClasses = '';
 
-				if (includeContainer) {
+				if (isSticky) {
 					containerClasses += getStickyContainerClassname(i);
 				}
 
@@ -258,7 +258,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				}
 
 				const containerOptions = {
-					sticky: includeContainer,
+					sticky: isSticky,
 					className: containerClasses,
 					enableDebug,
 				};
