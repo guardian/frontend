@@ -3,8 +3,12 @@
 
 <div class='fc-aus-territory__container'>
     <button
-    class='fc-aus-territory__accordion-header'
-    data-link-name="AU-NSW-expand"
+        id="container-@containerDefinition.dataId-aus-region-selector-button"
+        class='fc-aus-territory__accordion-header'
+        data-link-name="AU-NSW-expand"
+        aria-expanded="false"
+        aria-controls="container-@containerDefinition.dataId-aus-region-selector-body"
+
     >
         <div class='u-button-reset fc-aus-territory__accordion-header__headline'>
                 Not in&nbsp;@containerDefinition.territoryName?&nbsp;<span class='hide-on-mobile'>Change region</span>
@@ -38,37 +42,43 @@
             </svg>
         </div>
     </button>
-    <div class='fc-aus-territory__body' style="display: none;">
+    <div id="container-@containerDefinition.dataId-aus-region-selector-body" class='fc-aus-territory__body' style="display: none;" aria-labelledby="container-@containerDefinition.dataId-aus-region-selector-button" >
         <div class='fc-aus-territory__body__accordion-body'>
             <span class='fc-aus-territory__body__accordion-body--bold'>The articles above have been curated for you based on the state you are in.</span>
             If we have your location wrong or you want to see coverage of a different state, please select from the links below. We hope to expand this service to other states in the future.
         </div>
+        <span id="container-@containerDefinition.dataId-aus-region-selector-label" hidden>Change region to</span>
         <button class="@RenderClasses(Map(
-                ("u-button-reset", true),
                 ("fc-aus-territory__territory-button", true),
                 ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-NSW")),
             ))"
             data-link-name="AU-NSW"
+            id="container-@containerDefinition.dataId-aus-region-selector-nsw-button"
+            aria-labelledby="container-@containerDefinition.dataId-aus-region-selector-label container-@containerDefinition.dataId-aus-region-selector-nsw-button"
         >
             New South Wales
         </button>
         <button class="@RenderClasses(Map(
-                ("u-button-reset", true),
                 ("fc-aus-territory__territory-button", true),
                 ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-QLD")),
             ))"
-            data-link-name="AU-QLD">
+            data-link-name="AU-QLD"
+            id="container-@containerDefinition.dataId-aus-region-selector-qld-button"
+            aria-labelledby="container-@containerDefinition.dataId-aus-region-selector-label container-@containerDefinition.dataId-aus-region-selector-qld-button"
+        >
             <span class=''>Queensland</span>
         </button>
         <button class="@RenderClasses(Map(
-                ("u-button-reset", true),
                 ("fc-aus-territory__territory-button", true),
                 ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-VIC")),
             ))"
-            data-link-name="AU-VIC">
+            data-link-name="AU-VIC"
+            id="container-@containerDefinition.dataId-aus-region-selector-vic-button"
+            aria-labelledby="container-@containerDefinition.dataId-aus-region-selector-label container-@containerDefinition.dataId-aus-region-selector-vic-button"
+        >
             <span class=''>Victoria</span>
         </button>
-        <button class='u-button-reset fc-aus-territory__territory-button fc-aus-territory__territory-button--secondary'
+        <button class='fc-aus-territory__territory-button fc-aus-territory__territory-button--secondary'
             data-link-name="AU-other"
         >
             <span class=''>Hide local news</span>

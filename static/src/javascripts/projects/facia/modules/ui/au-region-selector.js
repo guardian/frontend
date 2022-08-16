@@ -15,6 +15,9 @@ export const init = () => {
 		);
 		accordionButtons.each((button) => {
 			button.addEventListener('click', () => {
+                const isOpen = button.getAttribute("aria-expanded")
+                console.log("isOpen", isOpen)
+                button.setAttribute("aria-expanded", isOpen === "true" ? "false" : "true");
 				accordionArrows.toggle();
 				body.toggle();
 			});
