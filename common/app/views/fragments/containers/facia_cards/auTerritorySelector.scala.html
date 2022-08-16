@@ -13,7 +13,7 @@
         <div class='u-button-reset fc-aus-territory__accordion-header__headline'>
                 Not in&nbsp;@containerDefinition.territoryName?&nbsp;<span class='hide-on-mobile'>Change region</span>
             </div>
-        <div class='fc-aus-territory__accordion-arrow'>
+        <div aria-hidden="true" class='fc-aus-territory__accordion-arrow'>
             <svg
             viewBox="0 0 30 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@
                 />
             </svg>
         </div>
-        <div class='fc-aus-territory__accordion-arrow' style="display: none">
+        <div aria-hidden="true" class='fc-aus-territory__accordion-arrow' style="display: none">
             <svg
             viewBox="0 0 30 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -53,9 +53,8 @@
                 ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-NSW")),
             ))"
             data-link-name="AU-NSW"
-            id="container-@containerDefinition.dataId-aus-region-selector-nsw-button"
-            aria-labelledby="container-@containerDefinition.dataId-aus-region-selector-label container-@containerDefinition.dataId-aus-region-selector-nsw-button"
         >
+            <span hidden aria-hidden="false">Change region to</span>
             New South Wales
         </button>
         <button class="@RenderClasses(Map(
@@ -63,25 +62,23 @@
                 ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-QLD")),
             ))"
             data-link-name="AU-QLD"
-            id="container-@containerDefinition.dataId-aus-region-selector-qld-button"
-            aria-labelledby="container-@containerDefinition.dataId-aus-region-selector-label container-@containerDefinition.dataId-aus-region-selector-qld-button"
         >
-            <span class=''>Queensland</span>
+            <span hidden aria-hidden="false">Change region to</span>
+            Queensland
         </button>
         <button class="@RenderClasses(Map(
                 ("fc-aus-territory__territory-button", true),
                 ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-VIC")),
             ))"
             data-link-name="AU-VIC"
-            id="container-@containerDefinition.dataId-aus-region-selector-vic-button"
-            aria-labelledby="container-@containerDefinition.dataId-aus-region-selector-label container-@containerDefinition.dataId-aus-region-selector-vic-button"
         >
-            <span class=''>Victoria</span>
+            <span hidden aria-hidden="false">Change region to</span>
+            Victoria
         </button>
         <button class='fc-aus-territory__territory-button fc-aus-territory__territory-button--secondary'
             data-link-name="AU-other"
         >
-            <span class=''>Hide local news</span>
+            Hide local news
         </button>
     </div>
 </div>
