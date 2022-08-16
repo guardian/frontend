@@ -12,12 +12,12 @@ import { getHeaderBiddingAdSlots } from '../slot-config';
 class A9AdUnit implements A9AdUnitInterface {
 	slotID: string;
 	slotName?: string;
-	sizes: HeaderBiddingSize[];
+	sizes: number[][];
 
 	constructor(advert: Advert, slot: HeaderBiddingSlot) {
 		this.slotID = advert.id;
 		this.slotName = config.get('page.adUnit');
-		this.sizes = slot.sizes;
+		this.sizes = slot.sizes.map((size) => size.toArray());
 	}
 }
 
