@@ -19,7 +19,7 @@ class MostViewedAudioController(
 
   def renderMostViewed(): Action[AnyContent] =
     Action { implicit request =>
-      getMostViewedAudio match {
+      getMostViewedAudio() match {
         case Nil   => Cached(60) { JsonNotFound() }
         case audio => renderMostViewedAudio(audio, "audio")
       }
@@ -27,7 +27,7 @@ class MostViewedAudioController(
 
   def renderMostViewedPodcast(): Action[AnyContent] =
     Action { implicit request =>
-      getMostViewedPodcast match {
+      getMostViewedPodcast() match {
         case Nil     => Cached(60) { JsonNotFound() }
         case podcast => renderMostViewedAudio(podcast, "podcast")
       }

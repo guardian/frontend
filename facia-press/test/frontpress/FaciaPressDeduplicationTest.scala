@@ -11,6 +11,7 @@ class FaciaPressDeduplicationTest extends AnyFlatSpec with Matchers with FaciaPr
     PressedCollectionVisibility(collection1, 0),
     PressedCollectionVisibility(collection2, 0),
     PressedCollectionVisibility(collection3, 0),
+    PressedCollectionVisibility(collection4, 0),
   )
   // Note that the integer (0) passed as second argument of PressedCollectionVisibility.apply is irrelevant. We use
   // it because the current version of PressedCollectionDeduplication.deduplication still takes PressedCollectionVisibility
@@ -35,5 +36,11 @@ class FaciaPressDeduplicationTest extends AnyFlatSpec with Matchers with FaciaPr
 
   it should "not deduplicate Most Popular containers" in {
     newSequence(3).pressedCollection.backfill.size shouldBe sequence(3).pressedCollection.backfill.size
+  }
+
+  it should "deduplicate backfill within a single container" in {
+    newSequence(4).pressedCollection.backfill.size shouldBe 2
+    newSequence(4).pressedCollection.backfill(0).header.url shouldEqual "/link96"
+    newSequence(4).pressedCollection.backfill(1).header.url shouldEqual "/link95"
   }
 }

@@ -133,7 +133,7 @@ private[conf] class HealthCheckCache(preconditionMaybe: Option[HealthCheckPrecon
   def get(): List[HealthCheckResult] = cache.get()
 
   def refresh(port: Int, healthChecks: SingleHealthCheck*): Future[List[HealthCheckResult]] = {
-    val alreadyFetched = noRefreshNeededResults
+    val alreadyFetched = noRefreshNeededResults()
     val toFetch: Seq[SingleHealthCheck] = healthChecks.filterNot(h => alreadyFetched.map(_.url).contains(h.path))
     fetchResults(port, preconditionMaybe, toFetch: _*).flatMap(fetchedResults =>
       cache.alter(fetchedResults.toList ++ alreadyFetched),
@@ -142,7 +142,7 @@ private[conf] class HealthCheckCache(preconditionMaybe: Option[HealthCheckPrecon
 
   private def noRefreshNeededResults(): List[HealthCheckResult] = {
     // No refresh needed for non-expiring results if they have already been fetched successfully
-    cache.get.filter(r => !r.expiration.isDefined && r.result.isInstanceOf[HealthCheckResultTypes.Success])
+    cache.get().filter(r => !r.expiration.isDefined && r.result.isInstanceOf[HealthCheckResultTypes.Success])
   }
 }
 
@@ -183,7 +183,7 @@ abstract class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: O
   def healthCheck(): Action[AnyContent] =
     Action.async {
       Future.successful {
-        val results = cache.get
+        val results = cache.get()
         val response = results
           .map { r: HealthCheckResult => s"GET ${r.url} '${r.formattedResult}' '${r.formattedDate}'" }
           .mkString("\n")

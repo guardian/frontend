@@ -64,36 +64,36 @@ object Atoms extends common.GuLogging {
 
   def make(content: contentapi.Content, pageShares: ShareLinkMeta = ShareLinkMeta(Nil, Nil)): Option[Atoms] = {
     content.atoms.map { atoms =>
-      val quizzes = extract(atoms.quizzes, atom => { QuizAtom.make(content.id, atom, pageShares) })
+      val quizzes = extract(atoms.quizzes.map(_.toSeq), atom => { QuizAtom.make(content.id, atom, pageShares) })
 
       val media = extract(
-        atoms.media,
+        atoms.media.map(_.toSeq),
         atom => {
           MediaAtom.make(atom)
         },
       )
 
-      val interactives = extract(atoms.interactives, atom => { InteractiveAtom.make(atom) })
+      val interactives = extract(atoms.interactives.map(_.toSeq), atom => { InteractiveAtom.make(atom) })
 
-      val recipes = extract(atoms.recipes, atom => { RecipeAtom.make(atom) })
+      val recipes = extract(atoms.recipes.map(_.toSeq), atom => { RecipeAtom.make(atom) })
 
-      val reviews = extract(atoms.reviews, atom => { ReviewAtom.make(atom) })
+      val reviews = extract(atoms.reviews.map(_.toSeq), atom => { ReviewAtom.make(atom) })
 
-      val explainers = extract(atoms.explainers, atom => { ExplainerAtom.make(atom) })
+      val explainers = extract(atoms.explainers.map(_.toSeq), atom => { ExplainerAtom.make(atom) })
 
-      val qandas = extract(atoms.qandas, atom => { QandaAtom.make(atom) })
+      val qandas = extract(atoms.qandas.map(_.toSeq), atom => { QandaAtom.make(atom) })
 
-      val guides = extract(atoms.guides, atom => { GuideAtom.make(atom) })
+      val guides = extract(atoms.guides.map(_.toSeq), atom => { GuideAtom.make(atom) })
 
-      val profiles = extract(atoms.profiles, atom => { ProfileAtom.make(atom) })
+      val profiles = extract(atoms.profiles.map(_.toSeq), atom => { ProfileAtom.make(atom) })
 
-      val timelines = extract(atoms.timelines, atom => { TimelineAtom.make(atom) })
+      val timelines = extract(atoms.timelines.map(_.toSeq), atom => { TimelineAtom.make(atom) })
 
-      val commonsdivisions = extract(atoms.commonsdivisions, atom => { CommonsDivisionAtom.make(atom) })
+      val commonsdivisions = extract(atoms.commonsdivisions.map(_.toSeq), atom => { CommonsDivisionAtom.make(atom) })
 
-      val audios = extract(atoms.audios, atom => { AudioAtom.make(atom) })
+      val audios = extract(atoms.audios.map(_.toSeq), atom => { AudioAtom.make(atom) })
 
-      val charts = extract(atoms.charts, ChartAtom.make)
+      val charts = extract(atoms.charts.map(_.toSeq), ChartAtom.make)
 
       Atoms(
         quizzes = quizzes,
@@ -126,7 +126,7 @@ object Atoms extends common.GuLogging {
           url = Some(asset.file),
         )
       }
-    }
+    }.toSeq
 
     ImageMedia(imageAssets)
   }

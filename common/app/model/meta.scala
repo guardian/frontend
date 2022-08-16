@@ -138,7 +138,7 @@ object MetaData {
       webTitle: String,
       url: Option[String] = None,
       canonicalUrl: Option[String] = None,
-      pillar: Option[Pillar] = None,
+      pillar: Option[model.Pillar] = None,
       format: Option[ContentFormat] = None,
       designType: Option[DesignType] = None,
       shouldGoogleIndex: Boolean = true,
@@ -313,7 +313,7 @@ case class MetaData(
     url: String,
     webUrl: String,
     section: Option[SectionId],
-    pillar: Option[Pillar],
+    pillar: Option[model.Pillar],
     format: Option[ContentFormat],
     designType: Option[DesignType],
     webTitle: String,
@@ -600,7 +600,8 @@ object Elements {
     Elements(
       apiContent.elements
         .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
-        .getOrElse(Nil),
+        .getOrElse(Nil)
+        .toSeq,
     )
   }
 }
@@ -744,7 +745,7 @@ object SubMetaLinks {
     val sectionLabels = List(sectionLink, secondaryLink).flatten
     val keywordSubMetaLinks = tags.keywords
       .filterNot(_.isSectionTag)
-      .filterNot(k => sectionLabelName.contains(k.name))
+      .filterNot(k => sectionLink.exists(_.text == k.name))
       .filterNot(t => blogOrSeriesTag.map(_.id).contains(t.id))
       .take(6)
       .map(tag => SubMetaLink(tag.metadata.url, makeKeywordName(tag, tags.keywords), Some(s"keyword: ${tag.id}")))

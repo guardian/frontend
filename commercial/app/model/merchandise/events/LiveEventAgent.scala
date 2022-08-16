@@ -17,7 +17,7 @@ class LiveEventAgent(wsClient: WSClient) extends GuLogging {
 
   private lazy val liveEventAgent = Box[Seq[LiveEvent]](Seq.empty)
 
-  def specificLiveEvent(eventBriteId: String): Option[LiveEvent] = liveEventAgent.get.find(_.eventId == eventBriteId)
+  def specificLiveEvent(eventBriteId: String): Option[LiveEvent] = liveEventAgent.get().find(_.eventId == eventBriteId)
 
   private def updateAvailableMerchandise(
       freshMerchandise: Seq[LiveEvent],

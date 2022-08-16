@@ -32,12 +32,13 @@
     <div class="@RenderClasses(Map(
         ("fc-container__body", true),
         ("fc-container--rolled-up-hide", true),
-        ("fc-show-more--hidden", containerDefinition.addShowMoreClasses),
-        ("js-container--fc-show-more", containerDefinition.addShowMoreClasses),
+        ("fc-show-more--hidden", containerDefinition.addShowMoreClasses()),
+        ("js-container--fc-show-more", containerDefinition.addShowMoreClasses()),
         ("fc-show-more--mobile-only", containerDefinition.hasMobileOnlyShowMore)
     ))"
          data-title="@Localisation(containerDefinition.displayName getOrElse "")"
-         data-id="@containerDefinition.dataId">
+         data-id="@containerDefinition.dataId"
+         id="container-@containerDefinition.dataId">
 
         @for(sliceWithCards <- containerLayout.slices) {
             @slice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId, containerDefinition.isStoryPackage)

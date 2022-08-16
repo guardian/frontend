@@ -34,7 +34,7 @@ trait Related extends ConciergeRepository {
         val relatedContentItems = response.relatedContent.getOrElse(Nil) map { item =>
           RelatedContentItem(item)
         }
-        RelatedContent(relatedContentItems)
+        RelatedContent(relatedContentItems.toSeq)
       }
 
       trails recoverApi404With RelatedContent(Nil)
@@ -57,7 +57,7 @@ trait Related extends ConciergeRepository {
         RelatedContentItem(item)
       }
       RelatedContent(
-        items.sortBy(content => -mostReadAgent.getViewCount(content.content.metadata.id).getOrElse(0)).take(10),
+        items.sortBy(content => -mostReadAgent.getViewCount(content.content.metadata.id).getOrElse(0)).take(10).toSeq,
       )
     }
 

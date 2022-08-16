@@ -127,7 +127,7 @@ GET         /troubleshoot/test                                                  
 # Football admin
 GET         /admin/football                                                                         controllers.admin.SiteController.index
 GET         /admin/football/browse                                                                  controllers.admin.PaBrowserController.browse
-POST        /admin/football/browserRedirect                                                         controllers.admin.PaBrowserController.browserSubstitution
+POST        /admin/football/browserRedirect                                                         controllers.admin.PaBrowserController.browserSubstitution()
 GET         /admin/football/browser/*query                                                          controllers.admin.PaBrowserController.browser(query)
 GET         /admin/football/player                                                                  controllers.admin.PlayerController.playerIndex
 POST        /admin/football/player/card                                                             controllers.admin.PlayerController.redirectToCard

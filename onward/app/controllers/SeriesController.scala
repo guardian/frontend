@@ -83,7 +83,7 @@ class SeriesController(
       response.tag.flatMap { tag =>
         val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
         if (trails.nonEmpty) {
-          Some(Series(seriesId, Tag.make(tag, None), RelatedContent(trails)))
+          Some(Series(seriesId, Tag.make(tag, None), RelatedContent(trails.toSeq)))
         } else { None }
       }
     }

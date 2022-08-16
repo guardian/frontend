@@ -7,9 +7,9 @@ import scala.util.parsing.combinator.RegexParsers
 
 object ParseBlockId extends RegexParsers {
 
-  sealed trait ParseResult { def toOption: Option[String] }
-  case object InvalidFormat extends ParseResult { val toOption = None }
-  case class ParsedBlockId(blockId: String) extends ParseResult { val toOption = Some(blockId) }
+  sealed trait ParseBlockResult { def toOption: Option[String] }
+  case object InvalidFormat extends ParseBlockResult { val toOption = None }
+  case class ParsedBlockId(blockId: String) extends ParseBlockResult { val toOption = Some(blockId) }
 
   private def withParser: Parser[Unit] = "with:" ^^ { _ => () }
   private def block: Parser[Unit] = "block-" ^^ { _ => () }
@@ -18,7 +18,7 @@ object ParseBlockId extends RegexParsers {
 
   // get Id from page parameter
 
-  def fromPageParam(input: String): ParseResult = {
+  def fromPageParam(input: String): ParseBlockResult = {
     def expr: Parser[String] = withParser ~> blockId
 
     parse(expr, input) match {
@@ -29,7 +29,7 @@ object ParseBlockId extends RegexParsers {
 
   // get Id from block id string
 
-  def fromBlockId(input: String): ParseResult = {
+  def fromBlockId(input: String): ParseBlockResult = {
     parse(blockId, input) match {
       case Success(matched, _) => ParsedBlockId(matched)
       case _                   => InvalidFormat

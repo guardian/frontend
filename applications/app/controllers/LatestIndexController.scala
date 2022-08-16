@@ -80,7 +80,7 @@ class LatestIndexController(contentApiClient: ContentApiClient, val controllerCo
           .map(section =>
             IndexPage(
               page = Section.make(section),
-              contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+              contents = item.results.getOrElse(Nil).map(IndexPageItem(_)).toSeq,
               tags = Tags(Nil),
               date = DateTime.now,
               tzOverride = None,
@@ -90,7 +90,7 @@ class LatestIndexController(contentApiClient: ContentApiClient, val controllerCo
             item.tag.map(tag =>
               IndexPage(
                 page = Tag.make(tag),
-                contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+                contents = item.results.getOrElse(Nil).map(IndexPageItem(_)).toSeq,
                 tags = Tags(Nil),
                 date = DateTime.now,
                 tzOverride = None,

@@ -53,36 +53,36 @@ class GuLineItemTest extends AnyFlatSpec with Matchers {
 
   "isSuitableForTopAboveNavSlot" should
     "be true for a line item that meets all the rules" in {
-    lineItem() shouldBe 'suitableForTopAboveNavSlot
+    lineItem() shouldBe Symbol("suitableForTopAboveNavSlot")
   }
 
   it should
     "be true for a line item that has relevant creative targeting" in {
     val creativePlaceholders =
       Seq(GuCreativePlaceholder(leaderboardSize, targeting = Some(defaultTargeting)))
-    lineItem(creativePlaceholders = creativePlaceholders) shouldBe 'suitableForTopAboveNavSlot
+    lineItem(creativePlaceholders = creativePlaceholders) shouldBe Symbol("suitableForTopAboveNavSlot")
   }
 
   it should "be false for a section front targeted indirectly" in {
     val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com"), GuAdUnit.ACTIVE)))
-    lineItem(targeting = target) should not be 'suitableForTopAboveNavSlot
+    lineItem(targeting = target) should not be Symbol("suitableForTopAboveNavSlot")
   }
 
   it should "be false for an untargeted section front" in {
     val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com", "politics"), GuAdUnit.ACTIVE)))
-    lineItem(targeting = target) should not be 'suitableForTopAboveNavSlot
+    lineItem(targeting = target) should not be Symbol("suitableForTopAboveNavSlot")
   }
 
   it should "be false for a front whose section is targeted but front not targeted directly" in {
     val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com", "business"), GuAdUnit.ACTIVE)))
-    lineItem(targeting = target) should not be 'suitableForTopAboveNavSlot
+    lineItem(targeting = target) should not be Symbol("suitableForTopAboveNavSlot")
   }
 
   it should "be false for a CPM campaign" in {
-    lineItem(costType = "CPM") should not be 'suitableForTopAboveNavSlot
+    lineItem(costType = "CPM") should not be Symbol("suitableForTopAboveNavSlot")
   }
 
   it should "be false for a completed campaign" in {
-    lineItem(endTime = Some(now.minusDays(1))) should not be 'suitableForTopAboveNavSlot
+    lineItem(endTime = Some(now.minusDays(1))) should not be Symbol("suitableForTopAboveNavSlot")
   }
 }

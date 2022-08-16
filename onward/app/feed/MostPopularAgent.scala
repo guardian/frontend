@@ -103,7 +103,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
 
     for {
       mostViewedResponse <- futureMostViewed
-      mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
+      mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_)).toSeq
       newMap <- relatedContentsBox.alter(_ + (edition.id -> mostViewed))
     } yield newMap
   }

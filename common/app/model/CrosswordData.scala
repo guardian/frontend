@@ -18,7 +18,7 @@ object Entry {
     //Adding space between number and direction
     //as well as after comma
     //ex: "2,24across,16" => "2, 24 across, 16"
-    val clues: Seq[Option[String]] = numbers.split(',').map { singleClue =>
+    val clues: Seq[Option[String]] = numbers.split(',').toIndexedSeq.map { singleClue =>
       // Acceptable clue is a number followed by an optional direction
       "([0-9]+)([a-z]+)?".r.findFirstMatchIn(singleClue).map { m =>
         val number: String = m.group(1)
@@ -43,9 +43,9 @@ object Entry {
       entry.clue.getOrElse(""),
       entry.direction.getOrElse(""),
       entry.length.getOrElse(0),
-      entry.group.getOrElse(Seq()),
+      entry.group.getOrElse(Seq()).toSeq,
       entry.position.map(position => CrosswordPosition(position.x, position.y)).getOrElse(CrosswordPosition(0, 0)),
-      entry.separatorLocations.map(_.toMap),
+      entry.separatorLocations.map(_.toMap.map(entry => entry._1 -> entry._2.toSeq)),
       entry.solution,
     )
 }
@@ -156,7 +156,7 @@ object CrosswordData {
       creator = for (creator <- crossword.creator) yield CrosswordCreator(creator.name, creator.webUrl),
       crossword.date.toJoda,
       content.webPublicationDate.fold(crossword.date.toJoda)(_.toJoda),
-      sortedNewEntries,
+      sortedNewEntries.toSeq,
       crossword.solutionAvailable,
       crossword.dateSolutionAvailable.map(_.toJoda),
       CrosswordDimensions(crossword.dimensions.cols, crossword.dimensions.rows),

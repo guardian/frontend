@@ -11,9 +11,9 @@ const toggleText = {
     displayed: 'Hide',
 };
 
-const btnTmpl = ({ text, dataLink }) => `
-    <button class="fc-container__toggle" data-link-name="${dataLink}">
-        <span class="fc-container__toggle__text">${text}</span>
+const btnTmpl = ({ text, dataLink, id }) => `
+    <button class="fc-container__toggle" data-link-name="${dataLink}" aria-expanded="true" aria-controls="container-${id}" aria-labelledby="container-header-${id} container-state-${id}">
+        <span class="fc-container__toggle__text" id="container-state-${id}">${text}</span>
     </button>
 `;
 
@@ -26,6 +26,7 @@ export class ContainerToggle {
                 btnTmpl({
                     text: 'Hide',
                     dataLink: 'Show',
+                    id: this.$container.attr('data-id'),
                 })
             )
         );
@@ -64,6 +65,10 @@ export class ContainerToggle {
             this.$button.attr(
                 'data-link-name',
                 toggleText[this.state === 'displayed' ? 'hidden' : 'displayed']
+            );
+            this.$button.attr(
+                'aria-expanded',
+                this.state === 'displayed' ? 'true' : 'false'
             );
             this.buttonText().text(toggleText[this.state]);
         });

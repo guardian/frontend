@@ -113,13 +113,11 @@ class Advert {
 	) {
 		this.id = adSlotNode.id;
 		this.node = adSlotNode;
-
 		this.sizes = this.generateSizeMapping(additionalSizeMapping);
 
 		const slotDefinition = defineSlot(adSlotNode, this.sizes);
 
 		this.slot = slotDefinition.slot;
-
 		this.whenSlotReady = slotDefinition.slotReady;
 
 		this.whenLoaded = new Promise((resolve: Resolver) => {
@@ -228,7 +226,10 @@ class Advert {
 
 		this.sizes = sizeMapping;
 
-		this.slot.defineSizeMapping(buildGoogletagSizeMapping(sizeMapping));
+		const googletagSizeMapping = buildGoogletagSizeMapping(sizeMapping);
+		if (googletagSizeMapping) {
+			this.slot.defineSizeMapping(googletagSizeMapping);
+		}
 	}
 }
 

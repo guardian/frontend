@@ -20,10 +20,6 @@
     margin-bottom: $gs-baseline * 2;
 }
 
-.ad-slot--dark {
-    background-color: lighten($brightness-7,  2.5%);
-}
-
 .ad-slot--right,
 .ad-slot--comments {
     position: sticky;
@@ -271,6 +267,10 @@
     }
 }
 
+.ad-slot--dark {
+    background-color: lighten($brightness-7,  2.5%);
+}
+
 .ad-slot--container-inline:not(.ad-slot--fluid):not(.ad-slot--gc):not(.ad-slot--mostpop) {
     .ad-slot__content {
         margin: 0 auto;
@@ -457,6 +457,11 @@
     }
 }
 
+.ad-slot--merchandising,
+.ad-slot--merchandising-high {
+    min-height: 250px;
+}
+
 // See implementation on DCR
 // mark: dca5c7dd-dda4-4922-9317-a55a3789fe4c
 .ad-slot--carrot {
@@ -611,4 +616,10 @@
  */
 .bz-custom-container ~ #bannerandheader > .top-banner-ad-container {
     display: none;
+}
+
+.podcast__secondary .ad-slot--right {
+    @include mq($until: desktop) {
+        display: none;
+    }
 }

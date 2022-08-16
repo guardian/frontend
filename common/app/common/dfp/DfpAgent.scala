@@ -24,15 +24,15 @@ object DfpAgent
   private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
   private lazy val nonRefreshableLineItemsAgent = Box[Seq[Long]](Nil)
 
-  protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get ()
+  protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent.get()
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] =
-    targetedHighMerchandisingLineItemsAgent get ()
-  protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get ()
-  protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent get ()
+    targetedHighMerchandisingLineItemsAgent.get()
+  protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
+  protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent.get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
-    takeoverWithEmptyMPUsAgent get ()
+    takeoverWithEmptyMPUsAgent.get()
 
-  def nonRefreshableLineItemIds(): Seq[Long] = nonRefreshableLineItemsAgent get ()
+  def nonRefreshableLineItemIds(): Seq[Long] = nonRefreshableLineItemsAgent.get()
 
   private def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 

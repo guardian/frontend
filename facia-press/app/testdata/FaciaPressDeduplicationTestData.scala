@@ -118,4 +118,22 @@ trait FaciaPressDeduplicationTestData {
     ),
   )
 
+  // -----------------------------------------------------
+  // Comment for FaciaPressDeduplicationTest:
+  // collection4 is used to test that backfills are deduped against curated
+  // from the same collection, as well as previous collections.
+  // -----------------------------------------------------
+  val collection4 = collectionFromCuratedAndBackfilled(
+    List(
+      "link99",
+      "link98",
+      "link97",
+    ).map(id => pressedContentFromId(id)),
+    List(
+      "link97",
+      "link96",
+      "link95",
+    ).map(id => pressedContentFromId(id)),
+  )
+
 }

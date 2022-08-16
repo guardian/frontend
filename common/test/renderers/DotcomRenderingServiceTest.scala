@@ -28,7 +28,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 
   val dotcomRenderingService = DotcomRenderingService()
   val articleUrl = "politics/2021/oct/07/coronavirus-report-warned-of-impact-on-uk-four-years-before-pandemic"
-  val post = PrivateMethod[Future[Result]]('post)
+  val post = PrivateMethod[Future[Result]](Symbol("post"))
   val request = TestRequest()
   private val wsMock = mock[WSClient]
   private val wsResponseMock = mock[WSResponse]
