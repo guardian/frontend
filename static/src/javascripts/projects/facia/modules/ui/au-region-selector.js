@@ -33,7 +33,7 @@ export const init = () => {
 					// Fastly expects the value of 'Other' - if a different, non-valid value is provided,
 					// fastly will ignore the cookie & use the users locations
 					const value =
-						attrValue === 'AU-other' ? 'Other' : attrValue;
+						attrValue === 'AU-hide-thrasher' ? 'Other' : attrValue;
 					setCookie({ name: 'GU_territory', value });
 					location.reload();
 				}
