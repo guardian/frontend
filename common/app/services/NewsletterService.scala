@@ -6,6 +6,7 @@ import model.{ArticlePage, PageWithStoryPackage, LiveBlogPage, Tag}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.json.Json
+import com.gu.contentapi.client.utils.format.NewsletterSignupDesign
 
 case class NewsletterData(
     identityName: String,
@@ -27,7 +28,6 @@ object NewsletterData {
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   private val EMBED_TAG_PREFIX = "campaign/email/"
   private val EMBED_TAG_TYPE = "Campaign"
-  private val SIGN_UP_PAGE_TAG = "info/newsletter-sign-up"
 
   private def findNewsletterTag(tags: List[Tag]) = {
     tags.find(t => t.properties.tagType.equals(EMBED_TAG_TYPE) && t.properties.id.startsWith(EMBED_TAG_PREFIX))
@@ -59,7 +59,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   }
 
   private def isSignUpPage(articlePage: ArticlePage): Boolean = {
-    articlePage.article.tags.tags.exists(t => t.properties.id.equals(SIGN_UP_PAGE_TAG))
+    articlePage.article.content.metadata.format.nonEmpty && articlePage.article.content.metadata.format.get.design == NewsletterSignupDesign
   }
 
   private def convertNewsletterResponseToData(response: NewsletterResponse): NewsletterData = {
