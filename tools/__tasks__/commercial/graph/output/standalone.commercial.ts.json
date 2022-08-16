@@ -97,8 +97,6 @@
   "../projects/commercial/modules/sticky-inlines.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
@@ -653,7 +651,7 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts",
+  "../projects/common/modules/experiments/tests/deeply-read-article-footer.js",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -679,10 +677,7 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
- "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
+ "../projects/common/modules/experiments/tests/deeply-read-article-footer.js": [],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
