@@ -51,15 +51,19 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     }
   }
 
-  private def getNewsletterResponseFromSignUpPage(articleId:String): Option[NewsletterResponse] = {
+  private def getNewsletterResponseFromSignUpPage(articleId: String): Option[NewsletterResponse] = {
     newsletterSignupAgent.getNewsletters() match {
       case Left(_) => None
-      case Right(list) => list.find(response => response.signupPage.nonEmpty && response.signupPage.get == "/"+articleId)
+      case Right(list) =>
+        list.find(response => response.signupPage.nonEmpty && response.signupPage.get == "/" + articleId)
     }
   }
 
   private def isSignUpPage(articlePage: ArticlePage): Boolean = {
-    articlePage.article.content.metadata.format.nonEmpty && articlePage.article.content.metadata.format.get.design == NewsletterSignupDesign
+    articlePage.article.content.metadata.format match {
+      case None         => false
+      case Some(format) => format.design == NewsletterSignupDesign
+    }
   }
 
   private def convertNewsletterResponseToData(response: NewsletterResponse): NewsletterData = {
