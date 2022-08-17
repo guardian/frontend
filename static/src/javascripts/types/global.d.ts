@@ -240,6 +240,20 @@ interface IasPET {
 	pubId?: string;
 }
 
+interface OptOutInitializeOptions {
+	publisher: number;
+	onlyNoConsent: 0 | 1;
+	consentTimeOutMS?: 5000;
+	noLogging?: 0 | 1;
+}
+
+interface OptOutDefineSlotOptions {
+	adSlot: string;
+	targetId: string;
+	filledCallback?: () => void;
+	emptyCallback?: () => void;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -256,7 +270,12 @@ interface Window {
 			dfpEnv?: DfpEnv;
 		};
 	};
-
+	ootag: {
+		queue: Array<() => void>;
+		initializeOo: (o: OptOutInitializeOptions) => void;
+		addParameter: (key: string, value: string) => void;
+		defineSlot: (o: OptOutDefineSlotOptions) => void;
+	};
 	confiant?: Confiant;
 	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];
