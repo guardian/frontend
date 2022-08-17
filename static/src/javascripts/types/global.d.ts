@@ -177,7 +177,7 @@ interface Confiant extends Record<string, unknown> {
 interface A9AdUnitInterface {
 	slotID: string;
 	slotName?: string;
-	sizes: HeaderBiddingSize[];
+	sizes: number[][];
 }
 
 type ApstagInitConfig = {
