@@ -17,7 +17,7 @@ class A9AdUnit implements A9AdUnitInterface {
 	constructor(advert: Advert, slot: HeaderBiddingSlot) {
 		this.slotID = advert.id;
 		this.slotName = config.get('page.adUnit');
-		this.sizes = slot.sizes.map((size) => size.toArray());
+		this.sizes = slot.sizes.map((size) => Array.from(size));
 	}
 }
 
