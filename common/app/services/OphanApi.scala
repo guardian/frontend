@@ -1,11 +1,12 @@
 package services
 
+import common.editions.{Au, Uk, Us, International}
+
 import java.net.URLEncoder
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-
-import common.{BadConfigurationException, GuLogging}
+import common.{BadConfigurationException, Edition, GuLogging}
 import conf.Configuration._
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
@@ -13,9 +14,16 @@ import play.api.libs.ws.WSClient
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.DurationInt
 
+// Base on this response: https://dashboard.ophan.co.uk/api/mostread
 case class OphanMostReadItem(url: String, count: Int)
 object OphanMostReadItem {
   implicit val jsonReads = Json.reads[OphanMostReadItem]
+}
+
+// Based on this response: https://dashboard.ophan.co.uk/api/deeplyread
+case class OphanDeeplyReadItem(path: String, benchmarkedAttentionTime: Int)
+object OphanDeeplyReadItem {
+  implicit val jsonReads = Json.reads[OphanDeeplyReadItem]
 }
 
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
@@ -24,6 +32,14 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
   private val mostViewedDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
   private def ensureHostSecure(host: String): String = host.replace("http:", "https:")
+
+  private def countryFromEdition(edition: Edition) =
+    edition match {
+      case Au            => "au"
+      case Uk            => "gb"
+      case Us            => "us"
+      case International => "international"
+    }
 
   // getBody is the general function that queries Ophan
   private def getBody(path: String)(params: Map[String, String] = Map.empty): Future[JsValue] = {
@@ -85,6 +101,9 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
 
   def getMostViewedAudio(hours: Int, count: Int): Future[Seq[OphanMostReadItem]] =
     getMostRead(Map("content-type" -> "audio", "hours" -> hours.toString, "count" -> count.toString))
+
+  def getDeeplyRead(edition: Edition): Future[Seq[OphanDeeplyReadItem]] =
+    getBody("deeplyread")(Map("country" -> countryFromEdition(edition))).map(_.as[Seq[OphanDeeplyReadItem]])
 
   def getAdsRenderTime(params: Map[String, Seq[String]]): Future[JsValue] = {
     val validatedParams = for {
