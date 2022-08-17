@@ -19,6 +19,10 @@ import { initFixedSlots } from 'commercial/modules/consentless/init-fixed-slots'
 import { initConsentless } from 'commercial/modules/consentless/prepare-ootag';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { consentlessAds } from 'common/modules/experiments/tests/consentlessAds';
+import {
+	AdFreeCookieReasons,
+	maybeUnsetAdFreeCookie,
+} from 'lib/manage-ad-free-cookie';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
@@ -205,6 +209,7 @@ const bootCommercial = async (): Promise<void> => {
 };
 
 const bootConsentless = async (): Promise<void> => {
+	maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
 	await Promise.all([
 		initConsentless(),
 		initFixedSlots(),
