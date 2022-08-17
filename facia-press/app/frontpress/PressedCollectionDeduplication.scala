@@ -1,5 +1,7 @@
 package frontpress
 
+import model.pressed.PressedContent
+
 object PressedCollectionDeduplication {
 
   /*
@@ -38,6 +40,10 @@ object PressedCollectionDeduplication {
     !collectionIsMostPopular(collectionV: PressedCollectionVisibility)
   }
 
+  def getHeaderURLsFromTrailsList(pCVs: List[PressedContent]): Seq[String] = {
+    pCVs.map(pressedContent => pressedContent.header.url)
+  }
+
   def getHeaderURLsFromCuratedAndBackfilledAtDepth(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
     pCVs.flatMap { collection =>
       (collection.pressedCollection.curated ++ collection.pressedCollection.backfill)
@@ -50,10 +56,18 @@ object PressedCollectionDeduplication {
       accum: Seq[PressedCollectionVisibility],
       collectionV: PressedCollectionVisibility,
   ): PressedCollectionVisibility = {
-    // Essentially deduplicate the backfill of collectionV using header values values from accum's elements curated and backfill
-    val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, 10)
+    // `accum` accumulates the deduplicated collections that have been processed so far from this batch.
+    // The idea is that if a card has already appeared in a collection 'higher up on the page', then it should be
+    // removed from later collections, unless it was curated for the later collection (see comments at top of page).
+    // Because it's possible for there to be overlap *within* a container between the curated and backfill
+    // cards, we also add the current collection's curated cards to the list of URLs to deduplicate the current
+    // container's backfill cards against.
+    val headerURLsToDeduplicateAgainst: Seq[String] =
+      getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, 10) ++ getHeaderURLsFromTrailsList(
+        collectionV.pressedCollection.curated,
+      )
     val newBackfill = collectionV.pressedCollection.backfill.filter(pressedContent =>
-      !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url),
+      !headerURLsToDeduplicateAgainst.contains(pressedContent.header.url),
     )
     collectionV.copy(
       pressedCollection = collectionV.pressedCollection.copy(

@@ -217,7 +217,7 @@ class MostPopularController(
     contentApiClient.getResponse(capiItemWithDate).map { response =>
       val heading = response.section.map(s => "in " + s.webTitle).getOrElse("Across The&nbsp;Guardian")
       val popular = response.mostViewed.getOrElse(Nil) take 10 map (RelatedContentItem(_))
-      if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent)))
+      if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent).toSeq))
     }
   }
 }

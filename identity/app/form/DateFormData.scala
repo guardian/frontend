@@ -10,7 +10,7 @@ trait DateMapping {
 
   def dateMapping(implicit messagesProvider: MessagesProvider): Mapping[DateFormData] =
     mapping(
-      "year" -> optional(number(min = 1800, max = DateTime.now.getYear)),
+      "year" -> optional(number(min = 1800, max = DateTime.now().getYear)),
       "month" -> optional(number(min = 1, max = 12)),
       "day" -> optional(number(min = 1, max = 31)),
     )(DateFormData.apply)(DateFormData.unapply) verifying (

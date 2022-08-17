@@ -29,11 +29,10 @@ const isBreakpoint = (
 /**
  * Builds a googletag size mapping based on the breakpoints and ad sizes from
  * the size mapping in commercial-core and the viewport sizes from source-foundations.
- *
  */
 const buildGoogletagSizeMapping = (
 	sizeMapping: SizeMapping,
-): googletag.SizeMappingArray => {
+): googletag.SizeMappingArray | null => {
 	const mapping = window.googletag.sizeMapping();
 
 	Object.entries(sizeMapping).forEach(([breakpoint, sizes]) => {
@@ -76,12 +75,12 @@ const isSizeInArray = (
  * @returns all the sizes that were present in the size mapping
  */
 const collectSizes = (
-	sizeMapping: googletag.SizeMappingArray,
+	sizeMapping: googletag.SizeMappingArray | null,
 ): googletag.SingleSize[] => {
 	const sizes: googletag.SingleSize[] = [];
 
 	// as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-	sizeMapping.forEach(([, sizesForBreakpoint]) => {
+	sizeMapping?.forEach(([, sizesForBreakpoint]) => {
 		if (isMultiSize(sizesForBreakpoint)) {
 			sizesForBreakpoint.forEach((size) => {
 				if (!isSizeInArray(size, sizes)) {
@@ -104,6 +103,7 @@ const allowSafeFrameToExpand = (slot: googletag.Slot) => {
 		allowPushExpansion: true,
 		sandbox: true,
 	});
+
 	return slot;
 };
 
@@ -112,11 +112,15 @@ const defineSlot = (
 	sizeMapping: SizeMapping,
 ): { slot: googletag.Slot; slotReady: Promise<void> } => {
 	const slotTarget = adSlotNode.getAttribute('data-name') as SlotName;
+	const id = adSlotNode.id;
 
 	const googletagSizeMapping = buildGoogletagSizeMapping(sizeMapping);
+	if (!googletagSizeMapping) {
+		throw new Error(`Could not define slot for ${id}`);
+	}
+
 	const sizes = collectSizes(googletagSizeMapping);
 
-	const id = adSlotNode.id;
 	let slot: googletag.Slot | null;
 	let slotReady = Promise.resolve();
 
@@ -135,14 +139,14 @@ const defineSlot = (
 	if (!slot) {
 		throw new Error(`Could not define slot for ${id}`);
 	}
+
 	/*
         For each ad slot defined, we request information from IAS, based
         on slot name, ad unit and sizes. We then add this targeting to the
         slot prior to requesting it from DFP.
 
-        We race the request to IAS with a Timeout of 2 seconds. If the
-        timeout resolves before the request to IAS then the slot is defined
-        without the additional IAS data.
+        We create a timer, such that if the timeout resolves before the request
+		to IAS returns, then the slot is defined without the additional IAS data.
 
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
@@ -231,6 +235,7 @@ const defineSlot = (
 
 		slotReady = Promise.race([iasTimeout(), iasDataPromise]);
 	}
+
 	const isbn = window.guardian.config.page.isbn;
 
 	if (slotTarget === 'im' && isbn) {

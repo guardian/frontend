@@ -88,7 +88,7 @@ case class TextMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
 
   def receive(request: ReceiveMessageRequest): Future[Seq[Message[String]]] = {
     receiveMessages(request) map { messages =>
-      messages map { message =>
+      messages.toSeq map { message =>
         Message(
           MessageId(message.getMessageId),
           message.getBody,
@@ -121,7 +121,7 @@ case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
 
   def receive(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Seq[Message[A]]] = {
     receiveMessages(request) map { messages =>
-      messages map { message =>
+      messages.toSeq map { message =>
         Message(
           MessageId(message.getMessageId),
           Json.fromJson[A](Json.parse(message.getBody)) getOrElse {

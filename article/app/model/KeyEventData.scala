@@ -22,7 +22,7 @@ object KeyEventData {
 
   def apply(blocks: Seq[BodyBlock], timezone: DateTimeZone): Seq[KeyEventData] = {
     val TimelineMaxEntries = 7
-    val timelineBlocks = blocks.sortBy(_.publishedCreatedTimestamp).reverse.take(TimelineMaxEntries)
+    val timelineBlocks = blocks.sortBy(_.publishedCreatedTimestamp()).reverse.take(TimelineMaxEntries)
     timelineBlocks.map { bodyBlock =>
       /*
     Composer should set a default title of `Summary` on summary blocks but instead it allows title to be empty (None).

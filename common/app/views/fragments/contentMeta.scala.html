@@ -54,7 +54,7 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier)
+                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier())
             </div>
                 <div class="meta__numbers">
                     <div class="u-h meta__number js-sharecount">

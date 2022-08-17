@@ -34,7 +34,7 @@ object BookAgent extends GuLogging {
       isbn: String,
   )(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] = {
 
-    val bookJson: Option[JsValue] = cache.get.get(isbn)
+    val bookJson: Option[JsValue] = cache.get().get(isbn)
 
     if (bookJson.isEmpty) {
       magentoService.findByIsbn(isbn) onComplete {

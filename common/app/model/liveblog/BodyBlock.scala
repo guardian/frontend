@@ -20,7 +20,7 @@ object Blocks {
     }
 
     val mainBlock: Option[BodyBlock] = blocks.main.map(BodyBlock.make)
-    val bodyBlocks: Seq[BodyBlock] = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
+    val bodyBlocks: Seq[BodyBlock] = orderBlocks(blocks.body.toSeq.flatMap(blocks => BodyBlock.make(blocks.toSeq)))
     val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks
       .map { map =>
         map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
@@ -63,8 +63,8 @@ object BodyBlock {
       bodyBlock.firstPublishedDate.map(_.toJoda),
       bodyBlock.publishedDate.map(_.toJoda),
       bodyBlock.lastModifiedDate.map(_.toJoda),
-      bodyBlock.contributors,
-      bodyBlock.elements.flatMap(BlockElement.make),
+      bodyBlock.contributors.toSeq,
+      bodyBlock.elements.flatMap(BlockElement.make).toSeq,
     )
 
   sealed trait EventType

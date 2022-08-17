@@ -45,11 +45,11 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         content <- response.content
         crossword <- content.crossword
       } yield f(crossword, content)
-      maybeCrossword getOrElse noResults
+      maybeCrossword getOrElse noResults()
     } recover {
       case t: Throwable =>
         log.error(s"Error retrieving $crosswordType crossword id $id from API", t)
-        noResults
+        noResults()
     }
   }
 
@@ -166,62 +166,66 @@ class CrosswordSearchController(
 
   def search(): Action[AnyContent] =
     Action.async { implicit request =>
-      searchForm.bindFromRequest.fold(
-        empty =>
-          Future.successful(
-            Cached(7.days)(
-              RevalidatableResult.Ok(
-                CrosswordHtmlPage.html(new CrosswordSearchPageWithResults),
+      searchForm
+        .bindFromRequest()
+        .fold(
+          empty =>
+            Future.successful(
+              Cached(7.days)(
+                RevalidatableResult.Ok(
+                  CrosswordHtmlPage.html(new CrosswordSearchPageWithResults),
+                ),
               ),
             ),
-          ),
-        params => {
-          val withoutSetter = contentApiClient
-            .item(s"crosswords/series/${params.crosswordType}")
-            .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
-            .stringParam("to-date", params.toDate.toString("yyyy-MM-dd"))
-            .pageSize(50)
+          params => {
+            val withoutSetter = contentApiClient
+              .item(s"crosswords/series/${params.crosswordType}")
+              .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
+              .stringParam("to-date", params.toDate.toString("yyyy-MM-dd"))
+              .pageSize(50)
 
-          val maybeSetter = params.setter.fold(withoutSetter) { setter =>
-            withoutSetter.stringParam("tag", s"profile/${setter.toLowerCase}")
-          }
+            val maybeSetter = params.setter.fold(withoutSetter) { setter =>
+              withoutSetter.stringParam("tag", s"profile/${setter.toLowerCase}")
+            }
 
-          contentApiClient.getResponse(maybeSetter.showFields("all")).map {
-            response =>
-              response.results.getOrElse(Seq.empty).toList match {
-                case Nil => noResults
+            contentApiClient.getResponse(maybeSetter.showFields("all")).map {
+              response =>
+                response.results.getOrElse(Seq.empty).toList match {
+                  case Nil => noResults()
 
-                case results =>
-                  val section = Section.make(
-                    ApiSection(
-                      "crosswords",
-                      "Crosswords search results",
-                      "http://www.theguardian.com/crosswords/search",
-                      "",
-                      Nil,
-                    ),
-                  )
-                  val page = IndexPage(
-                    page = section,
-                    contents = results.map(IndexPageItem(_)),
-                    tags = Tags(Nil),
-                    date = DateTime.now,
-                    tzOverride = None,
-                  )
+                  case results =>
+                    val section = Section.make(
+                      ApiSection(
+                        "crosswords",
+                        "Crosswords search results",
+                        "http://www.theguardian.com/crosswords/search",
+                        "",
+                        Nil,
+                      ),
+                    )
+                    val page = IndexPage(
+                      page = section,
+                      contents = results.map(IndexPageItem(_)),
+                      tags = Tags(Nil),
+                      date = DateTime.now,
+                      tzOverride = None,
+                    )
 
-                  Cached(15.minutes)(RevalidatableResult.Ok(IndexHtmlPage.html(page)))
-              }
-          }
-        },
-      )
+                    Cached(15.minutes)(RevalidatableResult.Ok(IndexHtmlPage.html(page)))
+                }
+            }
+          },
+        )
     }
 
   def lookup(): Action[AnyContent] =
     Action.async { implicit request =>
-      lookupForm.bindFromRequest.fold(
-        formWithErrors => Future.successful(noResults),
-        lookUpData => renderCrosswordPage(lookUpData.crosswordType, lookUpData.id),
-      )
+      lookupForm
+        .bindFromRequest()
+        .fold(
+          formWithErrors => Future.successful(noResults()),
+          lookUpData => renderCrosswordPage(lookUpData.crosswordType, lookUpData.id),
+        )
     }
 
   case class CrosswordSearch(crosswordType: String, month: Int, year: Int, setter: Option[String]) {

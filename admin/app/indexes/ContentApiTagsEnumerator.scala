@@ -18,7 +18,7 @@ class ContentApiTagsEnumerator(contentApiClient: ContentApiClient)(implicit exec
   def enumerateTagType(tagType: String): Future[Seq[Tag]] = {
     val tagQuery = contentApiClient.tags.tagType(tagType).pageSize(MaxPageSize)
     contentApiClient.thriftClient.paginateAccum(tagQuery)(
-      { r: TagsResponse => r.results.filter(isSuitableTag) },
+      { r: TagsResponse => r.results.filter(isSuitableTag).toSeq },
       { (a: Seq[Tag], b: Seq[Tag]) => a ++ b },
     )
   }

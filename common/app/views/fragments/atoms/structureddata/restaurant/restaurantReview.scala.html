@@ -27,7 +27,7 @@
     "priceRange": "£££",
     @for(address <- entity.address) { @fragments.atoms.structureddata.restaurant.address(address) }
     @for(geoLocation <- entity.geolocation) { "geo" : @fragments.atoms.structureddata.restaurant.geo(geoLocation), }
-    @review.data.images.flatMap(ReviewAtom.getLargestImageUrl).map { img => "image": "@img" }
+    @review.data.images.map(_.toSeq).flatMap(ReviewAtom.getLargestImageUrl).map { img => "image": "@img" }
   },
   "reviewRating": {
     "@@type": "Rating",

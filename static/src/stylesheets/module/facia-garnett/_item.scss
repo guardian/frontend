@@ -569,12 +569,6 @@ $block-height: 58px;
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%,  rgba(0, 0, 0, .8) 100%);
         color: $brightness-100;
         padding: 60px 8px 8px;
-        
-        &:not(.fc-item__captioned-image-mobile-support) {
-            @include mq($until: tablet) {
-                display: none;
-            }
-        }
 
         .fc-item--list-media-mobile & {
             @include mq($until: tablet) {
@@ -595,22 +589,7 @@ $block-height: 58px;
 }
 
 .fc-item__slideshow {
-    &:not(.fc-item__slideshow-mobile-support) figure {
-        @include mq($until: tablet) {
-            &:nth-child(1n+2) {
-                display: none;
-            }
-        }
-
-        @include mq(tablet) {
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-            animation-direction: normal;
-            opacity: 0;
-        }
-    }
-
-    &.fc-item__slideshow-mobile-support figure {
+    figure {
         animation-timing-function: linear;
         animation-iteration-count: infinite;
         animation-direction: normal;
@@ -649,12 +628,6 @@ $block-height: 58px;
         }
     }
     .fc-item__slideshow--#{$i} {
-        @include mq(tablet) {
-            @include fc-slideshow-movement($totalLoopTime, $i)
-        }
-
-        &.fc-item__slideshow-mobile-support {
-            @include fc-slideshow-movement($totalLoopTime, $i)
-        }
+        @include fc-slideshow-movement($totalLoopTime, $i)
     }
 }

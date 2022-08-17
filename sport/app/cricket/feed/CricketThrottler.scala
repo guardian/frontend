@@ -35,7 +35,7 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
     .run()
 
   override def receive: PartialFunction[Any, Unit] = {
-    case toBeThrottled: CricketThrottledTask[Any] => throttler ! TaskWithSender(sender, toBeThrottled.task)
+    case toBeThrottled: CricketThrottledTask[Any] => throttler ! TaskWithSender(sender(), toBeThrottled.task)
     case throttled: TaskWithSender[Any]           => throttled.task() pipeTo throttled.sender
   }
 }

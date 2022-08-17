@@ -1,11 +1,9 @@
 import type { ABTest } from '@guardian/ab-core';
 import { getUrlVars } from 'lib/url';
 import { isInABTestSynchronous } from '../experiments/ab';
-import { multiStickyRightAds } from '../experiments/tests/multi-sticky-right-ads';
 
 const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
-	multiStickyRightAds,
 ];
 
 const serverSideTests: ServerSideABTest[] = [];

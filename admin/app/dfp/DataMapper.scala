@@ -7,9 +7,9 @@ import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
 class DataMapper(
     adUnitService: AdUnitService,
-    placementService: PlacementService,
-    customTargetingService: CustomTargetingService,
-    customFieldService: CustomFieldService,
+    placementService: dfp.PlacementService,
+    customTargetingService: dfp.CustomTargetingService,
+    customFieldService: dfp.CustomFieldService,
 ) {
 
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
@@ -46,7 +46,7 @@ class DataMapper(
           CustomTarget(
             customTargetingService.targetingKey(session)(criterion.getKeyId),
             criterion.getOperator.getValue,
-            criterion.getValueIds map (valueId =>
+            criterion.getValueIds.toSeq map (valueId =>
               customTargetingService.targetingValue(session)(criterion.getKeyId, valueId),
             ),
           )
@@ -54,7 +54,7 @@ class DataMapper(
         val targets = criteria.getChildren collect {
           case criterion: CustomCriteria => criterion
         } map toCustomTarget
-        CustomTargetSet(criteria.getLogicalOperator.getValue, targets)
+        CustomTargetSet(criteria.getLogicalOperator.getValue, targets.toIndexedSeq)
       }
 
       criteriaSets.getChildren
@@ -105,7 +105,7 @@ class DataMapper(
       GuCreativePlaceholder(AdSize(size.getWidth, size.getHeight), targeting)
     }
 
-    placeholders sortBy { placeholder =>
+    placeholders.toIndexedSeq sortBy { placeholder =>
       val size = placeholder.size
       (size.width, size.height)
     }

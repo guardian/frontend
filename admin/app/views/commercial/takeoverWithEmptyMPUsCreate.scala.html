@@ -19,17 +19,17 @@
             }
             </ul>
         }
-        @inputText(takeoverForm("url"), '_label -> "Paste URL here:", 'size -> 100, '_help -> "")
+        @inputText(takeoverForm("url"), Symbol("_label")-> "Paste URL here:", Symbol("size") -> 100, Symbol("_help") -> "")
         @select(
             takeoverForm("editions"),
             options = for(e <- Edition.all) yield { e.id -> e.displayName },
-            'multiple -> true,
-            '_label -> "Editions this applies to (one or multiple):"
+            Symbol("multiple") -> true,
+            Symbol("_label") -> "Editions this applies to (one or multiple):"
         )
-        @input(takeoverForm("startTime"), '_label -> "Takeover starts (UTC):", '_help -> "") { (id, name, value, args) =>
+        @input(takeoverForm("startTime"), Symbol("_label") -> "Takeover starts (UTC):", Symbol("_help") -> "") { (id, name, value, args) =>
             <input type="datetime-local" name="@name" id="@id" @toHtmlArgs(args)>
         }
-        @input(takeoverForm("endTime"), '_label -> "Takeover ends (UTC):", '_help -> "") { (id, name, value, args) =>
+        @input(takeoverForm("endTime"), Symbol("_label") -> "Takeover ends (UTC):", Symbol("_help") -> "") { (id, name, value, args) =>
             <input type="datetime-local" name="@name" id="@id" @toHtmlArgs(args)>
         }
         <input class="btn btn-large btn-success" type="submit" value="Save" />

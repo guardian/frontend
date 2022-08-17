@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition, MerchandisingMinHeight)
+    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -36,15 +36,6 @@ object LiveBlogMainMediaPosition
       owners = Seq(Owner.withGithub("abeddow91")),
       sellByDate = LocalDate.of(2022, 10, 7),
       participationGroup = Perc50,
-    )
-
-object MerchandisingMinHeight
-    extends Experiment(
-      name = "merchandising-min-height",
-      description = "Test whether there are negative effects of setting a min-height on both merchandising slots",
-      owners = Seq(Owner.withGithub("domlander")),
-      sellByDate = LocalDate.of(2022, 9, 2),
-      participationGroup = Perc0C,
     )
 
 object DCROnwardsData

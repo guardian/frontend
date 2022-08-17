@@ -54,7 +54,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         checkModuleSupport(),
         inlineJSBlocking(),
       ),
-      bodyTag(classes = defaultBodyClasses)(
+      bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),

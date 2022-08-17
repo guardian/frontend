@@ -28,9 +28,9 @@
     "name": "@entity.title",
     "sameAs": "http://www.imdb.com/title/@entity.imdbId",
     @review.atom.contentChangeDetails.created.map { created => "dateCreated": "@{new DateTime(created.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
-    "director" : @Html(people(entity.directors.map(_.fullName))),
-    "actor" : @Html(people(entity.actors.map(_.fullName))),
-    @review.data.images.flatMap(ReviewAtom.getLargestImageUrl).map { img => "image": "@img" }
+    "director" : @Html(people(entity.directors.toSeq.map(_.fullName))),
+    "actor" : @Html(people(entity.actors.toSeq.map(_.fullName))),
+    @review.data.images.map(_.toSeq).flatMap(ReviewAtom.getLargestImageUrl).map { img => "image": "@img" }
   },
   "reviewRating": {
     "@@type": "Rating",

@@ -17,7 +17,7 @@
     <div class="content__header tonal__header">
         <div class="u-cf">
             @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
-                @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                @fragments.contentAgeNotice(ageNotice(), ariaHidden = true)
             }
 
             <h1 class="content__headline @if(article.content.hasTonalHeaderByline) {content__headline--no-margin-bottom}" articleprop="headline" @langAttributes(article.content)>
@@ -25,7 +25,7 @@
             </h1>
 
             @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
-                @fragments.contentAgeNotice(ageNotice, isHidden = true)
+                @fragments.contentAgeNotice(ageNotice(), isHidden = true)
             }
 
             @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) {

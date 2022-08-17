@@ -18,7 +18,7 @@ object DynamicPackage extends DynamicContainer {
 
     storiesIncludingBackfill.length match {
       case 0     => Nil
-      case 1     => Seq(FullMedia75)
+      case 1     => Seq(FullMedia100)
       case 2     => Seq(ThreeQuarterQuarter)
       case 3     => Seq(ThreeQuarterTallQuarter2)
       case 4     => Seq(ThreeQuarterTallQuarter1Ql2)

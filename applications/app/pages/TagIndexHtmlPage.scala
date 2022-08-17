@@ -60,7 +60,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
         checkModuleSupport(),
         inlineJSBlocking(),
       ),
-      bodyTag(classes = defaultBodyClasses)(
+      bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),

@@ -60,7 +60,7 @@ class ContentTest
       elements = Some(elements),
     )
 
-    val trail: ContentType = Content(content)
+    val trail: model.ContentType = Content(content)
 
     trail.fields.linkText should be("Some article")
     trail.metadata.url should be("/foo/2012/jan/07/bar")
@@ -162,7 +162,7 @@ class ContentTest
 
   it should "returns the correct shortUrlId (gu.com)" in {
 
-    def contentWithShortUrl(shortUrl: String): ContentType =
+    def contentWithShortUrl(shortUrl: String): model.ContentType =
       Content(article.copy(fields = Some(ContentFields(shortUrl = Some(shortUrl)))))
 
     contentWithShortUrl("http://gu.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
@@ -171,7 +171,7 @@ class ContentTest
 
   it should "returns the correct shortUrlId (www.theguardian.com)" in {
 
-    def contentWithShortUrl(shortUrl: String): ContentType =
+    def contentWithShortUrl(shortUrl: String): model.ContentType =
       Content(article.copy(fields = Some(ContentFields(shortUrl = Some(shortUrl)))))
 
     contentWithShortUrl("http://www.theguardian.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
@@ -282,7 +282,7 @@ class ContentTest
       contentType: String,
       elements: List[ApiElement],
       maybeByline: Option[String] = None,
-  ): ContentType = {
+  ): model.ContentType = {
     Content(contentApi(contentType, elements, maybeByline))
   }
 

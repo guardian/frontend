@@ -72,7 +72,7 @@ object DotcomRenderingUtils {
         case _                 => None
       }
       sequence
-    }
+    }.map(_.toIndexedSeq)
 
     def entryToDataPair(entry: JsValue): Option[(String, String)] = {
       /*
@@ -156,7 +156,7 @@ object DotcomRenderingUtils {
 
     val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
     relevantBlocks.filter(block => ids(block.id))
-  }
+  }.toSeq
 
   private def addDisclaimer(
       elems: List[PageElement],

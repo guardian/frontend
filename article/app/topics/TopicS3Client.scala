@@ -26,7 +26,7 @@ final class TopicS3ClientImpl extends TopicS3Client with S3 with GuLogging {
   def getListOfKeys(): Future[List[String]] = {
     getClient { client =>
       Try {
-        val s3ObjectList = client.listObjects(getBucket).getObjectSummaries().asScala.toList
+        val s3ObjectList = client.listObjects(getBucket()).getObjectSummaries().asScala.toList
         s3ObjectList.map(_.getKey)
       } match {
         case Success(value) =>
@@ -42,7 +42,7 @@ final class TopicS3ClientImpl extends TopicS3Client with S3 with GuLogging {
   def getObject(key: String): Future[TopicsApiResponse] = {
     getClient { client =>
       Try {
-        val request = new GetObjectRequest(getBucket, key)
+        val request = new GetObjectRequest(getBucket(), key)
         client.getObject(request).parseToTopicsApiResponse
       }.flatten match {
         case Success(value) =>

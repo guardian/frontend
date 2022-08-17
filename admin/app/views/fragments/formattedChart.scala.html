@@ -5,7 +5,7 @@
 
 <script type="text/javascript">
     function drawChart() {
-        var data = new google.visualization.DataTable(@{Html(chart.asJson.toString)})
+        var data = new google.visualization.DataTable(@{Html(chart.asJson().toString)})
 
         var chart = new google.visualization.LineChart(document.getElementById('@chart.id'));
 

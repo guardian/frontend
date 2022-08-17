@@ -316,35 +316,37 @@ class EmailSignupController(
     Action.async { implicit request =>
       AllEmailSubmission.increment()
 
-      emailForm.bindFromRequest.fold(
-        formWithErrors => {
-          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-          EmailFormError.increment()
-          Future.successful(respondFooter(InvalidEmail))
-        },
-        form => {
-          log.info(
-            s"Post request received to /email/ - " +
-              s"email: ${form.email}, " +
-              s"ref: ${form.ref}, " +
-              s"refViewId: ${form.refViewId}, " +
-              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
-              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-          )
+      emailForm
+        .bindFromRequest()
+        .fold(
+          formWithErrors => {
+            log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            EmailFormError.increment()
+            Future.successful(respondFooter(InvalidEmail))
+          },
+          form => {
+            log.info(
+              s"Post request received to /email/ - " +
+                s"email: ${form.email}, " +
+                s"ref: ${form.ref}, " +
+                s"refViewId: ${form.refViewId}, " +
+                s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
+                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+            )
 
-          (for {
-            _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-            result <- submitFormFooter(form)
-          } yield {
-            result
-          }) recover {
-            case _ =>
-              respondFooter(OtherError)
-          }
-        },
-      )
+            (for {
+              _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              result <- submitFormFooter(form)
+            } yield {
+              result
+            }) recover {
+              case _ =>
+                respondFooter(OtherError)
+            }
+          },
+        )
     }
 
   private def respondFooter(result: SubscriptionResult)(implicit
@@ -430,35 +432,37 @@ class EmailSignupController(
     Action.async { implicit request =>
       AllEmailSubmission.increment()
 
-      emailForm.bindFromRequest.fold(
-        formWithErrors => {
-          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-          EmailFormError.increment()
-          Future.successful(respond(InvalidEmail))
-        },
-        form => {
-          log.info(
-            s"Post request received to /email/ - " +
-              s"email: ${form.email}, " +
-              s"ref: ${form.ref}, " +
-              s"refViewId: ${form.refViewId}, " +
-              s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
-              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-          )
+      emailForm
+        .bindFromRequest()
+        .fold(
+          formWithErrors => {
+            log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            EmailFormError.increment()
+            Future.successful(respond(InvalidEmail))
+          },
+          form => {
+            log.info(
+              s"Post request received to /email/ - " +
+                s"email: ${form.email}, " +
+                s"ref: ${form.ref}, " +
+                s"refViewId: ${form.refViewId}, " +
+                s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
+                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+            )
 
-          (for {
-            _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-            result <- submitForm(form)
-          } yield {
-            result
-          }) recover {
-            case _ =>
-              respond(OtherError)
-          }
-        },
-      )
+            (for {
+              _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              result <- submitForm(form)
+            } yield {
+              result
+            }) recover {
+              case _ =>
+                respond(OtherError)
+            }
+          },
+        )
     }
 
   private def submitForm(form: EmailForm)(implicit request: Request[AnyContent]) = {
