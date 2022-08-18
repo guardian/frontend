@@ -1,3 +1,4 @@
+import once from 'lodash-es/once';
 import fastdom from '../../../../lib/fastdom-promise';
 import {
 	renderStickyAdLabel,
@@ -13,6 +14,7 @@ const getStylesFromSpec = (
 	const styles = { ...specs };
 	delete styles.scrollType;
 
+	// native templates are sometimes using the british spelling of background-color for some reason
 	if (styles.backgroundColour) {
 		styles.backgroundColor = styles.backgroundColour;
 		delete styles.backgroundColour;
@@ -22,58 +24,33 @@ const getStylesFromSpec = (
 
 interface BackgroundSpecs {
 	backgroundImage: string;
-	backgroundRepeat: string;
-	backgroundPosition: string;
+	backgroundRepeat?: string;
+	backgroundPosition?: string;
+	// native templates are sometimes using the british spelling of background-color for some reason, removed in getStylesFromSpec above
 	backgroundColour?: string;
 	backgroundColor?: string;
-	scrollType?: string;
+	backgroundSize?: string;
+	transform?: string;
+	scrollType?: 'interscroller' | 'fixed' | 'parallax';
 	ctaUrl?: string;
 }
 
 const isBackgroundSpecs = (specs: unknown): specs is BackgroundSpecs =>
-	typeof specs === 'object' &&
-	!!specs &&
-	[
-		'backgroundImage',
-		'backgroundRepeat',
-		'backgroundPosition',
-		'scrollType',
-	].every((key) => key in specs);
+	typeof specs === 'object' && !!specs && 'backgroundImage' in specs;
 
-const maybeInsertParent = (specs: BackgroundSpecs, adSlot: HTMLElement) => {
-	const backgroundParentClass = 'creative__background-parent';
-	const backgroundClass = 'creative__background';
-
-	const maybeBackgroundParent = adSlot.querySelector<HTMLDivElement>(
-		`.${backgroundParentClass}`,
-	);
-
-	const maybeBackground = maybeBackgroundParent
-		? maybeBackgroundParent.querySelector<HTMLDivElement>(
-				`.${backgroundClass}`,
-		  )
-		: null;
-
-	const backgroundAlreadyExists = !!(
-		maybeBackgroundParent && maybeBackground
-	);
-	if (backgroundAlreadyExists) {
-		return {
-			backgroundParent: maybeBackgroundParent,
-			background: maybeBackground,
-		};
-	}
+// using once, because some native templates send the 'background' message multiple times
+const createParent = once((scrollType: BackgroundSpecs['scrollType']) => {
 	const backgroundParent = document.createElement('div');
 	const background = document.createElement('div');
 
-	backgroundParent.classList.add(backgroundParentClass);
-	background.classList.add(backgroundClass);
+	backgroundParent.classList.add('creative__background-parent');
+	background.classList.add('creative__background');
 
-	if (specs.scrollType) {
+	if (scrollType) {
 		backgroundParent.classList.add(
-			`${backgroundParentClass}--${specs.scrollType}`,
+			`creative__background-parent--${scrollType}`,
 		);
-		background.classList.add(`${backgroundClass}--${specs.scrollType}`);
+		background.classList.add(`creative__background--${scrollType}`);
 	}
 
 	backgroundParent.appendChild(background);
@@ -89,17 +66,14 @@ const maybeInsertParent = (specs: BackgroundSpecs, adSlot: HTMLElement) => {
 	}
 
 	return { backgroundParent, background };
-};
+});
 
-const setBackgroundStyles = async (
+const setBackgroundStyles = (
 	specs: BackgroundSpecs,
 	background: HTMLElement,
-): Promise<void> => {
+): void => {
 	const specStyles = getStylesFromSpec(specs);
-
-	await fastdom.mutate(() => {
-		Object.assign(background.style, specStyles);
-	});
+	Object.assign(background.style, specStyles);
 };
 
 const setCtaURL = (
@@ -118,17 +92,16 @@ const setCtaURL = (
 const renderBottomLine = (
 	background: HTMLElement,
 	backgroundParent: HTMLElement,
-): Promise<void> =>
-	fastdom.mutate(() => {
-		background.style.position = 'fixed';
-		const bottomLine = document.createElement('div');
-		bottomLine.classList.add('ad-slot__line');
-		bottomLine.style.position = 'absolute';
-		bottomLine.style.width = '100%';
-		bottomLine.style.bottom = '0';
-		bottomLine.style.borderBottom = '1px solid #dcdcdc';
-		backgroundParent.appendChild(bottomLine);
-	});
+): void => {
+	background.style.position = 'fixed';
+	const bottomLine = document.createElement('div');
+	bottomLine.classList.add('ad-slot__line');
+	bottomLine.style.position = 'absolute';
+	bottomLine.style.width = '100%';
+	bottomLine.style.bottom = '0';
+	bottomLine.style.borderBottom = '1px solid #dcdcdc';
+	backgroundParent.appendChild(bottomLine);
+};
 
 const setupParallax = (
 	adSlot: HTMLElement,
@@ -180,48 +153,47 @@ const setupBackground = async (
 	specs: BackgroundSpecs,
 	adSlot: HTMLElement,
 ): Promise<void> => {
-	const { backgroundParent, background } = maybeInsertParent(specs, adSlot);
-	await setBackgroundStyles(specs, background);
+	const { backgroundParent, background } = createParent(specs.scrollType);
 
-	if (specs.scrollType === 'parallax') {
-		setupParallax(adSlot, background, backgroundParent);
-	}
+	return fastdom.mutate(() => {
+		setBackgroundStyles(specs, background);
 
-	// fixed background is very similar to interscroller, generally with a smaller height
-	if (specs.scrollType === 'fixed') {
-		adSlot.style.position = 'relative';
-		if (isDCR) {
-			background.style.position = 'fixed';
+		if (specs.scrollType === 'parallax') {
+			setupParallax(adSlot, background, backgroundParent);
 		}
 
-		if (specs.backgroundColor) {
-			backgroundParent.style.backgroundColor = specs.backgroundColor;
-		}
-	}
-
-	if (specs.scrollType === 'interscroller') {
-		if (isDCR) {
-			adSlot.style.height = '85vh';
-			adSlot.style.marginBottom = '12px';
+		// fixed background is very similar to interscroller, generally with a smaller height
+		if (specs.scrollType === 'fixed') {
 			adSlot.style.position = 'relative';
+			if (isDCR) {
+				background.style.position = 'fixed';
+			}
+
+			if (specs.backgroundColor) {
+				backgroundParent.style.backgroundColor = specs.backgroundColor;
+			}
 		}
 
-		void renderStickyAdLabel(adSlot);
-		void renderStickyScrollForMoreLabel(backgroundParent);
+		if (specs.scrollType === 'interscroller') {
+			if (isDCR) {
+				adSlot.style.height = '85vh';
+				adSlot.style.marginBottom = '12px';
+				adSlot.style.position = 'relative';
+			}
 
-		isDCR && void renderBottomLine(background, backgroundParent);
+			void renderStickyAdLabel(adSlot);
+			void renderStickyScrollForMoreLabel(backgroundParent);
 
-		if (specs.ctaUrl) {
-			const anchor = setCtaURL(specs.ctaUrl, backgroundParent);
-			await fastdom.mutate(() =>
-				adSlot.insertBefore(anchor, adSlot.firstChild),
-			);
+			isDCR && renderBottomLine(background, backgroundParent);
+
+			if (specs.ctaUrl) {
+				const anchor = setCtaURL(specs.ctaUrl, backgroundParent);
+				adSlot.insertBefore(anchor, adSlot.firstChild);
+			}
+		} else {
+			adSlot.insertBefore(backgroundParent, adSlot.firstChild);
 		}
-	} else {
-		await fastdom.mutate(() =>
-			adSlot.insertBefore(backgroundParent, adSlot.firstChild),
-		);
-	}
+	});
 };
 
 const init = (register: RegisterListener): void => {
