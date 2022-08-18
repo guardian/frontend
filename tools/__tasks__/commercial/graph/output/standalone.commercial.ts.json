@@ -307,7 +307,7 @@
   "../projects/commercial/modules/dfp/on-slot-viewable.ts",
   "../projects/commercial/modules/dfp/refresh-on-resize.ts",
   "../projects/commercial/modules/messenger.ts",
-  "../projects/commercial/modules/messenger/background.js",
+  "../projects/commercial/modules/messenger/background.ts",
   "../projects/commercial/modules/messenger/click.ts",
   "../projects/commercial/modules/messenger/disable-refresh.ts",
   "../projects/commercial/modules/messenger/get-page-targeting.ts",
@@ -477,11 +477,11 @@
   "../lib/report-error.js",
   "../projects/commercial/modules/messenger/post-message.ts"
  ],
- "../projects/commercial/modules/messenger/background.js": [
-  "../lib/config.js",
-  "../lib/events.ts",
+ "../projects/commercial/modules/messenger/background.ts": [
+  "../../../../node_modules/@types/lodash-es/once.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/render-advert-label.ts"
+  "../projects/commercial/modules/dfp/render-advert-label.ts",
+  "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/messenger/click.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
