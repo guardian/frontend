@@ -11,6 +11,7 @@ const coreVitals = (): void => {
 	const { isDev } = window.guardian.config.page;
 	const sampling = 1 / 100;
 
+	/* eslint-disable @typescript-eslint/no-floating-promises -- they’re async methods */
 	initCoreWebVitals({
 		browserId,
 		pageViewId,
@@ -20,6 +21,7 @@ const coreVitals = (): void => {
 	});
 
 	if (shouldCaptureMetrics()) bypassCoreWebVitalsSampling('commercial');
+	/* eslint-enable @typescript-eslint/no-floating-promises -- they’re async methods */
 };
 
 export { coreVitals };
