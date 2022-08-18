@@ -482,4 +482,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val AusRegionSelector = Switch(
+    SwitchGroup.Feature,
+    "aus-region-selector",
+    "When ON, facia containers with targeted territories in Australia will include a 'region switcher' for users to change their region",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }
