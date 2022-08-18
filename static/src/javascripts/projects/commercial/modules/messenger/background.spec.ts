@@ -1,8 +1,9 @@
 import { _ } from './background';
+import type { BackgroundSpecs } from './background';
 
 const { setupBackground, getStylesFromSpec } = _;
 
-const adSpec = {
+const adSpec: BackgroundSpecs = {
 	scrollType: 'fixed',
 	backgroundColour: 'ffffff',
 	backgroundImage: 'image',
@@ -65,6 +66,8 @@ describe('Cross-frame messenger: getStylesFromSpec', () => {
 		const specStyles = getStylesFromSpec(adSpec);
 		// @ts-expect-error -- this is what we're testing
 		expect(specStyles.scrollType).toBeUndefined();
+		// @ts-expect-error -- this is what we're testing
+		expect(specStyles.ctaUrl).toBeUndefined();
 		expect(specStyles.backgroundColor).toBe('ffffff');
 		expect(specStyles.backgroundImage).toBe('image');
 		expect(specStyles.backgroundRepeat).toBe('no-repeat');

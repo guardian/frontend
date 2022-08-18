@@ -10,9 +10,10 @@ const isDCR = window.guardian.config.isDotcomRendering;
 
 const getStylesFromSpec = (
 	specs: BackgroundSpecs,
-): Omit<BackgroundSpecs, 'scrollType' | 'backgroundColour'> => {
+): Omit<BackgroundSpecs, 'scrollType' | 'backgroundColour' | 'ctaUrl'> => {
 	const styles = { ...specs };
 	delete styles.scrollType;
+	delete styles.ctaUrl;
 
 	// native templates are sometimes using the british spelling of background-color for some reason
 	if (styles.backgroundColour) {
@@ -214,3 +215,5 @@ export const _ = {
 };
 
 export { init };
+
+export type { BackgroundSpecs };
