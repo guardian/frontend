@@ -36,6 +36,7 @@ import { manageAdFreeCookieOnConsentChange } from '../projects/commercial/module
 import { init as initMobileSticky } from '../projects/commercial/modules/mobile-sticky';
 import { paidContainers } from '../projects/commercial/modules/paid-containers';
 import { init as initPaidForBand } from '../projects/commercial/modules/paidfor-band';
+import { reloadPageOnConsentChange } from '../projects/commercial/modules/reload-page-on-consent-change';
 import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercial/modules/remove-slots';
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
@@ -74,6 +75,7 @@ const commercialExtraModules: Modules = [
 	['cm-ipsosmori', initIpsosMori],
 	['cm-trackScrollDepth', initTrackScrollDepth],
 	['cm-trackGpcSignal', initTrackGpcSignal],
+	['cm-reloadPageOnConsentChange', reloadPageOnConsentChange],
 ];
 
 if (!commercialFeatures.adFree) {
