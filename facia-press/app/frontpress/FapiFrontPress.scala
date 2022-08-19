@@ -278,7 +278,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       case Success(_) =>
         val pressDuration: Long = stopWatch.elapsed
         log.info(s"Successfully pressed $path in $pressDuration ms")
-        FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(pressDuration)
+        FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(pressDuration.toDouble)
 
         /** We record separate metrics for each of the editions' network fronts */
         val metricsByPath = Map(
@@ -288,7 +288,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         )
         if (Edition.all.map(_.id.toLowerCase).contains(path)) {
           metricsByPath.get(path).foreach { metric =>
-            metric.recordDuration(pressDuration)
+            metric.recordDuration(pressDuration.toDouble)
           }
         }
       case Failure(error) =>

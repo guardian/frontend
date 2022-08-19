@@ -523,6 +523,7 @@ object UnknownBlockElement {
 
 case class VideoBlockElement(
     caption: Option[String],
+    title: Option[String],
     url: String,
     originalUrl: String,
     height: Int,
@@ -539,6 +540,7 @@ object VideoBlockElement {
 
 case class VideoFacebookBlockElement(
     caption: Option[String],
+    title: Option[String],
     url: String,
     originalUrl: String,
     embedUrl: Option[String],
@@ -557,6 +559,7 @@ object VideoFacebookBlockElement {
 
 case class VideoVimeoBlockElement(
     caption: Option[String],
+    title: Option[String],
     url: String,
     originalUrl: String,
     embedUrl: Option[String],
@@ -574,6 +577,7 @@ object VideoVimeoBlockElement {
 
 case class VideoYoutubeBlockElement(
     caption: Option[String],
+    title: Option[String],
     url: String,
     originalUrl: String,
     embedUrl: Option[String],
@@ -1660,6 +1664,7 @@ object PageElement {
       data <- element.videoTypeData
       source <- data.source
       caption = data.caption
+      title = data.title
       originalUrl <- data.originalUrl
       height <- data.height
       width <- data.width
@@ -1670,6 +1675,7 @@ object PageElement {
         case "youtube" =>
           VideoYoutubeBlockElement(
             caption,
+            title,
             url,
             originalUrl,
             getEmbedUrl(data.html),
@@ -1683,6 +1689,7 @@ object PageElement {
         case "vimeo" =>
           VideoVimeoBlockElement(
             caption,
+            title,
             url,
             originalUrl,
             getEmbedUrl(data.html),
@@ -1696,6 +1703,7 @@ object PageElement {
         case "facebook" =>
           VideoFacebookBlockElement(
             caption,
+            title,
             url,
             originalUrl,
             getEmbedUrl(data.html),
@@ -1709,6 +1717,7 @@ object PageElement {
         case _ =>
           VideoBlockElement(
             caption,
+            title,
             url,
             originalUrl,
             height,

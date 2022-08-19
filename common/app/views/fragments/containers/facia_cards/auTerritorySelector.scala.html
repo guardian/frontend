@@ -1,0 +1,84 @@
+@import views.support.RenderClasses
+@(containerDefinition: layout.FaciaContainer)(implicit request: RequestHeader)
+
+<div class='fc-aus-territory__container'>
+    <button
+        id="container-@containerDefinition.dataId-aus-region-selector-button"
+        class='fc-aus-territory__accordion-header'
+        data-link-name="@containerDefinition.targetedTerritory.map(_.id).getOrElse("AU-unknown")-expand"
+        aria-expanded="false"
+        aria-controls="container-@containerDefinition.dataId-aus-region-selector-body"
+
+    >
+        <div class='u-button-reset fc-aus-territory__accordion-header__headline'>
+                Not in&nbsp;@containerDefinition.territoryName?&nbsp;<span class='hide-on-mobile'>Change region</span>
+            </div>
+        <div aria-hidden="true" class='fc-aus-territory__accordion-arrow'>
+            <svg
+            viewBox="0 0 30 20"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="20"
+            >
+                <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M4 9.95L14.45 20.4H15.45L25.8999 9.95L24.9249 9L14.95 17.4L4.975 9L4 9.95Z"
+                />
+            </svg>
+        </div>
+        <div aria-hidden="true" class='fc-aus-territory__accordion-arrow' style="display: none">
+            <svg
+            viewBox="0 0 30 20"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="20"
+            >
+                <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M25.8999 19.45L15.45 9H14.45L4 19.45L4.975 20.4L14.95 12L24.9249 20.4L25.8999 19.45Z"
+                />
+            </svg>
+        </div>
+    </button>
+    <div id="container-@containerDefinition.dataId-aus-region-selector-body" class='fc-aus-territory__body' style="display: none;" aria-labelledby="container-@containerDefinition.dataId-aus-region-selector-button" >
+        <div class='fc-aus-territory__body__accordion-body'>
+            <span class='fc-aus-territory__body__accordion-body--bold'>The articles above have been curated for you based on the state you are in.</span>
+            If we have your location wrong or you want to see coverage of a different state, please select from the links below. We hope to expand this service to other states in the future.
+        </div>
+        <span id="container-@containerDefinition.dataId-aus-region-selector-label" hidden>Change region to</span>
+        <button class="@RenderClasses(Map(
+                ("fc-aus-territory__territory-button", true),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-NSW")),
+            ))"
+            data-link-name="AU-NSW"
+        >
+            <span hidden aria-hidden="false">Change region to</span>
+            New South Wales
+        </button>
+        <button class="@RenderClasses(Map(
+                ("fc-aus-territory__territory-button", true),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-QLD")),
+            ))"
+            data-link-name="AU-QLD"
+        >
+            <span hidden aria-hidden="false">Change region to</span>
+            Queensland
+        </button>
+        <button class="@RenderClasses(Map(
+                ("fc-aus-territory__territory-button", true),
+                ("fc-aus-territory__territory-button--selected", containerDefinition.targetedTerritory.exists(_.id == "AU-VIC")),
+            ))"
+            data-link-name="AU-VIC"
+        >
+            <span hidden aria-hidden="false">Change region to</span>
+            Victoria
+        </button>
+        <button class='fc-aus-territory__territory-button fc-aus-territory__territory-button--secondary'
+            data-link-name="AU-hide-thrasher"
+        >
+            Hide local news
+        </button>
+    </div>
+</div>

@@ -26,12 +26,12 @@ object SystemMetrics extends implicits.Numbers {
 
     def gcCount: Double = {
       val totalGcCount = bean.getCollectionCount
-      totalGcCount - lastGcCount.getAndSet(totalGcCount)
+      totalGcCount - lastGcCount.getAndSet(totalGcCount).toDouble
     }
 
     def gcTime: Double = {
       val totalGcTime = bean.getCollectionTime
-      totalGcTime - lastGcTime.getAndSet(totalGcTime)
+      totalGcTime - lastGcTime.getAndSet(totalGcTime).toDouble
     }
   }
 
@@ -221,9 +221,14 @@ class CloudWatchMetricsLifecycle(
           s"${gc.name}-gc-count-per-min",
           "Used heap memory (MB)",
           StandardUnit.Count,
-          () => gc.gcCount.toLong,
+          () => gc.gcCount,
         ),
-        GaugeMetric(s"${gc.name}-gc-time-per-min", "Used heap memory (MB)", StandardUnit.Count, () => gc.gcTime.toLong),
+        GaugeMetric(
+          s"${gc.name}-gc-time-per-min",
+          "Used heap memory (MB)",
+          StandardUnit.Count,
+          () => gc.gcTime,
+        ),
       )
     }
 
@@ -256,5 +261,5 @@ class CloudWatchMetricsLifecycle(
 
 object bytesAsMb {
   // divide by 1048576 to convert bytes to MB
-  def apply(bytes: Long): Long = bytes / 1048576
+  def apply(bytes: Long): Double = (bytes / 1048576).toDouble
 }

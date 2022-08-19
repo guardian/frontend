@@ -1,12 +1,13 @@
 package controllers
 
+import agents.DeeplyReadAgent
 import com.softwaremill.macwire._
 import contentapi.ContentApiClient
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
-import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent, NewsletterService}
+import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.newsletters.NewsletterSignupAgent
 import topics.{TopicS3Client, TopicService}
 
@@ -26,4 +27,5 @@ trait ArticleControllers {
   lazy val articleController = wire[ArticleController]
   lazy val liveBlogController = wire[LiveBlogController]
   lazy val newsletterService = wire[NewsletterService]
+  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
 }

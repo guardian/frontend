@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition)
+    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition, TableOfContents)
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -36,4 +36,13 @@ object LiveBlogMainMediaPosition
       owners = Seq(Owner.withGithub("abeddow91")),
       sellByDate = LocalDate.of(2022, 10, 7),
       participationGroup = Perc50,
+    )
+
+object TableOfContents
+    extends Experiment(
+      name = "table-of-contents",
+      description = "When ON, a table of contents will be rendered for qualifying articles",
+      owners = Seq(Owner.withName("journalism team")),
+      sellByDate = LocalDate.of(2022, 12, 7),
+      participationGroup = Perc0C,
     )
