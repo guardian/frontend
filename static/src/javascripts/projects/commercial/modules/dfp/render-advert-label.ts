@@ -14,8 +14,7 @@ const shouldRenderLabel = (adSlotNode: HTMLElement) =>
 		adSlotNode.classList.contains('u-h') ||
 		// set for out-of-page (1x1) and empty (2x2) ads
 		adSlotNode.classList.contains('ad-slot--collapse') ||
-		adSlotNode.getAttribute('data-label') === 'false' ||
-		adSlotNode.getElementsByClassName('ad-slot__label').length
+		adSlotNode.getAttribute('data-label') === 'false'
 	);
 
 const createAdCloseDiv = () => {
@@ -46,7 +45,7 @@ const createAdLabel = () => {
  *  particularly noticeable when ads are refreshed as the advert slot contents are deleted.
  *
  *  **Toggled labels:**
- *  To prevent CLS the label is now a sibling element with its visibility initially hidden.
+ *  To prevent CLS the label inserted on the server with its visibility initially hidden.
  *  Its visibility and width is toggled once the ad and its width is known.
  *  Currently only for dfp-ad--top-above-nav.
  * @param {HTMLElement} adSlotNode
@@ -65,15 +64,10 @@ export const renderAdvertLabel = (
 				// found a toggled label so don't render dynamically
 				renderDynamic = false;
 				if (shouldRender) {
-					const adSlotWidth = adSlotNode.offsetWidth;
-					const labelToggleWidth = labelToggle.offsetWidth;
-					if (labelToggleWidth !== adSlotWidth) {
-						return fastdom.mutate(() => {
-							labelToggle.style.width = `${adSlotWidth}px`;
-							labelToggle.classList.remove('hidden');
-							labelToggle.classList.add('visible');
-						});
-					}
+					void fastdom.mutate(() => {
+						labelToggle.classList.remove('hidden');
+						labelToggle.classList.add('visible');
+					});
 				} else {
 					// some ads should not have a label
 					// for example fabric ads can have an embedded label
