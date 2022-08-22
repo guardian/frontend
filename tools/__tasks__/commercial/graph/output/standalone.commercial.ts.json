@@ -129,7 +129,9 @@
   "../lib/config.d.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/consentless/define-slot.ts": [],
+ "../projects/commercial/modules/consentless/define-slot.ts": [
+  "../projects/commercial/modules/dfp/render-advert-label.ts"
+ ],
  "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect-viewport.ts",
@@ -739,6 +741,7 @@
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/manage-ad-free-cookie.ts",
   "../lib/report-error.js",
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
