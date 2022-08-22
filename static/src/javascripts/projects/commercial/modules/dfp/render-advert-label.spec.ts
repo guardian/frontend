@@ -28,15 +28,8 @@ const adverts: Record<string, string> = {
 	topAboveNavToggleLabel: `
         <div>
             <div class="js-ad-slot" id="dfp-ad--top-above-nav">
-			<div class="ad-slot__label ad-slot__label--toggle hidden">Advertisement</div>
-			</div>
-        </div>`,
-	topAboveNavToggleLabelDontRender: `
-        <div>
-            <div class="js-ad-slot" id="dfp-ad--top-above-nav">
 				<div class="ad-slot__label ad-slot__label--toggle hidden">Advertisement</div>
-                <div class="ad-slot__label"></div>
-            </div>
+			</div>
         </div>`,
 };
 
@@ -115,17 +108,6 @@ describe('Rendering advert labels', () => {
 		return renderAdvertLabel(getAd()).then(() => {
 			const label = getAd().querySelector(labelSelector) as HTMLElement;
 			expect(label.textContent).toEqual('Advertisement');
-		});
-	});
-
-	it('When the ad is top above nav and the label is toggleable, and the ad slot should not be rendered, make the label display none so it is removed from layout', async () => {
-		createAd(adverts['topAboveNavToggleLabelDontRender']);
-		return renderAdvertLabel(getAd()).then(() => {
-			const label = document.querySelector(
-				'.ad-slot__label--toggle',
-			) as HTMLElement;
-			// expect(label.classList.contains('visible')).toBe(false);
-			expect(label.style.display).toEqual('none');
 		});
 	});
 });
