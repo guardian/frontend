@@ -1,4 +1,4 @@
-import { setCookie } from '@guardian/libs';
+import { removeCookie, setCookie } from '@guardian/libs';
 import { $$ } from '../../../../lib/$$';
 
 const toggle = (e: HTMLElement): void => {
@@ -41,6 +41,7 @@ export const init = (): void => {
 					// fastly will ignore the cookie & use the users locations
 					const value =
 						attrValue === 'AU-hide-thrasher' ? 'Other' : attrValue;
+					removeCookie({ name: 'GU_territory' });
 					setCookie({ name: 'GU_territory', value });
 					location.reload();
 				}
