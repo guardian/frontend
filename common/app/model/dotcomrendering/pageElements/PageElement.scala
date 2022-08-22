@@ -1458,12 +1458,20 @@ object PageElement {
 
   private[this] def getIframeWidth(html: String): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("width").toInt)
+    try {
+      doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("width").toInt)
+    } catch {
+      case _: Throwable => Some(460)
+    }
   }
 
   private[this] def getIframeHeight(html: String): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("height").toInt)
+    try {
+      doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("height").toInt)
+    } catch {
+      case _: Throwable => Some(450)
+    }
   }
 
   private def extractSoundcloudBlockElement(
