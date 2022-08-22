@@ -7,9 +7,9 @@ import play.api.mvc.RequestHeader
 import play.api.libs.json._
 import model.{FrontProperties, RelatedContent, Tag}
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
-import model.pressed.{CollectionConfig}
+import model.pressed.CollectionConfig
 import services.CollectionConfigWithId
-import model.dotcomrendering.OnwardItem
+import model.dotcomrendering.Trail
 
 case class Series(id: String, tag: Tag, trails: RelatedContent) {
   lazy val displayName = tag.id match {
@@ -23,7 +23,7 @@ case class SeriesStoriesDCR(
     displayname: String,
     description: Option[String],
     url: String,
-    trails: Seq[OnwardItem],
+    trails: Seq[Trail],
 )
 
 object SeriesStoriesDCR {
@@ -34,7 +34,7 @@ object SeriesStoriesDCR {
       displayname = series.displayName,
       description = series.tag.properties.description,
       url = series.tag.properties.webUrl,
-      trails = series.trails.faciaItems.map(OnwardItem.pressedContentToOnwardItem).take(10),
+      trails = series.trails.faciaItems.map(Trail.pressedContentToTrail).take(10),
     )
   }
 }

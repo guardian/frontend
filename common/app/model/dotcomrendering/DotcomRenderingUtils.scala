@@ -300,8 +300,7 @@ object DotcomRenderingUtils {
         Some(
           OnwardCollectionResponse(
             heading = "More on this story",
-            trails =
-              faciaItems.map(faciaItem => OnwardItem.pressedContentToOnwardItem(faciaItem)(requestHeader)).take(10),
+            trails = faciaItems.map(faciaItem => Trail.pressedContentToTrail(faciaItem)(requestHeader)).take(10),
           ),
         )
     }

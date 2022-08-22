@@ -14,7 +14,7 @@ import model.dotcomrendering.{
   MostPopularNx2,
   OnwardCollectionResponse,
   OnwardCollectionResponseDCR,
-  OnwardItem,
+  Trail,
 }
 import play.api.libs.json._
 import play.api.mvc._
@@ -128,14 +128,14 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = section.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
+        trails = section.trails.map(Trail.pressedContentToTrail).take(10),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItem.contentCardToOnwardItem(contentCard)
+      Trail.contentCardToTrail(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItem.contentCardToOnwardItem(contentCard)
+      Trail.contentCardToTrail(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent.fromWritable(response))
@@ -148,10 +148,10 @@ class MostPopularController(
       OnwardCollectionResponse(nx2.heading, nx2.trails)
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItem.contentCardToOnwardItem(contentCard)
+      Trail.contentCardToTrail(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItem.contentCardToOnwardItem(contentCard)
+      Trail.contentCardToTrail(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent.fromWritable(response))
@@ -161,7 +161,7 @@ class MostPopularController(
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = mostPopular.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
+      trails = mostPopular.trails.map(Trail.pressedContentToTrail).take(10),
     )
     Cached(900)(JsonComponent.fromWritable(data))
   }
