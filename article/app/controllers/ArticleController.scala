@@ -1,6 +1,6 @@
 package controllers
 
-import agents.DeeplyReadAgent
+import agents.{DeeplyReadAgent, PopularInTagAgent}
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
@@ -26,6 +26,7 @@ class ArticleController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     deeplyReadAgent: DeeplyReadAgent,
+    popularInTagAgent: PopularInTagAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse

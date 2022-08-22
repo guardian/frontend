@@ -1,6 +1,6 @@
 package controllers
 
-import agents.DeeplyReadAgent
+import agents.{DeeplyReadAgent, PopularInTagAgent}
 import com.softwaremill.macwire._
 import contentapi.ContentApiClient
 import model.ApplicationContext
@@ -28,4 +28,5 @@ trait ArticleControllers {
   lazy val liveBlogController = wire[LiveBlogController]
   lazy val newsletterService = wire[NewsletterService]
   lazy val deeplyReadAgent = wire[DeeplyReadAgent]
+  lazy val popularInTagAgent = wire[PopularInTagAgent]
 }

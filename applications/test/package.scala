@@ -15,14 +15,14 @@ object `package` {
 
 class ApplicationsTestSuite
     extends Suites(
-      new services.IndexPageGroupingTest,
-      new common.CombinerControllerTest,
-      new common.CombinerFeatureTest,
-      new AllIndexControllerTest,
-      new AllIndexTemplateTest,
-      new AllIndexTemplateTestLite,
-      new GalleryControllerTest,
-      new GalleryTemplateTest,
+//      new services.IndexPageGroupingTest,
+//      new common.CombinerControllerTest,
+//      new common.CombinerFeatureTest,
+//      new AllIndexControllerTest,
+//      new AllIndexTemplateTest,
+//      new AllIndexTemplateTestLite,
+//      new GalleryControllerTest,
+//      new GalleryTemplateTest,
       new ImageContentControllerTest,
       new ImageContentTemplateTest,
       new IndexControllerTest,

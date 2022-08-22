@@ -123,6 +123,39 @@ object Trail {
     )
   }
 
+
+  def pressedContentToTrailWithoutRequest(content: PressedContent): Trail = {
+
+    def pillarToString(pillar: Pillar): String = {
+      pillar.toString.toLowerCase() match {
+        case "arts" => "culture"
+        case other => other
+      }
+    }
+
+    Trail(
+      url = "https://www.theguardian.com/uk",
+      linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
+      showByline = content.properties.showByline,
+      byline = content.properties.byline,
+      image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
+      carouselImages = getImageSources(content.trailPicture),
+      ageWarning = content.ageWarning,
+      isLiveBlog = content.properties.isLiveBlog,
+      pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
+      designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
+      format = content.format.getOrElse(ContentFormat.defaultContentFormat),
+      webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
+      headline = content.header.headline,
+      mediaType = content.card.mediaType.map(_.toString()),
+      shortUrl = content.card.shortUrl,
+      kickerText = content.header.kicker.flatMap(_.properties.kickerText),
+      starRating = content.card.starRating,
+      avatarUrl = None,
+      branding = None,
+    )
+  }
+
   def pressedContentToTrail(content: PressedContent)(implicit
       request: RequestHeader,
   ): Trail = {
