@@ -24,6 +24,7 @@ import views.support.cleaner.SoundcloudHelper
 import views.support.{ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
+import scala.util.Try
 
 // ------------------------------------------------------
 // PageElement Supporting Types and Traits
@@ -1456,22 +1457,26 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
-  private[this] def getIframeWidth(html: String): Option[Int] = {
+  private[this] def getIframeWidth(html: String, default: Int = 0): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
-    try {
-      doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("width").toInt)
-    } catch {
-      case _: Throwable => Some(460)
-    }
+
+    doc.getElementsByTag("iframe")
+      .asScala.headOption
+      .map(_.attr("width"))
+      .map(
+        attr => Try(attr.toInt).getOrElse(default)
+      )
   }
 
-  private[this] def getIframeHeight(html: String): Option[Int] = {
+  private[this] def getIframeHeight(html: String, default: Int = 0): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
-    try {
-      doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("height").toInt)
-    } catch {
-      case _: Throwable => Some(450)
-    }
+
+    doc.getElementsByTag("iframe")
+      .asScala.headOption
+      .map(_.attr("height"))
+      .map(
+        attr => Try(attr.toInt).getOrElse(default)
+      )
   }
 
   private def extractSoundcloudBlockElement(
@@ -1554,8 +1559,8 @@ object PageElement {
     } yield {
       SpotifyBlockElement(
         getEmbedUrl(d.html),
-        getIframeHeight(html),
-        getIframeWidth(html),
+        getIframeHeight(html, default=540),
+        getIframeWidth(html, default=460),
         d.title,
         d.caption,
         thirdPartyTracking,
