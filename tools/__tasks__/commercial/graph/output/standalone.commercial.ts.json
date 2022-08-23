@@ -226,6 +226,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -739,6 +740,7 @@
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/manage-ad-free-cookie.ts",
   "../lib/report-error.js",
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",

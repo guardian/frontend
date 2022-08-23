@@ -1,3 +1,4 @@
+import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
@@ -35,9 +36,16 @@ const onIntersect = (
 };
 
 const getObserver = once(() => {
+	const tests = window.guardian.config.tests;
+	const isInMegaTestControlGroup =
+		tests && !!tests['commercialEndOfQuarterMegaTestControl'];
+
+	const lazyLoadMargin = isInMegaTestControlGroup ? '200px' : '20%';
+	log('commercial', 'Using lazy load margin', lazyLoadMargin);
+
 	return Promise.resolve(
 		new window.IntersectionObserver(onIntersect, {
-			rootMargin: '20% 0px',
+			rootMargin: `${lazyLoadMargin} 0px`,
 		}),
 	);
 });
