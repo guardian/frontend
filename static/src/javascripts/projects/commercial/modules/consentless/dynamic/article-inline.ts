@@ -103,7 +103,40 @@ const filterNearbyCandidates =
 	};
 
 const addMobileInlineAds = async () => {
-	// TODO
+	const rules: SpacefinderRules = {
+		bodySelector: articleBodySelector,
+		slotSelector: ' > p',
+		minAbove: 200,
+		minBelow: 200,
+		selectors: {
+			' > h2': {
+				minAbove: 100,
+				minBelow: 250,
+			},
+			' .ad-slot': adSlotClassSelectorSizes,
+			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)':
+				{
+					minAbove: 35,
+					minBelow: 200,
+				},
+		},
+		filter: filterNearbyCandidates(adSizes.mpu.height),
+	};
+
+	const insertAds: SpacefinderWriter = async (paras) => {
+		const slots = paras.map((para, i) =>
+			insertAdAtPara(para, `inline${i + 1}`, 'inline', 'inline'),
+		);
+		await Promise.all(slots);
+	};
+
+	const enableDebug = sfdebug === '1';
+
+	return spaceFiller.fillSpace(rules, insertAds, {
+		waitForImages: true,
+		waitForInteractives: true,
+		debug: enableDebug,
+	});
 };
 
 const addDesktopInlineAds = async () => {
