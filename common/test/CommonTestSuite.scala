@@ -14,6 +14,5 @@ class CommonTestSuite
       new NavigationTest,
       new FlagshipFrontContainerSpec,
       new DotcomRenderingServiceTest,
-      new PopularInTagAgentTest,
     )
     with SingleServerSuite {}

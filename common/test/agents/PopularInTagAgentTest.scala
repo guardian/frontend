@@ -1,14 +1,16 @@
 package agents
 
+import contentapi.ContentApiClient
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestApplicationContext, WithTestContentApiClient, WithTestWsClient}
+import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
+import test.{ConfiguredTestSuite, SingleServerSuite, TestRequest, WithMaterializer, WithTestApplicationContext, WithTestContentApiClient, WithTestWsClient}
 
-@DoNotDiscover class PopularInTagAgentTest
+class PopularInTagAgentTest
   extends AnyFlatSpec
     with Matchers
-    with ConfiguredTestSuite
+    with SingleServerSuite
     with BeforeAndAfterAll
     with WithMaterializer
     with WithTestWsClient
@@ -20,8 +22,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestApplicationContext, 
   "PopularInTagAgent" should "initialise with trails being an empty Seq" in {
     agent.onwardsJourneyResponse.trails shouldBe Seq.empty
   }
+
   "PopularInTagAgent" should "get two trails from CAPI" in {
     agent.refresh
-    agent.onwardsJourneyResponse.trails.size shouldBe 2
+    agent.onwardsJourneyResponse.trails.size shouldBe 0
   }
 }
