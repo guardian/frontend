@@ -1,10 +1,10 @@
 package agents
 
 import common.{Box, GuLogging}
-import model.dotcomrendering.{OnwardCollectionResponse, OnwardItem}
+import model.dotcomrendering.{OnwardCollectionResponse, Trail}
 
 class DeeplyReadAgent extends GuLogging {
-  private val trailsBox = Box[Seq[OnwardItem]](Seq())
+  private val trailsBox = Box[Seq[Trail]](Seq())
   def onwardsJourneyResponse = {
     OnwardCollectionResponse(
       heading = "Deeply read",
