@@ -143,6 +143,15 @@
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
+ "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/fastdom-promise.js",
+  "../lib/url.ts",
+  "../projects/commercial/modules/consentless/define-slot.ts",
+  "../projects/common/modules/article/space-filler.ts",
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder.ts"
+ ],
  "../projects/commercial/modules/consentless/init-fixed-slots.ts": [
   "../projects/commercial/modules/consentless/define-slot.ts"
  ],
@@ -753,6 +762,7 @@
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
   "../projects/commercial/modules/consentless/dynamic/article-inline.ts",
+  "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts",
   "../projects/commercial/modules/consentless/init-fixed-slots.ts",
   "../projects/commercial/modules/consentless/prepare-ootag.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
