@@ -6,7 +6,10 @@ const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
 ];
 
-const serverSideTests: ServerSideABTest[] = [];
+const serverSideTests: ServerSideABTest[] = [
+	'commercialEndOfQuarterMegaTestControl',
+	'commercialEndOfQuarterMegaTestVariant',
+];
 
 /**
  * Function to check whether metrics should be captured for the current page
