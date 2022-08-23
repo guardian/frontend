@@ -1,16 +1,30 @@
 import { renderAdvertLabel } from '../dfp/render-advert-label';
 
-const getOptOutSlotName = (dfpSlotName: string): string => {
-	if (dfpSlotName.includes('top-above-nav')) {
-		return 'homepage-lead';
+const getOptOutSlotName = (slotName: string, inlineId?: number): string => {
+	if (window.guardian.config.page.isFront && slotName === 'inline') {
+		return 'front-inline';
+	} else if (slotName === 'inline') {
+		if (window.guardian.config.page.contentType === 'Article') {
+			if (inlineId === 1) {
+				return 'article-inline1';
+			} else {
+				return 'article-inline2-plus';
+			}
+		} else if (window.guardian.config.page.isLiveBlog) {
+			return 'liveblog-inline';
+		}
 	}
-	return 'homepage-rect';
+	return slotName;
 };
 
-const defineSlot = (slotId: string): void => {
+const defineSlot = (
+	slotId: string,
+	slotName: string,
+	inlineId?: number,
+): void => {
 	window.ootag.queue.push(() => {
 		window.ootag.defineSlot({
-			adSlot: getOptOutSlotName(slotId),
+			adSlot: getOptOutSlotName(slotName, inlineId),
 			targetId: slotId,
 			filledCallback: () => {
 				const slotElement = document.getElementById(slotId);

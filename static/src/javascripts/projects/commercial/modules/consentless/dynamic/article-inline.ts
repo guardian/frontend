@@ -70,6 +70,7 @@ const insertAdAtPara = (
 	type: SlotName,
 	classes?: string,
 	containerOptions: ContainerOptions = {},
+	inlineId: number,
 ): Promise<void> => {
 	const ad = createAdSlot(type, {
 		name,
@@ -85,7 +86,7 @@ const insertAdAtPara = (
 			}
 		})
 		.then(() => {
-			defineSlot(ad.id);
+			defineSlot(ad.id, 'inline', inlineId);
 		});
 };
 
@@ -207,6 +208,7 @@ const addDesktopInlineAds = async () => {
 				'inline',
 				'inline',
 				containerOptions,
+				inlineId,
 			);
 		});
 		await Promise.all(slots);
