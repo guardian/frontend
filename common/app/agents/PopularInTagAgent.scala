@@ -44,9 +44,12 @@ class PopularInTagAgent(
     trails
   }
 
-  def refresh: Future[Unit] = {
+  def refresh(): Future[Unit] = {
+//    Future.successful((): Unit)
     getPopularInTag(edition = editions.Uk, tag = "sport/cricket", Seq()).map(trailsBox.send)
   }
+
+//  def refreshWith(): Future[Seq[Trail]]
 }
 
 class PopularInTagAgentLifecycle(
