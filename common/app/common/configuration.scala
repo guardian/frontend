@@ -210,13 +210,24 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: FiniteDuration =
-      Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
+      Duration.create(
+        configuration
+          .getIntegerProperty("content.api.timeout.millis")
+          .getOrElse(2000L)
+          .asInstanceOf[Number]
+          .longValue(),
+        MILLISECONDS,
+      )
 
     lazy val circuitBreakerErrorThreshold: Int =
       configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(30)
     lazy val circuitBreakerResetTimeout: FiniteDuration =
       FiniteDuration(
-        configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(2000),
+        configuration
+          .getIntegerProperty("content.api.circuit_breaker.reset_timeout")
+          .getOrElse(2000L)
+          .asInstanceOf[Number]
+          .longValue(),
         MILLISECONDS,
       )
 
