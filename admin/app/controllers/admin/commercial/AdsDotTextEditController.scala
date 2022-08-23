@@ -42,16 +42,18 @@ class AdsDotTextEditController(val controllerComponents: ControllerComponents)(i
       postSave: Call,
   ): Action[AnyContent] =
     Action { implicit request =>
-      AdsTextSellers.form.bindFromRequest.fold(
-        formWithErrors => {
-          NoCache(BadRequest(views.html.commercial.adsDotText(name, saveRoute, formWithErrors)))
-        },
-        adsTextSellers => {
-          S3.putPrivate(s3DotTextKey, adsTextSellers.sellers, "text/plain")
-          log.info(s"Wrote new $name file to $s3DotTextKey")
-          NoCache(Redirect(postSave))
-        },
-      )
+      AdsTextSellers.form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => {
+            NoCache(BadRequest(views.html.commercial.adsDotText(name, saveRoute, formWithErrors)))
+          },
+          adsTextSellers => {
+            S3.putPrivate(s3DotTextKey, adsTextSellers.sellers, "text/plain")
+            log.info(s"Wrote new $name file to $s3DotTextKey")
+            NoCache(Redirect(postSave))
+          },
+        )
     }
 
   def postAdsDotText(): Action[AnyContent] =

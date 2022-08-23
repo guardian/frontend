@@ -2,7 +2,7 @@
 
 import { log } from '@guardian/libs';
 import { memoize } from 'lodash-es';
-import { amIUsed } from 'commercial/sentinel';
+import { amIUsed } from 'commercial/am-i-used';
 import fastdom from '../../../lib/fastdom-promise';
 import { debugMinAbove, markCandidates } from './spacefinder-debug-tools';
 

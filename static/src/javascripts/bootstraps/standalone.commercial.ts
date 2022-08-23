@@ -14,6 +14,15 @@
 
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { initArticleInline } from 'commercial/modules/consentless/dynamic/article-inline';
+import { initFixedSlots } from 'commercial/modules/consentless/init-fixed-slots';
+import { initConsentless } from 'commercial/modules/consentless/prepare-ootag';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { consentlessAds } from 'common/modules/experiments/tests/consentlessAds';
+import {
+	AdFreeCookieReasons,
+	maybeUnsetAdFreeCookie,
+} from 'lib/manage-ad-free-cookie';
 import reportError from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
@@ -46,9 +55,16 @@ import type { Modules } from './types';
 
 const { isDotcomRendering, page } = window.guardian.config;
 
-const assetsPath = page.frontendAssetsFullURL ?? page.assetsPath;
+const decideAssetsPath = () => {
+	if (process.env.OVERRIDE_BUNDLE_PATH) {
+		return process.env.OVERRIDE_BUNDLE_PATH;
+	} else {
+		const assetsPath = page.frontendAssetsFullURL ?? page.assetsPath;
+		return `${assetsPath}javascripts/commercial/`;
+	}
+};
 
-__webpack_public_path__ = `${assetsPath}javascripts/commercial/`;
+__webpack_public_path__ = decideAssetsPath();
 
 const tags: Record<string, unknown> = {
 	feature: 'commercial',
@@ -192,8 +208,33 @@ const bootCommercial = async (): Promise<void> => {
 	}
 };
 
-if (window.guardian.mustardCut || window.guardian.polyfilled) {
-	void bootCommercial();
+const bootConsentless = async (): Promise<void> => {
+	/*  In the consented ad stack, we set the ad free cookie for users who
+		don't consent to targeted ads in order to hide empty ads slots.
+		We remove the cookie here so that we can show Opt Out ads.
+		TODO: Stop setting ad free cookie for users who opt out when
+		consentless ads are rolled out to all users.
+ 	*/
+	maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
+
+	await Promise.all([
+		initConsentless(),
+		initFixedSlots(),
+		initArticleInline(),
+	]);
+};
+
+/* Provide consentless advertising in the variant of a zero-percent test,
+   regardless of consent state. This is currently just for testing purposes.
+
+   If not in the variant, get the usual commercial experience
+*/
+if (isInVariantSynchronous(consentlessAds, 'variant')) {
+	void bootConsentless();
 } else {
-	window.guardian.queue.push(bootCommercial);
+	if (window.guardian.mustardCut || window.guardian.polyfilled) {
+		void bootCommercial();
+	} else {
+		window.guardian.queue.push(bootCommercial);
+	}
 }

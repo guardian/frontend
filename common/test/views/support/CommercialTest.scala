@@ -16,19 +16,6 @@ class CommercialTest extends AnyFlatSpec with Matchers with OptionValues with Be
       javascriptConfigOverrides = Map(),
     )
 
-  def pageShouldRequestAdSizes(pageId: String)(sizes: Seq[String]): Unit = {
-    topAboveNavSlot.adSizes.get("desktop").value shouldBe sizes
-  }
-
-  "topAboveNavSlot ad sizes" should "be variable for all pages" in {
-    pageShouldRequestAdSizes("uk/culture")(
-      Seq("1,1", "2,2", "728,90", "940,230", "900,250", "970,250", "88,71", "fluid"),
-    )
-    pageShouldRequestAdSizes("business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis")(
-      Seq("1,1", "2,2", "728,90", "940,230", "900,250", "970,250", "88,71", "fluid"),
-    )
-  }
-
   // Keeping this code for now since we'll be running another similar
   // experiment in the near future:
   // "topAboveNavSlot css classes" should

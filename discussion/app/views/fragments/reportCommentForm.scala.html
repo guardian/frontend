@@ -11,7 +11,7 @@
     userForm.error("email"),
     userForm.error("reason")
 ) { case (emailInput: Option[String], categoryError: Option[FormError], emailError: Option[FormError], reasonError: Option[FormError]) =>
-                @helper.form(controllers.routes.CommentsController.reportAbuseSubmission(commentId), 'class -> "form") {
+                @helper.form(controllers.routes.CommentsController.reportAbuseSubmission(commentId), Symbol("class") -> "form") {
                     @helper.CSRF.formField
                     <fieldset class="fieldset">
                         <div class="fieldset__heading" />

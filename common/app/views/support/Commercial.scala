@@ -128,24 +128,6 @@ object Commercial {
     } yield branding.brandingType
 
   object topAboveNavSlot {
-
-    // mark: c66fae4e-1d29-467a-a081-caad7a90cacd
-    val adSizes: Map[String, Seq[String]] = {
-      val fabricAdvertsTop = Seq("88,71")
-      val fluidAdvertsTop = Seq("fluid")
-      Map(
-        "tablet" -> (Seq("1,1", "2,2", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
-        "desktop" -> (Seq(
-          "1,1",
-          "2,2",
-          "728,90",
-          "940,230",
-          "900,250",
-          "970,250",
-        ) ++ fabricAdvertsTop ++ fluidAdvertsTop),
-      )
-    }
-
     // The sizesOverride parameter is for testing only.
     def cssClasses(metadata: model.MetaData): String = {
       val topBannerDisableSticky = metadata.javascriptConfigOverrides.get("disableStickyTopBanner") match {

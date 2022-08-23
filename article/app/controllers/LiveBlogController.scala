@@ -1,5 +1,6 @@
 package controllers
 
+import agents.DeeplyReadAgent
 import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
@@ -21,6 +22,7 @@ import services.{CAPILookup, NewsletterService}
 import services.dotcomponents.DotcomponentsLogger
 import topics.TopicService
 import views.support.RenderOtherStatus
+
 import scala.concurrent.Future
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -32,12 +34,16 @@ class LiveBlogController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     topicService: TopicService,
+    deeplyReadAgent: DeeplyReadAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
+  val mostPopular = Seq(
+    deeplyReadAgent.onwardsJourneyResponse,
+  )
 
   // we support liveblogs and also articles, so that minutes work
   private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle
@@ -123,7 +129,14 @@ class LiveBlogController(
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
           Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult))
         case (blog: LiveBlogPage, blocks) =>
-          getJson(blog, range, isLivePage, filter, blocks.requestedBodyBlocks.getOrElse(Map.empty), topicResult)
+          getJson(
+            blog,
+            range,
+            isLivePage,
+            filter,
+            blocks.requestedBodyBlocks.getOrElse(Map.empty).map(entry => (entry._1, entry._2.toSeq)),
+            topicResult,
+          )
         case (minute: MinutePage, _) =>
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ =>
@@ -182,6 +195,7 @@ class LiveBlogController(
                 availableTopics,
                 newsletter = None,
                 topicResult,
+                mostPopular = Some(mostPopular),
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)

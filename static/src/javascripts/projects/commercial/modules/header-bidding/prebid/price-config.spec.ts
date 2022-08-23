@@ -80,6 +80,8 @@ describe('priceGranularity', () => {
 		[[728, 90], granularityOption2],
 		[[970, 250], granularityOption2],
 		[[300, 250], granularityOption2],
+		[[620, 350], granularityOption2],
+		[[300, 197], granularityOption2],
 	])(
 		'Ozone slot with size %s gives correct granularity',
 		([width, height], expectedGranularity) => {

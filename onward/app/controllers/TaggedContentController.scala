@@ -34,7 +34,7 @@ class TaggedContentController(
 
   private def render(trails: Seq[ContentType])(implicit request: RequestHeader): Result =
     Cached(300) {
-      JsonComponent(
+      common.JsonComponent(
         "trails" -> JsArray(trails.map { trail =>
           Json.obj(
             ("webTitle", trail.metadata.webTitle),

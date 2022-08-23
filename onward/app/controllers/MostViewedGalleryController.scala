@@ -39,7 +39,7 @@ class MostViewedGalleryController(
 
   def renderMostViewed(): Action[AnyContent] =
     Action { implicit request =>
-      getMostViewedGallery match {
+      getMostViewedGallery() match {
         case Nil       => Cached(60) { JsonNotFound() }
         case galleries => renderMostViewedGallery(galleries)
       }

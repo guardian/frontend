@@ -59,7 +59,7 @@ class MostViewedSocialController(
                     Fixed(container),
                     CollectionConfigWithId(dataId, config),
                     CollectionEssentials(
-                      items.map(FaciaContentConvert.contentToFaciaContent),
+                      items.map(FaciaContentConvert.contentToFaciaContent).toSeq,
                       Nil,
                       displayName,
                       None,

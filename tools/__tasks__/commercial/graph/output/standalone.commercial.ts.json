@@ -61,6 +61,9 @@
   "../projects/common/modules/commercial/support-utilities.js",
   "../projects/common/modules/commercial/user-features.ts"
  ],
+ "../projects/commercial/am-i-used.ts": [
+  "../lib/config.d.ts"
+ ],
  "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
@@ -94,21 +97,19 @@
   "../projects/commercial/modules/sticky-inlines.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
+  "../lib/url.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
-  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
@@ -119,7 +120,6 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/commercial/lib/googletag-ad-size.ts",
   "../projects/common/modules/identity/api.ts"
  ],
  "../projects/commercial/modules/comscore.ts": [
@@ -128,6 +128,24 @@
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.d.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
+ ],
+ "../projects/commercial/modules/consentless/define-slot.ts": [],
+ "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/detect-viewport.ts",
+  "../lib/fastdom-promise.js",
+  "../lib/url.ts",
+  "../projects/commercial/modules/consentless/define-slot.ts",
+  "../projects/commercial/modules/sticky-inlines.ts",
+  "../projects/common/modules/article/space-filler.ts",
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder.ts"
+ ],
+ "../projects/commercial/modules/consentless/init-fixed-slots.ts": [
+  "../projects/commercial/modules/consentless/define-slot.ts"
+ ],
+ "../projects/commercial/modules/consentless/prepare-ootag.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
@@ -145,12 +163,19 @@
  "../projects/commercial/modules/dfp/add-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
+  "../projects/commercial/modules/dfp/create-advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/commercial/modules/dfp/queue-advert.ts"
  ],
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
+ "../projects/commercial/modules/dfp/create-advert.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/report-error.js",
+  "../projects/commercial/modules/dfp/Advert.ts"
+ ],
  "../projects/commercial/modules/dfp/define-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
@@ -182,9 +207,11 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/fill-advert-slots.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/Advert.ts",
+  "../projects/commercial/modules/dfp/create-advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/display-ads.ts",
   "../projects/commercial/modules/dfp/display-lazy-ads.ts",
@@ -199,7 +226,6 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -390,7 +416,7 @@
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
  "../projects/commercial/modules/header-bidding/slot-config.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../lib/config.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
@@ -549,9 +575,6 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
- "../projects/commercial/sentinel.ts": [
-  "../lib/config.d.ts"
- ],
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
   "../lib/config.d.ts",
@@ -646,7 +669,8 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts",
+  "../projects/common/modules/experiments/tests/consentlessAds.ts",
+  "../projects/common/modules/experiments/tests/deeply-read-article-footer.js",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
@@ -672,10 +696,11 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
- "../projects/common/modules/experiments/tests/multi-sticky-right-ads.ts": [
+ "../projects/common/modules/experiments/tests/consentlessAds.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
  ],
+ "../projects/common/modules/experiments/tests/deeply-read-article-footer.js": [],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
@@ -696,7 +721,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/sentinel.ts",
+  "../projects/commercial/am-i-used.ts",
   "../projects/common/modules/spacefinder-debug-tools.js"
  ],
  "../projects/common/modules/ui/sticky.js": [
@@ -723,6 +748,9 @@
   "../projects/commercial/modules/article-body-adverts.ts",
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
+  "../projects/commercial/modules/consentless/dynamic/article-inline.ts",
+  "../projects/commercial/modules/consentless/init-fixed-slots.ts",
+  "../projects/commercial/modules/consentless/prepare-ootag.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.ts",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
@@ -743,6 +771,8 @@
   "../projects/commercial/modules/track-scroll-depth.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-features.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/consentlessAds.ts",
   "types.ts"
  ],
  "types.ts": []

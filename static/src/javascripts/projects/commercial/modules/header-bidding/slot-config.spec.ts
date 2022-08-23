@@ -79,8 +79,8 @@ describe('getSlots', () => {
 
 	test('should return the correct slots at breakpoint M without mobile sticky', () => {
 		(shouldIncludeMobileSticky as jest.Mock).mockReturnValue(false);
-		(getBreakpointKey as jest.Mock).mockReturnValue('M');
-		expect(getSlots('Article')).toEqual([
+		config.set('page.contentType', 'Article');
+		expect(getSlots('mobile')).toEqual([
 			{
 				key: 'right',
 				sizes: [
@@ -111,10 +111,10 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint M for US including mobile sticky slot', () => {
-		(getBreakpointKey as jest.Mock).mockReturnValue('M');
 		config.set('switches.mobileStickyPrebid', true);
 		(shouldIncludeMobileSticky as jest.Mock).mockReturnValue(true);
-		expect(getSlots('Article')).toEqual([
+		config.set('page.contentType', 'Article');
+		expect(getSlots('mobile')).toEqual([
 			{
 				key: 'right',
 				sizes: [
@@ -149,8 +149,7 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint T', () => {
-		(getBreakpointKey as jest.Mock).mockReturnValue('T');
-		expect(getSlots('Article')).toEqual([
+		expect(getSlots('tablet')).toEqual([
 			{
 				key: 'right',
 				sizes: [
@@ -185,8 +184,8 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint D on article pages', () => {
-		(getBreakpointKey as jest.Mock).mockReturnValue('D');
-		const desktopSlots = getSlots('Article');
+		config.set('page.contentType', 'Article');
+		const desktopSlots = getSlots('desktop');
 		expect(desktopSlots).toContainEqual({
 			key: 'inline',
 			sizes: [
@@ -209,8 +208,8 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint T on crossword pages', () => {
-		(getBreakpointKey as jest.Mock).mockReturnValue('T');
-		const tabletSlots = getSlots('Crossword');
+		config.set('page.contentType', 'Crossword');
+		const tabletSlots = getSlots('tablet');
 		expect(tabletSlots).toContainEqual({
 			key: 'crossword-banner',
 			sizes: [[728, 90]],
@@ -218,8 +217,8 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint D on other pages', () => {
-		(getBreakpointKey as jest.Mock).mockReturnValue('D');
-		const desktopSlots = getSlots('');
+		config.set('page.contentType', '');
+		const desktopSlots = getSlots('desktop');
 		expect(desktopSlots).toContainEqual({
 			key: 'inline',
 			sizes: [[300, 250]],
@@ -300,6 +299,42 @@ describe('getPrebidAdSlots', () => {
 				key: 'mobile-sticky',
 				sizes: [[320, 50]],
 			},
+		]);
+	});
+
+	test('should return the correct inline slot at breakpoint M when inline is in size mappings', () => {
+		(getBreakpointKey as jest.Mock).mockReturnValue('M');
+		config.set('page.contentType', 'Article');
+		const hbSlots = getHeaderBiddingAdSlots(buildAdvert('inline'));
+
+		expect(hbSlots).toContainEqual(
+			expect.objectContaining({ key: 'inline', sizes: [[300, 250]] }),
+		);
+	});
+
+	test('should return the correct inline slot at breakpoint D with no additional size mappings', () => {
+		(getBreakpointKey as jest.Mock).mockReturnValue('D');
+		config.set('page.contentType', 'Article');
+
+		const hbSlots = getHeaderBiddingAdSlots(buildAdvert('inline'));
+		expect(hbSlots).toHaveLength(1);
+		expect(hbSlots[0].sizes).toEqual([[300, 250]]);
+	});
+
+	test('should return the correct inline slot at breakpoint D with additional size mappings', () => {
+		(getBreakpointKey as jest.Mock).mockReturnValue('D');
+		config.set('page.contentType', 'Article');
+
+		const hbSlots = getHeaderBiddingAdSlots(
+			buildAdvert('inline', {
+				desktop: [adSizes.halfPage, adSizes.skyscraper],
+			}),
+		);
+		expect(hbSlots).toHaveLength(1);
+		expect(hbSlots[0].sizes).toEqual([
+			[160, 600],
+			[300, 600],
+			[300, 250],
 		]);
 	});
 });

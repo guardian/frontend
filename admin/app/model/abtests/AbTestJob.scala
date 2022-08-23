@@ -27,7 +27,7 @@ object AbTestJob extends GuLogging {
       val testVariants = switches.foldLeft(Map.empty[String, Seq[String]])((acc, switch) => {
         if (tests.isDefinedAt(switch)) {
           // Update map with a list of variants for the ab-test switch.
-          acc.updated(switch, tests(switch).map(_._2))
+          acc.updated(switch, tests(switch).map(_._2).toSeq)
         } else {
           acc
         }

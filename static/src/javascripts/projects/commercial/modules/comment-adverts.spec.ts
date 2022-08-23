@@ -1,4 +1,4 @@
-import { createAdSize } from '@guardian/commercial-core';
+import { adSizes } from '@guardian/commercial-core';
 import { mocked } from 'ts-jest/utils';
 import { getBreakpoint as getBreakpoint_ } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
@@ -74,9 +74,7 @@ const generateInnerHtmlWithAdSlot = () => {
                 <div class="content__main-column">
                     <div class="js-discussion__ad-slot">
                         <div id="dfp-ad--comments"
-                            class="js-ad-slot ad-slot ad-slot--comments js-sticky-mpu
-                            data-mobile="1,1|2,2|300,250|300,274|fluid"
-                            data-desktop="1,1|2,2|300,250|300,274|fluid">
+                            class="js-ad-slot ad-slot ad-slot--comments js-sticky-mpu">
                         </div>
                     </div>
                 </div>
@@ -84,10 +82,10 @@ const generateInnerHtmlWithAdSlot = () => {
 };
 
 const createTestAdvert = (testAdvert: Partial<MockAdvert>): Advert =>
-	({ ...testAdvert } as Advert);
+	({ updateSizeMapping: jest.fn(), ...testAdvert } as Advert);
 
-const getElement = (selector: string): Element =>
-	document.querySelector(selector) as Element;
+const getElement = (selector: string): HTMLElement =>
+	document.querySelector(selector) as HTMLElement;
 
 describe('createCommentSlot', () => {
 	beforeEach(() => {
@@ -104,28 +102,9 @@ describe('createCommentSlot', () => {
 		fakeMediator.removeAllListeners();
 	});
 
-	it('should return an ad slot with the correct sizes', () => {
-		const commentMpu = createCommentSlot(false);
-		const commentDmpu = createCommentSlot(true);
-		expect(commentMpu.getAttribute('data-desktop')).toBe(
-			'1,1|2,2|300,250|300,274|fluid',
-		);
-		expect(commentMpu.getAttribute('data-mobile')).toBe(
-			'1,1|2,2|300,197|300,250|300,274|fluid',
-		);
-		expect(commentDmpu.getAttribute('data-desktop')).toBe(
-			'1,1|2,2|300,250|300,274|fluid|300,600|160,600',
-		);
-		expect(commentDmpu.getAttribute('data-mobile')).toBe(
-			'1,1|2,2|300,197|300,250|300,274|fluid',
-		);
-	});
-
 	it('should add js-sticky-mpu to the class list', () => {
-		const commentMpu = createCommentSlot(false);
-		const commentDmpu = createCommentSlot(true);
+		const commentMpu = createCommentSlot();
 		expect(commentMpu.classList).toContain('js-sticky-mpu');
-		expect(commentDmpu.classList).toContain('js-sticky-mpu');
 	});
 });
 
@@ -141,44 +120,42 @@ describe('maybeUpgradeSlot', () => {
 
 	it('should upgrade the MPU to a DMPU where necessary', () => {
 		const advert = createTestAdvert({
-			sizes: { desktop: [createAdSize(300, 250)] },
-			slot: { defineSizeMapping: jest.fn() },
+			node: getElement('.js-discussion__ad-slot'),
+			sizes: {
+				desktop: [adSizes.mpu],
+			},
 		});
-		expect(advert.sizes.desktop).toEqual([createAdSize(300, 250)]);
 
-		maybeUpgradeSlot(advert, getElement('.js-discussion__ad-slot'));
-		expect(advert.sizes.desktop).toEqual([
-			createAdSize(300, 250),
-			createAdSize(300, 600),
-			createAdSize(160, 600),
-		]);
-		expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
+		expect(advert.sizes.desktop).toEqual([adSizes.mpu]);
+
+		maybeUpgradeSlot(advert);
+
+		expect(advert.updateSizeMapping).toHaveBeenCalledWith({
+			desktop: [adSizes.mpu, adSizes.halfPage, adSizes.skyscraper],
+		});
 	});
 
 	it('should not alter the slot if the slot is already a DMPU', () => {
 		const advert = createTestAdvert({
+			node: getElement('.js-discussion__ad-slot'),
 			sizes: {
-				desktop: [
-					createAdSize(160, 600),
-					createAdSize(300, 250),
-					createAdSize(300, 600),
-				],
+				desktop: [adSizes.skyscraper, adSizes.mpu, adSizes.halfPage],
 			},
 			slot: { defineSizeMapping: jest.fn() },
 		});
 		expect(advert.sizes.desktop).toEqual([
-			createAdSize(160, 600),
-			createAdSize(300, 250),
-			createAdSize(300, 600),
+			adSizes.skyscraper,
+			adSizes.mpu,
+			adSizes.halfPage,
 		]);
 
-		maybeUpgradeSlot(advert, getElement('.js-discussion__ad-slot'));
+		maybeUpgradeSlot(advert);
 		expect(advert.sizes.desktop).toEqual([
-			createAdSize(160, 600),
-			createAdSize(300, 250),
-			createAdSize(300, 600),
+			adSizes.skyscraper,
+			adSizes.mpu,
+			adSizes.halfPage,
 		]);
-		expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(0);
+		expect(advert.updateSizeMapping).toHaveBeenCalledTimes(0);
 	});
 });
 
@@ -198,13 +175,15 @@ describe('runSecondStage', () => {
 			'.js-comments .content__main-column',
 		);
 		const advert = createTestAdvert({
-			sizes: { desktop: [createAdSize(300, 250)] },
+			sizes: { desktop: [adSizes.mpu] },
 			slot: { defineSizeMapping: jest.fn() },
 		});
 		mocked(getAdvertById).mockReturnValue(advert);
 
 		runSecondStage(commentMainColumn, adSlotContainer);
-		expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
+		expect(advert.updateSizeMapping).toHaveBeenCalledWith({
+			desktop: [adSizes.mpu, adSizes.halfPage, adSizes.skyscraper],
+		});
 		expect(mocked(getAdvertById).mock.calls).toEqual([
 			['dfp-ad--comments'],
 		]);
@@ -217,13 +196,13 @@ describe('runSecondStage', () => {
 			'.js-comments .content__main-column',
 		);
 		const advert = createTestAdvert({
-			sizes: { desktop: [createAdSize(300, 250)] },
+			sizes: { desktop: [adSizes.mpu] },
 			slot: { defineSizeMapping: jest.fn() },
 		});
 		mocked(getAdvertById).mockReturnValue(advert);
 
 		runSecondStage(commentMainColumn, adSlotContainer);
-		expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
+		expect(advert.updateSizeMapping).toHaveBeenCalledTimes(1);
 		expect(mocked(getAdvertById).mock.calls).toEqual([
 			['dfp-ad--comments'],
 		]);
@@ -281,10 +260,9 @@ describe('initCommentAdverts', () => {
 			fakeMediator.emit('modules:comments:renderComments:rendered');
 			fakeMediator.once('page:commercial:comments', () => {
 				const adSlot = getElement('.js-ad-slot');
-				expect(addSlot).toHaveBeenCalledTimes(1);
-				expect(adSlot.getAttribute('data-desktop')).toBe(
-					'1,1|2,2|300,250|300,274|fluid|300,600|160,600',
-				);
+				expect(addSlot).toHaveBeenCalledWith(adSlot, false, {
+					desktop: [adSizes.halfPage, adSizes.skyscraper],
+				});
 				done();
 			});
 		});
@@ -297,10 +275,9 @@ describe('initCommentAdverts', () => {
 			fakeMediator.emit('modules:comments:renderComments:rendered');
 			fakeMediator.once('page:commercial:comments', () => {
 				const adSlot = getElement('.js-ad-slot');
-				expect(addSlot).toHaveBeenCalledTimes(1);
-				expect(adSlot.getAttribute('data-desktop')).toBe(
-					'1,1|2,2|300,250|300,274|fluid|300,600|160,600',
-				);
+				expect(addSlot).toHaveBeenCalledWith(adSlot, false, {
+					desktop: [adSizes.halfPage, adSizes.skyscraper],
+				});
 				done();
 			});
 		});
@@ -313,10 +290,7 @@ describe('initCommentAdverts', () => {
 			fakeMediator.emit('modules:comments:renderComments:rendered');
 			fakeMediator.once('page:commercial:comments', () => {
 				const adSlot = getElement('.js-ad-slot');
-				expect(addSlot).toHaveBeenCalledTimes(1);
-				expect(adSlot.getAttribute('data-desktop')).toBe(
-					'1,1|2,2|300,250|300,274|fluid',
-				);
+				expect(addSlot).toHaveBeenCalledWith(adSlot, false, {});
 				done();
 			});
 		});

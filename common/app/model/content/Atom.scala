@@ -90,7 +90,7 @@ final case class ExplainerAtom(
 object ExplainerAtom {
   def make(atom: AtomApiAtom): ExplainerAtom = {
     val explainer = atom.data.asInstanceOf[AtomData.Explainer].explainer
-    ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil), explainer.title, explainer.body, atom)
+    ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil).toSeq, explainer.title, explainer.body, atom)
   }
 }
 
@@ -214,7 +214,7 @@ object MediaAtom extends common.GuLogging {
     MediaAtom(
       id = id,
       defaultHtml = defaultHtml,
-      assets = mediaAtom.assets.map(mediaAssetMake),
+      assets = mediaAtom.assets.map(mediaAssetMake).toSeq,
       title = mediaAtom.title,
       duration = mediaAtom.duration,
       source = mediaAtom.source,
@@ -226,7 +226,7 @@ object MediaAtom extends common.GuLogging {
   }
 
   def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
-    ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)))
+    ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)).toSeq)
   }
 
   def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset = {
@@ -366,7 +366,7 @@ object QuizAtom extends common.GuLogging {
           text = answer.answerText,
           revealText = answer.revealText.flatMap(revealText => if (revealText != "") Some(revealText) else None),
           weight = answer.weight.toInt,
-          buckets = answer.bucket.getOrElse(Nil),
+          buckets = answer.bucket.getOrElse(Nil).toSeq,
           imageMedia = transformAssets(answer.assets.headOption),
         )
       }
@@ -374,10 +374,10 @@ object QuizAtom extends common.GuLogging {
       Question(
         id = question.id,
         text = question.questionText,
-        answers = answers,
+        answers = answers.toSeq,
         imageMedia = transformAssets(question.assets.headOption),
       )
-    }
+    }.toSeq
 
   def extractResultGroups(resultGroups: Option[com.gu.contentatom.thrift.atom.quiz.ResultGroups]): Seq[ResultGroup] =
     resultGroups
@@ -390,6 +390,7 @@ object QuizAtom extends common.GuLogging {
         )
       })
       .getOrElse(Nil)
+      .toSeq
 
   def extractContent(questions: Seq[Question], quiz: atomapi.quiz.QuizAtom): QuizContent =
     QuizContent(
@@ -406,7 +407,8 @@ object QuizAtom extends common.GuLogging {
             )
           })
         })
-        .getOrElse(Nil),
+        .getOrElse(Nil)
+        .toSeq,
     )
 
   def make(path: String, atom: AtomApiAtom, shareLinks: ShareLinkMeta): QuizAtom = {
@@ -541,7 +543,7 @@ object TimelineAtom {
       atom.id,
       atom,
       atom.data.asInstanceOf[AtomData.Timeline].timeline,
-      events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events map TimelineItem.make _,
+      events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events.toSeq map TimelineItem.make,
     )
 
   def renderFormattedDate(date: Long, format: Option[String]): String = {

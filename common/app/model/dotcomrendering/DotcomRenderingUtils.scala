@@ -72,7 +72,7 @@ object DotcomRenderingUtils {
         case _                 => None
       }
       sequence
-    }
+    }.map(_.toIndexedSeq)
 
     def entryToDataPair(entry: JsValue): Option[(String, String)] = {
       /*
@@ -156,7 +156,7 @@ object DotcomRenderingUtils {
 
     val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
     relevantBlocks.filter(block => ids(block.id))
-  }
+  }.toSeq
 
   private def addDisclaimer(
       elems: List[PageElement],
@@ -300,8 +300,7 @@ object DotcomRenderingUtils {
         Some(
           OnwardCollectionResponse(
             heading = "More on this story",
-            trails =
-              faciaItems.map(faciaItem => OnwardItem.pressedContentToOnwardItem(faciaItem)(requestHeader)).take(10),
+            trails = faciaItems.map(faciaItem => Trail.pressedContentToTrail(faciaItem)(requestHeader)).take(10),
           ),
         )
     }

@@ -1,5 +1,6 @@
 package test
 
+import agents.DeeplyReadAgent
 import controllers.ArticleController
 import org.apache.commons.codec.digest.DigestUtils
 import org.scalatest.flatspec.AnyFlatSpec
@@ -31,6 +32,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     wsClient,
     new DCRFake(),
     new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
+    new DeeplyReadAgent(),
   )
 
   "Article Controller" should "200 when content type is article" in {

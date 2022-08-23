@@ -40,16 +40,6 @@
         @fragments.headTonal(audio, page)
 
         <div class="podcast gs-container">
-            <figure class="podcast__player podcast__section"
-                data-component="main audio"
-                id="audio-component-container"
-                data-media-id="@audio.elements.mainAudio.map(_.properties.id)"
-                data-source="@audio.downloadUrl"
-                data-download-url="@audio.downloadUrl.getOrElse("#")"
-                data-duration="@audio.duration"
-                >
-            </figure>
-
             @for( series <- audio.tags.tags.find(_.properties.podcast.nonEmpty)
             ; podcast <- series.properties.podcast
             ; image <- podcast.image
@@ -124,12 +114,33 @@
                 @fragments.contentMeta(audio, page, false)
             </div>
 
+            <div class="meta__social podcast__share podcast__section" data-component="share">
+                @fragments.social(audio.sharelinks.pageShares)
+                <div class="meta__numbers">
+                    <div class="u-h meta__number js-sharecount">
+                    </div>
+                    <div class="u-h meta__number" data-discussion-id="@audio.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                        !audio.trail.isCommentable
+                    }">
+                    </div>
+                </div>
+            </div>
+
             @if(audio.fields.standfirst.isDefined) {
                 <div class="podcast__standfirst">
                     @fragments.standfirst(audio)
                 </div>
             }
 
+            <figure class="podcast__player podcast__section"
+                    data-component="main audio"
+                    id="audio-component-container"
+                    data-media-id="@audio.elements.mainAudio.map(_.properties.id)"
+                    data-source="@audio.downloadUrl"
+                    data-download-url="@audio.downloadUrl.getOrElse("#")"
+            data-duration="@audio.duration"
+            >
+            </figure>
 
             <div class="from-content-api podcast__body">
                 @if(audio.fields.body.nonEmpty) {
@@ -144,7 +155,7 @@
                 <div class="js-audio-components-container"></div>
                 @if(audio.fields.body.nonEmpty) {
                     <div class="hide-on-childrens-books-site">
-                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                        @fragments.commercial.standardAd("right", Seq("dark"), Map()))
                     </div>
                 }
             </div>
@@ -159,18 +170,6 @@
                     Support The Guardian
                     @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon", "podcast__section-icon"))
                 </a>
-            </div>
-
-            <div class="meta__social podcast__share podcast__section" data-component="share">
-                @fragments.social(audio.sharelinks.pageShares)
-                <div class="meta__numbers">
-                    <div class="u-h meta__number js-sharecount">
-                    </div>
-                    <div class="u-h meta__number" data-discussion-id="@audio.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
-                        !audio.trail.isCommentable
-                    }">
-                    </div>
-                </div>
             </div>
 
             <div class="podcast__submeta podcast__section">
