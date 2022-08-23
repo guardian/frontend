@@ -197,7 +197,7 @@ abstract class HtmlCleaner extends GuLogging {
   }
 
   private def secureSource(src: String): String = {
-    src.replaceAllLiterally("http://", "//")
+    src.replace("http://", "//")
   }
 
 }
