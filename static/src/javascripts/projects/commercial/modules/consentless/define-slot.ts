@@ -1,20 +1,19 @@
 import { renderAdvertLabel } from '../dfp/render-advert-label';
 
+const isArticle = window.guardian.config.page.contentType === 'Article';
+const isFront = window.guardian.config.page.isFront;
+
 const getOptOutSlotName = (slotName: string, inlineId?: number): string => {
-	if (window.guardian.config.page.isFront && slotName === 'inline') {
-		return 'front-inline';
-	} else if (slotName === 'inline') {
-		if (window.guardian.config.page.contentType === 'Article') {
-			if (inlineId === 1) {
-				return 'article-inline1';
-			} else {
-				return 'article-inline2-plus';
-			}
-		} else if (window.guardian.config.page.isLiveBlog) {
-			return 'liveblog-inline';
+	// front, liveblog, article inlines all have slightly different mappings, so we prefix them
+	if (slotName === 'inline') {
+		if (isArticle) {
+			// article inlines are suffixed with 1 for inline1 and 2-plus for all other inlines as they have different size mappings
+			return `article-inline${inlineId === 1 ? '1' : '2-plus'}`;
 		}
+		return `${isFront ? 'front-' : 'liveblog-'}${slotName}`;
+	} else {
+		return slotName;
 	}
-	return slotName;
 };
 
 const defineSlot = (
