@@ -1457,25 +1457,25 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
-  private[this] def getIframeWidth(html: String, default: Int = 0): Option[Int] = {
+  private[this] def getIframeWidth(html: String, fallback: Int = 0): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
 
     doc.getElementsByTag("iframe")
       .asScala.headOption
       .map(_.attr("width"))
       .map(
-        attr => Try(attr.toInt).getOrElse(default)
+        attr => Try(attr.toInt).getOrElse(fallback)
       )
   }
 
-  private[this] def getIframeHeight(html: String, default: Int = 0): Option[Int] = {
+  private[this] def getIframeHeight(html: String, fallback: Int = 0): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
 
     doc.getElementsByTag("iframe")
       .asScala.headOption
       .map(_.attr("height"))
       .map(
-        attr => Try(attr.toInt).getOrElse(default)
+        attr => Try(attr.toInt).getOrElse(fallback)
       )
   }
 
@@ -1559,8 +1559,8 @@ object PageElement {
     } yield {
       SpotifyBlockElement(
         getEmbedUrl(d.html),
-        getIframeHeight(html, default=540),
-        getIframeWidth(html, default=460),
+        getIframeHeight(html, fallback=540),
+        getIframeWidth(html, fallback=460),
         d.title,
         d.caption,
         thirdPartyTracking,
