@@ -12,7 +12,7 @@ class OnwardsPicker(curatedContentAgent: CuratedContentAgent) {
 
     Seq(
       OnwardCollectionResponse(
-        heading = s"More from ${format.theme}",
+        heading = "Curated content",
         trails = curatedContent,
       ),
     )
