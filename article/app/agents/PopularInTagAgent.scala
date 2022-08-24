@@ -1,16 +1,15 @@
 package agents
 
 import app.LifecycleComponent
-import play.api.inject.ApplicationLifecycle
-import common.editions
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import common.{AkkaAsync, Box, Edition, GuLogging, JobScheduler}
+import common.{AkkaAsync, Box, Edition, GuLogging, JobScheduler, editions}
 import contentapi.ContentApiClient
 import model.dotcomrendering.Trail.pressedContentToTrailWithoutRequest
 import model.dotcomrendering.{OnwardCollectionResponse, Trail}
+import play.api.inject.ApplicationLifecycle
 import services.FaciaContentConvert
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class PopularInTagAgent(
     contentApiClient: ContentApiClient,

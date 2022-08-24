@@ -1,14 +1,10 @@
 package agents
 
-import contentapi.ContentApiClient
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatest.BeforeAndAfterAll
 import org.scalatest.concurrent.ScalaFutures.whenReady
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
-import test.{ConfiguredTestSuite, SingleServerSuite, TestRequest, WithMaterializer, WithTestApplicationContext, WithTestContentApiClient, WithTestWsClient}
-
-import scala.concurrent.Await
+import test._
 
 class PopularInTagAgentTest
   extends AnyFlatSpec

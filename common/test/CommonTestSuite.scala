@@ -6,7 +6,6 @@ import conf.audio.FlagshipFrontContainerSpec
 import navigation.NavigationTest
 import org.scalatest.Suites
 import renderers.DotcomRenderingServiceTest
-import agents.PopularInTagAgentTest
 
 class CommonTestSuite
     extends Suites(
