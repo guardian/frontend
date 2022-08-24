@@ -106,7 +106,7 @@ object NavMenu {
    * UsSportsPillar
    */
   private[navigation] def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
-    Edition.others(edition).flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
+    Edition.othersWithEurope(edition).flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
   }
 
   @tailrec
