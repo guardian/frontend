@@ -54,3 +54,15 @@ object CommercialEndOfQuarterMegaTest
       sellByDate = LocalDate.of(2022, 10, 10),
       participationGroup = Perc10A,
     )
+
+object DCROnwardsData
+    extends Experiment(
+      name = "dcr-onwards-data",
+      // DCR will already render the data if we send it down the pipes.
+      // This will allow us to iterate on the feature.
+      // see: https://github.com/guardian/dotcom-rendering/blob/b649a00fc9e5d2ba158f82b7c4b152106579f6a9/dotcom-rendering/src/web/layouts/StandardLayout.tsx#L793-L798
+      description = "Switch to iterate on adding onwards data to be sent to DCR to be server rendered",
+      owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 6, 2),
+      participationGroup = Perc0C,
+    )
