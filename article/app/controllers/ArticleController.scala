@@ -1,9 +1,10 @@
 package controllers
 
-import agents.DeeplyReadAgent
+import agents.{CuratedContentAgent, DeeplyReadAgent}
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
+import experiments.{ActiveExperiments, DCROnwardsData}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
@@ -26,6 +27,7 @@ class ArticleController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     deeplyReadAgent: DeeplyReadAgent,
+    onwardsPicker: OnwardsPicker,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -97,9 +99,14 @@ class ArticleController(
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
     val newsletter = newsletterService.getNewsletterForArticle(article)
+    val edition = Edition(request)
+    val onwards =
+      if (ActiveExperiments.isParticipating(DCROnwardsData)(request)) Some(onwardsPicker.forArticle(article, edition))
+      else None
+
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel
-        .forArticle(article, blocks, request, pageType, newsletter),
+        .forArticle(article, blocks, request, pageType, newsletter, onwards),
     )
   }
 
@@ -134,6 +141,7 @@ class ArticleController(
           newsletter = newsletter,
           topicResult = None,
           mostPopular = Some(mostPopular),
+          onwards = None,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
