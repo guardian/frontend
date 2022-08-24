@@ -1,5 +1,6 @@
 package controllers
 
+import agents.CuratedContentAgent
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
@@ -18,12 +19,14 @@ import views.support._
 
 import scala.concurrent.Future
 
+case class OnwardCollection()
 class ArticleController(
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
+    curatedContentAgent: CuratedContentAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -92,6 +95,10 @@ class ArticleController(
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
     val newsletter = newsletterService.getNewsletterForArticle(article)
+    val format = article.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
+    val edition = Edition(request)
+    val curatedContent = curatedContentAgent.getTrails(format.theme, edition)
+
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel
         .forArticle(article, blocks, request, pageType, newsletter),

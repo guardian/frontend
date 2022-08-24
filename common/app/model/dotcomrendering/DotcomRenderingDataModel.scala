@@ -218,11 +218,6 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
-    val onwardsRelated = OnwardCollectionResponse(
-      heading = "Related stories",
-      trails = page.related.faciaItems.map(pressedContentToOnwardItem(_)(request)),
-    )
-
     val linkedData = LinkedData.forArticle(
       article = page.article,
       baseURL = Configuration.amp.baseUrl,
@@ -244,7 +239,7 @@ object DotcomRenderingDataModel {
       availableTopics = None,
       newsletter = newsletter,
       topicResult = None,
-      onwards = Some(Seq(onwardsRelated)),
+      onwards = Some(Seq()),
     )
   }
 
