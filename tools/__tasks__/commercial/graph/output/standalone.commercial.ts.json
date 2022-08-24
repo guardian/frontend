@@ -129,7 +129,9 @@
   "../lib/config.d.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/consentless/define-slot.ts": [],
+ "../projects/commercial/modules/consentless/define-slot.ts": [
+  "../projects/commercial/modules/dfp/render-advert-label.ts"
+ ],
  "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect-viewport.ts",
@@ -137,6 +139,15 @@
   "../lib/url.ts",
   "../projects/commercial/modules/consentless/define-slot.ts",
   "../projects/commercial/modules/sticky-inlines.ts",
+  "../projects/common/modules/article/space-filler.ts",
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder.ts"
+ ],
+ "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/fastdom-promise.js",
+  "../lib/url.ts",
+  "../projects/commercial/modules/consentless/define-slot.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
@@ -226,6 +237,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -739,6 +751,7 @@
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/manage-ad-free-cookie.ts",
   "../lib/report-error.js",
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
@@ -749,6 +762,7 @@
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
   "../projects/commercial/modules/consentless/dynamic/article-inline.ts",
+  "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts",
   "../projects/commercial/modules/consentless/init-fixed-slots.ts",
   "../projects/commercial/modules/consentless/prepare-ootag.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
