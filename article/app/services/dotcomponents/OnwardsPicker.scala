@@ -1,11 +1,11 @@
 package services.dotcomponents
 
-import agents.CuratedContentAgent
+import agents.{CuratedContentAgent, PopularInTagAgent}
 import common.Edition
 import model.dotcomrendering.OnwardCollectionResponse
 import model.{ArticlePage, ContentFormat}
 
-class OnwardsPicker(curatedContentAgent: CuratedContentAgent) {
+class OnwardsPicker(curatedContentAgent: CuratedContentAgent, popularInTagAgent: PopularInTagAgent) {
   def forArticle(article: ArticlePage, edition: Edition): Seq[OnwardCollectionResponse] = {
     val format = article.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
     val curatedContent = curatedContentAgent.getTrails(format.theme, edition)
