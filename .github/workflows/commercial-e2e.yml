@@ -1,0 +1,57 @@
+name: Commercial E2E Tests
+on:
+    [push]
+    # will change to below when we have a stable branch
+    #
+    # pull_request:
+    #     paths:
+    #         - static/src/javascripts/projects/common/modules/commercial
+    #         - static/src/javascripts/projects/commercial
+    #         - commercial
+
+concurrency:
+    group: 'commercial-e2e'
+    cancel-in-progress: true
+
+jobs:
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout frontend
+              uses: actions/checkout@v3
+              with:
+                  path: ./frontend
+
+            - name: Checkout DCR
+              uses: actions/checkout@v3
+              with:
+                  path: ./dcr
+
+            - name: Setup node
+              uses: guardian/actions-setup-node@main
+
+            - name: Install frontend dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: ./frontend
+
+            - name: Install DCR dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: ./dcr
+
+            - name: Start Frontend
+              run: nohup make watch &
+              working-directory: ./frontend
+
+            - name: Start DCR
+              run: nohup make dev &
+              env:
+                  COMMERCIAL_BUNDLE_URL: http://localhost:9000/assets/javascripts/commercial/graun.standalone.commercial.js
+
+            - name: Run Cypress
+              uses: cypress-io/github-action@v4
+              with:
+                  project: ./frontend
+                  wait-on: 'http://localhost:3000'
