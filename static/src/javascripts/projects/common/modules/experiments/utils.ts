@@ -3,5 +3,5 @@ import { bypassCoreWebVitalsSampling } from '@guardian/libs';
 
 export const bypassMetricsSampling = (): void => {
 	void bypassCommercialMetricsSampling();
-	bypassCoreWebVitalsSampling();
+	void bypassCoreWebVitalsSampling();
 };
