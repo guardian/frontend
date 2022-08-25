@@ -86,7 +86,7 @@ const insertAdAtPara = (
 			}
 		})
 		.then(() => {
-			defineSlot(ad.id, 'inline', inlineId);
+			defineSlot(ad.id, inlineId === 1 ? 'inline' : 'inline-right');
 		});
 };
 
