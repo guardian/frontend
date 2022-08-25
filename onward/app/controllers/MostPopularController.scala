@@ -11,7 +11,7 @@ import model.Cached.RevalidatableResult
 import model._
 import model.dotcomrendering.{
   MostPopularGeoResponse,
-  MostPopularNx2,
+  MostPopularTrails,
   OnwardCollectionResponse,
   OnwardCollectionResponseDCR,
   Trail,
@@ -21,12 +21,15 @@ import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
+import agents.DeeplyReadAgent
+import model.dotcomrendering.MostPopularTrails
 
 class MostPopularController(
     contentApiClient: ContentApiClient,
     geoMostPopularAgent: GeoMostPopularAgent,
     dayMostPopularAgent: DayMostPopularAgent,
     mostPopularAgent: MostPopularAgent,
+    deeplyReadAgent: DeeplyReadAgent,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -141,11 +144,11 @@ class MostPopularController(
     Cached(900)(JsonComponent.fromWritable(response))
   }
 
-  def jsonResponseNx2(mostPopulars: Seq[MostPopularNx2], mostCards: Map[String, Option[ContentCard]])(implicit
+  def jsonResponseTrails(mostPopulars: Seq[MostPopularTrails], mostCards: Map[String, Option[ContentCard]])(implicit
       request: RequestHeader,
   ): Result = {
-    val tabs = mostPopulars.map { nx2 =>
-      OnwardCollectionResponse(nx2.heading, nx2.trails)
+    val tabs = mostPopulars.map { tab =>
+      OnwardCollectionResponse(tab.heading, tab.trails)
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
       Trail.contentCardToTrail(contentCard)
@@ -198,6 +201,47 @@ class MostPopularController(
           ),
         )
       }
+    }
+
+  def renderWithDeeplyRead(): Action[AnyContent] =
+    Action.async { implicit request =>
+      val edition = Edition(request)
+
+      // Synchronous edition popular, from the mostPopularAgent (stateful)
+      val editionPopular: Option[MostPopularTrails] = {
+        val editionPopularContent = mostPopularAgent.mostPopular(edition)
+        if (editionPopularContent.isEmpty) None
+        Some(
+          MostPopularTrails(
+            "Most popular",
+            "",
+            editionPopularContent
+              .map(_.faciaContent)
+              .map(Trail.pressedContentToTrail),
+          ),
+        )
+      }
+
+      val deeplyReadItems = deeplyReadAgent.getTrails
+
+      // Async global deeply read
+      val deeplyRead: Option[MostPopularTrails] = {
+        if (deeplyReadItems.isEmpty) None
+        Some(
+          MostPopularTrails(
+            "Deeply read",
+            "",
+            deeplyReadItems,
+          ),
+        )
+      }
+
+      val response =
+        if (editionPopular.isDefined && deeplyRead.isDefined)
+          jsonResponseTrails(editionPopular.toSeq ++ deeplyRead.toSeq, mostCards())
+        else NotFound
+
+      Future(response)
     }
 
   // Get "Most Commented" & "Most Shared" cards for Extended "Most Read" container

@@ -11,4 +11,8 @@ class DeeplyReadAgent extends GuLogging {
       trails = trailsBox.get(),
     )
   }
+
+  def getTrails = {
+    trailsBox.get()
+  }
 }
