@@ -19,10 +19,9 @@ export const getTestUrl = (stage: 'code' | 'prod' | 'dev', path: string, { isDcr
 		// Use dev if no stage properly specified
 		case 'dev':
 		default: {
-			// TODO We currently have two separate URLs for testing DCR locally
-			// Investigate why proxying URLs via 9000 doesn't work
+			// The local bundle can be served from DCR by using COMMERCIAL_BUNDLE_URL when starting DCR to test changes locally without needing to launch frontend
 			if (isDcr) {
-				return `http://localhost:3030/Article?url=http://localhost:9000${path}`;
+				return `http://localhost:3030/Article?url=https://theguardian.com${path}`;
 			} else {
 				return `http://localhost:9000${path}`;
 			}

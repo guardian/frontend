@@ -49,7 +49,7 @@ jobs:
 
             - name: Start DCR
               run: nohup make dev &
-              working-directory: ./dcr
+              working-directory: ./dcr/dotcom-rendering
               env:
                   COMMERCIAL_BUNDLE_URL: http://localhost:9000/assets/javascripts/commercial/graun.standalone.commercial.js
 
