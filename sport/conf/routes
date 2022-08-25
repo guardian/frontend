@@ -19,6 +19,8 @@ GET        /football/fixtures/:year/:month/:day.json                            
 GET        /football/fixtures/:year/:month/:day                                                football.controllers.FixturesController.allFixturesFor(year, month, day)
 GET        /football/fixtures                                                                  football.controllers.FixturesController.allFixtures()
 GET        /football/fixtures.json                                                             football.controllers.FixturesController.allFixturesJson()
+GET        /football/:tag/fixtures/more/:year/:month/:day.json                                 football.controllers.FixturesController.moreTagFixturesForJson(year, month, day, tag)
+GET        /football/:tag/fixtures/more/:year/:month/:day                                      football.controllers.FixturesController.moreTagFixturesFor(year, month, day, tag)
 GET        /football/:tag/fixtures/:year/:month/:day.json                                      football.controllers.FixturesController.tagFixturesForJson(year, month, day, tag)
 GET        /football/:tag/fixtures/:year/:month/:day                                           football.controllers.FixturesController.tagFixturesFor(year, month, day, tag)
 GET        /football/:tag/fixtures                                                             football.controllers.FixturesController.tagFixturesJson(tag)
