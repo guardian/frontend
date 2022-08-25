@@ -58,5 +58,5 @@ jobs:
               with:
                   install: false
                   start: yarn cypress:run
-                  project: ./frontend
+                  working-directory: ./frontend
                   wait-on: 'http://localhost:3030, http://localhost:9000/assets/javascripts/commercial/graun.standalone.commercial.js'
