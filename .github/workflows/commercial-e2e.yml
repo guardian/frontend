@@ -26,6 +26,7 @@ jobs:
             - name: Checkout DCR
               uses: actions/checkout@v3
               with:
+                  repository: guardian/dotcom-rendering
                   path: ./dcr
 
             - name: Setup node
