@@ -31,7 +31,7 @@ jobs:
             - name: Setup node
               uses: guardian/actions-setup-node@main
               with:
-                  node-version: '14'
+                  node-version: '14.18.3'
 
             - name: Install frontend dependencies
               uses: bahmutov/npm-install@v1
@@ -49,11 +49,14 @@ jobs:
 
             - name: Start DCR
               run: nohup make dev &
+              working-directory: ./dcr
               env:
                   COMMERCIAL_BUNDLE_URL: http://localhost:9000/assets/javascripts/commercial/graun.standalone.commercial.js
 
             - name: Run Cypress
               uses: cypress-io/github-action@v4
               with:
+                  install: false
+                  start: yarn cypress:run
                   project: ./frontend
-                  wait-on: 'http://localhost:3000'
+                  wait-on: 'http://localhost:3030, http://localhost:9000/assets/javascripts/commercial/graun.standalone.commercial.js'
