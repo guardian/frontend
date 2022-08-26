@@ -6,7 +6,7 @@ const gamUrl = 'https://securepubads.g.doubleclick.net/gampad/ads?**';
 describe('GAM targeting', () => {
 	it(`checks that a request is made`, () => {
 		const { path, adTest } = articles[0];
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.allowAllConsent();
 
@@ -17,7 +17,7 @@ describe('GAM targeting', () => {
 
 	it(`checks the gdpr_consent param`, () => {
 		const { path, adTest } = articles[0];
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.allowAllConsent();
 
@@ -33,7 +33,7 @@ describe('GAM targeting', () => {
 	// front tests are disabled for the moment
 	// fronts.forEach(({ path, section, adTest }) => {
 	// 	it.skip(`checks custom params on the ${section} front`, () => {
-	// 		cy.visit(`${path}?adtest=${adTest}`);
+	// 		cy.visit(path);
 
 	// 		cy.allowAllConsent();
 

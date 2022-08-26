@@ -8,25 +8,33 @@ import type {UserFeaturesResponse} from '../../static/src/javascripts/types/memb
  * @param {{ isDcr?: boolean }} options
  * @returns {string} The full path
  */
-export const getTestUrl = (stage: 'code' | 'prod' | 'dev', path: string, { isDcr } = { isDcr: false }) => {
+export const getTestUrl = (stage: 'code' | 'prod' | 'dev', path: string, { isDcr } = { isDcr: false }, adtest = 'fixed-puppies') => {
+	let url = '';
 	switch (stage) {
 		case 'code': {
-			return `https://code.dev-theguardian.com${path}`;
+			url = `https://code.dev-theguardian.com${path}`;
 		}
 		case 'prod': {
-			return `https://theguardian.com${path}`;
+			url = `https://theguardian.com${path}`;
 		}
 		// Use dev if no stage properly specified
 		case 'dev':
 		default: {
 			// The local bundle can be served from DCR by using COMMERCIAL_BUNDLE_URL when starting DCR to test changes locally without needing to launch frontend
 			if (isDcr) {
-				return `http://localhost:3030/Article?url=https://theguardian.com${path}`;
+				url = `http://localhost:3030/Article?url=https://theguardian.com${path}`;
 			} else {
-				return `http://localhost:9000${path}`;
+				url = `http://localhost:9000${path}`;
 			}
 		}
 	}
+
+	if (adtest) {
+		const builder = new URL(url);
+		builder.searchParams.append('adtest', adtest);
+		url = builder.toString();
+	}
+	return url;
 };
 
 /**

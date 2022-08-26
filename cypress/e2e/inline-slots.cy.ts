@@ -11,7 +11,7 @@ describe('Slots and iframes load on pages', () => {
 			it(`Test ${path} has at least ${expectedMinInlineSlotsOnPage} inline total slots at breakpoint ${breakpoint}`, () => {
 				cy.viewport(width, 500);
 
-				cy.visit(`${path}?adtest=${adTest}`);
+				cy.visit(path);
 
 				cy.allowAllConsent();
 

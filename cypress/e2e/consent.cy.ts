@@ -73,7 +73,7 @@ describe('tcfv2 consent', () => {
 
 	const { path, adTest } = articles[0];
 	it(`Test ${path} hides slots when consent is denied`, () => {
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -96,7 +96,7 @@ describe('tcfv2 consent', () => {
 	});
 
 	it(`Test ${path} shows ad slots when reconsented`, () => {
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -120,7 +120,7 @@ describe('tcfv2 consent', () => {
 	it(`Test ${path} reject all, login as subscriber, log out should not show ads`, () => {
 		fakeLogin(true);
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -141,7 +141,7 @@ describe('tcfv2 consent', () => {
 	it(`Test ${path} reject all, login as non-subscriber, log out should not show ads`, () => {
 		fakeLogin(false);
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -155,7 +155,7 @@ describe('tcfv2 consent', () => {
 	});
 
 	it(`Test ${path} reject all, login as non-subscriber, reconsent should show ads`, () => {
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -185,7 +185,7 @@ describe('tcfv2 consent', () => {
 	it(`Test ${path} accept all, login as subscriber, subscription expires, should show ads`, () => {
 		fakeLogin(true);
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.allowAllConsent();
 
@@ -217,7 +217,7 @@ describe('tcfv2 consent', () => {
 	it(`Test ${path} reject all, login as subscriber, subscription expires, should not show ads`, () => {
 		fakeLogin(true);
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -250,7 +250,7 @@ describe('tcfv2 consent', () => {
 	});
 
 	it(`Test ${path} reject all, cookie/reason expires, cookie should renew expiry and remain`, () => {
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -294,7 +294,7 @@ describe('tcfv2 consent', () => {
 
 		cy.setCookie('GU_AF1', String(new Date().getTime() + 100000));
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.allowAllConsent();
 

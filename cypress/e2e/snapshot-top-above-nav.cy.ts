@@ -5,7 +5,7 @@ import '@percy/cypress';
 describe('Visually snapshot top-above-nav', () => {
 	[articles[0]].forEach(({ path, adTest }) => {
 		it(`snapshots ${path}`, () => {
-			cy.visit(`${path}?adtest=${adTest}`);
+			cy.visit(path);
 			cy.allowAllConsent();
 			cy.get('#dfp-ad--top-above-nav').should('exist');
 			cy.findAdSlotIframeBySlotId('dfp-ad--top-above-nav').should(
