@@ -24,8 +24,7 @@ function initConsentless(): Promise<void> {
 		});
 	});
 
-	// TODO this seems to be safeframeless version. Ask OptOut how we can use safeframes.
-	void loadScript('//cdn.optoutadvertising.com/script/ootag.min.js');
+	void loadScript('//cdn.optoutadvertising.com/script/ooguardian.v2.min.js');
 	return Promise.resolve();
 }
 
