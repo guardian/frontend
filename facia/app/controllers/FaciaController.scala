@@ -23,6 +23,7 @@ import conf.Configuration
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
+import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
