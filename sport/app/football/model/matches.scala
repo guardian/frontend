@@ -1,5 +1,6 @@
 package football.model
 
+import com.madgag.scala.collection.decorators.MapDecorator
 import football.collections.RichList
 import football.datetime.DateHelpers
 import implicits.Football
@@ -60,7 +61,7 @@ trait MatchesList extends Football with RichList {
       case (d, ms) =>
         val competitionsWithMatches = ms
           .groupBy(_._2)
-          .mapValues(_.map {
+          .mapV(_.map {
             case (matches, _) => matches
           })
           .toList

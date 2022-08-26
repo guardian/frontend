@@ -1,5 +1,6 @@
 package common
 
+import com.madgag.scala.collection.decorators.MapDecorator
 import com.sun.syndication.feed.module.Module
 import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
@@ -108,7 +109,7 @@ object TrailsToShowcase {
       .flatMap(_.curated)
       .map(_.card.id)
       .groupBy(identity)
-      .mapValues(_.size)
+      .mapV(_.size)
       .filter(_._2 > 1)
 
     val singleStoryPanelsOutcome = if (singleStoryCollections.nonEmpty) {
