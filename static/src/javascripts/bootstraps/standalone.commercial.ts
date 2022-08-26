@@ -227,6 +227,10 @@ const bootConsentless = async (): Promise<void> => {
 		initArticleInline(),
 		initLiveblogInline(),
 	]);
+
+	// Since we're in single-request mode
+	// Call this once all ad slots are present on the page
+	window.ootag.makeRequests();
 };
 
 /* Provide consentless advertising in the variant of a zero-percent test,

@@ -318,6 +318,7 @@ interface Window {
 		initializeOo: (o: OptOutInitializeOptions) => void;
 		addParameter: (key: string, value: string) => void;
 		defineSlot: (o: OptOutDefineSlotOptions) => void;
+		makeRequests: () => void;
 	};
 	confiant?: Confiant;
 	apstag?: Apstag;
