@@ -18,7 +18,7 @@ object DiscussionKey {
     new PathBindable[DiscussionKey] {
       override def bind(key: String, value: String): Either[String, DiscussionKey] = {
         for {
-          keyAsString <- stringBinder.bind(key, value).right
+          keyAsString <- stringBinder.bind(key, value)
         } yield DiscussionKey(keyAsString)
       }
 

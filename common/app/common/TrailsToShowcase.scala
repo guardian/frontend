@@ -316,7 +316,7 @@ object TrailsToShowcase {
         title <- proposedArticleTitle.toOption
         guid <- guidFor(contentItem)
         webUrl <- webUrl(contentItem)
-        imageUrl <- proposedArticleImage.right.toOption
+        imageUrl <- proposedArticleImage.toOption
         maybeOverline <- proposedOverline.toOption
       } yield {
         val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)
