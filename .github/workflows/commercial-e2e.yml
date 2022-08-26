@@ -44,10 +44,6 @@ jobs:
               with:
                   working-directory: ./dcr
 
-            - name: Build Commercial JS Bundle
-              run: yarn webpack --config webpack.config.commercial.dev.js
-              working-directory: ./frontend
-
             - name: Build DCR
               run: make build-ci
               working-directory: ./dcr/dotcom-rendering
@@ -56,15 +52,15 @@ jobs:
               uses: cypress-io/github-action@v4
               with:
                   install: false
-                  start: make -C ../dcr/dotcom-rendering start-ci, npx http-server -p 3000 static/target
+                  start: make -C ../dcr/dotcom-rendering start-ci, make commercial-dev
                   working-directory: frontend
-                  wait-on: 'http://localhost:3030, http://localhost:3000/javascripts/commercial/graun.standalone.commercial.js'
+                  wait-on: 'http://localhost:3030, http://localhost:3031/graun.standalone.commercial.js'
                   wait-on-timeout: 30
                   browser: chrome
                   spec: cypress/e2e/**/*
               env:
                   PORT: 3030
-                  COMMERCIAL_BUNDLE_URL: http://localhost:3000/javascripts/commercial/graun.standalone.commercial.js
+                  COMMERCIAL_BUNDLE_URL: http://localhost:3031/graun.standalone.commercial.js
 
             - uses: actions/upload-artifact@v2
               if: always()

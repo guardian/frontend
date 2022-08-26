@@ -32,7 +32,7 @@ const reconsent = () => {
 
 	// scrollintoview not working for some reason
 	cy.scrollTo('top');
-	cy.wait(1);
+	cy.wait(100);
 };
 
 const expectAdFree = (reasons: AdFreeCookieReasons[]) => {

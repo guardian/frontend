@@ -5,7 +5,7 @@ const gamUrl = 'https://securepubads.g.doubleclick.net/gampad/ads?**';
 
 describe('GAM targeting', () => {
 	it(`checks that a request is made`, () => {
-		const { path, adTest } = articles[0];
+		const { path } = articles[0];
 		cy.visit(path);
 
 		cy.allowAllConsent();
@@ -16,7 +16,7 @@ describe('GAM targeting', () => {
 	});
 
 	it(`checks the gdpr_consent param`, () => {
-		const { path, adTest } = articles[0];
+		const { path } = articles[0];
 		cy.visit(path);
 
 		cy.allowAllConsent();
@@ -30,30 +30,6 @@ describe('GAM targeting', () => {
 		cy.wait('@gamRequest', { timeout: 30000 });
 	});
 
-	// front tests are disabled for the moment
-	// fronts.forEach(({ path, section, adTest }) => {
-	// 	it.skip(`checks custom params on the ${section} front`, () => {
-	// 		cy.visit(path);
-
-	// 		cy.allowAllConsent();
-
-	// 		cy.intercept({ url: gamUrl }, function (req) {
-	// 			const url = new URL(req.url);
-
-	// 			const custParams = decodeURIComponent(
-	// 				url.searchParams.get('cust_params') || '',
-	// 			);
-	// 			const decodedCustParams = new URLSearchParams(custParams);
-
-	// 			expect(decodedCustParams.get('s')).to.equal(section); // s: section
-	// 			expect(decodedCustParams.get('urlkw')).to.contain(section); // urlkw: url keywords. urlkw is an array.
-	// 			expect(decodedCustParams.get('sens')).to.equal('f'); // not sensitive content
-	// 		}).as('gamRequest');
-
-	// 		cy.wait('@gamRequest', { timeout: 30000 });
-	// 	});
-	// });
-
 	it(`checks sensitive content is marked as sensitive`, () => {
 		const sensitivePage = allPages.find(
 			(page) => page?.name === 'sensitive-content',
@@ -61,7 +37,7 @@ describe('GAM targeting', () => {
 		if (!sensitivePage)
 			throw new Error('No sensitive articles found to run test.');
 
-		cy.visit(`${sensitivePage.path}?adtest=${sensitivePage.adTest}`);
+		cy.visit(sensitivePage.path);
 
 		cy.allowAllConsent();
 
@@ -122,7 +98,10 @@ describe('Prebid targeting', () => {
 
 		interceptGamRequest();
 
-		cy.visit(`${path}?adrefresh=false`);
+		const url = new URL(path);
+		url.searchParams.set('adrefresh', 'false');
+		url.searchParams.delete('adtest');
+		cy.visit(url.toString());
 
 		cy.allowAllConsent();
 
