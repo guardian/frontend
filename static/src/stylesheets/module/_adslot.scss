@@ -629,3 +629,8 @@
     margin-bottom: 12px;
     position: relative;
 }
+
+/* Necessary for IAB safeframes served via Opt Out */
+.iab_sf {
+    margin: auto;
+}
