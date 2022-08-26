@@ -118,9 +118,11 @@ class AwsLineChart(
     val dataColumns = labels.tail
     val table = new ChartTable(dataColumns)
 
-    (dataColumns, charts.toList).zipped.map((column, chart) => {
-      table.addColumn(column, ChartColumn(chart.getDatapoints.asScala))
-    })
+    dataColumns
+      .lazyZip(charts.toList)
+      .map((column, chart) => {
+        table.addColumn(column, ChartColumn(chart.getDatapoints.asScala.toSeq))
+      })
 
     table.asChartRow(toLabel, toValue)
   }
@@ -158,8 +160,9 @@ class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, char
   private val dataColumns: Seq[(String, ChartColumn)] = {
 
     // Do not consider any metrics that have less than three data points.
-    (ablabels.tail, charts.toList).zipped
-      .map((column, chart) => (column, ChartColumn(chart.getDatapoints.asScala)))
+    ablabels.tail
+      .lazyZip(charts.toList)
+      .map((column, chart) => (column, ChartColumn(chart.getDatapoints.asScala.toSeq)))
       .filter { case (label, column) => column.values.length > 3 }
   }
 
