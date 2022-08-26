@@ -88,7 +88,7 @@ trait Fixtures extends GuLogging {
   }
 }
 
-trait Results extends GuLogging with implicits.Collections {
+trait Results extends GuLogging {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
