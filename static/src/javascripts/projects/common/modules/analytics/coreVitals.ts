@@ -11,7 +11,7 @@ const coreVitals = (): void => {
 	const { isDev } = window.guardian.config.page;
 	const sampling = 1 / 100;
 
-	initCoreWebVitals({
+	void initCoreWebVitals({
 		browserId,
 		pageViewId,
 		isDev,
@@ -19,7 +19,9 @@ const coreVitals = (): void => {
 		team: 'dotcom',
 	});
 
-	if (shouldCaptureMetrics()) bypassCoreWebVitalsSampling('commercial');
+	if (shouldCaptureMetrics()) {
+		void bypassCoreWebVitalsSampling('commercial');
+	}
 };
 
 export { coreVitals };

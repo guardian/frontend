@@ -20,7 +20,6 @@ const isDailyArticleHistory = (data: unknown): data is DailyArticleHistory =>
 	Array.isArray(data);
 
 const getDailyArticleHistory = (): DailyArticleHistory | undefined => {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- reading from local storage
 	const item = storage.local.get(storageKeyDailyArticleCount);
 	if (isDailyArticleHistory(item)) {
 		return item;
