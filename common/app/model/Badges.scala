@@ -170,7 +170,7 @@ object Badges {
     badgeForTags(c.tags.tags.map(_.id))
   }
 
-  def badgeForTags(tags: Traversable[String]): Option[Badge] = {
+  def badgeForTags(tags: Iterable[String]): Option[Badge] = {
 
     val badgesForTags =
       for {
