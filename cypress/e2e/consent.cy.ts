@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-
 import { articles } from '../fixtures/pages';
 import { fakeLogOut, fakeLogin } from '../lib/util';
 import { AdFreeCookieReasons } from 'lib/manage-ad-free-cookie';
@@ -38,7 +37,7 @@ const reconsent = () => {
 
 const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
 	// wait is an antipattern and unreliable, maybe import onConsentChange and cypressify it?
-	cy.wait(200);
+	cy.wait(300);
 	cy.then(function expectAdFree() {
 		cy.getCookie('GU_AF1').should(
 			reasons.length ? 'not.be.empty' : 'be.null',
@@ -65,7 +64,11 @@ const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
 describe('tcfv2 consent', () => {
 	beforeEach(() => {
 		cy.clearCookies();
-		cy.clearLocalStorage();
+		cy.clearLocalStorage()
+		.then(() => {
+			cy.log('override geolocation');
+			window.localStorage.setItem('gu.geo.override', JSON.stringify({value:'GB'}));
+		});
 	});
 
 	const { path, adTest } = articles[0];
