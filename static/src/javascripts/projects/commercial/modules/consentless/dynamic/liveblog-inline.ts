@@ -103,7 +103,7 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 			}
 		})
 		.then(() => {
-			defineSlot(ad.id);
+			defineSlot(ad.id, 'inline');
 		});
 };
 

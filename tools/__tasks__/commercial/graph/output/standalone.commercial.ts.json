@@ -129,6 +129,9 @@
   "../lib/config.d.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
+ "../projects/commercial/modules/consentless/build-page-parameters.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/commercial/modules/consentless/define-slot.ts": [
   "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
@@ -156,7 +159,8 @@
   "../projects/commercial/modules/consentless/define-slot.ts"
  ],
  "../projects/commercial/modules/consentless/prepare-ootag.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/commercial/modules/consentless/build-page-parameters.ts"
  ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",

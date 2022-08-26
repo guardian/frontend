@@ -219,6 +219,7 @@ const bootConsentless = async (): Promise<void> => {
 	maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
 
 	await Promise.all([
+		setAdTestCookie(),
 		initConsentless(),
 		initFixedSlots(),
 		initArticleInline(),
