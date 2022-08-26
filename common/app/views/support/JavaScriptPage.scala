@@ -101,5 +101,5 @@ object JavaScriptPage {
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
     ) ++ commercialBundleUrl
-  }
+  }.toMap
 }
