@@ -6,7 +6,7 @@ import model.{Tag, Tags}
 import org.jsoup.Jsoup
 import views.support.AffiliateLinksCleaner
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.util.matching.Regex
 
 object TextCleaner {

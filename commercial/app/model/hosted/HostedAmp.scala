@@ -3,7 +3,7 @@ package model.hosted
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 object HostedAmp {
 

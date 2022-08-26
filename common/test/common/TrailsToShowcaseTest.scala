@@ -14,7 +14,7 @@ import org.scalatest.matchers.should.Matchers
 import play.api.test.FakeRequest
 
 import java.time.ZoneOffset
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.xml.{Node, XML}
 
 class TrailsToShowcaseTest extends AnyFlatSpec with Matchers {

@@ -7,7 +7,7 @@ import common.editions.Uk
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json._
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.collection.mutable.{Map => MutableMap}
 
 case class ChartRow[K](rowKey: K, values: Seq[Double])

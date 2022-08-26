@@ -14,8 +14,7 @@ import play.api.mvc.RequestHeader
 
 import java.io.StringWriter
 import java.util.Date
-import scala.collection.JavaConverters._
-import scala.collection.immutable.WrappedString
+import scala.jdk.CollectionConverters._
 
 object TrailsToShowcase {
 

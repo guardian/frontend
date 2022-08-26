@@ -6,7 +6,7 @@ import common.{Box, GuLogging}
 import org.joda.time.DateTime
 import tools.CloudWatch._
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.BigDecimal
 import scala.util.control.NonFatal

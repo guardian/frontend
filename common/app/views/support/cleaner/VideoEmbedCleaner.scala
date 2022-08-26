@@ -6,7 +6,7 @@ import model.{Article, DotcomContentType, ShareLinks, VideoElement}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{HtmlCleaner, Item640}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 /*
  * maxEmbedHeight: 812px - full height on an iPhone X

@@ -13,7 +13,7 @@ import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import services.ParameterStore
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 

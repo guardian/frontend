@@ -5,7 +5,7 @@ import play.api.Logger
 import org.apache.commons.lang.exception.ExceptionUtils
 import net.logstash.logback.marker.LogstashMarker
 import net.logstash.logback.marker.Markers._
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.implicitConversions
 import scala.util.{Failure, Success, Try}
