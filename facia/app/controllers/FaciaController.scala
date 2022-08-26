@@ -23,6 +23,7 @@ import services.{CollectionConfigWithId, ConfigAgent}
 import utils.{FaciaPicker, RemoteRender, TargetedCollections}
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
+import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful

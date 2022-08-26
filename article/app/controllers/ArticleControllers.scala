@@ -1,12 +1,16 @@
 package controllers
 
-import agents.DeeplyReadAgent
+import agents.{CuratedContentAgent, DeeplyReadAgent}
+import akka.actor.ActorSystem
 import com.softwaremill.macwire._
+import concurrent.BlockingOperations
 import contentapi.ContentApiClient
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
+import services.dotcomponents.OnwardsPicker
+import services.fronts.FrontJsonFapiLive
 import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.newsletters.NewsletterSignupAgent
 import topics.{TopicS3Client, TopicService}
@@ -20,7 +24,10 @@ trait ArticleControllers {
   def topicService: TopicService
   def newsletterSignupAgent: NewsletterSignupAgent
 
+  def actorSystem: ActorSystem
+
   implicit def appContext: ApplicationContext
+
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]
   lazy val bookSectionAgent: NewspaperBookSectionTagAgent = wire[NewspaperBookSectionTagAgent]
   lazy val publicationController = wire[PublicationController]
@@ -28,4 +35,8 @@ trait ArticleControllers {
   lazy val liveBlogController = wire[LiveBlogController]
   lazy val newsletterService = wire[NewsletterService]
   lazy val deeplyReadAgent = wire[DeeplyReadAgent]
+  lazy val articleBlockingOperations = wire[BlockingOperations]
+  lazy val articleFrontJsonFapiLive = wire[FrontJsonFapiLive]
+  lazy val curatedContentAgent = wire[CuratedContentAgent]
+  lazy val onwardsPicker = wire[OnwardsPicker]
 }

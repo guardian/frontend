@@ -1,6 +1,7 @@
 import _root_.commercial.CommercialLifecycle
 import _root_.commercial.controllers.CommercialControllers
 import _root_.commercial.targeting.TargetingLifecycle
+import agents.{CuratedContentAgent, CuratedContentAgentLifecycle}
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle

@@ -7,7 +7,6 @@ import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
-import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, PreloadFilters}
@@ -18,8 +17,9 @@ import play.api.http.HttpRequestHandler
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import router.Routes
 import services._
+import services.fronts.{FrontJsonFapiDraft, FrontJsonFapiLive}
+import router.Routes
 import services.ophan.SurgingContentAgentLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
@@ -41,7 +41,6 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val ophanApi = wire[OphanApi]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
-  lazy val curatedContentAgent = wire[CuratedContentAgent]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -52,7 +51,6 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     wire[IndexListingsLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
-    wire[CuratedContentAgentLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

@@ -1,4 +1,5 @@
 import _root_.commercial.targeting.TargetingLifecycle
+import agents.CuratedContentAgentLifecycle
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
@@ -63,6 +64,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
     wire[StoreNavigationLifecycleComponent],
     wire[TopicLifecycle],
     wire[NewsletterSignupLifecycle],
+    wire[CuratedContentAgentLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

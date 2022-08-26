@@ -1,5 +1,7 @@
 package model.dotcomrendering
 
+import common.Edition
+import model.facia.PressedCollection
 import play.api.libs.json._
 
 case class OnwardCollectionResponse(
@@ -8,6 +10,18 @@ case class OnwardCollectionResponse(
 )
 object OnwardCollectionResponse {
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
+  def getOnwardCollectionResponse(collection: PressedCollection,
+                           edition: Edition,
+                         ): OnwardCollectionResponse = {
+    val trails = collection.curatedPlusBackfillDeduplicated
+      .take(10)
+      .map(pressed => Trail.pressedContentToTrail(pressed, edition))
+
+    OnwardCollectionResponse(
+      heading = collection.displayName,
+      trails = trails,
+    )
+  }
 }
 
 case class OnwardCollectionResponseDCR(

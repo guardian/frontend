@@ -2,12 +2,12 @@ package test
 
 import java.io.File
 import concurrent.BlockingOperations
-import controllers.front.FrontJsonFapiLive
 import model.{PressedPage, PressedPageType}
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
 import play.api.libs.json.Json
 import recorder.HttpRecorder
+import services.fronts.FrontJsonFapiLive
 import utils.FaciaPickerTest
 
 import scala.concurrent.{ExecutionContext, Future}
