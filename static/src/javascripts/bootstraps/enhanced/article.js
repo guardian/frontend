@@ -6,10 +6,6 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { isBreakpoint } from 'lib/detect';
 import { mediator } from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
-import {
-    insertTagRichLink,
-    upgradeRichLinks,
-} from 'common/modules/article/rich-links';
 import { upgradeMembershipEvents } from 'common/modules/article/membership-events';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/quiz';
@@ -64,8 +60,6 @@ const init = () => {
         ['article-righthand-component', modules.initRightHandComponent],
         ['article-cmp-param', modules.initCmpParam],
         ['article-quiz-listeners', modules.initQuizListeners],
-        ['article-rich-links', upgradeRichLinks],
-        ['article-tag-rich-link', insertTagRichLink],
         ['article-upgrade-membership-events', upgradeMembershipEvents],
         ['article-mediator-emit-event', modules.emitReadyEvent],
         ['article-handle-quiz-completion', handleQuizCompletion],

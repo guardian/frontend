@@ -10,7 +10,7 @@ import commercial.targeting.CampaignAgent
 object CardStylePicker {
 
   def apply(content: CapiContent, trailMetaData: MetaDataCommonFields): CardStyle = {
-    val tags = content.tags.map(_.id)
+    val tags = content.tags.map(_.id).toSeq
     extractCampaigns(tags) match {
       case Nil => CardStyle(content, TrailMetaData.empty)
       case _   => SpecialReport

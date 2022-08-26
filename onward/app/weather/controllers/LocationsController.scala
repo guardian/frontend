@@ -18,7 +18,7 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
   def findCity(query: String): Action[AnyContent] =
     Action.async { implicit request =>
       weatherApi.searchForLocations(query) map { locations =>
-        Cached(7.days)(JsonComponent(CityResponse.fromLocationResponses(locations.toList)))
+        Cached(7.days)(JsonComponent.fromWritable(CityResponse.fromLocationResponses(locations.toList)))
       }
     }
 
@@ -58,7 +58,7 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
               // We do this as AccuWeather writes "New York, New York" if no region is specified, where as we
               // just get "New York" from Fastly.
               val weatherCityWithoutRegion = weatherCity.copy(city = city)
-              Cached(1 hour)(JsonComponent(weatherCityWithoutRegion))
+              Cached(1 hour)(JsonComponent.fromWritable(weatherCityWithoutRegion))
             }
           }
 
@@ -67,7 +67,7 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
             cityFromRequestEdition.fold {
               Cached(CacheTime.NotFound)(JsonNotFound())
             } { city =>
-              Cached(1 hour)(JsonComponent(city))
+              Cached(1 hour)(JsonComponent.fromWritable(city))
             },
           )
       }

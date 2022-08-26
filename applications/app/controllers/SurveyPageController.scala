@@ -23,7 +23,7 @@ class SurveyPageController(
     Action.async { implicit request =>
       wsClient
         .url(s"https://${Configuration.Survey.formStackAccountName}.formstack.com/forms/$formName")
-        .head
+        .head()
         .map { headResponse =>
           headResponse.status match {
             case 200 =>

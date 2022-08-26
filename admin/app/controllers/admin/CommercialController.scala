@@ -126,7 +126,7 @@ class CommercialController(
       val lineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().lineItems filter (_.orderId.toString == orderId)
 
       Cached(5.minutes) {
-        JsonComponent(Json.toJson(lineItems))
+        JsonComponent.fromWritable(lineItems)
       }
     }
 
@@ -144,7 +144,7 @@ class CommercialController(
         }) getOrElse Nil
 
       Cached(5.minutes) {
-        JsonComponent(Json.toJson(previewUrls))
+        JsonComponent.fromWritable(previewUrls)
       }
     }
 

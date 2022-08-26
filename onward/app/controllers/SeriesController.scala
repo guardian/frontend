@@ -32,7 +32,9 @@ class SeriesController(
     Action.async { implicit request =>
       if (request.forceDCR) {
         lookup(Edition(request), seriesId).map { mseries =>
-          mseries.map { series => JsonComponent(SeriesStoriesDCR.fromSeries(series)).result }.getOrElse(NotFound)
+          mseries
+            .map { series => JsonComponent.fromWritable(SeriesStoriesDCR.fromSeries(series)).result }
+            .getOrElse(NotFound)
         }
       } else {
         lookup(Edition(request), seriesId) map { series =>
@@ -81,7 +83,7 @@ class SeriesController(
       response.tag.flatMap { tag =>
         val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
         if (trails.nonEmpty) {
-          Some(Series(seriesId, Tag.make(tag, None), RelatedContent(trails)))
+          Some(Series(seriesId, Tag.make(tag, None), RelatedContent(trails.toSeq)))
         } else { None }
       }
     }

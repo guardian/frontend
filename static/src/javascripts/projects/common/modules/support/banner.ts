@@ -14,7 +14,11 @@ import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { getVisitCount } from 'common/modules/commercial/contributions-utilities';
-import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
+import {
+	getPurchaseInfo,
+	shouldHideSupportMessaging,
+} from 'common/modules/commercial/user-features';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import {
 	getArticleCounts,
 	getArticleCountToday,
@@ -112,7 +116,10 @@ export const renderBanner = (
 		});
 };
 
-const buildBannerPayload = async (): Promise<BannerPayload> => {
+const buildBannerPayload = async (
+	purchaseInfo?: ReturnType<typeof getPurchaseInfo>,
+	isSignedIn?: boolean,
+): Promise<BannerPayload> => {
 	const {
 		contentType,
 		section,
@@ -140,6 +147,8 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 		subscriptionBannerLastClosedAt:
 			(userPrefs.get('subscriptionBannerLastClosedAt') as string) ||
 			undefined,
+		signInBannerLastClosedAt:
+			(userPrefs.get('signInBannerLastClosedAt') as string) || undefined,
 		mvtId: getMvtValue() ?? 0,
 		countryCode: getCountryCode(),
 		weeklyArticleHistory: weeklyArticleHistory,
@@ -150,6 +159,8 @@ const buildBannerPayload = async (): Promise<BannerPayload> => {
 		tagIds: buildTagIds(),
 		contentType,
 		browserId: (await hasCmpConsentForBrowserId()) ? browserId : undefined,
+		purchaseInfo,
+		isSignedIn: !!isSignedIn,
 	};
 
 	return {
@@ -190,7 +201,9 @@ export const fetchPuzzlesData =
 	};
 
 export const fetchBannerData = async (): Promise<ModuleDataResponse | null> => {
-	const payload = await buildBannerPayload();
+	const purchaseInfo = getPurchaseInfo();
+	const isSignedIn = isUserLoggedIn();
+	const payload = await buildBannerPayload(purchaseInfo, isSignedIn);
 
 	if (
 		payload.targeting.shouldHideReaderRevenue ||
@@ -200,7 +213,13 @@ export const fetchBannerData = async (): Promise<ModuleDataResponse | null> => {
 		return Promise.resolve(null);
 	}
 
+	const showSignInPrompt =
+		purchaseInfo &&
+		!isSignedIn &&
+		!payload.targeting.signInBannerLastClosedAt;
+
 	if (
+		!showSignInPrompt &&
 		payload.targeting.engagementBannerLastClosedAt &&
 		payload.targeting.subscriptionBannerLastClosedAt &&
 		withinLocalNoBannerCachePeriod()

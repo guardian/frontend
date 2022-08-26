@@ -107,7 +107,7 @@ class AccountDeletionController(
   def processAccountDeletionForm: Action[AnyContent] =
     csrfCheck {
       fullAuthWithIdapiUserAction.async { implicit request =>
-        val boundForm = accountDeletionForm.bindFromRequest
+        val boundForm = accountDeletionForm.bindFromRequest()
 
         boundForm.fold(
           formWithErrors =>

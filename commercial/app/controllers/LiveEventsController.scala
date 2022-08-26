@@ -16,7 +16,7 @@ class LiveEventsController(liveEventAgent: LiveEventAgent, val controllerCompone
         for {
           id <- specificId
           event <- liveEventAgent.specificLiveEvent(id)
-        } yield Cached(componentMaxAge) { JsonComponent(event) }
+        } yield Cached(componentMaxAge) { JsonComponent.fromWritable(event) }
       } getOrElse Cached(componentNilMaxAge) { jsonFormat.nilResult }
     }
 }

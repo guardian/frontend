@@ -5,14 +5,6 @@ import { dfpEnv } from './dfp-env';
 import { getAdvertById } from './get-advert-by-id';
 import { loadAdvert, refreshAdvert } from './load-advert';
 
-const decideLazyLoadMargin = () => {
-	const lazyLoadMargin = '20%';
-
-	log('commercial', `Using lazy load margin of ${lazyLoadMargin}`);
-
-	return lazyLoadMargin;
-};
-
 const displayAd = (advertId: string) => {
 	const advert = getAdvertById(advertId);
 	if (advert) {
@@ -44,9 +36,16 @@ const onIntersect = (
 };
 
 const getObserver = once(() => {
+	const tests = window.guardian.config.tests;
+	const isInMegaTestControlGroup =
+		tests && !!tests['commercialEndOfQuarterMegaTestControl'];
+
+	const lazyLoadMargin = isInMegaTestControlGroup ? '200px' : '20%';
+	log('commercial', 'Using lazy load margin', lazyLoadMargin);
+
 	return Promise.resolve(
 		new window.IntersectionObserver(onIntersect, {
-			rootMargin: `${decideLazyLoadMargin()} 0px`,
+			rootMargin: `${lazyLoadMargin} 0px`,
 		}),
 	);
 });

@@ -52,7 +52,8 @@ object ImageMedia {
       allImages = capiElement.assets
         .filter(_.`type` == AssetType.Image)
         .map(ImageAsset.make(_, properties.index))
-        .sortBy(-_.width),
+        .sortBy(-_.width)
+        .toSeq,
     )
   def make(crops: Seq[ImageAsset]): ImageMedia =
     ImageMedia(
@@ -150,7 +151,8 @@ object EmbedMedia {
     EmbedMedia(
       embedAssets = capiElement.assets
         .filter(_.`type` == AssetType.Embed)
-        .map(EmbedAsset.make),
+        .map(EmbedAsset.make)
+        .toSeq,
     )
   }
 }

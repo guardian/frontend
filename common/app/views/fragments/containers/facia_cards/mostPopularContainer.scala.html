@@ -4,7 +4,6 @@
 @import common.LinkTo
 @import model.MostPopular
 @import fragments.commercial.adSlot
-@import common.commercial.AdSlot.mostPopularSizes
 @import layout.ContentCard
 
 @defining("Most viewed") { containerTitle =>
@@ -45,7 +44,7 @@
                 @adSlot(
                     "mostpop",
                     Seq("container-inline"),
-                    mostPopularSizes(true),
+                    Map(),
                     optId = None,
                     optClassNames = None
                 ){ }

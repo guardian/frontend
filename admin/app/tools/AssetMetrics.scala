@@ -91,7 +91,7 @@ object AssetMetricsCache extends GuLogging {
       .sizeMetrics()
       .map { metrics =>
         log.info("Successfully refreshed Asset Metrics data")
-        cache.send(cache.get + (ReportTypes.sizeOfFiles -> metrics))
+        cache.send(cache.get() + (ReportTypes.sizeOfFiles -> metrics))
       }
       .recover {
         case NonFatal(e) =>

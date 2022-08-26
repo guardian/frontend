@@ -22,15 +22,17 @@ class TakeoverWithEmptyMPUsController(val controllerComponents: ControllerCompon
 
   def create(): Action[AnyContent] =
     Action { implicit request =>
-      TakeoverWithEmptyMPUs.form.bindFromRequest.fold(
-        formWithErrors => {
-          NoCache(BadRequest(views.html.commercial.takeoverWithEmptyMPUsCreate(formWithErrors)))
-        },
-        takeover => {
-          TakeoverWithEmptyMPUs.create(takeover)
-          NoCache(Redirect(routes.TakeoverWithEmptyMPUsController.viewList()))
-        },
-      )
+      TakeoverWithEmptyMPUs.form
+        .bindFromRequest()
+        .fold(
+          formWithErrors => {
+            NoCache(BadRequest(views.html.commercial.takeoverWithEmptyMPUsCreate(formWithErrors)))
+          },
+          takeover => {
+            TakeoverWithEmptyMPUs.create(takeover)
+            NoCache(Redirect(routes.TakeoverWithEmptyMPUsController.viewList()))
+          },
+        )
     }
 
   def remove(url: String): Action[AnyContent] =

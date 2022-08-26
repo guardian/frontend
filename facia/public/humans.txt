@@ -2,6 +2,9 @@
 /* CURRENT                                              */
 /* ---------------------------------------------------- */
 
+Developer: Daniel Clifton
+From: Ipswich UK
+
 Product Manager: Stephan Fowler
 Twitter: @stephanfowler
 From: London, UK
@@ -166,6 +169,9 @@ Location: Newbury, UK
 
 Developer: Charlotte Emms
 Location: London, UK
+
+Developer: Rachel Miles
+Location: Birmingham, UK
 
 /* ---------------------------------------------------- */
 /* FORMER                                               */

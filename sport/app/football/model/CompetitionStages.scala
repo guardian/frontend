@@ -184,14 +184,14 @@ object KnockoutSpider {
     ),
     // Womens Euro 2022
     "423" -> List(
-      // Group C Winner & Group D Runner up
-      ZonedDateTime.of(2022, 7, 22, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 3  // 4287727
       // Group A Winner & Group B Runner Up
       ZonedDateTime.of(2022, 7, 20, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 1  // 4287725
-      // Group D Winner & Group C Runner up
-      ZonedDateTime.of(2022, 7, 23, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 4  // 4287728
+      // Group C Winner & Group D Runner up
+      ZonedDateTime.of(2022, 7, 22, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 3  // 4287727
       // Group B Winner & Group A Runner Up
       ZonedDateTime.of(2022, 7, 21, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 2  // 4287726
+      // Group D Winner & Group C Runner up
+      ZonedDateTime.of(2022, 7, 23, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 4  // 4287728
       // QF Winners 3 & 1
       ZonedDateTime.of(2022, 7, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 1     // 4287730
       // QF Winners 4 & 2

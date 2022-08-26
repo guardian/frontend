@@ -1,8 +1,10 @@
+import { adSizes, createAdSize } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { getBreakpoint } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { removeDisabledSlots } from '../remove-slots';
-import { Advert } from './Advert';
+import type { Advert } from './Advert';
+import { createAdvert } from './create-advert';
 import { dfpEnv } from './dfp-env';
 import { displayAds } from './display-ads';
 import { displayLazyAds } from './display-lazy-ads';
@@ -33,6 +35,7 @@ const fillAdvertSlots = async (): Promise<void> => {
 	if (commercialFeatures.adFree) {
 		return Promise.resolve();
 	}
+
 	const isDCRMobile =
 		window.guardian.config.isDotcomRendering &&
 		getBreakpoint() === 'mobile';
@@ -48,7 +51,22 @@ const fillAdvertSlots = async (): Promise<void> => {
 		.filter(
 			(adSlot) => !(isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav'),
 		)
-		.map((adSlot) => new Advert(adSlot));
+		.map((adSlot) => {
+			let additionalSizes = {};
+
+			if (
+				window.guardian.config.page.contentType === 'Gallery' &&
+				adSlot.dataset.name?.includes('inline')
+			) {
+				additionalSizes = {
+					desktop: [adSizes.billboard, createAdSize(900, 250)],
+				};
+			}
+
+			return createAdvert(adSlot, additionalSizes);
+		})
+		.filter((advert): advert is Advert => advert !== null);
+
 	const currentLength = dfpEnv.adverts.length;
 	dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
 	adverts.forEach((advert, index) => {

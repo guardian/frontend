@@ -152,13 +152,13 @@ class HostedContentController(
           val itemId = s"advertiser-content/$campaignName/$pageName"
           contentType match {
             case "video" =>
-              val trails = HostedTrails.fromContent(itemId, results)
+              val trails = HostedTrails.fromContent(itemId, results.toSeq)
               Cached(cacheDuration)(onwardView(trails, 1, 1))
             case "article" =>
-              val trails = HostedTrails.fromContent(itemId, results)
+              val trails = HostedTrails.fromContent(itemId, results.toSeq)
               Cached(cacheDuration)(onwardView(trails, 2, 4))
             case "gallery" =>
-              val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
+              val trails = HostedTrails.fromContent(itemId, trailCount = 2, results.toSeq)
               Cached(cacheDuration)(galleryOnwardView(trails))
             case _ =>
               Cached(0)(JsonNotFound())
@@ -188,7 +188,7 @@ class HostedContentController(
           val videoPages = results
             .filter(_.`type` == Video)
           val itemId = s"advertiser-content/$campaignName/$pageName"
-          val trails = HostedTrails.fromContent(itemId, 1, videoPages)
+          val trails = HostedTrails.fromContent(itemId, 1, videoPages.toSeq)
           Cached(cacheDuration)(JsonComponent(hostedVideoAutoplayWrapper(trails)))
         } getOrElse {
           Cached(0)(JsonNotFound())

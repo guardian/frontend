@@ -39,7 +39,7 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
       val index = request.getIntParameter("index") getOrElse 1
       lookup(path, index, isTrail = false) map {
         case Right(other) => RenderOtherStatus(other)
-        case Left(model)  => Cached(model) { JsonComponent(model.gallery.lightbox.javascriptConfig) }
+        case Left(model)  => Cached(model) { JsonComponent.fromWritable(model.gallery.lightbox.javascriptConfig) }
       }
     }
 

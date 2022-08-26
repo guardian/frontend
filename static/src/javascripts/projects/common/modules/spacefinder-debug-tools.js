@@ -27,7 +27,7 @@ const markCandidates = (exclusions, winners, options) => {
 
 	const addDistanceExplainer = (element, text) => {
 		const explainer = document.createElement('div');
-		explainer.className = 'distanceExplainer';
+		explainer.className = 'distanceExplainer sfdebug';
 		explainer.appendChild(document.createTextNode(text));
 		explainer.style.cssText = `
             position:absolute;
@@ -66,6 +66,7 @@ const markCandidates = (exclusions, winners, options) => {
 
 	const addExplainer = (element, text) => {
 		const explainer = document.createElement('div');
+		explainer.className = 'sfdebug';
 		explainer.appendChild(document.createTextNode(text));
 		explainer.style.cssText = `
             position:absolute;
@@ -110,6 +111,7 @@ const debugMinAbove = (body, minAbove) => {
 	body.style.position = 'relative';
 
 	const minAboveIndicator = document.createElement('div');
+	minAboveIndicator.className = 'sfdebug';
 
 	minAboveIndicator.style.cssText = `
 		position: absolute;
@@ -119,7 +121,7 @@ const debugMinAbove = (body, minAbove) => {
 		height: 5px;
 	`;
 
-	minAboveIndicator.innerHTML = `<div style="position: absolute; right: 0px; background-color: rgba(255, 255, 255, 0.97); padding: 10px; border-radius: 0px 0px 0px 10px; font-family: sans-serif; font-size: 0.7rem;">Threshold for slot to be too close to top (minAbove: ${minAbove}px)</div>`;
+	minAboveIndicator.innerHTML = `<div class="sfdebug" style="position: absolute; right: 0px; background-color: rgba(255, 255, 255, 0.97); padding: 10px; border-radius: 0px 0px 0px 10px; font-family: sans-serif; font-size: 0.7rem;">Threshold for slot to be too close to top (minAbove: ${minAbove}px)</div>`;
 
 	body.appendChild(minAboveIndicator);
 };

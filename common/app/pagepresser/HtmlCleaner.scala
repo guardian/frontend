@@ -9,7 +9,7 @@ import scala.collection.JavaConverters._
 
 abstract class HtmlCleaner extends GuLogging {
   lazy val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
-  lazy val staticRegEx = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
+  lazy val staticRegEx = """//static.guim.co.uk/static/(?<cacheBustId>\w+)/(?<paths>.+)(?<extension>\.\w+)$""".r
   lazy val nonDigitRegEx = """\D+""".r
 
   def canClean(document: Document): Boolean
@@ -158,8 +158,7 @@ abstract class HtmlCleaner extends GuLogging {
 
   def deComboLinks(document: Document): Document = {
     document.getAllElements.asScala.filter(elementContainsCombo).foreach { el =>
-      val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
-      val microAppRegex = """^m-(\d+)~(.+)""".r
+      val combinerRegex = """//combo.guim.co.uk/(?<cacheBustId>\w+)/(?<paths>.+)(?<extension>\.\w+)$""".r
       val href = if (el.hasAttr("href")) {
         el.attr("href")
       } else {
@@ -198,7 +197,7 @@ abstract class HtmlCleaner extends GuLogging {
   }
 
   private def secureSource(src: String): String = {
-    src.replaceAllLiterally("http://", "//")
+    src.replace("http://", "//")
   }
 
 }

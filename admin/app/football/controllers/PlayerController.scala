@@ -76,7 +76,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
                 client.appearances(playerId, competition.startDate, LocalDate.now(), teamId, competitionId)
             } yield {
               val result = createPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
-              result.map(renderPlayerCard).getOrElse(renderNotFound)
+              result.map(renderPlayerCard).getOrElse(renderNotFound())
             }
           }
       }
@@ -94,7 +94,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
         playerAppearances <- client.appearances(playerId, startDate, LocalDate.now(), teamId)
       } yield {
         val result = createPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
-        result.map(renderPlayerCard).getOrElse(renderNotFound)
+        result.map(renderPlayerCard).getOrElse(renderNotFound())
       }
     }
 
@@ -152,7 +152,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
             ),
           ),
         )
-        Cached(600)(JsonComponent(responseJson))
+        Cached(600)(JsonComponent.fromWritable(responseJson))
       }
     }
 }

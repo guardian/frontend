@@ -71,7 +71,6 @@ object Badges {
   val theEmptyDoorway = Badge("cities/series/the-empty-doorway", Static("images/badges/the-empty-doorway.svg"))
   val yemenAtWar = Badge("world/series/yemen-at-war", Static("images/badges/yemen-at-war.svg"))
   val thePolluters = Badge("environment/series/the-polluters", Static("images/badges/the-polluters.svg"))
-  val youthJustice = Badge("society/youthjustice", Static("images/badges/childrenInTheDocks-Icon1.svg"))
   val lostInPolitics = Badge("politics/series/lost-in-politics", Static("images/badges/lost-in-politics-badge.svg"))
   val thisIsEurope = Badge("world/series/this-is-europe", Static("images/badges/this-is-europe.svg"))
   val coronavirus =
@@ -106,6 +105,8 @@ object Badges {
     Badge("tone/newsletter-tone", Static("images/badges/newsletter-badge.svg"))
   val womenseuros2022 =
     Badge("football/women-s-euro-2022", Static("images/badges/womens_euros_2022_badge.svg"))
+  val usMidtermElections2022 =
+    Badge("us-news/us-midterm-elections-2022", Static("images/badges/us-midterm-elections-2022.svg"))
 
   val allBadges = Seq(
     newArrivals,
@@ -139,7 +140,6 @@ object Badges {
     theEmptyDoorway,
     yemenAtWar,
     thePolluters,
-    youthJustice,
     lostInPolitics,
     thisIsEurope,
     coronavirus,
@@ -163,13 +163,14 @@ object Badges {
     ausElection2022,
     newsletters,
     womenseuros2022,
+    usMidtermElections2022,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {
     badgeForTags(c.tags.tags.map(_.id))
   }
 
-  def badgeForTags(tags: Traversable[String]): Option[Badge] = {
+  def badgeForTags(tags: Iterable[String]): Option[Badge] = {
 
     val badgesForTags =
       for {

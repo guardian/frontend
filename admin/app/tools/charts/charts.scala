@@ -47,7 +47,7 @@ class ChartTable(private val labels: Seq[String]) {
       ChartRow(dateFormat(new DateTime(row._1)), row._2)
     }
 
-    chartRows.seq
+    chartRows
   }
 }
 

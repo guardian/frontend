@@ -1,5 +1,6 @@
 package test
 
+import agents.DeeplyReadAgent
 import controllers.LiveBlogController
 import org.mockito.Mockito._
 import org.mockito.Matchers.{anyObject, anyString}
@@ -9,8 +10,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, TopicResult, Topic, TopicType}
-import topics.{TopicService}
+import model.{LiveBlogPage, Topic, TopicResult, TopicType}
+import topics.TopicService
 import services.NewsletterService
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
@@ -71,6 +72,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       fakeDcr,
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
       fakeTopicService,
+      new DeeplyReadAgent,
     )
   }
 

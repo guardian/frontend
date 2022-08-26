@@ -3,7 +3,6 @@
 @import conf.switches.Switches
 @import common.LinkTo
 @import fragments.commercial.adSlot
-@import common.commercial.AdSlot.mostPopularSizes
 
 @defining(Some(section).filter{ section => section.nonEmpty && !section.equals("global")}.map{ section => s"/most-read/$section" }.getOrElse("/most-read")){ url =>
     <section
@@ -25,7 +24,7 @@
                         @adSlot(
                         "mostpop",
                         Seq("container-inline"),
-                        mostPopularSizes(isExtended),
+                        Map(),
                         optId = None,
                         optClassNames = None
                         ){ }

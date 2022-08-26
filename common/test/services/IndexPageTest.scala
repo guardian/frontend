@@ -35,7 +35,7 @@ import scala.concurrent.Future
         item.section.map(section =>
           IndexPage(
             page = Section.make(section),
-            contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+            contents = item.results.getOrElse(Nil).map(IndexPageItem(_)).toSeq,
             tags = Tags(Nil),
             date = DateTime.now,
             tzOverride = None,

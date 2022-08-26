@@ -1,3 +1,4 @@
+import { createAdSize } from '@guardian/commercial-core';
 import type { CountryCode } from '@guardian/libs';
 import { _ } from 'common/modules/commercial/geo-utils';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
@@ -93,18 +94,12 @@ describe('Utils', () => {
 	});
 
 	test('getLargestSize should return only one and the largest size', () => {
-		expect(getLargestSize([[300, 250]])).toEqual([300, 250]);
+		expect(getLargestSize([createAdSize(300, 250)])).toEqual([300, 250]);
 		expect(
-			getLargestSize([
-				[300, 250],
-				[300, 600],
-			]),
+			getLargestSize([createAdSize(300, 250), createAdSize(300, 600)]),
 		).toEqual([300, 600]);
 		expect(
-			getLargestSize([
-				[970, 250],
-				[728, 80],
-			]),
+			getLargestSize([createAdSize(970, 250), createAdSize(728, 80)]),
 		).toEqual([970, 250]);
 	});
 
@@ -301,14 +296,14 @@ describe('Utils', () => {
 	});
 
 	test('shouldIncludeAdYouLike when not in any tests', () => {
-		expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
+		expect(shouldIncludeAdYouLike([createAdSize(300, 250)])).toBe(true);
 		expect(
 			shouldIncludeAdYouLike([
-				[300, 600],
-				[300, 250],
+				createAdSize(300, 600),
+				createAdSize(300, 250),
 			]),
 		).toBe(true);
-		expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
+		expect(shouldIncludeAdYouLike([createAdSize(728, 90)])).toBe(false);
 	});
 
 	test('removeFalseyValues correctly remove non-truthy values', () => {

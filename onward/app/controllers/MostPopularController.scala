@@ -14,7 +14,7 @@ import model.dotcomrendering.{
   MostPopularNx2,
   OnwardCollectionResponse,
   OnwardCollectionResponseDCR,
-  OnwardItem,
+  Trail,
 }
 import play.api.libs.json._
 import play.api.mvc._
@@ -128,17 +128,17 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = section.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
+        trails = section.trails.map(Trail.pressedContentToTrail).take(10),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItem.contentCardToOnwardItem(contentCard)
+      Trail.contentCardToTrail(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItem.contentCardToOnwardItem(contentCard)
+      Trail.contentCardToTrail(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
-    Cached(900)(JsonComponent(response))
+    Cached(900)(JsonComponent.fromWritable(response))
   }
 
   def jsonResponseNx2(mostPopulars: Seq[MostPopularNx2], mostCards: Map[String, Option[ContentCard]])(implicit
@@ -148,22 +148,22 @@ class MostPopularController(
       OnwardCollectionResponse(nx2.heading, nx2.trails)
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItem.contentCardToOnwardItem(contentCard)
+      Trail.contentCardToTrail(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItem.contentCardToOnwardItem(contentCard)
+      Trail.contentCardToTrail(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
-    Cached(900)(JsonComponent(response))
+    Cached(900)(JsonComponent.fromWritable(response))
   }
 
   def jsonResponse(mostPopular: MostPopular, countryCode: String)(implicit request: RequestHeader): Result = {
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = mostPopular.trails.map(OnwardItem.pressedContentToOnwardItem).take(10),
+      trails = mostPopular.trails.map(Trail.pressedContentToTrail).take(10),
     )
-    Cached(900)(JsonComponent(data))
+    Cached(900)(JsonComponent.fromWritable(data))
   }
 
   def renderPopularDay(countryCode: String): Action[AnyContent] =
@@ -217,7 +217,7 @@ class MostPopularController(
     contentApiClient.getResponse(capiItemWithDate).map { response =>
       val heading = response.section.map(s => "in " + s.webTitle).getOrElse("Across The&nbsp;Guardian")
       val popular = response.mostViewed.getOrElse(Nil) take 10 map (RelatedContentItem(_))
-      if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent)))
+      if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent).toSeq))
     }
   }
 }

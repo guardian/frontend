@@ -1,13 +1,15 @@
 package crosswords
 
 import com.gu.contentapi.client.model.v1.{
-  CrosswordEntry,
-  CrosswordDimensions,
   Crossword,
+  CrosswordDimensions,
+  CrosswordEntry,
   CrosswordPosition => ApiCrosswordPosition,
 }
-import model.{Entry, CrosswordPosition}
+import model.{CrosswordPosition, Entry}
+
 import Function.const
+import scala.collection.compat.immutable.LazyList
 
 trait CrosswordGridDataOrdering {
   implicit val positionOrdering = Ordering.by[CrosswordPosition, (Int, Int)](position => (position.y, position.x))
@@ -15,7 +17,7 @@ trait CrosswordGridDataOrdering {
 
 trait CrosswordGridColumnNotation {
   val columnsByLetters =
-    (('A' to 'Z').toList.zip(Stream from 0) map { case (letter, number) => (number, letter) }).toMap
+    (('A' to 'Z').toList.zip(LazyList from 0) map { case (letter, number) => (number, letter) }).toMap
 }
 
 case class Cell(number: Option[Int])
@@ -33,7 +35,7 @@ case class Grid(columns: Int, rows: Int, cells: Map[CrosswordPosition, Cell]) {
 
   def withCrosswordEntry(crosswordEntry: CrosswordEntry): Grid = {
     val entry = Entry.fromCrosswordEntry(crosswordEntry)
-    crosswordEntry.allPositions.foldLeft(this.withEntry(entry)) { (grid, crosswordPosition) =>
+    crosswordEntry.allPositions().foldLeft(this.withEntry(entry)) { (grid, crosswordPosition) =>
       grid.withEditablePosition(crosswordPosition)
     }
   }

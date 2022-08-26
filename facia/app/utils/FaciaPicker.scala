@@ -1,7 +1,7 @@
 package utils
 
 import common.GuLogging
-import experiments.{ActiveExperiments, FrontRendering}
+import experiments.{ActiveExperiments, DCRFronts}
 import implicits.Requests._
 import model.PressedPage
 import play.api.mvc.RequestHeader
@@ -19,10 +19,15 @@ class FaciaPicker extends GuLogging {
   }
 
   def getTier(faciaPage: PressedPage, path: String)(implicit request: RequestHeader): RenderType = {
-    val participatingInTest = ActiveExperiments.isParticipating(FrontRendering)
+    val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
     val dcrCouldRender = dcrSupportsAllCollectionTypes(faciaPage)
 
-    val tier = getTier(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
+    val tier = getTier(
+      forceDCROff = request.forceDCROff,
+      forceDCR = request.forceDCR,
+      participatingInTest = participatingInTest,
+      dcrCouldRender = dcrCouldRender,
+    )
 
     logTier(faciaPage, path, participatingInTest, dcrCouldRender, tier)
 

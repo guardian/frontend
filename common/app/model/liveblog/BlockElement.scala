@@ -117,22 +117,28 @@ object BlockElement {
       case Image =>
         Some(
           ImageBlockElement(
-            ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
+            ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }.toSeq),
             imageDataFor(element),
             element.imageTypeData.flatMap(_.displayCredit),
           ),
         )
 
-      case Audio => Some(AudioBlockElement(element, element.assets.map(AudioAsset.make)))
+      case Audio => Some(AudioBlockElement(element, element.assets.map(AudioAsset.make).toSeq))
 
       case Video =>
         if (element.assets.nonEmpty) {
           Some(
             GuVideoBlockElement(
-              element.assets.map(VideoAsset.make),
-              ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
-                case (a, i) => ImageAsset.make(a, i)
-              }),
+              element.assets.map(VideoAsset.make).toSeq,
+              ImageMedia(
+                element.assets
+                  .filter(_.mimeType.exists(_.startsWith("image")))
+                  .zipWithIndex
+                  .map {
+                    case (a, i) => ImageAsset.make(a, i)
+                  }
+                  .toSeq,
+              ),
               videoDataFor(element),
             ),
           )

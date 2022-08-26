@@ -6,7 +6,7 @@ import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType}
 import models.dotcomponents.{RichLink, RichLinkTag}
-import model.dotcomrendering.OnwardsUtils
+import model.dotcomrendering.TrailUtils
 import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
 import play.twirl.api.Html
 import views.support.{ImgSrc, Item460, RichLinkContributor}
@@ -37,10 +37,10 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
             contributorImage = content.tags.contributors.headOption
               .flatMap(_.properties.contributorLargeImagePath.map(ImgSrc(_, RichLinkContributor))),
             url = content.metadata.url,
-            pillar = OnwardsUtils.normalisePillar(content.metadata.pillar),
+            pillar = TrailUtils.normalisePillar(content.metadata.pillar),
             format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
           )
-          Cached(900)(JsonComponent(richLink)(request, RichLink.writes))
+          Cached(900)(JsonComponent.fromWritable(richLink)(request, RichLink.writes))
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
         case None          => NotFound
       }

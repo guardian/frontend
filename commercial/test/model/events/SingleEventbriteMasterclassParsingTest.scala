@@ -12,14 +12,14 @@ class SingleEventbriteMasterclassParsingTest extends AnyFlatSpec with Matchers w
   "MasterClass companion object" should
     "not create a masterclass object if there isn't at link to the Guardian with the words 'Click here'" in {
     val event = Json.parse(Fixtures.jsonWithNoLink).as[Event]
-    Masterclass.fromEvent(event) shouldBe 'empty
+    Masterclass.fromEvent(event) shouldBe Symbol("empty")
   }
 
   "MasterClass companion object" should "return an appropriate MasterClass" in {
     val masterclass = Masterclass.fromEvent(Json.parse(Fixtures.json).as[Event]).get
 
     masterclass.name should be("Travel writing weekend")
-    masterclass shouldBe 'open
+    masterclass shouldBe Symbol("open")
     masterclass.displayPriceRange should be(Some("£400.00"))
     masterclass.ratioTicketsLeft should be(Some(0.5))
     masterclass.guardianUrl should be(
@@ -45,7 +45,7 @@ class SingleEventbriteMasterclassParsingTest extends AnyFlatSpec with Matchers w
     val masterclass = Masterclass.fromEvent(Json.parse(Fixtures.jsonWith2Tickets).as[Event]).get
 
     masterclass.name should be("Travel writing weekend")
-    masterclass shouldBe 'open
+    masterclass shouldBe Symbol("open")
     masterclass.displayPriceRange should be(Some("£400.00 to £2,600.00"))
     masterclass.ratioTicketsLeft should be(Some(0.5))
   }

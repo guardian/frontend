@@ -24,6 +24,7 @@ import views.support.cleaner.SoundcloudHelper
 import views.support.{ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
+import scala.util.Try
 
 // ------------------------------------------------------
 // PageElement Supporting Types and Traits
@@ -523,6 +524,7 @@ object UnknownBlockElement {
 
 case class VideoBlockElement(
     caption: Option[String],
+    title: Option[String],
     url: String,
     originalUrl: String,
     height: Int,
@@ -539,6 +541,7 @@ object VideoBlockElement {
 
 case class VideoFacebookBlockElement(
     caption: Option[String],
+    title: Option[String],
     url: String,
     originalUrl: String,
     embedUrl: Option[String],
@@ -557,6 +560,7 @@ object VideoFacebookBlockElement {
 
 case class VideoVimeoBlockElement(
     caption: Option[String],
+    title: Option[String],
     url: String,
     originalUrl: String,
     embedUrl: Option[String],
@@ -574,6 +578,7 @@ object VideoVimeoBlockElement {
 
 case class VideoYoutubeBlockElement(
     caption: Option[String],
+    title: Option[String],
     url: String,
     originalUrl: String,
     embedUrl: Option[String],
@@ -879,12 +884,12 @@ object PageElement {
                 ImgSrc.srcsetForBreakpoint(
                   b,
                   imageRoleWidthsByBreakpoint.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(imageAssets)),
+                  maybeImageMedia = Some(ImageMedia(imageAssets.toSeq)),
                 ),
                 ImgSrc.srcsetForBreakpoint(
                   b,
                   imageRoleWidthsByBreakpoint.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(imageAssets)),
+                  maybeImageMedia = Some(ImageMedia(imageAssets.toSeq)),
                   hidpi = true,
                 ),
               )
@@ -905,7 +910,7 @@ object PageElement {
 
         List(
           ImageBlockElement(
-            ImageMedia(imageAssets),
+            ImageMedia(imageAssets.toSeq),
             imageDataFor(element),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
@@ -965,10 +970,16 @@ object PageElement {
         if (element.assets.nonEmpty) {
           List(
             GuVideoBlockElement(
-              element.assets.map(VideoAsset.make),
-              ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
-                case (a, i) => ImageAsset.make(a, i)
-              }),
+              element.assets.map(VideoAsset.make).toSeq,
+              ImageMedia(
+                element.assets
+                  .filter(_.mimeType.exists(_.startsWith("image")))
+                  .zipWithIndex
+                  .map {
+                    case (a, i) => ImageAsset.make(a, i)
+                  }
+                  .toSeq,
+              ),
               element.videoTypeData.flatMap(_.caption).getOrElse(""),
               element.videoTypeData.flatMap(_.url).getOrElse(""),
               element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
@@ -1164,16 +1175,18 @@ object PageElement {
                 id = timeline.id,
                 title = timeline.atom.title.getOrElse(""),
                 description = timeline.data.description,
-                events = timeline.data.events.map(event =>
-                  TimelineEvent(
-                    title = event.title,
-                    date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
-                    body = event.body,
-                    toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
-                    unixDate = event.date,
-                    toUnixDate = event.toDate,
-                  ),
-                ),
+                events = timeline.data.events
+                  .map(event =>
+                    TimelineEvent(
+                      title = event.title,
+                      date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
+                      body = event.body,
+                      toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
+                      unixDate = event.date,
+                      toUnixDate = event.toDate,
+                    ),
+                  )
+                  .toSeq,
               ),
             )
           }
@@ -1352,7 +1365,7 @@ object PageElement {
         i.typeData.map(x => WitnessBlockElementAssetsElementTypeData(x.name)),
       ),
     )
-  }
+  }.toSeq
 
   private def makeWitnessBlockElementImage(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
     WitnessBlockElement(
@@ -1444,14 +1457,26 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
-  private[this] def getIframeWidth(html: String): Option[Int] = {
+  private[this] def getIframeWidth(html: String, fallback: Int = 0): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("width").toInt)
+
+    doc
+      .getElementsByTag("iframe")
+      .asScala
+      .headOption
+      .map(_.attr("width"))
+      .map(attr => Try(attr.toInt).getOrElse(fallback))
   }
 
-  private[this] def getIframeHeight(html: String): Option[Int] = {
+  private[this] def getIframeHeight(html: String, fallback: Int = 0): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("height").toInt)
+
+    doc
+      .getElementsByTag("iframe")
+      .asScala
+      .headOption
+      .map(_.attr("height"))
+      .map(attr => Try(attr.toInt).getOrElse(fallback))
   }
 
   private def extractSoundcloudBlockElement(
@@ -1534,8 +1559,8 @@ object PageElement {
     } yield {
       SpotifyBlockElement(
         getEmbedUrl(d.html),
-        getIframeHeight(html),
-        getIframeWidth(html),
+        getIframeHeight(html, fallback = 540),
+        getIframeWidth(html, fallback = 460),
         d.title,
         d.caption,
         thirdPartyTracking,
@@ -1652,6 +1677,7 @@ object PageElement {
       data <- element.videoTypeData
       source <- data.source
       caption = data.caption
+      title = data.title
       originalUrl <- data.originalUrl
       height <- data.height
       width <- data.width
@@ -1662,6 +1688,7 @@ object PageElement {
         case "youtube" =>
           VideoYoutubeBlockElement(
             caption,
+            title,
             url,
             originalUrl,
             getEmbedUrl(data.html),
@@ -1675,6 +1702,7 @@ object PageElement {
         case "vimeo" =>
           VideoVimeoBlockElement(
             caption,
+            title,
             url,
             originalUrl,
             getEmbedUrl(data.html),
@@ -1688,6 +1716,7 @@ object PageElement {
         case "facebook" =>
           VideoFacebookBlockElement(
             caption,
+            title,
             url,
             originalUrl,
             getEmbedUrl(data.html),
@@ -1701,6 +1730,7 @@ object PageElement {
         case _ =>
           VideoBlockElement(
             caption,
+            title,
             url,
             originalUrl,
             height,

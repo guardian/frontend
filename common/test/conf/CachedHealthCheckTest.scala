@@ -64,7 +64,7 @@ import scala.util.Random
     val controller = new MockController(Helpers.stubControllerComponents())
 
     // Populate the cache and wait for it to finish
-    whenReady(controller.runChecks) { _ =>
+    whenReady(controller.runChecks()) { _ =>
       // Call the /_healthcheck endpoint on this controller
       val healthCheckRequest = FakeRequest(method = "GET", path = "/_healthcheck")
       val response = call(controller.healthCheck(), healthCheckRequest)
@@ -110,7 +110,7 @@ import scala.util.Random
       }
       "results which are never expiring" should {
         "200" in {
-          val resultDate = DateTime.now.minus(scala.util.Random.nextLong) // random date in the past
+          val resultDate = DateTime.now.minus(scala.util.Random.nextLong()) // random date in the past
           val mockResults = List(mockResult(200, resultDate, None))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be(200)

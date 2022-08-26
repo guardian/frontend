@@ -56,7 +56,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
         checkModuleSupport(),
         inlineJSBlocking(),
       ),
-      bodyTag(classes = defaultBodyClasses)(
+      bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
         survey(),
         pageSkin() when page.metadata.hasPageSkin(request),

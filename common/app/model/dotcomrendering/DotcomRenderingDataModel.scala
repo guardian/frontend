@@ -97,6 +97,8 @@ case class DotcomRenderingDataModel(
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
+    mostPopular: Option[Seq[OnwardCollectionResponse]],
+    onwards: Option[Seq[OnwardCollectionResponse]],
 )
 
 object DotcomRenderingDataModel {
@@ -170,6 +172,7 @@ object DotcomRenderingDataModel {
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
         "promotedNewsletter" -> model.promotedNewsletter,
+        "mostPopular" -> model.mostPopular,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -197,7 +200,7 @@ object DotcomRenderingDataModel {
         fallbackLogo = Configuration.images.fallbackLogo,
       ),
       mainBlock = blocks.main,
-      bodyBlocks = blocks.body.getOrElse(Nil),
+      bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
       storyPackage = getStoryPackage(page.related.faciaItems, request),
@@ -215,6 +218,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       newsletter: Option[NewsletterData],
+      onwards: Option[Seq[OnwardCollectionResponse]],
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = page.article,
@@ -228,7 +232,7 @@ object DotcomRenderingDataModel {
       pagination = None,
       linkedData = linkedData,
       mainBlock = blocks.main,
-      bodyBlocks = blocks.body.getOrElse(Nil),
+      bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
       storyPackage = getStoryPackage(page.related.faciaItems, request),
@@ -237,6 +241,7 @@ object DotcomRenderingDataModel {
       availableTopics = None,
       newsletter = newsletter,
       topicResult = None,
+      onwards = onwards,
     )
   }
 
@@ -247,7 +252,7 @@ object DotcomRenderingDataModel {
       case Some(requestedBlocks) =>
         val keyEvent = requestedBlocks.getOrElse(CanonicalLiveBlog.timeline, Seq.empty[APIBlock])
         val summaryEvent = requestedBlocks.getOrElse(CanonicalLiveBlog.summary, Seq.empty[APIBlock])
-        keyEvent ++ summaryEvent
+        keyEvent.toSeq ++ summaryEvent.toSeq
       case None => Seq.empty[APIBlock]
     }
   }
@@ -283,7 +288,7 @@ object DotcomRenderingDataModel {
     }
 
     val timelineBlocks =
-      orderBlocks(allTimelineBlocks).map(ensureSummaryTitle)
+      orderBlocks(allTimelineBlocks.toSeq).map(ensureSummaryTitle)
 
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,
@@ -295,7 +300,7 @@ object DotcomRenderingDataModel {
     val pinnedPost =
       blocks.requestedBodyBlocks
         .flatMap(_.get("body:pinned"))
-        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true))))
+        .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true)).toSeq))
         .headOption
         .map(ensureSummaryTitle)
 
@@ -340,6 +345,8 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
+      mostPopular: Option[Seq[OnwardCollectionResponse]] = None,
+      onwards: Option[Seq[OnwardCollectionResponse]] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -512,6 +519,8 @@ object DotcomRenderingDataModel {
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
+      mostPopular = mostPopular,
+      onwards = onwards,
     )
   }
 }

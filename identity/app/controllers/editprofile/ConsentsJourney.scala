@@ -37,34 +37,36 @@ trait ConsentsJourney extends EditProfileControllerComponents {
     csrfCheck {
       consentAuthWithIdapiUserAction.async { implicit request =>
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
-        returnUrlForm.bindFromRequest.fold(
-          formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors.toList))),
-          returnUrl => {
-            val newConsents =
-              if (request.user.consents.isEmpty) Consent.defaultConsents
-              else Consent.addNewDefaults(request.user.consents)
-            identityApiClient
-              .saveUser(
-                request.user.id,
-                UserUpdateDTO(
-                  consents = Some(newConsents),
-                ),
-                request.user.auth,
-              )
-              .map {
-                case Left(idapiErrors) =>
-                  logger.error(s"Failed to set save user consents ${request.user.id}: $idapiErrors")
-                  InternalServerError(Json.toJson(idapiErrors))
+        returnUrlForm
+          .bindFromRequest()
+          .fold(
+            formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors.toList))),
+            returnUrl => {
+              val newConsents =
+                if (request.user.consents.isEmpty) Consent.defaultConsents
+                else Consent.addNewDefaults(request.user.consents)
+              identityApiClient
+                .saveUser(
+                  request.user.id,
+                  UserUpdateDTO(
+                    consents = Some(newConsents),
+                  ),
+                  request.user.auth,
+                )
+                .map {
+                  case Left(idapiErrors) =>
+                    logger.error(s"Failed to set save user consents ${request.user.id}: $idapiErrors")
+                    InternalServerError(Json.toJson(idapiErrors))
 
-                case Right(updatedUser) =>
-                  logger.info(s"Successfully set consents for user ${request.user.id}")
-                  Redirect(
-                    s"${routes.EditProfileController.displayConsentComplete().url}",
-                    Map("returnUrl" -> Seq(returnUrl)),
-                  )
-              }
-          },
-        )
+                  case Right(updatedUser) =>
+                    logger.info(s"Successfully set consents for user ${request.user.id}")
+                    Redirect(
+                      s"${routes.EditProfileController.displayConsentComplete().url}",
+                      Map("returnUrl" -> Seq(returnUrl)),
+                    )
+                }
+            },
+          )
       }
     }
 

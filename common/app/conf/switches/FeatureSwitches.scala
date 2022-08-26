@@ -439,17 +439,7 @@ trait FeatureSwitches {
     "Activate the Interactive Picker (routing interactives between frontend and DCR)",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = LocalDate.of(2022, 8, 25),
-    exposeClientSide = false,
-  )
-
-  val FrontsSlideshowMobileSupport = Switch(
-    SwitchGroup.Feature,
-    "fronts-slideshow-mobile-support",
-    "Enables using captions and slideshows on fronts mobile displays",
-    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = never,
+    sellByDate = LocalDate.of(2022, 10, 25),
     exposeClientSide = false,
   )
 
@@ -491,5 +481,15 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+  )
+
+  val AusRegionSelector = Switch(
+    SwitchGroup.Feature,
+    "aus-region-selector",
+    "When ON, facia containers with targeted territories in Australia will include a 'region switcher' for users to change their region",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
   )
 }

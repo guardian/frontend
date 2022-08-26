@@ -20,7 +20,7 @@ class JobsController(jobsAgent: JobsAgent, val controllerComponents: ControllerC
   def getJobs: Action[AnyContent] =
     Action { implicit request =>
       Cached(60.seconds) {
-        JsonComponent(jobSample(specificIds, segment))
+        JsonComponent.fromWritable(jobSample(specificIds, segment))
       }
     }
 }

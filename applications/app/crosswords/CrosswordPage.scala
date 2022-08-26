@@ -27,7 +27,7 @@ class CrosswordPageWithContent(content: CrosswordContent) extends ContentPage {
   override lazy val item = content
   val crossword = content.crossword
 
-  import CrosswordSvg.{BorderSize, CellSize}
+  import crosswords.CrosswordSvg.{BorderSize, CellSize}
 
   case class SvgDimensions(width: Int, height: Int) {
     def styleString: String = s"width: $width; height: $height"

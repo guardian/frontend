@@ -65,7 +65,7 @@ class ImageContentController(
             case _                     => None
           },
         )
-        Cached(CacheTime.Default)(JsonComponent(JsArray(lightboxJson)))
+        Cached(CacheTime.Default)(JsonComponent.fromWritable(JsArray(lightboxJson)))
       }
     }
 }

@@ -13,8 +13,6 @@ class PrebidAnalyticsController(val controllerComponents: ControllerComponents) 
 
   def insert(): Action[String] =
     Action(parse.text) { implicit request =>
-      val stream = Analytics.storeJsonBody(Switches.prebidAnalytics, prebidAnalyticsStream, log) _
-
-      stream(request.body)
+      Analytics.storeJsonBody(Switches.prebidAnalytics, prebidAnalyticsStream, log)(request.body)
     }
 }

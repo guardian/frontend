@@ -77,13 +77,13 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
           None,
           Some(FRONT_PAGE_DISPLAY_NAME),
           Some(newspaperDate.toString(dateForFrontPagePattern)),
-          content,
+          content.toSeq,
           0,
           snaps,
         )
       }
 
-      val unorderedBookSections = createBookSections(otherContent)
+      val unorderedBookSections = createBookSections(otherContent.toSeq)
       val orderedBookSections = orderByPageNumber(unorderedBookSections)
 
       val bookSectionContainers = orderedBookSections.map { list =>

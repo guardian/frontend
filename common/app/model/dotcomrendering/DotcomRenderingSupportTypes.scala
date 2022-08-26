@@ -117,7 +117,7 @@ object Block {
       id = block.id,
       attributes = attributes,
       elements = DotcomRenderingUtils.blockElementsToPageElements(
-        block.elements,
+        block.elements.toSeq,
         request,
         content,
         shouldAddAffiliateLinks,
@@ -131,7 +131,7 @@ object Block {
       blockLastUpdated = blockLastUpdated,
       blockLastUpdatedDisplay = blockLastUpdatedDisplay,
       title = block.title,
-      contributors = contributors,
+      contributors = contributors.toSeq,
       blockFirstPublished = blockFirstPublished,
       blockFirstPublishedDisplay = blockFirstPublishedDisplay,
       blockFirstPublishedDisplayNoTimezone = blockFirstPublishedDisplayNoTimezone,

@@ -3,10 +3,9 @@
 @import views.support.Commercial.topAboveNavSlot
 
 <div class="@topAboveNavSlot.cssClasses(page.metadata)">
-    <div class="ad-slot__label ad-slot__label--toggle hidden">Advertisement</div>
     @fragments.commercial.standardAd(
         "top-above-nav",
         topAboveNavSlot.slotCssClasses,
-        topAboveNavSlot.adSizes
+        Map()
     )
 </div>

@@ -33,7 +33,7 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
         case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
         case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
       } map { mediaInfo =>
-        Cached(60)(JsonComponent(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
+        Cached(60)(JsonComponent.fromWritable(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
       }
     }
 

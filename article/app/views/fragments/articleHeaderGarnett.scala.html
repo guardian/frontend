@@ -23,7 +23,7 @@
 
             <div class="u-cf">
                 @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
-                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                    @fragments.contentAgeNotice(ageNotice(), ariaHidden = true)
                 }
 
                 @if((article.tags.isInterview)){
@@ -55,7 +55,7 @@
 
             <div class="u-cf">
                 @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
-                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                    @fragments.contentAgeNotice(ageNotice(), ariaHidden = true)
                 }
 
                 @if((article.tags.isInterview)){
@@ -71,7 +71,7 @@
                 </h1>
 
                 @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
-                    @fragments.contentAgeNotice(ageNotice, isHidden = true)
+                    @fragments.contentAgeNotice(ageNotice(), isHidden = true)
                 }
 
                 @if(article.tags.isInterview) {

@@ -11,7 +11,7 @@ import play.api.mvc.RequestHeader
 
 class ExperimentsTest extends AnyFlatSpec with Matchers {
 
-  conf.switches.Switches.ServerSideExperiments.switchOn
+  conf.switches.Switches.ServerSideExperiments.switchOn()
 
   "Experiments" should "not share participation group" in {
     ActiveExperiments.allExperiments.size should be(ActiveExperiments.allExperiments.map(_.participationGroup).size)
@@ -176,9 +176,9 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
   trait EnabledExperiments {
 
     def apply[T](block: => T): T = {
-      TestCases.experiments.foreach(_.switch.switchOn)
+      TestCases.experiments.foreach(_.switch.switchOn())
       val result = block
-      TestCases.experiments.foreach(_.switch.switchOff)
+      TestCases.experiments.foreach(_.switch.switchOff())
       result
     }
   }

@@ -268,17 +268,15 @@ class MoreOnMatchController(
               filtered <- related map { _ filter hasExactlyTwoTeams }
             } yield {
               Cached(if (theMatch.isLive) 10 else 300) {
-                JsonComponent(
-                  Json.toJson(
-                    NxAnswer.makeFromFootballMatch(
-                      request,
-                      theMatch,
-                      filtered,
-                      lineup,
-                      competition,
-                      theMatch.isResult,
-                      theMatch.isLive,
-                    ),
+                JsonComponent.fromWritable(
+                  NxAnswer.makeFromFootballMatch(
+                    request,
+                    theMatch,
+                    filtered,
+                    lineup,
+                    competition,
+                    theMatch.isResult,
+                    theMatch.isLive,
                   ),
                 )
               }

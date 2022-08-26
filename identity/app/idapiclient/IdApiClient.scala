@@ -202,10 +202,10 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
       tracking: Option[TrackingData] = None,
       extra: Parameters = Iterable.empty,
   ): Parameters =
-    extra ++ clientAuth.parameters ++ auth.map(_.parameters) ++ tracking.map(_.parameters)
+    extra ++ clientAuth.parameters ++ auth.map(_.parameters).toSeq ++ tracking.map(_.parameters).toSeq
 
   private def buildHeaders(auth: Option[Auth] = None, extra: Parameters = Iterable.empty): Parameters = {
-    extra ++ clientAuth.headers ++ auth.map(_.headers)
+    extra ++ clientAuth.headers ++ auth.map(_.headers).toSeq
   }
 
   private def apiUrl(path: String) = urlJoin(apiRootUrl, path)

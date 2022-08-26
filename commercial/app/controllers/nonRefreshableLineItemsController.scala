@@ -15,11 +15,9 @@ class nonRefreshableLineItemsController(val controllerComponents: ControllerComp
   def getIds: Action[AnyContent] =
     Action { implicit request =>
       val nonRefreshableLineItems: Seq[Long] = DfpAgent.nonRefreshableLineItemIds()
-      val json = Json.toJson(nonRefreshableLineItems)
-
       Cors(
         Cached(15.minutes) {
-          JsonComponent(json)
+          JsonComponent.fromWritable(nonRefreshableLineItems)
         },
         None,
         None,

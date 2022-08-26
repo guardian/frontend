@@ -6,8 +6,7 @@
     @fragments.commercial.adSlot(
         "merchandising-high",
         Seq("commercial-component-high"),
-        (if(isPaidContent) Map("mobile" -> Seq("1,1", "2,2", "88,89", "fluid")) else Map("mobile" -> Seq("1,1", "2,2", "88,87", "fluid"))) ++
-        (if(hasPageSkin) Map("wide" -> Seq("2,2")) else Map.empty),
+        Map(),
         showLabel=false,
         refresh=false
     ){ }

@@ -45,7 +45,7 @@ object NewsletterHtmlPage extends HtmlPage[NewsletterRoundupPage] {
         checkModuleSupport(),
         inlineJSBlocking(),
       ),
-      bodyTag(classes = defaultBodyClasses)(
+      bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),

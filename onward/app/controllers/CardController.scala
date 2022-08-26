@@ -57,7 +57,7 @@ class CardController(
                   // To test a story that has no image:
                   // /cards/opengraph/http%3A%2F%2Fwww.theguardian.com%2Fmedia%2Fgreenslade%2F2013%2Faug%2F22%2Fjournalist-safety-egypt.json
 
-                  JsonComponent(
+                  JsonComponent.fromWritable(
                     withRefreshStatus(
                       Json
                         .toJson(
@@ -92,7 +92,7 @@ class CardController(
                   val firstParagraph = fragment.select("#mw-content-text > p").first
                   firstParagraph.select(".reference").remove()
 
-                  JsonComponent(
+                  JsonComponent.fromWritable(
                     withRefreshStatus(
                       Json
                         .toJson(

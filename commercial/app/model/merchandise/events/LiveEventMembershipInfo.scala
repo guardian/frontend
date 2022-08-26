@@ -11,7 +11,7 @@ object LiveEventMembershipInfo {
   implicit val readsLiveEventMembershipInfo = new Reads[Seq[LiveEventMembershipInfo]] {
     override def reads(json: JsValue): JsResult[Seq[LiveEventMembershipInfo]] = {
       json match {
-        case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[LiveEventMembershipInfo]))
+        case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[LiveEventMembershipInfo]).toIndexedSeq)
         case _                 => JsError(JsonValidationError("error.expected.jsarray containing LiveEventMembershipInfo"))
       }
     }

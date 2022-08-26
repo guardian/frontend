@@ -46,3 +46,22 @@ Cypress.Commands.add('allowAllConsent', () => {
 		.find(`button[title="${allowAll}"]`, { timeout: 30000 })
 		.click();
 });
+
+Cypress.Commands.add('hydrate', () => {
+	return cy
+		.get('gu-island')
+		.each((el) => {
+			cy.wrap(el)
+				.log(`Scrolling to ${el.attr('name')}`)
+				.scrollIntoView({ duration: 100, timeout: 10000 })
+				.should('have.attr', 'data-gu-ready', 'true', {
+					timeout: 30000,
+				});
+		})
+		.then(() => {
+			cy.scrollTo('top');
+			// Additional wait to ensure layout shift has completed post hydration
+			// eslint-disable-next-line cypress/no-unnecessary-waiting
+			cy.wait(5000);
+		});
+});

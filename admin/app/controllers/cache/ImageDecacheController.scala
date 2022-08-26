@@ -51,7 +51,7 @@ class ImageDecacheController(
 
           ImageServices.clearFastly(originUri, wsClient)
 
-          val decacheRequest: Future[WSResponse] = wsClient.url(s"$originUrl?cachebust=$cacheBust").get
+          val decacheRequest: Future[WSResponse] = wsClient.url(s"$originUrl?cachebust=$cacheBust").get()
           decacheRequest
             .map(_.status)
             .map {

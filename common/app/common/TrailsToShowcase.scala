@@ -505,7 +505,7 @@ object TrailsToShowcase {
   }
 
   private def extractBulletsFrom(trailText: String): Either[Seq[String], BulletList] = {
-    val lines = new WrappedString(trailText).lines.toSeq
+    val lines = trailText.linesIterator.toSeq
 
     val proposedBulletTexts = lines
       .map(_.stripLeading)
