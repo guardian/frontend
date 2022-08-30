@@ -478,6 +478,7 @@
   "../projects/commercial/modules/messenger/post-message.ts"
  ],
  "../projects/commercial/modules/messenger/background.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/once.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/render-advert-label.ts",
