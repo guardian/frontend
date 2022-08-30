@@ -8,6 +8,8 @@ on:
     #         - static/src/javascripts/projects/common/modules/commercial
     #         - static/src/javascripts/projects/commercial
     #         - commercial
+    #         - cypress
+    #         - cypress.config.ts
 
 concurrency:
     group: 'commercial-e2e'
