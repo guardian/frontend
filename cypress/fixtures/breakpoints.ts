@@ -8,9 +8,9 @@ type BreakpointSizes = {
 
 const breakpointsToTest: Array<keyof typeof breakpoints> = [
 	'mobile',
-	'tablet',
+	// 'tablet',
 	'desktop',
-	'wide',
+	// 'wide',
 ];
 
 const breakpointSizes: BreakpointSizes[] = breakpointsToTest.map((b) => ({
