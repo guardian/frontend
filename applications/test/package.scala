@@ -44,3 +44,4 @@ class ApplicationsTestSuite
       new InteractivePickerTest,
     )
     with SingleServerSuite {}
+
