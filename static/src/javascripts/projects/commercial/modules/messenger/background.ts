@@ -1,3 +1,4 @@
+import { isObject } from '@guardian/libs';
 import once from 'lodash-es/once';
 import fastdom from '../../../../lib/fastdom-promise';
 import {
@@ -37,7 +38,7 @@ interface BackgroundSpecs {
 }
 
 const isBackgroundSpecs = (specs: unknown): specs is BackgroundSpecs =>
-	typeof specs === 'object' && !!specs && 'backgroundImage' in specs;
+	isObject(specs) && 'backgroundImage' in specs;
 
 // using once, because some native templates send the 'background' message multiple times
 const createParent = once((scrollType: BackgroundSpecs['scrollType']) => {
