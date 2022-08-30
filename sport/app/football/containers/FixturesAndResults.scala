@@ -132,6 +132,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           useShowMore = false,
           hasShowMoreEnabled = true,
           isThrasher = false,
+          targetedTerritory = None,
         )
         Some(faciaContainer)
       } else None

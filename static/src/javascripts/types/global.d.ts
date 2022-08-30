@@ -99,6 +99,7 @@ interface PageConfig extends CommercialPageConfig {
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
 	isImmersive?: boolean;
+	isLiveBlog?: boolean;
 	isPaidContent: boolean;
 	isProd: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala
 	isSensitive: boolean;
@@ -177,7 +178,7 @@ interface Confiant extends Record<string, unknown> {
 interface A9AdUnitInterface {
 	slotID: string;
 	slotName?: string;
-	sizes: HeaderBiddingSize[];
+	sizes: number[][];
 }
 
 type ApstagInitConfig = {
@@ -240,6 +241,20 @@ interface IasPET {
 	pubId?: string;
 }
 
+interface OptOutInitializeOptions {
+	publisher: number;
+	onlyNoConsent: 0 | 1;
+	consentTimeOutMS?: 5000;
+	noLogging?: 0 | 1;
+}
+
+interface OptOutDefineSlotOptions {
+	adSlot: string;
+	targetId: string;
+	filledCallback?: () => void;
+	emptyCallback?: () => void;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -256,7 +271,12 @@ interface Window {
 			dfpEnv?: DfpEnv;
 		};
 	};
-
+	ootag: {
+		queue: Array<() => void>;
+		initializeOo: (o: OptOutInitializeOptions) => void;
+		addParameter: (key: string, value: string) => void;
+		defineSlot: (o: OptOutDefineSlotOptions) => void;
+	};
 	confiant?: Confiant;
 	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];

@@ -6,6 +6,7 @@ import model.{ArticlePage, PageWithStoryPackage, LiveBlogPage, Tag}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.json.Json
+import com.gu.contentapi.client.utils.format.NewsletterSignupDesign
 
 case class NewsletterData(
     identityName: String,
@@ -16,6 +17,7 @@ case class NewsletterData(
     listId: Int,
     group: String,
     successDescription: String,
+    regionFocus: Option[String],
 )
 
 object NewsletterData {
@@ -49,6 +51,21 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     }
   }
 
+  private def getNewsletterResponseFromSignUpPage(articleId: String): Option[NewsletterResponse] = {
+    newsletterSignupAgent.getNewsletters() match {
+      case Left(_) => None
+      case Right(list) =>
+        list.find(response => response.signupPage.nonEmpty && response.signupPage.get == "/" + articleId)
+    }
+  }
+
+  private def isSignUpPage(articlePage: ArticlePage): Boolean = {
+    articlePage.article.content.metadata.format match {
+      case None         => false
+      case Some(format) => format.design == NewsletterSignupDesign
+    }
+  }
+
   private def convertNewsletterResponseToData(response: NewsletterResponse): NewsletterData = {
     NewsletterData(
       response.identityName,
@@ -59,6 +76,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
       response.listId,
       response.group,
       response.emailEmbed.successDescription,
+      response.regionFocus,
     )
   }
 
@@ -67,7 +85,14 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   }
 
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
-    val response = getNewsletterResponseFromTags(articlePage.article.tags.tags)
+
+    var response: Option[NewsletterResponse] = None
+    if (isSignUpPage(articlePage)) {
+      response = getNewsletterResponseFromSignUpPage(articlePage.article.content.metadata.id)
+    } else {
+      response = getNewsletterResponseFromTags(articlePage.article.tags.tags)
+    }
+
     if (response.isEmpty || !shouldInclude(response.get)) {
       return None
     }
