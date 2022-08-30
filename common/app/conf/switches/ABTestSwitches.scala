@@ -27,6 +27,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-mandatory-long-test-run",
+    "Mandatory sign in gate to users over 6 weeks",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-deeply-read-article-footer",
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),
