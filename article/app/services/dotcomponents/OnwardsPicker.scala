@@ -8,7 +8,9 @@ import play.api.mvc.RequestHeader
 import views.support.Commercial
 
 class OnwardsPicker(curatedContentAgent: CuratedContentAgent) {
-  def forArticle(article: ArticlePage, edition: Edition)(implicit request: RequestHeader): Seq[OnwardCollectionResponse] = {
+  def forArticle(article: ArticlePage, edition: Edition)(implicit
+      request: RequestHeader,
+  ): Seq[OnwardCollectionResponse] = {
     val format = article.article.content.metadata.format.getOrElse(ContentFormat.defaultContentFormat)
     val curatedContent = curatedContentAgent.getTrails(format.theme, edition, Commercial.isAdFree(request))
 

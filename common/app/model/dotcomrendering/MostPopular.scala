@@ -10,9 +10,7 @@ case class OnwardCollectionResponse(
 )
 object OnwardCollectionResponse {
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
-  def getOnwardCollectionResponse(collection: PressedCollection,
-                           edition: Edition,
-                         ): OnwardCollectionResponse = {
+  def getOnwardCollectionResponse(collection: PressedCollection, edition: Edition): OnwardCollectionResponse = {
     val trails = collection.curatedPlusBackfillDeduplicated
       .take(10)
       .map(pressed => Trail.pressedContentToTrail(pressed, edition))

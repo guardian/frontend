@@ -14,7 +14,6 @@ import play.api.libs.json._
 import play.api.test.Helpers._
 import services.ConfigAgent
 
-
 import scala.concurrent.duration._
 import scala.concurrent.Await
 import test._
@@ -29,7 +28,7 @@ import test._
     with WithTestWsClient
     with MockitoSugar
     with WithTestFrontJsonFapi {
-  
+
   override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
