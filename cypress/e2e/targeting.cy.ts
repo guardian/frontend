@@ -56,7 +56,7 @@ describe('GAM targeting', () => {
 	});
 });
 
-describe('Prebid targeting', () => {
+describe.skip('Prebid targeting', () => {
 	const interceptGamRequest = () =>
 		cy.intercept(
 			{
