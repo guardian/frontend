@@ -27,12 +27,9 @@ import test._
     with WithTestApplicationContext
     with WithMaterializer
     with WithTestWsClient
-    with MockitoSugar {
-
-  lazy val actorSystem = ActorSystem()
-  lazy val blockingOperations = new BlockingOperations(actorSystem)
-  lazy val fapi = new TestFrontJsonFapi(blockingOperations)
-
+    with MockitoSugar
+    with WithTestFrontJsonFapi {
+  
   override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
