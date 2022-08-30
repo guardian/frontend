@@ -25,7 +25,7 @@ case class ContainerMeta(theme: Theme, edition: Edition)
 
 class CuratedContentAgent(frontJsonFapiLive: FrontJsonFapiLive) extends GuLogging {
   private lazy val curatedContentAgent = Box[Map[String, Seq[Trail]]](Map.empty)
-  private lazy val curatedContentAddFreeAgent = Box[Map[String, Seq[Trail]]](Map.empty)
+  private lazy val curatedContentAdFreeAgent = Box[Map[String, Seq[Trail]]](Map.empty)
 
   private val CONTAINERS_WITH_EDITION: Map[String, ContainerMeta] = Map(
     "uk-alpha/news/regular-stories" -> ContainerMeta(NewsPillar, Uk),
@@ -88,7 +88,7 @@ class CuratedContentAgent(frontJsonFapiLive: FrontJsonFapiLive) extends GuLoggin
       }
   }
 
-  def getCuratedContentAddFree: Map[String, Seq[Trail]] = curatedContentAddFreeAgent.get()
+  def getCuratedContentAdFree: Map[String, Seq[Trail]] = curatedContentAdFreeAgent.get()
 
   def getCuratedContent: Map[String, Seq[Trail]] = curatedContentAgent.get()
 
