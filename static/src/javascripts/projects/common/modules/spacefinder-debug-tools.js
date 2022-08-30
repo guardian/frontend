@@ -84,16 +84,19 @@ const markCandidates = (exclusions, winners, options) => {
 		arr.forEach((exclusion) => {
 			const type = exclusionTypes[key];
 
+            const element = exclusion instanceof Element ? exclusion : exclusion.element;
+            const meta = exclusion instanceof Element ? null : exclusion;
+
 			if (type) {
-				addExplainer(exclusion.element, type.reason);
-				exclusion.element.style.cssText += `background:${type.colour}`;
-			} else if (exclusion.meta.tooClose.length > 0) {
-				addExplainer(exclusion.element, 'Too close to other element');
-				exclusion.element.style.cssText += `background:${colours.blue}`;
-				addHoverListener(exclusion.element, exclusion.meta.tooClose);
+				addExplainer(element, type.reason);
+				element.style.cssText += `background:${type.colour}`;
+			} else if (meta?.tooClose.length > 0) {
+				addExplainer(element, 'Too close to other element');
+				element.style.cssText += `background:${colours.blue}`;
+				addHoverListener(element, meta?.tooClose);
 			} else {
-				addExplainer(exclusion.element, `Unknown key: ${key}`);
-				exclusion.element.style.cssText += `background:${colours.pink}`;
+				addExplainer(element, `Unknown key: ${key}`);
+				element.style.cssText += `background:${colours.pink}`;
 			}
 		});
 	}
