@@ -1,15 +1,13 @@
 name: Commercial E2E Tests
 on:
-    [push]
-    # will change to below when we have a stable branch
-    #
-    # pull_request:
-    #     paths:
-    #         - static/src/javascripts/projects/common/modules/commercial
-    #         - static/src/javascripts/projects/commercial
-    #         - commercial
-    #         - cypress
-    #         - cypress.config.ts
+    pull_request:
+        paths:
+            - static/src/javascripts/projects/common/modules/commercial
+            - static/src/javascripts/projects/commercial
+            - commercial
+            - cypress
+            - cypress.config.ts
+            - .github/workflows/commercial-e2e.yml
 
 concurrency:
     group: 'commercial-e2e'
