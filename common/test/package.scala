@@ -2,13 +2,13 @@ package test
 
 import java.io.File
 import java.net.URL
-
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient}
 import common.Lazy
+import concurrent.BlockingOperations
 import contentapi._
-import model.{ApplicationContext, ApplicationIdentity}
+import model.{ApplicationContext, ApplicationIdentity, PressedPage, PressedPageType}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.{BeforeAndAfterAll, TestSuite}
 import org.scalatestplus.play._
@@ -16,14 +16,19 @@ import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api._
 import play.api.http.HttpConfiguration
 import play.api.libs.crypto.{CSRFTokenSigner, CSRFTokenSignerProvider, CookieSigner, CookieSignerProvider}
+import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
-import recorder.ContentApiHttpRecorder
+import recorder.{ContentApiHttpRecorder, HttpRecorder}
+import services.fronts.FrontJsonFapiLive
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.io.Codec.UTF8
 import scala.util.{Failure, Success, Try}
+
+import akka.actor.ActorSystem
 
 trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with ConfiguredBrowser {
 
@@ -161,4 +166,39 @@ trait WithTestCSRF {
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
   lazy val csrfAddToken = new CSRFAddToken(csrfConfig, csrfTokenSigner, httpConfiguration.session)
   lazy val csrfCheck = new CSRFCheck(csrfConfig, csrfTokenSigner, httpConfiguration.session)
+}
+
+trait WithTestFrontJsonFapi {
+
+  // need a front api that stores S3 locally so it can run without deps in the unit tests
+  class TestFrontJsonFapi(override val blockingOperations: BlockingOperations)
+    extends FrontJsonFapiLive(blockingOperations) {
+
+    override def get(path: String, pageType: PressedPageType)(implicit
+                                                              executionContext: ExecutionContext,
+    ): Future[Option[PressedPage]] = {
+      recorder.load(path, Map()) {
+        super.get(path, pageType)
+      }
+    }
+
+    val recorder = new HttpRecorder[Option[PressedPage]] {
+      override lazy val baseDir = new File(System.getProperty("user.dir"), "data/pressedPage")
+
+      //No transformation for now as we only store content that's there.
+      override def toResponse(b: Array[Byte]): Option[PressedPage] =
+        Json.parse(new String(b, UTF8.charSet)).asOpt[PressedPage]
+
+      override def fromResponse(maybeResponse: Option[PressedPage]): Array[Byte] = {
+        val response = maybeResponse getOrElse {
+          throw new RuntimeException("seeing None.get locally? make sure you have S3 credentials")
+        }
+        Json.stringify(Json.toJson(response)).getBytes(UTF8.charSet)
+      }
+    }
+  }
+
+  lazy val actorSystem = ActorSystem()
+  lazy val blockingOperations = new BlockingOperations(actorSystem)
+  lazy val fapi = new TestFrontJsonFapi(blockingOperations)
 }

@@ -1,5 +1,8 @@
 package test
 
+import agents.CuratedContentAgent
+import akka.actor.ActorSystem
+import concurrent.BlockingOperations
 import org.scalatest.{Suites, Tag}
 import services.dotcomponents.ArticlePickerTest
 object ArticleComponents extends Tag("article components")

@@ -1,6 +1,8 @@
 package test
 
-import agents.DeeplyReadAgent
+import agents.{CuratedContentAgent, DeeplyReadAgent}
+import akka.actor.ActorSystem
+import concurrent.BlockingOperations
 import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
 import org.mockito.Mockito._
@@ -23,7 +25,8 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with WithTestFrontJsonFapi {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
@@ -41,7 +44,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       new DCRFake(),
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
       new DeeplyReadAgent(),
-      new OnwardsPicker(new CuratedContentAgent()),
+      new OnwardsPicker(new CuratedContentAgent(fapi)),
     )
   lazy val publicationController =
     new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)
