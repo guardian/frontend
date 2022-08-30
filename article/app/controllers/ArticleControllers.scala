@@ -20,6 +20,8 @@ trait ArticleControllers {
   def topicS3Client: TopicS3Client
   def topicService: TopicService
   def newsletterSignupAgent: NewsletterSignupAgent
+  def onwardsPicker: OnwardsPicker
+  def curatedContentAgent: CuratedContentAgent
 
   implicit def appContext: ApplicationContext
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]
@@ -29,6 +31,4 @@ trait ArticleControllers {
   lazy val liveBlogController = wire[LiveBlogController]
   lazy val newsletterService = wire[NewsletterService]
   lazy val articleDeeplyReadAgent = wire[DeeplyReadAgent]
-  lazy val curatedContentAgent = wire[CuratedContentAgent]
-  lazy val onwardsPicker = wire[OnwardsPicker]
 }

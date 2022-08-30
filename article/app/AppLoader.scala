@@ -1,4 +1,5 @@
 import _root_.commercial.targeting.TargetingLifecycle
+import agents.CuratedContentAgent
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
@@ -6,6 +7,7 @@ import common.Assets.DiscussionExternalAssetsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common._
 import common.dfp.DfpAgentLifecycle
+import concurrent.BlockingOperations
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -20,6 +22,8 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
+import services.dotcomponents.OnwardsPicker
+import services.fronts.FrontJsonFapiLive
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
@@ -48,6 +52,12 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+
+  lazy val onwardsPicker = wire[OnwardsPicker]
+  lazy val curatedContentAgent = wire[CuratedContentAgent]
+
+  lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
+  lazy val blockingOperations = wire[BlockingOperations]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
