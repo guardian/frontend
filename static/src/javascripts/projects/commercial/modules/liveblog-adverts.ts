@@ -137,7 +137,7 @@ const fill = (rules: SpacefinderRules) => {
 	return spaceFiller.fillSpace(rules, insertAds, options).then(() => {
 		if (AD_COUNTER < MAX_ADS) {
 			const el = document.querySelector(
-				`${rules.bodySelector} > .ad-slot`,
+				`${rules.bodySelector} > .ad-slot-container`,
 			);
 			if (el && el.previousSibling instanceof HTMLElement) {
 				firstSlot = el.previousSibling;
