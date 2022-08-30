@@ -61,17 +61,19 @@ const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
 	});
 };
 
-describe('tcfv2 consent', () => {
+describe.skip('tcfv2 consent', () => {
 	beforeEach(() => {
 		cy.clearCookies();
-		cy.clearLocalStorage()
-		.then(() => {
+		cy.clearLocalStorage().then(() => {
 			cy.log('override geolocation');
-			window.localStorage.setItem('gu.geo.override', JSON.stringify({value:'GB'}));
+			window.localStorage.setItem(
+				'gu.geo.override',
+				JSON.stringify({ value: 'GB' }),
+			);
 		});
 	});
 
-	const { path, adTest } = articles[0];
+	const { path } = articles[0];
 	it(`Test ${path} hides slots when consent is denied`, () => {
 		cy.visit(path);
 
