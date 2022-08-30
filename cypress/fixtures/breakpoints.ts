@@ -7,7 +7,7 @@ type BreakpointSizes = {
 };
 
 const breakpointsToTest: Array<keyof typeof breakpoints> = [
-	'mobile',
+	// 'mobile',
 	// 'tablet',
 	'desktop',
 	// 'wide',
