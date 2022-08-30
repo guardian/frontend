@@ -4,6 +4,7 @@
 2. [Testing AMP](#testing-amp)
 3. [Device Testing](#device-testing)
 4. [Testing local on CODE](#testing-your-local-on-code)
+5. [Scalatest in IntelliJ](#scalatest-in-intellij)
 
 
 # Running localhost
@@ -185,6 +186,23 @@ Some points about CODE. The CODE composer does not actually produce content for 
  This means that there is no way to create a piece of content on code then surface it to a front on your local machine or on code.
 
 
+# Scalatest in IntelliJ
 
+It can be convenient to run ScalaTest directly from IntelliJ. There's a few config steps you can take to make this easier.
 
+### Missing error and warning highlighting because of Reader mode in tests
 
+Reader mode can be selected as the default view for tests in IntelliJ. This can make testing difficult as you loose
+error and warning highlighting. You can either disable reader mode, or enable error and warning highlighting while in
+reader mode. [Here's more detail on how to do that](https://www.jetbrains.com/help/idea/reader-mode.html).
+
+### Tests flagged as `@DoNotDiscover`
+
+These tests have been flagged as [`@DoNotDiscover`](https://www.scalatest.org/scaladoc/3.0.6/org/scalatest/DoNotDiscover.html)
+to avoid them being run individually - but as part of a suite. e.g. [`ArticleControllerTest`](../../article/test/ArticleControllerTest.scala)
+which is part of [`ArticleTestSuite`](../../article/test/package.scala).
+
+This is often because we want the suite of tests to run against a single server by extending the Suite class with
+[`SingleServerSuite`](../../common/test/package.scala). To run these tests individually you can comment out the tests
+you don't want to run in the suite. This isn't ideal, but it was worth noting as it has caught people out, and is _a_
+solution.
