@@ -13,6 +13,15 @@ import common.{Box, Edition, GuLogging}
 import model.dotcomrendering.{OnwardCollectionResponse, Trail}
 
 class CuratedContentAgent() extends GuLogging {
+  private val containerIds: Seq[String] =
+    Seq(NewsPillar, SportPillar, OpinionPillar, CulturePillar, LifestylePillar) flatMap { theme =>
+      Seq(
+        getContainerId(theme, Uk),
+        getContainerId(theme, Us),
+        getContainerId(theme, Au),
+        getContainerId(theme, International),
+      )
+    }
   private def getContainerId(theme: Theme, edition: Edition) =
     theme match {
       case NewsPillar =>
