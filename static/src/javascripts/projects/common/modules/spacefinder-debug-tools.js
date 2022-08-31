@@ -95,7 +95,7 @@ const markCandidates = (exclusions, winners, options, rules) => {
                 const type = exclusionTypes[key];
 
                 const element = exclusion instanceof Element ? exclusion : exclusion.element;
-                const meta = exclusion instanceof Element ? null : exclusion;
+                const meta = exclusion instanceof Element ? null : exclusion.meta;
 
                 if (element == rules?.startAt) {
                     const type = exclusionTypes.isStartAt;
