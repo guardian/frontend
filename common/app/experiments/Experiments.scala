@@ -10,6 +10,15 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
+object DCRJSBundleVariant
+    extends Experiment(
+      name = "dcr-js-bundle-variant",
+      description = "DCR bundle experiment",
+      owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2024, 4, 1),
+      participationGroup = Perc1A,
+    )
+
 object DCRFronts
     extends Experiment(
       name = "dcr-fronts",
