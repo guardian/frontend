@@ -190,7 +190,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 	/**
 	 * In special cases, inline2 can overlap the "Most viewed" island, so
-	 * we need to make a few adjustments.
+	 * we need to make an adjustment to move the inline2 further down the page.
 	 */
 	if (isPaidContent) {
 		minAbove += 600;
@@ -198,8 +198,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	// Some old articles don't have a main image, which means the first paragraph is much higher
 	if (!hasImages) {
 		minAbove += 600;
-	}
-	if (hasShowcaseMainElement) {
+	} else if (hasShowcaseMainElement) {
 		minAbove += 100;
 	}
 
