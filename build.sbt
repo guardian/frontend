@@ -35,6 +35,7 @@ val common = library("common")
       rome,
       romeModules,
       scalaCheck,
+      scalaCollectionPlus,
       nScalaTime,
       ws,
       faciaFapiScalaClient,

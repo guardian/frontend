@@ -4,7 +4,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Node, TextNode}
 import play.twirl.api.Html
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 object HtmlTextExtractor {
 

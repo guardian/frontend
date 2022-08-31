@@ -16,7 +16,6 @@ object StringEncodings {
     */
   def jsonToJS(json: String): String =
     json
-      .replaceAll("""\u2028""", """\\u2028""")
-      .replaceAll("""\u2029""", """\\u2029""")
-
+      .replaceAll("\u2028", """\\u2028""")
+      .replaceAll("\u2029", """\\u2029""")
 }

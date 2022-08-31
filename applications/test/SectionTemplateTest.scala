@@ -7,7 +7,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.DoNotDiscover
 import play.api.test.TestBrowser
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 @DoNotDiscover class SectionTemplateTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 

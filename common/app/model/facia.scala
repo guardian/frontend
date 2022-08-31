@@ -21,7 +21,7 @@ object SeoData extends GuLogging {
   val editions = Edition.all.map(_.id.toLowerCase)
 
   def fromPath(path: String): SeoData =
-    path.split('/').toList match {
+    (path.split('/').toList: @unchecked) match { // split() never gives the empty list
       //This case is only to handle the nonevent of uk/technology/games
       case edition :: section :: name :: tail if editions.contains(edition.toLowerCase) =>
         val webTitle: String = webTitleFromTail(name :: tail)

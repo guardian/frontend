@@ -1,5 +1,6 @@
 package services.dotcomponents
 
+import com.madgag.scala.collection.decorators.MapDecorator
 import implicits.Requests._
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
@@ -37,7 +38,7 @@ object ArticlePicker {
 
   private[this] def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
     val allowListFeatures = dcrChecks(page, request)
-    val article100PercentPageFeatures = allowListFeatures.filterKeys(
+    val article100PercentPageFeatures = allowListFeatures.view.filterKeys(
       Set(
         "isSupportedType",
         "isNotAGallery",
@@ -63,7 +64,7 @@ object ArticlePicker {
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
     // include features that we wish to log but not allow-list against
-    val features = checks.mapValues(_.toString) +
+    val features = checks.mapV(_.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
       ("dcrCouldRender" -> dcrCanRender.toString) +
       ("pageTones" -> pageTones)

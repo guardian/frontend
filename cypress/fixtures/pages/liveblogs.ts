@@ -11,7 +11,6 @@ const liveblogs: Page[] = [
 			{ isDcr: true },
 		),
 		expectedMinInlineSlotsOnPage: 4,
-		adTest: 'fixed-puppies',
 	},
 ];
 

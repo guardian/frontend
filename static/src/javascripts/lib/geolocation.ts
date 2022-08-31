@@ -26,9 +26,7 @@ let locale: CountryCode | null;
 const getCountryCode = (): CountryCode => {
 	const pageEdition = config.get<string>('page.edition');
 
-	const maybeCountryOverride = storage.local.get(
-		countryOverrideName,
-	) as unknown;
+	const maybeCountryOverride = storage.local.get(countryOverrideName);
 	const countryOverride = isString(maybeCountryOverride)
 		? (maybeCountryOverride as CountryCode)
 		: null;

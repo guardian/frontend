@@ -1,3 +1,5 @@
+import { storage } from '@guardian/libs';
+
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
@@ -44,3 +46,8 @@ declare global {
 import './commands';
 
 Cypress.on('uncaught:exception', (err, runnable) => false);
+
+beforeEach(() => {
+	// execute all tests in GB region for now
+	storage.local.set('gu.geo.override', 'GB');
+});

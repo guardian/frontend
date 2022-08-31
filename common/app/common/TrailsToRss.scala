@@ -17,7 +17,7 @@ import java.io.StringWriter
 import java.text.SimpleDateFormat
 import java.util.regex.Pattern
 import java.util.{Date, TimeZone}
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 object RssDates {
   def getYear(date: Date): String = {
@@ -27,7 +27,7 @@ object RssDates {
   }
 }
 
-object TrailsToRss extends implicits.Collections {
+object TrailsToRss {
 
   // The CAPI blocks we would like consumers to request to build our item intro text from
   val BlocksToGenerateRssIntro = "body:oldest:10"

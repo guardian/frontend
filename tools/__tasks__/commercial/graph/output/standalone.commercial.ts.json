@@ -129,6 +129,9 @@
   "../lib/config.d.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
+ "../projects/commercial/modules/consentless/build-page-parameters.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/commercial/modules/consentless/define-slot.ts": [
   "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
@@ -155,8 +158,12 @@
  "../projects/commercial/modules/consentless/init-fixed-slots.ts": [
   "../projects/commercial/modules/consentless/define-slot.ts"
  ],
- "../projects/commercial/modules/consentless/prepare-ootag.ts": [
+ "../projects/commercial/modules/consentless/init-safeframes.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
+ "../projects/commercial/modules/consentless/prepare-ootag.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/commercial/modules/consentless/build-page-parameters.ts"
  ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
@@ -303,7 +310,7 @@
   "../projects/commercial/modules/dfp/on-slot-viewable.ts",
   "../projects/commercial/modules/dfp/refresh-on-resize.ts",
   "../projects/commercial/modules/messenger.ts",
-  "../projects/commercial/modules/messenger/background.js",
+  "../projects/commercial/modules/messenger/background.ts",
   "../projects/commercial/modules/messenger/click.ts",
   "../projects/commercial/modules/messenger/disable-refresh.ts",
   "../projects/commercial/modules/messenger/get-page-targeting.ts",
@@ -473,11 +480,12 @@
   "../lib/report-error.js",
   "../projects/commercial/modules/messenger/post-message.ts"
  ],
- "../projects/commercial/modules/messenger/background.js": [
-  "../lib/config.js",
-  "../lib/events.ts",
+ "../projects/commercial/modules/messenger/background.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/once.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/render-advert-label.ts"
+  "../projects/commercial/modules/dfp/render-advert-label.ts",
+  "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/messenger/click.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -764,6 +772,7 @@
   "../projects/commercial/modules/consentless/dynamic/article-inline.ts",
   "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts",
   "../projects/commercial/modules/consentless/init-fixed-slots.ts",
+  "../projects/commercial/modules/consentless/init-safeframes.ts",
   "../projects/commercial/modules/consentless/prepare-ootag.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.ts",
