@@ -100,22 +100,4 @@ class FixturesController(
       case None => Action(NotFound)
     }
   }
-
-  def teamFixturesComponentJson(teamId: String): Action[AnyContent] = teamFixturesComponent(teamId)
-  def teamFixturesComponent(teamId: String): Action[AnyContent] =
-    Action { implicit request =>
-      competitionsService
-        .findTeam(teamId)
-        .map { team =>
-          val now = LocalDate.now(Edition.defaultEdition.timezoneId)
-          val fixtures = TeamFixturesList(now, competitionsService.competitions, teamId)
-          val page = new FootballPage(
-            s"football/${team.id}/fixtures",
-            "football",
-            s"${team.name} fixtures",
-          )
-          renderMatchList(page, fixtures, filters)
-        }
-        .getOrElse(NotFound)
-    }
 }
