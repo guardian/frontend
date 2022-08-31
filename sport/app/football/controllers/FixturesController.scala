@@ -47,10 +47,9 @@ class FixturesController(
     moreTagFixturesFor(year, month, day, tag)
 
   def moreTagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    getTagFixtures(createDate(year, month, day), tag) match {
-      case Some((_, fixtures)) => renderMoreFixtures(fixtures)
-      case None                => Action(NotFound)
-    }
+    getTagFixtures(createDate(year, month, day), tag)
+      .map(result => renderMoreFixtures(result._2))
+      .getOrElse(Action(NotFound))
 
   def tagFixturesJson(tag: String): Action[AnyContent] = tagFixtures(tag)
   def tagFixtures(tag: String): Action[AnyContent] =
@@ -61,43 +60,34 @@ class FixturesController(
   def tagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     renderTagFixtures(createDate(year, month, day), tag)
 
-  private def getTagFixtures(date: LocalDate, tag: String): Option[(Either[Competition, FootballTeam], Fixtures)] = {
+  private def getTagFixtures(date: LocalDate, tag: String): Option[(FootballPage, Fixtures)] = {
     lookupCompetition(tag)
       .map(comp =>
         (
-          Left(comp),
+          new FootballPage(s"football/$tag/fixtures", "football", s"${comp.fullName} fixtures"),
           CompetitionFixturesList(date, competitionsService.competitions, comp.id, tag),
         ),
       )
       .orElse {
         lookupTeam(tag).map(team =>
           (
-            Right(team),
+            new FootballPage(s"football/$tag/fixtures", "football", s"${team.name} fixtures"),
             TeamFixturesList(date, competitionsService.competitions, team.id, tag),
           ),
         )
       }
   }
 
-  private def renderTagFixtures(date: LocalDate, tag: String): Action[AnyContent] = {
-    getTagFixtures(date, tag) match {
-      case Some((Left(competition), fixtures)) =>
+  private def renderTagFixtures(date: LocalDate, tag: String): Action[AnyContent] =
+    getTagFixtures(date, tag)
+      .map(result =>
         Action { implicit request =>
           renderMatchList(
-            new FootballPage(s"football/$tag/fixtures", "football", s"${competition.fullName} fixtures"),
-            fixtures,
+            result._1,
+            result._2,
             filters,
           )
-        }
-      case Some((Right(team), fixtures)) =>
-        Action { implicit request =>
-          renderMatchList(
-            new FootballPage(s"football/$tag/fixtures", "football", s"${team.name} fixtures"),
-            fixtures,
-            filters,
-          )
-        }
-      case None => Action(NotFound)
-    }
-  }
+        },
+      )
+      .getOrElse(Action(NotFound))
 }
