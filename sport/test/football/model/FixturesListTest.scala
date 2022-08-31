@@ -154,7 +154,7 @@ import java.time.format.DateTimeFormatter
 
   "the competition fixtures list" - {
     "given competition 500" - {
-      val fixtures = CompetitionFixturesList(today, competitions.competitions, "500")
+      val fixtures = CompetitionFixturesList(today, competitions.competitions, "500", "Champions League")
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches
@@ -183,7 +183,7 @@ import java.time.format.DateTimeFormatter
     }
 
     "given competition 100" - {
-      val fixtures = CompetitionFixturesList(today, competitions.competitions, "100")
+      val fixtures = CompetitionFixturesList(today, competitions.competitions, "100", "Premier League")
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches
@@ -205,7 +205,7 @@ import java.time.format.DateTimeFormatter
 
   "the team fixtures list" - {
     "given spurs" - {
-      val fixtures = TeamFixturesList(today, competitions.competitions, spurs.id)
+      val fixtures = TeamFixturesList(today, competitions.competitions, spurs.id, spurs.name)
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches

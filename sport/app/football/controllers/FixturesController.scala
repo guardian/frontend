@@ -66,14 +66,14 @@ class FixturesController(
       .map(comp =>
         (
           Left(comp),
-          CompetitionFixturesList(date, competitionsService.competitions, comp.id),
+          CompetitionFixturesList(date, competitionsService.competitions, comp.id, tag),
         ),
       )
       .orElse {
         lookupTeam(tag).map(team =>
           (
             Right(team),
-            TeamFixturesList(date, competitionsService.competitions, team.id),
+            TeamFixturesList(date, competitionsService.competitions, team.id, tag),
           ),
         )
       }
