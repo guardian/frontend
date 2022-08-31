@@ -62,10 +62,6 @@ object Edition {
 
   lazy val allWithEurope = all ++ List(editions.Europe)
 
-  lazy val editionFronts = Edition.all.map { e => "/" + e.id.toLowerCase }
-
-  def isEditionFront(implicit request: RequestHeader): Boolean = editionFronts.contains(request.path)
-
   private def editionFromRequest(request: RequestHeader): String = {
     // override for Ajax calls
     val editionFromParameter = request.getQueryString("_edition")
