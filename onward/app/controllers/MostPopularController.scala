@@ -13,7 +13,7 @@ import model.Cached.RevalidatableResult
 import model._
 import model.dotcomrendering.{
   MostPopularGeoResponse,
-  MostPopularTrails,
+  MostPopularCollectionResponse,
   OnwardCollectionResponse,
   OnwardCollectionResponseDCR,
   Trail,
@@ -24,7 +24,7 @@ import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
 import agents.DeeplyReadAgent
-import model.dotcomrendering.MostPopularTrails
+import model.dotcomrendering.MostPopularCollectionResponse
 
 class MostPopularController(
     contentApiClient: ContentApiClient,
@@ -146,7 +146,7 @@ class MostPopularController(
     Cached(900)(JsonComponent.fromWritable(response))
   }
 
-  def jsonResponseTrails(mostPopulars: Seq[MostPopularTrails], mostCards: Map[String, Option[ContentCard]])(implicit
+  def jsonResponseTrails(mostPopulars: Seq[MostPopularCollectionResponse], mostCards: Map[String, Option[ContentCard]])(implicit
       request: RequestHeader,
   ): Result = {
     val tabs = mostPopulars.map { tab =>
@@ -210,11 +210,11 @@ class MostPopularController(
       val edition = Edition(request)
 
       // Synchronous edition popular, from the mostPopularAgent (stateful)
-      val editionPopular: Option[MostPopularTrails] = {
+      val editionPopular: Option[MostPopularCollectionResponse] = {
         val editionPopularContent = mostPopularAgent.mostPopular(edition)
         if (editionPopularContent.isEmpty) None
         Some(
-          MostPopularTrails(
+          MostPopularCollectionResponse(
             "Most popular",
             "",
             editionPopularContent
@@ -227,10 +227,10 @@ class MostPopularController(
       val deeplyReadItems = deeplyReadAgent.getTrails
 
       // Async global deeply read
-      val deeplyRead: Option[MostPopularTrails] = {
+      val deeplyRead: Option[MostPopularCollectionResponse] = {
         if (deeplyReadItems.isEmpty) None
         Some(
-          MostPopularTrails(
+          MostPopularCollectionResponse(
             "Deeply read",
             "",
             deeplyReadItems,

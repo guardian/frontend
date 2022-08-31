@@ -28,7 +28,7 @@ object MostPopularGeoResponse {
   implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
 }
 
-case class MostPopularTrails(heading: String, section: String, trails: Seq[Trail])
-object MostPopularTrails {
-  implicit val mostPopularNx2Writes = Json.writes[MostPopularTrails]
+case class MostPopularCollectionResponse(heading: String, section: String, trails: Seq[Trail])
+object MostPopularCollectionResponse {
+  implicit val MostPopularCollectionResponseWrites = Json.writes[MostPopularCollectionResponse]
 }
