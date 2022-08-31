@@ -236,10 +236,11 @@ class MostPopularController(
         )
       }
 
-      val response =
-        if (editionPopular.isDefined && deeplyRead.isDefined)
-          jsonResponseTrails(editionPopular.toSeq ++ deeplyRead.toSeq, mostCards())
-        else NotFound
+      val response = (editionPopular, deeplyRead) match => {
+        case (Some(p), Some(d)) => 
+          jsonResponseTrails(p.toSeq ++ d.toSeq, mostCards())
+        case (_, _) => NotFound
+      }
 
       Future(response)
     }
