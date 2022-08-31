@@ -146,8 +146,8 @@ class MostPopularController(
     Cached(900)(JsonComponent.fromWritable(response))
   }
 
-  def jsonResponseTrails(mostPopulars: Seq[MostPopularCollectionResponse], mostCards: Map[String, Option[ContentCard]])(implicit
-      request: RequestHeader,
+  def jsonResponseTrails(mostPopulars: Seq[MostPopularCollectionResponse], mostCards: Map[String, Option[ContentCard]])(
+      implicit request: RequestHeader,
   ): Result = {
     val tabs = mostPopulars.map { tab =>
       OnwardCollectionResponse(tab.heading, tab.trails)
@@ -238,9 +238,9 @@ class MostPopularController(
         )
       }
 
-      val response = (editionPopular, deeplyRead) match => {
-        case (Some(p), Some(d)) => 
-          jsonResponseTrails(p.toSeq ++ d.toSeq, mostCards())
+      val response = (editionPopular, deeplyRead) match {
+        case (Some(p), Some(d)) =>
+          jsonResponseTrails(editionPopular.toSeq ++ deeplyRead.toSeq, mostCards())
         case (_, _) => NotFound
       }
 
