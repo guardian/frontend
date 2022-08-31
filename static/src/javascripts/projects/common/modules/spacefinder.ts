@@ -467,10 +467,9 @@ export const _ = {
 	testCandidates, // exposed for unit testing
 };
 
-export { findSpace };
+export { findSpace, SpaceError };
 
 export type {
-	SpaceError,
 	SpacefinderRules,
 	SpacefinderWriter,
 	SpacefinderOptions,

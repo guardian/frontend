@@ -4,6 +4,7 @@ on:
         paths:
             - static/src/javascripts/projects/common/modules/commercial/**
             - static/src/javascripts/projects/commercial/**
+            - static/src/javascripts/projects/common/modules/spacefinder-*
             - commercial/**
             - cypress/**
             - cypress.config.ts
