@@ -19,6 +19,10 @@ const markCandidates = (exclusions, winners, options) => {
 			colour: colours.orange,
 			reason: 'Too close to top or bottom of article',
 		},
+        startAt: {
+            colour: colours.orange,
+            reason: 'Skipped because start at was specified',
+        },
 		custom: {
 			colour: colours.yellow,
 			reason: 'Too close to other winner',
