@@ -38,7 +38,13 @@ declare global {
 		 * Include properties that we expect on the window when testing Guardian pages
 		 * e.g. `window.guardian.page`
 		 */
-		interface ApplicationWindow extends Window {}
+		interface ApplicationWindow extends Window {
+			mockLiveUpdate: (options: {
+				numNewBlocks: number;
+				html: string;
+				mostRecentBlockId: string;
+			}) => void;
+		}
 	}
 }
 

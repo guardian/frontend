@@ -6,7 +6,7 @@ const pages = [...articles, ...liveblogs].filter(
 );
 
 describe('Slots and iframes load on pages', () => {
-	pages.forEach(({ path, adTest, expectedMinInlineSlotsOnPage }) => {
+	pages.forEach(({ path, expectedMinInlineSlotsOnPage }) => {
 		breakpoints.forEach(({ breakpoint, width }) => {
 			it(`Test ${path} has at least ${expectedMinInlineSlotsOnPage} inline total slots at breakpoint ${breakpoint}`, () => {
 				cy.viewport(width, 500);

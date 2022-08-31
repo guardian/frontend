@@ -457,6 +457,7 @@ const findSpace = async (
 		exclusions,
 		winners,
 		options,
+		rules,
 	) as SpacefinderItem[];
 
 	// TODO Is this really an error condition?
