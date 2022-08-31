@@ -18,7 +18,7 @@ import play.api.test.FakeRequest
 import test.TestRequest
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.xml.XML
 
 class TemplatesTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {

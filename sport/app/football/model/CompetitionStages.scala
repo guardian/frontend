@@ -20,7 +20,7 @@ class CompetitionStage(competitions: Seq[Competition]) {
       competition: Competition,
       orderings: Map[String, List[ZonedDateTime]] = Map.empty,
   ): List[CompetitionStageLike] = {
-    val stagesWithMatches = competition.matches.toList.groupBy(_.stage).toList
+    val stagesWithMatches = competition.matches.groupBy(_.stage).toList.sortBy(_._1.stageNumber.toIntOption)
     val allStagesHaveStarted = stagesWithMatches.forall { case (_, matches) => matches.exists(_.hasStarted) }
     // if all stages have started, reverse order (typically at most two stages so means "show most recent first")
     val sortedStagesWithMatches =

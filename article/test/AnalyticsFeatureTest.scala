@@ -2,7 +2,7 @@ package test
 
 import org.scalatest.{DoNotDiscover, GivenWhenThen}
 
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
 import org.scalatest.featurespec.AnyFeatureSpec

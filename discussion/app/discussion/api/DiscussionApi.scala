@@ -253,9 +253,7 @@ object AuthHeaders {
   val all = Set(guIdToken, cookie)
 
   def filterHeaders(headers: Headers): Map[String, String] =
-    headers.toSimpleMap filterKeys {
-      all.contains
-    }
+    headers.toSimpleMap.view.filterKeys(all.contains).toMap
 }
 
 case class DiscussionParams(

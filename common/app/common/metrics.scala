@@ -12,7 +12,7 @@ import model.ApplicationIdentity
 import model.diagnostics.CloudWatch
 import play.api.inject.ApplicationLifecycle
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 

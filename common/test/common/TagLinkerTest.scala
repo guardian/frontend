@@ -16,7 +16,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import views.support.TagLinker
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 class TagLinkerTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 

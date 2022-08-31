@@ -3,7 +3,7 @@ package views.support.cleaner
 import org.jsoup.nodes.{Document, Element}
 import views.support.HtmlCleaner
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 object CmpParamCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {

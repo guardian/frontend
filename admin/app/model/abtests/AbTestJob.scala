@@ -4,7 +4,7 @@ import common.GuLogging
 import tools.CloudWatch
 import views.support.CamelCase
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.ExecutionContext
 
 object AbTestJob extends GuLogging {

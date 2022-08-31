@@ -1,5 +1,6 @@
 package layout.slices
 
+import com.madgag.scala.collection.decorators.MapDecorator
 import model.pressed.{CollectionConfig, PressedContent}
 import common.GuLogging
 import layout.{EmailContentContainer, Front}
@@ -30,7 +31,7 @@ object Container extends GuLogging {
       ("nav/list", NavList),
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),
-    ) ++ FixedContainers.all.mapValues(Fixed.apply) ++ EmailLayouts.all.mapValues(Email.apply)
+    ) ++ FixedContainers.all.mapV(Fixed.apply) ++ EmailLayouts.all.mapV(Email.apply)
 
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)

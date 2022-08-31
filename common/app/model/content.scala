@@ -19,7 +19,7 @@ import com.github.nscala_time.time.Imports._
 import play.api.libs.json._
 import views.support._
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.util.Try
 import implicits.Booleans._
 import org.joda.time.DateTime

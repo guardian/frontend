@@ -11,7 +11,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
 import java.util
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 class RssAtomModule extends com.sun.syndication.feed.module.Module with Serializable {
   override def getUri: String = RssAtomModule.URI

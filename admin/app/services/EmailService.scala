@@ -8,7 +8,7 @@ import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination
 import common.{AkkaAsync, GuLogging}
 import conf.Configuration.aws.mandatoryCredentials
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.control.NonFatal

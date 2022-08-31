@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit
 import java.time.{LocalDate, ZonedDateTime}
 import scala.language.implicitConversions
 
-trait Football extends Collections {
+trait Football {
 
   implicit class MatchSeq2Sorted(matches: Seq[FootballMatch]) {
     lazy val sortByDate = matches.sortBy(m => (m.date.toInstant.toEpochMilli, m.homeTeam.name))

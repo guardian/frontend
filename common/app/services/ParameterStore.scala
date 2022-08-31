@@ -9,7 +9,7 @@ import common.GuardianConfiguration
 import conf.Configuration
 
 import scala.annotation.tailrec
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 class ParameterStore(region: String) {
 

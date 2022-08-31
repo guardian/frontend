@@ -9,6 +9,7 @@ import com.gu.contentatom.thrift.{
   ImageAsset => AtomApiImageAsset,
   atom => atomapi,
 }
+import com.madgag.scala.collection.decorators.MapDecorator
 import enumeratum._
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 import org.apache.commons.lang3.time.DurationFormatUtils
@@ -339,13 +340,13 @@ object QuizAtom extends common.GuLogging {
       parseResult match {
         case parsed: JsSuccess[Image] =>
           val image = parsed.get
-          val typeData = image.fields.mapValues(value => value.toString) - "caption"
+          val typeData = image.fields.mapV(value => value.toString) - "caption"
 
           val assets = for {
             plainAsset <- image.assets
           } yield {
             ImageAsset(
-              fields = typeData ++ plainAsset.fields.mapValues(value => value.toString),
+              fields = typeData ++ plainAsset.fields.mapV(value => value.toString),
               mediaType = plainAsset.assetType,
               mimeType = plainAsset.mimeType,
               url = plainAsset.secureUrl.orElse(plainAsset.url),
