@@ -11,8 +11,7 @@ function initConsentless(): Promise<void> {
 		window.ootag.initializeOo({
 			publisher: 33,
 			noLogging: 0,
-			// consentTimeOutMS: 5000,
-			onlyNoConsent: 1,
+			alwaysNoConsent: 1,
 		});
 		window.ootag.addParameter('test', 'yes');
 

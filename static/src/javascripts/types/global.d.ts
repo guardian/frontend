@@ -243,16 +243,40 @@ interface IasPET {
 
 interface OptOutInitializeOptions {
 	publisher: number;
-	onlyNoConsent: 0 | 1;
+	onlyNoConsent?: 0 | 1;
+	alwaysNoConsent?: 0 | 1;
 	consentTimeOutMS?: 5000;
 	noLogging?: 0 | 1;
+	lazyLoading?: { fractionInView?: number; viewPortMargin?: string };
 }
 
-interface OptOutDefineSlotOptions {
+interface OptOutResponse {
+	adSlot: string;
+	width: number;
+	height: number;
+	ad: string; // The creative HTML
+	creativeId: string;
+	meta: {
+		networkId: string;
+		networkName: string;
+		agencyId: string;
+		agencyName: string;
+		advertiserId: string;
+		advertiserName: string;
+		advertiserDomains: string[];
+	};
+	optOutExt: {
+		noSafeFrame: boolean;
+		tags: string[];
+	};
+}
+
+interface OptOutAdSlot {
 	adSlot: string;
 	targetId: string;
-	filledCallback?: () => void;
-	emptyCallback?: () => void;
+	filledCallback?: (adSlot: OptOutAdSlot, response: OptOutResponse) => void;
+	emptyCallback?: (adSlot: OptOutAdSlot) => void;
+	adShownCallback?: (adSlot: OptOutAdSlot, response: OptOutResponse) => void;
 }
 
 /**
@@ -317,8 +341,10 @@ interface Window {
 		queue: Array<() => void>;
 		initializeOo: (o: OptOutInitializeOptions) => void;
 		addParameter: (key: string, value: string) => void;
-		defineSlot: (o: OptOutDefineSlotOptions) => void;
+		defineSlot: (o: OptOutAdSlot) => void;
 		makeRequests: () => void;
+		refreshSlot: (slotId: string) => void;
+		refreshAllSlots: () => void;
 	};
 	confiant?: Confiant;
 	apstag?: Apstag;
