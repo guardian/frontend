@@ -6,6 +6,7 @@ import java.util.Locale
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
+import experiments.{ActiveExperiments, EuropeNetworkFront}
 
 import java.time.ZoneId
 
@@ -47,6 +48,10 @@ object Edition {
   implicit def edition(implicit request: RequestHeader): Edition = this(request)
 
   lazy val defaultEdition: Edition = editions.Uk
+  def editionsByRequest(implicit request: RequestHeader): List[Edition] = {
+    val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
+    if (!participatingInTest) all else allWithEurope
+  }
 
   lazy val all = List(
     editions.Uk,
@@ -54,6 +59,8 @@ object Edition {
     editions.Au,
     editions.International,
   )
+
+  lazy val allWithEurope = all ++ List(editions.Europe)
 
   lazy val editionFronts = Edition.all.map { e => "/" + e.id.toLowerCase }
 
@@ -78,17 +85,17 @@ object Edition {
 
   def apply(request: RequestHeader): Edition = {
     val cookieValue = editionFromRequest(request)
-    all.find(_.matchesCookie(cookieValue)).getOrElse(defaultEdition)
+    editionsByRequest(request).find(_.matchesCookie(cookieValue)).getOrElse(defaultEdition)
   }
 
   def others(implicit request: RequestHeader): Seq[Edition] = {
     val currentEdition = Edition(request)
-    others(currentEdition)
+    editionsByRequest(request).filterNot(_ == currentEdition)
   }
 
   def others(edition: Edition): Seq[Edition] = all.filterNot(_ == edition)
 
-  def byId(id: String): Option[Edition] = all.find(_.id.equalsIgnoreCase(id))
+  def byId(id: String): Option[Edition] = allWithEurope.find(_.id.equalsIgnoreCase(id))
 
   implicit val editionWrites: Writes[Edition] = new Writes[Edition] {
     def writes(edition: Edition): JsValue = Json.obj("id" -> edition.id)
@@ -98,7 +105,7 @@ object Edition {
     (__ \ "id").read[String] map (Edition.byId(_).getOrElse(defaultEdition))
   }
 
-  lazy val editionRegex = Edition.all.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
+  lazy val editionRegex = Edition.allWithEurope.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
   private lazy val EditionalisedFront = s"""^/($editionRegex)$$""".r
 
   private lazy val EditionalisedId = s"^/($editionRegex)(/[\\w\\d-]+)$$".r
@@ -107,10 +114,10 @@ object Edition {
     val path = request.path
     path match {
       case EditionalisedId(editionId, section) if Edition.defaultEdition.isEditionalised(section.drop(1)) =>
-        val links = Edition.all.map(EditionLink(_, section))
+        val links = Edition.editionsByRequest(request).map(EditionLink(_, section))
         links.filter(link => link.edition.isEditionalised(link.path.drop(1)))
       case EditionalisedFront(_) =>
-        all.map(EditionLink(_, "/"))
+        editionsByRequest(request).map(EditionLink(_, "/"))
       case _ => Nil
     }
   }
