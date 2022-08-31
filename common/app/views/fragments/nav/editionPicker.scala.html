@@ -13,7 +13,7 @@
     </button>
 
     <ul class="menu-group">
-        @Edition.all.map { edition =>
+        @Edition.allWithEurope.map { edition =>
              @if((edition != Edition(request))) {
                  <li class="menu-item">
                      <a data-link-name="nav2 : edition-picker: @edition.id"

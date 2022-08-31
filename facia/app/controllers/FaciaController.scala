@@ -26,6 +26,8 @@ import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
+import experiments.{ActiveExperiments, EuropeNetworkFront}
+
 
 trait FaciaController
     extends BaseController
@@ -42,9 +44,10 @@ trait FaciaController
   private def getEditionFromString(edition: String): Edition = {
     val editionToFilterBy = edition match {
       case "international" => "int"
+      case "europe"        => "eur"
       case _               => edition
     }
-    Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
+    Edition.allWithEurope.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.allWithEurope.head)
   }
 
   def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
@@ -175,7 +178,11 @@ trait FaciaController
     } else result
 
   import PressedPage.pressedPageFormat
-  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
+  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
+    val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
+    if (!participatingInTest && path == "europe") {
+      return successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+    }
     val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
       case Some(faciaPage: PressedPage) =>
         val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)

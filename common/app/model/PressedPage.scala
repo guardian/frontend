@@ -25,7 +25,7 @@ object PressedPage {
     def optionalMapEntry(key: String, o: Option[String]): Map[String, String] =
       o.map(value => Map(key -> value)).getOrElse(Map())
 
-    val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
+    val isNetworkFront: Boolean = Edition.allWithEurope.exists(_.networkFrontId == id)
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val contentType: DotcomContentType =
       if (isNetworkFront) DotcomContentType.NetworkFront else DotcomContentType.Section
@@ -120,7 +120,7 @@ case class PressedPage(
   lazy val filterEmpty: PressedPage = copy(collections = collections.filterNot(_.isEmpty))
 
   override val metadata: MetaData = PressedPage.makeMetadata(id, seoData, frontProperties, collections)
-  val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
+  val isNetworkFront: Boolean = Edition.allWithEurope.exists(_.networkFrontId == id)
 
   /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
     * content.

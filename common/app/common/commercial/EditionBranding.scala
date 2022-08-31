@@ -45,17 +45,17 @@ object EditionBranding {
   implicit val editionBrandingFormat = Json.format[EditionBranding]
 
   def fromContent(item: Content): Set[EditionBranding] =
-    Edition.all.toSet[Edition] map { edition =>
+    Edition.allWithEurope.toSet[Edition] map { edition =>
       EditionBranding(edition, BrandingFinder.findBranding(edition.id)(item))
     }
 
   def fromSection(section: Section): Set[EditionBranding] =
-    Edition.all.toSet[Edition] map { edition =>
+    Edition.allWithEurope.toSet[Edition] map { edition =>
       EditionBranding(edition, BrandingFinder.findBranding(edition.id)(section))
     }
 
   def fromTag(tag: Tag): Set[EditionBranding] =
-    Edition.all.toSet[Edition] map { edition =>
+    Edition.allWithEurope.toSet[Edition] map { edition =>
       EditionBranding(edition, BrandingFinder.findBranding(edition.id)(tag))
     }
 }

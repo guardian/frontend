@@ -72,7 +72,7 @@ object EditionAdTargeting {
   )
 
   private def editionTargeting(targeting: Edition => Set[AdTargetParam]): Set[EditionAdTargeting] =
-    for (edition <- Edition.all.toSet[Edition]) yield EditionAdTargeting(edition, paramSet = Some(targeting(edition)))
+    for (edition <- Edition.allWithEurope.toSet[Edition]) yield EditionAdTargeting(edition, paramSet = Some(targeting(edition)))
 
   def fromContent(item: Content): Set[EditionAdTargeting] =
     editionTargeting { edition =>

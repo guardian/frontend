@@ -34,7 +34,7 @@ object `package` {
   }
 
   def frontKeywordIds(pageId: String): Seq[String] = {
-    val editions = Edition.all.map(_.id.toLowerCase).toSet
+    val editions = Edition.allWithEurope.map(_.id.toLowerCase).toSet
 
     val parts = pageId.split("/").toList match {
       case edition :: rest if editions.contains(edition) => rest

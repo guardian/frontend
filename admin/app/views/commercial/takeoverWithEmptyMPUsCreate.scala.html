@@ -22,7 +22,7 @@
         @inputText(takeoverForm("url"), Symbol("_label")-> "Paste URL here:", Symbol("size") -> 100, Symbol("_help") -> "")
         @select(
             takeoverForm("editions"),
-            options = for(e <- Edition.all) yield { e.id -> e.displayName },
+            options = for(e <- Edition.allWithEurope) yield { e.id -> e.displayName },
             Symbol("multiple") -> true,
             Symbol("_label") -> "Editions this applies to (one or multiple):"
         )
