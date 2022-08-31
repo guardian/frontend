@@ -1,5 +1,5 @@
 import { breakpoints } from '../fixtures/breakpoints';
-import { articles, liveblogs } from '../fixtures/pages';
+import { liveblogs } from '../fixtures/pages';
 
 const pages = [...liveblogs];
 

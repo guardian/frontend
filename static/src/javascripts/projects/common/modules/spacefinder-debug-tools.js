@@ -1,4 +1,4 @@
-const markCandidates = (exclusions, winners, options) => {
+const markCandidates = (exclusions, winners, options, rules) => {
 	if (!options?.debug) return winners;
 
 	const colours = {
@@ -6,6 +6,7 @@ const markCandidates = (exclusions, winners, options) => {
 		orange: 'rgb(255 213 178)',
 		yellow: 'rgb(254 255 178)',
 		blue: 'rgb(178 248 255)',
+        purple: 'rgb(178 178 255)',
 		pink: 'rgb(255 178 242)',
 		green: 'rgb(178 255 184)',
 	};
@@ -19,9 +20,13 @@ const markCandidates = (exclusions, winners, options) => {
 			colour: colours.orange,
 			reason: 'Too close to top or bottom of article',
 		},
+        isStartAt: {
+            colour: colours.purple,
+            reason: 'Spacefinder is starting from this position',
+        },
         startAt: {
             colour: colours.orange,
-            reason: 'Skipped because start at was specified',
+            reason: 'Before the starting element',
         },
 		custom: {
 			colour: colours.yellow,
@@ -91,7 +96,11 @@ const markCandidates = (exclusions, winners, options) => {
             const element = exclusion instanceof Element ? exclusion : exclusion.element;
             const meta = exclusion instanceof Element ? null : exclusion;
 
-			if (type) {
+            if (element == rules?.startAt) {
+                const type = exclusionTypes.isStartAt;
+                addExplainer(element, type.reason);
+                element.style.cssText += `background:${type.colour}`;
+            }else if (type) {
 				addExplainer(element, type.reason);
 				element.style.cssText += `background:${type.colour}`;
 			} else if (meta?.tooClose.length > 0) {
