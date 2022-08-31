@@ -8,13 +8,13 @@ import play.api.inject.ApplicationLifecycle
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
-
 class CuratedContentAgentLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  curatedContentAgent: CuratedContentAgent,
-)(implicit ec: ExecutionContext) extends LifecycleComponent {
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    curatedContentAgent: CuratedContentAgent,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent {
 
   appLifecycle.addStopHook { () =>
     Future {
@@ -43,4 +43,3 @@ class CuratedContentAgentLifecycle(
   }
 
 }
-

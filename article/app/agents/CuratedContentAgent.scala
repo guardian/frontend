@@ -32,22 +32,18 @@ class CuratedContentAgent(frontJsonFapiLive: FrontJsonFapiLive) extends GuLoggin
     "c5cad9ee-584d-4e85-85cd-bf8ee481b026" -> ContainerMeta(NewsPillar, Us),
     "au-alpha/news/regular-stories" -> ContainerMeta(NewsPillar, Au),
     "10f21d96-18f6-426f-821b-19df55dfb831" -> ContainerMeta(NewsPillar, International),
-
     "754c-8e8c-fad9-a927" -> ContainerMeta(SportPillar, Uk),
     "f6dd-d7b1-0e85-4650" -> ContainerMeta(SportPillar, Us),
     "c45d-318f-896c-3a85" -> ContainerMeta(SportPillar, Au),
     "d1ad8ec3-5ee2-4673-94c8-cc3f8d261e52" -> ContainerMeta(SportPillar, International),
-
     "3ff78b30-52f5-4d30-ace8-c887113cbe0d" -> ContainerMeta(OpinionPillar, Uk),
     "98df412d-b0e7-4d9a-98c2-062642823e94" -> ContainerMeta(OpinionPillar, Us),
     "au-alpha/contributors/feature-stories" -> ContainerMeta(OpinionPillar, Au),
     "ee3386bb-9430-4a6d-8bca-b99d65790f3b" -> ContainerMeta(OpinionPillar, International),
-
     "ae511a89-ef38-4ec9-aab1-3a5ebc96d118" -> ContainerMeta(CulturePillar, Uk),
     "fb59c1f8-72a7-41d5-8365-a4d574809bed" -> ContainerMeta(CulturePillar, Us),
     "22262088-4bce-4290-9810-cb50bbead8db" -> ContainerMeta(CulturePillar, Au),
     "c7154e22-7292-4d93-a14d-22fd4b6b693d" -> ContainerMeta(CulturePillar, International),
-
     "uk-alpha/features/feature-stories" -> ContainerMeta(LifestylePillar, Uk),
     "us-alpha/features/feature-stories" -> ContainerMeta(LifestylePillar, Us),
     "13636104-51ce-4264-bb6b-556c80227331" -> ContainerMeta(LifestylePillar, Au),
