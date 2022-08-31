@@ -89,7 +89,7 @@ object Edition {
     editionsByRequest(request).filterNot(_ == currentEdition)
   }
 
-  def others(edition: Edition): Seq[Edition] = all.filterNot(_ == edition)
+  def othersWithEurope(edition: Edition): Seq[Edition] = allWithEurope.filterNot(_ == edition)
 
   def byId(id: String): Option[Edition] = allWithEurope.find(_.id.equalsIgnoreCase(id))
 
