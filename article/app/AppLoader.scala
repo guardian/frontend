@@ -27,7 +27,7 @@ import services.dotcomponents.OnwardsPicker
 import services.fronts.FrontJsonFapiLive
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
+import services.{ConfigAgentLifecycle, NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import topics.{TopicS3Client, TopicS3ClientImpl, TopicService}
 
 class AppLoader extends FrontendApplicationLoader {
@@ -74,6 +74,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
     wire[TopicLifecycle],
     wire[NewsletterSignupLifecycle],
     wire[CuratedContentAgentLifecycle],
+    wire[ConfigAgentLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
