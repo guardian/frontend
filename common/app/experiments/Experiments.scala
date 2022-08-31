@@ -77,10 +77,10 @@ object DCROnwardsData
     )
 
 object EuropeNetworkFront
-  extends Experiment(
-    name = "europe-network-front",
-    description = "Test new europe network front",
-    owners = Seq(Owner.withGithub("rowannekabalan")),
-    sellByDate = LocalDate.of(2022, 09, 30),
-    participationGroup = Perc0D,
-  )
+    extends Experiment(
+      name = "europe-network-front",
+      description = "Test new europe network front",
+      owners = Seq(Owner.withGithub("rowannekabalan")),
+      sellByDate = LocalDate.of(2022, 9, 30),
+      participationGroup = Perc0D,
+    )
