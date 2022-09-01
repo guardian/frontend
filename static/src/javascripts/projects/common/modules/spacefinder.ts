@@ -453,12 +453,7 @@ const findSpace = async (
 	const candidates = getCandidates(rules, exclusions);
 	const measurements = await getMeasurements(rules, candidates);
 	const winners = enforceRules(measurements, rules, exclusions);
-	const markedWinners = markCandidates(
-		exclusions,
-		winners,
-		options,
-		rules,
-	) as SpacefinderItem[];
+	const markedWinners = markCandidates(exclusions, winners, options, rules);
 
 	// TODO Is this really an error condition?
 	if (!markedWinners.length) {
@@ -472,11 +467,12 @@ export const _ = {
 	testCandidates, // exposed for unit testing
 };
 
-export {
-	findSpace,
-	SpaceError,
+export { findSpace, SpaceError };
+
+export type {
 	SpacefinderRules,
 	SpacefinderWriter,
 	SpacefinderOptions,
 	SpacefinderItem,
+	SpacefinderExclusions,
 };
