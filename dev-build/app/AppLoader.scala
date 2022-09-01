@@ -119,5 +119,5 @@ trait AppComponents
   override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
   override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
 
-  override lazy val deeplyReadAgent = wire[DeeplyReadAgent]
+  override lazy val articleDeeplyReadAgent = wire[DeeplyReadAgent]
 }
