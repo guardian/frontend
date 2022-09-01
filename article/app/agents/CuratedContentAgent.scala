@@ -90,7 +90,7 @@ class CuratedContentAgent(frontJsonFapiLive: FrontJsonFapiLive) extends GuLoggin
 
   def getTrails(theme: Theme, edition: Edition, isAdFree: Boolean) =
     if (isAdFree) {
-      curatedContentAddFreeAgent.get()(EDITIONS_WITH_CONTAINER(ContainerMeta(theme, edition)))
+      curatedContentAdFreeAgent.get()(EDITIONS_WITH_CONTAINER(ContainerMeta(theme, edition)))
     } else {
       curatedContentAgent.get()(EDITIONS_WITH_CONTAINER(ContainerMeta(theme, edition)))
     }
