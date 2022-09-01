@@ -100,17 +100,6 @@ class CuratedContentAgent(frontJsonFapiLive: FrontJsonFapiLive) extends GuLoggin
   // having this as a public method allows us to use it in tests, to bypass reliance on the ConfigAgent
   def refreshPaths(paths: List[String]): Future[Unit] = {
     val containerIds = CONTAINERS_WITH_EDITION.keys.toList
-    val curatedContentFuture = getCuratedContent(FullAdFreeType, paths = paths, containerIds = containerIds)
-    curatedContentFuture.onComplete {
-      case Success(_) => log.info(s"Successfully populated the curated content cache.")
-      case Failure(t) => log.error(s"Failed to populate the curated content cache $t", t)
-    }
-    curatedContentFuture.map(curatedContentAdFreeAgent.send)
-  }
-
-  def refresh: Future[Unit] = {
-    val containerIds = CONTAINERS_WITH_EDITION.keys.toList
-    val paths = ConfigAgent.getConfigsUsingCollectionIds(containerIds)
 
     val curatedContentAdFreeFuture = getCuratedContent(FullAdFreeType, paths = paths, containerIds = containerIds)
     val curatedContentFuture = getCuratedContent(FullType, paths = paths, containerIds = containerIds)
@@ -131,6 +120,13 @@ class CuratedContentAgent(frontJsonFapiLive: FrontJsonFapiLive) extends GuLoggin
       .recover {
         case (_) => log.error("Failed to refresh curated content cache.")
       }
+  }
+
+  def refresh: Future[Unit] = {
+    val containerIds = CONTAINERS_WITH_EDITION.keys.toList
+    val paths = ConfigAgent.getConfigsUsingCollectionIds(containerIds)
+
+    refreshPaths(paths)
   }
 
 }
