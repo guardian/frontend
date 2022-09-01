@@ -51,27 +51,3 @@ class PopularInTagAgent(
 //  def refreshWith(): Future[Seq[Trail]]
 }
 
-class PopularInTagAgentLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  popularInTagAgent: PopularInTagAgent,
-) extends LifecycleComponent {
-
-  appLifecycle.addStopHook { () =>
-    Future {
-      jobs.deschedule("PopularInTagJob")
-    }
-  }
-
-  override def start(): Unit = {
-    jobs.deschedule("PopularInTagJob")
-    jobs.schedule("PopularInTagJob", "18 * * * * ?") {
-      popularInTagAgent.refresh
-    }
-
-    akkaAsync.after1s {
-      popularInTagAgent.refresh
-    }
-  }
-}
