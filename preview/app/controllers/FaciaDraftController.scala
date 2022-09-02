@@ -3,12 +3,12 @@ package controllers
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.TrailsToShowcase
 import contentapi.{ContentApiClient, SectionsLookUp}
-import controllers.front.FrontJsonFapiDraft
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, PressedPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.ConfigAgent
+import services.fronts.FrontJsonFapiDraft
 
 import scala.concurrent.Future
 

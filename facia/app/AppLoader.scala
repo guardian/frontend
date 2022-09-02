@@ -7,7 +7,6 @@ import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
-import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, PreloadFilters}
@@ -20,6 +19,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import services._
+import services.fronts.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {

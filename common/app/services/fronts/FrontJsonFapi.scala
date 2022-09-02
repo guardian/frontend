@@ -1,4 +1,4 @@
-package controllers.front
+package services.fronts
 
 import common.{FaciaPressMetrics, GuLogging}
 import concurrent.{BlockingOperations, FutureSemaphore}
