@@ -70,7 +70,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
       val fixturesComponent = if (fixtureExists) {
         Some(
           matchesComponent(
-            TeamFixturesList(now, competitions.competitions, teamId, 2),
+            TeamFixturesList(now, competitions.competitions, teamId, tagId, 2),
             Some(s"Show more $teamName fixtures", s"/football/$tagId/fixtures"),
           ),
         )
