@@ -6,7 +6,14 @@ import java.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
-    Set(DCRFronts, OfferHttp3, LiveBlogMainMediaPosition, TableOfContents, CommercialEndOfQuarterMegaTest, EuropeNetworkFront)
+    Set(
+      DCRFronts,
+      OfferHttp3,
+      LiveBlogMainMediaPosition,
+      TableOfContents,
+      CommercialEndOfQuarterMegaTest,
+      EuropeNetworkFront,
+    )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
@@ -81,6 +88,6 @@ object EuropeNetworkFront
       name = "europe-network-front",
       description = "Test new europe network front",
       owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2022, 9, 30),
+      sellByDate = LocalDate.of(2022, 11, 1),
       participationGroup = Perc0D,
     )
