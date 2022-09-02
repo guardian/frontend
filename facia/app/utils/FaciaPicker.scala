@@ -63,7 +63,7 @@ class FaciaPicker extends GuLogging {
         "tier" -> tierReadable,
       )
 
-    DotcomFrontsLogger.logger.logRequest(s"front executing in $tierReadable: $path, $properties", properties, faciaPage)
+    DotcomFrontsLogger.logger.logRequest(s"front executing in $tierReadable", properties, faciaPage)
   }
 }
 
