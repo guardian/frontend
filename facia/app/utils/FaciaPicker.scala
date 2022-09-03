@@ -40,11 +40,10 @@ class FaciaPicker extends GuLogging {
       participatingInTest: Boolean,
       dcrCouldRender: Boolean,
   ): RenderType = {
-    if (forceDCR || participatingInTest && dcrCouldRender && !forceDCROff) {
-      RemoteRender
-    } else {
-      LocalRender
-    }
+    if (forceDCROff) LocalRender
+    else if (forceDCR) RemoteRender
+    else if (dcrCanRender && participatingInTest) RemoteRender
+    else LocalRender
   }
 
   def logTier(
