@@ -22,7 +22,7 @@ class FaciaPicker extends GuLogging {
     val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
     val dcrCouldRender = dcrSupportsAllCollectionTypes(faciaPage)
 
-    val tier = getTier(
+    val tier = decideTier(
       forceDCROff = request.forceDCROff,
       forceDCR = request.forceDCR,
       participatingInTest = participatingInTest,
@@ -34,7 +34,7 @@ class FaciaPicker extends GuLogging {
     tier
   }
 
-  def getTier(
+  def decideTier(
       forceDCROff: Boolean,
       forceDCR: Boolean,
       participatingInTest: Boolean,
