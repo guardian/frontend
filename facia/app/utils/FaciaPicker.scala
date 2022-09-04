@@ -6,7 +6,48 @@ import implicits.Requests._
 import model.PressedPage
 import play.api.mvc.RequestHeader
 
+object FrontChecks {
+
+  def allCollectionsAreSupported(faciaPage: PressedPage): Boolean = {
+    faciaPage.collections.forall(collection => SUPPORTED_COLLECTIONS.contains(collection.collectionType))
+  }
+
+  def hasNoWeatherWidget(faciaPage: PressedPage): Boolean = {
+    // See: https://github.com/guardian/dotcom-rendering/issues/4602
+    false
+  }
+
+  def isNotSignedIn(faciaPage: PressedPage): Boolean = {
+    // We don't support the signed in experience
+    // See: https://github.com/guardian/dotcom-rendering/issues/5926
+    false
+  }
+
+  def hasNoPageSkin(faciaPage: PressedPage): Boolean = {
+    // We don't support page skin ads
+    // See: https://github.com/guardian/dotcom-rendering/issues/5490
+    false
+  }
+
+  def hasNoSlideshows(faciaPage: PressedPage): Boolean = {
+    // We don't support image slideshows
+    // See: https://github.com/guardian/dotcom-rendering/issues/4612
+    false
+  }
+
+}
+
 class FaciaPicker extends GuLogging {
+
+  private def dcrChecks(faciaPage: PressedPage): Map[String, Boolean] = {
+    Map(
+      ("allCollectionsAreSupported", FrontChecks.allCollectionsAreSupported(faciaPage)),
+      ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
+      ("isNotSignedIn", FrontChecks.isNotSignedIn(faciaPage)),
+      ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
+      ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
+    )
+  }
 
   // To check which collections are supported by DCR and update this set please check:
   // https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/src/web/lib/DecideContainer.tsx
@@ -58,7 +99,8 @@ class FaciaPicker extends GuLogging {
 
   def getTier(faciaPage: PressedPage, path: String)(implicit request: RequestHeader): RenderType = {
     val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
-    val dcrCouldRender = dcrSupportsAllCollectionTypes(faciaPage)
+    val checks = dcrChecks(faciaPage)
+    val dcrCouldRender = checks.values.forall(checkValue => checkValue == true)
 
     val tier = {
       if (forceDCROff) LocalRender
@@ -67,7 +109,7 @@ class FaciaPicker extends GuLogging {
       else LocalRender
     }
 
-    logTier(faciaPage, path, participatingInTest, dcrCouldRender, tier)
+    logTier(faciaPage, path, participatingInTest, dcrCouldRender, checks, tier)
 
     tier
   }
@@ -77,18 +119,22 @@ class FaciaPicker extends GuLogging {
       path: String,
       participatingInTest: Boolean,
       dcrCouldRender: Boolean,
+      checks: Map[String, Boolean],
       tier: RenderType,
   )(implicit request: RequestHeader): Unit = {
     val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web";
+    val checksToString = checks.map(case(key, value) => {
+      (key, value.toString)
+    })
     val properties =
       Map(
         "participatingInTest" -> participatingInTest.toString,
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isFront" -> "true",
         "tier" -> tierReadable,
-      )
+      ) ++ checksToString
 
-    DotcomFrontsLogger.logger.logRequest(s"front executing in $tierReadable", properties, faciaPage)
+    DotcomFrontsLogger.logger.logRequest(s"front executing in $tierReadable", properties, checks, faciaPage)
   }
 }
 
