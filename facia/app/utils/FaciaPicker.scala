@@ -58,34 +58,34 @@ class FaciaPicker extends GuLogging {
         "dynamic/slow-mpu",
           pending https://github.com/guardian/dotcom-rendering/issues/5926 and
           https://github.com/guardian/dotcom-rendering/issues/5821
-      */
+       */
 
       /*
         "fixed/small/slow-V-mpu",
           pending https://github.com/guardian/dotcom-rendering/issues/5926
-      */
+       */
 
       /*
         "fixed/medium/slow-XII-mpu",
           pending https://github.com/guardian/dotcom-rendering/issues/5926
-      */
+       */
 
       /*
         "dynamic/package",
           pending https://github.com/guardian/dotcom-rendering/issues/5196 and
           https://github.com/guardian/dotcom-rendering/issues/5267
-      */
+       */
 
       /*
         "news/most-popular"
           pending https://github.com/guardian/frontend/issues/25448 and
           https://github.com/guardian/dotcom-rendering/issues/5902
-      */
+       */
 
       /*
         "dynamic/fast"
           pending https://github.com/guardian/dotcom-rendering/issues/5782
-      */
+       */
 
       "dynamic/slow",
       "fixed/small/slow-I",
@@ -94,7 +94,7 @@ class FaciaPicker extends GuLogging {
       "fixed/small/slow-V-third",
       "fixed/medium/slow-VI",
       "fixed/large/slow-XIV",
-      "fixed/large/slow-XIV"
+      "fixed/large/slow-XIV",
     )
 
   def getTier(faciaPage: PressedPage, path: String)(implicit request: RequestHeader): RenderType = {
