@@ -72,7 +72,7 @@ class FaciaPicker extends GuLogging {
     tier
   }
 
-  def logTier(
+  private def logTier(
       faciaPage: PressedPage,
       path: String,
       participatingInTest: Boolean,
