@@ -10,7 +10,7 @@ import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test._
 import services.NewsletterService
-import services.dotcomponents.OnwardsPicker
+import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class ArticleControllerTest

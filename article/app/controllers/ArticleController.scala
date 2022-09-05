@@ -16,6 +16,7 @@ import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.{CAPILookup, NewsletterService}
 import services.dotcomponents.{ArticlePicker, _}
+import services.dotcomrendering.OnwardsPicker
 import views.support._
 
 import scala.concurrent.Future

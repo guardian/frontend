@@ -11,7 +11,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.Helpers._
 import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.NewsletterService
-import services.dotcomponents.OnwardsPicker
+import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class PublicationControllerTest
