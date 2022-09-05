@@ -207,7 +207,7 @@ trait FaciaController
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some((faciaPage: PressedPage, targetedTerritories))
-          if FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender
+          if FaciaPicker.getTier(faciaPage)(request) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
         withVaryHeader(remoteRenderer.getFront(ws, faciaPage, pageType)(request), targetedTerritories)
