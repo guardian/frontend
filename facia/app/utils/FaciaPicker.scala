@@ -122,7 +122,7 @@ class FaciaPicker extends GuLogging {
       checks: Map[String, Boolean],
       tier: RenderType,
   )(implicit request: RequestHeader): Unit = {
-    val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web";
+    val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web"
     val checksToString = checks.map(check => {
       (check._1, check._2.toString)
     })
