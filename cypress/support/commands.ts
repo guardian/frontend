@@ -39,12 +39,14 @@ Cypress.Commands.add('rejectAllConsent', () => {
 	cy.getIframeBody('iframe[title="SP Consent Message"]')
 		.find(`button[title="${rejectAll}"]`, { timeout: 30000 })
 		.click();
+	cy.wait(100);
 });
 
 Cypress.Commands.add('allowAllConsent', () => {
 	cy.getIframeBody('sp_message_iframe_')
 		.find(`button[title="${allowAll}"]`, { timeout: 30000 })
 		.click();
+	cy.wait(100);
 });
 
 Cypress.Commands.add('hydrate', () => {
