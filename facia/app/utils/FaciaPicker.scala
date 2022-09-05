@@ -86,6 +86,17 @@ object FrontChecks {
     )
   }
 
+  def isNotPaidContent(faciaPage: PressedPage): Boolean = {
+    // We don't support paid content
+    !faciaPage.frontProperties.isPaidContent
+  }
+
+  def hasNoPaidForCards(faciaPage: PressedPage): Boolean = {
+    // We don't support labs containers
+    // See: https://github.com/guardian/dotcom-rendering/issues/5150
+    !faciaPage.collections.exists(collection => collection.curated.exists(card => card.isPaidFor))
+  }
+
 }
 
 class FaciaPicker extends GuLogging {
@@ -97,6 +108,8 @@ class FaciaPicker extends GuLogging {
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
+      ("isNotPaidContent", FrontChecks.isNotPaidContent(faciaPage)),
+      ("hasNoPaidForCards", FrontChecks.hasNoPaidForCards(faciaPage)),
     )
   }
 
