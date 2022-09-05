@@ -15,36 +15,36 @@ object FrontChecks {
   private val SUPPORTED_COLLECTIONS: Set[String] =
     Set(
       /*
-      "dynamic/slow-mpu",
-        pending https://github.com/guardian/dotcom-rendering/issues/5926 and
-        https://github.com/guardian/dotcom-rendering/issues/5821
+    "dynamic/slow-mpu",
+      pending https://github.com/guardian/dotcom-rendering/issues/5926 and
+      https://github.com/guardian/dotcom-rendering/issues/5821
        */
 
       /*
-      "fixed/small/slow-V-mpu",
-        pending https://github.com/guardian/dotcom-rendering/issues/5926
+    "fixed/small/slow-V-mpu",
+      pending https://github.com/guardian/dotcom-rendering/issues/5926
        */
 
       /*
-      "fixed/medium/slow-XII-mpu",
-        pending https://github.com/guardian/dotcom-rendering/issues/5926
+    "fixed/medium/slow-XII-mpu",
+      pending https://github.com/guardian/dotcom-rendering/issues/5926
        */
 
       /*
-      "dynamic/package",
-        pending https://github.com/guardian/dotcom-rendering/issues/5196 and
-        https://github.com/guardian/dotcom-rendering/issues/5267
+    "dynamic/package",
+      pending https://github.com/guardian/dotcom-rendering/issues/5196 and
+      https://github.com/guardian/dotcom-rendering/issues/5267
        */
 
       /*
-      "news/most-popular"
-        pending https://github.com/guardian/frontend/issues/25448 and
-        https://github.com/guardian/dotcom-rendering/issues/5902
+    "news/most-popular"
+      pending https://github.com/guardian/frontend/issues/25448 and
+      https://github.com/guardian/dotcom-rendering/issues/5902
        */
 
       /*
-      "dynamic/fast"
-        pending https://github.com/guardian/dotcom-rendering/issues/5782
+    "dynamic/fast"
+      pending https://github.com/guardian/dotcom-rendering/issues/5782
        */
 
       "dynamic/slow",
