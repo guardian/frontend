@@ -100,7 +100,7 @@ class FaciaPicker extends GuLogging {
     )
   }
 
-  def getTier(faciaPage: PressedPage, path: String)(implicit request: RequestHeader): RenderType = {
+  def getTier(faciaPage: PressedPage)(implicit request: RequestHeader): RenderType = {
     val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
     val checks = dcrChecks(faciaPage)
     val dcrCouldRender = checks.values.forall(checkValue => checkValue == true)
@@ -112,14 +112,13 @@ class FaciaPicker extends GuLogging {
       else LocalRender
     }
 
-    logTier(faciaPage, path, participatingInTest, dcrCouldRender, checks, tier)
+    logTier(faciaPage, participatingInTest, dcrCouldRender, checks, tier)
 
     tier
   }
 
   private def logTier(
       faciaPage: PressedPage,
-      path: String,
       participatingInTest: Boolean,
       dcrCouldRender: Boolean,
       checks: Map[String, Boolean],
