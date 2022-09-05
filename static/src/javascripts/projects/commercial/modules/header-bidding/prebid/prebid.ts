@@ -16,6 +16,7 @@ import { bids } from './bid-config';
 import type { PrebidPriceGranularity } from './price-config';
 import {
 	criteoPriceGranularity,
+	indexPrebidPriceGranularity,
 	ozonePriceGranularity,
 	priceGranularity,
 } from './price-config';
@@ -225,8 +226,8 @@ let initialised = false;
 
 const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 	if (!window.pbjs) {
-		console.warn('window.pbjs not found on window');
-		return void 0; // We couldn’t initialise
+		log('commercial', 'window.pbjs not found on window');
+		return; // We couldn’t initialise
 	}
 	initialised = true;
 
@@ -332,6 +333,26 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 						`Custom Ozone price bucket for size (${width},${height}):`,
 						granularity,
 					);
+					return granularity;
+				},
+			},
+		});
+	}
+
+	if (window.guardian.config.switches.prebidIndexExchange) {
+		window.pbjs.setBidderConfig({
+			bidders: ['ix'],
+			config: {
+				guCustomPriceBucket: ({ width, height }) => {
+					const granularity =
+						indexPrebidPriceGranularity(width, height) ??
+						priceGranularity;
+					log(
+						'commercial',
+						`Custom Prebid Index price bucket for size (${width},${height}):`,
+						granularity,
+					);
+
 					return granularity;
 				},
 			},
