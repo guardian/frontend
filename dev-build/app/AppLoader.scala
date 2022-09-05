@@ -33,6 +33,7 @@ import rugby.controllers.RugbyControllers
 import services._
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
+import agents.DeeplyReadAgent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -121,4 +122,6 @@ trait AppComponents
   override lazy val httpFilters = wire[DevFilters].filters
   override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
   override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
+
+  override lazy val articleDeeplyReadAgent = wire[DeeplyReadAgent]
 }

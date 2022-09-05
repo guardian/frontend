@@ -8,6 +8,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.test._
 import play.api.test.Helpers._
 import services.OphanApi
+import agents.DeeplyReadAgent
 
 @DoNotDiscover class MostPopularControllerTest
     extends AnyFlatSpec
@@ -27,6 +28,7 @@ import services.OphanApi
     new GeoMostPopularAgent(testContentApiClient, ophanApi),
     new DayMostPopularAgent(testContentApiClient, ophanApi),
     new MostPopularAgent(testContentApiClient, ophanApi, wsClient),
+    new DeeplyReadAgent,
     play.api.test.Helpers.stubControllerComponents(),
   )
 

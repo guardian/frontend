@@ -1,5 +1,7 @@
 package test
 
+import akka.actor.ActorSystem
+
 import java.io.File
 import java.net.URL
 import akka.stream.Materializer
@@ -169,7 +171,6 @@ trait WithTestCSRF {
 }
 
 trait WithTestFrontJsonFapi {
-
   // need a front api that stores S3 locally so it can run without deps in the unit tests
   class TestFrontJsonFapi(override val blockingOperations: BlockingOperations)
       extends FrontJsonFapiLive(blockingOperations) {

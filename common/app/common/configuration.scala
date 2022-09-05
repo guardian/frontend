@@ -13,7 +13,7 @@ import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import services.ParameterStore
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
@@ -323,7 +323,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 
     private lazy val hostOption = Option(System.getenv("proxy_host"))
-    private lazy val portOption = Option(System.getenv("proxy_port")) flatMap { _.toIntOption }
+    private lazy val portOption = Option(System.getenv("proxy_port")) flatMap { augmentString(_).toIntOption }
 
     lazy val host: String = hostOption getOrElse {
       throw new IllegalStateException("HTTP proxy host not configured")

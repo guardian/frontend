@@ -1,8 +1,8 @@
 package model.liveblog
 
 import java.util.Locale
-
 import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
+import com.madgag.scala.collection.decorators.MapDecorator
 import implicits.Dates.CapiRichDateTime
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
@@ -23,7 +23,7 @@ object Blocks {
     val bodyBlocks: Seq[BodyBlock] = orderBlocks(blocks.body.toSeq.flatMap(blocks => BodyBlock.make(blocks.toSeq)))
     val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks
       .map { map =>
-        map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
+        map.toMap.mapV(blocks => orderBlocks(BodyBlock.make(blocks.toSeq)))
       }
       .getOrElse(Map())
     Blocks(

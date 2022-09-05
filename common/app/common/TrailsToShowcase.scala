@@ -1,5 +1,6 @@
 package common
 
+import com.madgag.scala.collection.decorators.MapDecorator
 import com.sun.syndication.feed.module.Module
 import com.sun.syndication.feed.module.mediarss.MediaEntryModuleImpl
 import com.sun.syndication.feed.module.mediarss.types.{MediaContent, Metadata, UrlReference}
@@ -14,8 +15,7 @@ import play.api.mvc.RequestHeader
 
 import java.io.StringWriter
 import java.util.Date
-import scala.collection.JavaConverters._
-import scala.collection.immutable.WrappedString
+import scala.jdk.CollectionConverters._
 
 object TrailsToShowcase {
 
@@ -109,7 +109,7 @@ object TrailsToShowcase {
       .flatMap(_.curated)
       .map(_.card.id)
       .groupBy(identity)
-      .mapValues(_.size)
+      .mapV(_.size)
       .filter(_._2 > 1)
 
     val singleStoryPanelsOutcome = if (singleStoryCollections.nonEmpty) {
@@ -316,7 +316,7 @@ object TrailsToShowcase {
         title <- proposedArticleTitle.toOption
         guid <- guidFor(contentItem)
         webUrl <- webUrl(contentItem)
-        imageUrl <- proposedArticleImage.right.toOption
+        imageUrl <- proposedArticleImage.toOption
         maybeOverline <- proposedOverline.toOption
       } yield {
         val lastModified = contentItem.card.lastModifiedOption.getOrElse(webPublicationDate)

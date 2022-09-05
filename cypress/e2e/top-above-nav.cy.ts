@@ -3,7 +3,7 @@ import { allPages } from '../fixtures/pages';
 describe('top-above-nav on pages', () => {
 	allPages.forEach(({ path, adTest }) => {
 		it(`Test ${path} has top-above-nav slot and iframe`, () => {
-			cy.visit(`${path}?adtest=${adTest}`);
+			cy.visit(path);
 
 			cy.allowAllConsent();
 

@@ -18,7 +18,7 @@ import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 import layout.slices.ContainerDefinition
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 /**
   * Encapsulates previous and next urls

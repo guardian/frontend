@@ -6,7 +6,6 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import test._
-
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
@@ -35,5 +34,4 @@ class CuratedContentAgentTest
     curatedContentAgent.getCuratedContentAdFree.size should be > (0)
     curatedContentAgent.getTrails(NewsPillar, International, true).size should be > (0)
   }
-
 }

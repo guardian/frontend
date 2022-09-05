@@ -1,5 +1,6 @@
 package common.commercial
 
+import com.madgag.scala.collection.decorators.MapDecorator
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import layout.{Breakpoint, Desktop, Mobile, Tablet}
 import play.api.libs.json.{JsString, JsValue, _}
@@ -267,8 +268,7 @@ object PrebidIndexSite {
       "world" -> PrebidIndexSite(Desktop, 204985),
       "world" -> PrebidIndexSite(Mobile, 213473),
       "world" -> PrebidIndexSite(Tablet, 215408),
-    ).groupBy { case (section, _) => section }
-      .mapValues { _.map { case (_, site) => site }.toSet }
+    ).groupBy { case (section, _) => section }.mapV { _.map { case (_, site) => site }.toSet }
 
   private def fromSectionId(sectionId: String): Option[Set[PrebidIndexSite]] = {
     val firstPart = {

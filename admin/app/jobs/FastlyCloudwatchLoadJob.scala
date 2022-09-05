@@ -1,6 +1,7 @@
 package jobs
 
 import com.amazonaws.services.cloudwatch.model.StandardUnit
+import com.madgag.scala.collection.decorators.MapDecorator
 import common.GuLogging
 import metrics.SamplerMetric
 import model.diagnostics.CloudWatch
@@ -61,8 +62,8 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
       }
 
       val groups = fresh groupBy { _.key }
-      val timestampsSent = groups mapValues { _ map { _.timestamp } }
-      timestampsSent mapValues { _.max } foreach {
+      val timestampsSent = groups mapV { _ map { _.timestamp } }
+      timestampsSent mapV { _.max } foreach {
         case (key, value) =>
           latestTimestampsSent.update(key, value)
       }

@@ -158,7 +158,8 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)';
 
 	const isImmersive = config.get('page.isImmersive');
-	const defaultRules: SpacefinderRules = {
+
+	const firstInlineRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: isImmersive ? 700 : 300,
@@ -187,17 +188,21 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 
 	let minAbove = 1000;
 
+	/**
+	 * In special cases, inline2 can overlap the "Most viewed" island, so
+	 * we need to make an adjustment to move the inline2 further down the page.
+	 */
 	if (isPaidContent) {
 		minAbove += 600;
 	}
-
-	/* On old articles without a main image or articles with a showcase main image, inline2 can sometimes overlap the most viewed articles */
-	if (!hasImages || hasShowcaseMainElement) {
+	// Some old articles don't have a main image, which means the first paragraph is much higher
+	if (!hasImages) {
+		minAbove += 600;
+	} else if (hasShowcaseMainElement) {
 		minAbove += 100;
 	}
 
-	// For any other inline
-	const relaxedRules: SpacefinderRules = {
+	const subsequentInlineRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove,
@@ -212,7 +217,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		filter: filterNearbyCandidates(adSizes.halfPage.height),
 	};
 
-	const rules = isInline1 ? defaultRules : relaxedRules;
+	const rules = isInline1 ? firstInlineRules : subsequentInlineRules;
 
 	const enableDebug =
 		(sfdebug === '1' && isInline1) || (sfdebug === '2' && !isInline1);

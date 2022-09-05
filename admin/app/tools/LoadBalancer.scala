@@ -3,7 +3,7 @@ package tools
 import common.{Box, GuLogging}
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 case class LoadBalancer(
     id: String,

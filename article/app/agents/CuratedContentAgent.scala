@@ -128,5 +128,4 @@ class CuratedContentAgent(frontJsonFapiLive: FrontJsonFapiLive) extends GuLoggin
 
     refreshPaths(paths)
   }
-
 }

@@ -6,7 +6,7 @@ import model.EmailAddons
 import org.jsoup.Jsoup
 import org.jsoup.nodes._
 import play.twirl.api.Html
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.util.Try
 
 object BrazeEmailFormatter extends GuLogging {
