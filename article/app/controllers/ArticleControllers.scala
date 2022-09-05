@@ -1,18 +1,15 @@
 package controllers
 
 import agents.{CuratedContentAgent, DeeplyReadAgent}
-import akka.actor.ActorSystem
 import com.softwaremill.macwire._
-import concurrent.BlockingOperations
 import contentapi.ContentApiClient
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
-import services.dotcomponents.OnwardsPicker
-import services.fronts.FrontJsonFapiLive
-import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
+import services.dotcomrendering.OnwardsPicker
 import services.newsletters.NewsletterSignupAgent
+import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import topics.{TopicS3Client, TopicService}
 
 trait ArticleControllers {

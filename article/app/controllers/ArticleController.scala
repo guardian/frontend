@@ -14,8 +14,9 @@ import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
+import services.dotcomponents.{ArticlePicker, PressedArticle, RemoteRender}
+import services.dotcomrendering.OnwardsPicker
 import services.{CAPILookup, NewsletterService}
-import services.dotcomponents._
 import views.support._
 
 import scala.concurrent.Future

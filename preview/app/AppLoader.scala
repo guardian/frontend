@@ -29,7 +29,7 @@ import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
-import services.dotcomponents.OnwardsPicker
+import services.dotcomrendering.OnwardsPicker
 import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}

@@ -23,7 +23,7 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
-import services.dotcomponents.OnwardsPicker
+import services.dotcomrendering.OnwardsPicker
 import services.fronts.FrontJsonFapiLive
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
