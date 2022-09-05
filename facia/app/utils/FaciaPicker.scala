@@ -5,6 +5,7 @@ import experiments.{ActiveExperiments, DCRFronts}
 import implicits.Requests._
 import model.PressedPage
 import play.api.mvc.RequestHeader
+import views.support.Commercial
 
 object FrontChecks {
 
@@ -65,10 +66,10 @@ object FrontChecks {
     false
   }
 
-  def isNotSignedIn(faciaPage: PressedPage): Boolean = {
+  def isNotAdFree(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
     // We don't support the signed in experience
     // See: https://github.com/guardian/dotcom-rendering/issues/5926
-    false
+    !Commercial.isAdFree(request)
   }
 
   def hasNoPageSkin(faciaPage: PressedPage): Boolean = {
@@ -87,11 +88,11 @@ object FrontChecks {
 
 class FaciaPicker extends GuLogging {
 
-  private def dcrChecks(faciaPage: PressedPage): Map[String, Boolean] = {
+  private def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("allCollectionsAreSupported", FrontChecks.allCollectionsAreSupported(faciaPage)),
       ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
-      ("isNotSignedIn", FrontChecks.isNotSignedIn(faciaPage)),
+      ("isNotAdFree", FrontChecks.isNotAdFree(faciaPage)),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
     )
