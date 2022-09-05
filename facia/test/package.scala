@@ -20,6 +20,7 @@ object `package` {
 
     def hasAttribute(name: String): Boolean = element.attribute(name) != null
   }
+
 }
 
 class FaciaTestSuite

@@ -23,7 +23,9 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
   "Navigation Controller" should "serve JSON" in {
     val fakeRequest = FakeRequest(GET, testRoute)
       .withHeaders("host" -> "http://localhost:9000")
+
     val Some(result) = route(app, fakeRequest)
+
     status(result) should be(200)
     contentType(result).get should be("application/json")
   }

@@ -30,8 +30,6 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
 import scala.util.{Failure, Success, Try}
 
-import akka.actor.ActorSystem
-
 trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with ConfiguredBrowser {
 
   lazy val webClient = new WebClient(BrowserVersion.CHROME)

@@ -8,7 +8,6 @@ import commercial.targeting.TargetingLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics}
-import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
 import contentapi._
