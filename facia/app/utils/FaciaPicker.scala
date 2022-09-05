@@ -12,7 +12,7 @@ object FrontChecks {
   // To check which collections are supported by DCR and update this set please check:
   // https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/src/web/lib/DecideContainer.tsx
   // and https://github.com/guardian/dotcom-rendering/issues/4720
-  private val SUPPORTED_COLLECTIONS: Set[String] =
+  val SUPPORTED_COLLECTIONS: Set[String] =
     Set(
       /*
     "dynamic/slow-mpu",
@@ -101,20 +101,27 @@ class FaciaPicker extends GuLogging {
   }
 
   def getTier(faciaPage: PressedPage)(implicit request: RequestHeader): RenderType = {
-    val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
-    val checks = dcrChecks(faciaPage)
-    val dcrCouldRender = checks.values.forall(checkValue => checkValue == true)
+    lazy val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
+    lazy val checks = dcrChecks(faciaPage)
+    lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue == true)
 
-    val tier = {
-      if (request.forceDCROff) LocalRender
-      else if (request.forceDCR) RemoteRender
-      else if (dcrCouldRender && participatingInTest) RemoteRender
-      else LocalRender
-    }
+    val tier = decideTier(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
 
     logTier(faciaPage, participatingInTest, dcrCouldRender, checks, tier)
 
     tier
+  }
+
+  def decideTier(
+      forceDCROff: Boolean,
+      forceDCR: Boolean,
+      participatingInTest: Boolean,
+      dcrCouldRender: Boolean,
+  ): RenderType = {
+    if (forceDCROff) LocalRender
+    else if (forceDCR) RemoteRender
+    else if (dcrCouldRender && participatingInTest) RemoteRender
+    else LocalRender
   }
 
   private def logTier(
