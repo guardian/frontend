@@ -103,8 +103,8 @@ class FaciaPicker extends GuLogging {
     val dcrCouldRender = checks.values.forall(checkValue => checkValue == true)
 
     val tier = {
-      if (forceDCROff) LocalRender
-      else if (forceDCR) RemoteRender
+      if (request.forceDCROff) LocalRender
+      else if (request.forceDCR) RemoteRender
       else if (dcrCouldRender && participatingInTest) RemoteRender
       else LocalRender
     }
