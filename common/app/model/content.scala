@@ -94,7 +94,7 @@ final case class Content(
         AmpLiveBlogSwitch.isSwitchedOn
       } else if (tags.isArticle) {
         val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
-        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !isImmersive && !tags.isQuiz
+        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !tags.isQuiz
       } else {
         false
       }
