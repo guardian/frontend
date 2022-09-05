@@ -63,25 +63,27 @@ object FrontChecks {
 
   def hasNoWeatherWidget(faciaPage: PressedPage): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/issues/4602
-    false
+    !faciaPage.isNetworkFront
   }
 
-  def isNotAdFree(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
+  def isNotAdFree()(implicit request: RequestHeader): Boolean = {
     // We don't support the signed in experience
     // See: https://github.com/guardian/dotcom-rendering/issues/5926
     !Commercial.isAdFree(request)
   }
 
-  def hasNoPageSkin(faciaPage: PressedPage): Boolean = {
+  def hasNoPageSkin(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
     // We don't support page skin ads
     // See: https://github.com/guardian/dotcom-rendering/issues/5490
-    false
+    !faciaPage.metadata.hasPageSkin(request)
   }
 
   def hasNoSlideshows(faciaPage: PressedPage): Boolean = {
     // We don't support image slideshows
     // See: https://github.com/guardian/dotcom-rendering/issues/4612
-    false
+    !faciaPage.collections.exists(collection =>
+      collection.curated.exists(card => card.properties.imageSlideshowReplace),
+    )
   }
 
 }
@@ -92,7 +94,7 @@ class FaciaPicker extends GuLogging {
     Map(
       ("allCollectionsAreSupported", FrontChecks.allCollectionsAreSupported(faciaPage)),
       ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
-      ("isNotAdFree", FrontChecks.isNotAdFree(faciaPage)),
+      ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
     )
