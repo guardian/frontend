@@ -26,10 +26,6 @@ trait ArticleControllers {
   def onwardsPicker: OnwardsPicker
   def curatedContentAgent: CuratedContentAgent
 
-  def onwardsPicker: OnwardsPicker
-
-  def curatedContentAgent: CuratedContentAgent
-
   implicit def appContext: ApplicationContext
 
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]
