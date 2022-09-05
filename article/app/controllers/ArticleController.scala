@@ -1,6 +1,6 @@
 package controllers
 
-import agents.DeeplyReadAgent
+import agents.{CuratedContentAgent, DeeplyReadAgent}
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
@@ -10,7 +10,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model._
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
-import play.api.libs.json.Json
+import play.api.libs.json.{Writes, _}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
@@ -18,6 +18,7 @@ import services.dotcomponents.{ArticlePicker, PressedArticle, RemoteRender}
 import services.dotcomrendering.OnwardsPicker
 import services.{CAPILookup, NewsletterService}
 import views.support._
+import model.PressedContentFormat
 
 import scala.concurrent.Future
 
@@ -29,6 +30,7 @@ class ArticleController(
     newsletterService: NewsletterService,
     deeplyReadAgent: DeeplyReadAgent,
     onwardsPicker: OnwardsPicker,
+    curatedContentAgent: CuratedContentAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -84,6 +86,20 @@ class ArticleController(
         .lookup(path, Some(ArticleBlocks))
         .map(_.content.map(_.webTitle))
         .map(responseFromOptionalString)
+    }
+
+  def renderCuratedContentAgentJson(): Action[AnyContent] =
+    Action.async { implicit request =>
+      Future(
+        Cached(900)(
+          JsonComponent.fromWritable(
+            Map(
+              "curatedContent" -> curatedContentAgent.getCuratedContent,
+              "curatedAdFreeContent" -> curatedContentAgent.getCuratedContentAdFree,
+            ),
+          ),
+        ),
+      )
     }
 
   private def getJson(article: ArticlePage)(implicit request: RequestHeader): List[(String, Object)] = {

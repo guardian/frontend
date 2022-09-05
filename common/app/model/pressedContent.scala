@@ -3,7 +3,8 @@ package model.pressed
 import com.gu.commercial.branding.Branding
 import com.gu.facia.api.{models => fapi}
 import common.Edition
-import model.{ContentFormat, Pillar}
+import model.{ContentFormat, Pillar, PressedContentFormat}
+import play.api.libs.json.Json
 import views.support.ContentOldAgeDescriber
 
 sealed trait PressedContent {
@@ -45,6 +46,7 @@ sealed trait PressedContent {
 }
 
 object PressedContent {
+  implicit val pressedContentFormat = PressedContentFormat.format
   def make(content: fapi.FaciaContent): PressedContent =
     content match {
       case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
