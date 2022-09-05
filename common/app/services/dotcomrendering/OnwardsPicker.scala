@@ -1,4 +1,4 @@
-package services.dotcomponents
+package services.dotcomrendering
 
 import agents.CuratedContentAgent
 import common.Edition

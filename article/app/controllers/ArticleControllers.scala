@@ -7,7 +7,7 @@ import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
-import services.dotcomponents.OnwardsPicker
+import services.dotcomrendering.OnwardsPicker
 import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.newsletters.NewsletterSignupAgent
 import topics.{TopicS3Client, TopicService}
