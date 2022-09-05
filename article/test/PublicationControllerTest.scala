@@ -36,6 +36,9 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
   val bookAgent = mock[NewspaperBookTagAgent]
   val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
   lazy val controllerComponents = play.api.test.Helpers.stubControllerComponents()
+
+  lazy val curatedContentAgent = new CuratedContentAgent(fapi)
+
   lazy val articleController =
     new ArticleController(
       testContentApiClient,
@@ -44,7 +47,8 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       new DCRFake(),
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
       new DeeplyReadAgent(),
-      new OnwardsPicker(new CuratedContentAgent(fapi)),
+      new OnwardsPicker(curatedContentAgent),
+      curatedContentAgent,
     )
   lazy val publicationController =
     new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)

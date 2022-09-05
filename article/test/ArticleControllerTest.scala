@@ -29,6 +29,8 @@ import agents.CuratedContentAgent
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
 
+  lazy val curatedContentAgent = new CuratedContentAgent(fapi)
+
   lazy val articleController = new ArticleController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
@@ -36,7 +38,8 @@ import agents.CuratedContentAgent
     new DCRFake(),
     new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
     new DeeplyReadAgent(),
-    new OnwardsPicker(new CuratedContentAgent(fapi)),
+    new OnwardsPicker(curatedContentAgent),
+    curatedContentAgent,
   )
 
   "Article Controller" should "200 when content type is article" in {
