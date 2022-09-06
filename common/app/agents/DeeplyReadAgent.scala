@@ -126,8 +126,16 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       refresh(edition)
     }
 
-    val trails: Seq[Trail] = deeplyReadItems().get(edition).getOrElse(Seq.empty)
-
+    val trails: Seq[Trail] = getTrailsOnly(edition)
     OnwardCollectionResponse("Deeply read", trails)
   }
+
+  def getTrailsOnly(edition: Edition)(implicit ec: ExecutionContext): Seq[Trail] = {
+    if (deeplyReadItems().isEmpty) {
+      refresh(edition)
+    }
+
+    deeplyReadItems().get(edition).getOrElse(Seq.empty)
+  }
+
 }
