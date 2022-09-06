@@ -8,10 +8,16 @@ import org.scalatest.flatspec.AnyFlatSpec
 
 class PageElementTest extends AnyFlatSpec with Matchers {
   "PageElement" should "classify capi tracking value correctly" in {
-    containsThirdPartyTracking(None) should equal(false)
-    containsThirdPartyTracking(Some(EmbedTracking(DoesNotTrack))) should equal(false)
-    containsThirdPartyTracking(Some(EmbedTracking(Tracks))) should equal(true)
-    containsThirdPartyTracking(Some(EmbedTracking(Unknown))) should equal(true)
-    containsThirdPartyTracking(Some(EmbedTracking(EnumUnknownEmbedTracksType(99)))) should equal(true)
+    containsThirdPartyTracking(None, false) should equal(false)
+    containsThirdPartyTracking(Some(EmbedTracking(DoesNotTrack)), false) should equal(false)
+    containsThirdPartyTracking(Some(EmbedTracking(Tracks)), false) should equal(true)
+    containsThirdPartyTracking(Some(EmbedTracking(Unknown)), false) should equal(true)
+    containsThirdPartyTracking(Some(EmbedTracking(EnumUnknownEmbedTracksType(99))), false) should equal(true)
+
+    containsThirdPartyTracking(None, true) should equal(true)
+    containsThirdPartyTracking(Some(EmbedTracking(DoesNotTrack)), true) should equal(true)
+    containsThirdPartyTracking(Some(EmbedTracking(Tracks)), true) should equal(true)
+    containsThirdPartyTracking(Some(EmbedTracking(Unknown)), true) should equal(true)
+    containsThirdPartyTracking(Some(EmbedTracking(EnumUnknownEmbedTracksType(99))), true) should equal(true)
   }
 }
