@@ -9,7 +9,7 @@ import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType, Trail}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.{ApplicationContext, CanonicalLiveBlog, _}
@@ -41,9 +41,6 @@ class LiveBlogController(
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  val mostPopular = Seq(
-    deeplyReadAgent.onwardsJourneyResponse,
-  )
 
   // we support liveblogs and also articles, so that minutes work
   private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle
@@ -180,6 +177,8 @@ class LiveBlogController(
                 "isLiveBlog" -> "true",
               )
             val remoteRendering = !request.forceDCROff
+            val edition: Edition = Edition(request)
+            val deeplyRead: Seq[Trail] = deeplyReadAgent.getTrails(edition)
 
             if (remoteRendering) {
               DotcomponentsLogger.logger
@@ -195,7 +194,7 @@ class LiveBlogController(
                 availableTopics,
                 newsletter = None,
                 topicResult,
-                mostPopular = Some(mostPopular),
+                mostPopular = Some(deeplyRead),
                 onwards = None,
               )
             } else {

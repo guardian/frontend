@@ -11,6 +11,7 @@ import services.dotcomponents.OnwardsPicker
 import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.newsletters.NewsletterSignupAgent
 import topics.{TopicS3Client, TopicService}
+import services.OphanApi
 
 trait ArticleControllers {
   def contentApiClient: ContentApiClient
@@ -20,6 +21,7 @@ trait ArticleControllers {
   def topicS3Client: TopicS3Client
   def topicService: TopicService
   def newsletterSignupAgent: NewsletterSignupAgent
+  def ophanApi: OphanApi
 
   implicit def appContext: ApplicationContext
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]

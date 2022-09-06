@@ -97,7 +97,7 @@ case class DotcomRenderingDataModel(
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
-    mostPopular: Option[Seq[OnwardCollectionResponse]],
+    mostPopular: Option[Seq[Trail]],
     onwards: Option[Seq[OnwardCollectionResponse]],
 )
 
@@ -345,7 +345,7 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      mostPopular: Option[Seq[OnwardCollectionResponse]] = None,
+      mostPopular: Option[Seq[Trail]] = None,
       onwards: Option[Seq[OnwardCollectionResponse]] = None,
   ): DotcomRenderingDataModel = {
 

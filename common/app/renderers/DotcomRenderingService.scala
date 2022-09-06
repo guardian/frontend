@@ -37,6 +37,7 @@ import java.util.concurrent.TimeoutException
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import model.dotcomrendering.Trail
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
@@ -157,7 +158,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       availableTopics: Option[Seq[Topic]] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      mostPopular: Option[Seq[OnwardCollectionResponse]],
+      mostPopular: Option[Seq[Trail]],
       onwards: Option[Seq[OnwardCollectionResponse]],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {

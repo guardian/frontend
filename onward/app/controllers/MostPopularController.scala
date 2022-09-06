@@ -224,7 +224,7 @@ class MostPopularController(
         )
       }
 
-      val deeplyReadItems = deeplyReadAgent.getTrails
+      val deeplyReadItems = deeplyReadAgent.getTrails(edition)
 
       // Async global deeply read
       val deeplyRead: Option[MostPopularCollectionResponse] = {

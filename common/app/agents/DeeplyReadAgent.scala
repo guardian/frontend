@@ -36,25 +36,25 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         query CAPI and set the Content for the path.
      */
 
-    val deeplyReadItemsWithCapi: Future[Seq[Option[Option[model.dotcomrendering.Trail]]]] =
+    val deeplyReadItemsWithCapi: Future[Seq[Trail]] =
       ophanApi.getDeeplyRead(edition).flatMap { seq =>
-        log.info(s"ophanItems updated with: ${seq.toArray.size} new items")
-        val constructedTrail: Seq[Future[Option[Option[model.dotcomrendering.Trail]]]] = seq.map { ophanItem =>
+        log.info(s"ophanItems updated with: ${seq.size} new items")
+        val constructedTrail: Seq[Future[Trail]] = seq.map { ophanItem =>
           log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
           val path = removeStartingSlash(ophanItem.path)
           log.info(s"CAPI Lookup for path: ${path}")
-          val capiItem = contentApiClient
+          val capiRequest = contentApiClient
             .item(path)
             .showTags("all")
             .showFields("all")
             .showReferences("none")
             .showAtoms("none")
-          val capiResponse = contentApiClient
-            .getResponse(capiItem)
+          val trailFromCapiResponse = contentApiClient
+            .getResponse(capiRequest)
             .map { res =>
-              res.content.map { c =>
-                log.info(s"Update CAPI data for path: ${path}")
-                println(s"Update CAPI data for path: ${path}")
+              res.content.flatMap { c =>
+                log.info(s"Updated CAPI data for path: ${path}")
+                println(s"Updated CAPI data for path: ${path}")
                 ophanItemToTrail(ophanItem, c)
               }
             }
@@ -63,23 +63,17 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
                 log.info(s"Error CAPI lookup for path: ${path}. ${e.getMessage}")
                 None
             }
-          capiResponse
+          trailFromCapiResponse.map(_.get)
         }
         Future.sequence(constructedTrail)
       }
 
-    val futureTrailSequence: Future[Seq[Trail]] = deeplyReadItemsWithCapi.map { seq =>
-      seq.flatten.flatten
-    }
-
     deeplyReadItemsWithCapi.foreach { sequence =>
-      val trailSequence = sequence.filter(option => option.filter(_.isDefined).isDefined).map(_.get.get)
-      val deeplyReadMap = Map(edition -> trailSequence)
-
+      val deeplyReadMap = deeplyReadItems.get() ++ Map(edition -> sequence)
       deeplyReadItems.alter(deeplyReadMap)
     }
 
-    futureTrailSequence
+    deeplyReadItemsWithCapi
   }
 
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
@@ -126,11 +120,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       refresh(edition)
     }
 
-    val trails: Seq[Trail] = getTrailsOnly(edition)
+    val trails: Seq[Trail] = getTrails(edition)
     OnwardCollectionResponse("Deeply read", trails)
   }
 
-  def getTrailsOnly(edition: Edition)(implicit ec: ExecutionContext): Seq[Trail] = {
+  def getTrails(edition: Edition)(implicit ec: ExecutionContext): Seq[Trail] = {
     if (deeplyReadItems().isEmpty) {
       refresh(edition)
     }

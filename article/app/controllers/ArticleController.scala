@@ -7,7 +7,7 @@ import contentapi.ContentApiClient
 import experiments.{ActiveExperiments, DCROnwardsData}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType, Trail}
 import model.{ContentType, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
@@ -35,9 +35,6 @@ class ArticleController(
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  val mostPopular = Seq(
-    deeplyReadAgent.onwardsJourneyResponse,
-  )
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -119,6 +116,8 @@ class ArticleController(
     val tier = ArticlePicker.getTier(article, path)
     val isAmpSupported = article.article.content.shouldAmplify
     val pageType: PageType = PageType(article, request, context)
+    val edition: Edition = Edition(request)
+    val deeplyRead: Seq[Trail] = deeplyReadAgent.getTrails(edition)
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
         Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
@@ -140,7 +139,7 @@ class ArticleController(
           false,
           newsletter = newsletter,
           topicResult = None,
-          mostPopular = Some(mostPopular),
+          mostPopular = Some(deeplyRead),
           onwards = None,
         )
       case HtmlFormat | AmpFormat =>

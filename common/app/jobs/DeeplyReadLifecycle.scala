@@ -9,7 +9,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import agents.DeeplyReadAgent
 import common.Edition
 
-class TopicLifecycle(
+class DeeplyReadLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
     akkaAsync: AkkaAsync,
@@ -29,7 +29,7 @@ class TopicLifecycle(
     // refresh top mentions when app starts
     akkaAsync.after1s {
       Edition.all.foreach { edition =>
-        deeplyReadAgent.getReport(edition)
+        deeplyReadAgent.refresh(edition)
       }
       Future.successful(())
     }
