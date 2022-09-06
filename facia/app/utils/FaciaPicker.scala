@@ -88,6 +88,7 @@ object FrontChecks {
 
   def isNotPaidContent(faciaPage: PressedPage): Boolean = {
     // We don't support paid content
+    // See: https://github.com/guardian/dotcom-rendering/issues/5945
     !faciaPage.frontProperties.isPaidContent
   }
 
