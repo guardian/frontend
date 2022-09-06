@@ -506,8 +506,9 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
   private def removeLeadEditionFromSectionId(sectionId: String): String =
     sectionId.split('/').toList match {
-      case edition :: tail if Edition.allWithBetaEditions.map(_.id.toLowerCase).contains(edition.toLowerCase) => tail.mkString("/")
-      case _                                                                                  => sectionId
+      case edition :: tail if Edition.allWithBetaEditions.map(_.id.toLowerCase).contains(edition.toLowerCase) =>
+        tail.mkString("/")
+      case _ => sectionId
     }
 
   private def getCapiItemResponseForPath(
