@@ -35,6 +35,7 @@ GET        /top-stories/trails.json                   controllers.TopStoriesCont
 GET        /related/*path.json                        controllers.RelatedController.render(path)
 
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.render(tag)
+GET        /popular-in-tag-dcr/*tag.json              controllers.PopularInTagDCR.render(tag)
 
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
 
