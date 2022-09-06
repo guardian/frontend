@@ -3,7 +3,7 @@ package model.dotcomrendering
 import com.github.nscala_time.time.Imports.DateTime
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.format.LiveBlogDesign
+import com.gu.contentapi.client.utils.format.{DeadBlogDesign, LiveBlogDesign}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import conf.switches.Switches
@@ -209,6 +209,7 @@ object DotcomRenderingUtils {
           article.elements.thumbnail,
           edition,
           article.trail.webPublicationDate,
+          article.metadata.format.exists(format => format.design == LiveBlogDesign || format.design == DeadBlogDesign),
         ),
       )
       .filter(PageElement.isSupported)
