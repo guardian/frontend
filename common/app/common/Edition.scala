@@ -50,7 +50,7 @@ object Edition {
   lazy val defaultEdition: Edition = editions.Uk
   def editionsByRequest(implicit request: RequestHeader): List[Edition] = {
     val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
-    if (!participatingInTest) all else allWithEurope
+    if (!participatingInTest) all else allWithBetaEditions
   }
 
   lazy val all = List(
@@ -60,7 +60,7 @@ object Edition {
     editions.International,
   )
 
-  lazy val allWithEurope = all ++ List(editions.Europe)
+  lazy val allWithBetaEditions = all ++ List(editions.Europe)
 
   private def editionFromRequest(request: RequestHeader): String = {
     // override for Ajax calls
@@ -89,9 +89,9 @@ object Edition {
     editionsByRequest(request).filterNot(_ == currentEdition)
   }
 
-  def othersWithEurope(edition: Edition): Seq[Edition] = allWithEurope.filterNot(_ == edition)
+  def othersWithBetaEditions(edition: Edition): Seq[Edition] = allWithBetaEditions.filterNot(_ == edition)
 
-  def byId(id: String): Option[Edition] = allWithEurope.find(_.id.equalsIgnoreCase(id))
+  def byId(id: String): Option[Edition] = allWithBetaEditions.find(_.id.equalsIgnoreCase(id))
 
   implicit val editionWrites: Writes[Edition] = new Writes[Edition] {
     def writes(edition: Edition): JsValue = Json.obj("id" -> edition.id)
@@ -101,7 +101,7 @@ object Edition {
     (__ \ "id").read[String] map (Edition.byId(_).getOrElse(defaultEdition))
   }
 
-  lazy val editionRegex = Edition.allWithEurope.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
+  lazy val editionRegex = Edition.allWithBetaEditions.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
   private lazy val EditionalisedFront = s"""^/($editionRegex)$$""".r
 
   private lazy val EditionalisedId = s"^/($editionRegex)(/[\\w\\d-]+)$$".r

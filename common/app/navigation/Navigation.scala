@@ -106,7 +106,7 @@ object NavMenu {
   private[navigation] def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
     // This shouldn't be a problem as Europe won't have special NavLinks
     Edition
-      .othersWithEurope(edition)
+      .othersWithBetaEditions(edition)
       .flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
   }
 
