@@ -1,4 +1,4 @@
-import type {UserFeaturesResponse} from '../../static/src/javascripts/types/membership';
+import type { UserFeaturesResponse } from '../../static/src/javascripts/types/membership';
 
 /**
  * Generate a full URL for a given relative path and the desired stage
@@ -8,7 +8,12 @@ import type {UserFeaturesResponse} from '../../static/src/javascripts/types/memb
  * @param {{ isDcr?: boolean }} options
  * @returns {string} The full path
  */
-export const getTestUrl = (stage: 'code' | 'prod' | 'dev', path: string, { isDcr } = { isDcr: false }, adtest = 'fixed-puppies') => {
+export const getTestUrl = (
+	stage: 'code' | 'prod' | 'dev',
+	path: string,
+	{ isDcr } = { isDcr: false },
+	adtest = 'fixed-puppies',
+) => {
 	let url = '';
 	switch (stage) {
 		case 'code': {
@@ -46,7 +51,6 @@ export const getStage = () => {
 	return stage?.toLowerCase();
 };
 
-
 export const fakeLogin = (subscriber = true) => {
 	const response: UserFeaturesResponse = {
 		userId: '107421393',
@@ -76,11 +80,54 @@ export const fakeLogin = (subscriber = true) => {
 		'https://members-data-api.theguardian.com/user-attributes/me',
 		response,
 	).as('userData');
-}
+};
 
- export const fakeLogOut = () => {
+export const fakeLogOut = () => {
 	// we can't just click sign out because cypress does not like following links to other domains
 	cy.clearCookie('GU_U');
 
 	cy.reload();
-}
+};
+
+export const mockIntersectionObserver = (win: Window, selector?: string) => {
+	const Original = win.IntersectionObserver;
+	// ts-expect-error
+	win.IntersectionObserver = function (
+		cb: IntersectionObserverCallback,
+		options: IntersectionObserverInit | undefined,
+	) {
+		const instance: IntersectionObserver = {
+			thresholds: Array.isArray(options?.threshold)
+				? options?.threshold || [0]
+				: [options?.threshold || 0],
+			root: options?.root || null,
+			rootMargin: options?.rootMargin || '0px',
+			takeRecords: () => [],
+			observe: (element: HTMLElement) => {
+				if (!selector || element.matches(selector)) {
+					const entry = [
+						{
+							isIntersecting: true,
+							boundingClientRect: element.getBoundingClientRect(),
+							intersectionRatio: 1,
+							intersectionRect: element.getBoundingClientRect(),
+							rootBounds:
+								instance.root instanceof HTMLElement
+									? instance.root.getBoundingClientRect()
+									: null,
+							target: element,
+							time: Date.now(),
+						},
+					];
+					cb(entry, instance);
+				} else {
+					const observer = new Original(cb, options);
+					observer.observe(element);
+				}
+			},
+			unobserve: () => {},
+			disconnect: () => {},
+		};
+		return instance;
+	};
+};

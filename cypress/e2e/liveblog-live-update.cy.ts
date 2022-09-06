@@ -1,51 +1,51 @@
 import { breakpoints } from '../fixtures/breakpoints';
 import { liveblogs } from '../fixtures/pages';
+import { mockIntersectionObserver } from '../lib/util';
 
 const pages = [...liveblogs];
 
 describe('Liveblog live updates', () => {
-	pages.forEach(({ path }) => {
-		breakpoints.forEach(({ breakpoint, width }) => {
+	pages.forEach(({ path, expectedMinInlineSlotsOnPage }) => {
+		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ads are inserted when liveblogs live update, breakpoint: ${breakpoint}`, () => {
-				cy.viewport(width, 500);
+				cy.viewport(width, height);
 
-				cy.visit(path);
+				cy.visit(path, {
+					onBeforeLoad(win) {
+						mockIntersectionObserver(win, '#top-of-blog');
+					},
+				});
 
 				cy.allowAllConsent();
 
-				cy.get('#liveblog-body .ad-slot').then((adSlots) => {
-					const adSlotCount = adSlots.length;
+				cy.get('#liveblog-body .ad-slot').its('length').as('adCount');
 
-					cy.window().then((win) => {
-						win.mockLiveUpdate({
-							numNewBlocks: 5,
-							html: `
+				cy.window().invoke('mockLiveUpdate', {
+					numNewBlocks: 5,
+					html: `
 							<p style="height:1000px;" class="pending block">New block</p>
 							<p style="height:1000px;" class="pending block">New block</p>
 							<p style="height:1000px;" class="pending block">New block</p>
 							<p style="height:1000px;" class="pending block">New block</p>
 							<p style="height:1000px;" class="pending block">New block</p>
 							`,
-							mostRecentBlockId: 'abc',
-						});
-
-						cy.get('#liveblog-body .block')
-							.first()
-							.should('have.css', 'opacity', '1')
-							.scrollIntoView();
-
-						// eslint-disable-next-line cypress/no-unnecessary-waiting
-						cy.wait(300);
-
-						cy.get('#liveblog-body .ad-slot').then((adSlots) => {
-							const newAdSlotCount = adSlots.length;
-
-							expect(newAdSlotCount).to.be.greaterThan(
-								adSlotCount,
-							);
-						});
-					});
+					mostRecentBlockId: 'abc',
 				});
+
+				if (expectedMinInlineSlotsOnPage) {
+					cy.get('@adCount').then((adCount) => {
+						cy.get(
+							`#dfp-ad--inline${
+								breakpoint === 'mobile'
+									? expectedMinInlineSlotsOnPage + 3
+									: expectedMinInlineSlotsOnPage + 1
+							}`,
+						).should('exist');
+						cy.get('#liveblog-body .ad-slot')
+							.its('length')
+							.should('be.gt', adCount);
+					});
+				}
 			});
 		});
 	});
