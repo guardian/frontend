@@ -42,7 +42,7 @@ class EditionTest extends AnyFlatSpec with Matchers {
     // because they are used as defaults for other editions that do not override them
 
     val defaultSections = Edition.defaultEdition.editionalisedSections.sorted
-    val allSections = Edition.all.flatMap(_.editionalisedSections).distinct.sorted
+    val allSections = Edition.allWithBetaEditions.flatMap(_.editionalisedSections).distinct.sorted
 
     allSections should equal(defaultSections)
   }
