@@ -2,12 +2,13 @@ package renderers
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
-import common.GuLogging
+import common.{GuLogging, JsonNotFound}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.dotcomrendering.DotcomRenderingUtils.withoutNull
 import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
@@ -27,6 +28,7 @@ import model.{
   Topic,
   TopicResult,
 }
+import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -145,6 +147,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     post(ws, json, Configuration.rendering.baseURL + "/AMPArticle", page.metadata.cacheTime)
+  }
+
+  def getOnwardHtml(ws: WSClient, onwards: OnwardCollectionResponse)(implicit
+      request: RequestHeader,
+  ): Future[Result] = {
+    val jsValue = Json.toJson(onwards)
+    val json = Json.stringify(withoutNull(jsValue))
+    post(ws, json, Configuration.rendering.baseURL + "/Onwards", CacheTime.Default)
   }
 
   def getArticle(
