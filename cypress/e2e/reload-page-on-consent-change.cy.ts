@@ -1,18 +1,21 @@
-import { articles, liveblogs } from '../fixtures/pages';
+import { articles } from '../fixtures/pages';
 
-const pages = [articles[0], liveblogs[0]];
+const path = articles[0].path;
 
 describe('Reload page on consent change', () => {
-	pages.forEach(({ path, adTest, expectedMinInlineSlotsOnPage }) => {
-		it(`Test ${path} change from accept all to reject all`, () => {
-			cy.spy(window.location, 'reload')
+	it(`Test ${path} change from accept all to reject all`, () => {
+		cy.visit(path);
 
-			cy.allowAllConsent();
+		cy.intercept(path).as('reload')
 
-			// cy.privacyManagerRejectAllConsent();
+		// allow all consents from the privacy banner
+		cy.allowAllConsent();
 
-			expect(window.location.reload).to.be.called
+		// then reject all from the privacy manager
+		cy.privacyManagerRejectAllConsent();
 
-		});
+		// assert the page has reloaded
+		cy.wait('@reload').its('response.statusCode').should('eq', 200)
+
 	});
 });
