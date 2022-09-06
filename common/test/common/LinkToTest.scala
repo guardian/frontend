@@ -1,7 +1,7 @@
 package common
 
 import org.scalatest.matchers.should.Matchers
-import common.editions.{Au, International, Uk, Us}
+import common.editions.{Au, Europe, International, Uk, Us}
 import org.scalatest.flatspec.AnyFlatSpec
 import test._
 import play.api.test.FakeRequest
@@ -89,6 +89,10 @@ class LinkToTest extends AnyFlatSpec with Matchers with implicits.FakeRequests {
     TheGuardianLinkTo("/", International) should be("https://www.theguardian.com/international")
   }
 
+  it should "correctly editionalise the Europe front" in {
+    TheGuardianLinkTo("/", Europe) should be("https://www.theguardian.com/europe")
+  }
+
   it should "correctly link editionalised sections" in {
     for (edition <- editions) {
       for (section <- edition.editionalisedSections) {
@@ -104,6 +108,13 @@ class LinkToTest extends AnyFlatSpec with Matchers with implicits.FakeRequests {
     // Only the front page is different in the international edition, the others go to UK...
     for (section <- International.editionalisedSections.filterNot(_.isEmpty)) {
       TheGuardianLinkTo(s"/$section", International) should endWith(s"www.theguardian.com/uk/$section")
+    }
+  }
+
+  it should "correctly link editionalised sections to the UK version for the Europe edition" in {
+    // Only the front page is different in the europe edition, the others go to UK...
+    for (section <- Europe.editionalisedSections.filterNot(_.isEmpty)) {
+      TheGuardianLinkTo(s"/$section", Europe) should endWith(s"www.theguardian.com/uk/$section")
     }
   }
 
