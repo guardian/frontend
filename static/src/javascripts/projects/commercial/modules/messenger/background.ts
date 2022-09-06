@@ -88,6 +88,7 @@ const setCtaURL = (
 	ctaURLAnchor.appendChild(backgroundParent);
 	ctaURLAnchor.style.width = '100%';
 	ctaURLAnchor.style.height = '100%';
+	ctaURLAnchor.style.display = 'block';
 	return ctaURLAnchor;
 };
 
