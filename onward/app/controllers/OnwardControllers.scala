@@ -39,6 +39,7 @@ trait OnwardControllers {
   lazy val topStoriesController = wire[TopStoriesController]
   lazy val relatedController = wire[RelatedController]
   lazy val popularInTag = wire[PopularInTag]
+  lazy val popularInTagDCR = wire[PopularInTagDCR]
   lazy val changeEditionController = wire[ChangeEditionController]
   lazy val mediaInSectionController = wire[MediaInSectionController]
   lazy val mostViewedVideoController = wire[MostViewedVideoController]
