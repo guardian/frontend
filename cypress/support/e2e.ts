@@ -29,6 +29,8 @@ declare global {
 
 			rejectAllConsent(): void;
 
+			privacyManagerRejectAllConsent(): void;
+
 			hydrate(): Chainable<JQuery<HTMLElement>>;
 		}
 
