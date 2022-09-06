@@ -17,7 +17,11 @@ trait GetPopularInTagDCR {
 
   def mostReadAgent: MostReadAgent
 
-  def getPopularInTagTrails(edition: Edition, tag: String, excludeTags: Seq[String] = Nil): Future[OnwardCollectionResponse] = {
+  def getPopularInTagTrails(
+      edition: Edition,
+      tag: String,
+      excludeTags: Seq[String] = Nil,
+  ): Future[OnwardCollectionResponse] = {
 
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
