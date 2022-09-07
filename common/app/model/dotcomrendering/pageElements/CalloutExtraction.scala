@@ -3,7 +3,7 @@ package model.dotcomrendering.pageElements
 import org.jsoup.Jsoup
 import play.api.libs.json._
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 sealed trait CalloutFormField
 case class CalloutFormFieldBase(

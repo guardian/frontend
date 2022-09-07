@@ -34,11 +34,9 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
     with BeforeAndAfterEach
     with WithMaterializer
     with WithTestApplicationContext
-    with MockitoSugar {
+    with MockitoSugar
+    with WithTestFrontJsonFapi {
 
-  lazy val actorSystem = ActorSystem()
-  lazy val blockingOperations = new BlockingOperations(actorSystem)
-  lazy val fapi = new TestFrontJsonFapi(blockingOperations)
   lazy val wsClient = mockWsResponse()
 
   lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient)

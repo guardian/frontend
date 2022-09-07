@@ -22,6 +22,7 @@ case class NewsletterResponse(
     cancelled: Boolean,
     emailConfirmation: Boolean,
     group: String,
+    regionFocus: Option[String],
 )
 
 object NewsletterResponse {

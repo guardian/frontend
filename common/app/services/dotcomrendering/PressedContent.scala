@@ -137,6 +137,7 @@ object PressedContent {
     "/us-news/2018/jul/30/black-panthers-prison-interviews-african-american-activism",
     "/us-news/ng-interactive/2018/jul/31/california-fires-wildfires-2018-visual-guide-map",
     "/global-development/ng-interactive/2018/sep/07/women-gorongosa-national-park-healing-scars-of-war-mozambique",
+    "/global-development/ng-interactive/2018/sep/24/our-time-is-now-world-youth-poll-reveals-unexpected-optimism",
     "/world/2018/aug/07/osama-bin-laden-mother-speaks-out-family-interview-in-arabic",
     "/books/ng-interactive/2018/aug/18/barack-obama-reveals-how-letters-from-the-american-people-shaped-his-presidency-interview",
     "/global-development/ng-interactive/2018/aug/20/lost-tribes-1000km-rainforest-mission-amazon-village-brazil",

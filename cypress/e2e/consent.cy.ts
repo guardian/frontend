@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-
 import { articles } from '../fixtures/pages';
 import { fakeLogOut, fakeLogin } from '../lib/util';
 import { AdFreeCookieReasons } from 'lib/manage-ad-free-cookie';
@@ -33,12 +32,12 @@ const reconsent = () => {
 
 	// scrollintoview not working for some reason
 	cy.scrollTo('top');
-	cy.wait(1);
+	cy.wait(100);
 };
 
 const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
 	// wait is an antipattern and unreliable, maybe import onConsentChange and cypressify it?
-	cy.wait(200);
+	cy.wait(300);
 	cy.then(function expectAdFree() {
 		cy.getCookie('GU_AF1').should(
 			reasons.length ? 'not.be.empty' : 'be.null',
@@ -62,15 +61,21 @@ const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
 	});
 };
 
-describe('tcfv2 consent', () => {
+describe.skip('tcfv2 consent', () => {
 	beforeEach(() => {
 		cy.clearCookies();
-		cy.clearLocalStorage();
+		cy.clearLocalStorage().then(() => {
+			cy.log('override geolocation');
+			window.localStorage.setItem(
+				'gu.geo.override',
+				JSON.stringify({ value: 'GB' }),
+			);
+		});
 	});
 
-	const { path, adTest } = articles[0];
+	const { path } = articles[0];
 	it(`Test ${path} hides slots when consent is denied`, () => {
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -93,7 +98,7 @@ describe('tcfv2 consent', () => {
 	});
 
 	it(`Test ${path} shows ad slots when reconsented`, () => {
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -117,7 +122,7 @@ describe('tcfv2 consent', () => {
 	it(`Test ${path} reject all, login as subscriber, log out should not show ads`, () => {
 		fakeLogin(true);
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -138,7 +143,7 @@ describe('tcfv2 consent', () => {
 	it(`Test ${path} reject all, login as non-subscriber, log out should not show ads`, () => {
 		fakeLogin(false);
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -152,7 +157,7 @@ describe('tcfv2 consent', () => {
 	});
 
 	it(`Test ${path} reject all, login as non-subscriber, reconsent should show ads`, () => {
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -182,7 +187,7 @@ describe('tcfv2 consent', () => {
 	it(`Test ${path} accept all, login as subscriber, subscription expires, should show ads`, () => {
 		fakeLogin(true);
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.allowAllConsent();
 
@@ -214,7 +219,7 @@ describe('tcfv2 consent', () => {
 	it(`Test ${path} reject all, login as subscriber, subscription expires, should not show ads`, () => {
 		fakeLogin(true);
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -247,7 +252,7 @@ describe('tcfv2 consent', () => {
 	});
 
 	it(`Test ${path} reject all, cookie/reason expires, cookie should renew expiry and remain`, () => {
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.rejectAllConsent();
 
@@ -291,7 +296,7 @@ describe('tcfv2 consent', () => {
 
 		cy.setCookie('GU_AF1', String(new Date().getTime() + 100000));
 
-		cy.visit(`${path}?adtest=${adTest}`);
+		cy.visit(path);
 
 		cy.allowAllConsent();
 

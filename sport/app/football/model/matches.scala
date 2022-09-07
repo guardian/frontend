@@ -1,5 +1,6 @@
 package football.model
 
+import com.madgag.scala.collection.decorators.MapDecorator
 import football.collections.RichList
 import football.datetime.DateHelpers
 import implicits.Football
@@ -60,7 +61,7 @@ trait MatchesList extends Football with RichList {
       case (d, ms) =>
         val competitionsWithMatches = ms
           .groupBy(_._2)
-          .mapValues(_.map {
+          .mapV(_.map {
             case (matches, _) => matches
           })
           .toList
@@ -126,19 +127,31 @@ case class FixturesList(date: LocalDate, competitions: Seq[Competition]) extends
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isFixture
 }
-case class CompetitionFixturesList(date: LocalDate, competitions: Seq[Competition], competitionId: String)
-    extends Fixtures
+case class CompetitionFixturesList(
+    date: LocalDate,
+    competitions: Seq[Competition],
+    competitionId: String,
+    competitionTag: String,
+) extends Fixtures
     with CompetitionList {
   override val daysToDisplay = 20
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     competition.id == competitionId && fMatch.isFixture
+  override val baseUrl: String = s"/football/$competitionTag/fixtures"
 }
 
-case class TeamFixturesList(date: LocalDate, competitions: Seq[Competition], teamId: String, daysToDisplay: Int = 20)
-    extends Fixtures
+case class TeamFixturesList(
+    date: LocalDate,
+    competitions: Seq[Competition],
+    teamId: String,
+    teamTag: String,
+    daysToDisplay: Int = 20,
+) extends Fixtures
     with TeamList {
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isFixture && fMatch.hasTeam(teamId)
+
+  override val baseUrl: String = s"/football/$teamTag/fixtures"
 }
 
 case class ResultsList(date: LocalDate, competitions: Seq[Competition]) extends Results {

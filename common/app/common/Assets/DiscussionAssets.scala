@@ -1,6 +1,7 @@
 package common.Assets
 
 import app.LifecycleComponent
+import com.madgag.scala.collection.decorators.MapDecorator
 import common.{Box, GuLogging, GuardianConfiguration, JobScheduler}
 import conf.switches.Switches
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -106,7 +107,7 @@ object DiscussionAssetsMap {
   private lazy val agent = Box[Map[String, String]](Map.empty)
 
   def alter(map: Map[String, String], baseURI: URI): Future[Map[String, String]] = {
-    agent.alter(map.mapValues(value => baseURI.resolve(value).toString))
+    agent.alter(map.mapV(value => baseURI.resolve(value).toString))
   }
 
   def getURL(assetName: String): String = {

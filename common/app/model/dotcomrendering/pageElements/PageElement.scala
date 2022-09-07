@@ -23,7 +23,8 @@ import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
 import views.support.{ImgSrc, SrcSet, Video700}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
+import scala.util.Try
 
 // ------------------------------------------------------
 // PageElement Supporting Types and Traits
@@ -800,6 +801,7 @@ object PageElement {
       overrideImage: Option[ImageElement],
       edition: Edition,
       webPublicationDate: DateTime,
+      isLiveblog: Boolean,
   ): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
@@ -847,7 +849,7 @@ object PageElement {
             id,
             element.assets.nonEmpty,
             Role(data.role),
-            containsThirdPartyTracking(element.tracking),
+            containsThirdPartyTracking(element.tracking, isLiveblog),
             data.source,
             data.sourceDomain,
           )
@@ -917,7 +919,7 @@ object PageElement {
           ),
         )
 
-      case Audio => audioToPageElement(element).toList
+      case Audio => audioToPageElement(element, isLiveblog).toList
 
       case Video => {
         def secureVideoHtmlUrls(html: String, element: ApiBlockElement): String = {
@@ -987,7 +989,7 @@ object PageElement {
               Role(element.videoTypeData.flatMap(_.role)),
             ),
           )
-        } else videoToPageElement(element).toList
+        } else videoToPageElement(element, isLiveblog).toList
       }
 
       case Membership =>
@@ -1022,7 +1024,7 @@ object PageElement {
           )
         }).toList
 
-      case Embed => embedToPageElement(element, campaigns, calloutsUrl).toList
+      case Embed => embedToPageElement(element, campaigns, calloutsUrl, isLiveblog).toList
       // This process returns either:
       // 1. SoundcloudBlockElement
       // 2. EmbedBlockElement
@@ -1238,7 +1240,7 @@ object PageElement {
             height <- getIframeHeight(html)
             caption = mapElem.caption.getOrElse("")
             title = mapElem.title.getOrElse("")
-            thirdPartyTracking = containsThirdPartyTracking(element.tracking)
+            thirdPartyTracking = containsThirdPartyTracking(element.tracking, isLiveblog)
           } yield MapBlockElement(
             embedUrl,
             originalUrl,
@@ -1259,7 +1261,7 @@ object PageElement {
               d.html,
               Role(d.role),
               d.attribution,
-              containsThirdPartyTracking(element.tracking),
+              containsThirdPartyTracking(element.tracking, isLiveblog),
               d.source,
               d.sourceDomain,
             ),
@@ -1278,9 +1280,9 @@ object PageElement {
           embedType <- wtd.witnessEmbedType
         } yield {
           embedType match {
-            case "image" => Some(makeWitnessBlockElementImage(element, wtd))
-            case "video" => Some(makeWitnessBlockElementVideo(element, wtd))
-            case "text"  => Some(makeWitnessBlockElementText(element, wtd))
+            case "image" => Some(makeWitnessBlockElementImage(element, wtd, isLiveblog))
+            case "video" => Some(makeWitnessBlockElementVideo(element, wtd, isLiveblog))
+            case "text"  => Some(makeWitnessBlockElementText(element, wtd, isLiveblog))
             case _       => None
           }
 
@@ -1296,7 +1298,7 @@ object PageElement {
               d.height,
               d.title,
               d.isMandatory,
-              containsThirdPartyTracking(element.tracking),
+              containsThirdPartyTracking(element.tracking, isLiveblog),
               d.source,
               d.sourceDomain,
             ),
@@ -1309,7 +1311,7 @@ object PageElement {
               d.originalUrl,
               d.html,
               d.caption.isDefined,
-              containsThirdPartyTracking(element.tracking),
+              containsThirdPartyTracking(element.tracking, isLiveblog),
               Some(d.source),
               d.sourceDomain,
             ),
@@ -1327,7 +1329,7 @@ object PageElement {
             getIframeWidth(html).getOrElse(0),
             fields.originalUrl,
             fields.title,
-            containsThirdPartyTracking(element.tracking),
+            containsThirdPartyTracking(element.tracking, isLiveblog),
             Some(fields.source),
             fields.sourceDomain,
             fields.role,
@@ -1366,7 +1368,11 @@ object PageElement {
     )
   }.toSeq
 
-  private def makeWitnessBlockElementImage(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
+  private def makeWitnessBlockElementImage(
+      element: ApiBlockElement,
+      wtd: WitnessElementFields,
+      isLiveblog: Boolean,
+  ): WitnessBlockElement = {
     WitnessBlockElement(
       assets = makeWitnessAssets(element),
       witnessTypeData = WitnessTypeDataImage(
@@ -1388,13 +1394,17 @@ object PageElement {
         photographer = wtd.photographer,
         dateCreated = wtd.dateCreated.map(date => date.iso8601),
       ),
-      containsThirdPartyTracking(element.tracking),
+      containsThirdPartyTracking(element.tracking, isLiveblog),
       wtd.source,
       wtd.sourceDomain,
     )
   }
 
-  private def makeWitnessBlockElementVideo(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
+  private def makeWitnessBlockElementVideo(
+      element: ApiBlockElement,
+      wtd: WitnessElementFields,
+      isLiveblog: Boolean,
+  ): WitnessBlockElement = {
     WitnessBlockElement(
       assets = makeWitnessAssets(element),
       witnessTypeData = WitnessTypeDataVideo(
@@ -1421,13 +1431,17 @@ object PageElement {
         youtubeAuthorName = wtd.youtubeAuthorName,
         youtubeHtml = wtd.youtubeHtml,
       ),
-      containsThirdPartyTracking(element.tracking),
+      containsThirdPartyTracking(element.tracking, isLiveblog),
       wtd.source,
       wtd.sourceDomain,
     )
   }
 
-  private def makeWitnessBlockElementText(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
+  private def makeWitnessBlockElementText(
+      element: ApiBlockElement,
+      wtd: WitnessElementFields,
+      isLiveblog: Boolean,
+  ): WitnessBlockElement = {
     WitnessBlockElement(
       assets = makeWitnessAssets(element),
       witnessTypeData = WitnessTypeDataText(
@@ -1445,7 +1459,7 @@ object PageElement {
         apiUrl = wtd.apiUrl,
         dateCreated = wtd.dateCreated.map(date => date.iso8601),
       ),
-      containsThirdPartyTracking(element.tracking),
+      containsThirdPartyTracking(element.tracking, isLiveblog),
       wtd.source,
       wtd.sourceDomain,
     )
@@ -1456,14 +1470,26 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
-  private[this] def getIframeWidth(html: String): Option[Int] = {
+  private[this] def getIframeWidth(html: String, fallback: Int = 0): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("width").toInt)
+
+    doc
+      .getElementsByTag("iframe")
+      .asScala
+      .headOption
+      .map(_.attr("width"))
+      .map(attr => Try(attr.toInt).getOrElse(fallback))
   }
 
-  private[this] def getIframeHeight(html: String): Option[Int] = {
+  private[this] def getIframeHeight(html: String, fallback: Int = 0): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("height").toInt)
+
+    doc
+      .getElementsByTag("iframe")
+      .asScala
+      .headOption
+      .map(_.attr("height"))
+      .map(attr => Try(attr.toInt).getOrElse(fallback))
   }
 
   private def extractSoundcloudBlockElement(
@@ -1546,8 +1572,8 @@ object PageElement {
     } yield {
       SpotifyBlockElement(
         getEmbedUrl(d.html),
-        getIframeHeight(html),
-        getIframeWidth(html),
+        getIframeHeight(html, fallback = 540),
+        getIframeWidth(html, fallback = 460),
         d.title,
         d.caption,
         thirdPartyTracking,
@@ -1558,12 +1584,12 @@ object PageElement {
     }
   }
 
-  private def audioToPageElement(element: ApiBlockElement) = {
+  private def audioToPageElement(element: ApiBlockElement, isLiveblog: Boolean) = {
     for {
       d <- element.audioTypeData
       html <- d.html
       mandatory = true
-      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
+      thirdPartyTracking = containsThirdPartyTracking(element.tracking, isLiveblog)
     } yield {
       /*
         comment id: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
@@ -1616,12 +1642,13 @@ object PageElement {
       element: ApiBlockElement,
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
+      isLiveblog: Boolean,
   ): Option[PageElement] = {
     for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
-      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
+      thirdPartyTracking = containsThirdPartyTracking(element.tracking, isLiveblog)
     } yield {
       extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse {
         CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
@@ -1659,7 +1686,7 @@ object PageElement {
     }
   }
 
-  private def videoToPageElement(element: ApiBlockElement): Option[PageElement] = {
+  private def videoToPageElement(element: ApiBlockElement, isLiveblog: Boolean): Option[PageElement] = {
     for {
       data <- element.videoTypeData
       source <- data.source
@@ -1669,7 +1696,7 @@ object PageElement {
       height <- data.height
       width <- data.width
       url = data.url.getOrElse(originalUrl)
-      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
+      thirdPartyTracking = containsThirdPartyTracking(element.tracking, isLiveblog)
     } yield {
       source.toLowerCase match {
         case "youtube" =>
@@ -1731,7 +1758,14 @@ object PageElement {
     }
   }
 
-  private[pageElements] def containsThirdPartyTracking(embedTracking: Option[EmbedTracking]): Boolean = {
+  private[pageElements] def containsThirdPartyTracking(
+      embedTracking: Option[EmbedTracking],
+      isLiveblog: Boolean,
+  ): Boolean = {
+    if (isLiveblog) {
+      return true
+    }
+
     embedTracking.map(_.tracks) match {
       case Some(DoesNotTrack) => false
       case None               => false

@@ -4,6 +4,7 @@ import java.time.ZoneOffset
 import com.gu.contentapi.client.model.v1.{Content, ItemResponse, Section, Tag, TagType}
 import org.joda.time.DateTime
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.EitherValues
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import test.{TestRequest, WithTestExecutionContext}
@@ -15,7 +16,7 @@ import scala.concurrent.Future
 
 private object TestModel
 
-class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecutionContext {
+class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecutionContext with EitherValues {
 
   val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 
@@ -94,7 +95,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testArticle)),
-      ).right.get
+      ).value
     }
 
     status(notFound) should be(200)
@@ -106,7 +107,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testVideo)),
-      ).right.get
+      ).value
     }
 
     status(notFound) should be(200)
@@ -118,7 +119,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testGallery)),
-      ).right.get
+      ).value
     }
 
     status(notFound) should be(200)
@@ -130,7 +131,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testAudio)),
-      ).right.get
+      ).value
     }
 
     status(notFound) should be(200)
@@ -142,7 +143,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testContent)),
-      ).right.get
+      ).value
     }
 
     status(notFound) should be(404)
@@ -153,7 +154,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(tag = Some(articleTag)),
-      ).right.get
+      ).value
     }
 
     status(notFound) should be(200)
@@ -167,7 +168,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(section = Some(testSection)),
-      ).right.get
+      ).value
     }
 
     status(notFound) should be(200)

@@ -5,7 +5,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
 import conf.Configuration
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 abstract class HtmlCleaner extends GuLogging {
   lazy val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
@@ -197,7 +197,7 @@ abstract class HtmlCleaner extends GuLogging {
   }
 
   private def secureSource(src: String): String = {
-    src.replaceAllLiterally("http://", "//")
+    src.replace("http://", "//")
   }
 
 }

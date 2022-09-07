@@ -10,7 +10,7 @@ import common.GuLogging
 import conf.{AdminConfiguration, Configuration}
 import dfp.Reader.read
 import dfp.SessionLogger.{logAroundCreate, logAroundPerform, logAroundRead, logAroundReadSingle}
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 import scala.util.control.NonFatal
 

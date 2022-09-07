@@ -7,11 +7,10 @@ const liveblogs: Page[] = [
 	{
 		path: getTestUrl(
 			stage,
-			'/politics/live/2022/jan/31/uk-politics-live-omicron-nhs-workers-coronavirus-vaccines-no-10-sue-gray-report',
+			'/politics/live/2022/jan/31/uk-politics-live-omicron-nhs-workers-coronavirus-vaccines-no-10-sue-gray-report?live=true',
 			{ isDcr: true },
 		),
 		expectedMinInlineSlotsOnPage: 4,
-		adTest: 'fixed-puppies',
 	},
 ];
 

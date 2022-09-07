@@ -4,6 +4,7 @@ package dfp
 // https://developers.google.com/ad-manager/api/pqlreference
 import com.google.api.ads.admanager.axis.utils.v202108.StatementBuilder
 import com.google.api.ads.admanager.axis.v202108._
+import com.madgag.scala.collection.decorators.MapDecorator
 import common.GuLogging
 import common.dfp._
 import org.joda.time.DateTime
@@ -31,7 +32,7 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
     // item, potentially making one API call per lineitem.
     val validatedLineItems = lineItems
       .groupBy(Function.tupled(dataValidation.isGuLineItemValid))
-      .mapValues(_.map(_._1))
+      .mapV(_.map(_._1))
 
     DfpLineItems(
       validItems = validatedLineItems.getOrElse(true, Nil),

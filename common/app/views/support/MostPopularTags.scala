@@ -5,7 +5,7 @@ import model.Tag
 import model.pressed.PressedContent
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
-object MostPopularTags extends implicits.Collections {
+object MostPopularTags {
 
   /** A descending list of the tags that occur most frequently within the given items of content and how frequently
     * they occur

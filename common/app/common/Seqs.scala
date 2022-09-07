@@ -1,8 +1,10 @@
 package common
 
+import com.madgag.scala.collection.decorators.MapDecorator
+
 object Seqs {
   implicit class RichSeq[A](as: Seq[A]) {
-    def frequencies: Map[A, Int] = as.groupBy(identity).mapValues(_.length)
+    def frequencies: Map[A, Int] = as.groupBy(identity).mapV(_.length)
 
     def isDescending(implicit ordering: Ordering[A]): Boolean = as == reverseSorted
 
