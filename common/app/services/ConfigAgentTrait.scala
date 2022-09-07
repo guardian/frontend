@@ -5,6 +5,7 @@ import app.LifecycleComponent
 import com.gu.facia.api.models.{Front, _}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
+import com.madgag.scala.collection.decorators.MapDecorator
 import common._
 import conf.Configuration
 import fronts.FrontsApi
@@ -68,7 +69,7 @@ object ConfigAgent extends GuLogging {
 
   def getConfigCollectionMap: Map[String, Seq[String]] = {
     val config = configAgent.get()
-    config.map(_.fronts.mapValues(_.collections)).getOrElse(Map.empty)
+    config.map(_.fronts.mapV(_.collections)).getOrElse(Map.empty)
   }
 
   def getConfigsUsingCollectionId(id: String): Seq[String] = {
@@ -80,7 +81,9 @@ object ConfigAgent extends GuLogging {
   def getCanonicalIdForFront(frontId: String): Option[String] = {
     val config = configAgent.get()
     val canonicalCollectionMap =
-      config.map(_.fronts.mapValues(front => front.canonical.orElse(front.collections.headOption))).getOrElse(Map.empty)
+      config
+        .map(_.fronts.mapV(front => front.canonical.orElse(front.collections.headOption)))
+        .getOrElse(Map.empty)
 
     canonicalCollectionMap.get(frontId).flatten
   }

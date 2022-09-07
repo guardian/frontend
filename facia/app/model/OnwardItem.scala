@@ -3,12 +3,12 @@ package model
 import model.facia.PressedCollection
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
-import model.dotcomrendering.OnwardItem
+import model.dotcomrendering.{Trail => DCRTrail}
 
 case class OnwardCollection(
     displayName: String,
     heading: String,
-    trails: List[OnwardItem],
+    trails: List[DCRTrail],
 )
 
 object OnwardCollection {
@@ -20,7 +20,7 @@ object OnwardCollection {
   )(implicit request: RequestHeader): OnwardCollection = {
     val trails = collection.curatedPlusBackfillDeduplicated
       .take(10)
-      .map(pressed => OnwardItem.pressedContentToOnwardItem(pressed))
+      .map(DCRTrail.pressedContentToTrail)
 
     OnwardCollection(
       displayName = collection.displayName,

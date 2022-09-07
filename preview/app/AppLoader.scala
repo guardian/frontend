@@ -11,7 +11,6 @@ import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
 import contentapi._
 import controllers._
-import controllers.front.FrontJsonFapiDraft
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import dev.DevAssetsController
@@ -29,6 +28,7 @@ import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
+import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
 

@@ -4,7 +4,7 @@ import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{DoNotDiscover, GivenWhenThen}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 @DoNotDiscover class MatchFeatureTest extends AnyFeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 

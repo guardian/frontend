@@ -2,7 +2,7 @@ package experiments
 
 import play.api.libs.typedmap.TypedKey
 import play.api.mvc.RequestHeader
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import java.util.concurrent.ConcurrentHashMap
 
 object LookedAtExperiments {

@@ -26,7 +26,8 @@ GET        /most-read.json                            controllers.MostPopularCon
 GET        /most-read/*path.json                      controllers.MostPopularController.render(path)
 GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
 GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDay(countryCode)
-
+# Deeply read experiment
+GET        /most-read-with-deeply-read.json          controllers.MostPopularController.renderWithDeeplyRead()
 
 GET        /top-stories.json                          controllers.TopStoriesController.renderTopStories()
 GET        /top-stories/trails.json                   controllers.TopStoriesController.renderTrails()

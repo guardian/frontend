@@ -5,7 +5,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.{DoNotDiscover, GivenWhenThen}
 import test.ConfiguredTestSuite
 
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 @DoNotDiscover class CombinerFeatureTest
     extends AnyFeatureSpec

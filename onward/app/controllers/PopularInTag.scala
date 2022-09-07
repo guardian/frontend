@@ -6,7 +6,7 @@ import containers.Containers
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
-import model.dotcomrendering.{OnwardItem, OnwardCollectionResponse}
+import model.dotcomrendering.{Trail, OnwardCollectionResponse}
 import play.api.mvc._
 import services._
 
@@ -43,7 +43,7 @@ class PopularInTag(
         JsonComponent.fromWritable(
           OnwardCollectionResponse(
             heading = "Related content",
-            trails = trails.items.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(numberOfCards),
+            trails = trails.items.map(_.faciaContent).map(Trail.pressedContentToTrail).take(numberOfCards),
           ),
         )
       } else {

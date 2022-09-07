@@ -1,4 +1,5 @@
 import { loadScript } from '@guardian/libs';
+import { buildPageParameters } from './build-page-parameters';
 
 function initConsentless(): Promise<void> {
 	// Stub the command queue
@@ -14,6 +15,13 @@ function initConsentless(): Promise<void> {
 			onlyNoConsent: 1,
 		});
 		window.ootag.addParameter('test', 'yes');
+
+		Object.entries(buildPageParameters()).forEach(([key, value]) => {
+			if (!value) {
+				return;
+			}
+			window.ootag.addParameter(key, value);
+		});
 	});
 
 	// TODO this seems to be safeframeless version. Ask OptOut how we can use safeframes.

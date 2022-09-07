@@ -8,7 +8,7 @@ import conf.Configuration
 import conf.Configuration._
 import metrics.{FrontendMetric, FrontendStatisticSet}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 trait CloudWatch extends GuLogging {
 

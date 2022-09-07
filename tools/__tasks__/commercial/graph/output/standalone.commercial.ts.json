@@ -129,7 +129,12 @@
   "../lib/config.d.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/consentless/define-slot.ts": [],
+ "../projects/commercial/modules/consentless/build-page-parameters.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
+ "../projects/commercial/modules/consentless/define-slot.ts": [
+  "../projects/commercial/modules/dfp/render-advert-label.ts"
+ ],
  "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect-viewport.ts",
@@ -141,11 +146,24 @@
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
+ "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/fastdom-promise.js",
+  "../lib/url.ts",
+  "../projects/commercial/modules/consentless/define-slot.ts",
+  "../projects/common/modules/article/space-filler.ts",
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder.ts"
+ ],
  "../projects/commercial/modules/consentless/init-fixed-slots.ts": [
   "../projects/commercial/modules/consentless/define-slot.ts"
  ],
- "../projects/commercial/modules/consentless/prepare-ootag.ts": [
+ "../projects/commercial/modules/consentless/init-safeframes.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
+ "../projects/commercial/modules/consentless/prepare-ootag.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../projects/commercial/modules/consentless/build-page-parameters.ts"
  ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
@@ -226,6 +244,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/lazy-load.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -291,7 +310,7 @@
   "../projects/commercial/modules/dfp/on-slot-viewable.ts",
   "../projects/commercial/modules/dfp/refresh-on-resize.ts",
   "../projects/commercial/modules/messenger.ts",
-  "../projects/commercial/modules/messenger/background.js",
+  "../projects/commercial/modules/messenger/background.ts",
   "../projects/commercial/modules/messenger/click.ts",
   "../projects/commercial/modules/messenger/disable-refresh.ts",
   "../projects/commercial/modules/messenger/get-page-targeting.ts",
@@ -461,11 +480,12 @@
   "../lib/report-error.js",
   "../projects/commercial/modules/messenger/post-message.ts"
  ],
- "../projects/commercial/modules/messenger/background.js": [
-  "../lib/config.js",
-  "../lib/events.ts",
+ "../projects/commercial/modules/messenger/background.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/@types/lodash-es/once.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/render-advert-label.ts"
+  "../projects/commercial/modules/dfp/render-advert-label.ts",
+  "../projects/commercial/modules/messenger.ts"
  ],
  "../projects/commercial/modules/messenger/click.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -721,13 +741,15 @@
  "../projects/common/modules/identity/auth-component-event-params.js": [
   "../lib/url.ts"
  ],
- "../projects/common/modules/spacefinder-debug-tools.js": [],
+ "../projects/common/modules/spacefinder-debug-tools.ts": [
+  "../projects/common/modules/spacefinder.ts"
+ ],
  "../projects/common/modules/spacefinder.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/am-i-used.ts",
-  "../projects/common/modules/spacefinder-debug-tools.js"
+  "../projects/common/modules/spacefinder-debug-tools.ts"
  ],
  "../projects/common/modules/ui/sticky.js": [
   "../../../../node_modules/fastdom/fastdom.js",
@@ -744,6 +766,7 @@
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/manage-ad-free-cookie.ts",
   "../lib/report-error.js",
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
@@ -754,7 +777,9 @@
   "../projects/commercial/modules/comment-adverts.ts",
   "../projects/commercial/modules/comscore.ts",
   "../projects/commercial/modules/consentless/dynamic/article-inline.ts",
+  "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts",
   "../projects/commercial/modules/consentless/init-fixed-slots.ts",
+  "../projects/commercial/modules/consentless/init-safeframes.ts",
   "../projects/commercial/modules/consentless/prepare-ootag.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.ts",

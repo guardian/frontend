@@ -1,11 +1,10 @@
 package football.model
 
 import pa.{Season, Team}
-import implicits.Collections
 
 import java.time.ZoneId
 
-object PA extends Collections {
+object PA {
 
   val competitionNames = Map[String, String](
     ("100", "Premier League"),

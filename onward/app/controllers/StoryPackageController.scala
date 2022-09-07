@@ -4,7 +4,7 @@ import common._
 import containers.Containers
 import contentapi.ContentApiClient
 import model._
-import model.dotcomrendering.{OnwardItem, OnwardCollectionResponse}
+import model.dotcomrendering.{Trail, OnwardCollectionResponse}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
@@ -33,7 +33,7 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
         val json = JsonComponent.fromWritable(
           OnwardCollectionResponse(
             heading = "More on this story",
-            trails = items.map(_.faciaContent).map(OnwardItem.pressedContentToOnwardItem).take(10),
+            trails = items.map(_.faciaContent).map(Trail.pressedContentToTrail).take(10),
           ),
         )
         Cached(5.minutes)(json)

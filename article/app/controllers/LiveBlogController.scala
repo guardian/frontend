@@ -196,6 +196,7 @@ class LiveBlogController(
                 newsletter = None,
                 topicResult,
                 mostPopular = Some(mostPopular),
+                onwards = None,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)

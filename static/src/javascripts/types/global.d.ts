@@ -99,6 +99,7 @@ interface PageConfig extends CommercialPageConfig {
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
 	isImmersive?: boolean;
+	isLiveBlog?: boolean;
 	isPaidContent: boolean;
 	isProd: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala
 	isSensitive: boolean;
@@ -254,6 +255,48 @@ interface OptOutDefineSlotOptions {
 	emptyCallback?: () => void;
 }
 
+/**
+ * Describes the configuration options for the Safeframe host API
+ *
+ * Currently typed as `unknown` since we do not consume it ourselves
+ */
+type SafeFrameAPIHostConfig = unknown;
+
+/**
+ * Types for the IAB Safeframe API
+ *
+ * Note this type definition is incomplete.
+ * These types can be refined as/when they are required
+ */
+interface SafeFrameAPI {
+	ver: string;
+	specVersion: string;
+	lib: {
+		lang: Record<string, unknown>;
+		dom: {
+			iframes: Record<string, unknown>;
+			msghost: Record<string, unknown>;
+		};
+		logger: Record<string, unknown>;
+	};
+	env: {
+		isIE: boolean;
+		ua: Record<string, unknown>;
+	};
+	info: {
+		errs: unknown[];
+		list: unknown[];
+	};
+	host: {
+		Config: {
+			new (o: {
+				renderFile: string;
+				positions: Record<string, unknown>;
+			}): SafeFrameAPIHostConfig;
+		};
+	};
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -280,4 +323,10 @@ interface Window {
 	apstag?: Apstag;
 	_comscore?: ComscoreGlobals[];
 	__iasPET?: IasPET;
+
+	// https://www.iab.com/wp-content/uploads/2014/08/SafeFrames_v1.1_final.pdf
+	$sf: SafeFrameAPI;
+
+	// Safeframe API host config required by Opt Out tag
+	conf: SafeFrameAPIHostConfig;
 }

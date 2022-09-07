@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.254"
   val awsVersion = "1.12.205"
-  val capiVersion = "19.0.3"
+  val capiVersion = "19.0.4"
   val faciaVersion = "4.0.1"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -52,6 +52,7 @@ object Dependencies {
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.16.0" % Test
+  val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "0.11"
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.30.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.2.11" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test

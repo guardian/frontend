@@ -9,7 +9,7 @@ import org.w3c.css.sac.InputSource
 import org.w3c.dom.css.{CSSRuleList, CSSRule => W3CSSRule}
 import play.twirl.api.Html
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.collection.immutable.ListMap
 import scala.util.{Failure, Success}
 
