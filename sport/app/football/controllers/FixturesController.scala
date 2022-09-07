@@ -28,7 +28,7 @@ class FixturesController(
     renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezoneId))
 
   def moreFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
-    renderMoreFixtures(createDate(year, month, day))
+    renderMoreFixtures(fixtures(createDate(year, month, day)))
 
   def moreFixturesForJson(year: String, month: String, day: String): Action[AnyContent] =
     moreFixturesFor(year, month, day)
@@ -38,10 +38,18 @@ class FixturesController(
       renderMatchList(page, fixtures(date), filters)
     }
 
-  private def renderMoreFixtures(date: LocalDate): Action[AnyContent] =
+  private def renderMoreFixtures(fixtures: Fixtures): Action[AnyContent] =
     Action { implicit request =>
-      renderMoreMatches(page, fixtures(date), filters)
+      renderMoreMatches(page, fixtures, filters)
     }
+
+  def moreTagFixturesForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
+    moreTagFixturesFor(year, month, day, tag)
+
+  def moreTagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
+    getTagFixtures(createDate(year, month, day), tag)
+      .map(result => renderMoreFixtures(result._2))
+      .getOrElse(Action(NotFound))
 
   def tagFixturesJson(tag: String): Action[AnyContent] = tagFixtures(tag)
   def tagFixtures(tag: String): Action[AnyContent] =
@@ -52,53 +60,34 @@ class FixturesController(
   def tagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     renderTagFixtures(createDate(year, month, day), tag)
 
-  private def renderTagFixtures(date: LocalDate, tag: String): Action[AnyContent] = {
+  private def getTagFixtures(date: LocalDate, tag: String): Option[(FootballPage, Fixtures)] = {
     lookupCompetition(tag)
-      .map { comp =>
-        renderCompetitionFixtures(tag, comp, date)
-      }
+      .map(comp =>
+        (
+          new FootballPage(s"football/$tag/fixtures", "football", s"${comp.fullName} fixtures"),
+          CompetitionFixturesList(date, competitionsService.competitions, comp.id, tag),
+        ),
+      )
       .orElse {
-        lookupTeam(tag).map(renderTeamFixtures(tag, _, date))
-      }
-      .getOrElse {
-        Action(NotFound)
+        lookupTeam(tag).map(team =>
+          (
+            new FootballPage(s"football/$tag/fixtures", "football", s"${team.name} fixtures"),
+            TeamFixturesList(date, competitionsService.competitions, team.id, tag),
+          ),
+        )
       }
   }
 
-  private def renderCompetitionFixtures(
-      competitionName: String,
-      competition: Competition,
-      date: LocalDate,
-  ): Action[AnyContent] =
-    Action { implicit request =>
-      val fixtures = CompetitionFixturesList(date, competitionsService.competitions, competition.id)
-      val page =
-        new FootballPage(s"football/$competitionName/fixtures", "football", s"${competition.fullName} fixtures")
-      renderMatchList(page, fixtures, filters)
-    }
-
-  private def renderTeamFixtures(teamName: String, team: FootballTeam, date: LocalDate): Action[AnyContent] =
-    Action { implicit request =>
-      val fixtures = TeamFixturesList(date, competitionsService.competitions, team.id)
-      val page = new FootballPage(s"football/$teamName/fixtures", "football", s"${team.name} fixtures")
-      renderMatchList(page, fixtures, filters)
-    }
-
-  def teamFixturesComponentJson(teamId: String): Action[AnyContent] = teamFixturesComponent(teamId)
-  def teamFixturesComponent(teamId: String): Action[AnyContent] =
-    Action { implicit request =>
-      competitionsService
-        .findTeam(teamId)
-        .map { team =>
-          val now = LocalDate.now(Edition.defaultEdition.timezoneId)
-          val fixtures = TeamFixturesList(now, competitionsService.competitions, teamId)
-          val page = new FootballPage(
-            s"football/${team.id}/fixtures",
-            "football",
-            s"${team.name} fixtures",
+  private def renderTagFixtures(date: LocalDate, tag: String): Action[AnyContent] =
+    getTagFixtures(date, tag)
+      .map(result =>
+        Action { implicit request =>
+          renderMatchList(
+            result._1,
+            result._2,
+            filters,
           )
-          renderMatchList(page, fixtures, filters)
-        }
-        .getOrElse(NotFound)
-    }
+        },
+      )
+      .getOrElse(Action(NotFound))
 }
