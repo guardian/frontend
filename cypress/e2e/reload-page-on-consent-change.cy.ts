@@ -33,4 +33,20 @@ describe('Reload page on consent change', () => {
 		// assert the page has reloaded
 		cy.wait('@reload').its('response.statusCode').should('eq', 200)
 	});
+
+
+	it(`Test ${path} no change in consent means page doesn't reload`, () => {
+		cy.visit(path);
+
+		cy.intercept(path, cy.spy().as('reload'));
+
+		// reject all consents from the privacy banner
+		cy.rejectAllConsent();
+
+		// then reject all again from the privacy manager
+		cy.privacyManagerRejectAllConsent();
+
+		// assert the page has not reloaded
+		cy.get('@reload').should('not.have.been.called');
+	});
 });
