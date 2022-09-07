@@ -2,8 +2,7 @@ package jobs
 
 import app.LifecycleComponent
 import conf.Configuration
-import navigation.{EditionNavLinks, NavLink, NavigationData}
-import play.api.libs.json.{JsValue, Json}
+import navigation.NavigationData
 import services.S3
 
 import scala.concurrent.ExecutionContext
@@ -21,15 +20,9 @@ class StoreNavigationLifecycleComponent(implicit executionContext: ExecutionCont
       return
     }
 
-    implicit val navlinkWrites = Json.writes[NavLink]
-    implicit val editionNavLinksWrites = Json.writes[EditionNavLinks]
-    implicit val navlinksInterfaceWrites = Json.writes[NavigationData]
-
-    val nav: JsValue = Json.toJson(NavigationData())
-
     S3.putPrivate(
       key = s"${Configuration.environment.stage}/navigation.json",
-      value = nav.toString(),
+      value = NavigationData.nav.toString(),
       contentType = "application/json",
     )
 

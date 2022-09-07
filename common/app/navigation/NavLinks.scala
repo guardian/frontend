@@ -1,5 +1,7 @@
 package navigation
 
+import play.api.libs.json.{JsValue, Json}
+
 private object NavLinks {
 
   /* NEWS */
@@ -722,6 +724,14 @@ case class EditionNavLinks(
     otherLinks: List[NavLink],
     brandExtensions: List[NavLink],
 )
+
+object NavigationData {
+  implicit val navlinkWrites = Json.writes[NavLink]
+  implicit val editionNavLinksWrites = Json.writes[EditionNavLinks]
+  implicit val navlinksInterfaceWrites = Json.writes[NavigationData]
+
+  val nav: JsValue = Json.toJson(NavigationData())
+}
 
 case class NavigationData(
     uk: EditionNavLinks = EditionNavLinks(
