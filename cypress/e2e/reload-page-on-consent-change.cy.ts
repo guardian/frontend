@@ -18,4 +18,19 @@ describe('Reload page on consent change', () => {
 		cy.wait('@reload').its('response.statusCode').should('eq', 200)
 
 	});
+
+	it(`Test ${path} change from reject all to accept all`, () => {
+		cy.visit(path);
+
+		cy.intercept(path).as('reload')
+
+		// reject all consents from the privacy banner
+		cy.rejectAllConsent();
+
+		// then accept all from the privacy manager
+		cy.privacyManagerAllowAllConsent();
+
+		// assert the page has reloaded
+		cy.wait('@reload').its('response.statusCode').should('eq', 200)
+	});
 });

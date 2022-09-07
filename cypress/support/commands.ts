@@ -27,9 +27,16 @@ Cypress.Commands.add('findAdSlotIframeBySlotId', (adSlotId: string) => {
 	cy.get(`#${adSlotId}`).find('iframe', { timeout: 30000 });
 });
 
-const allowAll = 'Yes, I’m happy';
+const allowAllBanner = 'Yes, I’m happy';
+const allowAllPrivacyManager = 'Accept all';
 const manageConsent = 'Manage my cookies';
 const rejectAll = 'Reject all';
+
+Cypress.Commands.add('allowAllConsent', () => {
+	cy.getIframeBody('sp_message_iframe_')
+		.find(`button[title="${allowAllBanner}"]`, { timeout: 30000 })
+		.click();
+});
 
 Cypress.Commands.add('rejectAllConsent', () => {
 	cy.getIframeBody('sp_message_iframe_')
@@ -41,18 +48,21 @@ Cypress.Commands.add('rejectAllConsent', () => {
 		.click();
 });
 
+Cypress.Commands.add('privacyManagerAllowAllConsent', () => {
+	cy.get(`[data-link-name='privacy-settings']`)
+		.click();
+
+	cy.getIframeBody('iframe[title="SP Consent Message"]')
+		.find(`button[title="${allowAllPrivacyManager}"]`, { timeout: 30000 })
+		.click();
+});
+
 Cypress.Commands.add('privacyManagerRejectAllConsent', () => {
 	cy.get(`[data-link-name='privacy-settings']`)
 		.click();
 
 	cy.getIframeBody('iframe[title="SP Consent Message"]')
 		.find(`button[title="${rejectAll}"]`, { timeout: 30000 })
-		.click();
-});
-
-Cypress.Commands.add('allowAllConsent', () => {
-	cy.getIframeBody('sp_message_iframe_')
-		.find(`button[title="${allowAll}"]`, { timeout: 30000 })
 		.click();
 });
 
