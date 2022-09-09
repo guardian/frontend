@@ -23,7 +23,7 @@ import services.SkimLinksCache
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.Commercial.isAdFree
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.collection.mutable
 import scala.util.Try
 

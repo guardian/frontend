@@ -5,7 +5,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.DoNotDiscover
 import org.scalatest.matchers.should.Matchers
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 @DoNotDiscover class GalleryTemplateTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
 

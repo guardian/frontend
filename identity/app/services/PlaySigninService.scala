@@ -14,7 +14,7 @@ class PlaySigninService(conf: IdentityConfiguration) extends SafeLogging {
       executionContext: ExecutionContext,
   ): Future[Response[List[Cookie]]] = {
     cookiesResponse map {
-      _.right.map(getCookies(_, rememberMe))
+      _.map(getCookies(_, rememberMe))
     }
   }
 

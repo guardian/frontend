@@ -4,7 +4,7 @@ import java.util.{List => JList}
 import org.scalatest.Suites
 import services.{FacebookGraphApiTest, IndexPageTest, InteractivePickerTest, NewspaperControllerTest}
 
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 object `package` {
 

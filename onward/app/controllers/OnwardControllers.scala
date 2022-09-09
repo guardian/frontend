@@ -10,6 +10,7 @@ import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import weather.WeatherApi
+import agents.DeeplyReadAgent
 
 trait OnwardControllers {
 
@@ -21,6 +22,7 @@ trait OnwardControllers {
   def geoMostPopularAgent: GeoMostPopularAgent
   def dayMostPopularAgent: DayMostPopularAgent
   def mostPopularAgent: MostPopularAgent
+  def deeplyReadAgent: DeeplyReadAgent
   def mostReadAgent: MostReadAgent
   def mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh
   def mostViewedVideoAgent: MostViewedVideoAgent

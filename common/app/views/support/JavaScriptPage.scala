@@ -1,6 +1,7 @@
 package views.support
 
 import com.gu.commercial.display.AdTargetParam.toMap
+import com.madgag.scala.collection.decorators.MapDecorator
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
@@ -26,7 +27,7 @@ object JavaScriptPage {
       CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
     }
 
-    val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
+    val config = (Configuration.javascript.config ++ pageData).mapV(JsString.apply)
     val sponsorshipType = for {
       commercial <- page.metadata.commercial
       branding <- commercial.branding(edition)
@@ -100,5 +101,5 @@ object JavaScriptPage {
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
     ) ++ commercialBundleUrl
-  }
+  }.toMap
 }

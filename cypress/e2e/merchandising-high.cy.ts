@@ -7,7 +7,7 @@ describe('merchandising-high slot on pages', () => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
 				cy.viewport(width, 800);
 
-				cy.visit(`${path}?adtest=${adTest}`);
+				cy.visit(path);
 
 				cy.allowAllConsent();
 

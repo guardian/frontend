@@ -5,7 +5,7 @@ describe('mostpop slot on pages', () => {
 	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
 		breakpoints.forEach(({ breakpoint }) => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
-				cy.visit(`${path}?adtest=${adTest}`);
+				cy.visit(path);
 
 				cy.allowAllConsent();
 

@@ -24,6 +24,7 @@ import weather.WeatherApi
 import _root_.commercial.targeting.TargetingLifecycle
 
 import scala.concurrent.ExecutionContext
+import agents.DeeplyReadAgent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -49,6 +50,7 @@ trait OnwardServices {
   lazy val mostViewedAudioAgent = wire[MostViewedAudioAgent]
   lazy val mostViewedGalleryAgent = wire[MostViewedGalleryAgent]
   lazy val mostViewedVideoAgent = wire[MostViewedVideoAgent]
+  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
 }
 
 trait AppComponents extends FrontendComponents with OnwardControllers with OnwardServices {

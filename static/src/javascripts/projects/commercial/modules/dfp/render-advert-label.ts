@@ -110,6 +110,7 @@ export const renderStickyScrollForMoreLabel = (
 		const scrollForMoreLabel = document.createElement('div');
 		scrollForMoreLabel.classList.add('ad-slot__scroll');
 		scrollForMoreLabel.innerHTML = 'Scroll for More';
+		scrollForMoreLabel.setAttribute('role', 'button');
 		scrollForMoreLabel.onclick = (event) => {
 			adSlotNode.scrollIntoView({
 				behavior: 'smooth',

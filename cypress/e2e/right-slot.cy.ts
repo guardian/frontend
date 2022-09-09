@@ -7,7 +7,7 @@ describe('right slot on pages', () => {
 			// viewport width has to be >= 1300px in order for the right column to appear on liveblogs
 			cy.viewport(breakpoints['wide'], 1000);
 
-			cy.visit(`${path}?adtest=${adTest}`);
+			cy.visit(path);
 
 			cy.allowAllConsent();
 

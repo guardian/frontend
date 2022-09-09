@@ -3,7 +3,7 @@ package test
 import org.scalatest.{DoNotDiscover, GivenWhenThen}
 import services.IndexPagePagination
 
-import collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import conf.switches.Switches
 import org.fluentlenium.core.domain.{FluentList, FluentWebElement}
 import org.scalatest.featurespec.AnyFeatureSpec

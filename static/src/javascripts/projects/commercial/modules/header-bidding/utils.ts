@@ -6,6 +6,7 @@ import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
 import {
 	isInAuOrNz,
+	isInCanada,
 	isInRow,
 	isInUk,
 	isInUsOrCa,
@@ -149,7 +150,7 @@ export const shouldIncludeAdYouLike = (
 
 // TODO: Check is we want regional restrictions on where we load the ozoneBidAdapter
 export const shouldUseOzoneAdaptor = (): boolean =>
-	!isInUsOrCa() &&
+	!isInCanada() &&
 	!isInAuOrNz() &&
 	(window.guardian.config.switches.prebidOzone ?? false);
 

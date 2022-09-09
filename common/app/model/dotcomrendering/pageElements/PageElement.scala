@@ -23,7 +23,7 @@ import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
 import views.support.{ImgSrc, SrcSet, Video700}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.util.Try
 
 // ------------------------------------------------------

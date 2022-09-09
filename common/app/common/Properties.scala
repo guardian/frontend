@@ -2,7 +2,7 @@ package common
 
 import java.io.{File, FileInputStream, InputStream}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import java.net.URL
 import java.nio.charset.Charset
 

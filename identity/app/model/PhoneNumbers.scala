@@ -1,7 +1,7 @@
 package model
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import reflect.runtime.{universe => ru}
 
 object PhoneNumbers {

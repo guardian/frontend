@@ -19,7 +19,7 @@ import com.github.nscala_time.time.Imports._
 import play.api.libs.json._
 import views.support._
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.util.Try
 import implicits.Booleans._
 import org.joda.time.DateTime
@@ -88,15 +88,21 @@ final case class Content(
   lazy val campaigns: List[Campaign] =
     _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
-  lazy val isAmpSupportedArticleType: Boolean = (tags.isArticle && !tags.isLiveBlog) && !isImmersive && !tags.isQuiz
-
   lazy val shouldAmplify: Boolean = {
-    val shouldAmplifyArticles = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
-    val shouldAmplifyLiveBlogs = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
-    val containsFormStacks: Boolean = fields.body.contains("guardiannewsandmedia.formstack.com")
-    val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
+    val shouldAmplifyContent = {
+      if (tags.isLiveBlog) {
+        AmpLiveBlogSwitch.isSwitchedOn
+      } else if (tags.isArticle) {
+        val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
+        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !tags.isQuiz
+      } else {
+        false
+      }
+    }
 
-    ((shouldAmplifyArticles && hasBodyBlocks) || shouldAmplifyLiveBlogs) && !containsFormStacks
+    val containsFormStacks: Boolean = fields.body.contains("guardiannewsandmedia.formstack.com")
+
+    shouldAmplifyContent && !containsFormStacks
   }
 
   lazy val hasSingleContributor: Boolean = {

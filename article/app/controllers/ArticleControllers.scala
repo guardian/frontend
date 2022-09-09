@@ -28,7 +28,7 @@ trait ArticleControllers {
   lazy val articleController = wire[ArticleController]
   lazy val liveBlogController = wire[LiveBlogController]
   lazy val newsletterService = wire[NewsletterService]
-  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
+  lazy val articleDeeplyReadAgent = wire[DeeplyReadAgent]
   lazy val curatedContentAgent = wire[CuratedContentAgent]
   lazy val onwardsPicker = wire[OnwardsPicker]
   lazy val popularInTagAgent = wire[PopularInTagAgent]

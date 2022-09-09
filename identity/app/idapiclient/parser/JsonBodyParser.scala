@@ -16,7 +16,7 @@ trait JsonBodyParser extends Logging {
       extractJsonObj: JValue => JValue = identity,
   )(httpResponseResponse: Response[HttpResponse])(implicit successType: Manifest[T]): Response[T] = {
 
-    httpResponseResponse.right.flatMap { httpResponse =>
+    httpResponseResponse.flatMap { httpResponse =>
       try {
         httpResponse match {
           case HttpResponse(body, status, message) if status == 502 =>
