@@ -274,6 +274,7 @@ interface OptOutResponse {
 interface OptOutAdSlot {
 	adSlot: string;
 	targetId: string;
+	id: string;
 	filledCallback?: (adSlot: OptOutAdSlot, response: OptOutResponse) => void;
 	emptyCallback?: (adSlot: OptOutAdSlot) => void;
 	adShownCallback?: (adSlot: OptOutAdSlot, response: OptOutResponse) => void;
