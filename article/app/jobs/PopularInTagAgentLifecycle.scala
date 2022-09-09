@@ -34,7 +34,7 @@ class PopularInTagAgentLifecycle(
   private def scheduleJobs(): Unit = {
     // TODO: what schedule do we want this to run on?
     jobs.scheduleEvery("PopularInTagJob", 5.minutes) {
-      popularInTagAgent.refresh()
+      popularInTagAgent.refresh().map(_ => Unit)
     }
   }
 
