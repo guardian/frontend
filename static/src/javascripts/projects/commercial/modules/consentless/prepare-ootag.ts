@@ -23,7 +23,7 @@ function initConsentless(): Promise<void> {
 		});
 	});
 
-	void loadScript('//cdn.optoutadvertising.com/script/ooguardian.v2.min.js');
+	void loadScript('//cdn.optoutadvertising.com/script/ooguardian.v3.min.js');
 	return Promise.resolve();
 }
 
