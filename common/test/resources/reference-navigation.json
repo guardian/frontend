@@ -323,7 +323,7 @@
         "classList" : [ ]
       }, {
         "title" : "Obituaries",
-        "url" : "/tone/obituaries",
+        "url" : "/obituaries",
         "children" : [ ],
         "classList" : [ ]
       } ],
@@ -647,7 +647,7 @@
       "url" : "/theguardian",
       "children" : [ {
         "title" : "Obituaries",
-        "url" : "/tone/obituaries",
+        "url" : "/obituaries",
         "children" : [ ],
         "classList" : [ ]
       }, {
@@ -2252,7 +2252,7 @@
         "classList" : [ ]
       }, {
         "title" : "Obituaries",
-        "url" : "/tone/obituaries",
+        "url" : "/obituaries",
         "children" : [ ],
         "classList" : [ ]
       } ],
@@ -2556,7 +2556,7 @@
       "url" : "/theguardian",
       "children" : [ {
         "title" : "Obituaries",
-        "url" : "/tone/obituaries",
+        "url" : "/obituaries",
         "children" : [ ],
         "classList" : [ ]
       }, {
