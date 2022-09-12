@@ -1,8 +1,10 @@
 package navigation
 
 import play.api.libs.json.{JsValue, Json}
+import common.Edition
+import play.api.libs.json.Json.toJson
 
-private object NavLinks {
+object NavLinks {
 
   /* NEWS */
   val science = NavLink("Science", "/science")
@@ -728,47 +730,9 @@ case class EditionNavLinks(
 object NavigationData {
   implicit val navlinkWrites = Json.writes[NavLink]
   implicit val editionNavLinksWrites = Json.writes[EditionNavLinks]
-  implicit val navlinksInterfaceWrites = Json.writes[NavigationData]
 
-  val nav: JsValue = Json.toJson(NavigationData())
+  val nav: JsValue = toJson(
+    (Edition.all
+      .map(e => e.networkFrontId -> toJson(e.navigationLinks)) :+ "tagPages" -> toJson(NavLinks.tagPages)).toMap,
+  )
 }
-
-case class NavigationData(
-    uk: EditionNavLinks = EditionNavLinks(
-      NavLinks.ukNewsPillar,
-      NavLinks.ukOpinionPillar,
-      NavLinks.ukSportPillar,
-      NavLinks.ukCulturePillar,
-      NavLinks.ukLifestylePillar,
-      NavLinks.ukOtherLinks,
-      NavLinks.ukBrandExtensions,
-    ),
-    us: EditionNavLinks = EditionNavLinks(
-      NavLinks.usNewsPillar,
-      NavLinks.usOpinionPillar,
-      NavLinks.usSportPillar,
-      NavLinks.usCulturePillar,
-      NavLinks.usLifestylePillar,
-      NavLinks.usOtherLinks,
-      NavLinks.usBrandExtensions,
-    ),
-    au: EditionNavLinks = EditionNavLinks(
-      NavLinks.auNewsPillar,
-      NavLinks.auOpinionPillar,
-      NavLinks.auSportPillar,
-      NavLinks.auCulturePillar,
-      NavLinks.auLifestylePillar,
-      NavLinks.auOtherLinks,
-      NavLinks.auBrandExtensions,
-    ),
-    international: EditionNavLinks = EditionNavLinks(
-      NavLinks.intNewsPillar,
-      NavLinks.intOpinionPillar,
-      NavLinks.intSportPillar,
-      NavLinks.intCulturePillar,
-      NavLinks.intLifestylePillar,
-      NavLinks.intOtherLinks,
-      NavLinks.intBrandExtensions,
-    ),
-    tagPages: List[String] = NavLinks.tagPages,
-)
