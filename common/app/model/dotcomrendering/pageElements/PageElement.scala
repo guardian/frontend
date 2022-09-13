@@ -1215,7 +1215,7 @@ object PageElement {
                   .flatMap(i => i.imageMedia.masterImage.flatMap(_.altText))
                   // Remove surrounding quotes from alt text, e.g
                   // "hello world" => hello world
-                  .map(alt => alt.substring(1, alt.length() - 1)),
+                  .map(_.replaceAll("^\"|\"$", "")),
               )
             }
             Some(
