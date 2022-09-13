@@ -21,7 +21,7 @@ object Europe
         NavLinks.intLifestylePillar,
         NavLinks.intOtherLinks,
         NavLinks.intBrandExtensions,
-      )
+      ),
     ) {
 
   implicit val EUR = Europe
