@@ -423,7 +423,13 @@ case class QuizAtomAnswer(
     isCorrect: Boolean,
 )
 case class QuizAtomResultBucket(id: String, title: String, description: String)
-case class QuizAtomQuestion(id: String, text: String, answers: Seq[QuizAtomAnswer], imageUrl: Option[String])
+case class QuizAtomQuestion(
+    id: String,
+    text: String,
+    answers: Seq[QuizAtomAnswer],
+    imageUrl: Option[String],
+    imageAlt: Option[String],
+)
 case class QuizAtomResultGroup(id: String, title: String, shareText: String, minScore: Int)
 case class QuizAtomBlockElement(
     id: String,
@@ -1205,6 +1211,11 @@ object PageElement {
                   ),
                 ),
                 imageUrl = q.imageMedia.flatMap(i => ImgSrc.getAmpImageUrl(i.imageMedia)),
+                imageAlt = q.imageMedia
+                  .flatMap(i => i.imageMedia.masterImage.flatMap(_.altText))
+                  // Remove surrounding quotes from alt text, e.g
+                  // "hello world" => hello world
+                  .map(alt => alt.substring(1, alt.length() - 1)),
               )
             }
             Some(
