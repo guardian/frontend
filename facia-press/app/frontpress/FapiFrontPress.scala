@@ -286,7 +286,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
           "us" -> FaciaPressMetrics.UsPressLatencyMetric,
           "au" -> FaciaPressMetrics.AuPressLatencyMetric,
         )
-        if (Edition.allWithBetaEditions.map(_.id.toLowerCase).contains(path)) {
+        if (Edition.byId(path).isDefined) {
           metricsByPath.get(path).foreach { metric =>
             metric.recordDuration(pressDuration.toDouble)
           }
@@ -506,8 +506,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
   private def removeLeadEditionFromSectionId(sectionId: String): String =
     sectionId.split('/').toList match {
-      case edition :: tail if Edition.allWithBetaEditions.map(_.id.toLowerCase).contains(edition.toLowerCase) =>
-        tail.mkString("/")
+      case edition :: tail if Edition.byId(edition).isDefined => tail.mkString("/")
       case _ => sectionId
     }
 
