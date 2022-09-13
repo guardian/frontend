@@ -198,7 +198,6 @@ object NavMenu {
       "type/cartoon",
       "cartoons/archive",
     )
-    val networkFronts = Seq("uk", "us", "au", "international", "europe")
     val tags = getTagsFromPage(page)
     val commonKeywords = tags.keywordIds
       .intersect(NavLinks.tagPages)
@@ -207,7 +206,7 @@ object NavMenu {
       .contains(page.metadata.id)
     val isArticleInTagPageSection = commonKeywords.nonEmpty
 
-    val id = if (networkFronts.contains(page.metadata.sectionId)) {
+    val id = if (Edition.byNetworkFrontId(page.metadata.sectionId).isDefined) {
       ""
     } else if (isTagPage) {
       page.metadata.id
