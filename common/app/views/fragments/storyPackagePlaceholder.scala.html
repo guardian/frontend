@@ -14,7 +14,7 @@
 
 @defining(Seq("related") ++ (if(isPaidContent) Seq("paid-content") else Nil)) { classes =>
     @if(related.hasStoryPackage) {
-        <aside class="@classes.mkString(" ") more-on-this-story js-outbrain-anchor" aria-labelledby="related-content-head">
+        <aside class="@classes.mkString(" ") more-on-this-story js-outbrain-anchor" aria-label="More on this story">
             @container("More on this story", "more-on-this-story", href = None)
         </aside>
     } else {
