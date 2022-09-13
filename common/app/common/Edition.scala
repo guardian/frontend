@@ -92,6 +92,7 @@ object Edition {
   def othersWithBetaEditions(edition: Edition): Seq[Edition] = allWithBetaEditions.filterNot(_ == edition)
 
   def byId(id: String): Option[Edition] = allWithBetaEditions.find(_.id.equalsIgnoreCase(id))
+  def byNetworkFrontId(id: String): Option[Edition] = allWithBetaEditions.find(_.networkFrontId == id)
 
   implicit val editionWrites: Writes[Edition] = new Writes[Edition] {
     def writes(edition: Edition): JsValue = Json.obj("id" -> edition.id)
