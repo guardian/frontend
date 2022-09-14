@@ -10,7 +10,7 @@ object Uk
       id = "UK",
       displayName = "UK edition",
       timezone = DateTimeZone.forID("Europe/London"),
-      locale = Locale.forLanguageTag("en-gb"),
+      locale = Some(Locale.forLanguageTag("en-gb")),
       networkFrontId = "uk",
       navigationLinks = EditionNavLinks(
         NavLinks.ukNewsPillar,
