@@ -28,7 +28,7 @@ class PopularInTagService(contentApiClient: ContentApiClient)(implicit
 
     response.map { response =>
       val numberOfCards = if (response.results.length == 5 || response.results.length == 6) 4 else 8
-      val items = response.results.sortBy(content => itemViewCounts.getOrElse(content.id, 0)).map { item =>
+      val items = response.results.sortBy(content => -itemViewCounts.getOrElse(content.id, 0)).map { item =>
         RelatedContentItem(item)
       }
 
