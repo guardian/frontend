@@ -18,7 +18,7 @@ case class SeoData(id: String, navSection: String, webTitle: String, title: Opti
 object SeoData extends GuLogging {
   implicit val seoFormatter = Json.format[SeoData]
 
-  val editions = Edition.all.map(_.id.toLowerCase)
+  val editions = Edition.allWithBetaEditions.map(_.id.toLowerCase)
 
   def fromPath(path: String): SeoData =
     (path.split('/').toList: @unchecked) match { // split() never gives the empty list

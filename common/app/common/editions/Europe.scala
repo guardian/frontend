@@ -13,7 +13,7 @@ object Europe
       locale = Locale.forLanguageTag("en"),
       networkFrontId = "europe",
       editionalisedSections = Seq(""), // only the home page
-      navigationLinks = International.navigationLinks
+      navigationLinks = International.navigationLinks,
     ) {
 
   implicit val EUR = Europe
