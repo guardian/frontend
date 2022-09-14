@@ -15,7 +15,7 @@ abstract class Edition(
     val id: String,
     val displayName: String,
     val timezone: DateTimeZone,
-    val locale: Locale,
+    val locale: Option[Locale],
     val networkFrontId: String,
     val editionalisedSections: Seq[String] = Seq(
       "", // network front
@@ -61,6 +61,12 @@ object Edition {
   )
 
   lazy val allWithBetaEditions = all ++ List(editions.Europe)
+
+  lazy val localeByEdition: Map[Edition, Locale] =
+    (for {
+      edition <- allWithBetaEditions
+      locale <- edition.locale
+    } yield edition -> locale).toMap
 
   private def editionFromRequest(request: RequestHeader): String = {
     // override for Ajax calls
@@ -110,11 +116,17 @@ object Edition {
   def allPagesFor(request: RequestHeader): Seq[EditionLink] = {
     val path = request.path
     path match {
-      case EditionalisedId(editionId, section) if Edition.defaultEdition.isEditionalised(section.drop(1)) =>
-        val links = Edition.all.map(EditionLink(_, section))
+      case EditionalisedId(id, section)
+          if Edition.defaultEdition
+            .isEditionalised(section.drop(1)) && Edition.byNetworkFrontId(id).exists(_.locale.isDefined) =>
+        val links = for {
+          (edition, locale) <- localeByEdition.toSeq
+        } yield EditionLink(edition, section, locale)
         links.filter(link => link.edition.isEditionalised(link.path.drop(1)))
-      case EditionalisedFront(_) =>
-        Edition.all.map(EditionLink(_, "/"))
+      case EditionalisedFront(networkFrontId) if Edition.byNetworkFrontId(networkFrontId).exists(_.locale.isDefined) =>
+        for {
+          (edition, locale) <- localeByEdition.toSeq
+        } yield EditionLink(edition, "/", locale)
       case _ => Nil
     }
   }
@@ -140,7 +152,7 @@ object Editionalise {
   }
 }
 
-case class EditionLink(edition: Edition, path: String)
+case class EditionLink(edition: Edition, path: String, locale: Locale)
 
 object InternationalEdition {
 

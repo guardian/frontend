@@ -10,7 +10,7 @@ object Europe
       id = "EUR",
       displayName = "Europe edition",
       timezone = DateTimeZone.forID("Europe/London"),
-      locale = Locale.forLanguageTag("en"), // #To-do: change this if we decide to include Europe in page alternates
+      locale = None,
       networkFrontId = "europe",
       editionalisedSections = Seq(""), // only the home page
       navigationLinks = International.navigationLinks,

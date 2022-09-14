@@ -10,7 +10,7 @@ object Us
       id = "US",
       displayName = "US edition",
       timezone = DateTimeZone.forID("America/New_York"),
-      locale = Locale.forLanguageTag("en-us"),
+      locale = Some(Locale.forLanguageTag("en-us")),
       networkFrontId = "us",
       navigationLinks = EditionNavLinks(
         NavLinks.usNewsPillar,
