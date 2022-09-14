@@ -507,7 +507,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   private def removeLeadEditionFromSectionId(sectionId: String): String =
     sectionId.split('/').toList match {
       case edition :: tail if Edition.byId(edition).isDefined => tail.mkString("/")
-      case _ => sectionId
+      case _                                                  => sectionId
     }
 
   private def getCapiItemResponseForPath(
