@@ -69,7 +69,9 @@ GET        /business-data/stocks.json                 controllers.StocksControll
 
 # DCR
 GET        /story-package/*path.json                  controllers.StoryPackageController.render(path)
-GET        /nav/:editionId.json                     controllers.NavigationController.renderDCRNav(editionId: String)
+GET        /nav/:editionId.json                       controllers.NavigationController.renderDCRNav(editionId: String)
+GET        /onwards/popular-in-tag/*tag.json          controllers.OnwardResponseController.popularInTagJson(tag)
+GET        /onwards/popular-in-tag/*tag               controllers.OnwardResponseController.popularInTagHtml(tag)
 
 # AMP
 GET        /most-read-mf2.json                        controllers.MostPopularController.renderPopularMicroformat2()
