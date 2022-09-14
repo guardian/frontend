@@ -41,14 +41,6 @@ trait FaciaController
 
   implicit val context: ApplicationContext
 
-  private def getEditionFromString(edition: String): Edition = {
-    val editionToFilterBy = edition match {
-      case "international" => "int"
-      case _               => edition
-    }
-    Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
-  }
-
   def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
     successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
   }
@@ -92,10 +84,9 @@ trait FaciaController
       count: Int,
       offset: Int,
       section: String = "",
-      edition: String = "",
   ): Action[AnyContent] =
     Action.async { implicit request =>
-      val e = if (edition.isEmpty) Edition(request) else getEditionFromString(edition)
+      val e = Edition(request)
       val collectionsPath = if (section.isEmpty) e.id.toLowerCase else Editionalise(section, e)
       getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
         Cached(CacheTime.Facia) {

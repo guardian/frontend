@@ -19,10 +19,8 @@ GET        /.well-known/security.txt.asc                                        
 GET        /.well-known/amphtml/apikey.pub                                          controllers.FaciaController.ampRsaPublicKey()
 
 # AMP
-GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
-GET        /container/count/:count/offset/:offset/section/:section/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
-GET        /container/count/:count/offset/:offset/edition/:edition/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
-GET        /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json    controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
+GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "")
+GET        /container/count/:count/offset/:offset/section/:section/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section)
 
 #Facia Press
 GET        /collection/*id/rss                                                      controllers.FaciaController.renderCollectionRss(id)
