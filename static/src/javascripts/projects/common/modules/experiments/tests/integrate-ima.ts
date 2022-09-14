@@ -4,7 +4,7 @@ import { noop } from '../../../../../lib/noop';
 export const integrateIMA: ABTest = {
 	id: 'IntegrateIMA',
 	start: '2022-07-14',
-	expiry: '2022-12-31',
+	expiry: '2022-12-30',
 	author: 'Zeke Hunter-Green',
 	description:
 		'Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos',

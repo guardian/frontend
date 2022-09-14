@@ -51,7 +51,7 @@ trait ABTestSwitches {
     "Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos",
     owners = Seq(Owner.withGithub("zekehuntergreen")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 31)),
+    sellByDate = Some(LocalDate.of(2022, 12, 30)),
     exposeClientSide = true,
   )
 }
