@@ -111,10 +111,10 @@ object Edition {
     val path = request.path
     path match {
       case EditionalisedId(editionId, section) if Edition.defaultEdition.isEditionalised(section.drop(1)) =>
-        val links = Edition.editionsByRequest(request).map(EditionLink(_, section))
+        val links = Edition.all.map(EditionLink(_, section))
         links.filter(link => link.edition.isEditionalised(link.path.drop(1)))
       case EditionalisedFront(_) =>
-        editionsByRequest(request).map(EditionLink(_, "/"))
+        Edition.all.map(EditionLink(_, "/"))
       case _ => Nil
     }
   }
