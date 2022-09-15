@@ -609,7 +609,7 @@ $block-height: 58px;
     }
 }
 
-@for $i from 2 through 5 {
+@for $i from 2 through 10 {
     $hangTime: 5;
     $fadeTime: 1;
     $totalLoopTime: $i * ($hangTime + $fadeTime);
