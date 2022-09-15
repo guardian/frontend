@@ -7,6 +7,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
+      NoMoreThanFiveSlides,
       DCRFronts,
       OfferHttp3,
       LiveBlogMainMediaPosition,
@@ -24,6 +25,15 @@ object DCRJSBundleVariant
       owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2024, 4, 1),
       participationGroup = Perc1A,
+    )
+
+object NoMoreThanFiveSlides
+    extends Experiment(
+      name = "no-more-than-five-slides",
+      description = "Prevent showing more than five slides in a facia slide show",
+      owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2022, 9, 20),
+      participationGroup = Perc1B,
     )
 
 object DCRFronts

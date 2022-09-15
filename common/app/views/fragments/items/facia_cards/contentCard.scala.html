@@ -11,6 +11,7 @@
 @import views.html.fragments.inlineSvg
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
 @import model.ContentDesignType.RichContentDesignType
+@import experiments.{ActiveExperiments, NoMoreThanFiveSlides}
 
 @import Function.const
 
@@ -176,27 +177,29 @@ data-test-id="facia-card"
             }
 
             case Some(InlineSlideshow(imageElements)) => {
-                <div class="fc-item__media-wrapper">
-                    <div class="fc-item__image-container u-responsive-ratio fc-item__slideshow fc-item__slideshow--@imageElements.size">
-                        @imageElements.headOption.map { imageElement =>
-                            @captionedImage(
-                                classes = Seq("responsive-img "),
-                                widths = item.mediaWidthsByBreakpoint,
-                                maybePath = Some(imageElement.url),
-                                maybeSrc = if(containerIndex == 0 && index < 9) Some(imageElement.url) else None,
-                                caption = imageElement.caption
-                            )
-                            @imageElements.tail.map { imageElement =>
+                @defining(imageElements.take(if(ActiveExperiments.isParticipating(NoMoreThanFiveSlides)) 5 else 10)) { slides =>
+                    <div class="fc-item__media-wrapper">
+                        <div class="fc-item__image-container u-responsive-ratio fc-item__slideshow fc-item__slideshow--@slides.size">
+                            @slides.headOption.map { imageElement =>
                                 @captionedImage(
                                     classes = Seq("responsive-img "),
                                     widths = item.mediaWidthsByBreakpoint,
                                     maybePath = Some(imageElement.url),
+                                    maybeSrc = if(containerIndex == 0 && index < 9) Some(imageElement.url) else None,
                                     caption = imageElement.caption
                                 )
+                                @slides.tail.map { imageElement =>
+                                    @captionedImage(
+                                        classes = Seq("responsive-img "),
+                                        widths = item.mediaWidthsByBreakpoint,
+                                        maybePath = Some(imageElement.url),
+                                        caption = imageElement.caption
+                                    )
+                                }
                             }
-                        }
+                        </div>
                     </div>
-                </div>
+                }
             }
 
             case _ => {}
