@@ -19,7 +19,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import router.Routes
-import services.{OphanApi, PopularInTagService}
+import services.{OphanApi, PopularInTagService, SeriesService}
 import weather.WeatherApi
 import _root_.commercial.targeting.TargetingLifecycle
 
@@ -54,6 +54,7 @@ trait OnwardServices {
   lazy val deeplyReadAgent = wire[DeeplyReadAgent]
   lazy val remoteRenderer = wire[DotcomRenderingService]
   lazy val popularInTagService = wire[PopularInTagService]
+  lazy val seriesService = wire[SeriesService]
 }
 
 trait AppComponents extends FrontendComponents with OnwardControllers with OnwardServices {
