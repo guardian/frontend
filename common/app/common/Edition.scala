@@ -38,7 +38,7 @@ abstract class Edition(
 ) {
   val homePagePath: String = s"/$networkFrontId"
 
-  def isEditionalised(id: String): Boolean = editionalisedSections.contains(id)
+  def isEditionalised(sectionId: String): Boolean = editionalisedSections.contains(sectionId)
   def matchesCookie(cookieValue: String): Boolean = id.equalsIgnoreCase(cookieValue)
   def timezoneId = ZoneId.of(timezone.getID)
 }
@@ -52,6 +52,8 @@ object Edition {
     val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
     if (!participatingInTest) all else allWithBetaEditions
   }
+  def editionsSupportingSection(sectionId: String): Seq[Edition] =
+    allWithBetaEditions.filter(_.isEditionalised(sectionId))
 
   lazy val all = List(
     editions.Uk,
@@ -108,29 +110,42 @@ object Edition {
     (__ \ "id").read[String] map (Edition.byId(_).getOrElse(defaultEdition))
   }
 
-  lazy val editionRegex = Edition.allWithBetaEditions.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
+  lazy val editionRegex = allWithBetaEditions.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
   private lazy val EditionalisedFront = s"""^/($editionRegex)$$""".r
 
-  private lazy val EditionalisedId = s"^/($editionRegex)(/[\\w\\d-]+)$$".r
+  private lazy val EditionalisedId = s"^/($editionRegex)/([\\w\\d-]+)$$".r
 
-  def allPagesFor(request: RequestHeader): Seq[EditionLink] = {
+  /*
+  This method is used for working out what alternate edition
+  versions of pages Google might want to know about.
+  We have to be careful that pages that use Hreflang alternates all
+  point to each other in a consistent group and that no two editions have the same locale.
+
+  https://developers.google.com/search/docs/advanced/crawling/localized-versions
+   */
+  def localizedEditionLinks(request: RequestHeader): Seq[EditionLink] = {
     val path = request.path
+
     path match {
-      case EditionalisedId(id, section)
-          if Edition.defaultEdition
-            .isEditionalised(section.drop(1)) && Edition.byNetworkFrontId(id).exists(_.locale.isDefined) =>
-        val links = for {
-          (edition, locale) <- localeByEdition.toSeq
-        } yield EditionLink(edition, section, locale)
-        links.filter(link => link.edition.isEditionalised(link.path.drop(1)))
-      case EditionalisedFront(networkFrontId) if Edition.byNetworkFrontId(networkFrontId).exists(_.locale.isDefined) =>
+      case EditionalisedId(editionNetworkId, sectionId)
+          if editionsSupportingSection(sectionId).nonEmpty
+            && editionIsIncludedInHreflangAlternates(editionNetworkId) =>
+        for {
+          edition <- editionsSupportingSection(sectionId)
+          locale <- localeByEdition.get(edition)
+        } yield EditionLink(edition, s"/$sectionId", locale)
+
+      case EditionalisedFront(networkFrontId) if editionIsIncludedInHreflangAlternates(networkFrontId) =>
         for {
           (edition, locale) <- localeByEdition.toSeq
         } yield EditionLink(edition, "/", locale)
       case _ => Nil
     }
   }
-
+  /* We might choose to exclude certain editions from Hreflang alternates because we can't have more than one Edition possessing the same language code */
+  private def editionIsIncludedInHreflangAlternates(editionNetworkId: String) = {
+    Edition.byNetworkFrontId(editionNetworkId).exists(_.locale.isDefined)
+  }
 }
 
 object Editionalise {
