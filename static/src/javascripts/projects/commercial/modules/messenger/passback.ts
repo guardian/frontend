@@ -213,6 +213,13 @@ const init = (register: RegisterListener): void => {
 											`Passback: setting height of passback slot to ${slotHeight}`,
 										);
 										slotElement.style.height = slotHeight;
+
+										// Also resize the initial outstream iframe so
+										// it doesn't block text selection directly under
+										// the new ad
+										iframe.style.height = slotHeight;
+										iFrameContainer.style.height =
+											slotHeight;
 									});
 								}
 							}
