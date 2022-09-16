@@ -2,13 +2,13 @@ package controllers
 
 import common.{Edition, ImplicitControllerExecutionContext, JsonComponent}
 import feed.MostReadAgent
-import model.{ApplicationContext, Cached, RelatedContent, RelatedContentItem, Tag}
+import model.{ApplicationContext, Cached}
 import model.dotcomrendering.OnwardCollectionResponse
+import model.dotcomrendering.Trail
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import renderers.DotcomRenderingService
 import services.{PopularInTagService, SeriesService}
-import contentapi.ContentApiClient
 
 import scala.concurrent.Future
 
@@ -43,25 +43,21 @@ class OnwardResponseController(
         .fromWritable[OnwardCollectionResponse](onwardsCollection)(
           request,
           OnwardCollectionResponse.collectionWrites,
-        )
       )
     }
   }
 
   def series(seriesId: String)(implicit request: RequestHeader): Future[Option[OnwardCollectionResponse]] = {
     val edition = Edition(request)
-    seriesService.fetch(edition, seriesId)
+    seriesService.fetch(edition, seriesId, f = (tag, trails) =>
+      OnwardCollectionResponse(
+      heading = tag.id,
+      trails = trails.map(_.faciaContent).map(Trail.pressedContentToTrail),
+    ))
   }
 
   def seriesJson(seriesId: String): Action[AnyContent] =
     Action.async { implicit request =>
       series(seriesId).map { _.map(renderJson).getOrElse(NotFound) }
-    }
-
-    def seriesHtml(seriesId: String): Action[AnyContent] =
-      Action.async { implicit request =>
-        series(seriesId).flatMap {
-          _.map(renderHtml).getOrElse(Future.successful(NotFound))
-      }
     }
 }

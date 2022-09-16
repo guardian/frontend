@@ -13,14 +13,13 @@ import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
 import models.{Series, SeriesHelper, SeriesStoriesDCR}
-import utils.ShortUrls
-
-import scala.concurrent.Future
+import services.SeriesService
 import scala.concurrent.duration._
 
 class SeriesController(
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
+    seriesService: SeriesService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -28,24 +27,32 @@ class SeriesController(
     with ImplicitControllerExecutionContext
     with Requests {
 
-  def renderSeriesStories(seriesId: String): Action[AnyContent] =
+  private def fetch(seriesId: String,
+                    queryModifier: ItemQuery => ItemQuery = identity)(implicit request: RequestHeader) = {
+    seriesService.fetch(Edition(request), seriesId, queryModifier, f = (tag, trails) =>
+      Series(seriesId, Tag.make(tag, None), RelatedContent(trails.toSeq))
+    )
+  }
+
+  def renderSeriesStories(seriesId: String): Action[AnyContent] = {
     Action.async { implicit request =>
       if (request.forceDCR) {
-        lookup(Edition(request), seriesId).map { mseries =>
+        fetch(seriesId).map { mseries =>
           mseries
             .map { series => JsonComponent.fromWritable(SeriesStoriesDCR.fromSeries(series)).result }
             .getOrElse(NotFound)
         }
       } else {
-        lookup(Edition(request), seriesId) map { series =>
+        fetch(seriesId) map { series =>
           series.map(renderSeriesTrails).getOrElse(NotFound)
         }
       }
     }
+  }
 
   def renderMf2SeriesStories(seriesId: String): Action[AnyContent] =
     Action.async { implicit request =>
-      lookup(Edition(request), seriesId) map {
+      fetch(seriesId) map {
         _.map(series =>
           Cached(15.minutes)(
             rendermf2Series(series),
@@ -56,7 +63,7 @@ class SeriesController(
 
   def renderPodcastEpisodes(seriesId: String): Action[AnyContent] =
     Action.async { implicit request =>
-      lookup(Edition(request), seriesId, _.contentType("audio")) map {
+      fetch(seriesId, _.contentType("audio")) map {
         _.map(series =>
           Cached(900) {
             JsonComponent(views.html.fragments.podcastEpisodes(series.trails.items.take(4).map(_.content)))
@@ -64,35 +71,6 @@ class SeriesController(
         ).getOrElse(NotFound)
       }
     }
-
-  private def lookup(edition: Edition, seriesId: String, queryModifier: ItemQuery => ItemQuery = identity)(implicit
-      request: RequestHeader,
-  ): Future[Option[Series]] = {
-    val currentShortUrl = request.getQueryString("shortUrl")
-
-    def isCurrentStory(content: ApiContent) =
-      content.fields
-        .flatMap(fields => fields.shortUrl.map(ShortUrls.shortUrlToShortId))
-        .exists(url => currentShortUrl.exists(_.endsWith(url)))
-
-    val query = queryModifier {
-      contentApiClient.item(seriesId, edition).showFields("all")
-    }
-
-    val seriesResponse: Future[Option[Series]] = contentApiClient.getResponse(query).map { response =>
-      response.tag.flatMap { tag =>
-        val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
-        if (trails.nonEmpty) {
-          Some(Series(seriesId, Tag.make(tag, None), RelatedContent(trails.toSeq)))
-        } else { None }
-      }
-    }
-    seriesResponse.recover {
-      case ContentApiError(404, message, _) =>
-        log.info(s"Got a 404 calling content api: $message")
-        None
-    }
-  }
 
   private def rendermf2Series(series: Series)(implicit request: RequestHeader): RevalidatableResult = {
     val displayName = Some(series.displayName)
