@@ -9,8 +9,8 @@ const defaultClientSideTests: ABTest[] = [
 const serverSideTests: ServerSideABTest[] = [
 	'commercialEndOfQuarterMegaTestControl',
 	'commercialEndOfQuarterMegaTestVariant',
-	'NoMoreThanFiveSlidesControl',
-	'NoMoreThanFiveSlidesVariant',
+	'noMoreThanFiveSlidesControl',
+	'noMoreThanFiveSlidesVariant',
 ];
 
 /**
