@@ -5,8 +5,8 @@ export const signInGateMandatoryLongTestRunUk = {
 	author: 'vlbee',
 	description:
 		'Test run for long mandatory test - Show sign in gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
-	audience: 0.01,
-	audienceOffset: 0.0,
+	audience: 0.0025,
+	audienceOffset: 0.89,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria:
 		'Global, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
@@ -30,8 +30,8 @@ export const signInGateMandatoryLongTestRunNa = {
 	author: 'vlbee',
 	description:
 		'Test run for long mandatory test - Show sign in gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
-	audience: 0.01,
-	audienceOffset: 0.0,
+	audience: 0.0025,
+	audienceOffset: 0.8925,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria:
 		'Global, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
@@ -55,8 +55,8 @@ export const signInGateMandatoryLongTestRunAunz = {
 	author: 'vlbee',
 	description:
 		'Test run for long mandatory test - Show sign in gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
-	audience: 0.01,
-	audienceOffset: 0.0,
+	audience: 0.0025,
+	audienceOffset: 0.895,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria:
 		'Global, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
@@ -80,8 +80,8 @@ export const signInGateMandatoryLongTestRunEu = {
 	author: 'vlbee',
 	description:
 		'Test run for long mandatory test - Show sign in gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
-	audience: 0.01,
-	audienceOffset: 0.0,
+	audience: 0.0025,
+	audienceOffset: 0.8975,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria:
 		'Global, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
