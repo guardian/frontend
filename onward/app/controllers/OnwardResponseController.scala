@@ -1,11 +1,9 @@
 package controllers
 
-import com.gu.contentapi.client.model.{ContentApiError, ItemQuery}
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent}
 import feed.MostReadAgent
 import model.{ApplicationContext, Cached, RelatedContent, RelatedContentItem, Tag}
 import model.dotcomrendering.OnwardCollectionResponse
-import models.Series
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import renderers.DotcomRenderingService
@@ -46,6 +44,7 @@ class OnwardResponseController(
           request,
           OnwardCollectionResponse.collectionWrites,
         )
+      )
     }
   }
 
@@ -56,17 +55,13 @@ class OnwardResponseController(
 
   def seriesJson(seriesId: String): Action[AnyContent] =
     Action.async { implicit request =>
-      series(seriesId).flatMap {
-        case Some(onwardCollectionResponse) => renderJson(onwardCollectionResponse)
-        case None => NotFound
-      }
+      series(seriesId).map { _.map(renderJson).getOrElse(NotFound) }
     }
 
     def seriesHtml(seriesId: String): Action[AnyContent] =
       Action.async { implicit request =>
         series(seriesId).flatMap {
-          case Some(onwardCollectionResponse) => renderHtml(onwardCollectionResponse)
-          case None => NotFound
-        }
+          _.map(renderHtml).getOrElse(Future.successful(NotFound))
       }
+    }
 }
