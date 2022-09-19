@@ -95,7 +95,7 @@ object FrontChecks {
   def isNotPaidContent(faciaPage: PressedPage): Boolean = {
     // We don't support paid content
     // See: https://github.com/guardian/dotcom-rendering/issues/5945
-    !faciaPage.frontProperties.isPaidContent
+    !faciaPage.collections.exists(_.curated.exists(card => card.properties.isPaidFor))
   }
 
   def hasNoPaidForCards(faciaPage: PressedPage): Boolean = {
@@ -125,7 +125,7 @@ class FaciaPicker extends GuLogging {
     lazy val checks = dcrChecks(faciaPage)
     lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue == true)
 
-    val tier = decideTier(request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
+    val tier = decideTier(request.isRss, request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
 
     logTier(faciaPage, participatingInTest, dcrCouldRender, checks, tier)
 
@@ -133,12 +133,14 @@ class FaciaPicker extends GuLogging {
   }
 
   def decideTier(
+      isRss: Boolean,
       forceDCROff: Boolean,
       forceDCR: Boolean,
       participatingInTest: Boolean,
       dcrCouldRender: Boolean,
   ): RenderType = {
-    if (forceDCROff) LocalRender
+    if (isRss) LocalRender
+    else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
     else if (dcrCouldRender && participatingInTest) RemoteRender
     else LocalRender

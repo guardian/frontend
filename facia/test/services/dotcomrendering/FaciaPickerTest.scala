@@ -33,42 +33,57 @@ import org.scalatestplus.mockito.MockitoSugar
   }
 
   "Facia Picker decideTier" should "return LocalRender if dcr=false" in {
+    val isRSS = false
     val forceDCROff = true
     val forceDCR = false
     val participatingInTest = true
     val dcrCouldRender = true
 
-    val tier = FaciaPicker.decideTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(LocalRender)
   }
 
   it should "return RemoteRender if dcr=true" in {
+    val isRSS = false
     val forceDCROff = false
     val forceDCR = true
     val participatingInTest = false
     val dcrCouldRender = false
 
-    val tier = FaciaPicker.decideTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(RemoteRender)
   }
 
   it should "return LocalRender if no flag is provided, participatingInTest is false and dcrCouldRender is true" in {
+    val isRSS = false
     val forceDCROff = false
     val forceDCR = false
     val participatingInTest = false
     val dcrCouldRender = true
 
-    val tier = FaciaPicker.decideTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(LocalRender)
   }
 
   it should "return RemoteRender if no flag is provided and participatingInTest and dcrCouldRender are true" in {
+    val isRSS = false
     val forceDCROff = false
     val forceDCR = false
     val participatingInTest = true
     val dcrCouldRender = true
 
-    val tier = FaciaPicker.decideTier(forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(RemoteRender)
+  }
+
+  it should "return LocalRender if the request is for RSS" in {
+    val isRSS = true
+    val forceDCROff = false
+    val forceDCR = false
+    val participatingInTest = true
+    val dcrCouldRender = true
+
+    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    tier should be(LocalRender)
   }
 }
