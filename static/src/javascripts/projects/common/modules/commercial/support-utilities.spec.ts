@@ -10,30 +10,21 @@ describe('addCountryGroupToSupportLink', () => {
 		removeCookie({ name: countryCookieName });
 	});
 
-	test('adds country group to subscribe link', async () => {
+	test('adds country group to subscribe link', () => {
 		setCookie({ name: countryCookieName, value: 'GB' });
 		expect(
-			await addCountryGroupToSupportLink(
+			addCountryGroupToSupportLink(
 				'https://support.theguardian.com/subscribe',
 			),
 		).toEqual('https://support.theguardian.com/uk/subscribe');
 	});
 
-	test('adds country group to contribute link', async () => {
+	test('adds country group to contribute link', () => {
 		setCookie({ name: countryCookieName, value: 'FR' });
 		expect(
-			await addCountryGroupToSupportLink(
+			addCountryGroupToSupportLink(
 				'https://support.theguardian.com/contribute',
 			),
 		).toEqual('https://support.theguardian.com/eu/contribute');
-	});
-
-	test('does not add country group to contribute link with country group already in it', async () => {
-		setCookie({ name: countryCookieName, value: 'GB' });
-		expect(
-			await addCountryGroupToSupportLink(
-				'https://support.theguardian.com/int/contribute',
-			),
-		).toEqual('https://support.theguardian.com/int/contribute');
 	});
 });

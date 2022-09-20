@@ -405,7 +405,7 @@ const countryCodeToCountryGroupId = (
 
 const countryCodeToSupportInternationalisationId = (
 	countryCode: CountryCode,
-): string | string[] =>
+): SupportInternationalisationId =>
 	countryGroups[countryCodeToCountryGroupId(countryCode)]
 		.supportInternationalisationId;
 
