@@ -94,11 +94,17 @@ export const renderAdvertLabel = (
 	});
 };
 
-export const renderStickyAdLabel = (adSlotNode: HTMLElement): Promise<void> =>
+export const renderInterscrollerAdLabel = (
+	adSlotNode: HTMLElement,
+): Promise<void> =>
 	fastdom.measure(() => {
 		const adSlotLabel: HTMLElement = document.createElement('div');
 		adSlotLabel.classList.add('ad-slot__label');
-		adSlotLabel.classList.add('sticky');
+		adSlotLabel.style.cssText = `
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;`;
 		adSlotLabel.innerHTML = 'Advertisement';
 		adSlotNode.appendChild(adSlotLabel);
 	});

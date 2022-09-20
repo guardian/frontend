@@ -2,7 +2,7 @@ import { breakpoints } from '@guardian/source-foundations';
 import { articles, liveblogs } from '../fixtures/pages';
 
 describe('right slot on pages', () => {
-	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
+	[...articles, ...liveblogs].forEach(({ path }) => {
 		it(`Test ${path} has correct slot and iframe`, () => {
 			// viewport width has to be >= 1300px in order for the right column to appear on liveblogs
 			cy.viewport(breakpoints['wide'], 1000);

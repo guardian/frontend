@@ -11,8 +11,7 @@ function initConsentless(): Promise<void> {
 		window.ootag.initializeOo({
 			publisher: 33,
 			noLogging: 0,
-			// consentTimeOutMS: 5000,
-			onlyNoConsent: 1,
+			alwaysNoConsent: 1,
 		});
 		window.ootag.addParameter('test', 'yes');
 
@@ -24,8 +23,7 @@ function initConsentless(): Promise<void> {
 		});
 	});
 
-	// TODO this seems to be safeframeless version. Ask OptOut how we can use safeframes.
-	void loadScript('//cdn.optoutadvertising.com/script/ootag.min.js');
+	void loadScript('//cdn.optoutadvertising.com/script/ooguardian.v3.min.js');
 	return Promise.resolve();
 }
 

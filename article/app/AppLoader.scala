@@ -1,6 +1,6 @@
 import _root_.commercial.targeting.TargetingLifecycle
-import agents.CuratedContentAgent
 import jobs.CuratedContentAgentLifecycle
+import agents.CuratedContentAgent
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._

@@ -1,8 +1,6 @@
 package test
 
 import agents.{CuratedContentAgent, DeeplyReadAgent}
-import akka.actor.ActorSystem
-import concurrent.BlockingOperations
 import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
 import org.mockito.Mockito._

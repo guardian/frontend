@@ -1,7 +1,7 @@
 import { allPages } from '../fixtures/pages';
 
 describe('top-above-nav on pages', () => {
-	allPages.forEach(({ path, adTest }) => {
+	allPages.forEach(({ path }) => {
 		it(`Test ${path} has top-above-nav slot and iframe`, () => {
 			cy.visit(path);
 

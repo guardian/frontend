@@ -5,6 +5,7 @@ const defineSlot = (slotId: string, slotName: string): void => {
 		window.ootag.defineSlot({
 			adSlot: slotName,
 			targetId: slotId,
+			id: slotId,
 			filledCallback: () => {
 				const slotElement = document.getElementById(slotId);
 				if (slotElement) {

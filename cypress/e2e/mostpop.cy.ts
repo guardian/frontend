@@ -1,11 +1,18 @@
 import { breakpoints } from '../fixtures/breakpoints';
 import { articles, liveblogs } from '../fixtures/pages';
+import { mockIntersectionObserver } from '../lib/util';
 
 describe('mostpop slot on pages', () => {
-	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
-		breakpoints.forEach(({ breakpoint }) => {
+	[...articles, ...liveblogs].forEach(({ path }) => {
+		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
-				cy.visit(path);
+				cy.viewport(width, height);
+
+				cy.visit(path, {
+					onBeforeLoad(win) {
+						mockIntersectionObserver(win, '#dfp-ad--mostpop');
+					},
+				});
 
 				cy.allowAllConsent();
 

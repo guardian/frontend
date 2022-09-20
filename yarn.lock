@@ -2089,17 +2089,17 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-7.3.0.tgz#9c4908fa5d439d85b2024735575435b0a5cd369f"
   integrity sha512-Py2FZ6aHi/inOIF4+4xZqNmbJur3cevtWRMQeFLjNjgN7zR7hMB6Dsd8uurEym6Qd3yxBAGPx/+rS3xVbTKz4w==
 
-"@guardian/commercial-core@4.8.0":
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-4.8.0.tgz#184abda938df34d01cc856d5596555f692ca296d"
-  integrity sha512-AGqoj3Zcmcvyp+XX2MRkqRLpPUPoKtsrA2R7XZG24zYGaeqItc+Wyd1Xx2nkFFMI4JLQ5UMrmF8V94W2nLJY2A==
+"@guardian/commercial-core@4.10.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-4.10.0.tgz#a1c2797ba8118da206b671dee27fa333524053d1"
+  integrity sha512-rhMdCSWLiRURcCc4rDLK1k7a/Q3+Hk55K5/e1l7w4WgzfTvYr7P0gvaG5sr6C93OVeQFDzisOR6pLj6tHo8kZw==
 
-"@guardian/consent-management-platform@^10.7.1":
-  version "10.7.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.7.1.tgz#ed672e1a7cc0e177d820dc7b2ebbfd26531a2d86"
-  integrity sha512-9wN4Bu0VMfpDg0p1/PjO/hAuPN7pJrBm24YXLWmAnfvHci0Wr+WMSF5ZOwhbMA01jl5IP3Hr1TKpFbkg3NhGdg==
+"@guardian/consent-management-platform@^10.11.1":
+  version "10.11.1"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-10.11.1.tgz#fa01a9262963ac07df9476e591d14601efbc4588"
+  integrity sha512-7dKcKZ3L/Y/hG9MB6i1invZmTVL6EepIv1ioGCW7uR9MVhWcuIGR1MJqKWMIzQgtZ2p0CXtSzKQOvbRtfX5fxQ==
   dependencies:
-    "@guardian/libs" "1.6.1 - 3.3.0"
+    "@guardian/libs" "^7.1.4"
 
 "@guardian/eslint-config-typescript@^0.7.0":
   version "0.7.0"
@@ -2120,11 +2120,6 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/libs@1.6.1 - 3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-3.3.0.tgz#fa98c7b8216ab35b8cf3087cd9ba336958fac99a"
-  integrity sha512-XB9o8qtDOg+KlPh1sjEr4u+Ai3RFTRr2riZ/HJpdlh8Cu4ZpYjCSGUZXSGkxp1CwFWT9sduANnsWSqZ97iBloQ==
-
 "@guardian/libs@^4.1.0":
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-4.1.0.tgz#a189f524379b71a19143050d364f9447ed70524b"
@@ -2135,10 +2130,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-7.1.4.tgz#f5de14f52a32cb677361d49157c94eb046a2b9a8"
   integrity sha512-r2AJk+4EakNLCLXHhUEqdYSjFhuq19k7tsQO5+53YZc6x6ADEXFNRVE/7EzbODgu5pVwk5SQ/rMuWsE7+5qdVQ==
 
-"@guardian/prettier@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/prettier/-/prettier-1.0.0.tgz#a5dd832e2ce31c6f723f0af77fe116b32b4695ff"
-  integrity sha512-srnhPn3hcSv14mDotFQN0CfN3k8MaGsXdK8BXAG95QQxM69Ybi16o4/Xqe361fwDEp7m+9jf03sETcMi8WsDlA==
+"@guardian/prettier@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/prettier/-/prettier-2.1.1.tgz#e6de7d5fa484f0a384bfc6588eafda8052bba231"
+  integrity sha512-QFTwJilWDA0t3IMizJwKi9ykqbBlB3Vzd2dC+1Fjx5A7ffHfc5DPcBQxsnsCuznK3Cj/BhCASzJsEDAnBbB5sg==
 
 "@guardian/shimport@^1.0.2":
   version "1.0.2"

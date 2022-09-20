@@ -1,6 +1,10 @@
 package navigation
 
-private object NavLinks {
+import play.api.libs.json.{JsValue, Json}
+import common.Edition
+import play.api.libs.json.Json.toJson
+
+object NavLinks {
 
   /* NEWS */
   val science = NavLink("Science", "/science")
@@ -59,7 +63,7 @@ private object NavLinks {
   val savings = NavLink("Savings", "/money/savings")
   val borrowing = NavLink("Borrowing", "/money/debt")
   val careers = NavLink("Careers", "/money/work-and-careers")
-  val obituaries = NavLink("Obituaries", "/tone/obituaries")
+  val obituaries = NavLink("Obituaries", "/obituaries")
   val greenLight = NavLink("Green light", "/environment/series/green-light")
   val fightToVote = NavLink("Fight to vote", "/us-news/series/the-fight-to-vote")
   val ukNews = NavLink(
@@ -173,7 +177,7 @@ private object NavLinks {
     "Today's paper",
     "/theguardian",
     children = List(
-      NavLink("Obituaries", "/tone/obituaries"),
+      NavLink("Obituaries", "/obituaries"),
       NavLink("G2", "/theguardian/g2"),
       NavLink("Journal", "/theguardian/journal"),
       NavLink("Saturday", "/theguardian/saturday"),
@@ -723,42 +727,12 @@ case class EditionNavLinks(
     brandExtensions: List[NavLink],
 )
 
-case class NavigationData(
-    uk: EditionNavLinks = EditionNavLinks(
-      NavLinks.ukNewsPillar,
-      NavLinks.ukOpinionPillar,
-      NavLinks.ukSportPillar,
-      NavLinks.ukCulturePillar,
-      NavLinks.ukLifestylePillar,
-      NavLinks.ukOtherLinks,
-      NavLinks.ukBrandExtensions,
-    ),
-    us: EditionNavLinks = EditionNavLinks(
-      NavLinks.usNewsPillar,
-      NavLinks.usOpinionPillar,
-      NavLinks.usSportPillar,
-      NavLinks.usCulturePillar,
-      NavLinks.usLifestylePillar,
-      NavLinks.usOtherLinks,
-      NavLinks.usBrandExtensions,
-    ),
-    au: EditionNavLinks = EditionNavLinks(
-      NavLinks.auNewsPillar,
-      NavLinks.auOpinionPillar,
-      NavLinks.auSportPillar,
-      NavLinks.auCulturePillar,
-      NavLinks.auLifestylePillar,
-      NavLinks.auOtherLinks,
-      NavLinks.auBrandExtensions,
-    ),
-    international: EditionNavLinks = EditionNavLinks(
-      NavLinks.intNewsPillar,
-      NavLinks.intOpinionPillar,
-      NavLinks.intSportPillar,
-      NavLinks.intCulturePillar,
-      NavLinks.intLifestylePillar,
-      NavLinks.intOtherLinks,
-      NavLinks.intBrandExtensions,
-    ),
-    tagPages: List[String] = NavLinks.tagPages,
-)
+object NavigationData {
+  implicit val navlinkWrites = Json.writes[NavLink]
+  implicit val editionNavLinksWrites = Json.writes[EditionNavLinks]
+
+  val nav: JsValue = toJson(
+    (Edition.all
+      .map(e => e.networkFrontId -> toJson(e.navigationLinks)) :+ "tagPages" -> toJson(NavLinks.tagPages)).toMap,
+  )
+}

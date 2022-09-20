@@ -1,8 +1,9 @@
-package services.dotcomponents
+package services.dotcomrendering
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.DoNotDiscover
+import services.dotcomrendering.{ArticlePicker, LocalRenderArticle, PressedArticle, RemoteRender}
 import test.TestRequest
 
 @DoNotDiscover class ArticlePickerTest extends AnyFlatSpec with Matchers {

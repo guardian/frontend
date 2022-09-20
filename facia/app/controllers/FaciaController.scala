@@ -20,9 +20,11 @@ import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.{CollectionConfigWithId, ConfigAgent}
-import utils.{FaciaPicker, RemoteRender, TargetedCollections}
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
+import utils.TargetedCollections
+import experiments.{ActiveExperiments, EuropeNetworkFront}
+import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 
 import scala.concurrent.Future
@@ -39,14 +41,6 @@ trait FaciaController
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   implicit val context: ApplicationContext
-
-  private def getEditionFromString(edition: String): Edition = {
-    val editionToFilterBy = edition match {
-      case "international" => "int"
-      case _               => edition
-    }
-    Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
-  }
 
   def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
     successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
@@ -91,10 +85,9 @@ trait FaciaController
       count: Int,
       offset: Int,
       section: String = "",
-      edition: String = "",
   ): Action[AnyContent] =
     Action.async { implicit request =>
-      val e = if (edition.isEmpty) Edition(request) else getEditionFromString(edition)
+      val e = Edition(request)
       val collectionsPath = if (section.isEmpty) e.id.toLowerCase else Editionalise(section, e)
       getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
         Cached(CacheTime.Facia) {
@@ -176,7 +169,11 @@ trait FaciaController
     } else result
 
   import PressedPage.pressedPageFormat
-  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
+  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
+    val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
+    if (path == "europe" && !participatingInTest) {
+      return successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+    }
     val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
       case Some(faciaPage: PressedPage) =>
         val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
@@ -202,7 +199,7 @@ trait FaciaController
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some((faciaPage: PressedPage, targetedTerritories))
-          if FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender
+          if FaciaPicker.getTier(faciaPage) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
         withVaryHeader(remoteRenderer.getFront(ws, faciaPage, pageType)(request), targetedTerritories)
