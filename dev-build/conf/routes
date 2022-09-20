@@ -318,10 +318,9 @@ GET            /most-read-mf2.json                                              
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
 GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
 
-GET            /container/count/:count/offset/:offset/mf2.json                                                                   controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
-GET            /container/count/:count/offset/:offset/section/:section/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
-GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition)
-GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
+# AMP
+GET             /container/count/:count/offset/:offset/mf2.json                                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "")
+GET             /container/count/:count/offset/:offset/section/:section/mf2.json                                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section)
 
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
