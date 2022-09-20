@@ -36,7 +36,7 @@ describe('Slots and iframes load on article pages', () => {
 	});
 });
 
-describe('Slots and iframes load on article liveblog pages', () => {
+describe('Slots and iframes load on liveblog pages', () => {
 	liveBlogPages.forEach(({ path, expectedMinInlineSlotsOnPage }) => {
 		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ${path} has at least ${expectedMinInlineSlotsOnPage} inline total slots at breakpoint ${breakpoint}`, () => {
