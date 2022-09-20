@@ -5,7 +5,7 @@ import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonCompo
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType}
-import models.dotcomponents.{RichLink, RichLinkTag}
+import models.dotcomrendering.{RichLink, RichLinkTag}
 import model.dotcomrendering.TrailUtils
 import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
 import play.twirl.api.Html

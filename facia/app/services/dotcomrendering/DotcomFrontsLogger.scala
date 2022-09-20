@@ -1,4 +1,4 @@
-package utils
+package services.dotcomrendering
 
 import common.GuLogging
 import common.LoggingField._

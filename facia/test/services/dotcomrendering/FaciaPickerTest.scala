@@ -1,4 +1,4 @@
-package utils
+package services.dotcomrendering
 
 import common.facia.{FixtureBuilder, PressedCollectionBuilder}
 import org.scalatest.DoNotDiscover

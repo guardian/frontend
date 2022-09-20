@@ -1,4 +1,4 @@
-package models.dotcomponents
+package models.dotcomrendering
 
 import model.{ContentFormat, DotcomContentType, ImageAsset}
 import play.api.libs.json.Json

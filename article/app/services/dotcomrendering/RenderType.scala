@@ -1,4 +1,4 @@
-package services.dotcomponents
+package services.dotcomrendering
 
 sealed trait RenderType
 case object RemoteRender extends RenderType
