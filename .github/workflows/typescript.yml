@@ -1,6 +1,9 @@
 name: typescript
 on: [push]
 
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
 jobs:
     typescript:
         name: Typescript
