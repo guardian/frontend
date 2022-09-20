@@ -2,7 +2,7 @@ import { isObject } from '@guardian/libs';
 import once from 'lodash-es/once';
 import fastdom from '../../../../lib/fastdom-promise';
 import {
-	renderStickyAdLabel,
+	renderInterscrollerAdLabel,
 	renderStickyScrollForMoreLabel,
 } from '../dfp/render-advert-label';
 import type { RegisterListener } from '../messenger';
@@ -184,7 +184,7 @@ const setupBackground = async (
 				adSlot.style.position = 'relative';
 			}
 
-			void renderStickyAdLabel(adSlot);
+			void renderInterscrollerAdLabel(adSlot);
 			void renderStickyScrollForMoreLabel(backgroundParent);
 
 			isDCR && renderBottomLine(background, backgroundParent);
