@@ -58,7 +58,7 @@
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/common/modules/commercial/contributions-utilities.js",
-  "../projects/common/modules/commercial/support-utilities.js",
+  "../projects/common/modules/commercial/support-utilities.ts",
   "../projects/common/modules/commercial/user-features.ts"
  ],
  "../projects/commercial/am-i-used.ts": [
@@ -654,7 +654,7 @@
  "../projects/common/modules/commercial/lib/googletag-ad-size.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
- "../projects/common/modules/commercial/support-utilities.js": [
+ "../projects/common/modules/commercial/support-utilities.ts": [
   "../lib/geolocation.ts"
  ],
  "../projects/common/modules/commercial/user-features.ts": [
