@@ -1,4 +1,4 @@
-package services.dotcomponents
+package services.dotcomrendering
 
 import common.GuLogging
 import common.LoggingField._
