@@ -1,7 +1,6 @@
 import _root_.commercial.CommercialLifecycle
 import _root_.commercial.controllers.CommercialControllers
 import _root_.commercial.targeting.TargetingLifecycle
-import agents.{CuratedContentAgent, CuratedContentAgentLifecycle}
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
@@ -22,7 +21,7 @@ import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
-import jobs.TopicLifecycle
+import jobs.{CuratedContentAgentLifecycle, TopicLifecycle}
 import model.{AdminLifecycle, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api._
@@ -33,7 +32,8 @@ import rugby.controllers.RugbyControllers
 import services._
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
-import agents.DeeplyReadAgent
+import agents.{CuratedContentAgent, DeeplyReadAgent}
+import services.dotcomrendering.OnwardsPicker
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -62,6 +62,9 @@ trait Controllers
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]
   lazy val signupPageController = wire[SignupPageController]
+
+  lazy val onwardsPicker = wire[OnwardsPicker]
+
 }
 
 trait AppComponents

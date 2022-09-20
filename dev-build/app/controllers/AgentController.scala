@@ -1,8 +1,9 @@
 package controllers
 
 import agents.CuratedContentAgent
+import services.fronts.FrontJsonFapiLive
 
-class AgentController {
-  val curatedContentAgent: CuratedContentAgent = CuratedContentAgent()
 
+class AgentController(frontJsonFapiLive: FrontJsonFapiLive) {
+  val curatedContentAgent: CuratedContentAgent = new CuratedContentAgent(frontJsonFapiLive)
 }

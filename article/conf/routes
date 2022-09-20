@@ -10,7 +10,6 @@ GET     /_healthcheck               controllers.HealthCheck.healthCheck()
 GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 
 # agent data
-
 GET     /agent/curated-content-agent.json                 controllers.ArticleController.renderCuratedContentAgentJson()
 
 # liveblogs, minutes.
