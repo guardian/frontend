@@ -20,20 +20,14 @@ const addCountryGroupToSupportLink = (rawUrl: SupportUrlRaw): string => {
 	);
 };
 
-const supportContributeGeoRedirectURL =
-	'https://support.theguardian.com/contribute';
-const supportSubscribeGeoRedirectURL =
-	'https://support.theguardian.com/subscribe';
 const supportContributeURL = (): string =>
-	addCountryGroupToSupportLink(supportContributeGeoRedirectURL);
+	addCountryGroupToSupportLink('https://support.theguardian.com/contribute');
 const supportSubscribeURL = (): string =>
-	addCountryGroupToSupportLink(supportSubscribeGeoRedirectURL);
+	addCountryGroupToSupportLink('https://support.theguardian.com/subscribe');
 const supportSubscribeDigitalURL = (): string =>
 	`${supportSubscribeURL()}/digital`;
 
 export {
-	supportContributeGeoRedirectURL,
-	supportSubscribeGeoRedirectURL,
 	supportContributeURL,
 	supportSubscribeURL,
 	supportSubscribeDigitalURL,
