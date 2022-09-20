@@ -89,6 +89,14 @@ export const fakeLogOut = () => {
 	cy.reload();
 };
 
+/**
+ * This function will mock the intersection observer API, and will call the callback immediately to trigger lazy-loading behaviour
+ *
+ * Optionally, you can pass in a selector to mock the intersection observer for specific elements, useful for ads because loading them all at once can be quite slow
+ *
+ * @param win window object
+ * @param selector optional selector to target specific elements, if empty, will indiscriminately mock all observers
+ */
 export const mockIntersectionObserver = (win: Window, selector?: string) => {
 	const Original = win.IntersectionObserver;
 	// ts-expect-error
