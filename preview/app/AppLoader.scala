@@ -1,3 +1,4 @@
+import agents.CuratedContentAgent
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
@@ -28,6 +29,7 @@ import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
+import services.dotcomrendering.OnwardsPicker
 import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
@@ -114,6 +116,9 @@ trait AppComponents
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val responsiveViewerController = wire[ResponsiveViewerController]
+
+  lazy val onwardsPicker = wire[OnwardsPicker]
+  lazy val curatedContentAgent = wire[CuratedContentAgent]
 
   lazy val router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("preview")
