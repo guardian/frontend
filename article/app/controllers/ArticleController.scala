@@ -28,6 +28,7 @@ class ArticleController(
     newsletterService: NewsletterService,
     deeplyReadAgent: DeeplyReadAgent,
     onwardsPicker: OnwardsPicker,
+    curatedContentAgent: CuratedContentAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -83,6 +84,20 @@ class ArticleController(
         .lookup(path, Some(ArticleBlocks))
         .map(_.content.map(_.webTitle))
         .map(responseFromOptionalString)
+    }
+
+  def renderCuratedContentAgentJson(): Action[AnyContent] =
+    Action.async { implicit request =>
+      Future(
+        Cached(900)(
+          JsonComponent.fromWritable(
+            Map(
+              "curatedContent" -> curatedContentAgent.getCuratedContent,
+              "curatedAdFreeContent" -> curatedContentAgent.getCuratedContentAdFree,
+            ),
+          ),
+        ),
+      )
     }
 
   private def getJson(article: ArticlePage)(implicit request: RequestHeader): List[(String, Object)] = {

@@ -9,6 +9,9 @@ GET     /_healthcheck               controllers.HealthCheck.healthCheck()
 
 GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 
+# agent data
+GET     /agent/curated-content-agent.json                 controllers.ArticleController.renderCuratedContentAgentJson()
+
 # liveblogs, minutes.
 # NOTE: if updating the .json endpoint below, you must also update the fastly cache purger path used
 # See https://github.com/guardian/fastly-cache-purger/blob/master/src/main/scala/com/gu/fastly/Lambda.scala
