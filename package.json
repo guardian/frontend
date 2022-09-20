@@ -9,7 +9,7 @@
     "static/src/**/*"
   ],
   "dependencies": {
-    "@braze/web-sdk-core": "3.3.0",
+    "@braze/web-sdk-core": "3.5.1",
     "@emotion/cache": "^11.1.5",
     "@emotion/core": "^10.0.27",
     "@emotion/react": "^11.1.5",
