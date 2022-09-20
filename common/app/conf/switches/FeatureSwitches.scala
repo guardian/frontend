@@ -502,4 +502,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val GoogleIndexingTest = Switch(
+    SwitchGroup.Feature,
+    "google-indexing-test",
+    "When ON, we will serve some articles using the legacy Frontend platform to verify if this impacts how quickly content is indexed",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    exposeClientSide = false,
+  )
 }

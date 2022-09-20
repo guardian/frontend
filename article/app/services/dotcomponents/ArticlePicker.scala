@@ -1,10 +1,15 @@
 package services.dotcomponents
 
 import com.madgag.scala.collection.decorators.MapDecorator
+import conf.switches.Switches.GoogleIndexingTest
+
+import scala.util.hashing.MurmurHash3
 import implicits.Requests._
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
 import services.dotcomrendering.PressedContent
+
+import scala.math.BigInt.int2bigInt
 
 object ArticlePageChecks {
 
@@ -36,6 +41,11 @@ object ArticlePicker {
     )
   }
 
+  def shouldForceFrontend(request: RequestHeader): Boolean = {
+    val hash = MurmurHash3.stringHash(request.path)
+    (hash mod 5) == 0
+  }
+
   private[this] def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
     val allowListFeatures = dcrChecks(page, request)
     val article100PercentPageFeatures = allowListFeatures.view.filterKeys(
@@ -57,8 +67,9 @@ object ArticlePicker {
     val dcrCanRender = checks.values.forall(identity)
     val isNotPaidContent = ArticlePageChecks.isNotPaidContent(page)
     val shouldServePressed = PressedContent.isPressed(ensureStartingForwardSlash(path)) && isNotPaidContent
+    val forceFrontendForGoogleTest = GoogleIndexingTest.isSwitchedOn && shouldForceFrontend(request)
 
-    val tier: RenderType = decideTier(shouldServePressed, dcrCanRender)
+    val tier: RenderType = decideTier(shouldServePressed, dcrCanRender, forceFrontendForGoogleTest)
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
@@ -80,12 +91,13 @@ object ArticlePicker {
     tier
   }
 
-  def decideTier(shouldServePressed: Boolean, dcrCanRender: Boolean)(implicit
+  def decideTier(shouldServePressed: Boolean, dcrCanRender: Boolean, forceFrontendForGoogleTest: Boolean)(implicit
       request: RequestHeader,
   ): RenderType = {
     if (request.forceDCROff) LocalRenderArticle
     else if (request.forceDCR) RemoteRender
     else if (shouldServePressed) PressedArticle
+    else if (forceFrontendForGoogleTest) LocalRenderArticle
     else if (dcrCanRender) RemoteRender
     else LocalRenderArticle
   }
