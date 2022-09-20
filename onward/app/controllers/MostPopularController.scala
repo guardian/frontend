@@ -215,7 +215,7 @@ class MostPopularController(
         if (editionPopularContent.isEmpty) None
         Some(
           MostPopularCollectionResponse(
-            "Most popular",
+            "Most viewed",
             "",
             editionPopularContent
               .map(_.faciaContent)

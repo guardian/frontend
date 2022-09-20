@@ -28,20 +28,14 @@ class DeeplyReadLifecycle(
 
     // refresh top mentions when app starts
     akkaAsync.after1s {
-      Edition.all.foreach { edition =>
-        deeplyReadAgent.refresh(edition)
-      }
-      Future.successful(())
+      deeplyReadAgent.refresh()
     }
   }
 
   private def scheduleJobs(): Unit = {
     // This job runs every 2 minutes
     jobs.scheduleEvery("DeeplyReadAgentRefreshJob", 2.minutes) {
-      Edition.all.foreach { edition =>
-        deeplyReadAgent.refresh(edition)
-      }
-      Future.successful(())
+      deeplyReadAgent.refresh()
     }
   }
 

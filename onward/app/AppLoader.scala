@@ -25,6 +25,7 @@ import _root_.commercial.targeting.TargetingLifecycle
 
 import scala.concurrent.ExecutionContext
 import agents.DeeplyReadAgent
+import jobs.DeeplyReadLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -68,6 +69,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[TargetingLifecycle],
+    wire[DeeplyReadLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

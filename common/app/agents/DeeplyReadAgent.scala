@@ -5,13 +5,15 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RenderingFormat
 import common._
 import contentapi.ContentApiClient
 import model.ContentFormat
-import model.dotcomrendering.{OnwardCollectionResponse}
+import model.dotcomrendering.OnwardCollectionResponse
 import play.api.libs.json._
 import services.{OphanApi, OphanDeeplyReadItem}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 import model.dotcomrendering.Trail
+
+import java.lang.Throwable
 
 class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
@@ -23,57 +25,56 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       at any point in time. This is not an issue as we have our CDN caching layer in front.
    */
 
-  private var deeplyReadItems = Box[Map[Edition, Seq[Trail]]](Map.empty)
+  private val deeplyReadItems = Box[Map[Edition, Seq[Trail]]](Map.empty)
 
   def removeStartingSlash(path: String): String = {
     if (path.startsWith("/")) path.stripPrefix("/") else path
   }
 
-  def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Seq[Trail]] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info(s"Deeply Read Agent refresh()")
     /*
         Here we simply go through the OphanDeeplyReadItem we got from Ophan and for each
         query CAPI and set the Content for the path.
      */
-
-    val deeplyReadItemsWithCapi: Future[Seq[Trail]] =
-      ophanApi.getDeeplyRead(edition).flatMap { seq =>
-        log.info(s"ophanItems updated with: ${seq.size} new items")
-        val constructedTrail: Seq[Future[Trail]] = seq.map { ophanItem =>
-          log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
-          val path = removeStartingSlash(ophanItem.path)
-          log.info(s"CAPI Lookup for path: ${path}")
-          val capiRequest = contentApiClient
-            .item(path)
-            .showTags("all")
-            .showFields("all")
-            .showReferences("none")
-            .showAtoms("none")
-          val trailFromCapiResponse = contentApiClient
-            .getResponse(capiRequest)
-            .map { res =>
-              res.content.flatMap { c =>
-                log.info(s"Updated CAPI data for path: ${path}")
-                println(s"Updated CAPI data for path: ${path}")
-                ophanItemToTrail(ophanItem, c)
+    val k = Edition.all.map { edition =>
+      val deeplyReadItemsWithCapi: Future[Seq[Trail]] =
+        ophanApi.getDeeplyRead(edition).flatMap { ophanDeeplyReadItems =>
+          log.info(s"ophanItems updated with: ${ophanDeeplyReadItems.size} new items")
+          val constructedTrail: Seq[Future[Trail]] = ophanDeeplyReadItems.map { ophanItem =>
+            log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
+            val path = removeStartingSlash(ophanItem.path)
+            log.info(s"CAPI Lookup for path: ${path}")
+            val capiRequest = contentApiClient
+              .item(path)
+              .showTags("all")
+              .showFields("all")
+              .showReferences("none")
+              .showAtoms("none")
+            val trailFromCapiResponse = contentApiClient
+              .getResponse(capiRequest)
+              .map { res =>
+                res.content.flatMap { c =>
+                  log.info(s"Updated CAPI data for path: ${path}")
+                  println(s"Updated CAPI data for path: ${path}")
+                  ophanItemToTrail(ophanItem, c)
+                }
               }
-            }
-            .recover {
-              case NonFatal(e) =>
-                log.info(s"Error CAPI lookup for path: ${path}. ${e.getMessage}")
-                None
-            }
-          trailFromCapiResponse.map(_.get)
+              .recover {
+                case NonFatal(e) =>
+                  log.info(s"Error CAPI lookup for path: ${path}. ${e.getMessage}")
+                  None
+              }
+            trailFromCapiResponse.map(_.get)
+          }
+          Future.sequence(constructedTrail)
         }
-        Future.sequence(constructedTrail)
-      }
 
-    deeplyReadItemsWithCapi.foreach { sequence =>
-      val deeplyReadMap = deeplyReadItems.get() ++ Map(edition -> sequence)
-      deeplyReadItems.alter(deeplyReadMap)
+//      deeplyReadItemsWithCapi.foreach { sequence =>
+//        val deeplyReadMap = deeplyReadItems.get() ++ Map(edition -> sequence)
+//        deeplyReadItems.alter(deeplyReadMap)
+//      }
     }
-
-    deeplyReadItemsWithCapi
   }
 
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
@@ -95,7 +96,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       showByline = false,
       byline = fields.byline,
       image = fields.thumbnail,
-      carouselImages = ???,
+      carouselImages = Map.empty,
       ageWarning = None,
       isLiveBlog = fields.liveBloggingNow.getOrElse(false),
       pillar = correctPillar(pillar.toLowerCase),
@@ -108,7 +109,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       kickerText = None,
       starRating = None,
       avatarUrl = None,
-      branding = ???,
+      branding = None,
     )
   }
 
@@ -125,11 +126,12 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   }
 
   def getTrails(edition: Edition)(implicit ec: ExecutionContext): Seq[Trail] = {
-    if (deeplyReadItems().isEmpty) {
+    val editionVal = deeplyReadItems.get().getOrElse(edition, Seq.empty)
+    if (editionVal.isEmpty) {
       refresh(edition)
     }
 
-    deeplyReadItems().get(edition).getOrElse(Seq.empty)
+    editionVal
   }
 
 }
