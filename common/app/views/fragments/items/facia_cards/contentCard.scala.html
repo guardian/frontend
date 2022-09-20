@@ -11,7 +11,6 @@
 @import views.html.fragments.inlineSvg
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
 @import model.ContentDesignType.RichContentDesignType
-@import experiments.{ActiveExperiments, NoMoreThanFiveSlides}
 
 @import Function.const
 
@@ -177,7 +176,7 @@ data-test-id="facia-card"
             }
 
             case Some(InlineSlideshow(imageElements)) => {
-                @defining(imageElements.take(if(ActiveExperiments.isParticipating(NoMoreThanFiveSlides)) 5 else 10)) { slides =>
+                @defining(imageElements.take(5)) { slides =>
                     <div class="fc-item__media-wrapper">
                         <div class="fc-item__image-container u-responsive-ratio fc-item__slideshow fc-item__slideshow--@slides.size">
                             @slides.headOption.map { imageElement =>
