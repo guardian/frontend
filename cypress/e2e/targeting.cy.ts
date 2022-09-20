@@ -56,7 +56,7 @@ describe('GAM targeting', () => {
 	});
 });
 
-describe.skip('Prebid targeting', () => {
+describe('Prebid targeting', () => {
 	const interceptGamRequest = () =>
 		cy.intercept(
 			{
@@ -93,7 +93,8 @@ describe.skip('Prebid targeting', () => {
 		});
 	});
 
-	it(`prebid winner should display ad and send targeting to GAM`, () => {
+	// This test is flaky, so we're skipping it for now
+	it.skip(`prebid winner should display ad and send targeting to GAM`, () => {
 		const { path } = articles[0];
 
 		interceptGamRequest();
