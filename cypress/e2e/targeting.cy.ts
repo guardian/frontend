@@ -93,7 +93,8 @@ describe('Prebid targeting', () => {
 		});
 	});
 
-	it(`prebid winner should display ad and send targeting to GAM`, () => {
+	// This test is flaky, so we're skipping it for now
+	it.skip(`prebid winner should display ad and send targeting to GAM`, () => {
 		const { path } = articles[0];
 
 		interceptGamRequest();
