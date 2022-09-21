@@ -1,98 +1,126 @@
-export const signInGateMandatoryLongTestRunUk = {
-	id: 'SignInGateMandatoryLongTestRunUk',
-	start: '2022-09-20',
-	expiry: '2022-10-01',
+const sharedTestData = {
+	start: '2022-09-26',
+	expiry: '2022-12-31',
 	author: 'vlbee',
 	description:
-		'Test run for long mandatory test - Show sign in gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
-	audience: 0.0025,
-	audienceOffset: 0.89,
-	successMeasure: 'Users sign in or create a Guardian account',
+		'Long-running mandatory sign in gate - Show gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
 	audienceCriteria:
-		'Global, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
-	dataLinkNames: 'SignInGateMandatoryLongTestRunUk',
+		'Restricted by region, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
+	successMeasure:
+		'Primary metric will be the average attention time per browser. Secondary: Average page views per browser, Sessions per browser, Gate conversion rate, Average days between visits, Engagement score, Reader revenue, Programmatic ad revenue',
 	idealOutcome:
-		'Increase the number of users signed in whilst running at a reasonable scale',
+		'Significantly grow the number of registered and signed in users amongst this cohort, with appropriate permissions but achieve this without meaningfully denting engagement with our journalism or long-term ad revenue',
 	showForSensitive: false,
 	canRun: () => true,
-	variants: [
-		{
-			id: 'mandatory-long-testrun-uk',
-			test: () => {},
-		},
-	],
 };
 
-export const signInGateMandatoryLongTestRunNa = {
-	id: 'SignInGateMandatoryLongTestRunNa',
-	start: '2022-09-20',
-	expiry: '2022-10-01',
-	author: 'vlbee',
-	description:
-		'Test run for long mandatory test - Show sign in gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
-	audience: 0.0025,
-	audienceOffset: 0.8925,
-	successMeasure: 'Users sign in or create a Guardian account',
-	audienceCriteria:
-		'Global, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
-	dataLinkNames: 'SignInGateMandatoryLongTestRunNA',
-	idealOutcome:
-		'Increase the number of users signed in whilst running at a reasonable scale',
-	showForSensitive: false,
-	canRun: () => true,
-	variants: [
-		{
-			id: 'mandatory-long-testrun-na',
-			test: () => {},
-		},
-	],
-};
-
-export const signInGateMandatoryLongTestRunAunz = {
-	id: 'SignInGateMandatoryLongTestRunAunz',
-	start: '2022-09-20',
-	expiry: '2022-10-01',
-	author: 'vlbee',
-	description:
-		'Test run for long mandatory test - Show sign in gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
-	audience: 0.0025,
+export const signInGateMandatoryLongTestControlUk = {
+	...sharedTestData,
+	id: 'SignInGateMandatoryLongTestControlUk',
+	audience: 0.005,
 	audienceOffset: 0.895,
-	successMeasure: 'Users sign in or create a Guardian account',
-	audienceCriteria:
-		'Global, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
-	dataLinkNames: 'SignInGateMandatoryLongTestRunAunz',
-	idealOutcome:
-		'Increase the number of users signed in whilst running at a reasonable scale',
-	showForSensitive: false,
-	canRun: () => true,
+	dataLinkNames: 'SignInGateMandatoryLongTestControlUk',
 	variants: [
 		{
-			id: 'mandatory-long-testrun-aunz',
+			id: 'mandatory-long-test-control-uk',
 			test: () => {},
 		},
 	],
 };
 
-export const signInGateMandatoryLongTestRunEu = {
-	id: 'SignInGateMandatoryLongTestRunEu',
-	start: '2022-09-20',
-	expiry: '2022-10-01',
-	author: 'vlbee',
-	description:
-		'Test run for long mandatory test - Show sign in gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
-	audience: 0.0025,
-	audienceOffset: 0.8975,
-	successMeasure: 'Users sign in or create a Guardian account',
-	audienceCriteria:
-		'Global, 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
-	dataLinkNames: 'SignInGateMandatoryLongTestRunEu',
-	idealOutcome:
-		'Increase the number of users signed in whilst running at a reasonable scale',
-	showForSensitive: false,
-	canRun: () => true,
+export const signInGateMandatoryLongTestVariantUk = {
+	...sharedTestData,
+	id: 'SignInGateMandatoryLongTestVariantUk',
+	audience: 0.005,
+	audienceOffset: 0.89,
+	dataLinkNames: 'SignInGateMandatoryLongTestVariantUk',
 	variants: [
 		{
-			id: 'mandatory-long-testrun-eu',
+			id: 'mandatory-long-test-variant-uk',
+			test: () => {},
+		},
+	],
+};
+
+export const signInGateMandatoryLongTestControlNa = {
+	...sharedTestData,
+	id: 'SignInGateMandatoryLongTestControlNa',
+	audience: 0.005,
+	audienceOffset: 0.895,
+	dataLinkNames: 'SignInGateMandatoryLongTestControlNA',
+	variants: [
+		{
+			id: 'mandatory-long-test-control-na',
+			test: () => {},
+		},
+	],
+};
+
+export const signInGateMandatoryLongTestVariantNa = {
+	...sharedTestData,
+	id: 'SignInGateMandatoryLongTestVariantNa',
+	audience: 0.005,
+	audienceOffset: 0.89,
+	dataLinkNames: 'SignInGateMandatoryLongTestVariantNA',
+	variants: [
+		{
+			id: 'mandatory-long-test-variant-na',
+			test: () => {},
+		},
+	],
+};
+
+export const signInGateMandatoryLongTestControlAunz = {
+	...sharedTestData,
+	id: 'SignInGateMandatoryLongTestControlAunz',
+	audience: 0.005,
+	audienceOffset: 0.895,
+	dataLinkNames: 'SignInGateMandatoryLongTestControlAunz',
+	variants: [
+		{
+			id: 'mandatory-long-test-control-aunz',
+			test: () => {},
+		},
+	],
+};
+
+export const signInGateMandatoryLongTestVariantAunz = {
+	...sharedTestData,
+	id: 'SignInGateMandatoryLongTestVariantAunz',
+	audience: 0.005,
+	audienceOffset: 0.89,
+	dataLinkNames: 'SignInGateMandatoryLongTestVariantAunz',
+	variants: [
+		{
+			id: 'mandatory-long-test-variant-aunz',
+			test: () => {},
+		},
+	],
+};
+
+export const signInGateMandatoryLongTestControlEu = {
+	...sharedTestData,
+	id: 'SignInGateMandatoryLongTestControlEu',
+	audience: 0.005,
+	audienceOffset: 0.895,
+	dataLinkNames: 'SignInGateMandatoryLongTestControlEu',
+	variants: [
+		{
+			id: 'mandatory-long-test-control-eu',
+			test: () => {},
+		},
+	],
+};
+
+export const signInGateMandatoryLongTestVariantEu = {
+	...sharedTestData,
+	id: 'SignInGateMandatoryLongTestVariantEu',
+	audience: 0.005,
+	audienceOffset: 0.89,
+	dataLinkNames: 'SignInGateMandatoryLongTestVariantEu',
+	variants: [
+		{
+			id: 'mandatory-long-test-variant-eu',
 			test: () => {},
 		},
 	],
