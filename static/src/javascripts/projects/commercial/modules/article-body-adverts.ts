@@ -34,6 +34,8 @@ const hasImages = !!window.guardian.config.page.lightboxImages?.images.length;
 const hasShowcaseMainElement =
 	window.guardian.config.page.hasShowcaseMainElement;
 
+const adSlotcontainerClass = 'ad-slot-container';
+
 const adSlotClassSelectorSizes = {
 	minAbove: 500,
 	minBelow: 500,
@@ -44,12 +46,13 @@ const adSlotClassSelectorSizes = {
  *
  * We add 2 to the index because these are always ads added in the second pass.
  *
- * e.g. the 0th container inserted in pass 2 becomes `ad-slot-container--2` to match `inline2`
+ * e.g. the 0th container inserted in pass 2 will have suffix `-2` to match `inline2`
  *
  * @param i Index of winning paragraph
  * @returns The classname for container
  */
-const getStickyContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
+const getStickyContainerClassname = (i: number) =>
+	`${adSlotcontainerClass}-${i + 2}`;
 
 const wrapSlotInContainer = (
 	ad: HTMLElement,
@@ -57,7 +60,7 @@ const wrapSlotInContainer = (
 ) => {
 	const container = document.createElement('div');
 
-	container.className = `ad-slot-container ${options.className ?? ''}`;
+	container.className = `${adSlotcontainerClass} ${options.className ?? ''}`;
 
 	if (options.sticky) {
 		ad.style.cssText += 'position: sticky; top: 0;';
@@ -154,8 +157,8 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
 	const ignoreList = hasLeftCol
-		? ' > :not(p):not(h2):not(.ad-slot-container):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])'
-		: ' > :not(p):not(h2):not(.ad-slot-container):not(#sign-in-gate):not(.sfdebug)';
+		? ` > :not(p):not(h2):not(.${adSlotcontainerClass}):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])`
+		: ` > :not(p):not(h2):not(.${adSlotcontainerClass}):not(#sign-in-gate):not(.sfdebug)`;
 
 	const isImmersive = config.get('page.isImmersive');
 
@@ -169,7 +172,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minAbove: 5,
 				minBelow: 190,
 			},
-			' .ad-slot-container': adSlotClassSelectorSizes,
+			[` .${adSlotcontainerClass}`]: adSlotClassSelectorSizes,
 			[ignoreList]: {
 				minAbove: 35,
 				minBelow: 400,
@@ -208,7 +211,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		minAbove,
 		minBelow: 300,
 		selectors: {
-			' .ad-slot-container': adSlotClassSelectorSizes,
+			[` .${adSlotcontainerClass}`]: adSlotClassSelectorSizes,
 			' [data-spacefinder-role="immersive"]': {
 				minAbove: 0,
 				minBelow: 600,
@@ -320,8 +323,8 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				minAbove: 100,
 				minBelow: 250,
 			},
-			' .ad-slot-container': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot-container):not(#sign-in-gate):not(.sfdebug)':
+			[` .${adSlotcontainerClass}`]: adSlotClassSelectorSizes,
+			[` > :not(p):not(h2):not(.${adSlotcontainerClass}):not(#sign-in-gate):not(.sfdebug)`]:
 				{
 					minAbove: 35,
 					minBelow: 200,
@@ -385,8 +388,8 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 				minAbove: 100,
 				minBelow: 250,
 			},
-			' .ad-slot-container': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot-container):not(#sign-in-gate):not(.sfdebug)':
+			[` .${adSlotcontainerClass}`]: adSlotClassSelectorSizes,
+			[` > :not(p):not(h2):not(.${adSlotcontainerClass}):not(#sign-in-gate):not(.sfdebug)`]:
 				{
 					minAbove: 200,
 					minBelow: 400,
