@@ -18,12 +18,13 @@ import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
 import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
-import utils.{FaciaPicker, RemoteRender, TargetedCollections}
+import utils.TargetedCollections
 import conf.Configuration
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import experiments.{ActiveExperiments, EuropeNetworkFront}
+import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 
 import scala.concurrent.Future

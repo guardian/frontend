@@ -9,7 +9,7 @@
     "static/src/**/*"
   ],
   "dependencies": {
-    "@braze/web-sdk-core": "3.3.0",
+    "@braze/web-sdk-core": "3.5.1",
     "@emotion/cache": "^11.1.5",
     "@emotion/core": "^10.0.27",
     "@emotion/react": "^11.1.5",
@@ -17,7 +17,7 @@
     "@guardian/ab-core": "^2.0.0",
     "@guardian/atom-renderer": "1.2.2",
     "@guardian/automat-modules": "^0.3.8",
-    "@guardian/braze-components": "^7.3.0",
+    "@guardian/braze-components": "^7.4.0",
     "@guardian/commercial-core": "4.10.0",
     "@guardian/consent-management-platform": "^10.11.1",
     "@guardian/libs": "^7.1.4",

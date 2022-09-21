@@ -27,6 +27,46 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-mandatory-long-test-run-uk",
+    "Test run for long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-run-na",
+    "Test run for long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-run-aunz",
+    "Test run for long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-run-eu",
+    "Test run for long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-deeply-read-article-footer",
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),

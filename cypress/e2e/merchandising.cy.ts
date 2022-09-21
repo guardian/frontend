@@ -1,26 +1,24 @@
 import { breakpoints } from '../fixtures/breakpoints';
 import { articles, liveblogs } from '../fixtures/pages';
+import { mockIntersectionObserver } from '../lib/util';
 
 describe('merchandising slot on pages', () => {
-	[...articles, ...liveblogs].forEach(({ path, adTest }) => {
-		breakpoints.forEach(({ breakpoint, width }) => {
+	[...articles, ...liveblogs].forEach(({ path }) => {
+		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
-				cy.viewport(width, 800);
+				cy.viewport(width, height);
 
-				cy.visit(path);
+				cy.visit(path, {
+					onBeforeLoad(win) {
+						mockIntersectionObserver(win, '#dfp-ad--merchandising');
+					},
+				});
 
 				cy.allowAllConsent();
 
-				// Check that the merchandising ad slot is on the page
-				cy.get('#dfp-ad--merchandising').should('exist');
-
-				// Ensure all lazy loaded items are loaded
-				cy.scrollTo('bottom', { duration: 3000 });
-
-				// creative isn't loaded unless slot is in view
-				cy.get('#dfp-ad--merchandising').scrollIntoView({
-					duration: 3000,
-				});
+				cy.get('#dfp-ad--merchandising')
+					.scrollIntoView({ duration: 200 })
+					.should('exist');
 
 				// Check that an iframe is placed inside the merchandising ad slot
 				cy.findAdSlotIframeBySlotId('dfp-ad--merchandising').should(

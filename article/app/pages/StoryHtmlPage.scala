@@ -13,7 +13,7 @@ import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
 import html.HtmlPageHelpers.ContentCSSFile
-import services.dotcomponents.ArticlePicker.{dcrChecks}
+import services.dotcomrendering.ArticlePicker.dcrChecks
 
 object StoryHtmlPage {
 
