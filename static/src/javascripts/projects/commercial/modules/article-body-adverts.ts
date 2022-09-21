@@ -8,6 +8,7 @@ import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import type {
+	RuleSpacing,
 	SpacefinderItem,
 	SpacefinderRules,
 	SpacefinderWriter,
@@ -36,7 +37,7 @@ const hasShowcaseMainElement =
 
 const adSlotcontainerClass = 'ad-slot-container';
 
-const adSlotClassSelectorSizes = {
+const adSlotContainerRules: RuleSpacing = {
 	minAbove: 500,
 	minBelow: 500,
 };
@@ -110,7 +111,7 @@ const filterNearbyCandidates =
 
 		return (
 			Math.abs(candidate.top - lastWinner.top) - maximumAdHeight >=
-			adSlotClassSelectorSizes.minBelow
+			adSlotContainerRules.minBelow
 		);
 	};
 
@@ -172,7 +173,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minAbove: 5,
 				minBelow: 190,
 			},
-			[` .${adSlotcontainerClass}`]: adSlotClassSelectorSizes,
+			[` .${adSlotcontainerClass}`]: adSlotContainerRules,
 			[ignoreList]: {
 				minAbove: 35,
 				minBelow: 400,
@@ -211,7 +212,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		minAbove,
 		minBelow: 300,
 		selectors: {
-			[` .${adSlotcontainerClass}`]: adSlotClassSelectorSizes,
+			[` .${adSlotcontainerClass}`]: adSlotContainerRules,
 			' [data-spacefinder-role="immersive"]': {
 				minAbove: 0,
 				minBelow: 600,
@@ -323,7 +324,7 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				minAbove: 100,
 				minBelow: 250,
 			},
-			[` .${adSlotcontainerClass}`]: adSlotClassSelectorSizes,
+			[` .${adSlotcontainerClass}`]: adSlotContainerRules,
 			[` > :not(p):not(h2):not(.${adSlotcontainerClass}):not(#sign-in-gate):not(.sfdebug)`]:
 				{
 					minAbove: 35,
@@ -388,7 +389,7 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 				minAbove: 100,
 				minBelow: 250,
 			},
-			[` .${adSlotcontainerClass}`]: adSlotClassSelectorSizes,
+			[` .${adSlotcontainerClass}`]: adSlotContainerRules,
 			[` > :not(p):not(h2):not(.${adSlotcontainerClass}):not(#sign-in-gate):not(.sfdebug)`]:
 				{
 					minAbove: 200,

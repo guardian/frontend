@@ -470,6 +470,7 @@ export const _ = {
 export { findSpace, SpaceError };
 
 export type {
+	RuleSpacing,
 	SpacefinderRules,
 	SpacefinderWriter,
 	SpacefinderOptions,
