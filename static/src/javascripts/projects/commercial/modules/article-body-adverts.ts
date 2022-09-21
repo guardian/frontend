@@ -154,8 +154,8 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
 	const ignoreList = hasLeftCol
-		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])'
-		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)';
+		? ' > :not(p):not(h2):not(.ad-slot-container):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])'
+		: ' > :not(p):not(h2):not(.ad-slot-container):not(#sign-in-gate):not(.sfdebug)';
 
 	const isImmersive = config.get('page.isImmersive');
 
@@ -169,7 +169,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minAbove: 5,
 				minBelow: 190,
 			},
-			' .ad-slot': adSlotClassSelectorSizes,
+			' .ad-slot-container': adSlotClassSelectorSizes,
 			[ignoreList]: {
 				minAbove: 35,
 				minBelow: 400,
@@ -208,7 +208,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		minAbove,
 		minBelow: 300,
 		selectors: {
-			' .ad-slot': adSlotClassSelectorSizes,
+			' .ad-slot-container': adSlotClassSelectorSizes,
 			' [data-spacefinder-role="immersive"]': {
 				minAbove: 0,
 				minBelow: 600,
@@ -320,8 +320,8 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				minAbove: 100,
 				minBelow: 250,
 			},
-			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)':
+			' .ad-slot-container': adSlotClassSelectorSizes,
+			' > :not(p):not(h2):not(.ad-slot-container):not(#sign-in-gate):not(.sfdebug)':
 				{
 					minAbove: 35,
 					minBelow: 200,
@@ -385,8 +385,8 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 				minAbove: 100,
 				minBelow: 250,
 			},
-			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)':
+			' .ad-slot-container': adSlotClassSelectorSizes,
+			' > :not(p):not(h2):not(.ad-slot-container):not(#sign-in-gate):not(.sfdebug)':
 				{
 					minAbove: 200,
 					minBelow: 400,
