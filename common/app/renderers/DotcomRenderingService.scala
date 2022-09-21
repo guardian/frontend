@@ -12,16 +12,13 @@ import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
   DotcomRenderingDataModel,
-  DotcomRenderingUtils,
   OnwardCollectionResponse,
   PageType,
-  Trail,
 }
 import services.NewsletterData
 import model.{
   CacheTime,
   Cached,
-  ContentFormat,
   InteractivePage,
   LiveBlogPage,
   NoCache,
@@ -30,7 +27,6 @@ import model.{
   Topic,
   TopicResult,
 }
-import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -243,45 +239,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page.metadata.cacheTime)
   }
-
-  // This is complete rubbish, but we need to send format through to
-  // DCR, but aren't aware of what the format is at this stage so we just use the default
-  // TODO: Either remove this from DCR or from here
-  private case class DCROnwardCollectionResponse(
-      heading: String,
-      trails: Seq[Trail],
-      format: ContentFormat,
-  )
-  private object DCROnwardCollectionResponse {
-    implicit val writes = Json.writes[DCROnwardCollectionResponse]
-
-    def toJson(model: DCROnwardCollectionResponse) = {
-      val jsValue = Json.toJson(model)
-      Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
-    }
-  }
-  def getOnward(ws: WSClient, onwardsCollection: OnwardCollectionResponse)(implicit
-      request: RequestHeader,
-  ): Future[String] = {
-    val json = DCROnwardCollectionResponse.toJson(
-      DCROnwardCollectionResponse(
-        heading = onwardsCollection.heading,
-        trails = onwardsCollection.trails,
-        format = ContentFormat.defaultContentFormat,
-      ),
-    )
-
-    postWithoutHandler(ws, json, Configuration.rendering.baseURL + "/Onwards")
-      .flatMap(response => {
-        if (response.status == 200)
-          Future.successful(response.body)
-        else
-          Future.failed(
-            DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"),
-          )
-      })
-  }
-
 }
 
 object DotcomRenderingService {
