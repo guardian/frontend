@@ -94,4 +94,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 12, 30)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-shady-pie-click-through",
+    "Test the click through rate of the new labs shady pie component",
+    owners = Seq(Owner.withGithub("emma-imber")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 30)),
+    exposeClientSide = true,
+  )
 }
