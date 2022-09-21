@@ -26,6 +26,8 @@ type ContainerOptions = {
 	className?: string;
 };
 
+const articleBodySelector = '.article-body-commercial-selector';
+
 const sfdebug = getUrlVars().sfdebug;
 
 const isPaidContent = config.get<boolean>('page.isPaidContent', false);
@@ -150,8 +152,6 @@ const decideAdditionalSizes = async (
 		distanceFromBottom ? distanceFromBottom >= adSize.height : false,
 	);
 };
-
-const articleBodySelector = '.article-body-commercial-selector';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const tweakpoint = getTweakpoint(getViewport().width);
