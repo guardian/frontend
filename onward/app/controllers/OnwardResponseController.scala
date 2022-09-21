@@ -6,7 +6,6 @@ import model.{ApplicationContext, Cached}
 import model.dotcomrendering.OnwardCollectionResponse
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
-import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.PopularInTagService
 
@@ -33,10 +32,6 @@ class OnwardResponseController(
     Action.async { implicit request =>
       popularInTag(tag) map renderJson
     }
-  def popularInTagHtml(tag: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      popularInTag(tag) flatMap renderHtml
-    }
 
   private def renderJson(
       onwardsCollection: OnwardCollectionResponse,
@@ -47,14 +42,6 @@ class OnwardResponseController(
           request,
           OnwardCollectionResponse.collectionWrites,
         )
-    }
-  }
-
-  private def renderHtml(
-      onwardsCollection: OnwardCollectionResponse,
-  )(implicit request: RequestHeader): Future[Result] = {
-    remoteRenderer.getOnward(ws, onwardsCollection) map { result =>
-      Cached(600)(JsonComponent("html" -> new Html(result)))
     }
   }
 }
