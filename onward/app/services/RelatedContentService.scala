@@ -46,7 +46,7 @@ class RelatedContentService(contentApiClient: ContentApiClient)(implicit
       .map(trails =>
         OnwardCollectionResponse(
           heading = "Related content",
-          trails = trails.take(10),
+          trails = trails.take(10).toSeq,
         ),
       )
   }

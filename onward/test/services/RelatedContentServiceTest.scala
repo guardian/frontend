@@ -10,6 +10,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
+import scala.util.Try
 
 @DoNotDiscover class RelatedContentServiceTest
     extends AnyFlatSpec
@@ -36,7 +37,6 @@ import scala.concurrent.Await
   }
 
   it should "have 10 related articles without Liam Gallagher tag" in {
-    RelatedContentSwitch.switchOff()
     val result = Await.result(
       relatedContentService.fetch(Uk, "music/2022/sep/20/liam-gallagher-at-50-oasis", Seq("music/liam-gallagher")),
       1.second,
@@ -49,13 +49,12 @@ import scala.concurrent.Await
 
   it should "throw an error if RelatedContentSwitch is off" in {
     RelatedContentSwitch.switchOff()
-    val result = scala.util.Try(
+
+    assertThrows[RelatedContentDisabledException] {
       Await.result(
         relatedContentService.fetch(Uk, "music/2022/sep/20/liam-gallagher-at-50-oasis", Seq("music/liam-gallagher")),
         1.second,
-      ),
-    )
-
-    result.failed.get.getClass should RelatedContentDisabledException.getClass
+      )
+    }
   }
 }
