@@ -4,7 +4,7 @@ import { breakpoints } from '@guardian/source-foundations';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import fastdom from '../../../../lib/fastdom-promise';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
-import type { RegisterListener } from '../messenger';
+import type { RegisterListener } from '@guardian/commercial-core';
 
 type PassbackMessagePayload = { source: string };
 

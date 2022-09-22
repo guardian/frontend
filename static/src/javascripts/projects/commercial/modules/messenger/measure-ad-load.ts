@@ -1,6 +1,6 @@
 import { EventTimer } from '@guardian/commercial-core';
 import { isObject, isString } from '@guardian/libs';
-import type { RegisterListener } from '../messenger';
+import type { RegisterListener } from '@guardian/commercial-core';
 
 // This message is intended to be used with a GAM creative wrapper.
 // For reference, the wrapper will post a message, like so:

@@ -1,7 +1,7 @@
-import { postMessage } from './post-message';
+import { postMessage } from '@guardian/commercial-core';
 import { send } from './send';
 
-jest.mock('./post-message', () => ({
+jest.mock('@guardian/commercial-core', () => ({
 	postMessage: jest.fn(),
 }));
 

@@ -1,3 +1,4 @@
+import type { RegisterListener } from '@guardian/commercial-core';
 import { isObject } from '@guardian/libs';
 import once from 'lodash-es/once';
 import fastdom from '../../../../lib/fastdom-promise';
@@ -5,7 +6,6 @@ import {
 	renderInterscrollerAdLabel,
 	renderStickyScrollForMoreLabel,
 } from '../dfp/render-advert-label';
-import type { RegisterListener } from '../messenger';
 
 const isDCR = window.guardian.config.isDotcomRendering;
 

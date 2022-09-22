@@ -5,10 +5,6 @@ const addScrollListener = testExports.addScrollListener;
 const removeScrollListener = testExports.removeScrollListener;
 const reset = testExports.reset;
 
-jest.mock('../messenger', () => ({
-	register: jest.fn(),
-}));
-
 const mockViewport = (width: number, height: number): void => {
 	Object.defineProperties(window, {
 		innerWidth: {

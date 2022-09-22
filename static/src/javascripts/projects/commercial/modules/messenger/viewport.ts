@@ -1,7 +1,10 @@
+import type {
+	RegisterPersistentListener,
+	RespondProxy,
+} from '@guardian/commercial-core';
 import { getViewport } from '../../../../lib/detect-viewport';
 import type { Viewport } from '../../../../lib/detect-viewport';
 import fastdom from '../../../../lib/fastdom-promise';
-import type { RegisterPersistentListener, RespondProxy } from '../messenger';
 
 type IFrameMapValue = {
 	node: HTMLIFrameElement;
