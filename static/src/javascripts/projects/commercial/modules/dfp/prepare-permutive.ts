@@ -1,6 +1,23 @@
 import reportError from '../../../../lib/report-error';
 
-type PermutivePageConfig = Pick<Config, 'page' | 'user' | 'ophan'>;
+interface PermutivePageConfig {
+	page: Pick<
+		PageConfig,
+		| 'isPaidContent'
+		| 'pageId'
+		| 'headline'
+		| 'contentType'
+		| 'section'
+		| 'author'
+		| 'keywords'
+		| 'webPublicationDate'
+		| 'series'
+		| 'edition'
+		| 'toneIds'
+	>;
+	user?: UserConfig;
+	ophan?: Config['ophan'];
+}
 
 type PermutiveSchema = {
 	content: {
@@ -54,10 +71,10 @@ const removeEmpty = <
 	return payload;
 };
 
-const generatePayload = (
-	permutiveConfig: PermutivePageConfig,
-): PermutiveSchema => {
-	const { page, user } = permutiveConfig;
+const generatePayload = ({
+	page,
+	user,
+}: PermutivePageConfig): PermutiveSchema => {
 	const {
 		isPaidContent,
 		pageId,
