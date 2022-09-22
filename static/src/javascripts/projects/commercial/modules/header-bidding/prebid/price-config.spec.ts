@@ -1,7 +1,6 @@
 import {
 	criteoPriceGranularity,
-	indexPrebidPriceGranularity,
-	otherPrebidPriceGranularity,
+	indexPriceGranularity,
 	ozonePriceGranularity,
 	priceGranularity,
 } from './price-config';
@@ -11,17 +10,20 @@ describe('price granularity', () => {
 		expect(priceGranularity).toEqual({
 			buckets: [
 				{
-					max: 100,
+					max: 10,
 					increment: 0.01,
 				},
 				{
-					max: 500,
+					max: 15,
+					increment: 0.1,
+				},
+				{
+					max: 100,
 					increment: 1,
 				},
 			],
 		});
 	});
-
 	test('criteo should have correct buckets', () => {
 		expect(criteoPriceGranularity).toEqual({
 			buckets: [
@@ -140,61 +142,7 @@ describe('price granularity', () => {
 		])(
 			'Index Prebid slot with size %s gives correct granularity',
 			([width, height], expectedGranularity) => {
-				expect(indexPrebidPriceGranularity(width, height)).toEqual(
-					expectedGranularity,
-				);
-			},
-		);
-	});
-
-	describe('Other Prebid', () => {
-		const otherPrebidGranularityOption1 = {
-			buckets: [
-				{
-					max: 7,
-					increment: 0.01,
-				},
-				{
-					max: 15,
-					increment: 0.1,
-				},
-				{
-					max: 50,
-					increment: 1,
-				},
-			],
-		};
-
-		const otherPrebidGranularityOption2 = {
-			buckets: [
-				{
-					max: 10,
-					increment: 0.01,
-				},
-				{
-					max: 15,
-					increment: 0.1,
-				},
-				{
-					max: 50,
-					increment: 1,
-				},
-			],
-		};
-
-		test.each([
-			[[100, 100], undefined],
-			[[160, 600], otherPrebidGranularityOption1],
-			[[300, 600], otherPrebidGranularityOption1],
-			[[320, 480], otherPrebidGranularityOption1],
-			[[728, 90], otherPrebidGranularityOption2],
-			[[970, 250], otherPrebidGranularityOption2],
-			[[300, 250], otherPrebidGranularityOption2],
-			[[320, 50], otherPrebidGranularityOption2],
-		])(
-			'Index Prebid slot with size %s gives correct granularity',
-			([width, height], expectedGranularity) => {
-				expect(otherPrebidPriceGranularity(width, height)).toEqual(
+				expect(indexPriceGranularity(width, height)).toEqual(
 					expectedGranularity,
 				);
 			},
