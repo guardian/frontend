@@ -49,7 +49,7 @@ class OnwardResponseController(
 
   def series(seriesId: String)(implicit request: RequestHeader): Future[Option[OnwardCollectionResponse]] = {
     val edition = Edition(request)
-    seriesService.fetch(edition, seriesId, decideReturnType = (tag, trails) =>
+    seriesService.fetch(edition, seriesId, f = (tag, trails) =>
       OnwardCollectionResponse(
       heading = tag.id,
       trails = trails.map(_.faciaContent).map(Trail.pressedContentToTrail),

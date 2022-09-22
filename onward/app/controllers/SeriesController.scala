@@ -29,7 +29,7 @@ class SeriesController(
 
   private def fetch(seriesId: String,
                     queryModifier: ItemQuery => ItemQuery = identity)(implicit request: RequestHeader) = {
-    seriesService.fetch(Edition(request), seriesId, queryModifier, decideReturnType = (tag, trails) =>
+    seriesService.fetch(Edition(request), seriesId, queryModifier, f = (tag, trails) =>
       Series(seriesId, Tag.make(tag, None), RelatedContent(trails.toSeq))
     )
   }

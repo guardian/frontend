@@ -15,7 +15,7 @@ class SeriesService(contentApiClient: ContentApiClient)(implicit executionContex
   def fetch[T](edition: Edition,
                seriesId: String,
                queryModifier: ItemQuery => ItemQuery = identity,
-               decideReturnType: (Tag, Seq[RelatedContentItem]) => T
+               f: (Tag, Seq[RelatedContentItem]) => T
               )(implicit request: RequestHeader): Future[Option[T]] = {
     val currentShortUrl = request.getQueryString("shortUrl")
 
@@ -31,7 +31,7 @@ class SeriesService(contentApiClient: ContentApiClient)(implicit executionContex
     val response: Future[Option[T]] = contentApiClient.getResponse(query).map { response =>
       response.tag.flatMap { tag =>
         val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
-        Option.when(trails.nonEmpty)(decideReturnType(tag, trails.toSeq))
+        Option.when(trails.nonEmpty)(f(tag, trails.toSeq))
       }
     }
 
