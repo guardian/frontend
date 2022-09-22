@@ -30,8 +30,10 @@ import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
+import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
+import agents.CuratedContentAgent
 import agents.DeeplyReadAgent
 
 class AppLoader extends FrontendApplicationLoader {
@@ -87,6 +89,9 @@ trait AppComponents
 
   override lazy val optionalDevContext = new OptionalDevContext(devContext)
   override lazy val sourceMapper = devContext.map(_.sourceMapper)
+
+  lazy val onwardsPicker = wire[OnwardsPicker]
+  lazy val curatedContentAgent = wire[CuratedContentAgent]
 
   def actorSystem: ActorSystem
   override def router: Router = wire[Routes]
