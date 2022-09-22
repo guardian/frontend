@@ -5,6 +5,9 @@ import feed.MostReadAgent
 import model.{ApplicationContext, Cached}
 import model.dotcomrendering.OnwardCollectionResponse
 import model.dotcomrendering.Trail
+import model.{ApplicationContext, Cached, RelatedContent, RelatedContentItem, Tag}
+import model.dotcomrendering.OnwardCollectionResponse
+import models.Series
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import renderers.DotcomRenderingService
@@ -49,11 +52,7 @@ class OnwardResponseController(
 
   def series(seriesId: String)(implicit request: RequestHeader): Future[Option[OnwardCollectionResponse]] = {
     val edition = Edition(request)
-    seriesService.fetch(edition, seriesId, f = (tag, trails) =>
-      OnwardCollectionResponse(
-      heading = tag.id,
-      trails = trails.map(_.faciaContent).map(Trail.pressedContentToTrail),
-    ))
+    seriesService.fetch(edition, seriesId)
   }
 
   def seriesJson(seriesId: String): Action[AnyContent] =

@@ -5,7 +5,6 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
-import services.SeriesService
 
 @DoNotDiscover class SeriesControllerTest
     extends AnyFlatSpec
@@ -19,10 +18,7 @@ import services.SeriesService
 
   var series = "news/series/pass-notes"
   lazy val seriesController =
-    new SeriesController(testContentApiClient,
-      play.api.test.Helpers.stubControllerComponents(),
-      new SeriesService(testContentApiClient),
-    )
+    new SeriesController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "Series Controller" should "200 when content type is a tag" in {
     val result = seriesController.renderSeriesStories(series)(TestRequest())
