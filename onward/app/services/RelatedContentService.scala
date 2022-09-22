@@ -16,11 +16,7 @@ class RelatedContentService(contentApiClient: ContentApiClient)(implicit
       requestHeader: RequestHeader,
   ): Future[OnwardCollectionResponse] = {
     if (RelatedContentSwitch.isSwitchedOff) {
-      logWarningWithCustomFields(
-        "Failed getting related content due to RelatedContentSwitch being off",
-        RelatedContentDisabledException(),
-        List("pageId" -> pageId),
-      )
+      log.info("Failed getting related content due to RelatedContentSwitch being off")
       return Future.failed(RelatedContentDisabledException())
     }
 
