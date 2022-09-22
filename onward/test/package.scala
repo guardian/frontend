@@ -1,6 +1,7 @@
 package test
 
 import org.scalatest.Suites
+import services.RelatedContentServiceTest
 
 class OnwardTestSuite
     extends Suites(
@@ -16,5 +17,6 @@ class OnwardTestSuite
       new VideoInSectionTest,
       new RichLinkControllerTest,
       new NavigationControllerTest,
+      new RelatedContentServiceTest,
     )
     with SingleServerSuite {}

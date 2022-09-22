@@ -12,7 +12,7 @@ import play.api.mvc.ControllerComponents
 import weather.WeatherApi
 import agents.DeeplyReadAgent
 import renderers.DotcomRenderingService
-import services.PopularInTagService
+import services.{PopularInTagService, RelatedContentService}
 
 trait OnwardControllers {
 
@@ -34,6 +34,7 @@ trait OnwardControllers {
   def controllerComponents: ControllerComponents
   def remoteRenderer: DotcomRenderingService
   def popularInTagService: PopularInTagService
+  def relatedContentService: RelatedContentService
 
   lazy val navigationController = wire[NavigationController]
   lazy val weatherController = wire[WeatherController]
