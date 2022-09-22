@@ -32,8 +32,8 @@ import scala.util.Try
       Await.result(relatedContentService.fetch(Uk, "music/2022/sep/20/liam-gallagher-at-50-oasis", Seq.empty), 1.second)
 
     result.trails.exists(_.headline.contains("Liam Gallagher")) shouldBe true
-    result.trails.length shouldEqual 10
-    result.heading shouldEqual "Related content"
+    result.trails.length shouldBe 10
+    result.heading shouldBe "Related content"
   }
 
   it should "have 10 related articles without Liam Gallagher tag" in {
@@ -43,8 +43,8 @@ import scala.util.Try
     )
 
     result.trails.exists(_.headline.contains("Liam Gallagher")) shouldBe false
-    result.trails.length shouldEqual 10
-    result.heading shouldEqual "Related content"
+    result.trails.length shouldBe 10
+    result.heading shouldBe "Related content"
   }
 
   it should "throw an error if RelatedContentSwitch is off" in {
