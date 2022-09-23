@@ -96,6 +96,7 @@ class CanonicalLink {
     "index",
     "page",
     "filterKeyEvents",
+    "topics",
   )
 
   def apply(implicit request: RequestHeader, webUrl: String): String = {
