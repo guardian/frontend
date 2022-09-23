@@ -11,9 +11,10 @@ import model.RelatedContentItem
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class SeriesService(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext,
-) extends GuLogging {
-  def fetch(edition: Edition, seriesId: String, queryModifier: ItemQuery => ItemQuery = identity)(implicit request: RequestHeader): Future[Option[OnwardCollectionResponse]] = {
+class SeriesService(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext) extends GuLogging {
+  def fetch(edition: Edition, seriesId: String, queryModifier: ItemQuery => ItemQuery = identity)(implicit
+      request: RequestHeader,
+  ): Future[Option[OnwardCollectionResponse]] = {
     val currentShortUrl = request.getQueryString("shortUrl")
 
     def isCurrentStory(content: ApiContent) =
@@ -29,10 +30,12 @@ class SeriesService(contentApiClient: ContentApiClient)(implicit executionContex
       response.tag.flatMap { tag =>
         val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
         if (trails.nonEmpty) {
-          Some(OnwardCollectionResponse(
-            heading = tag.id,
-            trails = trails.map(_.faciaContent).map(Trail.pressedContentToTrail).toSeq,
-          ))
+          Some(
+            OnwardCollectionResponse(
+              heading = tag.id,
+              trails = trails.map(_.faciaContent).map(Trail.pressedContentToTrail).toSeq,
+            ),
+          )
         } else { None }
       }
     }
