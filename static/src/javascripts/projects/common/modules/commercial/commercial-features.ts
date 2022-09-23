@@ -42,7 +42,6 @@ class CommercialFeatures {
 	relatedWidgetEnabled: boolean;
 	commentAdverts: boolean;
 	liveblogAdverts: boolean;
-	paidforBand: boolean;
 	adFree: boolean;
 	comscore: boolean;
 	launchpad: boolean;
@@ -192,9 +191,6 @@ class CommercialFeatures {
 
 		this.liveblogAdverts =
 			isLiveBlog && this.dfpAdvertising && !this.adFree;
-
-		this.paidforBand =
-			config.get<boolean>('page.isPaidContent', false) && !supportsSticky;
 
 		this.comscore =
 			config.get<boolean>('switches.comscore', false) &&
