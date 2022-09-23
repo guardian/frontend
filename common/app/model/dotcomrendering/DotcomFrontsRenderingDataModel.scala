@@ -72,7 +72,7 @@ object DotcomFrontsRenderingDataModel {
       commercialProperties = commercialProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
-      isNetworkFront = page.isNetworkFront
+      isNetworkFront = page.isNetworkFront,
     )
   }
 
