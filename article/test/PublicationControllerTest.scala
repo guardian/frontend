@@ -1,6 +1,6 @@
 package test
 
-import agents.{CuratedContentAgent, DeeplyReadAgent}
+import agents.{CuratedContentAgent}
 import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
 import org.mockito.Mockito._
@@ -41,7 +41,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       wsClient,
       new DCRFake(),
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
-      new DeeplyReadAgent(),
       new OnwardsPicker(new CuratedContentAgent(fapi)),
     )
   lazy val publicationController =

@@ -1,6 +1,6 @@
 package test
 
-import agents.{CuratedContentAgent, DeeplyReadAgent}
+import agents.{CuratedContentAgent}
 import controllers.ArticleController
 import org.apache.commons.codec.digest.DigestUtils
 import org.scalatest.flatspec.AnyFlatSpec
@@ -34,7 +34,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     wsClient,
     new DCRFake(),
     new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
-    new DeeplyReadAgent(),
     new OnwardsPicker(new CuratedContentAgent(fapi)),
   )
 
