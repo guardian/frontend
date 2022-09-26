@@ -27,4 +27,13 @@ describe('addCountryGroupToSupportLink', () => {
 			),
 		).toEqual('https://support.theguardian.com/eu/contribute');
 	});
+
+	test('does not add country group to contribute link with country group already in it', () => {
+		setCookie({ name: countryCookieName, value: 'GB' });
+		expect(
+			addCountryGroupToSupportLink(
+				'https://support.theguardian.com/int/contribute',
+			),
+		).toEqual('https://support.theguardian.com/int/contribute');
+	});
 });
