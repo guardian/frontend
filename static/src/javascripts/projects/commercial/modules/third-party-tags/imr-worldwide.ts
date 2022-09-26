@@ -3,7 +3,7 @@ import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
 // NOLCMB is a global function defined by the IMR worldwide library
 
-const guMetadata = {
+const guMetadata: Record<string, string> = {
 	books: 'P5033A084-E9BF-453A-91D3-C558751D9A85',
 	business: 'P5B109609-6223-45BA-B052-55F34A79D7AD',
 	commentisfree: 'PA878EFC7-93C8-4352-905E-9E03883FD6BD',
@@ -58,8 +58,10 @@ const guMetadata = {
 	'brand-only': 'P0EE0F4F4-8D7C-4082-A2A4-82C84728DC59',
 };
 
-const onLoad = () => {
-	const sectionFromMeta = config.get('page.section', '').toLowerCase();
+const onLoad = (): void => {
+	const sectionFromMeta = config
+		.get<string>('page.section', '')
+		.toLowerCase();
 	const subBrandApId =
 		guMetadata[sectionFromMeta] || guMetadata['brand-only'];
 
