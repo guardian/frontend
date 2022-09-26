@@ -578,7 +578,6 @@
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/third-party-tags/imr-worldwide.ts": [
-  "../lib/config.d.ts",
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/track-gpc-signal.ts": [
