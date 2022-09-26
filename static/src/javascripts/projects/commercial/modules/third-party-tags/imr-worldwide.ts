@@ -1,4 +1,3 @@
-import config from '../../../../lib/config';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
 // NOLCMB is a global function defined by the IMR worldwide library
@@ -87,8 +86,7 @@ const onLoad = (): void => {
 };
 
 export const imrWorldwide = {
-	shouldRun:
-		config.get<boolean>('switches.imrWorldwide', false) && isInAuOrNz(),
+	shouldRun: window.guardian.config.switches.imrWorldwide && isInAuOrNz(),
 	url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
 	onLoad,
 };
