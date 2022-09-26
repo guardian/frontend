@@ -21,7 +21,11 @@ const adsShouldNotShow = () => {
 };
 
 const reconsent = () => {
-	cy.get('[data-link-name="privacy-settings"]').scrollIntoView().click();
+	cy.get('[data-link-name="privacy-settings"]')
+		.scrollIntoView({
+			duration: 500,
+		})
+		.click();
 
 	cy.getIframeBody('iframe[title="SP Consent Message"]')
 		.find(`button[title="Accept all"]`)
@@ -36,8 +40,6 @@ const reconsent = () => {
 };
 
 const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
-	// wait is an antipattern and unreliable, maybe import onConsentChange and cypressify it?
-	cy.wait(300);
 	cy.then(function expectAdFree() {
 		cy.getCookie('GU_AF1').should(
 			reasons.length ? 'not.be.empty' : 'be.null',
@@ -61,7 +63,46 @@ const expectAdFree = (reasons: AdFreeCookieReasons[]) => {
 	});
 };
 
-describe.skip('tcfv2 consent', () => {
+describe('tcfv2 consent', () => {
+	const expectAdFreeCookieReasonSet = (reasons: AdFreeCookieReasons[]) => {
+		cy.window()
+			.its('localStorage.setItem')
+			.should(
+				'be.calledWith',
+				'gu.ad_free_cookie_reason',
+				Cypress.sinon.match((value) => {
+					const parsed: Record<AdFreeCookieReasons, number> =
+						JSON.parse(value);
+					return (
+						Object.keys(parsed).length === reasons.length &&
+						reasons.every((r) => parsed[r]) &&
+						Object.keys(parsed).every((r) =>
+							reasons.includes(r as AdFreeCookieReasons),
+						)
+					);
+				}),
+			);
+
+		cy.window()
+			.its('localStorage.setItem')
+			.should(
+				'not.be.calledWith',
+				'gu.ad_free_cookie_reason',
+				Cypress.sinon.match((value) => {
+					const parsed: Record<AdFreeCookieReasons, number> =
+						JSON.parse(value);
+					const excludeReasons = Object.keys(
+						AdFreeCookieReasons,
+					).filter(
+						(r) => !reasons.includes(r as AdFreeCookieReasons),
+					);
+					return Object.keys(parsed).some((r) =>
+						excludeReasons.includes(r),
+					);
+				}),
+			);
+	};
+
 	beforeEach(() => {
 		cy.clearCookies();
 		cy.clearLocalStorage().then(() => {
@@ -70,6 +111,10 @@ describe.skip('tcfv2 consent', () => {
 				'gu.geo.override',
 				JSON.stringify({ value: 'GB' }),
 			);
+		});
+
+		Cypress.on('window:before:load', (win) => {
+			cy.spy(win.localStorage, 'setItem').log(false);
 		});
 	});
 
@@ -83,7 +128,7 @@ describe.skip('tcfv2 consent', () => {
 
 		cy.getCookie('GU_AF1').should('not.be.empty');
 
-		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
+		expectAdFreeCookieReasonSet([AdFreeCookieReasons.ConsentOptOut]);
 
 		cy.reload();
 
@@ -112,6 +157,8 @@ describe.skip('tcfv2 consent', () => {
 
 		reconsent();
 
+		expectAdFreeCookieReasonSet([]);
+
 		cy.reload();
 
 		expectAdFree([]);
@@ -126,7 +173,7 @@ describe.skip('tcfv2 consent', () => {
 
 		cy.rejectAllConsent();
 
-		expectAdFree([
+		expectAdFreeCookieReasonSet([
 			AdFreeCookieReasons.ConsentOptOut,
 			AdFreeCookieReasons.Subscriber,
 		]);
@@ -135,9 +182,9 @@ describe.skip('tcfv2 consent', () => {
 
 		cy.reload();
 
-		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
-
 		adsShouldNotShow();
+
+		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 	});
 
 	it(`Test ${path} reject all, login as non-subscriber, log out should not show ads`, () => {
@@ -147,13 +194,13 @@ describe.skip('tcfv2 consent', () => {
 
 		cy.rejectAllConsent();
 
-		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
+		expectAdFreeCookieReasonSet([AdFreeCookieReasons.ConsentOptOut]);
 
 		fakeLogOut();
 
-		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
-
 		adsShouldNotShow();
+
+		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 	});
 
 	it(`Test ${path} reject all, login as non-subscriber, reconsent should show ads`, () => {
@@ -169,6 +216,8 @@ describe.skip('tcfv2 consent', () => {
 			`{"value":"${new Date().toISOString()}"}`,
 		);
 
+		expectAdFreeCookieReasonSet([AdFreeCookieReasons.ConsentOptOut]);
+
 		cy.reload();
 
 		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
@@ -177,7 +226,7 @@ describe.skip('tcfv2 consent', () => {
 
 		reconsent();
 
-		expectAdFree([]);
+		expectAdFreeCookieReasonSet([]);
 
 		cy.reload();
 
@@ -191,7 +240,7 @@ describe.skip('tcfv2 consent', () => {
 
 		cy.allowAllConsent();
 
-		expectAdFree([AdFreeCookieReasons.Subscriber]);
+		expectAdFreeCookieReasonSet([AdFreeCookieReasons.Subscriber]);
 
 		cy.setCookie(
 			'gu_user_features_expiry',
@@ -210,7 +259,6 @@ describe.skip('tcfv2 consent', () => {
 
 		expectAdFree([]);
 
-		// reload twice so server is not sent ad free cookie
 		cy.reload();
 
 		adsShouldShow();
@@ -223,7 +271,7 @@ describe.skip('tcfv2 consent', () => {
 
 		cy.rejectAllConsent();
 
-		expectAdFree([
+		expectAdFreeCookieReasonSet([
 			AdFreeCookieReasons.ConsentOptOut,
 			AdFreeCookieReasons.Subscriber,
 		]);
@@ -256,7 +304,7 @@ describe.skip('tcfv2 consent', () => {
 
 		cy.rejectAllConsent();
 
-		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
+		expectAdFreeCookieReasonSet([AdFreeCookieReasons.ConsentOptOut]);
 
 		const expiredTimestamp = new Date().getTime() - 1000;
 
@@ -268,6 +316,8 @@ describe.skip('tcfv2 consent', () => {
 		);
 
 		cy.reload();
+
+		cy.wait(100);
 
 		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
@@ -285,7 +335,7 @@ describe.skip('tcfv2 consent', () => {
 		);
 
 		cy.getCookie('GU_AF1')
-			.should('have.property', 'value')
+			.its('value')
 			.then((value) =>
 				expect(Number(value)).to.be.greaterThan(expiredTimestamp),
 			);

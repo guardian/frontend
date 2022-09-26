@@ -34,11 +34,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info(s"Deeply Read Agent refresh()")
     /*
-        Here we simply go through the OphanDeeplyReadItem we got from Ophan and for each
-        query CAPI and set the Content for the path.
+      We query Ophan for the deeply read URLs and use them to queryCapi
+      then use this information to create a sequence of trails that we cache
+      using a Box structure.
      */
-    val k = Edition.all.map { edition =>
-      val deeplyReadItemsWithCapi: Future[Seq[Trail]] =
+    Future.sequence(Edition.all.map { edition =>
         ophanApi.getDeeplyRead(edition).flatMap { ophanDeeplyReadItems =>
           log.info(s"ophanItems updated with: ${ophanDeeplyReadItems.size} new items")
           val constructedTrail: Seq[Future[Trail]] = ophanDeeplyReadItems.map { ophanItem =>
@@ -54,32 +54,30 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
             val trailFromCapiResponse = contentApiClient
               .getResponse(capiRequest)
               .map { res =>
-                res.content.flatMap { c =>
-                  log.info(s"Updated CAPI data for path: ${path}")
-                  println(s"Updated CAPI data for path: ${path}")
-                  ophanItemToTrail(ophanItem, c)
+                res.content.flatMap { capiData =>
+                  log.info(s"Retrieved CAPI data for Deeply Read item: ${path}")
+                  deeplyReadUrlToTrail(capiData)
                 }
               }
               .recover {
                 case NonFatal(e) =>
-                  log.info(s"Error CAPI lookup for path: ${path}. ${e.getMessage}")
+                  log.error(s"Error retrieving CAPI data for Deeply Read item: ${path}. ${e.getMessage}")
                   None
               }
             trailFromCapiResponse.map(_.get)
           }
           Future.sequence(constructedTrail)
         }
-
-//      deeplyReadItemsWithCapi.foreach { sequence =>
-//        val deeplyReadMap = deeplyReadItems.get() ++ Map(edition -> sequence)
-//        deeplyReadItems.alter(deeplyReadMap)
-//      }
-    }
+    }).map(trailsList => {
+//      deeplyReadItems
+      val map = Edition.all.zip(trailsList).toMap
+      deeplyReadItems.alter(map)
+    })
   }
 
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
 
-  def ophanItemToTrail(item: OphanDeeplyReadItem, content: Content): Option[Trail] = {
+  def deeplyReadUrlToTrail(content: Content): Option[Trail] = {
 
     val contentFormat: ContentFormat = ContentFormat(content.design, content.theme, content.display)
 
@@ -113,25 +111,12 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     )
   }
 
-  def getReport(edition: Edition)(implicit ec: ExecutionContext): OnwardCollectionResponse = {
-    if (deeplyReadItems().isEmpty) {
-      // This helps improving the situation if the initial akka driven refresh failed (which happens way to often)
-      // Note that is there was no data in ophanItems the report will be empty, but will at least return data at the next call
-      log.info(s"refresh() from getReport()")
-      refresh(edition)
-    }
-
-    val trails: Seq[Trail] = getTrails(edition)
-    OnwardCollectionResponse("Deeply read", trails)
-  }
-
   def getTrails(edition: Edition)(implicit ec: ExecutionContext): Seq[Trail] = {
-    val editionVal = deeplyReadItems.get().getOrElse(edition, Seq.empty)
-    if (editionVal.isEmpty) {
-      refresh(edition)
+    val updatedTrails = deeplyReadItems.get().getOrElse(edition, Seq.empty)
+    if (updatedTrails.isEmpty) {
+      refresh()
     }
-
-    editionVal
+    updatedTrails
   }
 
 }

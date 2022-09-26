@@ -23,4 +23,8 @@ class MostReadAgent(ophanApi: OphanApi) extends GuLogging {
   def getViewCount(id: String): Option[Int] = {
     agent.get().get(id)
   }
+
+  def getViewCounts: Map[String, Int] = {
+    agent.get()
+  }
 }

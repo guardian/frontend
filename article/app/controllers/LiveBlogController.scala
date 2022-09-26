@@ -3,7 +3,7 @@ package controllers
 import agents.DeeplyReadAgent
 import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
-import common.{JsonComponent, RichRequestHeader, _}
+import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
@@ -12,14 +12,14 @@ import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType, Trail}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
-import model.{ApplicationContext, CanonicalLiveBlog, _}
+import model._
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
+import services.dotcomrendering.DotcomponentsLogger
 import services.{CAPILookup, NewsletterService}
-import services.dotcomponents.DotcomponentsLogger
 import topics.TopicService
 import views.support.RenderOtherStatus
 

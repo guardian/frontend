@@ -8,14 +8,14 @@ import experiments.{ActiveExperiments, DCROnwardsData}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType, Trail}
-import model.{ContentType, _}
+import model._
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.{CAPILookup, NewsletterService}
-import services.dotcomponents.{ArticlePicker, _}
+import services.dotcomrendering.{ArticlePicker, OnwardsPicker, PressedArticle, RemoteRender}
 import views.support._
 
 import scala.concurrent.Future

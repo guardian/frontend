@@ -1,10 +1,9 @@
-package services.dotcomponents
+package services.dotcomrendering
 
 import com.madgag.scala.collection.decorators.MapDecorator
 import implicits.Requests._
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
-import services.dotcomrendering.PressedContent
 
 object ArticlePageChecks {
 

@@ -10,7 +10,7 @@ import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test._
 import services.NewsletterService
-import services.dotcomponents.OnwardsPicker
+import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class ArticleControllerTest
@@ -22,7 +22,8 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with WithTestFrontJsonFapi {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
@@ -34,7 +35,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     new DCRFake(),
     new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
     new DeeplyReadAgent(),
-    new OnwardsPicker(new CuratedContentAgent()),
+    new OnwardsPicker(new CuratedContentAgent(fapi)),
   )
 
   "Article Controller" should "200 when content type is article" in {

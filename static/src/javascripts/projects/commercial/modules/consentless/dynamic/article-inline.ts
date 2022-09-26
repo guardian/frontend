@@ -167,26 +167,22 @@ const addDesktopInlineAds = async () => {
 	const enableDebug = sfdebug === '1';
 
 	const insertAds: SpacefinderWriter = async (paras) => {
-		// Make ads sticky in containers if using containers and in sticky test variant
 		// Compute the height of containers in which ads will remain sticky
-		const includeStickyContainers = !!getUrlVars().multiSticky;
+		const stickyContainerHeights = await computeStickyHeights(
+			paras,
+			articleBodySelector,
+		);
 
-		if (includeStickyContainers) {
-			const stickyContainerHeights = await computeStickyHeights(
-				paras,
-				articleBodySelector,
-			);
-
-			void insertHeightStyles(
-				stickyContainerHeights.map((height, index) => [
-					getStickyContainerClassname(index),
-					height,
-				]),
-			);
-		}
+		void insertHeightStyles(
+			stickyContainerHeights.map((height, index) => [
+				getStickyContainerClassname(index),
+				height,
+			]),
+		);
 
 		const slots = paras.map((para, i) => {
 			const inlineId = i + 1;
+			const makeContainerSticky = inlineId !== 1;
 
 			if (sfdebug) {
 				para.style.cssText += 'border: thick solid green;';
@@ -194,7 +190,7 @@ const addDesktopInlineAds = async () => {
 
 			let containerClasses = '';
 
-			if (includeStickyContainers) {
+			if (makeContainerSticky) {
 				containerClasses += getStickyContainerClassname(i);
 			}
 
@@ -204,7 +200,7 @@ const addDesktopInlineAds = async () => {
 			}
 
 			const containerOptions = {
-				sticky: includeStickyContainers,
+				sticky: makeContainerSticky,
 				className: containerClasses,
 				enableDebug,
 			};

@@ -1,17 +1,8 @@
 package test
 
-import java.io.File
-import concurrent.BlockingOperations
-import model.{PressedPage, PressedPageType}
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
-import play.api.libs.json.Json
-import recorder.HttpRecorder
-import services.fronts.FrontJsonFapiLive
-import utils.FaciaPickerTest
-
-import scala.concurrent.{ExecutionContext, Future}
-import scala.io.Codec.UTF8
+import services.dotcomrendering.FaciaPickerTest
 
 object `package` {
 

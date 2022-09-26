@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import common.{Chronos, Edition, Localisation, RichRequestHeader}
+import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
@@ -55,6 +55,7 @@ case class DotcomRenderingDataModel(
     editionLongForm: String,
     editionId: String,
     pageId: String,
+    canonicalUrl: String,
     // Format and previous flags
     format: ContentFormat,
     designType: String,
@@ -131,6 +132,7 @@ object DotcomRenderingDataModel {
         "editionLongForm" -> model.editionLongForm,
         "editionId" -> model.editionId,
         "pageId" -> model.pageId,
+        "canonicalUrl" -> model.canonicalUrl,
         "format" -> model.format,
         "designType" -> model.designType,
         "tags" -> model.tags,
@@ -490,6 +492,7 @@ object DotcomRenderingDataModel {
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,
+      canonicalUrl = CanonicalLink(request, content.metadata.webUrl),
       pageType = pageType, // TODO this info duplicates what is already elsewhere in format?
       pagination = pagination,
       pillar = findPillar(content.metadata.pillar, content.metadata.designType),

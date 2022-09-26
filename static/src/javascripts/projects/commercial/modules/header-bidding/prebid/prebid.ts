@@ -16,7 +16,7 @@ import { bids } from './bid-config';
 import type { PrebidPriceGranularity } from './price-config';
 import {
 	criteoPriceGranularity,
-	indexPrebidPriceGranularity,
+	indexPriceGranularity,
 	ozonePriceGranularity,
 	priceGranularity,
 } from './price-config';
@@ -160,12 +160,12 @@ declare global {
 					customPriceBucket?: PrebidPriceGranularity;
 					/**
 					 * This is a custom property that has been added to our fork of prebid.js
-					 * to select a price bucket based on the width and height of the slot
+					 * to select a price bucket based on the width and height of the slot.
 					 */
 					guCustomPriceBucket?: (bid: {
 						width: number;
 						height: number;
-					}) => PrebidPriceGranularity;
+					}) => PrebidPriceGranularity | undefined;
 				};
 			}) => void;
 			getConfig: (item?: string) => PbjsConfig & {
@@ -318,22 +318,22 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 	}
 
 	if (window.guardian.config.switches.prebidOzone) {
-		// Use a custom price granularity for Ozone
-		// This price granularity is based upon the size of the slot being auctioned
+		// Use a custom price granularity, which is based upon the size of the slot being auctioned
 		window.pbjs.setBidderConfig({
 			bidders: ['ozone'],
 			config: {
 				// Select the ozone granularity, use default if not defined for the size
 				guCustomPriceBucket: ({ width, height }) => {
-					const granularity =
-						ozonePriceGranularity(width, height) ??
-						priceGranularity;
+					const ozoneGranularity = ozonePriceGranularity(
+						width,
+						height,
+					);
 					log(
 						'commercial',
-						`Custom Ozone price bucket for size (${width},${height}):`,
-						granularity,
+						`Custom Prebid - Ozone price bucket for size (${width},${height}):`,
+						ozoneGranularity,
 					);
-					return granularity;
+					return ozoneGranularity;
 				},
 			},
 		});
@@ -344,16 +344,17 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			bidders: ['ix'],
 			config: {
 				guCustomPriceBucket: ({ width, height }) => {
-					const granularity =
-						indexPrebidPriceGranularity(width, height) ??
-						priceGranularity;
+					const indexGranularity = indexPriceGranularity(
+						width,
+						height,
+					);
 					log(
 						'commercial',
-						`Custom Prebid Index price bucket for size (${width},${height}):`,
-						granularity,
+						`Custom Prebid - Index price bucket for size (${width},${height}):`,
+						indexGranularity,
 					);
 
-					return granularity;
+					return indexGranularity;
 				},
 			},
 		});

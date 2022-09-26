@@ -1,7 +1,8 @@
 package test
 
 import org.scalatest.{Suites, Tag}
-import services.dotcomponents.ArticlePickerTest
+import services.dotcomrendering.ArticlePickerTest
+
 object ArticleComponents extends Tag("article components")
 
 class ArticleTestSuite

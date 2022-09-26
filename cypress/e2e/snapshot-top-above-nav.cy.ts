@@ -3,7 +3,7 @@ import { breakpoints } from '../fixtures/breakpoints';
 import '@percy/cypress';
 
 describe('Visually snapshot top-above-nav', () => {
-	[articles[0]].forEach(({ path, adTest }) => {
+	[articles[0]].forEach(({ path }) => {
 		it(`snapshots ${path}`, () => {
 			cy.visit(path);
 			cy.allowAllConsent();

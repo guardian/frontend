@@ -1,4 +1,5 @@
 import type { SizeMapping } from '@guardian/commercial-core';
+import reportError from 'lib/report-error';
 import type { Advert } from './Advert';
 import { createAdvert } from './create-advert';
 import { dfpEnv } from './dfp-env';
@@ -28,6 +29,17 @@ const addSlot = (
 
 			// dynamically add ad slot
 			displayAd(advert, forceDisplay);
+		} else {
+			const errorMessage = `Attempting to add slot with exisiting id ${adSlot.id}`;
+			reportError(
+				Error(errorMessage),
+				{
+					feature: 'commercial',
+					slotId: adSlot.id,
+				},
+				false,
+			);
+			console.error(errorMessage);
 		}
 	});
 };

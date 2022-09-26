@@ -51,6 +51,7 @@ import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercia
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
 import { init as initTrackGpcSignal } from '../projects/commercial/modules/track-gpc-signal';
+import { init as initTrackLabsContainer } from '../projects/commercial/modules/track-labs-container';
 import { init as initTrackScrollDepth } from '../projects/commercial/modules/track-scroll-depth';
 import { commercialFeatures } from '../projects/common/modules/commercial/commercial-features';
 import type { Modules } from './types';
@@ -84,6 +85,7 @@ const commercialExtraModules: Modules = [
 	['cm-comscore', initComscore],
 	['cm-ipsosmori', initIpsosMori],
 	['cm-trackScrollDepth', initTrackScrollDepth],
+	['cm-trackLabsContainer', initTrackLabsContainer],
 	['cm-trackGpcSignal', initTrackGpcSignal],
 ];
 
@@ -227,6 +229,10 @@ const bootConsentless = async (): Promise<void> => {
 		initArticleInline(),
 		initLiveblogInline(),
 	]);
+
+	// Since we're in single-request mode
+	// Call this once all ad slots are present on the page
+	window.ootag.makeRequests();
 };
 
 /* Provide consentless advertising in the variant of a zero-percent test,

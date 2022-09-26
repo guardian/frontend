@@ -1,5 +1,7 @@
 package common
 
+import navigation.EditionNavLinks
+
 import java.util.Locale
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
@@ -31,6 +33,7 @@ abstract class Edition(
       "travel",
       "tv-and-radio",
     ),
+    val navigationLinks: EditionNavLinks,
 ) {
   val homePagePath: String = s"/$networkFrontId"
 

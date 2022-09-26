@@ -240,7 +240,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page.metadata.cacheTime)
   }
-
 }
 
 object DotcomRenderingService {

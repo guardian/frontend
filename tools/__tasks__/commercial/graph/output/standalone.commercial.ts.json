@@ -159,7 +159,8 @@
   "../projects/commercial/modules/consentless/define-slot.ts"
  ],
  "../projects/commercial/modules/consentless/init-safeframes.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/consentless/prepare-ootag.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -180,6 +181,7 @@
  ],
  "../projects/commercial/modules/dfp/add-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/report-error.js",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/create-advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -590,6 +592,11 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
+ "../projects/commercial/modules/track-labs-container.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/commercial/modules/track-scroll-depth.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
@@ -691,9 +698,11 @@
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../projects/common/modules/experiments/tests/consentlessAds.ts",
   "../projects/common/modules/experiments/tests/deeply-read-article-footer.js",
+  "../projects/common/modules/experiments/tests/integrate-ima.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
-  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
+  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
+  "../projects/common/modules/experiments/tests/sign-in-gate-mandatory-long.js"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -721,9 +730,14 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/deeply-read-article-footer.js": [],
+ "../projects/common/modules/experiments/tests/integrate-ima.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
+ "../projects/common/modules/experiments/tests/sign-in-gate-mandatory-long.js": [],
  "../projects/common/modules/identity/api.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
@@ -793,6 +807,7 @@
   "../projects/commercial/modules/set-adtest-cookie.ts",
   "../projects/commercial/modules/third-party-tags.ts",
   "../projects/commercial/modules/track-gpc-signal.ts",
+  "../projects/commercial/modules/track-labs-container.ts",
   "../projects/commercial/modules/track-scroll-depth.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-features.ts",
