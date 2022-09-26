@@ -53,12 +53,12 @@ Cypress.Commands.add('hydrate', () => {
 	return cy
 		.get('gu-island')
 		.each((el) => {
+			cy.log(`Scrolling to ${el.attr('name')}`);
 			cy.wrap(el)
-				.log(`Scrolling to ${el.attr('name')}`)
-				.scrollIntoView({ duration: 100, timeout: 10000 })
-				.should('have.attr', 'data-gu-ready', 'true', {
-					timeout: 30000,
-				});
+			.scrollIntoView({ duration: 1000, timeout: 30000 })
+			.should('have.attr', 'data-gu-ready', 'true', {
+				timeout: 30000,
+			});
 		})
 		.then(() => {
 			cy.scrollTo('top');
