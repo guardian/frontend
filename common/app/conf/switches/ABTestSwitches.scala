@@ -101,7 +101,7 @@ trait ABTestSwitches {
     "Test the click through rate of the new labs shady pie component",
     owners = Seq(Owner.withGithub("emma-imber")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 30)),
+    sellByDate = Some(LocalDate.of(2022, 10, 11)),
     exposeClientSide = true,
   )
 }
