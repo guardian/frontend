@@ -21,7 +21,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       We use a mutable map instead of a com.gu.Box, as the latter is a minimal wrapper.
       Both are used as key value store providing in memory caching.
 
-      This implies that several EC2 instances running this app could be in slightly different states
+      This implies that several EC2 instances running this app couqld be in slightly different states
       at any point in time. This is not an issue as we have our CDN caching layer in front.
    */
 
@@ -38,41 +38,45 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       then use this information to create a sequence of trails that we cache
       using a Box structure.
      */
-    Future.sequence(Edition.all.map { edition =>
-        ophanApi.getDeeplyRead(edition).flatMap { ophanDeeplyReadItems =>
-          log.info(s"ophanItems updated with: ${ophanDeeplyReadItems.size} new items")
-          val constructedTrail: Seq[Future[Trail]] = ophanDeeplyReadItems.map { ophanItem =>
-            log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
-            val path = removeStartingSlash(ophanItem.path)
-            log.info(s"CAPI Lookup for path: ${path}")
-            val capiRequest = contentApiClient
-              .item(path)
-              .showTags("all")
-              .showFields("all")
-              .showReferences("none")
-              .showAtoms("none")
-            val trailFromCapiResponse = contentApiClient
-              .getResponse(capiRequest)
-              .map { res =>
-                res.content.flatMap { capiData =>
-                  log.info(s"Retrieved CAPI data for Deeply Read item: ${path}")
-                  deeplyReadUrlToTrail(capiData)
-                }
-              }
-              .recover {
-                case NonFatal(e) =>
-                  log.error(s"Error retrieving CAPI data for Deeply Read item: ${path}. ${e.getMessage}")
-                  None
-              }
-            trailFromCapiResponse.map(_.get)
-          }
-          Future.sequence(constructedTrail)
+    Future
+      .sequence(Edition.all.map { edition =>
+        ophanApi.getDeeplyRead(edition).flatMap {
+          ophanDeeplyReadItems =>
+            log.info(s"ophanItems updated with: ${ophanDeeplyReadItems.size} new items")
+            val constructedTrail: Seq[Future[Trail]] = ophanDeeplyReadItems.map {
+              ophanItem =>
+                log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
+                val path = removeStartingSlash(ophanItem.path)
+                log.info(s"CAPI Lookup for path: ${path}")
+                val capiRequest = contentApiClient
+                  .item(path)
+                  .showTags("all")
+                  .showFields("all")
+                  .showReferences("none")
+                  .showAtoms("none")
+                val trailFromCapiResponse = contentApiClient
+                  .getResponse(capiRequest)
+                  .map { res =>
+                    res.content.flatMap { capiData =>
+                      log.info(s"Retrieved CAPI data for Deeply Read item: ${path}")
+                      deeplyReadUrlToTrail(capiData)
+                    }
+                  }
+                  .recover {
+                    case NonFatal(e) =>
+                      log.error(s"Error retrieving CAPI data for Deeply Read item: ${path}. ${e.getMessage}")
+                      None
+                  }
+                trailFromCapiResponse.map(_.get)
+            }
+            Future.sequence(constructedTrail)
         }
-    }).map(trailsList => {
+      })
+      .map(trailsList => {
 //      deeplyReadItems
-      val map = Edition.all.zip(trailsList).toMap
-      deeplyReadItems.alter(map)
-    })
+        val map = Edition.all.zip(trailsList).toMap
+        deeplyReadItems.alter(map)
+      })
   }
 
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
