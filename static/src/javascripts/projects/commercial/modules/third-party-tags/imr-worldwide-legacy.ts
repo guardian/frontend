@@ -3,7 +3,7 @@ import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
 // nol_t is a global function defined by the IMR worldwide library
 
-const onLoad = () => {
+const onLoad = (): void => {
 	const pvar = {
 		cid: 'au-guardian',
 		content: '0',
@@ -15,7 +15,8 @@ const onLoad = () => {
 };
 
 export const imrWorldwideLegacy = {
-	shouldRun: config.get('switches.imrWorldwide') && isInAuOrNz(),
+	shouldRun:
+		config.get<boolean>('switches.imrWorldwide', false) && isInAuOrNz(),
 	url: '//secure-au.imrworldwide.com/v60.js',
 	onLoad,
 };
