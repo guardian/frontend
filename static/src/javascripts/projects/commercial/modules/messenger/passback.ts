@@ -1,10 +1,10 @@
 import { adSizes } from '@guardian/commercial-core';
+import type { RegisterListener } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { breakpoints } from '@guardian/source-foundations';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import fastdom from '../../../../lib/fastdom-promise';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
-import type { RegisterListener } from '@guardian/commercial-core';
 
 type PassbackMessagePayload = { source: string };
 
