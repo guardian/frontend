@@ -72,7 +72,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       fakeDcr,
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
       fakeTopicService,
-      new DeeplyReadAgent,
     )
   }
 

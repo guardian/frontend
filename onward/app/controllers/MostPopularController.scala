@@ -24,7 +24,6 @@ import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
 import agents.DeeplyReadAgent
-import model.dotcomrendering.MostPopularCollectionResponse
 
 class MostPopularController(
     contentApiClient: ContentApiClient,
