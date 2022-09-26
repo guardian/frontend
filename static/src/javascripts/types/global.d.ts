@@ -345,6 +345,9 @@ interface SafeFrameAPI {
 	};
 }
 
+/**
+ * Types for IMR Worldwide
+ */
 interface NSdkInstance {
 	ggPM: (
 		type: string,
@@ -398,6 +401,7 @@ interface Window {
 	// Safeframe API host config required by Opt Out tag
 	conf: SafeFrameAPIHostConfig;
 
+	// IMR Worldwide
 	NOLCMB: {
 		getInstance: (apid: string) => NSdkInstance;
 	};
