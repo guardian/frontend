@@ -1,3 +1,4 @@
+import { initMessenger } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,
@@ -7,12 +8,12 @@ import { loadScript } from '@guardian/libs';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
 import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
+import reportError from '../../../../lib/report-error';
 import { removeSlots } from '../../../commercial/modules/remove-slots';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import type { IdentityUserIdentifiers } from '../../../common/modules/identity/api';
 import { getUserIdentifiersFromApi } from '../../../common/modules/identity/api';
-import { init as initMessenger } from '../messenger';
 import { init as background } from '../messenger/background';
 import { init as sendClick } from '../messenger/click';
 import { init as disableRefresh } from '../messenger/disable-refresh';
@@ -44,6 +45,7 @@ initMessenger(
 		passback,
 	],
 	[scroll, viewport],
+	reportError,
 );
 
 const setDfpListeners = (): void => {

@@ -1,6 +1,6 @@
+import type { RegisterListener } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
 import fastdom from '../../../../lib/fastdom-promise';
-import type { RegisterListener } from '../messenger';
 
 const setType = (adSlotType: string, adSlot: Element) =>
 	fastdom.mutate(() => {
