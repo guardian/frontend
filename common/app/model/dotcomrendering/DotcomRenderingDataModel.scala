@@ -98,7 +98,6 @@ case class DotcomRenderingDataModel(
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
-    mostPopular: Option[Seq[Trail]],
     onwards: Option[Seq[OnwardCollectionResponse]],
 )
 
@@ -174,7 +173,6 @@ object DotcomRenderingDataModel {
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
         "promotedNewsletter" -> model.promotedNewsletter,
-        "mostPopular" -> model.mostPopular,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -347,7 +345,6 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      mostPopular: Option[Seq[Trail]] = None,
       onwards: Option[Seq[OnwardCollectionResponse]] = None,
   ): DotcomRenderingDataModel = {
 
@@ -522,7 +519,6 @@ object DotcomRenderingDataModel {
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
-      mostPopular = mostPopular,
       onwards = onwards,
     )
   }

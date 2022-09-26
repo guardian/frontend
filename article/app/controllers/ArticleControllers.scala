@@ -1,6 +1,6 @@
 package controllers
 
-import agents.{CuratedContentAgent, DeeplyReadAgent}
+import agents.{CuratedContentAgent}
 import com.softwaremill.macwire._
 import contentapi.ContentApiClient
 import model.ApplicationContext
@@ -11,7 +11,6 @@ import services.dotcomrendering.OnwardsPicker
 import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.newsletters.NewsletterSignupAgent
 import topics.{TopicS3Client, TopicService}
-import services.OphanApi
 
 trait ArticleControllers {
   def contentApiClient: ContentApiClient
@@ -21,7 +20,6 @@ trait ArticleControllers {
   def topicS3Client: TopicS3Client
   def topicService: TopicService
   def newsletterSignupAgent: NewsletterSignupAgent
-  def ophanApi: OphanApi
   def onwardsPicker: OnwardsPicker
   def curatedContentAgent: CuratedContentAgent
 
@@ -32,5 +30,4 @@ trait ArticleControllers {
   lazy val articleController = wire[ArticleController]
   lazy val liveBlogController = wire[LiveBlogController]
   lazy val newsletterService = wire[NewsletterService]
-  lazy val articleDeeplyReadAgent = wire[DeeplyReadAgent]
 }

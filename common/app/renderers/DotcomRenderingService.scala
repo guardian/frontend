@@ -158,7 +158,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       availableTopics: Option[Seq[Topic]] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      mostPopular: Option[Seq[Trail]],
       onwards: Option[Seq[OnwardCollectionResponse]],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
@@ -177,9 +176,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter, onwards)
     }
 
-    val modelWithAgentData = dataModel.copy(mostPopular = mostPopular)
-
-    val json = DotcomRenderingDataModel.toJson(modelWithAgentData)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", page.metadata.cacheTime)
   }
 

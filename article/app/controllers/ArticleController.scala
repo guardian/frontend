@@ -1,13 +1,12 @@
 package controllers
 
-import agents.{CuratedContentAgent, DeeplyReadAgent}
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import experiments.{ActiveExperiments, DCROnwardsData}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType, Trail}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model._
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
@@ -26,7 +25,6 @@ class ArticleController(
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
-    deeplyReadAgent: DeeplyReadAgent,
     onwardsPicker: OnwardsPicker,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -116,8 +114,6 @@ class ArticleController(
     val tier = ArticlePicker.getTier(article, path)
     val isAmpSupported = article.article.content.shouldAmplify
     val pageType: PageType = PageType(article, request, context)
-    val edition: Edition = Edition(request)
-    val deeplyRead: Seq[Trail] = deeplyReadAgent.getTrails(edition)
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
         Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
@@ -139,7 +135,6 @@ class ArticleController(
           false,
           newsletter = newsletter,
           topicResult = None,
-          mostPopular = Some(deeplyRead),
           onwards = None,
         )
       case HtmlFormat | AmpFormat =>

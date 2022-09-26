@@ -1,6 +1,5 @@
 package controllers
 
-import agents.DeeplyReadAgent
 import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common._
@@ -9,7 +8,7 @@ import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType, Trail}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model._
@@ -34,7 +33,6 @@ class LiveBlogController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     topicService: TopicService,
-    deeplyReadAgent: DeeplyReadAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -177,8 +175,6 @@ class LiveBlogController(
                 "isLiveBlog" -> "true",
               )
             val remoteRendering = !request.forceDCROff
-            val edition: Edition = Edition(request)
-            val deeplyRead: Seq[Trail] = deeplyReadAgent.getTrails(edition)
 
             if (remoteRendering) {
               DotcomponentsLogger.logger
@@ -194,7 +190,6 @@ class LiveBlogController(
                 availableTopics,
                 newsletter = None,
                 topicResult,
-                mostPopular = Some(deeplyRead),
                 onwards = None,
               )
             } else {
