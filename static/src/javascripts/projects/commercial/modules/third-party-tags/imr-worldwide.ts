@@ -89,7 +89,8 @@ const onLoad = (): void => {
 };
 
 export const imrWorldwide = {
-	shouldRun: config.get('switches.imrWorldwide') && isInAuOrNz(),
+	shouldRun:
+		config.get<boolean>('switches.imrWorldwide', false) && isInAuOrNz(),
 	url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
 	onLoad,
 };
