@@ -8,14 +8,15 @@ type SupportUrlDomain = 'support.theguardian.com';
 type SupportUrlPath = 'contribute' | 'subscribe';
 type SupportUrlRaw =
 	`${SupportUrlProtocol}${SupportUrlDomain}/${SupportUrlPath}`;
+const supportUrlRegex = /(support.theguardian.com)\/(contribute|subscribe)/;
 
 const addCountryGroupToSupportLink = (rawUrl: SupportUrlRaw): string => {
 	const countryCode = getCountryCode();
 	const countryGroup =
 		countryCodeToSupportInternationalisationId(countryCode);
 	return rawUrl.replace(
-		/(support.theguardian.com)\/(contribute|subscribe)/,
 		(_, domain: SupportUrlDomain, path: SupportUrlPath) =>
+		supportUrlRegex,
 			`${domain}/${countryGroup.toLowerCase()}/${path}`,
 	);
 };
