@@ -329,8 +329,7 @@
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/identity/api.ts"
  ],
- "../projects/commercial/modules/dfp/prepare-permutive.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/dfp/prepare-permutive.ts": [
   "../lib/report-error.js"
  ],
  "../projects/commercial/modules/dfp/prepare-prebid.ts": [
@@ -793,7 +792,7 @@
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.ts",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
-  "../projects/commercial/modules/dfp/prepare-permutive.js",
+  "../projects/commercial/modules/dfp/prepare-permutive.ts",
   "../projects/commercial/modules/dfp/prepare-prebid.ts",
   "../projects/commercial/modules/dfp/redplanet.ts",
   "../projects/commercial/modules/high-merch.ts",
