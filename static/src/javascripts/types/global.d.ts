@@ -345,6 +345,22 @@ interface SafeFrameAPI {
 	};
 }
 
+interface NSdkInstance {
+	ggPM: (
+		type: string,
+		dcrStaticMetadata: {
+			type: string;
+			assetid: unknown;
+			section: string;
+		},
+	) => void;
+	ggInitialize: (nolggGlobalParams: {
+		sfcode: string;
+		apid: string;
+		apn: string;
+	}) => void;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -381,4 +397,8 @@ interface Window {
 
 	// Safeframe API host config required by Opt Out tag
 	conf: SafeFrameAPIHostConfig;
+
+	NOLCMB: {
+		getInstance: (apid: string) => NSdkInstance;
+	};
 }
