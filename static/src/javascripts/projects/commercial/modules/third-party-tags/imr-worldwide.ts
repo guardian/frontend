@@ -59,9 +59,7 @@ const guMetadata: Record<string, string> = {
 };
 
 const onLoad = (): void => {
-	const sectionFromMeta = config
-		.get<string>('page.section', '')
-		.toLowerCase();
+	const sectionFromMeta = window.guardian.config.page.section.toLowerCase();
 	const subBrandApId =
 		guMetadata[sectionFromMeta] || guMetadata['brand-only'];
 
@@ -81,7 +79,7 @@ const onLoad = (): void => {
 
 	const dcrStaticMetadata = {
 		type: 'static',
-		assetid: config.get('page.pageId'),
+		assetid: window.guardian.config.page.pageId,
 		section: sectionRef,
 	};
 
