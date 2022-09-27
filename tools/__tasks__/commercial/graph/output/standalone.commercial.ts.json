@@ -570,15 +570,14 @@
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
-  "../projects/commercial/modules/third-party-tags/imr-worldwide.js",
+  "../projects/commercial/modules/third-party-tags/imr-worldwide.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js": [
   "../lib/config.js",
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
- "../projects/commercial/modules/third-party-tags/imr-worldwide.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/third-party-tags/imr-worldwide.ts": [
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/track-gpc-signal.ts": [
