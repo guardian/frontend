@@ -62,13 +62,6 @@ describe('third party tag IMR in AUS', () => {
 		jest.clearAllMocks();
 	});
 
-	it('should exist and have the correct exports', () => {
-		expect(shouldRun).toBe(true);
-		expect(url).toBe(
-			'//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
-		);
-	});
-
 	it('should initalize, with a brand-only apid on an unmatched section', () => {
 		// If a section does not exist in guMetadata, it will use the default apid
 		const expectedNolggParams = {
