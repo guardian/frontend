@@ -18,7 +18,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
   val requestedBlogs: Queue[PageWithStoryPackage] = new Queue[PageWithStoryPackage]()
   val updatedBlocks = ArrayBuffer.empty[Block]
 
-  def getArticle(
+  override def getArticle(
       ws: WSClient,
       article: PageWithStoryPackage,
       blocks: Blocks,
