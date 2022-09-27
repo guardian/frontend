@@ -1,6 +1,6 @@
 package agents
 
-import common.Edition
+import common.{Edition}
 import contentapi.ContentApiClient
 import model.dotcomrendering.OnwardCollectionResponse
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
