@@ -1,4 +1,3 @@
-import config from '../../../../lib/config';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
 // nol_t is a global function defined by the IMR worldwide library
@@ -15,8 +14,7 @@ const onLoad = (): void => {
 };
 
 export const imrWorldwideLegacy = {
-	shouldRun:
-		config.get<boolean>('switches.imrWorldwide', false) && isInAuOrNz(),
+	shouldRun: !!window.guardian.config.switches.imrWorldwide && isInAuOrNz(),
 	url: '//secure-au.imrworldwide.com/v60.js',
 	onLoad,
 };
