@@ -17,8 +17,8 @@ const sharedTestData = {
 export const signInGateMandatoryLongTestControlUk = {
 	...sharedTestData,
 	id: 'SignInGateMandatoryLongTestControlUk',
-	audience: 0.005,
-	audienceOffset: 0.895,
+	audience: 0.0358,
+	audienceOffset: 0,
 	dataLinkNames: 'SignInGateMandatoryLongTestControlUk',
 	variants: [
 		{
@@ -31,8 +31,8 @@ export const signInGateMandatoryLongTestControlUk = {
 export const signInGateMandatoryLongTestVariantUk = {
 	...sharedTestData,
 	id: 'SignInGateMandatoryLongTestVariantUk',
-	audience: 0.005,
-	audienceOffset: 0.89,
+	audience: 0.0165,
+	audienceOffset: 0.8373,
 	dataLinkNames: 'SignInGateMandatoryLongTestVariantUk',
 	variants: [
 		{
@@ -45,8 +45,8 @@ export const signInGateMandatoryLongTestVariantUk = {
 export const signInGateMandatoryLongTestControlNa = {
 	...sharedTestData,
 	id: 'SignInGateMandatoryLongTestControlNa',
-	audience: 0.005,
-	audienceOffset: 0.895,
+	audience: 0.0919,
+	audienceOffset: 0,
 	dataLinkNames: 'SignInGateMandatoryLongTestControlNA',
 	variants: [
 		{
@@ -59,8 +59,8 @@ export const signInGateMandatoryLongTestControlNa = {
 export const signInGateMandatoryLongTestVariantNa = {
 	...sharedTestData,
 	id: 'SignInGateMandatoryLongTestVariantNa',
-	audience: 0.005,
-	audienceOffset: 0.89,
+	audience: 0.042,
+	audienceOffset: 0.8373,
 	dataLinkNames: 'SignInGateMandatoryLongTestVariantNA',
 	variants: [
 		{
@@ -73,8 +73,8 @@ export const signInGateMandatoryLongTestVariantNa = {
 export const signInGateMandatoryLongTestControlAunz = {
 	...sharedTestData,
 	id: 'SignInGateMandatoryLongTestControlAunz',
-	audience: 0.005,
-	audienceOffset: 0.895,
+	audience: 0.1254,
+	audienceOffset: 0,
 	dataLinkNames: 'SignInGateMandatoryLongTestControlAunz',
 	variants: [
 		{
@@ -87,8 +87,8 @@ export const signInGateMandatoryLongTestControlAunz = {
 export const signInGateMandatoryLongTestVariantAunz = {
 	...sharedTestData,
 	id: 'SignInGateMandatoryLongTestVariantAunz',
-	audience: 0.005,
-	audienceOffset: 0.89,
+	audience: 0.0627,
+	audienceOffset: 0.8373,
 	dataLinkNames: 'SignInGateMandatoryLongTestVariantAunz',
 	variants: [
 		{
@@ -101,8 +101,8 @@ export const signInGateMandatoryLongTestVariantAunz = {
 export const signInGateMandatoryLongTestControlEu = {
 	...sharedTestData,
 	id: 'SignInGateMandatoryLongTestControlEu',
-	audience: 0.005,
-	audienceOffset: 0.895,
+	audience: 0.0773,
+	audienceOffset: 0,
 	dataLinkNames: 'SignInGateMandatoryLongTestControlEu',
 	variants: [
 		{
@@ -115,8 +115,8 @@ export const signInGateMandatoryLongTestControlEu = {
 export const signInGateMandatoryLongTestVariantEu = {
 	...sharedTestData,
 	id: 'SignInGateMandatoryLongTestVariantEu',
-	audience: 0.005,
-	audienceOffset: 0.89,
+	audience: 0.0365,
+	audienceOffset: 0.8373,
 	dataLinkNames: 'SignInGateMandatoryLongTestVariantEu',
 	variants: [
 		{
