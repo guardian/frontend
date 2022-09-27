@@ -86,7 +86,7 @@ const onLoad = (): void => {
 };
 
 export const imrWorldwide = {
-	shouldRun: window.guardian.config.switches.imrWorldwide && isInAuOrNz(),
+	shouldRun: !!window.guardian.config.switches.imrWorldwide && isInAuOrNz(),
 	url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
 	onLoad,
 };
