@@ -26,6 +26,7 @@ import _root_.commercial.targeting.TargetingLifecycle
 import scala.concurrent.ExecutionContext
 import agents.DeeplyReadAgent
 import renderers.DotcomRenderingService
+
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
     new BuiltInComponentsFromContext(context) with AppComponents
