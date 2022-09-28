@@ -9,7 +9,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DCRFronts,
       OfferHttp3,
-      LiveBlogMainMediaPosition,
       TableOfContents,
       CommercialEndOfQuarterMegaTest,
       EuropeNetworkFront,
@@ -42,15 +41,6 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2022, 12, 6),
       participationGroup = Perc0B,
-    )
-
-object LiveBlogMainMediaPosition
-    extends Experiment(
-      name = "live-blog-main-media-position",
-      description = "When ON, main media will be positioned between the kicker and headline on liveblogs",
-      owners = Seq(Owner.withGithub("abeddow91")),
-      sellByDate = LocalDate.of(2022, 10, 7),
-      participationGroup = Perc50,
     )
 
 object TableOfContents
