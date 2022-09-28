@@ -32,8 +32,6 @@ jobs:
 
             - name: Setup node
               uses: guardian/actions-setup-node@main
-              with:
-                  node-version: '14.18.3'
 
             - name: Install Frontend dependencies
               uses: bahmutov/npm-install@v1
