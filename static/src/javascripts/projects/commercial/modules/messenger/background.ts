@@ -39,12 +39,15 @@ interface BackgroundSpecs {
 const isBackgroundSpecs = (specs: unknown): specs is BackgroundSpecs =>
 	isObject(specs) && 'backgroundImage' in specs;
 
-const createParent = (scrollType: BackgroundSpecs['scrollType']) => {
-	let backgroundParent = document.querySelector<HTMLDivElement>(
-		'creative__background-parent',
+const createParent = (
+	adSlot: HTMLElement,
+	scrollType: BackgroundSpecs['scrollType'],
+) => {
+	let backgroundParent = adSlot.querySelector<HTMLDivElement>(
+		'.creative__background-parent',
 	);
-	let background = document.querySelector<HTMLDivElement>(
-		'creative__background',
+	let background = adSlot.querySelector<HTMLDivElement>(
+		'.creative__background',
 	);
 
 	if (!backgroundParent || !background) {
@@ -163,7 +166,10 @@ const setupBackground = async (
 	specs: BackgroundSpecs,
 	adSlot: HTMLElement,
 ): Promise<void> => {
-	const { backgroundParent, background } = createParent(specs.scrollType);
+	const { backgroundParent, background } = createParent(
+		adSlot,
+		specs.scrollType,
+	);
 
 	return fastdom.mutate(() => {
 		setBackgroundStyles(specs, background);
