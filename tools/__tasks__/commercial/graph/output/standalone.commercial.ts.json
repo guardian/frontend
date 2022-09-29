@@ -693,6 +693,7 @@
   "../projects/common/modules/experiments/tests/deeply-read-article-footer.js",
   "../projects/common/modules/experiments/tests/integrate-ima.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
+  "../projects/common/modules/experiments/tests/shady-pie-click-through.ts",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-mandatory-long.js"
@@ -728,6 +729,10 @@
   "../lib/noop.ts"
  ],
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
+ "../projects/common/modules/experiments/tests/shady-pie-click-through.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-mandatory-long.js": [],
