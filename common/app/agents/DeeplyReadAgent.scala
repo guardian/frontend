@@ -17,14 +17,6 @@ import java.lang.Throwable
 
 class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
-  /*
-      We use a mutable map instead of a com.gu.Box, as the latter is a minimal wrapper.
-      Both are used as key value store providing in memory caching.
-
-      This implies that several EC2 instances running this app couqld be in slightly different states
-      at any point in time. This is not an issue as we have our CDN caching layer in front.
-   */
-
   private val deeplyReadItems = Box[Map[Edition, Seq[Trail]]](Map.empty)
 
   def removeStartingSlash(path: String): String = {
@@ -73,7 +65,6 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         }
       })
       .map(trailsList => {
-//      deeplyReadItems
         val map = Edition.all.zip(trailsList).toMap
         deeplyReadItems.alter(map)
       })
