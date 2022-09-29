@@ -499,7 +499,7 @@ trait FeatureSwitches {
     "When ON, we replace the standard article layout with the new signup layout for newsletter sign up pages",
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = LocalDate.of(2022, 10, 14),
     exposeClientSide = true,
   )
 }
