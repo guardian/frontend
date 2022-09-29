@@ -212,6 +212,7 @@ object NavLinks {
       NavLink("Azed", "/crosswords/series/azed"),
     ),
   )
+  val corrections = NavLink("Corrections", "/theguardian/series/corrections-and-clarifications")
   val video = NavLink("Video", "/video")
   val podcasts = NavLink("Podcasts", "/podcasts")
   val podcastsAU = NavLink("Podcasts", "/australia-podcasts")
@@ -547,6 +548,7 @@ object NavLinks {
     observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     crosswords,
+    corrections,
   )
   val auOtherLinks = List(
     apps,
@@ -557,6 +559,7 @@ object NavLinks {
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Aus"),
     crosswords,
+    corrections,
   )
   val usOtherLinks = List(
     apps,
@@ -566,6 +569,7 @@ object NavLinks {
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_US"),
     crosswords,
+    corrections,
   )
   val intOtherLinks = List(
     apps,
@@ -578,6 +582,7 @@ object NavLinks {
     observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
+    corrections,
   )
 
   val ukBrandExtensions = List(
