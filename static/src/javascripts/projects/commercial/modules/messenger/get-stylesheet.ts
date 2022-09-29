@@ -20,10 +20,13 @@ const getStyles = (
 	for (let i = 0; i < styleSheets.length; i += 1) {
 		const ownerNode = styleSheets[i].ownerNode;
 
-		if (ownerNode instanceof Element && ownerNode.matches(specs.selector)) {
-			if (ownerNode instanceof HTMLStyleElement) {
-				ownerNode.textContent && result.push(ownerNode.textContent);
-			}
+		if (
+			ownerNode instanceof HTMLStyleElement &&
+			ownerNode.matches(specs.selector)
+		) {
+			ownerNode.textContent !== null &&
+				result.push(ownerNode.textContent);
+
 			// if it's a link, we can't access the CSS rules because of CORS and the stylesheets are on another domain
 		}
 	}
