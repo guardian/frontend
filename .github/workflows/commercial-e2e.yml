@@ -26,7 +26,7 @@ jobs:
                   path: ./frontend
 
             - name: Setup frontend node
-              uses: guardian/actions-setup-node@main
+              uses: actions/setup-node@v3
               with:
                   node-version-file: './frontend/.nvmrc'
 
@@ -43,7 +43,7 @@ jobs:
                   path: ./dcr
 
             - name: Setup DCR node
-              uses: guardian/actions-setup-node@main
+              uses: actions/setup-node@v3
               with:
                   node-version-file: './dcr/.nvmrc'
 
