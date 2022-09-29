@@ -39,7 +39,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
               ophanItem =>
                 log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
                 val path = removeStartingSlash(ophanItem.path)
-                log.info(s"CAPI Lookup for path: ${path}")
+                log.info(s"CAPI Lookup for path: $path")
                 val capiRequest = contentApiClient
                   .item(path)
                   .showTags("all")
