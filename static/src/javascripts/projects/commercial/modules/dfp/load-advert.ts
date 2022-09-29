@@ -4,28 +4,31 @@ import { prebid } from '../header-bidding/prebid/prebid';
 import { stripDfpAdPrefixFrom } from '../header-bidding/utils';
 import type { Advert } from './Advert';
 
-const forcedSlotSize = (advert: Advert, hbSlot: HeaderBiddingSlot) => {
-	// We only fiddle with top-above-nav hbSlot(s)
+// Force the refreshed advert to be the same size as the first
+const retainTopAboveNavSlotSize = (
+	advertSize: Advert['size'],
+	hbSlot: HeaderBiddingSlot,
+): HeaderBiddingSlot[] => {
 	if (hbSlot.key !== 'top-above-nav') {
 		return [hbSlot];
 	}
-	// For top-above-nav slots, we force the refreshed
-	// to be the same size as the first display
+
+	// No point forcing a size, as there is already only one possible (mobile/tablet).
+	// See prebid/slot-config.js
 	if (hbSlot.sizes.length === 1) {
-		// No point forcing a size, as there is already only one
-		// possible (mobile/tablet). See prebid/slot-config.js
 		return [hbSlot];
 	}
 
-	if (Array.isArray(advert.size)) {
-		return [
-			Object.assign({}, hbSlot, {
-				sizes: [[advert.size[0], advert.size[1]]],
-			}),
-		];
+	// If advert.size is not an array, there is no point having this hbSlot
+	if (!Array.isArray(advertSize)) {
+		return [];
 	}
-	// No point having this hbSlot, as advert.size is not an array
-	return [];
+
+	return [
+		Object.assign({}, hbSlot, {
+			sizes: [[advertSize[0], advertSize[1]]],
+		}),
+	];
 };
 
 const eventTimer = EventTimer.get();
@@ -60,17 +63,20 @@ export const refreshAdvert = (advert: Advert): void => {
 			const prebidPromise = prebid.requestBids(
 				advert,
 				(prebidSlot: HeaderBiddingSlot) =>
-					forcedSlotSize(advert, prebidSlot),
+					retainTopAboveNavSlotSize(advert.size, prebidSlot),
 			);
 
 			const a9Promise = a9.requestBids(
 				advert,
-				(a9Slot: HeaderBiddingSlot) => forcedSlotSize(advert, a9Slot),
+				(a9Slot: HeaderBiddingSlot) =>
+					retainTopAboveNavSlotSize(advert.size, a9Slot),
 			);
+
 			return Promise.all([prebidPromise, a9Promise]);
 		})
 		.then(() => {
 			advert.slot.setTargeting('refreshed', 'true');
+
 			if (advert.id === 'dfp-ad--top-above-nav') {
 				// force the slot sizes to be the same as advert.size (current)
 				// only when advert.size is an array (forget 'fluid' and other specials)
@@ -83,6 +89,7 @@ export const refreshAdvert = (advert: Advert): void => {
 					advert.slot.defineSizeMapping(mapping.build());
 				}
 			}
+
 			window.googletag.pubads().refresh([advert.slot]);
 		});
 };
