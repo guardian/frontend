@@ -364,6 +364,11 @@ interface NSdkInstance {
 	}) => void;
 }
 
+interface Trac {
+	record: () => this;
+	post: () => this;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -405,4 +410,5 @@ interface Window {
 	NOLCMB: {
 		getInstance: (apid: string) => NSdkInstance;
 	};
+	nol_t: (pvar: { cid: string; content: string; server: string }) => Trac;
 }

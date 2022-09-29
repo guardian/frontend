@@ -568,12 +568,11 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
+  "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.ts",
   "../projects/commercial/modules/third-party-tags/imr-worldwide.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.ts": [
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/third-party-tags/imr-worldwide.ts": [
