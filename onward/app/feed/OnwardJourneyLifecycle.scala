@@ -1,5 +1,6 @@
 package feed
 
+import agents.DeeplyReadAgent
 import java.util.concurrent.Executors
 import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
@@ -17,6 +18,7 @@ class OnwardJourneyLifecycle(
     mostViewedAudioAgent: MostViewedAudioAgent,
     mostViewedGalleryAgent: MostViewedGalleryAgent,
     mostViewedVideoAgent: MostViewedVideoAgent,
+    deeplyReadAgent: DeeplyReadAgent,
 ) extends LifecycleComponent {
 
   implicit val capiClientExecutionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
@@ -40,6 +42,7 @@ class OnwardJourneyLifecycle(
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsHighFrequencyRefreshJob", 5) {
       mostPopularAgent.refresh()
       geoMostPopularAgent.refresh()
+      deeplyReadAgent.refresh()
     }
 
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsMediumFrequencyRefreshJob", 30) {
@@ -55,6 +58,7 @@ class OnwardJourneyLifecycle(
 
     akkaAsync.after1s {
       mostPopularAgent.refresh()
+      deeplyReadAgent.refresh()
       geoMostPopularAgent.refresh()
       dayMostPopularAgent.refresh()
       mostViewedAudioAgent.refresh()

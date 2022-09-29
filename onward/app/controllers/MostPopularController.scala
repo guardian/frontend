@@ -24,7 +24,6 @@ import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
 import agents.DeeplyReadAgent
-import model.dotcomrendering.MostPopularCollectionResponse
 
 class MostPopularController(
     contentApiClient: ContentApiClient,
@@ -215,7 +214,7 @@ class MostPopularController(
         if (editionPopularContent.isEmpty) None
         Some(
           MostPopularCollectionResponse(
-            "Most popular",
+            "Most viewed",
             "",
             editionPopularContent
               .map(_.faciaContent)
@@ -224,7 +223,7 @@ class MostPopularController(
         )
       }
 
-      val deeplyReadItems = deeplyReadAgent.getTrails
+      val deeplyReadItems = deeplyReadAgent.getTrails(edition)
 
       // Async global deeply read
       val deeplyRead: Option[MostPopularCollectionResponse] = {
