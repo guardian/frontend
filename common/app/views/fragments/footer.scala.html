@@ -1,6 +1,6 @@
 @(showNav: Boolean = true)(implicit page: model.Page, request: RequestHeader)
 
-@import common.editions.{Au, International, Uk, Us}
+@import common.editions.{Au, International, Uk, Us, Europe}
 @import common.{Edition, LinkTo}
 @import conf.switches.Switches.EmailInlineInFooterSwitch
 @import navigation.ReaderRevenueSite.{SupportContribute, SupportSubscribe}
@@ -183,6 +183,10 @@
             case International => {
                 @fragments.email.signup.emailFooterLink("morning-briefing", "/global/2022/sep/20/sign-up-for-the-first-edition-newsletter-our-free-news-email")
             }
+            case Europe => {
+                @fragments.email.signup.emailFooterLink("morning-briefing", "/global/ng-interactive/2022/apr/13/first-edition-sign-up-guardian")
+            }
+
         }
         </div>
     </section>
