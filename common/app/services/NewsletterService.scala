@@ -85,12 +85,11 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   }
 
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
+    var response = getNewsletterResponseFromTags(articlePage.article.tags.tags)
 
-    var response: Option[NewsletterResponse] = None
-    if (isSignUpPage(articlePage)) {
-      response = getNewsletterResponseFromSignUpPage(articlePage.article.content.metadata.id)
-    } else {
-      response = getNewsletterResponseFromTags(articlePage.article.tags.tags)
+    // TODO: Remove this part when all sign up pages have the correct tag added
+    if (response.isEmpty) {
+      response = getNewsletterResponseFromSignUpPage(articlePage.article.metadata.id)
     }
 
     if (response.isEmpty || !shouldInclude(response.get)) {
