@@ -7,6 +7,7 @@ import model.{ArticlePage, PageWithStoryPackage, LiveBlogPage, Tag}
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.json.Json
 import com.gu.contentapi.client.utils.format.NewsletterSignupDesign
+import com.gu.contentapi.client.model.v1.TagType
 
 case class NewsletterData(
     identityName: String,
@@ -27,10 +28,9 @@ object NewsletterData {
 
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   private val EMBED_TAG_PREFIX = "campaign/email/"
-  private val EMBED_TAG_TYPE = "Campaign"
 
   private def findNewsletterTag(tags: List[Tag]) = {
-    tags.find(t => t.properties.tagType.equals(EMBED_TAG_TYPE) && t.properties.id.startsWith(EMBED_TAG_PREFIX))
+    tags.find(t => t.properties.tagType.equals(TagType.Campaign.name) && t.properties.id.startsWith(EMBED_TAG_PREFIX))
   }
 
   private def getNewsletterName(tag: Tag) = {
@@ -85,24 +85,27 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
   }
 
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
-    var response = getNewsletterResponseFromTags(articlePage.article.tags.tags)
+    // Try retrieving newsletter data by matching a sign up tag to the newsletters response
+    val maybeNewsletterFromTags = getNewsletterResponseFromTags(articlePage.article.tags.tags)
 
-    // TODO: Remove this part when all sign up pages have the correct tag added
-    if (response.isEmpty) {
-      response = getNewsletterResponseFromSignUpPage(articlePage.article.metadata.id)
+    val maybeNewsletter = maybeNewsletterFromTags match {
+      case Some(newsletter) => if (shouldInclude(newsletter)) Some(newsletter) else None
+      case None             =>
+        // For sign up pages without a matching newsletter tag, try matching the article ID against the sign up page from newsletters API
+        // N.B. This is for backwards compatibility, remove this part when all sign up pages have the correct tag added
+        if (isSignUpPage(articlePage)) getNewsletterResponseFromSignUpPage(articlePage.article.metadata.id) else None
     }
 
-    if (response.isEmpty || !shouldInclude(response.get)) {
-      return None
-    }
-    Option(convertNewsletterResponseToData(response.get))
+    maybeNewsletter.map(convertNewsletterResponseToData)
   }
 
   def getNewsletterForLiveBlog(blogPage: LiveBlogPage): Option[NewsletterData] = {
-    val response = getNewsletterResponseFromTags(blogPage.article.tags.tags)
-    if (response.isEmpty || !shouldInclude(response.get)) {
-      return None
+    val maybeNewsletterFromTags = getNewsletterResponseFromTags(blogPage.article.tags.tags)
+
+    val maybeNewsletter = maybeNewsletterFromTags flatMap { newsletter =>
+      if (shouldInclude(newsletter)) Some(newsletter) else None
     }
-    Option(convertNewsletterResponseToData(response.get))
+
+    maybeNewsletter.map(convertNewsletterResponseToData)
   }
 }
