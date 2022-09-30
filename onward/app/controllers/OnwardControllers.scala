@@ -11,6 +11,8 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import weather.WeatherApi
 import agents.DeeplyReadAgent
+import renderers.DotcomRenderingService
+import services.PopularInTagService
 
 trait OnwardControllers {
 
@@ -30,6 +32,8 @@ trait OnwardControllers {
   def mostViewedAudioAgent: MostViewedAudioAgent
   def actorSystem: ActorSystem
   def controllerComponents: ControllerComponents
+  def remoteRenderer: DotcomRenderingService
+  def popularInTagService: PopularInTagService
 
   lazy val navigationController = wire[NavigationController]
   lazy val weatherController = wire[WeatherController]
@@ -51,4 +55,5 @@ trait OnwardControllers {
   lazy val seriesController = wire[SeriesController]
   lazy val stocksController = wire[StocksController]
   lazy val storyPackageController = wire[StoryPackageController]
+  lazy val onwardResponseController = wire[OnwardResponseController]
 }

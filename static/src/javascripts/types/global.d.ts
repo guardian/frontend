@@ -62,6 +62,14 @@ interface CommercialPageConfig {
 	dfpAccountId: string;
 }
 
+interface UserConfig {
+	accountCreatedDate: number;
+	displayName: string;
+	emailVerified: boolean;
+	id: string;
+	rawResponse: string;
+}
+
 interface Config {
 	ophan: {
 		// somewhat redundant with guardian.ophan
@@ -70,6 +78,7 @@ interface Config {
 	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
+	user?: UserConfig;
 	tests?: {
 		[key: `${string}Control`]: 'control';
 		[key: `${string}Variant`]: 'variant';
@@ -86,6 +95,7 @@ interface LightboxImages {
 interface PageConfig extends CommercialPageConfig {
 	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	assetsPath: string;
+	author: string;
 	authorIds: string;
 	blogIds: string;
 	contentType: string;
@@ -94,6 +104,7 @@ interface PageConfig extends CommercialPageConfig {
 	hasInlineMerchandise: boolean;
 	hasPageSkin: boolean; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L48
 	hasShowcaseMainElement: boolean;
+	headline: string;
 	host: string;
 	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
@@ -120,6 +131,7 @@ interface PageConfig extends CommercialPageConfig {
 	tones: string;
 	videoDuration: number;
 	isbn?: string;
+	webPublicationDate: number;
 }
 
 interface Ophan {
@@ -172,6 +184,17 @@ interface Confiant extends Record<string, unknown> {
 		callback: ConfiantCallback;
 		[key: string]: unknown;
 	};
+}
+
+interface Permutive {
+	config?: {
+		projectId?: string;
+		apiKey?: string;
+		environment?: string;
+	};
+	q?: Array<{ functionName: string; arguments: unknown[] }>;
+	addon?: (name: string, props: Record<string, unknown>) => void;
+	identify?: (user: Array<{ id: string; tag: string }>) => void;
 }
 
 // https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/api-reference.html#apstaginit
@@ -322,6 +345,30 @@ interface SafeFrameAPI {
 	};
 }
 
+/**
+ * Types for IMR Worldwide
+ */
+interface NSdkInstance {
+	ggPM: (
+		type: string,
+		dcrStaticMetadata: {
+			type: string;
+			assetid: unknown;
+			section: string;
+		},
+	) => void;
+	ggInitialize: (nolggGlobalParams: {
+		sfcode: string;
+		apid: string;
+		apn: string;
+	}) => void;
+}
+
+interface Trac {
+	record: () => this;
+	post: () => this;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -349,6 +396,7 @@ interface Window {
 	};
 	confiant?: Confiant;
 	apstag?: Apstag;
+	permutive?: Permutive;
 	_comscore?: ComscoreGlobals[];
 	__iasPET?: IasPET;
 
@@ -357,4 +405,10 @@ interface Window {
 
 	// Safeframe API host config required by Opt Out tag
 	conf: SafeFrameAPIHostConfig;
+
+	// IMR Worldwide
+	NOLCMB: {
+		getInstance: (apid: string) => NSdkInstance;
+	};
+	nol_t: (pvar: { cid: string; content: string; server: string }) => Trac;
 }

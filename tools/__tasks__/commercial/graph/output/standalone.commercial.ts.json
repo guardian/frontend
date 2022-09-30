@@ -58,7 +58,7 @@
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/common/modules/commercial/contributions-utilities.js",
-  "../projects/common/modules/commercial/support-utilities.js",
+  "../projects/common/modules/commercial/support-utilities.ts",
   "../projects/common/modules/commercial/user-features.ts"
  ],
  "../projects/commercial/am-i-used.ts": [
@@ -181,6 +181,7 @@
  ],
  "../projects/commercial/modules/dfp/add-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../lib/report-error.js",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/create-advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -264,8 +265,8 @@
   "../lib/report-error.js"
  ],
  "../projects/commercial/modules/dfp/on-slot-load.ts": [
-  "../projects/commercial/modules/dfp/get-advert-by-id.ts",
-  "../projects/commercial/modules/messenger/post-message.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../projects/commercial/modules/dfp/get-advert-by-id.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-render.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -300,17 +301,18 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-googletag.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/raven.js",
+  "../lib/report-error.js",
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
   "../projects/commercial/modules/dfp/on-slot-load.ts",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
   "../projects/commercial/modules/dfp/on-slot-viewable.ts",
   "../projects/commercial/modules/dfp/refresh-on-resize.ts",
-  "../projects/commercial/modules/messenger.ts",
   "../projects/commercial/modules/messenger/background.ts",
   "../projects/commercial/modules/messenger/click.ts",
   "../projects/commercial/modules/messenger/disable-refresh.ts",
@@ -328,8 +330,7 @@
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/identity/api.ts"
  ],
- "../projects/commercial/modules/dfp/prepare-permutive.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/dfp/prepare-permutive.ts": [
   "../lib/report-error.js"
  ],
  "../projects/commercial/modules/dfp/prepare-prebid.ts": [
@@ -477,52 +478,46 @@
   "../lib/manage-ad-free-cookie.ts",
   "../projects/commercial/modules/remove-slots.ts"
  ],
- "../projects/commercial/modules/messenger.ts": [
-  "../lib/report-error.js",
-  "../projects/commercial/modules/messenger/post-message.ts"
- ],
  "../projects/commercial/modules/messenger/background.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../../../../node_modules/@types/lodash-es/once.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/render-advert-label.ts",
-  "../projects/commercial/modules/messenger.ts"
+  "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
  "../projects/commercial/modules/messenger/click.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../projects/commercial/modules/messenger.ts",
   "../projects/common/modules/analytics/google.ts"
  ],
  "../projects/commercial/modules/messenger/disable-refresh.ts": [
-  "../projects/commercial/modules/dfp/dfp-env.ts",
-  "../projects/commercial/modules/messenger.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/messenger/get-page-targeting.ts": [
-  "../projects/commercial/modules/messenger.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
  "../projects/commercial/modules/messenger/get-page-url.ts": [
-  "../projects/commercial/modules/messenger.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
  "../projects/commercial/modules/messenger/get-stylesheet.js": [],
  "../projects/commercial/modules/messenger/measure-ad-load.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../projects/commercial/modules/messenger.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/messenger/passback.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/dfp/dfp-env-globals.ts",
-  "../projects/commercial/modules/messenger.ts"
+  "../projects/commercial/modules/dfp/dfp-env-globals.ts"
  ],
- "../projects/commercial/modules/messenger/post-message.ts": [],
  "../projects/commercial/modules/messenger/resize.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/messenger.ts"
+  "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/scroll.js": [
   "../lib/detect-viewport.ts",
@@ -530,14 +525,14 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/type.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/messenger.ts"
+  "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/viewport.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect-viewport.ts",
-  "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/messenger.ts"
+  "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/mobile-sticky.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -573,16 +568,14 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
-  "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
-  "../projects/commercial/modules/third-party-tags/imr-worldwide.js",
+  "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.ts",
+  "../projects/commercial/modules/third-party-tags/imr-worldwide.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
- "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/third-party-tags/imr-worldwide-legacy.ts": [
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
- "../projects/commercial/modules/third-party-tags/imr-worldwide.js": [
-  "../lib/config.js",
+ "../projects/commercial/modules/third-party-tags/imr-worldwide.ts": [
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/track-gpc-signal.ts": [
@@ -653,7 +646,7 @@
  "../projects/common/modules/commercial/lib/googletag-ad-size.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
- "../projects/common/modules/commercial/support-utilities.js": [
+ "../projects/common/modules/commercial/support-utilities.ts": [
   "../lib/geolocation.ts"
  ],
  "../projects/common/modules/commercial/user-features.ts": [
@@ -700,7 +693,8 @@
   "../projects/common/modules/experiments/tests/integrate-ima.ts",
   "../projects/common/modules/experiments/tests/remote-header-test.js",
   "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
-  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js"
+  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
+  "../projects/common/modules/experiments/tests/sign-in-gate-mandatory-long.js"
  ],
  "../projects/common/modules/experiments/ab-url.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
@@ -735,6 +729,7 @@
  "../projects/common/modules/experiments/tests/remote-header-test.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
+ "../projects/common/modules/experiments/tests/sign-in-gate-mandatory-long.js": [],
  "../projects/common/modules/identity/api.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
@@ -790,7 +785,7 @@
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.ts",
   "../projects/commercial/modules/dfp/prepare-googletag.ts",
-  "../projects/commercial/modules/dfp/prepare-permutive.js",
+  "../projects/commercial/modules/dfp/prepare-permutive.ts",
   "../projects/commercial/modules/dfp/prepare-prebid.ts",
   "../projects/commercial/modules/dfp/redplanet.ts",
   "../projects/commercial/modules/high-merch.ts",

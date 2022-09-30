@@ -397,7 +397,16 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 	const enableDebug = sfdebug === 'im';
 
 	const insertAds: SpacefinderWriter = (paras) =>
-		insertAdAtPara(paras[0], 'im', 'im');
+		insertAdAtPara(
+			paras[0],
+			'im',
+			'im',
+			'',
+			{},
+			{
+				className: 'ad-slot-container--im',
+			},
+		);
 
 	return spaceFiller.fillSpace(rules, insertAds, {
 		waitForImages: true,

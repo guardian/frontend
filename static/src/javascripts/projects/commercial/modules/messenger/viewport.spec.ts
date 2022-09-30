@@ -3,10 +3,6 @@ import { _ as testExports } from './viewport';
 const addResizeListener = testExports.addResizeListener;
 const reset = testExports.reset;
 
-jest.mock('../messenger', () => ({
-	register: jest.fn(),
-}));
-
 const domSnippet = `
     <div id="ad-slot-1" class="js-ad-slot">
 		<iframe id="iframe1" style="height: 200px"></iframe>

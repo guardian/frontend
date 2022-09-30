@@ -1,6 +1,5 @@
 package controllers
 
-import agents.DeeplyReadAgent
 import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common._
@@ -34,16 +33,12 @@ class LiveBlogController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     topicService: TopicService,
-    deeplyReadAgent: DeeplyReadAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  val mostPopular = Seq(
-    deeplyReadAgent.onwardsJourneyResponse,
-  )
 
   // we support liveblogs and also articles, so that minutes work
   private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle
@@ -195,7 +190,6 @@ class LiveBlogController(
                 availableTopics,
                 newsletter = None,
                 topicResult,
-                mostPopular = Some(mostPopular),
                 onwards = None,
               )
             } else {

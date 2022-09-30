@@ -1,4 +1,4 @@
-import { postMessage } from './post-message';
+import { postMessage } from '@guardian/commercial-core';
 
 /* eslint no-bitwise: "off" */
 
