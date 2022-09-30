@@ -220,7 +220,7 @@
 		"test": "jest",
 		"cypress:open": "cypress open --e2e --browser=chrome",
 		"cypress:run": "cypress run --spec 'cypress/e2e/**/*'",
-		"cypress:run:percy": "percy exec -- cypress run --spec 'cypress/e2e/**/snapshot-*'"
+    "cypress:run:snapshot": "percy exec -- cypress run --config specPattern='cypress/snapshot/**/*'"
 	},
 	"prettier": "@guardian/prettier"
 }
