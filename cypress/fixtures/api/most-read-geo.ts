@@ -1,4 +1,6 @@
-{
+// the response for https://api.nextgen.guardianapps.co.uk/most-read-geo.json?dcr=true
+// this is used for Most Viewed (right)
+export const mostReadGeo = {
 	"heading": "Across The&nbsp;Guardian",
 	"trails": [
 		{
