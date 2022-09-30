@@ -1,4 +1,6 @@
-{
+// the response for https://api.nextgen.guardianapps.co.uk/most-read/politics.json?dcr=true
+// this is used for Most Viewed (bottom)
+export const mostRead = {
 	"tabs": [
 		{
 			"heading": "Across The&nbsp;Guardian",
