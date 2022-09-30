@@ -19,26 +19,33 @@ jobs:
         name: Test
         runs-on: ubuntu-latest
         steps:
+            # Frontend
             - name: Checkout frontend
               uses: actions/checkout@v3
               with:
                   path: ./frontend
 
+            - name: Setup frontend node
+              uses: actions/setup-node@v3
+              with:
+                  node-version-file: './frontend/.nvmrc'
+
+            - name: Install Frontend dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: ./frontend
+
+            # DCR
             - name: Checkout DCR
               uses: actions/checkout@v3
               with:
                   repository: guardian/dotcom-rendering
                   path: ./dcr
 
-            - name: Setup node
-              uses: guardian/actions-setup-node@main
+            - name: Setup DCR node
+              uses: actions/setup-node@v3
               with:
-                  node-version: '14.18.3'
-
-            - name: Install Frontend dependencies
-              uses: bahmutov/npm-install@v1
-              with:
-                  working-directory: ./frontend
+                  node-version-file: './dcr/.nvmrc'
 
             - name: Install DCR dependencies
               uses: bahmutov/npm-install@v1
