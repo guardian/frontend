@@ -1,8 +1,7 @@
-import { articles, liveblogs } from '../fixtures/pages';
-import { breakpoints } from '../fixtures/breakpoints';
+import { articles } from '../fixtures/pages';
 import '@percy/cypress';
 
-describe('Visually snapshot top-above-nav', () => {
+describe('Visually snapshot standard article', () => {
 	[articles[0]].forEach(({ path }) => {
 		it(`snapshots ${path}`, () => {
 			cy.visit(path);
