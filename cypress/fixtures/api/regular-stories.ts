@@ -1,4 +1,6 @@
-{
+// the response for https://api.nextgen.guardianapps.co.uk/container/data/uk-alpha/news/regular-stories.json
+// this is used for Headlines
+export const regularStories = {
 	"displayName": "Headlines",
 	"heading": "Headlines",
 	"trails": [
