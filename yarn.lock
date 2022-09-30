@@ -2164,10 +2164,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.12.0.tgz#52d11d2fff649e04934033473b3ed7c7bf4a1639"
   integrity sha512-JIFBybaCd69tf+zJZZ7KNLdqaVePOAc36wGFor0I60vc9Ib0jMuzYVffMjMhF6LHSXMdoOcqGwiPdFucObVYAA==
 
-"@guardian/support-dotcom-components@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.4.tgz#1d09ce408bcfa435eb2411255688e22a2eede032"
-  integrity sha512-g23KJoJiJVIC75DZW87zyblmNMnjujCgCKntLVLblKoSxIzOBLhzkPUnJqzPtG3aztTPRbqmhLzqgzm6M56/qw==
+"@guardian/support-dotcom-components@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.5.tgz#659720c332c62b211efab9a45350c042184a5082"
+  integrity sha512-BVvGeyS5dAD9Qu7NwFUsDou9LN5o9LZH5I4BnVf2Tg7Rj/mxdnO5qPygwI0dKFEbNHql4BEhJqSBdWI9MUSPWw==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"

@@ -15,6 +15,7 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { getVisitCount } from 'common/modules/commercial/contributions-utilities';
 import {
+	getLastOneOffContributionDate,
 	getPurchaseInfo,
 	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
@@ -161,6 +162,8 @@ const buildBannerPayload = async (
 		browserId: (await hasCmpConsentForBrowserId()) ? browserId : undefined,
 		purchaseInfo,
 		isSignedIn: !!isSignedIn,
+		lastOneOffContributionDate:
+			getLastOneOffContributionDate() ?? undefined,
 	};
 
 	return {
