@@ -34,7 +34,6 @@ function adsDisabledLogger(
 class CommercialFeatures {
 	dfpAdvertising: boolean;
 	isSecureContact: boolean;
-	stickyTopBannerAd: boolean;
 	articleBodyAdverts: boolean;
 	carrotTrafficDriver: boolean;
 	highMerch: boolean;
@@ -42,7 +41,6 @@ class CommercialFeatures {
 	relatedWidgetEnabled: boolean;
 	commentAdverts: boolean;
 	liveblogAdverts: boolean;
-	paidforBand: boolean;
 	adFree: boolean;
 	comscore: boolean;
 	launchpad: boolean;
@@ -70,8 +68,6 @@ class CommercialFeatures {
 			config.get('page.section') === 'identity'; // needed for pages under profile.* subdomain
 		const switches = config.get<Record<string, boolean>>('switches', {});
 		const isWidePage = getBreakpoint() === 'wide';
-		const supportsSticky =
-			document.documentElement.classList.contains('has-sticky');
 		const newRecipeDesign =
 			config.get('page.showNewRecipeDesign') &&
 			config.get('tests.abNewRecipeDesign');
@@ -112,11 +108,6 @@ class CommercialFeatures {
 				dfpAdvertisingFalseConditions,
 			);
 		}
-
-		this.stickyTopBannerAd =
-			!this.adFree &&
-			!config.get('page.disableStickyTopBanner') &&
-			!supportsSticky;
 
 		const articleBodyAdvertsTrueConditions = {
 			isArticle,
@@ -192,9 +183,6 @@ class CommercialFeatures {
 
 		this.liveblogAdverts =
 			isLiveBlog && this.dfpAdvertising && !this.adFree;
-
-		this.paidforBand =
-			config.get<boolean>('page.isPaidContent', false) && !supportsSticky;
 
 		this.comscore =
 			config.get<boolean>('switches.comscore', false) &&
