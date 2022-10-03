@@ -1,6 +1,6 @@
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
-import { buildPageParameters } from './build-page-parameters';
+import { getConsentlessPageTargeting } from 'common/modules/commercial/build-page-targeting';
 
 function initConsentless(consentState: ConsentState): Promise<void> {
 	// Stub the command queue
@@ -15,7 +15,7 @@ function initConsentless(consentState: ConsentState): Promise<void> {
 			alwaysNoConsent: 1,
 		});
 
-		Object.entries(buildPageParameters(consentState)).forEach(
+		Object.entries(getConsentlessPageTargeting(consentState)).forEach(
 			([key, value]) => {
 				if (!value) {
 					return;

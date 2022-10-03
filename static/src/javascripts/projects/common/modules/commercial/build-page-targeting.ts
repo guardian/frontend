@@ -145,6 +145,7 @@ const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
 	return filtered;
 };
 
+// TODO rename to getConsentedTargeting
 const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 	const { page } = window.guardian.config;
 	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
@@ -213,8 +214,73 @@ const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 	return pageTargeting;
 };
 
+const consentlessTargetingKeys = [
+	'ab',
+	'at',
+	'bl',
+	'bp',
+	'br',
+	'category',
+	'cc',
+	'ct',
+	'dcre',
+	'edition',
+	'isbn',
+	'k',
+	'refreshed',
+	'rp',
+	's',
+	'se',
+	'sens',
+	'sh',
+	'si',
+	'skinsize',
+	'slot',
+	'slot-fabric',
+	'su',
+	'tn',
+	'url',
+	'urlkw',
+] as const;
+
+type ConsentlessTargetingKeys = typeof consentlessTargetingKeys[number];
+
+type ConsentlessPageTargeting = Partial<
+	Pick<PageTargeting, ConsentlessTargetingKeys>
+>;
+
+const isConsentlessKey = (key: unknown): key is ConsentlessTargetingKeys => {
+	return consentlessTargetingKeys.includes(key as ConsentlessTargetingKeys);
+};
+
+const getConsentlessPageTargeting = (
+	consentState: ConsentState,
+): ConsentlessPageTargeting => {
+	const consentedPageTargeting: PageTargeting =
+		getPageTargeting(consentState);
+
+	// filter consentedPageTargeting to only include consentless keys.
+	// A more straightforward way to do this would be to loop through
+	// consentedPageTargeting and only include keys that are in
+	// consentlessTargetingKeys. This causes type errors since TypeScript can't
+	// verify that the values are of the correct type.
+	// We use reduce to get around this.
+	const consentlessPageTargeting: ConsentlessPageTargeting = Object.entries(
+		consentedPageTargeting,
+	).reduce(
+		(consentlessPageTargeting, [key, value]) =>
+			isConsentlessKey(key)
+				? { ...consentlessPageTargeting, [key]: value }
+				: consentlessPageTargeting,
+		{},
+	);
+
+	return consentlessPageTargeting;
+};
+
 export {
 	getPageTargeting,
+	getConsentlessPageTargeting,
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
 };
