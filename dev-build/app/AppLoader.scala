@@ -34,7 +34,6 @@ import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
 import agents.CuratedContentAgent
-import agents.DeeplyReadAgent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -123,6 +122,4 @@ trait AppComponents
   override lazy val httpFilters = wire[DevFilters].filters
   override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
   override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
-
-  override lazy val articleDeeplyReadAgent = wire[DeeplyReadAgent]
 }
