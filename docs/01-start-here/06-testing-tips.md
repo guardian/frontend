@@ -192,7 +192,7 @@ It can be convenient to run ScalaTest directly from IntelliJ. There's a few conf
 
 ### Missing error and warning highlighting because of Reader mode in tests
 
-Reader mode can be selected as the default view for tests in IntelliJ. This can make testing difficult as you loose
+Reader mode can be selected as the default view for tests in IntelliJ. This can make testing difficult as you lose
 error and warning highlighting. You can either disable reader mode, or enable error and warning highlighting while in
 reader mode. [Here's more detail on how to do that](https://www.jetbrains.com/help/idea/reader-mode.html).
 
