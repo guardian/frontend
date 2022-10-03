@@ -253,6 +253,13 @@ const isConsentlessKey = (key: unknown): key is ConsentlessTargetingKeys => {
 	return consentlessTargetingKeys.includes(key as ConsentlessTargetingKeys);
 };
 
+/**
+ * Call getPageTargeting then filter out the keys that are not needed for
+ * consentless targeting.
+ *
+ * @param  {ConsentState} consentState
+ * @returns {ConsentlessPageTargeting}
+ */
 const getConsentlessPageTargeting = (
 	consentState: ConsentState,
 ): ConsentlessPageTargeting => {
