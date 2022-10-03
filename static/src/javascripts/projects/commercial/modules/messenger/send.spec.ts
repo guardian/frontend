@@ -18,7 +18,7 @@ describe('Cross-frame messenger: send', () => {
 		expect(postMessage).toHaveBeenCalledWith(
 			expect.objectContaining({
 				id,
-				iframeId: expect.any(String),
+				iframeId: expect.any(String) as string,
 				type,
 				value,
 			}),
