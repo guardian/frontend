@@ -74,10 +74,6 @@ class GalleryLightbox {
                 </div>
             </dialog>`;
 
-
-
-
-
         // ELEMENT BINDINGS
         this.lightboxEl = bonzo.create(galleryLightboxHtml);
         this.$lightboxEl = bonzo(this.lightboxEl).prependTo(document.body);
