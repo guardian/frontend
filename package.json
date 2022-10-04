@@ -31,6 +31,7 @@
 		"bootstrap-sass": "^3.4.1",
 		"classnames": "~2.2.0",
 		"curl": "cujojs/curl#0.8.9",
+		"dialog-polyfill": "^0.5.6",
 		"domready": "^1.0.8",
 		"dynamic-import-polyfill": "^0.1.1",
 		"fastdom": "1.0.9",
