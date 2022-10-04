@@ -14,7 +14,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     background-color: lighten($brightness-7, 2.5%);
     overflow: hidden;
     z-index: $zindex-lightbox;
-    box-sizing: border-box;
 }
 
 .gallery-lightbox--open {
