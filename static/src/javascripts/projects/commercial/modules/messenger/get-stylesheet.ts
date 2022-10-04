@@ -22,9 +22,13 @@ const getStyles = (
 		) {
 			ownerNode.textContent !== null &&
 				result.push(ownerNode.textContent);
-
-			// if it's a link, we can't access the CSS rules because of CORS and the stylesheets are on another domain
 		}
+		/*
+			There could be link elements here too, but we don't care about them as we cannot access the CSS
+			text content in them anyway.
+			This is due to the fact that they are on separate domains like `assets.guim.co.uk`, accessing the text
+			from them results in a CORS error.
+		 */
 	}
 	return result;
 };
