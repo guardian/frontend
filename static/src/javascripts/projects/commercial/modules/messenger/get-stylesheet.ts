@@ -9,13 +9,9 @@ const isStyleSpecs = (specs: unknown): specs is StylesheetSpecs =>
 	isObject(specs) && 'selector' in specs;
 
 const getStyles = (
-	specs: StylesheetSpecs | undefined,
+	specs: StylesheetSpecs,
 	styleSheets: StyleSheetList,
 ): string[] => {
-	if (!specs || typeof specs.selector !== 'string') {
-		return [];
-	}
-
 	const result: string[] = [];
 	for (let i = 0; i < styleSheets.length; i += 1) {
 		const ownerNode = styleSheets[i].ownerNode;
