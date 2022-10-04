@@ -111,7 +111,7 @@ trait ABTestSwitches {
     "Test the updated Confiant SDK",
     owners = Seq(Owner.withGithub("jakeii")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 10, 30)),
+    sellByDate = Some(LocalDate.of(2022, 10, 28)),
     exposeClientSide = true,
   )
 }

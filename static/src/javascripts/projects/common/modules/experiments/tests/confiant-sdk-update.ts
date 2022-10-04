@@ -4,7 +4,7 @@ import { noop } from '../../../../../lib/noop';
 export const confiantSDKUpdateTest: ABTest = {
 	id: 'ConfiantSDKUpdate',
 	start: '2022-10-04',
-	expiry: '2022-10-30',
+	expiry: '2022-10-28',
 	author: 'Jake Lee Kennedy',
 	description: 'Test the new Confiant SDK, to share with the Confiant team',
 	audience: 0,
