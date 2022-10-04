@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Long mandatory sign in gate trial",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2023, 1, 18)),
     exposeClientSide = true,
   )
 
@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Long mandatory sign in gate trial",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2023, 1, 18)),
     exposeClientSide = true,
   )
 
@@ -51,7 +51,7 @@ trait ABTestSwitches {
     "Long mandatory sign in gate trial",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2023, 1, 18)),
     exposeClientSide = true,
   )
 
@@ -61,7 +61,7 @@ trait ABTestSwitches {
     "Long mandatory sign in gate trial",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2023, 1, 18)),
     exposeClientSide = true,
   )
 
@@ -71,7 +71,7 @@ trait ABTestSwitches {
     "Long mandatory sign in gate trial",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2023, 1, 18)),
     exposeClientSide = true,
   )
 
@@ -81,7 +81,7 @@ trait ABTestSwitches {
     "Long mandatory sign in gate trial",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2023, 1, 18)),
     exposeClientSide = true,
   )
 
@@ -91,7 +91,7 @@ trait ABTestSwitches {
     "Long mandatory sign in gate trial",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2023, 1, 18)),
     exposeClientSide = true,
   )
 
@@ -101,7 +101,7 @@ trait ABTestSwitches {
     "Long mandatory sign in gate trial",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2023, 1, 18)),
     exposeClientSide = true,
   )
 

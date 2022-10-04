@@ -1,6 +1,6 @@
 const sharedTestData = {
-	start: '2022-09-26',
-	expiry: '2022-12-31',
+	start: '2022-10-04',
+	expiry: '2023-01-18',
 	author: 'vlbee',
 	description:
 		'Long-running mandatory sign in gate - Show gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
