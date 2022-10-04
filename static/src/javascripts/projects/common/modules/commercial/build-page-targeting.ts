@@ -267,7 +267,7 @@ const getConsentlessPageTargeting = (
 		getPageTargeting(consentState);
 
 	return Object.fromEntries(
-		Object.entries(consentedPageTargeting).filter(([k, _]) =>
+		Object.entries(consentedPageTargeting).filter(([k]) =>
 			isConsentlessKey(k),
 		),
 	);
