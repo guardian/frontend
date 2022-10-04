@@ -75,7 +75,9 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
-  "../projects/commercial/modules/header-bidding/utils.ts"
+  "../projects/commercial/modules/header-bidding/utils.ts",
+  "../projects/common/modules/experiments/ab.ts",
+  "../projects/common/modules/experiments/tests/confiant-sdk-update.ts"
  ],
  "../projects/commercial/modules/article-aside-adverts.ts": [
   "../lib/$$.ts",
@@ -684,6 +686,7 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../projects/common/modules/experiments/tests/confiant-sdk-update.ts",
   "../projects/common/modules/experiments/tests/consentlessAds.ts",
   "../projects/common/modules/experiments/tests/deeply-read-article-footer.js",
   "../projects/common/modules/experiments/tests/integrate-ima.ts",
@@ -714,6 +717,10 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
+ "../projects/common/modules/experiments/tests/confiant-sdk-update.ts": [
+  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
+  "../lib/noop.ts"
+ ],
  "../projects/common/modules/experiments/tests/consentlessAds.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
