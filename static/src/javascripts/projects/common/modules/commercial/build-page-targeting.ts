@@ -220,7 +220,6 @@ const consentlessTargetingKeys = [
 	'bl',
 	'bp',
 	'br',
-	'category', // TODO: this may not be page-level
 	'cc',
 	'ct',
 	'dcre',
