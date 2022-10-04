@@ -61,32 +61,29 @@ const onIntersect: IntersectionObserverCallback = (changes) => {
 
 // typescript complains about an async event handler, so wrap it in a non-async function
 const onScroll = () => {
-	void (() => {
-		if (!taskQueued) {
-			const viewport = getViewport();
-			taskQueued = true;
+	if (!taskQueued) {
+		const viewport = getViewport();
+		taskQueued = true;
 
-			return fastdom.measure(() => {
-				taskQueued = false;
+		void fastdom.measure(() => {
+			taskQueued = false;
 
-				const iframeIds = Object.keys(iframes);
+			const iframeIds = Object.keys(iframes);
 
-				if (useIO) {
-					visibleIframeIds.map(getDimensions).forEach((data) => {
+			if (useIO) {
+				visibleIframeIds.map(getDimensions).forEach((data) => {
+					sendCoordinates(data[0], data[1]);
+				});
+			} else {
+				iframeIds
+					.map(getDimensions)
+					.filter(isIframeInViewport, viewport)
+					.forEach((data) => {
 						sendCoordinates(data[0], data[1]);
 					});
-				} else {
-					iframeIds
-						.map(getDimensions)
-						.filter(isIframeInViewport, viewport)
-						.forEach((data) => {
-							sendCoordinates(data[0], data[1]);
-						});
-				}
-			});
-		}
-		return Promise.resolve();
-	})();
+			}
+		});
+	}
 };
 
 const addScrollListener = (
