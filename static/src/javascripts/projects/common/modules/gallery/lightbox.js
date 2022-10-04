@@ -17,7 +17,7 @@ import endslateTpl from 'common/views/content/endslate.html';
 import loaderTpl from 'common/views/content/loader.html';
 import shareButtonTpl from 'common/views/content/share-button.html';
 import { loadCssPromise } from 'lib/load-css-promise';
-import dialogPolyfill from "dialog-polyfill";
+
 
 
 
@@ -74,10 +74,12 @@ class GalleryLightbox {
                 </div>
             </dialog>`;
 
-        const galleryLightboxHtmlPoly = dialogPolyfill.registerDialog(galleryLightboxHtml);
+
+
+
 
         // ELEMENT BINDINGS
-        this.lightboxEl = bonzo.create(galleryLightboxHtmlPoly);
+        this.lightboxEl = bonzo.create(galleryLightboxHtml);
         this.$lightboxEl = bonzo(this.lightboxEl).prependTo(document.body);
         this.$indexEl = $('.js-gallery-index', this.lightboxEl);
         this.$countEl = $('.js-gallery-count', this.lightboxEl);
@@ -111,6 +113,17 @@ class GalleryLightbox {
                 this.trigger('close');
             }
         });
+
+        const dialog = document.querySelector('dialog');
+
+
+        if(!dialog.showModal) {
+            this.polyfillPromise = import('dialog-polyfill')
+            this.polyfillPromise.then(dialogPolyfill => dialogPolyfill.default.registerDialog(dialog))
+
+        }
+
+
 
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
@@ -654,7 +667,12 @@ const init = () => {
 
             if (lightboxIndex > 0) {
                 lightbox.fetchSurroundingJson(images).then(allImages => {
-                    lightbox.loadOrOpen(allImages, lightboxIndex);
+                    if(lightbox.polyfillPromise){
+                        lightbox.polyfillPromise.then(() => lightbox.loadOrOpen(allImages, lightboxIndex))
+                    }
+                    else {
+                        lightbox.loadOrOpen(allImages, lightboxIndex);
+                    }
                 });
             }
         }
