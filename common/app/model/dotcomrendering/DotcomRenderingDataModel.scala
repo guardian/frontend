@@ -190,13 +190,15 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
   ): DotcomRenderingDataModel = {
+    val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
+
     apply(
       page = page,
       request = request,
       pagination = None,
       linkedData = LinkedData.forInteractive(
         interactive = page.item,
-        baseURL = Configuration.amp.baseUrl,
+        baseURL = baseUrl,
         fallbackLogo = Configuration.images.fallbackLogo,
       ),
       mainBlock = blocks.main,
@@ -220,11 +222,13 @@ object DotcomRenderingDataModel {
       newsletter: Option[NewsletterData],
       onwards: Option[Seq[OnwardCollectionResponse]],
   ): DotcomRenderingDataModel = {
-    val linkedData = LinkedData.forArticle(
-      article = page.article,
-      baseURL = Configuration.amp.baseUrl,
-      fallbackLogo = Configuration.images.fallbackLogo,
-    )
+    val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
+    val linkedData =
+      LinkedData.forArticle(
+        article = page.article,
+        baseURL = baseUrl,
+        fallbackLogo = Configuration.images.fallbackLogo,
+      )
 
     apply(
       page = page,
@@ -290,10 +294,11 @@ object DotcomRenderingDataModel {
     val timelineBlocks =
       orderBlocks(allTimelineBlocks.toSeq).map(ensureSummaryTitle)
 
+    val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,
       blocks = bodyBlocks,
-      baseURL = Configuration.amp.baseUrl,
+      baseURL = baseUrl,
       fallbackLogo = Configuration.images.fallbackLogo,
     )
 
