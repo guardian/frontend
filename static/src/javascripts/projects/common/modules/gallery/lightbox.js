@@ -111,8 +111,8 @@ class GalleryLightbox {
         });
 
         const dialog = document.querySelector('dialog');
-
-
+    
+        // We are exposing this promise here so that it can be waited on when initiating lightbox
         if(!dialog.showModal) {
             this.polyfillPromise = import('dialog-polyfill')
             this.polyfillPromise.then(dialogPolyfill => dialogPolyfill.default.registerDialog(dialog))
