@@ -41,6 +41,6 @@ const init = (register: RegisterListener): void => {
 	});
 };
 
-export const _ = { getStyles };
+export const _ = { getStyles, isStyleSpecs };
 
-export { init, getStyles };
+export { init };
