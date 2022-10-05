@@ -2,7 +2,7 @@ import type { ABTest } from '@guardian/ab-core';
 import { noop } from '../../../../../lib/noop';
 
 export const confiantSDKUpdateTest: ABTest = {
-	id: 'ConfiantSDKUpdate',
+	id: 'ConfiantSdkUpdate',
 	start: '2022-10-04',
 	expiry: '2022-10-28',
 	author: 'Jake Lee Kennedy',
