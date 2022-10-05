@@ -42,7 +42,6 @@ export const loadAdvert = (advert: Advert): void => {
 		})
 		.then(() => {
 			eventTimer.trigger('slotReady', adName);
-			advert.startLoading();
 			return Promise.all([
 				prebid.requestBids(advert),
 				a9.requestBids(advert),
