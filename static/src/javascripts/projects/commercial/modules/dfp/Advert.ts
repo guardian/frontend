@@ -111,8 +111,8 @@ class Advert {
 		void fastdom.mutate(() => {
 			this.node.classList.remove(...classesToRemove);
 			this.node.classList.add(...newClasses);
+			this.extraNodeClasses = newClasses;
 		});
-		this.extraNodeClasses = newClasses;
 	}
 
 	/**
