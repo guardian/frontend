@@ -97,16 +97,15 @@ class Advert {
 		this.whenSlotReady = slotDefinition.slotReady;
 	}
 
-	static filterClasses = (
-		oldClasses: string[],
-		newClasses: string[],
-	): string[] =>
-		oldClasses.filter((oldClass) => !newClasses.includes(oldClass));
-
+	/**
+	 * Update the "extra" classes for this slot e.g. `ad-slot--outstream`, so that the main one's
+	 * like `ad-slot` etc. are not affected
+	 *
+	 * @param newClasses An array of classes to set on the slot
+	 **/
 	updateExtraSlotClasses(...newClasses: string[]): void {
-		const classesToRemove = Advert.filterClasses(
-			this.extraNodeClasses,
-			newClasses,
+		const classesToRemove = this.extraNodeClasses.filter(
+			(c) => !newClasses.includes(c),
 		);
 
 		void fastdom.mutate(() => {
@@ -175,6 +174,5 @@ class Advert {
 export { Advert };
 
 export const _ = {
-	filterClasses: Advert.filterClasses,
 	getSlotSizeMapping,
 };
