@@ -98,12 +98,19 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
     val mostViewedQuery = contentApiClient
       .item("/", edition)
       .showMostViewed(true)
+      .showFields("legallySensitive")
 
     val futureMostViewed = contentApiClient.getResponse(mostViewedQuery)
 
     for {
       mostViewedResponse <- futureMostViewed
-      mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_)).toSeq
+      mostViewed =
+        mostViewedResponse.mostViewed
+          .getOrElse(Nil)
+          .filterNot(_.fields.flatMap(_.legallySensitive).getOrElse(false))
+          .take(10)
+          .map(RelatedContentItem(_))
+          .toSeq
       newMap <- relatedContentsBox.alter(_ + (edition.id -> mostViewed))
     } yield newMap
   }

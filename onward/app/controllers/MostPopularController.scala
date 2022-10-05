@@ -257,13 +257,18 @@ class MostPopularController(
       .item(path, edition)
       .tag(None)
       .showMostViewed(true)
+      .showFields("legallySensitive")
 
     val capiItemWithDate =
       if (path == "film") capiItem.dateParam("from-date", Instant.now.minus(180, ChronoUnit.DAYS)) else capiItem
 
     contentApiClient.getResponse(capiItemWithDate).map { response =>
       val heading = response.section.map(s => "in " + s.webTitle).getOrElse("Across The&nbsp;Guardian")
-      val popular = response.mostViewed.getOrElse(Nil) take 10 map (RelatedContentItem(_))
+      val popular = response.mostViewed
+        .getOrElse(Nil)
+        .filterNot(_.fields.flatMap(_.legallySensitive).getOrElse(false))
+        .take(10)
+        .map(RelatedContentItem(_))
       if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent).toSeq))
     }
   }
