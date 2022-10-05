@@ -47,6 +47,11 @@ object FrontChecks {
       pending https://github.com/guardian/dotcom-rendering/issues/5782
        */
 
+      /*
+    "fixed/video"
+      pending https://github.com/guardian/dotcom-rendering/issues/5149
+       */
+
       "dynamic/slow",
       "fixed/small/slow-I",
       "fixed/small/slow-III",
