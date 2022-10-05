@@ -176,6 +176,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
+  "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
   "../projects/commercial/modules/dfp/define-slot.ts"
  ],
