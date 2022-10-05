@@ -9,15 +9,13 @@ import com.gu.contentapi.client.model.v1.{
 import model.{CrosswordPosition, Entry}
 
 import Function.const
-import scala.collection.compat.immutable.LazyList
 
 trait CrosswordGridDataOrdering {
   implicit val positionOrdering = Ordering.by[CrosswordPosition, (Int, Int)](position => (position.y, position.x))
 }
 
 trait CrosswordGridColumnNotation {
-  val columnsByLetters =
-    (('A' to 'Z').toList.zip(LazyList from 0) map { case (letter, number) => (number, letter) }).toMap
+  val columnsByLetters = ('A' to 'Z').toList.zipWithIndex.map(_.swap).toMap
 }
 
 case class Cell(number: Option[Int])
