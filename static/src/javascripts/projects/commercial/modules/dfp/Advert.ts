@@ -5,6 +5,7 @@ import {
 } from '@guardian/commercial-core';
 import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
 import { breakpoints } from '../../../../lib/detect';
+import fastdom from '../../../../lib/fastdom-promise';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { buildGoogletagSizeMapping, defineSlot } from './define-slot';
 
@@ -107,8 +108,11 @@ class Advert {
 			this.extraNodeClasses,
 			newClasses,
 		);
-		this.node.classList.remove(...classesToRemove);
-		this.node.classList.add(...newClasses);
+
+		void fastdom.mutate(() => {
+			this.node.classList.remove(...classesToRemove);
+			this.node.classList.add(...newClasses);
+		});
 		this.extraNodeClasses = newClasses;
 	}
 
