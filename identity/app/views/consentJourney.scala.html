@@ -50,7 +50,7 @@
                     The conditional for special casing 'holidays' can be removed after the Identity data source is
                     re-released without 'holidays' in the data.
                 */ }
-                @if(!isChannel(consentField) && !isProduct(consentField)) {
+                @if(!isChannel(consentField) && !isProduct(consentField) && !isHolidays(consentField)) {
                     @if(index == 0) {
                         <li>
                             @fragments.consentSwitch(consentField, consentHint, skin = skin)(messages)
