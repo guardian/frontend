@@ -93,7 +93,7 @@
   "../lib/url.ts",
   "../projects/commercial/modules/carrot-traffic-driver.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
-  "../projects/commercial/modules/dfp/track-ad-render.ts",
+  "../projects/commercial/modules/dfp/wait-for-advert.ts",
   "../projects/commercial/modules/sticky-inlines.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
@@ -383,9 +383,6 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts"
- ],
- "../projects/commercial/modules/dfp/track-ad-render.ts": [
-  "../projects/commercial/modules/dfp/wait-for-advert.ts"
  ],
  "../projects/commercial/modules/dfp/wait-for-advert.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
