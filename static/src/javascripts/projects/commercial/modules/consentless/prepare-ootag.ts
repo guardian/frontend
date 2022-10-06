@@ -1,6 +1,9 @@
+import { buildPageTargetingConsentless } from '@guardian/commercial-core';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
-import { getConsentlessPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { getSynchronousParticipations } from 'common/modules/experiments/ab';
+import { getCountryCode } from 'lib/geolocation';
 
 function initConsentless(consentState: ConsentState): Promise<void> {
 	// Stub the command queue
@@ -15,14 +18,19 @@ function initConsentless(consentState: ConsentState): Promise<void> {
 			alwaysNoConsent: 1,
 		});
 
-		Object.entries(getConsentlessPageTargeting(consentState)).forEach(
-			([key, value]) => {
-				if (!value) {
-					return;
-				}
-				window.ootag.addParameter(key, value);
-			},
-		);
+		Object.entries(
+			buildPageTargetingConsentless(
+				consentState,
+				commercialFeatures.adFree,
+				getCountryCode(),
+				getSynchronousParticipations(),
+			),
+		).forEach(([key, value]) => {
+			if (!value) {
+				return;
+			}
+			window.ootag.addParameter(key, value);
+		});
 	});
 
 	void loadScript('//cdn.optoutadvertising.com/script/ooguardian.v3.min.js');
