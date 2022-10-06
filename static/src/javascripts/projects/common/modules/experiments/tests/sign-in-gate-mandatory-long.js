@@ -14,7 +14,7 @@ export const signInGateMandatoryLongBucketingTestRun = {
 	idealOutcome:
 		'Increase the number of users signed in whilst running at a reasonable scale',
 	showForSensitive: false,
-	canRun: () => true,
+	canRun: () => false,
 	variants: [
 		{
 			id: 'mandatory-long-bucketing-testrun',
