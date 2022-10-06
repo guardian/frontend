@@ -1,5 +1,5 @@
+import type { PageTargeting } from '@guardian/commercial-core';
 import config from '../../../../../lib/config';
-import type { PageTargeting } from '../../../../common/modules/commercial/build-page-targeting';
 import { buildAppNexusTargetingObject } from '../../../../common/modules/commercial/build-page-targeting';
 import { isInAuOrNz } from '../../../../common/modules/commercial/geo-utils';
 import {
