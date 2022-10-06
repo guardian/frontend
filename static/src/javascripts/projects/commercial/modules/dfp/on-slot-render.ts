@@ -50,7 +50,7 @@ export const onSlotRender = (
 		return;
 	}
 
-	const emitRenderEvents = (isRendered: boolean) => {
+	const emitRenderEvents = () => {
 		mediator.emit('modules:commercial:dfp:rendered', event);
 	};
 
@@ -59,7 +59,7 @@ export const onSlotRender = (
 	if (event.isEmpty) {
 		emptyAdvert(advert);
 		reportEmptyResponse(advert.id, event);
-		emitRenderEvents(false);
+		emitRenderEvents();
 	} else {
 		/**
 		 * if advert.hasPrebidSize is false we use size

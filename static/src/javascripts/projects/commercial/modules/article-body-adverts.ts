@@ -14,7 +14,7 @@ import type {
 } from '../../common/modules/spacefinder';
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
-import { trackAdRender } from './dfp/track-ad-render';
+import { waitForAdvert } from './dfp/wait-for-advert';
 import { computeStickyHeights, insertHeightStyles } from './sticky-inlines';
 
 type SlotName = Parameters<typeof createAdSlot>[0];
@@ -424,7 +424,7 @@ const doInit = async (): Promise<boolean> => {
 		? attemptToAddInlineMerchAd()
 		: Promise.resolve(false);
 	const inlineMerchAdded = await im;
-	if (inlineMerchAdded) await trackAdRender('dfp-ad--im');
+	if (inlineMerchAdded) await waitForAdvert('dfp-ad--im');
 	await addInlineAds();
 	await initCarrot();
 
