@@ -145,7 +145,6 @@ const filterEmptyValues = (pageTargets: Record<string, unknown>) => {
 	return filtered;
 };
 
-// TODO rename to getConsentedTargeting
 const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 	const { page } = window.guardian.config;
 	const adFreeTargeting: PageTargeting = commercialFeatures.adFree
@@ -214,63 +213,8 @@ const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 	return pageTargeting;
 };
 
-const consentlessTargetingKeys = [
-	'ab',
-	'at',
-	'bl',
-	'bp',
-	'br',
-	'cc',
-	'ct',
-	'dcre',
-	'edition',
-	'k',
-	'rp',
-	's',
-	'se',
-	'sens',
-	'sh',
-	'si',
-	'skinsize',
-	'su',
-	'tn',
-	'url',
-	'urlkw',
-] as const;
-
-type ConsentlessTargetingKeys = typeof consentlessTargetingKeys[number];
-
-type ConsentlessPageTargeting = Partial<
-	Pick<PageTargeting, ConsentlessTargetingKeys>
->;
-
-const isConsentlessKey = (key: unknown): key is ConsentlessTargetingKeys => {
-	return consentlessTargetingKeys.includes(key as ConsentlessTargetingKeys);
-};
-
-/**
- * Call getPageTargeting then filter out the keys that are not needed for
- * consentless targeting.
- *
- * @param  {ConsentState} consentState
- * @returns {ConsentlessPageTargeting}
- */
-const getConsentlessPageTargeting = (
-	consentState: ConsentState,
-): ConsentlessPageTargeting => {
-	const consentedPageTargeting: PageTargeting =
-		getPageTargeting(consentState);
-
-	return Object.fromEntries(
-		Object.entries(consentedPageTargeting).filter(([k]) =>
-			isConsentlessKey(k),
-		),
-	);
-};
-
 export {
 	getPageTargeting,
-	getConsentlessPageTargeting,
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
 };
