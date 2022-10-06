@@ -1,7 +1,11 @@
+import { buildPageTargetingConsentless } from '@guardian/commercial-core';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
-import { buildPageParameters } from './build-page-parameters';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { getSynchronousParticipations } from 'common/modules/experiments/ab';
+import { getCountryCode } from 'lib/geolocation';
 
-function initConsentless(): Promise<void> {
+function initConsentless(consentState: ConsentState): Promise<void> {
 	// Stub the command queue
 	// @ts-expect-error -- it’s a stub, not the whole OO tag object
 	window.ootag = {
@@ -13,9 +17,15 @@ function initConsentless(): Promise<void> {
 			noLogging: 0,
 			alwaysNoConsent: 1,
 		});
-		window.ootag.addParameter('test', 'yes');
 
-		Object.entries(buildPageParameters()).forEach(([key, value]) => {
+		Object.entries(
+			buildPageTargetingConsentless(
+				consentState,
+				commercialFeatures.adFree,
+				getCountryCode(),
+				getSynchronousParticipations(),
+			),
+		).forEach(([key, value]) => {
 			if (!value) {
 				return;
 			}

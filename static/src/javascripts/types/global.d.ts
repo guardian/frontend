@@ -388,7 +388,7 @@ interface Window {
 	ootag: {
 		queue: Array<() => void>;
 		initializeOo: (o: OptOutInitializeOptions) => void;
-		addParameter: (key: string, value: string) => void;
+		addParameter: (key: string, value: string | string[]) => void;
 		defineSlot: (o: OptOutAdSlot) => void;
 		makeRequests: () => void;
 		refreshSlot: (slotId: string) => void;
