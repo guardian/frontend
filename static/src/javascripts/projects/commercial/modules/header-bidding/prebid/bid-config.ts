@@ -1,7 +1,7 @@
+import type { PageTargeting } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
-import type { PageTargeting } from '../../../../common/modules/commercial/build-page-targeting';
 import {
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,

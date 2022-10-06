@@ -13,6 +13,7 @@
  */
 
 import { EventTimer } from '@guardian/commercial-core';
+import { onConsent } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
 import { initArticleInline } from 'commercial/modules/consentless/dynamic/article-inline';
 import { initLiveblogInline } from 'commercial/modules/consentless/dynamic/liveblog-inline';
@@ -219,10 +220,12 @@ const bootConsentless = async (): Promise<void> => {
  	*/
 	maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
 
+	const consentState = await onConsent();
+
 	await Promise.all([
 		setAdTestCookie(),
 		initSafeframes(),
-		initConsentless(),
+		initConsentless(consentState),
 		initFixedSlots(),
 		initArticleInline(),
 		initLiveblogInline(),
