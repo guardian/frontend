@@ -58,7 +58,7 @@ interface CommercialPageConfig {
 	adUnit: AdUnit;
 	appNexusPageTargeting?: string;
 	sharedAdTargeting?: Record<string, string | string[]>;
-	pageAdTargeting?: Record<string, string | string[]>;
+	pageAdTargeting?: PageTargeting;
 	dfpAccountId: string;
 }
 

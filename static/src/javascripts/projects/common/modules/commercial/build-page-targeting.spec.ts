@@ -2,11 +2,9 @@ import { cmp as cmp_ } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { setCookie, storage } from '@guardian/libs';
-import { getReferrer as getReferrer_ } from '../../../../lib/detect';
 import { getCountryCode as getCountryCode_ } from '../../../../lib/geolocation';
 import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from '../experiments/ab';
-import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
 import { getPageTargeting } from './build-page-targeting';
 import { commercialFeatures } from './commercial-features';
 
@@ -14,10 +12,6 @@ const getSynchronousParticipations =
 	getSynchronousParticipations_ as jest.MockedFunction<
 		typeof getSynchronousParticipations_
 	>;
-const getReferrer = getReferrer_ as jest.MockedFunction<typeof getReferrer_>;
-const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
-	typeof isUserLoggedIn_
->;
 const getCountryCode = getCountryCode_ as jest.MockedFunction<
 	typeof getCountryCode_
 >;
@@ -38,7 +32,6 @@ type UnknownFunc = (...args: unknown[]) => unknown;
 
 jest.mock('../../../../lib/config');
 jest.mock('../../../../lib/detect', () => ({
-	getReferrer: jest.fn(),
 	hasPushStateSupport: jest.fn(),
 }));
 jest.mock('../../../../lib/geolocation', () => ({
@@ -197,10 +190,9 @@ describe('Build Page Targeting', () => {
 
 		setCookie({ name: 'adtest', value: 'ng101' });
 
-		getReferrer.mockReturnValue('');
 		mockViewport(0, 0);
 
-		isUserLoggedIn.mockReturnValue(true);
+		setCookie({ name: 'GU_U', value: 'test' });
 
 		getSynchronousParticipations.mockReturnValue({
 			MtMaster: {
@@ -443,35 +435,37 @@ describe('Build Page Targeting', () => {
 
 	describe('Referrer', () => {
 		it('should set ref to Facebook', () => {
-			getReferrer.mockReturnValue(
+			jest.spyOn(document, 'referrer', 'get').mockReturnValue(
 				'https://www.facebook.com/feel-the-force',
 			);
 			expect(getPageTargeting(emptyConsent).ref).toEqual('facebook');
 		});
 
 		it('should set ref to Twitter', () => {
-			getReferrer.mockReturnValue(
+			jest.spyOn(document, 'referrer', 'get').mockReturnValue(
 				'https://t.co/you-must-unlearn-what-you-have-learned',
 			);
 			expect(getPageTargeting(emptyConsent).ref).toEqual('twitter');
 		});
 
 		it('should set ref to reddit', () => {
-			getReferrer.mockReturnValue(
+			jest.spyOn(document, 'referrer', 'get').mockReturnValue(
 				'https://www.reddit.com/its-not-my-fault',
 			);
 			expect(getPageTargeting(emptyConsent).ref).toEqual('reddit');
 		});
 
 		it('should set ref to google', () => {
-			getReferrer.mockReturnValue(
+			jest.spyOn(document, 'referrer', 'get').mockReturnValue(
 				'https://www.google.com/i-find-your-lack-of-faith-distrubing',
 			);
 			expect(getPageTargeting(emptyConsent).ref).toEqual('google');
 		});
 
 		it('should set ref empty string if referrer does not match', () => {
-			getReferrer.mockReturnValue('https://theguardian.com');
+			jest.spyOn(document, 'referrer', 'get').mockReturnValue(
+				'https://theguardian.com',
+			);
 			expect(getPageTargeting(emptyConsent).ref).toEqual(undefined);
 		});
 	});
