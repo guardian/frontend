@@ -106,8 +106,8 @@ class Advert {
 	}
 
 	/**
-	 * Update the "extra" classes for this slot e.g. `ad-slot--outstream`, so that the main one's
-	 * like `ad-slot` etc. are not affected
+	 * Update the "extra" classes for this slot e.g. `ad-slot--outstream`, so that the base classes
+	 * like `ad-slot` etc. are never removed
 	 *
 	 * @param newClasses An array of classes to set on the slot
 	 **/

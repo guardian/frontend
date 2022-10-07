@@ -14,8 +14,6 @@ jest.mock('../../../../lib/raven');
 
 jest.mock('./empty-advert');
 
-// const renderAdvert = jest.fn().mockReturnValue(Promise.resolve(true));
-
 jest.mock('./render-advert', () => ({
 	renderAdvert: jest.fn().mockReturnValue(Promise.resolve(true)),
 }));
@@ -35,7 +33,6 @@ describe('onSlotRender', () => {
 		};
 		// @ts-expect-error - we are mocking the function
 		onSlotRender(event);
-		// expect(advert.finishedRendering).toBeCalledWith(true);
 	});
 
 	it('if not rendered call set call finishedRendering on the advert', () => {
