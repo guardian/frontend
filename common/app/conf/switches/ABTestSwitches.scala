@@ -104,14 +104,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 10, 25)),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-confiant-sdk-update",
-    "Test the updated Confiant SDK",
-    owners = Seq(Owner.withGithub("jakeii")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 10, 28)),
-    exposeClientSide = true,
-  )
 }

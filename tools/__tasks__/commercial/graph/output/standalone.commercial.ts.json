@@ -1,130 +1,4 @@
 {
- "../../../../../commercial-core/dist/cjs/ad-sizes.d.ts": [
-  "../../../../../commercial-core/dist/cjs/lib/breakpoint.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/ad-targeting-youtube.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/constants/adLabelHeight.d.ts": [],
- "../../../../../commercial-core/dist/cjs/constants/index.d.ts": [
-  "../../../../../commercial-core/dist/cjs/constants/adLabelHeight.d.ts",
-  "../../../../../commercial-core/dist/cjs/constants/prebid-timeout.d.ts",
-  "../../../../../commercial-core/dist/cjs/constants/top-above-nav-height.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/constants/prebid-timeout.d.ts": [],
- "../../../../../commercial-core/dist/cjs/constants/top-above-nav-height.d.ts": [],
- "../../../../../commercial-core/dist/cjs/create-ad-slot.d.ts": [
-  "../../../../../commercial-core/dist/cjs/ad-sizes.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/detect-ad-blocker.d.ts": [],
- "../../../../../commercial-core/dist/cjs/event-timer.d.ts": [],
- "../../../../../commercial-core/dist/cjs/index.d.ts": [
-  "../../../../../commercial-core/dist/cjs/ad-sizes.d.ts",
-  "../../../../../commercial-core/dist/cjs/ad-targeting-youtube.d.ts",
-  "../../../../../commercial-core/dist/cjs/constants/index.d.ts",
-  "../../../../../commercial-core/dist/cjs/create-ad-slot.d.ts",
-  "../../../../../commercial-core/dist/cjs/detect-ad-blocker.d.ts",
-  "../../../../../commercial-core/dist/cjs/event-timer.d.ts",
-  "../../../../../commercial-core/dist/cjs/lib/breakpoint.d.ts",
-  "../../../../../commercial-core/dist/cjs/messenger.d.ts",
-  "../../../../../commercial-core/dist/cjs/messenger/post-message.d.ts",
-  "../../../../../commercial-core/dist/cjs/permutive.d.ts",
-  "../../../../../commercial-core/dist/cjs/send-commercial-metrics.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/build-page-targeting-consentless.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/build-page-targeting.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/content.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/personalised.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/pick-targeting-values.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/session.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/shared.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/viewport.d.ts",
-  "../../../../../commercial-core/dist/cjs/third-party-tags/facebook-pixel.d.ts",
-  "../../../../../commercial-core/dist/cjs/third-party-tags/ias.d.ts",
-  "../../../../../commercial-core/dist/cjs/third-party-tags/inizio.d.ts",
-  "../../../../../commercial-core/dist/cjs/third-party-tags/permutive.d.ts",
-  "../../../../../commercial-core/dist/cjs/third-party-tags/remarketing.d.ts",
-  "../../../../../commercial-core/dist/cjs/third-party-tags/twitter-uwt.d.ts",
-  "../../../../../commercial-core/dist/cjs/track-gpc-signal.d.ts",
-  "../../../../../commercial-core/dist/cjs/track-labs-container.d.ts",
-  "../../../../../commercial-core/dist/cjs/track-scroll-depth.d.ts",
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/lib/breakpoint.d.ts": [],
- "../../../../../commercial-core/dist/cjs/messenger.d.ts": [],
- "../../../../../commercial-core/dist/cjs/messenger/post-message.d.ts": [],
- "../../../../../commercial-core/dist/cjs/permutive.d.ts": [],
- "../../../../../commercial-core/dist/cjs/send-commercial-metrics.d.ts": [],
- "../../../../../commercial-core/dist/cjs/targeting/build-page-targeting-consentless.d.ts": [
-  "../../../../../commercial-core/dist/cjs/targeting/build-page-targeting.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/libs/dist/types/index.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/targeting/build-page-targeting.d.ts": [
-  "../../../../../commercial-core/dist/cjs/targeting/personalised.d.ts",
-  "../../../../../commercial-core/dist/cjs/targeting/shared.d.ts",
-  "../../../../../commercial-core/dist/cjs/types.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/libs/dist/types/index.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/targeting/content.d.ts": [
-  "../../../../../commercial-core/dist/cjs/targeting/shared.d.ts",
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/targeting/personalised.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/consent-management-platform/dist/types/tcfv2/index.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/targeting/pick-targeting-values.d.ts": [
-  "../../../../../commercial-core/node_modules/type-fest/index.d.ts",
-  "../../../../../commercial-core/node_modules/type-fest/index.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/targeting/session.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../../../../../commercial-core/node_modules/@guardian/libs/dist/types/index.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/targeting/shared.d.ts": [],
- "../../../../../commercial-core/dist/cjs/targeting/viewport.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/third-party-tags/facebook-pixel.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/third-party-tags/ias.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/third-party-tags/inizio.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/third-party-tags/permutive.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/third-party-tags/remarketing.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/third-party-tags/twitter-uwt.d.ts": [
-  "../../../../../commercial-core/dist/cjs/types.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/track-gpc-signal.d.ts": [
-  "../../../../../commercial-core/node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
- ],
- "../../../../../commercial-core/dist/cjs/track-labs-container.d.ts": [],
- "../../../../../commercial-core/dist/cjs/track-scroll-depth.d.ts": [],
- "../../../../../commercial-core/dist/cjs/types.d.ts": [
-  "../../../../../commercial-core/node_modules/@guardian/consent-management-platform/dist/types/index.d.ts"
- ],
- "../../../../../commercial-core/dist/esm/constants/adLabelHeight.d.ts": [],
- "../../../../../commercial-core/dist/esm/constants/index.d.ts": [
-  "../../../../../commercial-core/dist/esm/constants/adLabelHeight.d.ts",
-  "../../../../../commercial-core/dist/esm/constants/prebid-timeout.d.ts",
-  "../../../../../commercial-core/dist/esm/constants/top-above-nav-height.d.ts"
- ],
- "../../../../../commercial-core/dist/esm/constants/prebid-timeout.d.ts": [],
- "../../../../../commercial-core/dist/esm/constants/top-above-nav-height.d.ts": [],
  "../lib/$$.ts": [
   "../../../../node_modules/csstype/index.d.ts"
  ],
@@ -197,13 +71,11 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
-  "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/confiant-sdk-update.ts"
+  "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/article-aside-adverts.ts": [
   "../lib/$$.ts",
@@ -212,7 +84,8 @@
   "../lib/mediator.ts"
  ],
  "../projects/commercial/modules/article-body-adverts.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
@@ -227,7 +100,7 @@
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../lib/url.ts",
@@ -237,7 +110,7 @@
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/comment-adverts.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
@@ -260,7 +133,7 @@
   "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
  "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
   "../lib/url.ts",
@@ -271,7 +144,7 @@
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/fastdom-promise.js",
   "../lib/url.ts",
   "../projects/commercial/modules/consentless/define-slot.ts",
@@ -287,7 +160,7 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/consentless/prepare-ootag.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/geolocation.ts",
@@ -301,13 +174,14 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/Advert.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
   "../projects/commercial/modules/dfp/define-slot.ts"
  ],
  "../projects/commercial/modules/dfp/add-slot.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/report-error.js",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/create-advert.ts",
@@ -318,13 +192,13 @@
  ],
  "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts": [],
  "../projects/commercial/modules/dfp/create-advert.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/report-error.js",
   "../projects/commercial/modules/dfp/Advert.ts"
  ],
  "../projects/commercial/modules/dfp/define-slot.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/url.ts",
@@ -354,7 +228,7 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/fill-advert-slots.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/detect.js",
   "../projects/commercial/modules/dfp/Advert.ts",
@@ -381,7 +255,7 @@
   "../projects/commercial/modules/dfp/load-advert.ts"
  ],
  "../projects/commercial/modules/dfp/load-advert.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/header-bidding/a9/a9.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
@@ -392,11 +266,12 @@
   "../lib/report-error.js"
  ],
  "../projects/commercial/modules/dfp/on-slot-load.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-render.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/mediator.ts",
   "../lib/report-error.js",
@@ -427,7 +302,7 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-googletag.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -496,7 +371,7 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/dfp/render-advert.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/$$.ts",
   "../lib/fastdom-promise.js",
   "../lib/report-error.js",
@@ -505,7 +380,8 @@
   "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
  "../projects/commercial/modules/dfp/should-refresh.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts"
  ],
  "../projects/commercial/modules/dfp/track-ad-render.ts": [
@@ -524,12 +400,14 @@
   "../projects/commercial/modules/header-bidding/slot-config.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/appnexus.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/bid-config.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/url.ts",
@@ -539,8 +417,9 @@
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/prebid.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
-  "../../../../../commercial-core/dist/esm/constants/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/esm/constants/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -556,16 +435,17 @@
   "../projects/common/modules/commercial/build-page-targeting.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
  "../projects/commercial/modules/header-bidding/slot-config.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/header-bidding/utils.ts"
  ],
  "../projects/commercial/modules/header-bidding/utils.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.d.ts",
@@ -574,7 +454,7 @@
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/high-merch.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/common/modules/commercial/commercial-features.ts"
@@ -586,7 +466,7 @@
   "../projects/commercial/modules/__vendor/ipsos-mori.js"
  ],
  "../projects/commercial/modules/liveblog-adverts.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect.js",
   "../lib/fastdom-promise.js",
   "../lib/url.ts",
@@ -602,36 +482,38 @@
   "../projects/commercial/modules/remove-slots.ts"
  ],
  "../projects/commercial/modules/messenger/background.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
  "../projects/commercial/modules/messenger/click.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/common/modules/analytics/google.ts"
  ],
  "../projects/commercial/modules/messenger/disable-refresh.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/messenger/get-page-targeting.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
  "../projects/commercial/modules/messenger/get-page-url.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
  "../projects/commercial/modules/messenger/get-stylesheet.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/messenger/measure-ad-load.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/messenger/passback.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
   "../lib/detect-viewport.ts",
@@ -639,7 +521,7 @@
   "../projects/commercial/modules/dfp/dfp-env-globals.ts"
  ],
  "../projects/commercial/modules/messenger/resize.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/fastdom-promise.js"
  ],
@@ -650,17 +532,17 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/type.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/messenger/viewport.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/mobile-sticky.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/header-bidding/utils.ts"
@@ -684,7 +566,8 @@
   "../lib/fastdom-promise.js"
  ],
  "../projects/commercial/modules/third-party-tags.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../lib/config.d.ts",
   "../lib/fastdom-promise.js",
@@ -699,18 +582,18 @@
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/track-gpc-signal.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/track-labs-container.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/track-scroll-depth.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
@@ -728,20 +611,15 @@
  ],
  "../projects/common/modules/async-call-merger.ts": [],
  "../projects/common/modules/commercial/build-page-targeting.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/config.d.ts",
-  "../lib/detect-viewport.ts",
-  "../lib/detect.js",
   "../lib/geolocation.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/identity/api.ts"
+  "../projects/common/modules/experiments/ab.ts"
  ],
  "../projects/common/modules/commercial/commercial-features.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -763,7 +641,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/common/modules/commercial/lib/googletag-ad-size.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
  "../projects/common/modules/commercial/support-utilities.ts": [
   "../lib/geolocation.ts"
@@ -807,7 +685,6 @@
  ],
  "../projects/common/modules/experiments/ab-tests.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/tests/confiant-sdk-update.ts",
   "../projects/common/modules/experiments/tests/consentlessAds.ts",
   "../projects/common/modules/experiments/tests/deeply-read-article-footer.js",
   "../projects/common/modules/experiments/tests/integrate-ima.ts",
@@ -838,10 +715,6 @@
   "../projects/common/modules/experiments/ab-utils.ts"
  ],
  "../projects/common/modules/experiments/automatLog.ts": [],
- "../projects/common/modules/experiments/tests/confiant-sdk-update.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
  "../projects/common/modules/experiments/tests/consentlessAds.ts": [
   "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
   "../lib/noop.ts"
@@ -890,7 +763,7 @@
   "../types/dates.ts"
  ],
  "standalone.commercial.ts": [
-  "../../../../../commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/manage-ad-free-cookie.ts",

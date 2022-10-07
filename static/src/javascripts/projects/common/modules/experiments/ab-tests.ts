@@ -1,5 +1,4 @@
 import type { ABTest } from '@guardian/ab-core';
-import { confiantSDKUpdateTest } from './tests/confiant-sdk-update';
 import { consentlessAds } from './tests/consentlessAds';
 import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
 import { integrateIMA } from './tests/integrate-ima';
@@ -28,5 +27,4 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateMandatoryLongTestRunNa,
 	signInGateMandatoryLongTestRunUk,
 	shadyPieClickThrough,
-	confiantSDKUpdateTest,
 ];

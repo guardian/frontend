@@ -3,8 +3,6 @@ import {
 	bypassCommercialMetricsSampling as switchOffSampling,
 } from '@guardian/commercial-core';
 import { loadScript, log } from '@guardian/libs';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { confiantSDKUpdateTest } from 'common/modules/experiments/tests/confiant-sdk-update';
 import { getAdvertById } from '../dfp/get-advert-by-id';
 import { refreshAdvert } from '../dfp/load-advert';
 import { stripDfpAdPrefixFrom } from '../header-bidding/utils';
@@ -69,11 +67,7 @@ const maybeRefreshBlockedSlotOnce: ConfiantCallback = (
  * @returns Promise
  */
 export const init = async (): Promise<void> => {
-	let host = 'confiant-integrations.global.ssl.fastly.net';
-	if (isInVariantSynchronous(confiantSDKUpdateTest, 'variant')) {
-		host = 'cdn.confiant-integrations.net';
-	}
-
+	const host = 'cdn.confiant-integrations.net';
 	const id = '7oDgiTsq88US4rrBG0_Nxpafkrg';
 	const remoteScriptUrl = `//${host}/${id}/gpt_and_prebid/config.js`;
 
