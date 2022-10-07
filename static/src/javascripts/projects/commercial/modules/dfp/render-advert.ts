@@ -71,39 +71,25 @@ sizeCallbacks[adSizes.fluid.toString()] = (advert: Advert) =>
 	);
 
 sizeCallbacks[adSizes.mpu.toString()] = (advert: Advert): Promise<void> =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses();
-	});
+	advert.updateExtraSlotClasses();
 
 sizeCallbacks[adSizes.halfPage.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses();
-	});
+	advert.updateExtraSlotClasses();
 
 sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--sky');
-	});
+	advert.updateExtraSlotClasses('ad-slot--sky');
 
 sizeCallbacks[adSizes.outstreamDesktop.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--outstream');
-	});
+	advert.updateExtraSlotClasses('ad-slot--outstream');
 
 sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--outstream');
-	});
+	advert.updateExtraSlotClasses('ad-slot--outstream');
 
 sizeCallbacks[adSizes.outstreamMobile.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--outstream');
-	});
+	advert.updateExtraSlotClasses('ad-slot--outstream');
 
 sizeCallbacks[adSizes.googleCard.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--gc');
-	});
+	advert.updateExtraSlotClasses('ad-slot--gc');
 
 /**
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
@@ -183,9 +169,7 @@ export const renderAdvert = (
 					return Promise.resolve(
 						sizeCallback !== undefined
 							? sizeCallback(advert, slotRenderEndedEvent)
-							: fastdom.mutate(() => {
-									advert.updateExtraSlotClasses();
-							  }),
+							: advert.updateExtraSlotClasses(),
 					);
 				}
 				return Promise.resolve();
