@@ -1,4 +1,4 @@
-import { adSizes } from '@guardian/commercial-core';
+import { adSizes, constants, standardAdSizes } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
@@ -138,6 +138,36 @@ const addContentClass = (adSlotNode: HTMLElement) => {
 };
 
 /**
+ * Avoid CLS when an advert is refreshed, by setting the
+ * min-height of the ad slot to the height of the ad.
+ *
+ * Doesn't work for fluid ads, because we don't know the height of a fluid ad at this point.
+ */
+const setMinHeightOfAdvert = (advert: Advert): void => {
+	if (
+		advert.id !== 'dfp-ad--top-above-nav' ||
+		advert.size === null ||
+		advert.size === 'fluid'
+	) {
+		return;
+	}
+
+	const adHeight = advert.size.height;
+
+	// Ensure that we know the height of the ad, i.e. the ad does not have variable dimensions
+	const isStandardAdSize = Object.values(standardAdSizes).some(
+		(adSize) => adSize.height === adHeight,
+	);
+
+	const adSlotHeight = adHeight + constants.AD_LABEL_HEIGHT;
+	if (isStandardAdSize) {
+		void fastdom.mutate(() => {
+			advert.node.setAttribute('style', `min-height:${adSlotHeight}px`);
+		});
+	}
+};
+
+/**
  * @param advert - as defined in commercial/modules/dfp/Advert
  * @param slotRenderEndedEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
@@ -147,31 +177,26 @@ export const renderAdvert = (
 	slotRenderEndedEvent: googletag.events.SlotRenderEndedEvent,
 ): Promise<boolean> => {
 	addContentClass(advert.node);
+	setMinHeightOfAdvert(advert);
 
 	return getAdIframe(advert.node)
 		.then((isRendered) => {
 			const callSizeCallback = () => {
 				if (advert.size) {
-					let size = advert.size.toString();
-
-					if (size === '0,0') {
-						size = 'fluid';
-					}
-
 					/**
-					 * we reset hasPrebidSize to the default
-					 * value of false for subsequent ad refreshes
-					 * as they may not be prebid ads.
+					 * We reset hasPrebidSize to the default value of false for
+					 * subsequent ad refreshes as they may not be prebid ads.
 					 * */
 					advert.hasPrebidSize = false;
 
-					const sizeCallback = sizeCallbacks[size];
+					const sizeCallback = sizeCallbacks[advert.size.toString()];
 					return Promise.resolve(
 						sizeCallback !== undefined
 							? sizeCallback(advert, slotRenderEndedEvent)
 							: advert.updateExtraSlotClasses(),
 					);
 				}
+
 				return Promise.resolve();
 			};
 
