@@ -20,7 +20,6 @@ import { loadCssPromise } from 'lib/load-css-promise';
 
 
 
-
 const pulseButton = (button) => {
     const $btn = bonzo(button);
     $btn.addClass('gallery-lightbox__button-pulse');
@@ -111,7 +110,7 @@ class GalleryLightbox {
         });
 
         const dialog = document.querySelector('dialog');
-    
+
         // We are exposing this promise here so that it can be waited on when initiating lightbox
         if(!dialog.showModal) {
             this.polyfillPromise = import('dialog-polyfill')
