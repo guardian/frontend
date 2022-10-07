@@ -1,6 +1,6 @@
 const sharedTestData = {
-	start: '2022-10-04',
-	expiry: '2023-01-18',
+	start: '2022-10-11',
+	expiry: '2023-01-31',
 	author: 'vlbee',
 	description:
 		'Long-running mandatory sign in gate - Show gate to global users on 3rd article view of simple article templates, with higher priority over banners and epic.',
@@ -11,7 +11,7 @@ const sharedTestData = {
 	idealOutcome:
 		'Significantly grow the number of registered and signed in users amongst this cohort, with appropriate permissions but achieve this without meaningfully denting engagement with our journalism or long-term ad revenue',
 	showForSensitive: false,
-	canRun: () => true,
+	canRun: () => false,
 };
 
 export const signInGateMandatoryLongTestControlUk = {
