@@ -1,11 +1,10 @@
-import type { AdSize } from '@guardian/commercial-core';
+import type { AdSize, PageTargeting } from '@guardian/commercial-core';
 import { createAdSize, EventTimer } from '@guardian/commercial-core';
 import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import { onConsent } from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
-import type { PageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';

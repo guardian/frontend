@@ -173,6 +173,10 @@ Location: London, UK
 Developer: Rachel Miles
 Location: Birmingham, UK
 
+Engineering fellow: Thomas King
+Location: London, UK
+linkedin: komting
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
