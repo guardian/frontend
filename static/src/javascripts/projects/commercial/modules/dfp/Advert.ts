@@ -111,16 +111,17 @@ class Advert {
 	 *
 	 * @param newClasses An array of classes to set on the slot
 	 **/
-	updateExtraSlotClasses(...newClasses: string[]): void {
+	async updateExtraSlotClasses(...newClasses: string[]): Promise<void> {
 		const classesToRemove = this.extraNodeClasses.filter(
 			(c) => !newClasses.includes(c),
 		);
 
-		void fastdom.mutate(() => {
+		await fastdom.mutate(() => {
 			this.node.classList.remove(...classesToRemove);
 			this.node.classList.add(...newClasses);
-			this.extraNodeClasses = newClasses;
 		});
+
+		this.extraNodeClasses = newClasses;
 	}
 
 	/**
