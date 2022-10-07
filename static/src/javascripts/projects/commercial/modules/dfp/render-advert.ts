@@ -1,4 +1,5 @@
 import { adSizes, constants, standardAdSizes } from '@guardian/commercial-core';
+import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
@@ -145,6 +146,7 @@ const addContentClass = (adSlotNode: HTMLElement) => {
  */
 const setMinHeightOfAdvert = (advert: Advert): void => {
 	if (
+		getBreakpoint(getViewport().width) === 'mobile' ||
 		advert.id !== 'dfp-ad--top-above-nav' ||
 		advert.size === null ||
 		advert.size === 'fluid'
