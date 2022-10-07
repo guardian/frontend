@@ -73,9 +73,6 @@ class Advert {
 	size: AdSize | 'fluid' | null = null;
 	slot: googletag.Slot;
 	isEmpty: boolean | null = null;
-	isLoading = false;
-	isRendering = false;
-	isLoaded = false;
 	isRendered = false;
 	shouldRefresh = false;
 	whenSlotReady: Promise<void>;
