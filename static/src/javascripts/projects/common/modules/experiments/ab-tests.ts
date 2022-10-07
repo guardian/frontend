@@ -7,10 +7,10 @@ import { shadyPieClickThrough } from './tests/shady-pie-click-through';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 import {
-	signInGateMandatoryLongTestRunAunz,
-	signInGateMandatoryLongTestRunEu,
-	signInGateMandatoryLongTestRunNa,
-	signInGateMandatoryLongTestRunUk,
+	signInGateMandatoryLongBucketingTestRun,
+	signInGateMandatoryLongBucketingTestRunEu,
+	signInGateMandatoryLongBucketingTestRunNa,
+	signInGateMandatoryLongBucketingTestRunUk,
 } from './tests/sign-in-gate-mandatory-long';
 
 // keep in sync with ab-tests in dotcom-rendering
@@ -22,9 +22,9 @@ export const concurrentTests: readonly ABTest[] = [
 	deeplyReadArticleFooterTest,
 	consentlessAds,
 	integrateIMA,
-	signInGateMandatoryLongTestRunAunz,
-	signInGateMandatoryLongTestRunEu,
-	signInGateMandatoryLongTestRunNa,
-	signInGateMandatoryLongTestRunUk,
 	shadyPieClickThrough,
+	signInGateMandatoryLongBucketingTestRun,
+	signInGateMandatoryLongBucketingTestRunEu,
+	signInGateMandatoryLongBucketingTestRunNa,
+	signInGateMandatoryLongBucketingTestRunUk,
 ];
