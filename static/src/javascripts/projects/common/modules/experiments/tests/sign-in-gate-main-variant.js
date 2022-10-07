@@ -8,7 +8,7 @@ export const signInGateMainVariant = {
 	author: 'Mahesh Makani',
 	description:
 		'Show sign in gate to 100% of users on 3rd article view of simple article templates, with higher priority over banners and epic. Main/Variant Audience.',
-	audience: 0.8975,
+	audience: 0.89,
 	audienceOffset: 0.0,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria:
