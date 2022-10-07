@@ -1,18 +1,24 @@
-import { addEventListener } from '../../../../lib/events';
+import type { RegisterListener } from '@guardian/commercial-core';
+import type { Viewport } from '../../../../lib/detect-viewport';
 import { getViewport } from '../../../../lib/detect-viewport';
+import { addEventListener } from '../../../../lib/events';
 import fastdom from '../../../../lib/fastdom-promise';
+
+type Respond = (...args: unknown[]) => void;
+
+type Iframe = { node: HTMLIFrameElement; visible: boolean; respond: Respond };
 
 // An intersection observer will allow us to efficiently send slot
 // coordinates for only those that are in the viewport.
 const w = window;
 let useIO = 'IntersectionObserver' in w;
 let taskQueued = false;
-let iframes = {};
+let iframes: Record<string, Iframe> = {};
 let iframeCounter = 0;
-let observer;
-let visibleIframeIds;
+let observer: IntersectionObserver | null;
+let visibleIframeIds: string[] = [];
 
-const reset = (useIO_) => {
+const reset = (useIO_: boolean): void => {
 	useIO = useIO_;
 	taskQueued = false;
 	iframes = {};
@@ -22,7 +28,7 @@ const reset = (useIO_) => {
 // Instances of classes bound to the current view are not serialised correctly
 // by JSON.stringify. That's ok, we don't care if it's a DOMRect or some other
 // object, as long as the calling view receives the frame coordinates.
-const domRectToRect = (rect) => ({
+const domRectToRect = (rect: DOMRect) => ({
 	width: rect.width,
 	height: rect.height,
 	top: rect.top,
@@ -31,28 +37,35 @@ const domRectToRect = (rect) => ({
 	right: rect.right,
 });
 
-const sendCoordinates = (iframeId, domRect) => {
+const sendCoordinates = (iframeId: string, domRect: DOMRect) => {
 	iframes[iframeId].respond(null, domRectToRect(domRect));
 };
 
-const getDimensions = (id) => [id, iframes[id].node.getBoundingClientRect()];
+const getDimensions = (id: string): [string, DOMRect] => [
+	id,
+	iframes[id].node.getBoundingClientRect(),
+];
 
-const isIframeInViewport = function (item) {
+const isIframeInViewport = function (
+	this: Viewport,
+	item: [string, DOMRect],
+): boolean {
 	return item[1].bottom > 0 && item[1].top < this.height;
 };
 
-const onIntersect = (changes) => {
+const onIntersect: IntersectionObserverCallback = (changes) => {
 	visibleIframeIds = changes
 		.filter((_) => _.intersectionRatio > 0)
 		.map((_) => _.target.id);
 };
 
+// typescript complains about an async event handler, so wrap it in a non-async function
 const onScroll = () => {
 	if (!taskQueued) {
 		const viewport = getViewport();
 		taskQueued = true;
 
-		return fastdom.measure(() => {
+		void fastdom.measure(() => {
 			taskQueued = false;
 
 			const iframeIds = Object.keys(iframes);
@@ -73,7 +86,10 @@ const onScroll = () => {
 	}
 };
 
-const addScrollListener = (iframe, respond) => {
+const addScrollListener = (
+	iframe: HTMLIFrameElement,
+	respond: Respond,
+): void => {
 	if (iframeCounter === 0) {
 		addEventListener(w, 'scroll', onScroll, {
 			passive: true,
@@ -93,23 +109,23 @@ const addScrollListener = (iframe, respond) => {
 	};
 	iframeCounter += 1;
 
-	if (useIO && observer) {
+	if (observer) {
 		observer.observe(iframe);
 	}
 
-	fastdom
+	void fastdom
 		.measure(() => iframe.getBoundingClientRect())
 		.then((domRect) => {
 			sendCoordinates(iframe.id, domRect);
 		});
 };
 
-const removeScrollListener = (iframe) => {
-	if (iframes[iframe.id]) {
+const removeScrollListener = (iframe: HTMLIFrameElement): void => {
+	if (iframe.id in iframes) {
 		if (useIO && observer) {
 			observer.unobserve(iframe);
 		}
-		iframes[iframe.id] = false;
+		delete iframes[iframe.id];
 		iframeCounter -= 1;
 	}
 
@@ -122,19 +138,19 @@ const removeScrollListener = (iframe) => {
 	}
 };
 
-const onMessage = (respond, start, iframe) => {
-	if (!iframe) return;
-	if (start) {
-		addScrollListener(iframe, respond);
-	} else {
-		removeScrollListener(iframe);
-	}
+const isCallable = (x: unknown): x is Respond => typeof x === 'function';
+
+const init = (register: RegisterListener): void => {
+	register('scroll', (respond, start, iframe) => {
+		if (!iframe) return;
+		if (start && isCallable(respond)) {
+			addScrollListener(iframe, respond);
+		} else {
+			removeScrollListener(iframe);
+		}
+	});
 };
 
-const init = (register) => {
-	register('scroll', onMessage);
-};
-
-export const _ = { addScrollListener, removeScrollListener, reset, onMessage };
+export const _ = { addScrollListener, removeScrollListener, reset };
 
 export { init };

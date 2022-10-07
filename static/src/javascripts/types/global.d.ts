@@ -58,7 +58,7 @@ interface CommercialPageConfig {
 	adUnit: AdUnit;
 	appNexusPageTargeting?: string;
 	sharedAdTargeting?: Record<string, string | string[]>;
-	pageAdTargeting?: Record<string, string | string[]>;
+	pageAdTargeting?: PageTargeting;
 	dfpAccountId: string;
 }
 
@@ -388,7 +388,7 @@ interface Window {
 	ootag: {
 		queue: Array<() => void>;
 		initializeOo: (o: OptOutInitializeOptions) => void;
-		addParameter: (key: string, value: string) => void;
+		addParameter: (key: string, value: string | string[]) => void;
 		defineSlot: (o: OptOutAdSlot) => void;
 		makeRequests: () => void;
 		refreshSlot: (slotId: string) => void;

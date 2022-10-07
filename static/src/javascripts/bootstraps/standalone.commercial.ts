@@ -13,6 +13,7 @@
  */
 
 import { EventTimer } from '@guardian/commercial-core';
+import { onConsent } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
 import { initArticleInline } from 'commercial/modules/consentless/dynamic/article-inline';
 import { initLiveblogInline } from 'commercial/modules/consentless/dynamic/liveblog-inline';
@@ -46,7 +47,6 @@ import { init as initLiveblogAdverts } from '../projects/commercial/modules/live
 import { manageAdFreeCookieOnConsentChange } from '../projects/commercial/modules/manage-ad-free-cookie-on-consent-change';
 import { init as initMobileSticky } from '../projects/commercial/modules/mobile-sticky';
 import { paidContainers } from '../projects/commercial/modules/paid-containers';
-import { init as initPaidForBand } from '../projects/commercial/modules/paidfor-band';
 import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercial/modules/remove-slots';
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
@@ -108,7 +108,6 @@ if (!commercialFeatures.adFree) {
 		['cm-thirdPartyTags', initThirdPartyTags],
 		['cm-redplanet', initRedplanet],
 		['cm-paidContainers', paidContainers],
-		['cm-paidforBand', initPaidForBand],
 		['cm-commentAdverts', initCommentAdverts],
 		['rr-adblock-ask', initAdblockAsk],
 	);
@@ -221,10 +220,12 @@ const bootConsentless = async (): Promise<void> => {
  	*/
 	maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
 
+	const consentState = await onConsent();
+
 	await Promise.all([
 		setAdTestCookie(),
 		initSafeframes(),
-		initConsentless(),
+		initConsentless(consentState),
 		initFixedSlots(),
 		initArticleInline(),
 		initLiveblogInline(),

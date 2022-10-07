@@ -252,7 +252,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				const isLastInline = i === paras.length - 1;
 
 				if (sfdebug == '1' || sfdebug == '2') {
-					para.style.cssText += 'border: thick solid green;';
+					para.style.cssText += 'outline: thick solid green;';
 				}
 
 				let containerClasses = '';

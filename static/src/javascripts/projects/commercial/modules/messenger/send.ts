@@ -1,8 +1,6 @@
 import { postMessage } from '@guardian/commercial-core';
 
-/* eslint no-bitwise: "off" */
-
-const send = (type, payload) => {
+const send = (type: string, payload: unknown): string => {
 	const msg = {
 		id: 'xxxxxxxxxx'.replace(/x/g, () =>
 			((Math.random() * 36) | 0).toString(36),
@@ -12,7 +10,7 @@ const send = (type, payload) => {
 		value: payload,
 	};
 
-	postMessage(msg, window.top, '*');
+	window.top && postMessage(msg, window.top, '*');
 
 	return msg.id;
 };

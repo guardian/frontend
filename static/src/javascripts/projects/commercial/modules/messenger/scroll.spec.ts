@@ -18,19 +18,22 @@ const mockViewport = (width: number, height: number): void => {
 
 // TODO either remove or resolve flakiness of these tests.
 describe.skip('Cross-frame messenger: scroll', () => {
-	let iframe1: HTMLElement | null;
-	let iframe2: HTMLElement | null;
+	let iframe1: HTMLIFrameElement | null;
+	let iframe2: HTMLIFrameElement | null;
 	let onScroll = () => Promise.resolve();
 
 	const respond1 = jest.fn();
 	const respond2 = jest.fn();
 
 	const domSnippet = `
-         <div id="ad-slot-1" class="js-ad-slot"><div id="iframe1" style="height: 200px"></div></div>
-         <div id="ad-slot-2" class="js-ad-slot"><div id="iframe2" style="height: 200px"></div></div>
+         <div id="ad-slot-1" class="js-ad-slot"><iframe id="iframe1" style="height: 200px"></iframe></div>
+         <div id="ad-slot-2" class="js-ad-slot"><iframe id="iframe2" style="height: 200px"></iframe></div>
      `;
 
-	const mockIframePosition = (iframe: HTMLElement | null, top: number) => {
+	const mockIframePosition = (
+		iframe: HTMLIFrameElement | null,
+		top: number,
+	) => {
 		if (!iframe) return;
 		jest.spyOn(iframe, 'getBoundingClientRect').mockImplementationOnce(
 			() => ({
@@ -58,8 +61,8 @@ describe.skip('Cross-frame messenger: scroll', () => {
 			onScroll = () => Promise.resolve();
 		});
 		document.body.innerHTML = domSnippet;
-		iframe1 = document.getElementById('iframe1');
-		iframe2 = document.getElementById('iframe2');
+		iframe1 = <HTMLIFrameElement>document.getElementById('iframe1');
+		iframe2 = <HTMLIFrameElement>document.getElementById('iframe2');
 
 		mockViewport(400, 300);
 
@@ -67,8 +70,8 @@ describe.skip('Cross-frame messenger: scroll', () => {
 	});
 
 	afterEach(() => {
-		removeScrollListener(iframe1);
-		removeScrollListener(iframe2);
+		iframe1 && removeScrollListener(iframe1);
+		iframe2 && removeScrollListener(iframe2);
 		iframe1 = null;
 		iframe2 = null;
 		jest.resetModules();
@@ -103,8 +106,8 @@ describe.skip('Cross-frame messenger: scroll', () => {
 				writable: true,
 			});
 			reset(true);
-			addScrollListener(iframe1, respond1);
-			addScrollListener(iframe2, respond2);
+			iframe1 && addScrollListener(iframe1, respond1);
+			iframe2 && addScrollListener(iframe2, respond2);
 		});
 
 		afterEach(() => {
@@ -153,8 +156,8 @@ describe.skip('Cross-frame messenger: scroll', () => {
 		beforeEach(() => {
 			reset(false);
 			return Promise.all([
-				addScrollListener(iframe1, respond1),
-				addScrollListener(iframe2, respond2),
+				iframe1 && addScrollListener(iframe1, respond1),
+				iframe2 && addScrollListener(iframe2, respond2),
 			]);
 		});
 
