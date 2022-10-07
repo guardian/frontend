@@ -95,6 +95,17 @@ class Advert {
 	}
 
 	/**
+	 * Call this method once the ad has been rendered, it will set the
+	 * `isRendered` flag to true, which is used to determine whether to load
+	 * or refresh the ad
+	 *
+	 * @param isRendered was an advert rendered
+	 */
+	finishedRendering(isRendered: boolean): void {
+		this.isRendered = isRendered;
+	}
+
+	/**
 	 * Update the "extra" classes for this slot e.g. `ad-slot--outstream`, so that the main one's
 	 * like `ad-slot` etc. are not affected
 	 *
