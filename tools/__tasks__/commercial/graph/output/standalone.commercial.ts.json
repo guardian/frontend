@@ -374,6 +374,7 @@
  "../projects/commercial/modules/dfp/render-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/$$.ts",
+  "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
   "../lib/report-error.js",
   "../projects/commercial/modules/dfp/Advert.ts",
