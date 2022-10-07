@@ -144,7 +144,7 @@ const addContentClass = (adSlotNode: HTMLElement) => {
  *
  * Doesn't work for fluid ads, because we don't know the height of a fluid ad at this point.
  */
-const setMinHeightOfAdvert = (advert: Advert): void => {
+const setMinHeightOfAdSlot = (advert: Advert): void => {
 	if (
 		getBreakpoint(getViewport().width) === 'mobile' ||
 		advert.id !== 'dfp-ad--top-above-nav' ||
@@ -179,7 +179,7 @@ export const renderAdvert = (
 	slotRenderEndedEvent: googletag.events.SlotRenderEndedEvent,
 ): Promise<boolean> => {
 	addContentClass(advert.node);
-	setMinHeightOfAdvert(advert);
+	setMinHeightOfAdSlot(advert);
 
 	return getAdIframe(advert.node)
 		.then((isRendered) => {

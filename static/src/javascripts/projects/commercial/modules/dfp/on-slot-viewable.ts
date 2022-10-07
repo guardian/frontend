@@ -13,7 +13,7 @@ const setSlotAdRefresh = (
 		return;
 	}
 
-	const viewabilityThresholdMs = 5000; // 30 seconds refresh
+	const viewabilityThresholdMs = 30_000; // 30 seconds refresh
 
 	// Asynchronously retrieve the non-refreshable line item ids
 	// Only do this if they haven't been attached to the page config
