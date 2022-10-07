@@ -35,7 +35,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-   Switch(
+  Switch(
     ABTests,
     "ab-sign-in-gate-mandatory-long-bucketing-test-run-uk",
     "Test run bucketing for long mandatory sign in gate trial",
@@ -45,7 +45,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-   Switch(
+  Switch(
     ABTests,
     "ab-sign-in-gate-mandatory-long-bucketing-test-run-na",
     "Test run bucketing for long mandatory sign in gate trial",
@@ -55,7 +55,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-   Switch(
+  Switch(
     ABTests,
     "ab-sign-in-gate-mandatory-long-bucketing-test-run-eu",
     "Test run bucketing for long mandatory sign in gate trial",
