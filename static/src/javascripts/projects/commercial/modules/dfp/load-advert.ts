@@ -1,3 +1,4 @@
+import type { AdSize } from '@guardian/commercial-core';
 import { EventTimer } from '@guardian/commercial-core';
 import { a9 } from '../header-bidding/a9/a9';
 import { prebid } from '../header-bidding/prebid/prebid';
@@ -25,9 +26,10 @@ const retainTopAboveNavSlotSize = (
 	}
 
 	return [
-		Object.assign({}, hbSlot, {
-			sizes: [[advertSize[0], advertSize[1]]],
-		}),
+		{
+			...hbSlot,
+			sizes: [[advertSize[0], advertSize[1]] as AdSize],
+		},
 	];
 };
 

@@ -1,5 +1,9 @@
-import { adSizes, constants, standardAdSizes } from '@guardian/commercial-core';
-import { getBreakpoint, getViewport } from 'lib/detect-viewport';
+import {
+	adSizes,
+	constants,
+	slotSizeMappings,
+	standardAdSizes,
+} from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
@@ -20,7 +24,6 @@ import { renderAdvertLabel } from './render-advert-label';
 /**
  * Types of events that are returned when executing a size change callback
  */
-
 const addClassIfHasClass = (newClassNames: string[]) =>
 	function hasClass(classNames: string[]) {
 		return function onAdvertRendered(advert: Advert) {
@@ -146,7 +149,6 @@ const addContentClass = (adSlotNode: HTMLElement) => {
  */
 const setMinHeightOfAdSlot = (advert: Advert): void => {
 	if (
-		getBreakpoint(getViewport().width) === 'mobile' ||
 		advert.id !== 'dfp-ad--top-above-nav' ||
 		advert.size === null ||
 		advert.size === 'fluid'
@@ -154,16 +156,21 @@ const setMinHeightOfAdSlot = (advert: Advert): void => {
 		return;
 	}
 
-	const adHeight = advert.size.height;
+	const { height: adHeight, width: adWidth } = advert.size;
 
 	// Ensure that we know the height of the ad, i.e. the ad does not have variable dimensions
 	const isStandardAdSize = Object.values(standardAdSizes).some(
 		(adSize) => adSize.height === adHeight,
 	);
 
-	const adSlotHeight = adHeight + constants.AD_LABEL_HEIGHT;
-	if (isStandardAdSize) {
+	// Only set min-height for desktop ad sizes
+	const isDesktopAdSize = slotSizeMappings['top-above-nav'].desktop?.some(
+		({ height, width }) => height === adHeight && width === adWidth,
+	);
+
+	if (isStandardAdSize && isDesktopAdSize) {
 		void fastdom.mutate(() => {
+			const adSlotHeight = adHeight + constants.AD_LABEL_HEIGHT;
 			advert.node.setAttribute('style', `min-height:${adSlotHeight}px`);
 		});
 	}
