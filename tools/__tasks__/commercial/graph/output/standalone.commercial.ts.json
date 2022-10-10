@@ -257,6 +257,7 @@
  ],
  "../projects/commercial/modules/dfp/load-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/header-bidding/a9/a9.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
@@ -374,7 +375,6 @@
  "../projects/commercial/modules/dfp/render-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/$$.ts",
-  "../lib/detect-viewport.ts",
   "../lib/fastdom-promise.js",
   "../lib/report-error.js",
   "../projects/commercial/modules/dfp/Advert.ts",
