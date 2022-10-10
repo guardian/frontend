@@ -109,6 +109,17 @@ class GalleryLightbox {
             }
         });
 
+        const dialog = document.querySelector('dialog');
+
+        // We are exposing this promise here so that it can be waited on when initiating lightbox
+        if(!dialog.showModal) {
+            this.polyfillPromise = import('dialog-polyfill')
+            this.polyfillPromise.then(dialogPolyfill => dialogPolyfill.default.registerDialog(dialog))
+
+        }
+
+
+
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
             initial: 'closed',
@@ -483,9 +494,9 @@ class GalleryLightbox {
                     this.index,
                     0,
                     this.useSwipe &&
-                        isBreakpoint({
-                            max: 'tablet',
-                        })
+                    isBreakpoint({
+                        max: 'tablet',
+                    })
                         ? 100
                         : 0
                 );
@@ -651,7 +662,12 @@ const init = () => {
 
             if (lightboxIndex > 0) {
                 lightbox.fetchSurroundingJson(images).then(allImages => {
-                    lightbox.loadOrOpen(allImages, lightboxIndex);
+                    if(lightbox.polyfillPromise){
+                        lightbox.polyfillPromise.then(() => lightbox.loadOrOpen(allImages, lightboxIndex))
+                    }
+                    else {
+                        lightbox.loadOrOpen(allImages, lightboxIndex);
+                    }
                 });
             }
         }
