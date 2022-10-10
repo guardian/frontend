@@ -7,8 +7,7 @@ const defaultClientSideTests: ABTest[] = [
 ];
 
 const serverSideTests: ServerSideABTest[] = [
-	'commercialEndOfQuarterMegaTestControl',
-	'commercialEndOfQuarterMegaTestVariant',
+	/* linter, please keep this array multi-line */
 ];
 
 /**
