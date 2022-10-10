@@ -9,7 +9,7 @@ import fastdom from '../../../../lib/fastdom-promise';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { buildGoogletagSizeMapping, defineSlot } from './define-slot';
 
-const stringToTuple = (size: string): AdSizeTuple => {
+const stringToTuple = (size: string): [number, number] => {
 	const dimensions = size.split(',', 2).map(Number);
 
 	// Return an outOfPage tuple if the string is not `{number},{number}`
@@ -19,7 +19,8 @@ const stringToTuple = (size: string): AdSizeTuple => {
 	return [dimensions[0], dimensions[1]];
 };
 
-/** A breakpoint can have various sizes assigned to it. You can assign either on
+/**
+ * A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
  *
  * One size       - `data-mobile="300,50"`
@@ -28,7 +29,8 @@ const stringToTuple = (size: string): AdSizeTuple => {
 const createSizeMapping = (attr: string): AdSize[] =>
 	attr.split('|').map((size) => createAdSize(...stringToTuple(size)));
 
-/** Extract the ad sizes from the breakpoint data attributes of an ad slot
+/**
+ * Extract the ad sizes from the breakpoint data attributes of an ad slot
  *
  * @param advertNode The ad slot HTML element that contains the breakpoint attributes
  * @returns A mapping from the breakpoints supported by the slot to an array of ad sizes

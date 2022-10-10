@@ -1,13 +1,8 @@
 import { adSizes, createAdSize } from '@guardian/commercial-core';
-import type { AdSize } from '@guardian/commercial-core';
 import { Advert } from './Advert';
 import { _, shouldRefresh } from './should-refresh';
 
 const { outstreamSizes } = _;
-
-const toAdSizeString = (size: AdSize): AdSize | 'fluid' => {
-	return size[0] === 0 && size[1] === 0 ? (size.toString() as 'fluid') : size;
-};
 
 describe('shouldRefresh', () => {
 	let googleSlot: googletag.Slot;
@@ -55,7 +50,7 @@ describe('shouldRefresh', () => {
 		const slot = document.createElement('div');
 		slot.setAttribute('data-name', 'inline');
 		const advert = new Advert(slot);
-		advert.size = toAdSizeString(createAdSize(0, 0));
+		advert.size = createAdSize(0, 0);
 		const result = shouldRefresh(advert);
 		expect(result).toBe(false);
 	});
