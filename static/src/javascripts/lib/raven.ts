@@ -1,3 +1,4 @@
+import type { RavenOptions } from 'raven-js';
 import raven from 'raven-js';
 import config from './config';
 import { adblockInUse } from './detect';
@@ -7,7 +8,7 @@ const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
 
 let adblockBeingUsed = false;
 
-const sentryOptions = {
+const sentryOptions: RavenOptions = {
 	whitelistUrls: [
 		// localhost will not log errors, but call `shouldSendCallback`
 		/localhost/,
@@ -83,8 +84,9 @@ const sentryOptions = {
 	},
 };
 
-adblockInUse.then((isUse) => {
+void adblockInUse.then((isUse: boolean) => {
 	adblockBeingUsed = isUse;
 });
 
+// eslint-disable-next-line import/no-default-export -- Allow this default export
 export default raven.config(sentryUrl, sentryOptions).install();
