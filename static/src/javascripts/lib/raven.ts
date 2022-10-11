@@ -62,8 +62,7 @@ const sentryOptions: RavenOptions = {
 	},
 
 	shouldSendCallback(data: { tags: { ignored?: unknown } }) {
-		const isIgnored =
-			typeof data.tags.ignored !== 'undefined' && !!data.tags.ignored;
+		const isIgnored = !!data.tags.ignored;
 
 		// Sample at a very small rate.
 		const isInSample = Math.random() < 0.008;
