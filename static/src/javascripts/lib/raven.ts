@@ -3,7 +3,14 @@ import raven from 'raven-js';
 import config from './config';
 import { adblockInUse } from './detect';
 
-const { sentryPublicApiKey, sentryHost } = window.guardian.config.page;
+const {
+	// linter, keep this multi-line
+	sentryPublicApiKey,
+	sentryHost,
+	edition,
+	contentType,
+	revisionNumber,
+} = window.guardian.config.page;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
 
 let adblockBeingUsed = false;
@@ -17,9 +24,9 @@ const sentryOptions: RavenOptions = {
 	],
 
 	tags: {
-		edition: config.get('page.edition'),
-		contentType: config.get('page.contentType'),
-		revisionNumber: config.get('page.revisionNumber'),
+		edition,
+		contentType,
+		revisionNumber,
 	},
 
 	ignoreErrors: [
