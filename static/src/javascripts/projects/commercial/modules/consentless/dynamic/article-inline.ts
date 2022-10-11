@@ -18,7 +18,6 @@ import { defineSlot } from '../define-slot';
 type SlotName = Parameters<typeof createAdSlot>[0];
 
 type ContainerOptions = {
-	sticky?: boolean;
 	enableDebug?: boolean;
 	className?: string;
 };
@@ -51,10 +50,6 @@ const wrapSlotInContainer = (
 	const container = document.createElement('div');
 
 	container.className = `ad-slot-container ${options.className ?? ''}`;
-
-	if (options.sticky) {
-		ad.style.cssText += 'position: sticky; top: 0;';
-	}
 
 	if (options.enableDebug) {
 		container.style.cssText += 'outline: 2px solid red;';
@@ -182,7 +177,6 @@ const addDesktopInlineAds = async () => {
 
 		const slots = paras.map((para, i) => {
 			const inlineId = i + 1;
-			const makeContainerSticky = inlineId !== 1;
 
 			if (sfdebug) {
 				para.style.cssText += 'border: thick solid green;';
@@ -190,17 +184,12 @@ const addDesktopInlineAds = async () => {
 
 			let containerClasses = '';
 
-			if (makeContainerSticky) {
-				containerClasses += getStickyContainerClassname(i);
-			}
-
 			if (inlineId !== 1) {
 				containerClasses +=
 					' offset-right ad-slot--offset-right ad-slot-container--offset-right';
 			}
 
 			const containerOptions = {
-				sticky: makeContainerSticky,
 				className: containerClasses,
 				enableDebug,
 			};

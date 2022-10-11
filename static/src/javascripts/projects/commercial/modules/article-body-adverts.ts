@@ -65,10 +65,6 @@ const wrapSlotInContainer = (
 
 	container.className = `${adSlotContainerClass} ${options.className ?? ''}`;
 
-	/*if (options.sticky) {
-		ad.style.cssText += 'position: sticky; top: 0;';
-	}*/
-
 	if (options.enableDebug) {
 		container.style.cssText += 'outline: 2px solid red;';
 	}
