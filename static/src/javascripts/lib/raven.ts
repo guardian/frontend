@@ -9,7 +9,9 @@ const {
 	edition,
 	contentType,
 	revisionNumber,
+	isDev,
 } = window.guardian.config.page;
+const { enableSentryReporting } = window.guardian.config.switches;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
 
 let adblockBeingUsed = false;
@@ -60,8 +62,6 @@ const sentryOptions: RavenOptions = {
 	},
 
 	shouldSendCallback(data: { tags: { ignored?: unknown } }) {
-		const { isDev } = window.guardian.config.page;
-		const { enableSentryReporting } = window.guardian.config.switches;
 		const isIgnored =
 			typeof data.tags.ignored !== 'undefined' && !!data.tags.ignored;
 
