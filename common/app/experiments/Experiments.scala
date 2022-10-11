@@ -10,7 +10,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRFronts,
       OfferHttp3,
       TableOfContents,
-      CommercialEndOfQuarterMegaTest,
       EuropeNetworkFront,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -50,15 +49,6 @@ object TableOfContents
       owners = Seq(Owner.withName("journalism team")),
       sellByDate = LocalDate.of(2022, 12, 7),
       participationGroup = Perc0C,
-    )
-
-object CommercialEndOfQuarterMegaTest
-    extends Experiment(
-      name = "commercial-end-of-quarter-mega-test",
-      description = "Measure the revenue uplift of the various changes introduced by the commercial team in Q1",
-      owners = Seq(Owner.withGithub("commercial-dev")),
-      sellByDate = LocalDate.of(2022, 10, 10),
-      participationGroup = Perc10A,
     )
 
 object DCROnwardsData
