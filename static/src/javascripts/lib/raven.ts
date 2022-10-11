@@ -2,7 +2,7 @@ import raven from 'raven-js';
 import config from './config';
 import { adblockInUse } from './detect';
 
-const { sentryPublicApiKey, sentryHost } = config.get('page', {});
+const { sentryPublicApiKey, sentryHost } = window.guardian.config.page;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
 
 let adblockBeingUsed = false;

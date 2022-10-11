@@ -106,6 +106,7 @@ interface PageConfig extends CommercialPageConfig {
 	hasShowcaseMainElement: boolean;
 	headline: string;
 	host: string;
+	isbn?: string;
 	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
@@ -122,6 +123,8 @@ interface PageConfig extends CommercialPageConfig {
 	publication: string;
 	section: string;
 	sectionName: string;
+	sentryHost: string;
+	sentryPublicApiKey: string;
 	series: string;
 	seriesId: string;
 	shouldHideReaderRevenue?: boolean;
@@ -130,7 +133,6 @@ interface PageConfig extends CommercialPageConfig {
 	toneIds: string;
 	tones: string;
 	videoDuration: number;
-	isbn?: string;
 	webPublicationDate: number;
 }
 
