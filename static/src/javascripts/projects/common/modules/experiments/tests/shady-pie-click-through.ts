@@ -4,7 +4,7 @@ import { noop } from '../../../../../lib/noop';
 export const shadyPieClickThrough: ABTest = {
 	id: 'ShadyPieClickThrough',
 	start: '2022-09-26',
-	expiry: '2022-10-25',
+	expiry: '2022-11-16',
 	author: 'Emma Imber',
 	description:
 		'Test the click through rate of the new labs shady pie component',
