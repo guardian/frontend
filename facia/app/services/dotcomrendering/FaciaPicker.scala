@@ -61,6 +61,7 @@ object FrontChecks {
       "fixed/medium/fast-XII",
       "fixed/large/slow-XIV",
       "fixed/large/slow-XIV",
+      "nav/list"
     )
 
   def allCollectionsAreSupported(faciaPage: PressedPage): Boolean = {
