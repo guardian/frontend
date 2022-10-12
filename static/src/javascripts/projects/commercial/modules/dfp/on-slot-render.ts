@@ -51,12 +51,10 @@ export const onSlotRender = (
 	}
 
 	const emitRenderEvents = (isRendered: boolean) => {
-		advert.stopRendering(isRendered);
+		advert.finishedRendering(isRendered);
 		mediator.emit('modules:commercial:dfp:rendered', event);
 	};
 
-	advert.stopLoading(true);
-	advert.startRendering();
 	advert.isEmpty = event.isEmpty;
 
 	if (event.isEmpty) {

@@ -27,7 +27,7 @@ const outstreamSizes = [
 export const shouldRefresh = (
 	advert: Advert,
 	nonRefreshableLineItemIds: number[] = [],
-	// This parameter can be removed when we only check refreshing at the  slot-viewable point
+	// This parameter can be removed when we only check refreshing at the slot-viewable point
 	eventLineItemId?: number,
 ): boolean => {
 	const sizeString = advert.size?.toString();

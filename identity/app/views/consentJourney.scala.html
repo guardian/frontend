@@ -42,7 +42,15 @@
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
-                @if(!isChannel(consentField) && !isProduct(consentField)) {
+                @{ /*
+                    Temporary fix - the 'holidays' marketing email is going to be replaced, so we don't want to include it
+                    on the list inviting new users to sign-up for it.
+                    But, the consentOption for holidays cannot be removed from the data source in Identity as we need to
+                    render the option to unsubscribe on the 'manage you account' page.
+                    The conditional for special casing 'holidays' can be removed after the Identity data source is
+                    re-released without 'holidays' in the data.
+                */ }
+                @if(!isChannel(consentField) && !isProduct(consentField) && !isHolidays(consentField)) {
                     @if(index == 0) {
                         <li>
                             @fragments.consentSwitch(consentField, consentHint, skin = skin)(messages)

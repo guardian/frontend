@@ -8,13 +8,14 @@ import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import type {
+	RuleSpacing,
 	SpacefinderItem,
 	SpacefinderRules,
 	SpacefinderWriter,
 } from '../../common/modules/spacefinder';
 import { initCarrot } from './carrot-traffic-driver';
 import { addSlot } from './dfp/add-slot';
-import { trackAdRender } from './dfp/track-ad-render';
+import { waitForAdvert } from './dfp/wait-for-advert';
 import { computeStickyHeights, insertHeightStyles } from './sticky-inlines';
 
 type SlotName = Parameters<typeof createAdSlot>[0];
@@ -25,6 +26,8 @@ type ContainerOptions = {
 	className?: string;
 };
 
+const articleBodySelector = '.article-body-commercial-selector';
+
 const sfdebug = getUrlVars().sfdebug;
 
 const isPaidContent = config.get<boolean>('page.isPaidContent', false);
@@ -34,7 +37,9 @@ const hasImages = !!window.guardian.config.page.lightboxImages?.images.length;
 const hasShowcaseMainElement =
 	window.guardian.config.page.hasShowcaseMainElement;
 
-const adSlotClassSelectorSizes = {
+const adSlotContainerClass = 'ad-slot-container';
+
+const adSlotContainerRules: RuleSpacing = {
 	minAbove: 500,
 	minBelow: 500,
 };
@@ -44,12 +49,13 @@ const adSlotClassSelectorSizes = {
  *
  * We add 2 to the index because these are always ads added in the second pass.
  *
- * e.g. the 0th container inserted in pass 2 becomes `ad-slot-container--2` to match `inline2`
+ * e.g. the 0th container inserted in pass 2 will have suffix `-2` to match `inline2`
  *
  * @param i Index of winning paragraph
  * @returns The classname for container
  */
-const getStickyContainerClassname = (i: number) => `ad-slot-container-${i + 2}`;
+const getStickyContainerClassname = (i: number) =>
+	`${adSlotContainerClass}-${i + 2}`;
 
 const wrapSlotInContainer = (
 	ad: HTMLElement,
@@ -57,11 +63,7 @@ const wrapSlotInContainer = (
 ) => {
 	const container = document.createElement('div');
 
-	container.className = `ad-slot-container ${options.className ?? ''}`;
-
-	if (options.sticky) {
-		ad.style.cssText += 'position: sticky; top: 0;';
-	}
+	container.className = `${adSlotContainerClass} ${options.className ?? ''}`;
 
 	if (options.enableDebug) {
 		container.style.cssText += 'outline: 2px solid red;';
@@ -107,7 +109,7 @@ const filterNearbyCandidates =
 
 		return (
 			Math.abs(candidate.top - lastWinner.top) - maximumAdHeight >=
-			adSlotClassSelectorSizes.minBelow
+			adSlotContainerRules.minBelow
 		);
 	};
 
@@ -147,15 +149,13 @@ const decideAdditionalSizes = async (
 	);
 };
 
-const articleBodySelector = '.article-body-commercial-selector';
-
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const tweakpoint = getTweakpoint(getViewport().width);
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
 	const ignoreList = hasLeftCol
-		? ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])'
-		: ' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)';
+		? ` > :not(p):not(h2):not(.${adSlotContainerClass}):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])`
+		: ` > :not(p):not(h2):not(.${adSlotContainerClass}):not(#sign-in-gate):not(.sfdebug)`;
 
 	const isImmersive = config.get('page.isImmersive');
 
@@ -169,7 +169,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				minAbove: 5,
 				minBelow: 190,
 			},
-			' .ad-slot': adSlotClassSelectorSizes,
+			[` .${adSlotContainerClass}`]: adSlotContainerRules,
 			[ignoreList]: {
 				minAbove: 35,
 				minBelow: 400,
@@ -208,7 +208,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		minAbove,
 		minBelow: 300,
 		selectors: {
-			' .ad-slot': adSlotClassSelectorSizes,
+			[` .${adSlotContainerClass}`]: adSlotContainerRules,
 			' [data-spacefinder-role="immersive"]': {
 				minAbove: 0,
 				minBelow: 600,
@@ -223,13 +223,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		(sfdebug === '1' && isInline1) || (sfdebug === '2' && !isInline1);
 
 	const insertAds: SpacefinderWriter = async (paras) => {
-		const tests = window.guardian.config.tests;
-		const isInMegaTestControlGroup =
-			tests && !!tests['commercialEndOfQuarterMegaTestControl'];
-
 		// Make ads sticky on the non-inline1 pass
 		// i.e. inline2, inline3, etc...
-		const isSticky = !isInline1 && !isInMegaTestControlGroup;
+		const isSticky = !isInline1;
 
 		if (isSticky) {
 			const stickyContainerHeights = await computeStickyHeights(
@@ -320,8 +316,8 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				minAbove: 100,
 				minBelow: 250,
 			},
-			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)':
+			[` .${adSlotContainerClass}`]: adSlotContainerRules,
+			[` > :not(p):not(h2):not(.${adSlotContainerClass}):not(#sign-in-gate):not(.sfdebug)`]:
 				{
 					minAbove: 35,
 					minBelow: 200,
@@ -385,8 +381,8 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 				minAbove: 100,
 				minBelow: 250,
 			},
-			' .ad-slot': adSlotClassSelectorSizes,
-			' > :not(p):not(h2):not(.ad-slot):not(#sign-in-gate):not(.sfdebug)':
+			[` .${adSlotContainerClass}`]: adSlotContainerRules,
+			[` > :not(p):not(h2):not(.${adSlotContainerClass}):not(#sign-in-gate):not(.sfdebug)`]:
 				{
 					minAbove: 200,
 					minBelow: 400,
@@ -424,7 +420,7 @@ const doInit = async (): Promise<boolean> => {
 		? attemptToAddInlineMerchAd()
 		: Promise.resolve(false);
 	const inlineMerchAdded = await im;
-	if (inlineMerchAdded) await trackAdRender('dfp-ad--im');
+	if (inlineMerchAdded) await waitForAdvert('dfp-ad--im');
 	await addInlineAds();
 	await initCarrot();
 

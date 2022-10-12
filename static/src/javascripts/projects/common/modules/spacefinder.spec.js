@@ -1,6 +1,6 @@
 import { _ } from 'common/modules/spacefinder';
 
-jest.mock('commercial/modules/dfp/track-ad-render', () =>
+jest.mock('commercial/modules/dfp/wait-for-advert', () =>
     Promise.resolve(true)
 );
 jest.mock('ophan/ng', () => null);

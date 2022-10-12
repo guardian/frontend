@@ -34,6 +34,7 @@ class LeagueTableController(
     "Ligue 1",
     "Women's Super League",
     "Champions League",
+    "Women's Champions League",
     "Europa League",
     "Carabao Cup",
     "International friendlies",
@@ -78,9 +79,11 @@ class LeagueTableController(
       }
 
       val htmlResponse =
-        () => football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters, None))
+        () =>
+          football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
       val jsonResponse =
-        () => football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters, None))
+        () =>
+          football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
       renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
     }
@@ -100,9 +103,12 @@ class LeagueTableController(
 
       val comps = competitionsService.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
 
-      val htmlResponse = () => football.views.html.teamlist(TablesPage(page, groups, "/football", filters, None), comps)
+      val htmlResponse =
+        () => football.views.html.teamlist(TablesPage(page, groups, "/football", filters(tableOrder), None), comps)
       val jsonResponse =
-        () => football.views.html.fragments.teamlistBody(TablesPage(page, groups, "/football", filters, None), comps)
+        () =>
+          football.views.html.fragments
+            .teamlistBody(TablesPage(page, groups, "/football", filters(tableOrder), None), comps)
       renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
     }
@@ -125,7 +131,9 @@ class LeagueTableController(
             table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
           val htmlResponse = () =>
             football.views.html.tablesList
-              .tablesPage(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
+              .tablesPage(
+                TablesPage(page, Seq(table), table.competition.url, filters(tableOrder), Some(table.competition)),
+              )
           val jsonResponse = () =>
             football.views.html.tablesList.tablesComponent(
               table.competition,
@@ -172,7 +180,9 @@ class LeagueTableController(
         val groupTable = Table(table.competition, Seq(group), hasGroups = true)
         val htmlResponse = () =>
           football.views.html.tablesList
-            .tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))
+            .tablesPage(
+              TablesPage(page, Seq(groupTable), table.competition.url, filters(tableOrder), Some(table.competition)),
+            )
         val jsonResponse = () =>
           football.views.html.tablesList.tablesComponent(
             table.competition,

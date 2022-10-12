@@ -12,6 +12,7 @@ module.exports = {
                     'formstack-interactive/**/*',
                     'prebid_safeframe.js',
                     'polyfillio.minimum.fallback.js',
+                    'omsdk-v1.js',
                 ],
                 path.resolve(target, 'javascripts', 'vendor'),
                 {

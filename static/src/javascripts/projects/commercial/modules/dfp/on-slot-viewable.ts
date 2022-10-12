@@ -9,11 +9,11 @@ const setSlotAdRefresh = (
 	event: googletag.events.ImpressionViewableEvent,
 ): void => {
 	const advert = getAdvertById(event.slot.getSlotElementId());
-	const viewabilityThresholdMs = 30000; // 30 seconds refresh
-
 	if (!advert) {
 		return;
 	}
+
+	const viewabilityThresholdMs = 30_000; // 30 seconds refresh
 
 	// Asynchronously retrieve the non-refreshable line item ids
 	// Only do this if they haven't been attached to the page config
@@ -67,11 +67,8 @@ const setSlotAdRefresh = (
 };
 
 /*
-
   Returns a function to be used as a callback for GTP 'impressionViewable' event
-
   Uses URL parameters.
-
  */
 export const onSlotViewableFunction = (): ((
 	event: googletag.events.ImpressionViewableEvent,
