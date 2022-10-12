@@ -6,7 +6,7 @@
 import crossIcon from 'svgs/icon/cross.svg';
 import fastdom from '../../../../lib/fastdom-promise';
 
-const shouldRenderLabel = (adSlotNode: HTMLElement) =>
+const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
 	!(
 		adSlotNode.classList.contains('ad-slot--fluid') ||
 		adSlotNode.classList.contains('ad-slot--frame') ||
@@ -22,7 +22,7 @@ const shouldRenderLabel = (adSlotNode: HTMLElement) =>
 		).length
 	);
 
-const createAdCloseDiv = () => {
+const createAdCloseDiv = (): HTMLElement => {
 	const closeDiv: HTMLElement = document.createElement('button');
 	closeDiv.className = 'ad-slot__close-button';
 	closeDiv.innerHTML = crossIcon.markup;
@@ -35,7 +35,7 @@ const createAdCloseDiv = () => {
 	return closeDiv;
 };
 
-const createAdLabel = () => {
+const createAdLabel = (): HTMLElement => {
 	const adLabel = document.createElement('div');
 	adLabel.className = 'ad-slot__label';
 	adLabel.innerHTML = 'Advertisement';
@@ -55,9 +55,7 @@ const createAdLabel = () => {
  *  Currently only for dfp-ad--top-above-nav.
  * @param {HTMLElement} adSlotNode
  */
-export const renderAdvertLabel = (
-	adSlotNode: HTMLElement,
-): Promise<Promise<void>> => {
+const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 	let renderDynamic = true;
 	const shouldRender = shouldRenderLabel(adSlotNode);
 
@@ -94,9 +92,7 @@ export const renderAdvertLabel = (
 	});
 };
 
-export const renderInterscrollerAdLabel = (
-	adSlotNode: HTMLElement,
-): Promise<void> =>
+const renderInterscrollerAdLabel = (adSlotNode: HTMLElement): Promise<void> =>
 	fastdom.measure(() => {
 		const adSlotLabel: HTMLElement = document.createElement('div');
 		adSlotLabel.classList.add('ad-slot__label');
@@ -109,7 +105,7 @@ export const renderInterscrollerAdLabel = (
 		adSlotNode.appendChild(adSlotLabel);
 	});
 
-export const renderStickyScrollForMoreLabel = (
+const renderStickyScrollForMoreLabel = (
 	adSlotNode: HTMLElement,
 ): Promise<void> =>
 	fastdom.mutate(() => {
@@ -126,3 +122,12 @@ export const renderStickyScrollForMoreLabel = (
 		};
 		adSlotNode.appendChild(scrollForMoreLabel);
 	});
+
+export {
+	renderAdvertLabel,
+	renderInterscrollerAdLabel,
+	renderStickyScrollForMoreLabel,
+	shouldRenderLabel,
+	createAdCloseDiv,
+	createAdLabel,
+};
