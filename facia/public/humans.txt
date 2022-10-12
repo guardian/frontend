@@ -180,6 +180,10 @@ linkedin: komting
 Developer: Sophie MacMillan
 Location: London, UK
 
+Developer: Georges Lebreton
+From: France
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
