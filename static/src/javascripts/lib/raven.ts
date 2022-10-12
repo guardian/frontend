@@ -80,8 +80,8 @@ const sentryOptions: RavenOptions = {
 	},
 };
 
-void adblockInUse.then((isUse: boolean) => {
-	adblockBeingUsed = isUse;
+void adblockInUse.then((isInUse: boolean) => {
+	adblockBeingUsed = isInUse;
 });
 
 // eslint-disable-next-line import/no-default-export -- Allow this default export
