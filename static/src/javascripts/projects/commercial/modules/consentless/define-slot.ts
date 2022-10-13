@@ -1,4 +1,4 @@
-import { renderAdvertLabel } from '../dfp/render-advert-label';
+import { renderConsentlessAdvertLabel } from './render-advert-label';
 
 const defineSlot = (slotId: string, slotName: string): void => {
 	window.ootag.queue.push(() => {
@@ -9,7 +9,7 @@ const defineSlot = (slotId: string, slotName: string): void => {
 			filledCallback: () => {
 				const slotElement = document.getElementById(slotId);
 				if (slotElement) {
-					void renderAdvertLabel(slotElement);
+					void renderConsentlessAdvertLabel(slotElement);
 				}
 				console.log(`filled consentless ${slotId}`);
 			},

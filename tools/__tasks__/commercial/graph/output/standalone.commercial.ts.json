@@ -130,7 +130,7 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/consentless/define-slot.ts": [
-  "../projects/commercial/modules/dfp/render-advert-label.ts"
+  "../projects/commercial/modules/consentless/render-advert-label.ts"
  ],
  "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -166,6 +166,10 @@
   "../lib/geolocation.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/experiments/ab.ts"
+ ],
+ "../projects/commercial/modules/consentless/render-advert-label.ts": [
+  "../lib/fastdom-promise.js",
+  "../projects/commercial/modules/dfp/render-advert-label.ts"
  ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
