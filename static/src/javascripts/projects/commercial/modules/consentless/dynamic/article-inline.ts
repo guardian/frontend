@@ -10,6 +10,7 @@ import type {
 	SpacefinderRules,
 	SpacefinderWriter,
 } from 'common/modules/spacefinder';
+import { createAdvertBorder } from 'common/modules/spacefinder-debug-tools';
 import { getBreakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../../../lib/fastdom-promise';
@@ -52,7 +53,7 @@ const wrapSlotInContainer = (
 	container.className = `ad-slot-container ${options.className ?? ''}`;
 
 	if (options.enableDebug) {
-		container.style.cssText += 'outline: 2px solid red;';
+		createAdvertBorder(container);
 	}
 
 	container.appendChild(ad);
@@ -177,10 +178,6 @@ const addDesktopInlineAds = async () => {
 
 		const slots = paras.map((para, i) => {
 			const inlineId = i + 1;
-
-			if (sfdebug) {
-				para.style.cssText += 'border: thick solid green;';
-			}
 
 			let containerClasses = '';
 
