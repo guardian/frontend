@@ -2,7 +2,7 @@ package dfp
 
 import concurrent.BlockingOperations
 import common.dfp.{GuAdUnit, GuLineItem, GuTargeting, Sponsorship}
-import com.google.api.ads.admanager.axis.v202108._
+import com.google.api.ads.admanager.axis.v202208._
 import org.joda.time.DateTime
 import akka.actor.ActorSystem
 import org.scalatest.flatspec.AnyFlatSpec
