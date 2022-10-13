@@ -8,6 +8,9 @@ const config = {
 	webpackConfig: 'webpack.config.commercial.prod.js',
 	tsConfig: 'tsconfig.json',
 	includeNpm: true,
+    excludeRegExp: [
+        /projects\/common\/modules\/(experiments|identity)/
+    ],
 };
 
 const graphFile = `${__dirname}/output/${filename}.json`;
