@@ -1,5 +1,6 @@
 import type { AdSize, SizeMapping } from '@guardian/commercial-core';
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { createAdvertBorder } from 'common/modules/spacefinder-debug-tools';
 import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
@@ -66,7 +67,7 @@ const wrapSlotInContainer = (
 	container.className = `${adSlotContainerClass} ${options.className ?? ''}`;
 
 	if (options.enableDebug) {
-		container.style.cssText += 'outline: 2px solid red;';
+		createAdvertBorder(container);
 	}
 
 	container.appendChild(ad);
@@ -247,10 +248,6 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 				const inlineId = i + (isInline1 ? 1 : 2);
 				const isLastInline = i === paras.length - 1;
 
-				if (sfdebug == '1' || sfdebug == '2') {
-					para.style.cssText += 'outline: thick solid green;';
-				}
-
 				let containerClasses = '';
 
 				if (isSticky) {
@@ -295,6 +292,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 					containerOptions,
 				);
 			});
+
 		await Promise.all(slots);
 	};
 

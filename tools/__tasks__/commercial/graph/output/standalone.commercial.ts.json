@@ -97,6 +97,7 @@
   "../projects/commercial/modules/sticky-inlines.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder-debug-tools.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
@@ -141,6 +142,7 @@
   "../projects/commercial/modules/sticky-inlines.ts",
   "../projects/common/modules/article/space-filler.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/spacefinder-debug-tools.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts": [
@@ -747,6 +749,7 @@
   "../lib/url.ts"
  ],
  "../projects/common/modules/spacefinder-debug-tools.ts": [
+  "../lib/mediator.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/common/modules/spacefinder.ts": [

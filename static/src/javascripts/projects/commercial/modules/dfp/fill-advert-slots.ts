@@ -39,6 +39,7 @@ const fillAdvertSlots = async (): Promise<void> => {
 	const isDCRMobile =
 		window.guardian.config.isDotcomRendering &&
 		getBreakpoint() === 'mobile';
+
 	// Get all ad slots
 	const adverts = [
 		...document.querySelectorAll<HTMLElement>(dfpEnv.adSlotSelector),
@@ -72,6 +73,7 @@ const fillAdvertSlots = async (): Promise<void> => {
 	adverts.forEach((advert, index) => {
 		dfpEnv.advertIds[advert.id] = currentLength + index;
 	});
+
 	adverts.forEach(queueAdvert);
 	if (dfpEnv.shouldLazyLoad()) {
 		displayLazyAds();

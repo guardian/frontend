@@ -1,7 +1,6 @@
 import type { AdSize } from '@guardian/commercial-core';
 import { createAdSize } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
-import { mediator } from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
 import { dfpEnv } from './dfp-env';
 import { emptyAdvert } from './empty-advert';
@@ -50,17 +49,12 @@ export const onSlotRender = (
 		return;
 	}
 
-	const emitRenderEvents = (isRendered: boolean) => {
-		advert.finishedRendering(isRendered);
-		mediator.emit('modules:commercial:dfp:rendered', event);
-	};
-
 	advert.isEmpty = event.isEmpty;
 
 	if (event.isEmpty) {
 		emptyAdvert(advert);
 		reportEmptyResponse(advert.id, event);
-		emitRenderEvents(false);
+		advert.finishedRendering(false);
 	} else {
 		/**
 		 * if advert.hasPrebidSize is false we use size
@@ -93,6 +87,8 @@ export const onSlotRender = (
 			advert.lineItemId = event.lineItemId;
 		}
 
-		void renderAdvert(advert, event).then(emitRenderEvents);
+		void renderAdvert(advert, event).then((isRendered) => {
+			advert.finishedRendering(isRendered);
+		});
 	}
 };
