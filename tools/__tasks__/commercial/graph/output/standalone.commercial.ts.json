@@ -280,7 +280,6 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/mediator.ts",
   "../lib/report-error.js",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/empty-advert.ts",
@@ -749,7 +748,6 @@
   "../lib/url.ts"
  ],
  "../projects/common/modules/spacefinder-debug-tools.ts": [
-  "../lib/mediator.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/common/modules/spacefinder.ts": [
