@@ -119,8 +119,7 @@
   "../projects/commercial/modules/dfp/add-slot.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/load-advert.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/identity/api.ts"
+  "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/comscore.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
@@ -164,8 +163,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/geolocation.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/experiments/ab.ts"
+  "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/consentless/render-advert-label.ts": [
   "../lib/fastdom-promise.js",
@@ -333,8 +331,7 @@
   "../projects/commercial/modules/messenger/viewport.ts",
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/identity/api.ts"
+  "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-permutive.ts": [
   "../lib/report-error.js"
@@ -620,15 +617,13 @@
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/geolocation.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/commercial-features.ts",
-  "../projects/common/modules/experiments/ab.ts"
+  "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/common/modules/commercial/commercial-features.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
   "../lib/detect.js",
   "../projects/common/modules/commercial/user-features.ts",
-  "../projects/common/modules/identity/api.ts",
   "../projects/common/modules/user-prefs.js"
  ],
  "../projects/common/modules/commercial/contributions-utilities.js": [
@@ -657,94 +652,8 @@
   "../lib/noop.ts",
   "../lib/time-utils.ts",
   "../projects/common/modules/commercial/lib/cookie.ts",
-  "../projects/common/modules/identity/api.ts",
   "../types/dates.ts",
   "../types/membership.ts"
- ],
- "../projects/common/modules/experiments/ab-constants.ts": [],
- "../projects/common/modules/experiments/ab-core.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/config.d.ts",
-  "../lib/time-utils.ts",
-  "../projects/common/modules/analytics/mvt-cookie.ts",
-  "../projects/common/modules/experiments/ab-constants.ts",
-  "../projects/common/modules/experiments/ab-local-storage.ts",
-  "../projects/common/modules/experiments/ab-url.ts",
-  "../projects/common/modules/experiments/ab-utils.ts",
-  "../projects/common/modules/experiments/automatLog.ts"
- ],
- "../projects/common/modules/experiments/ab-local-storage.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../projects/common/modules/experiments/ab-constants.ts",
-  "../projects/common/modules/experiments/ab-utils.ts"
- ],
- "../projects/common/modules/experiments/ab-ophan.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/config.d.ts",
-  "../lib/noop.ts",
-  "../lib/report-error.js"
- ],
- "../projects/common/modules/experiments/ab-tests.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/tests/consentlessAds.ts",
-  "../projects/common/modules/experiments/tests/deeply-read-article-footer.js",
-  "../projects/common/modules/experiments/tests/integrate-ima.ts",
-  "../projects/common/modules/experiments/tests/remote-header-test.js",
-  "../projects/common/modules/experiments/tests/shady-pie-click-through.ts",
-  "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js",
-  "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js",
-  "../projects/common/modules/experiments/tests/sign-in-gate-mandatory-long.js"
- ],
- "../projects/common/modules/experiments/ab-url.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../projects/common/modules/experiments/ab-utils.ts"
- ],
- "../projects/common/modules/experiments/ab-utils.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/config.d.ts",
-  "../projects/common/modules/experiments/ab-constants.ts"
- ],
- "../projects/common/modules/experiments/ab.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../projects/common/modules/experiments/ab-core.ts",
-  "../projects/common/modules/experiments/ab-local-storage.ts",
-  "../projects/common/modules/experiments/ab-ophan.ts",
-  "../projects/common/modules/experiments/ab-tests.ts",
-  "../projects/common/modules/experiments/ab-url.ts",
-  "../projects/common/modules/experiments/ab-utils.ts"
- ],
- "../projects/common/modules/experiments/automatLog.ts": [],
- "../projects/common/modules/experiments/tests/consentlessAds.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
- "../projects/common/modules/experiments/tests/deeply-read-article-footer.js": [],
- "../projects/common/modules/experiments/tests/integrate-ima.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
- "../projects/common/modules/experiments/tests/remote-header-test.js": [],
- "../projects/common/modules/experiments/tests/shady-pie-click-through.ts": [
-  "../../../../node_modules/@guardian/ab-core/dist/index.d.ts",
-  "../lib/noop.ts"
- ],
- "../projects/common/modules/experiments/tests/sign-in-gate-main-control.js": [],
- "../projects/common/modules/experiments/tests/sign-in-gate-main-variant.js": [],
- "../projects/common/modules/experiments/tests/sign-in-gate-mandatory-long.js": [],
- "../projects/common/modules/identity/api.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/config.d.ts",
-  "../lib/fetch-json.ts",
-  "../lib/mediator.ts",
-  "../lib/url.ts",
-  "../projects/common/modules/async-call-merger.ts",
-  "../projects/common/modules/identity/auth-component-event-params.js"
- ],
- "../projects/common/modules/identity/auth-component-event-params.js": [
-  "../lib/url.ts"
  ],
  "../projects/common/modules/spacefinder-debug-tools.ts": [
   "../projects/common/modules/spacefinder.ts"
@@ -803,8 +712,6 @@
   "../projects/commercial/modules/track-scroll-depth.ts",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/user-features.ts",
-  "../projects/common/modules/experiments/ab.ts",
-  "../projects/common/modules/experiments/tests/consentlessAds.ts",
   "types.ts"
  ],
  "types.ts": []
