@@ -7,7 +7,7 @@ import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
-import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics}
+import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, DCRMetrics}
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
 import contentapi._
@@ -112,6 +112,8 @@ trait AppComponents
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,
     ContentApiMetrics.ContentApiRequestsMetric,
+    DCRMetrics.DCRLatencyMetric,
+    DCRMetrics.DCRRequestCountMetric,
   )
 
   lazy val healthCheck = wire[HealthCheck]

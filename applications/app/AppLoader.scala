@@ -2,7 +2,7 @@ import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
-import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
+import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, DCRMetrics, EmailSubsciptionMetrics}
 import _root_.commercial.targeting.TargetingLifecycle
 import common.Assets.DiscussionExternalAssetsLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
@@ -88,6 +88,8 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     EmailSubsciptionMetrics.APINetworkError,
     EmailSubsciptionMetrics.ListIDError,
     EmailSubsciptionMetrics.AllEmailSubmission,
+    DCRMetrics.DCRLatencyMetric,
+    DCRMetrics.DCRRequestCountMetric,
   )
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]

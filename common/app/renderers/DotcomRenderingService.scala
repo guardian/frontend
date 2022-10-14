@@ -2,7 +2,7 @@ package renderers
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
-import common.GuLogging
+import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
@@ -32,6 +32,7 @@ import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 
+import java.lang.System.currentTimeMillis
 import java.net.ConnectException
 import java.util.concurrent.TimeoutException
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -60,11 +61,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       endpoint: String,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[WSResponse] = {
+
+    val start = currentTimeMillis()
+
     val resp = ws
       .url(endpoint)
       .withRequestTimeout(timeout)
       .addHttpHeaders("Content-Type" -> "application/json")
       .post(payload)
+
+    resp.foreach(_ => {
+      DCRMetrics.DCRLatencyMetric.recordDuration(currentTimeMillis() - start)
+      DCRMetrics.DCRRequestCountMetric.increment()
+    })
 
     resp.recoverWith({
       case _: ConnectException if Configuration.environment.stage == "DEV" =>
