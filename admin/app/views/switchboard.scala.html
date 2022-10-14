@@ -7,6 +7,7 @@
     <link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
         <div class="container__main">
             @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
+            @if(flash.get("success").isDefined) { <h1 style="color:mediumseagreen">@flash.get("success").get</h1> }
             <p>
                 <blockquote>
                     <em>"Death by switches."</em>

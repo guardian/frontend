@@ -85,7 +85,9 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
         log.info(s"Switch change by $requester: $change")
       }
 
-      Redirect(routes.SwitchboardController.renderSwitchboard())
+      Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
+        "success" -> s"Switches successfully changed: ${changes.mkString("; ")}",
+      )
     } catch {
       case e: Throwable =>
         log.error("exception saving switches", e)
