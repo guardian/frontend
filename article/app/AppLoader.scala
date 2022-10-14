@@ -84,8 +84,8 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,
     ContentApiMetrics.ContentApiRequestsMetric,
-    ArticleRenderingMetrics.RemoteRenderingMetric,
-    ArticleRenderingMetrics.LocalRenderingMetric,
+    DCRMetrics.DCRLatencyMetric,
+    DCRMetrics.DCRRequestCountMetric,
   )
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
