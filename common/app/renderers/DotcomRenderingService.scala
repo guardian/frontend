@@ -62,7 +62,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[WSResponse] = {
 
-    val start = currentTimeMillis
+    val start = currentTimeMillis()
 
     val resp = ws
       .url(endpoint)
@@ -71,7 +71,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       .post(payload)
 
     resp.foreach(_ => {
-      DCRMetrics.DCRLatencyMetric.recordDuration(currentTimeMillis - start)
+      DCRMetrics.DCRLatencyMetric.recordDuration(currentTimeMillis() - start)
       DCRMetrics.DCRRequestCountMetric.increment()
     })
 
