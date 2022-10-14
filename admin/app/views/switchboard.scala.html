@@ -15,7 +15,14 @@
             @if(flash.get("success").isDefined) {
                 <section class="bg-success" style="padding: 1em;">
                     <h2 class="text-success">Success</h2>
-                    <p>@flash.get("success").get</p>
+                    <ul>
+                    @for(switch <- flash.get("success").get.split("; ")){
+                        <li class="sub-heading">@switch</li>
+                    }
+                    </ul>
+@*                    <p>@flash.get("success").get.split("; ").map(switch => {*@
+@*                    <li>@switch</li>*@
+@*            })</p>*@
                 </section>
             }
             <p>

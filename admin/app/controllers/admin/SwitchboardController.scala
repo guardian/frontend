@@ -86,7 +86,7 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
       }
 
       Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
-        "success" -> s"Switches successfully changed: ${changes.mkString("; ")}.",
+        "success" -> changes.mkString("; "),
       )
     } catch {
       case e: Throwable =>
