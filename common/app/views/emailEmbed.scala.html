@@ -49,7 +49,15 @@
                 });
             }
 
-            revealPrivacyWordingWhenUserInteractsWithEmailField()
+            function informParentOfLoad(loadEvent) {
+                window.parent.postMessage({
+                    subject: 'emailEmbedPageLoaded',
+                    path: window.location.pathname,
+                }, window.origin);
+            }
+
+            window.addEventListener('DOMContentLoaded', informParentOfLoad);
+            revealPrivacyWordingWhenUserInteractsWithEmailField();
         </script>
     }
 
