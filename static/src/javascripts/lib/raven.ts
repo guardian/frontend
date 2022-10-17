@@ -1,13 +1,22 @@
+import type { RavenOptions } from 'raven-js';
 import raven from 'raven-js';
-import config from './config';
 import { adblockInUse } from './detect';
 
-const { sentryPublicApiKey, sentryHost } = config.get('page', {});
+const {
+	// linter, keep this multi-line
+	sentryPublicApiKey,
+	sentryHost,
+	edition,
+	contentType,
+	revisionNumber,
+	isDev,
+} = window.guardian.config.page;
+const { enableSentryReporting } = window.guardian.config.switches;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
 
 let adblockBeingUsed = false;
 
-const sentryOptions = {
+const sentryOptions: RavenOptions = {
 	whitelistUrls: [
 		// localhost will not log errors, but call `shouldSendCallback`
 		/localhost/,
@@ -16,9 +25,9 @@ const sentryOptions = {
 	],
 
 	tags: {
-		edition: config.get('page.edition'),
-		contentType: config.get('page.contentType'),
-		revisionNumber: config.get('page.revisionNumber'),
+		edition,
+		contentType,
+		revisionNumber,
 	},
 
 	ignoreErrors: [
@@ -38,10 +47,10 @@ const sentryOptions = {
 		'Fetch error while requesting https://api.nextgen.guardianapps.co.uk/weatherapi/city.json:',
 	],
 
-	dataCallback(data) {
-		const { culprit = false } = data;
+	dataCallback(data: { tags: { origin?: string }; culprit?: string }) {
+		const { culprit } = data;
 		const resp = data;
-		const culpritMatches = /j.ophan.co.uk/.test(data.culprit);
+		const culpritMatches = culprit ? /j.ophan.co.uk/.test(culprit) : false;
 
 		if (culprit) {
 			resp.culprit = culprit.replace(/\/[a-z\d]{32}(\/[^/]+)$/, '$1');
@@ -52,39 +61,28 @@ const sentryOptions = {
 		return resp;
 	},
 
-	shouldSendCallback(data) {
-		const { isDev } = config.get('page');
-		const isIgnored =
-			typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
-		const { enableSentryReporting } = config.get('switches');
-		const isSentinelLoggingEvent =
-			data?.tags?.tag === 'commercial-sentinel';
+	shouldSendCallback(data: { tags: { ignored?: unknown } }) {
+		const isIgnored = !!data.tags.ignored;
 
-		// isInSample is always true if the tag is commercial-sentinel.
-		// Otherwise, sample at a very small rate.
-		const isInSample = isSentinelLoggingEvent
-			? true
-			: Math.random() < 0.008;
+		// Sample at a very small rate.
+		const isInSample = Math.random() < 0.008;
 
 		if (isDev && !isIgnored) {
-			// Some environments don't support or don't always expose the console Object
-			if (window.console && window.console.warn) {
-				window.console.warn('Raven captured event.', data);
-			}
+			console.warn('Raven captured event.', data);
 		}
 
 		return (
-			enableSentryReporting &&
+			!!enableSentryReporting &&
 			isInSample &&
 			!isIgnored &&
-			!adblockBeingUsed &&
-			(!isDev || isSentinelLoggingEvent)
+			!adblockBeingUsed
 		);
 	},
 };
 
-adblockInUse.then((isUse) => {
-	adblockBeingUsed = isUse;
+void adblockInUse.then((isInUse: boolean) => {
+	adblockBeingUsed = isInUse;
 });
 
+// eslint-disable-next-line import/no-default-export -- Allow this default export
 export default raven.config(sentryUrl, sentryOptions).install();

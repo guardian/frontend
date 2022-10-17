@@ -38,13 +38,13 @@
  ],
  "../lib/noop.ts": [],
  "../lib/partition.ts": [],
- "../lib/raven.js": [
-  "../../../../node_modules/raven-js/src/singleton.js",
-  "../lib/config.js",
+ "../lib/raven.ts": [
+  "../../../../node_modules/raven-js/typescript/raven.d.ts",
+  "../../../../node_modules/raven-js/typescript/raven.d.ts",
   "../lib/detect.js"
  ],
  "../lib/report-error.js": [
-  "../lib/raven.js"
+  "../lib/raven.ts"
  ],
  "../lib/robust.js": [
   "../lib/report-error.js"
@@ -311,7 +311,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/raven.js",
+  "../lib/raven.ts",
   "../lib/report-error.js",
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
   "../projects/commercial/modules/dfp/on-slot-load.ts",
@@ -606,7 +606,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
-  "../lib/raven.js",
+  "../lib/raven.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/common/modules/async-call-merger.ts": [],
