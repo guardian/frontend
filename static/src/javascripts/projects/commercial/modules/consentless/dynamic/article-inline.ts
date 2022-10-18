@@ -11,7 +11,7 @@ import type {
 	SpacefinderWriter,
 } from 'common/modules/spacefinder';
 import { createAdvertBorder } from 'common/modules/spacefinder-debug-tools';
-import { getBreakpoint, getViewport } from 'lib/detect-viewport';
+import { getCurrentBreakpoint } from 'lib/detect-viewport';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../../../lib/fastdom-promise';
 import { defineSlot } from '../define-slot';
@@ -211,7 +211,7 @@ const addDesktopInlineAds = async () => {
 };
 
 const addInlineAds = (): Promise<boolean | void> =>
-	getBreakpoint(getViewport().width) === 'mobile'
+	getCurrentBreakpoint() === 'mobile'
 		? addMobileInlineAds()
 		: addDesktopInlineAds();
 

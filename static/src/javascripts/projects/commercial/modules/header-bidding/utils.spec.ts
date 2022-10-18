@@ -2,12 +2,10 @@ import { createAdSize } from '@guardian/commercial-core';
 import type { CountryCode } from '@guardian/libs';
 import { _ } from 'common/modules/commercial/geo-utils';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+import { getCurrentTweakpoint as getCurrentTweakpoint_ } from 'lib/detect-viewport';
 import { getCountryCode as getCountryCode_ } from 'lib/geolocation';
 import config from '../../../../lib/config';
-import {
-	getBreakpoint as getBreakpoint_,
-	isBreakpoint as isBreakpoint_,
-} from '../../../../lib/detect';
+import { isBreakpoint as isBreakpoint_ } from '../../../../lib/detect';
 import {
 	getBreakpointKey,
 	getLargestSize,
@@ -28,8 +26,8 @@ import {
 const getCountryCode = getCountryCode_ as jest.MockedFunction<
 	typeof getCountryCode_
 >;
-const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
-	typeof getBreakpoint_
+const getCurrentTweakpoint = getCurrentTweakpoint_ as jest.MockedFunction<
+	typeof getCurrentTweakpoint_
 >;
 const isBreakpoint = isBreakpoint_ as jest.MockedFunction<typeof isBreakpoint_>;
 const isInVariantSynchronous = isInVariantSynchronous_ as jest.MockedFunction<
@@ -47,9 +45,12 @@ jest.mock('../../../common/modules/experiments/ab', () => ({
 }));
 
 jest.mock('../../../../lib/detect', () => ({
-	getBreakpoint: jest.fn(() => 'mobile'),
 	hasPushStateSupport: jest.fn(() => true),
 	isBreakpoint: jest.fn(),
+}));
+
+jest.mock('lib/detect-viewport', () => ({
+	getCurrentTweakpoint: jest.fn(() => 'mobile'),
 }));
 
 jest.mock('../../../common/modules/experiments/ab-tests');
@@ -107,11 +108,17 @@ describe('Utils', () => {
 		expect(getLargestSize([])).toEqual(null);
 	});
 
-	test('getBreakpointKey should find the correct key', () => {
-		const breakpoints = ['mobile', 'phablet', 'tablet', 'desktop', 'wide'];
+	test('getCurrentTweakpointKey should find the correct key', () => {
+		const breakpoints = [
+			'mobile',
+			'phablet',
+			'tablet',
+			'desktop',
+			'wide',
+		] as const;
 		const results = [];
 		for (let i = 0; i < breakpoints.length; i += 1) {
-			getBreakpoint.mockReturnValueOnce(breakpoints[i]);
+			getCurrentTweakpoint.mockReturnValueOnce(breakpoints[i]);
 			results.push(getBreakpointKey());
 		}
 		expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);

@@ -1,8 +1,5 @@
 import { renderAdvertLabel } from './render-advert-label';
 
-jest.mock('../../../../lib/detect', (): void => {
-	return;
-});
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
 }));

@@ -1,8 +1,9 @@
 import { createAdSize } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
+import { getCurrentTweakpoint } from 'lib/detect-viewport';
 import config from '../../../../lib/config';
-import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
+import { isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
 import {
 	isInAuOrNz,
@@ -107,7 +108,7 @@ export const getLargestSize = (
 };
 
 export const getBreakpointKey = (): string => {
-	switch (getBreakpoint()) {
+	switch (getCurrentTweakpoint()) {
 		case 'mobile':
 		case 'mobileMedium':
 		case 'mobileLandscape':

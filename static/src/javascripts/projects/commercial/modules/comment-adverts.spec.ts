@@ -1,6 +1,6 @@
 import { adSizes } from '@guardian/commercial-core';
 import { mocked } from 'ts-jest/utils';
-import { getBreakpoint as getBreakpoint_ } from '../../../lib/detect';
+import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-viewport';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator as fakeMediator } from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -40,8 +40,8 @@ jest.mock('./dfp/get-advert-by-id', () => ({
 	getAdvertById: jest.fn(),
 }));
 
-jest.mock('../../../lib/detect', () => ({
-	getBreakpoint: jest.fn(),
+jest.mock('lib/detect-viewport', () => ({
+	getCurrentBreakpoint: jest.fn(),
 }));
 
 jest.mock('../../common/modules/commercial/commercial-features', () => ({
@@ -58,7 +58,7 @@ const { createCommentSlot, runSecondStage, maybeUpgradeSlot } = _;
 const commercialFeaturesMock = commercialFeatures;
 const isUserLoggedIn = isUserLoggedIn_;
 const getAdvertById = getAdvertById_;
-const getBreakpoint = getBreakpoint_;
+const getCurrentBreakpoint = getCurrentBreakpoint_;
 const refreshAdvert = refreshAdvert_;
 
 const mockHeight = (height: number) => {
@@ -246,7 +246,7 @@ describe('initCommentAdverts', () => {
 		document.body.innerHTML = `<div class="js-comments">
                 <div class="content__main-column"></div></div>`;
 
-		mocked(getBreakpoint).mockReturnValue('mobile');
+		mocked(getCurrentBreakpoint).mockReturnValue('mobile');
 
 		void initCommentAdverts().then((result) => {
 			expect(result).toBe(false);

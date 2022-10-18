@@ -1,6 +1,7 @@
 import { log } from '@guardian/libs';
+import { getCurrentBreakpoint } from 'lib/detect-viewport';
 import defaultConfig from '../../../../lib/config';
-import { getBreakpoint, isInternetExplorer } from '../../../../lib/detect';
+import { isInternetExplorer } from '../../../../lib/detect';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
@@ -67,7 +68,7 @@ class CommercialFeatures {
 			config.get('page.contentType') === 'Identity' ||
 			config.get('page.section') === 'identity'; // needed for pages under profile.* subdomain
 		const switches = config.get<Record<string, boolean>>('switches', {});
-		const isWidePage = getBreakpoint() === 'wide';
+		const isWidePage = getCurrentBreakpoint() === 'wide';
 		const newRecipeDesign =
 			config.get('page.showNewRecipeDesign') &&
 			config.get('tests.abNewRecipeDesign');

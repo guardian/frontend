@@ -69,4 +69,17 @@ const getBreakpoint = (width: number): Breakpoint => getPoint(false, width);
 const getTweakpoint = (width: number): Tweakpoint | Breakpoint =>
 	getPoint(true, width);
 
-export { getBreakpoint, getTweakpoint, getViewport, Viewport };
+const getCurrentBreakpoint = (): Breakpoint =>
+	getBreakpoint(getViewport().width);
+
+const getCurrentTweakpoint = (): Tweakpoint | Breakpoint =>
+	getTweakpoint(getViewport().width);
+
+export {
+	getBreakpoint,
+	getTweakpoint,
+	getViewport,
+	Viewport,
+	getCurrentBreakpoint,
+	getCurrentTweakpoint,
+};
