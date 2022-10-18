@@ -1,9 +1,8 @@
 import { createAdSize } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
-import { getCurrentTweakpoint } from 'lib/detect-viewport';
+import { getCurrentTweakpoint, matchesBreakpoints } from 'lib/detect-viewport';
 import config from '../../../../lib/config';
-import { isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
 import {
 	isInAuOrNz,
@@ -183,7 +182,7 @@ export const shouldIncludeMobileSticky = once(
 	(): boolean =>
 		window.location.hash.includes('#mobile-sticky') ||
 		(!!window.guardian.config.switches.mobileStickyLeaderboard &&
-			isBreakpoint({
+			matchesBreakpoints({
 				min: 'mobile',
 				max: 'mobileLandscape',
 			}) &&

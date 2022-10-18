@@ -75,6 +75,26 @@ const getCurrentBreakpoint = (): Breakpoint =>
 const getCurrentTweakpoint = (): Tweakpoint | Breakpoint =>
 	getTweakpoint(getViewport().width);
 
+const getMediaQuery = ({
+	min,
+	max,
+}: {
+	min?: Breakpoint | Tweakpoint;
+	max?: Breakpoint | Tweakpoint;
+}): string => {
+	const minWidth = min ? sourceBreakpoints[min] : 0;
+	const maxWidth = max ? sourceBreakpoints[max] - 1 : 999999;
+
+	return `(min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
+};
+const matchesBreakpoints = ({
+	min,
+	max,
+}: {
+	min?: Breakpoint | Tweakpoint;
+	max?: Breakpoint | Tweakpoint;
+}): boolean => window.matchMedia(getMediaQuery({ min, max })).matches;
+
 export {
 	getBreakpoint,
 	getTweakpoint,
@@ -82,4 +102,5 @@ export {
 	Viewport,
 	getCurrentBreakpoint,
 	getCurrentTweakpoint,
+	matchesBreakpoints,
 };

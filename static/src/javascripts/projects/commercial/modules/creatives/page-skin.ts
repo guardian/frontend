@@ -1,6 +1,7 @@
 import fastdom from 'fastdom';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { hasCrossedBreakpoint, isBreakpoint } from '../../../../lib/detect';
+import { matchesBreakpoints } from 'lib/detect-viewport';
+import { hasCrossedBreakpoint } from '../../../../lib/detect';
 import { mediator } from '../../../../lib/mediator';
 
 const pageSkin = (): void => {
@@ -17,7 +18,7 @@ const pageSkin = (): void => {
 		fastdom.mutate(() => {
 			bodyEl.classList.toggle(
 				'has-active-pageskin',
-				isBreakpoint({ min: 'wide' }),
+				matchesBreakpoints({ min: 'wide' }),
 			);
 		});
 	};

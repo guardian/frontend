@@ -1,4 +1,5 @@
-import { breakpoints, hasCrossedBreakpoint } from '../../../../lib/detect';
+import { breakpoints } from '@guardian/source-foundations';
+import { hasCrossedBreakpoint } from '../../../../lib/detect';
 import { mediator } from '../../../../lib/mediator';
 import type { Advert } from './Advert';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
@@ -13,7 +14,7 @@ const hasBreakpointChanged = hasCrossedBreakpoint(true);
 /**
  * Array of breakpoint names
  */
-const breakpointNames = breakpoints.map(({ name }) => name);
+const breakpointNames = Object.keys(breakpoints);
 
 // TODO: reset advert flags
 const refresh = (currentBreakpoint: string, previousBreakpoint: string) => {
