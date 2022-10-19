@@ -1,7 +1,6 @@
 import { log } from '@guardian/libs';
 import { getCurrentBreakpoint } from 'lib/detect-viewport';
 import defaultConfig from '../../../../lib/config';
-import { isInternetExplorer } from '../../../../lib/detect';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
@@ -30,6 +29,13 @@ function adsDisabledLogger(
 		if (value) noAdsLog(condition, value);
 	}
 }
+
+/**
+ * Determine whether current browser is a version of Internet Explorer
+ */
+const isInternetExplorer = () => {
+	return !!navigator.userAgent.match(/MSIE|Trident/g)?.length;
+};
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -74,7 +80,7 @@ class CommercialFeatures {
 			config.get('tests.abNewRecipeDesign');
 
 		// TODO Convert detect.js to TypeScript
-		const isUnsupportedBrowser = (isInternetExplorer as () => boolean)();
+		const isUnsupportedBrowser: boolean = isInternetExplorer();
 
 		this.isSecureContact = [
 			'help/ng-interactive/2017/mar/17/contact-the-guardian-securely',

@@ -25,15 +25,6 @@ jest.mock('../../../common/modules/experiments/ab', () => ({
 	),
 }));
 
-jest.mock('../../../../lib/detect', () => ({
-	hasCrossedBreakpoint: jest.fn(),
-	isBreakpoint: jest.fn(),
-	getBreakpoint: jest.fn(),
-	getViewport: jest.fn(),
-	hasPushStateSupport: jest.fn(),
-	breakpoints: [],
-}));
-
 jest.mock('../../../../lib/cookies', () => ({
 	getCookie: jest.fn(),
 }));

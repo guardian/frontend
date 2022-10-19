@@ -66,21 +66,20 @@ const getViewport = (): Viewport => {
 
 const getBreakpoint = (width: number): Breakpoint => getPoint(false, width);
 
-const getTweakpoint = (width: number): Tweakpoint | Breakpoint =>
-	getPoint(true, width);
+const getTweakpoint = (width: number): Point<true> => getPoint(true, width);
 
 const getCurrentBreakpoint = (): Breakpoint =>
 	getBreakpoint(getViewport().width);
 
-const getCurrentTweakpoint = (): Tweakpoint | Breakpoint =>
+const getCurrentTweakpoint = (): Point<true> =>
 	getTweakpoint(getViewport().width);
 
 const getMediaQuery = ({
 	min,
 	max,
 }: {
-	min?: Breakpoint | Tweakpoint;
-	max?: Breakpoint | Tweakpoint;
+	min?: Point<true>;
+	max?: Point<true>;
 }): string => {
 	const minWidth = min ? sourceBreakpoints[min] : 0;
 	const maxWidth = max ? sourceBreakpoints[max] - 1 : 999999;
@@ -91,10 +90,30 @@ const matchesBreakpoints = ({
 	min,
 	max,
 }: {
-	min?: Breakpoint | Tweakpoint;
-	max?: Breakpoint | Tweakpoint;
+	min?: Point<true>;
+	max?: Point<true>;
 }): boolean => window.matchMedia(getMediaQuery({ min, max })).matches;
 
+type BreakpointCallback = (is: Point<true>, was: Point<true>) => unknown;
+
+const hasCrossedBreakpoint = (
+	includeTweakpoint: boolean,
+): ((cb: BreakpointCallback) => unknown) => {
+	let was = includeTweakpoint
+		? getCurrentTweakpoint()
+		: getCurrentBreakpoint();
+
+	return (callback: BreakpointCallback) => {
+		const is = includeTweakpoint
+			? getCurrentTweakpoint()
+			: getCurrentBreakpoint();
+
+		if (is !== was) {
+			callback(is, was);
+			was = is;
+		}
+	};
+};
 export {
 	getBreakpoint,
 	getTweakpoint,
@@ -103,4 +122,5 @@ export {
 	getCurrentBreakpoint,
 	getCurrentTweakpoint,
 	matchesBreakpoints,
+	hasCrossedBreakpoint,
 };

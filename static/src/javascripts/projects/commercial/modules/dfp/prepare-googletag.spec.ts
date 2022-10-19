@@ -77,6 +77,7 @@ jest.mock('../../../common/modules/analytics/beacon', () => void {});
 
 jest.mock('lib/detect-viewport', () => ({
 	getCurrentBreakpoint: jest.fn(),
+	hasCrossedBreakpoint: jest.fn(),
 }));
 jest.mock('../../../common/modules/analytics/google', () => () => void {});
 jest.mock('./display-lazy-ads', () => ({

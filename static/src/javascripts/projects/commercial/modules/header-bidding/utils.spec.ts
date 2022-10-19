@@ -48,10 +48,6 @@ jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('../../../../lib/detect', () => ({
-	hasPushStateSupport: jest.fn(() => true),
-}));
-
 jest.mock('lib/detect-viewport', () => ({
 	getCurrentTweakpoint: jest.fn(() => 'mobile'),
 	matchesBreakpoints: jest.fn(),
