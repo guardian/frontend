@@ -1,6 +1,6 @@
 import type { RavenOptions } from 'raven-js';
 import raven from 'raven-js';
-import { adblockInUse } from './detect';
+import { adblockInUse } from './detect-adblock';
 
 const {
 	// linter, keep this multi-line
