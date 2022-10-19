@@ -286,6 +286,7 @@ object ContentFormat {
       case "CulturePillar"      => CulturePillar
       case "LifestylePillar"    => LifestylePillar
       case "SpecialReportTheme" => SpecialReportTheme
+//      case "SpecialReportAltTheme" => SpecialReportAltTheme
       case "Labs"               => Labs
       case _                    => NewsPillar
     }
