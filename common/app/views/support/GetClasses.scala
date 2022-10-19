@@ -46,6 +46,7 @@ object GetClasses {
         ("fc-item--pillar-" + item.pillar.nameOrDefault, true),
         ("fc-item--type-" + item.designType.nameOrDefault, true),
         ("fc-item--pillar-special-report", item.cardStyle == SpecialReport),
+//        ("fc-item--pillar-special-report-alt", item.cardStyle == SpecialReportAlt),
         ("fc-item--paid-content", item.branding.exists(_.isPaid)),
         ("fc-item--has-cutout", item.cutOut.isDefined),
         ("fc-item--has-no-image", !item.hasImage),
