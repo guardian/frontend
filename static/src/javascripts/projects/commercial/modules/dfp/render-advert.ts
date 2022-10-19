@@ -1,4 +1,4 @@
-import { adSizes, constants } from '@guardian/commercial-core';
+import { adSizes, constants, outstreamSizes } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
@@ -146,18 +146,29 @@ const setAdSlotMinHeight = (advert: Advert): void => {
 		return;
 	}
 
-	const isStandardAdSize = !advert.size.isProxy();
+	const { size, node } = advert;
+
+	// Don't set a min-height on ad slots that can be passed back.
+	// The ad that loads may be shorter than the original ad height.
+	const canSlotBePassedBack = Object.values(outstreamSizes).some(
+		({ width, height }) => width === size.width && height === size.height,
+	);
+	if (canSlotBePassedBack) {
+		return;
+	}
+
+	const isStandardAdSize = !size.isProxy();
 	if (isStandardAdSize) {
-		const adSlotHeight = advert.size.height + constants.AD_LABEL_HEIGHT;
+		const adSlotHeight = size.height + constants.AD_LABEL_HEIGHT;
 		void fastdom.mutate(() => {
-			advert.node.setAttribute('style', `min-height:${adSlotHeight}px`);
+			node.setAttribute('style', `min-height:${adSlotHeight}px`);
 		});
 	} else {
 		// For the situation when we load a non-standard size ad, e.g. fluid ad, after
 		// previously loading a standard size ad. Ensure that the previously added min-height is
 		// removed, so that a smaller fluid ad does not have a min-height larger than it is.
 		void fastdom.mutate(() => {
-			advert.node.setAttribute('style', `min-height:unset`);
+			node.setAttribute('style', `min-height:unset`);
 		});
 	}
 };

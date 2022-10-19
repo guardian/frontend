@@ -38,7 +38,9 @@ const setSlotAdRefresh = (
 
 				advert.shouldRefresh = shouldSlotRefresh;
 
-				if (shouldSlotRefresh) setAdSlotMinHeight(advert);
+				if (shouldSlotRefresh) {
+					setAdSlotMinHeight(advert);
+				}
 			})
 			.catch((error) => {
 				log(
