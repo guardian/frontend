@@ -1,8 +1,12 @@
 import { adSizes, createAdSize } from '@guardian/commercial-core';
 import { Advert } from './Advert';
-import { _, shouldRefresh } from './should-refresh';
+import { shouldRefresh } from './should-refresh';
 
-const { outstreamSizes } = _;
+const outstreamSizes = [
+	adSizes.outstreamDesktop.toString(),
+	adSizes.outstreamMobile.toString(),
+	adSizes.outstreamGoogleDesktop.toString(),
+];
 
 describe('shouldRefresh', () => {
 	let googleSlot: googletag.Slot;

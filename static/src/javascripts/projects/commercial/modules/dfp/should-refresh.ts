@@ -1,12 +1,6 @@
-import type { AdSizeString } from '@guardian/commercial-core';
-import { adSizes } from '@guardian/commercial-core';
+import type { AdSize, AdSizeString } from '@guardian/commercial-core';
+import { outstreamSizes } from '@guardian/commercial-core';
 import type { Advert } from './Advert';
-
-const outstreamSizes = [
-	adSizes.outstreamDesktop.toString(),
-	adSizes.outstreamMobile.toString(),
-	adSizes.outstreamGoogleDesktop.toString(),
-];
 
 /**
  * Determine whether an advert should refresh, taking into account
@@ -37,7 +31,9 @@ export const shouldRefresh = (
 	if (isFluid) return false;
 
 	// Outstream adverts should not refresh
-	const isOutstream = outstreamSizes.includes(sizeString as AdSizeString);
+	const isOutstream = Object.values(outstreamSizes)
+		.map((size: AdSize) => size.toString())
+		.includes(sizeString as AdSizeString);
 	if (isOutstream) return false;
 
 	// If the advert has a line item id included in the array of non refreshable
@@ -52,8 +48,4 @@ export const shouldRefresh = (
 
 	// If none of the other conditions are met then the advert should refresh
 	return true;
-};
-
-export const _ = {
-	outstreamSizes,
 };
