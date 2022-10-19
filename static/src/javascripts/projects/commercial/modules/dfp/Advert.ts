@@ -145,9 +145,10 @@ class Advert {
 			additionalSizeMapping,
 		);
 
-		/** If the size mapping is empty, use the data attributes to create a size mapping,
+		/**
+		 * If the size mapping is empty, use the data attributes to create a size mapping,
 		 * this is used on some interactives e.g. https://www.theguardian.com/education/ng-interactive/2021/sep/11/the-best-uk-universities-2022-rankings
-		 **/
+		 */
 		if (isSizeMappingEmpty(sizeMapping)) {
 			sizeMapping = getSlotSizeMappingsFromDataAttrs(this.node);
 

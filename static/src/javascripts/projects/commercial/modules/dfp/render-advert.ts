@@ -1,9 +1,4 @@
-import {
-	adSizes,
-	constants,
-	slotSizeMappings,
-	standardAdSizes,
-} from '@guardian/commercial-core';
+import { adSizes, constants } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
@@ -142,36 +137,26 @@ const addContentClass = (adSlotNode: HTMLElement) => {
 };
 
 /**
- * Avoid CLS when an advert is refreshed, by setting the
+ * Prevent CLS when an advert is refreshed, by setting the
  * min-height of the ad slot to the height of the ad.
- *
- * Doesn't work for fluid ads, because we don't know the height of a fluid ad at this point.
  */
-const setMinHeightOfAdSlot = (advert: Advert): void => {
-	if (
-		advert.id !== 'dfp-ad--top-above-nav' ||
-		advert.size === null ||
-		advert.size === 'fluid'
-	) {
+const setAdSlotMinHeight = (advert: Advert): void => {
+	if (advert.size === null || advert.size === 'fluid') {
 		return;
 	}
 
-	const { height: adHeight, width: adWidth } = advert.size;
-
-	// Ensure that we know the height of the ad, i.e. the ad does not have variable dimensions
-	const isStandardAdSize = Object.values(standardAdSizes).some(
-		(adSize) => adSize.height === adHeight,
-	);
-
-	// Only set min-height for desktop ad sizes
-	const isDesktopAdSize = slotSizeMappings['top-above-nav'].desktop?.some(
-		({ height, width }) => height === adHeight && width === adWidth,
-	);
-
-	if (isStandardAdSize && isDesktopAdSize) {
+	const isStandardAdSize = !advert.size.isProxy();
+	if (isStandardAdSize) {
+		const adSlotHeight = advert.size.height + constants.AD_LABEL_HEIGHT;
 		void fastdom.mutate(() => {
-			const adSlotHeight = adHeight + constants.AD_LABEL_HEIGHT;
 			advert.node.setAttribute('style', `min-height:${adSlotHeight}px`);
+		});
+	} else {
+		// For the situation when we load a non-standard size ad, e.g. fluid ad, after
+		// previously loading a standard size ad. Ensure that the previously added min-height is
+		// removed, so that a smaller fluid ad does not have a min-height larger than it is.
+		void fastdom.mutate(() => {
+			advert.node.setAttribute('style', `min-height:unset`);
 		});
 	}
 };
@@ -181,12 +166,12 @@ const setMinHeightOfAdSlot = (advert: Advert): void => {
  * @param slotRenderEndedEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
-export const renderAdvert = (
+const renderAdvert = (
 	advert: Advert,
 	slotRenderEndedEvent: googletag.events.SlotRenderEndedEvent,
 ): Promise<boolean> => {
 	addContentClass(advert.node);
-	setMinHeightOfAdSlot(advert);
+	setAdSlotMinHeight(advert);
 
 	return getAdIframe(advert.node)
 		.then((isRendered) => {
@@ -219,6 +204,7 @@ export const renderAdvert = (
 			return callSizeCallback()
 				.then(() => renderAdvertLabel(advert.node))
 				.then(addRenderedClass)
+				.then(() => setAdSlotMinHeight(advert))
 				.then(() => isRendered);
 		})
 		.catch((err) => {
@@ -233,3 +219,5 @@ export const renderAdvert = (
 			return Promise.resolve(false);
 		});
 };
+
+export { renderAdvert };
