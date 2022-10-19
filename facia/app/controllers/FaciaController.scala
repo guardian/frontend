@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
+import common.JsonComponent.Ok
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
@@ -24,6 +25,7 @@ import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import experiments.{ActiveExperiments, EuropeNetworkFront}
+import play.api.http.ContentTypes.JSON
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 
@@ -352,7 +354,22 @@ trait FaciaController
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] =
     Action.async { implicit request =>
       frontJsonFapi.get(path, fullRequestType).flatMap {
-        case Some(pressedPage) =>
+        case Some(pressedPage) if request.forceDCR =>
+
+          val maybeResponse = for {
+            collection <- pressedPage.collections.find(_.id == collectionId)
+          } yield {
+            successful(Cached(CacheTime.Facia) {
+              val cards = collection.curated ++ collection.backfill
+
+              val adFreeFilteredCards = cards.filter(c => !(c.properties.isPaidFor && request.isAdFree))
+
+              implicit val pressedContentFormat = PressedContentFormat.format
+              JsonComponent.fromWritable(Json.toJson(adFreeFilteredCards))
+            })
+          }
+          maybeResponse.getOrElse { successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))) }
+        case Some(pressedPage)  =>
           val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
           val maybeResponse =
             for {
