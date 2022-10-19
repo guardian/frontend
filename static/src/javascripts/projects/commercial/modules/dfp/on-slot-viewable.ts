@@ -3,7 +3,10 @@ import { getUrlVars } from '../../../../lib/url';
 import { getAdvertById } from './get-advert-by-id';
 import { enableLazyLoad } from './lazy-load';
 import { memoizedFetchNonRefreshableLineItemIds } from './non-refreshable-line-items';
+import { setAdSlotMinHeight } from './render-advert';
 import { shouldRefresh } from './should-refresh';
+
+const ADVERT_REFRESH_RATE = 30_000; // 30 seconds
 
 const setSlotAdRefresh = (
 	event: googletag.events.ImpressionViewableEvent,
@@ -13,7 +16,7 @@ const setSlotAdRefresh = (
 		return;
 	}
 
-	const viewabilityThresholdMs = 30_000; // 30 seconds refresh
+	const viewabilityThresholdMs = ADVERT_REFRESH_RATE;
 
 	// Asynchronously retrieve the non-refreshable line item ids
 	// Only do this if they haven't been attached to the page config
@@ -28,10 +31,14 @@ const setSlotAdRefresh = (
 				// Determine whether ad should refresh
 				// This value will then be checked when the timer has elapsed and
 				// we want to know whether to refresh
-				advert.shouldRefresh = shouldRefresh(
+				const shouldSlotRefresh = shouldRefresh(
 					advert,
 					nonRefreshableLineItemIds,
 				);
+
+				advert.shouldRefresh = shouldSlotRefresh;
+
+				if (shouldSlotRefresh) setAdSlotMinHeight(advert);
 			})
 			.catch((error) => {
 				log(

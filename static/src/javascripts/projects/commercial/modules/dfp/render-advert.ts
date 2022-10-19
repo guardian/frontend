@@ -3,6 +3,7 @@ import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
 import type { Advert } from './Advert';
+import { isAdSize } from './Advert';
 import { getAdIframe } from './get-ad-iframe';
 import { renderAdvertLabel } from './render-advert-label';
 
@@ -141,7 +142,7 @@ const addContentClass = (adSlotNode: HTMLElement) => {
  * min-height of the ad slot to the height of the ad.
  */
 const setAdSlotMinHeight = (advert: Advert): void => {
-	if (advert.size === null || advert.size === 'fluid') {
+	if (!advert.shouldRefresh || !isAdSize(advert.size)) {
 		return;
 	}
 
@@ -171,7 +172,6 @@ const renderAdvert = (
 	slotRenderEndedEvent: googletag.events.SlotRenderEndedEvent,
 ): Promise<boolean> => {
 	addContentClass(advert.node);
-	setAdSlotMinHeight(advert);
 
 	return getAdIframe(advert.node)
 		.then((isRendered) => {
@@ -220,4 +220,4 @@ const renderAdvert = (
 		});
 };
 
-export { renderAdvert };
+export { renderAdvert, setAdSlotMinHeight };

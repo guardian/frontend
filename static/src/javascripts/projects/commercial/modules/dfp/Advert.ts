@@ -45,6 +45,7 @@ const getSlotSizeMappingsFromDataAttrs = (
 		if (data) {
 			sizes[breakpoint.name] = createSizeMapping(data);
 		}
+
 		return sizes;
 	}, {});
 
@@ -52,11 +53,16 @@ const isSlotName = (slotName: string): slotName is SlotName => {
 	return slotName in slotSizeMappings;
 };
 
+const isAdSize = (size: Advert['size']): size is AdSize => {
+	return size !== null && size !== 'fluid';
+};
+
 const getSlotSizeMapping = (name: string): SizeMapping => {
 	const slotName = name.includes('inline') ? 'inline' : name;
 	if (isSlotName(slotName)) {
 		return slotSizeMappings[slotName];
 	}
+
 	return {};
 };
 
@@ -183,7 +189,7 @@ class Advert {
 	}
 }
 
-export { Advert };
+export { Advert, isAdSize };
 
 export const _ = {
 	getSlotSizeMapping,
