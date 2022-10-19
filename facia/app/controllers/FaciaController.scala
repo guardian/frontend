@@ -355,7 +355,6 @@ trait FaciaController
     Action.async { implicit request =>
       frontJsonFapi.get(path, fullRequestType).flatMap {
         case Some(pressedPage) if request.forceDCR =>
-
           val maybeResponse = for {
             collection <- pressedPage.collections.find(_.id == collectionId)
           } yield {
@@ -369,7 +368,7 @@ trait FaciaController
             })
           }
           maybeResponse.getOrElse { successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))) }
-        case Some(pressedPage)  =>
+        case Some(pressedPage) =>
           val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
           val maybeResponse =
             for {
