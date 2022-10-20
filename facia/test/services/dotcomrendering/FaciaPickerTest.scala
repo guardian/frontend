@@ -1,6 +1,8 @@
 package services.dotcomrendering
 
 import common.facia.{FixtureBuilder, PressedCollectionBuilder}
+import com.gu.facia.client.models.{AUQueenslandTerritory}
+
 import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -85,5 +87,16 @@ import org.scalatestplus.mockito.MockitoSugar
 
     val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
     tier should be(LocalRender)
+  }
+
+  "Facia Picker hasNoRegionalAusTargetedContainers" should
+    "return false if there is a container with targetedTerritory set to an AU region" in {
+    val unsupportedPressedCollection =
+      List(
+        PressedCollectionBuilder.mkPressedCollection(targetedTerritory = Some(AUQueenslandTerritory)),
+      )
+
+    val faciaPage = FixtureBuilder.mkPressedPage(unsupportedPressedCollection)
+    FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage) should be(false)
   }
 }

@@ -104,6 +104,19 @@ object FrontChecks {
     !faciaPage.collections.exists(collection => collection.curated.exists(card => card.isPaidFor))
   }
 
+  def hasNoRegionalAusTargetedContainers(faciaPage: PressedPage): Boolean = {
+    // We don't support the Aus region selector component
+    // https://github.com/guardian/dotcom-rendering/issues/6234
+    !faciaPage.collections.exists(collection =>
+      collection.targetedTerritory.exists(_.id match {
+        case "AU-VIC" => true
+        case "AU-QLD" => true
+        case "AU-NSW" => true
+        case _        => false
+      }),
+    )
+  }
+
 }
 
 class FaciaPicker extends GuLogging {
@@ -117,6 +130,7 @@ class FaciaPicker extends GuLogging {
       ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
       ("isNotPaidContent", FrontChecks.isNotPaidContent(faciaPage)),
       ("hasNoPaidForCards", FrontChecks.hasNoPaidForCards(faciaPage)),
+      ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
     )
   }
 
