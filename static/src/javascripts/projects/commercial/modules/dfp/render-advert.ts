@@ -1,9 +1,8 @@
-import { adSizes, constants, outstreamSizes } from '@guardian/commercial-core';
+import { adSizes } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
-import type { Advert } from './Advert';
-import { isAdSize } from './Advert';
+import { Advert } from './Advert';
 import { getAdIframe } from './get-ad-iframe';
 import { renderAdvertLabel } from './render-advert-label';
 
@@ -138,45 +137,6 @@ const addContentClass = (adSlotNode: HTMLElement) => {
 };
 
 /**
- * Prevent CLS when an advert is refreshed, by setting the
- * min-height of the ad slot to the height of the ad.
- */
-const setAdSlotMinHeight = (advert: Advert): void => {
-	if (!advert.shouldRefresh || !isAdSize(advert.size)) {
-		return;
-	}
-
-	const { size, node } = advert;
-
-	// When a passback occurs, a new ad slot is created within the original ad slot.
-	// We don't want to set a min-height on the parent ad slot, as the child ad slot
-	// may load an ad size that we are not aware of at this point. It may be shorter,
-	// which would make the min-height we set here too high.
-	// Therefore it is safer to exclude ad slots where a passback may occur.
-	const canSlotBePassedBack = Object.values(outstreamSizes).some(
-		({ width, height }) => width === size.width && height === size.height,
-	);
-	if (canSlotBePassedBack) {
-		return;
-	}
-
-	const isStandardAdSize = !size.isProxy();
-	if (isStandardAdSize) {
-		const adSlotHeight = size.height + constants.AD_LABEL_HEIGHT;
-		void fastdom.mutate(() => {
-			node.setAttribute('style', `min-height:${adSlotHeight}px`);
-		});
-	} else {
-		// For the situation when we load a non-standard size ad, e.g. fluid ad, after
-		// previously loading a standard size ad. Ensure that the previously added min-height is
-		// removed, so that a smaller fluid ad does not have a min-height larger than it is.
-		void fastdom.mutate(() => {
-			node.setAttribute('style', `min-height:unset`);
-		});
-	}
-};
-
-/**
  * @param advert - as defined in commercial/modules/dfp/Advert
  * @param slotRenderEndedEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
@@ -233,4 +193,4 @@ const renderAdvert = (
 		});
 };
 
-export { renderAdvert, setAdSlotMinHeight };
+export { renderAdvert };
