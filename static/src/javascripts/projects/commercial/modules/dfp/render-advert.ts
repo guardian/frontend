@@ -148,8 +148,11 @@ const setAdSlotMinHeight = (advert: Advert): void => {
 
 	const { size, node } = advert;
 
-	// Don't set a min-height on ad slots that can be passed back.
-	// The ad that loads may be shorter than the original ad height.
+	// When a passback occurs, a new ad slot is created within the original ad slot.
+	// We don't want to set a min-height on the parent ad slot, as the child ad slot
+	// may load an ad size that we are not aware of at this point. It may be shorter,
+	// which would make the min-height we set here too high.
+	// Therefore it is safer to exclude ad slots where a passback may occur.
 	const canSlotBePassedBack = Object.values(outstreamSizes).some(
 		({ width, height }) => width === size.width && height === size.height,
 	);
