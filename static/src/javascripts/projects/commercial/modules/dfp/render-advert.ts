@@ -218,7 +218,6 @@ const renderAdvert = (
 			return callSizeCallback()
 				.then(() => renderAdvertLabel(advert.node))
 				.then(addRenderedClass)
-				.then(() => setAdSlotMinHeight(advert))
 				.then(() => isRendered);
 		})
 		.catch((err) => {
