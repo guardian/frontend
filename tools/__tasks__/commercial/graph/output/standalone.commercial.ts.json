@@ -5,15 +5,15 @@
  "../lib/a9-apstag.js": [],
  "../lib/config.d.ts": [],
  "../lib/config.js": [],
+ "../lib/detect-adblock.ts": [],
+ "../lib/detect-breakpoint.ts": [
+  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
+  "../lib/detect-viewport.ts"
+ ],
  "../lib/detect-google-proxy.ts": [],
- "../lib/detect-viewport.ts": [
-  "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts"
- ],
- "../lib/detect.js": [
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js",
-  "../lib/config.js",
-  "../lib/mediator.ts"
- ],
+ "../lib/detect-pushstate.ts": [],
+ "../lib/detect-viewport.ts": [],
  "../lib/events.ts": [],
  "../lib/fastdom-promise.js": [
   "../../../../node_modules/fastdom/extensions/fastdom-promised.js",
@@ -41,7 +41,7 @@
  "../lib/raven.ts": [
   "../../../../node_modules/raven-js/typescript/raven.d.ts",
   "../../../../node_modules/raven-js/typescript/raven.d.ts",
-  "../lib/detect.js"
+  "../lib/detect-adblock.ts"
  ],
  "../lib/report-error.js": [
   "../lib/raven.ts"
@@ -52,7 +52,7 @@
  "../lib/time-utils.ts": [],
  "../lib/url.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/detect.js"
+  "../lib/detect-pushstate.ts"
  ],
  "../projects/commercial/adblock-ask.ts": [
   "../lib/config.d.ts",
@@ -87,7 +87,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
   "../lib/url.ts",
@@ -102,7 +102,7 @@
  ],
  "../projects/commercial/modules/carrot-traffic-driver.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/fastdom-promise.js",
   "../lib/url.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
@@ -113,7 +113,7 @@
  "../projects/commercial/modules/comment-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/fastdom-promise.js",
   "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
@@ -134,7 +134,7 @@
  ],
  "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/fastdom-promise.js",
   "../lib/url.ts",
   "../projects/commercial/modules/consentless/define-slot.ts",
@@ -172,7 +172,7 @@
  ],
  "../projects/commercial/modules/creatives/page-skin.ts": [
   "../../../../node_modules/fastdom/fastdom.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/mediator.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
@@ -234,7 +234,7 @@
  "../projects/commercial/modules/dfp/fill-advert-slots.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/create-advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -366,7 +366,7 @@
  ],
  "../projects/commercial/modules/dfp/refresh-on-resize.ts": [
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
@@ -452,7 +452,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/url.ts",
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
@@ -470,7 +470,7 @@
  ],
  "../projects/commercial/modules/liveblog-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/fastdom-promise.js",
   "../lib/url.ts",
   "../projects/commercial/modules/dfp/add-slot.ts",
@@ -519,7 +519,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../lib/fastdom-promise.js",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts"
  ],
@@ -625,7 +625,7 @@
  "../projects/common/modules/commercial/commercial-features.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/config.d.ts",
-  "../lib/detect-viewport.ts",
+  "../lib/detect-breakpoint.ts",
   "../projects/common/modules/commercial/user-features.ts",
   "../projects/common/modules/user-prefs.js"
  ],
