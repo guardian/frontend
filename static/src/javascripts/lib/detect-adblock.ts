@@ -1,6 +1,6 @@
-const getAdblockInUse = () => {
+const getAdblockInUse = async (): Promise<boolean> => {
 	if (window.guardian.config.isDotcomRendering) {
-		return Promise.resolve(false);
+		return false;
 	}
 	return new Promise((resolve) => {
 		if (window.guardian.adBlockers.active) {

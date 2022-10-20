@@ -9,7 +9,6 @@ const breakpoints = {
 	wide: sourceBreakpoints['wide'],
 };
 type Breakpoint = keyof typeof breakpoints;
-type Tweakpoint = keyof typeof tweakpoints;
 
 const isSourceBreakpoint = (point: string): point is SourceBreakpoint =>
 	point in sourceBreakpoints;

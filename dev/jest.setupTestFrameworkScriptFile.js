@@ -36,7 +36,7 @@ window.matchMedia =
 	function() {
 		return {
 			matches: false,
-			addListener() {},
-			removeListener() {},
+			addEventListener() {},
+			removeEventListener() {},
 		};
 	};
