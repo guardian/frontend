@@ -1,7 +1,7 @@
-import { log } from '@guardian/libs';
 import { constants, outstreamSizes } from '@guardian/commercial-core';
-import { getUrlVars } from '../../../../lib/url';
+import { log } from '@guardian/libs';
 import fastdom from '../../../../lib/fastdom-promise';
+import { getUrlVars } from '../../../../lib/url';
 import { isAdSize } from './Advert';
 import type { Advert } from './Advert';
 import { getAdvertById } from './get-advert-by-id';
@@ -15,7 +15,7 @@ const ADVERT_REFRESH_RATE = 30_000; // 30 seconds
  * Prevent CLS when an advert is refreshed, by setting the
  * min-height of the ad slot to the height of the ad.
  */
-const setAdSlotMinHeight = async (advert: Advert): Promise<void> => {
+const setAdSlotMinHeight = (advert: Advert): void => {
 	// We need to know the height of the ad to set the min-height
 	if (!isAdSize(advert.size)) {
 		return;
@@ -38,14 +38,14 @@ const setAdSlotMinHeight = async (advert: Advert): Promise<void> => {
 	const isStandardAdSize = !size.isProxy();
 	if (isStandardAdSize) {
 		const adSlotHeight = size.height + constants.AD_LABEL_HEIGHT;
-		fastdom.mutate(() => {
+		void fastdom.mutate(() => {
 			node.setAttribute('style', `min-height:${adSlotHeight}px`);
 		});
 	} else {
 		// For the situation when we load a non-standard size ad, e.g. fluid ad, after
 		// previously loading a standard size ad. Ensure that the previously added min-height is
 		// removed, so that a smaller fluid ad does not have a min-height larger than it is.
-		fastdom.mutate(() => {
+		void fastdom.mutate(() => {
 			node.setAttribute('style', `min-height:unset`);
 		});
 	}

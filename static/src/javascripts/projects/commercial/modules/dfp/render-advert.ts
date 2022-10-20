@@ -2,7 +2,7 @@ import { adSizes } from '@guardian/commercial-core';
 import { $$ } from '../../../../lib/$$';
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
-import { Advert } from './Advert';
+import type { Advert } from './Advert';
 import { getAdIframe } from './get-ad-iframe';
 import { renderAdvertLabel } from './render-advert-label';
 
