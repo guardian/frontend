@@ -3,7 +3,6 @@ import type { ConsentState } from '@guardian/consent-management-platform/dist/ty
 import { loadScript } from '@guardian/libs';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
-import { getCountryCode } from 'lib/geolocation';
 
 function initConsentless(consentState: ConsentState): Promise<void> {
 	// Stub the command queue
@@ -22,7 +21,6 @@ function initConsentless(consentState: ConsentState): Promise<void> {
 			buildPageTargetingConsentless(
 				consentState,
 				commercialFeatures.adFree,
-				getCountryCode(),
 				getSynchronousParticipations(),
 			),
 		).forEach(([key, value]) => {

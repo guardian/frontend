@@ -3,7 +3,6 @@ import { buildPageTargeting } from '@guardian/commercial-core';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
-import { getCountryCode } from '../../../../lib/geolocation';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
 import { getSynchronousParticipations } from '../experiments/ab';
 import { commercialFeatures } from './commercial-features';
@@ -48,7 +47,6 @@ const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 	const pageTargeting = buildPageTargeting(
 		consentState,
 		commercialFeatures.adFree,
-		getCountryCode(),
 		getSynchronousParticipations(),
 	);
 
