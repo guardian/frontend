@@ -1,4 +1,5 @@
 import { partition } from '../../../../lib/partition';
+import { pageSkin } from '../creatives/page-skin';
 import { dfpEnv } from './dfp-env';
 import { enableLazyLoad } from './lazy-load';
 import { loadAdvert } from './load-advert';
@@ -19,6 +20,7 @@ const displayLazyAds = (): void => {
 
 	instantLoadAdverts.forEach(loadAdvert);
 	lazyLoadAdverts.forEach(enableLazyLoad);
+	pageSkin();
 };
 
 export { displayLazyAds };
