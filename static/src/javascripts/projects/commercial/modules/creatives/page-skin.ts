@@ -1,6 +1,9 @@
 import fastdom from 'fastdom';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { hasCrossedBreakpoint, matchesBreakpoints } from 'lib/detect-viewport';
+import {
+	hasCrossedBreakpoint,
+	matchesBreakpoints,
+} from 'lib/detect-breakpoint';
 import { mediator } from '../../../../lib/mediator';
 
 const pageSkin = (): void => {

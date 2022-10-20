@@ -1,5 +1,5 @@
 import { breakpoints } from '@guardian/source-foundations';
-import { hasCrossedBreakpoint } from 'lib/detect-viewport';
+import { hasCrossedBreakpoint } from 'lib/detect-breakpoint';
 import { mediator } from '../../../../lib/mediator';
 import type { Advert } from './Advert';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';

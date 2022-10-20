@@ -1,5 +1,5 @@
 import { createAdSlot } from '@guardian/commercial-core';
-import { getCurrentTweakpoint } from 'lib/detect-viewport';
+import { getCurrentTweakpoint } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';

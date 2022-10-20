@@ -5,7 +5,7 @@ import {
 } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
-import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-viewport';
+import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-breakpoint';
 import _config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import type { Advert } from './Advert';
@@ -75,7 +75,7 @@ jest.mock('../../../common/modules/identity/api', () => ({
 jest.mock('ophan/ng', () => null);
 jest.mock('../../../common/modules/analytics/beacon', () => void {});
 
-jest.mock('lib/detect-viewport', () => ({
+jest.mock('lib/detect-breakpoint', () => ({
 	getCurrentBreakpoint: jest.fn(),
 	hasCrossedBreakpoint: jest.fn(),
 }));

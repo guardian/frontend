@@ -1,6 +1,6 @@
 import { adSizes } from '@guardian/commercial-core';
 import { mocked } from 'ts-jest/utils';
-import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-viewport';
+import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-breakpoint';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator as fakeMediator } from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -40,7 +40,7 @@ jest.mock('./dfp/get-advert-by-id', () => ({
 	getAdvertById: jest.fn(),
 }));
 
-jest.mock('lib/detect-viewport', () => ({
+jest.mock('lib/detect-breakpoint', () => ({
 	getCurrentBreakpoint: jest.fn(),
 }));
 

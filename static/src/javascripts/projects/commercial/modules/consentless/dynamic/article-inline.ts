@@ -11,7 +11,7 @@ import type {
 	SpacefinderWriter,
 } from 'common/modules/spacefinder';
 import { createAdvertBorder } from 'common/modules/spacefinder-debug-tools';
-import { getCurrentBreakpoint } from 'lib/detect-viewport';
+import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../../../lib/fastdom-promise';
 import { defineSlot } from '../define-slot';

@@ -4,7 +4,7 @@ import { createAdvertBorder } from 'common/modules/spacefinder-debug-tools';
 import {
 	getCurrentBreakpoint,
 	getCurrentTweakpoint,
-} from 'lib/detect-viewport';
+} from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';

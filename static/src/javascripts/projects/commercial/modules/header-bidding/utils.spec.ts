@@ -5,7 +5,7 @@ import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/module
 import {
 	getCurrentTweakpoint as getCurrentTweakpoint_,
 	matchesBreakpoints as matchesBreakpoints_,
-} from 'lib/detect-viewport';
+} from 'lib/detect-breakpoint';
 import { getCountryCode as getCountryCode_ } from 'lib/geolocation';
 import config from '../../../../lib/config';
 import {
@@ -48,7 +48,7 @@ jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('lib/detect-viewport', () => ({
+jest.mock('lib/detect-breakpoint', () => ({
 	getCurrentTweakpoint: jest.fn(() => 'mobile'),
 	matchesBreakpoints: jest.fn(),
 }));

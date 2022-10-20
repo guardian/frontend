@@ -1,4 +1,4 @@
-import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-viewport';
+import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-breakpoint';
 import config from '../../../../lib/config';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
 import userPrefs from '../user-prefs';
@@ -40,7 +40,7 @@ jest.mock('./user-features', () => ({
 	isAdFreeUser: jest.fn(),
 }));
 
-jest.mock('lib/detect-viewport', () => ({
+jest.mock('lib/detect-breakpoint', () => ({
 	getCurrentBreakpoint: jest.fn(),
 }));
 

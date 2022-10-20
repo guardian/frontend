@@ -1,5 +1,5 @@
 import { log } from '@guardian/libs';
-import { getCurrentBreakpoint } from 'lib/detect-viewport';
+import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import defaultConfig from '../../../../lib/config';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';

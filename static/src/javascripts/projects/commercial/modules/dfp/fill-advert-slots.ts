@@ -1,6 +1,6 @@
 import { adSizes, createAdSize } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
-import { getCurrentBreakpoint } from 'lib/detect-viewport';
+import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { removeDisabledSlots } from '../remove-slots';
 import type { Advert } from './Advert';
