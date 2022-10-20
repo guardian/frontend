@@ -35,6 +35,7 @@ window.matchMedia =
 	window.matchMedia ||
 	jest.fn().mockImplementation(() => ({
             matches: false,
+            addListener: jest.fn(),
             addEventListener: jest.fn(),
         }));
 
