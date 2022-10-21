@@ -55,7 +55,9 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     newsletterSignupAgent.getNewsletters() match {
       case Left(_) => None
       case Right(list) =>
-        list.find(response => response.signupPage.nonEmpty && response.signupPage.get == "/" + articleId)
+        list
+          .filter(shouldInclude)
+          .find(response => response.signupPage.nonEmpty && response.signupPage.get == "/" + articleId)
     }
   }
 
