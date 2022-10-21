@@ -6,51 +6,54 @@
 @import views.support.Commercial.{shouldShowAds, isAdFree}
 
 @defining(CommercialSwitch.isSwitchedOn && shouldShowAds(crosswordPage) && !isAdFree(request)) { adsEnabled =>
-    <div class="l-side-margins">
-        <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
-            @crosswordMetaHeader(crosswordPage)
+<div class="l-side-margins">
+    <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
+        @crosswordMetaHeader(crosswordPage)
 
-            <div class="content__main tonal__main tonal__main--tone-news">
-                <div class="gs-container">
-                    <div class="js-content-main-column">
-                        <div class="@if(adsEnabled) {crossword__spacer--ad}">
-                            <div class="js-crossword @if(crosswordPage.hasGroupedClues) {has-grouped-clues}"
+        <div class="content__main tonal__main tonal__main--tone-news">
+            <div class="gs-container">
+                <div class="js-content-main-column">
+                    <div class="@if(adsEnabled) {crossword__spacer--ad}">
+                        <div class="js-crossword @if(crosswordPage.hasGroupedClues) {has-grouped-clues}"
                             data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))">
 
-                                <div class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase()">
-                                    @* The following is a fallback for when JavaScript is not enabled *@
-                                    <div class="crossword__container__grid-wrapper">
-                                        <noscript>@crosswordPage.svg</noscript>
-                                    </div>
-
-                                    <noscript>
-                                        <div class="crossword__clues">
-                                            <div class="crossword__clues--across">
-                                                <h3 class="crossword__clues-header">Across</h3>
-                                                @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "across"))
-                                            </div>
-
-                                            <div class="crossword__clues--down">
-                                                <h3 class="crossword__clues-header">Down</h3>
-                                                @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction == "down"))
-                                            </div>
-                                        </div>
-                                    </noscript>
+                            <div
+                                class="crossword__container crossword__container--@crosswordPage.crossword.crosswordType.toString.toLowerCase()">
+                                @* The following is a fallback for when JavaScript is not enabled *@
+                                <div class="crossword__container__grid-wrapper">
+                                    <noscript>@crosswordPage.svg</noscript>
                                 </div>
+
+                                <noscript>
+                                    <div class="crossword__clues">
+                                        <div class="crossword__clues--across">
+                                            <h3 class="crossword__clues-header">Across</h3>
+                                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction ==
+                                            "across"))
+                                        </div>
+
+                                        <div class="crossword__clues--down">
+                                            <h3 class="crossword__clues-header">Down</h3>
+                                            @crosswordEntries(crosswordPage.crossword.entries.filter(_.direction ==
+                                            "down"))
+                                        </div>
+                                    </div>
+                                </noscript>
                             </div>
                         </div>
                     </div>
-                    @if(adsEnabled) {
-                        <div class="content__secondary-column hide-until-wide" aria-hidden="true">
-                        @fragments.commercial.standardAd("right", Seq("mpu-banner-ad"), Map()))
-                        </div>
-                        <div class="crossword-banner hide-until-tablet hide-from-wide" aria-hidden="true">
-                        @fragments.commercial.standardAd("crossword-banner", Seq("crossword-banner"), Map())
-                        </div>
-                    }
                 </div>
+                @if(adsEnabled) {
+                <div class="content__secondary-column hide-until-wide" aria-hidden="true">
+                    @fragments.commercial.standardAd("right", Seq("mpu-banner-ad"), Map())
+                </div>
+                <div class="crossword-banner hide-until-tablet hide-from-wide" aria-hidden="true">
+                    @fragments.commercial.standardAd("crossword-banner", Seq("crossword-banner"), Map())
+                </div>
+                }
             </div>
-        </article>
-        @crosswordFooter(crosswordPage)
-    </div>
+        </div>
+    </article>
+    @crosswordFooter(crosswordPage)
+</div>
 }
