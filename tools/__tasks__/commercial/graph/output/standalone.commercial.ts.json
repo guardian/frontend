@@ -285,8 +285,11 @@
   "../projects/commercial/modules/dfp/should-refresh.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-viewable.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/fastdom-promise.js",
   "../lib/url.ts",
+  "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/dfp/lazy-load.ts",
   "../projects/commercial/modules/dfp/non-refreshable-line-items.ts",
