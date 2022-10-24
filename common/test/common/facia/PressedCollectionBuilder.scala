@@ -1,6 +1,7 @@
 package common.facia
 
 import FixtureBuilder.mkPressedContent
+import com.gu.facia.client.models.TargetedTerritory
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
 
@@ -13,6 +14,7 @@ object PressedCollectionBuilder {
       curated: List[PressedContent] = defaultCurated,
       backfill: List[PressedContent] = defaultBackfill,
       hideShowMore: Boolean = false,
+      targetedTerritory: Option[TargetedTerritory] = None,
   ): PressedCollection = {
 
     val config: CollectionConfig = CollectionConfig(
@@ -56,7 +58,7 @@ object PressedCollectionBuilder {
       showLatestUpdate = false,
       config,
       hasMore = false,
-      targetedTerritory = None,
+      targetedTerritory = targetedTerritory,
     )
   }
 }
