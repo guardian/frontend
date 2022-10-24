@@ -119,7 +119,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-consentless-ads",
     "Use consentless ad stack rather than consented / standalone",
-    owners = Seq(Owner.withName("commercial-dev")),
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
