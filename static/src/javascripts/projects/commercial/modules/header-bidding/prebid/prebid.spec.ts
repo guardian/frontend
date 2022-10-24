@@ -1,4 +1,3 @@
-import config from '../../../../../lib/config';
 import { getAdvertById as getAdvertById_ } from '../../dfp/get-advert-by-id';
 import { prebid } from './prebid';
 
@@ -32,12 +31,12 @@ const resetPrebid = () => {
 describe('initialise', () => {
 	beforeEach(() => {
 		resetPrebid();
-		config.set('switches.commercial', true);
-		config.set('switches.consentManagement', true);
-		config.set('switches.prebidUserSync', true);
-		config.set('switches.prebidAppNexus', true);
-		config.set('switches.prebidSonobi', true);
-		config.set('switches.prebidXaxis', true);
+		window.guardian.config.switches.commercial = true;
+		window.guardian.config.switches.consentManagement = true;
+		window.guardian.config.switches.prebidUserSync = true;
+		window.guardian.config.switches.prebidAppNexus = true;
+		window.guardian.config.switches.prebidSonobi = true;
+		window.guardian.config.switches.prebidXaxis = true;
 		getAdvertById.mockReset();
 	});
 
@@ -155,7 +154,7 @@ describe('initialise', () => {
 	});
 
 	test('should generate correct Prebid config when consent management off', () => {
-		config.set('switches.consentManagement', false);
+		window.guardian.config.switches.consentManagement = false;
 		prebid.initialise(window);
 		expect(window.pbjs?.getConfig('consentManagement')).toBeUndefined();
 	});
@@ -169,8 +168,8 @@ describe('initialise', () => {
 
 	describe('bidderSettings', () => {
 		beforeEach(() => {
-			config.set('switches.prebidXaxis', false);
-			config.set('switches.prebidImproveDigital', false);
+			window.guardian.config.switches.prebidXaxis = false;
+			window.guardian.config.switches.prebidImproveDigital = false;
 		});
 
 		test('should generate correct bidder settings when bidder switches are off', () => {
@@ -179,13 +178,13 @@ describe('initialise', () => {
 		});
 
 		test('should generate correct bidder settings when Xaxis is on', () => {
-			config.set('switches.prebidXaxis', true);
+			window.guardian.config.switches.prebidXaxis = true;
 			prebid.initialise(window);
 			expect(window.pbjs?.bidderSettings).toHaveProperty('xhb');
 		});
 
 		test('should generate correct bidder settings when Improve Digital is on', () => {
-			config.set('switches.prebidImproveDigital', true);
+			window.guardian.config.switches.prebidImproveDigital = true;
 			prebid.initialise(window);
 			expect(window.pbjs?.bidderSettings).toHaveProperty(
 				'improvedigital',
@@ -194,15 +193,15 @@ describe('initialise', () => {
 	});
 
 	test('should generate correct Prebid config when user-sync off', () => {
-		config.set('switches.prebidUserSync', false);
+		window.guardian.config.switches.prebidUserSync = false;
 		prebid.initialise(window);
 		// @ts-expect-error -- it works with the alternative type
 		expect(window.pbjs?.getConfig().userSync.syncEnabled).toEqual(false);
 	});
 
 	test('should generate correct Prebid config when both Permutive and prebidPermutiveAudience are true', () => {
-		config.set('switches.permutive', true);
-		config.set('switches.prebidPermutiveAudience', true);
+		window.guardian.config.switches.permutive = true;
+		window.guardian.config.switches.prebidPermutiveAudience = true;
 		prebid.initialise(window);
 		const rtcData = window.pbjs?.getConfig('realTimeData').dataProviders[0];
 		expect(rtcData?.name).toEqual('permutive');
@@ -221,8 +220,8 @@ describe('initialise', () => {
 	])(
 		'should not generate RTD when Permutive is %s and prebidPermutiveAudience is %s',
 		(p, a) => {
-			config.set('switches.permutive', p);
-			config.set('switches.prebidPermutiveAudience', a);
+			window.guardian.config.switches.permutive = p;
+			window.guardian.config.switches.prebidPermutiveAudience = a;
 			prebid.initialise(window);
 			const rtcData = window.pbjs?.getConfig('realTimeData');
 			expect(rtcData).toBeUndefined();

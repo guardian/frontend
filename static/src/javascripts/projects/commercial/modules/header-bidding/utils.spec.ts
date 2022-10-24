@@ -7,7 +7,6 @@ import {
 	matchesBreakpoints as matchesBreakpoints_,
 } from 'lib/detect-breakpoint';
 import { getCountryCode as getCountryCode_ } from 'lib/geolocation';
-import config from '../../../../lib/config';
 import {
 	getBreakpointKey,
 	getLargestSize,
@@ -56,19 +55,19 @@ jest.mock('lib/detect-breakpoint', () => ({
 jest.mock('../../../common/modules/experiments/ab-tests');
 
 const resetConfig = () => {
-	config.set('switches.prebidAppnexus', true);
-	config.set('switches.prebidAppnexusInvcode', false);
-	config.set('switches.prebidOpenx', true);
-	config.set('switches.prebidImproveDigital', true);
-	config.set('switches.prebidIndexExchange', true);
-	config.set('switches.prebidSonobi', true);
-	config.set('switches.prebidTrustx', true);
-	config.set('switches.prebidXaxis', true);
-	config.set('switches.prebidAdYouLike', true);
-	config.set('page.contentType', 'Article');
-	config.set('page.section', 'Magic');
-	config.set('page.edition', 'UK');
-	config.set('page.isDev', false);
+	window.guardian.config.switches.prebidAppnexus = true;
+	window.guardian.config.switches.prebidAppnexusInvcode = false;
+	window.guardian.config.switches.prebidOpenx = true;
+	window.guardian.config.switches.prebidImproveDigital = true;
+	window.guardian.config.switches.prebidIndexExchange = true;
+	window.guardian.config.switches.prebidSonobi = true;
+	window.guardian.config.switches.prebidTrustx = true;
+	window.guardian.config.switches.prebidXaxis = true;
+	window.guardian.config.switches.prebidAdYouLike = true;
+	window.guardian.config.page.contentType = 'Article';
+	window.guardian.config.page.section = 'Magic';
+	window.guardian.config.page.edition = 'UK';
+	window.guardian.config.page.isDev = false;
 };
 
 describe('Utils', () => {
@@ -237,13 +236,13 @@ describe('Utils', () => {
 		isInVariantSynchronous.mockImplementationOnce(
 			(testId, variantId) => variantId === 'variant',
 		);
-		config.set('page.isDev', true);
+		window.guardian.config.page.isDev = true;
 		getCountryCode.mockReturnValue('GB');
 		expect(shouldIncludeXaxis()).toBe(true);
 	});
 
 	test('shouldIncludeXaxis should be false if geolocation is not GB', () => {
-		config.set('page.isDev', true);
+		window.guardian.config.page.isDev = true;
 		const testGeos: CountryCode[] = [
 			'FK',
 			'GI',
@@ -348,8 +347,8 @@ describe('Utils', () => {
 
 	regions.forEach((region) => {
 		test(`should include mobile sticky if geolocation is ${region}, switch is ON and content is Article on mobiles`, () => {
-			config.set('page.contentType', 'Article');
-			config.set('switches.mobileStickyLeaderboard', true);
+			window.guardian.config.page.contentType = 'Article';
+			window.guardian.config.switches.mobileStickyLeaderboard = true;
 			getCountryCode.mockReturnValue(region);
 			matchesBreakpoints.mockReturnValue(true);
 			expect(shouldIncludeMobileSticky()).toBe(true);
@@ -357,49 +356,49 @@ describe('Utils', () => {
 	});
 
 	test('shouldIncludeMobileSticky should be false if all conditions true except content type ', () => {
-		config.set('page.contentType', 'Network Front');
-		config.set('switches.mobileStickyLeaderboard', true);
+		window.guardian.config.page.contentType = 'Network Front';
+		window.guardian.config.switches.mobileStickyLeaderboard = true;
 		matchesBreakpoints.mockReturnValue(true);
 		getCountryCode.mockReturnValue('US');
 		expect(shouldIncludeMobileSticky()).toBe(false);
 	});
 
 	test('shouldIncludeMobileSticky should be false if all conditions true except switch', () => {
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 		matchesBreakpoints.mockReturnValue(true);
-		config.set('switches.mobileStickyLeaderboard', false);
+		window.guardian.config.switches.mobileStickyLeaderboard = false;
 		getCountryCode.mockReturnValue('US');
 		expect(shouldIncludeMobileSticky()).toBe(false);
 	});
 
 	test('shouldIncludeMobileSticky should be false if all conditions true except isHosted condition', () => {
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 		matchesBreakpoints.mockReturnValue(true);
-		config.set('switches.mobileStickyLeaderboard', true);
-		config.set('page.isHosted', true);
+		window.guardian.config.switches.mobileStickyLeaderboard = true;
+		window.guardian.config.page.isHosted = true;
 		getCountryCode.mockReturnValue('US');
 		expect(shouldIncludeMobileSticky()).toBe(false);
 	});
 
 	test('shouldIncludeMobileSticky should be false if all conditions true except continent', () => {
-		config.set('page.contentType', 'Article');
-		config.set('switches.mobileStickyLeaderboard', true);
+		window.guardian.config.page.contentType = 'Article';
+		window.guardian.config.switches.mobileStickyLeaderboard = true;
 		matchesBreakpoints.mockReturnValue(true);
 		getCountryCode.mockReturnValue('GB');
 		expect(shouldIncludeMobileSticky()).toBe(false);
 	});
 
 	test('shouldIncludeMobileSticky should be false if all conditions true except mobile', () => {
-		config.set('page.contentType', 'Article');
-		config.set('switches.mobileStickyLeaderboard', true);
+		window.guardian.config.page.contentType = 'Article';
+		window.guardian.config.switches.mobileStickyLeaderboard = true;
 		matchesBreakpoints.mockReturnValue(false);
 		getCountryCode.mockReturnValue('US');
 		expect(shouldIncludeMobileSticky()).toBe(false);
 	});
 
 	test('shouldIncludeMobileSticky should be true if test param exists irrespective of other conditions', () => {
-		config.set('page.contentType', 'Network Front');
-		config.set('switches.mobileStickyLeaderboard', false);
+		window.guardian.config.page.contentType = 'Network Front';
+		window.guardian.config.switches.mobileStickyLeaderboard = false;
 		matchesBreakpoints.mockReturnValue(false);
 		getCountryCode.mockReturnValue('US');
 		window.location.hash = '#mobile-sticky';

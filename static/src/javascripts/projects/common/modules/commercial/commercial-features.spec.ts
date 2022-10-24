@@ -111,14 +111,14 @@ describe('Commercial features', () => {
 		it('Is disabled on sensitive pages', () => {
 			// Like all newspapers, the Guardian must sometimes cover disturbing and graphic content.
 			// Showing adverts on these pages would be crass - callous, even.
-			config.set('page.shouldHideAdverts', true);
+			window.guardian.config.page.shouldHideAdverts = true;
 			const features = new CommercialFeatures();
 			expect(features.dfpAdvertising).toBe(false);
 		});
 
 		it('Is disabled on the children`s book site', () => {
 			// ASA guidelines prohibit us from showing adverts on anything that might be deemed childrens' content
-			config.set('page.section', 'childrens-books-site');
+			window.guardian.config.page.section = 'childrens-books-site';
 			const features = new CommercialFeatures();
 			expect(features.dfpAdvertising).toBe(false);
 		});
@@ -201,19 +201,19 @@ describe('Commercial features', () => {
 		});
 
 		it('Doesn`t run in minute articles', () => {
-			config.set('page.isMinuteArticle', true);
+			window.guardian.config.page.isMinuteArticle = true;
 			const features = new CommercialFeatures();
 			expect(features.articleBodyAdverts).toBe(false);
 		});
 
 		it('Doesn`t run in non-article pages', () => {
-			config.set('page.contentType', 'Network Front');
+			window.guardian.config.page.contentType = 'Network Front';
 			const features = new CommercialFeatures();
 			expect(features.articleBodyAdverts).toBe(false);
 		});
 
 		it('Doesn`t run in live blogs', () => {
-			config.set('page.isLiveBlog', true);
+			window.guardian.config.page.isLiveBlog = true;
 			const features = new CommercialFeatures();
 			expect(features.articleBodyAdverts).toBe(false);
 		});
@@ -230,19 +230,19 @@ describe('Commercial features', () => {
 
 	describe('High-relevance commercial component', () => {
 		it('Does not run on fronts', () => {
-			config.set('page.isFront', true);
+			window.guardian.config.page.isFront = true;
 			const features = new CommercialFeatures();
 			expect(features.highMerch).toBe(false);
 		});
 
 		it('Does run on outside of fronts', () => {
-			config.set('page.isFront', false);
+			window.guardian.config.page.isFront = false;
 			const features = new CommercialFeatures();
 			expect(features.highMerch).toBe(true);
 		});
 
 		it('Does not run on minute articles', () => {
-			config.set('page.isMinuteArticle', true);
+			window.guardian.config.page.isMinuteArticle = true;
 			const features = new CommercialFeatures();
 			expect(features.highMerch).toBe(false);
 		});
@@ -254,19 +254,19 @@ describe('Commercial features', () => {
 		});
 
 		it('Does not run on fronts', () => {
-			config.set('page.isFront', true);
+			window.guardian.config.page.isFront = true;
 			const features = new CommercialFeatures();
 			expect(features.highMerch).toBe(false);
 		});
 
 		it('Does not run outside of fronts', () => {
-			config.set('page.isFront', false);
+			window.guardian.config.page.isFront = false;
 			const features = new CommercialFeatures();
 			expect(features.highMerch).toBe(false);
 		});
 
 		it('Does not run on minute articles', () => {
-			config.set('page.isMinuteArticle', true);
+			window.guardian.config.page.isMinuteArticle = true;
 			const features = new CommercialFeatures();
 			expect(features.highMerch).toBe(false);
 		});
@@ -279,14 +279,14 @@ describe('Commercial features', () => {
 		});
 
 		it('Does not run on identity pages', () => {
-			config.set('page.contentType', 'Identity');
+			window.guardian.config.page.contentType = 'Identity';
 			const features = new CommercialFeatures();
 			expect(features.thirdPartyTags).toBe(false);
 		});
 
 		it('Does not run on identity section', () => {
 			// This is needed for identity pages in the profile subdomain
-			config.set('page.section', 'identity');
+			window.guardian.config.page.section = 'identity';
 			const features = new CommercialFeatures();
 			expect(features.thirdPartyTags).toBe(false);
 		});
@@ -323,14 +323,14 @@ describe('Commercial features', () => {
 		});
 
 		it('Does not run on identity pages', () => {
-			config.set('page.contentType', 'Identity');
+			window.guardian.config.page.contentType = 'Identity';
 			const features = new CommercialFeatures();
 			expect(features.thirdPartyTags).toBe(false);
 		});
 
 		it('Does not run on identity section', () => {
 			// This is needed for identity pages in the profile subdomain
-			config.set('page.section', 'identity');
+			window.guardian.config.page.section = 'identity';
 			const features = new CommercialFeatures();
 			expect(features.thirdPartyTags).toBe(false);
 		});
@@ -348,7 +348,7 @@ describe('Commercial features', () => {
 
 	describe('Comment adverts', () => {
 		beforeEach(() => {
-			config.set('page.commentable', true);
+			window.guardian.config.page.commentable = true;
 			isUserLoggedIn.mockReturnValue(true);
 		});
 
@@ -364,20 +364,20 @@ describe('Commercial features', () => {
 		});
 
 		it('Does not display on minute articles', () => {
-			config.set('page.isMinuteArticle', true);
+			window.guardian.config.page.isMinuteArticle = true;
 			const features = new CommercialFeatures();
 			expect(features.commentAdverts).toBe(false);
 		});
 
 		it('Short circuits when no comments to add adverts to', () => {
-			config.set('page.commentable', false);
+			window.guardian.config.page.commentable = false;
 			const features = new CommercialFeatures();
 			expect(features.commentAdverts).toBe(false);
 		});
 
 		describe('If live blog', () => {
 			beforeEach(() => {
-				config.set('page.isLiveBlog', true);
+				window.guardian.config.page.isLiveBlog = true;
 			});
 
 			it('Appears if page is wide', () => {
@@ -396,7 +396,7 @@ describe('Commercial features', () => {
 
 	describe('Comment adverts under ad-free', () => {
 		beforeEach(() => {
-			config.set('page.commentable', true);
+			window.guardian.config.page.commentable = true;
 			isAdFreeUser.mockReturnValue(true);
 		});
 
@@ -406,7 +406,7 @@ describe('Commercial features', () => {
 		});
 
 		it('Does not display on minute articles', () => {
-			config.set('page.isMinuteArticle', true);
+			window.guardian.config.page.isMinuteArticle = true;
 			const features = new CommercialFeatures();
 			expect(features.commentAdverts).toBe(false);
 		});
@@ -418,14 +418,14 @@ describe('Commercial features', () => {
 		});
 
 		it('Short circuits when no comments to add adverts to', () => {
-			config.set('page.commentable', false);
+			window.guardian.config.page.commentable = false;
 			const features = new CommercialFeatures();
 			expect(features.commentAdverts).toBe(false);
 		});
 
 		describe('If live blog', () => {
 			beforeEach(() => {
-				config.set('page.isLiveBlog', true);
+				window.guardian.config.page.isLiveBlog = true;
 			});
 
 			it('Does not appear if page is wide', () => {
@@ -444,7 +444,7 @@ describe('Commercial features', () => {
 
 	describe('comscore ', () => {
 		beforeEach(() => {
-			config.set('switches.comscore', true);
+			window.guardian.config.switches.comscore = true;
 		});
 
 		it('Runs if switch is on', () => {
@@ -453,20 +453,20 @@ describe('Commercial features', () => {
 		});
 
 		it('Does not run if switch is off', () => {
-			config.set('switches.comscore', false);
+			window.guardian.config.switches.comscore = false;
 			const features = new CommercialFeatures();
 			expect(features.comscore).toBe(false);
 		});
 
 		it('Does not run on identity pages', () => {
-			config.set('page.contentType', 'Identity');
+			window.guardian.config.page.contentType = 'Identity';
 			const features = new CommercialFeatures();
 			expect(features.comscore).toBe(false);
 		});
 
 		it('Does not run on identity section', () => {
 			// This is needed for identity pages in the profile subdomain
-			config.set('page.section', 'identity');
+			window.guardian.config.page.section = 'identity';
 			const features = new CommercialFeatures();
 			expect(features.comscore).toBe(false);
 		});

@@ -63,7 +63,7 @@ interface CommercialPageConfig {
 	dfpAccountId: string;
 	ipsosTag?: string;
 	a9PublisherId: string;
-	libs: {
+	libs?: {
 		googletag?: string;
 	};
 }
@@ -75,6 +75,22 @@ interface UserConfig {
 	id: string;
 	rawResponse: string;
 }
+
+type BoostGaUserTimingFidelityMetrics = {
+	standardStart: 'metric18';
+	standardEnd: 'metric19';
+	commercialStart: 'metric20';
+	commercialEnd: 'metric21';
+	enhancedStart: 'metric22';
+	enhancedEnd: 'metric23';
+};
+
+type GoogleTimingEvent = {
+	timingCategory: string;
+	timingVar: keyof BoostGaUserTimingFidelityMetrics;
+	timeSincePageLoad: number;
+	timingLabel: string;
+};
 
 interface Config {
 	ophan: {
@@ -90,6 +106,12 @@ interface Config {
 		[key: `${string}Variant`]: 'variant';
 	};
 	isDotcomRendering: boolean;
+	googleAnalytics?: {
+		trackers?: {
+			editorial?: string;
+		};
+		timingEvents?: GoogleTimingEvent[];
+	};
 }
 
 type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
@@ -99,7 +121,7 @@ interface LightboxImages {
 }
 
 interface PageConfig extends CommercialPageConfig {
-	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
+	ajaxUrl?: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	assetsPath: string;
 	author: string;
 	authorIds: string;

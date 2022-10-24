@@ -1,6 +1,5 @@
 import { getCookie, getLocale, isString, storage } from '@guardian/libs';
 import type { CountryCode } from '@guardian/libs';
-import config from './config';
 import reportError from './report-error';
 
 const editionToGeolocationMap: Record<string, CountryCode> = {
@@ -24,7 +23,7 @@ let locale: CountryCode | null;
    we keep fallbacks to cookie or geo from edition.
 */
 const getCountryCode = (): CountryCode => {
-	const pageEdition = config.get<string>('page.edition');
+	const pageEdition = window.guardian.config.page.edition;
 
 	const maybeCountryOverride = storage.local.get(countryOverrideName);
 	const countryOverride = isString(maybeCountryOverride)

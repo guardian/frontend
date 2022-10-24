@@ -9,7 +9,7 @@ const fetchSpy = global.fetch;
 
 describe('Fetch JSON util', () => {
 	beforeAll(() => {
-		config.set('page.ajaxUrl', 'ajax.url/');
+		window.guardian.config.page.ajaxUrl = 'ajax.url/';
 	});
 
 	it('returns a promise which rejects on network errors', (done) => {

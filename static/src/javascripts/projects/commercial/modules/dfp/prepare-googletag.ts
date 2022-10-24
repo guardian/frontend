@@ -130,7 +130,7 @@ export const init = (): Promise<void> => {
 				);
 
 				void loadScript(
-					window.guardian.config.page.libs.googletag ??
+					window.guardian.config.page.libs?.googletag ??
 						'//www.googletagservices.com/tag/js/gpt.js',
 					{ async: false },
 				);

@@ -1,4 +1,3 @@
-import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { a9 } from '../header-bidding/a9/a9';
 import { dfpEnv } from './dfp-env';
@@ -96,7 +95,7 @@ describe('init', () => {
 		dfpEnv.hbImpl = { a9: true, prebid: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		config.set('page.hasPageSkin', true);
+		window.guardian.config.page.hasPageSkin = true;
 		await setupA9();
 		expect(a9.initialise).not.toBeCalled();
 	});
@@ -105,7 +104,7 @@ describe('init', () => {
 		dfpEnv.hbImpl = { a9: true, prebid: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		config.set('page.hasPageSkin', false);
+		window.guardian.config.page.hasPageSkin = false;
 		await setupA9();
 		expect(a9.initialise).toBeCalled();
 	});

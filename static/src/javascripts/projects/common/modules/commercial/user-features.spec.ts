@@ -1,6 +1,5 @@
 import { getCookie } from '@guardian/libs';
 import type { UserFeaturesResponse } from 'types/membership';
-import config from '../../../../lib/config';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
@@ -94,8 +93,8 @@ const deleteAllFeaturesData = () => {
 };
 
 beforeAll(() => {
-	config.set('switches.adFreeStrictExpiryEnforcement', true);
-	config.set('page.userAttributesApiUrl', '');
+	window.guardian.config.switches.adFreeStrictExpiryEnforcement = true;
+	window.guardian.config.page.userAttributesApiUrl = '';
 });
 
 describe('Refreshing the features data', () => {

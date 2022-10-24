@@ -5,7 +5,6 @@ import {
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { log } from '@guardian/libs';
-import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { dfpEnv } from './dfp-env';
@@ -196,7 +195,7 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		config.set('page.hasPageSkin', true);
+		window.guardian.config.page.hasPageSkin = true;
 		mockOnConsent(tcfv2WithConsent);
 		mockGetConsentFor(true);
 
@@ -208,7 +207,7 @@ describe('init', () => {
 		dfpEnv.hbImpl = { prebid: true, a9: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
-		config.set('page.hasPageSkin', false);
+		window.guardian.config.page.hasPageSkin = false;
 		mockOnConsent(tcfv2WithConsent);
 		mockGetConsentFor(true);
 

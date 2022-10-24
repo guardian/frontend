@@ -1,5 +1,3 @@
-import config from './config';
-
 /**
  * Check that path is a path-absolute-URL string as described in https://url.spec.whatwg.org/#path-absolute-url-string
  * A path-absolute-URL string is U+002F (/) followed by a path-relative-URL string, for instance `/plop` or `/plop/plop`
@@ -17,7 +15,7 @@ const fetchJson = async (
 
 	let path = resource;
 	if (isPathAbsoluteURL(path)) {
-		path = config.get<string>('page.ajaxUrl', '') + resource;
+		path = (window.guardian.config.page.ajaxUrl ?? '') + resource;
 		init.mode = 'cors';
 	}
 

@@ -115,9 +115,9 @@ const resetConfig = () => {
 		prebidTriplelift: true,
 		prebidCriteo: true,
 	};
-	config.set('page.contentType', 'Article');
-	config.set('page.section', 'Magic');
-	config.set('page.isDev', false);
+	window.guardian.config.page.contentType = 'Article';
+	window.guardian.config.page.section = 'Magic';
+	window.guardian.config.page.isDev = false;
 };
 
 describe('getImprovePlacementId', () => {
@@ -376,7 +376,7 @@ describe('getIndexSiteId', () => {
 	});
 
 	test('should return an empty string if pbIndexSites is empty', () => {
-		config.set('page.pbIndexSites', []);
+		window.guardian.config.page.pbIndexSites = [];
 		getBreakpointKey.mockReturnValue('D');
 		expect(getIndexSiteId()).toBe('');
 		expect(getIndexSiteId().length).toBe(0);
@@ -433,13 +433,13 @@ describe('bids', () => {
 	};
 
 	test('should only include bidders that are switched on if no bidders being tested', () => {
-		config.set('switches.prebidXaxis', false);
+		window.guardian.config.switches.prebidXaxis = false;
 		shouldIncludeImproveDigital.mockReturnValueOnce(true);
 		expect(getBidders()).toEqual(['ix', 'improvedigital', 'adyoulike']);
 	});
 
 	test('should not include ix bidders when switched off', () => {
-		config.set('switches.prebidIndexExchange', false);
+		window.guardian.config.switches.prebidIndexExchange = false;
 		expect(getBidders()).toEqual(['adyoulike']);
 	});
 
@@ -485,7 +485,7 @@ describe('bids', () => {
 
 	test('should only include bidder being tested, even when its switch is off', () => {
 		setQueryString('pbtest=xhb');
-		config.set('switches.prebidXaxis', false);
+		window.guardian.config.switches.prebidXaxis = false;
 		expect(getBidders()).toEqual(['xhb']);
 	});
 
@@ -500,8 +500,8 @@ describe('bids', () => {
 		isInVariantSynchronous.mockImplementation(
 			(testId, variantId) => variantId === 'variant',
 		);
-		config.set('switches.prebidXaxis', false);
-		config.set('switches.prebidSonobi', false);
+		window.guardian.config.switches.prebidXaxis = false;
+		window.guardian.config.switches.prebidSonobi = false;
 		expect(getBidders()).toEqual(['sonobi', 'xhb']);
 	});
 
@@ -574,7 +574,7 @@ describe('bids', () => {
 describe('triplelift adapter', () => {
 	beforeEach(() => {
 		resetConfig();
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 		shouldIncludeTripleLift.mockReturnValue(true);
 	});
 

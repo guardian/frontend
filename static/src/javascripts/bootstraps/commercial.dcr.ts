@@ -58,7 +58,7 @@ if (!commercialFeatures.adFree) {
 }
 
 const loadHostedBundle = (): Promise<void> => {
-	if (config.get('page.isHosted')) {
+	if (window.guardian.config.page.isHosted) {
 		amIUsed('commercial.dcr.ts', 'loadHostedBundle', { isHosted: 'true' });
 		return new Promise((resolve) => {
 			require.ensure(

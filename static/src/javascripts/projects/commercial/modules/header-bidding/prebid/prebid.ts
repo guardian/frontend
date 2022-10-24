@@ -363,7 +363,7 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 			{
 				provider: 'gu',
 				options: {
-					ajaxUrl: window.guardian.config.page.ajaxUrl,
+					ajaxUrl: window.guardian.config.page.ajaxUrl ?? '',
 					pv: window.guardian.ophan.pageViewId,
 				},
 			},

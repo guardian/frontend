@@ -3,8 +3,6 @@ import type { amIUsed as amIUsed_, AmIUsedLoggingEvent } from './am-i-used';
 const { amIUsed }: { amIUsed: typeof amIUsed_ } =
 	jest.requireActual('./am-i-used');
 
-jest.mock('../../lib/config');
-
 const CODE_ENDPOINT = '//logs.code.dev-guardianapis.com/log';
 const PROD_ENDPOINT = '//logs.guardianapis.com/log';
 const TEST_URL = 'http://testurl.theguardian.com/';
@@ -13,10 +11,6 @@ const owner = 'commercial.amiused';
 const defaultEvent: AmIUsedLoggingEvent = {
 	label: owner,
 };
-
-jest.mock('../../lib/config', () => ({
-	get: jest.fn(),
-}));
 
 navigator.sendBeacon = jest.fn();
 
@@ -58,6 +52,8 @@ describe('amIUsed', () => {
 	});
 
 	test('should not attach any extra properties if the property parameter is not passed', () => {
+		window.guardian.config.switches.sentinelLogger = true;
+		window.guardian.config.page.isDev = true;
 		amIUsed('moduleName', 'functionName');
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
 			[
@@ -75,6 +71,8 @@ describe('amIUsed', () => {
 	});
 
 	test('should attach extra properties if they are passed as a parameter', () => {
+		window.guardian.config.switches.sentinelLogger = true;
+		window.guardian.config.page.isDev = true;
 		amIUsed('moduleName', 'functionName', { comment: 'test' });
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
 			[
@@ -93,6 +91,8 @@ describe('amIUsed', () => {
 	});
 
 	test('should chain optional parameters to the properties array', () => {
+		window.guardian.config.switches.sentinelLogger = true;
+		window.guardian.config.page.isDev = true;
 		amIUsed('moduleName', 'functionName', {
 			conditionA: 'true',
 			conditionB: 'false',
@@ -115,6 +115,8 @@ describe('amIUsed', () => {
 	});
 
 	test('should correctly assign commercial.amiused as a label', () => {
+		window.guardian.config.switches.sentinelLogger = true;
+		window.guardian.config.page.isDev = true;
 		amIUsed('moduleName', 'functionName');
 		expect((navigator.sendBeacon as jest.Mock).mock.calls).toEqual([
 			[
