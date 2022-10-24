@@ -3,7 +3,6 @@
   "../../../../node_modules/csstype/index.d.ts"
  ],
  "../lib/a9-apstag.js": [],
- "../lib/config.d.ts": [],
  "../lib/detect-adblock.ts": [],
  "../lib/detect-breakpoint.ts": [
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
