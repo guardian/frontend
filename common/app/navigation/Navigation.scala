@@ -104,7 +104,10 @@ object NavMenu {
    * UsSportsPillar
    */
   private[navigation] def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
-    Edition.others(edition).flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
+    // This shouldn't be a problem as Europe won't have special NavLinks
+    Edition
+      .othersWithBetaEditions(edition)
+      .flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
   }
 
   @tailrec
@@ -195,7 +198,6 @@ object NavMenu {
       "type/cartoon",
       "cartoons/archive",
     )
-    val networkFronts = Seq("uk", "us", "au", "international")
     val tags = getTagsFromPage(page)
     val commonKeywords = tags.keywordIds
       .intersect(NavLinks.tagPages)
@@ -204,7 +206,7 @@ object NavMenu {
       .contains(page.metadata.id)
     val isArticleInTagPageSection = commonKeywords.nonEmpty
 
-    val id = if (networkFronts.contains(page.metadata.sectionId)) {
+    val id = if (Edition.byNetworkFrontId(page.metadata.sectionId).isDefined) {
       ""
     } else if (isTagPage) {
       page.metadata.id

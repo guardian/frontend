@@ -10,7 +10,7 @@ object International
       id = "INT",
       displayName = "International edition",
       timezone = DateTimeZone.forID("Europe/London"),
-      locale = Locale.forLanguageTag("en"),
+      locale = Some(Locale.forLanguageTag("en")),
       networkFrontId = "international",
       editionalisedSections = Seq(""), // only the home page
       navigationLinks = EditionNavLinks(

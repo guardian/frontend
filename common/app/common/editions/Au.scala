@@ -10,7 +10,7 @@ object Au
       id = "AU",
       displayName = "Australia edition",
       DateTimeZone.forID("Australia/Sydney"),
-      locale = Locale.forLanguageTag("en-au"),
+      locale = Some(Locale.forLanguageTag("en-au")),
       networkFrontId = "au",
       navigationLinks = EditionNavLinks(
         NavLinks.auNewsPillar,

@@ -40,7 +40,7 @@ case class CommercialProperties(
       .getOrElse(Set.empty)
 
   def perEdition: Map[Edition, EditionCommercialProperties] = {
-    Edition.all.map { edition =>
+    Edition.allWithBetaEditions.map { edition =>
       (
         edition,
         EditionCommercialProperties(
@@ -83,7 +83,7 @@ object CommercialProperties {
       prebidIndexSites = PrebidIndexSite.fromTag(tag),
     )
 
-  private def isNetworkFront(frontId: String): Boolean = Edition.all.map(_.networkFrontId).contains(frontId)
+  private def isNetworkFront(frontId: String): Boolean = Edition.byNetworkFrontId(frontId).isDefined
 
   def forNetworkFront(frontId: String): Option[CommercialProperties] = {
     if (isNetworkFront(frontId)) {

@@ -112,7 +112,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
 
   // Note that here we are in procedural land here (not functional)
   def refresh()(implicit ec: ExecutionContext): Unit = {
-    MostPopularRefresh.refreshAll(Edition.all)(refresh)
+    MostPopularRefresh.refreshAll(Edition.allWithBetaEditions)(refresh)
     refreshGlobal()
   }
 }

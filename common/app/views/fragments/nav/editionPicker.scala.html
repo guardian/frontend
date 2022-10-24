@@ -13,8 +13,8 @@
     </button>
 
     <ul class="menu-group">
-        @Edition.all.map { edition =>
-             @if((edition != Edition(request))) {
+        @Edition.editionsByRequest.map { edition =>
+             @if(edition != Edition(request)) {
                  <li class="menu-item">
                      <a data-link-name="nav2 : edition-picker: @edition.id"
                      href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
