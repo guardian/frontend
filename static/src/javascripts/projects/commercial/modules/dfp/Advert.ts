@@ -4,7 +4,7 @@ import {
 	slotSizeMappings,
 } from '@guardian/commercial-core';
 import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
-import { breakpoints } from '../../../../lib/detect';
+import { breakpoints as sourceBreakpoints } from '@guardian/source-foundations';
 import fastdom from '../../../../lib/fastdom-promise';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 import { buildGoogletagSizeMapping, defineSlot } from './define-slot';
@@ -38,16 +38,18 @@ const createSizeMapping = (attr: string): AdSize[] =>
 const getSlotSizeMappingsFromDataAttrs = (
 	advertNode: HTMLElement,
 ): SizeMapping =>
-	breakpoints.reduce<Record<string, AdSize[]>>((sizes, breakpoint) => {
-		const data = advertNode.getAttribute(
-			`data-${breakpointNameToAttribute(breakpoint.name)}`,
-		);
-		if (data) {
-			sizes[breakpoint.name] = createSizeMapping(data);
-		}
-
-		return sizes;
-	}, {});
+	Object.entries(sourceBreakpoints).reduce<Record<string, AdSize[]>>(
+		(sizes, [breakpointName]) => {
+			const data = advertNode.getAttribute(
+				`data-${breakpointNameToAttribute(breakpointName)}`,
+			);
+			if (data) {
+				sizes[breakpointName] = createSizeMapping(data);
+			}
+			return sizes;
+		},
+		{},
+	);
 
 const isSlotName = (slotName: string): slotName is SlotName => {
 	return slotName in slotSizeMappings;

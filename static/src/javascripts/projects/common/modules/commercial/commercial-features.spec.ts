@@ -1,5 +1,5 @@
+import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-breakpoint';
 import config from '../../../../lib/config';
-import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { commercialFeatures } from './commercial-features';
@@ -23,8 +23,8 @@ const shouldHideSupportMessaging =
 		typeof shouldHideSupportMessaging_
 	>;
 const isAdFreeUser = isAdFreeUser_ as jest.MockedFunction<typeof isAdFreeUser_>;
-const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
-	typeof getBreakpoint_
+const getCurrentBreakpoint = getCurrentBreakpoint_ as jest.MockedFunction<
+	typeof getCurrentBreakpoint_
 >;
 const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
 	typeof isUserLoggedIn_
@@ -40,9 +40,8 @@ jest.mock('./user-features', () => ({
 	isAdFreeUser: jest.fn(),
 }));
 
-jest.mock('../../../../lib/detect', () => ({
-	...jest.requireActual('../../../../lib/detect'),
-	getBreakpoint: jest.fn(),
+jest.mock('lib/detect-breakpoint', () => ({
+	getCurrentBreakpoint: jest.fn(),
 }));
 
 jest.mock('../identity/api', () => ({
@@ -93,7 +92,7 @@ describe('Commercial features', () => {
 
 		userPrefs.removeSwitch('adverts');
 
-		getBreakpoint.mockReturnValue('desktop');
+		getCurrentBreakpoint.mockReturnValue('desktop');
 		isPayingMember.mockReturnValue(false);
 		isRecentOneOffContributor.mockReturnValue(false);
 		shouldHideSupportMessaging.mockReturnValue(false);
@@ -382,13 +381,13 @@ describe('Commercial features', () => {
 			});
 
 			it('Appears if page is wide', () => {
-				getBreakpoint.mockReturnValue('wide');
+				getCurrentBreakpoint.mockReturnValue('wide');
 				const features = new CommercialFeatures();
 				expect(features.commentAdverts).toBe(true);
 			});
 
 			it('Does not appear if page is not wide', () => {
-				getBreakpoint.mockReturnValue('desktop');
+				getCurrentBreakpoint.mockReturnValue('desktop');
 				const features = new CommercialFeatures();
 				expect(features.commentAdverts).toBe(false);
 			});
@@ -430,13 +429,13 @@ describe('Commercial features', () => {
 			});
 
 			it('Does not appear if page is wide', () => {
-				getBreakpoint.mockReturnValue('wide');
+				getCurrentBreakpoint.mockReturnValue('wide');
 				const features = new CommercialFeatures();
 				expect(features.commentAdverts).toBe(false);
 			});
 
 			it('Does not appear if page is not wide', () => {
-				getBreakpoint.mockReturnValue('desktop');
+				getCurrentBreakpoint.mockReturnValue('desktop');
 				const features = new CommercialFeatures();
 				expect(features.commentAdverts).toBe(false);
 			});

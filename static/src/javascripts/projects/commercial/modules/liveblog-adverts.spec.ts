@@ -13,8 +13,6 @@ jest.mock('../../../lib/raven');
 
 jest.mock('../../../lib/mediator');
 
-jest.mock('../../../lib/detect');
-
 jest.mock('../../common/modules/article/space-filler', () => ({
 	spaceFiller: {
 		fillSpace: jest.fn(() => Promise.resolve(true)),

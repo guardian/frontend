@@ -1,7 +1,10 @@
 import type { AdSize, SizeMapping } from '@guardian/commercial-core';
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
 import { createAdvertBorder } from 'common/modules/spacefinder-debug-tools';
-import { getBreakpoint, getTweakpoint, getViewport } from 'lib/detect-viewport';
+import {
+	getCurrentBreakpoint,
+	getCurrentTweakpoint,
+} from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
 import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
@@ -151,7 +154,7 @@ const decideAdditionalSizes = async (
 };
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
-	const tweakpoint = getTweakpoint(getViewport().width);
+	const tweakpoint = getCurrentTweakpoint();
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
 	const ignoreList = hasLeftCol
@@ -346,7 +349,7 @@ const addMobileInlineAds = (): Promise<boolean> => {
 };
 
 const addInlineAds = (): Promise<boolean> => {
-	const isMobile = getBreakpoint(getViewport().width) === 'mobile';
+	const isMobile = getCurrentBreakpoint() === 'mobile';
 
 	if (isMobile) {
 		return addMobileInlineAds();
@@ -358,7 +361,7 @@ const addInlineAds = (): Promise<boolean> => {
 };
 
 const attemptToAddInlineMerchAd = (): Promise<boolean> => {
-	const breakpoint = getBreakpoint(getViewport().width);
+	const breakpoint = getCurrentBreakpoint();
 	const isMobileOrTablet = breakpoint === 'mobile' || breakpoint === 'tablet';
 
 	const rules: SpacefinderRules = {

@@ -33,10 +33,9 @@ window.guardian = {
 // Stub matchmedia
 window.matchMedia =
 	window.matchMedia ||
-	function() {
-		return {
-			matches: false,
-			addListener() {},
-			removeListener() {},
-		};
-	};
+	jest.fn().mockImplementation(() => ({
+            matches: false,
+            addListener: jest.fn(),
+            addEventListener: jest.fn(),
+        }));
+

@@ -1,6 +1,6 @@
 import { createAdSlot } from '@guardian/commercial-core';
+import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
-import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -95,7 +95,7 @@ const getSlotName = (isMobile: boolean, slotCounter: number): string => {
 };
 
 const insertAdAtPara = (para: Node): Promise<void> => {
-	const isMobile = getBreakpoint() === 'mobile';
+	const isMobile = getCurrentBreakpoint() === 'mobile';
 	const container: HTMLElement = document.createElement('div');
 	container.className = `ad-slot-container`;
 
