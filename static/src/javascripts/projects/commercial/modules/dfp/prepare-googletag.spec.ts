@@ -5,8 +5,8 @@ import {
 } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
+import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-breakpoint';
 import _config from '../../../../lib/config';
-import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import type { Advert } from './Advert';
 import { dfpEnv } from './dfp-env';
@@ -61,8 +61,8 @@ const getAdverts = (withEmpty: boolean) =>
 
 const getCreativeIDs = () => dfpEnv.creativeIDs;
 
-const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
-	typeof getBreakpoint_
+const getCurrentBreakpoint = getCurrentBreakpoint_ as jest.MockedFunction<
+	typeof getCurrentBreakpoint_
 >;
 
 jest.mock('../../../../lib/raven');
@@ -74,36 +74,10 @@ jest.mock('../../../common/modules/identity/api', () => ({
 }));
 jest.mock('ophan/ng', () => null);
 jest.mock('../../../common/modules/analytics/beacon', () => void {});
-jest.mock('../../../../lib/detect', () => ({
+
+jest.mock('lib/detect-breakpoint', () => ({
+	getCurrentBreakpoint: jest.fn(),
 	hasCrossedBreakpoint: jest.fn(),
-	isBreakpoint: jest.fn(),
-	getBreakpoint: jest.fn(),
-	getViewport: jest.fn(() => ({ width: 0, height: 0 })),
-	hasPushStateSupport: jest.fn(),
-	getReferrer: jest.fn(() => ''),
-	breakpoints: [
-		{
-			name: 'mobile',
-			isTweakpoint: false,
-			width: 0,
-		},
-		{
-			name: 'tablet',
-			isTweakpoint: false,
-			width: 740,
-		},
-		{
-			name: 'desktop',
-			isTweakpoint: false,
-			width: 980,
-		},
-		{
-			name: 'wide',
-			isTweakpoint: false,
-			width: 1300,
-		},
-	],
-	isGoogleProxy: jest.fn(() => false),
 }));
 jest.mock('../../../common/modules/analytics/google', () => () => void {});
 jest.mock('./display-lazy-ads', () => ({
@@ -566,7 +540,7 @@ describe('DFP', () => {
 
 	it('should display ads', async () => {
 		config.set('page.hasPageSkin', true);
-		getBreakpoint.mockReturnValue('wide');
+		getCurrentBreakpoint.mockReturnValue('wide');
 
 		mockOnConsent(tcfv2WithConsent);
 		mockGetConsentFor(true);

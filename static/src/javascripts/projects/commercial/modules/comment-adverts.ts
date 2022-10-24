@@ -1,6 +1,6 @@
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import config from '../../../lib/config';
-import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -94,7 +94,7 @@ const runSecondStage = (
 export const initCommentAdverts = (): Promise<boolean> => {
 	// TODO is this relevant? add amIUsed
 	const adSlotContainer = document.querySelector('.js-discussion__ad-slot');
-	const isMobile = getBreakpoint() === 'mobile';
+	const isMobile = getCurrentBreakpoint() === 'mobile';
 	if (!commercialFeatures.commentAdverts || !adSlotContainer || isMobile) {
 		return Promise.resolve(false);
 	}

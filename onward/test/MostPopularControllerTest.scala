@@ -28,7 +28,7 @@ import agents.DeeplyReadAgent
     new GeoMostPopularAgent(testContentApiClient, ophanApi),
     new DayMostPopularAgent(testContentApiClient, ophanApi),
     new MostPopularAgent(testContentApiClient, ophanApi, wsClient),
-    new DeeplyReadAgent,
+    new DeeplyReadAgent(testContentApiClient, ophanApi),
     play.api.test.Helpers.stubControllerComponents(),
   )
 

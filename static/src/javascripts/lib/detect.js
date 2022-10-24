@@ -193,23 +193,6 @@ const hasTouchScreen = () =>
 	'ontouchstart' in window ||
 	(window.DocumentTouch && document instanceof window.DocumentTouch);
 
-const hasPushStateSupport = () => {
-	if (supportsPushState !== undefined) {
-		return supportsPushState;
-	}
-
-	if (window.history && window.history.pushState) {
-		supportsPushState = true;
-		// Android stock browser lies about its HistoryAPI support.
-		if (window.navigator.userAgent.match(/Android/i)) {
-			supportsPushState =
-				!!window.navigator.userAgent.match(/(Chrome|Firefox)/i);
-		}
-	}
-
-	return supportsPushState;
-};
-
 const initPageVisibility = () => {
 	const onchange = (evt = window.event) => {
 		const v = 'visible';
@@ -251,23 +234,6 @@ const initPageVisibility = () => {
 const pageVisible = () => pageVisibility === 'visible';
 
 const isEnhanced = () => window.guardian.isEnhanced;
-
-const getAdblockInUse = () => {
-	if (config.get('isDotcomRendering', false)) {
-		return Promise.resolve(false);
-	}
-	return new Promise((resolve) => {
-		if (window.guardian.adBlockers.hasOwnProperty('active')) {
-			// adblock detection has completed
-			resolve(window.guardian.adBlockers.active);
-		} else {
-			// Push a listener for when the JS loads
-			window.guardian.adBlockers.onDetect.push(resolve);
-		}
-	});
-};
-
-const adblockInUse = getAdblockInUse();
 
 const getReferrer = () => document.referrer || '';
 
@@ -317,20 +283,6 @@ const getUserAgent = () => {
 
 const userAgent = getUserAgent();
 
-/**
- * Determine whether current browser is a version of Internet Explorer
- */
-const isInternetExplorer = () => {
-	const userAgent = getUserAgent();
-
-	return (
-		// IE 10 and IE 11
-		(isString(userAgent) && userAgent.startsWith('IE')) ||
-		// IE 9 and below
-		(isObject(userAgent) && userAgent.browser === 'MSIE')
-	);
-};
-
 const isGoogleProxy = () =>
 	!!(
 		navigator &&
@@ -344,11 +296,9 @@ initBreakpoints();
 export {
 	hasCrossedBreakpoint,
 	hasTouchScreen,
-	hasPushStateSupport,
 	getBreakpoint,
 	getUserAgent,
 	userAgent,
-	isInternetExplorer,
 	getViewport,
 	isIOS,
 	applePayApiAvailable,
@@ -358,7 +308,6 @@ export {
 	pageVisible,
 	breakpoints,
 	isEnhanced,
-	adblockInUse,
 	getReferrer,
 	isGoogleProxy,
 };

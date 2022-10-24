@@ -1,4 +1,4 @@
-import type { RegisterListener } from '../messenger';
+import type { RegisterListener } from '@guardian/commercial-core';
 
 const init = (register: RegisterListener): void => {
 	register(

@@ -2,6 +2,8 @@ package football.controllers
 
 import feed.CompetitionsService
 
+import scala.collection.immutable.Seq
+
 trait CompetitionFixtureFilters {
   def competitionsService: CompetitionsService
   def filters: Map[String, Seq[CompetitionFilter]] =
@@ -52,9 +54,10 @@ trait CompetitionListFilters {
 
 trait CompetitionTableFilters {
   def competitionsService: CompetitionsService
-  def filters: Map[String, Seq[CompetitionFilter]] =
+  def filters(tableOrder: Seq[String]): Map[String, Seq[CompetitionFilter]] =
     competitionsService.competitions
       .filter(_.hasLeagueTable)
+      .filter(competition => tableOrder.contains(competition.fullName))
       .groupBy(_.nation)
       .map {
         case (nation, comps) =>

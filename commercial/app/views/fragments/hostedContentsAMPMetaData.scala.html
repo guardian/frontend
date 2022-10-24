@@ -30,8 +30,8 @@
     ONLY for EDITONALISED sections
     https://support.google.com/webmasters/answer/189077
 *@
-@Edition.allPagesFor(request).map{ link =>
-    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.locale.toLanguageTag" />
+@Edition.localizedEditionLinks(request).map{ link =>
+    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.locale.toLanguageTag" />
 }
 
 @page.metadata.rssPath.map { path =>

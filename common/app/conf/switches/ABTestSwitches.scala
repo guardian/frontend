@@ -27,11 +27,91 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-mandatory-long-test-control-uk",
+    "Long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-control-na",
+    "Long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-control-aunz",
+    "Long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-control-eu",
+    "Long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-variant-uk",
+    "Long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-variant-na",
+    "Long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-variant-aunz",
+    "Long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-mandatory-long-test-variant-eu",
+    "Long mandatory sign in gate trial",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-deeply-read-article-footer",
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 10, 10)),
+    sellByDate = Some(LocalDate.of(2022, 12, 12)),
     exposeClientSide = true,
   )
 
@@ -45,4 +125,23 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  Switch(
+    ABTests,
+    "ab-integrate-ima",
+    "Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos",
+    owners = Seq(Owner.withGithub("zekehuntergreen")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 30)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-shady-pie-click-through",
+    "Test the click through rate of the new labs shady pie component",
+    owners = Seq(Owner.withGithub("emma-imber")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 11, 16)),
+    exposeClientSide = true,
+  )
 }

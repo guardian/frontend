@@ -19,7 +19,6 @@ import { renderAdvertLabel } from './render-advert-label';
 /**
  * Types of events that are returned when executing a size change callback
  */
-
 const addClassIfHasClass = (newClassNames: string[]) =>
 	function hasClass(classNames: string[]) {
 		return function onAdvertRendered(advert: Advert) {
@@ -71,39 +70,25 @@ sizeCallbacks[adSizes.fluid.toString()] = (advert: Advert) =>
 	);
 
 sizeCallbacks[adSizes.mpu.toString()] = (advert: Advert): Promise<void> =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses();
-	});
+	advert.updateExtraSlotClasses();
 
 sizeCallbacks[adSizes.halfPage.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses();
-	});
+	advert.updateExtraSlotClasses();
 
 sizeCallbacks[adSizes.skyscraper.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--sky');
-	});
+	advert.updateExtraSlotClasses('ad-slot--sky');
 
 sizeCallbacks[adSizes.outstreamDesktop.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--outstream');
-	});
+	advert.updateExtraSlotClasses('ad-slot--outstream');
 
 sizeCallbacks[adSizes.outstreamGoogleDesktop.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--outstream');
-	});
+	advert.updateExtraSlotClasses('ad-slot--outstream');
 
 sizeCallbacks[adSizes.outstreamMobile.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--outstream');
-	});
+	advert.updateExtraSlotClasses('ad-slot--outstream');
 
 sizeCallbacks[adSizes.googleCard.toString()] = (advert: Advert) =>
-	fastdom.mutate(() => {
-		advert.updateExtraSlotClasses('ad-slot--gc');
-	});
+	advert.updateExtraSlotClasses('ad-slot--gc');
 
 /**
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
@@ -156,7 +141,7 @@ const addContentClass = (adSlotNode: HTMLElement) => {
  * @param slotRenderEndedEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
-export const renderAdvert = (
+const renderAdvert = (
 	advert: Advert,
 	slotRenderEndedEvent: googletag.events.SlotRenderEndedEvent,
 ): Promise<boolean> => {
@@ -166,28 +151,20 @@ export const renderAdvert = (
 		.then((isRendered) => {
 			const callSizeCallback = () => {
 				if (advert.size) {
-					let size = advert.size.toString();
-
-					if (size === '0,0') {
-						size = 'fluid';
-					}
-
 					/**
-					 * we reset hasPrebidSize to the default
-					 * value of false for subsequent ad refreshes
-					 * as they may not be prebid ads.
+					 * We reset hasPrebidSize to the default value of false for
+					 * subsequent ad refreshes as they may not be prebid ads.
 					 * */
 					advert.hasPrebidSize = false;
 
-					const sizeCallback = sizeCallbacks[size];
+					const sizeCallback = sizeCallbacks[advert.size.toString()];
 					return Promise.resolve(
 						sizeCallback !== undefined
 							? sizeCallback(advert, slotRenderEndedEvent)
-							: fastdom.mutate(() => {
-									advert.updateExtraSlotClasses();
-							  }),
+							: advert.updateExtraSlotClasses(),
 					);
 				}
+
 				return Promise.resolve();
 			};
 
@@ -215,3 +192,5 @@ export const renderAdvert = (
 			return Promise.resolve(false);
 		});
 };
+
+export { renderAdvert };

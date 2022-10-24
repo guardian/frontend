@@ -32,11 +32,14 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
       publication: DateTime,
       tags: Seq[String],
       category: String,
+      lastModified: DateTime,
   ) {
 
     def xml(): Elem = {
       <url>
         <loc>{location}</loc>
+        <lastmod>
+          {lastModified.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString}</lastmod>
         <video:video>
           {thumbnail_loc.map(thumbnail => <video:thumbnail_loc>{thumbnail}</video:thumbnail_loc>).getOrElse(Nil)}
           <video:title>{title}</video:title>
@@ -61,7 +64,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
       .pageSize(200)
       .tag("type/video,-tone/sponsoredfeatures,-tone/advertisement-features")
       .orderBy("newest")
-      .showFields("headline")
+      .showFields("headline, lastModified")
       .showTags("all")
       .showReferences("all")
       .showElements("all")
@@ -104,6 +107,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
           publication = item.trail.webPublicationDate,
           tags = keywordTags ++ sectionTag,
           category = item.metadata.sectionId,
+          lastModified = item.fields.lastModified,
         )
       }
 

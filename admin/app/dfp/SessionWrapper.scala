@@ -2,8 +2,8 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.admanager.axis.utils.v202108.{ReportDownloader, StatementBuilder}
-import com.google.api.ads.admanager.axis.v202108._
+import com.google.api.ads.admanager.axis.utils.v202208.{ReportDownloader, StatementBuilder}
+import com.google.api.ads.admanager.axis.v202208._
 import com.google.api.ads.admanager.lib.client.AdManagerSession
 import com.google.common.io.CharSource
 import common.GuLogging

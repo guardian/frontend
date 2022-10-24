@@ -5,7 +5,7 @@ import { init } from './article-body-adverts';
 const ads = {
 	'dfp-ad--im': true,
 } as const;
-jest.mock('./dfp/track-ad-render', () => (id: keyof typeof ads) => {
+jest.mock('./dfp/wait-for-advert', () => (id: keyof typeof ads) => {
 	return Promise.resolve(ads[id]);
 });
 jest.mock('./dfp/add-slot', () => ({

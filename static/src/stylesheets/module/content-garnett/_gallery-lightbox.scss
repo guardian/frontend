@@ -14,6 +14,15 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     background-color: lighten($brightness-7, 2.5%);
     overflow: hidden;
     z-index: $zindex-lightbox;
+
+    // This default css is applied by browsers which support the
+    // 'dialogue' element - we need to be explicit about it for those
+    // which we polyfill
+    box-sizing: content-box;
+    margin: auto;
+    max-width: calc((100% - 6px) - 2em);
+    max-height: calc((100% - 6px) - 2em);
+
 }
 
 .gallery-lightbox--open {

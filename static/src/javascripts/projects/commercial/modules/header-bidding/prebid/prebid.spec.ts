@@ -50,12 +50,16 @@ describe('initialise', () => {
 			_customPriceBucket: {
 				buckets: [
 					{
+						max: 10,
 						increment: 0.01,
-						max: 100,
 					},
 					{
+						max: 15,
+						increment: 0.1,
+					},
+					{
+						max: 100,
 						increment: 1,
-						max: 500,
 					},
 				],
 			},
@@ -82,12 +86,16 @@ describe('initialise', () => {
 			customPriceBucket: {
 				buckets: [
 					{
+						max: 10,
 						increment: 0.01,
-						max: 100,
 					},
 					{
+						max: 15,
+						increment: 0.1,
+					},
+					{
+						max: 100,
 						increment: 1,
-						max: 500,
 					},
 				],
 			},

@@ -62,8 +62,6 @@ case class NavMenu(
 
 object NavMenu {
 
-  val navigationData = NavigationData()
-
   implicit val navlinkWrites = Json.writes[NavLink]
   implicit val flatSubnavWrites = Json.writes[FlatSubnav]
   implicit val parentSubnavWrites = Json.writes[ParentSubnav]
@@ -106,7 +104,10 @@ object NavMenu {
    * UsSportsPillar
    */
   private[navigation] def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
-    Edition.others(edition).flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
+    // This shouldn't be a problem as Europe won't have special NavLinks
+    Edition
+      .othersWithBetaEditions(edition)
+      .flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
   }
 
   @tailrec
@@ -159,18 +160,13 @@ object NavMenu {
         None
       } else if (pillars.contains(parent)) {
         currentParent
-      } else findParent(parent, edition, pillars, otherLinks).orElse(Some(navigationData.uk.newsPillar)),
+      } else findParent(parent, edition, pillars, otherLinks).orElse(Some(editions.Uk.navigationLinks.newsPillar)),
     )
   }
 
   def navRoot(edition: Edition): NavRoot = {
 
-    val editionLinks: EditionNavLinks = edition match {
-      case editions.Uk            => navigationData.uk
-      case editions.Us            => navigationData.us
-      case editions.Au            => navigationData.au
-      case editions.International => navigationData.international
-    }
+    val editionLinks: EditionNavLinks = edition.navigationLinks
 
     NavRoot(
       Seq(
@@ -202,16 +198,15 @@ object NavMenu {
       "type/cartoon",
       "cartoons/archive",
     )
-    val networkFronts = Seq("uk", "us", "au", "international")
     val tags = getTagsFromPage(page)
     val commonKeywords = tags.keywordIds
-      .intersect(navigationData.tagPages)
+      .intersect(NavLinks.tagPages)
       .sortWith(tags.keywordIds.indexOf(_) < tags.keywordIds.indexOf(_))
-    val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && navigationData.tagPages
+    val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && NavLinks.tagPages
       .contains(page.metadata.id)
     val isArticleInTagPageSection = commonKeywords.nonEmpty
 
-    val id = if (networkFronts.contains(page.metadata.sectionId)) {
+    val id = if (Edition.byNetworkFrontId(page.metadata.sectionId).isDefined) {
       ""
     } else if (isTagPage) {
       page.metadata.id

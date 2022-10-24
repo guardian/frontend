@@ -27,7 +27,7 @@
     }
 
     .new-header--slim & {
-        top: 10px;
+        padding-top: 8px;
 
         @include mq(tablet) {
             display: none;

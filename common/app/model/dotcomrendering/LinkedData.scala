@@ -83,7 +83,6 @@ object LinkedData {
       baseURL: String,
       fallbackLogo: String,
   ): List[LinkedData] = {
-
     val authors = getAuthors(article.tags)
 
     article match {

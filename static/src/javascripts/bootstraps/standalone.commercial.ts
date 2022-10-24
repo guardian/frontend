@@ -13,6 +13,7 @@
  */
 
 import { EventTimer } from '@guardian/commercial-core';
+import { onConsent } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
 import { initArticleInline } from 'commercial/modules/consentless/dynamic/article-inline';
 import { initLiveblogInline } from 'commercial/modules/consentless/dynamic/liveblog-inline';
@@ -46,11 +47,11 @@ import { init as initLiveblogAdverts } from '../projects/commercial/modules/live
 import { manageAdFreeCookieOnConsentChange } from '../projects/commercial/modules/manage-ad-free-cookie-on-consent-change';
 import { init as initMobileSticky } from '../projects/commercial/modules/mobile-sticky';
 import { paidContainers } from '../projects/commercial/modules/paid-containers';
-import { init as initPaidForBand } from '../projects/commercial/modules/paidfor-band';
 import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercial/modules/remove-slots';
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
 import { init as initTrackGpcSignal } from '../projects/commercial/modules/track-gpc-signal';
+import { init as initTrackLabsContainer } from '../projects/commercial/modules/track-labs-container';
 import { init as initTrackScrollDepth } from '../projects/commercial/modules/track-scroll-depth';
 import { commercialFeatures } from '../projects/common/modules/commercial/commercial-features';
 import type { Modules } from './types';
@@ -84,6 +85,7 @@ const commercialExtraModules: Modules = [
 	['cm-comscore', initComscore],
 	['cm-ipsosmori', initIpsosMori],
 	['cm-trackScrollDepth', initTrackScrollDepth],
+	['cm-trackLabsContainer', initTrackLabsContainer],
 	['cm-trackGpcSignal', initTrackGpcSignal],
 ];
 
@@ -106,7 +108,6 @@ if (!commercialFeatures.adFree) {
 		['cm-thirdPartyTags', initThirdPartyTags],
 		['cm-redplanet', initRedplanet],
 		['cm-paidContainers', paidContainers],
-		['cm-paidforBand', initPaidForBand],
 		['cm-commentAdverts', initCommentAdverts],
 		['rr-adblock-ask', initAdblockAsk],
 	);
@@ -219,14 +220,20 @@ const bootConsentless = async (): Promise<void> => {
  	*/
 	maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
 
+	const consentState = await onConsent();
+
 	await Promise.all([
 		setAdTestCookie(),
 		initSafeframes(),
-		initConsentless(),
+		initConsentless(consentState),
 		initFixedSlots(),
 		initArticleInline(),
 		initLiveblogInline(),
 	]);
+
+	// Since we're in single-request mode
+	// Call this once all ad slots are present on the page
+	window.ootag.makeRequests();
 };
 
 /* Provide consentless advertising in the variant of a zero-percent test,

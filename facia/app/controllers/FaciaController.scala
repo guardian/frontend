@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
+import common.JsonComponent.Ok
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
@@ -18,12 +19,14 @@ import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
 import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
-import utils.{FaciaPicker, RemoteRender, TargetedCollections}
+import utils.TargetedCollections
 import conf.Configuration
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import experiments.{ActiveExperiments, EuropeNetworkFront}
+import play.api.http.ContentTypes.JSON
+import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 
 import scala.concurrent.Future
@@ -40,14 +43,6 @@ trait FaciaController
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   implicit val context: ApplicationContext
-
-  private def getEditionFromString(edition: String): Edition = {
-    val editionToFilterBy = edition match {
-      case "international" => "int"
-      case _               => edition
-    }
-    Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
-  }
 
   def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
     successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
@@ -92,10 +87,9 @@ trait FaciaController
       count: Int,
       offset: Int,
       section: String = "",
-      edition: String = "",
   ): Action[AnyContent] =
     Action.async { implicit request =>
-      val e = if (edition.isEmpty) Edition(request) else getEditionFromString(edition)
+      val e = Edition(request)
       val collectionsPath = if (section.isEmpty) e.id.toLowerCase else Editionalise(section, e)
       getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
         Cached(CacheTime.Facia) {
@@ -207,7 +201,7 @@ trait FaciaController
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some((faciaPage: PressedPage, targetedTerritories))
-          if FaciaPicker.getTier(faciaPage, path)(request) == RemoteRender
+          if FaciaPicker.getTier(faciaPage) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
         withVaryHeader(remoteRenderer.getFront(ws, faciaPage, pageType)(request), targetedTerritories)
@@ -360,6 +354,20 @@ trait FaciaController
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] =
     Action.async { implicit request =>
       frontJsonFapi.get(path, fullRequestType).flatMap {
+        case Some(pressedPage) if request.forceDCR =>
+          val maybeResponse = for {
+            collection <- pressedPage.collections.find(_.id == collectionId)
+          } yield {
+            successful(Cached(CacheTime.Facia) {
+              val cards = collection.curated ++ collection.backfill
+
+              val adFreeFilteredCards = cards.filter(c => !(c.properties.isPaidFor && request.isAdFree))
+
+              implicit val pressedContentFormat = PressedContentFormat.format
+              JsonComponent.fromWritable(Json.toJson(adFreeFilteredCards))
+            })
+          }
+          maybeResponse.getOrElse { successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))) }
         case Some(pressedPage) =>
           val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
           val maybeResponse =

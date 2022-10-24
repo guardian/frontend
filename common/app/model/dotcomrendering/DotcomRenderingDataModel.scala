@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import common.{Chronos, Edition, Localisation, RichRequestHeader}
+import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
@@ -55,6 +55,7 @@ case class DotcomRenderingDataModel(
     editionLongForm: String,
     editionId: String,
     pageId: String,
+    canonicalUrl: String,
     // Format and previous flags
     format: ContentFormat,
     designType: String,
@@ -97,7 +98,6 @@ case class DotcomRenderingDataModel(
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
-    mostPopular: Option[Seq[OnwardCollectionResponse]],
     onwards: Option[Seq[OnwardCollectionResponse]],
 )
 
@@ -131,6 +131,7 @@ object DotcomRenderingDataModel {
         "editionLongForm" -> model.editionLongForm,
         "editionId" -> model.editionId,
         "pageId" -> model.pageId,
+        "canonicalUrl" -> model.canonicalUrl,
         "format" -> model.format,
         "designType" -> model.designType,
         "tags" -> model.tags,
@@ -172,7 +173,6 @@ object DotcomRenderingDataModel {
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
         "promotedNewsletter" -> model.promotedNewsletter,
-        "mostPopular" -> model.mostPopular,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -190,13 +190,15 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
   ): DotcomRenderingDataModel = {
+    val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
+
     apply(
       page = page,
       request = request,
       pagination = None,
       linkedData = LinkedData.forInteractive(
         interactive = page.item,
-        baseURL = Configuration.amp.baseUrl,
+        baseURL = baseUrl,
         fallbackLogo = Configuration.images.fallbackLogo,
       ),
       mainBlock = blocks.main,
@@ -220,11 +222,13 @@ object DotcomRenderingDataModel {
       newsletter: Option[NewsletterData],
       onwards: Option[Seq[OnwardCollectionResponse]],
   ): DotcomRenderingDataModel = {
-    val linkedData = LinkedData.forArticle(
-      article = page.article,
-      baseURL = Configuration.amp.baseUrl,
-      fallbackLogo = Configuration.images.fallbackLogo,
-    )
+    val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
+    val linkedData =
+      LinkedData.forArticle(
+        article = page.article,
+        baseURL = baseUrl,
+        fallbackLogo = Configuration.images.fallbackLogo,
+      )
 
     apply(
       page = page,
@@ -290,10 +294,11 @@ object DotcomRenderingDataModel {
     val timelineBlocks =
       orderBlocks(allTimelineBlocks.toSeq).map(ensureSummaryTitle)
 
+    val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
     val linkedData = LinkedData.forLiveblog(
       liveblog = page,
       blocks = bodyBlocks,
-      baseURL = Configuration.amp.baseUrl,
+      baseURL = baseUrl,
       fallbackLogo = Configuration.images.fallbackLogo,
     )
 
@@ -345,7 +350,6 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      mostPopular: Option[Seq[OnwardCollectionResponse]] = None,
       onwards: Option[Seq[OnwardCollectionResponse]] = None,
   ): DotcomRenderingDataModel = {
 
@@ -490,6 +494,7 @@ object DotcomRenderingDataModel {
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,
+      canonicalUrl = CanonicalLink(request, content.metadata.webUrl),
       pageType = pageType, // TODO this info duplicates what is already elsewhere in format?
       pagination = pagination,
       pillar = findPillar(content.metadata.pillar, content.metadata.designType),
@@ -519,7 +524,6 @@ object DotcomRenderingDataModel {
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
-      mostPopular = mostPopular,
       onwards = onwards,
     )
   }

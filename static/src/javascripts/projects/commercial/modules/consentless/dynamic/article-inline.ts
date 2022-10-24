@@ -10,7 +10,8 @@ import type {
 	SpacefinderRules,
 	SpacefinderWriter,
 } from 'common/modules/spacefinder';
-import { getBreakpoint, getViewport } from 'lib/detect-viewport';
+import { createAdvertBorder } from 'common/modules/spacefinder-debug-tools';
+import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../../../lib/fastdom-promise';
 import { defineSlot } from '../define-slot';
@@ -18,7 +19,6 @@ import { defineSlot } from '../define-slot';
 type SlotName = Parameters<typeof createAdSlot>[0];
 
 type ContainerOptions = {
-	sticky?: boolean;
 	enableDebug?: boolean;
 	className?: string;
 };
@@ -52,12 +52,8 @@ const wrapSlotInContainer = (
 
 	container.className = `ad-slot-container ${options.className ?? ''}`;
 
-	if (options.sticky) {
-		ad.style.cssText += 'position: sticky; top: 0;';
-	}
-
 	if (options.enableDebug) {
-		container.style.cssText += 'outline: 2px solid red;';
+		createAdvertBorder(container);
 	}
 
 	container.appendChild(ad);
@@ -167,36 +163,23 @@ const addDesktopInlineAds = async () => {
 	const enableDebug = sfdebug === '1';
 
 	const insertAds: SpacefinderWriter = async (paras) => {
-		// Make ads sticky in containers if using containers and in sticky test variant
 		// Compute the height of containers in which ads will remain sticky
-		const includeStickyContainers = !!getUrlVars().multiSticky;
+		const stickyContainerHeights = await computeStickyHeights(
+			paras,
+			articleBodySelector,
+		);
 
-		if (includeStickyContainers) {
-			const stickyContainerHeights = await computeStickyHeights(
-				paras,
-				articleBodySelector,
-			);
-
-			void insertHeightStyles(
-				stickyContainerHeights.map((height, index) => [
-					getStickyContainerClassname(index),
-					height,
-				]),
-			);
-		}
+		void insertHeightStyles(
+			stickyContainerHeights.map((height, index) => [
+				getStickyContainerClassname(index),
+				height,
+			]),
+		);
 
 		const slots = paras.map((para, i) => {
 			const inlineId = i + 1;
 
-			if (sfdebug) {
-				para.style.cssText += 'border: thick solid green;';
-			}
-
 			let containerClasses = '';
-
-			if (includeStickyContainers) {
-				containerClasses += getStickyContainerClassname(i);
-			}
 
 			if (inlineId !== 1) {
 				containerClasses +=
@@ -204,7 +187,6 @@ const addDesktopInlineAds = async () => {
 			}
 
 			const containerOptions = {
-				sticky: includeStickyContainers,
 				className: containerClasses,
 				enableDebug,
 			};
@@ -229,7 +211,7 @@ const addDesktopInlineAds = async () => {
 };
 
 const addInlineAds = (): Promise<boolean | void> =>
-	getBreakpoint(getViewport().width) === 'mobile'
+	getCurrentBreakpoint() === 'mobile'
 		? addMobileInlineAds()
 		: addDesktopInlineAds();
 

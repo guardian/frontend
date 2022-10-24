@@ -4,7 +4,7 @@ import { log } from '@guardian/libs';
 import { memoize } from 'lodash-es';
 import { amIUsed } from 'commercial/am-i-used';
 import fastdom from '../../../lib/fastdom-promise';
-import { debugMinAbove, markCandidates } from './spacefinder-debug-tools';
+import { runDebugTool } from './spacefinder-debug-tools';
 
 type RuleSpacing = {
 	minAbove: number;
@@ -184,6 +184,7 @@ const partitionCandidates = <T>(
 ) => {
 	const filtered: T[] = [];
 	const exclusions: T[] = [];
+
 	list.forEach((element) => {
 		if (filterElement(element, filtered[filtered.length - 1])) {
 			filtered.push(element);
@@ -191,6 +192,7 @@ const partitionCandidates = <T>(
 			exclusions.push(element);
 		}
 	});
+
 	return [filtered, exclusions];
 };
 
@@ -444,22 +446,22 @@ const findSpace = async (
 			document.querySelector<HTMLElement>(rules.bodySelector)) ||
 		document;
 
-	if (options.debug && rules.minAbove && rules.body instanceof HTMLElement) {
-		debugMinAbove(rules.body, rules.minAbove);
-	}
-
 	await getReady(rules, options);
 
 	const candidates = getCandidates(rules, exclusions);
 	const measurements = await getMeasurements(rules, candidates);
 	const winners = enforceRules(measurements, rules, exclusions);
-	const markedWinners = markCandidates(exclusions, winners, options, rules);
+
+	if (options.debug) {
+		runDebugTool(exclusions, winners, rules);
+	}
 
 	// TODO Is this really an error condition?
-	if (!markedWinners.length) {
+	if (!winners.length) {
 		throw new SpaceError(rules);
 	}
-	return markedWinners.map((candidate) => candidate.element);
+
+	return winners.map((candidate) => candidate.element);
 };
 
 export const _ = {
@@ -470,6 +472,7 @@ export const _ = {
 export { findSpace, SpaceError };
 
 export type {
+	RuleSpacing,
 	SpacefinderRules,
 	SpacefinderWriter,
 	SpacefinderOptions,

@@ -1,5 +1,5 @@
+import type { RegisterListener } from '@guardian/commercial-core';
 import { dfpEnv } from '../dfp/dfp-env';
-import type { RegisterListener } from '../messenger';
 
 // This message is intended to be used with a DFP creative wrapper.
 // For reference, the wrapper will post a message, with an iFrameId, like so:

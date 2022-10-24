@@ -24,6 +24,12 @@ class SpaceFiller {
 			findSpace(rules, options)
 				.then((paragraphs: HTMLElement[]) => writer(paragraphs))
 				.then(() => {
+					if (options?.debug) {
+						const event = new CustomEvent('adverts-created');
+						document.dispatchEvent(event);
+					}
+				})
+				.then(() => {
 					return true;
 				})
 				.catch((ex) => {

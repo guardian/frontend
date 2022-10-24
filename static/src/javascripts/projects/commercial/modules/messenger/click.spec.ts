@@ -1,5 +1,5 @@
+import type { RegisterListener } from '@guardian/commercial-core';
 import { trackNativeAdLinkClick } from '../../../common/modules/analytics/google';
-import type { RegisterListener } from '../messenger';
 import { init } from './click';
 
 jest.mock('../../../common/modules/analytics/google', () => ({

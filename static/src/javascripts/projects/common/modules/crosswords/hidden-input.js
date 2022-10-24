@@ -66,6 +66,10 @@ class HiddenInput extends Component {
                 <input
                     type="text"
                     className="crossword__hidden-input"
+                    // Avoids keyboard trap in this element. We haven't made this hidden
+                    // because we don't understand the full implications of that.
+                    // Fixes this https://github.com/guardian/dotcom-rendering/issues/5053
+                    tabIndex="-1"
                     maxLength="1"
                     onClick={this.onClick.bind(this)}
                     onChange={this.handleChange.bind(this)}

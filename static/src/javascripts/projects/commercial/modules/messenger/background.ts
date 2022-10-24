@@ -1,11 +1,10 @@
+import type { RegisterListener } from '@guardian/commercial-core';
 import { isObject } from '@guardian/libs';
-import once from 'lodash-es/once';
 import fastdom from '../../../../lib/fastdom-promise';
 import {
-	renderStickyAdLabel,
+	renderInterscrollerAdLabel,
 	renderStickyScrollForMoreLabel,
 } from '../dfp/render-advert-label';
-import type { RegisterListener } from '../messenger';
 
 const isDCR = window.guardian.config.isDotcomRendering;
 
@@ -40,35 +39,46 @@ interface BackgroundSpecs {
 const isBackgroundSpecs = (specs: unknown): specs is BackgroundSpecs =>
 	isObject(specs) && 'backgroundImage' in specs;
 
-// using once, because some native templates send the 'background' message multiple times
-const createParent = once((scrollType: BackgroundSpecs['scrollType']) => {
-	const backgroundParent = document.createElement('div');
-	const background = document.createElement('div');
+const createParent = (
+	adSlot: HTMLElement,
+	scrollType: BackgroundSpecs['scrollType'],
+) => {
+	let backgroundParent = adSlot.querySelector<HTMLDivElement>(
+		'.creative__background-parent',
+	);
+	let background = adSlot.querySelector<HTMLDivElement>(
+		'.creative__background',
+	);
 
-	backgroundParent.classList.add('creative__background-parent');
-	background.classList.add('creative__background');
+	if (!backgroundParent || !background) {
+		backgroundParent = document.createElement('div');
+		background = document.createElement('div');
 
-	if (scrollType) {
-		backgroundParent.classList.add(
-			`creative__background-parent--${scrollType}`,
-		);
-		background.classList.add(`creative__background--${scrollType}`);
-	}
+		backgroundParent.classList.add('creative__background-parent');
+		background.classList.add('creative__background');
 
-	backgroundParent.appendChild(background);
+		if (scrollType) {
+			backgroundParent.classList.add(
+				`creative__background-parent--${scrollType}`,
+			);
+			background.classList.add(`creative__background--${scrollType}`);
+		}
 
-	if (isDCR) {
-		backgroundParent.style.zIndex = '-1';
-		backgroundParent.style.position = 'absolute';
-		backgroundParent.style.inset = '0';
-		backgroundParent.style.clip = 'rect(0, auto, auto, 0)';
+		backgroundParent.appendChild(background);
 
-		background.style.inset = '0';
-		background.style.transition = 'background 100ms ease';
+		if (isDCR) {
+			backgroundParent.style.zIndex = '-1';
+			backgroundParent.style.position = 'absolute';
+			backgroundParent.style.inset = '0';
+			backgroundParent.style.clip = 'rect(0, auto, auto, 0)';
+
+			background.style.inset = '0';
+			background.style.transition = 'background 100ms ease';
+		}
 	}
 
 	return { backgroundParent, background };
-});
+};
 
 const setBackgroundStyles = (
 	specs: BackgroundSpecs,
@@ -88,6 +98,7 @@ const setCtaURL = (
 	ctaURLAnchor.appendChild(backgroundParent);
 	ctaURLAnchor.style.width = '100%';
 	ctaURLAnchor.style.height = '100%';
+	ctaURLAnchor.style.display = 'inline-block';
 	return ctaURLAnchor;
 };
 
@@ -155,7 +166,10 @@ const setupBackground = async (
 	specs: BackgroundSpecs,
 	adSlot: HTMLElement,
 ): Promise<void> => {
-	const { backgroundParent, background } = createParent(specs.scrollType);
+	const { backgroundParent, background } = createParent(
+		adSlot,
+		specs.scrollType,
+	);
 
 	return fastdom.mutate(() => {
 		setBackgroundStyles(specs, background);
@@ -183,7 +197,7 @@ const setupBackground = async (
 				adSlot.style.position = 'relative';
 			}
 
-			void renderStickyAdLabel(adSlot);
+			void renderInterscrollerAdLabel(adSlot);
 			void renderStickyScrollForMoreLabel(backgroundParent);
 
 			isDCR && renderBottomLine(background, backgroundParent);

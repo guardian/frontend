@@ -6,7 +6,7 @@ object Dependencies {
   val identityLibVersion = "3.254"
   val awsVersion = "1.12.205"
   val capiVersion = "19.0.4"
-  val faciaVersion = "4.0.1"
+  val faciaVersion = "4.0.2"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -31,7 +31,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.5"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "4.15.1"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "4.19.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play27" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion

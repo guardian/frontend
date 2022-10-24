@@ -2,12 +2,12 @@ import { createAdSize } from '@guardian/commercial-core';
 import type { CountryCode } from '@guardian/libs';
 import { _ } from 'common/modules/commercial/geo-utils';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+import {
+	getCurrentTweakpoint as getCurrentTweakpoint_,
+	matchesBreakpoints as matchesBreakpoints_,
+} from 'lib/detect-breakpoint';
 import { getCountryCode as getCountryCode_ } from 'lib/geolocation';
 import config from '../../../../lib/config';
-import {
-	getBreakpoint as getBreakpoint_,
-	isBreakpoint as isBreakpoint_,
-} from '../../../../lib/detect';
 import {
 	getBreakpointKey,
 	getLargestSize,
@@ -28,10 +28,12 @@ import {
 const getCountryCode = getCountryCode_ as jest.MockedFunction<
 	typeof getCountryCode_
 >;
-const getBreakpoint = getBreakpoint_ as jest.MockedFunction<
-	typeof getBreakpoint_
+const getCurrentTweakpoint = getCurrentTweakpoint_ as jest.MockedFunction<
+	typeof getCurrentTweakpoint_
 >;
-const isBreakpoint = isBreakpoint_ as jest.MockedFunction<typeof isBreakpoint_>;
+const matchesBreakpoints = matchesBreakpoints_ as jest.MockedFunction<
+	typeof matchesBreakpoints_
+>;
 const isInVariantSynchronous = isInVariantSynchronous_ as jest.MockedFunction<
 	typeof isInVariantSynchronous_
 >;
@@ -46,10 +48,9 @@ jest.mock('../../../common/modules/experiments/ab', () => ({
 	isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('../../../../lib/detect', () => ({
-	getBreakpoint: jest.fn(() => 'mobile'),
-	hasPushStateSupport: jest.fn(() => true),
-	isBreakpoint: jest.fn(),
+jest.mock('lib/detect-breakpoint', () => ({
+	getCurrentTweakpoint: jest.fn(() => 'mobile'),
+	matchesBreakpoints: jest.fn(),
 }));
 
 jest.mock('../../../common/modules/experiments/ab-tests');
@@ -107,11 +108,17 @@ describe('Utils', () => {
 		expect(getLargestSize([])).toEqual(null);
 	});
 
-	test('getBreakpointKey should find the correct key', () => {
-		const breakpoints = ['mobile', 'phablet', 'tablet', 'desktop', 'wide'];
+	test('getCurrentTweakpointKey should find the correct key', () => {
+		const breakpoints = [
+			'mobile',
+			'phablet',
+			'tablet',
+			'desktop',
+			'wide',
+		] as const;
 		const results = [];
 		for (let i = 0; i < breakpoints.length; i += 1) {
-			getBreakpoint.mockReturnValueOnce(breakpoints[i]);
+			getCurrentTweakpoint.mockReturnValueOnce(breakpoints[i]);
 			results.push(getBreakpointKey());
 		}
 		expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
@@ -344,7 +351,7 @@ describe('Utils', () => {
 			config.set('page.contentType', 'Article');
 			config.set('switches.mobileStickyLeaderboard', true);
 			getCountryCode.mockReturnValue(region);
-			isBreakpoint.mockReturnValue(true);
+			matchesBreakpoints.mockReturnValue(true);
 			expect(shouldIncludeMobileSticky()).toBe(true);
 		});
 	});
@@ -352,14 +359,14 @@ describe('Utils', () => {
 	test('shouldIncludeMobileSticky should be false if all conditions true except content type ', () => {
 		config.set('page.contentType', 'Network Front');
 		config.set('switches.mobileStickyLeaderboard', true);
-		isBreakpoint.mockReturnValue(true);
+		matchesBreakpoints.mockReturnValue(true);
 		getCountryCode.mockReturnValue('US');
 		expect(shouldIncludeMobileSticky()).toBe(false);
 	});
 
 	test('shouldIncludeMobileSticky should be false if all conditions true except switch', () => {
 		config.set('page.contentType', 'Article');
-		isBreakpoint.mockReturnValue(true);
+		matchesBreakpoints.mockReturnValue(true);
 		config.set('switches.mobileStickyLeaderboard', false);
 		getCountryCode.mockReturnValue('US');
 		expect(shouldIncludeMobileSticky()).toBe(false);
@@ -367,7 +374,7 @@ describe('Utils', () => {
 
 	test('shouldIncludeMobileSticky should be false if all conditions true except isHosted condition', () => {
 		config.set('page.contentType', 'Article');
-		isBreakpoint.mockReturnValue(true);
+		matchesBreakpoints.mockReturnValue(true);
 		config.set('switches.mobileStickyLeaderboard', true);
 		config.set('page.isHosted', true);
 		getCountryCode.mockReturnValue('US');
@@ -377,7 +384,7 @@ describe('Utils', () => {
 	test('shouldIncludeMobileSticky should be false if all conditions true except continent', () => {
 		config.set('page.contentType', 'Article');
 		config.set('switches.mobileStickyLeaderboard', true);
-		isBreakpoint.mockReturnValue(true);
+		matchesBreakpoints.mockReturnValue(true);
 		getCountryCode.mockReturnValue('GB');
 		expect(shouldIncludeMobileSticky()).toBe(false);
 	});
@@ -385,7 +392,7 @@ describe('Utils', () => {
 	test('shouldIncludeMobileSticky should be false if all conditions true except mobile', () => {
 		config.set('page.contentType', 'Article');
 		config.set('switches.mobileStickyLeaderboard', true);
-		isBreakpoint.mockReturnValue(false);
+		matchesBreakpoints.mockReturnValue(false);
 		getCountryCode.mockReturnValue('US');
 		expect(shouldIncludeMobileSticky()).toBe(false);
 	});
@@ -393,7 +400,7 @@ describe('Utils', () => {
 	test('shouldIncludeMobileSticky should be true if test param exists irrespective of other conditions', () => {
 		config.set('page.contentType', 'Network Front');
 		config.set('switches.mobileStickyLeaderboard', false);
-		isBreakpoint.mockReturnValue(false);
+		matchesBreakpoints.mockReturnValue(false);
 		getCountryCode.mockReturnValue('US');
 		window.location.hash = '#mobile-sticky';
 		expect(shouldIncludeMobileSticky()).toBe(true);

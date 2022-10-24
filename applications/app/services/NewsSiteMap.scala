@@ -29,11 +29,14 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
       genres: String,
       webPublicationDate: DateTime,
       imageUrl: String,
+      lastModified: DateTime,
   ) {
 
     def xml(): Elem = {
       <url>
         <loc>{location}</loc>
+        <lastmod>
+          {lastModified.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString}</lastmod>
         <image:image>
           <image:loc>{imageUrl}</image:loc>
         </image:image>
@@ -61,7 +64,7 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
       .pageSize(200)
       .tag("-tone/sponsoredfeatures,-type/crossword,-extra/extra,-tone/advertisement-features")
       .orderBy("newest")
-      .showFields("headline")
+      .showFields("headline, lastModified")
       .showTags("all")
       .showReferences("all")
       .showElements("all")
@@ -106,6 +109,7 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
           genres = genres,
           webPublicationDate = item.trail.webPublicationDate,
           imageUrl = imageUrl,
+          lastModified = item.fields.lastModified,
         )
       }
 

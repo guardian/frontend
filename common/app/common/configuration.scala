@@ -365,6 +365,10 @@ class GuardianConfiguration extends GuLogging {
     lazy val flushPublicKey = configuration.getMandatoryStringProperty("google.amp.flush.key.public")
   }
 
+  object dotcom {
+    lazy val baseUrl = "https://www.theguardian.com"
+  }
+
   object id {
     lazy val url = configuration.getStringProperty("id.url").getOrElse("")
     lazy val apiRoot = configuration.getStringProperty("id.apiRoot").getOrElse("")

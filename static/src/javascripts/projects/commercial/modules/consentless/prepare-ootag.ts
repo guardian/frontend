@@ -1,7 +1,10 @@
+import { buildPageTargetingConsentless } from '@guardian/commercial-core';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
-import { buildPageParameters } from './build-page-parameters';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 
-function initConsentless(): Promise<void> {
+function initConsentless(consentState: ConsentState): Promise<void> {
 	// Stub the command queue
 	// @ts-expect-error -- it’s a stub, not the whole OO tag object
 	window.ootag = {
@@ -11,12 +14,16 @@ function initConsentless(): Promise<void> {
 		window.ootag.initializeOo({
 			publisher: 33,
 			noLogging: 0,
-			// consentTimeOutMS: 5000,
-			onlyNoConsent: 1,
+			alwaysNoConsent: 1,
 		});
-		window.ootag.addParameter('test', 'yes');
 
-		Object.entries(buildPageParameters()).forEach(([key, value]) => {
+		Object.entries(
+			buildPageTargetingConsentless(
+				consentState,
+				commercialFeatures.adFree,
+				getSynchronousParticipations(),
+			),
+		).forEach(([key, value]) => {
 			if (!value) {
 				return;
 			}
@@ -24,8 +31,7 @@ function initConsentless(): Promise<void> {
 		});
 	});
 
-	// TODO this seems to be safeframeless version. Ask OptOut how we can use safeframes.
-	void loadScript('//cdn.optoutadvertising.com/script/ootag.min.js');
+	void loadScript('//cdn.optoutadvertising.com/script/ooguardian.v3.min.js');
 	return Promise.resolve();
 }
 

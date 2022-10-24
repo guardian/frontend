@@ -58,8 +58,16 @@ interface CommercialPageConfig {
 	adUnit: AdUnit;
 	appNexusPageTargeting?: string;
 	sharedAdTargeting?: Record<string, string | string[]>;
-	pageAdTargeting?: Record<string, string | string[]>;
+	pageAdTargeting?: PageTargeting;
 	dfpAccountId: string;
+}
+
+interface UserConfig {
+	accountCreatedDate: number;
+	displayName: string;
+	emailVerified: boolean;
+	id: string;
+	rawResponse: string;
 }
 
 interface Config {
@@ -70,6 +78,7 @@ interface Config {
 	};
 	page: PageConfig;
 	switches: Record<string, boolean | undefined>;
+	user?: UserConfig;
 	tests?: {
 		[key: `${string}Control`]: 'control';
 		[key: `${string}Variant`]: 'variant';
@@ -86,6 +95,7 @@ interface LightboxImages {
 interface PageConfig extends CommercialPageConfig {
 	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	assetsPath: string;
+	author: string;
 	authorIds: string;
 	blogIds: string;
 	contentType: string;
@@ -94,7 +104,9 @@ interface PageConfig extends CommercialPageConfig {
 	hasInlineMerchandise: boolean;
 	hasPageSkin: boolean; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L48
 	hasShowcaseMainElement: boolean;
+	headline: string;
 	host: string;
+	isbn?: string;
 	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
 	isHosted: boolean; // https://github.com/guardian/frontend/blob/66afe02e/common/app/common/commercial/hosted/HostedMetadata.scala#L37
@@ -109,8 +121,11 @@ interface PageConfig extends CommercialPageConfig {
 	nonRefreshableLineItemIds?: number[];
 	pageId: string;
 	publication: string;
+	revisionNumber: string; // https://github.com/guardian/frontend/blob/1b6f41c3/common/app/model/meta.scala#L388
 	section: string;
 	sectionName: string;
+	sentryHost: string;
+	sentryPublicApiKey: string;
 	series: string;
 	seriesId: string;
 	shouldHideReaderRevenue?: boolean;
@@ -119,7 +134,7 @@ interface PageConfig extends CommercialPageConfig {
 	toneIds: string;
 	tones: string;
 	videoDuration: number;
-	isbn?: string;
+	webPublicationDate: number;
 }
 
 interface Ophan {
@@ -172,6 +187,17 @@ interface Confiant extends Record<string, unknown> {
 		callback: ConfiantCallback;
 		[key: string]: unknown;
 	};
+}
+
+interface Permutive {
+	config?: {
+		projectId?: string;
+		apiKey?: string;
+		environment?: string;
+	};
+	q?: Array<{ functionName: string; arguments: unknown[] }>;
+	addon?: (name: string, props: Record<string, unknown>) => void;
+	identify?: (user: Array<{ id: string; tag: string }>) => void;
 }
 
 // https://ams.amazon.com/webpublisher/uam/docs/web-integration-documentation/integration-guide/javascript-guide/api-reference.html#apstaginit
@@ -243,16 +269,41 @@ interface IasPET {
 
 interface OptOutInitializeOptions {
 	publisher: number;
-	onlyNoConsent: 0 | 1;
+	onlyNoConsent?: 0 | 1;
+	alwaysNoConsent?: 0 | 1;
 	consentTimeOutMS?: 5000;
 	noLogging?: 0 | 1;
+	lazyLoading?: { fractionInView?: number; viewPortMargin?: string };
 }
 
-interface OptOutDefineSlotOptions {
+interface OptOutResponse {
+	adSlot: string;
+	width: number;
+	height: number;
+	ad: string; // The creative HTML
+	creativeId: string;
+	meta: {
+		networkId: string;
+		networkName: string;
+		agencyId: string;
+		agencyName: string;
+		advertiserId: string;
+		advertiserName: string;
+		advertiserDomains: string[];
+	};
+	optOutExt: {
+		noSafeFrame: boolean;
+		tags: string[];
+	};
+}
+
+interface OptOutAdSlot {
 	adSlot: string;
 	targetId: string;
-	filledCallback?: () => void;
-	emptyCallback?: () => void;
+	id: string;
+	filledCallback?: (adSlot: OptOutAdSlot, response: OptOutResponse) => void;
+	emptyCallback?: (adSlot: OptOutAdSlot) => void;
+	adShownCallback?: (adSlot: OptOutAdSlot, response: OptOutResponse) => void;
 }
 
 /**
@@ -297,6 +348,30 @@ interface SafeFrameAPI {
 	};
 }
 
+/**
+ * Types for IMR Worldwide
+ */
+interface NSdkInstance {
+	ggPM: (
+		type: string,
+		dcrStaticMetadata: {
+			type: string;
+			assetid: unknown;
+			section: string;
+		},
+	) => void;
+	ggInitialize: (nolggGlobalParams: {
+		sfcode: string;
+		apid: string;
+		apn: string;
+	}) => void;
+}
+
+interface Trac {
+	record: () => this;
+	post: () => this;
+}
+
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -316,11 +391,15 @@ interface Window {
 	ootag: {
 		queue: Array<() => void>;
 		initializeOo: (o: OptOutInitializeOptions) => void;
-		addParameter: (key: string, value: string) => void;
-		defineSlot: (o: OptOutDefineSlotOptions) => void;
+		addParameter: (key: string, value: string | string[]) => void;
+		defineSlot: (o: OptOutAdSlot) => void;
+		makeRequests: () => void;
+		refreshSlot: (slotId: string) => void;
+		refreshAllSlots: () => void;
 	};
 	confiant?: Confiant;
 	apstag?: Apstag;
+	permutive?: Permutive;
 	_comscore?: ComscoreGlobals[];
 	__iasPET?: IasPET;
 
@@ -329,4 +408,10 @@ interface Window {
 
 	// Safeframe API host config required by Opt Out tag
 	conf: SafeFrameAPIHostConfig;
+
+	// IMR Worldwide
+	NOLCMB: {
+		getInstance: (apid: string) => NSdkInstance;
+	};
+	nol_t: (pvar: { cid: string; content: string; server: string }) => Trac;
 }

@@ -1,6 +1,6 @@
 import { createAdSlot } from '@guardian/commercial-core';
+import { getCurrentTweakpoint } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
-import { getBreakpoint } from '../../../lib/detect';
 import fastdom from '../../../lib/fastdom-promise';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -92,7 +92,7 @@ const insertSlot: SpacefinderWriter = (paras) => {
 };
 
 const getRules = (): SpacefinderRules => {
-	switch (getBreakpoint()) {
+	switch (getCurrentTweakpoint()) {
 		case 'leftCol':
 		case 'wide':
 			return wideRules;

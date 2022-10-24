@@ -1,6 +1,6 @@
 package test
 
-import agents.{CuratedContentAgent, DeeplyReadAgent}
+import agents.{CuratedContentAgent}
 import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
 import org.mockito.Mockito._
@@ -11,7 +11,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.Helpers._
 import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.NewsletterService
-import services.dotcomponents.OnwardsPicker
+import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class PublicationControllerTest
@@ -23,7 +23,8 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with WithTestFrontJsonFapi {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
@@ -40,8 +41,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       wsClient,
       new DCRFake(),
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
-      new DeeplyReadAgent(),
-      new OnwardsPicker(new CuratedContentAgent()),
+      new OnwardsPicker(new CuratedContentAgent(fapi)),
     )
   lazy val publicationController =
     new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)

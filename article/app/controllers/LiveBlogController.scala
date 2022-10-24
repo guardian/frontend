@@ -1,9 +1,8 @@
 package controllers
 
-import agents.DeeplyReadAgent
 import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
-import common.{JsonComponent, RichRequestHeader, _}
+import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
@@ -12,14 +11,14 @@ import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
-import model.{ApplicationContext, CanonicalLiveBlog, _}
+import model._
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
+import services.dotcomrendering.DotcomponentsLogger
 import services.{CAPILookup, NewsletterService}
-import services.dotcomponents.DotcomponentsLogger
 import topics.TopicService
 import views.support.RenderOtherStatus
 
@@ -34,16 +33,12 @@ class LiveBlogController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     topicService: TopicService,
-    deeplyReadAgent: DeeplyReadAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  val mostPopular = Seq(
-    deeplyReadAgent.onwardsJourneyResponse,
-  )
 
   // we support liveblogs and also articles, so that minutes work
   private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle
@@ -195,7 +190,6 @@ class LiveBlogController(
                 availableTopics,
                 newsletter = None,
                 topicResult,
-                mostPopular = Some(mostPopular),
                 onwards = None,
               )
             } else {

@@ -173,6 +173,17 @@ Location: London, UK
 Developer: Rachel Miles
 Location: Birmingham, UK
 
+Engineering fellow: Thomas King
+Location: London, UK
+linkedin: komting
+
+Developer: Sophie MacMillan
+Location: London, UK
+
+Developer: Georges Lebreton
+From: France
+Location: London, UK
+
 /* ---------------------------------------------------- */
 /* FORMER                                               */
 /* ---------------------------------------------------- */
@@ -416,3 +427,9 @@ Location: London, UK
 
 Developer: Lauren Emms
 From: London, UK
+
+Developer: Paul Roberts
+From: London, UK
+
+Developer: Divya Bhatt
+From: Woodley, UK

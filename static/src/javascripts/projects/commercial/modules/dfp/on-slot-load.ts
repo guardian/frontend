@@ -1,4 +1,4 @@
-import { postMessage } from '../messenger/post-message';
+import { postMessage } from '@guardian/commercial-core';
 import { getAdvertById } from './get-advert-by-id';
 
 const host = `${window.location.protocol}//${window.location.host}`;

@@ -1,12 +1,6 @@
 import type { AdSizeString } from '@guardian/commercial-core';
-import { adSizes } from '@guardian/commercial-core';
+import { outstreamSizes } from '@guardian/commercial-core';
 import type { Advert } from './Advert';
-
-const outstreamSizes = [
-	adSizes.outstreamDesktop.toString(),
-	adSizes.outstreamMobile.toString(),
-	adSizes.outstreamGoogleDesktop.toString(),
-];
 
 /**
  * Determine whether an advert should refresh, taking into account
@@ -24,10 +18,10 @@ const outstreamSizes = [
  * @param nonRefreshableLineItemIds The array of line item ids for which
  * adverts should not refresh
  */
-export const shouldRefresh = (
+const shouldRefresh = (
 	advert: Advert,
 	nonRefreshableLineItemIds: number[] = [],
-	// This parameter can be removed when we only check refreshing at the  slot-viewable point
+	// This parameter can be removed when we only check refreshing at the slot-viewable point
 	eventLineItemId?: number,
 ): boolean => {
 	const sizeString = advert.size?.toString();
@@ -37,7 +31,9 @@ export const shouldRefresh = (
 	if (isFluid) return false;
 
 	// Outstream adverts should not refresh
-	const isOutstream = outstreamSizes.includes(sizeString as AdSizeString);
+	const isOutstream = Object.values(outstreamSizes)
+		.map((size) => size.toString())
+		.includes(sizeString as AdSizeString);
 	if (isOutstream) return false;
 
 	// If the advert has a line item id included in the array of non refreshable
@@ -54,6 +50,4 @@ export const shouldRefresh = (
 	return true;
 };
 
-export const _ = {
-	outstreamSizes,
-};
+export { shouldRefresh };

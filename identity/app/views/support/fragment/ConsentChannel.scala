@@ -73,4 +73,8 @@ object ConsentChannel {
   def isProduct(consentField: Field): Boolean = {
     consentField("id").value.exists { id => productIds.contains(id) }
   }
+
+  def isHolidays(consentField: Field): Boolean = {
+    consentField("id").value.exists { id => id == Consent.Holidays.id }
+  }
 }

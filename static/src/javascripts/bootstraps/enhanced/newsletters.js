@@ -2,7 +2,6 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
-import { formatTimestampToUTC } from 'common/modules/tracking/utc-date-format';
 import ophan from 'ophan/ng';
 
 const classes = {
@@ -42,7 +41,7 @@ const buildComponentEventData = (cardElement, action, eventDescription) => {
 	const value = JSON.stringify({
 		eventDescription,
 		newsletterId,
-		timestamp: formatTimestampToUTC(new Date()),
+		timestamp: new Date().getTime(),
 	});
 
 	return {

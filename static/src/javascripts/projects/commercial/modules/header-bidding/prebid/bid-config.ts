@@ -1,7 +1,7 @@
+import type { PageTargeting } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
-import type { PageTargeting } from '../../../../common/modules/commercial/build-page-targeting';
 import {
 	buildAppNexusTargeting,
 	buildAppNexusTargetingObject,
@@ -10,6 +10,7 @@ import {
 	isInAuOrNz,
 	isInRow,
 	isInUk,
+	isInUsa,
 	isInUsOrCa,
 } from '../../../../common/modules/commercial/geo-utils';
 import {
@@ -294,6 +295,8 @@ const openxClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
 	},
 });
 
+const getOzonePlacementId = () => (isInUsa() ? '1420436308' : '0420420500');
+
 const ozoneClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
 	pageTargeting: PageTargeting,
 ) => ({
@@ -302,7 +305,7 @@ const ozoneClientSideBidder: (pageTargeting: PageTargeting) => PrebidBidder = (
 	bidParams: (): PrebidOzoneParams => ({
 		publisherId: 'OZONEGMG0001',
 		siteId: '4204204209',
-		placementId: '0420420500',
+		placementId: getOzonePlacementId(),
 		customData: [
 			{
 				settings: {},

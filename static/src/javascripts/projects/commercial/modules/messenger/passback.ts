@@ -1,10 +1,10 @@
 import { adSizes } from '@guardian/commercial-core';
+import type { RegisterListener } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { breakpoints } from '@guardian/source-foundations';
-import { getBreakpoint, getViewport } from 'lib/detect-viewport';
+import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import fastdom from '../../../../lib/fastdom-promise';
 import { adSlotIdPrefix } from '../dfp/dfp-env-globals';
-import type { RegisterListener } from '../messenger';
 
 type PassbackMessagePayload = { source: string };
 
@@ -26,7 +26,7 @@ const getValuesForKeys = (
 ): Array<[string, string[]]> => keys.map((key) => [key, valueFn(key)]);
 
 const getPassbackValue = (source: string): string => {
-	const isMobile = getBreakpoint(getViewport().width) === 'mobile';
+	const isMobile = getCurrentBreakpoint() === 'mobile';
 	// e.g. 'teadsdesktop' or 'teadsmobile';
 	return `${source}${isMobile ? 'mobile' : 'desktop'}`;
 };
@@ -213,6 +213,13 @@ const init = (register: RegisterListener): void => {
 											`Passback: setting height of passback slot to ${slotHeight}`,
 										);
 										slotElement.style.height = slotHeight;
+
+										// Also resize the initial outstream iframe so
+										// it doesn't block text selection directly under
+										// the new ad
+										iframe.style.height = slotHeight;
+										iFrameContainer.style.height =
+											slotHeight;
 									});
 								}
 							}

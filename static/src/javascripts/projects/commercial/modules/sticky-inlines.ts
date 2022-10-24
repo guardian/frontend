@@ -42,7 +42,8 @@ const insertHeightStyles = (
 	heightMapping: Array<[string, number]>,
 ): Promise<void> => {
 	const heightClasses = heightMapping.reduce(
-		(css, [name, height]) => `${css} .${name} { min-height: ${height}px; }`,
+		(css, [name, height]) =>
+			`${css} .${name} { min-height: ${height}px; } .${name} > * { position: sticky; top: 0; }`,
 		'',
 	);
 

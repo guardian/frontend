@@ -49,7 +49,7 @@ function onSubmit(e) {
             script.src =
                 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaScriptLoaded&render=explicit';
             d.getElementsByTagName('head')[0].appendChild(script);
-        })(document);
+        })(document, undefined);
     } else { // grecaptcha has already been loaded and rendered, but been dismissed or expired
         openCaptcha()
     }
