@@ -339,7 +339,7 @@ class MoreOnMatchController(
     contentApiClient
       .getResponse(
         contentApiClient
-          .search(Edition(request))
+          .search()
           .section("football")
           .tag(
             "tone/minutebyminute|tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch",

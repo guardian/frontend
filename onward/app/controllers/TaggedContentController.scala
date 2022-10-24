@@ -23,7 +23,7 @@ class TaggedContentController(
   def renderJson(tag: String): Action[AnyContent] =
     Action.async { implicit request =>
       tagWhitelist.find(_ == tag).map { tag =>
-        lookup(tag, Edition(request)) map {
+        lookup(tag) map {
           case Nil    => Cached(300) { JsonNotFound() }
           case trails => render(trails)
         }
@@ -54,12 +54,12 @@ class TaggedContentController(
     "theguardian/series/guardiancommentcartoon",
   )
 
-  private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[List[ContentType]] = {
-    log.info(s"Fetching tagged stories for edition ${edition.id}")
+  private def lookup(tag: String)(implicit request: RequestHeader): Future[List[ContentType]] = {
+    log.info(s"Fetching tagged stories")
     contentApiClient
       .getResponse(
         contentApiClient
-          .search(edition)
+          .search()
           .tag(tag)
           .pageSize(3),
       )

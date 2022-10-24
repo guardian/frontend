@@ -1,7 +1,7 @@
 package controllers
 
 import common.`package`._
-import common.{Edition, ImplicitControllerExecutionContext, JsonNotFound}
+import common.{ImplicitControllerExecutionContext, JsonNotFound}
 import contentapi.ContentApiClient
 import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
@@ -34,7 +34,7 @@ class MostViewedSocialController(
         case Some(articleIds) if articleIds.nonEmpty =>
           contentApiClient.getResponse(
             contentApiClient
-              .search(Edition(request))
+              .search()
               .ids(articleIds.take(7).map(item => feed.urlToContentPath(item.url)).mkString(",")),
           ) map { response =>
             val items = response.results

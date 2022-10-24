@@ -2,7 +2,6 @@ package feed
 
 import com.gu.contentapi.client
 import common._
-import common.editions.Uk
 import contentapi.ContentApiClient
 import model.{Video, _}
 import play.api.libs.json._
@@ -41,7 +40,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
       val mostViewed: Future[Seq[Video]] = contentApiClient
         .getResponse(
           contentApiClient
-            .search(Uk)
+            .search()
             .ids(contentIds)
             .pageSize(20),
         )

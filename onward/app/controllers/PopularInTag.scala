@@ -25,9 +25,8 @@ class PopularInTag(
 
   def render(tag: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val edition = Edition(request)
       val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
-      getPopularInTag(edition, tag, excludeTags) map {
+      getPopularInTag(tag, excludeTags) map {
         case popular if popular.items.isEmpty => Cached(60)(JsonNotFound())
         case trails                           => renderPopularInTag(trails)
       }

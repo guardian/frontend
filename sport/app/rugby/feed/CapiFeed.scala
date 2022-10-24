@@ -1,6 +1,6 @@
 package rugby.feed
 
-import common.{Edition, GuLogging}
+import common.{GuLogging}
 import contentapi.ContentApiClient
 import model.{Content, ContentType}
 import org.joda.time.DateTimeZone
@@ -43,7 +43,7 @@ class CapiFeed(contentApiClient: ContentApiClient) extends GuLogging {
     contentApiClient
       .getResponse(
         contentApiClient
-          .search(Edition.defaultEdition)
+          .search()
           .section("sport")
           .tag(searchTags)
           .fromDate(jodaToJavaInstant(startMatchDayRange))

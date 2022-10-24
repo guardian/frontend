@@ -40,7 +40,7 @@ trait Index extends ConciergeRepository {
 
   }
 
-  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean)(implicit
+  def index(leftSide: String, rightSide: String, page: Int, isRss: Boolean)(implicit
       request: RequestHeader,
   ): Future[Either[IndexPage, PlayResult]] = {
 
@@ -66,7 +66,7 @@ trait Index extends ConciergeRepository {
     val promiseOfResponse = contentApiClient
       .getResponse(
         contentApiClient
-          .search(edition)
+          .search()
           .tag(s"$firstTag,$secondTag")
           .page(page)
           .pageSize(IndexPagePagination.pageSize)

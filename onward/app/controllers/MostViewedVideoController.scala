@@ -18,12 +18,11 @@ class MostViewedVideoController(
   def renderInSeries(series: String): Action[AnyContent] =
     Action.async { implicit request =>
       val page = (request.getQueryString("page") getOrElse "1").toInt
-      val edition = Edition(request)
 
       contentApiClient
         .getResponse(
           contentApiClient
-            .search(edition)
+            .search()
             .tag(series)
             .contentType("video")
             .showTags("series")
