@@ -1,6 +1,5 @@
 import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
 import ophan from 'ophan/ng';
-import config from '../../../../lib/config';
 import { noop } from '../../../../lib/noop';
 import reportError from '../../../../lib/report-error';
 
@@ -87,9 +86,10 @@ export const buildOphanPayload = (
 	tests: readonly Runnable[],
 ): OphanABPayload => {
 	try {
+		const testsConfig = window.guardian.config.tests ?? {};
 		const log: OphanABPayload = {};
-		const serverSideTests = Object.keys(config.get('tests', {})).filter(
-			(test) => !!config.get(`tests.${test}`),
+		const serverSideTests = Object.keys(testsConfig).filter(
+			(test) => test in testsConfig,
 		);
 
 		tests.filter(not(defersImpression)).forEach((test) => {

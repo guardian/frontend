@@ -5,15 +5,16 @@ import type {
 	Variant,
 } from '@guardian/ab-core';
 import { fromPairs, toPairs } from 'lodash-es';
-import config from '../../../../lib/config';
 import { NOT_IN_TEST, notInTestVariant } from './ab-constants';
 
 export const testSwitchExists = (testId: string): boolean =>
-	config.get<boolean | string>(`switches.ab${testId}`, 'NOT_FOUND') !==
-	'NOT_FOUND';
+	Object.prototype.hasOwnProperty.call(
+		window.guardian.config.switches,
+		`ab${testId}`,
+	);
 
 export const isTestSwitchedOn = (testId: string): boolean =>
-	config.get<boolean>(`switches.ab${testId}`, false);
+	!!window.guardian.config.switches[`switches.ab${testId}`];
 
 export const runnableTestsToParticipations = (
 	runnableTests: readonly Runnable[],

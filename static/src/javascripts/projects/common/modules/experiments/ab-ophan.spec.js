@@ -7,7 +7,6 @@ import {
 import { storage } from '@guardian/libs';
 
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
-import config from 'lib/config';
 
 import { genRunnableAbTestWhereControlIsRunnable } from './__fixtures__/ab-test';
 
@@ -21,11 +20,11 @@ describe('A/B Ophan analytics', () => {
     beforeEach(() => {
         // enable all test switches
         concurrentTests.forEach(test => {
-            config.set(`switches.ab${test.id}`, true);
+            window.guardian.switches[`ab${test.id}`] = true;
         });
 
         // empty server-side tests
-        config.set('tests', []);
+        window.guardian.config.tests = [];
     });
 
     afterEach(() => {
