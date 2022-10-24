@@ -1,6 +1,6 @@
 package model
 
-import com.gu.facia.api.utils.{CardStyle, FaciaContentUtils, SpecialReport}
+import com.gu.facia.api.utils.{CardStyle, FaciaContentUtils, SpecialReport, SpecialReportAlt}
 import com.gu.facia.client.models.{MetaDataCommonFields, TrailMetaData}
 import com.gu.targeting.client.{Campaign, ReportFields}
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
@@ -14,6 +14,7 @@ object CardStylePicker {
     extractCampaigns(tags) match {
       case Nil => CardStyle(content, TrailMetaData.empty)
       case _   => SpecialReport
+      case _   => SpecialReportAlt
     }
   }
 
@@ -22,6 +23,7 @@ object CardStylePicker {
     extractCampaigns(tags) match {
       case Nil => FaciaContentUtils.cardStyle(content)
       case _   => SpecialReport
+      case _   => SpecialReportAlt
     }
   }
 
