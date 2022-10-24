@@ -18,6 +18,7 @@ jest.mock('ophan/ng', () => null);
 
 describe('A/B Ophan analytics', () => {
     beforeEach(() => {
+        window.guardian.switches = window.guardian.switches ?? {};
         // enable all test switches
         concurrentTests.forEach(test => {
             window.guardian.switches[`ab${test.id}`] = true;

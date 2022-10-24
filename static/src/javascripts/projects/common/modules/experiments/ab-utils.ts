@@ -14,7 +14,7 @@ export const testSwitchExists = (testId: string): boolean =>
 	);
 
 export const isTestSwitchedOn = (testId: string): boolean =>
-	!!window.guardian.config.switches[`switches.ab${testId}`];
+	!!window.guardian.config.switches[`ab${testId}`];
 
 export const runnableTestsToParticipations = (
 	runnableTests: readonly Runnable[],
