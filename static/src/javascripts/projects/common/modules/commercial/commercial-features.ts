@@ -1,6 +1,5 @@
 import { log } from '@guardian/libs';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
-import defaultConfig from '../../../../lib/config';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
@@ -53,31 +52,27 @@ class CommercialFeatures {
 	launchpad: boolean;
 	youtubeAdvertising: boolean;
 
-	constructor(config = defaultConfig) {
+	constructor() {
 		// this is used for SpeedCurve tests
 		const noadsUrl = /[#&]noads(&.*)?$/.test(window.location.hash);
 		const forceAdFree = /[#&]noadsaf(&.*)?$/.test(window.location.hash);
 		const forceAds = /[?&]forceads(&.*)?$/.test(window.location.search);
 		const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
 		const sensitiveContent =
-			config.get<boolean>('page.shouldHideAdverts', false) ||
-			config.get('page.section') === 'childrens-books-site';
-		const isMinuteArticle = config.get<boolean>(
-			'page.isMinuteArticle',
-			false,
-		);
-		const isArticle = config.get('page.contentType') === 'Article';
-		const isInteractive = config.get('page.contentType') === 'Interactive';
-		const isLiveBlog = config.get<boolean>('page.isLiveBlog', false);
-		const isHosted = config.get<boolean>('page.isHosted', false);
+			window.guardian.config.page.shouldHideAdverts ||
+			window.guardian.config.page.section === 'childrens-books-site';
+		const isMinuteArticle = window.guardian.config.page.isMinuteArticle;
+		const isArticle = window.guardian.config.page.contentType === 'Article';
+		const isInteractive =
+			window.guardian.config.page.contentType === 'Interactive';
+		const isLiveBlog = window.guardian.config.page.isLiveBlog;
+		const isHosted = window.guardian.config.page.isHosted;
 		const isIdentityPage =
-			config.get('page.contentType') === 'Identity' ||
-			config.get('page.section') === 'identity'; // needed for pages under profile.* subdomain
-		const switches = config.get<Record<string, boolean>>('switches', {});
+			window.guardian.config.page.contentType === 'Identity' ||
+			window.guardian.config.page.section === 'identity'; // needed for pages under profile.* subdomain
+		const switches = window.guardian.config.switches;
 		const isWidePage = getCurrentBreakpoint() === 'wide';
-		const newRecipeDesign =
-			config.get('page.showNewRecipeDesign') &&
-			config.get('tests.abNewRecipeDesign');
+		const newRecipeDesign = window.guardian.config.page.showNewRecipeDesign;
 
 		// TODO Convert detect.js to TypeScript
 		const isUnsupportedBrowser: boolean = isInternetExplorer();
@@ -85,7 +80,7 @@ class CommercialFeatures {
 		this.isSecureContact = [
 			'help/ng-interactive/2017/mar/17/contact-the-guardian-securely',
 			'help/2016/sep/19/how-to-contact-the-guardian-securely',
-		].includes(config.get('page.pageId', ''));
+		].includes(window.guardian.config.page.pageId);
 
 		// Feature switches
 		this.adFree = !!forceAdFree || isAdFreeUser();
@@ -93,7 +88,7 @@ class CommercialFeatures {
 		this.youtubeAdvertising = !this.adFree && !sensitiveContent;
 
 		const dfpAdvertisingTrueConditions = {
-			'switches.commercial': switches.commercial,
+			'switches.commercial': !!switches.commercial,
 			externalAdvertising,
 		};
 
@@ -122,7 +117,7 @@ class CommercialFeatures {
 
 		const articleBodyAdvertsFalseConditions = {
 			isMinuteArticle,
-			isLiveBlog,
+			isLiveBlog: !!isLiveBlog,
 			isHosted,
 			newRecipeDesign: !!newRecipeDesign,
 		};
@@ -144,8 +139,8 @@ class CommercialFeatures {
 		this.carrotTrafficDriver =
 			!this.adFree &&
 			this.articleBodyAdverts &&
-			config.get<boolean>('switches.carrotTrafficDriver', false) &&
-			!config.get<boolean>('page.isPaidContent');
+			!!window.guardian.config.switches.carrotTrafficDriver &&
+			!window.guardian.config.page.isPaidContent;
 
 		this.highMerch =
 			this.dfpAdvertising &&
@@ -153,8 +148,8 @@ class CommercialFeatures {
 			!isMinuteArticle &&
 			!isHosted &&
 			!isInteractive &&
-			!config.get<boolean>('page.isFront') &&
-			!config.get<boolean>('isDotcomRendering', false) &&
+			!window.guardian.config.page.isFront &&
+			!window.guardian.config.isDotcomRendering &&
 			!newRecipeDesign;
 
 		this.thirdPartyTags =
@@ -168,7 +163,7 @@ class CommercialFeatures {
 			externalAdvertising &&
 			!isIdentityPage &&
 			!this.isSecureContact &&
-			config.get('switches.redplanetForAus', false);
+			!!window.guardian.config.switches.redplanetForAus;
 
 		this.relatedWidgetEnabled =
 			this.dfpAdvertising &&
@@ -176,23 +171,23 @@ class CommercialFeatures {
 			!noadsUrl &&
 			!sensitiveContent &&
 			isArticle &&
-			!config.get<boolean>('page.isPreview', false) &&
-			config.get<boolean>('page.showRelatedContent', false) &&
-			!(isUserLoggedIn() && config.get<boolean>('page.commentable'));
+			!window.guardian.config.page.isPreview &&
+			!!window.guardian.config.page.showRelatedContent &&
+			!(isUserLoggedIn() && window.guardian.config.page.commentable);
 
 		this.commentAdverts =
 			this.dfpAdvertising &&
 			!this.adFree &&
 			!isMinuteArticle &&
-			config.get<boolean>('switches.enableDiscussionSwitch', false) &&
-			config.get<boolean>('page.commentable', false) &&
+			!!window.guardian.config.switches.enableDiscussionSwitch &&
+			window.guardian.config.page.commentable &&
 			(!isLiveBlog || isWidePage);
 
 		this.liveblogAdverts =
-			isLiveBlog && this.dfpAdvertising && !this.adFree;
+			!!isLiveBlog && this.dfpAdvertising && !this.adFree;
 
 		this.comscore =
-			config.get<boolean>('switches.comscore', false) &&
+			!!window.guardian.config.switches.comscore &&
 			!isIdentityPage &&
 			!this.isSecureContact;
 	}

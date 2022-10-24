@@ -58,8 +58,14 @@ interface CommercialPageConfig {
 	adUnit: AdUnit;
 	appNexusPageTargeting?: string;
 	sharedAdTargeting?: Record<string, string | string[]>;
+	shouldHideAdverts: boolean;
 	pageAdTargeting?: PageTargeting;
 	dfpAccountId: string;
+	ipsosTag?: string;
+	a9PublisherId: string;
+	libs: {
+		googletag?: string;
+	};
 }
 
 interface UserConfig {
@@ -98,6 +104,7 @@ interface PageConfig extends CommercialPageConfig {
 	author: string;
 	authorIds: string;
 	blogIds: string;
+	commentable: boolean;
 	contentType: string;
 	edition: Edition;
 	frontendAssetsFullURL?: string; // only in DCR
@@ -113,8 +120,10 @@ interface PageConfig extends CommercialPageConfig {
 	isImmersive?: boolean;
 	isLiveBlog?: boolean;
 	isPaidContent: boolean;
+	isPreview: boolean;
 	isProd: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala
 	isSensitive: boolean;
+	isMinuteArticle: boolean;
 	keywordIds: string;
 	keywords: string;
 	lightboxImages?: LightboxImages;
@@ -129,12 +138,15 @@ interface PageConfig extends CommercialPageConfig {
 	series: string;
 	seriesId: string;
 	shouldHideReaderRevenue?: boolean;
+	showNewRecipeDesign?: boolean;
+	showRelatedContent?: boolean;
 	source: string;
 	sponsorshipType: string;
 	toneIds: string;
 	tones: string;
 	videoDuration: number;
 	webPublicationDate: number;
+	userAttributesApiUrl?: string;
 }
 
 interface Ophan {

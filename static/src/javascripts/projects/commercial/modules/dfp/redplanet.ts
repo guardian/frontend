@@ -3,7 +3,6 @@ import {
 	onConsent,
 } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
-import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
@@ -29,10 +28,10 @@ const initialise = () => {
 		schema: 'iglu:com.qantas.launchpad/hierarchy/jsonschema/1-0-0',
 		data: {
 			u1: 'theguardian.com',
-			u2: config.get('page.section'),
-			u3: config.get('page.sectionName'),
-			u4: config.get('page.contentType'),
-			uid: config.get<string>('ophan.browserId', ''),
+			u2: window.guardian.config.page.section,
+			u3: window.guardian.config.page.sectionName,
+			u4: window.guardian.config.page.contentType,
+			uid: window.guardian.config.ophan.browserId ?? '',
 		},
 	});
 };

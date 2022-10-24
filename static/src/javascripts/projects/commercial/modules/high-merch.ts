@@ -1,5 +1,4 @@
 import { createAdSlot } from '@guardian/commercial-core';
-import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 
@@ -9,7 +8,7 @@ import { commercialFeatures } from '../../common/modules/commercial/commercial-f
  */
 export const init = (): Promise<void> => {
 	if (commercialFeatures.highMerch) {
-		const anchorSelector = config.get('page.commentable')
+		const anchorSelector = window.guardian.config.page.commentable
 			? '#comments + *'
 			: '.content-footer > :first-child';
 		const anchor = document.querySelector(anchorSelector);

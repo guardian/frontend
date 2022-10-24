@@ -1,4 +1,3 @@
-import config from '../../lib/config';
 import fastdom from '../../lib/fastdom-promise';
 import { pageShouldHideReaderRevenue } from '../common/modules/commercial/contributions-utilities';
 import { supportSubscribeDigitalURL } from '../common/modules/commercial/support-utilities';
@@ -29,7 +28,7 @@ const askHtml = `
 const canShow = (): boolean =>
 	!shouldHideSupportMessaging() &&
 	!pageShouldHideReaderRevenue() &&
-	!config.get('page.hasShowcaseMainElement');
+	!window.guardian.config.page.hasShowcaseMainElement;
 
 /**
  * Initialise adblock ask a.k.a Shady Pie

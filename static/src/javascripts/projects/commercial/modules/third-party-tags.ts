@@ -13,7 +13,6 @@ import {
 	getConsentFor,
 	onConsent,
 } from '@guardian/consent-management-platform';
-import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { imrWorldwide } from './third-party-tags/imr-worldwide';
@@ -86,14 +85,23 @@ const insertScripts = async (
 
 const loadOther = (): Promise<void> => {
 	const advertisingServices: ThirdPartyTag[] = [
-		remarketing({ shouldRun: config.get('switches.remarketing', false) }),
-		permutive({ shouldRun: config.get('switches.permutive', false) }),
-		ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
-		inizio({ shouldRun: config.get('switches.inizio', false) }),
-		fbPixel({
-			shouldRun: config.get('switches.facebookTrackingPixel', false),
+		remarketing({
+			shouldRun: window.guardian.config.switches.remarketing ?? false,
 		}),
-		twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
+		permutive({
+			shouldRun: window.guardian.config.switches.permutive ?? false,
+		}),
+		ias({
+			shouldRun: window.guardian.config.switches.iasAdTargeting ?? false,
+		}),
+		inizio({ shouldRun: window.guardian.config.switches.inizio ?? false }),
+		fbPixel({
+			shouldRun:
+				window.guardian.config.switches.facebookTrackingPixel ?? false,
+		}),
+		twitter({
+			shouldRun: window.guardian.config.switches.twitterUwt ?? false,
+		}),
 	].filter((_) => _.shouldRun);
 
 	const performanceServices: ThirdPartyTag[] = [

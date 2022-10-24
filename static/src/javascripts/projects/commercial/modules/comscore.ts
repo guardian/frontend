@@ -4,7 +4,6 @@ import {
 } from '@guardian/consent-management-platform';
 import { loadScript, log } from '@guardian/libs';
 import { once } from 'lodash-es';
-import config from '../../../lib/config';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 
 const comscoreSrc = '//sb.scorecardresearch.com/cs/6035250/beacon.js';
@@ -27,7 +26,7 @@ const getGlobals = (keywords: string): ComscoreGlobals => {
 
 const initOnConsent = () => {
 	window._comscore = window._comscore ?? [];
-	window._comscore.push(getGlobals(config.get('page.keywords', '')));
+	window._comscore.push(getGlobals(window.guardian.config.page.keywords));
 
 	return loadScript(comscoreSrc, { id: 'comscore', async: true });
 };

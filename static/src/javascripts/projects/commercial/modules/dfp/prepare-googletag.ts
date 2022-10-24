@@ -6,7 +6,6 @@ import {
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
 import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
-import config from '../../../../lib/config';
 import raven from '../../../../lib/raven';
 import reportError from '../../../../lib/report-error';
 import { removeSlots } from '../../../commercial/modules/remove-slots';
@@ -131,10 +130,8 @@ export const init = (): Promise<void> => {
 				);
 
 				void loadScript(
-					config.get<string>(
-						'libs.googletag',
+					window.guardian.config.page.libs.googletag ??
 						'//www.googletagservices.com/tag/js/gpt.js',
-					),
 					{ async: false },
 				);
 			}

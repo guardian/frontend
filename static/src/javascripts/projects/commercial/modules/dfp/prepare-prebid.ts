@@ -6,7 +6,6 @@ import type { Framework } from '@guardian/consent-management-platform/dist/types
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import { isGoogleProxy } from 'lib/detect-google-proxy';
-import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
@@ -20,7 +19,7 @@ const loadPrebid = async (framework: Framework): Promise<void> => {
 		!dfpEnv.hbImpl.prebid ||
 		!commercialFeatures.dfpAdvertising ||
 		commercialFeatures.adFree ||
-		config.get('page.hasPageSkin') ||
+		window.guardian.config.page.hasPageSkin ||
 		shouldIncludeOnlyA9
 	)
 		return;

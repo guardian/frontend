@@ -1,5 +1,3 @@
-import config from '../../lib/config';
-
 export type AmIUsedLoggingEvent = {
 	label: string;
 	properties?: Property[];
@@ -32,9 +30,9 @@ export const amIUsed = (
 	>,
 ): void => {
 	// The function will return early if the sentinelLogger switch is disabled.
-	if (!config.get<boolean>('switches.sentinelLogger', false)) return;
+	if (!window.guardian.config.switches.sentinelLogger) return;
 
-	const endpoint = config.get<boolean>('page.isDev', false)
+	const endpoint = window.guardian.config.page.isDev
 		? '//logs.code.dev-guardianapis.com/log'
 		: '//logs.guardianapis.com/log';
 

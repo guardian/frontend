@@ -3,13 +3,12 @@ import {
 	onConsent,
 } from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
-import config from '../../../lib/config';
 import { stub } from './__vendor/ipsos-mori';
 
 const loadIpsosScript = (locale: 'au' | 'uk') => {
 	stub();
 
-	const ipsosTag = config.get<string>('page.ipsosTag');
+	const ipsosTag = window.guardian.config.page.ipsosTag;
 	if (ipsosTag === undefined) throw Error('Ipsos tag undefined');
 
 	const ipsosSource = `https://${locale}-script.dotmetrics.net/door.js?d=${document.location.host}&t=${ipsosTag}`;
