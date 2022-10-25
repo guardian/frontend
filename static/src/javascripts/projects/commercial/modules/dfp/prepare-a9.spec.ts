@@ -15,7 +15,9 @@ jest.mock('../header-bidding/a9/a9');
 
 jest.mock('./Advert');
 
-jest.mock('../../../../lib/a9-apstag', () => jest.fn());
+jest.mock('@guardian/commercial-core', () => ({
+	a9Apstag: jest.fn(),
+}));
 
 jest.mock('../../../common/modules/commercial/build-page-targeting');
 
