@@ -1,11 +1,9 @@
 import { getCLS, getFID, getLCP } from 'web-vitals';
-import config from 'lib/config';
 import { mediator } from 'lib/mediator';
 
-const trackerName = config.get(
-	'googleAnalytics.trackers.editorial',
-	'no-ga-tracker-found',
-);
+const trackerName =
+	window.guardian.config.googleAnalytics?.trackers?.editorial ??
+	'no-ga-tracker-found';
 
 const send = `${trackerName}.send`;
 
@@ -57,23 +55,7 @@ const trackNativeAdLinkClick = (slotName: string, tag: string): void => {
 	});
 };
 
-type BoostGaUserTimingFidelityMetrics = {
-	standardStart: 'metric18';
-	standardEnd: 'metric19';
-	commercialStart: 'metric20';
-	commercialEnd: 'metric21';
-	enhancedStart: 'metric22';
-	enhancedEnd: 'metric23';
-};
-
-type TimingEvent = {
-	timingCategory: string;
-	timingVar: keyof BoostGaUserTimingFidelityMetrics;
-	timeSincePageLoad: number;
-	timingLabel: string;
-};
-
-const sendPerformanceEvent = (event: TimingEvent): void => {
+const sendPerformanceEvent = (event: GoogleTimingEvent): void => {
 	const boostGaUserTimingFidelityMetrics: BoostGaUserTimingFidelityMetrics = {
 		standardStart: 'metric18',
 		standardEnd: 'metric19',
@@ -96,7 +78,7 @@ const sendPerformanceEvent = (event: TimingEvent): void => {
        send performance events as normal events too,
        so we can avoid the 0.1% sampling that affects timing events
     */
-	if (config.get('switches.boostGaUserTimingFidelity')) {
+	if (window.guardian.config.switches.boostGaUserTimingFidelity) {
 		// these are our own metrics that map to our timing events
 		const metric = boostGaUserTimingFidelityMetrics[event.timingVar];
 
@@ -131,7 +113,7 @@ const trackPerformance = (
 	timingLabel: string,
 ): void => {
 	const timeSincePageLoad = Math.round(window.performance.now());
-	const event: TimingEvent = {
+	const event: GoogleTimingEvent = {
 		timingCategory,
 		timingVar,
 		timeSincePageLoad,
@@ -142,10 +124,8 @@ const trackPerformance = (
 	if (window.ga ?? false) {
 		sendPerformanceEvent(event);
 	} else {
-		const timingEvents = config.get<TimingEvent[]>(
-			'googleAnalytics.timingEvents',
-			[],
-		);
+		const timingEvents =
+			window.guardian.config.googleAnalytics?.timingEvents ?? [];
 		const sendDeferredEventQueue = (): void => {
 			timingEvents.map(sendPerformanceEvent);
 			mediator.off('modules:ga:ready', sendDeferredEventQueue);

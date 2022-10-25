@@ -58,8 +58,14 @@ interface CommercialPageConfig {
 	adUnit: AdUnit;
 	appNexusPageTargeting?: string;
 	sharedAdTargeting?: Record<string, string | string[]>;
+	shouldHideAdverts: boolean;
 	pageAdTargeting?: PageTargeting;
 	dfpAccountId: string;
+	ipsosTag?: string;
+	a9PublisherId: string;
+	libs?: {
+		googletag?: string;
+	};
 }
 
 interface UserConfig {
@@ -69,6 +75,22 @@ interface UserConfig {
 	id: string;
 	rawResponse: string;
 }
+
+type BoostGaUserTimingFidelityMetrics = {
+	standardStart: 'metric18';
+	standardEnd: 'metric19';
+	commercialStart: 'metric20';
+	commercialEnd: 'metric21';
+	enhancedStart: 'metric22';
+	enhancedEnd: 'metric23';
+};
+
+type GoogleTimingEvent = {
+	timingCategory: string;
+	timingVar: keyof BoostGaUserTimingFidelityMetrics;
+	timeSincePageLoad: number;
+	timingLabel: string;
+};
 
 interface Config {
 	ophan: {
@@ -84,6 +106,12 @@ interface Config {
 		[key: `${string}Variant`]: 'variant';
 	};
 	isDotcomRendering: boolean;
+	googleAnalytics?: {
+		trackers?: {
+			editorial?: string;
+		};
+		timingEvents?: GoogleTimingEvent[];
+	};
 }
 
 type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
@@ -93,11 +121,12 @@ interface LightboxImages {
 }
 
 interface PageConfig extends CommercialPageConfig {
-	ajaxUrl: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
+	ajaxUrl?: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	assetsPath: string;
 	author: string;
 	authorIds: string;
 	blogIds: string;
+	commentable: boolean;
 	contentType: string;
 	edition: Edition;
 	frontendAssetsFullURL?: string; // only in DCR
@@ -106,6 +135,8 @@ interface PageConfig extends CommercialPageConfig {
 	hasShowcaseMainElement: boolean;
 	headline: string;
 	host: string;
+	idApiUrl?: string;
+	idUrl?: string;
 	isbn?: string;
 	isDev: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L73
 	isFront: boolean; // https://github.com/guardian/frontend/blob/201cc764/common/app/model/meta.scala#L352
@@ -113,8 +144,10 @@ interface PageConfig extends CommercialPageConfig {
 	isImmersive?: boolean;
 	isLiveBlog?: boolean;
 	isPaidContent: boolean;
+	isPreview: boolean;
 	isProd: boolean; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala
 	isSensitive: boolean;
+	isMinuteArticle: boolean;
 	keywordIds: string;
 	keywords: string;
 	lightboxImages?: LightboxImages;
@@ -129,12 +162,15 @@ interface PageConfig extends CommercialPageConfig {
 	series: string;
 	seriesId: string;
 	shouldHideReaderRevenue?: boolean;
+	showNewRecipeDesign?: boolean;
+	showRelatedContent?: boolean;
 	source: string;
 	sponsorshipType: string;
 	toneIds: string;
 	tones: string;
 	videoDuration: number;
 	webPublicationDate: number;
+	userAttributesApiUrl?: string;
 }
 
 interface Ophan {

@@ -9,7 +9,6 @@ import {
 	setAdFreeCookie,
 } from 'lib/manage-ad-free-cookie';
 import { noop } from 'lib/noop';
-import config from '../../../../lib/config';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { dateDiffDays } from '../../../../lib/time-utils';
 import { getLocalDate } from '../../../../types/dates';
@@ -146,10 +145,10 @@ const deleteOldData = (): void => {
 
 const requestNewData = () =>
 	fetchJson(
-		`${config.get<string>(
-			'page.userAttributesApiUrl',
-			'/USER_ATTRIBUTE_API_NOT_FOUND',
-		)}/me`,
+		`${
+			window.guardian.config.page.userAttributesApiUrl ??
+			'/USER_ATTRIBUTE_API_NOT_FOUND'
+		}/me`,
 		{
 			mode: 'cors',
 			credentials: 'include',

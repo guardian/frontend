@@ -1,15 +1,11 @@
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
-import config from '../../lib/config';
 import { _ } from './adblock-ask';
 
 const { params, canShow } = _;
 
 jest.mock('../common/modules/commercial/contributions-utilities');
 jest.mock('../common/modules/commercial/user-features');
-jest.mock('../../lib/config', () => ({
-	get: jest.fn(),
-}));
 jest.mock('ophan/ng', () => null);
 jest.mock('lib/raven');
 
@@ -21,7 +17,7 @@ describe('adblock-ask', () => {
 	});
 
 	it('should show if possible', () => {
-		(config.get as jest.Mock).mockReturnValue(false); // 'page.hasShowcaseMainElement'
+		window.guardian.config.page.hasShowcaseMainElement = false;
 		(pageShouldHideReaderRevenue as jest.Mock).mockReturnValue(false);
 		(shouldHideSupportMessaging as jest.Mock).mockReturnValue(false);
 
@@ -33,7 +29,7 @@ describe('adblock-ask', () => {
 		['pageShouldHideReaderRevenue', false, true, false],
 		['shouldHideSupportMessaging', false, false, true],
 	])('should not show if is %s is true', (_, a, b, c) => {
-		(config.get as jest.Mock).mockReturnValue(a); // 'page.hasShowcaseMainElement'
+		window.guardian.config.page.hasShowcaseMainElement = a;
 		(pageShouldHideReaderRevenue as jest.Mock).mockReturnValue(b);
 		(shouldHideSupportMessaging as jest.Mock).mockReturnValue(c);
 

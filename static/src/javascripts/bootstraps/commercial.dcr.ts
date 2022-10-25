@@ -22,7 +22,6 @@ import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
-import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
 import type { Modules } from './types';
@@ -58,7 +57,7 @@ if (!commercialFeatures.adFree) {
 }
 
 const loadHostedBundle = (): Promise<void> => {
-	if (config.get('page.isHosted')) {
+	if (window.guardian.config.page.isHosted) {
 		amIUsed('commercial.dcr.ts', 'loadHostedBundle', { isHosted: 'true' });
 		return new Promise((resolve) => {
 			require.ensure(

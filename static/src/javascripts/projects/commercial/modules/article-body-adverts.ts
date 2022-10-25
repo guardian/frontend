@@ -6,7 +6,6 @@ import {
 	getCurrentTweakpoint,
 } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
-import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { spaceFiller } from '../../common/modules/article/space-filler';
@@ -34,7 +33,7 @@ const articleBodySelector = '.article-body-commercial-selector';
 
 const sfdebug = getUrlVars().sfdebug;
 
-const isPaidContent = config.get<boolean>('page.isPaidContent', false);
+const isPaidContent = window.guardian.config.page.isPaidContent;
 
 const hasImages = !!window.guardian.config.page.lightboxImages?.images.length;
 
@@ -161,7 +160,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 		? ` > :not(p):not(h2):not(.${adSlotContainerClass}):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])`
 		: ` > :not(p):not(h2):not(.${adSlotContainerClass}):not(#sign-in-gate):not(.sfdebug)`;
 
-	const isImmersive = config.get('page.isImmersive');
+	const isImmersive = window.guardian.config.page.isImmersive;
 
 	const firstInlineRules: SpacefinderRules = {
 		bodySelector: articleBodySelector,
@@ -417,7 +416,7 @@ const doInit = async (): Promise<boolean> => {
 		return Promise.resolve(false);
 	}
 
-	const im = config.get('page.hasInlineMerchandise')
+	const im = window.guardian.config.page.hasInlineMerchandise
 		? attemptToAddInlineMerchAd()
 		: Promise.resolve(false);
 	const inlineMerchAdded = await im;

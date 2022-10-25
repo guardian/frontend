@@ -1,5 +1,4 @@
 import type { PageTargeting } from '@guardian/commercial-core';
-import config from '../../../../../lib/config';
 import { buildAppNexusTargetingObject } from '../../../../common/modules/commercial/build-page-targeting';
 import { isInAuOrNz } from '../../../../common/modules/commercial/geo-utils';
 import {
@@ -73,7 +72,7 @@ export const getAppNexusDirectBidParams = (
 	sizes: HeaderBiddingSize[],
 	pageTargeting: PageTargeting,
 ): AppNexusDirectBidParams => {
-	if (isInAuOrNz() && config.get('switches.prebidAppnexusInvcode')) {
+	if (isInAuOrNz() && window.guardian.config.switches.prebidAppnexusInvcode) {
 		const invCode = getAppNexusInvCode(sizes);
 		if (invCode) {
 			return {

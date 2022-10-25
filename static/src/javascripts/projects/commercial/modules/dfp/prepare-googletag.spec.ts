@@ -278,7 +278,7 @@ describe('DFP', () => {
 	} = {} as const;
 
 	beforeEach(() => {
-		config.set('switches.commercial', true);
+		window.guardian.config.switches.commercial = true;
 
 		config.set('page', {
 			adUnit: '/123456/theguardian.com/front',
@@ -296,8 +296,6 @@ describe('DFP', () => {
 				se: ['happy-times'],
 			},
 		});
-
-		config.set('images.commercial', {});
 
 		document.body.innerHTML = domSnippet;
 
@@ -539,7 +537,7 @@ describe('DFP', () => {
 	});
 
 	it('should display ads', async () => {
-		config.set('page.hasPageSkin', true);
+		window.guardian.config.page.hasPageSkin = true;
 		getCurrentBreakpoint.mockReturnValue('wide');
 
 		mockOnConsent(tcfv2WithConsent);
@@ -594,12 +592,12 @@ describe('DFP', () => {
 
 	describe('pageskin loading', () => {
 		it('should lazy load ads when there is no pageskin', () => {
-			config.set('page.hasPageSkin', false);
+			window.guardian.config.page.hasPageSkin = false;
 			expect(dfpEnv.shouldLazyLoad()).toBe(true);
 		});
 
 		it('should not lazy load ads when there is a pageskin', () => {
-			config.set('page.hasPageSkin', true);
+			window.guardian.config.page.hasPageSkin = true;
 			expect(dfpEnv.shouldLazyLoad()).toBe(false);
 		});
 	});

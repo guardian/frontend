@@ -6,7 +6,6 @@ import type { Framework } from '@guardian/consent-management-platform/dist/types
 import { isString, log } from '@guardian/libs';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { getHeaderBiddingAdSlots } from '../slot-config';
@@ -359,19 +358,19 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		});
 	}
 
-	if (config.get<boolean>('switches.prebidAnalytics', false)) {
+	if (window.guardian.config.switches.prebidAnalytics) {
 		window.pbjs.enableAnalytics([
 			{
 				provider: 'gu',
 				options: {
-					ajaxUrl: window.guardian.config.page.ajaxUrl,
+					ajaxUrl: window.guardian.config.page.ajaxUrl ?? '',
 					pv: window.guardian.ophan.pageViewId,
 				},
 			},
 		]);
 	}
 
-	if (config.get<boolean>('switches.prebidXaxis', false)) {
+	if (window.guardian.config.switches.prebidXaxis) {
 		window.pbjs.bidderSettings.xhb = {
 			adserverTargeting: [
 				{
@@ -388,7 +387,7 @@ const initialise = (window: Window, framework: Framework = 'tcfv2'): void => {
 		};
 	}
 
-	if (config.get<boolean>('switches.prebidImproveDigital', false)) {
+	if (window.guardian.config.switches.prebidImproveDigital) {
 		// Add placement ID for Improve Digital, reading from the bid response
 		const REGEX_PID = new RegExp(/placement_id=\\?"(\d+)\\?"/);
 		window.pbjs.bidderSettings.improvedigital = {

@@ -1,6 +1,5 @@
 import type { SizeMapping } from '@guardian/commercial-core';
 import { adSizes } from '@guardian/commercial-core';
-import config from '../../../../lib/config';
 import { Advert } from '../dfp/Advert';
 import { _, getHeaderBiddingAdSlots } from './slot-config';
 import { getBreakpointKey, shouldIncludeMobileSticky } from './utils';
@@ -61,7 +60,7 @@ const buildAdvert = (id: string, sizes?: SizeMapping) => {
 
 describe('getSlots', () => {
 	beforeEach(() => {
-		config.set('switches.extendedMostPopular', true);
+		window.guardian.config.switches.extendedMostPopular = true;
 	});
 
 	afterEach(() => {
@@ -70,7 +69,7 @@ describe('getSlots', () => {
 
 	test('should return the correct slots at breakpoint M without mobile sticky', () => {
 		(shouldIncludeMobileSticky as jest.Mock).mockReturnValue(false);
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 		expect(getSlots('mobile')).toEqual([
 			{
 				key: 'right',
@@ -102,9 +101,9 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint M for US including mobile sticky slot', () => {
-		config.set('switches.mobileStickyPrebid', true);
+		window.guardian.config.switches.mobileStickyPrebid = true;
 		(shouldIncludeMobileSticky as jest.Mock).mockReturnValue(true);
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 		expect(getSlots('mobile')).toEqual([
 			{
 				key: 'right',
@@ -175,7 +174,7 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint D on article pages', () => {
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 		const desktopSlots = getSlots('desktop');
 		expect(desktopSlots).toContainEqual({
 			key: 'inline',
@@ -199,7 +198,7 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint T on crossword pages', () => {
-		config.set('page.contentType', 'Crossword');
+		window.guardian.config.page.contentType = 'Crossword';
 		const tabletSlots = getSlots('tablet');
 		expect(tabletSlots).toContainEqual({
 			key: 'crossword-banner',
@@ -208,7 +207,7 @@ describe('getSlots', () => {
 	});
 
 	test('should return the correct slots at breakpoint D on other pages', () => {
-		config.set('page.contentType', '');
+		window.guardian.config.page.contentType = '';
 		const desktopSlots = getSlots('desktop');
 		expect(desktopSlots).toContainEqual({
 			key: 'inline',
@@ -279,7 +278,7 @@ describe('getPrebidAdSlots', () => {
 
 	test('should return the correct mobile-sticky slot at breakpoint M', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('M');
-		config.set('switches.mobileStickyPrebid', true);
+		window.guardian.config.switches.mobileStickyPrebid = true;
 		(shouldIncludeMobileSticky as jest.Mock).mockReturnValue(true);
 		expect(
 			getHeaderBiddingAdSlots(
@@ -295,7 +294,7 @@ describe('getPrebidAdSlots', () => {
 
 	test('should return the correct inline slot at breakpoint M when inline is in size mappings', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('M');
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 		const hbSlots = getHeaderBiddingAdSlots(buildAdvert('inline'));
 
 		expect(hbSlots).toContainEqual(
@@ -305,7 +304,7 @@ describe('getPrebidAdSlots', () => {
 
 	test('should return the correct inline slot at breakpoint D with no additional size mappings', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('D');
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 
 		const hbSlots = getHeaderBiddingAdSlots(buildAdvert('inline'));
 		expect(hbSlots).toHaveLength(1);
@@ -314,7 +313,7 @@ describe('getPrebidAdSlots', () => {
 
 	test('should return the correct inline slot at breakpoint D with additional size mappings', () => {
 		(getBreakpointKey as jest.Mock).mockReturnValue('D');
-		config.set('page.contentType', 'Article');
+		window.guardian.config.page.contentType = 'Article';
 
 		const hbSlots = getHeaderBiddingAdSlots(
 			buildAdvert('inline', {

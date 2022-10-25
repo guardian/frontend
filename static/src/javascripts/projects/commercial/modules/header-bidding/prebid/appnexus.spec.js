@@ -1,4 +1,3 @@
-import config from '../../../../../lib/config';
 import {
 	isInUsOrCa as isInUsOrCa_,
 	isInAuOrNz as isInAuOrNz_,
@@ -42,13 +41,13 @@ const isInUsOrCa = isInUsOrCa_;
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
-	config.set('switches.prebidAppnexus', true);
-	config.set('switches.prebidAppnexusInvcode', false);
-	config.set('ophan', { pageViewId: 'pvid' });
-	config.set('page.contentType', 'Article');
-	config.set('page.section', 'Magic');
-	config.set('page.sectionName', 'More Magic');
-	config.set('page.edition', 'UK');
+	window.guardian.config.switches.prebidAppnexus = true;
+	window.guardian.config.switches.prebidAppnexusInvcode = false;
+	window.guardian.config.ophan = { pageViewId: 'pvid' };
+	window.guardian.config.page.contentType = 'Article';
+	window.guardian.config.page.section = 'Magic';
+	window.guardian.config.page.sectionName = 'More Magic';
+	window.guardian.config.page.edition = 'UK';
 };
 
 describe('getAppNexusInvCode', () => {
@@ -96,7 +95,7 @@ describe('getAppNexusInvCode', () => {
 	});
 
 	test('should use sectionName, replacing whitespace with hyphens, when section is an empty string', () => {
-		config.set('page.section', '');
+		window.guardian.config.page.section = '';
 		expect(getAppNexusInvCode([[300, 250]])).toEqual('Dmore-magic300x250');
 	});
 });
@@ -175,7 +174,7 @@ describe('getAppNexusDirectBidParams', () => {
 	});
 
 	test('should exclude placementId for AU region when including member and invCode', () => {
-		config.set('switches.prebidAppnexusInvcode', true);
+		window.guardian.config.switches.prebidAppnexusInvcode = true;
 		getBreakpointKey.mockReturnValue('M');
 		isInAuOrNz.mockReturnValueOnce(true);
 		const pageTargeting = {};
@@ -200,7 +199,7 @@ describe('getAppNexusDirectBidParams', () => {
 	});
 
 	test('should include placementId and not include invCode if outside AU region', () => {
-		config.set('switches.prebidAppnexusInvcode', true);
+		window.guardian.config.switches.prebidAppnexusInvcode = true;
 		getBreakpointKey.mockReturnValue('M');
 		const pageTargeting = {};
 

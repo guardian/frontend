@@ -1,6 +1,5 @@
 import type { ABTest, Runnable, Variant } from '@guardian/ab-core';
 import { logAutomatEvent } from 'common/modules/experiments/automatLog';
-import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
 import { getMvtNumValues, getMvtValue } from '../analytics/mvt-cookie';
 import { NOT_IN_TEST } from './ab-constants';
@@ -15,7 +14,7 @@ const variantCanBeRun = (variant: Variant): boolean =>
 
 const testCanBeRun = (test: ABTest): boolean => {
 	const expired = isExpired(test.expiry);
-	const isSensitive = config.get('page.isSensitive');
+	const isSensitive = window.guardian.config.page.isSensitive;
 	const shouldShowForSensitive = !!test.showForSensitive;
 	const isTestOn = isTestSwitchedOn(test.id);
 	const canTestBeRun = test.canRun();

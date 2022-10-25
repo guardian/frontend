@@ -11,7 +11,10 @@ jest.mock('../static/src/javascripts/projects/commercial/am-i-used', () => ({
 window.guardian = {
 	config: {
 		switches: {},
-		page: {},
+		page: {
+            idApiUrl: 'https://idapi.theguardian.com',
+            idUrl: 'https://profile.theguardian.com',
+        },
 		images: {
 			commercial: {},
 		},

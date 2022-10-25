@@ -1,6 +1,5 @@
 import type { PageTargeting } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
-import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
 import {
 	buildAppNexusTargeting,
@@ -38,7 +37,7 @@ import {
 } from '../utils';
 import { getAppNexusDirectBidParams } from './appnexus';
 
-const isArticle = config.get('page.contentType') === 'Article';
+const isArticle = window.guardian.config.page.contentType === 'Article';
 
 const isDesktopAndArticle = getBreakpointKey() === 'D' && isArticle;
 

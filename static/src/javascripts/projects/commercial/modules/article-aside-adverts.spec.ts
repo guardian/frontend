@@ -1,4 +1,3 @@
-import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator as fakeMediator } from '../../../lib/mediator';
 import { init } from './article-aside-adverts';
@@ -19,8 +18,8 @@ const mockMeasure = (mainColHeight: number, immersiveOffset: number) => {
 const sharedBeforeEach = (domSnippet: string) => () => {
 	jest.resetAllMocks();
 	fakeMediator.removeAllListeners();
-	config.set('page.isImmersive', false);
-	config.set('page.hasShowcaseMainElement', false);
+	window.guardian.config.page.isImmersive = false;
+	window.guardian.config.page.hasShowcaseMainElement = false;
 
 	document.body.innerHTML = domSnippet;
 	expect.hasAssertions();
@@ -101,7 +100,7 @@ describe('Immersive Article Aside Adverts', () => {
 
 	it('should remove sticky and return all slot sizes when there is enough space', async () => {
 		mockMeasure(900_001, 10_000);
-		config.set('page.isImmersive', true);
+		window.guardian.config.page.isImmersive = true;
 		await init();
 
 		const adSlot = document.getElementById('dfp-ad--right');
@@ -117,7 +116,7 @@ describe('Immersive Article Aside Adverts', () => {
 
 	it('should remove sticky and return sizes that will fit when there is limited space', async () => {
 		mockMeasure(900_002, 260);
-		config.set('page.isImmersive', true);
+		window.guardian.config.page.isImmersive = true;
 		await init();
 
 		const adSlot = document.getElementById('dfp-ad--right');
@@ -146,7 +145,7 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
 
 	it('should have the correct size mappings and classes (leaves it untouched)', async () => {
 		mockMeasure(900_000, 0);
-		config.set('page.isImmersive', true);
+		window.guardian.config.page.isImmersive = true;
 		await init();
 
 		const adSlot = document.getElementById('dfp-ad--right');

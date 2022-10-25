@@ -1,6 +1,5 @@
 import { getCookie, storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
-import config from '../../../../lib/config';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
@@ -94,14 +93,12 @@ const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 
-const idApiRoot = config.get<string>(
-	'page.idApiUrl',
-	'/ID_API_ROOT_URL_NOT_FOUND',
-);
-const profileRoot = config.get<string>(
-	'page.idUrl',
-	'/PROFILE_ROOT_ID_URL_NOT_FOUND',
-);
+const idApiRoot =
+	window.guardian.config.page.idApiUrl ?? '/ID_API_ROOT_URL_NOT_FOUND';
+
+const profileRoot =
+	window.guardian.config.page.idUrl ?? '/PROFILE_ROOT_ID_URL_NOT_FOUND';
+
 mediator.emit('module:identity:api:loaded');
 
 export const decodeBase64 = (str: string): string =>

@@ -1,5 +1,4 @@
 import { noop } from 'lib/noop';
-import config from '../../../../../lib/config';
 import type { Advert } from '../../dfp/Advert';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { getHeaderBiddingAdSlots } from '../slot-config';
@@ -16,7 +15,7 @@ class A9AdUnit implements A9AdUnitInterface {
 
 	constructor(advert: Advert, slot: HeaderBiddingSlot) {
 		this.slotID = advert.id;
-		this.slotName = config.get('page.adUnit');
+		this.slotName = window.guardian.config.page.adUnit;
 		this.sizes = slot.sizes.map((size) => Array.from(size));
 	}
 }
@@ -30,7 +29,7 @@ const initialise = (): void => {
 	if (!initialised && window.apstag) {
 		initialised = true;
 		window.apstag.init({
-			pubID: config.get('page.a9PublisherId'),
+			pubID: window.guardian.config.page.a9PublisherId,
 			adServer: 'googletag',
 			bidTimeout: bidderTimeout,
 		});

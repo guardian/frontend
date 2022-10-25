@@ -5,7 +5,6 @@ import {
 	getCurrentTweakpoint,
 	matchesBreakpoints,
 } from 'lib/detect-breakpoint';
-import config from '../../../../lib/config';
 import { pbTestNameMap } from '../../../../lib/url';
 import {
 	isInAuOrNz,
@@ -190,7 +189,7 @@ export const shouldIncludeMobileSticky = once(
 				max: 'mobileLandscape',
 			}) &&
 			(isInUsOrCa() || isInAuOrNz()) &&
-			config.get('page.contentType') === 'Article' &&
+			window.guardian.config.page.contentType === 'Article' &&
 			!window.guardian.config.page.isHosted),
 );
 

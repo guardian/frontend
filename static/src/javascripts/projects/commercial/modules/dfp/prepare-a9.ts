@@ -4,7 +4,6 @@ import {
 } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
-import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect-google-proxy';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { a9 } from '../header-bidding/a9/a9';
@@ -26,7 +25,7 @@ const setupA9 = (): Promise<void | boolean> => {
 		(dfpEnv.hbImpl.a9 &&
 			commercialFeatures.dfpAdvertising &&
 			!commercialFeatures.adFree &&
-			!config.get('page.hasPageSkin'))
+			!window.guardian.config.page.hasPageSkin)
 	) {
 		moduleLoadResult = import(
 			/* webpackChunkName: "a9" */ '../../../../lib/a9-apstag.js'

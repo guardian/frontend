@@ -1,5 +1,4 @@
 import { $$ } from '../../../lib/$$';
-import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 
@@ -72,13 +71,16 @@ export const init = (): Promise<void | boolean> => {
 		})
 		.then(([mainColHeight, immersiveOffset]) => {
 			// we do all the adjustments server-side if the page has a ShowcaseMainElement!
-			if (config.get<boolean>('page.hasShowcaseMainElement', false)) {
+			if (window.guardian.config.page.hasShowcaseMainElement) {
 				return adSlotsWithinRightCol[0];
 			}
 			// immersive articles may have an image that overlaps the aside ad so we need to remove
 			// the sticky behaviour and conditionally adjust the slot size depending on how far down
 			// the page the first immersive image appears.
-			if (config.get('page.isImmersive') && immersiveEls.length > 0) {
+			if (
+				window.guardian.config.page.isImmersive &&
+				immersiveEls.length > 0
+			) {
 				return fastdom.mutate(() => {
 					removeStickyClasses(adSlotsWithinRightCol);
 					adSlotsWithinRightCol[0].setAttribute(

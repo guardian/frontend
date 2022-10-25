@@ -1,6 +1,5 @@
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
-import config from '../../../lib/config';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -28,8 +27,8 @@ const insertCommentAd = (
 		.mutate(() => {
 			commentMainColumn.classList.add('discussion__ad-wrapper');
 			if (
-				!config.get<boolean>('page.isLiveBlog') &&
-				!config.get<boolean>('page.isMinuteArticle')
+				!window.guardian.config.page.isLiveBlog &&
+				!window.guardian.config.page.isMinuteArticle
 			) {
 				commentMainColumn.classList.add('discussion__ad-wrapper-wider');
 			}

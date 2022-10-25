@@ -4,7 +4,6 @@ import {
 } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { log } from '@guardian/libs';
-import config from '../../../../lib/config';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz as isInAuOrNz_ } from '../../../common/modules/commercial/geo-utils';
 import { init, resetModule } from './redplanet';
@@ -72,10 +71,10 @@ describe('init', () => {
 	it('should initialise redplanet when all conditions are true with right params', async () => {
 		commercialFeatures.launchpad = true;
 		isInAuOrNz.mockReturnValue(true);
-		config.set('ophan.browserId', '123');
-		config.set('page.section', 'uk');
-		config.set('page.sectionName', 'Politics');
-		config.set('page.contentType', 'Article');
+		window.guardian.config.ophan.browserId = '123';
+		window.guardian.config.page.section = 'uk';
+		window.guardian.config.page.sectionName = 'Politics';
+		window.guardian.config.page.contentType = 'Article';
 		mockOnConsent(AusWithConsent);
 		mockGetConsentFor(true);
 
