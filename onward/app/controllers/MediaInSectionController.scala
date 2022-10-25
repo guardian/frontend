@@ -32,13 +32,13 @@ class MediaInSectionController(
 
   private def renderMedia(mediaType: String, sectionId: String, seriesId: Option[String]): Action[AnyContent] =
     Action.async { implicit request =>
-      val response = lookup(Edition(request), mediaType, sectionId, seriesId) map { seriesItems =>
+      val response = lookup(mediaType, sectionId, seriesId) map { seriesItems =>
         seriesItems map { trail => renderSectionTrails(mediaType, trail, sectionId) }
       }
       response map { _ getOrElse NotFound }
     }
 
-  private def lookup(edition: Edition, mediaType: String, sectionId: String, seriesId: Option[String])(implicit
+  private def lookup(mediaType: String, sectionId: String, seriesId: Option[String])(implicit
       request: RequestHeader,
   ): Future[Option[Seq[RelatedContentItem]]] = {
     val currentShortUrl = request.getQueryString("shortUrl")
@@ -55,7 +55,7 @@ class MediaInSectionController(
     val promiseOrResponse = contentApiClient
       .getResponse(
         contentApiClient
-          .search(edition)
+          .search()
           .section(sectionId)
           .tag(tags)
           .showTags("all")

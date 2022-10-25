@@ -32,7 +32,7 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
   )(implicit executionContext: ExecutionContext): Future[Seq[ContentType]] = {
     if (shortUrls.nonEmpty) {
       val shortIds = shortUrls.map(ShortUrls.shortUrlToShortId).mkString(",")
-      contentApiClient.getResponse(contentApiClient.search(defaultEdition).ids(shortIds)) map {
+      contentApiClient.getResponse(contentApiClient.search().ids(shortIds)) map {
         _.results.toSeq map (Content(_))
       }
     } else Future.successful(Nil)

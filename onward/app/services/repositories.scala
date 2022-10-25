@@ -41,13 +41,13 @@ trait Related extends ConciergeRepository {
     }
   }
 
-  def getPopularInTag(edition: Edition, tag: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
+  def getPopularInTag(tag: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
 
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
     val response = contentApiClient.getResponse(
       contentApiClient
-        .search(edition)
+        .search()
         .tag(tags)
         .pageSize(50),
     )

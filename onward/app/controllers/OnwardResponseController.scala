@@ -1,6 +1,6 @@
 package controllers
 
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent}
+import common.{ImplicitControllerExecutionContext, JsonComponent}
 import feed.MostReadAgent
 import model.{ApplicationContext, Cached}
 import model.dotcomrendering.OnwardCollectionResponse
@@ -22,11 +22,10 @@ class OnwardResponseController(
     with ImplicitControllerExecutionContext {
 
   def popularInTag(tag: String)(implicit request: RequestHeader): Future[OnwardCollectionResponse] = {
-    val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
     val itemViewCounts = mostReadAgent.getViewCounts
 
-    popularInTagService.fetch(edition, tag, excludeTags, itemViewCounts)
+    popularInTagService.fetch(tag, excludeTags, itemViewCounts)
   }
   def popularInTagJson(tag: String): Action[AnyContent] =
     Action.async { implicit request =>

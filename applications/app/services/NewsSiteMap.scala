@@ -1,6 +1,5 @@
 package services
 
-import common.Edition
 import conf.Configuration
 import contentapi.ContentApiClient
 import model.Content
@@ -60,7 +59,7 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
     val date = DateTime.now(DateTimeZone.UTC).minusDays(2)
 
     val query = contentApiClient
-      .search(Edition.defaultEdition)
+      .search()
       .pageSize(200)
       .tag("-tone/sponsoredfeatures,-type/crossword,-extra/extra,-tone/advertisement-features")
       .orderBy("newest")

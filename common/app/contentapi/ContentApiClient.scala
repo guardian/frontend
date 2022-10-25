@@ -75,7 +75,6 @@ object QueryDefaults {
 trait ApiQueryDefaults extends GuLogging {
 
   def item(id: String): ItemQuery = CapiContentApiClient.item(id)
-  def search: SearchQuery = CapiContentApiClient.search
 
   def item(id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
@@ -94,8 +93,8 @@ trait ApiQueryDefaults extends GuLogging {
       .showAtoms("media")
 
   //common fields that we use across most queries.
-  def search(edition: Edition): SearchQuery =
-    search
+  def search(): SearchQuery =
+    CapiContentApiClient.search
       .showTags("all")
       .showReferences(QueryDefaults.references)
       .showFields(QueryDefaults.trailFieldsWithMain)

@@ -29,7 +29,7 @@ trait IndexControllerCommon
   def renderCombiner(leftSide: String, rightSide: String): Action[AnyContent] =
     Action.async { implicit request =>
       logGoogleBot(request)
-      index(Edition(request), leftSide, rightSide, inferPage(request), request.isRss).map {
+      index(leftSide, rightSide, inferPage(request), request.isRss).map {
         case Left(page)   => renderFaciaFront(page)
         case Right(other) => other
       }

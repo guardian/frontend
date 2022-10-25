@@ -1,6 +1,5 @@
 package services
 
-import common.Edition
 import contentapi.ContentApiClient
 import model.RelatedContentItem
 import model.dotcomrendering.{OnwardCollectionResponse, Trail}
@@ -14,14 +13,14 @@ class PopularInTagService(contentApiClient: ContentApiClient)(implicit
   // `itemViewCounts` is a Map[Content.id: String, ViewCount:Int]
   // this is generally fetched from Ophan view the MostPopularAgent, but can come from anywhere
   // and makes this easy to test
-  def fetch(edition: Edition, tag: String, excludeTags: Seq[String], itemViewCounts: Map[String, Int])(implicit
+  def fetch(tag: String, excludeTags: Seq[String], itemViewCounts: Map[String, Int])(implicit
       request: RequestHeader,
   ): Future[OnwardCollectionResponse] = {
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
     val response = contentApiClient.getResponse(
       contentApiClient
-        .search(edition)
+        .search()
         .tag(tags)
         .pageSize(50),
     )
