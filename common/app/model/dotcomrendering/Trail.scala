@@ -16,8 +16,9 @@ case class Trail(
     linkText: String,
     showByline: Boolean,
     byline: Option[String],
-    image: Option[String],
-    carouselImages: Map[String, Option[String]],
+    masterImage: Option[String],
+    image: Option[String], // TODO: This can be deprecated after 'masterImage' is supported in DCR
+    carouselImages: Map[String, Option[String]], // TODO: This can be deprecated after 'masterImage' is supported in DCR
     ageWarning: Option[String],
     isLiveBlog: Boolean,
     pillar: String,
@@ -88,6 +89,13 @@ object Trail {
     images.toMap
   }
 
+  def getMasterUrl(imageMedia: Option[ImageMedia]): Option[String] =
+    for {
+      trailPicture <- imageMedia
+      masterImage <- trailPicture.masterImage
+      url <- masterImage.url
+    } yield url
+
   def contentCardToTrail(contentCard: ContentCard): Option[Trail] = {
     for {
       properties <- contentCard.properties
@@ -105,6 +113,7 @@ object Trail {
       linkText = "",
       showByline = showByline,
       byline = contentCard.byline.map(x => x.get),
+      masterImage = getMasterUrl(maybeContent.trail.trailPicture),
       image = maybeContent.trail.thumbnailPath,
       carouselImages = getImageSources(maybeContent.trail.trailPicture),
       ageWarning = None,
@@ -138,6 +147,7 @@ object Trail {
       linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
       showByline = content.properties.showByline,
       byline = content.properties.byline,
+      masterImage = getMasterUrl(content.trailPicture),
       image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
       carouselImages = getImageSources(content.trailPicture),
       ageWarning = content.ageWarning,
