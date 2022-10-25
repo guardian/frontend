@@ -1,12 +1,12 @@
+import { ipsosMoriStub } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,
 } from '@guardian/consent-management-platform';
 import { getLocale, loadScript, log } from '@guardian/libs';
-import { stub } from './__vendor/ipsos-mori';
 
 const loadIpsosScript = (locale: 'au' | 'uk') => {
-	stub();
+	ipsosMoriStub();
 
 	const ipsosTag = window.guardian.config.page.ipsosTag;
 	if (ipsosTag === undefined) throw Error('Ipsos tag undefined');

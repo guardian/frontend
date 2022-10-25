@@ -1,5 +1,5 @@
 import type { AdSize, PageTargeting } from '@guardian/commercial-core';
-import { createAdSize, EventTimer } from '@guardian/commercial-core';
+import { createAdSize, EventTimer, pubmatic } from '@guardian/commercial-core';
 import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import { onConsent } from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
@@ -18,7 +18,6 @@ import {
 	ozonePriceGranularity,
 	priceGranularity,
 } from './price-config';
-import { pubmatic } from './pubmatic';
 
 type CmpApi = 'iab' | 'static';
 // https://docs.prebid.org/dev-docs/modules/consentManagement.html
