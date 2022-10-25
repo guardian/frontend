@@ -2,7 +2,6 @@
  "../lib/$$.ts": [
   "../../../../node_modules/csstype/index.d.ts"
  ],
- "../lib/a9-apstag.js": [],
  "../lib/detect-adblock.ts": [],
  "../lib/detect-breakpoint.ts": [
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
@@ -23,7 +22,6 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/report-error.js"
  ],
- "../lib/launchpad.js": [],
  "../lib/manage-ad-free-cookie.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../projects/common/modules/commercial/lib/cookie.ts"
@@ -56,7 +54,6 @@
   "../projects/common/modules/commercial/user-features.ts"
  ],
  "../projects/commercial/am-i-used.ts": [],
- "../projects/commercial/modules/__vendor/ipsos-mori.js": [],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../projects/commercial/modules/remove-slots.ts",
@@ -285,10 +282,10 @@
   "../projects/commercial/modules/dfp/should-refresh.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-a9.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/a9-apstag.js",
   "../lib/detect-google-proxy.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/a9/a9.ts",
@@ -343,9 +340,9 @@
   "../projects/commercial/modules/dfp/dfp-env.ts"
  ],
  "../projects/commercial/modules/dfp/redplanet.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/launchpad.js",
   "../projects/common/modules/commercial/commercial-features.ts",
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
@@ -413,7 +410,6 @@
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
   "../projects/commercial/modules/header-bidding/prebid/bid-config.ts",
   "../projects/commercial/modules/header-bidding/prebid/price-config.ts",
-  "../projects/commercial/modules/header-bidding/prebid/pubmatic.js",
   "../projects/commercial/modules/header-bidding/slot-config.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
   "../projects/common/modules/commercial/build-page-targeting.ts"
@@ -421,7 +417,6 @@
  "../projects/commercial/modules/header-bidding/prebid/price-config.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts"
  ],
- "../projects/commercial/modules/header-bidding/prebid/pubmatic.js": [],
  "../projects/commercial/modules/header-bidding/slot-config.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -442,9 +437,9 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/ipsos-mori.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../projects/commercial/modules/__vendor/ipsos-mori.js"
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/commercial/modules/liveblog-adverts.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
