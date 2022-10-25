@@ -130,6 +130,8 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/consentless/define-slot.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../../../../node_modules/fastdom/fastdom.d.ts",
   "../projects/commercial/modules/consentless/render-advert-label.ts"
  ],
  "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [

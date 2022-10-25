@@ -14,7 +14,7 @@ const initFixedSlots = (): Promise<void> => {
 			? 'inline'
 			: slotElement.dataset.name;
 		if (slotName) {
-			defineSlot(slotElement.id, slotName);
+			defineSlot(slotElement, slotName);
 		}
 	});
 

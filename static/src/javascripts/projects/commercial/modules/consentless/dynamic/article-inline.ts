@@ -68,12 +68,12 @@ const insertAdAtPara = (
 	containerOptions: ContainerOptions = {},
 	inlineId: number,
 ): Promise<void> => {
-	const ad = createAdSlot(type, {
+	const adSlot = createAdSlot(type, {
 		name,
 		classes,
 	});
 
-	const node = wrapSlotInContainer(ad, containerOptions);
+	const node = wrapSlotInContainer(adSlot, containerOptions);
 
 	return fastdom
 		.mutate(() => {
@@ -82,7 +82,7 @@ const insertAdAtPara = (
 			}
 		})
 		.then(() => {
-			defineSlot(ad.id, inlineId === 1 ? 'inline' : 'inline-right');
+			defineSlot(adSlot, inlineId === 1 ? 'inline' : 'inline-right');
 		});
 };
 
