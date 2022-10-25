@@ -39,14 +39,14 @@ const setAdSlotMinHeight = (advert: Advert): void => {
 	if (isStandardAdSize) {
 		const adSlotHeight = size.height + constants.AD_LABEL_HEIGHT;
 		void fastdom.mutate(() => {
-			node.setAttribute('style', `min-height:${adSlotHeight}px`);
+			node.style.minHeight = `${adSlotHeight}px`;
 		});
 	} else {
 		// For the situation when we load a non-standard size ad, e.g. fluid ad, after
 		// previously loading a standard size ad. Ensure that the previously added min-height is
 		// removed, so that a smaller fluid ad does not have a min-height larger than it is.
 		void fastdom.mutate(() => {
-			node.setAttribute('style', `min-height:unset`);
+			node.style.minHeight = '';
 		});
 	}
 };
