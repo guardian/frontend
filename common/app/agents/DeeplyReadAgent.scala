@@ -88,6 +88,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       linkText = linkText,
       showByline = false,
       byline = fields.byline,
+      masterImage = None,
       image = fields.thumbnail,
       carouselImages = Map.empty,
       ageWarning = None,
