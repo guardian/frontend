@@ -1,16 +1,15 @@
 import { renderConsentlessAdvertLabel } from './render-advert-label';
 
-const defineSlot = (slotId: string, slotName: string): void => {
+const defineSlot = (slot: HTMLElement, slotName: string): void => {
+	const slotId = slot.id;
+
 	window.ootag.queue.push(() => {
 		window.ootag.defineSlot({
 			adSlot: slotName,
 			targetId: slotId,
 			id: slotId,
 			filledCallback: () => {
-				const slotElement = document.getElementById(slotId);
-				if (slotElement) {
-					void renderConsentlessAdvertLabel(slotElement);
-				}
+				void renderConsentlessAdvertLabel(slot);
 				console.log(`filled consentless ${slotId}`);
 			},
 			emptyCallback: () => {
