@@ -138,10 +138,10 @@ object KnockoutSpider {
       ZonedDateTime.of(2022, 12, 5, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 53
       ZonedDateTime.of(2022, 12, 5, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 54
       // ----
-      ZonedDateTime.of(2022, 12, 4, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 51
-      ZonedDateTime.of(2022, 12, 4, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 52
-      // ----
       ZonedDateTime.of(2022, 12, 6, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 55
+      ZonedDateTime.of(2022, 12, 4, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 51
+      // ----
+      ZonedDateTime.of(2022, 12, 4, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 52
       ZonedDateTime.of(2022, 12, 6, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 56
       // ----
       // Quarter Finals
@@ -153,8 +153,8 @@ object KnockoutSpider {
       // ----
       // Semi Finals
       // ----
-      ZonedDateTime.of(2022, 12, 13, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 61
-      ZonedDateTime.of(2022, 12, 14, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 62
+      ZonedDateTime.of(2022, 12, 13, 0, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 61
+      ZonedDateTime.of(2022, 12, 14, 0, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 62
       // ----
       // Final
       // ----
