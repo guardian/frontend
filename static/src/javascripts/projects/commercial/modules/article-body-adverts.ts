@@ -367,7 +367,7 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
 		bodySelector: articleBodySelector,
 		slotSelector: ' > p',
 		minAbove: 300,
-		minBelow: 0,
+		minBelow: 300,
 		selectors: {
 			' > .merch': {
 				minAbove: 0,
