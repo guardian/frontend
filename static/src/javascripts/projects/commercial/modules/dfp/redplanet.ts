@@ -1,3 +1,4 @@
+import { launchpad } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,
@@ -50,15 +51,12 @@ const setupRedplanet = () =>
 			}
 		})
 		.then(() => {
-			if (initialised)
+			if (initialised) {
 				return Promise.reject('replanet already initialised');
+			}
 
 			initialised = true;
-			return import(
-				/* webpackChunkName: "redplanet" */
-				// @ts-expect-error -- we’re loading a third-party JS file
-				'../../../../lib/launchpad.js'
-			);
+			launchpad();
 		})
 		.then(() => {
 			initialise();

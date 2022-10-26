@@ -42,8 +42,6 @@ jest.mock('../../../common/modules/experiments/ab');
 
 jest.mock('../../../../lib/cookies');
 
-jest.mock('../../../../lib/launchpad');
-
 jest.mock('../../../common/modules/commercial/build-page-targeting');
 
 jest.mock('@guardian/consent-management-platform');

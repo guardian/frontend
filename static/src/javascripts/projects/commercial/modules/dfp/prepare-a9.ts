@@ -1,3 +1,4 @@
+import { a9Apstag } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,
@@ -19,7 +20,6 @@ const setupA9 = (): Promise<void | boolean> => {
 		return Promise.resolve();
 	}
 
-	let moduleLoadResult = Promise.resolve();
 	if (
 		shouldIncludeOnlyA9 ||
 		(dfpEnv.hbImpl.a9 &&
@@ -27,16 +27,13 @@ const setupA9 = (): Promise<void | boolean> => {
 			!commercialFeatures.adFree &&
 			!window.guardian.config.page.hasPageSkin)
 	) {
-		moduleLoadResult = import(
-			/* webpackChunkName: "a9" */ '../../../../lib/a9-apstag.js'
-		).then(() => {
-			a9.initialise();
+		// Load a9 third party stub
+		a9Apstag();
 
-			return Promise.resolve();
-		});
+		a9.initialise();
 	}
 
-	return moduleLoadResult;
+	return Promise.resolve();
 };
 
 const setupA9Once = once(setupA9);
