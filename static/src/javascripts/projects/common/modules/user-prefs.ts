@@ -3,53 +3,76 @@ import { storage } from '@guardian/libs';
 const storagePrefix = 'gu.prefs.';
 const defaultOptions = {
 	type: 'local',
-};
+} as const;
 
-const set = (name, value, { type } = defaultOptions) => {
+interface StorageOptions {
+	type: 'local' | 'session';
+}
+
+const set = (
+	name: string,
+	value: unknown,
+	{ type }: StorageOptions = defaultOptions,
+): void => {
 	storage[type].set(storagePrefix + name, value);
 };
 
-const get = (name, { type } = defaultOptions) =>
-	storage[type].get(storagePrefix + name);
+const get = (
+	name: string,
+	{ type }: StorageOptions = defaultOptions,
+): unknown => storage[type].get(storagePrefix + name);
 
-const remove = (name, { type } = defaultOptions) => {
+const remove = (
+	name: string,
+	{ type }: StorageOptions = defaultOptions,
+): void => {
 	storage[type].remove(storagePrefix + name);
 };
 
-const switchOn = (name, { type } = defaultOptions) => {
+const switchOn = (
+	name: string,
+	{ type }: StorageOptions = defaultOptions,
+): void => {
 	storage[type].set(`${storagePrefix}switch.${name}`, true);
 };
 
-const switchOff = (name, { type } = defaultOptions) => {
+const switchOff = (name: string, { type } = defaultOptions): void => {
 	storage[type].set(`${storagePrefix}switch.${name}`, false);
 };
 
-const removeSwitch = (name, { type } = defaultOptions) => {
+const removeSwitch = (
+	name: string,
+	{ type }: StorageOptions = defaultOptions,
+): void => {
 	storage[type].remove(`${storagePrefix}switch.${name}`);
 };
 
-const isOn = (name, { type } = defaultOptions) =>
-	storage[type].get(`${storagePrefix}switch.${name}`) === true;
+const isOn = (
+	name: string,
+	{ type }: StorageOptions = defaultOptions,
+): boolean => storage[type].get(`${storagePrefix}switch.${name}`) === true;
 
-const isOff = (name, { type } = defaultOptions) =>
-	storage[type].get(`${storagePrefix}switch.${name}`) === false;
+const isOff = (
+	name: string,
+	{ type }: StorageOptions = defaultOptions,
+): boolean => storage[type].get(`${storagePrefix}switch.${name}`) === false;
 
 // Note 'false' !== Number.isNaN so we have to type coerce
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
-const isNumeric = (str) => !Number.isNaN(Number(str));
+const isNumeric = (str: string) => !Number.isNaN(Number(str));
 
-const isBoolean = (str) => str === 'true' || str === 'false';
+const isBoolean = (str: string) => str === 'true' || str === 'false';
 
-const setPrefs = (loc) => {
-	const qs = loc.hash.substr(1).split('&');
-	let i;
-	let j;
+const setPrefs = (loc: Location): void => {
+	const qs = loc.hash.substring(1).split('&');
+	let i: number;
+	let j: number;
 	for (i = 0, j = qs.length; i < j; i += 1) {
-		const m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
+		const m = /^gu\.prefs\.(.*)=(.*)$/.exec(qs[i]);
 		if (m) {
 			const key = m[1];
 			const val = m[2];
-			let v;
+			let v: string | boolean | number;
 			switch (key) {
 				case 'switchOn':
 					switchOn(val);
@@ -75,6 +98,7 @@ const setPrefs = (loc) => {
 
 setPrefs(window.location);
 
+// eslint-disable-next-line import/no-default-export -- Allow a default export here
 export default {
 	set,
 	get,
