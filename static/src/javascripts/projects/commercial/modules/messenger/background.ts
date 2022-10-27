@@ -70,7 +70,9 @@ const createParent = (
 			backgroundParent.style.zIndex = '-1';
 			backgroundParent.style.position = 'absolute';
 			backgroundParent.style.inset = '0';
-			backgroundParent.style.clip = 'rect(0, auto, auto, 0)';
+			backgroundParent.style.clipPath =
+				'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
+			backgroundParent.style.overflow = 'hidden';
 
 			background.style.inset = '0';
 			background.style.transition = 'background 100ms ease';
