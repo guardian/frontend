@@ -1,6 +1,6 @@
 import { getCookie, getLocale, isString, storage } from '@guardian/libs';
 import type { CountryCode } from '@guardian/libs';
-import reportError from './report-error';
+import { reportError } from './report-error';
 
 const editionToGeolocationMap: Record<string, CountryCode> = {
 	UK: 'GB',

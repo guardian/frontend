@@ -1,4 +1,4 @@
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { fetchPuzzlesData, renderBanner } from 'common/modules/support/banner';
 
 const messageCode = 'puzzles-banner';

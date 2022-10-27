@@ -22,7 +22,7 @@ import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
 import type { Modules } from './types';
 

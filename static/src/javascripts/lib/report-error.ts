@@ -9,14 +9,30 @@
 */
 import raven from './raven';
 
-const reportError = (err, tags, shouldThrow = true) => {
-	raven.captureException(err, { tags });
+type FrontendError = (Error & { reported?: boolean }) | string;
+
+const convertError = (err: unknown): Error => {
+	if (err instanceof Error) {
+		return err;
+	}
+	if (typeof err === 'string') {
+		return new Error(err);
+	}
+	return new Error(String(err));
+};
+
+const reportError = (
+	err: unknown,
+	tags: Record<string, string>,
+	shouldThrow = true,
+): void => {
+	const localError: FrontendError = convertError(err);
+	raven.captureException(localError, { tags });
 	if (shouldThrow) {
 		// Flag to ensure it is not reported to Sentry again via global handlers
-		const error = err;
-		error.reported = true;
-		throw error;
+		localError.reported = true;
+		throw localError;
 	}
 };
 
-export default reportError;
+export { reportError };

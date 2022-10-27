@@ -1,4 +1,4 @@
-import reportError from '../../../../lib/report-error';
+import { reportError } from '../../../../lib/report-error';
 
 interface PermutivePageConfig {
 	page: Pick<

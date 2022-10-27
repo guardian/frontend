@@ -1,14 +1,16 @@
+import { reportError } from 'lib/report-error';
 import { catchErrorsWithContext, _ } from './robust';
 
 const { catchAndLogError } = _;
 
-// #? Refactor this into a test utility with lots of magic?
-jest.mock('lib/report-error', () => jest.fn());
-const reportErrorMock = require('lib/report-error');
+jest.mock('lib/report-error', () => ({
+	reportError: jest.fn(),
+}));
 
 let origConsoleWarn;
 
 beforeEach(() => {
+    jest.clearAllMocks();
     origConsoleWarn = window.console.warn;
     window.console.warn = jest.fn();
 });
@@ -39,15 +41,16 @@ describe('robust', () => {
         expect(window.console.warn).toHaveBeenCalledTimes(1);
     });
 
-    test('catchAndLogError() - default reporter', () => {
-        reportErrorMock.mockClear();
+    test('catchAndLogError() - default reporter with no error', () => {
         catchAndLogError('test', noError);
-        expect(reportErrorMock).not.toHaveBeenCalled();
-
-        reportErrorMock.mockClear();
-        catchAndLogError('test', throwError);
-        expect(reportErrorMock).toHaveBeenCalledWith(ERROR, META, false);
+        expect(reportError).not.toHaveBeenCalled();
     });
+
+    test('catchAndLogError() - default reporter with error', () => {
+        catchAndLogError('test', throwError);
+        expect(reportError).toHaveBeenCalledWith(ERROR, META, false);
+    });
+
 
     test('catchErrorsWithContext()', () => {
         const runner = jest.fn();

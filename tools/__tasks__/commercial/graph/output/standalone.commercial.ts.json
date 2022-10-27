@@ -20,7 +20,7 @@
  "../lib/geolocation.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/report-error.js"
+  "../lib/report-error.ts"
  ],
  "../lib/manage-ad-free-cookie.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
@@ -36,11 +36,11 @@
   "../../../../node_modules/raven-js/typescript/raven.d.ts",
   "../lib/detect-adblock.ts"
  ],
- "../lib/report-error.js": [
+ "../lib/report-error.ts": [
   "../lib/raven.ts"
  ],
  "../lib/robust.js": [
-  "../lib/report-error.js"
+  "../lib/report-error.ts"
  ],
  "../lib/time-utils.ts": [],
  "../lib/url.ts": [
@@ -173,7 +173,7 @@
  ],
  "../projects/commercial/modules/dfp/add-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../lib/report-error.js",
+  "../lib/report-error.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/create-advert.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
@@ -185,7 +185,7 @@
  "../projects/commercial/modules/dfp/create-advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/report-error.js",
+  "../lib/report-error.ts",
   "../projects/commercial/modules/dfp/Advert.ts"
  ],
  "../projects/commercial/modules/dfp/define-slot.ts": [
@@ -253,7 +253,7 @@
  ],
  "../projects/commercial/modules/dfp/non-refreshable-line-items.ts": [
   "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../lib/report-error.js"
+  "../lib/report-error.ts"
  ],
  "../projects/commercial/modules/dfp/on-slot-load.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -263,7 +263,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/report-error.js",
+  "../lib/report-error.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/dfp/empty-advert.ts",
   "../projects/commercial/modules/dfp/get-advert-by-id.ts",
@@ -298,7 +298,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/raven.ts",
-  "../lib/report-error.js",
+  "../lib/report-error.ts",
   "../projects/commercial/modules/dfp/fill-advert-slots.ts",
   "../projects/commercial/modules/dfp/on-slot-load.ts",
   "../projects/commercial/modules/dfp/on-slot-render.ts",
@@ -321,7 +321,7 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-permutive.ts": [
-  "../lib/report-error.js"
+  "../lib/report-error.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-prebid.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
@@ -362,7 +362,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../lib/$$.ts",
   "../lib/fastdom-promise.ts",
-  "../lib/report-error.js",
+  "../lib/report-error.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
   "../projects/commercial/modules/dfp/get-ad-iframe.ts",
   "../projects/commercial/modules/dfp/render-advert-label.ts"
@@ -649,7 +649,7 @@
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/manage-ad-free-cookie.ts",
-  "../lib/report-error.js",
+  "../lib/report-error.ts",
   "../lib/robust.js",
   "../projects/commercial/adblock-ask.ts",
   "../projects/commercial/modules/ad-free-slot-remove.ts",

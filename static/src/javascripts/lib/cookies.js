@@ -1,4 +1,4 @@
-import reportError from './report-error';
+import { reportError } from './report-error';
 import config from './config';
 
 const ERR_INVALID_COOKIE_NAME = `Cookie must not contain invalid characters (space, tab and the following characters: '()<>@,;"/[]?={}')`;

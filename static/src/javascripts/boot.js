@@ -6,7 +6,7 @@ import { bootStandard } from 'bootstraps/standard/main';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { getLocale, loadScript } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
