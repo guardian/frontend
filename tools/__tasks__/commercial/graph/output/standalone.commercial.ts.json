@@ -597,7 +597,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/detect-breakpoint.ts",
   "../projects/common/modules/commercial/user-features.ts",
-  "../projects/common/modules/user-prefs.js"
+  "../projects/common/modules/user-prefs.ts"
  ],
  "../projects/common/modules/commercial/contributions-utilities.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
@@ -636,8 +636,8 @@
   "../projects/commercial/am-i-used.ts",
   "../projects/common/modules/spacefinder-debug-tools.ts"
  ],
- "../projects/common/modules/user-prefs.js": [
-  "../../../../node_modules/@guardian/libs/dist/cjs/index.js"
+ "../projects/common/modules/user-prefs.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../types/dates.ts": [],
  "../types/ias.d.ts": [],
