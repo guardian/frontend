@@ -1,5 +1,5 @@
 import { convertError, reportError } from 'lib/report-error';
-import { catchErrorsWithContext, _ } from './robust';
+import { _, catchErrorsWithContext } from './robust';
 import type { Modules } from './robust';
 
 const { catchAndLogError } = _;
