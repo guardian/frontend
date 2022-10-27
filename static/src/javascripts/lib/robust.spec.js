@@ -1,9 +1,10 @@
-import { reportError } from 'lib/report-error';
+import { convertError, reportError } from 'lib/report-error';
 import { catchErrorsWithContext, _ } from './robust';
 
 const { catchAndLogError } = _;
 
 jest.mock('lib/report-error', () => ({
+    convertError: jest.fn((e) => e),
 	reportError: jest.fn(),
 }));
 
@@ -38,19 +39,21 @@ describe('robust', () => {
             catchAndLogError('test', throwError);
         }).not.toThrowError(ERROR);
 
+        expect(convertError).toHaveBeenCalledTimes(1);
         expect(window.console.warn).toHaveBeenCalledTimes(1);
     });
 
     test('catchAndLogError() - default reporter with no error', () => {
         catchAndLogError('test', noError);
+        expect(convertError).toHaveBeenCalledTimes(0);
         expect(reportError).not.toHaveBeenCalled();
     });
 
     test('catchAndLogError() - default reporter with error', () => {
         catchAndLogError('test', throwError);
+        expect(convertError).toHaveBeenCalledTimes(1);
         expect(reportError).toHaveBeenCalledWith(ERROR, META, false);
     });
-
 
     test('catchErrorsWithContext()', () => {
         const runner = jest.fn();
