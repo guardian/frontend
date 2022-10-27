@@ -57,6 +57,7 @@ object FrontChecks {
       "fixed/small/slow-III",
       "fixed/small/slow-IV",
       "fixed/small/slow-V-third",
+      "fixed/small/fast-VIII",
       "fixed/medium/slow-VI",
       "fixed/medium/fast-XII",
       "fixed/large/slow-XIV",
