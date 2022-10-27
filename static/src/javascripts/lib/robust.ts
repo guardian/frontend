@@ -21,7 +21,7 @@ const catchErrors = (fn: ModuleFunction): Error | undefined => {
 	return error;
 };
 
-const logError = (moduleName: string, error: Error, tags: Record<string, string>) => {
+const logError = (moduleName: string, error: Error, tags?: Record<string, string>) => {
 	if (window.console && window.console.warn) {
 		window.console.warn('Caught error.', error.stack);
 	}
@@ -33,7 +33,7 @@ const logError = (moduleName: string, error: Error, tags: Record<string, string>
 	}
 };
 
-const catchAndLogError = (name: string, fn: ModuleFunction, tags: Record<string, string>) => {
+const catchAndLogError = (name: string, fn: ModuleFunction, tags?: Record<string, string>) => {
 	const error =catchErrors(fn);
 
 	if (error) {
@@ -41,9 +41,10 @@ const catchAndLogError = (name: string, fn: ModuleFunction, tags: Record<string,
 	}
 };
 
-const catchErrorsWithContext = (modules: Modules, tags: Record<string, string>) => {
+const catchErrorsWithContext = (modules: Modules, tags?: Record<string, string>) => {
 	modules.forEach(([name, fn]) => catchAndLogError(name, fn, tags));
 };
 
 export { catchErrorsWithContext, logError };
-export const _ = { catchAndLogError };
+export type { Modules }
+export const _ = { catchAndLogError};
