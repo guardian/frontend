@@ -3,7 +3,7 @@
 @import conf.Static
 @import conf.Configuration
 @import play.api.libs.json.Json
-@import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount, FBPixel}
+@import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
 @import conf.Configuration.environment
 @import navigation.NavMenu
 
@@ -58,8 +58,7 @@
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
             "cmp": { "fullVendorDataUrl": "/commercial/cmp/vendorlist.json",
                      "shortVendorDataUrl": "/commercial/cmp/shortvendorlist.json"
-            },
-            "facebookAccountId": "@FBPixel.account"
+            }
         }
     }
 }

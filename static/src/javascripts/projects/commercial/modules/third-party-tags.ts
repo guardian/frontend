@@ -1,7 +1,6 @@
 /* A regionalised container for all the commercial tags. */
 
 import {
-	fbPixel,
 	ias,
 	inizio,
 	permutive,
@@ -95,10 +94,6 @@ const loadOther = (): Promise<void> => {
 			shouldRun: window.guardian.config.switches.iasAdTargeting ?? false,
 		}),
 		inizio({ shouldRun: window.guardian.config.switches.inizio ?? false }),
-		fbPixel({
-			shouldRun:
-				window.guardian.config.switches.facebookTrackingPixel ?? false,
-		}),
 		twitter({
 			shouldRun: window.guardian.config.switches.twitterUwt ?? false,
 		}),
