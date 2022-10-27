@@ -14,12 +14,12 @@ const fakeRaven = require('raven-js');
 
 describe('report-error', () => {
 	const error = new Error('Something broke.');
-	const metaData = { test: true };
-	const ravenMetaData = { tags: metaData };
+	const tags = { test: 'testValue' };
+	const ravenMetaData = { tags: tags };
 
 	test('Does not throw an error', () => {
 		expect(() => {
-			reportError(error, metaData, false);
+			reportError(error, tags, false);
 		}).not.toThrowError(error);
 
 		expect(fakeRaven.captureException).toHaveBeenCalledWith(
@@ -30,7 +30,7 @@ describe('report-error', () => {
 
 	test('Throws an error', () => {
 		expect(() => {
-			reportError(error, metaData);
+			reportError(error, tags);
 		}).toThrowError(error);
 
 		expect(fakeRaven.captureException).toHaveBeenCalledWith(
