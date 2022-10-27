@@ -35,4 +35,4 @@ const reportError = (
 	}
 };
 
-export { reportError };
+export { convertError, reportError };
