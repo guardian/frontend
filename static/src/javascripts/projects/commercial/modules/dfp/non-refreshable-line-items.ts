@@ -46,7 +46,7 @@ export const fetchNonRefreshableLineItemIds = async (): Promise<number[]> => {
 		error,
 		{
 			feature: 'commercial',
-			status: response.status,
+			status: String(response.status),
 		},
 		false,
 	);
