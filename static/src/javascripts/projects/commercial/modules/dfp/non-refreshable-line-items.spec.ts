@@ -1,10 +1,12 @@
-import { reportError as reportErrorMock } from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import {
 	fetchNonRefreshableLineItemIds,
 	memoizedFetchNonRefreshableLineItemIds,
 } from './non-refreshable-line-items';
 
-jest.mock('lib/report-error', () => jest.fn());
+jest.mock('lib/report-error', () => ({
+	reportError: jest.fn(),
+}));
 
 describe('nonRefreshableLineItems', () => {
 	it('returns the same IDs as the API', async () => {
@@ -20,7 +22,7 @@ describe('nonRefreshableLineItems', () => {
 
 		const ids = await fetchNonRefreshableLineItemIds();
 
-		expect(reportErrorMock).not.toHaveBeenCalled();
+		expect(reportError).not.toHaveBeenCalled();
 
 		expect(ids).toEqual([1, 2, 3]);
 	});
@@ -40,7 +42,7 @@ describe('nonRefreshableLineItems', () => {
 			'Failed to parse non-refreshable line items as an array',
 		);
 
-		expect(reportErrorMock).not.toHaveBeenCalled();
+		expect(reportError).not.toHaveBeenCalled();
 	});
 
 	it('returns undefined when the API returns string array', async () => {
@@ -58,7 +60,7 @@ describe('nonRefreshableLineItems', () => {
 			'Failed to parse element in non-refreshable line item array as number',
 		);
 
-		expect(reportErrorMock).not.toHaveBeenCalled();
+		expect(reportError).not.toHaveBeenCalled();
 	});
 
 	it('returns undefined and reports error when the API call fails', async () => {
@@ -76,11 +78,11 @@ describe('nonRefreshableLineItems', () => {
 			'Failed to fetch non-refreshable line items',
 		);
 
-		expect(reportErrorMock).toHaveBeenCalledWith(
+		expect(reportError).toHaveBeenCalledWith(
 			new Error('Failed to fetch non-refreshable line items'),
 			{
 				feature: 'commercial',
-				status: 404,
+				status: '404',
 			},
 			false,
 		);
