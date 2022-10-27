@@ -1,5 +1,6 @@
 import { convertError, reportError } from 'lib/report-error';
 import { catchErrorsWithContext, _ } from './robust';
+import type { Modules } from './robust';
 
 const { catchAndLogError } = _;
 
@@ -8,7 +9,7 @@ jest.mock('lib/report-error', () => ({
 	reportError: jest.fn(),
 }));
 
-let origConsoleWarn;
+let origConsoleWarn: typeof window.console.warn;
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -62,7 +63,7 @@ describe('robust', () => {
             ['test-1', runner],
             ['test-2', runner],
             ['test-3', runner],
-        ];
+        ] as Modules;
 
         catchErrorsWithContext(MODULES);
         expect(runner).toHaveBeenCalledTimes(MODULES.length);
