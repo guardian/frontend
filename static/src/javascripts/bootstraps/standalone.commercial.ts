@@ -69,7 +69,7 @@ const decideAssetsPath = () => {
 
 __webpack_public_path__ = decideAssetsPath();
 
-const tags: Record<string, unknown> = {
+const tags: Record<string, string> = {
 	feature: 'commercial',
 	bundle: 'standalone',
 };
