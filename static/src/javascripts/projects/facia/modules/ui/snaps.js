@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import { isIOS } from 'lib/detect';
 import { mediator } from 'lib/mediator';
 import { addProximityLoader } from 'lib/proximity-loader';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { resizeForFootballSnaps } from 'facia/modules/ui/football-snaps';
 import once from 'lodash/once';

@@ -1,4 +1,4 @@
-import reportErrorMock from 'lib/report-error';
+import { reportError as reportErrorMock } from 'lib/report-error';
 import {
 	fetchNonRefreshableLineItemIds,
 	memoizedFetchNonRefreshableLineItemIds,

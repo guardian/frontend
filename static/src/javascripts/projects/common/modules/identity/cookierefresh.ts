@@ -4,7 +4,7 @@ import {
 	isUserLoggedIn,
 	refreshOktaSession,
 } from 'common/modules/identity/api';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 
 const days30InMillis: number = 1000 * 60 * 60 * 24 * 30;
 

@@ -1,6 +1,6 @@
 import fastdom from 'lib/fastdom-promise';
 import { fetchJson } from 'lib/fetch-json';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,

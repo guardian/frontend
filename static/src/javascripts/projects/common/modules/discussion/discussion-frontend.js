@@ -3,7 +3,7 @@ import fastdom from 'fastdom';
 import { integerCommas } from 'lib/formatters';
 import { loadScript } from '@guardian/libs';
 import { mediator } from 'lib/mediator';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 
 const loadDiscussionFrontend = (
     loader,

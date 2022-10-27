@@ -1,5 +1,5 @@
 import config from 'lib/config';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { fetchBannerData, renderBanner } from 'common/modules/support/banner';
 
 const messageCode = 'reader-revenue-banner';

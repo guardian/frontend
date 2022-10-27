@@ -5,7 +5,7 @@ import { storage } from '@guardian/libs';
 import { shouldNotBeShownSupportMessaging } from 'common/modules/commercial/user-features';
 import ophan from 'ophan/ng';
 import config from '../../../../../lib/config';
-import reportError from '../../../../../lib/report-error';
+import { reportError } from '../../../../../lib/report-error';
 import { getUrlVars } from '../../../../../lib/url';
 import { submitComponentEvent, submitViewEvent } from '../acquisitions-ophan';
 import { getUserFromApi } from '../../identity/api';

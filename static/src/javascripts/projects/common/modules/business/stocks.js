@@ -1,7 +1,7 @@
 import $ from 'lib/$';
 import config from 'lib/config';
 import { fetchJson } from 'lib/fetch-json';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import template from 'lodash/template';
 import { inlineSvg } from 'common/views/svgs';
 import stockValueTemplate from 'common/views/business/stock-value.html';

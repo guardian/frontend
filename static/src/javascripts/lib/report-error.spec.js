@@ -1,4 +1,4 @@
-import reportError from './report-error';
+import { reportError } from './report-error';
 
 jest.mock('raven-js', () => ({
 	config() {

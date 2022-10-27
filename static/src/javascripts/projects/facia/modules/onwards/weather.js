@@ -13,7 +13,7 @@
  */
 
 import bean from 'bean';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { fetchJson } from 'lib/fetch-json';

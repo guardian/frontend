@@ -1,5 +1,5 @@
 import type { SizeMapping } from '@guardian/commercial-core';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import type { Advert } from './Advert';
 import { createAdvert } from './create-advert';
 import { dfpEnv } from './dfp-env';

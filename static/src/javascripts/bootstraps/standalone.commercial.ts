@@ -26,7 +26,7 @@ import {
 	AdFreeCookieReasons,
 	maybeUnsetAdFreeCookie,
 } from 'lib/manage-ad-free-cookie';
-import reportError from '../lib/report-error';
+import { reportError } from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
 import { adFreeSlotRemove } from '../projects/commercial/modules/ad-free-slot-remove';

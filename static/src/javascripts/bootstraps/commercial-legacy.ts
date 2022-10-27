@@ -26,7 +26,7 @@ import { removeDisabledSlots as closeDisabledSlots } from 'commercial/modules/re
 import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { catchErrorsWithContext } from 'lib/robust';
 import type { Modules } from './types';
 

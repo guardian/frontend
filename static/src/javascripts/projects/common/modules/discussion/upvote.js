@@ -1,6 +1,6 @@
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { getUrlVars, constructQuery } from 'lib/url';
 import { recommendComment } from 'common/modules/discussion/api';
 

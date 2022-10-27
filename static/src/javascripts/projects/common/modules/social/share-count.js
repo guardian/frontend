@@ -1,5 +1,5 @@
 import fastdom from 'fastdom';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import $ from 'lib/$';
 import { fetchJson } from 'lib/fetch-json';
 import config from 'lib/config';

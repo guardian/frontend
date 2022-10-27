@@ -9,7 +9,7 @@ import {
     isFootballStatsPage,
     isLiveClockwatch,
 } from 'lib/page';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 import { TableDoughnut } from 'common/modules/charts/table-doughnut';
 import {
     statsFor,

@@ -18,7 +18,7 @@ import {
 } from 'common/modules/support/supportMessaging';
 import config from 'lib/config';
 import { getCountryCode } from 'lib/geolocation';
-import reportError from 'lib/report-error';
+import { reportError } from 'lib/report-error';
 
 const buildHeaderLinksPayload = (): HeaderPayload => {
 	const countryCode = getCountryCode();
