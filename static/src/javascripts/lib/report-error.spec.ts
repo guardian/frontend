@@ -1,3 +1,4 @@
+import fakeRaven from 'raven-js';
 import { reportError } from './report-error';
 
 jest.mock('raven-js', () => ({
@@ -10,14 +11,12 @@ jest.mock('raven-js', () => ({
 	captureException: jest.fn(),
 }));
 
-const fakeRaven = require('raven-js');
-
 describe('report-error', () => {
 	const error = new Error('Something broke.');
 	const tags = { test: 'testValue' };
 	const ravenMetaData = { tags: tags };
 
-	test('Does not throw an error', () => {
+	test('Does NOT throw an error', () => {
 		expect(() => {
 			reportError(error, tags, false);
 		}).not.toThrowError(error);
@@ -28,7 +27,7 @@ describe('report-error', () => {
 		);
 	});
 
-	test('Throws an error', () => {
+	test('Does throw an error', () => {
 		expect(() => {
 			reportError(error, tags);
 		}).toThrowError(error);
