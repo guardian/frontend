@@ -47,7 +47,9 @@ const init: () => void = () => {
 				})
 				.catch((error) =>
 					reportError(
-						`Error refreshing IDAPI cookies: ${String(error)}`,
+						new Error(
+							`Error refreshing IDAPI cookies: ${String(error)}`,
+						),
 						{},
 						false,
 					),
