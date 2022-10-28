@@ -35,6 +35,7 @@ class LeagueTableController(
     "Women's Super League",
     "Champions League",
     "Women's Champions League",
+    "World Cup 2022",
     "Europa League",
     "Carabao Cup",
     "International friendlies",
