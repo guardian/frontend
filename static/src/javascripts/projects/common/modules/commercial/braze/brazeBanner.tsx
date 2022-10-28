@@ -1,23 +1,22 @@
-import React from 'react';
-
+import type appboy from '@braze/web-sdk-core';
+import type { BrazeMessage } from '@guardian/braze-components';
+import {
+	BrazeMessages,
+	LocalMessageCache,
+} from '@guardian/braze-components/logic';
 import { onConsentChange } from '@guardian/consent-management-platform';
 import ophan from 'ophan/ng';
+import React from 'react';
+import { getUserIdentifiersFromApi } from 'common/modules/identity/api';
 import config from '../../../../../lib/config';
 import { reportError } from '../../../../../lib/report-error';
+import { measureTiming } from '../../../../commercial/modules/measure-timing';
 import { submitComponentEvent, submitViewEvent } from '../acquisitions-ophan';
 import {
 	clearHasCurrentBrazeUser,
 	hasCurrentBrazeUser,
 	setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
-import { measureTiming } from '../../../../commercial/modules/measure-timing';
-import type { BrazeMessage } from '@guardian/braze-components'
-import {
-    BrazeMessages,
-    LocalMessageCache,
-} from '@guardian/braze-components/logic';
-import { getUserIdentifiersFromApi } from 'common/modules/identity/api';
-import type appboy from '@braze/web-sdk-core';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -48,10 +47,10 @@ const hasRequiredConsents = (): Promise<boolean> =>
 	});
 
 interface BrazeMessageInterface {
-   extras: Record<string, string> | undefined;
-   logImpression: () => void;
-   logButtonClick: (internalButtonId: number) => void;
-};
+	extras: Record<string, string> | undefined;
+	logImpression: () => void;
+	logButtonClick: (internalButtonId: number) => void;
+}
 
 let message: BrazeMessageInterface;
 
@@ -92,10 +91,10 @@ const getMessageFromUrlFragment = (): BrazeMessageInterface | undefined => {
 					logButtonClick: () => {},
 				};
 			} catch (e) {
-                // Parsing failed. Log a message and fall through.
-                if (e instanceof Error) {
-                    console.log(`There was an error with ${key}:`, e.message);
-                }
+				// Parsing failed. Log a message and fall through.
+				if (e instanceof Error) {
+					console.log(`There was an error with ${key}:`, e.message);
+				}
 			}
 		}
 	}
@@ -112,13 +111,16 @@ const SDK_OPTIONS = {
 	devicePropertyAllowlist: [],
 };
 
-const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<BrazeMessage> => {
+const getMessageFromBraze = async (
+	apiKey: string,
+	brazeUuid: string,
+): Promise<BrazeMessage> => {
 	const sdkLoadTiming = measureTiming('braze-sdk-load');
 	sdkLoadTiming.start();
 
-	const importedAppboy = await import(
+	const importedAppboy = (await import(
 		/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
-	) as unknown as typeof appboy;
+	)) as unknown as typeof appboy;
 
 	const sdkLoadTimeTaken = sdkLoadTiming.end();
 	ophan.record({
@@ -144,11 +146,12 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<B
 	importedAppboy.changeUser(brazeUuid);
 	importedAppboy.openSession();
 
-    const section = config.get('page.section');
-	const brazeArticleContext = typeof section === 'string' ? { section } : undefined;
+	const section = config.get('page.section');
+	const brazeArticleContext =
+		typeof section === 'string' ? { section } : undefined;
 
-	const canShowPromise = brazeMessages
-		.getMessageForBanner(brazeArticleContext)
+	const canShowPromise =
+		brazeMessages.getMessageForBanner(brazeArticleContext);
 
 	canShowPromise
 		.then(() => {
@@ -167,15 +170,19 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<B
 	return canShowPromise;
 };
 
-const maybeWipeUserData = async (apiKey: string, brazeUuid: string | undefined, consent: boolean) => {
+const maybeWipeUserData = async (
+	apiKey: string,
+	brazeUuid: string | undefined,
+	consent: boolean,
+) => {
 	const userHasLoggedOut = !brazeUuid && hasCurrentBrazeUser();
 	const userHasRemovedConsent = !consent && hasCurrentBrazeUser();
 
 	if (userHasLoggedOut || userHasRemovedConsent) {
 		try {
-			const importedAppboy = await import(
+			const importedAppboy = (await import(
 				/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
-			) as unknown as typeof appboy;
+			)) as unknown as typeof appboy;
 			importedAppboy.initialize(apiKey, SDK_OPTIONS);
 			importedAppboy.wipeData();
 
@@ -239,102 +246,103 @@ const canShow = async (): Promise<boolean> => {
 	}
 };
 
-const renderBanner = (extras: Record<string, string>, message: BrazeMessageInterface) => {
-    Promise.all([
-        import('react-dom'),
-        import('@emotion/react'),
-        import('@emotion/cache'),
-        import(
-            /* webpackChunkName: "guardian-braze-components-banner" */ '@guardian/braze-components/banner'
-            ),
-    ])
-        .then((props) => {
-            const [
-                {render},
-                {CacheProvider},
-                {default: createCache},
-                brazeModule,
-            ] = props;
-            const container = document.createElement('div');
-            container.classList.add('site-message--banner');
+const renderBanner = (
+	extras: Record<string, string>,
+	message: BrazeMessageInterface,
+) => {
+	Promise.all([
+		import('react-dom'),
+		import('@emotion/react'),
+		import('@emotion/cache'),
+		import(
+			/* webpackChunkName: "guardian-braze-components-banner" */ '@guardian/braze-components/banner'
+		),
+	])
+		.then((props) => {
+			const [
+				{ render },
+				{ CacheProvider },
+				{ default: createCache },
+				brazeModule,
+			] = props;
+			const container = document.createElement('div');
+			container.classList.add('site-message--banner');
 
-            // The condition here is to keep flow happy
-            if (document.body) {
-                document.body.appendChild(container);
-            }
+			// The condition here is to keep flow happy
+			if (document.body) {
+				document.body.appendChild(container);
+			}
 
-            const Component = brazeModule.BrazeBannerComponent;
+			const Component = brazeModule.BrazeBannerComponent;
 
-            // IE does not support shadow DOM, so instead we just render
-            if (!container.attachShadow) {
-                render(
-                    <Component
-                        componentName={extras.componentName}
-                        logButtonClickWithBraze={(buttonId) => {
-                            message.logButtonClick(buttonId);
-                        }}
-                        submitComponentEvent={submitComponentEvent}
-                        brazeMessageProps={extras}
-                    />,
-                    container,
-                );
-            } else {
-                const shadowRoot = container.attachShadow({mode: 'open'});
-                const inner = shadowRoot.appendChild(
-                    document.createElement('div'),
-                );
-                const renderContainer = inner.appendChild(
-                    document.createElement('div'),
-                );
+			// IE does not support shadow DOM, so instead we just render
+			if (!container.attachShadow) {
+				render(
+					<Component
+						componentName={extras.componentName}
+						logButtonClickWithBraze={(buttonId) => {
+							message.logButtonClick(buttonId);
+						}}
+						submitComponentEvent={submitComponentEvent}
+						brazeMessageProps={extras}
+					/>,
+					container,
+				);
+			} else {
+				const shadowRoot = container.attachShadow({ mode: 'open' });
+				const inner = shadowRoot.appendChild(
+					document.createElement('div'),
+				);
+				const renderContainer = inner.appendChild(
+					document.createElement('div'),
+				);
 
-                const emotionCache = createCache({
-                    key: 'site-message',
-                    container: inner,
-                });
+				const emotionCache = createCache({
+					key: 'site-message',
+					container: inner,
+				});
 
-                const cached = (
-                    <CacheProvider value={emotionCache}>
-                        <Component
-                            componentName={extras.componentName}
-                            logButtonClickWithBraze={(buttonId) => {
-                                message.logButtonClick(buttonId);
-                            }}
-                            submitComponentEvent={submitComponentEvent}
-                            brazeMessageProps={extras}
-                        />
-                    </CacheProvider>
-                );
+				const cached = (
+					<CacheProvider value={emotionCache}>
+						<Component
+							componentName={extras.componentName}
+							logButtonClickWithBraze={(buttonId) => {
+								message.logButtonClick(buttonId);
+							}}
+							submitComponentEvent={submitComponentEvent}
+							brazeMessageProps={extras}
+						/>
+					</CacheProvider>
+				);
 
-                render(cached, renderContainer);
-            }
+				render(cached, renderContainer);
+			}
 
-            // Log the impression with Braze
-            message.logImpression();
+			// Log the impression with Braze
+			message.logImpression();
 
-            // Log the impression with Ophan
-            submitViewEvent({
-                component: {
-                    componentType: 'RETENTION_ENGAGEMENT_BANNER',
-                    id:
-                        extras.ophanComponentId ??
-                        extras.componentName,
-                },
-            });
+			// Log the impression with Ophan
+			submitViewEvent({
+				component: {
+					componentType: 'RETENTION_ENGAGEMENT_BANNER',
+					id: extras.ophanComponentId ?? extras.componentName,
+				},
+			});
 
-            return true;
-        })
-        .catch((error) => {
-            const msg = `Error with remote Braze component: ${error}`;
-            reportError(new Error(msg), {}, false);
+			return true;
+		})
+		.catch((error) => {
+			const msg = `Error with remote Braze component: ${error}`;
+			reportError(new Error(msg), {}, false);
 
-            return false;
-        });
+			return false;
+		});
 };
 
 const show = (): void => {
-    if (message && message.extras) {
-        renderBanner(message.extras, message);
-    }
+	if (message && message.extras) {
+		renderBanner(message.extras, message);
+	}
 };
 
 const brazeBanner = {
