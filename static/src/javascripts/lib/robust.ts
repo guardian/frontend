@@ -27,12 +27,7 @@ const logError = (
 	tags?: Record<string, string>,
 ): void => {
 	window.console.warn('Caught error.', error.stack);
-
-	if (tags) {
-		reportError(error, { module: moduleName, ...tags }, false);
-	} else {
-		reportError(error, { module: moduleName }, false);
-	}
+	reportError(error, { module: moduleName, ...tags }, false);
 };
 
 const catchAndLogError = (
