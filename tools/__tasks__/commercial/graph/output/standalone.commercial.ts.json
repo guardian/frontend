@@ -39,7 +39,7 @@
  "../lib/report-error.ts": [
   "../lib/raven.ts"
  ],
- "../lib/robust.js": [
+ "../lib/robust.ts": [
   "../lib/report-error.ts"
  ],
  "../lib/time-utils.ts": [],
@@ -650,7 +650,7 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/manage-ad-free-cookie.ts",
   "../lib/report-error.ts",
-  "../lib/robust.js",
+  "../lib/robust.ts",
   "../projects/commercial/adblock-ask.ts",
   "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
