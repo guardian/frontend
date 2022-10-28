@@ -128,7 +128,7 @@ object KnockoutSpider {
   val orderings: Map[String, List[ZonedDateTime]] = Map(
     // world cup 2022
     "700" -> List(
-      // Data from https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_knockout_stage (waiting for PA data)
+      // Data from https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_knockout_stage & PA API
       // ----
       // Rounds of 16
       // ----
@@ -153,8 +153,8 @@ object KnockoutSpider {
       // ----
       // Semi Finals
       // ----
-      ZonedDateTime.of(2022, 12, 13, 0, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 61
-      ZonedDateTime.of(2022, 12, 14, 0, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 62
+      ZonedDateTime.of(2022, 12, 13, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 61
+      ZonedDateTime.of(2022, 12, 14, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 62
       // ----
       // Final
       // ----
