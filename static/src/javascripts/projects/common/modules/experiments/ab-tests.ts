@@ -3,6 +3,7 @@ import { consentlessAds } from './tests/consentlessAds';
 import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
 import { integrateIMA } from './tests/integrate-ima';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
+import { removePrebidA9Canada } from './tests/removePrebidA9Canada';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 import {
@@ -33,4 +34,5 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateMandatoryLongTestVariantNa,
 	signInGateMandatoryLongTestVariantEu,
 	signInGateMandatoryLongTestVariantUk,
+	removePrebidA9Canada,
 ];
