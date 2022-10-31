@@ -17,9 +17,12 @@ object SupportedUrl {
         s"/${curatedContent.properties.webUrl
           .map(_.replaceFirst("^https?://www.theguardian.com/", ""))
           .orElse(curatedContent.properties.href)
-          .getOrElse(fc.card.id)}"
+          .getOrElse(curatedContent.card.id)}"
       case supportingCuratedContent: SupportingCuratedContent =>
-        s"/${supportingCuratedContent.properties.href.getOrElse(fc.card.id)}"
+        s"/${supportingCuratedContent.properties.webUrl
+          .map(_.replaceFirst("^https?://www.theguardian.com/", ""))
+          .orElse(supportingCuratedContent.properties.href)
+          .getOrElse(supportingCuratedContent.card.id)}"
       case linkSnap: LinkSnap => linkSnap.properties.href.getOrElse(linkSnap.card.id)
       case latestSnap: LatestSnap =>
         latestSnap.properties.maybeContent
