@@ -52,7 +52,7 @@ interface BrazeMessageInterface {
 	logButtonClick: (internalButtonId: number) => void;
 }
 
-let message: BrazeMessageInterface;
+let message: BrazeMessageInterface | undefined;
 
 const FORCE_BRAZE_ALLOWLIST = [
 	'preview.gutools.co.uk',
@@ -60,6 +60,13 @@ const FORCE_BRAZE_ALLOWLIST = [
 	'localhost',
 	'm.thegulocal.com',
 ];
+
+const isExtrasData = (data: unknown): data is Record<string, string> => {
+	if (typeof data === 'object' && data != null) {
+		return Object.values(data).every((value) => typeof value === 'string');
+	}
+	return false;
+};
 
 const getMessageFromUrlFragment = (): BrazeMessageInterface | undefined => {
 	if (window.location.hash) {
@@ -84,12 +91,19 @@ const getMessageFromUrlFragment = (): BrazeMessageInterface | undefined => {
 			try {
 				const dataFromBraze = JSON.parse(
 					decodeURIComponent(forcedMessage),
-				);
-				return {
-					extras: dataFromBraze,
-					logImpression: () => {},
-					logButtonClick: () => {},
-				};
+				) as unknown;
+
+				if (isExtrasData(dataFromBraze)) {
+					return {
+						extras: dataFromBraze,
+						logImpression: () => {
+							return;
+						},
+						logButtonClick: () => {
+							return;
+						},
+					};
+				}
 			} catch (e) {
 				// Parsing failed. Log a message and fall through.
 				if (e instanceof Error) {
@@ -268,14 +282,11 @@ const renderBanner = (
 			const container = document.createElement('div');
 			container.classList.add('site-message--banner');
 
-			// The condition here is to keep flow happy
-			if (document.body) {
-				document.body.appendChild(container);
-			}
+			document.body.appendChild(container);
 
 			const Component = brazeModule.BrazeBannerComponent;
 
-			// IE does not support shadow DOM, so instead we just render
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- IE does not support shadow DOM, so instead we just render
 			if (!container.attachShadow) {
 				render(
 					<Component
@@ -321,26 +332,30 @@ const renderBanner = (
 			// Log the impression with Braze
 			message.logImpression();
 
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- in general the Braze extras data should include the ophanComponentId, but it's not guaranteed
+			const componentId = extras.ophanComponentId ?? extras.componentName;
 			// Log the impression with Ophan
 			submitViewEvent({
 				component: {
 					componentType: 'RETENTION_ENGAGEMENT_BANNER',
-					id: extras.ophanComponentId ?? extras.componentName,
+					id: componentId,
 				},
 			});
 
 			return true;
 		})
 		.catch((error) => {
-			const msg = `Error with remote Braze component: ${error}`;
-			reportError(new Error(msg), {}, false);
+			if (error instanceof Error) {
+				const msg = `Error with remote Braze component: ${error.message}`;
+				reportError(new Error(msg), {}, false);
+			}
 
 			return false;
 		});
 };
 
 const show = (): void => {
-	if (message && message.extras) {
+	if (message?.extras) {
 		renderBanner(message.extras, message);
 	}
 };
