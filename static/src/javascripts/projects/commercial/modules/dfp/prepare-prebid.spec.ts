@@ -5,12 +5,19 @@ import {
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { log } from '@guardian/libs';
+import { isInCanada } from 'common/modules/commercial/geo-utils';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { dfpEnv } from './dfp-env';
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;
+
+jest.mock('common/modules/commercial/geo-utils', () => ({
+	isInCanada: jest.fn(() => false),
+}));
+
+jest.mock('../../../../lib/raven');
 
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
@@ -163,6 +170,21 @@ describe('init', () => {
 		expect(prebid.initialise).not.toBeCalled();
 	});
 
+	it('should NOT initialise Prebid when in Canada', async () => {
+		expect.hasAssertions();
+
+		dfpEnv.hbImpl = { prebid: true, a9: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+		(isInCanada as jest.Mock).mockReturnValueOnce(true);
+
+		await setupPrebid();
+
+		expect(prebid.initialise).not.toBeCalled();
+	});
+
 	it('should not initialise Prebid when advertising is switched off', async () => {
 		expect.hasAssertions();
 
@@ -214,6 +236,7 @@ describe('init', () => {
 		await setupPrebid();
 		expect(prebid.initialise).toBeCalled();
 	});
+
 	it('should initialise Prebid if TCFv2 consent with correct Sourcepoint Id is true ', async () => {
 		expect.hasAssertions();
 

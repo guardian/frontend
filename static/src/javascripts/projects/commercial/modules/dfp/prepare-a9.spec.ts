@@ -1,3 +1,4 @@
+import { isInCanada } from 'common/modules/commercial/geo-utils';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { a9 } from '../header-bidding/a9/a9';
 import { dfpEnv } from './dfp-env';
@@ -5,7 +6,9 @@ import { _ } from './prepare-a9';
 
 const { setupA9 } = _;
 
-jest.mock('../../../common/modules/commercial/geo-utils');
+jest.mock('../../../common/modules/commercial/geo-utils', () => ({
+	isInCanada: jest.fn(() => false),
+}));
 
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
@@ -55,6 +58,15 @@ describe('init', () => {
 		commercialFeatures.adFree = false;
 		await setupA9();
 		expect(a9.initialise).toBeCalled();
+	});
+
+	it('should NOT initialise A9 when in Canada', async () => {
+		dfpEnv.hbImpl = { a9: true, prebid: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		(isInCanada as jest.Mock).mockReturnValueOnce(true);
+		await setupA9();
+		expect(a9.initialise).not.toBeCalled();
 	});
 
 	it('should initialise A9 when both prebid and a9 switches are ON and advertising is on and ad-free is off', async () => {
