@@ -3,7 +3,6 @@ import {
 	BrazeMessages,
 	LocalMessageCache,
 } from '@guardian/braze-components/logic';
-import { onConsentChange } from '@guardian/consent-management-platform';
 import ophan from 'ophan/ng';
 import React from 'react';
 import { getUserIdentifiersFromApi } from 'common/modules/identity/api';
@@ -16,8 +15,7 @@ import {
 	hasCurrentBrazeUser,
 	setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
-
-const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
+import { hasRequiredConsents } from './hasRequiredConsents';
 
 const getBrazeUuid = (): Promise<string | undefined> =>
 	new Promise((resolve) => {
@@ -26,21 +24,6 @@ const getBrazeUuid = (): Promise<string | undefined> =>
 				resolve(userIdentifiers.brazeUuid);
 			} else {
 				resolve(undefined);
-			}
-		});
-	});
-
-const hasRequiredConsents = (): Promise<boolean> =>
-	new Promise((resolve) => {
-		onConsentChange(({ tcfv2, ccpa, aus }) => {
-			if (tcfv2) {
-				resolve(tcfv2.vendorConsents[brazeVendorId]);
-			} else if (ccpa) {
-				resolve(!ccpa.doNotSell);
-			} else if (aus) {
-				resolve(aus.personalisedAdvertising);
-			} else {
-				resolve(false);
 			}
 		});
 	});
@@ -374,4 +357,4 @@ const brazeBanner = {
 	canShow,
 };
 
-export { brazeBanner, brazeVendorId, hasRequiredConsents };
+export { brazeBanner };
