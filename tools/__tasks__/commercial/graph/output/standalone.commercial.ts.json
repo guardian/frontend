@@ -290,7 +290,8 @@
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/a9/a9.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-googletag.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -333,7 +334,8 @@
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
   "../projects/commercial/modules/header-bidding/utils.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
+  "../projects/common/modules/commercial/commercial-features.ts",
+  "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/dfp/queue-advert.ts": [
   "../projects/commercial/modules/dfp/Advert.ts",
