@@ -69,6 +69,6 @@ object EuropeNetworkFront
       name = "europe-network-front",
       description = "Test new europe network front",
       owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2022, 11, 1),
+      sellByDate = LocalDate.of(2023, 3, 1),
       participationGroup = Perc0D,
     )
