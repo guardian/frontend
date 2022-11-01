@@ -22,12 +22,10 @@ import { reportError } from 'lib/report-error';
 
 const buildHeaderLinksPayload = (): HeaderPayload => {
 	const countryCode = getCountryCode();
-	const edition = config.get('page.edition', 'INT');
 	return {
 		tracking,
 		targeting: {
 			showSupportMessaging: !shouldHideSupportMessaging(),
-			edition,
 			countryCode,
 			modulesVersion: ModulesVersion,
 			mvtId: getMvtValue() ?? 0,
