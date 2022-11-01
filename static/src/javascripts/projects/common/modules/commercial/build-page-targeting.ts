@@ -4,7 +4,6 @@ import type { ConsentState } from '@guardian/consent-management-platform/dist/ty
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
-import { getSynchronousParticipations } from '../experiments/ab';
 import { commercialFeatures } from './commercial-features';
 
 const formatAppNexusTargeting = (obj: Record<string, string | string[]>) => {
@@ -47,7 +46,6 @@ const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 	const pageTargeting = buildPageTargeting(
 		consentState,
 		commercialFeatures.adFree,
-		getSynchronousParticipations(),
 	);
 
 	// third-parties wish to access our page targeting, before the googletag script is loaded.
