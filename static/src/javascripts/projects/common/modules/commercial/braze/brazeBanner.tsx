@@ -1,4 +1,3 @@
-import type appboy from '@braze/web-sdk-core';
 import type { BrazeMessage } from '@guardian/braze-components';
 import {
 	BrazeMessages,
@@ -132,9 +131,9 @@ const getMessageFromBraze = async (
 	const sdkLoadTiming = measureTiming('braze-sdk-load');
 	sdkLoadTiming.start();
 
-	const importedAppboy = (await import(
+	const { default: importedAppboy } = await import(
 		/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
-	)) as unknown as typeof appboy;
+	);
 
 	const sdkLoadTimeTaken = sdkLoadTiming.end();
 	ophan.record({
@@ -194,9 +193,9 @@ const maybeWipeUserData = async (
 
 	if (userHasLoggedOut || userHasRemovedConsent) {
 		try {
-			const importedAppboy = (await import(
+			const { default: importedAppboy } = await import(
 				/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
-			)) as unknown as typeof appboy;
+			);
 			importedAppboy.initialize(apiKey, SDK_OPTIONS);
 			importedAppboy.wipeData();
 
