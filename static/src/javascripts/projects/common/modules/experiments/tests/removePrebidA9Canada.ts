@@ -1,4 +1,5 @@
 import type { ABTest } from '@guardian/ab-core';
+import { isInCanada } from 'common/modules/commercial/geo-utils';
 import { noop } from '../../../../../lib/noop';
 
 export const removePrebidA9Canada: ABTest = {
@@ -17,5 +18,5 @@ export const removePrebidA9Canada: ABTest = {
 		{ id: 'control', test: noop },
 		{ id: 'variant', test: noop },
 	],
-	canRun: () => true,
+	canRun: () => isInCanada(),
 };
