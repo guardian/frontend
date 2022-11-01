@@ -1,4 +1,8 @@
 import { isInCanada } from 'common/modules/commercial/geo-utils';
+import {
+	isInABTestSynchronous,
+	isInVariantSynchronous,
+} from 'common/modules/experiments/ab';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { a9 } from '../header-bidding/a9/a9';
 import { dfpEnv } from './dfp-env';
@@ -8,6 +12,11 @@ const { setupA9 } = _;
 
 jest.mock('../../../common/modules/commercial/geo-utils', () => ({
 	isInCanada: jest.fn(() => false),
+}));
+
+jest.mock('common/modules/experiments/ab', () => ({
+	isInABTestSynchronous: jest.fn().mockReturnValue(false),
+	isInVariantSynchronous: jest.fn().mockReturnValue(false),
 }));
 
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
@@ -44,7 +53,7 @@ const fakeUserAgent = (userAgent?: string) => {
 
 describe('init', () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		jest.resetAllMocks();
 		fakeUserAgent();
 	});
 
@@ -56,17 +65,48 @@ describe('init', () => {
 		dfpEnv.hbImpl = { a9: true, prebid: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
+
 		await setupA9();
+
 		expect(a9.initialise).toBeCalled();
 	});
 
-	it('should NOT initialise A9 when in Canada', async () => {
+	it('should NOT initialise A9 when in Canada and NOT in test', async () => {
 		dfpEnv.hbImpl = { a9: true, prebid: false };
 		commercialFeatures.dfpAdvertising = true;
 		commercialFeatures.adFree = false;
 		(isInCanada as jest.Mock).mockReturnValueOnce(true);
+		(isInABTestSynchronous as jest.Mock).mockReturnValueOnce(false);
+
 		await setupA9();
+
 		expect(a9.initialise).not.toBeCalled();
+	});
+
+	it('should NOT initialise A9 when in Canada and in test control', async () => {
+		dfpEnv.hbImpl = { a9: true, prebid: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		(isInCanada as jest.Mock).mockReturnValueOnce(true);
+		(isInABTestSynchronous as jest.Mock).mockReturnValueOnce(true);
+		(isInVariantSynchronous as jest.Mock).mockReturnValueOnce(false);
+
+		await setupA9();
+
+		expect(a9.initialise).not.toBeCalled();
+	});
+
+	it('should initialise A9 when in Canada and when in test variant', async () => {
+		dfpEnv.hbImpl = { a9: true, prebid: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		(isInCanada as jest.Mock).mockReturnValueOnce(true);
+		(isInABTestSynchronous as jest.Mock).mockReturnValueOnce(true);
+		(isInVariantSynchronous as jest.Mock).mockReturnValueOnce(true);
+
+		await setupA9();
+
+		expect(a9.initialise).toBeCalled();
 	});
 
 	it('should initialise A9 when both prebid and a9 switches are ON and advertising is on and ad-free is off', async () => {

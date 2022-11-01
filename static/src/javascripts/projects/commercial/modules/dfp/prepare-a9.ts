@@ -6,11 +6,31 @@ import {
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import { isInCanada } from 'common/modules/commercial/geo-utils';
+import {
+	isInABTestSynchronous,
+	isInVariantSynchronous,
+} from 'common/modules/experiments/ab';
+import { removePrebidA9Canada } from 'common/modules/experiments/tests/removePrebidA9Canada';
 import { isGoogleProxy } from '../../../../lib/detect-google-proxy';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { a9 } from '../header-bidding/a9/a9';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
+
+const shouldSkipA9InCanada = () => {
+	// If user is not in Canada, we don't skip
+	if (!isInCanada()) {
+		return false;
+	}
+
+	// If a user is not a part of the test, skip A9
+	if (!isInABTestSynchronous(removePrebidA9Canada)) {
+		return true;
+	}
+
+	// Don't skip A9 if user is in the variant
+	return !isInVariantSynchronous(removePrebidA9Canada, 'variant');
+};
 
 const setupA9 = (): Promise<void | boolean> => {
 	const shouldLoadA9 =
@@ -21,7 +41,7 @@ const setupA9 = (): Promise<void | boolean> => {
 		commercialFeatures.dfpAdvertising &&
 		!commercialFeatures.adFree &&
 		!window.guardian.config.page.hasPageSkin &&
-		!isInCanada();
+		!shouldSkipA9InCanada();
 
 	if (shouldLoadA9 || shouldIncludeOnlyA9) {
 		// Load a9 third party stub

@@ -6,6 +6,10 @@ import type { ConsentState } from '@guardian/consent-management-platform/dist/ty
 import type { TCFv2ConsentState } from '@guardian/consent-management-platform/dist/types/tcfv2';
 import { log } from '@guardian/libs';
 import { isInCanada } from 'common/modules/commercial/geo-utils';
+import {
+	isInABTestSynchronous,
+	isInVariantSynchronous,
+} from 'common/modules/experiments/ab';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { dfpEnv } from './dfp-env';
@@ -15,6 +19,11 @@ const { setupPrebid } = _;
 
 jest.mock('common/modules/commercial/geo-utils', () => ({
 	isInCanada: jest.fn(() => false),
+}));
+
+jest.mock('common/modules/experiments/ab', () => ({
+	isInABTestSynchronous: jest.fn().mockReturnValue(false),
+	isInVariantSynchronous: jest.fn().mockReturnValue(false),
 }));
 
 jest.mock('../../../../lib/raven');
@@ -126,7 +135,7 @@ const fakeUserAgent = (userAgent?: string) => {
 
 describe('init', () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		jest.resetAllMocks();
 		fakeUserAgent();
 	});
 
@@ -170,7 +179,21 @@ describe('init', () => {
 		expect(prebid.initialise).not.toBeCalled();
 	});
 
-	it('should NOT initialise Prebid when in Canada', async () => {
+	it('should initialise Prebid when NOT in Canada', async () => {
+		expect.hasAssertions();
+
+		dfpEnv.hbImpl = { prebid: true, a9: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+		(isInCanada as jest.Mock).mockReturnValueOnce(false);
+
+		await setupPrebid();
+		expect(prebid.initialise).toBeCalled();
+	});
+
+	it('should NOT initialise Prebid when in Canada and NOT in test', async () => {
 		expect.hasAssertions();
 
 		dfpEnv.hbImpl = { prebid: true, a9: false };
@@ -179,10 +202,43 @@ describe('init', () => {
 		mockOnConsent(tcfv2WithConsent);
 		mockGetConsentFor(true);
 		(isInCanada as jest.Mock).mockReturnValueOnce(true);
+		(isInABTestSynchronous as jest.Mock).mockReturnValueOnce(false);
+		(isInVariantSynchronous as jest.Mock).mockReturnValueOnce(false);
 
 		await setupPrebid();
-
 		expect(prebid.initialise).not.toBeCalled();
+	});
+
+	it('should NOT initialise Prebid when in Canada and when in test control', async () => {
+		expect.hasAssertions();
+
+		dfpEnv.hbImpl = { prebid: true, a9: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+		(isInCanada as jest.Mock).mockReturnValueOnce(true);
+		(isInABTestSynchronous as jest.Mock).mockReturnValueOnce(true);
+		(isInVariantSynchronous as jest.Mock).mockReturnValueOnce(false);
+
+		await setupPrebid();
+		expect(prebid.initialise).not.toBeCalled();
+	});
+
+	it('should initialise Prebid when in Canada and when in test variant', async () => {
+		expect.hasAssertions();
+
+		dfpEnv.hbImpl = { prebid: true, a9: false };
+		commercialFeatures.dfpAdvertising = true;
+		commercialFeatures.adFree = false;
+		mockOnConsent(tcfv2WithConsent);
+		mockGetConsentFor(true);
+		(isInCanada as jest.Mock).mockReturnValueOnce(true);
+		(isInABTestSynchronous as jest.Mock).mockReturnValueOnce(true);
+		(isInVariantSynchronous as jest.Mock).mockReturnValueOnce(true);
+
+		await setupPrebid();
+		expect(prebid.initialise).toBeCalled();
 	});
 
 	it('should not initialise Prebid when advertising is switched off', async () => {

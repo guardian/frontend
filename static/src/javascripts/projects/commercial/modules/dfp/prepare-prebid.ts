@@ -6,11 +6,31 @@ import type { Framework } from '@guardian/consent-management-platform/dist/types
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import { isInCanada } from 'common/modules/commercial/geo-utils';
+import {
+	isInABTestSynchronous,
+	isInVariantSynchronous,
+} from 'common/modules/experiments/ab';
+import { removePrebidA9Canada } from 'common/modules/experiments/tests/removePrebidA9Canada';
 import { isGoogleProxy } from 'lib/detect-google-proxy';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
+
+const shouldSkipPrebidInCanada = () => {
+	// If user is not in Canada, we don't skip
+	if (!isInCanada()) {
+		return false;
+	}
+
+	// If a user is not a part of the test, skip Prebid
+	if (!isInABTestSynchronous(removePrebidA9Canada)) {
+		return true;
+	}
+
+	// Don't skip Prebid if user is in the variant
+	return !isInVariantSynchronous(removePrebidA9Canada, 'variant');
+};
 
 const shouldLoadPrebid = () =>
 	!isGoogleProxy() &&
@@ -19,7 +39,7 @@ const shouldLoadPrebid = () =>
 	!commercialFeatures.adFree &&
 	!window.guardian.config.page.hasPageSkin &&
 	!shouldIncludeOnlyA9 &&
-	!isInCanada();
+	!shouldSkipPrebidInCanada();
 
 const loadPrebid = async (framework: Framework): Promise<void> => {
 	if (shouldLoadPrebid()) {
