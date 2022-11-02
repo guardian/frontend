@@ -147,16 +147,18 @@ from scrolling */
 }
 
 .news-header__logo-best-website {
+    margin-top: 10px;
+
     @include mq($until: mobileMedium) {
         margin-bottom: 17px;
     }
 
-    @include mq(mobileMedium) {
-        margin-top: 14px;
-    }
-
     @include mq(tablet) {
         margin-top: 8px;
+    }
+
+    @include mq(desktop) {
+        margin-top: 5px;
     }
 }
 
@@ -208,11 +210,11 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        width: 229px;
+        width: 224px;
     }
 
     @include mq(desktop) {
-        width: 301px;
+        width: 295px;
     }
 }
 
