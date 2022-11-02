@@ -9,7 +9,7 @@ const labelSelector = '.ad-slot__label';
 
 const adverts: Record<string, string> = {
 	withLabel: `
-        <div class="js-ad-slot"></div>`,
+        <div class="js-ad-slot" data-label-show="true"></div>`,
 	labelDisabled: `
         <div class="js-ad-slot" data-label="false"></div>`,
 	alreadyLabelled: `
@@ -45,8 +45,11 @@ describe('Rendering advert labels', () => {
 	it('Can add a label', async () => {
 		createAd(adverts['withLabel']);
 		return renderAdvertLabel(getAd()).then(() => {
-			const label = getAd().querySelector(labelSelector);
-			expect(label).not.toBeNull();
+			const ad = getAd().querySelector('.js-ad-slot');
+			const labelStyles = ad && getComputedStyle(ad, '::before');
+			if (labelStyles) {
+				expect(labelStyles.content).toBe('Advertisement');
+			}
 		});
 	});
 
