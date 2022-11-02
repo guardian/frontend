@@ -3,6 +3,7 @@ import {
 	BrazeMessages,
 	LocalMessageCache,
 } from '@guardian/braze-components/logic';
+import { log } from '@guardian/libs';
 import ophan from 'ophan/ng';
 import React from 'react';
 import { getUserIdentifiersFromApi } from 'common/modules/identity/api';
@@ -70,7 +71,7 @@ const getMessageFromUrlFragment = (): BrazeMessageInterface | undefined => {
 
 		if (hashString.includes(key)) {
 			if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
-				console.log(`${key} is not supported on this domain`);
+				log('tx', `${key} is not supported on this domain`);
 				return;
 			}
 
@@ -98,7 +99,7 @@ const getMessageFromUrlFragment = (): BrazeMessageInterface | undefined => {
 			} catch (e) {
 				// Parsing failed. Log a message and fall through.
 				if (e instanceof Error) {
-					console.log(`There was an error with ${key}:`, e.message);
+					log('tx', `There was an error with ${key}:`, e.message);
 				}
 			}
 		}
@@ -194,6 +195,8 @@ const maybeWipeUserData = async (
 			LocalMessageCache.clear();
 
 			clearHasCurrentBrazeUser();
+
+			log('tx', 'Cleared local Braze data');
 		} catch (error) {
 			reportError(error, {}, false);
 		}
@@ -214,6 +217,7 @@ const canShow = async (): Promise<boolean> => {
 	const apiKey: string | undefined = config.get('page.brazeApiKey');
 	const isBrazeConfigured = brazeSwitch && apiKey;
 	if (!isBrazeConfigured) {
+		log('tx', 'Braze is not configured, not loading Braze SDK');
 		return false;
 	}
 
@@ -225,11 +229,16 @@ const canShow = async (): Promise<boolean> => {
 	await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
 
 	if (!(brazeUuid && hasGivenConsent)) {
+		log(
+			'tx',
+			"User is not logged in or hasn't given consent, not loading Braze SDK",
+		);
 		return false;
 	}
 
 	// Don't load Braze SDK for paid content
 	if (config.get('page.isPaidContent')) {
+		log('tx', 'Page isPaidContent, not loading Braze SDK');
 		return false;
 	}
 
