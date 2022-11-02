@@ -296,7 +296,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("unknown")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val AmpLiveBlogSwitch = Switch(
@@ -306,7 +306,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("unknown")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val R2PagePressServiceSwitch = Switch(
