@@ -9,7 +9,7 @@ object Europe
     extends Edition(
       id = "EUR",
       displayName = "Europe edition",
-      timezone = DateTimeZone.forID("Europe/London"),
+      timezone = DateTimeZone.forID("Europe/Paris"), // CET/CEST
       locale = None,
       networkFrontId = "europe",
       editionalisedSections = Seq(""), // only the home page
