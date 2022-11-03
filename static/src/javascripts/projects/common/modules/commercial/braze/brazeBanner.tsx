@@ -3,7 +3,7 @@ import {
 	BrazeMessages,
 	LocalMessageCache,
 } from '@guardian/braze-components/logic';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { log } from '@guardian/libs';
 import ophan from 'ophan/ng';
 import React from 'react';
 import { getUserIdentifiersFromApi } from 'common/modules/identity/api';
@@ -16,8 +16,7 @@ import {
 	hasCurrentBrazeUser,
 	setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
-
-const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
+import { hasRequiredConsents } from './hasRequiredConsents';
 
 const getBrazeUuid = (): Promise<string | undefined> =>
 	new Promise((resolve) => {
@@ -26,21 +25,6 @@ const getBrazeUuid = (): Promise<string | undefined> =>
 				resolve(userIdentifiers.brazeUuid);
 			} else {
 				resolve(undefined);
-			}
-		});
-	});
-
-const hasRequiredConsents = (): Promise<boolean> =>
-	new Promise((resolve) => {
-		onConsentChange(({ tcfv2, ccpa, aus }) => {
-			if (tcfv2) {
-				resolve(tcfv2.vendorConsents[brazeVendorId]);
-			} else if (ccpa) {
-				resolve(!ccpa.doNotSell);
-			} else if (aus) {
-				resolve(aus.personalisedAdvertising);
-			} else {
-				resolve(false);
 			}
 		});
 	});
@@ -87,7 +71,7 @@ const getMessageFromUrlFragment = (): BrazeMessageInterface | undefined => {
 
 		if (hashString.includes(key)) {
 			if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
-				console.log(`${key} is not supported on this domain`);
+				log('tx', `${key} is not supported on this domain`);
 				return;
 			}
 
@@ -115,7 +99,7 @@ const getMessageFromUrlFragment = (): BrazeMessageInterface | undefined => {
 			} catch (e) {
 				// Parsing failed. Log a message and fall through.
 				if (e instanceof Error) {
-					console.log(`There was an error with ${key}:`, e.message);
+					log('tx', `There was an error with ${key}:`, e.message);
 				}
 			}
 		}
@@ -211,6 +195,8 @@ const maybeWipeUserData = async (
 			LocalMessageCache.clear();
 
 			clearHasCurrentBrazeUser();
+
+			log('tx', 'Cleared local Braze data');
 		} catch (error) {
 			reportError(error, {}, false);
 		}
@@ -231,6 +217,7 @@ const canShow = async (): Promise<boolean> => {
 	const apiKey: string | undefined = config.get('page.brazeApiKey');
 	const isBrazeConfigured = brazeSwitch && apiKey;
 	if (!isBrazeConfigured) {
+		log('tx', 'Braze is not configured, not loading Braze SDK');
 		return false;
 	}
 
@@ -242,11 +229,16 @@ const canShow = async (): Promise<boolean> => {
 	await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
 
 	if (!(brazeUuid && hasGivenConsent)) {
+		log(
+			'tx',
+			"User is not logged in or hasn't given consent, not loading Braze SDK",
+		);
 		return false;
 	}
 
 	// Don't load Braze SDK for paid content
 	if (config.get('page.isPaidContent')) {
+		log('tx', 'Page isPaidContent, not loading Braze SDK');
 		return false;
 	}
 
@@ -374,4 +366,4 @@ const brazeBanner = {
 	canShow,
 };
 
-export { brazeBanner, brazeVendorId, hasRequiredConsents };
+export { brazeBanner };
