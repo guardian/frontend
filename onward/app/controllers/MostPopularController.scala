@@ -54,7 +54,7 @@ class MostPopularController(
       val globalPopular: Option[MostPopular] = {
         val globalPopularContent = mostPopularAgent.mostPopular(edition)
         if (globalPopularContent.nonEmpty)
-          Some(MostPopular("Across The&nbsp;Guardian", "", globalPopularContent.map(_.faciaContent)))
+          Some(MostPopular("Across the&nbsp;Guardian", "", globalPopularContent.map(_.faciaContent)))
         else
           None
       }
@@ -104,7 +104,7 @@ class MostPopularController(
       val headers = request.headers.toSimpleMap
       val countryCode = headers.getOrElse("X-GU-GeoLocation", "country:row").replace("country:", "")
       val countryPopular =
-        MostPopular("Across The&nbsp;Guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
+        MostPopular("Across the&nbsp;Guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
       if (request.forceDCR) {
         jsonResponse(countryPopular, countryCode)
@@ -261,7 +261,7 @@ class MostPopularController(
       if (path == "film") capiItem.dateParam("from-date", Instant.now.minus(180, ChronoUnit.DAYS)) else capiItem
 
     contentApiClient.getResponse(capiItemWithDate).map { response =>
-      val heading = response.section.map(s => "in " + s.webTitle).getOrElse("Across The&nbsp;Guardian")
+      val heading = response.section.map(s => "in " + s.webTitle).getOrElse("Across the&nbsp;Guardian")
       val popular = response.mostViewed.getOrElse(Nil) take 10 map (RelatedContentItem(_))
       if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent).toSeq))
     }
