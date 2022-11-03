@@ -5,6 +5,11 @@ import scala.collection.immutable
 
 sealed abstract class ParticipationGroup(val headerName: String) extends EnumEntry {
   override def toString: String = headerName
+
+  val percentage = headerName match {
+    case s"X-GU-Experiment-${percNo}perc-${_}" => percNo
+    case _                                     => "unknown"
+  }
 }
 
 object ParticipationGroups extends enumeratum.Enum[ParticipationGroup] {
