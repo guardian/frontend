@@ -52,6 +52,7 @@ object CardStyleFormat extends Format[CardStyle] {
   def reads(json: JsValue): JsResult[CardStyle] = {
     (json \ "type").transform[JsString](Reads.JsStringReads) match {
       case JsSuccess(JsString("SpecialReport"), _)    => JsSuccess(SpecialReport)
+      case JsSuccess(JsString("SpecialReportAlt"), _) => JsSuccess(SpecialReportAlt)
       case JsSuccess(JsString("LiveBlog"), _)         => JsSuccess(LiveBlog)
       case JsSuccess(JsString("DeadBlog"), _)         => JsSuccess(DeadBlog)
       case JsSuccess(JsString("Feature"), _)          => JsSuccess(Feature)
@@ -70,6 +71,7 @@ object CardStyleFormat extends Format[CardStyle] {
   def writes(cardStyle: CardStyle): JsObject =
     cardStyle match {
       case SpecialReport    => JsObject(Seq("type" -> JsString("SpecialReport")))
+      case SpecialReportAlt => JsObject(Seq("type" -> JsString("SpecialReportAlt")))
       case LiveBlog         => JsObject(Seq("type" -> JsString("LiveBlog")))
       case DeadBlog         => JsObject(Seq("type" -> JsString("DeadBlog")))
       case Feature          => JsObject(Seq("type" -> JsString("Feature")))
