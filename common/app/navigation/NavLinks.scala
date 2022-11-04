@@ -108,6 +108,7 @@ object NavLinks {
     "Football",
     "/football",
     children = List(
+      NavLink("World Cup 2022", "/football/world-cup-2022", Some("football/world-cup-2022")),
       NavLink("Live scores", "/football/live", Some("football/live")),
       NavLink("Tables", "/football/tables", Some("football/tables")),
       NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
