@@ -42,6 +42,8 @@ trait FaciaController
   val ws: WSClient
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
+  val mostPopularAgent: Most =
+
   implicit val context: ApplicationContext
 
   def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
