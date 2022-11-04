@@ -1,261 +1,30 @@
-import type { BrazeMessage } from '@guardian/braze-components';
-import {
-	BrazeMessages,
-	LocalMessageCache,
-} from '@guardian/braze-components/logic';
-import { log } from '@guardian/libs';
-import ophan from 'ophan/ng';
 import React from 'react';
-import { getUserIdentifiersFromApi } from 'common/modules/identity/api';
 import config from '../../../../../lib/config';
 import { reportError } from '../../../../../lib/report-error';
-import { measureTiming } from '../../../../commercial/modules/measure-timing';
 import { submitComponentEvent, submitViewEvent } from '../acquisitions-ophan';
-import {
-	clearHasCurrentBrazeUser,
-	hasCurrentBrazeUser,
-	setHasCurrentBrazeUser,
-} from './hasCurrentBrazeUser';
-import { hasRequiredConsents } from './hasRequiredConsents';
-
-const getBrazeUuid = (): Promise<string | undefined> =>
-	new Promise((resolve) => {
-		getUserIdentifiersFromApi((userIdentifiers) => {
-			if (userIdentifiers?.brazeUuid) {
-				resolve(userIdentifiers.brazeUuid);
-			} else {
-				resolve(undefined);
-			}
-		});
-	});
-
-// Note on BrazeMessageInterface vs BrazeMessage:
-// BrazeMessage is the actual class which we wrap messages in returned from the
-// Braze SDK (in @guardian/braze-components). BrazeMessageInterface represents
-// the public interface supplied by instances of that class. In the message
-// forcing logic it's hard to create and return a BrazeMessage from the forced
-// json. A better approach would probably be to change the code in
-// @guardian/braze-components to return a BrazeMessageInterface (which an
-// instance of BrazeMessage would conform to) and at least the type definitions
-// would all live in one centralised place.
-interface BrazeMessageInterface {
-	extras: Record<string, string> | undefined;
-	logImpression: () => void;
-	logButtonClick: (internalButtonId: number) => void;
-}
+import type { BrazeMessageInterface } from './brazeMessageInterface';
+import { buildBrazeMessaging } from './buildBrazeMessaging';
+import { getMessageFromUrlFragment } from './getMessageFromUrlFragment';
 
 let message: BrazeMessageInterface | undefined;
 
-const FORCE_BRAZE_ALLOWLIST = [
-	'preview.gutools.co.uk',
-	'preview.code.dev-gutools.co.uk',
-	'localhost',
-	'm.thegulocal.com',
-];
-
-const isExtrasData = (data: unknown): data is Record<string, string> => {
-	if (typeof data === 'object' && data != null) {
-		return Object.values(data).every((value) => typeof value === 'string');
-	}
-	return false;
-};
-
-const getMessageFromUrlFragment = (): BrazeMessageInterface | undefined => {
-	if (window.location.hash) {
-		// This is intended for use on development domains for preview purposes.
-		// It won't run in PROD.
-
-		const key = 'force-braze-message';
-
-		const hashString = window.location.hash;
-
-		if (hashString.includes(key)) {
-			if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
-				log('tx', `${key} is not supported on this domain`);
-				return;
-			}
-
-			const forcedMessage = hashString.slice(
-				hashString.indexOf(`${key}=`) + key.length + 1,
-				hashString.length,
-			);
-
-			try {
-				const dataFromBraze = JSON.parse(
-					decodeURIComponent(forcedMessage),
-				) as unknown;
-
-				if (isExtrasData(dataFromBraze)) {
-					return {
-						extras: dataFromBraze,
-						logImpression: () => {
-							return;
-						},
-						logButtonClick: () => {
-							return;
-						},
-					};
-				}
-			} catch (e) {
-				// Parsing failed. Log a message and fall through.
-				if (e instanceof Error) {
-					log('tx', `There was an error with ${key}:`, e.message);
-				}
-			}
-		}
-	}
-
-	return;
-};
-
-const SDK_OPTIONS = {
-	enableLogging: false,
-	noCookies: true,
-	baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
-	sessionTimeoutInSeconds: 1,
-	minimumIntervalBetweenTriggerActionsInSeconds: 0,
-	devicePropertyAllowlist: [],
-};
-
-const getMessageFromBraze = async (
-	apiKey: string,
-	brazeUuid: string,
-): Promise<BrazeMessage> => {
-	const sdkLoadTiming = measureTiming('braze-sdk-load');
-	sdkLoadTiming.start();
-
-	const { default: importedAppboy } = await import(
-		/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
-	);
-
-	const sdkLoadTimeTaken = sdkLoadTiming.end();
-	ophan.record({
-		component: 'braze-sdk-load-timing',
-		value: sdkLoadTimeTaken,
-	});
-
-	const appboyTiming = measureTiming('braze-appboy');
-	appboyTiming.start();
-
-	importedAppboy.initialize(apiKey, SDK_OPTIONS);
-
-	const errorHandler = (error: Error) => {
-		reportError(error, {}, false);
-	};
-	const brazeMessages = new BrazeMessages(
-		importedAppboy,
-		LocalMessageCache,
-		errorHandler,
-	);
-
-	setHasCurrentBrazeUser();
-	importedAppboy.changeUser(brazeUuid);
-	importedAppboy.openSession();
-
-	const section = config.get('page.section');
-	const brazeArticleContext =
-		typeof section === 'string' ? { section } : undefined;
-
-	const canShowPromise =
-		brazeMessages.getMessageForBanner(brazeArticleContext);
-
-	canShowPromise
-		.then(() => {
-			const appboyTimeTaken = appboyTiming.end();
-
-			ophan.record({
-				component: 'braze-appboy-timing',
-				value: appboyTimeTaken,
-			});
-		})
-		.catch(() => {
-			appboyTiming.clear();
-			console.log('Appboy Timing failed.');
-		});
-
-	return canShowPromise;
-};
-
-const maybeWipeUserData = async (
-	apiKey: string,
-	brazeUuid: string | undefined,
-	consent: boolean,
-) => {
-	const userHasLoggedOut = !brazeUuid && hasCurrentBrazeUser();
-	const userHasRemovedConsent = !consent && hasCurrentBrazeUser();
-
-	if (userHasLoggedOut || userHasRemovedConsent) {
-		try {
-			const { default: importedAppboy } = await import(
-				/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
-			);
-			importedAppboy.initialize(apiKey, SDK_OPTIONS);
-			importedAppboy.wipeData();
-
-			LocalMessageCache.clear();
-
-			clearHasCurrentBrazeUser();
-
-			log('tx', 'Cleared local Braze data');
-		} catch (error) {
-			reportError(error, {}, false);
-		}
-	}
-};
-
 const canShow = async (): Promise<boolean> => {
-	const bannerTiming = measureTiming('braze-banner');
-	bannerTiming.start();
-
 	const forcedBrazeMessage = getMessageFromUrlFragment();
 	if (forcedBrazeMessage) {
 		message = forcedBrazeMessage;
 		return true;
 	}
 
-	const brazeSwitch: string | undefined = config.get('switches.brazeSwitch');
-	const apiKey: string | undefined = config.get('page.brazeApiKey');
-	const isBrazeConfigured = brazeSwitch && apiKey;
-	if (!isBrazeConfigured) {
-		log('tx', 'Braze is not configured, not loading Braze SDK');
-		return false;
-	}
-
-	const [brazeUuid, hasGivenConsent] = await Promise.all([
-		getBrazeUuid(),
-		hasRequiredConsents(),
-	]);
-
-	await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
-
-	if (!(brazeUuid && hasGivenConsent)) {
-		log(
-			'tx',
-			"User is not logged in or hasn't given consent, not loading Braze SDK",
-		);
-		return false;
-	}
-
-	// Don't load Braze SDK for paid content
-	if (config.get('page.isPaidContent')) {
-		log('tx', 'Page isPaidContent, not loading Braze SDK');
-		return false;
-	}
-
 	try {
-		message = await getMessageFromBraze(apiKey, brazeUuid);
+		const section = config.get('page.section');
+		const brazeArticleContext =
+			typeof section === 'string' ? { section } : undefined;
 
-		const timeTaken = bannerTiming.end();
-		if (timeTaken) {
-			ophan.record({
-				component: 'braze-banner-timing',
-				value: timeTaken,
-			});
-		}
+		const brazeMessages = await buildBrazeMessaging();
+		message = await brazeMessages.getMessageForBanner(brazeArticleContext);
 
 		return true;
 	} catch (e) {
-		bannerTiming.clear();
 		return false;
 	}
 };
