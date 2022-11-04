@@ -177,6 +177,7 @@ class FaciaPicker extends GuLogging {
     val properties =
       Map(
         "participatingInTest" -> participatingInTest.toString,
+        "testPercentage" -> DCRFronts.participationGroup.percentage,
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isFront" -> "true",
         "tier" -> tierReadable,
