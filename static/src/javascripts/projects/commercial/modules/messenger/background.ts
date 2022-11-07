@@ -2,7 +2,7 @@ import type { RegisterListener } from '@guardian/commercial-core';
 import { isObject } from '@guardian/libs';
 import fastdom from '../../../../lib/fastdom-promise';
 import {
-	renderInterscrollerAdLabel,
+	renderAdvertLabel,
 	renderStickyScrollForMoreLabel,
 } from '../dfp/render-advert-label';
 
@@ -199,7 +199,7 @@ const setupBackground = async (
 				adSlot.style.position = 'relative';
 			}
 
-			void renderInterscrollerAdLabel(adSlot);
+			void renderAdvertLabel(backgroundParent);
 			void renderStickyScrollForMoreLabel(backgroundParent);
 
 			isDCR && renderBottomLine(background, backgroundParent);

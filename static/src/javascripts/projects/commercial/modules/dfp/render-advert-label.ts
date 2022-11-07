@@ -80,19 +80,6 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 	});
 };
 
-const renderInterscrollerAdLabel = (adSlotNode: HTMLElement): Promise<void> =>
-	fastdom.measure(() => {
-		const adSlotLabel: HTMLElement = document.createElement('div');
-		adSlotLabel.classList.add('ad-slot__label');
-		adSlotLabel.style.cssText = `
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;`;
-		adSlotLabel.innerHTML = 'Advertisement';
-		adSlotNode.appendChild(adSlotLabel);
-	});
-
 const renderStickyScrollForMoreLabel = (
 	adSlotNode: HTMLElement,
 ): Promise<void> =>
@@ -113,7 +100,6 @@ const renderStickyScrollForMoreLabel = (
 
 export {
 	renderAdvertLabel,
-	renderInterscrollerAdLabel,
 	renderStickyScrollForMoreLabel,
 	shouldRenderLabel,
 	createAdCloseDiv,
