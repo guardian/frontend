@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
+import agents.MostViewedAgent
 import common.JsonComponent.Ok
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
@@ -40,9 +41,8 @@ trait FaciaController
 
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
+  val mostViewedAgent: MostViewedAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
-
-  val mostPopularAgent: Most =
 
   implicit val context: ApplicationContext
 
@@ -490,5 +490,6 @@ class FaciaControllerImpl(
     val frontJsonFapi: FrontJsonFapiLive,
     val controllerComponents: ControllerComponents,
     val ws: WSClient,
+    val mostViewedAgent: MostViewedAgent,
 )(implicit val context: ApplicationContext)
     extends FaciaController

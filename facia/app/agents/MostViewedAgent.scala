@@ -1,4 +1,4 @@
-package feed
+package agents
 
 import conf.Configuration
 import contentapi.ContentApiClient
