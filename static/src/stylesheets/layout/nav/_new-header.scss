@@ -146,20 +146,6 @@ from scrolling */
     }
 }
 
-.news-header__logo-best-website {
-    @include mq($until: mobileMedium) {
-        margin-bottom: 17px;
-    }
-
-    @include mq(mobileMedium) {
-        margin-top: 14px;
-    }
-
-    @include mq(tablet) {
-        margin-top: 8px;
-    }
-}
-
 .inline-the-guardian-roundel__svg {
     height: $veggie-burger;
     width: $veggie-burger;
@@ -208,11 +194,11 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        width: 229px;
+        width: 224px;
     }
 
     @include mq(desktop) {
-        width: 301px;
+        width: 295px;
     }
 }
 
