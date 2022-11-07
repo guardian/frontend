@@ -206,7 +206,17 @@ trait FaciaController
           if FaciaPicker.getTier(faciaPage) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
-        withVaryHeader(remoteRenderer.getFront(ws, faciaPage, pageType)(request), targetedTerritories)
+        withVaryHeader(
+          remoteRenderer.getFront(
+            ws = ws,
+            page = faciaPage,
+            pageType = pageType,
+            mostViewed = mostViewedAgent.mostViewed,
+            mostCommented = mostViewedAgent.mostCommented,
+            mostShared = mostViewedAgent.mostShared,
+          )(request),
+          targetedTerritories,
+        )
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(
           Cached(CacheTime.Facia)(

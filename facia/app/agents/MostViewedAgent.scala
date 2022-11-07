@@ -15,9 +15,14 @@ case class Country(code: String, edition: Edition)
 
 class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends GuLogging {
 
+  private val mostViewedBox = Box[Seq[RelatedContentItem]](Seq.empty)
   private val relatedContentsBox = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
   private val mostCommentedCardBox = Box[Option[Content]](None)
   private val mostSharedCardBox = Box[Option[Content]](None)
+
+  def mostViewed = mostViewedBox.get()
+  def mostCommented = mostCommentedCardBox.get()
+  def mostShared = mostSharedCardBox.get()
 
   // Container for most_shared and most_commented
   val mostSingleCardsBox = Box[Map[String, Content]](Map.empty)
