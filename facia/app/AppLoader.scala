@@ -1,3 +1,4 @@
+import agents.MostViewedAgent
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
@@ -9,6 +10,7 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
+import feed.MostViewedLifecycle
 import http.{CommonFilters, PreloadFilters}
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
@@ -41,6 +43,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val ophanApi = wire[OphanApi]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val mostViewedAgent = wire[MostViewedAgent]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -51,6 +54,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     wire[IndexListingsLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
+    wire[MostViewedLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
