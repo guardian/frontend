@@ -93,7 +93,13 @@ const go = () => {
                 if (consentState.aus) {
                     const ccpaUUID = getCookie('ccpaUUID') || '';
                     const consentStatus = getCookie('consentStatus') || '';
-                    return ['01:AUS', `06:${ccpaUUID}`, `07:${consentStatus}`];
+                    const personalisedAdvertising = consentState.aus?.personalisedAdvertising ? 'true' : 'false';
+                    return [
+                        '01:AUS',
+                        `06:${ccpaUUID}`,
+                        `07:${consentStatus}`,
+                        `08:${personalisedAdvertising}`,
+                    ];
                 }
                 return [];
             };
