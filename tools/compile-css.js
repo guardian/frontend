@@ -11,7 +11,7 @@ const mkdirp = require('mkdirp');
 const glob = require('glob');
 const pify = require('pify');
 
-const sass = require('node-sass');
+const sass = require('sass');
 
 const postcss = require('postcss');
 const autoprefixer = require('autoprefixer');

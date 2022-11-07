@@ -96,7 +96,7 @@
     }
 
     .content__labels--paidgallery {
-        @include fs-textSans(6)
+        @include fs-textSans(6);
         background: $labs-main;
         .content__label__link {
             color: $brightness-7;
