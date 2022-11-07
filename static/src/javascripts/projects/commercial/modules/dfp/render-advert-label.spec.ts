@@ -5,7 +5,6 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 }));
 
 const adSelector = '.js-ad-slot';
-const labelSelector = '.ad-slot__label';
 
 const adverts: Record<string, string> = {
 	withLabel: `
@@ -89,16 +88,6 @@ describe('Rendering advert labels', () => {
 			const adElement = getAd();
 			const dataLabelShow = adElement.getAttribute('data-label-show');
 			expect(dataLabelShow).toBeFalsy();
-		});
-	});
-
-	it('When the ad is top above nav and the label is toggleable, make the label visible', async () => {
-		createAd(adverts['topAboveNavToggleLabel']);
-		return renderAdvertLabel(getAd()).then(() => {
-			const adSlotLabel = getAd().querySelector(labelSelector);
-			expect(adSlotLabel).not.toBeNull();
-			const label = document.querySelector(labelSelector) as HTMLElement;
-			expect(label.classList.contains('visible')).toBe(true);
 		});
 	});
 
