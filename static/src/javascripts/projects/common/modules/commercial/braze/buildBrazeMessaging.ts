@@ -6,16 +6,14 @@ import {
 } from '@guardian/braze-components/logic';
 import { log } from '@guardian/libs';
 import ophan from 'ophan/ng';
-import config from '../../../../../lib/config';
 import { reportError } from '../../../../../lib/report-error';
 import { measureTiming } from '../../../../commercial/modules/measure-timing';
-import { getBrazeUuid } from './getBrazeUuid';
+import { checkBrazeDependencies } from './checkBrazeDependencies';
 import {
 	clearHasCurrentBrazeUser,
 	hasCurrentBrazeUser,
 	setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
-import { hasRequiredConsents } from './hasRequiredConsents';
 
 const SDK_OPTIONS = {
 	enableLogging: false,
@@ -27,7 +25,7 @@ const SDK_OPTIONS = {
 };
 
 const maybeWipeUserData = async (
-	apiKey: string,
+	apiKey: string | undefined,
 	brazeUuid: string | undefined,
 	consent: boolean,
 ) => {
@@ -39,8 +37,10 @@ const maybeWipeUserData = async (
 			const { default: importedAppboy } = await import(
 				/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
 			);
-			importedAppboy.initialize(apiKey, SDK_OPTIONS);
-			importedAppboy.wipeData();
+			if (apiKey) {
+				importedAppboy.initialize(apiKey, SDK_OPTIONS);
+				importedAppboy.wipeData();
+			}
 
 			LocalMessageCache.clear();
 
@@ -55,43 +55,31 @@ const maybeWipeUserData = async (
 
 export const buildBrazeMessaging =
 	async (): Promise<BrazeMessagesInterface> => {
-		// Check dependencies
-		const brazeSwitch: string | undefined = config.get(
-			'switches.brazeSwitch',
-		);
-		const apiKey: string | undefined = config.get('page.brazeApiKey');
-		const isBrazeConfigured = brazeSwitch && apiKey;
-		if (!isBrazeConfigured) {
-			log('tx', 'Braze is not configured, not loading Braze SDK');
-			return new NullBrazeMessages();
-		}
+		// New check dependencies
+		const dependenciesResult = await checkBrazeDependencies();
 
-		const [brazeUuid, hasGivenConsent] = await Promise.all([
-			getBrazeUuid(),
-			hasRequiredConsents(),
-		]);
+		if (!dependenciesResult.isSuccessful) {
+			const { failure, data } = dependenciesResult;
 
-		await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
-
-		if (!(brazeUuid && hasGivenConsent)) {
 			log(
 				'tx',
-				"User is not logged in or hasn't given consent, not loading Braze SDK",
+				`Not attempting to show Braze messages. Dependency ${
+					failure.field
+				} failed with ${String(failure.data)}.`,
 			);
-			return new NullBrazeMessages();
-		}
 
-		// Don't load Braze SDK for paid content
-		if (config.get('page.isPaidContent')) {
-			log('tx', 'Page isPaidContent, not loading Braze SDK');
+			await maybeWipeUserData(
+				data.apiKey as string | undefined,
+				data.brazeUuid as string | undefined,
+				data.consent as boolean,
+			);
+
 			return new NullBrazeMessages();
 		}
-		// End check dependencies
 
 		const sdkLoadTiming = measureTiming('braze-sdk-load');
 		sdkLoadTiming.start();
 
-		// Load and initialize SDK
 		const { default: importedAppboy } = await import(
 			/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
 		);
@@ -102,7 +90,10 @@ export const buildBrazeMessaging =
 			value: sdkLoadTimeTaken,
 		});
 
-		importedAppboy.initialize(apiKey, SDK_OPTIONS);
+		importedAppboy.initialize(
+			dependenciesResult.data.apiKey as string,
+			SDK_OPTIONS,
+		);
 
 		const errorHandler = (error: Error) => {
 			reportError(error, {}, false);
@@ -114,9 +105,8 @@ export const buildBrazeMessaging =
 		);
 
 		setHasCurrentBrazeUser();
-		importedAppboy.changeUser(brazeUuid);
+		importedAppboy.changeUser(dependenciesResult.data.brazeUuid as string);
 		importedAppboy.openSession();
-		// End Load and initialize SDK
 
 		return brazeMessages;
 	};
