@@ -9,7 +9,7 @@ const labelSelector = '.ad-slot__label';
 
 const adverts: Record<string, string> = {
 	withLabel: `
-        <div class="js-ad-slot" data-label-show="true"></div>`,
+        <div class="js-ad-slot"></div>`,
 	labelDisabled: `
         <div class="js-ad-slot" data-label="false"></div>`,
 	alreadyLabelled: `
@@ -42,54 +42,53 @@ describe('Rendering advert labels', () => {
 		document.body.innerHTML = '';
 	});
 
+	//To test the new style of ad label, we need to be able to use the window.getComputedStyle(element, pseudoSelector)
+	//function, but the pseudo selector capability isn't currently supported by JSDOM. So for now we can't access
+	//pseudo elements in the DOM while testing, which means we can't test for ad label rendering.
+	//However, we can at least make sure that 'data-label-show' is correctly assigned for each test case.
+
 	it('Can add a label', async () => {
 		createAd(adverts['withLabel']);
 		return renderAdvertLabel(getAd()).then(() => {
-			const ad = getAd().querySelector('.js-ad-slot');
-			const labelStyles = ad && getComputedStyle(ad, '::before');
-			if (labelStyles) {
-				expect(labelStyles.content).toBe('Advertisement');
-			}
-		});
-	});
-
-	it('The label has a message', async () => {
-		createAd(adverts['withLabel']);
-		return renderAdvertLabel(getAd()).then(() => {
-			const label = getAd().querySelector(labelSelector) as Element;
-			expect(label.textContent).toBe('Advertisement');
+			const adElement = getAd();
+			const dataLabelShow = adElement.getAttribute('data-label-show');
+			expect(dataLabelShow).toBeTruthy();
 		});
 	});
 
 	it('Will not add a label if it has an attribute data-label="false"', async () => {
 		createAd(adverts['labelDisabled']);
 		return renderAdvertLabel(getAd()).then(() => {
-			const label = getAd().querySelector(labelSelector);
-			expect(label).toBeNull();
+			const adElement = getAd();
+			const dataLabelShow = adElement.getAttribute('data-label-show');
+			expect(dataLabelShow).toBeFalsy();
 		});
 	});
 
 	it('Will not add a label if the adSlot already has one', async () => {
 		createAd(adverts['alreadyLabelled']);
 		return renderAdvertLabel(getAd()).then(() => {
-			const label = getAd().querySelectorAll(labelSelector);
-			expect(label.length).toBe(1);
+			const adElement = getAd();
+			const dataLabelShow = adElement.getAttribute('data-label-show');
+			expect(dataLabelShow).toBeFalsy();
 		});
 	});
 
 	it('Will not add a label to frame ads', async () => {
 		createAd(adverts['frame']);
 		return renderAdvertLabel(getAd()).then(() => {
-			const label = getAd().querySelector(labelSelector);
-			expect(label).toBeNull();
+			const adElement = getAd();
+			const dataLabelShow = adElement.getAttribute('data-label-show');
+			expect(dataLabelShow).toBeFalsy();
 		});
 	});
 
 	it('Will not add a label to an ad slot with a hidden u-h class', async () => {
 		createAd(adverts['uh']);
 		return renderAdvertLabel(getAd()).then(() => {
-			const label = getAd().querySelector(labelSelector);
-			expect(label).toBeNull();
+			const adElement = getAd();
+			const dataLabelShow = adElement.getAttribute('data-label-show');
+			expect(dataLabelShow).toBeFalsy();
 		});
 	});
 
@@ -106,8 +105,9 @@ describe('Rendering advert labels', () => {
 	it('When the ad is top above nav and the label is NOT toggleable, render the label dynamically', async () => {
 		createAd(adverts['topAboveNav']);
 		return renderAdvertLabel(getAd()).then(() => {
-			const label = getAd().querySelector(labelSelector) as HTMLElement;
-			expect(label.textContent).toEqual('Advertisement');
+			const adElement = getAd();
+			const dataLabelShow = adElement.getAttribute('data-label-show');
+			expect(dataLabelShow).toBeTruthy();
 		});
 	});
 });
