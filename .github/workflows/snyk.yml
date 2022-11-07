@@ -6,6 +6,8 @@ on:
         branches:
             - main
     workflow_dispatch:
+permissions:
+  contents: read
 jobs:
     security:
         uses: guardian/.github/.github/workflows/sbt-node-snyk.yml@main
