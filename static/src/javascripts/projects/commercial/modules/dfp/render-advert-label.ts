@@ -3,6 +3,7 @@
 -- Nested fastdom measure-mutate promises throw the error:
 -- "Promise returned in function argument where a void return was expected"
 */
+import { getCookie } from '@guardian/libs';
 import crossIcon from 'svgs/icon/cross.svg';
 import fastdom from '../../../../lib/fastdom-promise';
 
@@ -35,10 +36,33 @@ const createAdCloseDiv = (): HTMLElement => {
 	return closeDiv;
 };
 
+// If `adtest` cookie is set, display its value in the ad label
+// Furthermore, provide a link to clear the cookie
+const createAdTestLabel = (): HTMLElement => {
+	const adTestLabel = document.createElement('span');
+
+	const val = getCookie({ name: 'adtest', shouldMemoize: true });
+
+	if (val) {
+		adTestLabel.innerHTML += ` [?adtest=${val}] `;
+
+		const url = new URL(window.location.href);
+		url.searchParams.set('adtest', 'clear');
+
+		const clearLink = document.createElement('a');
+		clearLink.href = url.href;
+		clearLink.innerHTML = 'clear';
+		adTestLabel.appendChild(clearLink);
+	}
+
+	return adTestLabel;
+};
+
 const createAdLabel = (): HTMLElement => {
 	const adLabel = document.createElement('div');
 	adLabel.className = 'ad-slot__label';
 	adLabel.innerHTML = 'Advertisement';
+	adLabel.appendChild(createAdTestLabel());
 	adLabel.appendChild(createAdCloseDiv());
 	return adLabel;
 };
