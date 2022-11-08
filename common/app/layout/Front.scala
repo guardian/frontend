@@ -4,7 +4,7 @@ import common.{Edition, LinkTo}
 import model.PressedPage
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
-import model.pressed.{PressedContent, SpecialReportAlt}
+import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
 import slices._
 
