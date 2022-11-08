@@ -8,6 +8,7 @@ import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed.MostViewedLifecycle
@@ -39,13 +40,17 @@ trait FapiServices {
 
 trait AppComponents extends FrontendComponents with FaciaControllers with FapiServices {
 
+  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  lazy val contentApiClient = wire[ContentApiClient]
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val ophanApi = wire[OphanApi]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
   lazy val mostViewedAgent = wire[MostViewedAgent]
 
+
   override lazy val lifecycleComponents = List(
+
     wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],

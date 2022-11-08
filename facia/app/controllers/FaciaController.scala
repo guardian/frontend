@@ -22,6 +22,7 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
+import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
@@ -211,7 +212,7 @@ trait FaciaController
             ws = ws,
             page = faciaPage,
             pageType = pageType,
-            mostViewed = mostViewedAgent.mostViewed,
+            mostViewed = mostViewedAgent.mostViewed("GB"), // todo -- pass actual country code
             mostCommented = mostViewedAgent.mostCommented,
             mostShared = mostViewedAgent.mostShared,
           )(request),
@@ -230,6 +231,9 @@ trait FaciaController
                     page = faciaPage,
                     request = request,
                     pageType = PageType(faciaPage, request, context),
+                    mostViewed = mostViewedAgent.mostViewed("GB"), // todo -- pass actual country code
+                    mostCommented = mostViewedAgent.mostCommented,
+                    mostShared = mostViewedAgent.mostShared,
                   ),
                 )
               } else JsonFront(faciaPage)
