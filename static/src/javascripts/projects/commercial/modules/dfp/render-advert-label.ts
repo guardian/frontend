@@ -36,14 +36,21 @@ const createAdCloseDiv = (): HTMLElement => {
 	return closeDiv;
 };
 
+const shouldRenderAdTestLabel = (): boolean =>
+	!!getCookie({
+		name: 'adtestInLabels',
+		shouldMemoize: true,
+	});
+
 // If `adtest` cookie is set, display its value in the ad label
 // Furthermore, provide a link to clear the cookie
 const createAdTestLabel = (): HTMLElement => {
 	const adTestLabel = document.createElement('span');
 
+	const shouldRender = shouldRenderAdTestLabel();
 	const val = getCookie({ name: 'adtest', shouldMemoize: true });
 
-	if (val) {
+	if (shouldRender && val) {
 		adTestLabel.innerHTML += ` [?adtest=${val}] `;
 
 		const url = new URL(window.location.href);

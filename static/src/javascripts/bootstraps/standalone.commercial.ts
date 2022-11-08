@@ -49,6 +49,7 @@ import { init as initMobileSticky } from '../projects/commercial/modules/mobile-
 import { paidContainers } from '../projects/commercial/modules/paid-containers';
 import { removeDisabledSlots as closeDisabledSlots } from '../projects/commercial/modules/remove-slots';
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
+import { init as setAdTestInLabelsCookie } from '../projects/commercial/modules/set-adtest-in-labels-cookie';
 import { init as initThirdPartyTags } from '../projects/commercial/modules/third-party-tags';
 import { init as initTrackGpcSignal } from '../projects/commercial/modules/track-gpc-signal';
 import { init as initTrackLabsContainer } from '../projects/commercial/modules/track-labs-container';
@@ -92,6 +93,7 @@ const commercialExtraModules: Modules = [
 if (!commercialFeatures.adFree) {
 	commercialBaseModules.push(
 		['cm-setAdTestCookie', setAdTestCookie],
+		['cm-setAdTestInLabelsCookie', setAdTestInLabelsCookie],
 		['cm-prepare-prebid', preparePrebid],
 		// Permutive init code must run before google tag enableServices()
 		// The permutive lib however is loaded async with the third party tags
@@ -224,6 +226,7 @@ const bootConsentless = async (): Promise<void> => {
 
 	await Promise.all([
 		setAdTestCookie(),
+		setAdTestInLabelsCookie(),
 		initSafeframes(),
 		initConsentless(consentState),
 		initFixedSlots(),
