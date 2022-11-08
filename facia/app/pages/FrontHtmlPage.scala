@@ -13,6 +13,7 @@ import views.html.fragments.page.head._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import html.HtmlPageHelpers.{ContentCSSFile, FaciaCSSFile}
+import services.dotcomrendering.FaciaPicker.dcrChecks
 
 object FrontHtmlPage extends HtmlPage[PressedPage] {
 
@@ -41,6 +42,11 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
       override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
     }
 
+  def htmlDcrCouldRender(page: PressedPage)(implicit request: RequestHeader): Html = {
+    val thisDcrCouldRender: Boolean = dcrChecks(page).values.forall(identity)
+    Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
+  }
+
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: PressedPage = page
     htmlTag(
@@ -53,6 +59,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         fixIEReferenceErrors(),
         checkModuleSupport(),
         inlineJSBlocking(),
+        htmlDcrCouldRender(page),
       ),
       bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),

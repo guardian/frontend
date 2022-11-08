@@ -121,9 +121,9 @@ object FrontChecks {
 
 }
 
-class FaciaPicker extends GuLogging {
+object FaciaPicker extends GuLogging {
 
-  private def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
+  def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("allCollectionsAreSupported", FrontChecks.allCollectionsAreSupported(faciaPage)),
       ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
@@ -139,7 +139,7 @@ class FaciaPicker extends GuLogging {
   def getTier(faciaPage: PressedPage)(implicit request: RequestHeader): RenderType = {
     lazy val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
     lazy val checks = dcrChecks(faciaPage)
-    lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue == true)
+    lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue)
 
     val tier = decideTier(request.isRss, request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
 
@@ -186,5 +186,3 @@ class FaciaPicker extends GuLogging {
     DotcomFrontsLogger.logger.logRequest(s"front executing in $tierReadable", properties, faciaPage)
   }
 }
-
-object FaciaPicker extends FaciaPicker
