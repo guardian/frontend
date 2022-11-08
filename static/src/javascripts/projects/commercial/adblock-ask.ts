@@ -1,7 +1,5 @@
 import fastdom from '../../lib/fastdom-promise';
-import { pageShouldHideReaderRevenue } from '../common/modules/commercial/contributions-utilities';
 import { supportSubscribeDigitalURL } from '../common/modules/commercial/support-utilities';
-import { shouldHideSupportMessaging } from '../common/modules/commercial/user-features';
 
 const params = new URLSearchParams();
 params.set(
