@@ -24,7 +24,7 @@ const askHtml = `
 `;
 
 // Hard coded to disable for new product launch
-const canShow = (): boolean => false
+const canShow = (): boolean => false;
 
 /**
  * Initialise adblock ask a.k.a Shady Pie
