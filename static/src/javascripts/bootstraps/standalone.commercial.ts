@@ -20,8 +20,6 @@ import { initLiveblogInline } from 'commercial/modules/consentless/dynamic/liveb
 import { initFixedSlots } from 'commercial/modules/consentless/init-fixed-slots';
 import { initSafeframes } from 'commercial/modules/consentless/init-safeframes';
 import { initConsentless } from 'commercial/modules/consentless/prepare-ootag';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { consentlessAds } from 'common/modules/experiments/tests/consentlessAds';
 import {
 	AdFreeCookieReasons,
 	maybeUnsetAdFreeCookie,
@@ -211,7 +209,7 @@ const bootCommercial = async (): Promise<void> => {
 	}
 };
 
-const bootConsentless = async (): Promise<void> => {
+const bootAdServer = async (): Promise<void> => {
 	/*  In the consented ad stack, we set the ad free cookie for users who
 		don't consent to targeted ads in order to hide empty ads slots.
 		We remove the cookie here so that we can show Opt Out ads.
@@ -224,8 +222,6 @@ const bootConsentless = async (): Promise<void> => {
 
 	await Promise.all([
 		setAdTestCookie(),
-		initSafeframes(),
-		initConsentless(consentState),
 		initFixedSlots(),
 		initArticleInline(),
 		initLiveblogInline(),
@@ -236,17 +232,4 @@ const bootConsentless = async (): Promise<void> => {
 	window.ootag.makeRequests();
 };
 
-/* Provide consentless advertising in the variant of a zero-percent test,
-   regardless of consent state. This is currently just for testing purposes.
-
-   If not in the variant, get the usual commercial experience
-*/
-if (isInVariantSynchronous(consentlessAds, 'variant')) {
-	void bootConsentless();
-} else {
-	if (window.guardian.mustardCut || window.guardian.polyfilled) {
-		void bootCommercial();
-	} else {
-		window.guardian.queue.push(bootCommercial);
-	}
-}
+void bootAdServer();
