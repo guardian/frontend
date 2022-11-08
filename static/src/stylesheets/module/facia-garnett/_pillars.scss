@@ -412,6 +412,16 @@ $pillars: (
         }
     }
 
+    background-color: $special-report-alt-faded !important;
+
+    .fc-item__container.u-faux-block-link--hover {
+        background-color: $special-report-alt-faded !important;
+
+        .fc-item__timestamp,
+        .fc-trail__count--commentcount {
+            background-color: $special-report-alt-dark !important;
+        }
+    }
 
     &.fc-item--type-media,
     &.fc-item--type-interview {
@@ -430,7 +440,7 @@ $pillars: (
 
     .fc-item__container {
         &:before {
-            background-color: $special-report-alt-faded;
+            background-color: $special-report-alt-dark !important;
         }
     }
 
@@ -454,7 +464,8 @@ $pillars: (
         }
 
         .fc-item__kicker {
-            color: $special-report-alt-dark;
+            color: $special-report-alt-dark !important;
+
         }
     }
 

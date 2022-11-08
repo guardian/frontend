@@ -77,6 +77,7 @@ object GetClasses {
         (sublinkMediaTypeClass(sublink).getOrElse(""), true),
         ("fc-sublink--pillar-" + sublink.pillar.nameOrDefault, true),
         ("fc-sublink--type-" + sublink.designType.nameOrDefault, true),
+        ("fc-sublink--pillar-special-report-alt", sublink.cardStyle == SpecialReportAlt),
       ),
     )
 
