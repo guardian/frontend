@@ -49,9 +49,7 @@
  ],
  "../projects/commercial/adblock-ask.ts": [
   "../lib/fastdom-promise.ts",
-  "../projects/common/modules/commercial/contributions-utilities.ts",
-  "../projects/common/modules/commercial/support-utilities.ts",
-  "../projects/common/modules/commercial/user-features.ts"
+  "../projects/common/modules/commercial/support-utilities.ts"
  ],
  "../projects/commercial/am-i-used.ts": [],
  "../projects/commercial/modules/ad-free-slot-remove.ts": [
@@ -598,9 +596,6 @@
   "../lib/detect-breakpoint.ts",
   "../projects/common/modules/commercial/user-features.ts",
   "../projects/common/modules/user-prefs.ts"
- ],
- "../projects/common/modules/commercial/contributions-utilities.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/common/modules/commercial/geo-utils.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
