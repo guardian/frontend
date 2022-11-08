@@ -193,6 +193,7 @@ object GetClasses {
     BreakingPalette -> "fc-container--breaking-palette",
     EventPalette -> "fc-container--event-palette",
     EventAltPalette -> "fc-container--event-alt-palette",
+    SpecialReportAltPalette -> "fc-container--special-report-alt-palette",
   )
 
   private def primaryPaletteTag(metadata: Seq[Metadata]): Option[Metadata] = {
