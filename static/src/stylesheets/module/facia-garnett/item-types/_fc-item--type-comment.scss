@@ -287,7 +287,7 @@
 
 .fc-item--pillar-special-report-alt {
     .fc-item__container > .fc-item__meta {
-        @include multiline(3, #3c3c3c4d);
+        @include multiline(3, rgba(60, 60, 60, .3));
 
         display: flex;
         position: absolute;

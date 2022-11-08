@@ -56,7 +56,7 @@
         left: 0;
         content: '';
         width: $gs-gutter * 6 + 2px;
-        border-top: 1px solid #3c3c3c4d;
+        border-top: 1px solid rgba(60, 60, 60, .3);
 
         @include mq($from: tablet) {
             width: $gs-column-width * 2;
