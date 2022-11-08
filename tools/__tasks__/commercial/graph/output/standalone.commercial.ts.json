@@ -356,6 +356,7 @@
   "../projects/commercial/modules/dfp/load-advert.ts"
  ],
  "../projects/commercial/modules/dfp/render-advert-label.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/fastdom-promise.ts"
  ],
  "../projects/commercial/modules/dfp/render-advert.ts": [
@@ -536,6 +537,10 @@
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/url.ts"
  ],
+ "../projects/commercial/modules/set-adtest-in-labels-cookie.ts": [
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/url.ts"
+ ],
  "../projects/commercial/modules/sticky-inlines.ts": [
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/source-foundations/dist/types/index.d.ts",
@@ -677,6 +682,7 @@
   "../projects/commercial/modules/paid-containers.ts",
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/commercial/modules/set-adtest-cookie.ts",
+  "../projects/commercial/modules/set-adtest-in-labels-cookie.ts",
   "../projects/commercial/modules/third-party-tags.ts",
   "../projects/commercial/modules/track-gpc-signal.ts",
   "../projects/commercial/modules/track-labs-container.ts",
