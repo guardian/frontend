@@ -115,9 +115,11 @@
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/consentless/define-slot.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../../../../node_modules/fastdom/fastdom.d.ts",
-  "../projects/commercial/modules/consentless/render-advert-label.ts"
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../projects/commercial/modules/consentless/render-advert-label.ts",
+  "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/consentless/dynamic/article-inline.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -575,9 +577,6 @@
  "../projects/common/modules/analytics/google.ts": [
   "../../../../node_modules/web-vitals/dist/modules/index.d.ts",
   "../lib/mediator.ts"
- ],
- "../projects/common/modules/analytics/mvt-cookie.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
  ],
  "../projects/common/modules/article/space-filler.ts": [
   "../lib/raven.ts",
