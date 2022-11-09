@@ -3,7 +3,7 @@ package conf.switches
 import conf.switches.Expiry.never
 import java.time.LocalDate
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.Commercial
+import conf.switches.SwitchGroup.{Commercial, Feature}
 
 trait FeatureSwitches {
 
@@ -489,6 +489,16 @@ trait FeatureSwitches {
     "When ON, facia containers with targeted territories in Australia will include a 'region switcher' for users to change their region",
     owners = Seq(Owner.withName("unknown")),
     safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
+
+  val headerTopBar = Switch(
+    SwitchGroup.Feature,
+    "header-top-bar",
+    "When ON, the header has a thin top bar above containing relevant links",
+    owners = group(Feature),
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false,
   )
