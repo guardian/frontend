@@ -460,12 +460,16 @@ $pillars: (
 
         .fc-item__byline {
             display: inline;
-            color: $special-report-alt-dark;
+            color: $special-report-alt-dark !important;
         }
 
         .fc-item__kicker {
             color: $special-report-alt-dark !important;
 
+        }
+
+        .inline-icon {
+            fill: $special-report-alt-dark !important;
         }
     }
 
