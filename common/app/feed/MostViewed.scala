@@ -1,14 +1,65 @@
 package feed
 
 import com.gu.commercial.branding.BrandingFinder
-import common.{Edition, GuLogging}
+import common.{Edition, GuLogging, editions}
 import contentapi.{ContentApiClient, QueryDefaults}
+import implicits.Requests.RichRequestHeader
 import model.RelatedContentItem
 import services.OphanMostReadItem
 
 import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
+
+sealed trait Country {
+  val code: String
+  val edition: Edition
+}
+object Country {
+  def fromHeaderString(header: RichRequestHeader): Country =
+    header.countryCode.toLowerCase match {
+      case "gb" => GB
+      case "us" => US
+      case "ca" => CA
+      case "au" => AU
+      case "in" => IN
+      case "ng" => NG
+      case "nz" => NZ
+      case _ => ROW
+    }
+}
+case object GB extends Country {
+  val code = "gb"
+  val edition = editions.Uk
+}
+case object US extends Country {
+  val code = "us"
+  val edition = editions.Us
+}
+case object AU extends Country {
+  val code = "au"
+  val edition = editions.Au
+}
+case object CA extends Country {
+  val code = "ca"
+  val edition = editions.Us
+}
+case object IN extends Country {
+  val code = "in"
+  val edition = Edition.defaultEdition
+}
+case object NG extends Country {
+  val code = "ng"
+  val edition = Edition.defaultEdition
+}
+case object NZ extends Country {
+  val code = "nz"
+  val edition = editions.Au
+}
+case object ROW extends Country {
+  val code = "row"
+  val edition = Edition.defaultEdition
+}
 
 object MostViewed extends GuLogging {
 
@@ -20,8 +71,8 @@ object MostViewed extends GuLogging {
   // This function takes a sequence of items and a function that maps each item to a future.
   // Each future carries a map, all the maps are collapsed into one using a reduce
   def refreshAll[A](as: Seq[A])(
-    refreshOne: A => Future[Map[String, Seq[RelatedContentItem]]],
-  )(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+    refreshOne: A => Future[Map[Country, Seq[RelatedContentItem]]],
+  )(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
     as.map(refreshOne)
       .reduce((itemsF, otherItemsF) =>
         for {
