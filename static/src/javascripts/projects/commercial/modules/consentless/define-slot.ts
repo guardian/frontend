@@ -50,6 +50,7 @@ async function getAd(
 	const labelSet = new Set(labels.map((label) => label.name));
 	const isFluid = labelSet.has('fluid');
 	const useSrc = labelSet.has('use-iframe-src');
+	const noAdLabel = labelSet.has('no-ad-label');
 
 	if (url !== '') {
 		// Image based creative
@@ -73,6 +74,8 @@ async function getAd(
 		}
 		slot.appendChild(iframe);
 	}
+
+	return { noAdLabel };
 }
 
 let targeting: PageTargeting | undefined = undefined;
@@ -88,11 +91,14 @@ const defineSlot = (slot: HTMLElement, slotName: string): void => {
 					commercialFeatures.adFree,
 				);
 			}
-			return targeting;
+			// Attach additional slot-level targeting (but do not cache this)
+			return { ...targeting, slot: slot.id };
 		})
 		.then((targeting) => {
-			return getAd(slot, slotName, targeting).then(() => {
-				return renderConsentlessAdvertLabel(slot);
+			return getAd(slot, slotName, targeting).then((props) => {
+				if (!props?.noAdLabel) {
+					return renderConsentlessAdvertLabel(slot);
+				}
 			});
 		});
 };
