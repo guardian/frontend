@@ -55,7 +55,6 @@ const maybeWipeUserData = async (
 
 export const buildBrazeMessaging =
 	async (): Promise<BrazeMessagesInterface> => {
-		// New check dependencies
 		const dependenciesResult = await checkBrazeDependencies();
 
 		if (!dependenciesResult.isSuccessful) {
@@ -77,36 +76,47 @@ export const buildBrazeMessaging =
 			return new NullBrazeMessages();
 		}
 
-		const sdkLoadTiming = measureTiming('braze-sdk-load');
-		sdkLoadTiming.start();
+		try {
+			const sdkLoadTiming = measureTiming('braze-sdk-load');
+			sdkLoadTiming.start();
 
-		const { default: importedAppboy } = await import(
-			/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
-		);
+			const { default: importedAppboy } = await import(
+				/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
+			);
 
-		const sdkLoadTimeTaken = sdkLoadTiming.end();
-		ophan.record({
-			component: 'braze-sdk-load-timing',
-			value: sdkLoadTimeTaken,
-		});
+			const sdkLoadTimeTaken = sdkLoadTiming.end();
+			ophan.record({
+				component: 'braze-sdk-load-timing',
+				value: sdkLoadTimeTaken,
+			});
 
-		importedAppboy.initialize(
-			dependenciesResult.data.apiKey as string,
-			SDK_OPTIONS,
-		);
+			importedAppboy.initialize(
+				dependenciesResult.data.apiKey as string,
+				SDK_OPTIONS,
+			);
 
-		const errorHandler = (error: Error) => {
-			reportError(error, {}, false);
-		};
-		const brazeMessages = new BrazeMessages(
-			importedAppboy,
-			LocalMessageCache,
-			errorHandler,
-		);
+			const errorHandler = (error: Error) => {
+				reportError(error, {}, false);
+			};
+			const brazeMessages = new BrazeMessages(
+				importedAppboy,
+				LocalMessageCache,
+				errorHandler,
+			);
 
-		setHasCurrentBrazeUser();
-		importedAppboy.changeUser(dependenciesResult.data.brazeUuid as string);
-		importedAppboy.openSession();
+			setHasCurrentBrazeUser();
+			importedAppboy.changeUser(
+				dependenciesResult.data.brazeUuid as string,
+			);
+			importedAppboy.openSession();
 
-		return brazeMessages;
+			return brazeMessages;
+		} catch (error) {
+			if (error instanceof Error) {
+				const msg = `Error building Braze Messages: ${error.message}`;
+				log('tx', msg);
+			}
+
+			return new NullBrazeMessages();
+		}
 	};
