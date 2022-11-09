@@ -4,7 +4,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.Content
 import common._
-import feed.MostViewed
+import feed.{AU, CA, GB, US, NG, NZ, IN, ROW, Country, MostViewed}
 import services.OphanApi
 import model.RelatedContentItem
 import play.api.libs.json._
@@ -13,16 +13,14 @@ import play.api.libs.ws.WSClient
 import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 
-case class Country(code: String, edition: Edition)
-
 class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends GuLogging {
 
-  private val mostViewedBox = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val mostViewedBox = Box[Map[Country, Seq[RelatedContentItem]]](Map.empty)
   private val mostCommentedCardBox = Box[Option[Content]](None)
   private val mostSharedCardBox = Box[Option[Content]](None)
 
   // todo: better typing for country codes
-  def mostViewed(countryCode: String): Seq[RelatedContentItem] = mostViewedBox().getOrElse(countryCode, Nil)
+  def mostViewed(country: Country): Seq[RelatedContentItem] = mostViewedBox().getOrElse(country, Nil)
   def mostCommented = mostCommentedCardBox.get()
   def mostShared = mostSharedCardBox.get()
 
@@ -81,22 +79,13 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
       }
   }
 
-  private val defaultCountry: Country = Country("row", Edition.defaultEdition)
-
-  // These are the only country codes (row must be lower-case) passed to us from the fastly service.
+  // These are the only country codes passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
   private val countries = Seq(
-    Country("GB", editions.Uk),
-    Country("US", editions.Us),
-    Country("AU", editions.Au),
-    Country("CA", editions.Us),
-    Country("IN", Edition.defaultEdition),
-    Country("NG", Edition.defaultEdition),
-    Country("NZ", editions.Au),
-    defaultCountry,
+    GB, US, CA, AU, NG, NZ, IN, ROW
   )
 
-  private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+  private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase)
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
@@ -105,7 +94,7 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
       } else {
         log.info(s"Geo popular update for ${country.code} found nothing.")
       }
-      mostViewedBox.alter(_ + (country.code -> validItems))
+      mostViewedBox.alter(_ + (country -> validItems))
     }
   }
 
