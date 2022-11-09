@@ -21,7 +21,7 @@ async function getAd(
 		.join('&');
 
 	const res = await fetch(
-		`http://localhost:3000/api/ads?slotName=${slotName}&${targetingString}`,
+		`http://localhost:3032/api/ads?slotName=${slotName}&${targetingString}`,
 	);
 
 	if (!res.ok) {
