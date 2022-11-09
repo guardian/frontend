@@ -32,7 +32,22 @@
     align-self: end;
     color: $brightness-100;
     font-size: 12px;
-    padding: 36px 0;
+    padding: $gs-baseline * 2 0;
+
+    @include mq($from: desktop, $until: leftCol) {
+        max-width: gs-span(6);
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            background-color:  $brand-pastel;
+            width: 1px;
+            right: -13px;
+            top: -$gs-baseline * 2 ;
+            bottom: $gs-baseline * 2;
+        }
+    }
 }
 
 .colophon__lists-container {
