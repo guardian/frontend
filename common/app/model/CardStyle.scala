@@ -7,6 +7,7 @@ sealed trait CardStyle {
 }
 
 case object SpecialReport extends CardStyle { val toneString = fapiutils.CardStyle.specialReport }
+case object SpecialReportAlt extends CardStyle { val toneString = fapiutils.CardStyle.specialReportAlt }
 case object LiveBlog extends CardStyle { val toneString = fapiutils.CardStyle.live }
 case object DeadBlog extends CardStyle { val toneString = fapiutils.CardStyle.dead }
 case object Feature extends CardStyle { val toneString = fapiutils.CardStyle.feature }
@@ -23,6 +24,7 @@ object CardStyle {
   def make(cardStyle: fapiutils.CardStyle): CardStyle =
     cardStyle match {
       case fapiutils.SpecialReport    => SpecialReport
+      case fapiutils.SpecialReportAlt => SpecialReportAlt
       case fapiutils.LiveBlog         => LiveBlog
       case fapiutils.DeadBlog         => DeadBlog
       case fapiutils.Feature          => Feature
