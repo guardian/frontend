@@ -4,6 +4,18 @@ import { onConsent } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { renderConsentlessAdvertLabel } from './render-advert-label';
 
+// https://stackoverflow.com/a/41889348 (ish)
+function resizeIframe(iframe: HTMLIFrameElement) {
+	iframe.style.width = '100%';
+	const scrollHeight = iframe.contentWindow?.document.body.offsetHeight;
+
+	if (scrollHeight && scrollHeight < window.innerHeight) {
+		iframe.height = `${scrollHeight}px`;
+	} else {
+		iframe.height = `${window.innerHeight}px`;
+	}
+}
+
 export type Label = {
 	id: number;
 	name: string;
@@ -28,12 +40,16 @@ async function getAd(
 		return;
 	}
 
-	const { url, code } = (await res.json()) as {
+	const { url, code, labels } = (await res.json()) as {
 		campaignId: number;
 		url: string;
 		code: string;
 		labels: Label[];
 	};
+
+	const labelSet = new Set(labels.map((label) => label.name));
+	const isFluid = labelSet.has('fluid');
+	const useSrc = labelSet.has('use-iframe-src');
 
 	if (url !== '') {
 		// Image based creative
@@ -42,7 +58,20 @@ async function getAd(
 		slot.appendChild(img);
 	} else if (code !== '') {
 		// Markup based creative
-		slot.innerHTML = code;
+		const iframe = document.createElement('iframe');
+
+		if (useSrc) {
+			iframe.src = code;
+		} else {
+			iframe.srcdoc = code;
+		}
+
+		if (isFluid) {
+			iframe.onload = () => {
+				resizeIframe(iframe);
+			};
+		}
+		slot.appendChild(iframe);
 	}
 }
 
