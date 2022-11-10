@@ -134,4 +134,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2022, 12, 30)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-remove-prebid-a9-canada",
+    "Remove the initialisation of Prebid and A9 in the Canada region",
+    owners = Seq(Owner.withGithub("domlander")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
 }

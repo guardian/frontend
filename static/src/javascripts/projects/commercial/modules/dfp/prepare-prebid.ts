@@ -5,33 +5,50 @@ import {
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';
+import { isInCanada } from 'common/modules/commercial/geo-utils';
+import {
+	isInABTestSynchronous,
+	isInVariantSynchronous,
+} from 'common/modules/experiments/ab';
+import { removePrebidA9Canada } from 'common/modules/experiments/tests/removePrebidA9Canada';
 import { isGoogleProxy } from 'lib/detect-google-proxy';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
+const shouldSkipPrebidInCanada = () => {
+	// If user is not in Canada, we don't skip
+	if (!isInCanada()) {
+		return false;
+	}
+
+	// If a user is not a part of the test, skip Prebid
+	if (!isInABTestSynchronous(removePrebidA9Canada)) {
+		return true;
+	}
+
+	// Don't skip Prebid if user is in the variant
+	return !isInVariantSynchronous(removePrebidA9Canada, 'variant');
+};
+
+const shouldLoadPrebid = () =>
+	!isGoogleProxy() &&
+	dfpEnv.hbImpl.prebid &&
+	commercialFeatures.dfpAdvertising &&
+	!commercialFeatures.adFree &&
+	!window.guardian.config.page.hasPageSkin &&
+	!shouldIncludeOnlyA9 &&
+	!shouldSkipPrebidInCanada();
+
 const loadPrebid = async (framework: Framework): Promise<void> => {
-	// TODO: Understand why we want to skip Prebid for Google Proxy
-	if (isGoogleProxy()) return;
-
-	if (
-		!dfpEnv.hbImpl.prebid ||
-		!commercialFeatures.dfpAdvertising ||
-		commercialFeatures.adFree ||
-		window.guardian.config.page.hasPageSkin ||
-		shouldIncludeOnlyA9
-	)
-		return;
-
-	await import(
-		// @ts-expect-error -- there’s no types for Prebid.js
-		/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid'
-	);
-
-	prebid.initialise(window, framework);
-
-	return;
+	if (shouldLoadPrebid()) {
+		await import(
+			// @ts-expect-error -- there’s no types for Prebid.js
+			/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid'
+		);
+		prebid.initialise(window, framework);
+	}
 };
 
 const setupPrebid = (): Promise<void> =>
