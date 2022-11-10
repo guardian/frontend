@@ -58,7 +58,9 @@ export const fetchAndRenderHeaderLinks = async (): Promise<void> => {
 		const Header = await dynamicImport(module.url, module.name);
 
 		const el = document.createElement('div');
-		const container = document.querySelector('.new-header__cta-bar');
+		const container =
+			document.querySelector('.new-header__cta-bar') ??
+			document.querySelector('.header-top-bar__cta-bar');
 		if (container) {
 			container.appendChild(el);
 

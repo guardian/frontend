@@ -29,6 +29,44 @@ from scrolling */
             width: gs-span(12) + ($gs-gutter * 2);
         }
     }
+
+    .header-top-nav__top-bar {
+        display: flex;
+        justify-content: start;
+        font-weight: bold;
+        padding-right: 96px;
+
+        @include mq($from: desktop) {
+            justify-content: end;
+        }
+
+        .top-bar__item {
+            @include mq($until: desktop) {
+                padding: 3px 10px;
+            }
+        }
+    }
+
+    .header-top-nav__item {
+        position: relative;
+        margin-right: 0;
+
+        .header-top-nav__item--separator {
+            border-left: 1px solid $brand-pastel;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: $gs-baseline * 2;
+        }
+
+        svg {
+            fill: currentColor;
+            float: left;
+            height: 18px;
+            width: 18px;
+            margin: -1px 4px 0 0;
+        }
+    }
 }
 
 .header-top-nav__full-width {

@@ -3,7 +3,8 @@
     margin: 0;
     padding: 0 0 0 ($gs-gutter / 2);
 
-    .new-header:not(.new-header--slim) & {
+    .new-header:not(.new-header--slim) &,
+    .header-top-nav:not(.header-top-nav--slim) {
         &:after {
             content: '';
             border: 1px solid $brand-pastel;
@@ -34,12 +35,14 @@
     }
 
     @include mq(desktop) {
-        .new-header--open & {
+        .new-header--open &,
+        .header-top-nav--open {
             z-index: $zindex-main-menu;
         }
     }
 
-    .new-header--slim & {
+    .new-header--slim &,
+    .header-top-nav--slim & {
         @include mq($until: tablet) {
             display: none;
         }
