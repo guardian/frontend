@@ -493,9 +493,9 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val headerTopBar = Switch(
+  val headerTopNav = Switch(
     SwitchGroup.Feature,
-    "header-top-bar",
+    "header-top-nav",
     "When ON, the header has a thin top bar above containing relevant links",
     owners = group(Feature),
     safeState = On,

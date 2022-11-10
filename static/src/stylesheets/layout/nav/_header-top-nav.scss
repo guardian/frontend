@@ -1,0 +1,215 @@
+/* When the menu is open this class is added to the html to prevent users
+from scrolling */
+.nav-is-open {
+    @include mq($until: desktop) {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    // Prevents horizontal scrollbar https://codepen.io/tigt/post/bust-elements-out-of-containers-with-one-line-of-css#oh-no-a-horizontal-scrollbar-6
+    @include mq(desktop) {
+        overflow-x: hidden;
+    }
+}
+
+.header-top-nav {
+    background-color: $brand-main;
+    position: relative;
+
+    &:not(.header-top-nav--slim) {
+        margin-bottom: 0;
+    }
+
+    @include mq(tablet) {
+        display: block;
+    }
+
+    .has-page-skin & .gs-container {
+        @include mq(wide) {
+            width: gs-span(12) + ($gs-gutter * 2);
+        }
+    }
+}
+
+.header-top-nav__full-width {
+    // background-color: #001536;
+    background-color: #041f4a;
+
+    width: 100%;
+}
+
+.header-top-nav__inner {
+    @include clearfix();
+}
+
+
+.header-top-nav__edition-container {
+    position: absolute;
+    top: 0;
+    // Needs to sit above the menu, and the veggie burger
+    z-index: $zindex-main-menu + 2;
+    transform: translateX(100%);
+
+    @include mq(desktop) {
+        right: 120px;
+        width: 110px;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(wide) {
+            right: 197px;
+            width: 197px;
+        }
+    }
+
+    .top-bar__item__seperator {
+        margin-left: 0;
+    }
+}
+
+.header-top-nav__menu-toggle {
+    display: block;
+    outline: 0;
+    position: relative;
+
+    @include mq($until: desktop) {
+        position: absolute;
+        right: $gs-gutter / 4;
+        bottom: 58px;
+
+        @include mq(mobileMedium) {
+            right: $gs-gutter / 4;
+            bottom: -$gs-baseline / 4;
+        }
+
+        @include mq(mobileLandscape) {
+            right: $gs-gutter - 2px;
+        }
+
+        @include mq(tablet) {
+            bottom: $gs-baseline / 4;
+        }
+
+        .header-top-nav--slim & {
+            top: $gs-baseline / 4;
+            bottom: auto;
+        }
+    }
+
+    &:active {
+        outline: 0;
+    }
+}
+
+.header-top-nav__logo {
+    float: right;
+    margin-top: 10px;
+    margin-right: $veggie-burger + 12px;
+    margin-bottom: $gs-baseline * 2;
+
+    @include mq(mobileMedium) {
+        margin-right: $gs-gutter / 2;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        margin-top: 5px;
+        margin-bottom: $gs-baseline + ($gs-baseline / 2);
+        position: relative;
+        z-index: $zindex-main-menu + 1;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(wide) {
+            margin-right: 96px;
+        }
+    }
+
+    .header-top-nav--slim & {
+        position: absolute;
+        margin: 0;
+        right: $veggie-burger;
+        top: $gs-baseline / 4;
+        z-index: $zindex-main-menu;
+
+        body:not(.has-page-skin) & {
+            @include mq(mobileLandscape) {
+                margin-right: 0;
+                right: $veggie-burger + ($gs-gutter / 2);
+            }
+
+            @include mq(desktop) {
+                right: $gs-gutter;
+            }
+        }
+    }
+
+    .header-top-nav--slim.header-top-nav--open & {
+        @include mq(desktop) {
+            z-index: $zindex-main-menu + 2;
+        }
+    }
+}
+
+.inline-the-guardian-roundel__svg {
+    height: $veggie-burger;
+    width: $veggie-burger;
+
+    & path:nth-child(1) {
+        fill: $brightness-100;
+    }
+
+    & path:nth-child(2) {
+        fill: $brand-main;
+    }
+}
+
+.inline-the-guardian-logo__svg {
+    display: block;
+    height: 44px;
+    width: 135px;
+
+    @include mq(mobileMedium) {
+        height: 56px;
+        width: 175px;
+    }
+
+    @include mq(tablet) {
+        height: 72px;
+        width: 224px;
+    }
+
+    @include mq(desktop) {
+        height: 95px;
+        width: 295px;
+    }
+
+    path {
+        fill: $brightness-100;
+    }
+}
+
+.inline-guardian-best-website-logo {
+    display: block;
+    height: auto;
+    width: 146px;
+
+    @include mq(mobileMedium) {
+        width: 195px;
+    }
+
+    @include mq(tablet) {
+        width: 224px;
+    }
+
+    @include mq(desktop) {
+        width: 295px;
+    }
+}
+
+.header-top-nav--slim {
+    height: $pillar-height + $gs-baseline / 2;
+}
