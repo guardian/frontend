@@ -19,7 +19,6 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
   private val mostCommentedCardBox = Box[Option[Content]](None)
   private val mostSharedCardBox = Box[Option[Content]](None)
 
-  // todo: better typing for country codes
   def mostViewed(country: Country): Seq[RelatedContentItem] = mostViewedBox().getOrElse(country, Nil)
   def mostCommented = mostCommentedCardBox.get()
   def mostShared = mostSharedCardBox.get()

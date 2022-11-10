@@ -11,8 +11,6 @@ import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class Country(code: String, edition: Edition)
-
 class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends GuLogging {
 
   private val relatedContentsBox = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)

@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent, Country}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
@@ -35,7 +35,8 @@ class MostPopularController(
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
-    with ImplicitControllerExecutionContext {
+    with ImplicitControllerExecutionContext
+    with implicits.Requests {
   val page = SimplePage(
     MetaData.make(
       "most-read",
@@ -94,20 +95,24 @@ class MostPopularController(
     }
 
   private val countryNames = Map(
-    "AU" -> "Australia",
-    "US" -> "US",
-    "IN" -> "India",
+    "au" -> "Australia",
+    "us" -> "US",
+    "in" -> "India",
   )
 
   def renderPopularGeo(): Action[AnyContent] =
     Action { implicit request =>
       val headers = request.headers.toSimpleMap
-      val countryCode = headers.getOrElse("X-GU-GeoLocation", "country:row").replace("country:", "")
+      val country = Country.fromHeaderString(request)
       val countryPopular =
-        MostPopular("Across the&nbsp;Guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
+        MostPopular(
+          "Across the&nbsp;Guardian",
+          "",
+          geoMostPopularAgent.mostPopular(country).map(_.faciaContent),
+        )
 
       if (request.forceDCR) {
-        jsonResponse(countryPopular, countryCode)
+        jsonResponse(countryPopular, country)
       } else {
         Cached(900) {
           JsonComponent(
@@ -119,8 +124,8 @@ class MostPopularController(
               }
             },
             "rightHtml" -> views.html.fragments
-              .rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
-            "country" -> countryCode,
+              .rightMostPopularGeoGarnett(countryPopular, countryNames.get(country.code), country.code.toUpperCase()),
+            "country" -> country.code.toUpperCase(),
           )
         }
       }
@@ -161,9 +166,9 @@ class MostPopularController(
     Cached(900)(JsonComponent.fromWritable(response))
   }
 
-  def jsonResponse(mostPopular: MostPopular, countryCode: String)(implicit request: RequestHeader): Result = {
+  def jsonResponse(mostPopular: MostPopular, country: Country)(implicit request: RequestHeader): Result = {
     val data = MostPopularGeoResponse(
-      country = countryNames.get(countryCode),
+      country = countryNames.get(country.code),
       heading = mostPopular.heading,
       trails = mostPopular.trails.map(Trail.pressedContentToTrail).take(10),
     )
