@@ -47,7 +47,8 @@ import {
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
-import { brazeBanner } from 'common/modules/commercial/braze/brazeBanner';
+import { buildBrazeBanner } from 'common/modules/commercial/braze/brazeBanner';
+import { buildBrazeMessaging } from 'common/modules/commercial/braze/buildBrazeMessaging';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
@@ -255,6 +256,9 @@ const initPublicApi = () => {
 };
 
 const initialiseBanner = () => {
+    const brazeMessagesPromise = buildBrazeMessaging();
+    const brazeBanner = buildBrazeBanner(brazeMessagesPromise);
+
     const isPreview = config.get('page.isPreview', false)
     // ordered by priority
     // in preview we don't want to show most banners as they are an unnecessary interruption

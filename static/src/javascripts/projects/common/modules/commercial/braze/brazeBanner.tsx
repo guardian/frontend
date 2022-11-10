@@ -1,32 +1,38 @@
+import type { BrazeMessagesInterface } from '@guardian/braze-components';
 import React from 'react';
 import config from '../../../../../lib/config';
 import { reportError } from '../../../../../lib/report-error';
 import { submitComponentEvent, submitViewEvent } from '../acquisitions-ophan';
 import type { BrazeMessageInterface } from './brazeMessageInterface';
-import { buildBrazeMessaging } from './buildBrazeMessaging';
 import { getMessageFromUrlFragment } from './getMessageFromUrlFragment';
 
 let message: BrazeMessageInterface | undefined;
 
-const canShow = async (): Promise<boolean> => {
-	const forcedBrazeMessage = getMessageFromUrlFragment();
-	if (forcedBrazeMessage) {
-		message = forcedBrazeMessage;
-		return true;
-	}
+const buildCanShow = (
+	brazeMessagesPromise: Promise<BrazeMessagesInterface>,
+) => {
+	return async (): Promise<boolean> => {
+		const forcedBrazeMessage = getMessageFromUrlFragment();
+		if (forcedBrazeMessage) {
+			message = forcedBrazeMessage;
+			return true;
+		}
 
-	try {
-		const section = config.get('page.section');
-		const brazeArticleContext =
-			typeof section === 'string' ? { section } : undefined;
+		try {
+			const section = config.get('page.section');
+			const brazeArticleContext =
+				typeof section === 'string' ? { section } : undefined;
 
-		const brazeMessages = await buildBrazeMessaging();
-		message = await brazeMessages.getMessageForBanner(brazeArticleContext);
+			const brazeMessages = await brazeMessagesPromise;
+			message = await brazeMessages.getMessageForBanner(
+				brazeArticleContext,
+			);
 
-		return true;
-	} catch (e) {
-		return false;
-	}
+			return true;
+		} catch (e) {
+			return false;
+		}
+	};
 };
 
 const renderBanner = (
@@ -129,10 +135,18 @@ const show = (): void => {
 	}
 };
 
-const brazeBanner = {
+interface BannerCandidate {
+	id: string;
+	show: () => void;
+	canShow: () => Promise<boolean>;
+}
+
+const buildBrazeBanner = (
+	brazeMessagesPromise: Promise<BrazeMessagesInterface>,
+): BannerCandidate => ({
 	id: 'brazeBanner',
 	show,
-	canShow,
-};
+	canShow: buildCanShow(brazeMessagesPromise),
+});
 
-export { brazeBanner };
+export { buildBrazeBanner };
