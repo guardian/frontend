@@ -115,6 +115,11 @@ object NavLinks {
       NavLink("Results", "/football/results", Some("football/results")),
       NavLink("Competitions", "/football/competitions", Some("football/competitions")),
       NavLink("Clubs", "/football/teams", Some("football/teams")),
+      NavLink(
+        "Qatar: beyond the football",
+        "/news/series/qatar-beyond-the-football",
+        Some("/news/series/qatar-beyond-the-football"),
+      ),
     ),
   )
   val soccer = football.copy(title = "Soccer")
