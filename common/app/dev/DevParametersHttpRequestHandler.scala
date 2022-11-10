@@ -60,6 +60,7 @@ class DevParametersHttpRequestHandler(
   val commercialParams = Seq(
     "ad-unit", // allows overriding of the ad unit
     "adtest", // used to set ad-test cookie from admin domain
+    "adtestInLabels", // used to enable the display of the "adtest" cookie in ad labels
     "pbtest", // used to test Prebid adapters in isolation
     "adrefresh", // force adrefresh to be off with adrefresh=false in the URL
     "forceads", // shows ads even if they have been disabled for this content
