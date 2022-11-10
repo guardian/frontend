@@ -23,9 +23,44 @@ const updateCommentLink = (commentItems) => {
     }
 };
 
+const showNotifications = () => {
+    const notifications = ['Your credit card has expired.'];    // TODO get from braze
+
+    fastdom
+        .measure(() => ({
+            badge: document.querySelector('.js-user-account-notification-badge'),
+            menuItem: document.querySelector('.js-user-account-dropdown-menu-settings-item'),
+        }))
+        .then(els => {
+            const { badge, menuItem } = els;
+
+            if (notifications.length > 0 && badge && menuItem) {
+                // Add the count to the notification badge
+                const countLabel = badge.querySelector('.js-user-account-notification-count');
+                if (countLabel) {
+                    countLabel.textContent = `${notifications.length}`;
+                    badge.classList.remove('is-hidden');
+                }
+
+                // Add the notifications and dot to the 'Settings' menu item
+                const labelEl = document.createElement('div');
+                labelEl.innerText = 'Settings';
+                labelEl.classList.add('dropdown-menu__notification-red-dot');
+                const notificationEls = notifications.map(notification => {
+                    const el = document.createElement('div');
+                    el.classList.add('dropdown-menu__notification');
+                    el.innerText = notification;
+                    return el;
+                });
+                menuItem.innerHTML = '';
+                [labelEl, ...notificationEls].forEach(e => menuItem.appendChild(e))
+            }
+        });
+};
+
 const showMyAccountIfNecessary = () => {
     if (!isUserLoggedIn()) {
-        return;
+        // return;
     }
 
     fastdom
@@ -59,6 +94,7 @@ const showMyAccountIfNecessary = () => {
                 })
                 .then(() => {
                     updateCommentLink(commentItems);
+                    showNotifications();
                 });
         });
 };
