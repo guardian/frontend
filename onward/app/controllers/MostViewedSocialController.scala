@@ -35,7 +35,7 @@ class MostViewedSocialController(
           contentApiClient.getResponse(
             contentApiClient
               .search()
-              .ids(articleIds.take(7).map(item => feed.urlToContentPath(item.url)).mkString(",")),
+              .ids(articleIds.take(7).map(item => feed.MostViewed.urlToContentPath(item.url)).mkString(",")),
           ) map { response =>
             val items = response.results
             val container = visuallyPleasingContainerForStories(items.length)
