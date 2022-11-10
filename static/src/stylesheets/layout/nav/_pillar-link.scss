@@ -36,7 +36,8 @@
         padding-right: $gs-gutter;
         padding-left: $pillar-padding;
 
-        .new-header--slim & {
+        .new-header--slim &,
+        .header-top-nav--slim & {
             height: $pillar-height + ($gs-baseline / 2);
             padding-top: $gs-baseline - 1px;
         }
@@ -75,7 +76,8 @@
         @include mq(desktop) {
             bottom: .6em;
 
-            .new-header--open & {
+            .new-header--open &,
+            .header-top-nav--open & {
                 bottom: 0;
             }
         }
@@ -100,7 +102,8 @@
         }
     }
 
-    .new-header--open & {
+    .new-header--open &,
+    .header-top-nav--open & {
         @include mq(desktop) {
             &:hover,
             &:focus {
@@ -136,11 +139,13 @@
         transform: translateY(0) rotate(45deg);
     }
 
-    .new-header--open .pillar-link--dropdown & {
+    .new-header--open .pillar-link--dropdown &,
+    .header-top-nav--open .pillar-link--dropdown & {
         transform: translateY(1px) rotate(-135deg);
     }
 
-    .new-header--open .pillar-link--dropdown:hover & {
+    .new-header--open .pillar-link--dropdown:hover & ,
+    .header-top-nav--open .pillar-link--dropdown:hover & {
         transform: translateY(-2px) rotate(-135deg);
     }
 }

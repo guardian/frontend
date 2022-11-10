@@ -23,8 +23,8 @@
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
 <header class="@RenderClasses(Map(
-    "header-top-nav--slim" -> page.metadata.hasSlimHeader
-), s" pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "header-top-nav"
+    " header-top-nav--slim" -> page.metadata.hasSlimHeader
+    ), s" pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "header-top-nav"
     )" role="banner">
 
     <div class="header-top-nav__full-width">
@@ -143,7 +143,10 @@
         </nav>
     </div>
 
-    <div class="gs-container">
+
+
+
+    <nav class="gs-container u-cf" data-component="nav2">
         @defining(Edition(request).id.toLowerCase()) { editionId =>
         <a href="@LinkTo {/}" class="header-top-nav__logo" data-link-name="nav3 : logo">
 
@@ -161,42 +164,40 @@
         <div class="header-top-bar__cta-bar"></div>
 
         @fragments.nav.headerMenu(navMenu)
-
-        <nav data-component="nav2">
-            <ul class="pillars">
-                @navMenu.pillars.map { link =>
-                <li class="pillars__item">
-                    <a class="@RenderClasses(Map(
+        <ul class="pillars">
+            @navMenu.pillars.map { link =>
+            <li class="pillars__item">
+                <a class="@RenderClasses(Map(
                             " pillar-link--current-section" -> ((link.title ==
-                        navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)
-                        ), "pillar-link", s"pillar-link--${link.title}")"
-                        href="@LinkTo(link.url)"
-                        data-link-name="nav3 : primary : @link.title">
+                    navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)
+                    ), "pillar-link", s"pillar-link--${link.title}")"
+                    href="@LinkTo(link.url)"
+                    data-link-name="nav3 : primary : @link.title">
 
-                        @link.title
-                    </a>
-                </li>
-                }
-            </ul>
+                    @link.title
+                </a>
+            </li>
+            }
+        </ul>
 
-            <input type="checkbox" id="main-menu-toggle" class="veggie-burger-fallback js-enhance-checkbox u-h"
-                data-link-name="nav3 : veggie-burger : show" aria-controls="main-menu" tabindex="-1">
+        <input type="checkbox" id="main-menu-toggle" class="veggie-burger-fallback js-enhance-checkbox u-h"
+            data-link-name="nav3 : veggie-burger : show" aria-controls="main-menu" tabindex="-1">
 
-            <label for="main-menu-toggle" class="js-change-link header-top-bar__menu-toggle"
-                data-link-name="nav3 : veggie-burger : show" tabindex="0">
+        <label for="main-menu-toggle" class="js-change-link header-top-bar__menu-toggle"
+            data-link-name="nav3 : veggie-burger : show" tabindex="0">
 
-                <span class="veggie-burger hide-from-desktop">
-                    <span class="veggie-burger__icon"></span>
-                </span>
+            <span class="veggie-burger hide-from-desktop">
+                <span class="veggie-burger__icon"></span>
+            </span>
 
-                <span class="pillar-link pillar-link--dropdown pillar-link--sections hide-until-desktop">
-                    <span class="u-h">Show</span>
-                    More
-                    <i class="pillar-link--dropdown__icon"></i>
-                </span>
-            </label>
-        </nav>
-    </div>
+            <span class="pillar-link pillar-link--dropdown pillar-link--sections hide-until-desktop">
+                <span class="u-h">Show</span>
+                More
+                <i class="pillar-link--dropdown__icon"></i>
+            </span>
+        </label>
+    </nav>
+
 
     @fragments.nav.subNav(navMenu, page.metadata.designType)
 </header>

@@ -51,12 +51,14 @@
             margin-right: -50vw;
         }
 
-        .new-header--slim & {
+        .new-header--slim &,
+        .header-top-nav--slim & {
             top: $pillar-height;
         }
     }
 
-    .new-header--open & {
+    .new-header--open &
+    .header-top-nav--open & {
         @include mq($until: desktop) {
             @include menu-animation(0%);
         }
@@ -89,7 +91,8 @@
         box-sizing: border-box;
         padding: 0 $gs-gutter;
 
-        .new-header--slim & {
+        .new-header--slim &,
+        .header-top-nav--slim & {
             border-color: transparent;
         }
     }
@@ -107,7 +110,8 @@
     width: 0;
     z-index: $zindex-main-menu - 1;
 
-    .new-header--open & {
+    .new-header--open &,
+    .header-top-nav--open & {
         opacity: 1;
         width: 100%;
     }

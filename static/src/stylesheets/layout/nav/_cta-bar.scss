@@ -26,7 +26,8 @@
         }
     }
 
-    .new-header--slim & {
+    .new-header--slim &,
+    .header-top-nav--slim & {
         padding-top: 8px;
 
         @include mq(tablet) {
