@@ -84,6 +84,7 @@ object PressedContent {
     "/us-news/2016/sep/09/cia-insider-daniel-jones-senate-torture-investigation",
     "/environment/2016/sep/13/frontline-bloody-battle-save-africa-elephants-chinese-language",
     "/world/2016/sep/24/americas-war-the-killing-jaiden-dixon-and-tyler-dunn",
+    "/us-news/ng-interactive/2016/nov/08/us-election-2016-results-live-clinton-trump",
     "/cities/ng-interactive/2016/nov/10/subterranean-london",
     "/music/2016/nov/11/the-future-50-the-rising-stars-to-look-out-for",
     "/science/2016/nov/21/magic-numbers-can-maths-equations-be-beautiful",
