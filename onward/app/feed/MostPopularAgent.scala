@@ -105,10 +105,19 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   // These are the only country codes passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
   private val countries = Seq(
-    GB, US, CA, AU, NG, NZ, IN, ROW
+    GB,
+    US,
+    CA,
+    AU,
+    NG,
+    NZ,
+    IN,
+    ROW,
   )
 
-  private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
+  private def refresh(
+      country: Country,
+  )(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase)
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
@@ -122,7 +131,10 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   }
 
   def mostPopular(country: Country): Seq[RelatedContentItem] =
-    box().getOrElse(country, Nil) // todo: I've changed the fallback here because we've changed the typing, but is this right?
+    box().getOrElse(
+      country,
+      Nil,
+    ) // todo: I've changed the fallback here because we've changed the typing, but is this right?
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for countries.")
