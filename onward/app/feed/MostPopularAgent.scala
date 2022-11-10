@@ -102,15 +102,24 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
 
 class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
-  private val box = Box[Map[Country, Seq[RelatedContentItem]]](Map.empty)
+  private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  // These are the only country codes passed to us from the fastly service.
+  private val defaultCountry: Country = Country("row", Edition.defaultEdition)
+
+  // These are the only country codes (row must be lower-case) passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
   private val countries = Seq(
-    GB, US, CA, AU, NG, NZ, IN, ROW
+    Country("GB", editions.Uk),
+    Country("US", editions.Us),
+    Country("AU", editions.Au),
+    Country("CA", editions.Us),
+    Country("IN", Edition.defaultEdition),
+    Country("NG", Edition.defaultEdition),
+    Country("NZ", editions.Au),
+    defaultCountry,
   )
 
-  private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
+  private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase)
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
@@ -119,14 +128,14 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
       } else {
         log.info(s"Geo popular update for ${country.code} found nothing.")
       }
-      box.alter(_ + (country -> validItems))
+      box.alter(_ + (country.code -> validItems))
     }
   }
 
-  def mostPopular(country: Country): Seq[RelatedContentItem] =
-    box().getOrElse(country, Nil) // todo: I've changed the fallback here because we've changed the typing, but is this right?
+  def mostPopular(country: String): Seq[RelatedContentItem] =
+    box().getOrElse(country, box().getOrElse(defaultCountry.code, Nil))
 
-  def refresh()(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for countries.")
     MostViewed.refreshAll(countries)(refresh)
   }
@@ -137,11 +146,14 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   private val countries = Seq(
-    GB, US, AU
+    Country("GB", editions.Uk),
+    Country("US", editions.Us),
+    Country("AU", editions.Au),
   )
+
   def mostPopular(country: String): Seq[RelatedContentItem] = box().getOrElse(country, Nil)
 
-  def refresh()(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for the day.")
     MostViewed.refreshAll(countries)(refresh)
   }
