@@ -1,4 +1,6 @@
 .colophon {
+    display: grid;
+
     border-bottom: 1px solid $brand-pastel;
     padding: 0 9px ($gs-baseline * 2);
 
@@ -11,10 +13,46 @@
         border: 1px solid $brand-pastel;
         border-top: 0;
     }
+
+    grid-template-areas:
+    'signup'
+    'links'
+    'acknowledgment';
+
+    @include mq(leftCol) {
+        grid-template-columns: min-content;
+        grid-template-areas:
+        'signup          links'
+        'acknowledgment  links';
+    }
+}
+
+.colophon__acknowledgment {
+    grid-area: acknowledgment;
+    align-self: end;
+    color: $brightness-100;
+    font-size: 12px;
+    padding: $gs-baseline * 2 0;
+
+    @include mq($from: desktop, $until: leftCol) {
+        max-width: gs-span(6);
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            background-color:  $brand-pastel;
+            width: 1px;
+            right: -13px;
+            top: -$gs-baseline * 2 ;
+            bottom: $gs-baseline * 2;
+        }
+    }
 }
 
 .colophon__lists-container {
     @include fs-textSans(5);
+    grid-area: links;
     line-height: 1.2;
     display: flex;
     flex-direction: row;
@@ -23,7 +61,6 @@
 }
 
 .colophon__list {
-    @include clearfix();
     list-style: none;
     position: relative;
     margin: 0;

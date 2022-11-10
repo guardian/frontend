@@ -50,7 +50,7 @@
         </div>
 
 
-        <div class="colophon u-cf">
+        <div class="colophon">
             @defining(Edition(request)) { currentEdition =>
                 @if(EmailInlineInFooterSwitch.isSwitchedOn && !page.metadata.isFoundation) {
                     @emailSignUpLink(currentEdition)
@@ -116,6 +116,15 @@
                         @readerRevenueLinks(Edition(request).id.toLowerCase())
                     }
                 </div>
+                @if(currentEdition.id == "AU") {
+                    <div class="colophon__acknowledgment">
+                        Guardian Australia acknowledges the traditional owners and
+                        custodians of Country throughout Australia and their
+                        connections to land, waters and community. We pay respect by
+                        giving voice to social justice, acknowledging our shared
+                        history and valuing the cultures of First Nations.
+                    </div>
+                }
             }
         </div>
         <div class="copyright-container">
