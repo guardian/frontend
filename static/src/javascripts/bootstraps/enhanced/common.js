@@ -256,8 +256,17 @@ const initPublicApi = () => {
 };
 
 const initialiseBanner = () => {
-    const brazeMessagesPromise = buildBrazeMessaging();
+    const brazeMessagingPromise = buildBrazeMessaging();
+    const brazeMessagesPromise = brazeMessagingPromise.then(
+        ({ brazeMessages }) => brazeMessages
+    );
     const brazeBanner = buildBrazeBanner(brazeMessagesPromise);
+
+    brazeMessagingPromise.then(
+        ({ brazeCards }) => brazeCards
+    ).then((brazeCards) => {
+        return brazeCards.getCardsForProfileBadge();
+    }).then(notifications => console.log("Your notifications", notifications));
 
     const isPreview = config.get('page.isPreview', false)
     // ordered by priority
