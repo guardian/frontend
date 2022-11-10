@@ -12,6 +12,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       TableOfContents,
       EuropeNetworkFront,
       DCRJavascriptBundle,
+      FetchpriorityOnMainMedia,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -71,4 +72,13 @@ object EuropeNetworkFront
       owners = Seq(Owner.withGithub("rowannekabalan")),
       sellByDate = LocalDate.of(2023, 3, 1),
       participationGroup = Perc0D,
+    )
+
+object FetchpriorityOnMainMedia
+    extends Experiment(
+      name = "fetchpriority-on-main-media",
+      description = "Add fetchpriority='high' to main media images",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2022, 12, 30),
+      participationGroup = Perc1B,
     )
