@@ -75,7 +75,8 @@
     position: relative;
     z-index: $zindex-ads;
 
-    .new-header--open & {
+    .new-header--open &,
+    .header-top-nav--open & {
         // Needs to sit below the menu, and the veggie burger
         z-index: $zindex-ads;
     }

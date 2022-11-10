@@ -18,6 +18,7 @@
         overflow: auto;
         padding-top: $gs-baseline / 2;
         position: fixed;
+        z-index: $zindex-main-menu + 2;
         right: 0;
         transition: transform .2s cubic-bezier(.23, 1, .32, 1);
         will-change: transform;
@@ -57,7 +58,7 @@
         }
     }
 
-    .new-header--open &
+    .new-header--open &,
     .header-top-nav--open & {
         @include mq($until: desktop) {
             @include menu-animation(0%);

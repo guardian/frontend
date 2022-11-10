@@ -12,8 +12,9 @@
     z-index: $zindex-main-menu - 1;
 
     // menu is open
-    .new-header--open & {
-        z-index: $zindex-main-menu + 1;
+    .new-header--open &,
+    .header-top-nav--open & {
+        z-index: $zindex-main-menu + 2;
     }
 
     // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
@@ -51,7 +52,8 @@
     }
 
     // transform burger into cross
-    .new-header--open & {
+    .new-header--open &,
+    .header-top-nav--open & {
         background-color: transparent;
 
         &:before {
