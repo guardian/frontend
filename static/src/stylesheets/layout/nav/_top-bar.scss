@@ -81,3 +81,42 @@
         z-index: $zindex-ads;
     }
 }
+
+.top-bar__user-account-notification-badge {
+    background-color: red;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //padding: 0 5px;
+    margin-left: 19px;
+    margin-top: 2px;
+}
+
+.top-bar__user-account-notification-count {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.dropdown-menu__notification-red-dot:before {
+    content: '';
+    background-color: red;
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    position: absolute;
+    left: 3px;
+    top: 12px;
+}
+
+.dropdown-menu__notification {
+    color: red;
+    font-size: 12px;
+}
