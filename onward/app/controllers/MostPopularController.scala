@@ -103,7 +103,7 @@ class MostPopularController(
   def renderPopularGeo(): Action[AnyContent] =
     Action { implicit request =>
       val headers = request.headers.toSimpleMap
-      val country = Country.fromHeaderString(request)
+      val country = Country.fromRequestHeader(request)
       val countryPopular =
         MostPopular(
           "Across the&nbsp;Guardian",
@@ -175,11 +175,12 @@ class MostPopularController(
     Cached(900)(JsonComponent.fromWritable(data))
   }
 
-  def renderPopularDay(countryCode: String): Action[AnyContent] =
+  def renderPopularDay(countryCode: String): Action[AnyContent] = {
+    val country = Country.fromCountryCodeString(countryCode)
     Action { implicit request =>
       Cached(900) {
         JsonComponent(
-          "trails" -> JsArray(dayMostPopularAgent.mostPopular(countryCode).map { trail =>
+          "trails" -> JsArray(dayMostPopularAgent.mostPopular(country).map { trail =>
             Json.obj(
               ("url", trail.content.metadata.url),
               ("headline", trail.content.trail.headline),
@@ -188,6 +189,7 @@ class MostPopularController(
         )
       }
     }
+  }
 
   def renderPopularMicroformat2: Action[AnyContent] =
     Action { implicit request =>

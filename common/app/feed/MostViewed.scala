@@ -16,8 +16,8 @@ sealed trait Country {
   val edition: Edition
 }
 object Country {
-  def fromHeaderString(header: RichRequestHeader): Country =
-    header.countryCode.toLowerCase match {
+  def fromCountryCodeString(countryCode: String): Country =
+    countryCode.toLowerCase match {
       case "gb" => GB
       case "us" => US
       case "ca" => CA
@@ -25,8 +25,10 @@ object Country {
       case "in" => IN
       case "ng" => NG
       case "nz" => NZ
-      case _ => ROW
+      case _    => ROW
     }
+  def fromRequestHeader(header: RichRequestHeader): Country =
+    fromCountryCodeString(header.countryCode)
 }
 case object GB extends Country {
   val code = "gb"
@@ -71,7 +73,7 @@ object MostViewed extends GuLogging {
   // This function takes a sequence of items and a function that maps each item to a future.
   // Each future carries a map, all the maps are collapsed into one using a reduce
   def refreshAll[A, B](as: Seq[A])(
-    refreshOne: A => Future[Map[B, Seq[RelatedContentItem]]],
+      refreshOne: A => Future[Map[B, Seq[RelatedContentItem]]],
   )(implicit ec: ExecutionContext): Future[Map[B, Seq[RelatedContentItem]]] = {
     as.map(refreshOne)
       .reduce((itemsF, otherItemsF) =>

@@ -144,26 +144,28 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
 class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
-  private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val box = Box[Map[Country, Seq[RelatedContentItem]]](Map.empty)
 
   private val countries = Seq(
-    GB, US, AU
+    GB,
+    US,
+    AU,
   )
-  def mostPopular(country: String): Seq[RelatedContentItem] = box().getOrElse(country, Nil)
+  def mostPopular(country: Country): Seq[RelatedContentItem] = box().getOrElse(country, Nil)
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for the day.")
     MostViewed.refreshAll(countries)(refresh)
   }
 
-  def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+  def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 24, count = 10, country = country.code.toLowerCase())
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
       if (validItems.isEmpty) {
         log.info(s"Day popular update for ${country.code} found nothing.")
       }
-      box.alter(_ + (country.code -> validItems))
+      box.alter(_ + (country -> validItems))
     }
   }
 }
