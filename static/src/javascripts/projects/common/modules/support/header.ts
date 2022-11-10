@@ -60,7 +60,7 @@ export const fetchAndRenderHeaderLinks = async (): Promise<void> => {
 		const el = document.createElement('div');
 		const container =
 			document.querySelector('.new-header__cta-bar') ??
-			document.querySelector('.header-top-bar__cta-bar');
+			document.querySelector('.header-top-nav__cta-bar');
 		if (container) {
 			container.appendChild(el);
 
