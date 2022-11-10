@@ -500,6 +500,6 @@ trait FeatureSwitches {
     owners = group(Feature),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 }
