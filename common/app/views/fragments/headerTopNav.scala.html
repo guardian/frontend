@@ -6,18 +6,20 @@
 @import navigation.AuthenticationComponentEvent._
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
-@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupporterCTA, SupporterCTAWeekly}
+@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, PrintCTA, PrintCTAWeekly}
 @import conf.Configuration
 @import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch}
 
 @editionListItem(edition: Edition, isCurrentEdition: Boolean = false) = {
 <li class="dropdown-menu__item">
-    <a data-link-name="nav3 : topbar : edition-picker: @edition.id" href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+    @defining(LinkTo(s"/preference/edition/${edition.id.toLowerCase}")) { href =>
+    <a data-link-name="nav3 : topbar : edition-picker: @edition.id" href="@href"
         class="dropdown-menu__title @if(isCurrentEdition) {dropdown-menu__title--active}">
 
         <span class="u-h">switch to the </span>
         @edition.displayName
     </a>
+    }
 </li>
 }
 
@@ -33,11 +35,11 @@
 
             <div class="header-top-nav__top-bar">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
-                <div class="header-top-nav__item js-supporter-cta">
+                <div class="header-top-nav__item js-print-cta">
                     <span class="header-top-nav__item--separator hide-until-desktop"></span>
-                    @defining(if (editionId == "uk") getReaderRevenueUrl(SupporterCTA,
-                    Header) else getReaderRevenueUrl(SupporterCTAWeekly, Header)) { href =>
-                    <a class="top-bar__item hide-until-desktop yellow" data-link-name="nav3 : supporter-cta"
+                    @defining(if (editionId == "uk") getReaderRevenueUrl(PrintCTA,
+                    Header) else getReaderRevenueUrl(PrintCTAWeekly, Header)) { href =>
+                    <a class="top-bar__item hide-until-desktop yellow" data-link-name="nav3 : print-cta"
                         data-edition="@{editionId}" href="@href">
                         @fragments.inlineSvg("newspaper", "icon", List("top-bar__item__icon"))
                         Print subscriptions

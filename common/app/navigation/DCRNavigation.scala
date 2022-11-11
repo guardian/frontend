@@ -2,7 +2,7 @@ package navigation
 
 import common.Edition
 import model.Page
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupporterCTA}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupporterCTA, PrintCTA, PrintCTAWeekly}
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, Writes}
 
@@ -46,7 +46,7 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportContribute, SideMenu),
     getReaderRevenueUrl(SupportSubscribe, SideMenu),
     getReaderRevenueUrl(Support, SideMenu),
-    getReaderRevenueUrl(SupporterCTA, SideMenu),
+    getReaderRevenueUrl(PrintCTA, SideMenu),
   )
 
   val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(

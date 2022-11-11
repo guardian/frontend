@@ -8,6 +8,7 @@ import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 
 import scala.PartialFunction.condOpt
+import common.Edition
 
 object UrlHelpers {
 
@@ -51,6 +52,11 @@ object UrlHelpers {
       case (SupporterCTA, Footer)                                  => "footer_supporter_cta"
       case (SupporterCTA, AmpFooter)                               => "amp_footer_supporter_cta"
 
+      case (PrintCTA, Header)         => "header_print_cta"
+      case (PrintCTAWeekly, Header)   => "header_print_cta"
+      case (PrintCTA, SideMenu)       => "mobilenav_print_cta"
+      case (PrintCTAWeekly, SideMenu) => "mobilenav_print_cta"
+
       case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
   }
@@ -64,8 +70,13 @@ object UrlHelpers {
 
   def readerRevenueLinks(implicit request: RequestHeader): List[NavLink] =
     List(
-      NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
-      NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe")),
+      NavLink("Support us", getReaderRevenueUrl(SupportContribute, SideMenu)),
+      NavLink(
+        "Print subscriptions",
+        if (Edition(request).id == "UK") getReaderRevenueUrl(SupporterCTA, SideMenu)
+        else getReaderRevenueUrl(PrintCTAWeekly, SideMenu),
+        classList = Seq("js-print-subscription"),
+      ),
     )
 
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position): String = {
