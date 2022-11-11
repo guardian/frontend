@@ -1,0 +1,206 @@
+@()(implicit page: model.Page, request: RequestHeader)
+
+@import common.{LinkTo, Edition}
+@import views.support.RenderClasses
+@import views.support.DropdownMenus.accountDropdownMenu
+@import navigation.AuthenticationComponentEvent._
+@import navigation.NavMenu
+@import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
+@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, PrintCTA, PrintCTAWeekly}
+@import conf.Configuration
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch}
+
+@editionListItem(edition: Edition, isCurrentEdition: Boolean = false) = {
+<li class="dropdown-menu__item">
+    @defining(LinkTo(s"/preference/edition/${edition.id.toLowerCase}")) { href =>
+    <a data-link-name="nav3 : topbar : edition-picker: @edition.id" href="@href"
+        class="dropdown-menu__title @if(isCurrentEdition) {dropdown-menu__title--active}">
+
+        <span class="u-h">switch to the </span>
+        @edition.displayName
+    </a>
+    }
+</li>
+}
+
+@defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+<header class="@RenderClasses(Map(
+    " header-top-nav--slim" -> page.metadata.hasSlimHeader
+    ), s" pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "header-top-nav"
+    )" role="banner">
+
+    <div class="header-top-nav__full-width">
+        <nav class="header-top-nav__inner gs-container" data-component="nav3" role="navigation"
+            aria-label="Guardian sections">
+
+            <div class="header-top-nav__top-bar">
+                @defining(Edition(request).id.toLowerCase()) { editionId =>
+                <div class="header-top-nav__item js-print-cta">
+                    <span class="header-top-nav__item--separator hide-until-desktop"></span>
+                    @defining(if (editionId == "uk") getReaderRevenueUrl(PrintCTA,
+                    Header) else getReaderRevenueUrl(PrintCTAWeekly, Header)) { href =>
+                    <a class="top-bar__item hide-until-desktop yellow" data-link-name="nav3 : print-cta"
+                        data-edition="@{editionId}" href="@href">
+                        @fragments.inlineSvg("newspaper", "icon", List("top-bar__item__icon"))
+                        Print subscriptions
+                    </a>
+                    }
+                </div>
+
+
+
+                <div class="header-top-nav__item">
+                    <span class="header-top-nav__item--separator hide-until-desktop"></span>
+                    <a class="top-bar__item js-navigation-sign-in my-account" data-link-name="nav3 : topbar : signin"
+                        href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN&@createAuthenticationComponentEventParams(SigninHeaderId)">
+                        @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
+                        Sign in
+                    </a>
+
+                    <input type="checkbox" id="my-account-toggle" aria-controls="my-account-dropdown"
+                        class="dropdown-menu-fallback js-enhance-checkbox" data-link-name="nav3 : topbar: my account"
+                        tabindex="-1" />
+
+                    <label
+                        class="top-bar__item popup__toggle js-navigation-account-actions js-user-account-trigger is-hidden"
+                        for="my-account-toggle" data-link-name="nav3 : topbar: my account" tabindex="0">
+                        @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
+                        My account
+                    </label>
+                    <div class="my-account__overlay"></div>
+
+                    <ul class="dropdown-menu dropdown-menu--light js-user-account-dropdown-menu"
+                        id="my-account-dropdown" aria-hidden="true">
+
+                        @for((item)
+                        <- accountDropdownMenu) { @if(item.divider) { <hr />
+                        }
+                        <li class="@{(List(" dropdown-menu__item") ++ item.parentClassList).mkString(" ")}">
+                            <a class="@{(List(" dropdown-menu__title") ++ item.classList).mkString(" ")}"
+                                @if(item.href.isDefined) { href="@item.href" } @if(item.linkName.isDefined) {
+                                data-link-name="nav3 : topbar : @item.linkName" }>
+                                @(item.icon.map { icon =>
+                                views.html.fragments.inlineSvg(icon, "icon", isPresentation = true)
+                                })
+                                @item.label
+                            </a>
+                        </li>
+                        }
+                    </ul>
+                </div>
+
+                @if(editionId != "au") {
+                <div class="header-top-nav__item">
+                    <span class="header-top-nav__item--separator hide-until-desktop"></span>
+                    <a class="top-bar__item hide-until-desktop" data-link-name="nav3 : job-cta"
+                        data-edition="@{editionId}" href="@getJobUrl(editionId)">
+                        Search jobs
+                    </a>
+                </div>
+                }
+
+
+                <div class="header-top-nav__item">
+                    <span class="header-top-nav__item--separator hide-until-desktop"></span>
+                    <a class="top-bar__item hide-until-desktop"
+                        href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com"
+                        data-link-name="nav3 : search">
+                        @fragments.inlineSvg("search-36", "icon", List("top-bar__item__icon"))
+                        Search
+                    </a>
+                </div>
+
+                }
+
+
+                @if(!page.metadata.hasSlimHeader) {
+
+                <div class="header-top-nav__item hide-until-desktop">
+                    <span class="top-bar__item__seperator"></span>
+
+                    <input type="checkbox" id="edition-picker-toggle" aria-controls="edition-dropdown-menu"
+                        class="u-h dropdown-menu-fallback js-enhance-checkbox"
+                        data-link-name="nav2 : topbar : edition-picker: toggle" tabindex="-1">
+
+                    <ul class="dropdown-menu js-edition-dropdown-menu" id="edition-dropdown-menu" aria-hidden="true">
+
+                        @editionListItem(Edition(request), true)
+
+                        @Edition.others(request).map(e => editionListItem(e))
+                    </ul>
+
+                    <label for="edition-picker-toggle" class="top-bar__item popup__toggle js-edition-picker-trigger"
+                        data-link-name="nav2 : topnav : edition-picker: toggle"
+                        data-display-name="@Edition(request).displayName" tabindex="0">
+
+                        <span class="u-h">current edition: </span>
+                        @Edition(request).displayName
+                    </label>
+
+                </div>
+                }
+            </div>
+
+
+        </nav>
+    </div>
+
+
+
+
+    <nav class="gs-container u-cf" data-component="nav2">
+        @defining(Edition(request).id.toLowerCase()) { editionId =>
+        <a href="@LinkTo {/}" class="header-top-nav__logo" data-link-name="nav3 : logo">
+
+            <span class="u-h">The Guardian - Back to home</span>
+
+            @{
+            if(editionId == "uk") {
+            fragments.inlineSvg("guardian-best-website-logo", "logo")
+            } else {
+            fragments.inlineSvg("the-guardian-logo", "logo")
+            }
+            }
+        </a>
+        }
+        <div class="header-top-nav__cta-bar"></div>
+
+        @fragments.nav.headerMenu(navMenu)
+        <ul class="pillars">
+            @navMenu.pillars.map { link =>
+            <li class="pillars__item">
+                <a class="@RenderClasses(Map(
+                            " pillar-link--current-section" -> ((link.title ==
+                    navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)
+                    ), "pillar-link", s"pillar-link--${link.title}")"
+                    href="@LinkTo(link.url)"
+                    data-link-name="nav3 : primary : @link.title">
+
+                    @link.title
+                </a>
+            </li>
+            }
+        </ul>
+
+        <input type="checkbox" id="main-menu-toggle" class="veggie-burger-fallback js-enhance-checkbox u-h"
+            data-link-name="nav3 : veggie-burger : show" aria-controls="main-menu" tabindex="-1">
+
+        <label for="main-menu-toggle" class="js-change-link header-top-nav__menu-toggle"
+            data-link-name="nav3 : veggie-burger : show" tabindex="0">
+
+            <span class="veggie-burger hide-from-desktop">
+                <span class="veggie-burger__icon"></span>
+            </span>
+
+            <span class="pillar-link pillar-link--dropdown pillar-link--sections hide-until-desktop">
+                <span class="u-h">Show</span>
+                More
+                <i class="pillar-link--dropdown__icon"></i>
+            </span>
+        </label>
+    </nav>
+
+
+    @fragments.nav.subNav(navMenu, page.metadata.designType)
+</header>
+}

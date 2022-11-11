@@ -28,6 +28,7 @@ import { isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 import { init as initDynamicImport } from 'lib/dynamic-import-init';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
+import { headerTopNavInit } from 'common/modules/navigation/header-top-nav';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
@@ -220,7 +221,11 @@ const bootStandard = () => {
         handleMembershipAccess();
     }
 
-    newHeaderInit();
+    if(window.guardian.config.switches.headerTopNav) {
+        headerTopNavInit();
+    } else {
+        newHeaderInit();
+    }
 
     const isAtLeastLeftCol = isBreakpoint({ min: 'leftCol' });
 

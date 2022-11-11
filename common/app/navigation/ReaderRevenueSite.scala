@@ -40,4 +40,12 @@ object ReaderRevenueSite extends enumeratum.Enum[ReaderRevenueSite] {
   case object SupporterCTA extends ReaderRevenueSite {
     val url: String = s"${Configuration.id.supportUrl}/subscribe"
   }
+
+  case object PrintCTA extends ReaderRevenueSite {
+    val url: String = s"${Configuration.id.supportUrl}/subscribe"
+  }
+
+  case object PrintCTAWeekly extends ReaderRevenueSite {
+    val url: String = s"${Configuration.id.supportUrl}/subscribe/weekly"
+  }
 }
