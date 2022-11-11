@@ -23,9 +23,7 @@ const updateCommentLink = (commentItems) => {
     }
 };
 
-const showNotifications = () => {
-    const notifications = ['Your credit card has expired.'];    // TODO get from braze
-
+const showNotifications = (notifications) => {
     fastdom
         .measure(() => ({
             badge: document.querySelector('.js-user-account-notification-badge'),
@@ -94,7 +92,11 @@ const showMyAccountIfNecessary = () => {
                 })
                 .then(() => {
                     updateCommentLink(commentItems);
-                    showNotifications();
+
+                    const notifications = ['Your credit card has expired.'];    // TODO get from braze
+                    if (notifications.length > 0) {
+                        showNotifications(notifications);
+                    }
                 });
         });
 };
