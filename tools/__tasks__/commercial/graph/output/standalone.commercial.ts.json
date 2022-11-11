@@ -143,14 +143,12 @@
  "../projects/commercial/modules/consentless/init-fixed-slots.ts": [
   "../projects/commercial/modules/consentless/define-slot.ts"
  ],
- "../projects/commercial/modules/consentless/init-safeframes.ts": [
-  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
-  "../lib/fastdom-promise.ts"
- ],
  "../projects/commercial/modules/consentless/prepare-ootag.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
+  "../lib/report-error.ts",
+  "../projects/commercial/modules/messenger/get-stylesheet.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
  "../projects/commercial/modules/consentless/render-advert-label.ts": [
@@ -666,7 +664,6 @@
   "../projects/commercial/modules/consentless/dynamic/article-inline.ts",
   "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts",
   "../projects/commercial/modules/consentless/init-fixed-slots.ts",
-  "../projects/commercial/modules/consentless/init-safeframes.ts",
   "../projects/commercial/modules/consentless/prepare-ootag.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.ts",
