@@ -95,8 +95,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 19px;
+
     margin-top: 2px;
+    margin-left: 12px;
+    @include mq(tablet) {
+        margin-left: 19px;
+    }
 }
 
 .top-bar__user-account-notification-count {
