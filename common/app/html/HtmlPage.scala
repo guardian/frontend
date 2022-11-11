@@ -31,7 +31,7 @@ object HtmlPageHelpers {
         .isAdFree(request)
     val headerContent: Html = stacked(
       commercial.topBanner() when showTop && showAds,
-      if (Switches.headerTopNav.isSwitchedOn) headerTopNav() else header() when showTop,
+      if (Switches.headerTopNav.isSwitchedOn && !page.metadata.hasSlimHeader) headerTopNav() else header() when showTop,
     )
     bannerAndHeaderDiv(headerContent)
   }
