@@ -42,13 +42,14 @@ from scrolling */
 
         a.top-bar__item {
             &:hover {
+                color: $brightness-100;
                 text-decoration: underline;
             }
 
             &.yellow {
                 color: $highlight-main;
                 &:hover {
-                    color: $brightness-100;
+                    color: $highlight-main;
                 }
             }
 
