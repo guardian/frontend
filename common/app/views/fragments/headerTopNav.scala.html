@@ -37,7 +37,7 @@
                     <span class="header-top-nav__item--separator hide-until-desktop"></span>
                     @defining(if (editionId == "uk") getReaderRevenueUrl(SupporterCTA,
                     Header) else getReaderRevenueUrl(SupporterCTAWeekly, Header)) { href =>
-                    <a class="top-bar__item hide-until-desktop" data-link-name="nav3 : supporter-cta"
+                    <a class="top-bar__item hide-until-desktop yellow" data-link-name="nav3 : supporter-cta"
                         data-edition="@{editionId}" href="@href">
                         @fragments.inlineSvg("newspaper", "icon", List("top-bar__item__icon"))
                         Print subscriptions

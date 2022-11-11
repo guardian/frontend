@@ -40,7 +40,18 @@ from scrolling */
             justify-content: end;
         }
 
-        .top-bar__item {
+        a.top-bar__item {
+            &:hover {
+                text-decoration: underline;
+            }
+
+            &.yellow {
+                color: $highlight-main;
+                &:hover {
+                    color: $brightness-100;
+                }
+            }
+
             @include mq($until: desktop) {
                 padding: 3px 10px;
             }
