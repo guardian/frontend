@@ -2,6 +2,13 @@ window.guardian.notificationEventHistory ??= [];
 
 const eventName = 'my_account_notification';
 
+/**
+ * A simple event dispatcher for notifications. When a listener is added with
+ * .on, any missed events will be re-played. This is needed for the header
+ * notifications logic as we can't guarantee the listener will be added before
+ * the first notification events are fired. Messages are buffered on the window
+ * object.
+ */
 const bufferedNotificationListener = {
 	on: (callback: (event: CustomEvent<NotificationEvent>) => void): void => {
 		// See https://github.com/microsoft/TypeScript/issues/28357 for why we have to cast here
