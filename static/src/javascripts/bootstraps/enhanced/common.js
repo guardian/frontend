@@ -256,16 +256,8 @@ const initPublicApi = () => {
     window.guardian.api = {};
 };
 
-const initialiseBanner = () => {
-    const brazeMessagingPromise = buildBrazeMessaging();
-    const brazeMessagesPromise = brazeMessagingPromise.then(
-        ({ brazeMessages }) => brazeMessages
-    );
-    const brazeBanner = buildBrazeBanner(brazeMessagesPromise);
-
-    brazeMessagingPromise.then(
-        ({ brazeCards }) => brazeCards
-    ).then((brazeCards) => {
+const initialiseHeaderNotifications = (brazeCardsPromise) => {
+    brazeCardsPromise.then(brazeCards => {
         return brazeCards.getCardsForProfileBadge();
     }).then(cards => {
         console.log("Your notifications", cards);
@@ -281,6 +273,10 @@ const initialiseBanner = () => {
             bufferedNotificationListener.emit(notification);
         })
     })
+};
+
+const initialiseBanner = (brazeMessagesPromise) => {
+    const brazeBanner = buildBrazeBanner(brazeMessagesPromise);
 
     const isPreview = config.get('page.isPreview', false)
     // ordered by priority
@@ -301,6 +297,21 @@ const initialiseBanner = () => {
 
     initBannerPicker(bannerList);
 };
+
+const initialiseMessageSlots = () => {
+    const brazeMessagingPromise = buildBrazeMessaging();
+
+    const brazeMessagesPromise = brazeMessagingPromise.then(
+        ({ brazeMessages }) => brazeMessages
+    );
+    const brazeCardsPromise = brazeMessagingPromise.then(
+        ({ brazeCards }) => brazeCards
+    );
+
+    initialiseBanner(brazeMessagesPromise);
+    initialiseHeaderNotifications(brazeCardsPromise);
+};
+
 
 const initialiseConsentCookieTracking = () =>
     trackConsentCookies(getAllAdConsentsWithState());
@@ -336,7 +347,7 @@ const init = () => {
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
-        ['c-banner-picker', initialiseBanner],
+        ['c-message-slots', initialiseMessageSlots],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
         ['c-load-google-analytics', loadGoogleAnalytics],
