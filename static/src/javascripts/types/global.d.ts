@@ -310,6 +310,7 @@ interface OptOutInitializeOptions {
 	consentTimeOutMS?: 5000;
 	noLogging?: 0 | 1;
 	lazyLoading?: { fractionInView?: number; viewPortMargin?: string };
+	noRequestsOnPageLoad?: 0 | 1;
 }
 
 interface OptOutResponse {
@@ -333,11 +334,16 @@ interface OptOutResponse {
 	};
 }
 
+type OptOutFilledCallback = (
+	adSlot: OptOutAdSlot,
+	response: OptOutResponse,
+) => void;
+
 interface OptOutAdSlot {
 	adSlot: string;
 	targetId: string;
 	id: string;
-	filledCallback?: (adSlot: OptOutAdSlot, response: OptOutResponse) => void;
+	filledCallback?: OptOutFilledCallback;
 	emptyCallback?: (adSlot: OptOutAdSlot) => void;
 	adShownCallback?: (adSlot: OptOutAdSlot, response: OptOutResponse) => void;
 }
