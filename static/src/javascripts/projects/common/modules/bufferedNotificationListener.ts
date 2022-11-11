@@ -1,4 +1,3 @@
-// TODO: write some tests and convert to TypeScript
 window.guardian.notificationEventHistory ??= [];
 
 const eventName = 'my_account_notification';
