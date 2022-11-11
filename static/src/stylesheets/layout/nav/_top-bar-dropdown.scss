@@ -90,7 +90,7 @@ from scrolling */
     display: block;
     letter-spacing: .01rem;
     outline: none;
-    padding: ($gs-baseline / 2 + 1) $gs-gutter ($gs-baseline + $gs-baseline / 4) ($gs-gutter / 2);
+    padding: ($gs-baseline / 2 + 1) $gs-gutter ($gs-baseline + $gs-baseline / 4) $gs-gutter;
     position: relative;
     box-sizing: border-box;
     // Hides border on hover
