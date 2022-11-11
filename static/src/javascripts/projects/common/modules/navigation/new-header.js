@@ -7,7 +7,6 @@ import { storage } from '@guardian/libs';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
 import { showMyAccountIfNecessary } from './user-account';
-import bufferedEventListener from '../bufferedEventListener';
 
 const enhanced = {};
 const clickstreamListeners = {};
@@ -559,8 +558,6 @@ const addEventHandler = () => {
 };
 
 export const newHeaderInit = () => {
-    bufferedEventListener.on('my_account_notification', (payload) => { console.log("I got a notification!", payload) });
-
     enhanceMenuToggles();
     showMoreButton();
     addEventHandler();

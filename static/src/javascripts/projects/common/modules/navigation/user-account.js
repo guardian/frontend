@@ -1,5 +1,6 @@
 import fastdom from 'lib/fastdom-promise';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
+import { bufferedNotificationListener } from '../bufferedNotificationListener';
 
 const updateCommentLink = (commentItems) => {
     const user = getUserFromCookie();
@@ -44,10 +45,10 @@ const showNotifications = (notifications) => {
                 const labelEl = document.createElement('div');
                 labelEl.innerText = 'Settings';
                 labelEl.classList.add('dropdown-menu__notification-red-dot');
-                const notificationEls = notifications.map(notification => {
+                const notificationEls = notifications.map(({ message }) => {
                     const el = document.createElement('div');
                     el.classList.add('dropdown-menu__notification');
-                    el.innerText = notification;
+                    el.innerText = message;
                     return el;
                 });
                 menuItem.innerHTML = '';
@@ -93,10 +94,15 @@ const showMyAccountIfNecessary = () => {
                 .then(() => {
                     updateCommentLink(commentItems);
 
-                    const notifications = ['Your credit card has expired.'];    // TODO get from braze
-                    if (notifications.length > 0) {
-                        showNotifications(notifications);
-                    }
+                    let notifications = [];
+
+                    bufferedNotificationListener.on(
+                        (event) => {
+                            console.log("I got a notification!", event.detail);
+                            notifications = [...notifications, event.detail];
+                            showNotifications(notifications);
+                        },
+                    );
                 });
         });
 };
