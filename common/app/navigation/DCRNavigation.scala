@@ -2,7 +2,14 @@ package navigation
 
 import common.Edition
 import model.Page
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupporterCTA, PrintCTA, PrintCTAWeekly}
+import navigation.ReaderRevenueSite.{
+  Support,
+  SupportContribute,
+  SupportSubscribe,
+  SupporterCTA,
+  PrintCTA,
+  PrintCTAWeekly,
+}
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, Writes}
 
