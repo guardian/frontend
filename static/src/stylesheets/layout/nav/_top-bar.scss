@@ -83,8 +83,8 @@
 }
 
 .top-bar__user-account-notification-badge {
-    background-color: red;
-    color: white;
+    background-color: $news-main;
+    color: $brightness-100;
     position: absolute;
     top: 0;
     left: 0;
@@ -95,7 +95,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    //padding: 0 5px;
     margin-left: 19px;
     margin-top: 2px;
 }
@@ -107,7 +106,7 @@
 
 .dropdown-menu__notification-red-dot:before {
     content: '';
-    background-color: red;
+    background-color: $news-main;
     width: 14px;
     height: 14px;
     border-radius: 7px;
@@ -117,6 +116,6 @@
 }
 
 .dropdown-menu__notification {
-    color: red;
+    color: $news-main;
     font-size: 12px;
 }
