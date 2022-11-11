@@ -24,9 +24,7 @@
 }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
-<header class="@RenderClasses(Map(
-    " header-top-nav--slim" -> page.metadata.hasSlimHeader
-    ), s" pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "header-top-nav"
+<header class="@RenderClasses(s" pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "header-top-nav"
     )" role="banner">
 
     <div class="header-top-nav__full-width">
@@ -112,9 +110,6 @@
 
                 }
 
-
-                @if(!page.metadata.hasSlimHeader) {
-
                 <div class="header-top-nav__item hide-until-desktop">
                     <span class="top-bar__item__seperator"></span>
 
@@ -138,7 +133,6 @@
                     </label>
 
                 </div>
-                }
             </div>
 
 
@@ -171,7 +165,7 @@
             <li class="pillars__item">
                 <a class="@RenderClasses(Map(
                             " pillar-link--current-section" -> ((link.title ==
-                    navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)
+                    navMenu.currentPillar.map(_.title).getOrElse("")))
                     ), "pillar-link", s"pillar-link--${link.title}")"
                     href="@LinkTo(link.url)"
                     data-link-name="nav3 : primary : @link.title">
