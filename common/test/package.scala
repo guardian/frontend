@@ -78,6 +78,9 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
 
   // Fixes `Failed to listen for HTTP on /0.0.0.0:19001`
   System.setProperty("testserver.port", "0")
+  // This should never be set on PROD as it's to secure cryptographics functions.
+  // This trait is only ever used for testing, so it's OK.
+  System.setProperty("APP_SECRET", "foobar")
 
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
@@ -88,6 +91,7 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
     ("ws.timeout.connection", "10000"), // when running healthchecks on a cold app it can time out
     ("ws.timeout.idle", "10000"),
     ("ws.timeout.request", "10000"),
+    ("APP_SECRET", "foobar"),
   )
 
   implicit override lazy val app: Application = {
