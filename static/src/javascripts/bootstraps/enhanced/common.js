@@ -52,6 +52,7 @@ import { buildBrazeMessaging } from 'common/modules/commercial/braze/buildBrazeM
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
+import bufferedEventListener from 'common/modules/bufferedEventListener';
 
 const initialiseTopNavItems = () => {
     const header = document.getElementById('header');
@@ -266,7 +267,20 @@ const initialiseBanner = () => {
         ({ brazeCards }) => brazeCards
     ).then((brazeCards) => {
         return brazeCards.getCardsForProfileBadge();
-    }).then(notifications => console.log("Your notifications", notifications));
+    }).then(notifications => {
+        console.log("Your notifications", notifications);
+
+        notifications.forEach((notification) => {
+            const payload = {
+                target: notification.extras.target,
+                message: notification.extras.message,
+            };
+
+            bufferedEventListener.emit('my_account_notification', payload);
+        })
+
+        bufferedEventListener.on('my_account_notification', (payload) => { console.log("I got a notification which had already fired!", payload) });
+    })
 
     const isPreview = config.get('page.isPreview', false)
     // ordered by priority
