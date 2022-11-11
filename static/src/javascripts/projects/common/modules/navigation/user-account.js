@@ -32,18 +32,13 @@ const showNotifications = (notifications) => {
         .then(els => {
             const { badge, menuItem } = els;
 
-            if (notifications.length > 0 && badge && menuItem) {
-                // Add the count to the notification badge
-                const countLabel = badge.querySelector('.js-user-account-notification-count');
-                if (countLabel) {
-                    countLabel.textContent = `${notifications.length}`;
-                    badge.classList.remove('is-hidden');
-                }
+            if (notifications.length > 0 && menuItem) {
+                // Show the notification badge
+                badge.classList.remove('is-hidden');
 
                 // Add the notifications and dot to the 'Settings' menu item
                 const labelEl = document.createElement('div');
                 labelEl.innerText = 'Settings';
-                labelEl.classList.add('dropdown-menu__notification-red-dot');
                 const notificationEls = notifications.map(notification => {
                     const el = document.createElement('div');
                     el.classList.add('dropdown-menu__notification');
@@ -51,6 +46,7 @@ const showNotifications = (notifications) => {
                     return el;
                 });
                 menuItem.innerHTML = '';
+                labelEl.classList.add('top-bar__user-account-notification-badge');
                 [labelEl, ...notificationEls].forEach(e => menuItem.appendChild(e))
             }
         });
