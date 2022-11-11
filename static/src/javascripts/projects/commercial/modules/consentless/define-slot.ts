@@ -5,8 +5,13 @@ import { renderConsentlessAdvertLabel } from './render-advert-label';
 const defineSlot = (slot: HTMLElement, slotName: string): void => {
 	const slotId = slot.id;
 
-	const filledCallback = () => {
+	const filledCallback: OptOutFilledCallback = (_adSlot, response) => {
 		log('commercial', `Filled consentless ${slotId}`);
+		const { width, height } = response;
+		if (width === 1 && height === 1) {
+			slot.classList.add('ad-slot--fluid');
+		}
+
 		void renderConsentlessAdvertLabel(slot);
 	};
 
