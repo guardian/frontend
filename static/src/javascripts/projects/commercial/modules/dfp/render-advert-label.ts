@@ -3,7 +3,7 @@
 -- Nested fastdom measure-mutate promises throw the error:
 -- "Promise returned in function argument where a void return was expected"
 */
-import { getCookie } from '@guardian/libs';
+//import { getCookie } from '@guardian/libs';
 import crossIcon from 'svgs/icon/cross.svg';
 import fastdom from '../../../../lib/fastdom-promise';
 
@@ -13,7 +13,6 @@ const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
 		adSlotNode.classList.contains('ad-slot--frame') ||
 		adSlotNode.classList.contains('ad-slot--gc') ||
 		adSlotNode.classList.contains('u-h') ||
-		adSlotNode.classList.contains('ad-slot--fluid') ||
 		// set for out-of-page (1x1) and empty (2x2) ads
 		adSlotNode.classList.contains('ad-slot--collapse') ||
 		adSlotNode.getAttribute('data-label') === 'false' ||
