@@ -41,7 +41,12 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
   lazy val wsClient = mockWsResponse()
 
-  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient, new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient))
+  lazy val faciaController = new FaciaControllerImpl(
+    fapi,
+    play.api.test.Helpers.stubControllerComponents(),
+    wsClient,
+    new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
+  )
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
   val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)

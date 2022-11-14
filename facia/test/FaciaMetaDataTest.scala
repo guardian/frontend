@@ -29,8 +29,7 @@ import test._
     with WithTestWsClient
     with MockitoSugar
     with WithTestFrontJsonFapi
-    with WithTestContentApiClient
-    {
+    with WithTestContentApiClient {
 
   override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
@@ -43,7 +42,12 @@ import test._
     Await.result(refresh, 3.seconds)
   }
 
-  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient, new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient))
+  lazy val faciaController = new FaciaControllerImpl(
+    fapi,
+    play.api.test.Helpers.stubControllerComponents(),
+    wsClient,
+    new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
+  )
   val frontPath = "music"
 
   it should "Include organisation metadata" in {
