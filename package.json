@@ -22,7 +22,7 @@
 		"@guardian/consent-management-platform": "^10.11.1",
 		"@guardian/libs": "^7.1.4",
 		"@guardian/shimport": "^1.0.2",
-		"@guardian/source-foundations": "^4.0.3",
+		"@guardian/source-foundations": "^4.2.1",
 		"@guardian/source-react-components": "^4.4.0",
 		"@guardian/source-react-components-development-kitchen": "^0.0.33",
 		"@guardian/support-dotcom-components": "1.0.6",
