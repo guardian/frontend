@@ -1,14 +1,7 @@
-import {
-	buildPageTargetingConsentless,
-	initMessenger,
-} from '@guardian/commercial-core';
+import { buildPageTargetingConsentless } from '@guardian/commercial-core';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript } from '@guardian/libs';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { reportError } from 'lib/report-error';
-import { init as getStyles } from '../messenger/get-stylesheet';
-
-initMessenger([getStyles], [], reportError);
 
 function initConsentless(consentState: ConsentState): Promise<void> {
 	return new Promise((resolve) => {
