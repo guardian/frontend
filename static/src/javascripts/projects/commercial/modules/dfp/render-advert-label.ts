@@ -36,15 +36,15 @@ const createAdCloseDiv = (): HTMLElement => {
 	return closeDiv;
 };
 
-const shouldRenderAdTestLabel = (): boolean =>
+/*const shouldRenderAdTestLabel = (): boolean =>
 	!!getCookie({
 		name: 'adtestInLabels',
 		shouldMemoize: true,
 	});
-
+*/
 // If `adtest` cookie is set, display its value in the ad label
 // Furthermore, provide a link to clear the cookie
-const createAdTestLabel = (): HTMLElement => {
+/*const createAdTestLabel = (): HTMLElement => {
 	const adTestLabel = document.createElement('span');
 
 	const shouldRender = shouldRenderAdTestLabel();
@@ -64,59 +64,16 @@ const createAdTestLabel = (): HTMLElement => {
 
 	return adTestLabel;
 };
-
-const createAdLabel = (): HTMLElement => {
-	const adLabel = document.createElement('div');
-	adLabel.className = 'ad-slot__label';
-	adLabel.innerHTML = 'Advertisement';
-	adLabel.appendChild(createAdTestLabel());
-	adLabel.appendChild(createAdCloseDiv());
-	return adLabel;
-};
+*/
 
 /**
- *  **Dynamic labels:**
- *  Advert labels are historically inserted dynamically as a child of the advert slot node.
- *  This causes a cumulative layout shift (CLS) as content below is pushed down. This is
- *  particularly noticeable when ads are refreshed as the advert slot contents are deleted.
- *
- *  **Toggled labels:**
- *  To prevent CLS the label inserted on the server with its visibility initially hidden.
- *  Its visibility and width is toggled once the ad and its width is known.
- *  Currently only for dfp-ad--top-above-nav.
  * @param {HTMLElement} adSlotNode
  */
 const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
-	let renderDynamic = true;
-	const shouldRender = shouldRenderLabel(adSlotNode);
-
 	return fastdom.measure(() => {
-		if (adSlotNode.id === 'dfp-ad--top-above-nav') {
-			const labelToggle = document.querySelector<HTMLElement>(
-				'.ad-slot__label.ad-slot__label--toggle',
-			);
-			if (labelToggle) {
-				// found a toggled label so don't render dynamically
-				renderDynamic = false;
-				if (shouldRender) {
-					void fastdom.mutate(() => {
-						labelToggle.classList.remove('hidden');
-						labelToggle.classList.add('visible');
-					});
-				} else {
-					// some ads should not have a label
-					// for example fabric ads can have an embedded label
-					// so don't display and remove from layout
-					return fastdom.mutate(() => {
-						labelToggle.style.display = 'none';
-					});
-				}
-			}
-		}
-
-		if (renderDynamic && shouldRender) {
+		if (shouldRenderLabel(adSlotNode)) {
 			return fastdom.mutate(() => {
-				adSlotNode.prepend(createAdLabel());
+				adSlotNode.setAttribute('data-label-show', 'true');
 			});
 		}
 		return Promise.resolve();
@@ -160,5 +117,4 @@ export {
 	renderStickyScrollForMoreLabel,
 	shouldRenderLabel,
 	createAdCloseDiv,
-	createAdLabel,
 };

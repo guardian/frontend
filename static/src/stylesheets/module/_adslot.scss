@@ -629,3 +629,26 @@
     margin-bottom: 12px;
     position: relative;
 }
+
+.ad-slot:not[data-label-show='true']::before {
+    content: '';
+    display: block;
+    height: $mpu-ad-label-height;
+    visibility: hidden;
+}
+
+.ad-slot[data-label-show='true']:not([data-label='false'])::before {
+    @include font-size(12, 20);
+    content: 'Advertisement';
+    display: block;
+    visibility: visible;
+    position: relative;
+    height: $mpu-ad-label-height;
+    background-color: $brightness-97;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $brightness-86;
+    color: $brightness-46;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}

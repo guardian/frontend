@@ -1,5 +1,27 @@
+import crossIcon from 'svgs/icon/cross.svg';
 import fastdom from '../../../../lib/fastdom-promise';
-import { createAdLabel, shouldRenderLabel } from '../dfp/render-advert-label';
+import { shouldRenderLabel } from '../dfp/render-advert-label';
+
+const createAdCloseDiv = (): HTMLElement => {
+	const closeDiv: HTMLElement = document.createElement('button');
+	closeDiv.className = 'ad-slot__close-button';
+	closeDiv.innerHTML = crossIcon.markup;
+	closeDiv.onclick = () => {
+		const container: HTMLElement | null = closeDiv.closest(
+			'.mobilesticky-container',
+		);
+		if (container) container.remove();
+	};
+	return closeDiv;
+};
+
+const createAdLabel = (): HTMLElement => {
+	const adLabel = document.createElement('div');
+	adLabel.className = 'ad-slot__label';
+	adLabel.innerHTML = 'Advertisement';
+	adLabel.appendChild(createAdCloseDiv());
+	return adLabel;
+};
 
 // TODO: flesh out this function once we have a better idea of what we want it to look like
 // const insertConsentlessLabelInfo = (adLabelNode: HTMLElement): void => {
