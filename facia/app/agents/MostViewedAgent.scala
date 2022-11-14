@@ -33,7 +33,7 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
     implicit val format = Json.format[MostDiscussedItem]
   }
 
-  private def refreshGlobal()(implicit ec: ExecutionContext): Future[(Option[Content],Option[Content])] = {
+  private def refreshGlobal()(implicit ec: ExecutionContext): Future[(Option[Content], Option[Content])] = {
 
     log.info("Pulling most social media shared from Ophan")
 
@@ -82,10 +82,19 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
   // These are the only country codes passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
   private val countries = Seq(
-    GB, US, CA, AU, NG, NZ, IN, ROW
+    GB,
+    US,
+    CA,
+    AU,
+    NG,
+    NZ,
+    IN,
+    ROW,
   )
 
-  private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
+  private def refresh(
+      country: Country,
+  )(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase)
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten

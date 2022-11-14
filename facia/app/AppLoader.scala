@@ -48,9 +48,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
   lazy val mostViewedAgent = wire[MostViewedAgent]
 
-
   override lazy val lifecycleComponents = List(
-
     wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],

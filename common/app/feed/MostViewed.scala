@@ -25,7 +25,7 @@ object Country {
       case "in" => IN
       case "ng" => NG
       case "nz" => NZ
-      case _ => ROW
+      case _    => ROW
     }
 }
 case object GB extends Country {
@@ -71,7 +71,7 @@ object MostViewed extends GuLogging {
   // This function takes a sequence of items and a function that maps each item to a future.
   // Each future carries a map, all the maps are collapsed into one using a reduce
   def refreshAll[A, B](as: Seq[A])(
-    refreshOne: A => Future[Map[B, Seq[RelatedContentItem]]],
+      refreshOne: A => Future[Map[B, Seq[RelatedContentItem]]],
   )(implicit ec: ExecutionContext): Future[Map[B, Seq[RelatedContentItem]]] = {
     as.map(refreshOne)
       .reduce((itemsF, otherItemsF) =>

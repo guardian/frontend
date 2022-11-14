@@ -10,11 +10,11 @@ import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{ExecutionContext, Future}
 
 class MostViewedLifecycle(
-                              appLifecycle: ApplicationLifecycle,
-                              jobs: JobScheduler,
-                              akkaAsync: AkkaAsync,
-                              mostViewedAgent: MostViewedAgent,
-                            ) extends LifecycleComponent {
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    mostViewedAgent: MostViewedAgent,
+) extends LifecycleComponent {
 
   implicit val executionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
