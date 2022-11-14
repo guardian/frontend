@@ -637,7 +637,7 @@
     visibility: hidden;
 }
 
-.ad-slot[data-label-show='true']:not([data-label='false'])::before {
+.ad-slot[data-label-show='true']:not(.ad-slot--dark)::before {
     @include font-size(12, 20);
     content: 'Advertisement';
     display: block;
@@ -648,6 +648,22 @@
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $brightness-86;
     color: $brightness-46;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.ad-slot--dark[data-label-show='true']::before {
+    @include font-size(12, 20);
+    content: 'Advertisement';
+    display: block;
+    visibility: visible;
+    position: relative;
+    height: $mpu-ad-label-height;
+    background-color: transparent;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $brightness-20;
+    color: $brightness-86;
     text-align: left;
     box-sizing: border-box;
     font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
