@@ -39,7 +39,9 @@ function initConsentless(consentState: ConsentState): Promise<void> {
 			resolve();
 		});
 
-		void loadScript('//cdn.optoutadvertising.com/script/ooguardian.v4.js');
+		void loadScript(
+			'//cdn.optoutadvertising.com/script/ooguardian.v4.min.js',
+		);
 	});
 }
 
