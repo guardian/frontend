@@ -28,27 +28,30 @@ const showNotifications = (notifications) => {
     fastdom
         .measure(() => ({
             badge: document.querySelector('.js-user-account-notification-badge'),
-            menuItem: document.querySelector('.js-user-account-dropdown-menu-settings-item'),
+            menu: document.querySelector('#my-account-dropdown'),
         }))
         .then(els => {
-            const { badge, menuItem } = els;
+            const { badge, menu } = els;
 
-            if (notifications.length > 0 && menuItem) {
-                // Show the notification badge
-                badge.classList.remove('is-hidden');
+            if (notifications.length > 0 && menu) {
+                const menuItem = menu.querySelector(`a[data-link-name=${id}]`)
+                if (menuItem) {
+                    // Add the notifications and dot to the relevant menu item(s)
+                    const labelEl = document.createElement('div');
+                    labelEl.innerText = 'Settings';
+                    const notificationEls = notifications.map(({message}) => {
+                        const el = document.createElement('div');
+                        el.classList.add('dropdown-menu__notification');
+                        el.innerText = message;
+                        return el;
+                    });
+                    menuItem.innerHTML = '';
+                    labelEl.classList.add('top-bar__user-account-notification-badge');
+                    [labelEl, ...notificationEls].forEach(e => menuItem.appendChild(e))
 
-                // Add the notifications and dot to the 'Settings' menu item
-                const labelEl = document.createElement('div');
-                labelEl.innerText = 'Settings';
-                const notificationEls = notifications.map(({ message }) => {
-                    const el = document.createElement('div');
-                    el.classList.add('dropdown-menu__notification');
-                    el.innerText = message;
-                    return el;
-                });
-                menuItem.innerHTML = '';
-                labelEl.classList.add('top-bar__user-account-notification-badge');
-                [labelEl, ...notificationEls].forEach(e => menuItem.appendChild(e))
+                    // Show the notification badge
+                    badge.classList.remove('is-hidden');
+                }
             }
         });
 };

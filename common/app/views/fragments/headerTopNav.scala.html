@@ -77,7 +77,7 @@
                         <li class="@{(List(" dropdown-menu__item") ++ item.parentClassList).mkString(" ")}">
                             <a class="@{(List(" dropdown-menu__title") ++ item.classList).mkString(" ")}"
                                 @if(item.href.isDefined) { href="@item.href" } @if(item.linkName.isDefined) {
-                                data-link-name="nav3 : topbar : @item.linkName" }>
+                                data-link-name="nav3 : topbar : @item.linkName" } data-link-id="@item.linkId">
                                 @(item.icon.map { icon =>
                                 views.html.fragments.inlineSvg(icon, "icon", isPresentation = true)
                                 })
