@@ -35,45 +35,6 @@
     }
 }
 
-.ad-slot__label {
-    @include font-size(12, 20);
-    position: relative;
-    height: $mpu-ad-label-height;
-    max-height: $mpu-ad-label-height;
-    background-color: $brightness-97;
-    padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid $brightness-86;
-    color: $brightness-46;
-    text-align: left;
-    box-sizing: border-box;
-    font-family: $f-sans-serif-text;
-
-    .ad-slot--dark & {
-        color: $brightness-86;
-        border-top-color: $brightness-20;
-        background-color: transparent;
-    }
-
-    .ad-slot--sky & {
-        width: $mpu-skyscraper-width;
-    }
-
-    &--toggle {
-        margin: 0 auto;
-        @include mq($until: tablet) {
-            display: none;
-        }
-    }
-
-    &.visible {
-        visibility: initial;
-    }
-
-    &.hidden {
-        visibility: hidden;
-    }
-}
-
 /**
  * Banner ads
  */
