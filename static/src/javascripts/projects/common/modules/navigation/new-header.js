@@ -6,7 +6,7 @@ import fastdom from 'lib/fastdom-promise';
 import { storage } from '@guardian/libs';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
-import { showMyAccountIfNecessary } from './user-account';
+import { showMyAccountIfNecessary } from 'projects/common/modules/navigation/user-account';
 
 const enhanced = {};
 const clickstreamListeners = {};

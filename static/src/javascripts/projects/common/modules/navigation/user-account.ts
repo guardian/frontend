@@ -2,7 +2,7 @@ import fastdom from 'lib/fastdom-promise';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 import { bufferedNotificationListener } from '../bufferedNotificationListener';
 
-const updateCommentLink = (commentItems) => {
+const updateCommentLink = (commentItems: Element[]): void => {
     const user = getUserFromCookie();
 
     if (user) {
@@ -11,20 +11,22 @@ const updateCommentLink = (commentItems) => {
                 .measure(() =>
                     commentItem.querySelector('.js-add-comment-activity-link')
                 )
-                .then(commentLink =>
-                    fastdom.mutate(() => {
-                        commentItem.classList.remove('u-h');
-                        commentLink.setAttribute(
-                            'href',
-                            `https://profile.theguardian.com/user/id/${user.id}`
-                        );
-                    })
-                );
+                .then(commentLink => {
+					if (commentLink) {
+						fastdom.mutate(() => {
+							commentItem.classList.remove('u-h');
+							commentLink.setAttribute(
+								'href',
+								`https://profile.theguardian.com/user/id/${user.id}`
+							);
+						})
+					}
+				});
         });
     }
 };
 
-const showNotifications = (notifications) => {
+const showNotifications = (notifications: NotificationEvent[]): void => {
     fastdom
         .measure(() => ({
             badge: document.querySelector('.js-user-account-notification-badge'),
@@ -33,30 +35,30 @@ const showNotifications = (notifications) => {
         .then(els => {
             const { badge, menu } = els;
 
-            if (notifications.length > 0 && menu) {
-                const menuItem = menu.querySelector(`a[data-link-name=${id}]`)
-                if (menuItem) {
-                    // Add the notifications and dot to the relevant menu item(s)
-                    const labelEl = document.createElement('div');
-                    labelEl.innerText = 'Settings';
-                    const notificationEls = notifications.map(({message}) => {
-                        const el = document.createElement('div');
-                        el.classList.add('dropdown-menu__notification');
-                        el.innerText = message;
-                        return el;
-                    });
-                    menuItem.innerHTML = '';
-                    labelEl.classList.add('top-bar__user-account-notification-badge');
-                    [labelEl, ...notificationEls].forEach(e => menuItem.appendChild(e))
+            if (notifications.length > 0 && badge && menu) {
+				// Show the notification badge
+				badge.classList.remove('is-hidden');
 
-                    // Show the notification badge
-                    badge.classList.remove('is-hidden');
-                }
+                // const menuItem = menu.querySelector(`a[data-link-name=${id}]`)
+                // if (menuItem) {
+                //     // Add the notifications and dot to the relevant menu item(s)
+                //     const labelEl = document.createElement('div');
+                //     labelEl.innerText = 'Settings';
+                //     const notificationEls = notifications.map(({message}) => {
+                //         const el = document.createElement('div');
+                //         el.classList.add('dropdown-menu__notification');
+                //         el.innerText = message;
+                //         return el;
+                //     });
+                //     menuItem.innerHTML = '';
+                //     labelEl.classList.add('top-bar__user-account-notification-badge');
+                //     [labelEl, ...notificationEls].forEach(e => menuItem.appendChild(e))
+                // }
             }
         });
 };
 
-const showMyAccountIfNecessary = () => {
+const showMyAccountIfNecessary = (): void => {
     if (!isUserLoggedIn()) {
         // return;
     }
@@ -93,7 +95,7 @@ const showMyAccountIfNecessary = () => {
                 .then(() => {
                     updateCommentLink(commentItems);
 
-                    let notifications = [];
+                    let notifications: NotificationEvent[] = [];
 
                     bufferedNotificationListener.on(
                         (event) => {
