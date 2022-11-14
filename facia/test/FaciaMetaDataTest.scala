@@ -1,5 +1,6 @@
 package metadata
 
+import agents.MostViewedAgent
 import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import concurrent.BlockingOperations
@@ -12,7 +13,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json._
 import play.api.test.Helpers._
-import services.ConfigAgent
+import services.{ConfigAgent, OphanApi}
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
@@ -27,7 +28,9 @@ import test._
     with WithMaterializer
     with WithTestWsClient
     with MockitoSugar
-    with WithTestFrontJsonFapi {
+    with WithTestFrontJsonFapi
+    with WithTestContentApiClient
+    {
 
   override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(
@@ -40,7 +43,7 @@ import test._
     Await.result(refresh, 3.seconds)
   }
 
-  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient)
+  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient, new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient))
   val frontPath = "music"
 
   it should "Include organisation metadata" in {
