@@ -442,6 +442,24 @@
     .email-sub__message__headline {
         color: #ffffff;
     }
+
+    .email-sub__form-wrapper .newsletters-terms {
+        color: #ffffff;
+        a {
+            color: #ffffff;
+        }
+
+        &[data-privacy-visible='true'] {
+            .newsletters-privacy-notice {
+                display: inline;
+            }
+
+            color: #ffffff;
+            a {
+                color: #ffffff;
+            }
+        }
+    }
 }
 
 // PLAIN-TONE MODS
