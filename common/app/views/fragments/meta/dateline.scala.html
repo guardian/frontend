@@ -4,7 +4,7 @@
 
 @(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, firstPublicationDate: Option[DateTime], isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
 
-<p class="@if(!isMinute){content__dateline}@if(isMinute){content__dateline--minute-article}" aria-hidden="true">
+<p class="@if(!isMinute){content__dateline}@if(isMinute){content__dateline--minute-article}">
     <time itemprop="datePublished" datetime='@GuDateTimeFormatOld(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
         data-timestamp="@webPublicationDate.getMillis" class="content__dateline-wpd js-wpd">
         @if(isMinute) {
