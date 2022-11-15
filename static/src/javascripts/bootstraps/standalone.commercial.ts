@@ -13,18 +13,9 @@
  */
 
 import { EventTimer } from '@guardian/commercial-core';
-import { onConsent } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
-import { initArticleInline } from 'commercial/modules/consentless/dynamic/article-inline';
-import { initLiveblogInline } from 'commercial/modules/consentless/dynamic/liveblog-inline';
-import { initFixedSlots } from 'commercial/modules/consentless/init-fixed-slots';
-import { initConsentless } from 'commercial/modules/consentless/prepare-ootag';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { consentlessAds } from 'common/modules/experiments/tests/consentlessAds';
-import {
-	AdFreeCookieReasons,
-	maybeUnsetAdFreeCookie,
-} from 'lib/manage-ad-free-cookie';
 import { reportError } from '../lib/report-error';
 import { catchErrorsWithContext } from '../lib/robust';
 import { initAdblockAsk } from '../projects/commercial/adblock-ask';
@@ -212,38 +203,15 @@ const bootCommercial = async (): Promise<void> => {
 	}
 };
 
-const bootConsentless = async (): Promise<void> => {
-	/*  In the consented ad stack, we set the ad free cookie for users who
-		don't consent to targeted ads in order to hide empty ads slots.
-		We remove the cookie here so that we can show Opt Out ads.
-		TODO: Stop setting ad free cookie for users who opt out when
-		consentless ads are rolled out to all users.
- 	*/
-	maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
-
-	const consentState = await onConsent();
-
-	await Promise.all([
-		setAdTestCookie(),
-		setAdTestInLabelsCookie(),
-		initConsentless(consentState),
-		initFixedSlots(),
-		initArticleInline(),
-		initLiveblogInline(),
-	]);
-
-	// Since we're in single-request mode
-	// Call this once all ad slots are present on the page
-	window.ootag.makeRequests();
-};
-
 /* Provide consentless advertising in the variant of a zero-percent test,
    regardless of consent state. This is currently just for testing purposes.
 
    If not in the variant, get the usual commercial experience
 */
 if (isInVariantSynchronous(consentlessAds, 'variant')) {
-	void bootConsentless();
+	void import(
+		/* webpackChunkName: "consentless" */ './commercial.consentless'
+	).then(({ bootConsentless }) => bootConsentless());
 } else {
 	if (window.guardian.mustardCut || window.guardian.polyfilled) {
 		void bootCommercial();
