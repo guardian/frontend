@@ -90,12 +90,6 @@
 .ad-slot--top-banner-ad {
     text-align: center;
 
-    .ad-slot__label {
-        @include mq(wide) {
-            margin: 0;
-        }
-    }
-
     .has-page-skin & {
         @include mq(wide) {
             text-align: center;
@@ -268,7 +262,7 @@
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
 
-        & > div:not(.ad-slot__label) {
+        & > div {
             width: 300px;
             margin-left: auto;
             margin-right: auto;
@@ -277,11 +271,6 @@
 }
 .ad-slot--liveblog-inline {
     background-color: $brightness-93;
-
-    .ad-slot__label {
-        color: $brightness-46;
-        border-top-color: $brightness-86;
-    }
 }
 .ad-slot--mpu-banner-ad {
     display: none;
@@ -448,12 +437,6 @@
     }
 }
 
-.ad-slot--gc {
-    .ad-slot__label {
-        display: none;
-    }
-}
-
 .ad-slot--fabric-v1 {
     min-height: 250px;
 }
@@ -478,10 +461,6 @@
     width: auto;
     margin-left: 0;
     padding: 0;
-
-    .ad-slot__label {
-        display: none;
-    }
 }
 
 .ad-slot--fluid250 {
@@ -555,7 +534,7 @@
     text-align: center;
 }
 
-.ad-slot--mobile-sticky .ad-slot__label .ad-slot__close-button {
+.ad-slot--mobile-sticky .ad-slot__close-button {
     display: block;
 }
 
