@@ -26,10 +26,14 @@ export const renderConsentlessAdvertLabel = (
 ): Promise<Promise<void>> => {
 	return fastdom.measure(() => {
 		if (shouldRenderLabel(adSlotNode)) {
+			//Assigning the ad label text like this allows us to conditionally add extra text to it
+			//eg. for the ad test labelling for google ads
+			const adLabelContent = `Advertisement`;
 			return fastdom.mutate(() => {
 				//when the time comes to use a different ad label for consentless, we can update
 				//the attribute name that we set below and add a css selector accordingly
 				adSlotNode.setAttribute('data-label-show', 'true');
+				adSlotNode.setAttribute('ad-label-text', adLabelContent);
 			});
 		}
 		return Promise.resolve();
