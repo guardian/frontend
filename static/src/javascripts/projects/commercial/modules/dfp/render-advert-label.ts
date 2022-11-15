@@ -71,8 +71,6 @@ const createAdTestLabel = (): string => {
  */
 const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 	return fastdom.measure(() => {
-		console.log(adSlotNode);
-		console.log(adSlotNode.classList.contains('ad-slot--interscroller'));
 		if (shouldRenderLabel(adSlotNode)) {
 			const adLabelContent = `Advertisement${createAdTestLabel()}`;
 			return fastdom.mutate(() => {
