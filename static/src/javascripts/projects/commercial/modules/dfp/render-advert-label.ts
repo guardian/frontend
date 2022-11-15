@@ -3,7 +3,8 @@
 -- Nested fastdom measure-mutate promises throw the error:
 -- "Promise returned in function argument where a void return was expected"
 */
-//import { getCookie } from '@guardian/libs';
+import { getCookie } from '@guardian/libs';
+import type { String } from 'lodash';
 import crossIcon from 'svgs/icon/cross.svg';
 import fastdom from '../../../../lib/fastdom-promise';
 
@@ -36,35 +37,36 @@ const createAdCloseDiv = (): HTMLElement => {
 	return closeDiv;
 };
 
-/*const shouldRenderAdTestLabel = (): boolean =>
+const shouldRenderAdTestLabel = (): boolean =>
 	!!getCookie({
 		name: 'adtestInLabels',
 		shouldMemoize: true,
 	});
-*/
 // If `adtest` cookie is set, display its value in the ad label
 // Furthermore, provide a link to clear the cookie
-/*const createAdTestLabel = (): HTMLElement => {
-	const adTestLabel = document.createElement('span');
+const createAdTestLabel = (): string => {
+	//const adTestLabel = document.createElement('span');
+	let adTestLabel = '';
 
 	const shouldRender = shouldRenderAdTestLabel();
+	console.log(shouldRender);
 	const val = getCookie({ name: 'adtest', shouldMemoize: true });
+	console.log(val);
 
 	if (shouldRender && val) {
-		adTestLabel.innerHTML += ` [?adtest=${val}] `;
+		adTestLabel += ` [?adtest=${val}] `;
 
-		const url = new URL(window.location.href);
-		url.searchParams.set('adtest', 'clear');
+		//const url = new URL(window.location.href);
+		//url.searchParams.set('adtest', 'clear');
 
-		const clearLink = document.createElement('a');
-		clearLink.href = url.href;
-		clearLink.innerHTML = 'clear';
-		adTestLabel.appendChild(clearLink);
+		//const clearLink = document.createElement('a');
+		//clearLink.href = url.href;
+		//clearLink.innerHTML = 'clear';
+		//adTestLabel.appendChild(clearLink);
 	}
 
 	return adTestLabel;
 };
-*/
 
 /**
  * @param {HTMLElement} adSlotNode
@@ -72,8 +74,10 @@ const createAdCloseDiv = (): HTMLElement => {
 const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 	return fastdom.measure(() => {
 		if (shouldRenderLabel(adSlotNode)) {
+			const adLabelContent = `Advertisement${createAdTestLabel()}`;
 			return fastdom.mutate(() => {
 				adSlotNode.setAttribute('data-label-show', 'true');
+				adSlotNode.setAttribute('ad-label-text', adLabelContent);
 			});
 		}
 		return Promise.resolve();

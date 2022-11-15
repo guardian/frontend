@@ -600,7 +600,7 @@
 
 .ad-slot[data-label-show='true']:not(.ad-slot--dark):not(.ad-slot--interscroller)::before {
     @include font-size(12, 20);
-    content: 'Advertisement';
+    content: attr(ad-label-text);
     display: block;
     visibility: visible;
     position: relative;
