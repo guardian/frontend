@@ -9,7 +9,8 @@ import fastdom from '../../../../lib/fastdom-promise';
 
 const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
 	!(
-		adSlotNode.classList.contains('ad-slot--fluid') ||
+		(adSlotNode.classList.contains('ad-slot--fluid') &&
+			!adSlotNode.classList.contains('ad-slot--interscroller')) ||
 		adSlotNode.classList.contains('ad-slot--frame') ||
 		adSlotNode.classList.contains('ad-slot--gc') ||
 		adSlotNode.classList.contains('u-h') ||
@@ -48,9 +49,7 @@ const createAdTestLabel = (): string => {
 	let adTestLabel = '';
 
 	const shouldRender = shouldRenderAdTestLabel();
-	console.log(shouldRender);
 	const val = getCookie({ name: 'adtest', shouldMemoize: true });
-	console.log(val);
 
 	if (shouldRender && val) {
 		adTestLabel += ` [?adtest=${val}] `;
@@ -72,6 +71,8 @@ const createAdTestLabel = (): string => {
  */
 const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 	return fastdom.measure(() => {
+		console.log(adSlotNode);
+		console.log(adSlotNode.classList.contains('ad-slot--interscroller'));
 		if (shouldRenderLabel(adSlotNode)) {
 			const adLabelContent = `Advertisement${createAdTestLabel()}`;
 			return fastdom.mutate(() => {

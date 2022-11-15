@@ -199,7 +199,7 @@ const setupBackground = async (
 				adSlot.style.position = 'relative';
 			}
 
-			void renderAdvertLabel(backgroundParent);
+			void renderAdvertLabel(adSlot);
 			void renderStickyScrollForMoreLabel(backgroundParent);
 
 			isDCR && renderBottomLine(background, backgroundParent);
