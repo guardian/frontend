@@ -4,11 +4,7 @@ import { dfpEnv } from './dfp/dfp-env';
 
 // Remove ad slots
 // Remove toggled ad labels that sit outside of the ad slot
-const selectors: string[] = [
-	dfpEnv.adSlotSelector,
-	'.ad-slot__label--toggle',
-	'.top-banner-ad-container',
-];
+const selectors: string[] = [dfpEnv.adSlotSelector, '.top-banner-ad-container'];
 
 const selectNodes = () =>
 	selectors.reduce(
