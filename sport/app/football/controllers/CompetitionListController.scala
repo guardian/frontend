@@ -18,10 +18,10 @@ class CompetitionListController(
   val page = new FootballPage("football/competitions", "football", "Leagues & competitions")
 
   val competitionList = List(
+    "Internationals",
     "English",
     "European",
     "Scottish",
-    "Internationals",
     "Rest of world",
   )
 

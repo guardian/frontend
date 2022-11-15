@@ -18,10 +18,10 @@
     <label for="football-leagues" class="football-leagues__label">Choose league: </label>
     <select class="football-leagues__list" name="competitionUrl" id="football-leagues">
         <option value="/football/@pageType">All @pageType</option>
+        @renderOpts("Internationals")
         @renderOpts("English")
         @renderOpts("European")
         @renderOpts("Scottish")
-        @renderOpts("Internationals")
         @renderOpts("Rest of world")
     </select>
 </form>
