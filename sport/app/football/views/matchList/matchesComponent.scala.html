@@ -5,9 +5,10 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.RowInfo
 
+@import java.time.ZonedDateTime
 @(matchesList: MatchesList, customLink: Option[(String, String)] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@footballMatchDay(date: LocalDate, competitionMatches: List[(Competition, List[FootballMatch])], dateRow: RowInfo) = {
+@footballMatchDay(date: ZonedDateTime, competitionMatches: List[(Competition, List[FootballMatch])], dateRow: RowInfo) = {
     <div class="football-matches__day">
     @{competitionMatches.zipWithRowInfo.map { case ((competition, matches), matchRow) =>
         football.views.html.matchList.matchesList(

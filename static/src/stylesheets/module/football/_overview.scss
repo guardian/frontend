@@ -287,6 +287,12 @@
         float: none;
     }
 
+    .football-matches__timezone {
+        color: $brightness-46;
+        font-weight: normal;
+        font-size: 12px;
+    }
+
     .football-matches {
         .table__caption--top {
             border-top: 1px solid darken($brightness-97, 4%);
