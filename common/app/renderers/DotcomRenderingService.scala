@@ -1,7 +1,7 @@
 package renderers
 
 import akka.actor.ActorSystem
-import com.gu.contentapi.client.model.v1.{Block, Blocks, Content}
+import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -24,7 +24,6 @@ import model.{
   NoCache,
   PageWithStoryPackage,
   PressedPage,
-  RelatedContentItem,
   Topic,
   TopicResult,
 }
@@ -213,18 +212,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       page: PressedPage,
       pageType: PageType,
-      mostViewed: Seq[RelatedContentItem],
-      mostCommented: Option[Content],
-      mostShared: Option[Content],
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomFrontsRenderingDataModel(
-      page,
-      request,
-      pageType,
-      mostViewed,
-      mostCommented,
-      mostShared,
-    )
+    val dataModel = DotcomFrontsRenderingDataModel(page, request, pageType)
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)

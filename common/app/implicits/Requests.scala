@@ -115,8 +115,6 @@ trait Requests {
 
     // slot machine
     lazy val slotMachineFlags = r.getQueryString("slot-machine-flags").getOrElse("")
-
-    lazy val countryCode = r.headers.toSimpleMap.getOrElse("X-GU-GeoLocation", "country:row").replace("country:", "")
   }
 
 }

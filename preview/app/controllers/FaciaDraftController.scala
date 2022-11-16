@@ -1,6 +1,5 @@
 package controllers
 
-import agents.MostViewedAgent
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.TrailsToShowcase
 import contentapi.{ContentApiClient, SectionsLookUp}
@@ -19,7 +18,6 @@ class FaciaDraftController(
     sectionsLookUp: SectionsLookUp,
     val controllerComponents: ControllerComponents,
     val ws: WSClient,
-    val mostViewedAgent: MostViewedAgent,
 )(implicit val context: ApplicationContext)
     extends FaciaController
     with RendersItemResponse {

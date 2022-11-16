@@ -2,7 +2,6 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
-import agents.MostViewedAgent
 import common.JsonComponent.Ok
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
@@ -22,12 +21,10 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
-import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import experiments.{ActiveExperiments, EuropeNetworkFront}
-import feed.Country
 import play.api.http.ContentTypes.JSON
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
@@ -43,7 +40,6 @@ trait FaciaController
 
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
-  val mostViewedAgent: MostViewedAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   implicit val context: ApplicationContext
@@ -208,17 +204,7 @@ trait FaciaController
           if FaciaPicker.getTier(faciaPage) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
-        withVaryHeader(
-          remoteRenderer.getFront(
-            ws = ws,
-            page = faciaPage,
-            pageType = pageType,
-            mostViewed = mostViewedAgent.mostViewed(Country.fromHeaderString(request)),
-            mostCommented = mostViewedAgent.mostCommented,
-            mostShared = mostViewedAgent.mostShared,
-          )(request),
-          targetedTerritories,
-        )
+        withVaryHeader(remoteRenderer.getFront(ws, faciaPage, pageType)(request), targetedTerritories)
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(
           Cached(CacheTime.Facia)(
@@ -232,9 +218,6 @@ trait FaciaController
                     page = faciaPage,
                     request = request,
                     pageType = PageType(faciaPage, request, context),
-                    mostViewed = mostViewedAgent.mostViewed(Country.fromHeaderString(request)),
-                    mostCommented = mostViewedAgent.mostCommented,
-                    mostShared = mostViewedAgent.mostShared,
                   ),
                 )
               } else JsonFront(faciaPage)
@@ -505,6 +488,5 @@ class FaciaControllerImpl(
     val frontJsonFapi: FrontJsonFapiLive,
     val controllerComponents: ControllerComponents,
     val ws: WSClient,
-    val mostViewedAgent: MostViewedAgent,
 )(implicit val context: ApplicationContext)
     extends FaciaController
