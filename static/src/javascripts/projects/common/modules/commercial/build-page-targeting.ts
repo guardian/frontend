@@ -43,10 +43,10 @@ const buildAppNexusTargeting = once((pageTargeting: PageTargeting): string =>
 const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 	const { page } = window.guardian.config;
 
-	const pageTargeting = buildPageTargeting(
+	const pageTargeting = buildPageTargeting({
 		consentState,
-		commercialFeatures.adFree,
-	);
+		adFree: commercialFeatures.adFree,
+	});
 
 	// third-parties wish to access our page targeting, before the googletag script is loaded.
 	page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);
