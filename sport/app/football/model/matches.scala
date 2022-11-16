@@ -58,11 +58,11 @@ trait MatchesList extends Football with RichList {
     }
   }
   def matchesGroupedByDate(implicit request: RequestHeader) = {
-    relevantMatches.segmentBy(key = _._1.date.withZoneSameInstant(Edition(request).timezoneId))
+    relevantMatches.segmentBy(key = _._1.date.withZoneSameInstant(Edition(request).timezoneId).toLocalDate)
   }
   def matchesGroupedByDateAndCompetition(implicit
       request: RequestHeader,
-  ): Seq[(ZonedDateTime, List[(Competition, List[FootballMatch])])] =
+  ): Seq[(LocalDate, List[(Competition, List[FootballMatch])])] =
     matchesGroupedByDate.map {
       case (d, ms) =>
         val competitionsWithMatches = ms

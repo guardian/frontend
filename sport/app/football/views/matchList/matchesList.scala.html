@@ -1,9 +1,12 @@
 @import java.time.format.DateTimeFormatter
+@import java.time.ZonedDateTime
 @import football.model.GuTeamCodes
 @import common.Edition
+@import java.time.LocalTime
+
 @(matchesList: List[pa.FootballMatch],
     competition: model.Competition,
-    date: java.time.ZonedDateTime,
+    date: java.time.LocalDate,
     responsiveFont: Boolean = false,
     matchType: String = "",
     linkToCompetition: Boolean = false,
@@ -92,7 +95,7 @@
         }
         <span class="football-matches__date">
             @date.format(DateTimeFormatter.ofPattern("E d MMMM "))
-            <span class="football-matches__timezone">(@date.format(DateTimeFormatter.ofPattern("z")))</span>
+            <span class="football-matches__timezone">(@DateTimeFormatter.ofPattern("z").format(ZonedDateTime.of(date, LocalTime.of(0, 0), Edition(request).timezoneId)))</span>
         </span>
 
     </caption>
