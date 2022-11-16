@@ -1,4 +1,4 @@
-import agents.CuratedContentAgent
+import agents.{CuratedContentAgent, MostViewedAgent}
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
@@ -92,6 +92,7 @@ trait PreviewControllerComponents
   lazy val faviconController = wire[FaviconController]
   lazy val itemController = wire[ItemController]
   lazy val oAuthLoginController = wire[OAuthLoginPreviewController]
+  lazy val mostViewedAgent = wire[MostViewedAgent]
 }
 
 trait AppComponents
