@@ -1,6 +1,5 @@
 package test
 
-import agents.MostViewedAgent
 import akka.actor.ActorSystem
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
@@ -10,7 +9,7 @@ import concurrent.BlockingOperations
 import play.api.libs.json.JsArray
 import play.api.test._
 import play.api.test.Helpers._
-import services.{ConfigAgent, OphanApi}
+import services.ConfigAgent
 import org.scalatest._
 import controllers.FaciaControllerImpl
 import helpers.FaciaTestData
@@ -36,17 +35,11 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
     with WithMaterializer
     with WithTestApplicationContext
     with MockitoSugar
-    with WithTestFrontJsonFapi
-    with WithTestContentApiClient {
+    with WithTestFrontJsonFapi {
 
   lazy val wsClient = mockWsResponse()
 
-  lazy val faciaController = new FaciaControllerImpl(
-    fapi,
-    play.api.test.Helpers.stubControllerComponents(),
-    wsClient,
-    new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
-  )
+  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents(), wsClient)
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
   val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)

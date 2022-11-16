@@ -13,6 +13,23 @@ import scala.concurrent.{ExecutionContext, Future}
 
 case class Country(code: String, edition: Edition)
 
+object MostPopularRefresh {
+
+  // This function takes a sequence of items and a function that maps each item to a future.
+  // Each future carries a map, all the maps are collapsed into one using a reduce
+  def refreshAll[A](as: Seq[A])(
+      refreshOne: A => Future[Map[String, Seq[RelatedContentItem]]],
+  )(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+    as.map(refreshOne)
+      .reduce((itemsF, otherItemsF) =>
+        for {
+          items <- itemsF
+          otherItems <- otherItemsF
+        } yield items ++ otherItems,
+      )
+  }
+}
+
 class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends GuLogging {
 
   private val relatedContentsBox = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
@@ -70,7 +87,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
 
   private def contentFromUrl(url: String, capi: ContentApiClient)(implicit ec: ExecutionContext): Future[Content] = {
     capi
-      .getResponse(capi.item(MostViewed.urlToContentPath(url), ""))
+      .getResponse(capi.item(urlToContentPath(url), ""))
       .map { itemResponse =>
         itemResponse.content.get
       }
@@ -95,7 +112,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
 
   // Note that here we are in procedural land here (not functional)
   def refresh()(implicit ec: ExecutionContext): Unit = {
-    MostViewed.refreshAll(Edition.allWithBetaEditions)(refresh)
+    MostPopularRefresh.refreshAll(Edition.allWithBetaEditions)(refresh)
     refreshGlobal()
   }
 }
@@ -137,7 +154,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for countries.")
-    MostViewed.refreshAll(countries)(refresh)
+    MostPopularRefresh.refreshAll(countries)(refresh)
   }
 }
 
@@ -155,7 +172,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for the day.")
-    MostViewed.refreshAll(countries)(refresh)
+    MostPopularRefresh.refreshAll(countries)(refresh)
   }
 
   def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
