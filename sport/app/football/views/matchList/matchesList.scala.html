@@ -1,5 +1,9 @@
 @import java.time.format.DateTimeFormatter
+@import java.time.ZonedDateTime
 @import football.model.GuTeamCodes
+@import common.Edition
+@import java.time.LocalTime
+
 @(matchesList: List[pa.FootballMatch],
     competition: model.Competition,
     date: java.time.LocalDate,
@@ -39,9 +43,8 @@
                 ))">
                 <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub">
                     @if(theMatch.isFixture){
-                        <time datetime="@theMatch.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))" data-timestamp="@theMatch.date.toInstant.toEpochMilli"
-                        class="js-locale-timestamp">
-                            @theMatch.date.format(DateTimeFormatter.ofPattern("HH:mm"))</time>
+                        <time datetime="@theMatch.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ").withZone(Edition(request).timezoneId))" data-timestamp="@theMatch.date.toInstant.toEpochMilli">
+                            @theMatch.date.format(DateTimeFormatter.ofPattern("HH:mm ").withZone(Edition(request).timezoneId))</time>
                     }else{
                         @MatchStatus(theMatch.matchStatus)
                     }
@@ -90,7 +93,11 @@
                 <span class="football-matches__heading">@text</span>
             }
         }
-        <span class="football-matches__date">@date.format(DateTimeFormatter.ofPattern("E d MMMM"))</span>
+        <span class="football-matches__date">
+            @date.format(DateTimeFormatter.ofPattern("E d MMMM "))
+            <span class="football-matches__timezone">(@DateTimeFormatter.ofPattern("z").format(ZonedDateTime.of(date, LocalTime.of(0, 0), Edition(request).timezoneId)))</span>
+        </span>
+
     </caption>
     @if(linkToCompetition && link == None){
         <tfoot class="table__caption table__caption--bottom" >

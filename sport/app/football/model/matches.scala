@@ -1,11 +1,13 @@
 package football.model
 
 import com.madgag.scala.collection.decorators.MapDecorator
+import common.Edition
 import football.collections.RichList
 import football.datetime.DateHelpers
 import implicits.Football
 import model.Competition
 import pa.{FootballMatch, Round}
+import play.api.mvc.RequestHeader
 
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, ZonedDateTime}
@@ -55,8 +57,12 @@ trait MatchesList extends Football with RichList {
         eligibleDates.contains(fMatch.date.toLocalDate)
     }
   }
-  lazy val matchesGroupedByDate = relevantMatches.segmentBy(key = _._1.date.toLocalDate)
-  def matchesGroupedByDateAndCompetition: Seq[(LocalDate, List[(Competition, List[FootballMatch])])] =
+  def matchesGroupedByDate(implicit request: RequestHeader) = {
+    relevantMatches.segmentBy(key = _._1.date.withZoneSameInstant(Edition(request).timezoneId).toLocalDate)
+  }
+  def matchesGroupedByDateAndCompetition(implicit
+      request: RequestHeader,
+  ): Seq[(LocalDate, List[(Competition, List[FootballMatch])])] =
     matchesGroupedByDate.map {
       case (d, ms) =>
         val competitionsWithMatches = ms

@@ -7,6 +7,7 @@ import model.Competition
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import test.ConfiguredTestSuite
+import play.api.test.FakeRequest
 
 import java.time.format.DateTimeFormatter
 
@@ -32,7 +33,8 @@ import java.time.format.DateTimeFormatter
       }
 
       "should group matches correctly by date" in {
-        fixtures.matchesGroupedByDateAndCompetition.map(_._1) should equal(
+        val request = FakeRequest()
+        fixtures.matchesGroupedByDateAndCompetition(request).map(_._1) should equal(
           List(today, today.plusDays(1), today.plusDays(3)),
         )
       }
