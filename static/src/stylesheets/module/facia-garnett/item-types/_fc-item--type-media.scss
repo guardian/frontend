@@ -1,6 +1,6 @@
 // Styles shared by media and interview (video) types
 .fc-item--type-interview.fc-item--video,
-.fc-item--type-media {
+.fc-item--type-media:not(.fc-item--pillar-special-report-alt) {
     background-color: $brightness-20;
 
     .fc-item__video-duration {
@@ -92,5 +92,87 @@
 
     .fc-sublink__link {
         color: #ffffff;
+    }
+}
+
+.fc-item--type-media.fc-item--pillar-special-report-alt {
+
+    .fc-item__video-duration {
+        //ensures the alingment of the timestamp
+        display: inline-block;
+        transform: translateY(-8px);
+    }
+
+    .fc-item__content {
+        justify-content: space-between;
+    }
+
+    .fc-item__standfirst {
+        flex: 0 1 auto;
+    }
+
+    .fc-item__headline {
+        color: $special-report-alt-dark;
+    }
+
+    .fc-item__standfirst {
+        color: $special-report-alt-dark;
+    }
+
+    .fc-sublink__link {
+        color: $special-report-alt-dark;
+    }
+
+    .fc-item__meta-wrapper {
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline / 2;
+
+    }
+
+    .fc-item__footer-meta-wrapper {
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .fc-item__media-meta,
+    .fc-item__meta {
+        flex: 0 0 auto;
+    }
+
+    .fc-item__media-meta,
+    .fc-item__meta {
+        @include fs-textSans(1);
+        font-weight: 600;
+    }
+
+    .fc-item__media-meta {
+        margin-bottom: -#{$gs-baseline / 2};
+
+        .inline-icon__svg {
+            width: 14px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 6px;
+            display: block;
+        }
+    }
+
+    .fc-trail__count--commentcount {
+        color: $special-report-alt-dark;
+
+        svg {
+            fill: $special-report-alt-dark;
+        }
+    }
+
+    .fc-sublink__link {
+        color: $special-report-alt-dark;
     }
 }

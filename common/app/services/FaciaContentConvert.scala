@@ -13,7 +13,7 @@ object FaciaContentConvert {
   def contentToFaciaContent(content: Content): PressedContent = {
     val frontendContent = model.Content(content)
     val trailMetaData = TrailMetaData.empty
-    val cardStyle = CardStylePicker(content, trailMetaData)
+    val cardStyle = CardStylePicker(content)
     val resolvedMetaData = ResolvedMetaData.fromContentAndTrailMetaData(content, trailMetaData, cardStyle)
 
     val curated = fapi.CuratedContent(
