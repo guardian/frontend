@@ -82,6 +82,20 @@ $pillars: (
         cutoutBackground: $highlight-main,
         invertedKicker: $highlight-main,
         liveColour: #ffffff
+    ),
+    special-report-alt: (
+        cardBackground: $special-report-alt-faded,
+        lines: $special-report-alt-dark,
+        kicker: $brightness-7,
+        headline: $special-report-alt-dark,
+        featureHeadline: $special-report-alt-dark,
+        byline: $special-report-alt-dark,
+        commentCount: $special-report-alt-dark,
+        headlineIcon: $special-report-alt-dark,
+        metaText: $special-report-alt-dark,
+        cutoutBackground: $special-report-alt-dark,
+        invertedKicker: $brightness-7,
+        liveColour: $special-report-alt-faded
     )
 );
 
