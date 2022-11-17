@@ -197,7 +197,7 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report) .fc-item__standfirst {
+    &.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report):not(.fc-item--pillar-special-report-alt) .fc-item__standfirst {
         color: $brightness-7;
     }
 
@@ -288,7 +288,7 @@ $pillars: (
         background-color: map-get($palette, kicker);
     }
 
-    &.fc-item--type-comment:not(.fc-item--pillar-special-report) {
+    &.fc-item--type-comment:not(.fc-item--pillar-special-report):not(.fc-item--pillar-special-report-alt) {
 
         background-color: $opinion-faded;
 
@@ -355,7 +355,6 @@ $pillars: (
         .fc-item__content {
             background-color: $special-report-dark;
         }
-
         &:hover {
             .fc-item__content {
                 background-color: darken($special-report-dark, 5%);
@@ -395,5 +394,104 @@ $pillars: (
 
     .fc-sublink__title {
         color: #ffffff;
+    }
+}
+
+
+.fc-item--pillar-special-report-alt,
+.fc-item--pillar-special-report-alt.fc-item--type-feature {
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile {
+        .fc-item__content {
+            background-color: $special-report-alt-faded;
+        }
+
+        &:hover {
+            .fc-item__content {
+                background-color: $special-report-alt-faded;
+            }
+        }
+    }
+
+    background-color: $special-report-alt-faded !important;
+
+    .fc-item__container.u-faux-block-link--hover {
+        background-color: $special-report-alt-faded !important;
+
+        .fc-item__timestamp,
+        .fc-trail__count--commentcount {
+            background-color: $special-report-alt-dark !important;
+        }
+    }
+
+    &.fc-item--type-media,
+    &.fc-item--type-interview {
+        .inline-video-icon,
+        .inline-volume-high,
+        .inline-camera {
+            svg {
+                fill:  $special-report-alt-faded;
+            }
+
+            &::after {
+                background-color:  $special-report-alt-faded;
+            }
+        }
+    }
+
+    .fc-item__container {
+        &:before {
+            background-color: $special-report-alt-dark !important;
+        }
+    }
+
+    .fc-item__title {
+        color: $special-report-alt-dark;
+    }
+
+    .fc-item__kicker {
+        color: $special-report-alt-dark;
+    }
+
+    fc-item__headline {
+        color: $special-report-alt-dark;
+    }
+
+    &.fc-item--type-comment {
+
+        .fc-item__byline {
+            display: inline;
+            color: $special-report-alt-dark !important;
+        }
+
+        .fc-item__kicker {
+            color: $special-report-alt-dark !important;
+
+        }
+
+        .inline-icon {
+            fill: $special-report-alt-dark !important;
+        }
+    }
+
+    &.fc-item--type-media {
+        background-color: $special-report-alt-faded;
+
+        .youtube-media-atom__play-button.vjs-control-text {
+            .inline-play svg {
+                fill: $special-report-alt-faded;
+            }
+        }
+    }
+
+    .fc-item__container.u-faux-block-link--hover {
+        background-color: darken($special-report-alt-faded, 2%);
+    }
+
+    .fc-sublink__kicker {
+        color: $special-report-alt-dark;
+    }
+
+    .fc-sublink__title {
+        color: $special-report-alt-dark;
     }
 }
