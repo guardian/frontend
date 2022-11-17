@@ -45,7 +45,7 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
       contentApiClient
         .item(keywordId.stringDecoded, defaultEdition)
         .pageSize(maxItemCount)
-        .showTags("type,series,paid-content")
+        .showTags("type,series,paid-content,keyword")
         .orderBy("newest"),
     ) map {
       _.results.getOrElse(Nil).toSeq map (Content(_))
