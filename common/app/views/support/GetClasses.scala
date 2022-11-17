@@ -14,8 +14,7 @@ import com.gu.facia.client.models.{
 }
 import layout._
 import layout.slices._
-import model.pressed.{Audio, Gallery, SpecialReport, Video}
-import slices.{Dynamic, DynamicSlowMPU}
+import model.pressed.{Audio, Gallery, SpecialReport, SpecialReportAlt, Video}
 import play.api.mvc.RequestHeader
 import model.Pillar.RichPillar
 import model.ContentDesignType.RichContentDesignType
@@ -47,6 +46,7 @@ object GetClasses {
         ("fc-item--pillar-" + item.pillar.nameOrDefault, true),
         ("fc-item--type-" + item.designType.nameOrDefault, true),
         ("fc-item--pillar-special-report", item.cardStyle == SpecialReport),
+        ("fc-item--pillar-special-report-alt", item.cardStyle == SpecialReportAlt),
         ("fc-item--paid-content", item.branding.exists(_.isPaid)),
         ("fc-item--has-cutout", item.cutOut.isDefined),
         ("fc-item--has-no-image", !item.hasImage),
@@ -77,6 +77,7 @@ object GetClasses {
         (sublinkMediaTypeClass(sublink).getOrElse(""), true),
         ("fc-sublink--pillar-" + sublink.pillar.nameOrDefault, true),
         ("fc-sublink--type-" + sublink.designType.nameOrDefault, true),
+        ("fc-sublink--pillar-special-report-alt", sublink.cardStyle == SpecialReportAlt),
       ),
     )
 
