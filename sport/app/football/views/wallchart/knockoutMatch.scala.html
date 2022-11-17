@@ -29,10 +29,10 @@
             @if(fm.isFixture){
                 <div class="football-match__date">
                     <span class="football-match__kickoff">@fm.date.format(DateTimeFormatter.ofPattern("HH:mm ").withZone(Edition(request).timezoneId))</span>
-                    @fm.date.format(DateTimeFormatter.ofPattern("E dd MMMM"))
+                    @fm.date.withZoneSameInstant(Edition(request).timezoneId).toLocalDate.format(DateTimeFormatter.ofPattern("E dd MMMM"))
                 </div>
-
             }
+
             @fm.comments.map { comments =>
                 <div class="football-match__comments">@comments.reverse.dropWhile(_ == '.').reverse</div>
             }
