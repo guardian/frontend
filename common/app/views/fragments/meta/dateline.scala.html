@@ -21,6 +21,7 @@
         <time datetime='@GuDateTimeFormatOld(date, "yyyy-MM-dd'T'HH:mm:ssZ")'
         data-timestamp="@date.getMillis" class="content__dateline-lm js-lm u-h"
         @optItemProp.map { itemProp => itemprop="@itemProp" }
+        aria-hidden="true"
         >
             @label @GuDateTimeFormatOld(date, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormatNew.formatTimeForDisplay(date, request)</span>
         </time>
