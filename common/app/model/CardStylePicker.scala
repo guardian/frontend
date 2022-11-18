@@ -12,20 +12,18 @@ object CardStylePicker {
   def apply(content: CapiContent): CardStyle = {
     val tags = content.tags.map(_.id).toSeq
     extractCampaigns(tags) match {
-      case Nil => CardStyle(content, TrailMetaData.empty)
-      case campaign :: _ =>
-        if (campaign.id.toString.toLowerCase() == "specialreportalt") SpecialReportAlt else SpecialReport
-      case _ => SpecialReport
+      case Nil                                                                         => CardStyle(content, TrailMetaData.empty)
+      case campaign :: Nil if campaign.id.toString.toLowerCase() == "specialreportalt" => SpecialReportAlt
+      case _                                                                           => SpecialReport
     }
   }
 
   def apply(content: FaciaContent): CardStyle = {
     val tags = FaciaContentUtils.tags(content).map(_.id)
     extractCampaigns(tags) match {
-      case Nil => FaciaContentUtils.cardStyle(content)
-      case campaign :: _ =>
-        if (campaign.id.toString.toLowerCase() == "specialreportalt") SpecialReportAlt else SpecialReport
-      case _ => SpecialReport
+      case Nil                                                                         => FaciaContentUtils.cardStyle(content)
+      case campaign :: Nil if campaign.id.toString.toLowerCase() == "specialreportalt" => SpecialReportAlt
+      case _                                                                           => SpecialReport
     }
   }
 
