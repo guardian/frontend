@@ -42,6 +42,36 @@
     }
 }
 
+.fc-sublink__title.fc-sublink--pillar-special-report-alt {
+    @include fs-headline(1);
+    color: $brightness-7;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+
+    &:before {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        width: $gs-gutter * 6 + 2px;
+        border-top: 1px solid rgba(60, 60, 60, .3);
+
+        @include mq($from: tablet) {
+            width: $gs-column-width * 2;
+        }
+    }
+
+    .fc-sublink__kicker {
+        float: left;
+        margin-right: .2em;
+        font-weight: 700;
+    }
+}
+
+
+
 @mixin fc-sublinks--horizontal {
     .fc-sublinks {
         display: flex;
