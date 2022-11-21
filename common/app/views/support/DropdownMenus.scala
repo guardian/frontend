@@ -20,37 +20,37 @@ object DropdownMenus {
       href = Some(Configuration.id.mmaUrl),
       linkName = Some("account overview"),
       label = "Account overview",
-      linkId = "account_overview"
+      linkId = "account_overview",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/billing"),
       linkName = Some("billing"),
       label = "Billing",
-      linkId = "billing"
+      linkId = "billing",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/public-settings"),
       linkName = Some("profile"),
       label = "Profile",
-      linkId = "edit_profile"
+      linkId = "edit_profile",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/email-prefs"),
       linkName = Some("email prefs"),
       label = "Emails & marketing",
-      linkId = "email_prefs"
+      linkId = "email_prefs",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/account-settings"),
       linkName = Some("settings"),
       label = "Settings",
-      linkId = "settings"
+      linkId = "settings",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/help"),
       linkName = Some("help"),
       label = "Help",
-      linkId = "help"
+      linkId = "help",
     ),
     DropdownMenuItem(
       linkName = Some("comment activity"),
@@ -58,7 +58,7 @@ object DropdownMenus {
       classList = List("js-add-comment-activity-link"),
       parentClassList = List("u-h", "js-show-comment-activity"),
       divider = true,
-      linkId = "comment_activity"
+      linkId = "comment_activity",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.url}/signout"),
@@ -66,7 +66,7 @@ object DropdownMenus {
       label = "Sign out",
       icon = Some("log-off"),
       divider = true,
-      linkId = "sign_out"
+      linkId = "sign_out",
     ),
   )
 
