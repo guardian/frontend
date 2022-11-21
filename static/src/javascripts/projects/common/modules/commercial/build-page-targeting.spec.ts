@@ -9,6 +9,9 @@ const buildPageTargeting = buildPageTargeting_ as jest.MockedFunction<
 jest.mock('../../../../lib/geolocation', () => ({
 	getCountryCode: jest.fn(),
 }));
+jest.mock('../experiments/ab', () => ({
+	getSynchronousParticipations: jest.fn(),
+}));
 jest.mock('@guardian/commercial-core', () => ({
 	buildPageTargeting: jest.fn(),
 }));
