@@ -10,11 +10,10 @@ const initFixedSlots = (): Promise<void> => {
 
 	// define slots
 	adverts.forEach((slotElement) => {
-		const slotName = slotElement.dataset.name?.includes('inline')
-			? 'inline'
-			: slotElement.dataset.name;
+		const slotName = slotElement.dataset.name;
+		const slotKind = slotName?.includes('inline') ? 'inline' : undefined;
 		if (slotName) {
-			defineSlot(slotElement, slotName);
+			defineSlot(slotElement, slotName, slotKind);
 		}
 	});
 

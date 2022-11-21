@@ -434,6 +434,11 @@ interface Window {
 		queue: Array<() => void>;
 		initializeOo: (o: OptOutInitializeOptions) => void;
 		addParameter: (key: string, value: string | string[]) => void;
+		addParameterForSlot: (
+			slotId: string,
+			key: string,
+			value: string | string[],
+		) => void;
 		defineSlot: (o: OptOutAdSlot) => void;
 		makeRequests: () => void;
 		refreshSlot: (slotId: string) => void;
