@@ -44,7 +44,6 @@ object DropdownMenus {
       href = Some(s"${Configuration.id.mmaUrl}/account-settings"),
       linkName = Some("settings"),
       label = "Settings",
-      classList = List("js-user-account-dropdown-menu-settings-item"),
       linkId = "settings"
     ),
     DropdownMenuItem(
