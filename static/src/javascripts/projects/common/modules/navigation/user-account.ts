@@ -93,7 +93,7 @@ const showNotifications = (notifications: NotificationEvent[]): void => {
 
 const showMyAccountIfNecessary = (): void => {
 	if (!isUserLoggedIn()) {
-		// return;
+		return;
 	}
 
 	void fastdom
@@ -128,21 +128,7 @@ const showMyAccountIfNecessary = (): void => {
 				.then(() => {
 					updateCommentLink(commentItems);
 
-					let notifications: NotificationEvent[] = [
-						{
-							target: 'billing',
-							message: 'Your card has expired.',
-						},
-						{
-							target: 'edit_profile',
-							message: 'Add your contact details.',
-						},
-						{
-							target: 'edit_profile',
-							message: 'Set your public details.',
-						},
-					];
-					showNotifications(notifications); // TODO - remove
+					let notifications: NotificationEvent[] = [];
 
 					bufferedNotificationListener.on((event) => {
 						console.log('I got a notification!', event.detail);
