@@ -8,8 +8,8 @@ export const integrateIMA: ABTest = {
 	author: 'Zeke Hunter-Green',
 	description:
 		'Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos',
-	audience: 0,
-	audienceOffset: 0,
+	audience: 5 / 100,
+	audienceOffset: 30 / 100,
 	audienceCriteria: 'Opt in',
 	successMeasure:
 		'IMA integration works as expected without adversely affecting pages with videos',
