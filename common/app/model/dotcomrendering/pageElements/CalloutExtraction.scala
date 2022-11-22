@@ -356,8 +356,6 @@ object CalloutExtraction {
       campaign <- extractCampaignByCampaignId(callout.campaignId, cpgs)
       element <- campaignJsObjectToCalloutBlockElementV2(campaign, callout.isNonCollapsible, calloutsUrl)
     } yield {
-      println("element: ")
-      println(element)
       element
     }
   }
