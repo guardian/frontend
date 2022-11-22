@@ -144,6 +144,24 @@ object CalloutBlockElement {
   implicit val CalloutBlockElementWrites: Writes[CalloutBlockElement] = Json.writes[CalloutBlockElement]
 }
 
+case class CalloutBlockElementV2(
+    id: String,
+    calloutsUrl: Option[String],
+    activeFrom: Long,
+    activeTo: Option[Long],
+    displayOnSensitive: Boolean,
+    formId: Int,
+    title: String,
+    description: String,
+    tagName: String,
+    formFields: List[CalloutFormField],
+    isNonCollapsible: Boolean,
+) extends PageElement
+
+object CalloutBlockElementV2 {
+  implicit val CalloutBlockElementV2Writes: Writes[CalloutBlockElementV2] = Json.writes[CalloutBlockElementV2]
+}
+
 // The extension of the ChartAtomBlockElement, is experimental. Three fields have been added,
 // html: String, css: Option[String], js: Option[String], but it looks like, the html string we get from CAPI,
 // contains all the css and js required to display the atom.
@@ -753,6 +771,7 @@ object PageElement {
       case _: AudioAtomBlockElement       => true
       case _: BlockquoteBlockElement      => true
       case _: CalloutBlockElement         => true
+      case _: CalloutBlockElementV2       => true
       case _: ChartAtomBlockElement       => true
       case _: CodeBlockElement            => true
       case _: CommentBlockElement         => true
@@ -822,7 +841,6 @@ object PageElement {
       } yield role
 
     element.`type` match {
-
       case Text =>
         val textCleaners =
           TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks) _ andThen
@@ -1034,6 +1052,22 @@ object PageElement {
       // 1. SoundcloudBlockElement
       // 2. EmbedBlockElement
       // 3. CalloutBlockElement
+
+      case Callout => {
+        println("I'm a callout element")
+        val res = element.calloutTypeData
+          .map { callout =>
+            CalloutExtraction.extractCalloutByCampaignId(
+              callout,
+              campaigns,
+              calloutsUrl,
+            )
+          }
+          .flatten
+          .toList
+        println(res)
+        res
+      }
 
       case Contentatom =>
         (extractAtom match {
@@ -1649,7 +1683,7 @@ object PageElement {
       isCallout = CalloutExtraction.isCallout(html)
     } yield {
 
-      if (isCallout) CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl)
+      if (isCallout) CalloutExtraction.extractCallout(html, campaigns, calloutsUrl)
       else {
         Some(
           extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain).getOrElse(
