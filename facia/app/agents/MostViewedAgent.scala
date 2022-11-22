@@ -93,7 +93,7 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
   )
 
   private def refresh(
-                       country: EditionalisedCountry,
+      country: EditionalisedCountry,
   )(implicit ec: ExecutionContext): Future[Map[EditionalisedCountry, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase)
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
