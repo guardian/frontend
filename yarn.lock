@@ -2101,6 +2101,11 @@
   dependencies:
     "@guardian/libs" "^7.1.4"
 
+"@guardian/core-web-vitals@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-1.0.0.tgz#f5624eabbf7123f8a764c00674e640a10a80e2da"
+  integrity sha512-3WTUK6FmZpVUQGoc+hlAcuYx8yVKdYfpcP7HWkBmy1yaWV5yJ81HBxxoACwUeMrZrKLMlCMriPTC9CLhPgGGUQ==
+
 "@guardian/eslint-config-typescript@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@guardian/eslint-config-typescript/-/eslint-config-typescript-0.7.0.tgz#9b675639377bd71bc42f33741ea3bbbf20525c4a"
