@@ -46,7 +46,8 @@ deployments:
   frontend-static:
     type: aws-s3
     parameters:
-      bucket: aws-frontend-static
+      bucketSsmKey: /account/services/dotcom-static
+      bucketSsmLookup: true
       cacheControl: public, max-age=315360000
       prefixStack: false
       publicReadAcl: false
