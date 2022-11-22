@@ -4,7 +4,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.Content
 import common._
-import feed.{AU, CA, GB, US, NG, NZ, IN, ROW, Country, MostViewed}
+import feed.{AU, CA, GB, US, NG, NZ, IN, ROW, EditionalisedCountry, MostViewed}
 import services.OphanApi
 import model.RelatedContentItem
 import play.api.libs.json._
@@ -15,12 +15,12 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends GuLogging {
 
-  private val mostViewedBox = Box[Map[Country, Seq[RelatedContentItem]]](Map.empty)
+  private val mostViewedBox = Box[Map[EditionalisedCountry, Seq[RelatedContentItem]]](Map.empty)
   private val mostCommentedCardBox = Box[Option[Content]](None)
   private val mostSharedCardBox = Box[Option[Content]](None)
 
   // todo: better typing for country codes
-  def mostViewed(country: Country): Seq[RelatedContentItem] = mostViewedBox().getOrElse(country, Nil)
+  def mostViewed(country: EditionalisedCountry): Seq[RelatedContentItem] = mostViewedBox().getOrElse(country, Nil)
   def mostCommented = mostCommentedCardBox.get()
   def mostShared = mostSharedCardBox.get()
 
@@ -93,8 +93,8 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
   )
 
   private def refresh(
-      country: Country,
-  )(implicit ec: ExecutionContext): Future[Map[Country, Seq[RelatedContentItem]]] = {
+                       country: EditionalisedCountry,
+  )(implicit ec: ExecutionContext): Future[Map[EditionalisedCountry, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase)
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten

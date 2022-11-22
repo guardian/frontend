@@ -11,12 +11,12 @@ import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-sealed trait Country {
+sealed trait EditionalisedCountry {
   val code: String
   val edition: Edition
 }
-object Country {
-  def fromHeaderString(header: RichRequestHeader): Country =
+object EditionalisedCountry {
+  def fromHeaderString(header: RichRequestHeader): EditionalisedCountry =
     header.countryCode.toLowerCase match {
       case "gb" => GB
       case "us" => US
@@ -28,35 +28,35 @@ object Country {
       case _    => ROW
     }
 }
-case object GB extends Country {
+case object GB extends EditionalisedCountry {
   val code = "gb"
   val edition = editions.Uk
 }
-case object US extends Country {
+case object US extends EditionalisedCountry {
   val code = "us"
   val edition = editions.Us
 }
-case object AU extends Country {
+case object AU extends EditionalisedCountry {
   val code = "au"
   val edition = editions.Au
 }
-case object CA extends Country {
+case object CA extends EditionalisedCountry {
   val code = "ca"
   val edition = editions.Us
 }
-case object IN extends Country {
+case object IN extends EditionalisedCountry {
   val code = "in"
   val edition = Edition.defaultEdition
 }
-case object NG extends Country {
+case object NG extends EditionalisedCountry {
   val code = "ng"
   val edition = Edition.defaultEdition
 }
-case object NZ extends Country {
+case object NZ extends EditionalisedCountry {
   val code = "nz"
   val edition = editions.Au
 }
-case object ROW extends Country {
+case object ROW extends EditionalisedCountry {
   val code = "row"
   val edition = Edition.defaultEdition
 }
