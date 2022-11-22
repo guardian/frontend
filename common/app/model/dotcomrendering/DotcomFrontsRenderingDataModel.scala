@@ -4,8 +4,10 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
+import com.gu.contentapi.client.model.v1.Content
 import experiments.ActiveExperiments
-import model.PressedPage
+import layout.ContentCard
+import model.{PressedPage, RelatedContentItem}
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.RequestHeader
@@ -25,12 +27,22 @@ case class DotcomFrontsRenderingDataModel(
     pageFooter: PageFooter,
     isAdFreeUser: Boolean,
     isNetworkFront: Boolean,
+    mostViewed: Seq[Trail],
+    mostCommented: Option[Trail],
+    mostShared: Option[Trail],
 )
 
 object DotcomFrontsRenderingDataModel {
   implicit val writes = Json.writes[DotcomFrontsRenderingDataModel]
 
-  def apply(page: PressedPage, request: RequestHeader, pageType: PageType): DotcomFrontsRenderingDataModel = {
+  def apply(
+      page: PressedPage,
+      request: RequestHeader,
+      pageType: PageType,
+      mostViewed: Seq[RelatedContentItem],
+      mostCommented: Option[Content],
+      mostShared: Option[Content],
+  ): DotcomFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
 
@@ -73,6 +85,9 @@ object DotcomFrontsRenderingDataModel {
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       isNetworkFront = page.isNetworkFront,
+      mostViewed = mostViewed.map(content => Trail.pressedContentToTrail(content.faciaContent)(request)),
+      mostCommented = mostCommented.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
+      mostShared = mostShared.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
     )
   }
 
