@@ -1,12 +1,12 @@
 import type { ABTest } from '@guardian/ab-core';
 import { getUrlVars } from 'lib/url';
 import { isInABTestSynchronous } from '../experiments/ab';
-import { integrateIMA } from '../experiments/tests/integrate-ima';
+import { integrateIma } from '../experiments/tests/integrate-ima';
 import { removePrebidA9Canada } from '../experiments/tests/removePrebidA9Canada';
 
 const defaultClientSideTests: ABTest[] = [
 	/* linter, please keep this array multi-line */
-	integrateIMA,
+	integrateIma,
 	removePrebidA9Canada,
 ];
 
