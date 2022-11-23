@@ -136,8 +136,11 @@ describe('tcfv2 consent', () => {
 
 		cy.get(`[data-name="top-above-nav"]`).should('not.exist');
 
-		// Check the banner still shows support message
-		cy.get('[name="ReaderRevenueLinks"]')
+		// Check the header still shows support message
+		cy.get('[name="SupportTheG"]')
+			.should('have.attr', 'data-gu-ready', 'true', {
+				timeout: 30000,
+			})
 			.find('h2')
 			.should('contain', 'Support the Guardian');
 	});
