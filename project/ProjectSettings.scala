@@ -22,7 +22,7 @@ object ProjectSettings {
     scalacOptions ++= Seq(
       "-unchecked",
       "-deprecation",
-      "-target:jvm-1.8",
+      "-release:11",
       "-Xcheckinit",
       "-encoding",
       "utf8",
@@ -32,7 +32,7 @@ object ProjectSettings {
     Compile / packageDoc / publishArtifact := false,
     Compile / doc / sources := Seq.empty,
     Compile / doc := target.map(_ / "none").value,
-    scalaVersion := "2.13.8",
+    scalaVersion := "2.13.10",
     initialize := {
       val _ = initialize.value
       assert(
