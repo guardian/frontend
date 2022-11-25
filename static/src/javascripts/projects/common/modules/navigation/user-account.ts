@@ -131,7 +131,6 @@ const showMyAccountIfNecessary = (): void => {
 					let notifications: NotificationEvent[] = [];
 
 					bufferedNotificationListener.on((event) => {
-						console.log('I got a notification!', event.detail);
 						notifications = [...notifications, event.detail];
 						showNotifications(notifications);
 					});

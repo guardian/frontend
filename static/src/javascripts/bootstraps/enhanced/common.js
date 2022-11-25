@@ -260,8 +260,6 @@ const initialiseHeaderNotifications = (brazeCardsPromise) => {
     brazeCardsPromise.then(brazeCards => {
         return brazeCards.getCardsForProfileBadge();
     }).then(cards => {
-        console.log("Your notifications", cards);
-
         cards.filter((card) => {
             return Boolean(card.extras.target && card.extras.message);
         }).forEach((card) => {
