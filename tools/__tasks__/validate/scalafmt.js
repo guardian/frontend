@@ -11,7 +11,7 @@ module.exports = {
     description: 'scalafmt check',
     task: [
         {
-            description: 'scalaFmtCheck',
+            description: 'scalafmtCheckAll',
             task: `./sbt scalafmtCheckAll ${config}`,
             onError: error,
         },
