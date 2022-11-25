@@ -42,7 +42,7 @@ const confirmIfMain = execa
 const validate = () =>
     execa(
         './tools/task-runner/runner',
-        ['validate-head/index', 'validate/check-for-disallowed-strings'],
+        ['validate/scalafmt', 'validate-head/index', 'validate/check-for-disallowed-strings'],
         {
             stdio: 'inherit',
         }
