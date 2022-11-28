@@ -627,3 +627,14 @@
     left: 0px;
     right: 0px;
 }
+
+.ad-slot__adtest-cookie-clear-link {
+    @include font-size(12, 20);
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    text-align: left;
+    position: absolute;
+    right: 3px;
+    top: -22px;
+    padding: 0;
+    border: 0;
+}
