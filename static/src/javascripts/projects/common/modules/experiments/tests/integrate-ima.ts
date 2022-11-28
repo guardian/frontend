@@ -15,9 +15,7 @@ export const integrateIma: ABTest = {
 		'IMA integration works as expected without adversely affecting pages with videos',
 	canRun: () => true,
 	variants: [
-		{
-			id: 'variant',
-			test: () => noop,
-		},
+		{ id: 'control', test: () => noop },
+		{ id: 'variant', test: () => noop },
 	],
 };
