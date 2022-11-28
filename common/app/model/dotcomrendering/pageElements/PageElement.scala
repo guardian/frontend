@@ -148,7 +148,7 @@ case class CalloutBlockElementV2(
     id: String,
     calloutsUrl: Option[String],
     activeFrom: Long,
-    activeTo: Option[Long],
+    activeUntil: Option[Long],
     displayOnSensitive: Boolean,
     formId: Int,
     title: String,
@@ -1054,7 +1054,6 @@ object PageElement {
       // 3. CalloutBlockElement
 
       case Callout => {
-        println("I'm a callout element")
         val res = element.calloutTypeData
           .map { callout =>
             CalloutExtraction.extractCalloutByCampaignId(
