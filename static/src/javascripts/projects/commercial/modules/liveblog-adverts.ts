@@ -1,4 +1,4 @@
-import { createAdSlot } from '@guardian/commercial-core';
+import { adSizes, createAdSlot } from '@guardian/commercial-core';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../lib/fastdom-promise';
@@ -114,7 +114,16 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 			}
 		})
 		.then(() => {
-			addSlot(ad, false);
+			addSlot(ad, false, {
+				phablet: [
+					adSizes.outstreamDesktop,
+					adSizes.outstreamGoogleDesktop,
+				],
+				desktop: [
+					adSizes.outstreamDesktop,
+					adSizes.outstreamGoogleDesktop,
+				],
+			});
 		});
 };
 
