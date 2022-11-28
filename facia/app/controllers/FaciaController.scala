@@ -208,6 +208,10 @@ trait FaciaController
           if FaciaPicker.getTier(faciaPage) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
+        log.info(
+          s"Front Geo Request (212): ${EditionalisedCountry.fromHeaderString(request)} ${request.headers.toSimpleMap
+            .getOrElse("X-GU-GeoLocation", "country:row")}",
+        )
         withVaryHeader(
           remoteRenderer.getFront(
             ws = ws,
@@ -227,6 +231,10 @@ trait FaciaController
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             } else if (request.isJson) {
               if (request.forceDCR) {
+                log.info(
+                  s"Front Geo Request (237): ${EditionalisedCountry.fromHeaderString(request)} ${request.headers.toSimpleMap
+                    .getOrElse("X-GU-GeoLocation", "country:row")}",
+                )
                 JsonComponent.fromWritable(
                   DotcomFrontsRenderingDataModel(
                     page = faciaPage,
