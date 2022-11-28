@@ -57,6 +57,27 @@ const createAdTestLabel = (): string => {
 	return adTestLabel;
 };
 
+const createAdTestCookieRemovalLink = (): HTMLElement => {
+	const shouldRender = shouldRenderAdTestLabel();
+	const val = getCookie({ name: 'adtest', shouldMemoize: true });
+
+	const adTestCookieRemovalLink = document.createElement('div');
+	adTestCookieRemovalLink.style.cssText =
+		'position: relative;padding: 0 0.5rem;text-align: left;box-sizing: border-box;';
+
+	if (shouldRender && val) {
+		const url = new URL(window.location.href);
+		url.searchParams.set('adtest', 'clear');
+		const clearLink = document.createElement('a');
+		clearLink.className = 'ad-slot__adtest-cookie-clear-link';
+		clearLink.href = url.href;
+		clearLink.innerHTML = 'clear';
+		adTestCookieRemovalLink.appendChild(clearLink);
+	}
+
+	return adTestCookieRemovalLink;
+};
+
 /**
  * @param {HTMLElement} adSlotNode
  */
@@ -73,6 +94,12 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 					'position: relative;padding: 0 0.5rem;text-align: left;box-sizing: border-box;';
 				closeButtonDiv.appendChild(createAdCloseDiv());
 				adSlotNode.insertBefore(closeButtonDiv, adSlotNode.firstChild);
+				if (shouldRenderAdTestLabel()) {
+					adSlotNode.insertBefore(
+						createAdTestCookieRemovalLink(),
+						adSlotNode.firstChild,
+					);
+				}
 			});
 		}
 		return Promise.resolve();
