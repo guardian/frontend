@@ -76,6 +76,12 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 			return fastdom.mutate(() => {
 				adSlotNode.setAttribute('data-label-show', 'true');
 				adSlotNode.setAttribute('ad-label-text', adLabelContent);
+				const closeButtonDiv: HTMLElement =
+					document.createElement('div');
+				closeButtonDiv.style.cssText =
+					'position: relative;padding: 0 0.5rem;text-align: left;box-sizing: border-box;';
+				closeButtonDiv.appendChild(createAdCloseDiv());
+				adSlotNode.insertBefore(closeButtonDiv, adSlotNode.firstChild);
 			});
 		}
 		return Promise.resolve();
