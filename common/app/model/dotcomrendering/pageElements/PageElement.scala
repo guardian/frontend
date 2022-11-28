@@ -1053,8 +1053,8 @@ object PageElement {
       // 2. EmbedBlockElement
       // 3. CalloutBlockElement
 
-      case Callout => {
-        val res = element.calloutTypeData
+      case Callout =>
+        element.calloutTypeData
           .map { callout =>
             CalloutExtraction.extractCalloutByCampaignId(
               callout,
@@ -1064,9 +1064,6 @@ object PageElement {
           }
           .flatten
           .toList
-        println(res)
-        res
-      }
 
       case Contentatom =>
         (extractAtom match {
