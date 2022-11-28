@@ -49,8 +49,7 @@ describe('Rendering advert labels', () => {
 	it('Can add a label', async () => {
 		createAd(adverts['withLabel']);
 		return renderConsentlessAdvertLabel(getAd()).then(() => {
-			const adElement = getAd();
-			const dataLabelShow = adElement.getAttribute('data-label-show');
+			const dataLabelShow = getAd().getAttribute('data-label-show');
 			expect(dataLabelShow).toBeTruthy();
 		});
 	});
@@ -58,8 +57,7 @@ describe('Rendering advert labels', () => {
 	it('Will not add a label if it has an attribute data-label="false"', async () => {
 		createAd(adverts['labelDisabled']);
 		return renderConsentlessAdvertLabel(getAd()).then(() => {
-			const adElement = getAd();
-			const dataLabelShow = adElement.getAttribute('data-label-show');
+			const dataLabelShow = getAd().getAttribute('data-label-show');
 			expect(dataLabelShow).toBeFalsy();
 		});
 	});
@@ -67,8 +65,7 @@ describe('Rendering advert labels', () => {
 	it('Will not add a label if the adSlot already has one', async () => {
 		createAd(adverts['alreadyLabelled']);
 		return renderConsentlessAdvertLabel(getAd()).then(() => {
-			const adElement = getAd();
-			const dataLabelShow = adElement.getAttribute('data-label-show');
+			const dataLabelShow = getAd().getAttribute('data-label-show');
 			expect(dataLabelShow).toBeFalsy();
 		});
 	});
@@ -76,8 +73,7 @@ describe('Rendering advert labels', () => {
 	it('Will not add a label to frame ads', async () => {
 		createAd(adverts['frame']);
 		return renderConsentlessAdvertLabel(getAd()).then(() => {
-			const adElement = getAd();
-			const dataLabelShow = adElement.getAttribute('data-label-show');
+			const dataLabelShow = getAd().getAttribute('data-label-show');
 			expect(dataLabelShow).toBeFalsy();
 		});
 	});
@@ -85,8 +81,7 @@ describe('Rendering advert labels', () => {
 	it('Will not add a label to an ad slot with a hidden u-h class', async () => {
 		createAd(adverts['uh']);
 		return renderConsentlessAdvertLabel(getAd()).then(() => {
-			const adElement = getAd();
-			const dataLabelShow = adElement.getAttribute('data-label-show');
+			const dataLabelShow = getAd().getAttribute('data-label-show');
 			expect(dataLabelShow).toBeFalsy();
 		});
 	});
@@ -94,8 +89,7 @@ describe('Rendering advert labels', () => {
 	it('When the ad is top above nav and the label is NOT toggleable, render the label dynamically', async () => {
 		createAd(adverts['topAboveNav']);
 		return renderConsentlessAdvertLabel(getAd()).then(() => {
-			const adElement = getAd();
-			const dataLabelShow = adElement.getAttribute('data-label-show');
+			const dataLabelShow = getAd().getAttribute('data-label-show');
 			expect(dataLabelShow).toBeTruthy();
 		});
 	});
