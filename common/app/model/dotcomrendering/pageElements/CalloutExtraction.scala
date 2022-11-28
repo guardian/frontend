@@ -157,7 +157,7 @@ object CalloutExtraction {
       formFields1 <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
     } yield {
       val formFields2 = formFields1.value
-        .flatMap(formFieldItemToCalloutFormField(_))
+        .flatMap(formFieldItemToCalloutFormField)
         .toList
       CalloutBlockElement(
         id,
@@ -189,7 +189,7 @@ object CalloutExtraction {
       formFields1 <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
     } yield {
       val formFields2 = formFields1.value
-        .flatMap(formFieldItemToCalloutFormField(_))
+        .flatMap(formFieldItemToCalloutFormField)
         .toList
 
       CalloutBlockElementV2(
