@@ -28,7 +28,8 @@ const defineSlot = (
 	) => {
 		log('commercial', `Filled consentless ${slotId}`);
 
-		if (width === 1 && height === 1) {
+		const isFluid = width === 1 && height === 1;
+		if (isFluid) {
 			slot.classList.add('ad-slot--fluid');
 		}
 
