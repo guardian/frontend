@@ -43,9 +43,7 @@ const shouldRenderAdTestLabel = (): boolean =>
 		shouldMemoize: true,
 	});
 // If `adtest` cookie is set, display its value in the ad label
-// Furthermore, provide a link to clear the cookie
 const createAdTestLabel = (): string => {
-	//const adTestLabel = document.createElement('span');
 	let adTestLabel = '';
 
 	const shouldRender = shouldRenderAdTestLabel();
@@ -53,14 +51,7 @@ const createAdTestLabel = (): string => {
 
 	if (shouldRender && val) {
 		adTestLabel += ` [?adtest=${val}] `;
-
-		//const url = new URL(window.location.href);
-		//url.searchParams.set('adtest', 'clear');
-
-		//const clearLink = document.createElement('a');
-		//clearLink.href = url.href;
-		//clearLink.innerHTML = 'clear';
-		//adTestLabel.appendChild(clearLink);
+		//the functionality to clear the adtest cookie will be reimplemented in a future ticket
 	}
 
 	return adTestLabel;
